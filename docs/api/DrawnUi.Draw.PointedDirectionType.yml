@@ -18,11 +18,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+      path: src/Shared/Internals/Enums/PointedDirectionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: PointedDirectionType
-    path: ../src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+    path: ../src/Shared/Internals/Enums/PointedDirectionType.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -45,11 +45,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+      path: src/Shared/Internals/Enums/PointedDirectionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: LeftToRight
-    path: ../src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+    path: ../src/Shared/Internals/Enums/PointedDirectionType.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -71,11 +71,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+      path: src/Shared/Internals/Enums/PointedDirectionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RightToLeft
-    path: ../src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+    path: ../src/Shared/Internals/Enums/PointedDirectionType.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -97,11 +97,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+      path: src/Shared/Internals/Enums/PointedDirectionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TopToBottom
-    path: ../src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+    path: ../src/Shared/Internals/Enums/PointedDirectionType.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -123,11 +123,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+      path: src/Shared/Internals/Enums/PointedDirectionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: BottomToTop
-    path: ../src/Shared/Draw/Internals/Enums/PointedDirectionType.cs
+    path: ../src/Shared/Internals/Enums/PointedDirectionType.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui

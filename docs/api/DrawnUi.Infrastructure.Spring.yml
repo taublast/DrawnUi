@@ -20,11 +20,11 @@ items:
   type: Struct
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Spring.cs
+      path: src/Shared/Internals/Models/Spring.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Spring
-    path: ../src/Shared/Draw/Internals/Models/Spring.cs
+    path: ../src/Shared/Internals/Models/Spring.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -57,11 +57,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Spring.cs
+      path: src/Shared/Internals/Models/Spring.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Mass
-    path: ../src/Shared/Draw/Internals/Models/Spring.cs
+    path: ../src/Shared/Internals/Models/Spring.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -86,11 +86,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Spring.cs
+      path: src/Shared/Internals/Models/Spring.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Stiffness
-    path: ../src/Shared/Draw/Internals/Models/Spring.cs
+    path: ../src/Shared/Internals/Models/Spring.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -115,11 +115,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Spring.cs
+      path: src/Shared/Internals/Models/Spring.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DampingRatio
-    path: ../src/Shared/Draw/Internals/Models/Spring.cs
+    path: ../src/Shared/Internals/Models/Spring.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -144,11 +144,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Spring.cs
+      path: src/Shared/Internals/Models/Spring.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/Spring.cs
+    path: ../src/Shared/Internals/Models/Spring.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -180,11 +180,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Spring.cs
+      path: src/Shared/Internals/Models/Spring.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Damped
-    path: ../src/Shared/Draw/Internals/Models/Spring.cs
+    path: ../src/Shared/Internals/Models/Spring.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui
@@ -209,11 +209,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Spring.cs
+      path: src/Shared/Internals/Models/Spring.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Default
-    path: ../src/Shared/Draw/Internals/Models/Spring.cs
+    path: ../src/Shared/Internals/Models/Spring.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui

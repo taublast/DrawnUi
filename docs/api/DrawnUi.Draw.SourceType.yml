@@ -19,11 +19,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SourceType.cs
+      path: src/Shared/Internals/Enums/SourceType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SourceType
-    path: ../src/Shared/Draw/Internals/Enums/SourceType.cs
+    path: ../src/Shared/Internals/Enums/SourceType.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -46,11 +46,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SourceType.cs
+      path: src/Shared/Internals/Enums/SourceType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Unknown
-    path: ../src/Shared/Draw/Internals/Enums/SourceType.cs
+    path: ../src/Shared/Internals/Enums/SourceType.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -72,11 +72,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SourceType.cs
+      path: src/Shared/Internals/Enums/SourceType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Url
-    path: ../src/Shared/Draw/Internals/Enums/SourceType.cs
+    path: ../src/Shared/Internals/Enums/SourceType.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -98,11 +98,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SourceType.cs
+      path: src/Shared/Internals/Enums/SourceType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: LocalFile
-    path: ../src/Shared/Draw/Internals/Enums/SourceType.cs
+    path: ../src/Shared/Internals/Enums/SourceType.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -124,11 +124,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SourceType.cs
+      path: src/Shared/Internals/Enums/SourceType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: PackageFile
-    path: ../src/Shared/Draw/Internals/Enums/SourceType.cs
+    path: ../src/Shared/Internals/Enums/SourceType.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -150,11 +150,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/SourceType.cs
+      path: src/Shared/Internals/Enums/SourceType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: NativeStream
-    path: ../src/Shared/Draw/Internals/Enums/SourceType.cs
+    path: ../src/Shared/Internals/Enums/SourceType.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui

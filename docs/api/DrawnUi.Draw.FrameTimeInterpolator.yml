@@ -7,6 +7,7 @@ items:
   children:
   - DrawnUi.Draw.FrameTimeInterpolator.FpsBuffer
   - DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTime(System.Single)
+  - DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTimeFromDelta(System.Single)
   - DrawnUi.Draw.FrameTimeInterpolator.Instance
   - DrawnUi.Draw.FrameTimeInterpolator.IsSkippingFrames
   - DrawnUi.Draw.FrameTimeInterpolator.LastFrameStep
@@ -197,6 +198,47 @@ items:
       type: System.Boolean
     content.vb: Public Property ShouldReduceQuality As Boolean
   overload: DrawnUi.Draw.FrameTimeInterpolator.ShouldReduceQuality*
+- uid: DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTimeFromDelta(System.Single)
+  commentId: M:DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTimeFromDelta(System.Single)
+  id: GetDeltaTimeFromDelta(System.Single)
+  parent: DrawnUi.Draw.FrameTimeInterpolator
+  langs:
+  - csharp
+  - vb
+  name: GetDeltaTimeFromDelta(float)
+  nameWithType: FrameTimeInterpolator.GetDeltaTimeFromDelta(float)
+  fullName: DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTimeFromDelta(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Animations/FrameTimeInterpolator.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetDeltaTimeFromDelta
+    path: ../src/Shared/Features/Animations/FrameTimeInterpolator.cs
+    startLine: 82
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Calculates the delta time for the current frame based on performance monitoring
+
+    and the target FPS
+  example: []
+  syntax:
+    content: public float GetDeltaTimeFromDelta(float actualDeltaTime)
+    parameters:
+    - id: actualDeltaTime
+      type: System.Single
+      description: The actual delta time since last frame in seconds
+    return:
+      type: System.Single
+      description: The delta time to use for game updates
+    content.vb: Public Function GetDeltaTimeFromDelta(actualDeltaTime As Single) As Single
+  overload: DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTimeFromDelta*
+  nameWithType.vb: FrameTimeInterpolator.GetDeltaTimeFromDelta(Single)
+  fullName.vb: DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTimeFromDelta(Single)
+  name.vb: GetDeltaTimeFromDelta(Single)
 - uid: DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTime(System.Single)
   commentId: M:DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTime(System.Single)
   id: GetDeltaTime(System.Single)
@@ -215,7 +257,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetDeltaTime
     path: ../src/Shared/Features/Animations/FrameTimeInterpolator.cs
-    startLine: 82
+    startLine: 128
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -256,7 +298,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Reset
     path: ../src/Shared/Features/Animations/FrameTimeInterpolator.cs
-    startLine: 132
+    startLine: 178
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -284,7 +326,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Instance
     path: ../src/Shared/Features/Animations/FrameTimeInterpolator.cs
-    startLine: 250
+    startLine: 296
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -697,6 +739,12 @@ references:
   name: ShouldReduceQuality
   nameWithType: FrameTimeInterpolator.ShouldReduceQuality
   fullName: DrawnUi.Draw.FrameTimeInterpolator.ShouldReduceQuality
+- uid: DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTimeFromDelta*
+  commentId: Overload:DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTimeFromDelta
+  href: DrawnUi.Draw.FrameTimeInterpolator.html#DrawnUi_Draw_FrameTimeInterpolator_GetDeltaTimeFromDelta_System_Single_
+  name: GetDeltaTimeFromDelta
+  nameWithType: FrameTimeInterpolator.GetDeltaTimeFromDelta
+  fullName: DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTimeFromDelta
 - uid: DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTime*
   commentId: Overload:DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTime
   href: DrawnUi.Draw.FrameTimeInterpolator.html#DrawnUi_Draw_FrameTimeInterpolator_GetDeltaTime_System_Single_

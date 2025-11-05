@@ -20,11 +20,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SelectableAction.cs
+      path: src/Shared/Internals/Models/SelectableAction.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SelectableAction
-    path: ../src/Shared/Draw/Internals/Models/SelectableAction.cs
+    path: ../src/Shared/Internals/Models/SelectableAction.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -64,11 +64,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SelectableAction.cs
+      path: src/Shared/Internals/Models/SelectableAction.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/SelectableAction.cs
+    path: ../src/Shared/Internals/Models/SelectableAction.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -93,11 +93,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SelectableAction.cs
+      path: src/Shared/Internals/Models/SelectableAction.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/SelectableAction.cs
+    path: ../src/Shared/Internals/Models/SelectableAction.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -127,11 +127,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SelectableAction.cs
+      path: src/Shared/Internals/Models/SelectableAction.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/SelectableAction.cs
+    path: ../src/Shared/Internals/Models/SelectableAction.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui
@@ -163,11 +163,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SelectableAction.cs
+      path: src/Shared/Internals/Models/SelectableAction.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Action
-    path: ../src/Shared/Draw/Internals/Models/SelectableAction.cs
+    path: ../src/Shared/Internals/Models/SelectableAction.cs
     startLine: 23
   assemblies:
   - DrawnUi.Maui
@@ -192,11 +192,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SelectableAction.cs
+      path: src/Shared/Internals/Models/SelectableAction.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Selected
-    path: ../src/Shared/Draw/Internals/Models/SelectableAction.cs
+    path: ../src/Shared/Internals/Models/SelectableAction.cs
     startLine: 24
   assemblies:
   - DrawnUi.Maui
@@ -221,11 +221,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/SelectableAction.cs
+      path: src/Shared/Internals/Models/SelectableAction.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsReadOnly
-    path: ../src/Shared/Draw/Internals/Models/SelectableAction.cs
+    path: ../src/Shared/Internals/Models/SelectableAction.cs
     startLine: 26
   assemblies:
   - DrawnUi.Maui

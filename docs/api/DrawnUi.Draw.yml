@@ -43,6 +43,7 @@ items:
   - DrawnUi.Draw.ContextArguments
   - DrawnUi.Draw.ContrastEffect
   - DrawnUi.Draw.ControlInStack
+  - DrawnUi.Draw.ControlLifecycleState
   - DrawnUi.Draw.ControlTappedEventArgs
   - DrawnUi.Draw.ControlsTracker
   - DrawnUi.Draw.CriticallyDampedSpringTimingParameters
@@ -52,6 +53,7 @@ items:
   - DrawnUi.Draw.DecelerationTimingParameters
   - DrawnUi.Draw.DecelerationTimingVectorParameters
   - DrawnUi.Draw.DescendingZIndexGestureListenerComparer
+  - DrawnUi.Draw.DeviceOrientation
   - DrawnUi.Draw.DirectionType
   - DrawnUi.Draw.DrawImageAlignment
   - DrawnUi.Draw.DrawTextAlignment
@@ -1846,6 +1848,13 @@ references:
   name: VisualTreeHandler
   nameWithType: VisualTreeHandler
   fullName: DrawnUi.Draw.VisualTreeHandler
+- uid: DrawnUi.Draw.ControlLifecycleState
+  commentId: T:DrawnUi.Draw.ControlLifecycleState
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ControlLifecycleState.html
+  name: ControlLifecycleState
+  nameWithType: ControlLifecycleState
+  fullName: DrawnUi.Draw.ControlLifecycleState
 - uid: DrawnUi.Draw.SkiaCacheType
   commentId: T:DrawnUi.Draw.SkiaCacheType
   parent: DrawnUi.Draw
@@ -1867,6 +1876,13 @@ references:
   name: AutoSizeType
   nameWithType: AutoSizeType
   fullName: DrawnUi.Draw.AutoSizeType
+- uid: DrawnUi.Draw.DeviceOrientation
+  commentId: T:DrawnUi.Draw.DeviceOrientation
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.DeviceOrientation.html
+  name: DeviceOrientation
+  nameWithType: DeviceOrientation
+  fullName: DrawnUi.Draw.DeviceOrientation
 - uid: DrawnUi.Draw.DirectionType
   commentId: T:DrawnUi.Draw.DirectionType
   parent: DrawnUi.Draw

@@ -706,9 +706,6 @@ Override <code>Build()</code>, see examples.</p>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onhandlerchanging">Element.OnHandlerChanging(HandlerChangingEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onhandlerchanged">Element.OnHandlerChanged()</a>
-    </div>
-    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.mapautomationpropertiesisinaccessibletree">Element.MapAutomationPropertiesIsInAccessibleTree(IElementHandler, Element)</a>
     </div>
     <div>
@@ -910,7 +907,7 @@ Override <code>Build()</code>, see examples.</p>
 
   <h3 id="DrawnUi_Views_BasePageReloadable_CountReloads" data-uid="DrawnUi.Views.BasePageReloadable.CountReloads">
   CountReloads
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/BasePageReloadable.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/BasePageReloadable.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -941,7 +938,7 @@ Override <code>Build()</code>, see examples.</p>
 
   <h3 id="DrawnUi_Views_BasePageReloadable_IsDisposed" data-uid="DrawnUi.Views.BasePageReloadable.IsDisposed">
   IsDisposed
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/BasePageReloadable.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/BasePageReloadable.cs/#L71"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -976,7 +973,7 @@ Override <code>Build()</code>, see examples.</p>
 
   <h3 id="DrawnUi_Views_BasePageReloadable_Build" data-uid="DrawnUi.Views.BasePageReloadable.Build">
   Build()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/BasePageReloadable.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/BasePageReloadable.cs/#L60"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Build code-behind constructed page</p>
@@ -1003,7 +1000,7 @@ Override <code>Build()</code>, see examples.</p>
 
   <h3 id="DrawnUi_Views_BasePageReloadable_Dispose" data-uid="DrawnUi.Views.BasePageReloadable.Dispose">
   Dispose()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/BasePageReloadable.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/BasePageReloadable.cs/#L65"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
@@ -1030,7 +1027,7 @@ Override <code>Build()</code>, see examples.</p>
 
   <h3 id="DrawnUi_Views_BasePageReloadable_Dispose_System_Boolean_" data-uid="DrawnUi.Views.BasePageReloadable.Dispose(System.Boolean)">
   Dispose(bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/BasePageReloadable.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/BasePageReloadable.cs/#L73"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1057,11 +1054,41 @@ Override <code>Build()</code>, see examples.</p>
 
 
 
+  <a id="DrawnUi_Views_BasePageReloadable_OnHandlerChanged_" data-uid="DrawnUi.Views.BasePageReloadable.OnHandlerChanged*"></a>
+
+  <h3 id="DrawnUi_Views_BasePageReloadable_OnHandlerChanged" data-uid="DrawnUi.Views.BasePageReloadable.OnHandlerChanged">
+  OnHandlerChanged()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/BasePageReloadable.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>When overridden in a derived class, should raise the <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.handlerchanged">HandlerChanged</a> event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnHandlerChanged()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+  <h4 class="section" id="DrawnUi_Views_BasePageReloadable_OnHandlerChanged_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>It is the implementor's responsibility to raise the <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.handlerchanged">HandlerChanged</a> event.</p>
+</div>
+
+
+
+
   <a id="DrawnUi_Views_BasePageReloadable_ReloadUi_" data-uid="DrawnUi.Views.BasePageReloadable.ReloadUi*"></a>
 
   <h3 id="DrawnUi_Views_BasePageReloadable_ReloadUi_System_Type___" data-uid="DrawnUi.Views.BasePageReloadable.ReloadUi(System.Type[])">
   ReloadUi(Type[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/BasePageReloadable.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Views/BasePageReloadable.cs/#L48"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Reload code-behind constructed page</p>

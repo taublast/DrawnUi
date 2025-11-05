@@ -26,11 +26,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+      path: src/Shared/Internals/Models/LimitedConcurrentQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: LimitedConcurrentQueue
-    path: ../src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedConcurrentQueue.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -68,11 +68,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+      path: src/Shared/Internals/Models/LimitedConcurrentQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Count
-    path: ../src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedConcurrentQueue.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -99,11 +99,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+      path: src/Shared/Internals/Models/LimitedConcurrentQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ToArray
-    path: ../src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedConcurrentQueue.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -129,11 +129,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+      path: src/Shared/Internals/Models/LimitedConcurrentQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ToList
-    path: ../src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedConcurrentQueue.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui
@@ -159,11 +159,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+      path: src/Shared/Internals/Models/LimitedConcurrentQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedConcurrentQueue.cs
     startLine: 22
   assemblies:
   - DrawnUi.Maui
@@ -188,11 +188,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+      path: src/Shared/Internals/Models/LimitedConcurrentQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAutoRemovingItem
-    path: ../src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedConcurrentQueue.cs
     startLine: 26
   assemblies:
   - DrawnUi.Maui
@@ -219,11 +219,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+      path: src/Shared/Internals/Models/LimitedConcurrentQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedConcurrentQueue.cs
     startLine: 31
   assemblies:
   - DrawnUi.Maui
@@ -251,11 +251,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+      path: src/Shared/Internals/Models/LimitedConcurrentQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Push
-    path: ../src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedConcurrentQueue.cs
     startLine: 36
   assemblies:
   - DrawnUi.Maui
@@ -282,11 +282,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+      path: src/Shared/Internals/Models/LimitedConcurrentQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLocked
-    path: ../src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedConcurrentQueue.cs
     startLine: 49
   assemblies:
   - DrawnUi.Maui
@@ -313,11 +313,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+      path: src/Shared/Internals/Models/LimitedConcurrentQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Lock
-    path: ../src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedConcurrentQueue.cs
     startLine: 57
   assemblies:
   - DrawnUi.Maui
@@ -341,11 +341,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+      path: src/Shared/Internals/Models/LimitedConcurrentQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Unlock
-    path: ../src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedConcurrentQueue.cs
     startLine: 62
   assemblies:
   - DrawnUi.Maui
@@ -369,11 +369,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+      path: src/Shared/Internals/Models/LimitedConcurrentQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Pop
-    path: ../src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedConcurrentQueue.cs
     startLine: 67
   assemblies:
   - DrawnUi.Maui
@@ -399,11 +399,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+      path: src/Shared/Internals/Models/LimitedConcurrentQueue.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
-    path: ../src/Shared/Draw/Internals/Models/LimitedConcurrentQueue.cs
+    path: ../src/Shared/Internals/Models/LimitedConcurrentQueue.cs
     startLine: 74
   assemblies:
   - DrawnUi.Maui

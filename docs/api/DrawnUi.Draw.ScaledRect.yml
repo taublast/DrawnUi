@@ -24,11 +24,11 @@ items:
   type: Struct
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledRect.cs
+      path: src/Shared/Internals/Models/ScaledRect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ScaledRect
-    path: ../src/Shared/Draw/Internals/Models/ScaledRect.cs
+    path: ../src/Shared/Internals/Models/ScaledRect.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -57,11 +57,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledRect.cs
+      path: src/Shared/Internals/Models/ScaledRect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ToString
-    path: ../src/Shared/Draw/Internals/Models/ScaledRect.cs
+    path: ../src/Shared/Internals/Models/ScaledRect.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -89,11 +89,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledRect.cs
+      path: src/Shared/Internals/Models/ScaledRect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/ScaledRect.cs
+    path: ../src/Shared/Internals/Models/ScaledRect.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -118,11 +118,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledRect.cs
+      path: src/Shared/Internals/Models/ScaledRect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Scale
-    path: ../src/Shared/Draw/Internals/Models/ScaledRect.cs
+    path: ../src/Shared/Internals/Models/ScaledRect.cs
     startLine: 16
   assemblies:
   - DrawnUi.Maui
@@ -147,11 +147,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledRect.cs
+      path: src/Shared/Internals/Models/ScaledRect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Units
-    path: ../src/Shared/Draw/Internals/Models/ScaledRect.cs
+    path: ../src/Shared/Internals/Models/ScaledRect.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui
@@ -176,11 +176,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledRect.cs
+      path: src/Shared/Internals/Models/ScaledRect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Pixels
-    path: ../src/Shared/Draw/Internals/Models/ScaledRect.cs
+    path: ../src/Shared/Internals/Models/ScaledRect.cs
     startLine: 18
   assemblies:
   - DrawnUi.Maui
@@ -205,11 +205,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledRect.cs
+      path: src/Shared/Internals/Models/ScaledRect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Compare
-    path: ../src/Shared/Draw/Internals/Models/ScaledRect.cs
+    path: ../src/Shared/Internals/Models/ScaledRect.cs
     startLine: 20
   assemblies:
   - DrawnUi.Maui
@@ -236,11 +236,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledRect.cs
+      path: src/Shared/Internals/Models/ScaledRect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Compare
-    path: ../src/Shared/Draw/Internals/Models/ScaledRect.cs
+    path: ../src/Shared/Internals/Models/ScaledRect.cs
     startLine: 25
   assemblies:
   - DrawnUi.Maui
@@ -267,11 +267,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledRect.cs
+      path: src/Shared/Internals/Models/ScaledRect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FromUnits
-    path: ../src/Shared/Draw/Internals/Models/ScaledRect.cs
+    path: ../src/Shared/Internals/Models/ScaledRect.cs
     startLine: 30
   assemblies:
   - DrawnUi.Maui
@@ -303,11 +303,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledRect.cs
+      path: src/Shared/Internals/Models/ScaledRect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FromPixels
-    path: ../src/Shared/Draw/Internals/Models/ScaledRect.cs
+    path: ../src/Shared/Internals/Models/ScaledRect.cs
     startLine: 41
   assemblies:
   - DrawnUi.Maui
@@ -339,11 +339,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledRect.cs
+      path: src/Shared/Internals/Models/ScaledRect.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clone
-    path: ../src/Shared/Draw/Internals/Models/ScaledRect.cs
+    path: ../src/Shared/Internals/Models/ScaledRect.cs
     startLine: 52
   assemblies:
   - DrawnUi.Maui

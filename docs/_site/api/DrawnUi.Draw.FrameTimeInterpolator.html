@@ -196,7 +196,7 @@ Class FrameTimeInterpolator  <a class="header-action link-secondary" title="View
 
   <h3 id="DrawnUi_Draw_FrameTimeInterpolator_Instance" data-uid="DrawnUi.Draw.FrameTimeInterpolator.Instance">
   Instance
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animations/FrameTimeInterpolator.cs/#L251"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animations/FrameTimeInterpolator.cs/#L297"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -356,7 +356,7 @@ Class FrameTimeInterpolator  <a class="header-action link-secondary" title="View
 
   <h3 id="DrawnUi_Draw_FrameTimeInterpolator_GetDeltaTime_System_Single_" data-uid="DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTime(System.Single)">
   GetDeltaTime(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animations/FrameTimeInterpolator.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animations/FrameTimeInterpolator.cs/#L129"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Calculates the delta time for the current frame based on performance monitoring
@@ -392,11 +392,51 @@ and the target FPS</p>
 
 
 
+  <a id="DrawnUi_Draw_FrameTimeInterpolator_GetDeltaTimeFromDelta_" data-uid="DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTimeFromDelta*"></a>
+
+  <h3 id="DrawnUi_Draw_FrameTimeInterpolator_GetDeltaTimeFromDelta_System_Single_" data-uid="DrawnUi.Draw.FrameTimeInterpolator.GetDeltaTimeFromDelta(System.Single)">
+  GetDeltaTimeFromDelta(float)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animations/FrameTimeInterpolator.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Calculates the delta time for the current frame based on performance monitoring
+and the target FPS</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float GetDeltaTimeFromDelta(float actualDeltaTime)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>actualDeltaTime</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd><p>The actual delta time since last frame in seconds</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd><p>The delta time to use for game updates</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Draw_FrameTimeInterpolator_Reset_" data-uid="DrawnUi.Draw.FrameTimeInterpolator.Reset*"></a>
 
   <h3 id="DrawnUi_Draw_FrameTimeInterpolator_Reset" data-uid="DrawnUi.Draw.FrameTimeInterpolator.Reset">
   Reset()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animations/FrameTimeInterpolator.cs/#L133"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Shared/Features/Animations/FrameTimeInterpolator.cs/#L179"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Resets the time interpolation state</p>

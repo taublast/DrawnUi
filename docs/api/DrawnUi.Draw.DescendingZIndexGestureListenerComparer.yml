@@ -15,11 +15,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DescendingZIndexGestureListenerComparer.cs
+      path: src/Shared/Internals/Models/DescendingZIndexGestureListenerComparer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DescendingZIndexGestureListenerComparer
-    path: ../src/Shared/Draw/Internals/Models/DescendingZIndexGestureListenerComparer.cs
+    path: ../src/Shared/Internals/Models/DescendingZIndexGestureListenerComparer.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -54,11 +54,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DescendingZIndexGestureListenerComparer.cs
+      path: src/Shared/Internals/Models/DescendingZIndexGestureListenerComparer.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Compare
-    path: ../src/Shared/Draw/Internals/Models/DescendingZIndexGestureListenerComparer.cs
+    path: ../src/Shared/Internals/Models/DescendingZIndexGestureListenerComparer.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui

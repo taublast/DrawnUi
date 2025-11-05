@@ -30,11 +30,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DynamicGrid
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -74,11 +74,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: grid
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -103,11 +103,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxRows
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -134,11 +134,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxColumns
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -165,11 +165,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Add
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui
@@ -201,11 +201,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Get
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 47
   assemblies:
   - DrawnUi.Maui
@@ -237,11 +237,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetRow
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 53
   assemblies:
   - DrawnUi.Maui
@@ -271,11 +271,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetColumn
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 64
   assemblies:
   - DrawnUi.Maui
@@ -305,11 +305,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 75
   assemblies:
   - DrawnUi.Maui
@@ -333,11 +333,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetChildren
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 83
   assemblies:
   - DrawnUi.Maui
@@ -363,11 +363,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Children
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 88
   assemblies:
   - DrawnUi.Maui
@@ -394,11 +394,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FindChildAtIndex
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 96
   assemblies:
   - DrawnUi.Maui
@@ -428,11 +428,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: this[]
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 104
   assemblies:
   - DrawnUi.Maui
@@ -464,11 +464,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetChildrenAsSpans
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 115
   assemblies:
   - DrawnUi.Maui
@@ -494,11 +494,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCount
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 120
   assemblies:
   - DrawnUi.Maui
@@ -524,11 +524,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Length
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 128
   assemblies:
   - DrawnUi.Maui
@@ -557,11 +557,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/DynamicGrid.cs
+      path: src/Shared/Internals/Models/DynamicGrid.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetColumnCountForRow
-    path: ../src/Shared/Draw/Internals/Models/DynamicGrid.cs
+    path: ../src/Shared/Internals/Models/DynamicGrid.cs
     startLine: 136
   assemblies:
   - DrawnUi.Maui

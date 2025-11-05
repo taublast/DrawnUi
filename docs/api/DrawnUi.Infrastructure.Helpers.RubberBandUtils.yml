@@ -18,11 +18,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/RubberBandUtils.cs
+      path: src/Shared/Internals/Helpers/RubberBandUtils.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RubberBandUtils
-    path: ../src/Shared/Draw/Internals/Helpers/RubberBandUtils.cs
+    path: ../src/Shared/Internals/Helpers/RubberBandUtils.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -53,11 +53,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/RubberBandUtils.cs
+      path: src/Shared/Internals/Helpers/RubberBandUtils.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ClampOnTrack
-    path: ../src/Shared/Draw/Internals/Helpers/RubberBandUtils.cs
+    path: ../src/Shared/Internals/Helpers/RubberBandUtils.cs
     startLine: 28
   assemblies:
   - DrawnUi.Maui
@@ -99,11 +99,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/RubberBandUtils.cs
+      path: src/Shared/Internals/Helpers/RubberBandUtils.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clamp
-    path: ../src/Shared/Draw/Internals/Helpers/RubberBandUtils.cs
+    path: ../src/Shared/Internals/Helpers/RubberBandUtils.cs
     startLine: 39
   assemblies:
   - DrawnUi.Maui
@@ -139,11 +139,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/RubberBandUtils.cs
+      path: src/Shared/Internals/Helpers/RubberBandUtils.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RubberBandClamp
-    path: ../src/Shared/Draw/Internals/Helpers/RubberBandUtils.cs
+    path: ../src/Shared/Internals/Helpers/RubberBandUtils.cs
     startLine: 52
   assemblies:
   - DrawnUi.Maui
@@ -179,11 +179,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/RubberBandUtils.cs
+      path: src/Shared/Internals/Helpers/RubberBandUtils.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RubberBandClamp
-    path: ../src/Shared/Draw/Internals/Helpers/RubberBandUtils.cs
+    path: ../src/Shared/Internals/Helpers/RubberBandUtils.cs
     startLine: 99
   assemblies:
   - DrawnUi.Maui

@@ -17,11 +17,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+      path: src/Shared/Internals/Interfaces/IInsideViewport.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IInsideViewport
-    path: ../src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+    path: ../src/Shared/Internals/Interfaces/IInsideViewport.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -50,11 +50,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+      path: src/Shared/Internals/Interfaces/IInsideViewport.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnViewportWasChanged
-    path: ../src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+    path: ../src/Shared/Internals/Interfaces/IInsideViewport.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -82,11 +82,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+      path: src/Shared/Internals/Interfaces/IInsideViewport.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLoaded
-    path: ../src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+    path: ../src/Shared/Internals/Interfaces/IInsideViewport.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -110,11 +110,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+      path: src/Shared/Internals/Interfaces/IInsideViewport.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ShouldTriggerLoadMore
-    path: ../src/Shared/Draw/Internals/Interfaces/IInsideViewport.cs
+    path: ../src/Shared/Internals/Interfaces/IInsideViewport.cs
     startLine: 21
   assemblies:
   - DrawnUi.Maui

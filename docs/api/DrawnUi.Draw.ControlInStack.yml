@@ -31,11 +31,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ControlInStack
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -68,11 +68,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -97,11 +97,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ControlIndex
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 20
   assemblies:
   - DrawnUi.Maui
@@ -128,11 +128,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Measured
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 25
   assemblies:
   - DrawnUi.Maui
@@ -159,11 +159,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Layout
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 41
   assemblies:
   - DrawnUi.Maui
@@ -188,11 +188,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Area
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 46
   assemblies:
   - DrawnUi.Maui
@@ -219,11 +219,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Destination
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 51
   assemblies:
   - DrawnUi.Maui
@@ -250,11 +250,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OffsetOthers
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 53
   assemblies:
   - DrawnUi.Maui
@@ -279,11 +279,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: WasLastDrawn
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 58
   assemblies:
   - DrawnUi.Maui
@@ -310,11 +310,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: View
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 63
   assemblies:
   - DrawnUi.Maui
@@ -341,11 +341,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Drawn
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 68
   assemblies:
   - DrawnUi.Maui
@@ -372,11 +372,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Offset
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 73
   assemblies:
   - DrawnUi.Maui
@@ -403,11 +403,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: WasMeasured
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 75
   assemblies:
   - DrawnUi.Maui
@@ -432,11 +432,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVisible
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 77
   assemblies:
   - DrawnUi.Maui
@@ -461,11 +461,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ZIndex
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 90
   assemblies:
   - DrawnUi.Maui
@@ -490,11 +490,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Column
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 92
   assemblies:
   - DrawnUi.Maui
@@ -519,11 +519,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Row
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 94
   assemblies:
   - DrawnUi.Maui
@@ -548,11 +548,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ControlInStack.cs
+      path: src/Shared/Internals/Models/ControlInStack.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsCollapsed
-    path: ../src/Shared/Draw/Internals/Models/ControlInStack.cs
+    path: ../src/Shared/Internals/Models/ControlInStack.cs
     startLine: 99
   assemblies:
   - DrawnUi.Maui

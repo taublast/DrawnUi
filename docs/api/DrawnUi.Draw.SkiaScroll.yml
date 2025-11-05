@@ -149,6 +149,7 @@ items:
   - DrawnUi.Draw.SkiaScroll.NeedMeasure
   - DrawnUi.Draw.SkiaScroll.OffsetOk(System.Numerics.Vector2)
   - DrawnUi.Draw.SkiaScroll.OnDrawn(DrawnUi.Draw.DrawingContext)
+  - DrawnUi.Draw.SkiaScroll.OnLayoutReady
   - DrawnUi.Draw.SkiaScroll.OnMeasured
   - DrawnUi.Draw.SkiaScroll.OnPropertyChanged(System.String)
   - DrawnUi.Draw.SkiaScroll.OnScrollCompleted
@@ -157,6 +158,7 @@ items:
   - DrawnUi.Draw.SkiaScroll.OnScrollerStarted
   - DrawnUi.Draw.SkiaScroll.OnScrollerStopped
   - DrawnUi.Draw.SkiaScroll.OnScrollerUpdated
+  - DrawnUi.Draw.SkiaScroll.OnScrollingStateChanged(System.Boolean)
   - DrawnUi.Draw.SkiaScroll.OnWillDisposeWithChildren
   - DrawnUi.Draw.SkiaScroll.OrderToPreparePlaneBackwardInBackground(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaScroll.OrderToPreparePlaneForwardInBackground(DrawnUi.Draw.DrawingContext)
@@ -281,8 +283,6 @@ items:
   - DrawnUi.Draw.SkiaScroll.ViewportOffsetY
   - DrawnUi.Draw.SkiaScroll.ViewportZoom
   - DrawnUi.Draw.SkiaScroll.ViewportZoomProperty
-  - DrawnUi.Draw.SkiaScroll.Virtualisation
-  - DrawnUi.Draw.SkiaScroll.VirtualisationProperty
   - DrawnUi.Draw.SkiaScroll.WasSwiping
   - DrawnUi.Draw.SkiaScroll.WheelLineSize
   - DrawnUi.Draw.SkiaScroll.WillClipBounds
@@ -412,12 +412,15 @@ items:
   - DrawnUi.Draw.SkiaControl.AddSubView(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.RemoveSubView(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.OnLayoutChanged
+  - DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
   - DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect)
   - DrawnUi.Draw.SkiaControl.CreateShadow(DrawnUi.Draw.SkiaShadow,System.Single)
   - DrawnUi.Draw.SkiaControl.UpdatePlatformShadow
   - DrawnUi.Draw.SkiaControl.PlatformShadow
   - DrawnUi.Draw.SkiaControl.HasPlatformClip
   - DrawnUi.Draw.SkiaControl.GetDensity
+  - DrawnUi.Draw.SkiaControl.AutoCacheProperty
+  - DrawnUi.Draw.SkiaControl.AutoCache
   - DrawnUi.Draw.SkiaControl.UseCacheProperty
   - DrawnUi.Draw.SkiaControl.UseCache
   - DrawnUi.Draw.SkiaControl.AllowCachingProperty
@@ -474,8 +477,11 @@ items:
   - DrawnUi.Draw.SkiaControl.InvalidatedParent
   - DrawnUi.Draw.SkiaControl.InvalidateParent
   - DrawnUi.Draw.SkiaControl.InvalidateByChild(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.SkiaControl.RenderingInvalidated
   - DrawnUi.Draw.SkiaControl.DirtyChildrenTracker
   - DrawnUi.Draw.SkiaControl.DirtyChildrenInternal
+  - DrawnUi.Draw.SkiaControl.Initialized
+  - DrawnUi.Draw.SkiaControl.Destroyed
   - DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
   - DrawnUi.Draw.SkiaControl.OnHover(System.Boolean)
   - DrawnUi.Draw.SkiaControl.OnFocusChanged(System.Boolean)
@@ -493,6 +499,10 @@ items:
   - DrawnUi.Draw.SkiaControl.ClipWith
   - DrawnUi.Draw.SkiaControl.ChildrenProperty
   - DrawnUi.Draw.SkiaControl.Children
+  - DrawnUi.Draw.SkiaControl.VirtualizationProperty
+  - DrawnUi.Draw.SkiaControl.Virtualisation
+  - DrawnUi.Draw.SkiaControl.VirtualisationInflatedProperty
+  - DrawnUi.Draw.SkiaControl.VirtualisationInflated
   - DrawnUi.Draw.SkiaControl.DefaultBlendMode
   - DrawnUi.Draw.SkiaControl.IsVisibleInViewTree
   - DrawnUi.Draw.SkiaControl.GetPositionOnCanvasInPoints
@@ -744,7 +754,6 @@ items:
   - DrawnUi.Draw.SkiaControl.ArrangedDestination
   - DrawnUi.Draw.SkiaControl.LayoutIsReady
   - DrawnUi.Draw.SkiaControl.Disposing
-  - DrawnUi.Draw.SkiaControl.OnLayoutReady
   - DrawnUi.Draw.SkiaControl.IsLayoutReady
   - DrawnUi.Draw.SkiaControl.LayoutReady
   - DrawnUi.Draw.SkiaControl.CheckIsGhost
@@ -800,6 +809,8 @@ items:
   - DrawnUi.Draw.SkiaControl.ExecuteOnPaint
   - DrawnUi.Draw.SkiaControl.ThrowIfDisposed
   - DrawnUi.Draw.SkiaControl.Dispose(System.Boolean)
+  - DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+  - DrawnUi.Draw.SkiaControl.LifecycleState
   - DrawnUi.Draw.SkiaControl.Dispose
   - DrawnUi.Draw.SkiaControl.PaintErase
   - DrawnUi.Draw.SkiaControl.GetNanoseconds
@@ -819,6 +830,7 @@ items:
   - DrawnUi.Draw.SkiaControl.FindRenderedNode(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.CreateRenderedNode(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.Render(DrawnUi.Draw.DrawingContext)
+  - DrawnUi.Draw.SkiaControl.RenderCount
   - DrawnUi.Draw.SkiaControl.Rendered
   - DrawnUi.Draw.SkiaControl.LockDraw
   - DrawnUi.Draw.SkiaControl.LockRenderObject
@@ -845,6 +857,7 @@ items:
   - DrawnUi.Draw.SkiaControl.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
   - DrawnUi.Draw.SkiaControl.ShouldClipAntialiased
   - DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
+  - DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
   - DrawnUi.Draw.SkiaControl.NeedRemeasuring
   - DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   - DrawnUi.Draw.SkiaControl.PaintWithEffects(DrawnUi.Draw.DrawingContext)
@@ -868,6 +881,7 @@ items:
   - DrawnUi.Draw.SkiaControl.IsParentIndependent
   - DrawnUi.Draw.SkiaControl.WillNotUpdateParent
   - DrawnUi.Draw.SkiaControl.UpdateInternal
+  - DrawnUi.Draw.SkiaControl.UpdatedRendering
   - DrawnUi.Draw.SkiaControl.Update
   - DrawnUi.Draw.SkiaControl.Updated
   - DrawnUi.Draw.SkiaControl.StreamFromString(System.String)
@@ -1161,15 +1175,15 @@ items:
   - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.Observe``2(System.Func{{TSource}},System.Action{DrawnUi.Draw.SkiaScroll},System.String[])
   - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Draw.SkiaScroll,System.String},System.String[])
   - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Draw.SkiaScroll},System.String[])
-  - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(System.Action{DrawnUi.Draw.SkiaScroll,System.Object},System.String[])
   - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.OnLongPressing``1(System.Action{DrawnUi.Draw.SkiaScroll})
-  - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.OnPaint``1(System.Action{DrawnUi.Draw.SkiaScroll,DrawnUi.Draw.DrawingContext})
   - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Draw.SkiaScroll,DrawnUi.Draw.ControlTappedEventArgs})
   - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Draw.SkiaScroll})
   - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.SetGrid``1(System.Int32,System.Int32)
   - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.SetGrid``1(System.Int32,System.Int32,System.Int32,System.Int32)
   - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.StartX``1
   - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.StartY``1
+  - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(System.Action{DrawnUi.Draw.SkiaScroll,System.Object},System.String[])
+  - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.WhenPaint``1(System.Action{DrawnUi.Draw.SkiaScroll,DrawnUi.Draw.DrawingContext})
   - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(Microsoft.Maui.Graphics.Color)
   - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.WithCache``1(DrawnUi.Draw.SkiaCacheType)
   - DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.WithColumnSpan``1(System.Int32)
@@ -5309,7 +5323,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetMeasured
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2018
+    startLine: 2022
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5358,7 +5372,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetContentAvailableRect
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2035
+    startLine: 2039
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5393,7 +5407,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InternalViewportOffset
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2062
+    startLine: 2066
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5424,7 +5438,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ContentViewport
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2067
+    startLine: 2071
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5455,7 +5469,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdjustHeaderParallax
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2069
+    startLine: 2073
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5481,7 +5495,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PositionViewport
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2104
+    startLine: 2108
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5537,7 +5551,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SendScrolled
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2243
+    startLine: 2247
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5563,7 +5577,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SendScrollingEnded
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2254
+    startLine: 2258
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5589,7 +5603,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnScrollCompleted
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2263
+    startLine: 2267
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5599,6 +5613,38 @@ items:
     content: protected virtual void OnScrollCompleted()
     content.vb: Protected Overridable Sub OnScrollCompleted()
   overload: DrawnUi.Draw.SkiaScroll.OnScrollCompleted*
+- uid: DrawnUi.Draw.SkiaScroll.OnScrollingStateChanged(System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaScroll.OnScrollingStateChanged(System.Boolean)
+  id: OnScrollingStateChanged(System.Boolean)
+  parent: DrawnUi.Draw.SkiaScroll
+  langs:
+  - csharp
+  - vb
+  name: OnScrollingStateChanged(bool)
+  nameWithType: SkiaScroll.OnScrollingStateChanged(bool)
+  fullName: DrawnUi.Draw.SkiaScroll.OnScrollingStateChanged(bool)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnScrollingStateChanged
+    path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
+    startLine: 2277
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public virtual void OnScrollingStateChanged(bool value)
+    parameters:
+    - id: value
+      type: System.Boolean
+    content.vb: Public Overridable Sub OnScrollingStateChanged(value As Boolean)
+  overload: DrawnUi.Draw.SkiaScroll.OnScrollingStateChanged*
+  nameWithType.vb: SkiaScroll.OnScrollingStateChanged(Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaScroll.OnScrollingStateChanged(Boolean)
+  name.vb: OnScrollingStateChanged(Boolean)
 - uid: DrawnUi.Draw.SkiaScroll.IsScrolling
   commentId: P:DrawnUi.Draw.SkiaScroll.IsScrolling
   id: IsScrolling
@@ -5617,7 +5663,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsScrolling
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2275
+    startLine: 2305
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5646,7 +5692,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HideRefreshIndicator
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2301
+    startLine: 2333
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5672,7 +5718,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnScrolled
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2311
+    startLine: 2343
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5700,7 +5746,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollingEnded
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2327
+    startLine: 2359
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5727,7 +5773,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Scrolled
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2328
+    startLine: 2360
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5754,7 +5800,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UsingRefreshDistanceLimit
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2330
+    startLine: 2362
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5783,7 +5829,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ShowRefreshIndicatorForced
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2344
+    startLine: 2376
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5809,7 +5855,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyScrollPositionToRefreshViewUnsafe
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2373
+    startLine: 2405
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5835,7 +5881,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CheckNeedRefresh
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2408
+    startLine: 2440
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5861,7 +5907,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetIsRefreshing
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2438
+    startLine: 2470
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5893,7 +5939,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintViews
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2470
+    startLine: 2502
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5925,7 +5971,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2485
+    startLine: 2517
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5963,7 +6009,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2506
+    startLine: 2538
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5994,7 +6040,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetScrollOffset
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2567
+    startLine: 2599
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6036,7 +6082,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ParallaxComputedValue
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2620
+    startLine: 2652
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6065,7 +6111,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawViews
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2631
+    startLine: 2663
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6104,7 +6150,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ContentAvailableSpace
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2850
+    startLine: 2882
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6133,7 +6179,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ContentRectWithOffset
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2855
+    startLine: 2887
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6164,7 +6210,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2857
+    startLine: 2889
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6193,7 +6239,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Init
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2862
+    startLine: 2894
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6219,7 +6265,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetChildren
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2868
+    startLine: 2900
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6253,7 +6299,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyBindingContext
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2875
+    startLine: 2907
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6282,7 +6328,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetContent
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2887
+    startLine: 2919
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6296,6 +6342,35 @@ items:
       description: ''
     content.vb: Protected Overridable Sub SetContent(view As SkiaControl)
   overload: DrawnUi.Draw.SkiaScroll.SetContent*
+- uid: DrawnUi.Draw.SkiaScroll.OnLayoutReady
+  commentId: M:DrawnUi.Draw.SkiaScroll.OnLayoutReady
+  id: OnLayoutReady
+  parent: DrawnUi.Draw.SkiaScroll
+  langs:
+  - csharp
+  - vb
+  name: OnLayoutReady()
+  nameWithType: SkiaScroll.OnLayoutReady()
+  fullName: DrawnUi.Draw.SkiaScroll.OnLayoutReady()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnLayoutReady
+    path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
+    startLine: 2940
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Layout was changed with dimensions above zero. Rather a helper method, can you more generic OnLayoutChanged().
+  example: []
+  syntax:
+    content: protected override void OnLayoutReady()
+    content.vb: Protected Overrides Sub OnLayoutReady()
+  overridden: DrawnUi.Draw.SkiaControl.OnLayoutReady
+  overload: DrawnUi.Draw.SkiaScroll.OnLayoutReady*
 - uid: DrawnUi.Draw.SkiaScroll.SetHeader(DrawnUi.Draw.SkiaControl)
   commentId: M:DrawnUi.Draw.SkiaScroll.SetHeader(DrawnUi.Draw.SkiaControl)
   id: SetHeader(DrawnUi.Draw.SkiaControl)
@@ -6314,7 +6389,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetHeader
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2904
+    startLine: 2947
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6343,7 +6418,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetFooter
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2922
+    startLine: 2965
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6372,7 +6447,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollingSpeedMsProperty
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2941
+    startLine: 2984
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6399,7 +6474,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollingSpeedMs
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2950
+    startLine: 2993
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6430,7 +6505,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomLockedProperty
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2956
+    startLine: 2999
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6457,7 +6532,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomLocked
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2961
+    startLine: 3004
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6486,7 +6561,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomMinProperty
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2967
+    startLine: 3010
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6513,7 +6588,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomMin
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2972
+    startLine: 3015
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6542,7 +6617,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomMaxProperty
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2978
+    startLine: 3021
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6569,7 +6644,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomMax
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2983
+    startLine: 3026
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6598,7 +6673,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ViewportZoomProperty
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2989
+    startLine: 3032
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6625,7 +6700,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ViewportZoom
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 2994
+    startLine: 3037
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6654,7 +6729,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: VelocityImageLoaderLockProperty
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3000
+    startLine: 3043
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6681,7 +6756,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: VelocityImageLoaderLock
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3009
+    startLine: 3052
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6712,7 +6787,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ContentProperty
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3053
+    startLine: 3096
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6739,7 +6814,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Content
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3067
+    startLine: 3110
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6771,7 +6846,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OrientationProperty
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3073
+    startLine: 3116
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6798,7 +6873,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Orientation
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3081
+    startLine: 3124
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6829,7 +6904,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollTypeProperty
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3087
+    startLine: 3130
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6856,7 +6931,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollType
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3095
+    startLine: 3138
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6869,67 +6944,6 @@ items:
       type: DrawnUi.Draw.ViewportScrollType
     content.vb: Public Property ScrollType As ViewportScrollType
   overload: DrawnUi.Draw.SkiaScroll.ScrollType*
-- uid: DrawnUi.Draw.SkiaScroll.VirtualisationProperty
-  commentId: F:DrawnUi.Draw.SkiaScroll.VirtualisationProperty
-  id: VirtualisationProperty
-  parent: DrawnUi.Draw.SkiaScroll
-  langs:
-  - csharp
-  - vb
-  name: VirtualisationProperty
-  nameWithType: SkiaScroll.VirtualisationProperty
-  fullName: DrawnUi.Draw.SkiaScroll.VirtualisationProperty
-  type: Field
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-      branch: 2-A
-      repo: https://github.com/taublast/DrawnUi.git
-    id: VirtualisationProperty
-    path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3101
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public static readonly BindableProperty VirtualisationProperty
-    return:
-      type: Microsoft.Maui.Controls.BindableProperty
-    content.vb: Public Shared ReadOnly VirtualisationProperty As BindableProperty
-- uid: DrawnUi.Draw.SkiaScroll.Virtualisation
-  commentId: P:DrawnUi.Draw.SkiaScroll.Virtualisation
-  id: Virtualisation
-  parent: DrawnUi.Draw.SkiaScroll
-  langs:
-  - csharp
-  - vb
-  name: Virtualisation
-  nameWithType: SkiaScroll.Virtualisation
-  fullName: DrawnUi.Draw.SkiaScroll.Virtualisation
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-      branch: 2-A
-      repo: https://github.com/taublast/DrawnUi.git
-    id: Virtualisation
-    path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3112
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: >-
-    Default is true, children get the visible viewport area for rendering and can virtualize.
-
-    If set to false children get the full content area for rendering and draw all at once.
-  example: []
-  syntax:
-    content: public VirtualisationType Virtualisation { get; set; }
-    parameters: []
-    return:
-      type: DrawnUi.Draw.VirtualisationType
-    content.vb: Public Property Virtualisation As VirtualisationType
-  overload: DrawnUi.Draw.SkiaScroll.Virtualisation*
 - uid: DrawnUi.Draw.SkiaScroll.AdaptToKeyboardForProperty
   commentId: F:DrawnUi.Draw.SkiaScroll.AdaptToKeyboardForProperty
   id: AdaptToKeyboardForProperty
@@ -6948,7 +6962,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdaptToKeyboardForProperty
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3124
+    startLine: 3148
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6975,7 +6989,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdaptToKeyboardFor
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3130
+    startLine: 3154
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7004,7 +7018,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdaptToKeyboardSizeProperty
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3136
+    startLine: 3160
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7031,7 +7045,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdaptToKeyboardSize
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3142
+    startLine: 3166
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7060,7 +7074,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateNeededScrollForKeyboard
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3159
+    startLine: 3183
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7086,7 +7100,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdaptToKeyboard
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3189
+    startLine: 3213
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7112,7 +7126,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPropertyChanged
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3206
+    startLine: 3230
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7148,7 +7162,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateViewport
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3217
+    startLine: 3241
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7177,7 +7191,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: WillClipBounds
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3225
+    startLine: 3249
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7209,7 +7223,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDrawn
     path: ../src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3241
+    startLine: 3265
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11540,6 +11554,25 @@ references:
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutChanged
   - name: (
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
+  commentId: M:DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutPositionChanged
+  name: OnLayoutPositionChanged()
+  nameWithType: SkiaControl.OnLayoutPositionChanged()
+  fullName: DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
+    name: OnLayoutPositionChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutPositionChanged
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
+    name: OnLayoutPositionChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutPositionChanged
+  - name: (
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect)
   commentId: M:DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect)
   parent: DrawnUi.Draw.SkiaControl
@@ -11695,6 +11728,20 @@ references:
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetDensity
   - name: (
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.AutoCacheProperty
+  commentId: F:DrawnUi.Draw.SkiaControl.AutoCacheProperty
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AutoCacheProperty
+  name: AutoCacheProperty
+  nameWithType: SkiaControl.AutoCacheProperty
+  fullName: DrawnUi.Draw.SkiaControl.AutoCacheProperty
+- uid: DrawnUi.Draw.SkiaControl.AutoCache
+  commentId: P:DrawnUi.Draw.SkiaControl.AutoCache
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AutoCache
+  name: AutoCache
+  nameWithType: SkiaControl.AutoCache
+  fullName: DrawnUi.Draw.SkiaControl.AutoCache
 - uid: DrawnUi.Draw.SkiaControl.UseCacheProperty
   commentId: F:DrawnUi.Draw.SkiaControl.UseCacheProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -12921,6 +12968,13 @@ references:
     name: SkiaControl
     href: DrawnUi.Draw.SkiaControl.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.RenderingInvalidated
+  commentId: F:DrawnUi.Draw.SkiaControl.RenderingInvalidated
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RenderingInvalidated
+  name: RenderingInvalidated
+  nameWithType: SkiaControl.RenderingInvalidated
+  fullName: DrawnUi.Draw.SkiaControl.RenderingInvalidated
 - uid: DrawnUi.Draw.SkiaControl.DirtyChildrenTracker
   commentId: F:DrawnUi.Draw.SkiaControl.DirtyChildrenTracker
   parent: DrawnUi.Draw.SkiaControl
@@ -12935,6 +12989,20 @@ references:
   name: DirtyChildrenInternal
   nameWithType: SkiaControl.DirtyChildrenInternal
   fullName: DrawnUi.Draw.SkiaControl.DirtyChildrenInternal
+- uid: DrawnUi.Draw.SkiaControl.Initialized
+  commentId: E:DrawnUi.Draw.SkiaControl.Initialized
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Initialized
+  name: Initialized
+  nameWithType: SkiaControl.Initialized
+  fullName: DrawnUi.Draw.SkiaControl.Initialized
+- uid: DrawnUi.Draw.SkiaControl.Destroyed
+  commentId: E:DrawnUi.Draw.SkiaControl.Destroyed
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Destroyed
+  name: Destroyed
+  nameWithType: SkiaControl.Destroyed
+  fullName: DrawnUi.Draw.SkiaControl.Destroyed
 - uid: DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.SetHover(System.Boolean)
   parent: DrawnUi.Draw.SkiaControl
@@ -13126,6 +13194,34 @@ references:
   name: Children
   nameWithType: SkiaControl.Children
   fullName: DrawnUi.Draw.SkiaControl.Children
+- uid: DrawnUi.Draw.SkiaControl.VirtualizationProperty
+  commentId: F:DrawnUi.Draw.SkiaControl.VirtualizationProperty
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VirtualizationProperty
+  name: VirtualizationProperty
+  nameWithType: SkiaControl.VirtualizationProperty
+  fullName: DrawnUi.Draw.SkiaControl.VirtualizationProperty
+- uid: DrawnUi.Draw.SkiaControl.Virtualisation
+  commentId: P:DrawnUi.Draw.SkiaControl.Virtualisation
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Virtualisation
+  name: Virtualisation
+  nameWithType: SkiaControl.Virtualisation
+  fullName: DrawnUi.Draw.SkiaControl.Virtualisation
+- uid: DrawnUi.Draw.SkiaControl.VirtualisationInflatedProperty
+  commentId: F:DrawnUi.Draw.SkiaControl.VirtualisationInflatedProperty
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VirtualisationInflatedProperty
+  name: VirtualisationInflatedProperty
+  nameWithType: SkiaControl.VirtualisationInflatedProperty
+  fullName: DrawnUi.Draw.SkiaControl.VirtualisationInflatedProperty
+- uid: DrawnUi.Draw.SkiaControl.VirtualisationInflated
+  commentId: P:DrawnUi.Draw.SkiaControl.VirtualisationInflated
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VirtualisationInflated
+  name: VirtualisationInflated
+  nameWithType: SkiaControl.VirtualisationInflated
+  fullName: DrawnUi.Draw.SkiaControl.VirtualisationInflated
 - uid: DrawnUi.Draw.SkiaControl.DefaultBlendMode
   commentId: F:DrawnUi.Draw.SkiaControl.DefaultBlendMode
   parent: DrawnUi.Draw.SkiaControl
@@ -18235,25 +18331,6 @@ references:
   name: Disposing
   nameWithType: SkiaControl.Disposing
   fullName: DrawnUi.Draw.SkiaControl.Disposing
-- uid: DrawnUi.Draw.SkiaControl.OnLayoutReady
-  commentId: M:DrawnUi.Draw.SkiaControl.OnLayoutReady
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutReady
-  name: OnLayoutReady()
-  nameWithType: SkiaControl.OnLayoutReady()
-  fullName: DrawnUi.Draw.SkiaControl.OnLayoutReady()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.OnLayoutReady
-    name: OnLayoutReady
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutReady
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.OnLayoutReady
-    name: OnLayoutReady
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutReady
-  - name: (
-  - name: )
 - uid: DrawnUi.Draw.SkiaControl.IsLayoutReady
   commentId: P:DrawnUi.Draw.SkiaControl.IsLayoutReady
   parent: DrawnUi.Draw.SkiaControl
@@ -19851,6 +19928,38 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+  commentId: M:DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLifecycleStateChanged_DrawnUi_Draw_ControlLifecycleState_
+  name: OnLifecycleStateChanged(ControlLifecycleState)
+  nameWithType: SkiaControl.OnLifecycleStateChanged(ControlLifecycleState)
+  fullName: DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+    name: OnLifecycleStateChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLifecycleStateChanged_DrawnUi_Draw_ControlLifecycleState_
+  - name: (
+  - uid: DrawnUi.Draw.ControlLifecycleState
+    name: ControlLifecycleState
+    href: DrawnUi.Draw.ControlLifecycleState.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnLifecycleStateChanged(DrawnUi.Draw.ControlLifecycleState)
+    name: OnLifecycleStateChanged
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLifecycleStateChanged_DrawnUi_Draw_ControlLifecycleState_
+  - name: (
+  - uid: DrawnUi.Draw.ControlLifecycleState
+    name: ControlLifecycleState
+    href: DrawnUi.Draw.ControlLifecycleState.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.LifecycleState
+  commentId: P:DrawnUi.Draw.SkiaControl.LifecycleState
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_LifecycleState
+  name: LifecycleState
+  nameWithType: SkiaControl.LifecycleState
+  fullName: DrawnUi.Draw.SkiaControl.LifecycleState
 - uid: DrawnUi.Draw.SkiaControl.Dispose
   commentId: M:DrawnUi.Draw.SkiaControl.Dispose
   parent: DrawnUi.Draw.SkiaControl
@@ -20272,6 +20381,13 @@ references:
     name: DrawingContext
     href: DrawnUi.Draw.DrawingContext.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.RenderCount
+  commentId: F:DrawnUi.Draw.SkiaControl.RenderCount
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RenderCount
+  name: RenderCount
+  nameWithType: SkiaControl.RenderCount
+  fullName: DrawnUi.Draw.SkiaControl.RenderCount
 - uid: DrawnUi.Draw.SkiaControl.Rendered
   commentId: E:DrawnUi.Draw.SkiaControl.Rendered
   parent: DrawnUi.Draw.SkiaControl
@@ -20914,6 +21030,34 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.int64
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
+  commentId: M:DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostDrawAction_System_Action_
+  name: PostDrawAction(Action)
+  nameWithType: SkiaControl.PostDrawAction(Action)
+  fullName: DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
+    name: PostDrawAction
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostDrawAction_System_Action_
+  - name: (
+  - uid: System.Action
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
+    name: PostDrawAction
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostDrawAction_System_Action_
+  - name: (
+  - uid: System.Action
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.NeedRemeasuring
   commentId: F:DrawnUi.Draw.SkiaControl.NeedRemeasuring
   parent: DrawnUi.Draw.SkiaControl
@@ -21306,6 +21450,13 @@ references:
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateInternal
   - name: (
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.UpdatedRendering
+  commentId: F:DrawnUi.Draw.SkiaControl.UpdatedRendering
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdatedRendering
+  name: UpdatedRendering
+  nameWithType: SkiaControl.UpdatedRendering
+  fullName: DrawnUi.Draw.SkiaControl.UpdatedRendering
 - uid: DrawnUi.Draw.SkiaControl.Update
   commentId: M:DrawnUi.Draw.SkiaControl.Update
   parent: DrawnUi.Draw.SkiaControl
@@ -29619,99 +29770,6 @@ references:
   - name: (
   - name: )
   - name: )
-- uid: DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(System.Action{DrawnUi.Draw.SkiaScroll,System.Object},System.String[])
-  commentId: M:DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-  parent: DrawnUi.Draw.FluentExtensions
-  definition: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  name: OnBindingContextSet<SkiaScroll>(SkiaScroll, Action<SkiaScroll, object>, string[])
-  nameWithType: FluentExtensions.OnBindingContextSet<SkiaScroll>(SkiaScroll, Action<SkiaScroll, object>, string[])
-  fullName: DrawnUi.Draw.FluentExtensions.OnBindingContextSet<DrawnUi.Draw.SkiaScroll>(DrawnUi.Draw.SkiaScroll, System.Action<DrawnUi.Draw.SkiaScroll, object>, string[])
-  nameWithType.vb: FluentExtensions.OnBindingContextSet(Of SkiaScroll)(SkiaScroll, Action(Of SkiaScroll, Object), String())
-  fullName.vb: DrawnUi.Draw.FluentExtensions.OnBindingContextSet(Of DrawnUi.Draw.SkiaScroll)(DrawnUi.Draw.SkiaScroll, System.Action(Of DrawnUi.Draw.SkiaScroll, Object), String())
-  name.vb: OnBindingContextSet(Of SkiaScroll)(SkiaScroll, Action(Of SkiaScroll, Object), String())
-  spec.csharp:
-  - uid: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(DrawnUi.Draw.SkiaScroll,System.Action{DrawnUi.Draw.SkiaScroll,System.Object},System.String[])
-    name: OnBindingContextSet
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  - name: <
-  - uid: DrawnUi.Draw.SkiaScroll
-    name: SkiaScroll
-    href: DrawnUi.Draw.SkiaScroll.html
-  - name: '>'
-  - name: (
-  - uid: DrawnUi.Draw.SkiaScroll
-    name: SkiaScroll
-    href: DrawnUi.Draw.SkiaScroll.html
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: <
-  - uid: DrawnUi.Draw.SkiaScroll
-    name: SkiaScroll
-    href: DrawnUi.Draw.SkiaScroll.html
-  - name: ','
-  - name: " "
-  - uid: System.Object
-    name: object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: '>'
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: string
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: '['
-  - name: ']'
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(DrawnUi.Draw.SkiaScroll,System.Action{DrawnUi.Draw.SkiaScroll,System.Object},System.String[])
-    name: OnBindingContextSet
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: DrawnUi.Draw.SkiaScroll
-    name: SkiaScroll
-    href: DrawnUi.Draw.SkiaScroll.html
-  - name: )
-  - name: (
-  - uid: DrawnUi.Draw.SkiaScroll
-    name: SkiaScroll
-    href: DrawnUi.Draw.SkiaScroll.html
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: DrawnUi.Draw.SkiaScroll
-    name: SkiaScroll
-    href: DrawnUi.Draw.SkiaScroll.html
-  - name: ','
-  - name: " "
-  - uid: System.Object
-    name: Object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: )
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: String
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: (
-  - name: )
-  - name: )
 - uid: DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.OnLongPressing``1(System.Action{DrawnUi.Draw.SkiaScroll})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnLongPressing``1(``0,System.Action{``0})
   parent: DrawnUi.Draw.FluentExtensions
@@ -29775,81 +29833,6 @@ references:
   - uid: DrawnUi.Draw.SkiaScroll
     name: SkiaScroll
     href: DrawnUi.Draw.SkiaScroll.html
-  - name: )
-  - name: )
-- uid: DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.OnPaint``1(System.Action{DrawnUi.Draw.SkiaScroll,DrawnUi.Draw.DrawingContext})
-  commentId: M:DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-  parent: DrawnUi.Draw.FluentExtensions
-  definition: DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  name: OnPaint<SkiaScroll>(SkiaScroll, Action<SkiaScroll, DrawingContext>)
-  nameWithType: FluentExtensions.OnPaint<SkiaScroll>(SkiaScroll, Action<SkiaScroll, DrawingContext>)
-  fullName: DrawnUi.Draw.FluentExtensions.OnPaint<DrawnUi.Draw.SkiaScroll>(DrawnUi.Draw.SkiaScroll, System.Action<DrawnUi.Draw.SkiaScroll, DrawnUi.Draw.DrawingContext>)
-  nameWithType.vb: FluentExtensions.OnPaint(Of SkiaScroll)(SkiaScroll, Action(Of SkiaScroll, DrawingContext))
-  fullName.vb: DrawnUi.Draw.FluentExtensions.OnPaint(Of DrawnUi.Draw.SkiaScroll)(DrawnUi.Draw.SkiaScroll, System.Action(Of DrawnUi.Draw.SkiaScroll, DrawnUi.Draw.DrawingContext))
-  name.vb: OnPaint(Of SkiaScroll)(SkiaScroll, Action(Of SkiaScroll, DrawingContext))
-  spec.csharp:
-  - uid: DrawnUi.Draw.FluentExtensions.OnPaint``1(DrawnUi.Draw.SkiaScroll,System.Action{DrawnUi.Draw.SkiaScroll,DrawnUi.Draw.DrawingContext})
-    name: OnPaint
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  - name: <
-  - uid: DrawnUi.Draw.SkiaScroll
-    name: SkiaScroll
-    href: DrawnUi.Draw.SkiaScroll.html
-  - name: '>'
-  - name: (
-  - uid: DrawnUi.Draw.SkiaScroll
-    name: SkiaScroll
-    href: DrawnUi.Draw.SkiaScroll.html
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: <
-  - uid: DrawnUi.Draw.SkiaScroll
-    name: SkiaScroll
-    href: DrawnUi.Draw.SkiaScroll.html
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
-  - name: '>'
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.FluentExtensions.OnPaint``1(DrawnUi.Draw.SkiaScroll,System.Action{DrawnUi.Draw.SkiaScroll,DrawnUi.Draw.DrawingContext})
-    name: OnPaint
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: DrawnUi.Draw.SkiaScroll
-    name: SkiaScroll
-    href: DrawnUi.Draw.SkiaScroll.html
-  - name: )
-  - name: (
-  - uid: DrawnUi.Draw.SkiaScroll
-    name: SkiaScroll
-    href: DrawnUi.Draw.SkiaScroll.html
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: DrawnUi.Draw.SkiaScroll
-    name: SkiaScroll
-    href: DrawnUi.Draw.SkiaScroll.html
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
   - name: )
   - name: )
 - uid: DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.OnTapped``1(System.Action{DrawnUi.Draw.SkiaScroll,DrawnUi.Draw.ControlTappedEventArgs})
@@ -30227,6 +30210,174 @@ references:
   - uid: DrawnUi.Draw.SkiaScroll
     name: SkiaScroll
     href: DrawnUi.Draw.SkiaScroll.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(System.Action{DrawnUi.Draw.SkiaScroll,System.Object},System.String[])
+  commentId: M:DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  name: WhenBindingContextSet<SkiaScroll>(SkiaScroll, Action<SkiaScroll, object>, string[])
+  nameWithType: FluentExtensions.WhenBindingContextSet<SkiaScroll>(SkiaScroll, Action<SkiaScroll, object>, string[])
+  fullName: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet<DrawnUi.Draw.SkiaScroll>(DrawnUi.Draw.SkiaScroll, System.Action<DrawnUi.Draw.SkiaScroll, object>, string[])
+  nameWithType.vb: FluentExtensions.WhenBindingContextSet(Of SkiaScroll)(SkiaScroll, Action(Of SkiaScroll, Object), String())
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet(Of DrawnUi.Draw.SkiaScroll)(DrawnUi.Draw.SkiaScroll, System.Action(Of DrawnUi.Draw.SkiaScroll, Object), String())
+  name.vb: WhenBindingContextSet(Of SkiaScroll)(SkiaScroll, Action(Of SkiaScroll, Object), String())
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(DrawnUi.Draw.SkiaScroll,System.Action{DrawnUi.Draw.SkiaScroll,System.Object},System.String[])
+    name: WhenBindingContextSet
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  - name: <
+  - uid: DrawnUi.Draw.SkiaScroll
+    name: SkiaScroll
+    href: DrawnUi.Draw.SkiaScroll.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.SkiaScroll
+    name: SkiaScroll
+    href: DrawnUi.Draw.SkiaScroll.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - uid: DrawnUi.Draw.SkiaScroll
+    name: SkiaScroll
+    href: DrawnUi.Draw.SkiaScroll.html
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(DrawnUi.Draw.SkiaScroll,System.Action{DrawnUi.Draw.SkiaScroll,System.Object},System.String[])
+    name: WhenBindingContextSet
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaScroll
+    name: SkiaScroll
+    href: DrawnUi.Draw.SkiaScroll.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.SkiaScroll
+    name: SkiaScroll
+    href: DrawnUi.Draw.SkiaScroll.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaScroll
+    name: SkiaScroll
+    href: DrawnUi.Draw.SkiaScroll.html
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.WhenPaint``1(System.Action{DrawnUi.Draw.SkiaScroll,DrawnUi.Draw.DrawingContext})
+  commentId: M:DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  name: WhenPaint<SkiaScroll>(SkiaScroll, Action<SkiaScroll, DrawingContext>)
+  nameWithType: FluentExtensions.WhenPaint<SkiaScroll>(SkiaScroll, Action<SkiaScroll, DrawingContext>)
+  fullName: DrawnUi.Draw.FluentExtensions.WhenPaint<DrawnUi.Draw.SkiaScroll>(DrawnUi.Draw.SkiaScroll, System.Action<DrawnUi.Draw.SkiaScroll, DrawnUi.Draw.DrawingContext>)
+  nameWithType.vb: FluentExtensions.WhenPaint(Of SkiaScroll)(SkiaScroll, Action(Of SkiaScroll, DrawingContext))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WhenPaint(Of DrawnUi.Draw.SkiaScroll)(DrawnUi.Draw.SkiaScroll, System.Action(Of DrawnUi.Draw.SkiaScroll, DrawnUi.Draw.DrawingContext))
+  name.vb: WhenPaint(Of SkiaScroll)(SkiaScroll, Action(Of SkiaScroll, DrawingContext))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenPaint``1(DrawnUi.Draw.SkiaScroll,System.Action{DrawnUi.Draw.SkiaScroll,DrawnUi.Draw.DrawingContext})
+    name: WhenPaint
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  - name: <
+  - uid: DrawnUi.Draw.SkiaScroll
+    name: SkiaScroll
+    href: DrawnUi.Draw.SkiaScroll.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.SkiaScroll
+    name: SkiaScroll
+    href: DrawnUi.Draw.SkiaScroll.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - uid: DrawnUi.Draw.SkiaScroll
+    name: SkiaScroll
+    href: DrawnUi.Draw.SkiaScroll.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenPaint``1(DrawnUi.Draw.SkiaScroll,System.Action{DrawnUi.Draw.SkiaScroll,DrawnUi.Draw.DrawingContext})
+    name: WhenPaint
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaScroll
+    name: SkiaScroll
+    href: DrawnUi.Draw.SkiaScroll.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.SkiaScroll
+    name: SkiaScroll
+    href: DrawnUi.Draw.SkiaScroll.html
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaScroll
+    name: SkiaScroll
+    href: DrawnUi.Draw.SkiaScroll.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
   - name: )
 - uid: DrawnUi.Draw.SkiaScroll.DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(Microsoft.Maui.Graphics.Color)
   commentId: M:DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(``0,Microsoft.Maui.Graphics.Color)
@@ -34675,86 +34826,6 @@ references:
   - name: (
   - name: )
   - name: )
-- uid: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-  commentId: M:DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-  isExternal: true
-  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  name: OnBindingContextSet<T>(T, Action<T, object>, string[])
-  nameWithType: FluentExtensions.OnBindingContextSet<T>(T, Action<T, object>, string[])
-  fullName: DrawnUi.Draw.FluentExtensions.OnBindingContextSet<T>(T, System.Action<T, object>, string[])
-  nameWithType.vb: FluentExtensions.OnBindingContextSet(Of T)(T, Action(Of T, Object), String())
-  fullName.vb: DrawnUi.Draw.FluentExtensions.OnBindingContextSet(Of T)(T, System.Action(Of T, Object), String())
-  name.vb: OnBindingContextSet(Of T)(T, Action(Of T, Object), String())
-  spec.csharp:
-  - uid: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-    name: OnBindingContextSet
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  - name: <
-  - name: T
-  - name: '>'
-  - name: (
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: <
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Object
-    name: object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: '>'
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: string
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: '['
-  - name: ']'
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.FluentExtensions.OnBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
-    name: OnBindingContextSet
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnBindingContextSet__1___0_System_Action___0_System_Object__System_String___
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
-  - name: )
-  - name: (
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Object
-    name: Object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: )
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: String
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: (
-  - name: )
-  - name: )
 - uid: DrawnUi.Draw.FluentExtensions.OnLongPressing``1(``0,System.Action{``0})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnLongPressing``1(``0,System.Action{``0})
   isExternal: true
@@ -34805,68 +34876,6 @@ references:
   - name: Of
   - name: " "
   - name: T
-  - name: )
-  - name: )
-- uid: DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-  commentId: M:DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-  isExternal: true
-  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  name: OnPaint<T>(T, Action<T, DrawingContext>)
-  nameWithType: FluentExtensions.OnPaint<T>(T, Action<T, DrawingContext>)
-  fullName: DrawnUi.Draw.FluentExtensions.OnPaint<T>(T, System.Action<T, DrawnUi.Draw.DrawingContext>)
-  nameWithType.vb: FluentExtensions.OnPaint(Of T)(T, Action(Of T, DrawingContext))
-  fullName.vb: DrawnUi.Draw.FluentExtensions.OnPaint(Of T)(T, System.Action(Of T, DrawnUi.Draw.DrawingContext))
-  name.vb: OnPaint(Of T)(T, Action(Of T, DrawingContext))
-  spec.csharp:
-  - uid: DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-    name: OnPaint
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  - name: <
-  - name: T
-  - name: '>'
-  - name: (
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: <
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
-  - name: '>'
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.FluentExtensions.OnPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
-    name: OnPaint
-    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
-  - name: )
-  - name: (
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: System.Action`2
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-2
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
-  - name: ','
-  - name: " "
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
   - name: )
   - name: )
 - uid: DrawnUi.Draw.FluentExtensions.OnTapped``1(``0,System.Action{``0,DrawnUi.Draw.ControlTappedEventArgs})
@@ -35180,6 +35189,148 @@ references:
   - name: )
   - name: (
   - name: T
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+  commentId: M:DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  name: WhenBindingContextSet<T>(T, Action<T, object>, string[])
+  nameWithType: FluentExtensions.WhenBindingContextSet<T>(T, Action<T, object>, string[])
+  fullName: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet<T>(T, System.Action<T, object>, string[])
+  nameWithType.vb: FluentExtensions.WhenBindingContextSet(Of T)(T, Action(Of T, Object), String())
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet(Of T)(T, System.Action(Of T, Object), String())
+  name.vb: WhenBindingContextSet(Of T)(T, Action(Of T, Object), String())
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+    name: WhenBindingContextSet
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenBindingContextSet``1(``0,System.Action{``0,System.Object},System.String[])
+    name: WhenBindingContextSet
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenBindingContextSet__1___0_System_Action___0_System_Object__System_String___
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+  commentId: M:DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  name: WhenPaint<T>(T, Action<T, DrawingContext>)
+  nameWithType: FluentExtensions.WhenPaint<T>(T, Action<T, DrawingContext>)
+  fullName: DrawnUi.Draw.FluentExtensions.WhenPaint<T>(T, System.Action<T, DrawnUi.Draw.DrawingContext>)
+  nameWithType.vb: FluentExtensions.WhenPaint(Of T)(T, Action(Of T, DrawingContext))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WhenPaint(Of T)(T, System.Action(Of T, DrawnUi.Draw.DrawingContext))
+  name.vb: WhenPaint(Of T)(T, Action(Of T, DrawingContext))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+    name: WhenPaint
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WhenPaint``1(``0,System.Action{``0,DrawnUi.Draw.DrawingContext})
+    name: WhenPaint
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WhenPaint__1___0_System_Action___0_DrawnUi_Draw_DrawingContext__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
   - name: )
 - uid: DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(``0,Microsoft.Maui.Graphics.Color)
   commentId: M:DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(``0,Microsoft.Maui.Graphics.Color)
@@ -37815,6 +37966,12 @@ references:
   name: OnScrollCompleted
   nameWithType: SkiaScroll.OnScrollCompleted
   fullName: DrawnUi.Draw.SkiaScroll.OnScrollCompleted
+- uid: DrawnUi.Draw.SkiaScroll.OnScrollingStateChanged*
+  commentId: Overload:DrawnUi.Draw.SkiaScroll.OnScrollingStateChanged
+  href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_OnScrollingStateChanged_System_Boolean_
+  name: OnScrollingStateChanged
+  nameWithType: SkiaScroll.OnScrollingStateChanged
+  fullName: DrawnUi.Draw.SkiaScroll.OnScrollingStateChanged
 - uid: DrawnUi.Draw.SkiaScroll.IsScrolling*
   commentId: Overload:DrawnUi.Draw.SkiaScroll.IsScrolling
   href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_IsScrolling
@@ -38154,6 +38311,31 @@ references:
   name: SetContent
   nameWithType: SkiaScroll.SetContent
   fullName: DrawnUi.Draw.SkiaScroll.SetContent
+- uid: DrawnUi.Draw.SkiaControl.OnLayoutReady
+  commentId: M:DrawnUi.Draw.SkiaControl.OnLayoutReady
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutReady
+  name: OnLayoutReady()
+  nameWithType: SkiaControl.OnLayoutReady()
+  fullName: DrawnUi.Draw.SkiaControl.OnLayoutReady()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnLayoutReady
+    name: OnLayoutReady
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutReady
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnLayoutReady
+    name: OnLayoutReady
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutReady
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaScroll.OnLayoutReady*
+  commentId: Overload:DrawnUi.Draw.SkiaScroll.OnLayoutReady
+  href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_OnLayoutReady
+  name: OnLayoutReady
+  nameWithType: SkiaScroll.OnLayoutReady
+  fullName: DrawnUi.Draw.SkiaScroll.OnLayoutReady
 - uid: DrawnUi.Draw.SkiaScroll.SetHeader*
   commentId: Overload:DrawnUi.Draw.SkiaScroll.SetHeader
   href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_SetHeader_DrawnUi_Draw_SkiaControl_
@@ -38242,19 +38424,6 @@ references:
   name: ViewportScrollType
   nameWithType: ViewportScrollType
   fullName: DrawnUi.Draw.ViewportScrollType
-- uid: DrawnUi.Draw.SkiaScroll.Virtualisation*
-  commentId: Overload:DrawnUi.Draw.SkiaScroll.Virtualisation
-  href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_Virtualisation
-  name: Virtualisation
-  nameWithType: SkiaScroll.Virtualisation
-  fullName: DrawnUi.Draw.SkiaScroll.Virtualisation
-- uid: DrawnUi.Draw.VirtualisationType
-  commentId: T:DrawnUi.Draw.VirtualisationType
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.VirtualisationType.html
-  name: VirtualisationType
-  nameWithType: VirtualisationType
-  fullName: DrawnUi.Draw.VirtualisationType
 - uid: DrawnUi.Draw.SkiaScroll.AdaptToKeyboardFor*
   commentId: Overload:DrawnUi.Draw.SkiaScroll.AdaptToKeyboardFor
   href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_AdaptToKeyboardFor

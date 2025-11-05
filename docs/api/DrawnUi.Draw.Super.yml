@@ -14,6 +14,9 @@ items:
   - DrawnUi.Draw.Super.ColorAccent
   - DrawnUi.Draw.Super.ColorPrimary
   - DrawnUi.Draw.Super.CreateHttpClient
+  - DrawnUi.Draw.Super.DeviceOrientation
+  - DrawnUi.Draw.Super.DeviceRotation
+  - DrawnUi.Draw.Super.DeviceRotationSnap
   - DrawnUi.Draw.Super.DisplayException(Microsoft.Maui.Controls.VisualElement,System.Exception)
   - DrawnUi.Draw.Super.EnableRendering
   - DrawnUi.Draw.Super.EnqueueBackgroundTask(System.Func{System.Threading.Tasks.Task})
@@ -46,9 +49,11 @@ items:
   - DrawnUi.Draw.Super.OnNativeAppResumed
   - DrawnUi.Draw.Super.OnWentBackground
   - DrawnUi.Draw.Super.OnWentForeground
+  - DrawnUi.Draw.Super.OrientationChanged
   - DrawnUi.Draw.Super.PreloadRegisteredFonts
   - DrawnUi.Draw.Super.ProcessBackgroundQueue
   - DrawnUi.Draw.Super.ResizeWindow(Microsoft.Maui.Controls.Window,System.Int32,System.Int32,System.Boolean)
+  - DrawnUi.Draw.Super.RotationChanged
   - DrawnUi.Draw.Super.RunOnMainThreadAndWait(System.Action,System.Threading.CancellationToken)
   - DrawnUi.Draw.Super.RunOnMainThreadAndWaitAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)
   - DrawnUi.Draw.Super.Screen
@@ -301,7 +306,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Log
     path: ../src/Maui/DrawnUi/Super.Maui.cs
-    startLine: 156
+    startLine: 155
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -339,7 +344,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Services
     path: ../src/Maui/DrawnUi/Super.Maui.cs
-    startLine: 162
+    startLine: 161
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -368,7 +373,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AppContext
     path: ../src/Maui/DrawnUi/Super.Maui.cs
-    startLine: 184
+    startLine: 183
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -397,7 +402,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ResizeWindow
     path: ../src/Maui/DrawnUi/Super.Maui.cs
-    startLine: 219
+    startLine: 218
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1730,7 +1735,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EnqueueBackgroundTask
     path: ../src/Shared/Super.cs
-    startLine: 419
+    startLine: 421
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1762,7 +1767,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessBackgroundQueue
     path: ../src/Shared/Super.cs
-    startLine: 424
+    startLine: 426
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1772,6 +1777,149 @@ items:
       type: System.Threading.Tasks.Task
     content.vb: Protected Shared Function ProcessBackgroundQueue() As Task
   overload: DrawnUi.Draw.Super.ProcessBackgroundQueue*
+- uid: DrawnUi.Draw.Super.RotationChanged
+  commentId: E:DrawnUi.Draw.Super.RotationChanged
+  id: RotationChanged
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: RotationChanged
+  nameWithType: Super.RotationChanged
+  fullName: DrawnUi.Draw.Super.RotationChanged
+  type: Event
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RotationChanged
+    path: ../src/Shared/Super.cs
+    startLine: 446
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static event EventHandler<int> RotationChanged
+    return:
+      type: System.EventHandler{System.Int32}
+    content.vb: Public Shared Event RotationChanged As EventHandler(Of Integer)
+- uid: DrawnUi.Draw.Super.DeviceRotation
+  commentId: P:DrawnUi.Draw.Super.DeviceRotation
+  id: DeviceRotation
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: DeviceRotation
+  nameWithType: Super.DeviceRotation
+  fullName: DrawnUi.Draw.Super.DeviceRotation
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DeviceRotation
+    path: ../src/Shared/Super.cs
+    startLine: 451
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Degrees
+  example: []
+  syntax:
+    content: public static int DeviceRotation { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Shared Property DeviceRotation As Integer
+  overload: DrawnUi.Draw.Super.DeviceRotation*
+- uid: DrawnUi.Draw.Super.OrientationChanged
+  commentId: E:DrawnUi.Draw.Super.OrientationChanged
+  id: OrientationChanged
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: OrientationChanged
+  nameWithType: Super.OrientationChanged
+  fullName: DrawnUi.Draw.Super.OrientationChanged
+  type: Event
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OrientationChanged
+    path: ../src/Shared/Super.cs
+    startLine: 464
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static event EventHandler<DeviceOrientation> OrientationChanged
+    return:
+      type: System.EventHandler{DrawnUi.Draw.DeviceOrientation}
+    content.vb: Public Shared Event OrientationChanged As EventHandler(Of DeviceOrientation)
+- uid: DrawnUi.Draw.Super.DeviceOrientation
+  commentId: P:DrawnUi.Draw.Super.DeviceOrientation
+  id: DeviceOrientation
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: DeviceOrientation
+  nameWithType: Super.DeviceOrientation
+  fullName: DrawnUi.Draw.Super.DeviceOrientation
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DeviceOrientation
+    path: ../src/Shared/Super.cs
+    startLine: 466
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static DeviceOrientation DeviceOrientation { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.DeviceOrientation
+    content.vb: Public Shared Property DeviceOrientation As DeviceOrientation
+  overload: DrawnUi.Draw.Super.DeviceOrientation*
+- uid: DrawnUi.Draw.Super.DeviceRotationSnap
+  commentId: P:DrawnUi.Draw.Super.DeviceRotationSnap
+  id: DeviceRotationSnap
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: DeviceRotationSnap
+  nameWithType: Super.DeviceRotationSnap
+  fullName: DrawnUi.Draw.Super.DeviceRotationSnap
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DeviceRotationSnap
+    path: ../src/Shared/Super.cs
+    startLine: 480
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static int DeviceRotationSnap { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Shared ReadOnly Property DeviceRotationSnap As Integer
+  overload: DrawnUi.Draw.Super.DeviceRotationSnap*
 references:
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
@@ -2956,3 +3104,124 @@ references:
   name: ProcessBackgroundQueue
   nameWithType: Super.ProcessBackgroundQueue
   fullName: DrawnUi.Draw.Super.ProcessBackgroundQueue
+- uid: System.EventHandler{System.Int32}
+  commentId: T:System.EventHandler{System.Int32}
+  parent: System
+  definition: System.EventHandler`1
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  name: EventHandler<int>
+  nameWithType: EventHandler<int>
+  fullName: System.EventHandler<int>
+  nameWithType.vb: EventHandler(Of Integer)
+  fullName.vb: System.EventHandler(Of Integer)
+  name.vb: EventHandler(Of Integer)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.EventHandler`1
+  commentId: T:System.EventHandler`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  name: EventHandler<TEventArgs>
+  nameWithType: EventHandler<TEventArgs>
+  fullName: System.EventHandler<TEventArgs>
+  nameWithType.vb: EventHandler(Of TEventArgs)
+  fullName.vb: System.EventHandler(Of TEventArgs)
+  name.vb: EventHandler(Of TEventArgs)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: <
+  - name: TEventArgs
+  - name: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TEventArgs
+  - name: )
+- uid: DrawnUi.Draw.Super.DeviceRotation*
+  commentId: Overload:DrawnUi.Draw.Super.DeviceRotation
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_DeviceRotation
+  name: DeviceRotation
+  nameWithType: Super.DeviceRotation
+  fullName: DrawnUi.Draw.Super.DeviceRotation
+- uid: System.EventHandler{DrawnUi.Draw.DeviceOrientation}
+  commentId: T:System.EventHandler{DrawnUi.Draw.DeviceOrientation}
+  parent: System
+  definition: System.EventHandler`1
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  name: EventHandler<DeviceOrientation>
+  nameWithType: EventHandler<DeviceOrientation>
+  fullName: System.EventHandler<DrawnUi.Draw.DeviceOrientation>
+  nameWithType.vb: EventHandler(Of DeviceOrientation)
+  fullName.vb: System.EventHandler(Of DrawnUi.Draw.DeviceOrientation)
+  name.vb: EventHandler(Of DeviceOrientation)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: <
+  - uid: DrawnUi.Draw.DeviceOrientation
+    name: DeviceOrientation
+    href: DrawnUi.Draw.DeviceOrientation.html
+  - name: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.DeviceOrientation
+    name: DeviceOrientation
+    href: DrawnUi.Draw.DeviceOrientation.html
+  - name: )
+- uid: DrawnUi.Draw.Super.DeviceOrientation*
+  commentId: Overload:DrawnUi.Draw.Super.DeviceOrientation
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_DeviceOrientation
+  name: DeviceOrientation
+  nameWithType: Super.DeviceOrientation
+  fullName: DrawnUi.Draw.Super.DeviceOrientation
+- uid: DrawnUi.Draw.DeviceOrientation
+  commentId: T:DrawnUi.Draw.DeviceOrientation
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.DeviceOrientation.html
+  name: DeviceOrientation
+  nameWithType: DeviceOrientation
+  fullName: DrawnUi.Draw.DeviceOrientation
+- uid: DrawnUi.Draw.Super.DeviceRotationSnap*
+  commentId: Overload:DrawnUi.Draw.Super.DeviceRotationSnap
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_DeviceRotationSnap
+  name: DeviceRotationSnap
+  nameWithType: Super.DeviceRotationSnap
+  fullName: DrawnUi.Draw.Super.DeviceRotationSnap

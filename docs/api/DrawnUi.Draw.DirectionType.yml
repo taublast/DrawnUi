@@ -17,11 +17,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/DirectionType.cs
+      path: src/Shared/Internals/Enums/DirectionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DirectionType
-    path: ../src/Shared/Draw/Internals/Enums/DirectionType.cs
+    path: ../src/Shared/Internals/Enums/DirectionType.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -44,11 +44,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/DirectionType.cs
+      path: src/Shared/Internals/Enums/DirectionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Horizontal
-    path: ../src/Shared/Draw/Internals/Enums/DirectionType.cs
+    path: ../src/Shared/Internals/Enums/DirectionType.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -70,11 +70,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/DirectionType.cs
+      path: src/Shared/Internals/Enums/DirectionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Vertical
-    path: ../src/Shared/Draw/Internals/Enums/DirectionType.cs
+    path: ../src/Shared/Internals/Enums/DirectionType.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -96,11 +96,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/DirectionType.cs
+      path: src/Shared/Internals/Enums/DirectionType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: None
-    path: ../src/Shared/Draw/Internals/Enums/DirectionType.cs
+    path: ../src/Shared/Internals/Enums/DirectionType.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui

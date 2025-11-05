@@ -33,11 +33,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Vector
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -70,11 +70,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Radians
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -104,11 +104,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -133,11 +133,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui
@@ -171,11 +171,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 31
   assemblies:
   - DrawnUi.Maui
@@ -205,11 +205,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: setComponents
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 40
   assemblies:
   - DrawnUi.Maui
@@ -239,11 +239,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: CrossProduct
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 49
   assemblies:
   - DrawnUi.Maui
@@ -272,11 +272,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Cross
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 54
   assemblies:
   - DrawnUi.Maui
@@ -303,11 +303,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: getXComp
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 59
   assemblies:
   - DrawnUi.Maui
@@ -331,11 +331,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: setXComp
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 64
   assemblies:
   - DrawnUi.Maui
@@ -363,11 +363,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: getYComp
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 72
   assemblies:
   - DrawnUi.Maui
@@ -391,11 +391,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: setYComp
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 77
   assemblies:
   - DrawnUi.Maui
@@ -423,11 +423,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: add
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 85
   assemblies:
   - DrawnUi.Maui
@@ -454,11 +454,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: mAdd
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 91
   assemblies:
   - DrawnUi.Maui
@@ -483,11 +483,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: setAngle
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 96
   assemblies:
   - DrawnUi.Maui
@@ -515,11 +515,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: setMagnitude
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 109
   assemblies:
   - DrawnUi.Maui
@@ -547,11 +547,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: getMagnitude
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 119
   assemblies:
   - DrawnUi.Maui
@@ -575,11 +575,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: mScale
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 129
   assemblies:
   - DrawnUi.Maui
@@ -607,11 +607,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: scale
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 134
   assemblies:
   - DrawnUi.Maui
@@ -641,11 +641,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/Vector.cs
+      path: src/Shared/Internals/Models/Vector.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: getAngle
-    path: ../src/Shared/Draw/Internals/Models/Vector.cs
+    path: ../src/Shared/Internals/Models/Vector.cs
     startLine: 139
   assemblies:
   - DrawnUi.Maui

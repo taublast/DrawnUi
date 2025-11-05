@@ -21,11 +21,11 @@ items:
   type: Struct
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledPoint.cs
+      path: src/Shared/Internals/Models/ScaledPoint.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ScaledPoint
-    path: ../src/Shared/Draw/Internals/Models/ScaledPoint.cs
+    path: ../src/Shared/Internals/Models/ScaledPoint.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -55,11 +55,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledPoint.cs
+      path: src/Shared/Internals/Models/ScaledPoint.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/ScaledPoint.cs
+    path: ../src/Shared/Internals/Models/ScaledPoint.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -84,11 +84,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledPoint.cs
+      path: src/Shared/Internals/Models/ScaledPoint.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Scale
-    path: ../src/Shared/Draw/Internals/Models/ScaledPoint.cs
+    path: ../src/Shared/Internals/Models/ScaledPoint.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -113,11 +113,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledPoint.cs
+      path: src/Shared/Internals/Models/ScaledPoint.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Units
-    path: ../src/Shared/Draw/Internals/Models/ScaledPoint.cs
+    path: ../src/Shared/Internals/Models/ScaledPoint.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui
@@ -142,11 +142,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledPoint.cs
+      path: src/Shared/Internals/Models/ScaledPoint.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Pixels
-    path: ../src/Shared/Draw/Internals/Models/ScaledPoint.cs
+    path: ../src/Shared/Internals/Models/ScaledPoint.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -171,11 +171,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledPoint.cs
+      path: src/Shared/Internals/Models/ScaledPoint.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FromUnits
-    path: ../src/Shared/Draw/Internals/Models/ScaledPoint.cs
+    path: ../src/Shared/Internals/Models/ScaledPoint.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui
@@ -211,11 +211,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledPoint.cs
+      path: src/Shared/Internals/Models/ScaledPoint.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FromPixels
-    path: ../src/Shared/Draw/Internals/Models/ScaledPoint.cs
+    path: ../src/Shared/Internals/Models/ScaledPoint.cs
     startLine: 47
   assemblies:
   - DrawnUi.Maui
@@ -247,11 +247,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledPoint.cs
+      path: src/Shared/Internals/Models/ScaledPoint.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FromPixels
-    path: ../src/Shared/Draw/Internals/Models/ScaledPoint.cs
+    path: ../src/Shared/Internals/Models/ScaledPoint.cs
     startLine: 52
   assemblies:
   - DrawnUi.Maui

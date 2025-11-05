@@ -15,11 +15,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ICanBeUpdated.cs
+      path: src/Shared/Internals/Interfaces/ICanBeUpdated.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ICanBeUpdated
-    path: ../src/Shared/Draw/Internals/Interfaces/ICanBeUpdated.cs
+    path: ../src/Shared/Internals/Interfaces/ICanBeUpdated.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -42,11 +42,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ICanBeUpdated.cs
+      path: src/Shared/Internals/Interfaces/ICanBeUpdated.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
-    path: ../src/Shared/Draw/Internals/Interfaces/ICanBeUpdated.cs
+    path: ../src/Shared/Internals/Interfaces/ICanBeUpdated.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui

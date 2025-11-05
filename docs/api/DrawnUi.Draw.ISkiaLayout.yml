@@ -17,11 +17,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaLayout.cs
+      path: src/Shared/Internals/Interfaces/ISkiaLayout.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaLayout
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaLayout.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaLayout.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -118,11 +118,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaLayout.cs
+      path: src/Shared/Internals/Interfaces/ISkiaLayout.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedAutoSize
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaLayout.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaLayout.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -147,11 +147,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaLayout.cs
+      path: src/Shared/Internals/Interfaces/ISkiaLayout.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedAutoHeight
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaLayout.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaLayout.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -176,11 +176,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaLayout.cs
+      path: src/Shared/Internals/Interfaces/ISkiaLayout.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedAutoWidth
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaLayout.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaLayout.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui

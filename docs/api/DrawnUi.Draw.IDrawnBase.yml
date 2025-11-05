@@ -56,11 +56,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IDrawnBase
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -88,11 +88,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawingRect
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -117,11 +117,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Tag
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -146,11 +146,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVisible
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -175,11 +175,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui
@@ -204,11 +204,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposing
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 16
   assemblies:
   - DrawnUi.Maui
@@ -233,11 +233,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVisibleInViewTree
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 18
   assemblies:
   - DrawnUi.Maui
@@ -261,11 +261,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOnScreenVisibleArea
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 28
   assemblies:
   - DrawnUi.Maui
@@ -303,11 +303,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Invalidate
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 33
   assemblies:
   - DrawnUi.Maui
@@ -331,11 +331,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateParents
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 38
   assemblies:
   - DrawnUi.Maui
@@ -359,11 +359,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ClipSmart
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 46
   assemblies:
   - DrawnUi.Maui
@@ -397,11 +397,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateClip
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 56
   assemblies:
   - DrawnUi.Maui
@@ -445,11 +445,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RegisterAnimator
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 58
   assemblies:
   - DrawnUi.Maui
@@ -476,11 +476,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: UnregisterAnimator
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 60
   assemblies:
   - DrawnUi.Maui
@@ -505,11 +505,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: UnregisterAllAnimatorsByType
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 62
   assemblies:
   - DrawnUi.Maui
@@ -536,11 +536,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RegisterGestureListener
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 64
   assemblies:
   - DrawnUi.Maui
@@ -565,11 +565,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: UnregisterGestureListener
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 66
   assemblies:
   - DrawnUi.Maui
@@ -594,11 +594,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: PostAnimators
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 71
   assemblies:
   - DrawnUi.Maui
@@ -625,11 +625,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Views
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 77
   assemblies:
   - DrawnUi.Maui
@@ -656,11 +656,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: AddSubView
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 83
   assemblies:
   - DrawnUi.Maui
@@ -688,11 +688,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RemoveSubView
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 90
   assemblies:
   - DrawnUi.Maui
@@ -723,11 +723,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuredSize
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 92
   assemblies:
   - DrawnUi.Maui
@@ -752,11 +752,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Destination
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 94
   assemblies:
   - DrawnUi.Maui
@@ -781,11 +781,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: HeightRequest
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 96
   assemblies:
   - DrawnUi.Maui
@@ -810,11 +810,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: WidthRequest
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 98
   assemblies:
   - DrawnUi.Maui
@@ -839,11 +839,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Height
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 100
   assemblies:
   - DrawnUi.Maui
@@ -868,11 +868,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 102
   assemblies:
   - DrawnUi.Maui
@@ -897,11 +897,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TranslationX
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 104
   assemblies:
   - DrawnUi.Maui
@@ -926,11 +926,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TranslationY
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 106
   assemblies:
   - DrawnUi.Maui
@@ -955,11 +955,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: InputTransparent
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 108
   assemblies:
   - DrawnUi.Maui
@@ -984,11 +984,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsClippedToBounds
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 110
   assemblies:
   - DrawnUi.Maui
@@ -1013,11 +1013,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ClipEffects
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 112
   assemblies:
   - DrawnUi.Maui
@@ -1042,11 +1042,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateLocks
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 114
   assemblies:
   - DrawnUi.Maui
@@ -1071,11 +1071,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateByChild
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 120
   assemblies:
   - DrawnUi.Maui
@@ -1103,11 +1103,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateByChild
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 126
   assemblies:
   - DrawnUi.Maui
@@ -1135,11 +1135,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ShouldInvalidateByChildren
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 128
   assemblies:
   - DrawnUi.Maui
@@ -1164,11 +1164,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderingScale
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 130
   assemblies:
   - DrawnUi.Maui
@@ -1193,11 +1193,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: X
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 132
   assemblies:
   - DrawnUi.Maui
@@ -1222,11 +1222,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Y
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 134
   assemblies:
   - DrawnUi.Maui
@@ -1251,11 +1251,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateViewport
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 136
   assemblies:
   - DrawnUi.Maui
@@ -1277,11 +1277,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Repaint
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 138
   assemblies:
   - DrawnUi.Maui
@@ -1303,11 +1303,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateViewsList
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 140
   assemblies:
   - DrawnUi.Maui
@@ -1329,11 +1329,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+      path: src/Shared/Internals/Interfaces/IDrawnBase.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeObject
-    path: ../src/Shared/Draw/Internals/Interfaces/IDrawnBase.cs
+    path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
     startLine: 142
   assemblies:
   - DrawnUi.Maui

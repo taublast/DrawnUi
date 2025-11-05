@@ -17,11 +17,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/OrderedIndex.cs
+      path: src/Shared/Internals/Models/OrderedIndex.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OrderedIndex
-    path: ../src/Shared/Draw/Internals/Models/OrderedIndex.cs
+    path: ../src/Shared/Internals/Models/OrderedIndex.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -56,11 +56,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/OrderedIndex.cs
+      path: src/Shared/Internals/Models/OrderedIndex.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/OrderedIndex.cs
+    path: ../src/Shared/Internals/Models/OrderedIndex.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -90,11 +90,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/OrderedIndex.cs
+      path: src/Shared/Internals/Models/OrderedIndex.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Index
-    path: ../src/Shared/Draw/Internals/Models/OrderedIndex.cs
+    path: ../src/Shared/Internals/Models/OrderedIndex.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -119,11 +119,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/OrderedIndex.cs
+      path: src/Shared/Internals/Models/OrderedIndex.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Animate
-    path: ../src/Shared/Draw/Internals/Models/OrderedIndex.cs
+    path: ../src/Shared/Internals/Models/OrderedIndex.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui

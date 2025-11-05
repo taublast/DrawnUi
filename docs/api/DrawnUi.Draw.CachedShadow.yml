@@ -18,11 +18,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/CachedShadow.cs
+      path: src/Shared/Internals/Models/CachedShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: CachedShadow
-    path: ../src/Shared/Draw/Internals/Models/CachedShadow.cs
+    path: ../src/Shared/Internals/Models/CachedShadow.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -57,11 +57,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/CachedShadow.cs
+      path: src/Shared/Internals/Models/CachedShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Shadow
-    path: ../src/Shared/Draw/Internals/Models/CachedShadow.cs
+    path: ../src/Shared/Internals/Models/CachedShadow.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -86,11 +86,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/CachedShadow.cs
+      path: src/Shared/Internals/Models/CachedShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Filter
-    path: ../src/Shared/Draw/Internals/Models/CachedShadow.cs
+    path: ../src/Shared/Internals/Models/CachedShadow.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -115,11 +115,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/CachedShadow.cs
+      path: src/Shared/Internals/Models/CachedShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Scale
-    path: ../src/Shared/Draw/Internals/Models/CachedShadow.cs
+    path: ../src/Shared/Internals/Models/CachedShadow.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -144,11 +144,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/CachedShadow.cs
+      path: src/Shared/Internals/Models/CachedShadow.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
-    path: ../src/Shared/Draw/Internals/Models/CachedShadow.cs
+    path: ../src/Shared/Internals/Models/CachedShadow.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui

@@ -16,11 +16,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ContentLoadedEventArgs.cs
+      path: src/Shared/Internals/Models/ContentLoadedEventArgs.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: BitmapLoadedEventArgs
-    path: ../src/Shared/Draw/Internals/Models/ContentLoadedEventArgs.cs
+    path: ../src/Shared/Internals/Models/ContentLoadedEventArgs.cs
     startLine: 3
   assemblies:
   - DrawnUi.Maui
@@ -57,11 +57,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ContentLoadedEventArgs.cs
+      path: src/Shared/Internals/Models/ContentLoadedEventArgs.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/ContentLoadedEventArgs.cs
+    path: ../src/Shared/Internals/Models/ContentLoadedEventArgs.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -91,11 +91,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ContentLoadedEventArgs.cs
+      path: src/Shared/Internals/Models/ContentLoadedEventArgs.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Bitmap
-    path: ../src/Shared/Draw/Internals/Models/ContentLoadedEventArgs.cs
+    path: ../src/Shared/Internals/Models/ContentLoadedEventArgs.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui

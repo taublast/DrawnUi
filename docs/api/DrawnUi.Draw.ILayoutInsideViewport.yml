@@ -16,11 +16,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ILayoutInsideViewport.cs
+      path: src/Shared/Internals/Interfaces/ILayoutInsideViewport.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ILayoutInsideViewport
-    path: ../src/Shared/Draw/Internals/Interfaces/ILayoutInsideViewport.cs
+    path: ../src/Shared/Internals/Interfaces/ILayoutInsideViewport.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -52,11 +52,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ILayoutInsideViewport.cs
+      path: src/Shared/Internals/Interfaces/ILayoutInsideViewport.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetVisibleChildIndexAt
-    path: ../src/Shared/Draw/Internals/Interfaces/ILayoutInsideViewport.cs
+    path: ../src/Shared/Internals/Interfaces/ILayoutInsideViewport.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui
@@ -87,11 +87,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ILayoutInsideViewport.cs
+      path: src/Shared/Internals/Interfaces/ILayoutInsideViewport.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetChildIndexAt
-    path: ../src/Shared/Draw/Internals/Interfaces/ILayoutInsideViewport.cs
+    path: ../src/Shared/Internals/Interfaces/ILayoutInsideViewport.cs
     startLine: 18
   assemblies:
   - DrawnUi.Maui

@@ -16,11 +16,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IAnimatorsManager.cs
+      path: src/Shared/Internals/Interfaces/IAnimatorsManager.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IAnimatorsManager
-    path: ../src/Shared/Draw/Internals/Interfaces/IAnimatorsManager.cs
+    path: ../src/Shared/Internals/Interfaces/IAnimatorsManager.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -45,11 +45,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IAnimatorsManager.cs
+      path: src/Shared/Internals/Interfaces/IAnimatorsManager.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: AddAnimator
-    path: ../src/Shared/Draw/Internals/Interfaces/IAnimatorsManager.cs
+    path: ../src/Shared/Internals/Interfaces/IAnimatorsManager.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -74,11 +74,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IAnimatorsManager.cs
+      path: src/Shared/Internals/Interfaces/IAnimatorsManager.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RemoveAnimator
-    path: ../src/Shared/Draw/Internals/Interfaces/IAnimatorsManager.cs
+    path: ../src/Shared/Internals/Interfaces/IAnimatorsManager.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui

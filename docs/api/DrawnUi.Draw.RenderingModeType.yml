@@ -17,11 +17,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+      path: src/Shared/Internals/Enums/HardwareAccelerationMode.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderingModeType
-    path: ../src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+    path: ../src/Shared/Internals/Enums/HardwareAccelerationMode.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -44,11 +44,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+      path: src/Shared/Internals/Enums/HardwareAccelerationMode.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Default
-    path: ../src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+    path: ../src/Shared/Internals/Enums/HardwareAccelerationMode.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -72,11 +72,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+      path: src/Shared/Internals/Enums/HardwareAccelerationMode.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Accelerated
-    path: ../src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+    path: ../src/Shared/Internals/Enums/HardwareAccelerationMode.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -100,11 +100,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+      path: src/Shared/Internals/Enums/HardwareAccelerationMode.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: AcceleratedRetained
-    path: ../src/Shared/Draw/Internals/Enums/HardwareAccelerationMode.cs
+    path: ../src/Shared/Internals/Enums/HardwareAccelerationMode.cs
     startLine: 18
   assemblies:
   - DrawnUi.Maui

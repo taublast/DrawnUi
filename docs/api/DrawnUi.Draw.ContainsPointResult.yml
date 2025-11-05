@@ -17,11 +17,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ContainsPointResult.cs
+      path: src/Shared/Internals/Models/ContainsPointResult.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ContainsPointResult
-    path: ../src/Shared/Draw/Internals/Models/ContainsPointResult.cs
+    path: ../src/Shared/Internals/Models/ContainsPointResult.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -58,11 +58,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ContainsPointResult.cs
+      path: src/Shared/Internals/Models/ContainsPointResult.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Index
-    path: ../src/Shared/Draw/Internals/Models/ContainsPointResult.cs
+    path: ../src/Shared/Internals/Models/ContainsPointResult.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -87,11 +87,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ContainsPointResult.cs
+      path: src/Shared/Internals/Models/ContainsPointResult.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Unmodified
-    path: ../src/Shared/Draw/Internals/Models/ContainsPointResult.cs
+    path: ../src/Shared/Internals/Models/ContainsPointResult.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -116,11 +116,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ContainsPointResult.cs
+      path: src/Shared/Internals/Models/ContainsPointResult.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: NotFound
-    path: ../src/Shared/Draw/Internals/Models/ContainsPointResult.cs
+    path: ../src/Shared/Internals/Models/ContainsPointResult.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui

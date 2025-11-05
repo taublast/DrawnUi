@@ -18,11 +18,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/CachedShader.cs
+      path: src/Shared/Internals/Models/CachedShader.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: CachedShader
-    path: ../src/Shared/Draw/Internals/Models/CachedShader.cs
+    path: ../src/Shared/Internals/Models/CachedShader.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -59,11 +59,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/CachedShader.cs
+      path: src/Shared/Internals/Models/CachedShader.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Destination
-    path: ../src/Shared/Draw/Internals/Models/CachedShader.cs
+    path: ../src/Shared/Internals/Models/CachedShader.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -88,11 +88,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/CachedShader.cs
+      path: src/Shared/Internals/Models/CachedShader.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Shader
-    path: ../src/Shared/Draw/Internals/Models/CachedShader.cs
+    path: ../src/Shared/Internals/Models/CachedShader.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -117,11 +117,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/CachedShader.cs
+      path: src/Shared/Internals/Models/CachedShader.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
-    path: ../src/Shared/Draw/Internals/Models/CachedShader.cs
+    path: ../src/Shared/Internals/Models/CachedShader.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -147,11 +147,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/CachedShader.cs
+      path: src/Shared/Internals/Models/CachedShader.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
-    path: ../src/Shared/Draw/Internals/Models/CachedShader.cs
+    path: ../src/Shared/Internals/Models/CachedShader.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui

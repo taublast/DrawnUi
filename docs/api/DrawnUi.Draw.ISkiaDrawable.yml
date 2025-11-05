@@ -22,11 +22,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaDrawable
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -54,11 +54,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDraw
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -85,11 +85,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Surface
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -114,11 +114,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsHardwareAccelerated
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui
@@ -143,11 +143,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FPS
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -172,11 +172,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDrawing
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui
@@ -201,11 +201,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: HasDrawn
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui
@@ -230,11 +230,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameTime
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
     startLine: 19
   assemblies:
   - DrawnUi.Maui
@@ -259,11 +259,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+      path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Uid
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaDrawable.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
     startLine: 21
   assemblies:
   - DrawnUi.Maui

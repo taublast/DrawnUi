@@ -21,11 +21,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaCacheType.cs
+      path: src/Shared/Internals/Enums/SkiaCacheType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaCacheType
-    path: ../src/Shared/Draw/Cache/SkiaCacheType.cs
+    path: ../src/Shared/Internals/Enums/SkiaCacheType.cs
     startLine: 3
   assemblies:
   - DrawnUi.Maui
@@ -48,11 +48,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaCacheType.cs
+      path: src/Shared/Internals/Enums/SkiaCacheType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: None
-    path: ../src/Shared/Draw/Cache/SkiaCacheType.cs
+    path: ../src/Shared/Internals/Enums/SkiaCacheType.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -76,11 +76,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaCacheType.cs
+      path: src/Shared/Internals/Enums/SkiaCacheType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Operations
-    path: ../src/Shared/Draw/Cache/SkiaCacheType.cs
+    path: ../src/Shared/Internals/Enums/SkiaCacheType.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui
@@ -107,17 +107,17 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaCacheType.cs
+      path: src/Shared/Internals/Enums/SkiaCacheType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OperationsFull
-    path: ../src/Shared/Draw/Cache/SkiaCacheType.cs
+    path: ../src/Shared/Internals/Enums/SkiaCacheType.cs
     startLine: 21
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   summary: >-
-    EXPERIMENTAL! May be bugged. Create and reuse SKPicture all over the canvas ignoring clipping.
+    This records operations out of the controls destination, up to canvas limits. If you would need to offset cache later (ex: animate inside scroll) you must cache parent (ex: with simple Operations) to record this one within virtual parent canvas.
 
     Try this first for labels, svg etc. 
 
@@ -140,11 +140,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaCacheType.cs
+      path: src/Shared/Internals/Enums/SkiaCacheType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Image
-    path: ../src/Shared/Draw/Cache/SkiaCacheType.cs
+    path: ../src/Shared/Internals/Enums/SkiaCacheType.cs
     startLine: 27
   assemblies:
   - DrawnUi.Maui
@@ -171,11 +171,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaCacheType.cs
+      path: src/Shared/Internals/Enums/SkiaCacheType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ImageDoubleBuffered
-    path: ../src/Shared/Draw/Cache/SkiaCacheType.cs
+    path: ../src/Shared/Internals/Enums/SkiaCacheType.cs
     startLine: 32
   assemblies:
   - DrawnUi.Maui
@@ -199,11 +199,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaCacheType.cs
+      path: src/Shared/Internals/Enums/SkiaCacheType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ImageComposite
-    path: ../src/Shared/Draw/Cache/SkiaCacheType.cs
+    path: ../src/Shared/Internals/Enums/SkiaCacheType.cs
     startLine: 42
   assemblies:
   - DrawnUi.Maui
@@ -236,11 +236,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaCacheType.cs
+      path: src/Shared/Internals/Enums/SkiaCacheType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GPU
-    path: ../src/Shared/Draw/Cache/SkiaCacheType.cs
+    path: ../src/Shared/Internals/Enums/SkiaCacheType.cs
     startLine: 49
   assemblies:
   - DrawnUi.Maui

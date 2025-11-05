@@ -37,11 +37,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: CachedObject
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -77,11 +77,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TranslateInputCoords
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -108,11 +108,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculatePositionOffset
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui
@@ -139,11 +139,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Test
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 22
   assemblies:
   - DrawnUi.Maui
@@ -170,11 +170,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 37
   assemblies:
   - DrawnUi.Maui
@@ -208,11 +208,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: LastDrawnAt
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 72
   assemblies:
   - DrawnUi.Maui
@@ -235,11 +235,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 81
   assemblies:
   - DrawnUi.Maui
@@ -279,11 +279,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 104
   assemblies:
   - DrawnUi.Maui
@@ -317,11 +317,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 112
   assemblies:
   - DrawnUi.Maui
@@ -355,11 +355,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Id
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 121
   assemblies:
   - DrawnUi.Maui
@@ -382,11 +382,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SurfaceIsRecycled
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 127
   assemblies:
   - DrawnUi.Maui
@@ -413,11 +413,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Picture
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 129
   assemblies:
   - DrawnUi.Maui
@@ -442,11 +442,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Image
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 131
   assemblies:
   - DrawnUi.Maui
@@ -471,11 +471,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Bounds
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 133
   assemblies:
   - DrawnUi.Maui
@@ -500,11 +500,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RecordingArea
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 135
   assemblies:
   - DrawnUi.Maui
@@ -529,11 +529,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Type
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 137
   assemblies:
   - DrawnUi.Maui
@@ -558,11 +558,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
     startLine: 139
   assemblies:
   - DrawnUi.Maui
@@ -588,12 +588,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 159
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
+    startLine: 160
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -617,12 +617,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Tag
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 161
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
+    startLine: 162
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -646,12 +646,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: PreserveSourceFromDispose
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 163
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
+    startLine: 164
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -675,12 +675,12 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetBitmap
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 165
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
+    startLine: 166
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -703,12 +703,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Surface
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 170
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
+    startLine: 171
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -732,12 +732,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Children
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 172
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
+    startLine: 173
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -761,12 +761,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Cache/SkiaRenderObject.cs
+      path: src/Shared/Internals/Models/SkiaRenderObject.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAlive
-    path: ../src/Shared/Draw/Cache/SkiaRenderObject.cs
-    startLine: 174
+    path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
+    startLine: 175
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

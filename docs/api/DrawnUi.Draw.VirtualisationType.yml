@@ -18,11 +18,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+      path: src/Shared/Internals/Enums/VirtualizationType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: VirtualisationType
-    path: ../src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+    path: ../src/Shared/Internals/Enums/VirtualizationType.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -45,11 +45,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+      path: src/Shared/Internals/Enums/VirtualizationType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Disabled
-    path: ../src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+    path: ../src/Shared/Internals/Enums/VirtualizationType.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -73,11 +73,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+      path: src/Shared/Internals/Enums/VirtualizationType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Enabled
-    path: ../src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+    path: ../src/Shared/Internals/Enums/VirtualizationType.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -101,11 +101,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+      path: src/Shared/Internals/Enums/VirtualizationType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Smart
-    path: ../src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+    path: ../src/Shared/Internals/Enums/VirtualizationType.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui
@@ -129,11 +129,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+      path: src/Shared/Internals/Enums/VirtualizationType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Managed
-    path: ../src/Shared/Draw/Internals/Enums/VirtualizationType.cs
+    path: ../src/Shared/Internals/Enums/VirtualizationType.cs
     startLine: 23
   assemblies:
   - DrawnUi.Maui

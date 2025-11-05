@@ -18,11 +18,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/VelocityTracker.cs
+      path: src/Shared/Internals/Helpers/VelocityTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: VelocityTracker
-    path: ../src/Shared/Draw/Internals/Helpers/VelocityTracker.cs
+    path: ../src/Shared/Internals/Helpers/VelocityTracker.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -55,11 +55,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/VelocityTracker.cs
+      path: src/Shared/Internals/Helpers/VelocityTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Helpers/VelocityTracker.cs
+    path: ../src/Shared/Internals/Helpers/VelocityTracker.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -84,11 +84,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/VelocityTracker.cs
+      path: src/Shared/Internals/Helpers/VelocityTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: AddMovement
-    path: ../src/Shared/Draw/Internals/Helpers/VelocityTracker.cs
+    path: ../src/Shared/Internals/Helpers/VelocityTracker.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui
@@ -118,11 +118,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/VelocityTracker.cs
+      path: src/Shared/Internals/Helpers/VelocityTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
-    path: ../src/Shared/Draw/Internals/Helpers/VelocityTracker.cs
+    path: ../src/Shared/Internals/Helpers/VelocityTracker.cs
     startLine: 26
   assemblies:
   - DrawnUi.Maui
@@ -144,11 +144,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/VelocityTracker.cs
+      path: src/Shared/Internals/Helpers/VelocityTracker.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ComputeCurrentVelocity
-    path: ../src/Shared/Draw/Internals/Helpers/VelocityTracker.cs
+    path: ../src/Shared/Internals/Helpers/VelocityTracker.cs
     startLine: 36
   assemblies:
   - DrawnUi.Maui

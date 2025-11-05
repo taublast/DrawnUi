@@ -33,11 +33,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      path: src/Shared/Internals/Extensions/InternalExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: InternalExtensions
-    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -288,11 +288,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      path: src/Shared/Internals/Extensions/InternalExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ToDegrees
-    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui
@@ -327,11 +327,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      path: src/Shared/Internals/Extensions/InternalExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IntersectsWith
-    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
     startLine: 16
   assemblies:
   - DrawnUi.Maui
@@ -363,11 +363,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      path: src/Shared/Internals/Extensions/InternalExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ContainsInclusive
-    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
     startLine: 29
   assemblies:
   - DrawnUi.Maui
@@ -402,11 +402,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      path: src/Shared/Internals/Extensions/InternalExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ContainsInclusive
-    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
     startLine: 38
   assemblies:
   - DrawnUi.Maui
@@ -443,11 +443,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      path: src/Shared/Internals/Extensions/InternalExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetItemAtIndex
-    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
     startLine: 46
   assemblies:
   - DrawnUi.Maui
@@ -482,11 +482,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      path: src/Shared/Internals/Extensions/InternalExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeControlAndChildren
-    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
     startLine: 63
   assemblies:
   - DrawnUi.Maui
@@ -512,11 +512,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      path: src/Shared/Internals/Extensions/InternalExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: WithCancellation
-    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
     startLine: 120
   assemblies:
   - DrawnUi.Maui
@@ -546,11 +546,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      path: src/Shared/Internals/Extensions/InternalExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: WithCancellation
-    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
     startLine: 131
   assemblies:
   - DrawnUi.Maui
@@ -585,11 +585,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      path: src/Shared/Internals/Extensions/InternalExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clone
-    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
     startLine: 141
   assemblies:
   - DrawnUi.Maui
@@ -617,11 +617,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      path: src/Shared/Internals/Extensions/InternalExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsEven
-    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
     startLine: 146
   assemblies:
   - DrawnUi.Maui
@@ -652,11 +652,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      path: src/Shared/Internals/Extensions/InternalExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clamp
-    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
     startLine: 151
   assemblies:
   - DrawnUi.Maui
@@ -691,11 +691,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      path: src/Shared/Internals/Extensions/InternalExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clamp
-    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
     startLine: 170
   assemblies:
   - DrawnUi.Maui
@@ -730,11 +730,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+      path: src/Shared/Internals/Extensions/InternalExtensions.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clamp
-    path: ../src/Shared/Draw/Internals/Extensions/InternalExtensions.cs
+    path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
     startLine: 189
   assemblies:
   - DrawnUi.Maui

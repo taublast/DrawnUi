@@ -1,0 +1,2608 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Maui.Navigation.MenuPageItem
+  commentId: T:DrawnUi.Maui.Navigation.MenuPageItem
+  id: MenuPageItem
+  parent: DrawnUi.Maui.Navigation
+  children:
+  - DrawnUi.Maui.Navigation.MenuPageItem.#ctor
+  - DrawnUi.Maui.Navigation.MenuPageItem.AuthorizedOnly
+  - DrawnUi.Maui.Navigation.MenuPageItem.BackColor
+  - DrawnUi.Maui.Navigation.MenuPageItem.ContentType
+  - DrawnUi.Maui.Navigation.MenuPageItem.Counter
+  - DrawnUi.Maui.Navigation.MenuPageItem.GetCounter
+  - DrawnUi.Maui.Navigation.MenuPageItem.GetTitle
+  - DrawnUi.Maui.Navigation.MenuPageItem.IconSource
+  - DrawnUi.Maui.Navigation.MenuPageItem.IconString
+  - DrawnUi.Maui.Navigation.MenuPageItem.IsDetail
+  - DrawnUi.Maui.Navigation.MenuPageItem.IsOption
+  - DrawnUi.Maui.Navigation.MenuPageItem.Key
+  - DrawnUi.Maui.Navigation.MenuPageItem.Modal
+  - DrawnUi.Maui.Navigation.MenuPageItem.Module
+  - DrawnUi.Maui.Navigation.MenuPageItem.MyId
+  - DrawnUi.Maui.Navigation.MenuPageItem.NeedTransition
+  - DrawnUi.Maui.Navigation.MenuPageItem.OnSelected
+  - DrawnUi.Maui.Navigation.MenuPageItem.PseudoTab
+  - DrawnUi.Maui.Navigation.MenuPageItem.Selected
+  - DrawnUi.Maui.Navigation.MenuPageItem.Separator
+  - DrawnUi.Maui.Navigation.MenuPageItem.ShowCounter
+  - DrawnUi.Maui.Navigation.MenuPageItem.Tab
+  - DrawnUi.Maui.Navigation.MenuPageItem.TargetType
+  - DrawnUi.Maui.Navigation.MenuPageItem.Title
+  - DrawnUi.Maui.Navigation.MenuPageItem.TypeParameter
+  - DrawnUi.Maui.Navigation.MenuPageItem.UnauthorizedOnly
+  - DrawnUi.Maui.Navigation.MenuPageItem.Url
+  - DrawnUi.Maui.Navigation.MenuPageItem.UserRoles
+  - DrawnUi.Maui.Navigation.MenuPageItem.VOptions
+  - DrawnUi.Maui.Navigation.MenuPageItem.Visible
+  langs:
+  - csharp
+  - vb
+  name: MenuPageItem
+  nameWithType: MenuPageItem
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem
+  type: Class
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MenuPageItem
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 2
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: 'public class MenuPageItem : BindableObject, INotifyPropertyChanged'
+    content.vb: Public Class MenuPageItem Inherits BindableObject Implements INotifyPropertyChanged
+  inheritance:
+  - System.Object
+  - Microsoft.Maui.Controls.BindableObject
+  implements:
+  - System.ComponentModel.INotifyPropertyChanged
+  inheritedMembers:
+  - Microsoft.Maui.Controls.BindableObject.BindingContextProperty
+  - Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindableProperty)
+  - Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  - Microsoft.Maui.Controls.BindableObject.GetValue(Microsoft.Maui.Controls.BindableProperty)
+  - Microsoft.Maui.Controls.BindableObject.IsSet(Microsoft.Maui.Controls.BindableProperty)
+  - Microsoft.Maui.Controls.BindableObject.RemoveBinding(Microsoft.Maui.Controls.BindableProperty)
+  - Microsoft.Maui.Controls.BindableObject.SetBinding(Microsoft.Maui.Controls.BindableProperty,Microsoft.Maui.Controls.BindingBase)
+  - Microsoft.Maui.Controls.BindableObject.ApplyBindings
+  - Microsoft.Maui.Controls.BindableObject.OnBindingContextChanged
+  - Microsoft.Maui.Controls.BindableObject.OnPropertyChanged(System.String)
+  - Microsoft.Maui.Controls.BindableObject.OnPropertyChanging(System.String)
+  - Microsoft.Maui.Controls.BindableObject.UnapplyBindings
+  - Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindableProperty,System.Object)
+  - Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindablePropertyKey,System.Object)
+  - Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindableProperty)
+  - Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  - Microsoft.Maui.Controls.BindableObject.Dispatcher
+  - Microsoft.Maui.Controls.BindableObject.BindingContext
+  - Microsoft.Maui.Controls.BindableObject.PropertyChanged
+  - Microsoft.Maui.Controls.BindableObject.PropertyChanging
+  - Microsoft.Maui.Controls.BindableObject.BindingContextChanged
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - DrawnUi.Maui.Navigation.MenuPageItem.DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Maui.Navigation.MenuPageItem@)
+  - DrawnUi.Maui.Navigation.MenuPageItem.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.VOptions
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.VOptions
+  id: VOptions
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: VOptions
+  nameWithType: MenuPageItem.VOptions
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.VOptions
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: VOptions
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public LayoutOptions VOptions { get; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.Controls.LayoutOptions
+    content.vb: Public ReadOnly Property VOptions As LayoutOptions
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.VOptions*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Separator
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.Separator
+  id: Separator
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: Separator
+  nameWithType: MenuPageItem.Separator
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Separator
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Separator
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 20
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public bool Separator { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property Separator As Boolean
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.Separator*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Counter
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.Counter
+  id: Counter
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: Counter
+  nameWithType: MenuPageItem.Counter
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Counter
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Counter
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 45
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public int Counter { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Counter As Integer
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.Counter*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.ShowCounter
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.ShowCounter
+  id: ShowCounter
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: ShowCounter
+  nameWithType: MenuPageItem.ShowCounter
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.ShowCounter
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ShowCounter
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 59
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public bool ShowCounter { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property ShowCounter As Boolean
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.ShowCounter*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.IsOption
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.IsOption
+  id: IsOption
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: IsOption
+  nameWithType: MenuPageItem.IsOption
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.IsOption
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsOption
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 73
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public bool IsOption { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsOption As Boolean
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.IsOption*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.GetCounter
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.GetCounter
+  id: GetCounter
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: GetCounter
+  nameWithType: MenuPageItem.GetCounter
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.GetCounter
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetCounter
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 86
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public Func<int> GetCounter { get; set; }
+    parameters: []
+    return:
+      type: System.Func{System.Int32}
+    content.vb: Public Property GetCounter As Func(Of Integer)
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.GetCounter*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.GetTitle
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.GetTitle
+  id: GetTitle
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: GetTitle
+  nameWithType: MenuPageItem.GetTitle
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.GetTitle
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetTitle
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 88
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public Func<string> GetTitle { get; set; }
+    parameters: []
+    return:
+      type: System.Func{System.String}
+    content.vb: Public Property GetTitle As Func(Of String)
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.GetTitle*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Title
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.Title
+  id: Title
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: Title
+  nameWithType: MenuPageItem.Title
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Title
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Title
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 93
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public string Title { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Title As String
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.Title*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.IconSource
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.IconSource
+  id: IconSource
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: IconSource
+  nameWithType: MenuPageItem.IconSource
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.IconSource
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IconSource
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 108
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public string IconSource { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property IconSource As String
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.IconSource*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.BackColor
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.BackColor
+  id: BackColor
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: BackColor
+  nameWithType: MenuPageItem.BackColor
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.BackColor
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BackColor
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 110
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public Color BackColor { get; set; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.Graphics.Color
+    content.vb: Public Property BackColor As Color
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.BackColor*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.IconString
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.IconString
+  id: IconString
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: IconString
+  nameWithType: MenuPageItem.IconString
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.IconString
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IconString
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 113
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public string IconString { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property IconString As String
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.IconString*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.OnSelected
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.OnSelected
+  id: OnSelected
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: OnSelected
+  nameWithType: MenuPageItem.OnSelected
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.OnSelected
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnSelected
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 115
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public Action OnSelected { get; set; }
+    parameters: []
+    return:
+      type: System.Action
+    content.vb: Public Property OnSelected As Action
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.OnSelected*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.TargetType
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.TargetType
+  id: TargetType
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: TargetType
+  nameWithType: MenuPageItem.TargetType
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.TargetType
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TargetType
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 117
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public Type TargetType { get; set; }
+    parameters: []
+    return:
+      type: System.Type
+    content.vb: Public Property TargetType As Type
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.TargetType*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.TypeParameter
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.TypeParameter
+  id: TypeParameter
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: TypeParameter
+  nameWithType: MenuPageItem.TypeParameter
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.TypeParameter
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TypeParameter
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 119
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public object TypeParameter { get; set; }
+    parameters: []
+    return:
+      type: System.Object
+    content.vb: Public Property TypeParameter As Object
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.TypeParameter*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.ContentType
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.ContentType
+  id: ContentType
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: ContentType
+  nameWithType: MenuPageItem.ContentType
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.ContentType
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ContentType
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 121
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public Type ContentType { get; set; }
+    parameters: []
+    return:
+      type: System.Type
+    content.vb: Public Property ContentType As Type
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.ContentType*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Tab
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.Tab
+  id: Tab
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: Tab
+  nameWithType: MenuPageItem.Tab
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Tab
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Tab
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 123
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public int Tab { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Tab As Integer
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.Tab*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.NeedTransition
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.NeedTransition
+  id: NeedTransition
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: NeedTransition
+  nameWithType: MenuPageItem.NeedTransition
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.NeedTransition
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NeedTransition
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 124
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public bool NeedTransition { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property NeedTransition As Boolean
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.NeedTransition*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Selected
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.Selected
+  id: Selected
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: Selected
+  nameWithType: MenuPageItem.Selected
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Selected
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Selected
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 127
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public bool Selected { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property Selected As Boolean
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.Selected*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.PseudoTab
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.PseudoTab
+  id: PseudoTab
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: PseudoTab
+  nameWithType: MenuPageItem.PseudoTab
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.PseudoTab
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PseudoTab
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 140
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public bool PseudoTab { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property PseudoTab As Boolean
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.PseudoTab*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.IsDetail
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.IsDetail
+  id: IsDetail
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: IsDetail
+  nameWithType: MenuPageItem.IsDetail
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.IsDetail
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsDetail
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 141
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public bool IsDetail { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsDetail As Boolean
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.IsDetail*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Modal
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.Modal
+  id: Modal
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: Modal
+  nameWithType: MenuPageItem.Modal
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Modal
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Modal
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 142
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public bool Modal { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property Modal As Boolean
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.Modal*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Visible
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.Visible
+  id: Visible
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: Visible
+  nameWithType: MenuPageItem.Visible
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Visible
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Visible
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 145
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public bool Visible { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property Visible As Boolean
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.Visible*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.MyId
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.MyId
+  id: MyId
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: MyId
+  nameWithType: MenuPageItem.MyId
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.MyId
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MyId
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 158
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public string MyId { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property MyId As String
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.MyId*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Url
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.Url
+  id: Url
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: Url
+  nameWithType: MenuPageItem.Url
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Url
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Url
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 159
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public string Url { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Url As String
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.Url*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Key
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.Key
+  id: Key
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: Key
+  nameWithType: MenuPageItem.Key
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Key
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Key
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 165
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public string Key { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Key As String
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.Key*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Module
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.Module
+  id: Module
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: Module
+  nameWithType: MenuPageItem.Module
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Module
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Module
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 184
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  summary: if module is disable the use this key to disable this item
+  example: []
+  syntax:
+    content: public string Module { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property [Module] As String
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.Module*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.AuthorizedOnly
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.AuthorizedOnly
+  id: AuthorizedOnly
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: AuthorizedOnly
+  nameWithType: MenuPageItem.AuthorizedOnly
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.AuthorizedOnly
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AuthorizedOnly
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 186
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public bool AuthorizedOnly { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property AuthorizedOnly As Boolean
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.AuthorizedOnly*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.UserRoles
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.UserRoles
+  id: UserRoles
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: UserRoles
+  nameWithType: MenuPageItem.UserRoles
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.UserRoles
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UserRoles
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 187
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public string UserRoles { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property UserRoles As String
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.UserRoles*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.UnauthorizedOnly
+  commentId: P:DrawnUi.Maui.Navigation.MenuPageItem.UnauthorizedOnly
+  id: UnauthorizedOnly
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: UnauthorizedOnly
+  nameWithType: MenuPageItem.UnauthorizedOnly
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.UnauthorizedOnly
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UnauthorizedOnly
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 188
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public bool UnauthorizedOnly { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property UnauthorizedOnly As Boolean
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.UnauthorizedOnly*
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.#ctor
+  commentId: M:DrawnUi.Maui.Navigation.MenuPageItem.#ctor
+  id: '#ctor'
+  parent: DrawnUi.Maui.Navigation.MenuPageItem
+  langs:
+  - csharp
+  - vb
+  name: MenuPageItem()
+  nameWithType: MenuPageItem.MenuPageItem()
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.MenuPageItem()
+  type: Constructor
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+      branch: 2-A
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
+    startLine: 191
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Maui.Navigation
+  syntax:
+    content: public MenuPageItem()
+    content.vb: Public Sub New()
+  overload: DrawnUi.Maui.Navigation.MenuPageItem.#ctor*
+  nameWithType.vb: MenuPageItem.New()
+  fullName.vb: DrawnUi.Maui.Navigation.MenuPageItem.New()
+  name.vb: New()
+references:
+- uid: DrawnUi.Maui.Navigation
+  commentId: N:DrawnUi.Maui.Navigation
+  href: DrawnUi.html
+  name: DrawnUi.Maui.Navigation
+  nameWithType: DrawnUi.Maui.Navigation
+  fullName: DrawnUi.Maui.Navigation
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Maui
+    name: Maui
+    href: DrawnUi.Maui.html
+  - name: .
+  - uid: DrawnUi.Maui.Navigation
+    name: Navigation
+    href: DrawnUi.Maui.Navigation.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Maui
+    name: Maui
+    href: DrawnUi.Maui.html
+  - name: .
+  - uid: DrawnUi.Maui.Navigation
+    name: Navigation
+    href: DrawnUi.Maui.Navigation.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Microsoft.Maui.Controls.BindableObject
+  commentId: T:Microsoft.Maui.Controls.BindableObject
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject
+  name: BindableObject
+  nameWithType: BindableObject
+  fullName: Microsoft.Maui.Controls.BindableObject
+- uid: System.ComponentModel.INotifyPropertyChanged
+  commentId: T:System.ComponentModel.INotifyPropertyChanged
+  parent: System.ComponentModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged
+  name: INotifyPropertyChanged
+  nameWithType: INotifyPropertyChanged
+  fullName: System.ComponentModel.INotifyPropertyChanged
+- uid: Microsoft.Maui.Controls.BindableObject.BindingContextProperty
+  commentId: F:Microsoft.Maui.Controls.BindableObject.BindingContextProperty
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.bindingcontextproperty
+  name: BindingContextProperty
+  nameWithType: BindableObject.BindingContextProperty
+  fullName: Microsoft.Maui.Controls.BindableObject.BindingContextProperty
+- uid: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindableProperty)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindableProperty)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindableproperty)
+  name: ClearValue(BindableProperty)
+  nameWithType: BindableObject.ClearValue(BindableProperty)
+  fullName: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindableProperty)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindableProperty)
+    name: ClearValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindableproperty)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindableProperty)
+    name: ClearValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindableproperty)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindablepropertykey)
+  name: ClearValue(BindablePropertyKey)
+  nameWithType: BindableObject.ClearValue(BindablePropertyKey)
+  fullName: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindablePropertyKey)
+    name: ClearValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindablepropertykey)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindablePropertyKey
+    name: BindablePropertyKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindablepropertykey
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindablePropertyKey)
+    name: ClearValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindablepropertykey)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindablePropertyKey
+    name: BindablePropertyKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindablepropertykey
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.GetValue(Microsoft.Maui.Controls.BindableProperty)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.GetValue(Microsoft.Maui.Controls.BindableProperty)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.getvalue
+  name: GetValue(BindableProperty)
+  nameWithType: BindableObject.GetValue(BindableProperty)
+  fullName: Microsoft.Maui.Controls.BindableObject.GetValue(Microsoft.Maui.Controls.BindableProperty)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.GetValue(Microsoft.Maui.Controls.BindableProperty)
+    name: GetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.getvalue
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.GetValue(Microsoft.Maui.Controls.BindableProperty)
+    name: GetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.getvalue
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.IsSet(Microsoft.Maui.Controls.BindableProperty)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.IsSet(Microsoft.Maui.Controls.BindableProperty)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.isset
+  name: IsSet(BindableProperty)
+  nameWithType: BindableObject.IsSet(BindableProperty)
+  fullName: Microsoft.Maui.Controls.BindableObject.IsSet(Microsoft.Maui.Controls.BindableProperty)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.IsSet(Microsoft.Maui.Controls.BindableProperty)
+    name: IsSet
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.isset
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.IsSet(Microsoft.Maui.Controls.BindableProperty)
+    name: IsSet
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.isset
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.RemoveBinding(Microsoft.Maui.Controls.BindableProperty)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.RemoveBinding(Microsoft.Maui.Controls.BindableProperty)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.removebinding
+  name: RemoveBinding(BindableProperty)
+  nameWithType: BindableObject.RemoveBinding(BindableProperty)
+  fullName: Microsoft.Maui.Controls.BindableObject.RemoveBinding(Microsoft.Maui.Controls.BindableProperty)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.RemoveBinding(Microsoft.Maui.Controls.BindableProperty)
+    name: RemoveBinding
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.removebinding
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.RemoveBinding(Microsoft.Maui.Controls.BindableProperty)
+    name: RemoveBinding
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.removebinding
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.SetBinding(Microsoft.Maui.Controls.BindableProperty,Microsoft.Maui.Controls.BindingBase)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.SetBinding(Microsoft.Maui.Controls.BindableProperty,Microsoft.Maui.Controls.BindingBase)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setbinding
+  name: SetBinding(BindableProperty, BindingBase)
+  nameWithType: BindableObject.SetBinding(BindableProperty, BindingBase)
+  fullName: Microsoft.Maui.Controls.BindableObject.SetBinding(Microsoft.Maui.Controls.BindableProperty, Microsoft.Maui.Controls.BindingBase)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.SetBinding(Microsoft.Maui.Controls.BindableProperty,Microsoft.Maui.Controls.BindingBase)
+    name: SetBinding
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setbinding
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindingBase
+    name: BindingBase
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindingbase
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.SetBinding(Microsoft.Maui.Controls.BindableProperty,Microsoft.Maui.Controls.BindingBase)
+    name: SetBinding
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setbinding
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindingBase
+    name: BindingBase
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindingbase
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.ApplyBindings
+  commentId: M:Microsoft.Maui.Controls.BindableObject.ApplyBindings
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.applybindings
+  name: ApplyBindings()
+  nameWithType: BindableObject.ApplyBindings()
+  fullName: Microsoft.Maui.Controls.BindableObject.ApplyBindings()
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.ApplyBindings
+    name: ApplyBindings
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.applybindings
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.ApplyBindings
+    name: ApplyBindings
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.applybindings
+  - name: (
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.OnBindingContextChanged
+  commentId: M:Microsoft.Maui.Controls.BindableObject.OnBindingContextChanged
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onbindingcontextchanged
+  name: OnBindingContextChanged()
+  nameWithType: BindableObject.OnBindingContextChanged()
+  fullName: Microsoft.Maui.Controls.BindableObject.OnBindingContextChanged()
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.OnBindingContextChanged
+    name: OnBindingContextChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onbindingcontextchanged
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.OnBindingContextChanged
+    name: OnBindingContextChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onbindingcontextchanged
+  - name: (
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.OnPropertyChanged(System.String)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.OnPropertyChanged(System.String)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onpropertychanged
+  name: OnPropertyChanged(string)
+  nameWithType: BindableObject.OnPropertyChanged(string)
+  fullName: Microsoft.Maui.Controls.BindableObject.OnPropertyChanged(string)
+  nameWithType.vb: BindableObject.OnPropertyChanged(String)
+  fullName.vb: Microsoft.Maui.Controls.BindableObject.OnPropertyChanged(String)
+  name.vb: OnPropertyChanged(String)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.OnPropertyChanged(System.String)
+    name: OnPropertyChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onpropertychanged
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.OnPropertyChanged(System.String)
+    name: OnPropertyChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onpropertychanged
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.OnPropertyChanging(System.String)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.OnPropertyChanging(System.String)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onpropertychanging
+  name: OnPropertyChanging(string)
+  nameWithType: BindableObject.OnPropertyChanging(string)
+  fullName: Microsoft.Maui.Controls.BindableObject.OnPropertyChanging(string)
+  nameWithType.vb: BindableObject.OnPropertyChanging(String)
+  fullName.vb: Microsoft.Maui.Controls.BindableObject.OnPropertyChanging(String)
+  name.vb: OnPropertyChanging(String)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.OnPropertyChanging(System.String)
+    name: OnPropertyChanging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onpropertychanging
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.OnPropertyChanging(System.String)
+    name: OnPropertyChanging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onpropertychanging
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.UnapplyBindings
+  commentId: M:Microsoft.Maui.Controls.BindableObject.UnapplyBindings
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.unapplybindings
+  name: UnapplyBindings()
+  nameWithType: BindableObject.UnapplyBindings()
+  fullName: Microsoft.Maui.Controls.BindableObject.UnapplyBindings()
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.UnapplyBindings
+    name: UnapplyBindings
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.unapplybindings
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.UnapplyBindings
+    name: UnapplyBindings
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.unapplybindings
+  - name: (
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindableProperty,System.Object)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindableProperty,System.Object)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindableproperty-system-object)
+  name: SetValue(BindableProperty, object)
+  nameWithType: BindableObject.SetValue(BindableProperty, object)
+  fullName: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindableProperty, object)
+  nameWithType.vb: BindableObject.SetValue(BindableProperty, Object)
+  fullName.vb: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindableProperty, Object)
+  name.vb: SetValue(BindableProperty, Object)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindableProperty,System.Object)
+    name: SetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindableproperty-system-object)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindableProperty,System.Object)
+    name: SetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindableproperty-system-object)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindablePropertyKey,System.Object)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindablePropertyKey,System.Object)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindablepropertykey-system-object)
+  name: SetValue(BindablePropertyKey, object)
+  nameWithType: BindableObject.SetValue(BindablePropertyKey, object)
+  fullName: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindablePropertyKey, object)
+  nameWithType.vb: BindableObject.SetValue(BindablePropertyKey, Object)
+  fullName.vb: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindablePropertyKey, Object)
+  name.vb: SetValue(BindablePropertyKey, Object)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindablePropertyKey,System.Object)
+    name: SetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindablepropertykey-system-object)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindablePropertyKey
+    name: BindablePropertyKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindablepropertykey
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindablePropertyKey,System.Object)
+    name: SetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindablepropertykey-system-object)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindablePropertyKey
+    name: BindablePropertyKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindablepropertykey
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindableProperty)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindableProperty)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindableproperty)
+  name: CoerceValue(BindableProperty)
+  nameWithType: BindableObject.CoerceValue(BindableProperty)
+  fullName: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindableProperty)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindableProperty)
+    name: CoerceValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindableproperty)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindableProperty)
+    name: CoerceValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindableproperty)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindablepropertykey)
+  name: CoerceValue(BindablePropertyKey)
+  nameWithType: BindableObject.CoerceValue(BindablePropertyKey)
+  fullName: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindablePropertyKey)
+    name: CoerceValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindablepropertykey)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindablePropertyKey
+    name: BindablePropertyKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindablepropertykey
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindablePropertyKey)
+    name: CoerceValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindablepropertykey)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindablePropertyKey
+    name: BindablePropertyKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindablepropertykey
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.Dispatcher
+  commentId: P:Microsoft.Maui.Controls.BindableObject.Dispatcher
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.dispatcher
+  name: Dispatcher
+  nameWithType: BindableObject.Dispatcher
+  fullName: Microsoft.Maui.Controls.BindableObject.Dispatcher
+- uid: Microsoft.Maui.Controls.BindableObject.BindingContext
+  commentId: P:Microsoft.Maui.Controls.BindableObject.BindingContext
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.bindingcontext
+  name: BindingContext
+  nameWithType: BindableObject.BindingContext
+  fullName: Microsoft.Maui.Controls.BindableObject.BindingContext
+- uid: Microsoft.Maui.Controls.BindableObject.PropertyChanged
+  commentId: E:Microsoft.Maui.Controls.BindableObject.PropertyChanged
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.propertychanged
+  name: PropertyChanged
+  nameWithType: BindableObject.PropertyChanged
+  fullName: Microsoft.Maui.Controls.BindableObject.PropertyChanged
+- uid: Microsoft.Maui.Controls.BindableObject.PropertyChanging
+  commentId: E:Microsoft.Maui.Controls.BindableObject.PropertyChanging
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.propertychanging
+  name: PropertyChanging
+  nameWithType: BindableObject.PropertyChanging
+  fullName: Microsoft.Maui.Controls.BindableObject.PropertyChanging
+- uid: Microsoft.Maui.Controls.BindableObject.BindingContextChanged
+  commentId: E:Microsoft.Maui.Controls.BindableObject.BindingContextChanged
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.bindingcontextchanged
+  name: BindingContextChanged
+  nameWithType: BindableObject.BindingContextChanged
+  fullName: Microsoft.Maui.Controls.BindableObject.BindingContextChanged
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Maui.Navigation.MenuPageItem@)
+  commentId: M:DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  name: Assign<MenuPageItem>(MenuPageItem, out MenuPageItem)
+  nameWithType: FluentExtensions.Assign<MenuPageItem>(MenuPageItem, out MenuPageItem)
+  fullName: DrawnUi.Draw.FluentExtensions.Assign<DrawnUi.Maui.Navigation.MenuPageItem>(DrawnUi.Maui.Navigation.MenuPageItem, out DrawnUi.Maui.Navigation.MenuPageItem)
+  nameWithType.vb: FluentExtensions.Assign(Of MenuPageItem)(MenuPageItem, MenuPageItem)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Assign(Of DrawnUi.Maui.Navigation.MenuPageItem)(DrawnUi.Maui.Navigation.MenuPageItem, DrawnUi.Maui.Navigation.MenuPageItem)
+  name.vb: Assign(Of MenuPageItem)(MenuPageItem, MenuPageItem)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Maui.Navigation.MenuPageItem,DrawnUi.Maui.Navigation.MenuPageItem@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: <
+  - uid: DrawnUi.Maui.Navigation.MenuPageItem
+    name: MenuPageItem
+    href: DrawnUi.Maui.Navigation.MenuPageItem.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Maui.Navigation.MenuPageItem
+    name: MenuPageItem
+    href: DrawnUi.Maui.Navigation.MenuPageItem.html
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - uid: DrawnUi.Maui.Navigation.MenuPageItem
+    name: MenuPageItem
+    href: DrawnUi.Maui.Navigation.MenuPageItem.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Maui.Navigation.MenuPageItem,DrawnUi.Maui.Navigation.MenuPageItem@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Maui.Navigation.MenuPageItem
+    name: MenuPageItem
+    href: DrawnUi.Maui.Navigation.MenuPageItem.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Maui.Navigation.MenuPageItem
+    name: MenuPageItem
+    href: DrawnUi.Maui.Navigation.MenuPageItem.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Maui.Navigation.MenuPageItem
+    name: MenuPageItem
+    href: DrawnUi.Maui.Navigation.MenuPageItem.html
+  - name: )
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  parent: DrawnUi.Draw.ThemeBindings
+  definition: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  name: WithThemeBinding<MenuPageItem>(MenuPageItem, BindableProperty, object, object, object)
+  nameWithType: ThemeBindings.WithThemeBinding<MenuPageItem>(MenuPageItem, BindableProperty, object, object, object)
+  fullName: DrawnUi.Draw.ThemeBindings.WithThemeBinding<DrawnUi.Maui.Navigation.MenuPageItem>(DrawnUi.Maui.Navigation.MenuPageItem, Microsoft.Maui.Controls.BindableProperty, object, object, object)
+  nameWithType.vb: ThemeBindings.WithThemeBinding(Of MenuPageItem)(MenuPageItem, BindableProperty, Object, Object, Object)
+  fullName.vb: DrawnUi.Draw.ThemeBindings.WithThemeBinding(Of DrawnUi.Maui.Navigation.MenuPageItem)(DrawnUi.Maui.Navigation.MenuPageItem, Microsoft.Maui.Controls.BindableProperty, Object, Object, Object)
+  name.vb: WithThemeBinding(Of MenuPageItem)(MenuPageItem, BindableProperty, Object, Object, Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(DrawnUi.Maui.Navigation.MenuPageItem,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: <
+  - uid: DrawnUi.Maui.Navigation.MenuPageItem
+    name: MenuPageItem
+    href: DrawnUi.Maui.Navigation.MenuPageItem.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Maui.Navigation.MenuPageItem
+    name: MenuPageItem
+    href: DrawnUi.Maui.Navigation.MenuPageItem.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(DrawnUi.Maui.Navigation.MenuPageItem,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Maui.Navigation.MenuPageItem
+    name: MenuPageItem
+    href: DrawnUi.Maui.Navigation.MenuPageItem.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Maui.Navigation.MenuPageItem
+    name: MenuPageItem
+    href: DrawnUi.Maui.Navigation.MenuPageItem.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Microsoft.Maui.Controls
+  commentId: N:Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Controls
+  nameWithType: Microsoft.Maui.Controls
+  fullName: Microsoft.Maui.Controls
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+- uid: System.ComponentModel
+  commentId: N:System.ComponentModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.ComponentModel
+  nameWithType: System.ComponentModel
+  fullName: System.ComponentModel
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.ComponentModel
+    name: ComponentModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.componentmodel
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.ComponentModel
+    name: ComponentModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.componentmodel
+- uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  commentId: M:DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  name: Assign<T>(T, out T)
+  nameWithType: FluentExtensions.Assign<T>(T, out T)
+  fullName: DrawnUi.Draw.FluentExtensions.Assign<T>(T, out T)
+  nameWithType.vb: FluentExtensions.Assign(Of T)(T, T)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Assign(Of T)(T, T)
+  name.vb: Assign(Of T)(T, T)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions
+  commentId: T:DrawnUi.Draw.FluentExtensions
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.FluentExtensions.html
+  name: FluentExtensions
+  nameWithType: FluentExtensions
+  fullName: DrawnUi.Draw.FluentExtensions
+- uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  isExternal: true
+  href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  name: WithThemeBinding<TControl>(TControl, BindableProperty, object, object, object)
+  nameWithType: ThemeBindings.WithThemeBinding<TControl>(TControl, BindableProperty, object, object, object)
+  fullName: DrawnUi.Draw.ThemeBindings.WithThemeBinding<TControl>(TControl, Microsoft.Maui.Controls.BindableProperty, object, object, object)
+  nameWithType.vb: ThemeBindings.WithThemeBinding(Of TControl)(TControl, BindableProperty, Object, Object, Object)
+  fullName.vb: DrawnUi.Draw.ThemeBindings.WithThemeBinding(Of TControl)(TControl, Microsoft.Maui.Controls.BindableProperty, Object, Object, Object)
+  name.vb: WithThemeBinding(Of TControl)(TControl, BindableProperty, Object, Object, Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: <
+  - name: TControl
+  - name: '>'
+  - name: (
+  - name: TControl
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TControl
+  - name: )
+  - name: (
+  - name: TControl
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.ThemeBindings
+  commentId: T:DrawnUi.Draw.ThemeBindings
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ThemeBindings.html
+  name: ThemeBindings
+  nameWithType: ThemeBindings
+  fullName: DrawnUi.Draw.ThemeBindings
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.VOptions*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.VOptions
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_VOptions
+  name: VOptions
+  nameWithType: MenuPageItem.VOptions
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.VOptions
+- uid: Microsoft.Maui.Controls.LayoutOptions
+  commentId: T:Microsoft.Maui.Controls.LayoutOptions
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.layoutoptions
+  name: LayoutOptions
+  nameWithType: LayoutOptions
+  fullName: Microsoft.Maui.Controls.LayoutOptions
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Separator*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.Separator
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_Separator
+  name: Separator
+  nameWithType: MenuPageItem.Separator
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Separator
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Counter*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.Counter
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_Counter
+  name: Counter
+  nameWithType: MenuPageItem.Counter
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Counter
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.ShowCounter*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.ShowCounter
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_ShowCounter
+  name: ShowCounter
+  nameWithType: MenuPageItem.ShowCounter
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.ShowCounter
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.IsOption*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.IsOption
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_IsOption
+  name: IsOption
+  nameWithType: MenuPageItem.IsOption
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.IsOption
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.GetCounter*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.GetCounter
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_GetCounter
+  name: GetCounter
+  nameWithType: MenuPageItem.GetCounter
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.GetCounter
+- uid: System.Func{System.Int32}
+  commentId: T:System.Func{System.Int32}
+  parent: System
+  definition: System.Func`1
+  href: https://learn.microsoft.com/dotnet/api/system.func-1
+  name: Func<int>
+  nameWithType: Func<int>
+  fullName: System.Func<int>
+  nameWithType.vb: Func(Of Integer)
+  fullName.vb: System.Func(Of Integer)
+  name.vb: Func(Of Integer)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Func`1
+  commentId: T:System.Func`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.func-1
+  name: Func<TResult>
+  nameWithType: Func<TResult>
+  fullName: System.Func<TResult>
+  nameWithType.vb: Func(Of TResult)
+  fullName.vb: System.Func(Of TResult)
+  name.vb: Func(Of TResult)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.GetTitle*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.GetTitle
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_GetTitle
+  name: GetTitle
+  nameWithType: MenuPageItem.GetTitle
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.GetTitle
+- uid: System.Func{System.String}
+  commentId: T:System.Func{System.String}
+  parent: System
+  definition: System.Func`1
+  href: https://learn.microsoft.com/dotnet/api/system.func-1
+  name: Func<string>
+  nameWithType: Func<string>
+  fullName: System.Func<string>
+  nameWithType.vb: Func(Of String)
+  fullName.vb: System.Func(Of String)
+  name.vb: Func(Of String)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Title*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.Title
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_Title
+  name: Title
+  nameWithType: MenuPageItem.Title
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Title
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.IconSource*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.IconSource
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_IconSource
+  name: IconSource
+  nameWithType: MenuPageItem.IconSource
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.IconSource
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.BackColor*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.BackColor
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_BackColor
+  name: BackColor
+  nameWithType: MenuPageItem.BackColor
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.BackColor
+- uid: Microsoft.Maui.Graphics.Color
+  commentId: T:Microsoft.Maui.Graphics.Color
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
+  name: Color
+  nameWithType: Color
+  fullName: Microsoft.Maui.Graphics.Color
+- uid: Microsoft.Maui.Graphics
+  commentId: N:Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Graphics
+  nameWithType: Microsoft.Maui.Graphics
+  fullName: Microsoft.Maui.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.IconString*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.IconString
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_IconString
+  name: IconString
+  nameWithType: MenuPageItem.IconString
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.IconString
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.OnSelected*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.OnSelected
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_OnSelected
+  name: OnSelected
+  nameWithType: MenuPageItem.OnSelected
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.OnSelected
+- uid: System.Action
+  commentId: T:System.Action
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action
+  name: Action
+  nameWithType: Action
+  fullName: System.Action
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.TargetType*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.TargetType
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_TargetType
+  name: TargetType
+  nameWithType: MenuPageItem.TargetType
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.TargetType
+- uid: System.Type
+  commentId: T:System.Type
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.type
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.TypeParameter*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.TypeParameter
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_TypeParameter
+  name: TypeParameter
+  nameWithType: MenuPageItem.TypeParameter
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.TypeParameter
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.ContentType*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.ContentType
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_ContentType
+  name: ContentType
+  nameWithType: MenuPageItem.ContentType
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.ContentType
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Tab*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.Tab
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_Tab
+  name: Tab
+  nameWithType: MenuPageItem.Tab
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Tab
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.NeedTransition*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.NeedTransition
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_NeedTransition
+  name: NeedTransition
+  nameWithType: MenuPageItem.NeedTransition
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.NeedTransition
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Selected*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.Selected
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_Selected
+  name: Selected
+  nameWithType: MenuPageItem.Selected
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Selected
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.PseudoTab*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.PseudoTab
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_PseudoTab
+  name: PseudoTab
+  nameWithType: MenuPageItem.PseudoTab
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.PseudoTab
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.IsDetail*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.IsDetail
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_IsDetail
+  name: IsDetail
+  nameWithType: MenuPageItem.IsDetail
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.IsDetail
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Modal*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.Modal
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_Modal
+  name: Modal
+  nameWithType: MenuPageItem.Modal
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Modal
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Visible*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.Visible
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_Visible
+  name: Visible
+  nameWithType: MenuPageItem.Visible
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Visible
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.MyId*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.MyId
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_MyId
+  name: MyId
+  nameWithType: MenuPageItem.MyId
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.MyId
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Url*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.Url
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_Url
+  name: Url
+  nameWithType: MenuPageItem.Url
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Url
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Key*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.Key
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_Key
+  name: Key
+  nameWithType: MenuPageItem.Key
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Key
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.Module*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.Module
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_Module
+  name: Module
+  nameWithType: MenuPageItem.Module
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.Module
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.AuthorizedOnly*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.AuthorizedOnly
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_AuthorizedOnly
+  name: AuthorizedOnly
+  nameWithType: MenuPageItem.AuthorizedOnly
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.AuthorizedOnly
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.UserRoles*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.UserRoles
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_UserRoles
+  name: UserRoles
+  nameWithType: MenuPageItem.UserRoles
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.UserRoles
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.UnauthorizedOnly*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.UnauthorizedOnly
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem_UnauthorizedOnly
+  name: UnauthorizedOnly
+  nameWithType: MenuPageItem.UnauthorizedOnly
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.UnauthorizedOnly
+- uid: DrawnUi.Maui.Navigation.MenuPageItem.#ctor*
+  commentId: Overload:DrawnUi.Maui.Navigation.MenuPageItem.#ctor
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html#DrawnUi_Maui_Navigation_MenuPageItem__ctor
+  name: MenuPageItem
+  nameWithType: MenuPageItem.MenuPageItem
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem.MenuPageItem
+  nameWithType.vb: MenuPageItem.New
+  fullName.vb: DrawnUi.Maui.Navigation.MenuPageItem.New
+  name.vb: New

@@ -18,11 +18,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/IntersectionUtils.cs
+      path: src/Shared/Internals/Helpers/IntersectionUtils.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IntersectionUtils
-    path: ../src/Shared/Draw/Internals/Helpers/IntersectionUtils.cs
+    path: ../src/Shared/Internals/Helpers/IntersectionUtils.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -54,11 +54,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/IntersectionUtils.cs
+      path: src/Shared/Internals/Helpers/IntersectionUtils.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IntersectWith
-    path: ../src/Shared/Draw/Internals/Helpers/IntersectionUtils.cs
+    path: ../src/Shared/Internals/Helpers/IntersectionUtils.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -88,11 +88,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/IntersectionUtils.cs
+      path: src/Shared/Internals/Helpers/IntersectionUtils.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Clamped
-    path: ../src/Shared/Draw/Internals/Helpers/IntersectionUtils.cs
+    path: ../src/Shared/Internals/Helpers/IntersectionUtils.cs
     startLine: 21
   assemblies:
   - DrawnUi.Maui
@@ -121,11 +121,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/IntersectionUtils.cs
+      path: src/Shared/Internals/Helpers/IntersectionUtils.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetIntersection
-    path: ../src/Shared/Draw/Internals/Helpers/IntersectionUtils.cs
+    path: ../src/Shared/Internals/Helpers/IntersectionUtils.cs
     startLine: 28
   assemblies:
   - DrawnUi.Maui
@@ -154,11 +154,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/IntersectionUtils.cs
+      path: src/Shared/Internals/Helpers/IntersectionUtils.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetIntersection
-    path: ../src/Shared/Draw/Internals/Helpers/IntersectionUtils.cs
+    path: ../src/Shared/Internals/Helpers/IntersectionUtils.cs
     startLine: 57
   assemblies:
   - DrawnUi.Maui

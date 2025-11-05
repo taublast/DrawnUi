@@ -17,11 +17,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+      path: src/Shared/Internals/Interfaces/IHasAfterEffects.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IHasAfterEffects
-    path: ../src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+    path: ../src/Shared/Internals/Interfaces/IHasAfterEffects.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -44,11 +44,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+      path: src/Shared/Internals/Interfaces/IHasAfterEffects.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayRippleAnimation
-    path: ../src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+    path: ../src/Shared/Internals/Interfaces/IHasAfterEffects.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -82,11 +82,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+      path: src/Shared/Internals/Interfaces/IHasAfterEffects.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayShimmerAnimation
-    path: ../src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+    path: ../src/Shared/Internals/Interfaces/IHasAfterEffects.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -122,11 +122,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+      path: src/Shared/Internals/Interfaces/IHasAfterEffects.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOffsetInsideControlInPoints
-    path: ../src/Shared/Draw/Internals/Interfaces/IHasAfterEffects.cs
+    path: ../src/Shared/Internals/Interfaces/IHasAfterEffects.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui

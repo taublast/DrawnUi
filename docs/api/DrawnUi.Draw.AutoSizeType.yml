@@ -21,11 +21,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+      path: src/Shared/Internals/Enums/AutoSizeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoSizeType
-    path: ../src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+    path: ../src/Shared/Internals/Enums/AutoSizeType.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -48,11 +48,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+      path: src/Shared/Internals/Enums/AutoSizeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: None
-    path: ../src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+    path: ../src/Shared/Internals/Enums/AutoSizeType.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -74,11 +74,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+      path: src/Shared/Internals/Enums/AutoSizeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FitFillHorizontal
-    path: ../src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+    path: ../src/Shared/Internals/Enums/AutoSizeType.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -102,11 +102,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+      path: src/Shared/Internals/Enums/AutoSizeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FitFillVertical
-    path: ../src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+    path: ../src/Shared/Internals/Enums/AutoSizeType.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui
@@ -130,11 +130,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+      path: src/Shared/Internals/Enums/AutoSizeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FitHorizontal
-    path: ../src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+    path: ../src/Shared/Internals/Enums/AutoSizeType.cs
     startLine: 19
   assemblies:
   - DrawnUi.Maui
@@ -158,11 +158,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+      path: src/Shared/Internals/Enums/AutoSizeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FillHorizontal
-    path: ../src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+    path: ../src/Shared/Internals/Enums/AutoSizeType.cs
     startLine: 24
   assemblies:
   - DrawnUi.Maui
@@ -186,11 +186,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+      path: src/Shared/Internals/Enums/AutoSizeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FitVertical
-    path: ../src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+    path: ../src/Shared/Internals/Enums/AutoSizeType.cs
     startLine: 29
   assemblies:
   - DrawnUi.Maui
@@ -214,11 +214,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+      path: src/Shared/Internals/Enums/AutoSizeType.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: FillVertical
-    path: ../src/Shared/Draw/Internals/Enums/AutoSizeType.cs
+    path: ../src/Shared/Internals/Enums/AutoSizeType.cs
     startLine: 35
   assemblies:
   - DrawnUi.Maui

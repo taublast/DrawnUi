@@ -26,11 +26,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Looper.cs
+      path: src/Shared/Internals/Helpers/Looper.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Looper
-    path: ../src/Shared/Draw/Internals/Helpers/Looper.cs
+    path: ../src/Shared/Internals/Helpers/Looper.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -65,11 +65,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Looper.cs
+      path: src/Shared/Internals/Helpers/Looper.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Helpers/Looper.cs
+    path: ../src/Shared/Internals/Helpers/Looper.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -94,11 +94,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Looper.cs
+      path: src/Shared/Internals/Helpers/Looper.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Helpers/Looper.cs
+    path: ../src/Shared/Internals/Helpers/Looper.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui
@@ -126,11 +126,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Looper.cs
+      path: src/Shared/Internals/Helpers/Looper.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Cancel
-    path: ../src/Shared/Draw/Internals/Helpers/Looper.cs
+    path: ../src/Shared/Internals/Helpers/Looper.cs
     startLine: 16
   assemblies:
   - DrawnUi.Maui
@@ -155,11 +155,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Looper.cs
+      path: src/Shared/Internals/Helpers/Looper.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
-    path: ../src/Shared/Draw/Internals/Helpers/Looper.cs
+    path: ../src/Shared/Internals/Helpers/Looper.cs
     startLine: 18
   assemblies:
   - DrawnUi.Maui
@@ -189,11 +189,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Looper.cs
+      path: src/Shared/Internals/Helpers/Looper.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: StartOnMainThread
-    path: ../src/Shared/Draw/Internals/Helpers/Looper.cs
+    path: ../src/Shared/Internals/Helpers/Looper.cs
     startLine: 42
   assemblies:
   - DrawnUi.Maui
@@ -223,11 +223,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Looper.cs
+      path: src/Shared/Internals/Helpers/Looper.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: SetTargetFps
-    path: ../src/Shared/Draw/Internals/Helpers/Looper.cs
+    path: ../src/Shared/Internals/Helpers/Looper.cs
     startLine: 82
   assemblies:
   - DrawnUi.Maui
@@ -255,11 +255,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Looper.cs
+      path: src/Shared/Internals/Helpers/Looper.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
-    path: ../src/Shared/Draw/Internals/Helpers/Looper.cs
+    path: ../src/Shared/Internals/Helpers/Looper.cs
     startLine: 87
   assemblies:
   - DrawnUi.Maui
@@ -281,11 +281,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Looper.cs
+      path: src/Shared/Internals/Helpers/Looper.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
-    path: ../src/Shared/Draw/Internals/Helpers/Looper.cs
+    path: ../src/Shared/Internals/Helpers/Looper.cs
     startLine: 92
   assemblies:
   - DrawnUi.Maui
@@ -311,11 +311,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Looper.cs
+      path: src/Shared/Internals/Helpers/Looper.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRunning
-    path: ../src/Shared/Draw/Internals/Helpers/Looper.cs
+    path: ../src/Shared/Internals/Helpers/Looper.cs
     startLine: 101
   assemblies:
   - DrawnUi.Maui
@@ -340,11 +340,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Looper.cs
+      path: src/Shared/Internals/Helpers/Looper.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: StartLegacyLooperAsync
-    path: ../src/Shared/Draw/Internals/Helpers/Looper.cs
+    path: ../src/Shared/Internals/Helpers/Looper.cs
     startLine: 103
   assemblies:
   - DrawnUi.Maui
@@ -371,11 +371,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Looper.cs
+      path: src/Shared/Internals/Helpers/Looper.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: StartLooperAsync
-    path: ../src/Shared/Draw/Internals/Helpers/Looper.cs
+    path: ../src/Shared/Internals/Helpers/Looper.cs
     startLine: 134
   assemblies:
   - DrawnUi.Maui
@@ -402,11 +402,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Helpers/Looper.cs
+      path: src/Shared/Internals/Helpers/Looper.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnFrame
-    path: ../src/Shared/Draw/Internals/Helpers/Looper.cs
+    path: ../src/Shared/Internals/Helpers/Looper.cs
     startLine: 173
   assemblies:
   - DrawnUi.Maui

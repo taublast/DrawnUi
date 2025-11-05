@@ -18,11 +18,11 @@ items:
   type: Struct
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/MeasuringConstraints.cs
+      path: src/Shared/Internals/Models/MeasuringConstraints.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuringConstraints
-    path: ../src/Shared/Draw/Internals/Models/MeasuringConstraints.cs
+    path: ../src/Shared/Internals/Models/MeasuringConstraints.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -52,11 +52,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/MeasuringConstraints.cs
+      path: src/Shared/Internals/Models/MeasuringConstraints.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Margins
-    path: ../src/Shared/Draw/Internals/Models/MeasuringConstraints.cs
+    path: ../src/Shared/Internals/Models/MeasuringConstraints.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -81,11 +81,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/MeasuringConstraints.cs
+      path: src/Shared/Internals/Models/MeasuringConstraints.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: TotalMargins
-    path: ../src/Shared/Draw/Internals/Models/MeasuringConstraints.cs
+    path: ../src/Shared/Internals/Models/MeasuringConstraints.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -112,11 +112,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/MeasuringConstraints.cs
+      path: src/Shared/Internals/Models/MeasuringConstraints.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Request
-    path: ../src/Shared/Draw/Internals/Models/MeasuringConstraints.cs
+    path: ../src/Shared/Internals/Models/MeasuringConstraints.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui
@@ -141,11 +141,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/MeasuringConstraints.cs
+      path: src/Shared/Internals/Models/MeasuringConstraints.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Content
-    path: ../src/Shared/Draw/Internals/Models/MeasuringConstraints.cs
+    path: ../src/Shared/Internals/Models/MeasuringConstraints.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui

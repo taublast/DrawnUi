@@ -17,11 +17,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Shared/Draw/SkiaBevel.cs
+      path: src/Shared/Internals/Models/SkiaBevel.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: BevelType
-    path: ../src/Shared/Draw/SkiaBevel.cs
+    path: ../src/Shared/Internals/Models/SkiaBevel.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -44,11 +44,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaBevel.cs
+      path: src/Shared/Internals/Models/SkiaBevel.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: None
-    path: ../src/Shared/Draw/SkiaBevel.cs
+    path: ../src/Shared/Internals/Models/SkiaBevel.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -72,11 +72,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaBevel.cs
+      path: src/Shared/Internals/Models/SkiaBevel.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Bevel
-    path: ../src/Shared/Draw/SkiaBevel.cs
+    path: ../src/Shared/Internals/Models/SkiaBevel.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -100,11 +100,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Shared/Draw/SkiaBevel.cs
+      path: src/Shared/Internals/Models/SkiaBevel.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Emboss
-    path: ../src/Shared/Draw/SkiaBevel.cs
+    path: ../src/Shared/Internals/Models/SkiaBevel.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui

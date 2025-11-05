@@ -19,11 +19,11 @@ items:
   type: Struct
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      path: src/Shared/Internals/Models/ScaledSize.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: RangeF
-    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    path: ../src/Shared/Internals/Models/ScaledSize.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -53,11 +53,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      path: src/Shared/Internals/Models/ScaledSize.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
-    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    path: ../src/Shared/Internals/Models/ScaledSize.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -82,11 +82,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      path: src/Shared/Internals/Models/ScaledSize.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: End
-    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    path: ../src/Shared/Internals/Models/ScaledSize.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -111,11 +111,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      path: src/Shared/Internals/Models/ScaledSize.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    path: ../src/Shared/Internals/Models/ScaledSize.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -145,11 +145,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      path: src/Shared/Internals/Models/ScaledSize.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Length
-    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    path: ../src/Shared/Internals/Models/ScaledSize.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -174,11 +174,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Shared/Draw/Internals/Models/ScaledSize.cs
+      path: src/Shared/Internals/Models/ScaledSize.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: Delta
-    path: ../src/Shared/Draw/Internals/Models/ScaledSize.cs
+    path: ../src/Shared/Internals/Models/ScaledSize.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui

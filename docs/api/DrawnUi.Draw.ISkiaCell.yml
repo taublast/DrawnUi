@@ -15,11 +15,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaCell.cs
+      path: src/Shared/Internals/Interfaces/ISkiaCell.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaCell
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaCell.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaCell.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -42,11 +42,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Shared/Draw/Internals/Interfaces/ISkiaCell.cs
+      path: src/Shared/Internals/Interfaces/ISkiaCell.cs
       branch: 2-A
       repo: https://github.com/taublast/DrawnUi.git
     id: OnScrolled
-    path: ../src/Shared/Draw/Internals/Interfaces/ISkiaCell.cs
+    path: ../src/Shared/Internals/Interfaces/ISkiaCell.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui

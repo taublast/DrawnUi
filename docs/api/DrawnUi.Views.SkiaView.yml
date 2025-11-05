@@ -35,7 +35,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaView
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 2
+    startLine: 4
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -291,7 +291,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Uid
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 4
+    startLine: 6
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -323,7 +323,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsHardwareAccelerated
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 6
+    startLine: 8
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -355,7 +355,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SignalFrame
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 8
+    startLine: 10
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -390,7 +390,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDraw
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 13
+    startLine: 15
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -423,7 +423,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Superview
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 15
+    startLine: 17
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -452,7 +452,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 17
+    startLine: 19
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -482,7 +482,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 24
+    startLine: 26
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -514,7 +514,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Disconnect
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 30
+    startLine: 32
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -540,7 +540,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHandlerChanging
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 35
+    startLine: 42
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -574,7 +574,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHandlerChanged
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 46
+    startLine: 53
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -604,7 +604,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Surface
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 65
+    startLine: 78
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -636,7 +636,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FPS
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 73
+    startLine: 86
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -668,7 +668,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameTime
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 110
+    startLine: 123
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -700,7 +700,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDrawing
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 112
+    startLine: 125
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -732,7 +732,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HasDrawn
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 114
+    startLine: 127
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -764,7 +764,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 172
+    startLine: 166
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
