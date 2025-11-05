@@ -143,12 +143,11 @@ namespace DrawnUi.Draw
                 DrawnExtensions.StartupSettings.Logger?.Log(logLevel, message);
             }
 
-#if WINDOWS
-        Trace.WriteLine(message);
-#else
-
+    #if WINDOWS
+            Trace.WriteLine(message);
+    #else
             Console.WriteLine(message);
-#endif
+    #endif
         }
 
         /// <summary>

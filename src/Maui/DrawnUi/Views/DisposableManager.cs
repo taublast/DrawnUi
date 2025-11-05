@@ -8,6 +8,7 @@ namespace DrawnUi.Views
         void DisposeObject(IDisposable disposable, [CallerMemberName] string caller = null);
     }
 
+    [DebuggerDisplay("{_toBeDisposed.PendingDisposalCount}")]
     /// <summary>
     /// Manages delayed disposal of IDisposable objects based on frame count
     /// </summary>

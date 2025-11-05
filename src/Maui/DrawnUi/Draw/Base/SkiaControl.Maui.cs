@@ -354,6 +354,9 @@ namespace DrawnUi.Draw
             }
         }
 
+        /// <summary>
+        /// DrawingRect size changed
+        /// </summary>
         protected virtual void OnLayoutChanged()
         {
             var ready = this.Height > 0 && this.Width > 0;
@@ -369,6 +372,14 @@ namespace DrawnUi.Draw
             }
 
             LayoutReady = ready;
+        }
+
+        /// <summary>
+        /// DrawingRect location changed. This will not be called if OnLayoutChanged was invoked for this frame!
+        /// </summary>
+        protected virtual void OnLayoutPositionChanged()
+        {
+
         }
 
         /// <summary>

@@ -66,30 +66,28 @@ public class SkiaDrawnCell : SkiaLayout, ISkiaCell
 
     public override void ApplyBindingContext()
     {
-        lock (LockContext)
+        base.ApplyBindingContext();
+
+        var ctx = BindingContext;
+
+        if (ctx != Context && !_isAttaching)
         {
-            base.ApplyBindingContext();
+            _isAttaching = true;
 
-            var ctx = BindingContext;
+            FreeContext();
 
-            if (ctx != Context && !_isAttaching)
+            if (Context == null)
             {
-                _isAttaching = true;
+                LockUpdate(true);
 
-                FreeContext();
+                SetContent(ctx);
+                AttachContext(ctx);
 
-                if (Context == null)
-                {
-                    LockUpdate(true);
-
-                    SetContent(ctx);
-                    AttachContext(ctx);
-
-                    LockUpdate(false);
-                }
-                _isAttaching = false;
+                LockUpdate(false);
             }
+            _isAttaching = false;
         }
+
     }
 
 

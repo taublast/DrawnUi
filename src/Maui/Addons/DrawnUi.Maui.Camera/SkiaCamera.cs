@@ -178,12 +178,15 @@ public partial class SkiaCamera : SkiaControl
         Display.VerticalOptions = this.NeedAutoHeight ? LayoutOptions.Start : LayoutOptions.Fill;
     }
 
+    /// <summary>
+    /// This creates a SkiaImage that will be used to display camera preview frames. Please do NOT use cache here.
+    /// </summary>
+    /// <returns></returns>
     protected virtual SkiaImage CreatePreview()
     {
         return new SkiaImage()
         {
             LoadSourceOnFirstDraw = true,
-            UseCache = SkiaCacheType.GPU,
             RescalingQuality = SKFilterQuality.None,
             HorizontalOptions = this.NeedAutoWidth ? LayoutOptions.Start : LayoutOptions.Fill,
             VerticalOptions = this.NeedAutoHeight ? LayoutOptions.Start : LayoutOptions.Fill,
@@ -755,7 +758,20 @@ public partial class SkiaCamera : SkiaControl
 
                             //    System.Diagnostics.Debug.WriteLine($"[CAPTURE-DRAW] src={img.Width}x{img.Height} dst={info.Width}x{info.Height} srcRect=({rects.src.Left},{rects.src.Top},{rects.src.Right},{rects.src.Bottom}) dstRect=({rects.dst.Left},{rects.dst.Top},{rects.dst.Right},{rects.dst.Bottom})");
 
+                            // Apply 180° flip for selfie camera in landscape (sensor is opposite orientation)
+                            var isSelfieInLandscape = Facing == CameraPosition.Selfie && (RecordingLockedRotation == 90 || RecordingLockedRotation == 270);
+                            if (isSelfieInLandscape)
+                            {
+                                canvas.Save();
+                                canvas.Scale(-1, -1, info.Width / 2f, info.Height / 2f);
+                            }
+
                             canvas.DrawImage(img, rects.src, rects.dst);
+
+                            if (isSelfieInLandscape)
+                            {
+                                canvas.Restore();
+                            }
 
                             if (FrameProcessor != null || VideoDiagnosticsOn)
                             {
@@ -985,7 +1001,21 @@ public partial class SkiaCamera : SkiaControl
                     {
                         var __rects2 =
                             GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
+
+                        // Apply 180° flip for selfie camera in landscape (sensor is opposite orientation)
+                        var isSelfieInLandscape = Facing == CameraPosition.Selfie && (RecordingLockedRotation == 90 || RecordingLockedRotation == 270);
+                        if (isSelfieInLandscape)
+                        {
+                            canvas.Save();
+                            canvas.Scale(-1, -1, info.Width / 2f, info.Height / 2f);
+                        }
+
                         canvas.DrawImage(previewImage, __rects2.src, __rects2.dst);
+
+                        if (isSelfieInLandscape)
+                        {
+                            canvas.Restore();
+                        }
 
                         if (FrameProcessor != null || VideoDiagnosticsOn)
                         {
@@ -2589,6 +2619,7 @@ public partial class SkiaCamera : SkiaControl
 
     private static void OnCaptureFormatChanged(BindableObject bindable, object oldvalue, object newvalue)
     {
+       
         if (bindable is SkiaCamera control)
         {
             // When capture format changes, update preview to match aspect ratio
@@ -2610,17 +2641,33 @@ public partial class SkiaCamera : SkiaControl
 
 #endif
             }
-            //else
-            //{
-            //    if (control.IsOn)
-            //    {
-            //        control.StartInternal();
-            //    }
-            //    else
-            //    {
-            //        control.Start();
-            //    }
-            //}
+        }
+    }
+
+    private static void OnCaptureVideoFormatChanged(BindableObject bindable, object oldvalue, object newvalue)
+    {
+        
+        if (bindable is SkiaCamera control)
+        {
+            // When capture format changes, update preview to match aspect ratio
+            Debug.WriteLine($"[SkiaCamera] Capture video format changed: {oldvalue} -> {newvalue}");
+
+            if (newvalue is int)
+            {
+                if (control.VideoQuality != VideoQuality.Manual)
+                {
+                    return;
+                }
+            }
+
+            if (control.IsOn)
+            {
+#if ONPLATFORM
+                control.SafeAction(async () => { control.UpdatePreviewFormatForAspectRatio(); },
+                    LongKeyGenerator.EncodeSemantic("cam_restart"));
+
+#endif
+            }
         }
     }
 
@@ -2662,7 +2709,7 @@ public partial class SkiaCamera : SkiaControl
         nameof(PhotoQuality),
         typeof(CaptureQuality),
         typeof(SkiaCamera),
-        CaptureQuality.Max, propertyChanged: OnCaptureFormatChanged);
+        CaptureQuality.High, propertyChanged: OnCaptureFormatChanged);
 
     /// <summary>
     /// Photo capture quality
@@ -2776,8 +2823,8 @@ public partial class SkiaCamera : SkiaControl
         nameof(VideoQuality),
         typeof(VideoQuality),
         typeof(SkiaCamera),
-        VideoQuality.High,
-        propertyChanged: OnCaptureFormatChanged);
+        VideoQuality.Standard,
+        propertyChanged: OnCaptureVideoFormatChanged);
 
     /// <summary>
     /// Video recording quality preset
@@ -2793,7 +2840,7 @@ public partial class SkiaCamera : SkiaControl
         typeof(int),
         typeof(SkiaCamera),
         0,
-        propertyChanged: OnCaptureFormatChanged);
+        propertyChanged: OnCaptureVideoFormatChanged);
 
     /// <summary>
     /// Index of video format when VideoQuality is set to Manual.

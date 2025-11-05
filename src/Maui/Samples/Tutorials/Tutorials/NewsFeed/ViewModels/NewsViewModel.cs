@@ -66,8 +66,8 @@ public class NewsViewModel : BaseViewModel
             var newItems = _dataProvider.GetNewsFeed(DataChunkSize);
             
             // Preload images in background (DrawnUI's SkiaImageManager)
-            //_preloadCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            //_ = PreloadImages(newItems, _preloadCancellation.Token);
+            _preloadCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            _ = PreloadImages(newItems, _preloadCancellation.Token);
             
             // Update UI - Replace all items for refresh
             MainThread.BeginInvokeOnMainThread(() =>

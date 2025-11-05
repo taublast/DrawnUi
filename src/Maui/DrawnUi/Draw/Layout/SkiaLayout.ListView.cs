@@ -702,12 +702,6 @@ public partial class SkiaLayout
                 if (_measuredItems.ContainsKey(itemIndex))
                     continue;
 
-                // Add spacing only when starting a new row (not for columns within the same row)
-                if (Type == LayoutType.Column && col == 0 && i > 0)
-                {
-                    currentY += GetSpacingForIndex(row, scale);
-                }
-
                 var child = ChildrenFactory.GetViewForIndex(itemIndex, template, 0, true);
                 if (template == null && child != null)
                 {
@@ -2706,8 +2700,7 @@ public partial class SkiaLayout
                 if (_listAdditionalMeasurements == 0)
                 {
                     //do not use approx size we have
-                    stackHeight = structure.GetChildren().Sum(x => x.Measured.Pixels.Height) +
-                        spacingPixels * structure.MaxRows - 1;
+                    stackHeight = structure.GetChildren().Sum(x => x.Measured.Pixels.Height) + spacingPixels * structure.MaxRows - 1;
                 }
                 else
                 {

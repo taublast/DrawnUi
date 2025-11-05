@@ -52,6 +52,8 @@ public partial class SpaceShooter : MauiGame
 
     public SpaceShooter()
     {
+        //MauiGame.FrameInterpolatorDisabled=true;
+
         InitializeComponent();
 
         BindingContext = this;

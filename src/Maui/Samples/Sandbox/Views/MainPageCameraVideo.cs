@@ -254,7 +254,12 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
 
         Canvas.WillFirstTimeDraw += (sender, context) => { CameraControl.IsOn = true; };
 
-        Content = Canvas;
+        Content = new Grid() //due to maui layout specifics we are forced to use a Grid as root wrapper
+        {
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            Children = { Canvas }
+        };
 
         CameraControl.FrameProcessor = (frame) =>
         {

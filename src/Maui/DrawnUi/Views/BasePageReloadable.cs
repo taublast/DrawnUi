@@ -10,17 +10,30 @@ public class BasePageReloadable : DrawnUiBasePage, IDisposable
 
     public BasePageReloadable()
     {
-        this.Loaded += (s, a) =>
+        if (Debugger.IsAttached)
+        {
+            Super.HotReload += ReloadUi;
+        }
+    }
+
+    protected override void OnHandlerChanged()
+    {
+        base.OnHandlerChanged();
+
+        if (Handler != null)
         {
             if (!wasBuilt)
             {
                 Build();
             }
-        };
-
-        if (Debugger.IsAttached)
+            if (Debugger.IsAttached)
+            {
+                Super.HotReload += ReloadUi;
+            }
+        }
+        else
         {
-            Super.HotReload += ReloadUi;
+            Super.HotReload -= ReloadUi;
         }
     }
 

@@ -22,18 +22,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Shared/**/*.*pple.cs" />
-        <None Include="Shared/**/*.*pple.cs" />
+        <Compile Remove="Apple/**/*.*pple.cs" />
+        <None Include="Apple/**/*.*pple.cs" />
     </ItemGroup>
 
     <ItemGroup Condition="$(TargetFramework.Contains('catalyst'))">
-        <Compile Include="Shared/**/*.*pple.cs">
+        <Compile Include="Apple/**/*.*pple.cs">
             <Link>Platforms/MacCatalyst/%(RecursiveDir)%(Filename)%(Extension)</Link>
         </Compile>
     </ItemGroup>
 
     <ItemGroup Condition="$(TargetFramework.Contains('ios'))">
-        <Compile Include="Shared/**/*.*pple.cs">
+        <Compile Include="Apple/**/*.*pple.cs">
             <Link>Platforms/iOS/%(RecursiveDir)%(Filename)%(Extension)</Link>
         </Compile>
     </ItemGroup>

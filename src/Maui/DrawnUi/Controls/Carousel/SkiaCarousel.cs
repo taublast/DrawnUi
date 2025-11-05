@@ -1827,7 +1827,6 @@ public class SkiaCarousel : SnappingLayout
                     {
                         //IgnoreWrongDirection
                         wrongDirection = true;
-                        Repaint();
                         return consumedDefault;
                     }
                 }

@@ -275,41 +275,6 @@ namespace DrawnUi.Draw
 
         #region PROPERTIES
 
-        public static readonly BindableProperty VirtualizationProperty = BindableProperty.Create(
-            nameof(Virtualisation),
-            typeof(VirtualisationType),
-            typeof(SkiaLayout),
-            VirtualisationType.Enabled,
-            propertyChanged: NeedInvalidateMeasure);
-
-        /// <summary>
-        /// Default is Enabled, children get the visible viewport area for rendering and can virtualize.
-        /// </summary>
-        public VirtualisationType Virtualisation
-        {
-            get { return (VirtualisationType)GetValue(VirtualizationProperty); }
-            set { SetValue(VirtualizationProperty, value); }
-        }
-
-        public static readonly BindableProperty VirtualisationInflatedProperty = BindableProperty.Create(
-            nameof(VirtualisationInflated),
-            typeof(double),
-            typeof(SkiaLayout),
-            0.0,
-            propertyChanged: NeedInvalidateMeasure);
-
-        /// <summary>
-        /// How much of the hidden content out of visible bounds should be considered visible for rendering,
-        /// default is 0 pts.
-        /// Basically how much should be expand in every direction of the visible area prior to checking if content falls
-        /// into its bounds for rendering controlled with Virtualisation.
-        /// </summary>
-        public double VirtualisationInflated
-        {
-            get { return (double)GetValue(VirtualisationInflatedProperty); }
-            set { SetValue(VirtualisationInflatedProperty, value); }
-        }
-
 
         public static readonly BindableProperty RecyclingBufferProperty = BindableProperty.Create(
             nameof(RecyclingBuffer),
@@ -1486,6 +1451,8 @@ namespace DrawnUi.Draw
             this.ChildrenFactory.TemplatesInvalidated = true;
             ApplyNewItemsSource = true;
             Invalidate();
+
+            PostDrawAction(OnItemsSourceChangesApplied);
         }
 
         public virtual void ResetScroll()
@@ -1573,9 +1540,21 @@ namespace DrawnUi.Draw
                     {
                         Invalidate();
                     }
+
+                    PostDrawAction(OnItemsSourceChangesApplied);
                 });
             }
         }
+
+        /// <summary>
+        /// Triggers after a new ItemsSource was set or an observable collection of an existing one was changed
+        /// </summary>
+        protected virtual void OnItemsSourceChangesApplied()
+        {
+            ItemsSourceChangesApplied?.Invoke(this, EventArgs.Empty);
+        }
+
+        public event EventHandler ItemsSourceChangesApplied;
 
         /// <summary>
         /// Handles collection changes while preserving existing measurement structure

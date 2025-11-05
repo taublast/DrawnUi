@@ -4,6 +4,8 @@
 ![NuGet Downloads](https://img.shields.io/nuget/dt/AppoMobi.Maui.DrawnUi.svg)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=flat)](https://github.com/taublast/drawnui/blob/master/CONTRIBUTING.md)
 
+[Docs and Samples](https://drawnui.net) 👈
+
 Rendering engine for .NET MAUI with gestures and animations and much more, powered by [SkiaSharp](https://github.com/mono/SkiaSharp).   
 
 Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware acceleration.
@@ -31,23 +33,12 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
 
 ---
 
-## 🆕 What's new
+## 🆕 What's new for 1.7.3.2
 
-* Sandbox and Tutorial projects UI cache tuned for max fps
-* `SkiaButton` uses `Padding` property for frame content, see Sandbox project Buttons example.
-* Fix cache performance `ImageDoubleBuffered`, improved cache `Image`
-* Fixed cache type `OperationsFull`, god mode that records a larger area than your control, to pick up glow, shadows etc, if you need to animate its destination cache one of the the parents so it uses its bounds instead of the top canvas.
-* Some animated controls now have `ImageDoubleBuffered` set as default (lottie and similar)
-* `SkiaImage` performance fix to avoid changing source when was created from same string with converter. Added retry logic for all platforms.
-* `IsLooped` property implemented for `SkiaCarousel` (Sandbox project carousel example updated), for never-ending scrolls, also added `SwipeSpeed` property.
-* `Gestures` property for `Canvas` has new value `SoftLock` for smart working together inside native ScrollView: You started your custom control panning (ex: SkiaCarousel) MAUI ScrollView will not scroll until you release. Note that using `Lock` value instead will totally prevent parent ScrollView to receive panning gestures. Using new `AppoMobi.Maui.Gestures` gestures nuget.
-* `SkiaLabel` subpixel rendering quality improved, note it can be can turned off with `Super.FontSubPixelRendering` static property.
-* Improved font auto-selection for unicode symbols on **Android** + **Apple** for `SkiaRichLabel` and related, all currency, Chinese etc symbols now properly displayed. Implemented platform agnostic caching for auto-find font.
-* Fixed `MinimumWidthRequest` and `MinimumHeightRequest` not applying margins.
-* Fixed animators sometimes not starting when created to early, including `SkiaLottie` one.
-* Fixed `SkiaScroll` refresh mechanics, added refresh feature with `SkiaLottie` tinted indicator to News Feed Scroller tutorial code.
-
-  
+* GPU accelerated views first render on CPU for a fast display, then switch to GPU rendering when ready, to avoid blank controls on first display.
+* Many performance optimizations for native views, cells and layouts.
+* Fix spacing for `MeasureVisible` recycled cells scenario.
+ 
 ## 💡 Hint of the Day
 
 **❓ Q: How to make images to Fade-In when loaded?**
@@ -105,11 +96,10 @@ Do not miss the [Tutorials Project](https://github.com/taublast/DrawnUi.Maui/tre
 ## Sample Apps
 
 **Demo Projects:**
-- [Tutorials Project](https://github.com/taublast/DrawnUi/tree/main/src/Maui/Samples/Tutorials) - First steps, custom control, recycled cells scroller..
-- [Sandbox Project](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Sandbox) - Custom controls, camera, maps..
-- [Shaders Carousel](https://github.com/taublast/ShadersCarousel/) - Using shaders for custom control
+- [Engine Demo](https://github.com/taublast/AppoMobi.Maui.DrawnUi.Demo) - Navigation, recycled cells, camera integration
+- [Sandbox Project](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Sandbox) - Playground and custom controls
+- [Shaders Carousel](https://github.com/taublast/ShadersCarousel/) - Advanced SkiaSharp v3 effects
 - [Space Shooter](https://github.com/taublast/Maui.Game.SpaceShooter/) - 2D Arcade Game Etude
-- [Engine Demo](https://github.com/taublast/AppoMobi.Maui.DrawnUi.Demo) - Navigation and other
 
 **Open-Source Published Apps:**
 - [Filters Camera](https://github.com/taublast/ShadersCamera) - Real-time camera filters ([AppStore](https://apps.apple.com/us/app/filters-camera/id6749823005), [Google Play](https://play.google.com/store/apps/details?id=com.appomobi.drawnui.shaderscam))

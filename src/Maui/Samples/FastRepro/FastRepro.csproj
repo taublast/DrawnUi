@@ -3,6 +3,7 @@
     <PropertyGroup>
 
         <!--<TargetFrameworks>net9.0-windows10.0.19041.0</TargetFrameworks>-->
+        <!--<TargetFrameworks>net9.0-android</TargetFrameworks>-->
 
         <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
         <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
@@ -15,6 +16,8 @@
         <UseMaui>true</UseMaui>
         <SingleProject>true</SingleProject>
         <ImplicitUsings>enable</ImplicitUsings>
+        
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
     </PropertyGroup>
 
@@ -48,13 +51,6 @@
     <AndroidEnableSGenConcurrent>True</AndroidEnableSGenConcurrent>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net*-android|AnyCPU'">
-      <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net*-android|AnyCPU'">
-    <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
-  </PropertyGroup>
   
   <PropertyGroup Condition="$(TargetFramework.Contains('ios')) == true">
     <ProvisioningType>manual</ProvisioningType>
@@ -122,58 +118,35 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
-        <!--<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />-->
         <!--<PackageReference Include="DrawnUi.Maui" Version="1.6.2.5" />-->
 	</ItemGroup>
 
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\DrawnUi\DrawnUi.Maui.csproj" />
 	  <ProjectReference Include="..\..\Addons\DrawnUi.Maui.Camera\DrawnUi.Maui.Camera.csproj" />
 	</ItemGroup>
 
     <ItemGroup>
- 
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
- 
-    <EmbeddedResource Update="Resources\Strings\ResStrings.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-        <LastGenOutput>ResStrings.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-    
+        <Compile Update="Resources\Strings\ResStrings.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ResStrings.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="Resources\Strings\ResStrings.resx">
+            <LastGenOutput>ResStrings.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Extensions\" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Compile Update="ReproEditors.xaml.cs">
-        <DependentUpon>ReproEditors.xaml</DependentUpon>
-      </Compile>
-      <Compile Update="TestSoftLock.xaml.cs">
-        <DependentUpon>TestSoftLock.xaml</DependentUpon>
-      </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
-      <MauiXaml Update="ColorPicker\ColorPicker.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </MauiXaml>
-      <MauiXaml Update="ColorPicker\SliderColor.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </MauiXaml>
-      <MauiXaml Update="ReproEditors.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </MauiXaml>
-      <MauiXaml Update="TestSoftLock.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </MauiXaml>
-    </ItemGroup>
 
  
 </Project>

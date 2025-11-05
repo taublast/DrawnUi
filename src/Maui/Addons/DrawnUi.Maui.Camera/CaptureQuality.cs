@@ -7,6 +7,11 @@ public enum CaptureQuality
 	/// </summary>
 	Max,
 
+    /// <summary>
+    /// 20% reduction from Max
+    /// </summary>
+    High,
+
 	/// <summary>
 	/// Medium photo size
 	/// </summary>

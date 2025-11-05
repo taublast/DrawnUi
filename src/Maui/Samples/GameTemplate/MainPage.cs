@@ -75,14 +75,13 @@ namespace Breakout.Game
                     }
                 }.Fill()
             };
-#if IOS
-            this.Content = new Grid() //using grid wrapper to take apply safe insets on ios, other platforms use different logic
+            
+            Content = new Grid() //due to maui layout specifics we are forced to use a Grid as root wrapper
             {
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
                 Children = { Canvas }
             };
-#else
-            this.Content = Canvas;
-#endif
         }
     }
 }

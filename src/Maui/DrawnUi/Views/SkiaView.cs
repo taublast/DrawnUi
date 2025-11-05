@@ -1,4 +1,6 @@
-﻿namespace DrawnUi.Views;
+﻿using DrawnUi.Controls;
+
+namespace DrawnUi.Views;
 
 public partial class SkiaView : SKCanvasView, ISkiaDrawable
 {
@@ -138,38 +140,19 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
 
         if (OnDraw != null && Super.EnableRendering)
         {
+            var rect = new SKRect(0, 0, paintArgs.Info.Width, paintArgs.Info.Height);
             _surface = paintArgs.Surface;
-            bool isDirty = OnDraw.Invoke(paintArgs.Surface, new SKRect(0, 0, paintArgs.Info.Width, paintArgs.Info.Height));
+            bool isDirty = OnDraw.Invoke(paintArgs.Surface, rect);
 
 
 #if WINDOWS
             //fix handler renderer didn't render first frame at startup for skiasharp v3
-            if (Handler?.PlatformView is SkiaSharp.Views.Windows.SKXamlCanvas canvas)
+            if (Handler?.PlatformView is SoftwareWindowsCanvas canvas)
             {
                 if (double.IsNaN(canvas.Height) || double.IsNaN(canvas.Width))
                 {
-                    //maybeDrawn = false;
-                    //if (canvas is Microsoft.UI.Xaml.FrameworkElement element)
-                    //{
-                    //        element.UpdateLayout();
-                    //        element.Measure(new(element.ActualWidth, element.ActualHeight));
-                    //        element.Arrange(new(0, 0, element.ActualWidth, element.ActualHeight));
-                    //}
+                    maybeDrawn = false;
                 }
-                //Trace.WriteLine($"[!!!] canvas {canvas.Width}");
-            }
-#endif
-
-#if disabledANDROID
-            if (maybeLowEnd && FPS > 160)
-            {
-                maybeLowEnd = false;
-            }
-
-            if (maybeLowEnd && isDirty && _fps < 55) //kick refresh for low-end devices
-            {
-                InvalidateSurface();
-                return;
             }
 #endif
 
@@ -185,9 +168,10 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
     {
         if (
             Super.EnableRendering &&
-            this.Handler != null && this.Handler.PlatformView != null && CanvasSize is { Width: > 0, Height: > 0 })
+            this.Handler != null && this.Handler.PlatformView != null)
         {
             InvalidateSurface();
+
             return true;
         }
 

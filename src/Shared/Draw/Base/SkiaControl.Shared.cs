@@ -29,6 +29,16 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
+        /// Lifecycle event
+        /// </summary>
+        public event EventHandler Initialized;
+
+        /// <summary>
+        /// Lifecycle event
+        /// </summary>
+        public event EventHandler Destroyed;
+        
+        /// <summary>
         /// For internat custom logic, use IsHovered for usual use.
         /// </summary>
         /// <param name="state"></param>
@@ -188,6 +198,43 @@ namespace DrawnUi.Draw
             get => (IList<SkiaControl>)GetValue(ChildrenProperty);
             set => SetValue(ChildrenProperty, value);
         }
+
+
+        public static readonly BindableProperty VirtualizationProperty = BindableProperty.Create(
+            nameof(Virtualisation),
+            typeof(VirtualisationType),
+            typeof(SkiaControl),
+            VirtualisationType.Enabled,
+            propertyChanged: NeedInvalidateMeasure);
+
+        /// <summary>
+        /// Default is Enabled, children get the visible viewport area for rendering and can virtualize.
+        /// </summary>
+        public VirtualisationType Virtualisation
+        {
+            get { return (VirtualisationType)GetValue(VirtualizationProperty); }
+            set { SetValue(VirtualizationProperty, value); }
+        }
+
+        public static readonly BindableProperty VirtualisationInflatedProperty = BindableProperty.Create(
+            nameof(VirtualisationInflated),
+            typeof(double),
+            typeof(SkiaControl),
+            0.0,
+            propertyChanged: NeedInvalidateMeasure);
+
+        /// <summary>
+        /// How much of the hidden content out of visible bounds should be considered visible for rendering,
+        /// default is 0 pts.
+        /// Basically how much should be expand in every direction of the visible area prior to checking if content falls
+        /// into its bounds for rendering controlled with Virtualisation.
+        /// </summary>
+        public double VirtualisationInflated
+        {
+            get { return (double)GetValue(VirtualisationInflatedProperty); }
+            set { SetValue(VirtualisationInflatedProperty, value); }
+        }
+
 
         protected static SKBlendMode DefaultBlendMode = SKBlendMode.SrcOver;
 
@@ -2814,6 +2861,9 @@ namespace DrawnUi.Draw
             0.0,
             propertyChanged: NeedDraw);
 
+        /// <summary>
+        /// For Arc: start angle
+        /// </summary>
         public double Value1
         {
             get { return (double)GetValue(Value1Property); }
@@ -2825,6 +2875,9 @@ namespace DrawnUi.Draw
             0.0,
             propertyChanged: NeedDraw);
 
+        /// <summary>
+        /// For Arc: sweep angle
+        /// </summary>
         public double Value2
         {
             get { return (double)GetValue(Value2Property); }
@@ -3975,6 +4028,11 @@ namespace DrawnUi.Draw
                 OnDrawingSizeChanged();
                 layoutChanged = true;
             }
+            else
+            if (oldDrawingRect.Left != DrawingRect.Left || oldDrawingRect.Top != DrawingRect.Top)
+            {
+                OnLayoutPositionChanged();
+            }
 
             if (layoutChanged)
                 OnLayoutChanged();
@@ -4486,6 +4544,8 @@ namespace DrawnUi.Draw
                 }
 
                 CreateDefaultContent();
+
+                OnLifecycleStateChanged(ControlLifecycleState.Initialized);
             }
         }
 
@@ -5024,8 +5084,13 @@ namespace DrawnUi.Draw
             if (!disposing)
             {
                 _isDisposed = true;
+                LifecycleState = ControlLifecycleState.Destroyed; //cannot call virtual functions from destructor
+                IsDisposed = true;
+                _renderObject = null;
                 return;
             }
+
+            OnLifecycleStateChanged(ControlLifecycleState.Destroyed);
 
             OnWillDisposeWithChildren();
 
@@ -5097,6 +5162,23 @@ namespace DrawnUi.Draw
                 EffectPostRenderer = null;
             });
         }
+
+        protected virtual void OnLifecycleStateChanged(ControlLifecycleState state)
+        {
+            LifecycleState = state;
+                
+            switch (state)
+            {
+                case ControlLifecycleState.Initialized:
+                    Initialized?.Invoke(this, EventArgs.Empty);
+                    break;
+                case ControlLifecycleState.Destroyed:
+                    Destroyed?.Invoke(this, EventArgs.Empty);
+                    break;
+            }
+        }
+
+        public ControlLifecycleState LifecycleState { get; protected set; }
 
         /// <summary>
         /// Releases unmanaged resources before the object is reclaimed by garbage collection.
@@ -5342,8 +5424,12 @@ namespace DrawnUi.Draw
 
             Rendered?.Invoke(this, EventArgs.Empty);
 
+            RenderCount++;
+
             IsRendering = false;
         }
+
+        protected long RenderCount;
 
         public event EventHandler Rendered;
 
@@ -5814,6 +5900,24 @@ namespace DrawnUi.Draw
             if (super != null)
             {
                 Superview.PostponeExecutionBeforeDraw(() => { action(); }, key);
+                Repaint();
+            }
+            else
+            {
+                action();
+            }
+        }
+
+        /// <summary>
+        /// Will be executed after canvas has finished drawing current frame. Useful when you need to account for all calculations and drawings to be finished.
+        /// </summary>
+        /// <param name="action"></param>
+        public void PostDrawAction(Action action)
+        {
+            var super = this.Superview;
+            if (super != null)
+            {
+                Superview.PostponeExecutionAfterDraw(() => { action(); });
                 Repaint();
             }
             else
@@ -6305,6 +6409,7 @@ namespace DrawnUi.Draw
 
         private int _updatedFromThread;
         private volatile bool _neededUpdate;
+        protected long UpdatedRendering;
 
         /// <summary>
         /// Main method to invalidate cache and invoke rendering
@@ -6321,13 +6426,20 @@ namespace DrawnUi.Draw
                 Super.Log($"[SkiaControl] will Update {this}");
             }
 
+            Updated?.Invoke(this, null);
+
+            if (NeedUpdate && UpdatedRendering == RenderCount)
+            {
+                return;
+            }
+
             _updatedFromThread = Thread.CurrentThread.ManagedThreadId;
+
+            UpdatedRendering = RenderCount;
 
             InvalidateCache();
 
             UpdateInternal();
-
-            Updated?.Invoke(this, null);
         }
 
         /// <summary>
@@ -7366,16 +7478,23 @@ namespace DrawnUi.Draw
 
         protected void AddOrRemoveView(SkiaControl subView, bool add)
         {
-            if (subView != null)
+            try
             {
-                if (add)
+                if (subView != null)
                 {
-                    AddSubView(subView);
+                    if (add)
+                    {
+                        AddSubView(subView);
+                    }
+                    else
+                    {
+                        RemoveSubView(subView);
+                    }
                 }
-                else
-                {
-                    RemoveSubView(subView);
-                }
+            }
+            catch (Exception e)
+            {
+                Super.Log(e);
             }
         }
 

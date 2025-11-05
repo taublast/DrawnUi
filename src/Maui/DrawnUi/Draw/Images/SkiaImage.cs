@@ -579,6 +579,9 @@ public class SkiaImage : SkiaControl
                 {
                     try
                     {
+                        if (LifecycleState == ControlLifecycleState.Destroyed)
+                            return;
+
                         SKBitmap bitmap = null;
                         SkiaImageManager.Instance.CanReload -= OnCanReloadSource;
 
@@ -596,6 +599,9 @@ public class SkiaImage : SkiaControl
 
                             async Task LoadAction()
                             {
+                                if (LifecycleState == ControlLifecycleState.Destroyed)
+                                    return;
+
                                 try
                                 {
                                     //bitmap = await SkiaImageManager.LoadImageOnPlatformAsync(source, cancel.Token);

@@ -32,7 +32,12 @@ public partial class FirstAppPageCode : BasePageReloadable, IDisposable
             Content = CreateMainLayout()
         };
 
-        this.Content = Canvas;
+            Content = new Grid() //due to maui layout specifics we are forced to use a Grid as root wrapper
+            {
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
+                Children = { Canvas }
+            };
     }
 
     SkiaLayout CreateMainLayout()

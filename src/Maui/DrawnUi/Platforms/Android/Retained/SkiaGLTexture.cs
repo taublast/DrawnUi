@@ -50,7 +50,7 @@ namespace DrawnUi
                 this.textureView = textureView;
             }
 
-            protected override void OnPaintSurface(SKPaintGLSurfaceEventArgs e)
+            public override void OnPaintSurface(SKPaintGLSurfaceEventArgs e)
             {
                 textureView.OnPaintSurface(e);
             }

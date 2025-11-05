@@ -2014,7 +2014,11 @@ namespace DrawnUi.Draw
         }
 
         */
-        public ScaledRect Viewport { get; protected set; } = new();
+        public ScaledRect Viewport
+        {
+            get;
+            protected set;
+        } = new();
 
         protected override ScaledSize SetMeasured(float width, float height, bool widthCut, bool heightCut, float scale)
         {
@@ -2271,6 +2275,32 @@ namespace DrawnUi.Draw
             }
         }
 
+        public virtual void OnScrollingStateChanged(bool value)
+        {
+            _autoCacheContent = value;
+
+            AdjustCache();
+        }
+
+
+        private bool _autoCacheContent;
+        private SkiaCacheType _cacheType;
+
+        void AdjustCache()
+        {
+            if (Content != null && AutoCache)
+            {
+                //Debug.WriteLine($"[c] cacheContent: {cacheContent}");
+                if (_autoCacheContent)
+                {
+                    Content.UseCache = SkiaCacheType.Operations;
+                }
+                else
+                {
+                    Content.UseCache = _cacheType;
+                }
+            }
+        }
         private bool _IsScrolling;
 
         public bool IsScrolling
@@ -2280,6 +2310,8 @@ namespace DrawnUi.Draw
             {
                 if (_IsScrolling != value)
                 {
+                    OnScrollingStateChanged(value);
+
                     if (value)
                     {
                         InteractionState = ScrollInteractionState.Scrolling;
@@ -2899,7 +2931,18 @@ namespace DrawnUi.Draw
                 {
                     AddSubView(view);
                 }
+
+                _cacheType = view.UseCache;
+                _autoCacheContent = AutoCache;
+                AdjustCache();
             }
+        }
+
+        protected override void OnLayoutReady()
+        {
+            base.OnLayoutReady();
+
+            _autoCacheContent = false;
         }
 
         public void SetHeader(SkiaControl view)
@@ -3098,25 +3141,6 @@ namespace DrawnUi.Draw
             get { return (ViewportScrollType)GetValue(ScrollTypeProperty); }
             set { SetValue(ScrollTypeProperty, value); }
         }
-
-        public static readonly BindableProperty VirtualisationProperty = BindableProperty.Create(
-            nameof(Virtualisation),
-            typeof(VirtualisationType),
-            typeof(SkiaScroll),
-            VirtualisationType.Enabled,
-            propertyChanged: NeedInvalidateMeasure);
-
-        /// <summary>
-        /// Default is true, children get the visible viewport area for rendering and can virtualize.
-        /// If set to false children get the full content area for rendering and draw all at once.
-        /// </summary>
-        public VirtualisationType Virtualisation
-        {
-            get { return (VirtualisationType)GetValue(VirtualisationProperty); }
-            set { SetValue(VirtualisationProperty, value); }
-        }
-
-        //todo ZOOM
 
         #endregion
 
