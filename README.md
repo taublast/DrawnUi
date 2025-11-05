@@ -33,20 +33,12 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
 
 ---
 
-## 🆕 What's new
+## 🆕 What's new for 1.7.3.2
 
-* `IsLooped` property implemented for `SkiaCarousel` (Sandbox project carousel example updated), for never-ending scrolls, also added `SwipeSpeed` property.
-* `Gestures` property for `Canvas` has new value `SoftLock` for smart working together inside native ScrollView: You started your custom control panning (ex: SkiaCarousel) MAUI ScrollView will not scroll until you release. Note that using `Lock` value instead will totally prevent parent ScrollView to receive panning gestures. Using new `AppoMobi.Maui.Gestures` gestures nuget.
-* `SkiaLabel` subpixel rendering quality improved, note it can be can turned off with `Super.FontSubPixelRendering` static property.
-* Improved font auto-selection for unicode symbols on **Android** + **Apple** for `SkiaRichLabel` and related, all currency, Chinese etc symbols now properly displayed. Implemented platform agnostic caching for auto-find font.
-* `SkiaImage` performance fix to avoid changing source when was created from same string with converter. Added retry logic for all platforms.
-* Fixed cache type `OperationsFull`, god mode that records a larger area than your control, to pick up glow, shadows etc, everything that is out of the controls bounds. Limited by top canvas or by bounds of some cached parent if any.
-* Fixed `MinimumWidthRequest` and `MinimumHeightRequest` not applying margins.
-* `SkiaButton` uses `Padding` property for frame content, see Sandbox project Buttons example.
-* Fixed animators sometimes not starting when created to early, including `SkiaLottie` one.
-* Fixed `SkiaScroll` refresh mechanics, added refresh feature with `SkiaLottie` tinted indicator to News Feed Scroller tutorial code.
-* Scroll refresh indicator fixed, improvements and fixes for `SkiaCamera` and `SkiaMapsUi`, `SkiaSprite` and much more..
-  
+* GPU accelerated views first render on CPU for a fast display, then switch to GPU rendering when ready, to avoid blank controls on first display.
+* Many performance optimizations for native views, cells and layouts.
+* Fix spacing for `MeasureVisible` recycled cells scenario.
+ 
 ## 💡 Hint of the Day
 
 **❓ Q: How to make images to Fade-In when loaded?**
