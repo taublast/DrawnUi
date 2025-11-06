@@ -4529,6 +4529,10 @@ namespace DrawnUi.Draw
             return false;
         }
 
+        /// <summary>
+        /// Always run this before applying any changes while measuring.
+        /// </summary>
+        /// <param name="force"></param>
         public virtual void InitializeDefaultContent(bool force = false)
         {
             if (!DefaultContentCreated || force)
@@ -6416,7 +6420,7 @@ namespace DrawnUi.Draw
         /// </summary>
         public virtual void Update()
         {
-            if (UpdateLocks > 0 || NeedUpdate && Thread.CurrentThread.ManagedThreadId == _updatedFromThread)
+            if (UpdateLocks > 0)// || NeedUpdate && Thread.CurrentThread.ManagedThreadId == _updatedFromThread)
             {
                 return;
             }
@@ -6428,10 +6432,10 @@ namespace DrawnUi.Draw
 
             Updated?.Invoke(this, null);
 
-            if (NeedUpdate && UpdatedRendering == RenderCount)
-            {
-                return;
-            }
+            //if (NeedUpdate && UpdatedRendering == RenderCount)
+            //{
+            //    return;
+            //}
 
             _updatedFromThread = Thread.CurrentThread.ManagedThreadId;
 
@@ -6806,12 +6810,7 @@ namespace DrawnUi.Draw
                 DestroyRenderingObject();
             }
 
-            InvalidateMeasureOptimized(true);
-        }
-
-        protected virtual void InvalidateMeasureOptimized(bool optimize)
-        {
-            if (optimize && !WasMeasured || UpdateLocks > 0)
+            if (!WasMeasured || UpdateLocks > 0)
             {
                 CalculateMargins();
                 CalculateSizeRequest();
@@ -6823,6 +6822,8 @@ namespace DrawnUi.Draw
                 Update();
             }
         }
+
+ 
 
         protected static void NeedInvalidateViewport(BindableObject bindable, object oldvalue, object newvalue)
         {

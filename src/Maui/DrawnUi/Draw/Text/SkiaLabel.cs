@@ -1017,13 +1017,13 @@ namespace DrawnUi.Draw
 
                 try
                 {
+                    InitializeDefaultContent();
+
                     if (NeedSetText)
                     {
                         NeedSetText = false;
                         SetTextInternal();
                     }
-
-                    InitializeDefaultContent();
 
                     var request = CreateMeasureRequest(widthConstraint, heightConstraint, scale);
                     if (AvoidRemeasuring(request))
@@ -3173,18 +3173,8 @@ namespace DrawnUi.Draw
 
             GliphsInvalidated = true;
             NeedSetText = true;
-            _textChanged = true;
 
             InvalidateMeasure();
-        }
-
-        private bool _textChanged = false;
-
-        //to be able to change text at startup at all scenarios
-        protected override void InvalidateMeasureOptimized(bool optimize)
-        {
-            base.InvalidateMeasureOptimized(optimize &&!_textChanged);
-            _textChanged = false;
         }
 
         protected bool NeedSetText { get; set; }
