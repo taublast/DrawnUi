@@ -96,8 +96,9 @@ Do not miss the [Tutorials Project](https://github.com/taublast/DrawnUi.Maui/tre
 ## Sample Apps
 
 **Demo Projects:**
+- [Tutorials](https://github.com/taublast/DrawnUi/tree/main/src/Maui/Samples/Tutorials) - First steps, bindings, recycled cells
+- [Sandbox Project](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Sandbox) - Playground for custom controls, shaders, camera, maps etc
 - [Engine Demo](https://github.com/taublast/AppoMobi.Maui.DrawnUi.Demo) - Navigation, recycled cells, camera integration
-- [Sandbox Project](https://github.com/taublast/DrawnUi.Maui/tree/main/src/Maui/Samples/Sandbox) - Playground and custom controls
 - [Shaders Carousel](https://github.com/taublast/ShadersCarousel/) - Advanced SkiaSharp v3 effects
 - [Space Shooter](https://github.com/taublast/Maui.Game.SpaceShooter/) - 2D Arcade Game Etude
 
