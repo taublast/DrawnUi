@@ -4656,9 +4656,9 @@ namespace DrawnUi.Draw
                 if (double.IsFinite(MaximumHeightRequest) && MaximumHeightRequest >= 0)
                 {
                     var maxHeight = (float)(MaximumHeightRequest * scale);
-                    if (widthConstraint > maxHeight)
+                    if (heightConstraint > maxHeight)
                     {
-                        widthConstraint = maxHeight;
+                        heightConstraint = maxHeight;
                     }
                 }
             }
