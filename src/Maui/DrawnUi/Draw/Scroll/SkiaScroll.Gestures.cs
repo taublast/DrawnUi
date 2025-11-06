@@ -209,6 +209,11 @@ public partial class SkiaScroll
 
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
+        if (TouchEffect.LogEnabled)
+        {
+            Super.Log($"[SCROLL] {this.Tag} Got {args.Type} touches {args.Event.NumberOfTouches} {VelocityY}..");
+        }
+
         var consumedDefault = BlockGesturesBelow ? this : null;
 
         if (LockGesturesUntilDown)
@@ -244,10 +249,6 @@ public partial class SkiaScroll
             ContentGesturesHit = Content.HitIsInside(x, y);
         }
 
-        if (TouchEffect.LogEnabled)
-        {
-            Super.Log($"[SCROLL] {this.Tag} Got {args.Type} touches {args.Event.NumberOfTouches} {VelocityY}..");
-        }
 
         if (args.Type == TouchActionResult.Down && RespondsToGestures)
         {

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <views:BasePageCodeBehind
     x:Class="Sandbox.Views.MainPageGif"
@@ -17,8 +17,8 @@
         Margin="0,32,0,0"
         BackgroundColor="Black"
         Gestures="Enabled"
-        RenderingMode="Accelerated"
         HorizontalOptions="Fill"
+        RenderingMode="Accelerated"
         Tag="MainPage"
         VerticalOptions="Fill">
 
@@ -45,39 +45,40 @@
                         TextColor="White"
                         UseCache="Image" />
 
-                    <!--<draw:SkiaImage Source="Images/8.jpg" HeightRequest="100" WidthRequest="100" 
+                    <!--<draw:SkiaImage Source="Images/8.jpg" HeightRequest="100" WidthRequest="100"
                                     Aspect="AspectFitFill"
-                                    RescalingQuality="High" 
+                                    RescalingQuality="High"
                                     UseCache="Image"
                                     HorizontalOptions="Center" IsVisible="{Binding Visibility}" />
 
                     <draw:SkiaImage Source="Images/maui1.png" HeightRequest="100" WidthRequest="100"
-                                    Aspect="AspectFitFill" 
-                                    RescalingQuality="High" 
+                                    Aspect="AspectFitFill"
+                                    RescalingQuality="High"
                                     UseCache="Image"
                                     HorizontalOptions="Center" />-->
 
                     <draw:SkiaButton
-                        UseCache="OperationsFull"
                         ControlStyle="Cupertino"
                         HeightRequest="38"
                         HorizontalOptions="Center"
                         Tapped="SkiaButton_OnTapped"
                         Text="Toggle Visibility"
+                        UseCache="OperationsFull"
                         WidthRequest="200" />
 
+                    <!--it has gif inside that is already cached--> 
                     <draw:SkiaMediaImage
-                        UseCache="ImageDoubleBuffered"
-                        IsVisible="{Binding Visibility}" 
                         HorizontalOptions="Fill"
-                        Source="Anims/look.webp" />
+                        IsVisible="{Binding Visibility}"
+                        Source="Anims/look.webp"
+                        UseCache="None" />
 
+                    <!--auto-cached with ImageDoubleBuffered-->
                     <draw:SkiaGif
-                        UseCache="ImageDoubleBuffered"
                         BackgroundColor="Gainsboro"
                         HorizontalOptions="Fill"
                         Repeat="-1"
-                        Source="Anims/hair.webp" />
+                        Source="Anims/hair.webp"/>
 
                 </draw:SkiaLayout>
 

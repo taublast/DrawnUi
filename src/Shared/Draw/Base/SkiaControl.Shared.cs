@@ -37,7 +37,7 @@ namespace DrawnUi.Draw
         /// Lifecycle event
         /// </summary>
         public event EventHandler Destroyed;
-        
+
         /// <summary>
         /// For internat custom logic, use IsHovered for usual use.
         /// </summary>
@@ -450,7 +450,7 @@ namespace DrawnUi.Draw
             {
                 if (this.MinimumHeightRequest < 0 && VerticalOptions.Alignment != LayoutAlignment.Fill &&
                     (LockRatio == 0 || MinimumHeightRequest < 0))
-                    this.MinimumHeightRequest = height+Margins.VerticalThickness;
+                    this.MinimumHeightRequest = height + Margins.VerticalThickness;
             }
         }
 
@@ -4458,7 +4458,7 @@ namespace DrawnUi.Draw
             if (IsDisposed || IsDisposing)
                 return ScaledSize.Default;
 
-            if (!WasMeasured)
+            //if (!WasMeasured)
             {
                 InitializeMeasuring();
             }
@@ -5170,7 +5170,7 @@ namespace DrawnUi.Draw
         protected virtual void OnLifecycleStateChanged(ControlLifecycleState state)
         {
             LifecycleState = state;
-                
+
             switch (state)
             {
                 case ControlLifecycleState.Initialized:
@@ -5488,7 +5488,6 @@ namespace DrawnUi.Draw
 
             if (NeedRemeasuring || NeedMeasure)
             {
-                NeedRemeasuring = false;
                 InvalidateMeasure();
             }
             else if (UsesCacheDoubleBuffering
@@ -5507,6 +5506,8 @@ namespace DrawnUi.Draw
                     InvalidateMeasure();
                 }
             }
+
+            NeedRemeasuring = false;
         }
 
         protected virtual void Draw(DrawingContext context)
@@ -6414,6 +6415,7 @@ namespace DrawnUi.Draw
         private int _updatedFromThread;
         private volatile bool _neededUpdate;
         protected long UpdatedRendering;
+        protected long UpdatedInvalidation;
 
         /// <summary>
         /// Main method to invalidate cache and invoke rendering
@@ -6677,8 +6679,21 @@ namespace DrawnUi.Draw
 
         public virtual void InvalidateMeasureInternal()
         {
-            CalculateMargins();
-            CalculateSizeRequest();
+            if (NeedMeasure && RenderCount == UpdatedInvalidation)
+            {
+                //if (UsingCacheType == SkiaCacheType.ImageDoubleBuffered)
+                //{
+                //    Update();
+                //}
+                return;
+            }
+
+            UpdatedInvalidation = RenderCount;
+
+            //CalculateMargins();
+            //CalculateSizeRequest();
+
+            DestroyRenderingObject();
             NeedMeasure = true; //instead of previously InvalidateWithChildren();
             InvalidateParent();
         }
@@ -6819,11 +6834,10 @@ namespace DrawnUi.Draw
             else
             {
                 InvalidateMeasureInternal();
-                Update();
             }
         }
 
- 
+
 
         protected static void NeedInvalidateViewport(BindableObject bindable, object oldvalue, object newvalue)
         {
@@ -6949,7 +6963,7 @@ namespace DrawnUi.Draw
 
         public IAnimatorsManager GetAnimatorsManager()
         {
-            return GetTopParentView() as IAnimatorsManager;
+            return Superview as IAnimatorsManager;
         }
 
         public bool RegisterAnimator(ISkiaAnimator animator)
@@ -7021,7 +7035,10 @@ namespace DrawnUi.Draw
 
             var animation = new ShimmerAnimator(this)
             {
-                Color = color.ToSKColor(), ShimmerWidth = shimmerWidth, ShimmerAngle = shimmerAngle, Speed = speedMs
+                Color = color.ToSKColor(),
+                ShimmerWidth = shimmerWidth,
+                ShimmerAngle = shimmerAngle,
+                Speed = speedMs
             };
             animation.Start();
         }
