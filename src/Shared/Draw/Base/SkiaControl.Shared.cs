@@ -6420,7 +6420,7 @@ namespace DrawnUi.Draw
         /// </summary>
         public virtual void Update()
         {
-            if (UpdateLocks > 0)// || NeedUpdate && Thread.CurrentThread.ManagedThreadId == _updatedFromThread)
+            if (UpdateLocks > 0 || NeedUpdate && Thread.CurrentThread.ManagedThreadId == _updatedFromThread)
             {
                 return;
             }
@@ -6432,10 +6432,10 @@ namespace DrawnUi.Draw
 
             Updated?.Invoke(this, null);
 
-            //if (NeedUpdate && UpdatedRendering == RenderCount)
-            //{
-            //    return;
-            //}
+            if (NeedUpdate && UpdatedRendering == RenderCount)
+            {
+                return;
+            }
 
             _updatedFromThread = Thread.CurrentThread.ManagedThreadId;
 
