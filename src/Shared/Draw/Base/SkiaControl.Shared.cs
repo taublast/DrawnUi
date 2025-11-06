@@ -6806,16 +6806,21 @@ namespace DrawnUi.Draw
                 DestroyRenderingObject();
             }
 
-            if (WasMeasured && UpdateLocks < 1)
-            {
-                InvalidateMeasureInternal();
-                Update();
-            }
-            else
+            InvalidateMeasureOptimized(true);
+        }
+
+        protected virtual void InvalidateMeasureOptimized(bool optimize)
+        {
+            if (optimize && !WasMeasured || UpdateLocks > 0)
             {
                 CalculateMargins();
                 CalculateSizeRequest();
                 NeedMeasure = true;
+            }
+            else
+            {
+                InvalidateMeasureInternal();
+                Update();
             }
         }
 
