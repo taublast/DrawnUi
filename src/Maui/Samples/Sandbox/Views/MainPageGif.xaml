@@ -66,12 +66,12 @@
                         UseCache="OperationsFull"
                         WidthRequest="200" />
 
-                    <!--it has gif inside that is already cached--> 
-                    <draw:SkiaMediaImage
-                        HorizontalOptions="Fill"
+                    <draw:SkiaGif
                         IsVisible="{Binding Visibility}"
-                        Source="Anims/look.webp"
-                        UseCache="None" />
+                        BackgroundColor="Gainsboro"
+                        HorizontalOptions="Fill"
+                        Repeat="-1"
+                        Source="Anims/look.webp"/>
 
                     <!--auto-cached with ImageDoubleBuffered-->
                     <draw:SkiaGif
