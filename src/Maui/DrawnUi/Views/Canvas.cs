@@ -551,6 +551,11 @@ public class Canvas : DrawnView, IGestureListener
     {
         lock (LockIterateListeners)
         {
+            if (args.Type == TouchActionResult.Down && HadInput.Count > 0)
+            {
+                HadInput.Clear();
+            }
+
             _checkHover = args.Type == TouchActionResult.Pointer;
             _hadHover = false;
 

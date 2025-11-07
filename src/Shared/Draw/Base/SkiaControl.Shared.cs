@@ -37,7 +37,7 @@ namespace DrawnUi.Draw
         /// Lifecycle event
         /// </summary>
         public event EventHandler Destroyed;
-        
+
         /// <summary>
         /// For internat custom logic, use IsHovered for usual use.
         /// </summary>
@@ -450,7 +450,7 @@ namespace DrawnUi.Draw
             {
                 if (this.MinimumHeightRequest < 0 && VerticalOptions.Alignment != LayoutAlignment.Fill &&
                     (LockRatio == 0 || MinimumHeightRequest < 0))
-                    this.MinimumHeightRequest = height+Margins.VerticalThickness;
+                    this.MinimumHeightRequest = height + Margins.VerticalThickness;
             }
         }
 
@@ -903,9 +903,15 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
-        /// Is set by InvalidateMeasure();
+        /// Is set by UpdateSizeRequest(); 
         /// </summary>
-        public SKSize SizeRequest { get; protected set; }
+        public SKSize SizeRequest
+        {
+            get;
+            protected set;
+        }
+
+        private SKSize _sr;
 
         /// <summary>
         /// Points
@@ -2666,8 +2672,7 @@ namespace DrawnUi.Draw
 
         public static readonly BindableProperty MarginProperty = BindableProperty.Create(nameof(Margin),
             typeof(Thickness),
-            typeof(SkiaControl), Thickness.Zero,
-            propertyChanged: NeedInvalidateMeasure);
+            typeof(SkiaControl), Thickness.Zero);
 
         public Thickness Margin
         {
@@ -4460,13 +4465,16 @@ namespace DrawnUi.Draw
 
             if (!WasMeasured)
             {
-                InitializeMeasuring();
+                UpdateSizeRequest();
             }
 
             return OnMeasuring(widthConstraint, heightConstraint, scale);
         }
 
-        protected virtual void InitializeMeasuring()
+        /// <summary>
+        /// Calculates SizeRequest, Margins etc
+        /// </summary>
+        public virtual void UpdateSizeRequest()
         {
             CalculateMargins();
             CalculateSizeRequest();
@@ -4529,6 +4537,10 @@ namespace DrawnUi.Draw
             return false;
         }
 
+        /// <summary>
+        /// Always run this before applying any changes while measuring.
+        /// </summary>
+        /// <param name="force"></param>
         public virtual void InitializeDefaultContent(bool force = false)
         {
             if (!DefaultContentCreated || force)
@@ -4652,9 +4664,9 @@ namespace DrawnUi.Draw
                 if (double.IsFinite(MaximumHeightRequest) && MaximumHeightRequest >= 0)
                 {
                     var maxHeight = (float)(MaximumHeightRequest * scale);
-                    if (widthConstraint > maxHeight)
+                    if (heightConstraint > maxHeight)
                     {
-                        widthConstraint = maxHeight;
+                        heightConstraint = maxHeight;
                     }
                 }
             }
@@ -5166,7 +5178,7 @@ namespace DrawnUi.Draw
         protected virtual void OnLifecycleStateChanged(ControlLifecycleState state)
         {
             LifecycleState = state;
-                
+
             switch (state)
             {
                 case ControlLifecycleState.Initialized:
@@ -5321,7 +5333,7 @@ namespace DrawnUi.Draw
         {
             if (!WasMeasured)
             {
-                InitializeMeasuring();
+                UpdateSizeRequest();
             }
 
             var rectAvailable = DefineAvailableSize(destination, widthRequest, heightRequest, scale, false);
@@ -5484,8 +5496,9 @@ namespace DrawnUi.Draw
 
             if (NeedRemeasuring || NeedMeasure)
             {
-                NeedRemeasuring = false;
+                //UpdatedInvalidation--;
                 InvalidateMeasure();
+                //UpdateSizeRequest();
             }
             else if (UsesCacheDoubleBuffering
                      && RenderObject != null)
@@ -5503,6 +5516,8 @@ namespace DrawnUi.Draw
                     InvalidateMeasure();
                 }
             }
+
+            NeedRemeasuring = false;
         }
 
         protected virtual void Draw(DrawingContext context)
@@ -6410,6 +6425,7 @@ namespace DrawnUi.Draw
         private int _updatedFromThread;
         private volatile bool _neededUpdate;
         protected long UpdatedRendering;
+        protected long UpdatedInvalidation;
 
         /// <summary>
         /// Main method to invalidate cache and invoke rendering
@@ -6673,8 +6689,25 @@ namespace DrawnUi.Draw
 
         public virtual void InvalidateMeasureInternal()
         {
-            CalculateMargins();
-            CalculateSizeRequest();
+            if (NeedMeasure && RenderCount == UpdatedInvalidation)
+            {
+                //if (UsingCacheType == SkiaCacheType.ImageDoubleBuffered)
+                //{
+                //    Update();
+                //}
+                if (UsingCacheType == SkiaCacheType.ImageComposite)
+                {
+                    DestroyRenderingObject();
+                }
+                return;
+            }
+
+            UpdatedInvalidation = RenderCount;
+
+            //CalculateMargins();
+            //CalculateSizeRequest();
+
+            DestroyRenderingObject();
             NeedMeasure = true; //instead of previously InvalidateWithChildren();
             InvalidateParent();
         }
@@ -6801,23 +6834,24 @@ namespace DrawnUi.Draw
 
         protected override void InvalidateMeasure()
         {
-            if (UsingCacheType == SkiaCacheType.ImageComposite)
-            {
-                DestroyRenderingObject();
-            }
+            //CalculateMargins();
+            //CalculateSizeRequest();
 
-            if (WasMeasured && UpdateLocks < 1)
+            if (!WasMeasured || UpdateLocks > 0)
             {
-                InvalidateMeasureInternal();
-                Update();
+                if (UsingCacheType == SkiaCacheType.ImageComposite)
+                {
+                    DestroyRenderingObject();
+                }
+                NeedMeasure = true;
             }
             else
             {
-                CalculateMargins();
-                CalculateSizeRequest();
-                NeedMeasure = true;
+                InvalidateMeasureInternal();
             }
         }
+
+
 
         protected static void NeedInvalidateViewport(BindableObject bindable, object oldvalue, object newvalue)
         {
@@ -6943,7 +6977,7 @@ namespace DrawnUi.Draw
 
         public IAnimatorsManager GetAnimatorsManager()
         {
-            return GetTopParentView() as IAnimatorsManager;
+            return Superview as IAnimatorsManager;
         }
 
         public bool RegisterAnimator(ISkiaAnimator animator)
@@ -7015,7 +7049,10 @@ namespace DrawnUi.Draw
 
             var animation = new ShimmerAnimator(this)
             {
-                Color = color.ToSKColor(), ShimmerWidth = shimmerWidth, ShimmerAngle = shimmerAngle, Speed = speedMs
+                Color = color.ToSKColor(),
+                ShimmerWidth = shimmerWidth,
+                ShimmerAngle = shimmerAngle,
+                Speed = speedMs
             };
             animation.Start();
         }

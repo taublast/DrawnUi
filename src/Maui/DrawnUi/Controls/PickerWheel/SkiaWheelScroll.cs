@@ -267,7 +267,7 @@ namespace DrawnUi.Controls
         {
             base.OnLayoutPositionChanged();
 
-            Debug.WriteLine($"[PICKER] OnLayoutPositionChanged {DrawingRect}");
+            //Debug.WriteLine($"[PICKER] OnLayoutPositionChanged {DrawingRect}");
 
             ApplyVisibleItemCount();
 
@@ -280,7 +280,7 @@ namespace DrawnUi.Controls
         {
             base.OnLayoutChanged();
 
-            Debug.WriteLine($"[PICKER] OnLayoutChanged {DrawingRect}");
+            //Debug.WriteLine($"[PICKER] OnLayoutChanged {DrawingRect}");
 
             ApplyVisibleItemCount();
 

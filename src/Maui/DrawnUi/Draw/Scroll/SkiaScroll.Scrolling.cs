@@ -549,8 +549,8 @@ public partial class SkiaScroll
             ptsContentWidth += HeaderSize.Units.Width + FooterSize.Units.Width + (float)ContentOffset;
         }
 
-        var width = ptsContentWidth - Viewport.Units.Width;
-        var height = ptsContentHeight - Viewport.Units.Height;
+        var width = ptsContentWidth - MeasuredSize.Units.Width;
+        var height = ptsContentHeight - MeasuredSize.Units.Height;
 
         if (height < 0)
             height = 0;

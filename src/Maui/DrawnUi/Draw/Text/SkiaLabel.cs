@@ -1017,13 +1017,13 @@ namespace DrawnUi.Draw
 
                 try
                 {
+                    InitializeDefaultContent();
+
                     if (NeedSetText)
                     {
                         NeedSetText = false;
                         SetTextInternal();
                     }
-
-                    InitializeDefaultContent();
 
                     var request = CreateMeasureRequest(widthConstraint, heightConstraint, scale);
                     if (AvoidRemeasuring(request))
@@ -3173,6 +3173,7 @@ namespace DrawnUi.Draw
 
             GliphsInvalidated = true;
             NeedSetText = true;
+
             InvalidateMeasure();
         }
 

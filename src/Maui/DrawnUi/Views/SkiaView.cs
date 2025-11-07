@@ -146,10 +146,9 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
 
 
 #if WINDOWS
-            //fix handler renderer didn't render first frame at startup for skiasharp v3
             if (Handler?.PlatformView is SoftwareWindowsCanvas canvas)
             {
-                if (double.IsNaN(canvas.Height) || double.IsNaN(canvas.Width))
+                if (canvas.CanvasSize ==  SKSize.Empty)
                 {
                     maybeDrawn = false;
                 }

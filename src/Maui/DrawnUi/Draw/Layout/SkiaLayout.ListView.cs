@@ -470,7 +470,9 @@ public partial class SkiaLayout
                                 // Store in sliding window cache
                                 _measuredItems[cell.ControlIndex] = new MeasuredItemInfo
                                 {
-                                    Cell = cell, LastAccessed = DateTime.UtcNow, IsInViewport = true
+                                    Cell = cell,
+                                    LastAccessed = DateTime.UtcNow,
+                                    IsInViewport = true
                                 };
 
                                 measuredCount++;
@@ -720,7 +722,10 @@ public partial class SkiaLayout
 
                     var cell = new ControlInStack
                     {
-                        ControlIndex = itemIndex, Column = col, Row = row, Destination = rectForChild
+                        ControlIndex = itemIndex,
+                        Column = col,
+                        Row = row,
+                        Destination = rectForChild
                     };
 
                     var measured = MeasureAndArrangeCell(rectForChild, cell, child, constraints, scale);
@@ -733,7 +738,9 @@ public partial class SkiaLayout
 
                     measuredBatch.Add(new MeasuredItemInfo
                     {
-                        Cell = cell, LastAccessed = DateTime.UtcNow, IsInViewport = false
+                        Cell = cell,
+                        LastAccessed = DateTime.UtcNow,
+                        IsInViewport = false
                     });
 
                     // Move to next column
@@ -815,11 +822,12 @@ public partial class SkiaLayout
         get { return base.NeedMeasure; }
         set
         {
+#if DEBUG
             if (value && IsTemplated)
             {
-                Debug.WriteLine("Recycled cells stack NeedMeasure");
+                Debug.WriteLine($"Recycled cells stack {Tag} NeedMeasure");
             }
-
+#endif
             base.NeedMeasure = value;
         }
     }
@@ -944,7 +952,7 @@ public partial class SkiaLayout
             }
 
             List<List<ControlInStack>> allRows;
-            
+
             if (change.IsInsertOperation && change.InsertAtIndex.HasValue)
             {
                 // Prepare measurements for insertion at specific position
@@ -1241,7 +1249,9 @@ public partial class SkiaLayout
         // Create context for insert operation
         var context = new BackgroundMeasurementContext
         {
-            InsertAtIndex = insertAtIndex, InsertCount = insertCount, StartMeasuringFrom = insertAtIndex
+            InsertAtIndex = insertAtIndex,
+            InsertCount = insertCount,
+            StartMeasuringFrom = insertAtIndex
         };
 
         // Get current constraints from last measurement
@@ -1335,7 +1345,8 @@ public partial class SkiaLayout
         // For Replace: Split into Remove + Add in same frame
         var removeChange = new StructureChange(StructureChangeType.Remove, MeasureStamp)
         {
-            StartIndex = change.StartIndex, Count = change.Count
+            StartIndex = change.StartIndex,
+            Count = change.Count
         };
 
         var addChange = new StructureChange(StructureChangeType.Add, MeasureStamp)
@@ -2078,7 +2089,9 @@ public partial class SkiaLayout
                 // Create measured item info
                 var measuredItem = new MeasuredItemInfo
                 {
-                    Cell = cell, LastAccessed = DateTime.UtcNow, IsInViewport = true
+                    Cell = cell,
+                    LastAccessed = DateTime.UtcNow,
+                    IsInViewport = true
                 };
 
                 // Stage for rendering pipeline with special single-item flag
