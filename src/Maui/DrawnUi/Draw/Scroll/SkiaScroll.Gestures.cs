@@ -683,7 +683,7 @@ public partial class SkiaScroll
         GestureEventProcessingInfo apply)
     {
         var gestureLocation = args.Event.Location;
-        
+
         // Process planes in Z-order (top to bottom): Forward -> Current -> Backward
         // Check Forward plane first (top layer)
         if (PlaneForward?.IsReady == true && PlaneForward.RenderTree != null)
