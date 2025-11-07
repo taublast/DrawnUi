@@ -109,34 +109,41 @@ namespace DrawnUi.Draw
                 {
                     while (!_loopStarted)
                     {
-                        MainThread.BeginInvokeOnMainThread(async () =>
+                        try
                         {
-                            if (_loopStarting)
-                                return;
-                            _loopStarting = true;
-
-                            if (MainThread.IsMainThread) //UI thread is available
+                            MainThread.BeginInvokeOnMainThread(async () =>
                             {
-                                if (!_loopStarted)
+                                if (_loopStarting)
+                                    return;
+                                _loopStarting = true;
+
+                                if (MainThread.IsMainThread) //UI thread is available
                                 {
-                                    _loopStarted = true;
-                                    try
+                                    if (!_loopStarted)
                                     {
-                                        CompositionTarget.Rendering += (s, a) =>
+                                        _loopStarted = true;
+                                        try
                                         {
-                                            OnFrame?.Invoke(null, null);
-                                        };
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Console.WriteLine(e);
+                                            CompositionTarget.Rendering += (s, a) =>
+                                            {
+                                                OnFrame?.Invoke(null, null);
+                                            };
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Console.WriteLine(e);
+                                        }
                                     }
                                 }
-                            }
 
-                            _loopStarting = false;
-                        });
-                        await Task.Delay(100);
+                                _loopStarting = false;
+                            });
+                            await Task.Delay(100);
+                        }
+                        catch
+                        {
+                            //ignore unable to find main thread at startup until it does
+                        }
                     }
                 });
             }
