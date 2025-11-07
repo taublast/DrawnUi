@@ -903,9 +903,15 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
-        /// Is set by InvalidateMeasure();
+        /// Is set by UpdateSizeRequest(); 
         /// </summary>
-        public SKSize SizeRequest { get; protected set; }
+        public SKSize SizeRequest
+        {
+            get;
+            protected set;
+        }
+
+        private SKSize _sr;
 
         /// <summary>
         /// Points
@@ -2666,8 +2672,7 @@ namespace DrawnUi.Draw
 
         public static readonly BindableProperty MarginProperty = BindableProperty.Create(nameof(Margin),
             typeof(Thickness),
-            typeof(SkiaControl), Thickness.Zero,
-            propertyChanged: NeedInvalidateMeasure);
+            typeof(SkiaControl), Thickness.Zero);
 
         public Thickness Margin
         {
@@ -4458,15 +4463,18 @@ namespace DrawnUi.Draw
             if (IsDisposed || IsDisposing)
                 return ScaledSize.Default;
 
-            //if (!WasMeasured)
+            if (!WasMeasured)
             {
-                InitializeMeasuring();
+                UpdateSizeRequest();
             }
 
             return OnMeasuring(widthConstraint, heightConstraint, scale);
         }
 
-        protected virtual void InitializeMeasuring()
+        /// <summary>
+        /// Calculates SizeRequest, Margins etc
+        /// </summary>
+        public virtual void UpdateSizeRequest()
         {
             CalculateMargins();
             CalculateSizeRequest();
@@ -5325,7 +5333,7 @@ namespace DrawnUi.Draw
         {
             if (!WasMeasured)
             {
-                InitializeMeasuring();
+                UpdateSizeRequest();
             }
 
             var rectAvailable = DefineAvailableSize(destination, widthRequest, heightRequest, scale, false);
@@ -5488,7 +5496,9 @@ namespace DrawnUi.Draw
 
             if (NeedRemeasuring || NeedMeasure)
             {
+                //UpdatedInvalidation--;
                 InvalidateMeasure();
+                //UpdateSizeRequest();
             }
             else if (UsesCacheDoubleBuffering
                      && RenderObject != null)
@@ -6685,6 +6695,10 @@ namespace DrawnUi.Draw
                 //{
                 //    Update();
                 //}
+                if (UsingCacheType == SkiaCacheType.ImageComposite)
+                {
+                    DestroyRenderingObject();
+                }
                 return;
             }
 
@@ -6820,15 +6834,15 @@ namespace DrawnUi.Draw
 
         protected override void InvalidateMeasure()
         {
-            if (UsingCacheType == SkiaCacheType.ImageComposite)
-            {
-                DestroyRenderingObject();
-            }
+            //CalculateMargins();
+            //CalculateSizeRequest();
 
             if (!WasMeasured || UpdateLocks > 0)
             {
-                CalculateMargins();
-                CalculateSizeRequest();
+                if (UsingCacheType == SkiaCacheType.ImageComposite)
+                {
+                    DestroyRenderingObject();
+                }
                 NeedMeasure = true;
             }
             else

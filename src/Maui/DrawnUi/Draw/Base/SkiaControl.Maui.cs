@@ -277,13 +277,22 @@ namespace DrawnUi.Draw
                 InvalidateMeasure();
             }
             else if (propertyName.IsEither(
-                         nameof(HorizontalOptions), nameof(VerticalOptions),
+                         nameof(HorizontalOptions), nameof(VerticalOptions)))
+            {
+                InvalidateMeasure();
+            }
+            else if (propertyName.IsEither(
+                         nameof(Margin),
                          nameof(HeightRequest), nameof(WidthRequest),
                          nameof(MaximumWidthRequest), nameof(MinimumWidthRequest),
                          nameof(MaximumHeightRequest), nameof(MinimumHeightRequest)
                      ))
             {
                 InvalidateMeasure();
+                if (UsingCacheType != SkiaCacheType.ImageDoubleBuffered)
+                {
+                    UpdateSizeRequest();
+                }
             }
             else if (propertyName.IsEither(nameof(IsVisible)))
             {
