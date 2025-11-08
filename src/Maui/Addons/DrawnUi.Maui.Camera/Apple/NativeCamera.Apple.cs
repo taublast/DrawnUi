@@ -992,6 +992,102 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         UpdateOrientationFromMainThread();
     }
 
+    /// <summary>
+    /// Handles bitmap orientation for still captures with proper dimension swapping for rotations.
+    /// Combines sensor orientation with device rotation to produce correctly oriented output.
+    /// </summary>
+    /// <param name="bitmap">Source bitmap from camera sensor (in sensor's natural orientation)</param>
+    /// <param name="sensor">Sensor rotation relative to device (CurrentRotation)</param>
+    /// <param name="deviceRotation">Physical device rotation in degrees (0, 90, 180, 270)</param>
+    /// <param name="flip">Whether to flip horizontally (for selfie camera)</param>
+    /// <returns>Rotated bitmap with correct dimensions for user processing</returns>
+    public SKBitmap HandleOrientationForStillCapture(SKBitmap bitmap, double sensor, int deviceRotation, bool flip)
+    {
+        // Calculate final rotation: device rotation minus sensor offset
+        // Sensor tells us how raw image is rotated from device portrait
+        // deviceRotation tells us current device orientation
+        // We subtract to align image with current device orientation
+        var finalRotation = (deviceRotation - (int)sensor + 360) % 360;
+
+        // Portrait orientations need an additional 180° flip for correct orientation
+        if (deviceRotation == 0 || deviceRotation == 180)
+        {
+            finalRotation = (finalRotation + 180) % 360;
+        }
+
+        Debug.WriteLine($"[STILL CAPTURE] sensor: {sensor}°, deviceRotation: {deviceRotation}°, finalRotation: {finalRotation}°, isSelfie: {flip}");
+
+        SKBitmap rotated;
+        switch (finalRotation)
+        {
+            case 180:
+                rotated = new SKBitmap(bitmap.Width, bitmap.Height);
+                using (var surface = new SKCanvas(rotated))
+                {
+                    surface.Translate(bitmap.Width / 2.0f, bitmap.Height / 2.0f);
+                    surface.RotateDegrees(180);
+                    if (flip)
+                    {
+                        surface.Scale(1, -1);
+                    }
+                    surface.Translate(-bitmap.Width / 2.0f, -bitmap.Height / 2.0f);
+                    surface.DrawBitmap(bitmap, 0, 0);
+                }
+                return rotated;
+
+            case 270:
+                // CRITICAL: Swap dimensions for 270 degree rotation
+                rotated = new SKBitmap(bitmap.Height, bitmap.Width);
+                using (var surface = new SKCanvas(rotated))
+                {
+                    surface.Translate(0, rotated.Height);
+                    surface.RotateDegrees(270);
+                    if (flip)
+                    {
+                        surface.Scale(1, -1);
+                        surface.Translate(0, -bitmap.Height);
+                    }
+                    surface.DrawBitmap(bitmap, 0, 0);
+                }
+                return rotated;
+
+            case 90:
+                // CRITICAL: Swap dimensions for 90 degree rotation
+                rotated = new SKBitmap(bitmap.Height, bitmap.Width);
+                using (var surface = new SKCanvas(rotated))
+                {
+                    surface.Translate(rotated.Width, 0);
+                    surface.RotateDegrees(90);
+                    if (flip)
+                    {
+                        surface.Scale(1, -1);
+                        surface.Translate(0, -bitmap.Height);
+                    }
+                    surface.DrawBitmap(bitmap, 0, 0);
+                }
+                return rotated;
+
+            case 0:
+            case 360:
+                if (flip)
+                {
+                    rotated = new SKBitmap(bitmap.Width, bitmap.Height);
+                    using (var surface = new SKCanvas(rotated))
+                    {
+                        surface.Translate(0, bitmap.Height);
+                        surface.Scale(1, -1);
+                        surface.DrawBitmap(bitmap, 0, 0);
+                    }
+                    return rotated;
+                }
+                return bitmap;
+
+            default:
+                Debug.WriteLine($"[STILL CAPTURE] Unexpected rotation {finalRotation}°, returning original");
+                return bitmap;
+        }
+    }
+
     public void TakePicture()
     {
         if (_isCapturingStill || _stillImageOutput == null)
@@ -1048,7 +1144,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                 // Apply rotation if needed
                 using var bitmap = SKBitmap.FromImage(rawImage);
-                using var skBitmap = HandleOrientation(bitmap, (double)CurrentRotation, FormsControl.Facing == CameraPosition.Selfie);
+                using var skBitmap = HandleOrientationForStillCapture(bitmap, (double)CurrentRotation, deviceRotation, FormsControl.Facing == CameraPosition.Selfie);
 
                 var skImage = SKImage.FromBitmap(skBitmap);
                 
@@ -1212,7 +1308,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                     // Apply rotation if needed
                     using var bitmap = SKBitmap.FromImage(rawImage);
-                    using var rotatedBitmap = HandleOrientation(bitmap, (double)_latestRawFrame.CurrentRotation, _latestRawFrame.Facing == CameraPosition.Selfie);
+                    using var rotatedBitmap = HandleOrientationForPreview(bitmap, (double)_latestRawFrame.CurrentRotation, _latestRawFrame.Facing == CameraPosition.Selfie);
                     return SKImage.FromBitmap(rotatedBitmap);
                 }
                 finally
@@ -1614,7 +1710,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     /// <param name="bitmap"></param>
     /// <param name="sensor"></param>
     /// <returns></returns>
-    public SKBitmap HandleOrientation(SKBitmap bitmap, double sensor, bool flip)
+    public SKBitmap HandleOrientationForPreview(SKBitmap bitmap, double sensor, bool flip)
     {
         SKBitmap rotated;
         switch (sensor)

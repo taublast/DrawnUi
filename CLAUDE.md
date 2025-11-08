@@ -2,6 +2,13 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Working with Claude
+
+**Communication Protocol:**
+- ALWAYS explain fixes and solutions BEFORE implementing them - wait for approval
+- NEVER provide summaries or explanations AFTER approved changes are made
+- Once approved: make the changes and stay silent - no summary, no verbose output
+
 ## Project Overview
 
 DrawnUI for .NET MAUI is a cross-platform rendering engine that draws UI using SkiaSharp instead of native controls. It supports iOS, MacCatalyst, Android, and Windows platforms.
@@ -31,6 +38,16 @@ DrawnUI for .NET MAUI is a cross-platform rendering engine that draws UI using S
 - Effects and animation system
 
 ## Build Commands
+
+**CRITICAL: Always Compile After Code Changes**
+After making ANY code changes, ALWAYS compile with Debug configuration to check for compilation errors:
+```bash
+dotnet build src/Maui/DrawnUi/DrawnUi.Maui.csproj --configuration Debug
+```
+or for the specific addon:
+```bash
+dotnet build src/Maui/Addons/DrawnUi.Maui.Camera/DrawnUi.Maui.Camera.csproj --configuration Debug
+```
 
 **Build the main library:**
 ```bash
@@ -303,3 +320,11 @@ Each addon is a separate NuGet package that can be referenced independently.
 When creating code always consider that we we are inside a rendering engine trying to avoid new allocations during frame processing to avoid GC and looking for max fps.
 Apply this concept to new code and if you find existing code that can be adjusted to this line correct it at all times.
 Act a a principal engineer: you cannot disable or remove a feature to fix an issue, the fix must never make the system worse somewhere else or potentially break something else. You are looking to build a robust and stable system, and always think how we can modify the code flow in deep to make it better, and if needed add new functionnality to solve issues or challenges.
+
+**CRITICAL - Method Modification Safety:**
+When modifying any method to fix a specific problem, you MUST:
+- Search and analyze ALL execution paths where this method is called throughout the codebase
+- Verify that your changes don't break existing logic in other contexts
+- Consider adding parameters or creating specialized versions if the fix applies only to specific use cases
+- Never fix a local problem at the expense of breaking functionality elsewhere
+- Use tools like Grep to find all call sites and analyze their contexts before making changes
