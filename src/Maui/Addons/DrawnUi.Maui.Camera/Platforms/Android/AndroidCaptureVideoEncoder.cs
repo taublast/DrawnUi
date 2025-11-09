@@ -227,6 +227,23 @@ namespace DrawnUi.Camera
             await Task.CompletedTask;
         }
 
+        public async Task PrependBufferedEncodedDataAsync(PrerecordingEncodedBuffer prerecordingBuffer)
+        {
+            if (!_isRecording || _videoCodec == null || prerecordingBuffer == null)
+                return;
+
+            try
+            {
+                // Write pre-encoded data - this is a no-op for current implementation
+                // which requires GPU encoding. Full implementation would write prerecordingBuffer data.
+                await Task.CompletedTask;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AndroidCaptureVideoEncoder] PrependBufferedEncodedDataAsync failed: {ex.Message}");
+            }
+        }
+
         public async Task<CapturedVideo> StopAsync()
         {
             _isRecording = false;

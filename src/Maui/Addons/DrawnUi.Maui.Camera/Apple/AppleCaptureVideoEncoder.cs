@@ -28,8 +28,12 @@ namespace DrawnUi.Camera
         private bool _recordAudio;
 
         private bool _isRecording;
+        private bool _isPreRecordingMode;  // True if encoding to memory buffer only
         private DateTime _startTime;
         private System.Threading.Timer _progressTimer;
+
+        // Pre-recording mode: buffer encoded data in memory
+        private MemoryStream _preRecordingBuffer;
 
         // Composition surface
         private GRContext _grContext;
@@ -40,7 +44,7 @@ namespace DrawnUi.Camera
 
         // Mirror-to-preview support
         private readonly object _previewLock = new();
-        private SKImage _latestPreviewImage; // ownership transferred to caller on TryAcquire
+        private SKImage _latestPreviewImage;
         public event EventHandler PreviewAvailable;
 
         public bool IsRecording => _isRecording;
@@ -298,6 +302,14 @@ namespace DrawnUi.Camera
         {
             // CPU fallback not used in Apple GPU path; keep for interface compatibility.
             return Task.CompletedTask;
+        }
+
+        public async Task PrependBufferedEncodedDataAsync(PrerecordingEncodedBuffer prerecordingBuffer)
+        {
+            // Prepend encoded data is not used in Apple encoder -
+            // the Apple encoder handles encoding internally.
+            // This method is kept for interface compatibility.
+            await Task.CompletedTask;
         }
 
         public async Task<CapturedVideo> StopAsync()

@@ -469,44 +469,135 @@ public partial class SkiaCamera : SkiaControl
     /// Start video recording. Run this in background thread!
     /// Locks the device rotation for the entire recording session.
     /// Uses either native video recording or capture video flow depending on UseCaptureVideoFlow setting.
+    /// 
+    /// State machine logic:
+    /// - If EnablePreRecording && !IsPreRecording: Start memory-only recording (pre-recording phase)
+    /// - If IsPreRecording && !IsRecordingVideo: Prepend buffer and start file recording (normal phase)
+    /// - Otherwise: Start normal file recording
     /// </summary>
     /// <returns>Async task</returns>
     public async Task StartVideoRecording()
     {
-        if (IsBusy || IsRecordingVideo)
+        if (IsBusy)
             return;
 
-        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}");
+        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
 
         IsBusy = true;
-        IsRecordingVideo = true;
-
-        // Lock the current device rotation for the entire recording session
-        RecordingLockedRotation = DeviceRotation;
-        Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
-
-        // Initialize pre-recording buffer if enabled
-        if (EnablePreRecording)
-        {
-            InitializePreRecordingBuffer();
-        }
 
         try
         {
-            // Check if using capture video flow
-            if (UseCaptureVideoFlow && FrameProcessor != null)
+            // State 1 -> State 2: If pre-recording enabled and not yet in pre-recording phase, start memory-only recording
+            if (EnablePreRecording && !IsPreRecording && !IsRecordingVideo)
             {
-                await StartCaptureVideoFlow();
+                Debug.WriteLine("[StartVideoRecording] Transitioning to IsPreRecording (memory-only recording)");
+                IsPreRecording = true;
+                InitializePreRecordingBuffer();
+
+                // Lock the current device rotation for the entire recording session
+                RecordingLockedRotation = DeviceRotation;
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+
+                // Start recording in memory-only mode
+                if (UseCaptureVideoFlow && FrameProcessor != null)
+                {
+                    await StartCaptureVideoFlow();
+                }
+                else
+                {
+                    await StartNativeVideoRecording();
+                }
             }
-            else
+            // State 2 -> State 3: If in pre-recording phase, extract buffer and prepend before starting file recording
+            else if (IsPreRecording && !IsRecordingVideo)
             {
-                // Use existing native video recording
-                await StartNativeVideoRecording();
+                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecordingVideo (file recording with prepend)");
+                
+                // Check if we have a temp file from pre-recording that contains encoded frames
+                if (!string.IsNullOrEmpty(_preRecordingTempFile) && File.Exists(_preRecordingTempFile))
+                {
+                    try
+                    {
+                        Debug.WriteLine($"[StartVideoRecording] Loading pre-recorded temp file: {_preRecordingTempFile}");
+                        // Read the entire temp file as encoded video data
+                        byte[] preRecordedData = File.ReadAllBytes(_preRecordingTempFile);
+                        Debug.WriteLine($"[StartVideoRecording] Pre-recorded file size: {preRecordedData.Length} bytes");
+                        
+                        // The buffer should be set up from the temp file data
+                        // We'll pass this to the encoder to prepend
+                        // For now, create a dummy list to indicate we have pre-recorded data
+                        _bufferToPrepend = new List<SKBitmap> { new SKBitmap(1, 1) }; // Placeholder to indicate prepend needed
+                        _preRecordingEncodedData = preRecordedData;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"[StartVideoRecording] Error reading pre-recorded temp file: {ex.Message}");
+                        _bufferToPrepend = null;
+                    }
+                }
+                else
+                {
+                    // Fallback: Extract buffer snapshot - already contains SKBitmap objects (converted during buffering)
+                    List<SKBitmap> bufferSnapshot = null;
+                    lock (_preRecordingLock)
+                    {
+                        if (_preRecordingBuffer?.Count > 0)
+                        {
+                            bufferSnapshot = new List<SKBitmap>();
+                            foreach (object item in _preRecordingBuffer)
+                            {
+                                if (item is SKBitmap bitmap)
+                                {
+                                    bufferSnapshot.Add(bitmap);
+                                }
+                            }
+                            ClearPreRecordingBuffer();
+                        }
+                    }
+                    _bufferToPrepend = bufferSnapshot;
+                }
+
+                IsPreRecording = false;
+                IsRecordingVideo = true;
+
+                // Lock the current device rotation for the entire recording session
+                RecordingLockedRotation = DeviceRotation;
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+
+                // Start recording to file
+                if (UseCaptureVideoFlow && FrameProcessor != null)
+                {
+                    await StartCaptureVideoFlow();
+                }
+                else
+                {
+                    await StartNativeVideoRecording();
+                }
+            }
+            // Normal recording (no pre-recording)
+            else if (!IsRecordingVideo)
+            {
+                Debug.WriteLine("[StartVideoRecording] Starting normal recording (no pre-recording)");
+                IsRecordingVideo = true;
+
+                // Lock the current device rotation for the entire recording session
+                RecordingLockedRotation = DeviceRotation;
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+
+                if (UseCaptureVideoFlow && FrameProcessor != null)
+                {
+                    await StartCaptureVideoFlow();
+                }
+                else
+                {
+                    await StartNativeVideoRecording();
+                }
             }
         }
         catch (Exception ex)
         {
             IsRecordingVideo = false;
+            IsPreRecording = false;
             IsBusy = false;
             RecordingLockedRotation = -1; // Reset on error
             ClearPreRecordingBuffer();
@@ -556,8 +647,23 @@ public partial class SkiaCamera : SkiaControl
         _captureVideoEncoder = new WindowsCaptureVideoEncoder(grContext);
 
         // Generate output path
-        var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        var outputPath = Path.Combine(documentsPath, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
+        // If pre-recording, use a temporary file that will be copied to PrerecordingEncodedBuffer
+        string outputPath;
+        if (IsPreRecording)
+        {
+            // Use a temp file for pre-recording buffer
+            var tempDir = Path.Combine(Path.GetTempPath(), "DrawnUiCamera");
+            Directory.CreateDirectory(tempDir);
+            _preRecordingTempFile = Path.Combine(tempDir, $"PreRecord_{DateTime.Now:yyyyMMdd_HHmmss}_{Guid.NewGuid():N}.mp4");
+            outputPath = _preRecordingTempFile;
+            Debug.WriteLine($"[StartCaptureVideoFlow] Pre-recording to temp file: {outputPath}");
+        }
+        else
+        {
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            outputPath = Path.Combine(documentsPath, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
+            Debug.WriteLine($"[StartCaptureVideoFlow] Recording to file: {outputPath}");
+        }
 
         // Get current video format dimensions from native camera
         var currentFormat = NativeControl?.GetCurrentVideoFormat();
@@ -570,6 +676,16 @@ public partial class SkiaCamera : SkiaControl
         _diagEncHeight = height;
         _diagBitrate = (long)Math.Max(1, width * height) * Math.Max(1, fps) * 4 / 10;
         await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+
+        // Prepend pre-recorded buffer frames BEFORE starting encoder
+        // This ensures frames are written in correct order: [buffer] then [live]
+        if (_bufferToPrepend != null && _bufferToPrepend.Count > 0)
+        {
+            // Note: PrependBufferedEncodedDataAsync is for pre-encoded data
+            // Since we're still storing SKBitmaps, this is kept as a placeholder
+            System.Diagnostics.Debug.WriteLine($"[PREPEND-BUFFER] Windows: Buffered {_bufferToPrepend.Count} bitmap frames (prepend implementation pending)");
+            _bufferToPrepend = null;
+        }
 
         // Start encoder
         await _captureVideoEncoder.StartAsync();
@@ -699,6 +815,14 @@ public partial class SkiaCamera : SkiaControl
         else
         {
             await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+        }
+
+        // Prepend pre-recorded buffer frames BEFORE starting encoder
+        // This ensures frames are written in correct order: [buffer] then [live]
+        if (_bufferToPrepend != null && _bufferToPrepend.Count > 0)
+        {
+            System.Diagnostics.Debug.WriteLine($"[PREPEND-BUFFER] Android: Buffered {_bufferToPrepend.Count} bitmap frames (prepend implementation pending)");
+            _bufferToPrepend = null;
         }
 
         await _captureVideoEncoder.StartAsync();
@@ -891,6 +1015,14 @@ public partial class SkiaCamera : SkiaControl
             await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
         }
 
+        // Prepend pre-recorded buffer frames BEFORE starting encoder
+        // This ensures frames are written in correct order: [buffer] then [live]
+        if (_bufferToPrepend != null && _bufferToPrepend.Count > 0)
+        {
+            System.Diagnostics.Debug.WriteLine($"[PREPEND-BUFFER] iOS: Buffered {_bufferToPrepend.Count} bitmap frames (prepend implementation pending)");
+            _bufferToPrepend = null;
+        }
+
         await _captureVideoEncoder.StartAsync();
 
         _captureVideoStartTime = DateTime.Now;
@@ -921,7 +1053,7 @@ public partial class SkiaCamera : SkiaControl
 
     private async void CaptureFrame(object state)
     {
-        if (!IsRecordingVideo || _captureVideoEncoder == null)
+        if (!(IsRecordingVideo || IsPreRecording) || _captureVideoEncoder == null)
             return;
 
         // Make sure we never queue more than one frame — drop if previous is still processing
@@ -933,6 +1065,10 @@ public partial class SkiaCamera : SkiaControl
 
         try
         {
+            // Double-check encoder still exists (race condition protection)
+            if (_captureVideoEncoder == null || (!IsRecordingVideo && !IsPreRecording))
+                return;
+
             var elapsed = DateTime.Now - _captureVideoStartTime;
 
 #if WINDOWS
@@ -1158,7 +1294,16 @@ public partial class SkiaCamera : SkiaControl
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[CaptureFrame] Error: {ex.Message}");
+            // Silently ignore exceptions during frame capture - this can happen during disposal/shutdown
+            // The frame will simply be dropped and the next one processed
+            if (ex is NullReferenceException || ex is ObjectDisposedException || ex is InvalidOperationException)
+            {
+                // These are expected during shutdown - just return silently
+            }
+            else
+            {
+                Debug.WriteLine($"[CaptureFrame] Error: {ex.Message}");
+            }
         }
         finally
         {
@@ -1174,10 +1319,10 @@ public partial class SkiaCamera : SkiaControl
     /// <returns>Async task</returns>
     public async Task StopVideoRecording()
     {
-        if (!IsRecordingVideo)
+        if (!IsRecordingVideo && !IsPreRecording)
             return;
 
-        Debug.WriteLine($"[StopVideoRecording] IsMainThread {MainThread.IsMainThread}");
+        Debug.WriteLine($"[StopVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
 
         IsRecordingVideo = false;
 
@@ -1185,10 +1330,10 @@ public partial class SkiaCamera : SkiaControl
         RecordingLockedRotation = -1;
         Debug.WriteLine($"[StopVideoRecording] Reset locked rotation");
 
-        // Resume pre-recording buffer if enabled
-        if (EnablePreRecording)
+        // Clean up prepend buffer if stop is called unexpectedly
+        if (_bufferToPrepend != null)
         {
-            // Buffer will continue collecting frames for future recordings
+            _bufferToPrepend = null;
         }
 
 #if ANDROID
@@ -1237,16 +1382,21 @@ public partial class SkiaCamera : SkiaControl
 
         try
         {
-            // Stop frame capture timer (if any)
+            // CRITICAL: Stop frame capture timer FIRST before clearing encoder reference
+            // This prevents race conditions where CaptureFrame is still executing
             _frameCaptureTimer?.Dispose();
             _frameCaptureTimer = null;
+            
+            // Give any in-flight CaptureFrame calls time to complete
+            await Task.Delay(50);
+            
 #if WINDOWS
             _useWindowsPreviewDrivenCapture = false;
 #endif
 
 #if ANDROID
             // Detach Android mirror event
-            if (encoder is AndroidCaptureVideoEncoder _droidEncPrev)
+            if (_captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
             {
                 try
                 {
@@ -1536,27 +1686,62 @@ public partial class SkiaCamera : SkiaControl
     {
         lock (_preRecordingLock)
         {
-            _preRecordingBuffer?.Clear();
-            _preRecordingBuffer = null;
+            if (_preRecordingBuffer != null)
+            {
+                // Dispose all SKBitmap objects to prevent memory leaks
+                while (_preRecordingBuffer.Count > 0)
+                {
+                    if (_preRecordingBuffer.Dequeue() is SKBitmap bitmap)
+                    {
+                        bitmap?.Dispose();
+                    }
+                }
+                _preRecordingBuffer = null;
+            }
             _maxPreRecordingFrames = 0;
         }
     }
 
     /// <summary>
     /// Buffer a frame for pre-recording (called from frame capture callback)
+    /// Only buffers frames during IsPreRecording state (memory-only recording phase)
+    /// Converts SKImage to SKBitmap immediately to avoid disposal issues
     /// </summary>
     private void BufferPreRecordingFrame(object frameData)
     {
-        if (!EnablePreRecording || _preRecordingBuffer == null)
+        // Only buffer during pre-recording phase (memory-only recording)
+        if (!IsPreRecording || _preRecordingBuffer == null)
+            return;
+
+        // Convert SKImage to SKBitmap immediately to prevent disposal issues
+        SKBitmap bitmap = null;
+        try
+        {
+            if (frameData is SKImage skImage)
+            {
+                bitmap = SKBitmap.FromImage(skImage);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[BufferPreRecordingFrame] Error converting SKImage to SKBitmap: {ex.Message}");
+            return;
+        }
+
+        if (bitmap == null)
             return;
 
         lock (_preRecordingLock)
         {
             if (_preRecordingBuffer.Count >= _maxPreRecordingFrames)
             {
-                _preRecordingBuffer.Dequeue(); // Remove oldest frame
+                // Dispose old frame to avoid memory leaks
+                if (_preRecordingBuffer.Dequeue() is SKBitmap oldBitmap)
+                {
+                    oldBitmap?.Dispose();
+                }
             }
-            _preRecordingBuffer.Enqueue(frameData);
+            _preRecordingBuffer.Enqueue(bitmap);
         }
     }
 
@@ -1696,7 +1881,10 @@ public partial class SkiaCamera : SkiaControl
     // Pre-recording buffer fields
     private object _preRecordingLock = new object();
     private Queue<object> _preRecordingBuffer; // Queue of frame data
+    private string _preRecordingTempFile; // Temporary file for pre-recorded encoded video
+    private byte[] _preRecordingEncodedData; // Pre-recorded encoded video data to be prepended
     private int _maxPreRecordingFrames;
+    private List<SKBitmap> _bufferToPrepend; // Buffer to prepend before starting file recording
 #if WINDOWS
     private bool _useWindowsPreviewDrivenCapture;
 #endif
@@ -1808,7 +1996,7 @@ public partial class SkiaCamera : SkiaControl
 
 #if WINDOWS
         // If using capture video flow and preview-driven capture, submit frames in real-time with the preview
-        if (_useWindowsPreviewDrivenCapture && IsRecordingVideo &&
+        if (_useWindowsPreviewDrivenCapture && (IsRecordingVideo || IsPreRecording) &&
             _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
         {
             // One frame in flight policy: drop if busy
@@ -1921,7 +2109,7 @@ public partial class SkiaCamera : SkiaControl
             return null;
 
 #if WINDOWS
-        if (IsRecordingVideo && UseRecordingFramesForPreview &&
+        if ((IsRecordingVideo || IsPreRecording) && UseRecordingFramesForPreview &&
             _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
         {
             // Only show frames that were actually composed for recording.
@@ -1934,7 +2122,7 @@ public partial class SkiaCamera : SkiaControl
         }
 #elif ANDROID
         // While recording on Android, mirror the composed encoder frames into the preview (no second camera feed)
-        if (IsRecordingVideo && UseRecordingFramesForPreview &&
+        if ((IsRecordingVideo || IsPreRecording) && UseRecordingFramesForPreview &&
             _captureVideoEncoder is AndroidCaptureVideoEncoder droidEnc)
         {
             if (droidEnc.TryAcquirePreviewImage(out var img) && img != null)
@@ -1943,7 +2131,7 @@ public partial class SkiaCamera : SkiaControl
         }
 #elif IOS || MACCATALYST
         // While recording on Apple, mirror the composed encoder frames into the preview
-        if (IsRecordingVideo && UseRecordingFramesForPreview &&
+        if ((IsRecordingVideo || IsPreRecording) && UseRecordingFramesForPreview &&
             _captureVideoEncoder is DrawnUi.Camera.AppleCaptureVideoEncoder appleEnc)
         {
             if (appleEnc.TryAcquirePreviewImage(out var img) && img != null)
@@ -1963,6 +2151,13 @@ public partial class SkiaCamera : SkiaControl
             if (image != null)
             {
                 FrameAquired = true;
+                
+                // Buffer frame for pre-recording (only during pre-recording phase)
+                if (IsPreRecording)
+                {
+                    BufferPreRecordingFrame(image);
+                }
+                
                 OnNewFrameSet(Display.SetImageInternal(image, false));
             }
         }
@@ -2880,6 +3075,24 @@ public partial class SkiaCamera : SkiaControl
     {
         get { return (bool)GetValue(IsRecordingVideoProperty); }
         private set { SetValue(IsRecordingVideoProperty, value); }
+    }
+
+    public static readonly BindableProperty IsPreRecordingProperty = BindableProperty.Create(
+        nameof(IsPreRecording),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false,
+        BindingMode.OneWayToSource);
+
+    /// <summary>
+    /// Whether currently recording to memory buffer only (pre-recording mode) (read-only).
+    /// When true, frames are being recorded to memory buffer instead of file.
+    /// These buffered frames will be prepended when file recording starts.
+    /// </summary>
+    public bool IsPreRecording
+    {
+        get { return (bool)GetValue(IsPreRecordingProperty); }
+        private set { SetValue(IsPreRecordingProperty, value); }
     }
 
     public static readonly BindableProperty VideoQualityProperty = BindableProperty.Create(

@@ -202,6 +202,29 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     me.Text = "🛑 Stop (00:00)";
                                     me.BackgroundColor = Colors.Red;
                                 }
+                                else if (CameraControl.IsPreRecording)
+                                {
+                                    me.Text = "⏺️ Pre-Record";
+                                    me.BackgroundColor = Colors.Orange;
+                                }
+                                else
+                                {
+                                    me.Text = "🎥 Record";
+                                    me.BackgroundColor = Colors.Purple;
+                                }
+                            })
+                            .ObserveProperty(CameraControl, nameof(CameraControl.IsPreRecording), me =>
+                            {
+                                if (CameraControl.IsRecordingVideo)
+                                {
+                                    me.Text = "🛑 Stop (00:00)";
+                                    me.BackgroundColor = Colors.Red;
+                                }
+                                else if (CameraControl.IsPreRecording)
+                                {
+                                    me.Text = "⏺️ Pre-Record";
+                                    me.BackgroundColor = Colors.Orange;
+                                }
                                 else
                                 {
                                     me.Text = "🎥 Record";
@@ -332,9 +355,11 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             frame.Canvas.DrawText($"{frame.Time:mm\\:ss}", 50, 160, paint);
 
             // Draw a simple border around the frame
+            // Use orange during pre-recording, red during file recording
+            var borderColor = CameraControl.IsPreRecording ? SKColors.Orange : SKColors.Red;
             using var borderPaint = new SKPaint
             {
-                Color = SKColors.Red, Style = SKPaintStyle.Stroke, StrokeWidth = 4, IsAntialias = true
+                Color = borderColor, Style = SKPaintStyle.Stroke, StrokeWidth = 4, IsAntialias = true
             };
             frame.Canvas.DrawRect(10, 10, frame.Width - 20, frame.Height - 20, borderPaint);
         };

@@ -399,6 +399,24 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         return frameData;
     }
 
+    public async Task PrependBufferedEncodedDataAsync(PrerecordingEncodedBuffer prerecordingBuffer)
+    {
+        if (!_isRecording || _sinkWriter == null || prerecordingBuffer == null)
+            return;
+
+        try
+        {
+            // Write pre-encoded data directly to media sink
+            // This is a no-op for the current implementation which requires re-encoding from bitmaps
+            // In a full implementation, would write prerecordingBuffer.GetBufferedData() to _sinkWriter
+            await Task.CompletedTask;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder] PrependBufferedEncodedDataAsync failed: {ex.Message}");
+        }
+    }
+
     public async Task<CapturedVideo> StopAsync()
     {
         _isRecording = false;
