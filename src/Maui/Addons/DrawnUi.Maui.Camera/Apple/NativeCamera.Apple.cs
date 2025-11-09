@@ -13,6 +13,7 @@ using CoreVideo;
 using DrawnUi.Controls;
 using Foundation;
 using ImageIO;
+using IOSurface;
 using Microsoft.Maui.Controls.Compatibility;
 using Microsoft.Maui.Media;
 using Photos;
@@ -63,7 +64,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     private UIDeviceOrientation _deviceOrientation;
     private AVCaptureVideoOrientation _videoOrientation;
     private UIImageOrientation _imageOrientation;
- 
+
 
     public Rotation CurrentRotation { get; private set; } = Rotation.rotate0Degrees;
 
@@ -147,7 +148,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
     private void SetupHardware()
     {
-        lock(lockSetup)
+        lock (lockSetup)
         {
             _session.BeginConfiguration();
             _cameraUnitInitialized = false;
@@ -207,7 +208,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         var videoDevices = AVCaptureDevice.DevicesWithMediaType(AVMediaTypes.Video.GetConstant());
 
 #if MACCATALYST
-                    videoDevice = videoDevices.FirstOrDefault();
+                        videoDevice = videoDevices.FirstOrDefault();
 #else
                         videoDevice = videoDevices.FirstOrDefault(d => d.Position == cameraPosition);
 #endif
@@ -360,7 +361,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
     }
 
-    public List<CaptureFormat> StillFormats {get; protected set;}
+    public List<CaptureFormat> StillFormats { get; protected set; }
 
     private void SetupStillFormats(List<AVCaptureDeviceFormat> allFormats)
     {
@@ -412,7 +413,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     {
         var availableFormats = allFormats
             .Where(f => f.HighResolutionStillImageDimensions.Width > 0 && f.HighResolutionStillImageDimensions.Height > 0)
-            .Select(f => new {
+            .Select(f => new
+            {
                 Format = f,
                 VideoDims = (f.FormatDescription as CMVideoFormatDescription)?.Dimensions ?? new CMVideoDimensions()
             })
@@ -1020,20 +1022,19 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         SKBitmap rotated;
         switch (finalRotation)
         {
-            case 180:
-                rotated = new SKBitmap(bitmap.Width, bitmap.Height);
-                using (var surface = new SKCanvas(rotated))
+            case 180: //iphone landscape on left side
+                if (flip)
                 {
-                    surface.Translate(bitmap.Width / 2.0f, bitmap.Height / 2.0f);
-                    surface.RotateDegrees(180);
-                    if (flip)
+                    rotated = new SKBitmap(bitmap.Width, bitmap.Height);
+                    using (var surface = new SKCanvas(rotated))
                     {
+                        surface.Translate(0, bitmap.Height);
                         surface.Scale(1, -1);
+                        surface.DrawBitmap(bitmap, 0, 0);
                     }
-                    surface.Translate(-bitmap.Width / 2.0f, -bitmap.Height / 2.0f);
-                    surface.DrawBitmap(bitmap, 0, 0);
+                    return rotated;
                 }
-                return rotated;
+                return bitmap;
 
             case 270:
                 // CRITICAL: Swap dimensions for 270 degree rotation
@@ -1067,11 +1068,11 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 }
                 return rotated;
 
-            case 0:
-            case 360:
-                if (flip)
+            case 0: //iphone landscape on right side
+            case 360: //cant happen?
+                rotated = new SKBitmap(bitmap.Width, bitmap.Height);
+                if (!flip)
                 {
-                    rotated = new SKBitmap(bitmap.Width, bitmap.Height);
                     using (var surface = new SKCanvas(rotated))
                     {
                         surface.Translate(0, bitmap.Height);
@@ -1080,7 +1081,16 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     }
                     return rotated;
                 }
-                return bitmap;
+                else
+                {
+                    using (var surface = new SKCanvas(rotated)) //mirror X
+                    {
+                        surface.Translate(bitmap.Width, 0);
+                        surface.Scale(-1, 1);
+                        surface.DrawBitmap(bitmap, 0, 0);
+                    }
+                    return rotated;
+                }
 
             default:
                 Debug.WriteLine($"[STILL CAPTURE] Unexpected rotation {finalRotation}°, returning original");
@@ -1147,94 +1157,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 using var skBitmap = HandleOrientationForStillCapture(bitmap, (double)CurrentRotation, deviceRotation, FormsControl.Facing == CameraPosition.Selfie);
 
                 var skImage = SKImage.FromBitmap(skBitmap);
-                
-                /*
-                var rotation = 0;
-                bool flipHorizontal = false;
-                bool flipVertical = false;
 
-                //we have 2 steps or adjusting final image:
-                // 1: reorient image to be upright
-                // 2: set new EXIF erientation to display landscape correctly in gallery
-
-                //step 1
-                //if (cameraPosition == AVCaptureDevicePosition.Front)
-                {
-                    switch (orientation)
-                    {
-                        case 1: //Horizontal / normal
-                            break;
-                        case 2: //Mirror horizontal
-                            flipHorizontal = true;
-                            break;
-                        case 3: //Rotate 180
-                            rotation = 180;
-                            break;
-                        case 4: //Mirror vertical
-                            flipVertical = true;
-                            break;
-                        case 5: //Mirror horizontal and rotate 270 CW
-                            rotation = 270;
-                            flipHorizontal = true;
-                            break;
-                        case 6: //Rotate 90 CW
-                            rotation = 90;
-                            //if (deviceRotation == 90 || deviceRotation == 270 || deviceRotation == 180)
-                            //{
-                            //    flipVertical = true;
-                            //}
-                            break;
-                        case 7: //Mirror horizontal and rotate 90 CW
-                            flipHorizontal = true;
-                            rotation = 90;
-                            //if (deviceRotation == 90 || deviceRotation == 270 || deviceRotation == 180)
-                            //{
-                            //    flipVertical = true;
-                            //}
-                            break;
-                        case 8: //Rotate 270 CW
-                            rotation = 270;
-                            //flipHorizontal = true;
-                            //if (deviceRotation == 90 || deviceRotation == 270 || deviceRotation == 180)
-                            //{
-                            //    flipVertical = true;
-                            //}
-                            break;
-                    }
-                }
-                
-                SKBitmap skBitmap = SKBitmap.FromImage(skImage);
-            
-                var nonRotated = skBitmap;
-
-                skBitmap = SkiaCamera.Reorient(skBitmap, rotation, flipHorizontal, flipVertical);
-
-                if (nonRotated != skBitmap)
-                {
-                    nonRotated.Dispose();
-                    skImage.Dispose();
-                    skImage = SKImage.FromBitmap(skBitmap);
-                }
-                */
-
-                //step 2
                 var newExif = 1;
-                //todo later after we fix step 1
-                //switch (FormsControl.DeviceRotation)
-                //{
-                //    case 90:
-                //        newExif = 6;
-                //        break;
-                //    case 270:
-                //        newExif = 8;
-                //        break;
-                //    case 180:
-                //        newExif = 3;
-                //        break;
-                //    default:
-                //        newExif = 1;
-                //        break;
-                //}
 
                 Debug.WriteLine($"[CAPTURED] {cameraPosition}  exif {orientation} => {newExif} for {FormsControl.DeviceRotation}, {CurrentRotation}");
 
@@ -1243,7 +1167,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     Facing = FormsControl.Facing,
                     Time = DateTime.UtcNow,
                     Image = skImage,
-                    Rotation = FormsControl.DeviceRotation,
+                    Rotation = 0, //we already applied rotation
                     Meta = Metadata.CreateMetadataFromProperties(props, metaData)
                 };
 
@@ -1517,7 +1441,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             System.Diagnostics.Debug.WriteLine($"[NativeCameraiOS] Frame stats - Processed: {_processedFrameCount}, Skipped: {_skippedFrameCount}");
         }
 
-        bool hasFrame=false;
+        bool hasFrame = false;
         try
         {
             using var pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
@@ -1603,7 +1527,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         break;
                 }
 
-               var width = (int)pixelBuffer.Width;
+                var width = (int)pixelBuffer.Width;
                 var height = (int)pixelBuffer.Height;
                 var bytesPerRow = (int)pixelBuffer.BytesPerRow;
                 var baseAddress = pixelBuffer.BaseAddress;
@@ -1613,7 +1537,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 var pixelData = new byte[dataSize];
                 System.Runtime.InteropServices.Marshal.Copy(baseAddress, pixelData, 0, dataSize);
 
-                var time  = DateTime.UtcNow;
+                var time = DateTime.UtcNow;
 
                 // Store raw frame data for SKImage creation on main thread
                 var rawFrame = new RawFrameData
@@ -1629,7 +1553,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 };
 
                 SetRawFrame(rawFrame);
-                hasFrame=true;
+                hasFrame = true;
             }
             catch (Exception e)
             {
@@ -1794,10 +1718,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 _videoOrientation = videoConnection.VideoOrientation;
             }
 
-                CurrentRotation = GetRotation(
-                    _uiOrientation,
-                    _videoOrientation,
-                    _deviceInput?.Device?.Position ?? AVCaptureDevicePosition.Back);
+            CurrentRotation = GetRotation(
+                _uiOrientation,
+                _videoOrientation,
+                _deviceInput?.Device?.Position ?? AVCaptureDevicePosition.Back);
 
         }
     }

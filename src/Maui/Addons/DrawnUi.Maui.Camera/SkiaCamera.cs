@@ -356,7 +356,6 @@ public partial class SkiaCamera : SkiaControl
 
         await using var stream = CreateOutputStreamRotated(captured, false);
 
-
         using var exifStream = await JpegExifInjector.InjectExifMetadata(stream, captured.Meta);
 
         var filenameOutput = GenerateJpgFileName();
@@ -1477,6 +1476,8 @@ public partial class SkiaCamera : SkiaControl
             {
                 skBitmap = Reorient(skBitmap, captured.Rotation);
             }
+
+            Debug.WriteLine($"[SkiaCamera] Saving bitmap {skBitmap.Width}x{skBitmap.Height}");
 
             var data = skBitmap.Encode(format, quality);
             return data.AsStream();
