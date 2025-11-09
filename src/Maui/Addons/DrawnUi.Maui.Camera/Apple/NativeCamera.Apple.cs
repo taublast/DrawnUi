@@ -1036,8 +1036,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 }
                 return bitmap;
 
-            case 270:
-                // CRITICAL: Swap dimensions for 270 degree rotation
+            case 270: //iphone portrait upside down
                 rotated = new SKBitmap(bitmap.Height, bitmap.Width);
                 using (var surface = new SKCanvas(rotated))
                 {
@@ -1052,8 +1051,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 }
                 return rotated;
 
-            case 90:
-                // CRITICAL: Swap dimensions for 90 degree rotation
+            case 90: //iphone portrait
                 rotated = new SKBitmap(bitmap.Height, bitmap.Width);
                 using (var surface = new SKCanvas(rotated))
                 {
