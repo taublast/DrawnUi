@@ -27,18 +27,6 @@ namespace DrawnUi.Camera;
 
 public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotifyPropertyChanged, IAVCaptureVideoDataOutputSampleBufferDelegate, IAVCaptureFileOutputRecordingDelegate
 {
-    // Add these fields for pre-recording
-    private readonly object _bufferLock = new();
-    private Queue<CMSampleBuffer> _frameBuffer;
-    private bool _isBuffering = false;
-    private AVAssetWriter _assetWriter;
-    private AVAssetWriterInput _videoInputWriter;
-    private AVAssetWriterInput _audioInputWriter;
-    private bool _isManualRecording = false;
-    private string _videoOutputPath;
-    private CMTime _lastVideoTimestamp;
-    private CMTime _lastAudioTimestamp;
-
     protected readonly SkiaCamera FormsControl;
     private AVCaptureSession _session;
     private AVCaptureVideoDataOutput _videoDataOutput;
@@ -49,8 +37,13 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     private CameraProcessorState _state = CameraProcessorState.None;
     private bool _flashSupported;
     private bool _isCapturingStill;
-
-    // --- Rolling Buffer & AVAssetWriter Fields ---
+    private bool _isRecordingVideo;
+    private AVCaptureMovieFileOutput _movieFileOutput;
+    private NSUrl _currentVideoUrl;
+    private DateTime _recordingStartTime;
+    private NSTimer _progressTimer;
+    private bool _recordAudio = false; // Default to silent video
+    private double _zoomScale = 1.0;
     private readonly object _lockPreview = new();
     private CapturedImage _preview;
     bool _cameraUnitInitialized;
@@ -72,9 +65,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     private AVCaptureVideoOrientation _videoOrientation;
     private UIImageOrientation _imageOrientation;
 
-
-    public bool EnablePreRecording { get; set; }
-    public TimeSpan PreRecordDuration { get; set; } = TimeSpan.FromSeconds(5);
 
     public Rotation CurrentRotation { get; private set; } = Rotation.rotate0Degrees;
 
@@ -686,11 +676,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             // Apply current flash modes after session starts
             ApplyFlashMode();
 
-            if (EnablePreRecording)
-            {
-                StartBuffering();
-            }
-
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 DeviceDisplay.Current.KeepScreenOn = true;
@@ -705,11 +690,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
     public void Stop(bool force = false)
     {
-        if (EnablePreRecording)
-        {
-            StopBuffering();
-        }
-
         SetCapture(null);
 
         // Clear raw frame data
@@ -744,31 +724,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         {
             Console.WriteLine($"[NativeCameraiOS] Stop error: {e}");
             State = CameraProcessorState.Error;
-        }
-    }
-
-    public void StartBuffering()
-    {
-        lock (_bufferLock)
-        {
-            _frameBuffer = new Queue<CMSampleBuffer>();
-            _isBuffering = true;
-        }
-    }
-
-    public void StopBuffering()
-    {
-        lock (_bufferLock)
-        {
-            _isBuffering = false;
-            if (_frameBuffer != null)
-            {
-                while (_frameBuffer.Count > 0)
-                {
-                    _frameBuffer.Dequeue().Dispose();
-                }
-                _frameBuffer = null;
-            }
         }
     }
 
@@ -1465,134 +1420,17 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     [Export("captureOutput:didOutputSampleBuffer:fromConnection:")]
     public void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
     {
-        if (FormsControl == null || State != CameraProcessorState.Enabled)
-        {
-            sampleBuffer.Dispose();
+        if (FormsControl == null || _isCapturingStill || State != CameraProcessorState.Enabled)
             return;
-        }
-
-        if (_isManualRecording && _assetWriter?.Status == AVAssetWriterStatus.Writing)
-        {
-            if (captureOutput == _videoDataOutput && _videoInputWriter.ReadyForMoreMediaData)
-            {
-                _videoInputWriter.AppendSampleBuffer(sampleBuffer);
-                _lastVideoTimestamp = sampleBuffer.PresentationTimeStamp;
-            }
-            else if (captureOutput == _audioInput && _audioInputWriter.ReadyForMoreMediaData)
-            {
-                _audioInputWriter.AppendSampleBuffer(sampleBuffer);
-                _lastAudioTimestamp = sampleBuffer.PresentationTimeStamp;
-            }
-            sampleBuffer.Dispose(); // asset writer will retain it
-            return;
-        }
-
-        if (_isBuffering && captureOutput == _videoDataOutput)
-        {
-            lock (_bufferLock)
-            {
-                if (_frameBuffer != null)
-                {
-                    var clonedBuffer = sampleBuffer.Clone();
-                    _frameBuffer.Enqueue(clonedBuffer);
-
-                    while (_frameBuffer.Count > 0)
-                    {
-                        using (var oldestBuffer = _frameBuffer.Peek())
-                        {
-                            var oldestTimestamp = oldestBuffer.PresentationTimeStamp;
-                            var latestTimestamp = clonedBuffer.PresentationTimeStamp;
-                            if ((latestTimestamp - oldestTimestamp).ToTimeSpan() > PreRecordDuration)
-                            {
-                                _frameBuffer.Dequeue().Dispose();
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        if (_isCapturingStill)
-        {
-            sampleBuffer.Dispose();
-            return;
-        }
 
         // THROTTLING: Only skip if previous frame is still being processed (prevents thread overwhelm)
         if (_isProcessingFrame)
         {
             _skippedFrameCount++;
-            sampleBuffer.Dispose();
             return;
         }
 
         _isProcessingFrame = true;
-        
-        try
-        {
-            // Handle video recording with AVAssetWriter
-            if (_isManualRecording && _assetWriter?.Status == AVAssetWriterStatus.Writing)
-            {
-                if (_videoInputWriter.IsReadyForMoreMediaData)
-                {
-                    if (_isFirstFrame)
-                    {
-                        _assetWriter.StartSessionAtSourceTime(sampleBuffer.PresentationTimeStamp);
-                        _isFirstFrame = false;
-                    }
-                    _videoInputWriter.AppendSampleBuffer(sampleBuffer);
-                }
-            }
-            // Handle rolling buffer
-            else if (_isBuffering)
-            {
-                lock (_bufferLock)
-                {
-                    // Clone the buffer to ensure the original can be released by the system.
-                    var clonedBuffer = sampleBuffer.Clone();
-                    _frameBuffer.Enqueue(clonedBuffer);
-
-                    // Trim the buffer to maintain the desired pre-record duration
-                    while (_frameBuffer.Count > 0)
-                    {
-                        using (var oldestBuffer = _frameBuffer.Peek())
-                        {
-                            var oldestTimestamp = oldestBuffer.PresentationTimeStamp;
-                            var latestTimestamp = clonedBuffer.PresentationTimeStamp;
-                            if ((latestTimestamp - oldestTimestamp).ToTimeSpan() > PreRecordDuration)
-                            {
-                                _frameBuffer.Dequeue().Dispose(); // Dequeue and dispose the oldest frame
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-
-            // The rest of the method handles preview frame processing
-            ProcessPreviewFrame(sampleBuffer);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"[NativeCameraiOS] Frame processing error: {e}");
-        }
-        finally
-        {
-            sampleBuffer.Dispose();
-            // IMPORTANT: Always reset processing flag
-            _isProcessingFrame = false;
-        }
-    }
-
-    private void ProcessPreviewFrame(CMSampleBuffer sampleBuffer)
-    {
         _processedFrameCount++;
 
         // Log stats every 300 frames
@@ -1606,10 +1444,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         {
             using var pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
             if (pixelBuffer == null)
-            {
-                sampleBuffer.Dispose();
                 return;
-            }
 
             pixelBuffer.Lock(CVPixelBufferLock.ReadOnly);
 
@@ -1733,10 +1568,14 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
         catch (Exception e)
         {
-            Console.WriteLine($"[NativeCameraiOS] Frame preview processing error: {e}");
+            Console.WriteLine($"[NativeCameraiOS] Frame processing error: {e}");
+        }
+        finally
+        {
+            // IMPORTANT: Always reset processing flag
+            _isProcessingFrame = false;
         }
     }
-
 
     CapturedImage _kill;
 
@@ -1792,7 +1631,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     /// </summary>
     /// <param name="bitmap"></param>
     /// <param name="sensor"></param>
-    /// <returns></param>
+    /// <returns></returns>
     public SKBitmap HandleOrientationForPreview(SKBitmap bitmap, double sensor, bool flip)
     {
         SKBitmap rotated;
@@ -2045,25 +1884,17 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             // Stop video recording if active
             if (_isRecordingVideo)
             {
-                if (_isManualRecording)
+                try
                 {
-                    StopVideoRecordingWithPreRecord().ConfigureAwait(false);
+                    _movieFileOutput?.StopRecording();
                 }
-                else
-                {
-                    try
-                    {
-                        _movieFileOutput?.StopRecording();
-                    }
-                    catch { }
-                }
+                catch { }
                 _isRecordingVideo = false;
             }
 
             _progressTimer?.Invalidate();
             _progressTimer = null;
             CleanupMovieFileOutput();
-            CleanupAssetWriter();
 
             Stop();
 
@@ -2088,37 +1919,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     }
 
     #region VIDEO RECORDING
-
-    public void SetRollingBuffer(double ms)
-    {
-        if (ms > 0)
-        {
-            _preRecordDuration = TimeSpan.FromMilliseconds(ms);
-            lock (_bufferLock)
-            {
-                _frameBuffer ??= new();
-                _isBuffering = true;
-            }
-            Debug.WriteLine($"[NativeCamera.Apple] Rolling buffer enabled for {_preRecordDuration.TotalSeconds}s");
-        }
-        else
-        {
-            _isBuffering = false;
-            _preRecordDuration = TimeSpan.Zero;
-            lock (_bufferLock)
-            {
-                if (_frameBuffer != null)
-                {
-                    while (_frameBuffer.Count > 0)
-                    {
-                        _frameBuffer.Dequeue().Dispose();
-                    }
-                    _frameBuffer = null;
-                }
-            }
-            Debug.WriteLine($"[NativeCamera.Apple] Rolling buffer disabled");
-        }
-    }
 
     /// <summary>
     /// Gets the currently selected video format
@@ -2345,17 +2145,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         return (AVCaptureSession.PresetHigh, CreateVideoSettings(1920, 1080, 30));
     }
 
-    private nfloat GetRadiansForOrientation(AVCaptureVideoOrientation orientation)
-    {
-        return orientation switch
-        {
-            AVCaptureVideoOrientation.LandscapeRight => (nfloat)(Math.PI / 2.0),
-            AVCaptureVideoOrientation.LandscapeLeft => (nfloat)(-Math.PI / 2.0),
-            AVCaptureVideoOrientation.PortraitUpsideDown => (nfloat)Math.PI,
-            _ => 0
-        };
-    }
-
     /// <summary>
     /// Get predefined video formats for iOS/Mac
     /// </summary>
@@ -2409,34 +2198,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
     }
 
-    private void CleanupAssetWriter()
-    {
-        _assetWriter?.Dispose();
-        _assetWriter = null;
-        _videoInputWriter?.Dispose();
-        _videoInputWriter = null;
-        _audioInputWriter?.Dispose();
-        _audioInputWriter = null;
-        _isManualRecording = false;
-        _isRecordingVideo = false;
-    }
-
     /// <summary>
     /// Starts video recording
     /// </summary>
     public async Task StartVideoRecording()
-    {
-        if (EnablePreRecording)
-        {
-            await StartVideoRecordingWithPreRecord();
-        }
-        else
-        {
-            await StartNativeVideoRecording();
-        }
-    }
-
-    private async Task StartNativeVideoRecording()
     {
         if (_isRecordingVideo || _session == null)
             return;
@@ -2505,94 +2270,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
     }
 
-    public async Task StartVideoRecordingWithPreRecord()
-    {
-        if (_isManualRecording) return;
-
-        _isManualRecording = true;
-        _videoOutputPath = Path.Combine(Path.GetTempPath(), $"video_{Guid.NewGuid()}.mov");
-        var outputUrl = NSUrl.FromFilename(_videoOutputPath);
-
-        try
-        {
-            _assetWriter = new AVAssetWriter(outputUrl, AVFileType.QuickTimeMovie);
-
-            // Video input
-            var videoSettings = new AVVideoSettingsCompressed
-            {
-                Codec = AVVideoCodec.H264,
-                Width = GetCurrentVideoFormat().Width,
-                Height = GetCurrentVideoFormat().Height,
-            };
-            _videoInputWriter = new AVAssetWriterInput(AVMediaType.Video, videoSettings);
-            _videoInputWriter.ExpectsMediaDataInRealTime = true;
-            if (_assetWriter.CanAddInput(_videoInputWriter))
-                _assetWriter.AddInput(_videoInputWriter);
-
-            // Audio input
-            if (_recordAudio)
-            {
-                var audioSettings = new AudioSettings();
-                _audioInputWriter = new AVAssetWriterInput(AVMediaType.Audio, audioSettings);
-                _audioInputWriter.ExpectsMediaDataInRealTime = true;
-                if (_assetWriter.CanAddInput(_audioInputWriter))
-                    _assetWriter.AddInput(_audioInputWriter);
-            }
-
-            if (_assetWriter.StartWriting())
-            {
-                _recordingStartTime = DateTime.Now;
-
-                lock (_bufferLock)
-                {
-                    if (_frameBuffer != null && _frameBuffer.Count > 0)
-                    {
-                        var firstBuffer = _frameBuffer.Peek();
-                        _assetWriter.StartSessionAtSourceTime(firstBuffer.PresentationTimeStamp);
-                        _lastVideoTimestamp = firstBuffer.PresentationTimeStamp;
-
-                        while (_frameBuffer.Count > 0)
-                        {
-                            var sampleBuffer = _frameBuffer.Dequeue();
-                            if (_videoInputWriter.ReadyForMoreMediaData)
-                            {
-                                _videoInputWriter.AppendSampleBuffer(sampleBuffer);
-                                _lastVideoTimestamp = sampleBuffer.PresentationTimeStamp;
-                            }
-                            sampleBuffer.Dispose();
-                        }
-                    }
-                    else
-                    {
-                        _assetWriter.StartSessionAtSourceTime(CMTime.Zero);
-                    }
-                    _isBuffering = false; //stop buffering while recording
-                }
-
-                _isRecordingVideo = true;
-
-                _progressTimer = NSTimer.CreateRepeatingScheduledTimer(1.0, timer =>
-                {
-                    if (_isRecordingVideo)
-                    {
-                        var elapsed = DateTime.Now - _recordingStartTime;
-                        VideoRecordingProgress?.Invoke(elapsed);
-                    }
-                });
-            }
-            else
-            {
-                throw new Exception($"Failed to start asset writer: {_assetWriter.Error?.LocalizedDescription}");
-            }
-        }
-        catch (Exception ex)
-        {
-            _isManualRecording = false;
-            VideoRecordingFailed?.Invoke(ex);
-        }
-    }
-
-
     /// <summary>
     /// Converts device rotation (degrees) to AVCaptureVideoOrientation
     /// Selfie camera sensor is opposite to back camera, so landscape orientations are flipped
@@ -2620,18 +2297,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     /// </summary>
     public async Task StopVideoRecording()
     {
-        if (EnablePreRecording)
-        {
-            await StopVideoRecordingWithPreRecord();
-        }
-        else
-        {
-            await StopNativeVideoRecording();
-        }
-    }
-
-    private async Task StopNativeVideoRecording()
-    {
         if (!_isRecordingVideo || _movieFileOutput == null)
             return;
 
@@ -2657,54 +2322,101 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
     }
 
-    public async Task StopVideoRecordingWithPreRecord()
+    /// <summary>
+    /// Gets whether video recording is supported on this camera
+    /// </summary>
+    /// <returns>True if video recording is supported</returns>
+    public bool CanRecordVideo()
     {
-        if (!_isManualRecording) return;
-
-        _isManualRecording = false;
-        _isRecordingVideo = false;
-
-        _progressTimer?.Invalidate();
-        _progressTimer = null;
-
-        if (_assetWriter == null || _assetWriter.Status != AVAssetWriterStatus.Writing)
+        try
         {
-            if (EnablePreRecording)
-                StartBuffering();
-            return;
+            // Check if we have a session and device that supports video recording
+            return _session != null &&
+                   _deviceInput?.Device != null &&
+                   _deviceInput.Device.HasMediaType(AVMediaTypes.Video);
         }
-
-        _videoInputWriter.MarkAsFinished();
-        _audioInputWriter?.MarkAsFinished();
-
-        await _assetWriter.FinishWritingAsync();
-
-        var recordingEndTime = DateTime.Now;
-        var duration = recordingEndTime - _recordingStartTime;
-
-        var fileInfo = new FileInfo(_videoOutputPath);
-        long fileSizeBytes = fileInfo.Exists ? fileInfo.Length : 0;
-
-        var capturedVideo = new CapturedVideo
+        catch
         {
-            FilePath = _videoOutputPath,
-            Duration = duration,
-            Format = GetCurrentVideoFormat(),
-            Facing = FormsControl.Facing,
-            Time = _recordingStartTime,
-            FileSizeBytes = fileSizeBytes
-        };
-
-        VideoRecordingSuccess?.Invoke(capturedVideo);
-
-        _assetWriter.Dispose();
-        _assetWriter = null;
-        _videoInputWriter = null;
-        _audioInputWriter = null;
-
-        if (EnablePreRecording)
-            StartBuffering();
+            return false;
+        }
     }
+
+    /// <summary>
+    /// Set whether to record audio with video
+    /// </summary>
+    /// <param name="recordAudio">True to record audio, false for silent video</param>
+    public void SetRecordAudio(bool recordAudio)
+    {
+        _recordAudio = recordAudio;
+        System.Diagnostics.Debug.WriteLine($"[NativeCamera.Apple] SetRecordAudio: {recordAudio}");
+    }
+
+    /// <summary>
+    /// Save video to gallery
+    /// </summary>
+    /// <param name="videoFilePath">Path to video file</param>
+    /// <param name="album">Optional album name</param>
+    /// <returns>Gallery path if successful, null if failed</returns>
+    public async Task<string> SaveVideoToGallery(string videoFilePath, string album)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(videoFilePath) || !System.IO.File.Exists(videoFilePath))
+            {
+                Debug.WriteLine($"[NativeCamera.Apple] Video file not found: {videoFilePath}");
+                return null;
+            }
+
+            var videoUrl = NSUrl.FromFilename(videoFilePath);
+            var tcs = new TaskCompletionSource<string>();
+
+            // Request photo library access
+            var authorizationStatus = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.AddOnly);
+            if (authorizationStatus != PHAuthorizationStatus.Authorized)
+            {
+                Debug.WriteLine("[NativeCamera.Apple] Photo library access denied");
+                return null;
+            }
+
+            PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
+            {
+                var request = PHAssetChangeRequest.FromVideo(videoUrl);
+
+                // Set album if specified
+                if (!string.IsNullOrEmpty(album))
+                {
+                    // Find or create album and add asset to it
+                    var albumCollection = FindOrCreateAlbum(album);
+                    if (albumCollection != null)
+                    {
+                        var albumChangeRequest = PHAssetCollectionChangeRequest.ChangeRequest(albumCollection);
+                        albumChangeRequest?.AddAssets(new PHObject[] { request.PlaceholderForCreatedAsset });
+                    }
+                }
+            },
+            (success, error) =>
+            {
+                if (success)
+                {
+                    Debug.WriteLine($"[NativeCamera.Apple] Video saved to gallery successfully");
+                    tcs.SetResult(videoFilePath); // iOS doesn't provide new path
+                }
+                else
+                {
+                    Debug.WriteLine($"[NativeCamera.Apple] Failed to save video: {error?.LocalizedDescription}");
+                    tcs.SetResult(null);
+                }
+            });
+
+            return await tcs.Task;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCamera.Apple] Error saving video to gallery: {ex.Message}");
+            return null;
+        }
+    }
+
 
     /// <summary>
     /// Event fired when video recording completes successfully
@@ -2720,6 +2432,16 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     /// Event fired when video recording progress updates
     /// </summary>
     public Action<TimeSpan> VideoRecordingProgress { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether pre-recording is enabled.
+    /// </summary>
+    public bool EnablePreRecording { get; set; }
+
+    /// <summary>
+    /// Gets or sets the duration of the pre-recording buffer.
+    /// </summary>
+    public TimeSpan PreRecordDuration { get; set; }
 
     #endregion
 
@@ -2801,5 +2523,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
     #endregion
 
+    #endregion
 }
 #endif

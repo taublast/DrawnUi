@@ -19,6 +19,8 @@ public class CameraTestPage : BasePageReloadable, IDisposable
     private SkiaButton _cameraSelectButton;
     private SkiaLayer _previewOverlay;
     private SkiaImage _previewImage;
+    private SkiaButton _preRecordingToggleButton;
+    private SkiaLabel _preRecordingStatusLabel;
     Canvas Canvas;
 
     protected override void Dispose(bool isDisposing)
@@ -215,7 +217,48 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                             }
                             .OnTapped(async me => { await ShowVideoFormatPicker(); })
                     }
+                },
+
+                // Pre-Recording controls row
+                new SkiaRow
+                {
+                    Spacing = 8,
+                    HorizontalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        new SkiaButton("Pre-Record: OFF")
+                            {
+                                BackgroundColor = Colors.DarkGray,
+                                TextColor = Colors.White,
+                                CornerRadius = 8,
+                                UseCache = SkiaCacheType.Image
+                            }
+                            .Assign(out _preRecordingToggleButton)
+                            .OnTapped(me => { TogglePreRecording(); }),
+
+                        new SkiaButton("Duration: 5s")
+                            {
+                                BackgroundColor = Colors.DarkSlateGray,
+                                TextColor = Colors.White,
+                                CornerRadius = 8,
+                                UseCache = SkiaCacheType.Image
+                            }
+                            .OnTapped(async me => { await ShowPreRecordingDurationPicker(); })
+                    }
+                },
+
+                // Pre-Recording status label
+                new SkiaLabel("Pre-Recording: Disabled")
+                {
+                    FontSize = 12,
+                    TextColor = Colors.Orange,
+                    HorizontalOptions = LayoutOptions.Center,
+                    UseCache = SkiaCacheType.Operations
                 }
+                .Assign(out _preRecordingStatusLabel),
+
+
+
                     }
                 }.WithRow(1),
             }
@@ -701,6 +744,64 @@ public class CameraTestPage : BasePageReloadable, IDisposable
     {
         base.OnDisappearing();
         CameraControl?.Stop();
+    }
+
+    private void TogglePreRecording()
+    {
+        CameraControl.EnablePreRecording = !CameraControl.EnablePreRecording;
+
+        if (_preRecordingToggleButton != null)
+        {
+            _preRecordingToggleButton.Text = CameraControl.EnablePreRecording ? "Pre-Record: ON" : "Pre-Record: OFF";
+            _preRecordingToggleButton.BackgroundColor = CameraControl.EnablePreRecording ? Colors.Green : Colors.DarkGray;
+        }
+
+        UpdatePreRecordingStatus();
+
+        Debug.WriteLine($"Pre-Recording: {(CameraControl.EnablePreRecording ? "ENABLED" : "DISABLED")}");
+    }
+
+    private async Task ShowPreRecordingDurationPicker()
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            try
+            {
+                var durations = new[] { "2 seconds", "5 seconds", "10 seconds", "15 seconds" };
+                var values = new[] { 2, 5, 10, 15 };
+
+                var result = await DisplayActionSheet("Pre-Recording Duration", "Cancel", null, durations);
+
+                if (!string.IsNullOrEmpty(result) && result != "Cancel")
+                {
+                    var selectedIndex = Array.IndexOf(durations, result);
+                    if (selectedIndex >= 0)
+                    {
+                        CameraControl.PreRecordDuration = TimeSpan.FromSeconds(values[selectedIndex]);
+                        UpdatePreRecordingStatus();
+
+                        Debug.WriteLine($"Pre-Recording Duration set to: {values[selectedIndex]} seconds");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAlert("Error", $"Error setting pre-recording duration: {ex.Message}");
+            }
+        });
+    }
+
+    private void UpdatePreRecordingStatus()
+    {
+        if (_preRecordingStatusLabel != null)
+        {
+            var statusText = CameraControl.EnablePreRecording
+                ? $"Pre-Recording: Enabled ({CameraControl.PreRecordDuration.TotalSeconds:F0}s lookback)"
+                : "Pre-Recording: Disabled";
+
+            _preRecordingStatusLabel.Text = statusText;
+            _preRecordingStatusLabel.TextColor = CameraControl.EnablePreRecording ? Colors.LimeGreen : Colors.Orange;
+        }
     }
 
     // Removed old manual video gallery implementation - now using SkiaCamera's built-in MoveVideoToGalleryAsync method

@@ -486,7 +486,7 @@ public partial class SkiaCamera : SkiaControl
         Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
         // Initialize pre-recording buffer if enabled
-        if (_enablePreRecording)
+        if (EnablePreRecording)
         {
             InitializePreRecordingBuffer();
         }
@@ -1186,7 +1186,7 @@ public partial class SkiaCamera : SkiaControl
         Debug.WriteLine($"[StopVideoRecording] Reset locked rotation");
 
         // Resume pre-recording buffer if enabled
-        if (_enablePreRecording)
+        if (EnablePreRecording)
         {
             // Buffer will continue collecting frames for future recordings
         }
@@ -1524,7 +1524,7 @@ public partial class SkiaCamera : SkiaControl
     {
         lock (_preRecordingLock)
         {
-            _maxPreRecordingFrames = Math.Max(1, (int)(_preRecordDuration.TotalSeconds * 30)); // Assume 30 fps
+            _maxPreRecordingFrames = Math.Max(1, (int)(PreRecordDuration.TotalSeconds * 30)); // Assume 30 fps
             _preRecordingBuffer = new Queue<object>(_maxPreRecordingFrames);
         }
     }
@@ -1547,7 +1547,7 @@ public partial class SkiaCamera : SkiaControl
     /// </summary>
     private void BufferPreRecordingFrame(object frameData)
     {
-        if (!_enablePreRecording || _preRecordingBuffer == null)
+        if (!EnablePreRecording || _preRecordingBuffer == null)
             return;
 
         lock (_preRecordingLock)
@@ -1694,8 +1694,6 @@ public partial class SkiaCamera : SkiaControl
     private DateTime _captureVideoStartTime;
 
     // Pre-recording buffer fields
-    private bool _enablePreRecording;
-    private TimeSpan _preRecordDuration = TimeSpan.FromSeconds(3);
     private object _preRecordingLock = new object();
     private Queue<object> _preRecordingBuffer; // Queue of frame data
     private int _maxPreRecordingFrames;
