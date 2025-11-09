@@ -58,7 +58,7 @@ public partial class SkiaCamera : SkiaControl
         base.OnWillDisposeWithChildren();
 
         Super.OnNativeAppResumed -= Super_OnNativeAppResumed;
-        Super.OnNativeAppPaused -= Super_OnNativeAppResumed;
+        Super.OnNativeAppPaused -= Super_OnNativeAppPaused;
 
         if (Superview != null)
         {
@@ -485,6 +485,12 @@ public partial class SkiaCamera : SkiaControl
         RecordingLockedRotation = DeviceRotation;
         Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
+        // Initialize pre-recording buffer if enabled
+        if (_enablePreRecording)
+        {
+            InitializePreRecordingBuffer();
+        }
+
         try
         {
             // Check if using capture video flow
@@ -503,6 +509,7 @@ public partial class SkiaCamera : SkiaControl
             IsRecordingVideo = false;
             IsBusy = false;
             RecordingLockedRotation = -1; // Reset on error
+            ClearPreRecordingBuffer();
             VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
@@ -1178,6 +1185,12 @@ public partial class SkiaCamera : SkiaControl
         RecordingLockedRotation = -1;
         Debug.WriteLine($"[StopVideoRecording] Reset locked rotation");
 
+        // Resume pre-recording buffer if enabled
+        if (_enablePreRecording)
+        {
+            // Buffer will continue collecting frames for future recordings
+        }
+
 #if ANDROID
         // Stop Android event-driven capture and restore normal preview behavior
         try
@@ -1212,6 +1225,7 @@ public partial class SkiaCamera : SkiaControl
         {
             // On immediate exception, set the state and invoke the event
             IsRecordingVideo = false;
+            ClearPreRecordingBuffer();
             VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
@@ -1503,6 +1517,49 @@ public partial class SkiaCamera : SkiaControl
         CaptureFailed?.Invoke(this, ex);
     }
 
+    /// <summary>
+    /// Initialize pre-recording buffer for buffering frames before recording starts
+    /// </summary>
+    private void InitializePreRecordingBuffer()
+    {
+        lock (_preRecordingLock)
+        {
+            _maxPreRecordingFrames = Math.Max(1, (int)(_preRecordDuration.TotalSeconds * 30)); // Assume 30 fps
+            _preRecordingBuffer = new Queue<object>(_maxPreRecordingFrames);
+        }
+    }
+
+    /// <summary>
+    /// Clear the pre-recording buffer
+    /// </summary>
+    private void ClearPreRecordingBuffer()
+    {
+        lock (_preRecordingLock)
+        {
+            _preRecordingBuffer?.Clear();
+            _preRecordingBuffer = null;
+            _maxPreRecordingFrames = 0;
+        }
+    }
+
+    /// <summary>
+    /// Buffer a frame for pre-recording (called from frame capture callback)
+    /// </summary>
+    private void BufferPreRecordingFrame(object frameData)
+    {
+        if (!_enablePreRecording || _preRecordingBuffer == null)
+            return;
+
+        lock (_preRecordingLock)
+        {
+            if (_preRecordingBuffer.Count >= _maxPreRecordingFrames)
+            {
+                _preRecordingBuffer.Dequeue(); // Remove oldest frame
+            }
+            _preRecordingBuffer.Enqueue(frameData);
+        }
+    }
+
     private int _frameInFlight = 0;
 
     /// <summary>
@@ -1635,6 +1692,13 @@ public partial class SkiaCamera : SkiaControl
     private ICaptureVideoEncoder _captureVideoEncoder;
     private System.Threading.Timer _frameCaptureTimer;
     private DateTime _captureVideoStartTime;
+
+    // Pre-recording buffer fields
+    private bool _enablePreRecording;
+    private TimeSpan _preRecordDuration = TimeSpan.FromSeconds(3);
+    private object _preRecordingLock = new object();
+    private Queue<object> _preRecordingBuffer; // Queue of frame data
+    private int _maxPreRecordingFrames;
 #if WINDOWS
     private bool _useWindowsPreviewDrivenCapture;
 #endif
@@ -1859,7 +1923,7 @@ public partial class SkiaCamera : SkiaControl
             return null;
 
 #if WINDOWS
-        if (IsRecordingVideo && UseRecordingFramesToPreview &&
+        if (IsRecordingVideo && UseRecordingFramesForPreview &&
             _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
         {
             // Only show frames that were actually composed for recording.
@@ -1872,7 +1936,7 @@ public partial class SkiaCamera : SkiaControl
         }
 #elif ANDROID
         // While recording on Android, mirror the composed encoder frames into the preview (no second camera feed)
-        if (IsRecordingVideo && UseRecordingFramesToPreview &&
+        if (IsRecordingVideo && UseRecordingFramesForPreview &&
             _captureVideoEncoder is AndroidCaptureVideoEncoder droidEnc)
         {
             if (droidEnc.TryAcquirePreviewImage(out var img) && img != null)
@@ -1881,7 +1945,7 @@ public partial class SkiaCamera : SkiaControl
         }
 #elif IOS || MACCATALYST
         // While recording on Apple, mirror the composed encoder frames into the preview
-        if (IsRecordingVideo && UseRecordingFramesToPreview &&
+        if (IsRecordingVideo && UseRecordingFramesForPreview &&
             _captureVideoEncoder is DrawnUi.Camera.AppleCaptureVideoEncoder appleEnc)
         {
             if (appleEnc.TryAcquirePreviewImage(out var img) && img != null)
@@ -2064,8 +2128,6 @@ public partial class SkiaCamera : SkiaControl
         {
             NativeControl.SetFlashMode(FlashMode);
             NativeControl.SetCaptureFlashMode(CaptureFlashMode);
-            NativeControl.EnablePreRecording = EnablePreRecording;
-            NativeControl.PreRecordDuration = PreRecordDuration;
         }
     }
 
@@ -2446,6 +2508,7 @@ public partial class SkiaCamera : SkiaControl
     /// Will pass the fact if permissions dialog was diplayed as bool
     /// </summary>
     /// <param name="granted"></param>
+    /// <param name="notGranted"></param>
     public static void CheckPermissions(Action<bool> granted, Action<bool> notGranted)
     {
         MainThread.BeginInvokeOnMainThread(async () =>
@@ -2467,7 +2530,7 @@ public partial class SkiaCamera : SkiaControl
                     presented = true;
 
                     status = await Permissions.RequestAsync<Permissions.Camera>();
- 
+
 
                     if (status == PermissionStatus.Granted)
                     {
@@ -2534,1373 +2597,1063 @@ public partial class SkiaCamera : SkiaControl
         });
     }
 
-    private bool _GpsBusy;
-
-    public bool GpsBusy
-    {
-        get { return _GpsBusy; }
-        set
-        {
-            if (_GpsBusy != value)
-            {
-                _GpsBusy = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    private double _LocationLat;
-
-    public double LocationLat
-    {
-        get { return _LocationLat; }
-        set
-        {
-            if (_LocationLat != value)
-            {
-                _LocationLat = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    private double _LocationLon;
-
-    public double LocationLon
-    {
-        get { return _LocationLon; }
-        set
-        {
-            if (_LocationLon != value)
-            {
-                _LocationLon = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    private bool _CanDetectLocation;
-
-    public bool CanDetectLocation
-    {
-        get { return _CanDetectLocation; }
-        set
-        {
-            if (_CanDetectLocation != value)
-            {
-                _CanDetectLocation = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    /// <summary>
-    /// Safe and if CanDetectLocation
-    /// </summary>
-    /// <returns></returns>
-    public async Task RefreshLocation(int msTimeout)
-    {
-        if (CanDetectLocation)
-        {
-            //my ACTUAL location
-            try
-            {
-                GpsBusy = true;
-
-                var request = new GeolocationRequest(GeolocationAccuracy.Medium);
-                var cancel = new CancellationTokenSource();
-                cancel.CancelAfter(msTimeout);
-                var location = await Geolocation.GetLocationAsync(request, cancel.Token);
-
-                if (location != null)
-                {
-                    Debug.WriteLine(
-                        $"ACTUAL Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
-
-                    this.LocationLat = location.Latitude;
-                    this.LocationLon = location.Longitude;
-                }
-            }
-            catch (FeatureNotSupportedException fnsEx)
-            {
-                // Handle not supported on device exception
-                //Toast.ShortMessage("GPS не поддерживается на устройстве");
-            }
-            catch (FeatureNotEnabledException fneEx)
-            {
-                // Handle not enabled on device exception
-                //Toast.ShortMessage("GPS отключен на устройстве");
-            }
-            catch (PermissionException pEx)
-            {
-                // Handle permission exception
-                //Toast.ShortMessage("Вы не дали разрешение на использование GPS");
-            }
-            catch (Exception ex)
-            {
-                // Unable to get location
-            }
-            finally
-            {
-                GpsBusy = false;
-            }
-        }
-    }
-
-    //public ICommand CommandGetLocation
-    //{
-    //	get
-    //	{
-    //		return new Command((object context) =>
-    //		{
-    //			if (GpsBusy || !App.Native.CheckGpsEnabled())
-    //				return;
-
-    //			MainThread.BeginInvokeOnMainThread(async () =>
-    //			{
-    //				// Update the UI
-    //				try
-    //				{
-    //					GpsBusy = true;
-
-    //					var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-    //					if (status != PermissionStatus.Granted)
-    //					{
-    //						CanDetectLocation = false;
-
-    //						await App.Current.MainPage.DisplayAlert(Core.Current.MyCompany.Name, ResStrings.X_NeedMoreForGeo, ResStrings.ButtonOk);
-
-    //						status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-    //						if (status != PermissionStatus.Granted)
-    //						{
-    //							// Additionally could prompt the user to turn on in settings
-    //							return;
-    //						}
-    //						else
-    //						{
-    //							CanDetectLocation = true;
-    //						}
-    //					}
-    //					else
-    //					{
-    //						CanDetectLocation = true;
-    //					}
-
-    //					if (CanDetectLocation)
-    //					{
-    //						//my LAST location:
-    //						try
-    //						{
-    //							if (App.Native.CheckGpsEnabled())
-    //							{
-    //								var location = await Geolocation.GetLastKnownLocationAsync();
-
-    //								if (location != null)
-    //								{
-    //									Debug.WriteLine(
-    //										$"LAST Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
-
-    //									LocationLat = location.Latitude;
-    //									LocationLon = location.Longitude;
-    //								}
-    //							}
-    //						}
-    //						catch (FeatureNotSupportedException fnsEx)
-    //						{
-    //							// Handle not supported on device exception
-    //							//Toast.ShortMessage("GPS не поддерживается на устройстве");
-    //						}
-    //						catch (FeatureNotEnabledException fneEx)
-    //						{
-    //							// Handle not enabled on device exception
-    //							//Toast.ShortMessage("GPS отключен на устройстве");
-    //						}
-    //						catch (PermissionException pEx)
-    //						{
-    //							// Handle permission exception
-    //							//Toast.ShortMessage("Вы не дали разрешение на использование GPS");
-    //						}
-    //						catch (Exception ex)
-    //						{
-    //							// Unable to get location
-    //						}
-
-    //						await Task.Run(async () =>
-    //						{
-    //							await RefreshLocation(1200);
-
-    //						}).ConfigureAwait(false);
-
-    //					}
-    //					else
-    //					{
-    //						GpsBusy = false;
-    //					}
-
-
-    //				}
-    //				catch (Exception ex)
-    //				{
-    //					//Something went wrong
-    //					Trace.WriteLine(ex);
-    //					CanDetectLocation = false;
-    //					GpsBusy = false;
-    //				}
-    //				finally
-    //				{
-
-    //				}
-
-    //			});
-
-
-    //		});
-    //	}
-    //}
-
-    /// <summary>
-    /// Enable pre-recording, which buffers frames before recording starts.
-    /// </summary>
-    public bool EnablePreRecording
-    {
-        get => (bool)GetValue(EnablePreRecordingProperty);
-        set => SetValue(EnablePreRecordingProperty, value);
-    }
-
-    public static readonly BindableProperty EnablePreRecordingProperty = BindableProperty.Create(
-        nameof(EnablePreRecording), typeof(bool), typeof(SkiaCamera), false,
-        propertyChanged: (bindable, oldValue, newValue) =>
-        {
-            if (bindable is SkiaCamera control && control.NativeControl != null)
-            {
-                control.NativeControl.EnablePreRecording = (bool)newValue;
-            }
-        });
-
-    /// <summary>
-    /// Gets or sets the duration of the pre-recording buffer. Default is 5 seconds.
-    /// </summary>
-    public TimeSpan PreRecordDuration
-    {
-        get => (TimeSpan)GetValue(PreRecordDurationProperty);
-        set => SetValue(PreRecordDurationProperty, value);
-    }
-
-    public static readonly BindableProperty PreRecordDurationProperty = BindableProperty.Create(
-        nameof(PreRecordDuration), typeof(TimeSpan), typeof(SkiaCamera), TimeSpan.FromSeconds(5),
-        propertyChanged: (bindable, oldValue, newValue) =>
-        {
-            if (bindable is SkiaCamera control && control.NativeControl != null)
-            {
-                control.NativeControl.PreRecordDuration = (TimeSpan)newValue;
-            }
-        });
-
-    /// <summary>
-    /// Gets or sets whether the camera is currently recording video
-    /// </summary>
-    public bool IsRecordingVideo
-    {
-        get => _isRecordingVideo;
-        set
-        {
-            if (_isRecordingVideo != value)
-            {
-                _isRecordingVideo = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    private bool _isRecordingVideo;
-
-    /// <summary>
-    /// Notify property changed for IsRecordingVideo
-    /// </summary>
-    protected void OnIsRecordingVideoChanged()
-    {
-        OnPropertyChanged(nameof(IsRecordingVideo));
-    }
-
-    /// <summary>
-    /// Notify property changed for EnablePreRecording
-    /// </summary>
-    protected void OnEnablePreRecordingChanged()
-    {
-        OnPropertyChanged(nameof(EnablePreRecording));
-    }
-
-    /// <summary>
-    /// Notify property changed for PreRecordDuration
-    /// </summary>
-    protected void OnPreRecordDurationChanged()
-    {
-        OnPropertyChanged(nameof(PreRecordDuration));
-    }
-
-    /// <summary>
-    /// Internal method to raise VideoRecordingSuccess event
-    /// </summary>
-    internal void OnVideoRecordingSuccess(CapturedVideo capturedVideo)
-    {
-        CurrentRecordingDuration = TimeSpan.Zero;
-        VideoRecordingSuccess?.Invoke(this, capturedVideo);
-    }
-
-    /// <summary>
-    /// Internal method to raise VideoRecordingProgress event
-    /// </summary>
-    internal void OnVideoRecordingProgress(TimeSpan duration)
-    {
-        CurrentRecordingDuration = duration;
-        VideoRecordingProgress?.Invoke(this, duration);
-    }
-
     #endregion
 
-    /// <summary>
-    /// Internal method to get available cameras with caching
-    /// </summary>
-    protected virtual async Task<List<CameraInfo>> GetAvailableCamerasInternal(bool refresh = false)
-    {
-#if ONPLATFORM
-        return await GetAvailableCamerasPlatform(refresh);
-#endif
-
-        return new List<CameraInfo>();
-    }
-
-    #endregion
-
-    #region METHODS
 
     /// <summary>
-    /// Stops the camera by setting IsOn to false
+    /// This is filled by renderer
     /// </summary>
-    public virtual void Stop()
+    public string SavedFilename
     {
-        IsOn = false;
-    }
-
-    /// <summary>
-    /// Stops the camera immediately and releases native camera resources
-    /// </summary>
-    /// <param name="force">If true, forces immediate stop regardless of state</param>
-    public virtual void StopInternal(bool force = false)
-    {
-        if (IsDisposing || IsDisposed)
-            return;
-
-        System.Diagnostics.Debug.WriteLine($"[CAMERA] Stopped {Uid} {Tag}");
-
-        NativeControl?.Stop(force);
-        State = CameraState.Off;
-        //DisplayImage.IsVisible = false;
-    }
-
-
-    /// <summary>
-    /// Override this method to customize DisplayInfo content
-    /// </summary>
-    public virtual void UpdateInfo()
-    {
-        var info = $"Position: {Facing}" +
-                   $"\nState: {State}" +
-                   //$"\nSize: {Width}x{Height} pts" +
-                   $"\nPreview: {PreviewSize} px" +
-                   $"\nPhoto: {CapturePhotoSize} px" +
-                   $"\nRotation: {this.DeviceRotation}";
-
-        if (Display != null)
-        {
-            info += $"\nAspect: {Display.Aspect}";
-        }
-
-        DisplayInfo = info;
-    }
-
-    /// <summary>
-    /// Creates an output stream from a captured image with optional rotation correction
-    /// </summary>
-    /// <param name="captured">The captured image to encode</param>
-    /// <param name="reorient">If true, applies rotation correction before encoding</param>
-    /// <param name="format">Output image format (default: JPEG)</param>
-    /// <param name="quality">Encoding quality 0-100 (default: 90)</param>
-    /// <returns>Stream containing the encoded image</returns>
-    public Stream CreateOutputStreamRotated(CapturedImage captured,
-        bool reorient,
-        SKEncodedImageFormat format = SKEncodedImageFormat.Jpeg,
-        int quality = 90)
-    {
-        try
-        {
-            SKBitmap skBitmap = SKBitmap.FromImage(captured.Image);
-            if (reorient)
-            {
-                skBitmap = Reorient(skBitmap, captured.Rotation);
-            }
-
-            Debug.WriteLine($"[SkiaCamera] Saving bitmap {skBitmap.Width}x{skBitmap.Height}");
-
-            var data = skBitmap.Encode(format, quality);
-            return data.AsStream();
-        }
-        catch (Exception e)
-        {
-            Trace.WriteLine(e);
-            return null;
-        }
-    }
-
-    #endregion
-
-    #region ENGINE
-
-    protected virtual void OnCaptureSuccess(CapturedImage captured)
-    {
-        CaptureSuccess?.Invoke(this, captured);
-    }
-
-    protected virtual void OnCaptureFailed(Exception ex)
-    {
-        CaptureFailed?.Invoke(this, ex);
-    }
-
-    private int _frameInFlight = 0;
-
-    /// <summary>
-    /// Enable on-screen diagnostics overlay (effective FPS, dropped frames, last submit ms)
-    /// during capture video flow to validate performance.
-    /// </summary>
-    public bool EnableCaptureDiagnostics { get; set; } = true;
-
-    private long _diagDroppedFrames = 0;
-    private long _diagSubmittedFrames = 0;
-    private double _diagLastSubmitMs = 0;
-    private DateTime _diagStartTime;
-    private int _targetFps = 0;
-    private int _diagEncWidth = 0, _diagEncHeight = 0;
-    private long _diagBitrate = 0;
-
-    private void DrawDiagnostics(SKCanvas canvas, int width, int height)
-    {
-        if (!EnableCaptureDiagnostics || canvas == null)
-            return;
-
-        var elapsed = (DateTime.Now - _diagStartTime).TotalSeconds;
-        var effFps = elapsed > 0 ? _diagSubmittedFrames / elapsed : 0;
-
-        // Compose text
-        string line1 = $"FPS: {effFps:F1} / {_targetFps}  dropped: {_diagDroppedFrames}";
-        string line2 = $"submit: {_diagLastSubmitMs:F1} ms";
-        double mbps = _diagBitrate > 0 ? _diagBitrate / 1_000_000.0 : 0.0;
-        string line3 = _diagEncWidth > 0 && _diagEncHeight > 0
-            ? $"rec: {_diagEncWidth}x{_diagEncHeight}@{_targetFps}  bitrate: {mbps:F1} Mbps"
-            : $"bitrate: {mbps:F1} Mbps";
-
-        using var bgPaint = new SKPaint { Color = new SKColor(0, 0, 0, 140), IsAntialias = true };
-        using var textPaint = new SKPaint
-        {
-            Color = SKColors.White, IsAntialias = true, TextSize = Math.Max(14, width / 60f)
-        };
-
-        var pad = 8f;
-        var y1 = pad + textPaint.TextSize;
-        var y2 = y1 + textPaint.TextSize + 4f;
-        var y3 = y2 + textPaint.TextSize + 4f;
-        var maxTextWidth = Math.Max(textPaint.MeasureText(line1),
-            Math.Max(textPaint.MeasureText(line2), textPaint.MeasureText(line3)));
-        var rect = new SKRect(pad, pad, pad + maxTextWidth + pad, y3 + pad);
-
-        canvas.Save();
-        canvas.DrawRoundRect(rect, 6, 6, bgPaint);
-        canvas.DrawText(line1, pad * 1.5f, y1, textPaint);
-        canvas.DrawText(line2, pad * 1.5f, y2, textPaint);
-        canvas.DrawText(line3, pad * 1.5f, y3, textPaint);
-        canvas.Restore();
-    }
-
-    private static (SKRect src, SKRect dst) GetAspectFillRects(int srcW, int srcH, int dstW, int dstH)
-    {
-        var dst = new SKRect(0, 0, dstW, dstH);
-        if (srcW <= 0 || srcH <= 0 || dstW <= 0 || dstH <= 0)
-            return (new SKRect(0, 0, srcW, srcH), dst);
-
-        float srcAR = (float)srcW / srcH;
-        float dstAR = (float)dstW / dstH;
-        SKRect src;
-        if (srcAR > dstAR)
-        {
-            // Crop width
-            float newW = srcH * dstAR;
-            float left = (srcW - newW) * 0.5f;
-            src = new SKRect(left, 0, left + newW, srcH);
-        }
-        else
-        {
-            // Crop height
-            float newH = srcW / dstAR;
-            float top = (srcH - newH) * 0.5f;
-            src = new SKRect(0, top, srcW, top + newH);
-        }
-
-        return (src, dst);
-    }
-
-    /// <summary>
-    /// Applies canvas rotation based on device orientation (0, 90, 180, 270 degrees)
-    /// </summary>
-    private static void ApplyCanvasRotation(SKCanvas canvas, int width, int height, int rotation)
-    {
-        var normalizedRotation = rotation % 360;
-        if (normalizedRotation < 0)
-            normalizedRotation += 360;
-
-        switch (normalizedRotation)
-        {
-            case 90:
-                // Rotate 90° clockwise: translate to bottom-left, then rotate
-                canvas.Translate(0, height);
-                canvas.RotateDegrees(-90);
-                break;
-            case 180:
-                canvas.Translate(width, height);
-                canvas.RotateDegrees(180);
-                break;
-            case 270:
-                // Rotate 270° clockwise (or 90° counter-clockwise): translate to top-right, then rotate
-                canvas.Translate(width, 0);
-                canvas.RotateDegrees(90);
-                break;
-            // case 0: no rotation needed
-        }
-    }
-
-    /// <summary>
-    /// Returns frame dimensions after rotation (swaps width/height for 90/270 degrees)
-    /// </summary>
-    private static (int width, int height) GetRotatedDimensions(int width, int height, int rotation)
-    {
-        var normalizedRotation = rotation % 360;
-        if (normalizedRotation < 0)
-            normalizedRotation += 360;
-
-        // Swap dimensions for 90 and 270 degree rotations
-        if (normalizedRotation == 90 || normalizedRotation == 270)
-            return (height, width);
-
-        return (width, height);
-    }
-
-
-    public INativeCamera NativeControl;
-
-    private ICaptureVideoEncoder _captureVideoEncoder;
-    private System.Threading.Timer _frameCaptureTimer;
-    private DateTime _captureVideoStartTime;
-#if WINDOWS
-    private bool _useWindowsPreviewDrivenCapture;
-#endif
-#if WINDOWS || ANDROID || IOS || MACCATALYST
-    private EventHandler _encoderPreviewInvalidateHandler;
-#endif
-    private DateTime? _capturePtsBaseTime; // base timestamp for PTS (from first captured frame)
-
-
-#if ANDROID
-    private int _androidFrameGate; // 0 = free, 1 = in-flight
-    private int _androidWarmupDropRemaining; // drop first N frames to avoid initial garbage frame
-    private System.Action<CapturedImage> _androidPreviewHandler;
-#endif
-
-
-    protected override void OnLayoutReady()
-    {
-        base.OnLayoutReady();
-
-        if (State == CameraState.Error)
-            StartInternal();
-    }
-
-    bool subscribed;
-
-    /// <summary>
-    /// Called when the superview (parent container) changes.
-    /// Subscribes to orientation change events from the superview.
-    /// </summary>
-    public override void SuperViewChanged()
-    {
-        if (Superview != null && !subscribed)
-        {
-            subscribed = true;
-            Superview.OrientationChanged += DeviceOrientationChanged;
-        }
-
-        base.SuperViewChanged();
-    }
-
-    /// <summary>
-    /// Updates the camera orientation from the current device rotation
-    /// </summary>
-    public virtual void UpdateOrientationFromDevice()
-    {
-        //var rotation = ((orientation + 45) / 90) * 90 % 360;
-
-        DeviceRotation = Super.DeviceRotationSnap;
-
-        Debug.WriteLine($"[CAMERA] DeviceRotation: {DeviceRotation}");
-    }
-
-    private void DeviceOrientationChanged(object sender, DeviceOrientation deviceOrientation)
-    {
-        UpdateOrientationFromDevice();
-    }
-
-    private int _DeviceRotation = -1;
-
-    /// <summary>
-    /// Gets or sets the current device rotation in degrees (0, 90, 180, 270).
-    /// Automatically applies the orientation to the native camera when changed.
-    /// </summary>
-    public int DeviceRotation
-    {
-        get { return _DeviceRotation; }
+        get { return _SavedFilename; }
         set
         {
-            if (_DeviceRotation != value)
+            if (_SavedFilename != value)
             {
-                _DeviceRotation = value;
-                OnPropertyChanged();
-                NativeControl?.ApplyDeviceOrientation(value);
-                UpdateInfo();
+                _SavedFilename = value;
+                OnPropertyChanged("SavedFilename");
             }
         }
     }
 
-    /// <summary>
-    /// Rotation locked when video recording started. Used throughout recording to ensure consistent orientation.
-    /// </summary>
-    public int RecordingLockedRotation { get; private set; } = -1;
+    private string _SavedFilename;
 
-    /// <summary>
-    /// Gets the rotation to use for video recording - returns locked rotation during recording, current rotation otherwise.
-    /// </summary>
-    protected int GetActiveRecordingRotation()
+    public static readonly BindableProperty CaptureLocationProperty = BindableProperty.Create(
+        nameof(CaptureLocation),
+        typeof(CaptureLocationType),
+        typeof(SkiaCamera),
+        CaptureLocationType.Gallery);
+
+    public CaptureLocationType CaptureLocation
     {
-        return IsRecordingVideo && RecordingLockedRotation >= 0 ? RecordingLockedRotation : DeviceRotation;
+        get { return (CaptureLocationType)GetValue(CaptureLocationProperty); }
+        set { SetValue(CaptureLocationProperty, value); }
     }
 
-    object lockFrame = new();
+    public static readonly BindableProperty CaptureCustomFolderProperty = BindableProperty.Create(
+        nameof(CaptureCustomFolder),
+        typeof(string),
+        typeof(SkiaCamera),
+        string.Empty);
 
-    /// <summary>
-    /// Gets or sets whether a new camera frame has been acquired and is ready for display
-    /// </summary>
-    public bool FrameAquired { get; set; }
-
-    /// <summary>
-    /// Updates the camera preview display. Called when a new frame is available from the native camera.
-    /// Handles frame submission for video capture flow if recording is active.
-    /// </summary>
-    public virtual void UpdatePreview()
+    public string CaptureCustomFolder
     {
-        FrameAquired = false;
-        NeedUpdate = false;
-        Update();
-
-#if WINDOWS
-        // If using capture video flow and preview-driven capture, submit frames in real-time with the preview
-        if (_useWindowsPreviewDrivenCapture && IsRecordingVideo &&
-            _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
-        {
-            // One frame in flight policy: drop if busy
-            //if (System.Threading.Interlocked.CompareExchange(ref _frameInFlight, 1, 0) == 0)
-            {
-                SafeAction(async () =>
-                {
-                    try
-                    {
-                        var elapsed = DateTime.Now - _captureVideoStartTime;
-                        using var previewImage = NativeControl?.GetPreviewImage();
-                        if (previewImage == null)
-                            return;
-
-                        using (winEnc.BeginFrame(elapsed, out var canvas, out var info))
-                        {
-                            var __rects3 =
-                                GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
-                            canvas.DrawImage(previewImage, __rects3.src, __rects3.dst);
-
-                            if (FrameProcessor != null || VideoDiagnosticsOn)
-                            {
-                                // Apply rotation based on device orientation
-                                var rotation = GetActiveRecordingRotation();
-                                canvas.Save();
-                                ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
-
-                                var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
-                                var frame = new DrawableFrame
-                                {
-                                    Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed
-                                };
-                                FrameProcessor?.Invoke(frame);
-
-                            if (VideoDiagnosticsOn)
-                                DrawDiagnostics(canvas, info.Width, info.Height);
-
-                                canvas.Restore();
-                            }
-                        }
-
-                        var sw = System.Diagnostics.Stopwatch.StartNew();
-                        await winEnc.SubmitFrameAsync();
-                        sw.Stop();
-                        _diagLastSubmitMs = sw.Elapsed.TotalMilliseconds;
-                        System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"[UpdatePreview Capture] {ex.Message}");
-                    }
-                    finally
-                    {
-                        System.Threading.Interlocked.Exchange(ref _frameInFlight, 0);
-                    }
-                });
-            }
-            //else
-            //{
-            //    System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
-            //}
-        }
-#endif
+        get { return (string)GetValue(CaptureCustomFolderProperty); }
+        set { SetValue(CaptureCustomFolderProperty, value); }
     }
 
-    /// <summary>
-    /// Gets the SKSurface used for frame rendering operations
-    /// </summary>
-    public SKSurface FrameSurface { get; protected set; }
-
-    /// <summary>
-    /// Gets the image info for the frame surface
-    /// </summary>
-    public SKImageInfo FrameSurfaceInfo { get; protected set; }
-
-    //public bool AllocatedFrameSurface(int width, int height)
-    //{
-    //    if (Superview == null || width == 0 || height == 0)
-    //    {
-    //        return false;
-    //    }
-
-    //    var kill = FrameSurface;
-    //    FrameSurfaceInfo = new SKImageInfo(width, height);
-
-    //    if (Superview.CanvasView is SkiaViewAccelerated accelerated)
-    //    {
-    //        FrameSurface = SKSurface.Create(accelerated.GRContext, true, FrameSurfaceInfo);
-    //    }
-    //    else
-    //    {
-    //        //normal one
-    //        FrameSurface = SKSurface.Create(FrameSurfaceInfo);
-    //    }
-
-    //    kill?.Dispose();
-
-    //    return true;
-    //}
-
-    protected virtual void OnNewFrameSet(LoadedImageSource source)
+    public CameraPosition Facing
     {
-        NewPreviewSet?.Invoke(this, source);
+        get { return (CameraPosition)GetValue(FacingProperty); }
+        set { SetValue(FacingProperty, value); }
     }
 
-    protected virtual SKImage AquireFrameFromNative()
-    {
-        // If we are recording and not mirroring encoder frames to preview, suppress raw preview updates
-        if (IsRecordingVideo && !UseRecordingFramesToPreview)
-            return null;
+    public static readonly BindableProperty FacingProperty = BindableProperty.Create(
+        nameof(Facing),
+        typeof(CameraPosition),
+        typeof(SkiaCamera),
+        CameraPosition.Default, propertyChanged: NeedRestart);
 
-#if WINDOWS
-        if (IsRecordingVideo && UseRecordingFramesToPreview &&
-            _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
-        {
-            // Only show frames that were actually composed for recording.
-            // If none is available yet, return null so the previous displayed frame stays,
-            // avoiding a fallback blink from the raw preview without overlay.
-            if (winEnc.TryAcquirePreviewImage(out var img) && img != null)
-                return img; // renderer takes ownership and must dispose
-
-            return null; // do NOT fallback to raw preview during recording
-        }
-#elif ANDROID
-        // While recording on Android, mirror the composed encoder frames into the preview (no second camera feed)
-        if (IsRecordingVideo && UseRecordingFramesToPreview &&
-            _captureVideoEncoder is AndroidCaptureVideoEncoder droidEnc)
-        {
-            if (droidEnc.TryAcquirePreviewImage(out var img) && img != null)
-                return img; // renderer takes ownership and must dispose
-            return null; // no fallback to raw preview during recording
-        }
-#elif IOS || MACCATALYST
-        // While recording on Apple, mirror the composed encoder frames into the preview
-        if (IsRecordingVideo && UseRecordingFramesToPreview &&
-            _captureVideoEncoder is DrawnUi.Camera.AppleCaptureVideoEncoder appleEnc)
-        {
-            if (appleEnc.TryAcquirePreviewImage(out var img) && img != null)
-                return img; // renderer takes ownership and must dispose
-            return null; // no fallback to raw preview during recording
-        }
-#endif
-        return NativeControl.GetPreviewImage();
-    }
-
-    protected virtual void SetFrameFromNative()
-    {
-        if (NativeControl != null && !FrameAquired)
-        {
-            //acquire latest image from camera
-            var image = AquireFrameFromNative();
-            if (image != null)
-            {
-                FrameAquired = true;
-                OnNewFrameSet(Display.SetImageInternal(image, false));
-            }
-        }
-    }
-
-    protected override void Paint(DrawingContext ctx)
-    {
-        base.Paint(ctx);
-
-        if (State == CameraState.On)
-        {
-            SetFrameFromNative();
-        }
-
-        DrawViews(ctx);
-
-        if (ConstantUpdate && State == CameraState.On)
-        {
-            Update();
-        }
-    }
-
-    #endregion
-
-#if (!ANDROID && !IOS && !MACCATALYST && !WINDOWS && !TIZEN)
-    /// <summary>
-    /// Gets a bitmap of the current preview frame (not implemented on this platform)
-    /// </summary>
-    /// <returns>Preview bitmap</returns>
-    public SKBitmap GetPreviewBitmap()
-    {
-        throw new NotImplementedException();
-    }
-
-
-#endif
-
-
-    bool lockStartup;
-
-    /// <summary>
-    /// Starts the camera by setting IsOn to true.
-    /// The actual camera initialization and permission handling happens automatically.
-    /// </summary>
-    public virtual void Start()
-    {
-        IsOn = true; //haha
-    }
-
-    private static void PowerChanged(BindableObject bindable, object oldvalue, object newvalue)
+    private static void NeedRestart(BindableObject bindable, object oldvalue, object newvalue)
     {
         if (bindable is SkiaCamera control)
         {
-            control.StopInternal(true);
+            if (control.State == CameraState.On)
+            {
+                control.StopInternal();
+
+                // Force recreation of NativeControl when camera properties change
+                // This ensures the new camera selection settings are applied
+                if (control.NativeControl != null)
+                {
+                    control.NativeControl.Dispose();
+                    control.NativeControl = null;
+                }
+            }
+
             if (control.IsOn)
             {
-                control.StartWithPermissionsInternal();
+                control.StartInternal();
+            }
+            else
+            {
+                control.Start();
+            }
+        }
+    }
+
+    private static void OnCaptureFormatChanged(BindableObject bindable, object oldvalue, object newvalue)
+    {
+       
+        if (bindable is SkiaCamera control)
+        {
+            // When capture format changes, update preview to match aspect ratio
+            Debug.WriteLine($"[SkiaCamera] Capture format changed: {oldvalue} -> {newvalue}");
+
+            if (newvalue is int)
+            {
+                if (control.PhotoQuality != CaptureQuality.Manual)
+                {
+                    return;
+                }
+            }
+
+            if (control.IsOn)
+            {
+#if ONPLATFORM
+                control.SafeAction(async () => { control.UpdatePreviewFormatForAspectRatio(); },
+                    LongKeyGenerator.EncodeSemantic("cam_restart"));
+
+#endif
+            }
+        }
+    }
+
+    private static void OnCaptureVideoFormatChanged(BindableObject bindable, object oldvalue, object newvalue)
+    {
+        
+        if (bindable is SkiaCamera control)
+        {
+            // When capture format changes, update preview to match aspect ratio
+            Debug.WriteLine($"[SkiaCamera] Capture video format changed: {oldvalue} -> {newvalue}");
+
+            if (newvalue is int)
+            {
+                if (control.VideoQuality != VideoQuality.Manual)
+                {
+                    return;
+                }
+            }
+
+            if (control.IsOn)
+            {
+#if ONPLATFORM
+                control.SafeAction(async () => { control.UpdatePreviewFormatForAspectRatio(); },
+                    LongKeyGenerator.EncodeSemantic("cam_restart"));
+
+#endif
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Enables video recording diagnostics rendering over video, works when UseCaptureVideoFlow is set to true only.
+    /// </summary>
+    public bool VideoDiagnosticsOn
+    {
+        get { return (bool)GetValue(VideoDiagnosticsOnProperty); }
+        set { SetValue(VideoDiagnosticsOnProperty, value); }
+    }
+
+    public static readonly BindableProperty VideoDiagnosticsOnProperty = BindableProperty.Create(
+        nameof(VideoDiagnosticsOn),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false, propertyChanged: NeedRestart);
+
+
+    public static readonly BindableProperty CameraIndexProperty = BindableProperty.Create(
+        nameof(CameraIndex),
+        typeof(int),
+        typeof(SkiaCamera),
+        -1, propertyChanged: NeedRestart);
+
+    /// <summary>
+    /// Camera index for manual camera selection.
+    /// When set to -1 (default), uses automatic selection based on Facing property.
+    /// When Facing is set to Manual, this property determines which camera to use.
+    /// </summary>
+    public int CameraIndex
+    {
+        get { return (int)GetValue(CameraIndexProperty); }
+        set { SetValue(CameraIndexProperty, value); }
+    }
+
+    public static readonly BindableProperty PhotoQualityProperty = BindableProperty.Create(
+        nameof(PhotoQuality),
+        typeof(CaptureQuality),
+        typeof(SkiaCamera),
+        CaptureQuality.High, propertyChanged: OnCaptureFormatChanged);
+
+    /// <summary>
+    /// Photo capture quality
+    /// </summary>
+    public CaptureQuality PhotoQuality
+    {
+        get { return (CaptureQuality)GetValue(PhotoQualityProperty); }
+        set { SetValue(PhotoQualityProperty, value); }
+    }
+
+    public static readonly BindableProperty PhotoFormatIndexProperty = BindableProperty.Create(
+        nameof(PhotoFormatIndex),
+        typeof(int),
+        typeof(SkiaCamera),
+        0, propertyChanged: OnCaptureFormatChanged);
+
+    /// <summary>
+    /// Index of capture format when PhotoQuality is set to Manual.
+    /// Selects from the array of available capture formats/resolutions.
+    /// Use GetAvailableCaptureFormats() to see available options.
+    /// </summary>
+    public int PhotoFormatIndex
+    {
+        get { return (int)GetValue(PhotoFormatIndexProperty); }
+        set { SetValue(PhotoFormatIndexProperty, value); }
+    }
+
+    public static readonly BindableProperty CaptureFlashModeProperty = BindableProperty.Create(
+        nameof(CaptureFlashMode),
+        typeof(CaptureFlashMode),
+        typeof(SkiaCamera),
+        CaptureFlashMode.Auto,
+        propertyChanged: OnCaptureFlashModeChanged);
+
+    /// <summary>
+    /// Flash mode for still image capture. Controls whether flash fires during photo capture.
+    /// </summary>
+    public CaptureFlashMode CaptureFlashMode
+    {
+        get { return (CaptureFlashMode)GetValue(CaptureFlashModeProperty); }
+        set { SetValue(CaptureFlashModeProperty, value); }
+    }
+
+    private static void OnCaptureFlashModeChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is SkiaCamera camera && camera.NativeControl != null)
+        {
+            camera.NativeControl.SetCaptureFlashMode((CaptureFlashMode)newValue);
+        }
+    }
+
+    /// <summary>
+    /// Gets whether flash is supported on the current camera
+    /// </summary>
+    public bool IsFlashSupported
+    {
+        get { return NativeControl?.IsFlashSupported() ?? false; }
+    }
+
+    /// <summary>
+    /// Gets whether auto flash mode is supported on the current camera
+    /// </summary>
+    public bool IsAutoFlashSupported
+    {
+        get { return NativeControl?.IsAutoFlashSupported() ?? false; }
+    }
+
+    public static readonly BindableProperty FlashModeProperty = BindableProperty.Create(
+        nameof(FlashMode),
+        typeof(FlashMode),
+        typeof(SkiaCamera),
+        FlashMode.Off,
+        propertyChanged: OnFlashModeChanged);
+
+    /// <summary>
+    /// Flash mode for preview torch. Controls LED torch for live camera preview.
+    /// </summary>
+    public FlashMode FlashMode
+    {
+        get { return (FlashMode)GetValue(FlashModeProperty); }
+        set { SetValue(FlashModeProperty, value); }
+    }
+
+    private static void OnFlashModeChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is SkiaCamera camera && camera.NativeControl != null)
+        {
+            camera.NativeControl.SetFlashMode((FlashMode)newValue);
+        }
+    }
+
+    #region VIDEO RECORDING PROPERTIES
+
+    public static readonly BindableProperty IsRecordingVideoProperty = BindableProperty.Create(
+        nameof(IsRecordingVideo),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false,
+        BindingMode.OneWayToSource);
+
+    /// <summary>
+    /// Whether video recording is currently active (read-only)
+    /// </summary>
+    public bool IsRecordingVideo
+    {
+        get { return (bool)GetValue(IsRecordingVideoProperty); }
+        private set { SetValue(IsRecordingVideoProperty, value); }
+    }
+
+    public static readonly BindableProperty VideoQualityProperty = BindableProperty.Create(
+        nameof(VideoQuality),
+        typeof(VideoQuality),
+        typeof(SkiaCamera),
+        VideoQuality.Standard,
+        propertyChanged: OnCaptureVideoFormatChanged);
+
+    /// <summary>
+    /// Video recording quality preset
+    /// </summary>
+    public VideoQuality VideoQuality
+    {
+        get { return (VideoQuality)GetValue(VideoQualityProperty); }
+        set { SetValue(VideoQualityProperty, value); }
+    }
+
+    public static readonly BindableProperty VideoFormatIndexProperty = BindableProperty.Create(
+        nameof(VideoFormatIndex),
+        typeof(int),
+        typeof(SkiaCamera),
+        0,
+        propertyChanged: OnCaptureVideoFormatChanged);
+
+    /// <summary>
+    /// Index of video format when VideoQuality is set to Manual.
+    /// Selects from the array of available video formats.
+    /// Use GetAvailableVideoFormatsAsync() to see available options.
+    /// </summary>
+    public int VideoFormatIndex
+    {
+        get { return (int)GetValue(VideoFormatIndexProperty); }
+        set { SetValue(VideoFormatIndexProperty, value); }
+    }
+
+
+    /// <summary>
+    /// Controls which stream/aspect the live preview should match.
+    /// Still: preview matches still-capture aspect. Video: preview matches intended video recording aspect.
+    /// Changing this will restart the camera to apply the new preview configuration.
+    /// </summary>
+    public static readonly BindableProperty CaptureModeProperty = BindableProperty.Create(
+        nameof(CaptureMode),
+        typeof(CaptureModeType),
+        typeof(SkiaCamera),
+        CaptureModeType.Still,
+        propertyChanged: NeedRestart);
+
+    /// <summary>
+    /// Preview mode: Still or Video. Determines which aspect/format the preview sizing should follow.
+    /// </summary>
+    public CaptureModeType CaptureMode
+    {
+        get => (CaptureModeType)GetValue(CaptureModeProperty);
+        set => SetValue(CaptureModeProperty, value);
+    }
+
+
+    /// <summary>
+    /// Gets whether video recording is supported on the current device/camera
+    /// </summary>
+    public bool CanRecordVideo
+    {
+        get { return NativeControl?.CanRecordVideo() ?? false; }
+    }
+
+    /// <summary>
+    /// Gets the current recording duration (if recording)
+    /// </summary>
+    public TimeSpan CurrentRecordingDuration { get; private set; }
+
+    public static readonly BindableProperty RecordAudioProperty = BindableProperty.Create(
+        nameof(RecordAudio),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false);
+
+    /// <summary>
+    /// Whether to record audio with video. Default is false (silent video).
+    /// Must be set before starting video recording.
+    /// </summary>
+    public bool RecordAudio
+    {
+        get { return (bool)GetValue(RecordAudioProperty); }
+        set { SetValue(RecordAudioProperty, value); }
+    }
+
+    public static readonly BindableProperty UseCaptureVideoFlowProperty = BindableProperty.Create(
+        nameof(UseCaptureVideoFlow),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false);
+
+    /// <summary>
+    /// Whether to use capture video flow (frame-by-frame processing) instead of native video recording.
+    /// When true, individual camera frames are captured and processed through FrameProcessor callback before encoding.
+    /// Default is false (use native video recording).
+    /// </summary>
+    public bool UseCaptureVideoFlow
+    {
+        get { return (bool)GetValue(UseCaptureVideoFlowProperty); }
+        set { SetValue(UseCaptureVideoFlowProperty, value); }
+    }
+
+    public static readonly BindableProperty EnablePreRecordingProperty = BindableProperty.Create(
+        nameof(EnablePreRecording),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false,
+        propertyChanged: OnPreRecordingEnabledChanged);
+
+    /// <summary>
+    /// Whether to buffer pre-recorded frames before video recording starts.
+    /// When enabled, frames are buffered in memory before recording begins.
+    /// </summary>
+    public bool EnablePreRecording
+    {
+        get { return (bool)GetValue(EnablePreRecordingProperty); }
+        set { SetValue(EnablePreRecordingProperty, value); }
+    }
+
+    public static readonly BindableProperty PreRecordDurationProperty = BindableProperty.Create(
+        nameof(PreRecordDuration),
+        typeof(TimeSpan),
+        typeof(SkiaCamera),
+        TimeSpan.FromSeconds(3));
+
+    /// <summary>
+    /// Duration of pre-recording buffer to maintain (default: 3 seconds).
+    /// Assumes 30 fps average frame rate for buffer size calculation.
+    /// </summary>
+    public TimeSpan PreRecordDuration
+    {
+        get { return (TimeSpan)GetValue(PreRecordDurationProperty); }
+        set { SetValue(PreRecordDurationProperty, value); }
+    }
+
+    private static void OnPreRecordingEnabledChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is SkiaCamera camera)
+        {
+            bool enabled = (bool)newValue;
+            if (enabled && !camera.IsRecordingVideo)
+            {
+                camera.InitializePreRecordingBuffer();
+            }
+            else if (!enabled)
+            {
+                camera.ClearPreRecordingBuffer();
             }
         }
     }
 
     /// <summary>
-    /// Gets or sets whether a permissions error occurred
+    /// Callback for processing individual frames during capture video flow.
+    /// Only used when UseCaptureVideoFlow is true.
+    /// Parameters: SKCanvas (for drawing), SKImageInfo (frame info), TimeSpan (recording timestamp)
     /// </summary>
-    public bool PermissionsError { get; set; }
+    public Action<DrawableFrame> FrameProcessor { get; set; }
+
+    #endregion
 
     /// <summary>
-    /// Request permissions and start camera without setting IsOn true. Will set IsOn to false if permissions denied.
+    /// Whether to mirror composed recording frames to the on-screen preview during capture video flow.
+    /// Set this to true to see overlays exactly as recorded; set to false to avoid any mirroring overhead.
     /// </summary>
-    public virtual void StartWithPermissionsInternal()
+    public bool MirrorRecordingToPreview { get; set; } = true;
+
+    /// <summary>
+    /// While recording, show exactly the frames being composed for the encoder as the on-screen preview.
+    /// This avoids stutter by not relying on a separate preview feed. Controlled by MirrorRecordingToPreview.
+    /// </summary>
+    public bool UseRecordingFramesForPreview { get; set; } = true;
+
+
+    public static readonly BindableProperty TypeProperty = BindableProperty.Create(
+        nameof(Type),
+        typeof(CameraType),
+        typeof(SkiaCamera),
+        CameraType.Default, propertyChanged: NeedRestart);
+
+    /// <summary>
+    /// To be implemented
+    /// </summary>
+    public CameraType Type
     {
-        if (lockStartup)
-        {
-            Debug.WriteLine("[SkiaCamera] Startup locked.");
-            return;
-        }
+        get { return (CameraType)GetValue(TypeProperty); }
+        set { SetValue(TypeProperty, value); }
+    }
 
-        lockStartup = true;
 
-        try
+    /// <summary>
+    /// Will be applied to viewport for focal length etc
+    /// </summary>
+    public CameraUnit CameraDevice
+    {
+        get { return _virtualCameraUnit; }
+        set
         {
-            Debug.WriteLine("[SkiaCamera] Requesting permissions...");
-
-            SkiaCamera.CheckPermissions((presented) =>
-                {
-                    Debug.WriteLine("[SkiaCamera] Starting..");
-                    PermissionsWarning = false;
-                    PermissionsError = false;
-                    StartInternal();
-
-                    //if (Geotag)
-                    //	CommandGetLocation.Execute(null);
-                    //else
-                    //{
-                    //	CanDetectLocation = false;
-                    //}
-                },
-                (presented) =>
-                {
-                    Super.Log("[SkiaCamera] Permissions denied");
-                    IsOn = false;
-                    PermissionsWarning = true;
-                    PermissionsError = true;
-                });
-        }
-        catch (Exception e)
-        {
-            Trace.WriteLine(e);
-        }
-        finally
-        {
-            Tasks.StartDelayed(TimeSpan.FromSeconds(1), () =>
+            if (_virtualCameraUnit != value)
             {
-                Debug.WriteLine("[SkiaCamera] Startup UNlocked.");
-                lockStartup = false;
-            });
+                if (_virtualCameraUnit != value)
+                {
+                    _virtualCameraUnit = value;
+                    AssignFocalLengthInternal(value);
+                }
+            }
         }
     }
 
-    /// <summary>
-    /// Starts the camera after permissions where acquired
-    /// </summary>
-    protected virtual void StartInternal()
-    {
-        if (IsDisposing || IsDisposed)
-            return;
+    private CameraUnit _virtualCameraUnit;
 
-        if (NativeControl == null)
+    public void AssignFocalLengthInternal(CameraUnit value)
+    {
+        if (value != null)
         {
-#if ONPLATFORM
-            CreateNative();
-            OnNativeControlCreated();
-#endif
+            FocalLength = (float)(value.FocalLength * value.SensorCropFactor);
         }
 
-        //var rotation = ((Superview.DeviceRotation + 45) / 90) % 4;
-        //NativeControl?.ApplyDeviceOrientation(rotation);
+        OnPropertyChanged(nameof(CameraDevice));
+    }
 
+    private int _PreviewWidth;
+
+    public int PreviewWidth
+    {
+        get { return _PreviewWidth; }
+        set
+        {
+            if (_PreviewWidth != value)
+            {
+                _PreviewWidth = value;
+                OnPropertyChanged("PreviewWidth");
+            }
+        }
+    }
+
+    private int _PreviewHeight;
+
+    public int PreviewHeight
+    {
+        get { return _PreviewHeight; }
+        set
+        {
+            if (_PreviewHeight != value)
+            {
+                _PreviewHeight = value;
+                OnPropertyChanged("PreviewHeight");
+            }
+        }
+    }
+
+    private int _CaptureWidth;
+
+    public int CaptureWidth
+    {
+        get { return _CaptureWidth; }
+        set
+        {
+            if (_CaptureWidth != value)
+            {
+                _CaptureWidth = value;
+                OnPropertyChanged("CaptureWidth");
+            }
+        }
+    }
+
+    private int _CaptureHeight;
+
+    public int CaptureHeight
+    {
+        get { return _CaptureHeight; }
+        set
+        {
+            if (_CaptureHeight != value)
+            {
+                _CaptureHeight = value;
+                OnPropertyChanged("CaptureHeight");
+            }
+        }
+    }
+
+
+    protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        base.OnPropertyChanged(propertyName);
+
+        if (propertyName == nameof(FocalLength) || propertyName == nameof(FocalLengthAdjustment))
+        {
+            FocalLengthAdjusted = FocalLength + FocalLengthAdjustment;
+        }
+    }
+
+    public static double GetSensorRotation(DeviceOrientation orientation)
+    {
+        if (orientation == DeviceOrientation.PortraitUpsideDown)
+            return 180.0;
+
+        if (orientation == DeviceOrientation.LandscapeLeft)
+            return 90.0;
+
+        if (orientation == DeviceOrientation.LandscapeRight)
+            return 270.0;
+
+        return 0.0;
+    }
+
+
+    public static readonly BindableProperty CapturedStillImageProperty = BindableProperty.Create(
+        nameof(CapturedStillImage),
+        typeof(CapturedImage),
+        typeof(SkiaCamera),
+        null);
+
+    public CapturedImage CapturedStillImage
+    {
+        get { return (CapturedImage)GetValue(CapturedStillImageProperty); }
+        set { SetValue(CapturedStillImageProperty, value); }
+    }
+
+
+    public static readonly BindableProperty CustomAlbumProperty = BindableProperty.Create(nameof(CustomAlbum),
+        typeof(string),
+        typeof(SkiaCamera),
+        string.Empty);
+
+    /// <summary>
+    /// If not null will use this instead of Camera Roll folder for photos output
+    /// </summary>
+    public string CustomAlbum
+    {
+        get { return (string)GetValue(CustomAlbumProperty); }
+        set { SetValue(CustomAlbumProperty, value); }
+    }
+
+
+    public static readonly BindableProperty GeotagProperty = BindableProperty.Create(nameof(Geotag),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false);
+
+    /// <summary>
+    /// try to inject location metadata if to photos if GPS succeeds
+    /// </summary>
+    public bool Geotag
+    {
+        get { return (bool)GetValue(GeotagProperty); }
+        set { SetValue(GeotagProperty, value); }
+    }
+
+
+    public static readonly BindableProperty FocalLengthProperty = BindableProperty.Create(
+        nameof(FocalLength),
+        typeof(double),
+        typeof(SkiaCamera),
+        0.0);
+
+    public double FocalLength
+    {
+        get { return (double)GetValue(FocalLengthProperty); }
+        set { SetValue(FocalLengthProperty, value); }
+    }
+
+    public static readonly BindableProperty FocalLengthAdjustedProperty = BindableProperty.Create(
+        nameof(FocalLengthAdjusted),
+        typeof(double),
+        typeof(SkiaCamera),
+        0.0);
+
+    public double FocalLengthAdjusted
+    {
+        get { return (double)GetValue(FocalLengthAdjustedProperty); }
+        set { SetValue(FocalLengthAdjustedProperty, value); }
+    }
+
+    public static readonly BindableProperty FocalLengthAdjustmentProperty = BindableProperty.Create(
+        nameof(FocalLengthAdjustment),
+        typeof(double),
+        typeof(SkiaCamera),
+        0.0);
+
+    public double FocalLengthAdjustment
+    {
+        get { return (double)GetValue(FocalLengthAdjustmentProperty); }
+        set { SetValue(FocalLengthAdjustmentProperty, value); }
+    }
+
+    public static readonly BindableProperty ManualZoomProperty = BindableProperty.Create(
+        nameof(ManualZoom),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false);
+
+    public bool ManualZoom
+    {
+        get { return (bool)GetValue(ManualZoomProperty); }
+        set { SetValue(ManualZoomProperty, value); }
+    }
+
+    public static readonly BindableProperty ZoomProperty = BindableProperty.Create(
+        nameof(Zoom),
+        typeof(double),
+        typeof(SkiaCamera),
+        1.0,
+        propertyChanged: NeedSetZoom);
+
+    /// <summary>
+    /// Zoom camera
+    /// </summary>
+    public double Zoom
+    {
+        get { return (double)GetValue(ZoomProperty); }
+        set { SetValue(ZoomProperty, value); }
+    }
+
+    public static readonly BindableProperty ConstantUpdateProperty = BindableProperty.Create(
+        nameof(ConstantUpdate),
+        typeof(bool),
+        typeof(SkiaCamera),
+        true);
+
+    /// <summary>
+    /// Default is true.
+    /// Whether it should update non-stop or only when a new frame is acquired.
+    /// For example if camera gives frames at 30 fps, screen might update around 40fps without this set to true.
+    /// If enabled will force max redraws at 60 fps.
+    /// </summary>
+    public bool ConstantUpdate
+    {
+        get { return (bool)GetValue(ConstantUpdateProperty); }
+        set { SetValue(ConstantUpdateProperty, value); }
+    }
+
+    public static readonly BindableProperty ViewportScaleProperty = BindableProperty.Create(
+        nameof(ViewportScale),
+        typeof(double),
+        typeof(SkiaCamera),
+        1.0);
+
+    /// <summary>
+    /// Zoom viewport value, NOT a camera zoom,
+    /// </summary>
+    public double ViewportScale
+    {
+        get { return (double)GetValue(ViewportScaleProperty); }
+        set { SetValue(ViewportScaleProperty, value); }
+    }
+
+    public static readonly BindableProperty TextureScaleProperty = BindableProperty.Create(
+        nameof(TextureScale),
+        typeof(double),
+        typeof(SkiaCamera),
+        1.0, defaultBindingMode: BindingMode.OneWayToSource);
+
+    public double TextureScale
+    {
+        get { return (double)GetValue(TextureScaleProperty); }
+        set { SetValue(TextureScaleProperty, value); }
+    }
+
+    public static readonly BindableProperty ZoomLimitMinProperty = BindableProperty.Create(
+        nameof(ZoomLimitMin),
+        typeof(double),
+        typeof(SkiaCamera),
+        1.0);
+
+    public double ZoomLimitMin
+    {
+        get { return (double)GetValue(ZoomLimitMinProperty); }
+        set { SetValue(ZoomLimitMinProperty, value); }
+    }
+
+    public static readonly BindableProperty ZoomLimitMaxProperty = BindableProperty.Create(
+        nameof(ZoomLimitMax),
+        typeof(double),
+        typeof(SkiaCamera),
+        10.0);
+
+    public double ZoomLimitMax
+    {
+        get { return (double)GetValue(ZoomLimitMaxProperty); }
+        set { SetValue(ZoomLimitMaxProperty, value); }
+    }
+
+
+    private static void NeedSetZoom(BindableObject bindable, object oldvalue, object newvalue)
+    {
+        if (bindable is SkiaCamera control)
+        {
+            var zoom = (double)newvalue;
+            if (zoom < control.ZoomLimitMin)
+            {
+                zoom = control.ZoomLimitMin;
+            }
+            else if (zoom > control.ZoomLimitMax)
+            {
+                zoom = control.ZoomLimitMax;
+            }
+
+            control.SetZoom(zoom);
+        }
+    }
+
+    protected virtual void ApplyDisplayProperties()
+    {
         if (Display != null)
         {
-            //DestroyRenderingObject();
-            Display.IsVisible = true;
-        }
+            Display.Aspect = this.Aspect;
 
-        //IsOn = true;
-
-        NativeControl?.Start();
-    }
-
-    /// <summary>
-    /// Called after native control is created to notify property changes
-    /// </summary>
-    protected virtual void OnNativeControlCreated()
-    {
-        // Notify that flash capability properties may have changed
-        OnPropertyChanged(nameof(IsFlashSupported));
-        OnPropertyChanged(nameof(IsAutoFlashSupported));
-
-        // Apply current flash modes to native control
-        if (NativeControl != null)
-        {
-            NativeControl.SetFlashMode(FlashMode);
-            NativeControl.SetCaptureFlashMode(CaptureFlashMode);
-            NativeControl.EnablePreRecording = EnablePreRecording;
-            NativeControl.PreRecordDuration = PreRecordDuration;
+            Display.ScaleX = this.IsMirrored ? -1 : 1;
         }
     }
 
-    #region SkiaCamera xam control
-
-    private bool _PermissionsWarning;
-
-    /// <summary>
-    /// Gets or sets whether a permissions warning is active (permissions need to be granted)
-    /// </summary>
-    public bool PermissionsWarning
+    protected override void OnMeasured()
     {
-        get { return _PermissionsWarning; }
-        set
-        {
-            if (_PermissionsWarning != value)
-            {
-                _PermissionsWarning = value;
-                OnPropertyChanged();
-            }
-        }
+        base.OnMeasured();
+
+        ApplyDisplayProperties();
     }
 
-    /// <summary>
-    /// Represents a queued picture waiting to be processed
-    /// </summary>
-    public class CameraQueuedPictured
+    protected override void OnLayoutChanged()
     {
-        /// <summary>
-        /// Gets or sets the filename for this queued picture
-        /// </summary>
-        public string Filename { get; set; }
+        base.OnLayoutChanged();
 
-        /// <summary>
-        /// Gets or sets the sensor rotation angle in degrees
-        /// </summary>
-        public double SensorRotation { get; set; }
-
-        /// <summary>
-        /// Set by renderer after work
-        /// </summary>
-        public bool Processed { get; set; }
+        ApplyDisplayProperties();
     }
 
-    /// <summary>
-    /// Queue for managing pictures waiting to be processed
-    /// </summary>
-    public class CameraPicturesQueue : Queue<CameraQueuedPictured>
-    {
-    }
+    //public static readonly BindableProperty DisplayModeProperty = BindableProperty.Create(
+    //    nameof(DisplayMode),
+    //    typeof(StretchModes),
+    //    typeof(SkiaCamera),
+    //    StretchModes.Fill);
 
-
-    private bool _IsTakingPhoto;
-
-    /// <summary>
-    /// Gets whether the camera is currently taking a still photo
-    /// </summary>
-    public bool IsTakingPhoto
-    {
-        get { return _IsTakingPhoto; }
-        set
-        {
-            if (_IsTakingPhoto != value)
-            {
-                _IsTakingPhoto = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    /// <summary>
-    /// Gets the queue of pictures waiting to be processed
-    /// </summary>
-    public CameraPicturesQueue PicturesQueue { get; } = new CameraPicturesQueue();
-
-
-    #region PERMISSIONS
-
-    protected static bool ChecksBusy = false;
-
-    private static DateTime lastTimeChecked = DateTime.MinValue;
-
-    /// <summary>
-    /// Gets whether camera permissions have been granted
-    /// </summary>
-    public static bool PermissionsGranted { get; protected set; }
-
-    /// <summary>
-    /// Checks gallery/camera permissions and invokes the appropriate callback
-    /// </summary>
-    /// <param name="granted">Action to invoke if permissions are granted</param>
-    /// <param name="notGranted">Action to invoke if permissions are denied</param>
-    public static void CheckGalleryPermissions(Action granted, Action notGranted)
-    {
-        if (lastTimeChecked + TimeSpan.FromSeconds(5) < DateTime.Now) //avoid spam
-        {
-            lastTimeChecked = DateTime.Now;
-
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                if (ChecksBusy)
-                    return;
-
-                bool okay1 = false;
-
-
-                ChecksBusy = true;
-                // Update the UI
-                try
-                {
-                    var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
-                    if (status != PermissionStatus.Granted)
-                    {
-                        status = await Permissions.RequestAsync<Permissions.Camera>();
-
-
-                        if (status == PermissionStatus.Granted)
-                        {
-                            okay1 = true;
-                        }
-                    }
-                    else
-                    {
-                        okay1 = true;
-                    }
-
-
-                    // Could prompt to enable in settings if needed
-                }
-                catch (Exception ex)
-                {
-                    Trace.WriteLine(ex);
-                }
-                finally
-                {
-                    if (okay1)
-                    {
-                        PermissionsGranted = true;
-                        granted?.Invoke();
-                    }
-                    else
-                    {
-                        PermissionsGranted = false;
-                        notGranted?.Invoke();
-                    }
-
-                    ChecksBusy = false;
-                }
-            });
-        }
-    }
-
-    private bool _GpsBusy;
-
-    public bool GpsBusy
-    {
-        get { return _GpsBusy; }
-        set
-        {
-            if (_GpsBusy != value)
-            {
-                _GpsBusy = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    private double _LocationLat;
-
-    public double LocationLat
-    {
-        get { return _LocationLat; }
-        set
-        {
-            if (_LocationLat != value)
-            {
-                _LocationLat = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    private double _LocationLon;
-
-    public double LocationLon
-    {
-        get { return _LocationLon; }
-        set
-        {
-            if (_LocationLon != value)
-            {
-                _LocationLon = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    private bool _CanDetectLocation;
-
-    public bool CanDetectLocation
-    {
-        get { return _CanDetectLocation; }
-        set
-        {
-            if (_CanDetectLocation != value)
-            {
-                _CanDetectLocation = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    /// <summary>
-    /// Safe and if CanDetectLocation
-    /// </summary>
-    /// <returns></returns>
-    public async Task RefreshLocation(int msTimeout)
-    {
-        if (CanDetectLocation)
-        {
-            //my ACTUAL location
-            try
-            {
-                GpsBusy = true;
-
-                var request = new GeolocationRequest(GeolocationAccuracy.Medium);
-                var cancel = new CancellationTokenSource();
-                cancel.CancelAfter(msTimeout);
-                var location = await Geolocation.GetLocationAsync(request, cancel.Token);
-
-                if (location != null)
-                {
-                    Debug.WriteLine(
-                        $"ACTUAL Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
-
-                    this.LocationLat = location.Latitude;
-                    this.LocationLon = location.Longitude;
-                }
-            }
-            catch (FeatureNotSupportedException fnsEx)
-            {
-                // Handle not supported on device exception
-                //Toast.ShortMessage("GPS не поддерживается на устройстве");
-            }
-            catch (FeatureNotEnabledException fneEx)
-            {
-                // Handle not enabled on device exception
-                //Toast.ShortMessage("GPS отключен на устройстве");
-            }
-            catch (PermissionException pEx)
-            {
-                // Handle permission exception
-                //Toast.ShortMessage("Вы не дали разрешение на использование GPS");
-            }
-            catch (Exception ex)
-            {
-                // Unable to get location
-            }
-            finally
-            {
-                GpsBusy = false;
-            }
-        }
-    }
-
-    //public ICommand CommandGetLocation
+    //public StretchModes DisplayMode
     //{
-    //	get
-    //	{
-    //		return new Command((object context) =>
-    //		{
-    //			if (GpsBusy || !App.Native.CheckGpsEnabled())
-    //				return;
-
-    //			MainThread.BeginInvokeOnMainThread(async () =>
-    //			{
-    //				// Update the UI
-    //				try
-    //				{
-    //					GpsBusy = true;
-
-    //					var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-    //					if (status != PermissionStatus.Granted)
-    //					{
-    //						CanDetectLocation = false;
-
-    //						await App.Current.MainPage.DisplayAlert(Core.Current.MyCompany.Name, ResStrings.X_NeedMoreForGeo, ResStrings.ButtonOk);
-
-    //						status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-    //						if (status != PermissionStatus.Granted)
-    //						{
-    //							// Additionally could prompt the user to turn on in settings
-    //							return;
-    //						}
-    //						else
-    //						{
-    //							CanDetectLocation = true;
-    //						}
-    //					}
-    //					else
-    //					{
-    //						CanDetectLocation = true;
-    //					}
-
-    //					if (CanDetectLocation)
-    //					{
-    //						//my LAST location:
-    //						try
-    //						{
-    //							if (App.Native.CheckGpsEnabled())
-    //							{
-    //								var location = await Geolocation.GetLastKnownLocationAsync();
-
-    //								if (location != null)
-    //								{
-    //									Debug.WriteLine(
-    //										$"LAST Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
-
-    //									LocationLat = location.Latitude;
-    //									LocationLon = location.Longitude;
-    //								}
-    //							}
-    //						}
-    //						catch (FeatureNotSupportedException fnsEx)
-    //						{
-    //							// Handle not supported on device exception
-    //							//Toast.ShortMessage("GPS не поддерживается на устройстве");
-    //						}
-    //						catch (FeatureNotEnabledException fneEx)
-    //						{
-    //							// Handle not enabled on device exception
-    //							//Toast.ShortMessage("GPS отключен на устройстве");
-    //						}
-    //						catch (PermissionException pEx)
-    //						{
-    //							// Handle permission exception
-    //							//Toast.ShortMessage("Вы не дали разрешение на использование GPS");
-    //						}
-    //						catch (Exception ex)
-    //						{
-    //							// Unable to get location
-    //						}
-
-    //						await Task.Run(async () =>
-    //						{
-    //							await RefreshLocation(1200);
-
-    //						}).ConfigureAwait(false);
-
-    //					}
-    //					else
-    //					{
-    //						GpsBusy = false;
-    //					}
-
-
-    //				}
-    //				catch (Exception ex)
-    //				{
-    //					//Something went wrong
-    //					Trace.WriteLine(ex);
-    //					CanDetectLocation = false;
-    //					GpsBusy = false;
-    //				}
-    //				finally
-    //				{
-
-    //				}
-
-    //			});
-
-
-    //		});
-    //	}
+    //    get { return (StretchModes)GetValue(DisplayModeProperty); }
+    //    set { SetValue(DisplayModeProperty, value); }
     //}
+
+    public static readonly BindableProperty IsMirroredProperty = BindableProperty.Create(
+        nameof(IsMirrored),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false,
+        propertyChanged: NeedInvalidateMeasure);
+
+    public bool IsMirrored
+    {
+        get { return (bool)GetValue(IsMirroredProperty); }
+        set { SetValue(IsMirroredProperty, value); }
+    }
+
+    public static readonly BindableProperty AspectProperty = BindableProperty.Create(
+        nameof(Aspect),
+        typeof(TransformAspect),
+        typeof(SkiaImage),
+        TransformAspect.AspectFit,
+        propertyChanged: NeedInvalidateMeasure);
+
+    /// <summary>
+    /// Apspect to render image with, default is AspectFit.
+    /// </summary>
+    public TransformAspect Aspect
+    {
+        get { return (TransformAspect)GetValue(AspectProperty); }
+        set { SetValue(AspectProperty, value); }
+    }
+
+
+    public static readonly BindableProperty StateProperty = BindableProperty.Create(
+        nameof(State),
+        typeof(CameraState),
+        typeof(SkiaCamera),
+        CameraState.Off,
+        BindingMode.OneWayToSource, propertyChanged: ControlStateChanged);
+
+    private static void ControlStateChanged(BindableObject bindable, object oldvalue, object newvalue)
+    {
+        if (bindable is SkiaCamera control)
+        {
+            control.StateChanged?.Invoke(control, control.State);
+            control.UpdateInfo();
+        }
+    }
+
+    public CameraState State
+    {
+        get { return (CameraState)GetValue(StateProperty); }
+        set { SetValue(StateProperty, value); }
+    }
+
+    public event EventHandler<CameraState> StateChanged;
+
+    public static readonly BindableProperty IsOnProperty = BindableProperty.Create(
+        nameof(IsOn),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false,
+        propertyChanged: PowerChanged);
+
+    public bool IsOn
+    {
+        get { return (bool)GetValue(IsOnProperty); }
+        set { SetValue(IsOnProperty, value); }
+    }
+
+    public static readonly BindableProperty IsBusyProperty = BindableProperty.Create(
+        nameof(IsBusy),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false);
+
+    public bool IsBusy
+    {
+        get { return (bool)GetValue(IsBusyProperty); }
+        set { SetValue(IsBusyProperty, value); }
+    }
+
+    public static readonly BindableProperty PickerModeProperty = BindableProperty.Create(
+        nameof(PickerMode),
+        typeof(CameraPickerMode),
+        typeof(SkiaCamera),
+        CameraPickerMode.None);
+
+    public CameraPickerMode PickerMode
+    {
+        get { return (CameraPickerMode)GetValue(PickerModeProperty); }
+        set { SetValue(PickerModeProperty, value); }
+    }
+
+    public static readonly BindableProperty FilterProperty = BindableProperty.Create(
+        nameof(Filter),
+        typeof(CameraEffect),
+        typeof(SkiaCamera),
+        CameraEffect.None);
+
+    public CameraEffect Filter
+    {
+        get { return (CameraEffect)GetValue(FilterProperty); }
+        set { SetValue(FilterProperty, value); }
+    }
+
+
+    public double SavedRotation { get; set; }
+
+
+    //public bool
+    //ShowSettings
+    //{
+    //    get { return (bool)GetValue(PageCamera.ShowSettingsProperty); }
+    //    set { SetValue(PageCamera.ShowSettingsProperty, value); }
+    //}
+
+    #endregion
+
+    /// <summary>
+    /// The size of the camera preview in pixels
+    /// </summary>
+
+    public SKSize PreviewSize
+    {
+        get { return _previewSize; }
+        set
+        {
+            if (_previewSize != value)
+            {
+                _previewSize = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    SKSize _previewSize;
+
+
+    public SKSize CapturePhotoSize
+    {
+        get { return _capturePhotoSize; }
+
+        set
+        {
+            if (_capturePhotoSize != value)
+            {
+                _capturePhotoSize = value;
+                OnPropertyChanged();
+                //UpdateInfo();
+            }
+        }
+    }
+
+    SKSize _capturePhotoSize;
+
+    public void SetRotatedContentSize(SKSize size, int cameraRotation)
+    {
+        if (size.Width < 0 || size.Height < 0)
+        {
+            throw new Exception("Camera preview size cannot be negative.");
+        }
+
+        PreviewSize = size;
+
+        Invalidate();
+    }
+
+    private string _DisplayInfo;
+    private bool _hasPermissions;
+
+    public string DisplayInfo
+    {
+        get { return _DisplayInfo; }
+        set
+        {
+            if (_DisplayInfo != value)
+            {
+                _DisplayInfo = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    #region PROPERTIES
+
+    public static readonly BindableProperty EffectProperty = BindableProperty.Create(
+        nameof(Effect),
+        typeof(SkiaImageEffect),
+        typeof(SkiaCamera),
+        SkiaImageEffect.None,
+        propertyChanged: NeedSetupPreview);
+
+    private static void NeedSetupPreview(BindableObject bindable, object oldvalue, object newvalue)
+    {
+        if (bindable is SkiaCamera control)
+        {
+            control.ApplyPreviewProperties();
+        }
+    }
+
+    public SkiaImageEffect Effect
+    {
+        get { return (SkiaImageEffect)GetValue(EffectProperty); }
+        set { SetValue(EffectProperty, value); }
+    }
+
+    #endregion
+
+    private void Super_OnNativeAppPaused(object sender, EventArgs e)
+    {
+        StopAll();
+    }
+
+    private void Super_OnNativeAppResumed(object sender, EventArgs e)
+    {
+        ResumeIfNeeded();
+    }
+
+    public void ResumeIfNeeded()
+    {
+        if (IsOn)
+            StartInternal();
+    }
+
+    public static List<SkiaCamera> Instances = new();
+
+    /// <summary>
+    /// Stops all instances
+    /// </summary>
+    public static void StopAll()
+    {
+        foreach (var renderer in Instances)
+        {
+            renderer.StopInternal(true);
+        }
+    }
+}

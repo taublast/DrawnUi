@@ -35,6 +35,12 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     image = reader.AcquireLatestImage();
                     if (image != null)
                     {
+                        // Handle pre-recording buffer when enabled and not currently recording
+                        if (_enablePreRecording && !_isRecordingVideo)
+                        {
+                            BufferPreRecordingFrame(image, image.Timestamp);
+                        }
+
                         if (allocated.Allocation != null && allocated.Bitmap is { Width: > 0, Height: > 0 })
                         {
                             ProcessImage(image, allocated.Allocation);
