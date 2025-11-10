@@ -986,6 +986,25 @@ public partial class SkiaCamera : SkiaControl
     {
         try
         {
+            // Validate file exists and has content
+            if (!File.Exists(privateVideoPath))
+            {
+                Debug.WriteLine($"[SkiaCamera] iOS Photos save error: file does not exist at {privateVideoPath}");
+                return null;
+            }
+
+            var fileInfo = new FileInfo(privateVideoPath);
+            if (fileInfo.Length == 0)
+            {
+                Debug.WriteLine($"[SkiaCamera] iOS Photos save error: file is empty at {privateVideoPath}");
+                return null;
+            }
+
+            Debug.WriteLine($"[SkiaCamera] Saving video to Photos: {privateVideoPath} ({fileInfo.Length} bytes)");
+
+            // Small delay to ensure file is fully flushed to disk
+            await Task.Delay(100);
+
             // Request Photos AddOnly authorization (iOS 14+); falls back to Authorized for earlier
             var authStatus = await Photos.PHPhotoLibrary.RequestAuthorizationAsync(Photos.PHAccessLevel.AddOnly);
             if (authStatus != Photos.PHAuthorizationStatus.Authorized)

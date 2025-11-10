@@ -1,6 +1,7 @@
 #if IOS || MACCATALYST
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AVFoundation;
 using CoreMedia;
@@ -28,12 +29,8 @@ namespace DrawnUi.Camera
         private bool _recordAudio;
 
         private bool _isRecording;
-        private bool _isPreRecordingMode;  // True if encoding to memory buffer only
         private DateTime _startTime;
         private System.Threading.Timer _progressTimer;
-
-        // Pre-recording mode: buffer encoded data in memory
-        private MemoryStream _preRecordingBuffer;
 
         // Composition surface
         private GRContext _grContext;
@@ -51,6 +48,16 @@ namespace DrawnUi.Camera
         public event EventHandler<TimeSpan> ProgressReported;
 
         private int _deviceRotation = 0;
+        
+        // Properties for platform-specific details
+        public int EncodedFrameCount { get; private set; }
+        public long EncodedDataSize { get; private set; }
+        public TimeSpan EncodingDuration { get; private set; }
+        public string EncodingStatus { get; private set; } = "Idle";
+        
+        // Interface implementation - required by ICaptureVideoEncoder
+        public bool IsPreRecordingMode { get; set; }
+        public SkiaCamera ParentCamera { get; set; }
 
         // Interface implementation - required by ICaptureVideoEncoder
         public Task InitializeAsync(string outputPath, int width, int height, int frameRate, bool recordAudio)
@@ -165,6 +172,13 @@ namespace DrawnUi.Camera
 
             _isRecording = true;
             _startTime = DateTime.Now;
+            
+            // Initialize statistics
+            EncodedFrameCount = 0;
+            EncodedDataSize = 0;
+            EncodingDuration = TimeSpan.Zero;
+            EncodingStatus = "Started";
+            
             _progressTimer = new System.Threading.Timer(_ =>
             {
                 if (_isRecording)
@@ -256,14 +270,14 @@ namespace DrawnUi.Camera
                 pixelBuffer.Lock(CVPixelBufferLock.None);
                 try
                 {
-                    var baseAddress = pixelBuffer.BaseAddress;
-                    var bytesPerRow = (int)pixelBuffer.BytesPerRow;
+                    IntPtr baseAddress = pixelBuffer.BaseAddress;
+                    int bytesPerRow = (int)pixelBuffer.BytesPerRow;
 
-                    // Read pixels into CVPixelBuffer (BGRA, premul). Reuse the same buffer object from pool to avoid GC churn.
+                    // Read pixels into CVPixelBuffer (BGRA, premul)
                     lock (_frameLock)
                     {
                         if (_surface == null) return;
-                        var srcInfo = new SKImageInfo(_width, _height, SKColorType.Bgra8888, SKAlphaType.Premul);
+                        SKImageInfo srcInfo = new SKImageInfo(_width, _height, SKColorType.Bgra8888, SKAlphaType.Premul);
                         if (!_surface.ReadPixels(srcInfo, baseAddress, bytesPerRow, 0, 0))
                             return;
                     }
@@ -273,10 +287,22 @@ namespace DrawnUi.Camera
                     pixelBuffer.Unlock(CVPixelBufferLock.None);
                 }
 
-                var ts = CMTime.FromSeconds(_pendingTimestamp.TotalSeconds, 1_000_000);
+                CMTime ts = CMTime.FromSeconds(_pendingTimestamp.TotalSeconds, 1_000_000);
+                
                 if (!_pixelBufferAdaptor.AppendPixelBufferWithPresentationTime(pixelBuffer, ts))
                 {
                     // Drop silently on failure (keep real-time)
+                }
+                else
+                {
+                    // Update statistics
+                    EncodedFrameCount++;
+                    if (pixelBuffer != null)
+                    {
+                        EncodedDataSize += (long)pixelBuffer.DataSize;
+                    }
+                    EncodingDuration = DateTime.Now - _startTime;
+                    EncodingStatus = "Encoding";
                 }
             }
             finally
@@ -316,6 +342,9 @@ namespace DrawnUi.Camera
         {
             _isRecording = false;
             _progressTimer?.Dispose();
+            
+            // Update status
+            EncodingStatus = "Stopping";
 
             try
             {
@@ -345,6 +374,11 @@ namespace DrawnUi.Camera
             }
 
             var info = new FileInfo(_outputPath);
+            
+            // Update final statistics
+            EncodingStatus = "Completed";
+            EncodingDuration = DateTime.Now - _startTime;
+            
             return new CapturedVideo
             {
                 FilePath = _outputPath,

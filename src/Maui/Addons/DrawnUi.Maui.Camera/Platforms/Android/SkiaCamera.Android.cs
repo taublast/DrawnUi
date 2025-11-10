@@ -1,6 +1,8 @@
 ﻿using Android.Content;
 using Android.Hardware.Camera2;
+using Android.Media;
 using Android.Telecom;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 
 
 namespace DrawnUi.Camera;
@@ -252,6 +254,100 @@ public partial class SkiaCamera
             .CheckStatusAsync<Permissions.Camera>();
 
         return status == PermissionStatus.Granted;
+    }
+
+    /// <summary>
+    /// Mux pre-recorded and live video files using MediaMuxer
+    /// </summary>
+    private async Task<string> MuxVideosInternal(string preRecordedPath, string liveRecordingPath, string outputPath)
+    {
+        try
+        {
+            using (var muxer = new Android.Media.MediaMuxer(outputPath, Android.Media.MuxerOutputType.Mpeg4))
+            {
+                // Extract and re-mux pre-recorded file
+                ExtractTracksAndWriteToMuxer(muxer, preRecordedPath, timeOffsetUs: 0);
+
+                // Get duration of pre-recorded file to calculate offset for live recording
+                long preRecordedDurationUs = GetMediaDurationMicroseconds(preRecordedPath);
+
+                // Extract and re-mux live recording with time offset
+                ExtractTracksAndWriteToMuxer(muxer, liveRecordingPath, timeOffsetUs: preRecordedDurationUs);
+
+                muxer.Stop();
+            }
+
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Success: {outputPath}");
+            return await Task.FromResult(outputPath);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Error: {ex.Message}");
+            throw;
+        }
+    }
+
+    private void ExtractTracksAndWriteToMuxer(Android.Media.MediaMuxer muxer, string inputPath, long timeOffsetUs)
+    {
+        using (var extractor = new Android.Media.MediaExtractor())
+        {
+            extractor.SetDataSource(inputPath);
+
+            var trackIndexMap = new Dictionary<int, int>();
+
+            for (int i = 0; i < extractor.TrackCount; i++)
+            {
+                using (var format = extractor.GetTrackFormat(i))
+                {
+                    int outTrackIndex = muxer.AddTrack(format);
+                    trackIndexMap[i] = outTrackIndex;
+                    extractor.SelectTrack(i);
+                }
+            }
+
+            muxer.Start();
+
+            var sampleData = Java.Nio.ByteBuffer.Allocate(1024 * 1024);
+            var sampleInfo = new Android.Media.MediaCodec.BufferInfo();
+
+            while (true)
+            {
+                sampleData.Clear();
+                int trackIndex = extractor.SampleTrackIndex;
+
+                if (trackIndex < 0)
+                    break;
+
+                sampleInfo.Offset = 0;
+                sampleInfo.Size = extractor.ReadSampleData(sampleData, 0);
+
+                if (sampleInfo.Size <= 0)
+                {
+                    extractor.Advance();
+                    continue;
+                }
+
+                sampleInfo.PresentationTimeUs = extractor.SampleTime + timeOffsetUs;
+                sampleInfo.Flags = (Android.Media.MediaCodecBufferFlags)(int)extractor.SampleFlags;
+
+                muxer.WriteSampleData(trackIndexMap[trackIndex], sampleData, sampleInfo);
+                extractor.Advance();
+            }
+
+            sampleData.Dispose();
+        }
+    }
+
+    private long GetMediaDurationMicroseconds(string filePath)
+    {
+        using (var retriever = new Android.Media.MediaMetadataRetriever())
+        {
+            retriever.SetDataSource(filePath);
+            string duration = retriever.ExtractMetadata(Android.Media.MetadataKey.Duration);
+            if (long.TryParse(duration, out long durationMs))
+                return durationMs * 1000; // Convert ms to microseconds
+            return 0;
+        }
     }
 
 

@@ -280,8 +280,6 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                 }
                 .Assign(out _preRecordingStatusLabel),
 
-
-
                     }
                 }.WithRow(1),
             }
@@ -348,7 +346,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                 IsAntialias = true,
             };
 
-            // Draw "LIVE" text at top left
+            // text at top left
             frame.Canvas.DrawText("LIVE", 50, 100, paint);
 
             // Draw timestamp at top left (below LIVE)
@@ -828,6 +826,5 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             _preRecordingStatusLabel.TextColor = CameraControl.EnablePreRecording ? Colors.LimeGreen : Colors.Orange;
         }
     }
-
     // Removed old manual video gallery implementation - now using SkiaCamera's built-in MoveVideoToGalleryAsync method
 }

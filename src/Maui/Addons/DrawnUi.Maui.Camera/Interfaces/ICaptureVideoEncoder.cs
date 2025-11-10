@@ -48,6 +48,38 @@ public interface ICaptureVideoEncoder : IDisposable
     bool IsRecording { get; }
 
     /// <summary>
+    /// Sets whether the encoder is in pre-recording mode (buffering to memory only).
+    /// When true, encoded frames should be buffered instead of written to file.
+    /// </summary>
+    bool IsPreRecordingMode { get; set; }
+
+    /// <summary>
+    /// Reference to parent SkiaCamera for accessing BufferPreRecordingFrame method.
+    /// Used by encoder to buffer encoded frames during pre-recording phase.
+    /// </summary>
+    SkiaCamera ParentCamera { get; set; }
+
+    /// <summary>
+    /// Number of video frames successfully encoded.
+    /// </summary>
+    int EncodedFrameCount { get; }
+
+    /// <summary>
+    /// Total bytes of encoded data written to output.
+    /// </summary>
+    long EncodedDataSize { get; }
+
+    /// <summary>
+    /// Elapsed time since encoding started.
+    /// </summary>
+    TimeSpan EncodingDuration { get; }
+
+    /// <summary>
+    /// Current status of the encoding operation ("Idle", "Started", "Encoding", "Stopping", "Completed").
+    /// </summary>
+    string EncodingStatus { get; }
+
+    /// <summary>
     /// Progress reporting event (optional).
     /// </summary>
     event EventHandler<TimeSpan> ProgressReported;

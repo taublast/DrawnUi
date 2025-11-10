@@ -62,6 +62,16 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     public bool IsRecording => _isRecording;
 
     public event EventHandler<TimeSpan> ProgressReported;
+    
+    // Properties for platform-specific details
+    public int EncodedFrameCount { get; private set; }
+    public long EncodedDataSize { get; private set; }
+    public TimeSpan EncodingDuration { get; private set; }
+    public string EncodingStatus { get; private set; } = "Idle";
+
+    // Interface implementation - required by ICaptureVideoEncoder
+    public bool IsPreRecordingMode { get; set; }
+    public SkiaCamera ParentCamera { get; set; }
 
     public async Task InitializeAsync(string outputPath, int width, int height, int frameRate, bool recordAudio)
     {
@@ -252,6 +262,12 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         _isRecording = true;
         _startTime = DateTime.Now;
 
+        // Initialize statistics
+        EncodedFrameCount = 0;
+        EncodedDataSize = 0;
+        EncodingDuration = TimeSpan.Zero;
+        EncodingStatus = "Started";
+
         // Start progress reporting timer
         _progressTimer = new System.Threading.Timer(ReportProgress, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
 
@@ -332,6 +348,12 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                     _sinkWriter.WriteSample(_streamIndex, sample);
 
                     _lastSampleTime100ns = sampleTime;
+                    
+                    // Update statistics
+                    EncodedFrameCount++;
+                    EncodedDataSize += (long)dataSize;
+                    EncodingDuration = DateTime.Now - _startTime;
+                    EncodingStatus = "Encoding";
                 }
                 finally
                 {
@@ -421,6 +443,9 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     {
         _isRecording = false;
         _progressTimer?.Dispose();
+        
+        // Update status
+        EncodingStatus = "Stopping";
 
         try
         {
@@ -445,6 +470,11 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             if (_outputFile != null)
             {
                 var fileInfo = await _outputFile.GetBasicPropertiesAsync();
+                
+                // Update final statistics
+                EncodingStatus = "Completed";
+                EncodingDuration = DateTime.Now - _startTime;
+                
                 return new CapturedVideo
                 {
                     FilePath = _outputFile.Path,
@@ -458,6 +488,10 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         {
             Debug.WriteLine($"[WindowsCaptureVideoEncoder] Stop: failed to get file props: {ex.Message}");
         }
+
+        // Update final statistics even on failure
+        EncodingStatus = "Completed";
+        EncodingDuration = DateTime.Now - _startTime;
 
         return new CapturedVideo
         {

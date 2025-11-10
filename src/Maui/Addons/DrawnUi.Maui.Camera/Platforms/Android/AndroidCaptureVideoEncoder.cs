@@ -1,6 +1,7 @@
 #if ANDROID
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Android.Media;
 using Android.Opengl;
@@ -54,6 +55,16 @@ namespace DrawnUi.Camera
         public bool IsRecording => _isRecording;
         public event EventHandler<TimeSpan> ProgressReported;
 
+        // Properties for platform-specific details
+        public int EncodedFrameCount { get; private set; }
+        public long EncodedDataSize { get; private set; }
+        public TimeSpan EncodingDuration { get; private set; }
+        public string EncodingStatus { get; private set; } = "Idle";
+
+        // Interface implementation - required by ICaptureVideoEncoder
+        public bool IsPreRecordingMode { get; set; }
+        public SkiaCamera ParentCamera { get; set; }
+
         // Interface implementation - required by ICaptureVideoEncoder
         public Task InitializeAsync(string outputPath, int width, int height, int frameRate, bool recordAudio)
         {
@@ -105,6 +116,13 @@ namespace DrawnUi.Camera
         {
             _isRecording = true;
             _startTime = DateTime.Now;
+            
+            // Initialize statistics
+            EncodedFrameCount = 0;
+            EncodedDataSize = 0;
+            EncodingDuration = TimeSpan.Zero;
+            EncodingStatus = "Started";
+            
             _progressTimer = new System.Threading.Timer(_ =>
             {
                 if (_isRecording)
@@ -248,6 +266,9 @@ namespace DrawnUi.Camera
         {
             _isRecording = false;
             _progressTimer?.Dispose();
+            
+            // Update status
+            EncodingStatus = "Stopping";
 
             try
             {
@@ -268,6 +289,11 @@ namespace DrawnUi.Camera
             }
 
             var info = new FileInfo(_outputPath);
+            
+            // Update final statistics
+            EncodingStatus = "Completed";
+            EncodingDuration = DateTime.Now - _startTime;
+            
             return new CapturedVideo
             {
                 FilePath = _outputPath,
@@ -316,6 +342,12 @@ namespace DrawnUi.Camera
                             encodedData.Position(bufferInfo.Offset);
                             encodedData.Limit(bufferInfo.Offset + bufferInfo.Size);
                             _muxer.WriteSampleData(_videoTrackIndex, encodedData, bufferInfo);
+                            
+                            // Update statistics
+                            EncodedFrameCount++;
+                            EncodedDataSize += bufferInfo.Size;
+                            EncodingDuration = DateTime.Now - _startTime;
+                            EncodingStatus = "Encoding";
                         }
                     }
                     _videoCodec.ReleaseOutputBuffer(outIndex, false);

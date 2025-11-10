@@ -39,6 +39,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Platforms\Apple\" />
       <Folder Include="Platforms\iOS\" />
     </ItemGroup>
 

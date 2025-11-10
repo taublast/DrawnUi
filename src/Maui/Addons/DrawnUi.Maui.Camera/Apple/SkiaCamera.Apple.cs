@@ -1,9 +1,10 @@
 ﻿#if IOS || MACCATALYST
 
+using AVFoundation;
 using DrawnUi.Maui.Navigation;
 using Foundation;
-using UIKit;
 using Photos;
+using UIKit;
 
 namespace DrawnUi.Camera;
 
@@ -479,6 +480,8 @@ public partial class SkiaCamera
     }
 
 
+
+
     //public SKBitmap GetPreviewBitmap()
     //{
     //    var preview = NativeControl?.GetPreviewImage();
@@ -488,5 +491,114 @@ public partial class SkiaCamera
     //    }
     //    return null;
     //}
+
+    /// <summary>
+    /// Mux pre-recorded and live video files using AVAssetComposition
+    /// </summary>
+    private async Task<string> MuxVideosInternal(string preRecordedPath, string liveRecordingPath, string outputPath)
+    {
+        try
+        {
+            // Log input/output file paths for debugging
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Input files:");
+            System.Diagnostics.Debug.WriteLine($"  Pre-recorded: {preRecordedPath} (exists: {File.Exists(preRecordedPath)})");
+            System.Diagnostics.Debug.WriteLine($"  Live recording: {liveRecordingPath} (exists: {File.Exists(liveRecordingPath)})");
+            System.Diagnostics.Debug.WriteLine($"  Output: {outputPath}");
+
+            using (var preAsset = AVFoundation.AVAsset.FromUrl(Foundation.NSUrl.FromFilename(preRecordedPath)))
+            using (var liveAsset = AVFoundation.AVAsset.FromUrl(Foundation.NSUrl.FromFilename(liveRecordingPath)))
+            {
+                if (preAsset == null || liveAsset == null)
+                    throw new InvalidOperationException("Failed to load video assets");
+
+                var composition = new AVFoundation.AVMutableComposition();
+                var videoTrack = composition.AddMutableTrack(AVMediaTypes.Video.GetConstant(), 0);
+
+                if (videoTrack == null)
+                    throw new InvalidOperationException("Failed to create video track");
+
+                var currentTime = CoreMedia.CMTime.Zero;
+
+                // Add pre-recorded video
+                var preTracks = preAsset.TracksWithMediaType(AVMediaTypes.Video.GetConstant());
+                if (preTracks != null && preTracks.Length > 0)
+                {
+                    var preTrack = preTracks[0];
+                    var preRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = preAsset.Duration };
+                    videoTrack.InsertTimeRange(preRange, preTrack, currentTime, out var error);
+                    if (error != null)
+                        throw new InvalidOperationException($"Failed to insert pre-recorded track: {error.LocalizedDescription}");
+                    
+                    currentTime = CoreMedia.CMTime.Add(currentTime, preAsset.Duration);
+                }
+
+                // Add live recording video
+                var liveTracks = liveAsset.TracksWithMediaType(AVMediaTypes.Video.GetConstant());
+                if (liveTracks != null && liveTracks.Length > 0)
+                {
+                    var liveTrack = liveTracks[0];
+                    var liveRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = liveAsset.Duration };
+                    videoTrack.InsertTimeRange(liveRange, liveTrack, currentTime, out var error);
+                    if (error != null)
+                        throw new InvalidOperationException($"Failed to insert live track: {error.LocalizedDescription}");
+                }
+
+                // Export composition to file
+                // CRITICAL: AVAssetExportSession fails if output file already exists
+                if (File.Exists(outputPath))
+                {
+                    System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Deleting existing output file: {outputPath}");
+                    try { File.Delete(outputPath); } catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Warning: Failed to delete existing output file: {ex.Message}");
+                    }
+                }
+
+                var outputUrl = Foundation.NSUrl.FromFilename(outputPath);
+                var exporter = new AVFoundation.AVAssetExportSession(composition, AVFoundation.AVAssetExportSessionPreset.MediumQuality)
+                {
+                    OutputUrl = outputUrl,
+                    OutputFileType = AVFoundation.AVFileTypes.Mpeg4.GetConstant(),
+                    ShouldOptimizeForNetworkUse = false
+                };
+
+                var tcs = new TaskCompletionSource<string>();
+
+                exporter.ExportAsynchronously(() =>
+                {
+                    if (exporter.Status == AVFoundation.AVAssetExportSessionStatus.Completed)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Mux successful: {outputPath}");
+                        tcs.TrySetResult(outputPath);
+                    }
+                    else if (exporter.Status == AVFoundation.AVAssetExportSessionStatus.Failed)
+                    {
+                        var error = exporter.Error?.LocalizedDescription ?? "Unknown error";
+                        System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Export failed: {error}");
+                        tcs.TrySetException(new InvalidOperationException($"Export failed: {error}"));
+                    }
+                    else if (exporter.Status == AVFoundation.AVAssetExportSessionStatus.Cancelled)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Export cancelled");
+                        tcs.TrySetCanceled();
+                    }
+                    exporter.Dispose();
+                });
+
+                var result = await tcs.Task;
+
+                // Small delay to ensure file is fully flushed to disk before returning
+                await Task.Delay(50);
+
+                return result;
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Error: {ex.Message}");
+            throw;
+        }
+    }
 }
 #endif
+

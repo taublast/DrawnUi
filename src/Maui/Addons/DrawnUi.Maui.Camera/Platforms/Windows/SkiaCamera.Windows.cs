@@ -251,6 +251,31 @@ public partial class SkiaCamera : SkiaControl
         return status == PermissionStatus.Granted;
     }
 
+    /// <summary>
+    /// Mux pre-recorded and live video files (Windows: basic concatenation)
+    /// </summary>
+    private async Task<string> MuxVideosInternal(string preRecordedPath, string liveRecordingPath, string outputPath)
+    {
+        try
+        {
+            // Windows: Simple file concatenation as fallback
+            using (var output = File.Create(outputPath))
+            {
+                using (var preFile = File.OpenRead(preRecordedPath))
+                    await preFile.CopyToAsync(output);
+                using (var liveFile = File.OpenRead(liveRecordingPath))
+                    await liveFile.CopyToAsync(output);
+            }
+            Debug.WriteLine($"[MuxVideosWindows] Concatenation: {outputPath}");
+            return outputPath;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[MuxVideosWindows] Error: {ex.Message}");
+            throw;
+        }
+    }
+
     //public SKBitmap GetPreviewBitmap()
     //{
     //    var preview = NativeControl?.GetPreviewImage();
@@ -261,3 +286,4 @@ public partial class SkiaCamera : SkiaControl
     //    return null;
     //}
 }
+
