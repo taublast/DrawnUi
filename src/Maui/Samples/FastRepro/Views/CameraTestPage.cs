@@ -20,6 +20,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
     private SkiaLayer _previewOverlay;
     private SkiaImage _previewImage;
     private SkiaButton _preRecordingToggleButton;
+    private SkiaButton _preRecordingDurationButton;
     private SkiaLabel _preRecordingStatusLabel;
     Canvas Canvas;
 
@@ -259,13 +260,14 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                             .Assign(out _preRecordingToggleButton)
                             .OnTapped(me => { TogglePreRecording(); }),
 
-                        new SkiaButton("Duration: 5s")
+                        new SkiaButton($"Duration: {CameraControl.PreRecordDuration.TotalSeconds:F0}s")
                             {
                                 BackgroundColor = Colors.DarkSlateGray,
                                 TextColor = Colors.White,
                                 CornerRadius = 8,
                                 UseCache = SkiaCacheType.Image
                             }
+                            .Assign(out _preRecordingDurationButton)
                             .OnTapped(async me => { await ShowPreRecordingDurationPicker(); })
                     }
                 },
@@ -570,11 +572,12 @@ public class CameraTestPage : BasePageReloadable, IDisposable
 
                 if (!string.IsNullOrEmpty(publicPath))
                 {
-                    ShowAlert("Success", "Video saved to gallery!");
                     Debug.WriteLine($"✅ Video moved to gallery: {publicPath}");
+                    ShowAlert("Success", "Video saved to gallery!");
                 }
                 else
                 {
+                    Debug.WriteLine($"❌ Video not saved, path null");
                     ShowAlert("Error", "Failed to save video to gallery");
                 }
             }
@@ -824,6 +827,11 @@ public class CameraTestPage : BasePageReloadable, IDisposable
 
             _preRecordingStatusLabel.Text = statusText;
             _preRecordingStatusLabel.TextColor = CameraControl.EnablePreRecording ? Colors.LimeGreen : Colors.Orange;
+        }
+
+        if (_preRecordingDurationButton != null)
+        {
+            _preRecordingDurationButton.Text = $"Duration: {CameraControl.PreRecordDuration.TotalSeconds:F0}s";
         }
     }
     // Removed old manual video gallery implementation - now using SkiaCamera's built-in MoveVideoToGalleryAsync method

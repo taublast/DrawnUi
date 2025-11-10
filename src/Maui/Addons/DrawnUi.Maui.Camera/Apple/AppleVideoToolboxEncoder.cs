@@ -262,7 +262,7 @@ namespace DrawnUi.Camera
                 // Timestamp is stored automatically as DateTime.UtcNow inside AddFrame
                 _preRecordingBuffer.AddFrame(h264Data);
 
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Buffered frame: {h264Data.Length} bytes, buffer: {_preRecordingBuffer.Count} frames");
+                //System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Buffered frame: {h264Data.Length} bytes, buffer: {_preRecordingBuffer.Count} frames");
             }
             catch (Exception ex)
             {

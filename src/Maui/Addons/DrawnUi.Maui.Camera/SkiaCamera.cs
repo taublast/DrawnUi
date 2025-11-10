@@ -3268,7 +3268,7 @@ public partial class SkiaCamera : SkiaControl
         nameof(PreRecordDuration),
         typeof(TimeSpan),
         typeof(SkiaCamera),
-        TimeSpan.FromSeconds(3));
+        TimeSpan.FromSeconds(5));
 
     /// <summary>
     /// Duration of pre-recording buffer to maintain (default: 3 seconds).

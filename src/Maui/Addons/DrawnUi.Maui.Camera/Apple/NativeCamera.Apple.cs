@@ -1439,10 +1439,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         _processedFrameCount++;
 
         // Log stats every 300 frames
-        if (_processedFrameCount % 300 == 0)
-        {
-            System.Diagnostics.Debug.WriteLine($"[NativeCameraiOS] Frame stats - Processed: {_processedFrameCount}, Skipped: {_skippedFrameCount}");
-        }
+        //if (_processedFrameCount % 300 == 0)
+        //{
+        //    System.Diagnostics.Debug.WriteLine($"[NativeCameraiOS] Frame stats - Processed: {_processedFrameCount}, Skipped: {_skippedFrameCount}");
+        //}
 
         bool hasFrame = false;
         try
