@@ -17,6 +17,9 @@ namespace DrawnUi.Camera.Platforms.Windows;
 /// </summary>
 public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 {
+    private static int _instanceCounter = 0;
+    private readonly int _instanceId;
+
     private StorageFile _outputFile;
     private List<SKBitmap> _frames;
     private int _width;
@@ -27,6 +30,14 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     private bool _isRecording;
     private System.Threading.Timer _progressTimer;
     private int _totalFrameCount; // Track total frames processed
+
+    // Pre-recording support
+    private string _preRecordingFilePath;     // Pre-recording buffer MP4
+    private string _liveRecordingFilePath;    // Live recording MP4
+    private string _outputPath;               // Final output path
+    private PrerecordingEncodedBuffer _preRecordingBuffer; // Not used on Windows (no direct H.264 access)
+    private TimeSpan _preRecordingDuration;   // Offset for live recording timestamps
+    private bool _encodingDurationSetFromFrames = false;
 
     // GPU composition fields (temporary bridge until full Media Foundation path is implemented)
     private GRContext _grContext;                 // Provided by DrawnUi accelerated surface
@@ -55,7 +66,9 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
     public WindowsCaptureVideoEncoder(GRContext grContext = null)
     {
+        _instanceId = System.Threading.Interlocked.Increment(ref _instanceCounter);
         _grContext = grContext;
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] CONSTRUCTOR CALLED");
     }
 
 
@@ -75,14 +88,42 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
     public async Task InitializeAsync(string outputPath, int width, int height, int frameRate, bool recordAudio)
     {
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] InitializeAsync CALLED: IsPreRecordingMode={IsPreRecordingMode}");
+
+        _outputPath = outputPath;
         _width = width;
         _height = height;
         _frameRate = Math.Max(1, frameRate);
         _recordAudio = recordAudio;
+        _preRecordingDuration = TimeSpan.Zero;
 
-        // Create/replace output file first
-        var folder = await StorageFolder.GetFolderFromPathAsync(Path.GetDirectoryName(outputPath));
-        var fileName = Path.GetFileName(outputPath);
+        // Prepare output directory
+        var outputDir = Path.GetDirectoryName(_outputPath);
+        Directory.CreateDirectory(outputDir);
+
+        string targetFilePath;
+
+        // Initialize based on mode
+        if (IsPreRecordingMode && ParentCamera != null)
+        {
+            // Pre-recording mode: Write directly to temp file for pre-recording buffer
+            var guid = Guid.NewGuid().ToString("N");
+            _preRecordingFilePath = Path.Combine(outputDir, $"pre_rec_{guid}.mp4");
+            _liveRecordingFilePath = Path.Combine(outputDir, $"live_rec_{guid}.mp4");
+            targetFilePath = _preRecordingFilePath;
+
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Pre-recording mode: Writing to {_preRecordingFilePath}");
+        }
+        else
+        {
+            // Normal/live recording mode
+            targetFilePath = _outputPath;
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Normal recording mode: Writing to {_outputPath}");
+        }
+
+        // Create/replace output file
+        var folder = await StorageFolder.GetFolderFromPathAsync(Path.GetDirectoryName(targetFilePath));
+        var fileName = Path.GetFileName(targetFilePath);
         _outputFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
         // Initialize Media Foundation
@@ -257,8 +298,20 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     private sealed class FrameScope : IDisposable { public void Dispose() { } }
 
 
+    /// <summary>
+    /// Sets the pre-recording duration offset for live recording timestamps.
+    /// Call this before StartAsync() when transitioning from pre-recording to live recording.
+    /// </summary>
+    public void SetPreRecordingDuration(TimeSpan duration)
+    {
+        _preRecordingDuration = duration;
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Set pre-recording duration offset: {duration.TotalSeconds:F2}s");
+    }
+
     public Task StartAsync()
     {
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] StartAsync CALLED: IsPreRecordingMode={IsPreRecordingMode}");
+
         _isRecording = true;
         _startTime = DateTime.Now;
 
@@ -270,6 +323,11 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
         // Start progress reporting timer
         _progressTimer = new System.Threading.Timer(ReportProgress, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
+
+        if (_preRecordingDuration > TimeSpan.Zero)
+        {
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Live recording started after pre-recording offset: {_preRecordingDuration.TotalSeconds:F2}s");
+        }
 
         return Task.CompletedTask;
     }
@@ -336,8 +394,14 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 {
                     sample.AddBuffer(mediaBuffer);
 
-                    // Use real elapsed timestamp to keep output duration aligned with wall-clock time
-                    long sampleTime = (long)(_pendingTimestamp.TotalSeconds * 10_000_000L);
+                    // Apply pre-recording offset to timestamp if live recording after pre-recording
+                    double timestampSeconds = _pendingTimestamp.TotalSeconds;
+                    if (_preRecordingDuration > TimeSpan.Zero)
+                    {
+                        timestampSeconds += _preRecordingDuration.TotalSeconds;
+                    }
+
+                    long sampleTime = (long)(timestampSeconds * 10_000_000L);
                     if (sampleTime <= _lastSampleTime100ns)
                     {
                         sampleTime = _lastSampleTime100ns + _rtDurationPerFrame;
@@ -441,9 +505,11 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
     public async Task<CapturedVideo> StopAsync()
     {
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] StopAsync CALLED: IsPreRecordingMode={IsPreRecordingMode}");
+
         _isRecording = false;
         _progressTimer?.Dispose();
-        
+
         // Update status
         EncodingStatus = "Stopping";
 
@@ -465,41 +531,190 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             }
         }
 
-        try
+        // Handle pre-recording mode
+        if (IsPreRecordingMode && !string.IsNullOrEmpty(_preRecordingFilePath))
         {
-            if (_outputFile != null)
+            // Pre-recording encoder stopping: file is already written
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Pre-recording encoder stopped");
+
+            if (File.Exists(_preRecordingFilePath))
             {
-                var fileInfo = await _outputFile.GetBasicPropertiesAsync();
-                
-                // Update final statistics
-                EncodingStatus = "Completed";
+                var fileInfo = new FileInfo(_preRecordingFilePath);
                 EncodingDuration = DateTime.Now - _startTime;
-                
+                _encodingDurationSetFromFrames = true;
+
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Pre-recording file: {fileInfo.Length / 1024.0:F2} KB");
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Actual pre-recording duration: {EncodingDuration.TotalSeconds:F3}s");
+
+                EncodingStatus = "Completed";
+
                 return new CapturedVideo
                 {
-                    FilePath = _outputFile.Path,
-                    FileSizeBytes = (long)fileInfo.Size,
-                    Duration = DateTime.Now - _startTime,
+                    FilePath = _preRecordingFilePath,
+                    FileSizeBytes = fileInfo.Length,
+                    Duration = EncodingDuration,
+                    Time = _startTime
+                };
+            }
+        }
+
+        // Handle normal/live recording mode
+        // Check if we need to mux pre-recording + live recording
+        bool hasPreRecording = !string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath);
+        bool hasLiveRecording = _outputFile != null && File.Exists(_outputFile.Path);
+
+        if (hasPreRecording && hasLiveRecording)
+        {
+            // Mux both files
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Muxing pre-recorded file with live recording");
+            await MuxVideosWindows(_preRecordingFilePath, _outputFile.Path, _outputPath);
+
+            // Clean up temporary files
+            try
+            {
+                if (File.Exists(_preRecordingFilePath))
+                    File.Delete(_preRecordingFilePath);
+                if (File.Exists(_outputFile.Path))
+                    File.Delete(_outputFile.Path);
+            }
+            catch { }
+        }
+        else if (hasPreRecording)
+        {
+            // Only pre-recording exists, use it as output
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Only pre-recording exists, using as output");
+            File.Copy(_preRecordingFilePath, _outputPath, true);
+            try { File.Delete(_preRecordingFilePath); } catch { }
+        }
+        else if (hasLiveRecording)
+        {
+            // Only live recording exists
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Only live recording exists");
+            if (_outputFile.Path != _outputPath)
+            {
+                File.Copy(_outputFile.Path, _outputPath, true);
+            }
+        }
+
+        // Update final statistics
+        EncodingStatus = "Completed";
+        if (!_encodingDurationSetFromFrames)
+        {
+            EncodingDuration = DateTime.Now - _startTime;
+        }
+
+        try
+        {
+            if (File.Exists(_outputPath))
+            {
+                var fileInfo = new FileInfo(_outputPath);
+                return new CapturedVideo
+                {
+                    FilePath = _outputPath,
+                    FileSizeBytes = fileInfo.Length,
+                    Duration = EncodingDuration,
                     Time = _startTime
                 };
             }
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder] Stop: failed to get file props: {ex.Message}");
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Stop: failed to get file props: {ex.Message}");
         }
-
-        // Update final statistics even on failure
-        EncodingStatus = "Completed";
-        EncodingDuration = DateTime.Now - _startTime;
 
         return new CapturedVideo
         {
-            FilePath = _outputFile?.Path ?? string.Empty,
+            FilePath = _outputPath ?? string.Empty,
             FileSizeBytes = 0,
-            Duration = DateTime.Now - _startTime,
+            Duration = EncodingDuration,
             Time = _startTime
         };
+    }
+
+    /// <summary>
+    /// Muxes pre-recorded and live recording MP4 files using FFmpeg (fallback: simple file concatenation).
+    /// Windows doesn't have built-in MP4 concatenation like iOS's AVMutableComposition.
+    /// </summary>
+    private async Task MuxVideosWindows(string preRecordingPath, string liveRecordingPath, string outputPath)
+    {
+        Debug.WriteLine($"[MuxVideosWindows] Input files:");
+        Debug.WriteLine($"  Pre-recorded: {preRecordingPath} (exists: {File.Exists(preRecordingPath)})");
+        Debug.WriteLine($"  Live recording: {liveRecordingPath} (exists: {File.Exists(liveRecordingPath)})");
+        Debug.WriteLine($"  Output: {outputPath}");
+
+        try
+        {
+            // Try FFmpeg first (best quality)
+            if (await TryMuxWithFFmpeg(preRecordingPath, liveRecordingPath, outputPath))
+            {
+                Debug.WriteLine($"[MuxVideosWindows] Successfully muxed with FFmpeg");
+                return;
+            }
+
+            // Fallback: Simple binary concatenation (may not work for all MP4 files)
+            Debug.WriteLine($"[MuxVideosWindows] FFmpeg not available, using simple concatenation fallback");
+            await SimpleConcatenateMP4Files(preRecordingPath, liveRecordingPath, outputPath);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[MuxVideosWindows] Error: {ex.Message}");
+            throw;
+        }
+    }
+
+    private async Task<bool> TryMuxWithFFmpeg(string preRecPath, string liveRecPath, string outputPath)
+    {
+        try
+        {
+            // Create concat file list for FFmpeg
+            var tempListFile = Path.Combine(Path.GetTempPath(), $"concat_{Guid.NewGuid():N}.txt");
+            await File.WriteAllTextAsync(tempListFile,
+                $"file '{preRecPath.Replace("\\", "/")}'\n" +
+                $"file '{liveRecPath.Replace("\\", "/")}'");
+
+            var ffmpegArgs = $"-f concat -safe 0 -i \"{tempListFile}\" -c copy \"{outputPath}\"";
+
+            var processStartInfo = new ProcessStartInfo
+            {
+                FileName = "ffmpeg",
+                Arguments = ffmpegArgs,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
+
+            using var process = Process.Start(processStartInfo);
+            if (process != null)
+            {
+                await process.WaitForExitAsync();
+                try { File.Delete(tempListFile); } catch { }
+                return process.ExitCode == 0 && File.Exists(outputPath);
+            }
+
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[TryMuxWithFFmpeg] Failed: {ex.Message}");
+            return false;
+        }
+    }
+
+    private async Task SimpleConcatenateMP4Files(string file1, string file2, string outputPath)
+    {
+        // WARNING: This is a naive concatenation that may not work for all MP4 files
+        // It simply appends the bytes, which works for some simple cases but is not a proper MP4 mux
+        Debug.WriteLine($"[SimpleConcatenateMP4Files] WARNING: Using simple byte concatenation (may produce invalid MP4)");
+
+        using var output = File.Create(outputPath);
+        using var input1 = File.OpenRead(file1);
+        using var input2 = File.OpenRead(file2);
+
+        await input1.CopyToAsync(output);
+        await input2.CopyToAsync(output);
+
+        Debug.WriteLine($"[SimpleConcatenateMP4Files] Wrote {output.Length} bytes to {outputPath}");
     }
 
     private async Task CreateVideoFromFrames()
