@@ -1,6 +1,7 @@
 #if IOS || MACCATALYST
 using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AVFoundation;
@@ -28,7 +29,12 @@ namespace DrawnUi.Camera
     /// </summary>
     public class AppleVideoToolboxEncoder : ICaptureVideoEncoder
     {
-        private string _outputPath;
+        private static int _instanceCounter = 0;
+        private readonly int _instanceId;
+
+        private string _outputPath;               // Final output file (concatenated result)
+        private string _preRecordingFilePath;     // Pre-recording buffer MP4
+        private string _liveRecordingFilePath;    // Live recording MP4
         private int _width;
         private int _height;
         private int _frameRate;
@@ -36,6 +42,7 @@ namespace DrawnUi.Camera
         private bool _recordAudio;
         private bool _isRecording;
         private DateTime _startTime;
+        private TimeSpan _preRecordingDuration;  // Duration of pre-recorded content
 
         // Skia composition surface
         private SKSurface _surface;
@@ -52,6 +59,7 @@ namespace DrawnUi.Camera
         // VTCompressionSession for pre-recording buffer
         private VTCompressionSession _compressionSession;
         private PrerecordingEncodedBuffer _preRecordingBuffer;
+        private CMVideoFormatDescription _videoFormatDescription;
 
         // Mirror-to-preview support
         private readonly object _previewLock = new();
@@ -73,6 +81,12 @@ namespace DrawnUi.Camera
         public SkiaCamera ParentCamera { get; set; }
         public event EventHandler<TimeSpan> ProgressReported;
 
+        public AppleVideoToolboxEncoder()
+        {
+            _instanceId = System.Threading.Interlocked.Increment(ref _instanceCounter);
+            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] CONSTRUCTOR CALLED");
+        }
+
         // ICaptureVideoEncoder interface
         public Task InitializeAsync(string outputPath, int width, int height, int frameRate, bool recordAudio)
         {
@@ -81,12 +95,15 @@ namespace DrawnUi.Camera
 
         public async Task InitializeAsync(string outputPath, int width, int height, int frameRate, bool recordAudio, int deviceRotation)
         {
+            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] InitializeAsync CALLED: IsPreRecordingMode={IsPreRecordingMode}");
+
             _outputPath = outputPath;
             _width = Math.Max(16, width);
             _height = Math.Max(16, height);
             _frameRate = Math.Max(1, frameRate);
             _recordAudio = recordAudio;
             _deviceRotation = deviceRotation;
+            _preRecordingDuration = TimeSpan.Zero;
 
             // Prepare output directory
             Directory.CreateDirectory(Path.GetDirectoryName(_outputPath));
@@ -95,19 +112,42 @@ namespace DrawnUi.Camera
                 try { File.Delete(_outputPath); } catch { }
             }
 
-            // Initialize AVAssetWriter for MP4 output (normal recording)
-            InitializeAssetWriter();
-
-            // Initialize VTCompressionSession for pre-recording if needed
+            // Initialize based on mode
             if (IsPreRecordingMode && ParentCamera != null)
             {
+                // Pre-recording mode: Set up separate file paths
+                var outputDir = Path.GetDirectoryName(_outputPath);
+                var guid = Guid.NewGuid().ToString("N");
+                _preRecordingFilePath = Path.Combine(outputDir, $"pre_rec_{guid}.mp4");
+                _liveRecordingFilePath = Path.Combine(outputDir, $"live_rec_{guid}.mp4");
+
+                // Initialize VTCompressionSession + circular buffer
                 InitializeCompressionSession();
 
                 // Initialize circular buffer for storing encoded frames
                 var preRecordDuration = ParentCamera.PreRecordDuration;
                 _preRecordingBuffer = new PrerecordingEncodedBuffer(preRecordDuration);
 
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording enabled: {preRecordDuration.TotalSeconds}s buffer");
+                // CRITICAL: Start recording immediately to buffer frames
+                _isRecording = true;
+                _startTime = DateTime.Now;
+                EncodedFrameCount = 0;
+                EncodedDataSize = 0;
+                EncodingDuration = TimeSpan.Zero;
+                EncodingStatus = "Buffering";
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Pre-recording mode initialized and started:");
+                System.Diagnostics.Debug.WriteLine($"  Pre-recording file: {_preRecordingFilePath}");
+                System.Diagnostics.Debug.WriteLine($"  Live recording file: {_liveRecordingFilePath}");
+                System.Diagnostics.Debug.WriteLine($"  Final output file: {_outputPath}");
+                System.Diagnostics.Debug.WriteLine($"  Buffer duration: {preRecordDuration.TotalSeconds}s");
+                System.Diagnostics.Debug.WriteLine($"  Buffering frames to memory...");
+            }
+            else
+            {
+                // Normal recording mode: Use AVAssetWriter directly to outputPath
+                InitializeAssetWriter();
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Normal recording mode: AVAssetWriter -> {_outputPath}");
             }
 
             await Task.CompletedTask;
@@ -236,6 +276,21 @@ namespace DrawnUi.Camera
             if (_preRecordingBuffer == null)
                 return;
 
+            // Save format description from first frame (contains SPS/PPS for H.264)
+            if (_videoFormatDescription == null)
+            {
+                _videoFormatDescription = sampleBuffer.GetVideoFormatDescription();
+                if (_videoFormatDescription != null)
+                {
+                    var dims = _videoFormatDescription.Dimensions;
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Captured video format description: {dims.Width}x{dims.Height}, MediaSubType={_videoFormatDescription.MediaSubType}");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] WARNING: Failed to capture video format description!");
+                }
+            }
+
             // Extract H.264 data from sample buffer
             var blockBuffer = sampleBuffer.GetDataBuffer();
             if (blockBuffer == null || blockBuffer.DataLength == 0)
@@ -258,11 +313,19 @@ namespace DrawnUi.Camera
                 byte[] h264Data = new byte[totalLength];
                 Marshal.Copy(dataPointer, h264Data, 0, (int)totalLength);
 
-                // Add to circular buffer (will auto-drop old frames)
-                // Timestamp is stored automatically as DateTime.UtcNow inside AddFrame
-                _preRecordingBuffer.AddFrame(h264Data);
+                // Get timing information from sample buffer
+                var presentationTime = sampleBuffer.PresentationTimeStamp;
+                var duration = sampleBuffer.Duration;
+                var timestamp = TimeSpan.FromSeconds(presentationTime.Seconds);
 
-                //System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Buffered frame: {h264Data.Length} bytes, buffer: {_preRecordingBuffer.Count} frames");
+                // Log first few frames for diagnostics
+                if (_preRecordingBuffer.GetFrameCount() < 3)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Buffering frame #{_preRecordingBuffer.GetFrameCount() + 1}: PTS={presentationTime.Seconds:F3}s, Duration={duration.Seconds:F3}s, Size={h264Data.Length} bytes");
+                }
+
+                // Append to buffer with full timing info
+                _preRecordingBuffer.AppendEncodedFrame(h264Data, h264Data.Length, timestamp, presentationTime, duration);
             }
             catch (Exception ex)
             {
@@ -313,22 +376,145 @@ namespace DrawnUi.Camera
 
         public async Task StartAsync()
         {
-            if (_isRecording)
+            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] StartAsync CALLED: IsPreRecordingMode={IsPreRecordingMode}, _compressionSession={(_compressionSession != null ? "EXISTS" : "NULL")}");
+
+            // Pre-recording mode: Write buffer to file, then switch to AVAssetWriter for live recording
+            if (IsPreRecordingMode && _compressionSession != null)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Pre-recording mode: User pressed record");
+
+                // Step 1: Write circular buffer to pre-recording file
+                int bufferFrameCount = _preRecordingBuffer?.GetFrameCount() ?? 0;
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Buffer has {bufferFrameCount} frames");
+
+                if (_preRecordingBuffer != null && bufferFrameCount > 0)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Buffer stats: {_preRecordingBuffer.GetStats()}");
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Writing {bufferFrameCount} buffered frames to: {_preRecordingFilePath}");
+
+                    await WriteBufferedFramesToMp4Async(_preRecordingBuffer, _preRecordingFilePath);
+
+                    // Verify file was written
+                    if (File.Exists(_preRecordingFilePath))
+                    {
+                        var fileInfo = new FileInfo(_preRecordingFilePath);
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording file written: {fileInfo.Length / 1024.0:F2} KB");
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] WARNING: Pre-recording file was not created!");
+                    }
+
+                    // Calculate pre-recording duration for later concatenation
+                    _preRecordingDuration = _preRecordingBuffer.GetBufferedDuration();
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording duration: {_preRecordingDuration.TotalSeconds:F2}s");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] No buffered frames to write (buffer null or empty)");
+                }
+
+                // Step 2: Stop buffering to circular buffer (we'll switch to AVAssetWriter)
+                _compressionSession?.Dispose();
+                _compressionSession = null;
+                _preRecordingBuffer = null;
+
+                // Step 3: Initialize AVAssetWriter for live recording
+                var url = NSUrl.FromFilename(_liveRecordingFilePath);
+                _writer = new AVAssetWriter(url, "public.mpeg-4", out var err);
+                if (_writer == null || err != null)
+                    throw new InvalidOperationException($"AVAssetWriter failed: {err?.LocalizedDescription}");
+
+                var videoSettings = new AVVideoSettingsCompressed
+                {
+                    Codec = AVVideoCodec.H264,
+                    Width = _width,
+                    Height = _height
+                };
+
+                _videoInput = new AVAssetWriterInput(AVMediaTypes.Video.GetConstant(), videoSettings)
+                {
+                    ExpectsMediaDataInRealTime = true
+                };
+
+                _videoInput.Transform = GetTransformForRotation(_deviceRotation);
+
+                if (!_writer.CanAddInput(_videoInput))
+                    throw new InvalidOperationException("Cannot add video input to AVAssetWriter");
+                _writer.AddInput(_videoInput);
+
+                _pixelBufferAdaptor = new AVAssetWriterInputPixelBufferAdaptor(_videoInput,
+                    new CVPixelBufferAttributes
+                    {
+                        PixelFormatType = CVPixelFormatType.CV32BGRA,
+                        Width = _width,
+                        Height = _height
+                    });
+
+                // Step 4: Start AVAssetWriter for live recording
+                if (!_writer.StartWriting())
+                    throw new InvalidOperationException($"AVAssetWriter StartWriting failed: {_writer.Error?.LocalizedDescription}");
+
+                _writer.StartSessionAtSourceTime(CMTime.Zero);
+
+                _isRecording = true;
+                _startTime = DateTime.Now;
+                EncodedFrameCount = 0;
+                EncodedDataSize = 0;
+                EncodingDuration = TimeSpan.Zero;
+                EncodingStatus = "Recording Live";
+
+                _progressTimer = new System.Threading.Timer(_ =>
+                {
+                    if (_isRecording)
+                    {
+                        var elapsed = DateTime.Now - _startTime;
+                        ProgressReported?.Invoke(this, elapsed);
+                    }
+                }, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Live recording started -> {_liveRecordingFilePath}");
                 return;
+            }
+
+            // Normal recording mode: Start AVAssetWriter
+            if (_isRecording)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Already recording, ignoring StartAsync");
+                return;
+            }
+
+            if (_writer == null)
+            {
+                throw new InvalidOperationException("AVAssetWriter not initialized for normal recording mode");
+            }
 
             if (!_writer.StartWriting())
                 throw new InvalidOperationException($"AVAssetWriter StartWriting failed: {_writer.Error?.LocalizedDescription}");
 
-            var start = CMTime.FromSeconds(0, 1_000_000);
+            // Start session at source time zero
+            var startTime = _preRecordingDuration > TimeSpan.Zero ? _preRecordingDuration.TotalSeconds : 0;
+            var start = CMTime.FromSeconds(startTime, 1_000_000);
             _writer.StartSessionAtSourceTime(start);
 
             _isRecording = true;
             _startTime = DateTime.Now;
 
-            // Initialize statistics
+            if (_preRecordingDuration > TimeSpan.Zero)
+            {
+                // DO NOT RESET EncodingDuration - it continues from pre-recording offset
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Live recording started after pre-recording offset: {_preRecordingDuration.TotalSeconds:F2}s");
+            }
+            else
+            {
+                // Normal recording (no pre-recording): start fresh
+                EncodingDuration = TimeSpan.Zero;
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Normal recording started");
+            }
+
+            // Initialize statistics (only reset if normal recording)
             EncodedFrameCount = 0;
             EncodedDataSize = 0;
-            EncodingDuration = TimeSpan.Zero;
             EncodingStatus = "Started";
 
             _progressTimer = new System.Threading.Timer(_ =>
@@ -341,17 +527,17 @@ namespace DrawnUi.Camera
             }, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
 
             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Recording started");
+            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording offset: {_preRecordingDuration.TotalSeconds:F2}s");
+        }
 
-            // If we have pre-recorded buffered frames, prepend them to the output
-            if (_preRecordingBuffer != null && _preRecordingBuffer.Count > 0)
-            {
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Prepending {_preRecordingBuffer.Count} pre-recorded frames");
-                await PrependBufferedEncodedDataAsync(_preRecordingBuffer);
-
-                // Switch from pre-recording mode to normal recording mode
-                IsPreRecordingMode = false;
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Switched to normal recording mode");
-            }
+        /// <summary>
+        /// Set the duration of pre-recorded content so that live recording frames are offset correctly.
+        /// This ensures live frames start AFTER pre-recorded frames in the final timeline.
+        /// </summary>
+        public void SetPreRecordingDuration(TimeSpan duration)
+        {
+            _preRecordingDuration = duration;
+            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Set pre-recording duration offset: {duration.TotalSeconds:F2}s");
         }
 
         /// <summary>
@@ -429,12 +615,9 @@ namespace DrawnUi.Camera
 
                 if (IsPreRecordingMode && _compressionSession != null)
                 {
-                    // PRE-RECORDING MODE: Write to BOTH circular buffer AND file for muxing
-                    // 1. VTCompressionSession → circular buffer in memory (for fast prepending)
+                    // PRE-RECORDING MODE: Write ONLY to circular buffer in memory
+                    // VTCompressionSession → circular buffer (H.264 in memory, no file)
                     await SubmitFrameToCompressionSession();
-
-                    // 2. AVAssetWriter → pre_recording.mp4 file (for muxing with live recording)
-                    await SubmitFrameToAssetWriter();
                 }
                 else
                 {
@@ -556,7 +739,14 @@ namespace DrawnUi.Camera
                 }
 
                 // Append to AVAssetWriter
-                CMTime ts = CMTime.FromSeconds(_pendingTimestamp.TotalSeconds, 1_000_000);
+                // CRITICAL: If we have a pre-recording offset, ADD it to frame timestamps
+                // Session started at _preRecordingDuration, so all frames must be >= that time
+                double timestamp = _pendingTimestamp.TotalSeconds;
+                if (_preRecordingDuration > TimeSpan.Zero)
+                {
+                    timestamp += _preRecordingDuration.TotalSeconds;
+                }
+                CMTime ts = CMTime.FromSeconds(timestamp, 1_000_000);
 
                 if (!_pixelBufferAdaptor.AppendPixelBufferWithPresentationTime(pixelBuffer, ts))
                 {
@@ -584,14 +774,56 @@ namespace DrawnUi.Camera
 
         public async Task<CapturedVideo> StopAsync()
         {
+            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] StopAsync CALLED: IsPreRecordingMode={IsPreRecordingMode}, BufferFrames={(_preRecordingBuffer?.GetFrameCount() ?? 0)}");
+
             _isRecording = false;
             _progressTimer?.Dispose();
 
             // Update status
             EncodingStatus = "Stopping";
 
+            // CRITICAL: If pre-recording mode and buffer has frames, write buffer to file NOW
+            if (IsPreRecordingMode && _preRecordingBuffer != null && _compressionSession != null)
+            {
+                int bufferFrameCount = _preRecordingBuffer.GetFrameCount();
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Pre-recording encoder stopping with {bufferFrameCount} buffered frames");
+
+                if (bufferFrameCount > 0 && !string.IsNullOrEmpty(_preRecordingFilePath))
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Writing buffer to: {_preRecordingFilePath}");
+                    await WriteBufferedFramesToMp4Async(_preRecordingBuffer, _preRecordingFilePath);
+
+                    // CRITICAL: Update EncodingDuration to reflect ACTUAL video duration from frame timestamps
+                    // NOT wall-clock time! This is used by SkiaCamera for timestamp offset calculation
+                    EncodingDuration = _preRecordingBuffer.GetBufferedDuration();
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Actual pre-recording video duration: {EncodingDuration.TotalSeconds:F3}s (NOT wall-clock time!)");
+
+                    // Verify file was written
+                    if (File.Exists(_preRecordingFilePath))
+                    {
+                        var fileInfo = new FileInfo(_preRecordingFilePath);
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Pre-recording file written: {fileInfo.Length / 1024.0:F2} KB");
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] ERROR: Pre-recording file was not created!");
+                    }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] No buffered frames to write or invalid file path");
+                }
+
+                // Clean up compression session and buffer
+                _compressionSession?.Dispose();
+                _compressionSession = null;
+                _preRecordingBuffer?.Dispose();
+                _preRecordingBuffer = null;
+            }
+
             try
             {
+                // Finalize live recording
                 _videoInput?.MarkAsFinished();
                 if (_writer?.Status == AVAssetWriterStatus.Writing)
                 {
@@ -616,11 +848,110 @@ namespace DrawnUi.Camera
                 _surface?.Dispose(); _surface = null;
             }
 
+            // If pre-recording mode: concatenate pre-recording + live recording → final output
+            if (IsPreRecordingMode && !string.IsNullOrEmpty(_preRecordingFilePath) && !string.IsNullOrEmpty(_liveRecordingFilePath))
+            {
+                // Check if live recording file actually exists and has content
+                bool hasLiveRecording = File.Exists(_liveRecordingFilePath) && new FileInfo(_liveRecordingFilePath).Length > 0;
+                bool hasPreRecording = File.Exists(_preRecordingFilePath) && new FileInfo(_preRecordingFilePath).Length > 0;
+
+                if (hasPreRecording && hasLiveRecording)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Concatenating files:");
+                    System.Diagnostics.Debug.WriteLine($"  Pre-recording: {_preRecordingFilePath}");
+                    System.Diagnostics.Debug.WriteLine($"  Live recording: {_liveRecordingFilePath}");
+                    System.Diagnostics.Debug.WriteLine($"  Final output: {_outputPath}");
+
+                    await ConcatenateVideosAsync(_preRecordingFilePath, _liveRecordingFilePath, _outputPath);
+
+                    // Clean up intermediate files
+                    try
+                    {
+                        if (File.Exists(_preRecordingFilePath))
+                            File.Delete(_preRecordingFilePath);
+                        if (File.Exists(_liveRecordingFilePath))
+                            File.Delete(_liveRecordingFilePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Failed to delete intermediate files: {ex.Message}");
+                    }
+                }
+                else if (hasLiveRecording)
+                {
+                    // Only live recording exists, use it as output
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Only live recording exists, using as output");
+                    if (File.Exists(_outputPath))
+                        File.Delete(_outputPath);
+                    File.Copy(_liveRecordingFilePath, _outputPath, true);
+
+                    // Clean up
+                    try
+                    {
+                        if (File.Exists(_liveRecordingFilePath))
+                            File.Delete(_liveRecordingFilePath);
+                        if (File.Exists(_preRecordingFilePath))
+                            File.Delete(_preRecordingFilePath);
+                    }
+                    catch { }
+                }
+                else if (hasPreRecording)
+                {
+                    // Only pre-recording exists, use it as output
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Only pre-recording exists, using as output");
+                    if (File.Exists(_outputPath))
+                        File.Delete(_outputPath);
+                    File.Copy(_preRecordingFilePath, _outputPath, true);
+
+                    // Clean up
+                    try
+                    {
+                        if (File.Exists(_preRecordingFilePath))
+                            File.Delete(_preRecordingFilePath);
+                        if (File.Exists(_liveRecordingFilePath))
+                            File.Delete(_liveRecordingFilePath);
+                    }
+                    catch { }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] ERROR: Neither pre-recording nor live recording exist!");
+                }
+            }
+            else if (IsPreRecordingMode && !string.IsNullOrEmpty(_liveRecordingFilePath))
+            {
+                // No pre-recording, just move live recording to output
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] No pre-recording, moving live recording to output");
+                if (File.Exists(_liveRecordingFilePath))
+                {
+                    if (File.Exists(_outputPath))
+                        File.Delete(_outputPath);
+                    File.Copy(_liveRecordingFilePath, _outputPath, true);
+
+                    // Clean up
+                    try
+                    {
+                        File.Delete(_liveRecordingFilePath);
+                    }
+                    catch { }
+                }
+            }
+
             var info = new FileInfo(_outputPath);
 
             // Update final statistics
             EncodingStatus = "Completed";
-            EncodingDuration = DateTime.Now - _startTime;
+
+            // CRITICAL: For pre-recording mode, EncodingDuration was already set correctly from frame timestamps
+            // Do NOT overwrite it with wall-clock time!
+            if (!IsPreRecordingMode || _preRecordingBuffer == null)
+            {
+                EncodingDuration = DateTime.Now - _startTime;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Keeping pre-recording duration from frame timestamps: {EncodingDuration.TotalSeconds:F3}s (not using wall-clock time)");
+            }
 
             return new CapturedVideo
             {
@@ -647,36 +978,488 @@ namespace DrawnUi.Camera
             return Task.CompletedTask;
         }
 
-        public async Task PrependBufferedEncodedDataAsync(PrerecordingEncodedBuffer prerecordingBuffer)
+        private async Task ConcatenateVideosAsync(string preRecordingPath, string liveRecordingPath, string outputPath)
         {
-            if (prerecordingBuffer == null || prerecordingBuffer.Count == 0)
+            try
             {
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] No buffered frames to prepend");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] === Starting Video Concatenation ===");
+
+                // Verify input files exist and log sizes
+                if (!File.Exists(preRecordingPath))
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording file not found: {preRecordingPath}");
+                    // Just copy live recording to output
+                    if (File.Exists(liveRecordingPath))
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Copying live recording to output (no pre-recording)");
+                        File.Copy(liveRecordingPath, outputPath, true);
+                    }
+                    return;
+                }
+
+                if (!File.Exists(liveRecordingPath))
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Live recording file not found: {liveRecordingPath}");
+                    // Just copy pre-recording to output
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Copying pre-recording to output (no live recording)");
+                    File.Copy(preRecordingPath, outputPath, true);
+                    return;
+                }
+
+                // Log file sizes
+                var preRecInfo = new FileInfo(preRecordingPath);
+                var liveRecInfo = new FileInfo(liveRecordingPath);
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording file: {preRecInfo.Length / 1024.0:F2} KB");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Live recording file: {liveRecInfo.Length / 1024.0:F2} KB");
+
+                // Load pre-recording asset and wait for it to load
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Loading pre-recording asset...");
+                var preRecordingAsset = AVAsset.FromUrl(NSUrl.FromFilename(preRecordingPath));
+
+                // Wait for asset to load
+                var preRecLoadTcs = new TaskCompletionSource<bool>();
+                preRecordingAsset.LoadValuesAsynchronously(new[] { "tracks", "duration" }, () =>
+                {
+                    preRecLoadTcs.TrySetResult(true);
+                });
+                await preRecLoadTcs.Task;
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording asset duration: {preRecordingAsset.Duration.Seconds:F3}s");
+                var preRecordingVideoTrack = preRecordingAsset.TracksWithMediaType(AVMediaTypes.Video.GetConstant()).FirstOrDefault();
+
+                if (preRecordingVideoTrack == null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] ERROR: Pre-recording has no video track!");
+                    // Fall back to live recording only
+                    File.Copy(liveRecordingPath, outputPath, true);
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording video track: {preRecordingVideoTrack.NaturalSize.Width}x{preRecordingVideoTrack.NaturalSize.Height}");
+
+                // Load live recording asset and wait for it to load
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Loading live recording asset...");
+                var liveRecordingAsset = AVAsset.FromUrl(NSUrl.FromFilename(liveRecordingPath));
+
+                var liveRecLoadTcs = new TaskCompletionSource<bool>();
+                liveRecordingAsset.LoadValuesAsynchronously(new[] { "tracks", "duration" }, () =>
+                {
+                    liveRecLoadTcs.TrySetResult(true);
+                });
+                await liveRecLoadTcs.Task;
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Live recording asset duration: {liveRecordingAsset.Duration.Seconds:F3}s");
+                var liveRecordingVideoTrack = liveRecordingAsset.TracksWithMediaType(AVMediaTypes.Video.GetConstant()).FirstOrDefault();
+
+                if (liveRecordingVideoTrack == null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] ERROR: Live recording has no video track!");
+                    // Fall back to pre-recording only
+                    File.Copy(preRecordingPath, outputPath, true);
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Live recording video track: {liveRecordingVideoTrack.NaturalSize.Width}x{liveRecordingVideoTrack.NaturalSize.Height}");
+
+                // Create AVMutableComposition for concatenation
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Creating composition...");
+                var composition = AVMutableComposition.Create();
+                var videoTrack = composition.AddMutableTrack(AVMediaTypes.Video.GetConstant(), 0);
+
+                if (videoTrack == null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] ERROR: Failed to create composition video track!");
+                    return;
+                }
+
+                // Insert pre-recording track at time zero
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Inserting pre-recording track (duration: {preRecordingAsset.Duration.Seconds:F3}s)...");
+                NSError error;
+                var preRecTimeRange = new CMTimeRange { Start = CMTime.Zero, Duration = preRecordingAsset.Duration };
+
+                videoTrack.InsertTimeRange(
+                    preRecTimeRange,
+                    preRecordingVideoTrack,
+                    CMTime.Zero,
+                    out error);
+
+                if (error != null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] ERROR: Failed to insert pre-recording: {error.LocalizedDescription} (Code: {error.Code})");
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Falling back to live recording only");
+                    File.Copy(liveRecordingPath, outputPath, true);
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording inserted successfully");
+
+                // Insert live recording track after pre-recording
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Inserting live recording track (duration: {liveRecordingAsset.Duration.Seconds:F3}s) at time {preRecordingAsset.Duration.Seconds:F3}s...");
+                var liveRecTimeRange = new CMTimeRange { Start = CMTime.Zero, Duration = liveRecordingAsset.Duration };
+
+                videoTrack.InsertTimeRange(
+                    liveRecTimeRange,
+                    liveRecordingVideoTrack,
+                    preRecordingAsset.Duration,
+                    out error);
+
+                if (error != null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] ERROR: Failed to insert live recording: {error.LocalizedDescription} (Code: {error.Code})");
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Falling back to pre-recording only");
+                    File.Copy(preRecordingPath, outputPath, true);
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Live recording inserted successfully");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Total composition duration: {composition.Duration.Seconds:F3}s");
+
+                // Export composition to output file
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Starting export to: {outputPath}");
+                if (File.Exists(outputPath))
+                {
+                    File.Delete(outputPath);
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Deleted existing output file");
+                }
+
+                var exportSession = new AVAssetExportSession(composition, AVAssetExportSession.PresetPassthrough);
+                if (exportSession == null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] ERROR: Failed to create AVAssetExportSession");
+                    return;
+                }
+
+                exportSession.OutputUrl = NSUrl.FromFilename(outputPath);
+                exportSession.OutputFileType = AVFileTypes.Mpeg4.GetConstant();
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Export session created:");
+                System.Diagnostics.Debug.WriteLine($"  Preset: {AVAssetExportSession.PresetPassthrough}");
+                System.Diagnostics.Debug.WriteLine($"  Output URL: {exportSession.OutputUrl}");
+                System.Diagnostics.Debug.WriteLine($"  Output file type: {exportSession.OutputFileType}");
+                System.Diagnostics.Debug.WriteLine($"  Supported file types: {string.Join(", ", exportSession.SupportedFileTypes ?? new string[0])}");
+
+                var tcs = new TaskCompletionSource<bool>();
+                exportSession.ExportAsynchronously(() =>
+                {
+                    if (exportSession.Status == AVAssetExportSessionStatus.Completed)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Export completed successfully!");
+                        var fileInfo = new FileInfo(outputPath);
+                        if (fileInfo.Exists)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Final file size: {fileInfo.Length / 1024.0:F2} KB");
+                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] === Concatenation Complete ===");
+                        }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] WARNING: Output file doesn't exist after export!");
+                        }
+                        tcs.TrySetResult(true);
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Export FAILED!");
+                        System.Diagnostics.Debug.WriteLine($"  Status: {exportSession.Status}");
+                        System.Diagnostics.Debug.WriteLine($"  Error: {exportSession.Error?.LocalizedDescription}");
+                        System.Diagnostics.Debug.WriteLine($"  Error Code: {exportSession.Error?.Code}");
+                        System.Diagnostics.Debug.WriteLine($"  Error Domain: {exportSession.Error?.Domain}");
+
+                        if (exportSession.Status == AVAssetExportSessionStatus.Failed)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] FALLBACK: Copying live recording as output");
+                            try
+                            {
+                                File.Copy(liveRecordingPath, outputPath, true);
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Fallback copy failed: {ex.Message}");
+                            }
+                        }
+
+                        tcs.TrySetResult(false);
+                    }
+                });
+
+                await tcs.Task;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] ConcatenateVideosAsync error: {ex.Message}\n{ex.StackTrace}");
+            }
+        }
+
+        private async Task WriteBufferedFramesToMp4Async(PrerecordingEncodedBuffer buffer, string outputPath)
+        {
+            var frames = buffer.GetAllFrames();
+            if (frames == null || frames.Count == 0)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] No frames to write");
                 return;
+            }
+
+            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Writing {frames.Count} buffered frames to MP4: {outputPath}");
+
+            // Use a temporary file to avoid conflicts with existing file
+            var tempPath = Path.Combine(Path.GetDirectoryName(outputPath), $"temp_{Guid.NewGuid():N}.mp4");
+
+            AVAssetWriter writer = null;
+            AVAssetWriterInput videoInput = null;
+
+            try
+            {
+                // Delete output file if it exists
+                if (File.Exists(outputPath))
+                {
+                    try
+                    {
+                        File.Delete(outputPath);
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Deleted existing file: {outputPath}");
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Failed to delete existing file: {ex.Message}");
+                    }
+                }
+
+                // Get format description first (contains SPS/PPS, needed for AVAssetWriterInput)
+                CMVideoFormatDescription formatDesc = _videoFormatDescription;
+                if (formatDesc == null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] No format description available");
+                    return;
+                }
+
+                // Create AVAssetWriter for MP4 output (use temp path)
+                var url = NSUrl.FromFilename(tempPath);
+                writer = new AVAssetWriter(url, "public.mpeg-4", out var err);
+                if (writer == null || err != null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] AVAssetWriter creation failed: {err?.LocalizedDescription}");
+                    return;
+                }
+
+                // CRITICAL: For pass-through of already-compressed H.264 data:
+                // - Use null outputSettings (we don't want re-encoding)
+                // - Provide sourceFormatHint so AVAssetWriter knows the format
+                videoInput = new AVAssetWriterInput(
+                    AVMediaTypes.Video.GetConstant(),
+                    outputSettings: (AVVideoSettingsCompressed)null,
+                    sourceFormatHint: formatDesc)
+                {
+                    ExpectsMediaDataInRealTime = false
+                };
+
+                // Set transform based on device rotation
+                videoInput.Transform = GetTransformForRotation(_deviceRotation);
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Created AVAssetWriterInput with null settings and format hint: {formatDesc.Dimensions.Width}x{formatDesc.Dimensions.Height}");
+
+                if (!writer.CanAddInput(videoInput))
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Cannot add video input to writer");
+                    return;
+                }
+
+                writer.AddInput(videoInput);
+
+                if (!writer.StartWriting())
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] StartWriting failed: {writer.Error?.LocalizedDescription}");
+                    return;
+                }
+
+                writer.StartSessionAtSourceTime(CMTime.Zero);
+
+                int appendedCount = 0;
+                int frameIndex = 0;
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Format description: {formatDesc}");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Starting to write {frames.Count} frames...");
+
+                // Write all frames
+                foreach (var (data, presentationTime, duration) in frames)
+                {
+                    frameIndex++;
+
+                    if (data == null || data.Length == 0)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame {frameIndex}: SKIPPED (no data)");
+                        continue;
+                    }
+
+                    // Log timing for first and every 30th frame
+                    if (frameIndex == 1 || frameIndex % 30 == 0)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame {frameIndex}: PTS={presentationTime.Seconds:F3}s, Duration={duration.Seconds:F3}s, Size={data.Length} bytes");
+                    }
+
+                    // Create CMBlockBuffer from H.264 data
+                    // Allocate unmanaged memory for H.264 data
+                    var unmanagedPtr = Marshal.AllocHGlobal(data.Length);
+                    Marshal.Copy(data, 0, unmanagedPtr, data.Length);
+
+                    var blockBuffer = CMBlockBuffer.FromMemoryBlock(
+                        unmanagedPtr,
+                        (nuint)data.Length,
+                        null,
+                        0,
+                        (nuint)data.Length,
+                        CMBlockBufferFlags.AssureMemoryNow,
+                        out var blockError);
+
+                    if (blockBuffer == null || blockError != CMBlockBufferError.None)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame {frameIndex}: Failed to create block buffer: {blockError}");
+                        Marshal.FreeHGlobal(unmanagedPtr);
+                        continue;
+                    }
+
+                    try
+                    {
+                        // Create sample timing info
+                        var timing = new CMSampleTimingInfo
+                        {
+                            PresentationTimeStamp = presentationTime,
+                            Duration = duration,
+                            DecodeTimeStamp = CMTime.Invalid
+                        };
+
+                        // Create CMSampleBuffer with timing information
+                        var sampleSizes = new nuint[] { (nuint)data.Length };
+                        var sampleBuffer = CMSampleBuffer.CreateReady(
+                            blockBuffer,
+                            formatDesc,
+                            1,
+                            new[] { timing },
+                            sampleSizes,
+                            out var sampleError);
+
+                        if (sampleBuffer == null || sampleError != CMSampleBufferError.None)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame {frameIndex}: Failed to create sample buffer: {sampleError}");
+                            blockBuffer.Dispose();
+                            Marshal.FreeHGlobal(unmanagedPtr);
+                            continue;
+                        }
+
+                        try
+                        {
+                            // Wait for input to be ready
+                            while (!videoInput.ReadyForMoreMediaData)
+                            {
+                                await Task.Delay(10);
+                            }
+
+                            // Append to writer
+                            if (videoInput.AppendSampleBuffer(sampleBuffer))
+                            {
+                                appendedCount++;
+                            }
+                            else
+                            {
+                                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame {frameIndex}: AppendSampleBuffer FAILED");
+                            }
+                        }
+                        finally
+                        {
+                            sampleBuffer.Dispose();
+                        }
+                    }
+                    finally
+                    {
+                        blockBuffer.Dispose();
+                        Marshal.FreeHGlobal(unmanagedPtr);
+                    }
+                }
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Successfully wrote {appendedCount}/{frames.Count} frames to MP4");
+
+                // Finalize writing
+                videoInput.MarkAsFinished();
+                var tcs = new TaskCompletionSource<bool>();
+                writer.FinishWriting(() => tcs.TrySetResult(true));
+                await tcs.Task;
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] MP4 file finalized to temp: {tempPath}");
+
+                // CRITICAL: Dispose writer and input immediately to release file handles
+                videoInput?.Dispose();
+                videoInput = null;
+                writer?.Dispose();
+                writer = null;
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Writer disposed, file handles released");
+
+                // Move temp file to final output path
+                if (File.Exists(tempPath))
+                {
+                    try
+                    {
+                        // Delete target if it exists
+                        if (File.Exists(outputPath))
+                        {
+                            File.Delete(outputPath);
+                        }
+
+                        File.Move(tempPath, outputPath);
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Moved temp file to final path: {outputPath}");
+
+                        var fileInfo = new FileInfo(outputPath);
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording MP4 written: {fileInfo.Length / 1024.0:F2} KB, {appendedCount} frames");
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Failed to move temp file: {ex.Message}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] WriteBufferedFramesToMp4Async error: {ex.Message}\n{ex.StackTrace}");
+                writer?.CancelWriting();
+
+                // Clean up temp file on error
+                if (File.Exists(tempPath))
+                {
+                    try { File.Delete(tempPath); } catch { }
+                }
+            }
+            finally
+            {
+                videoInput?.Dispose();
+                writer?.Dispose();
+            }
+        }
+
+        public async Task<string> GetCombinedPreRecordingFileAsync(PrerecordingEncodedBuffer prerecordingBuffer)
+        {
+            if (prerecordingBuffer == null || prerecordingBuffer.GetFrameCount() == 0)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] No buffered frames to get");
+                return null;
             }
 
             try
             {
-                // Get buffer stats for logging
-                byte[] allData = prerecordingBuffer.GetBufferedData();
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording buffer: {prerecordingBuffer.Count} frames, {allData?.Length ?? 0} bytes");
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Prepending buffered data not yet fully implemented - requires two-file muxing");
+                // Log buffer statistics
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording buffer stats: {prerecordingBuffer.GetStats()}");
+                
+                // Flush buffers to disk files
+                var (fileA, fileB) = await prerecordingBuffer.FlushToFilesAsync();
+                
+                System.Diagnostics.Debug.WriteLine(
+                    $"[AppleVideoToolboxEncoder] Pre-recording buffers flushed to files: " +
+                    $"FileA={fileA}, FileB={fileB}");
 
-                // TODO: Implement one of these approaches:
-                // 1. Write buffered H.264 to temporary MP4 file, then mux with main recording using AVAssetExportSession
-                // 2. Reconstruct CMSampleBuffers from H.264 bytes and append to current AVAssetWriter
-                //    (Requires proper .NET iOS API bindings for CMSampleBuffer creation from raw data)
-                // 3. Use separate pre-recording encoder that writes to temp file continuously
-
-                // For now, the circular buffer successfully stores H.264 frames in memory,
-                // but prepending them requires additional muxing implementation
+                // Return both files so caller can combine them
+                return $"{fileA}|{fileB}";
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] PrependBufferedEncodedDataAsync error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] GetCombinedPreRecordingFileAsync error: {ex.Message}");
+                return null;
             }
-
-            await Task.CompletedTask;
         }
 
         public void Dispose()

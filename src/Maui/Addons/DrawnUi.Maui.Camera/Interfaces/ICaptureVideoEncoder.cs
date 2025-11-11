@@ -31,14 +31,8 @@ public interface ICaptureVideoEncoder : IDisposable
     Task AddFrameAsync(SKBitmap bitmap, TimeSpan timestamp);
 
     /// <summary>
-    /// Prepends pre-recorded buffered encoded data to the output.
-    /// This writes the pre-encoded video data directly to the file stream before live frames.
-    /// </summary>
-    /// <param name="prerecordingBuffer">Buffer containing pre-encoded video data</param>
-    Task PrependBufferedEncodedDataAsync(PrerecordingEncodedBuffer prerecordingBuffer);
-
-    /// <summary>
     /// Stops encoding and finalizes the video file.
+    /// In pre-recording mode, this will concatenate pre-recorded and live recordings.
     /// </summary>
     Task<CapturedVideo> StopAsync();
 
