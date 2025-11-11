@@ -564,34 +564,24 @@ public partial class SkiaCamera : SkiaControl
 
                     try
                     {
-                        await _captureVideoEncoder.StopAsync();
+                        var preRecResult = await _captureVideoEncoder.StopAsync();
                         Debug.WriteLine("[StartVideoRecording] Pre-recording encoder stopped and file finalized");
 
-                        // ✅ CRITICAL: Capture pre-recording duration BEFORE disposal
-                        // This duration will be used to offset live recording frame timestamps
-#if IOS || MACCATALYST
-                        if (_captureVideoEncoder is DrawnUi.Camera.AppleVideoToolboxEncoder appleEncPre)
+                        // ✅ CRITICAL: Capture pre-recording file path AND duration from StopAsync result
+                        // The encoder wrote the file, so we must use ITS path, not generate our own!
+                        if (preRecResult != null && !string.IsNullOrEmpty(preRecResult.FilePath))
                         {
+                            _preRecordingFilePath = preRecResult.FilePath;
                             _preRecordingDurationTracked = _captureVideoEncoder.EncodingDuration;
+                            Debug.WriteLine($"[StartVideoRecording] Captured pre-recording file: {_preRecordingFilePath}");
                             Debug.WriteLine($"[StartVideoRecording] Captured pre-recording duration: {_preRecordingDurationTracked.TotalSeconds:F2}s");
                         }
-#elif ANDROID
-                        if (_captureVideoEncoder is AndroidCaptureVideoEncoder droidEncPre)
+                        else
                         {
-                            _preRecordingDurationTracked = _captureVideoEncoder.EncodingDuration;
-                            Debug.WriteLine($"[StartVideoRecording] Captured pre-recording duration: {_preRecordingDurationTracked.TotalSeconds:F2}s");
+                            Debug.WriteLine($"[StartVideoRecording] WARNING: No pre-recording file path returned from encoder!");
+                            _preRecordingFilePath = null;
+                            _preRecordingDurationTracked = TimeSpan.Zero;
                         }
-#elif WINDOWS
-                        if (_captureVideoEncoder is WindowsCaptureVideoEncoder winEncPre)
-                        {
-                            _preRecordingDurationTracked = _captureVideoEncoder.EncodingDuration;
-                            Debug.WriteLine($"[StartVideoRecording] Captured pre-recording duration: {_preRecordingDurationTracked.TotalSeconds:F2}s");
-                        }
-#else
-                        // Fallback for other platforms
-                        _preRecordingDurationTracked = _captureVideoEncoder.EncodingDuration;
-                        Debug.WriteLine($"[StartVideoRecording] Captured pre-recording duration: {_preRecordingDurationTracked.TotalSeconds:F2}s");
-#endif
                     }
                     catch (Exception ex)
                     {
@@ -1775,11 +1765,12 @@ public partial class SkiaCamera : SkiaControl
     {
         lock (_preRecordingLock)
         {
-            // Create temp file path for pre-recording
+            // Generate base path for encoder initialization
+            // The encoder will create pre_rec_*.mp4 from this base path
             var tempDir = FileSystem.CacheDirectory;
-            _preRecordingFilePath = Path.Combine(tempDir, $"pre_recording_{Guid.NewGuid()}.mp4");
+            _preRecordingFilePath = Path.Combine(tempDir, $"pre_recording_base_{Guid.NewGuid()}.mp4");
             _maxPreRecordingFrames = Math.Max(1, (int)(PreRecordDuration.TotalSeconds * 30)); // Assume 30 fps for diagnostics
-            Debug.WriteLine($"[InitializePreRecordingBuffer] Pre-recording file: {_preRecordingFilePath}");
+            Debug.WriteLine($"[InitializePreRecordingBuffer] Base path for encoder: {_preRecordingFilePath}");
         }
     }
 

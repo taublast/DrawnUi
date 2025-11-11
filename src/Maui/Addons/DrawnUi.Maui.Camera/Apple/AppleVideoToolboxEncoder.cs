@@ -43,6 +43,7 @@ namespace DrawnUi.Camera
         private bool _isRecording;
         private DateTime _startTime;
         private TimeSpan _preRecordingDuration;  // Duration of pre-recorded content
+        private bool _encodingDurationSetFromFrames = false;  // Flag to prevent overwriting correct duration
 
         // Skia composition surface
         private SKSurface _surface;
@@ -790,12 +791,18 @@ namespace DrawnUi.Camera
 
                 if (bufferFrameCount > 0 && !string.IsNullOrEmpty(_preRecordingFilePath))
                 {
+                    // CRITICAL: Prune buffer to max duration BEFORE writing to file
+                    // This ensures we never write more than PreRecordDuration seconds
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Pruning buffer to max duration before writing...");
+                    _preRecordingBuffer.PruneToMaxDuration();
+
                     System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Writing buffer to: {_preRecordingFilePath}");
                     await WriteBufferedFramesToMp4Async(_preRecordingBuffer, _preRecordingFilePath);
 
                     // CRITICAL: Update EncodingDuration to reflect ACTUAL video duration from frame timestamps
                     // NOT wall-clock time! This is used by SkiaCamera for timestamp offset calculation
                     EncodingDuration = _preRecordingBuffer.GetBufferedDuration();
+                    _encodingDurationSetFromFrames = true;  // Flag to prevent overwriting later
                     System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Actual pre-recording video duration: {EncodingDuration.TotalSeconds:F3}s (NOT wall-clock time!)");
 
                     // Verify file was written
@@ -942,11 +949,11 @@ namespace DrawnUi.Camera
             // Update final statistics
             EncodingStatus = "Completed";
 
-            // CRITICAL: For pre-recording mode, EncodingDuration was already set correctly from frame timestamps
-            // Do NOT overwrite it with wall-clock time!
-            if (!IsPreRecordingMode || _preRecordingBuffer == null)
+            // CRITICAL: If EncodingDuration was set from frame timestamps, do NOT overwrite with wall-clock time!
+            if (!_encodingDurationSetFromFrames)
             {
                 EncodingDuration = DateTime.Now - _startTime;
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] EncodingDuration set from wall-clock time: {EncodingDuration.TotalSeconds:F3}s");
             }
             else
             {
@@ -1271,6 +1278,11 @@ namespace DrawnUi.Camera
 
                 writer.StartSessionAtSourceTime(CMTime.Zero);
 
+                // CRITICAL: Get first frame's PTS to use as offset for adjusting timestamps to start from zero
+                // This is needed because after pruning, frames might start at PTS=5.0s instead of 0.0s
+                CMTime firstFramePts = frames.Count > 0 ? frames[0].PresentationTime : CMTime.Zero;
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] First frame PTS: {firstFramePts.Seconds:F3}s, will adjust all timestamps by this offset");
+
                 int appendedCount = 0;
                 int frameIndex = 0;
 
@@ -1288,10 +1300,10 @@ namespace DrawnUi.Camera
                         continue;
                     }
 
-                    // Log timing for first and every 30th frame
-                    if (frameIndex == 1 || frameIndex % 30 == 0)
+                    // Log timing for first and last frame (detailed)
+                    if (frameIndex == 1 || frameIndex == frames.Count)
                     {
-                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame {frameIndex}: PTS={presentationTime.Seconds:F3}s, Duration={duration.Seconds:F3}s, Size={data.Length} bytes");
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame {frameIndex}: Original PTS={presentationTime.Seconds:F3}s, Duration={duration.Seconds:F3}s, Size={data.Length} bytes");
                     }
 
                     // Create CMBlockBuffer from H.264 data
@@ -1317,10 +1329,20 @@ namespace DrawnUi.Camera
 
                     try
                     {
-                        // Create sample timing info
+                        // CRITICAL: Adjust presentation time to start from zero
+                        // If first frame was at PTS=5.0s, subtract 5.0s from all frames so they start at 0.0s
+                        var adjustedPts = CMTime.Subtract(presentationTime, firstFramePts);
+
+                        // Log adjusted timing for first and last frame
+                        if (frameIndex == 1 || frameIndex == frames.Count)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame {frameIndex}: Adjusted PTS={adjustedPts.Seconds:F3}s (original was {presentationTime.Seconds:F3}s)");
+                        }
+
+                        // Create sample timing info with adjusted timestamp
                         var timing = new CMSampleTimingInfo
                         {
-                            PresentationTimeStamp = presentationTime,
+                            PresentationTimeStamp = adjustedPts,
                             Duration = duration,
                             DecodeTimeStamp = CMTime.Invalid
                         };

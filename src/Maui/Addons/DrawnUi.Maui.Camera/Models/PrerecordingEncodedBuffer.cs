@@ -30,6 +30,7 @@ public class PrerecordingEncodedBuffer : IDisposable
         public byte[] Data;
         public TimeSpan Timestamp;
         public DateTime AddedAt;
+        public bool IsKeyFrame;  // Critical for pruning: must start with keyframe for valid H.264
 
 #if IOS || MACCATALYST
         public CMTime PresentationTime;
@@ -150,13 +151,33 @@ public class PrerecordingEncodedBuffer : IDisposable
                 nextState.StartTime = DateTime.UtcNow;
                 nextState.IsLocked = false;
 
-                // Prune frames older than max duration (keep 1.5x to ensure smooth transition)
-                var cutoffTime = DateTime.UtcNow - TimeSpan.FromSeconds(_maxDuration.TotalSeconds * 1.5);
-                _frames.RemoveAll(f => f.AddedAt < cutoffTime);
+                // Prune frames to keep only the last _maxDuration seconds based on video PTS timestamps
+                if (_frames.Count > 0)
+                {
+                    var lastFrameTimestamp = _frames[_frames.Count - 1].Timestamp;
+                    var cutoffTimestamp = lastFrameTimestamp - _maxDuration;
+                    int beforePrune = _frames.Count;
+                    _frames.RemoveAll(f => f.Timestamp < cutoffTimestamp);
 
-                System.Diagnostics.Debug.WriteLine(
-                    $"[PreRecording] Swapped buffers. Active={(char)('A' + _currentBuffer)}, " +
-                    $"ElapsedInOldBuffer={elapsed.TotalSeconds:F2}s");
+                    // CRITICAL: Ensure first frame is a keyframe after pruning
+                    while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
+                    {
+                        _frames.RemoveAt(0);
+                    }
+
+                    int afterPrune = _frames.Count;
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[PreRecording] Swapped buffers. Active={(char)('A' + _currentBuffer)}, " +
+                        $"ElapsedInOldBuffer={elapsed.TotalSeconds:F2}s, " +
+                        $"Pruned frames: {beforePrune} -> {afterPrune} (cutoff={cutoffTimestamp.TotalSeconds:F3}s, first is KEYFRAME)");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[PreRecording] Swapped buffers. Active={(char)('A' + _currentBuffer)}, " +
+                        $"ElapsedInOldBuffer={elapsed.TotalSeconds:F2}s, No frames to prune");
+                }
 
                 // Point to next buffer for append
                 currentBuffer = nextBuffer;
@@ -178,6 +199,9 @@ public class PrerecordingEncodedBuffer : IDisposable
             currentState.BytesUsed += size;
             currentState.FrameCount++;
 
+            // Detect if this is a keyframe (IDR frame)
+            bool isKeyFrame = IsKeyFrame(nalUnits, size);
+
             // Store frame metadata
             byte[] frameCopy = new byte[size];
             Buffer.BlockCopy(nalUnits, 0, frameCopy, 0, size);
@@ -185,7 +209,8 @@ public class PrerecordingEncodedBuffer : IDisposable
             {
                 Data = frameCopy,
                 Timestamp = timestamp,
-                AddedAt = DateTime.UtcNow
+                AddedAt = DateTime.UtcNow,
+                IsKeyFrame = isKeyFrame
             });
 
         } // Lock released here
@@ -246,15 +271,33 @@ public class PrerecordingEncodedBuffer : IDisposable
                 nextState.StartTime = DateTime.UtcNow;
                 nextState.IsLocked = false;
 
-                // Prune frames older than max duration (keep 1.5x to ensure smooth transition)
-                var cutoffTime = DateTime.UtcNow - TimeSpan.FromSeconds(_maxDuration.TotalSeconds * 1.5);
-                int beforePrune = _frames.Count;
-                _frames.RemoveAll(f => f.AddedAt < cutoffTime);
-                int afterPrune = _frames.Count;
+                // Prune frames to keep only the last _maxDuration seconds based on video PTS timestamps
+                if (_frames.Count > 0)
+                {
+                    var lastFrameTimestamp = _frames[_frames.Count - 1].Timestamp;
+                    var cutoffTimestamp = lastFrameTimestamp - _maxDuration;
+                    int beforePrune = _frames.Count;
+                    _frames.RemoveAll(f => f.Timestamp < cutoffTimestamp);
 
-                System.Diagnostics.Debug.WriteLine(
-                    $"[PreRecording] Swapped buffers. Active={(char)('A' + _currentBuffer)}, " +
-                    $"ElapsedInOldBuffer={elapsed.TotalSeconds:F2}s, Frames: {beforePrune} -> {afterPrune} (pruned {beforePrune - afterPrune})");
+                    // CRITICAL: Ensure first frame is a keyframe after pruning
+                    while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
+                    {
+                        _frames.RemoveAt(0);
+                    }
+
+                    int afterPrune = _frames.Count;
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[PreRecording] Swapped buffers. Active={(char)('A' + _currentBuffer)}, " +
+                        $"ElapsedInOldBuffer={elapsed.TotalSeconds:F2}s, " +
+                        $"Pruned frames: {beforePrune} -> {afterPrune} (cutoff={cutoffTimestamp.TotalSeconds:F3}s, kept last {_maxDuration.TotalSeconds:F1}s, first is KEYFRAME)");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[PreRecording] Swapped buffers. Active={(char)('A' + _currentBuffer)}, " +
+                        $"ElapsedInOldBuffer={elapsed.TotalSeconds:F2}s, No frames to prune");
+                }
 
                 // Point to next buffer for append
                 currentBuffer = nextBuffer;
@@ -275,6 +318,10 @@ public class PrerecordingEncodedBuffer : IDisposable
             currentState.BytesUsed += size;
             currentState.FrameCount++;
 
+            // Detect if this is a keyframe (IDR frame) by checking H.264 NAL unit type
+            // NAL unit type is in bits 0-4 of first byte: type 5 = IDR (keyframe)
+            bool isKeyFrame = IsKeyFrame(nalUnits, size);
+
             // Store frame metadata with timing
             byte[] frameCopy = new byte[size];
             Buffer.BlockCopy(nalUnits, 0, frameCopy, 0, size);
@@ -286,11 +333,12 @@ public class PrerecordingEncodedBuffer : IDisposable
                 Timestamp = timestamp,
                 PresentationTime = presentationTime,
                 Duration = duration,
-                AddedAt = DateTime.UtcNow
+                AddedAt = DateTime.UtcNow,
+                IsKeyFrame = isKeyFrame
             });
             int afterAdd = _frames.Count;
 
-            System.Diagnostics.Debug.WriteLine($"[PreRecording] Frame ADDED to list: {beforeAdd} -> {afterAdd}, Total frames now: {_frames.Count}");
+            System.Diagnostics.Debug.WriteLine($"[PreRecording] Frame ADDED to list: {beforeAdd} -> {afterAdd}, Total frames now: {_frames.Count}, KeyFrame={isKeyFrame}");
 
         } // Lock released here
     }
@@ -440,6 +488,63 @@ public class PrerecordingEncodedBuffer : IDisposable
     }
 
     /// <summary>
+    /// Prunes buffer to contain only the last _maxDuration seconds of video based on PTS timestamps.
+    /// CRITICAL: Ensures the first remaining frame is a keyframe for valid H.264 decoding.
+    /// Call this before writing buffer to file to ensure we never exceed max duration.
+    /// </summary>
+    public void PruneToMaxDuration()
+    {
+        lock (_swapLock)
+        {
+            if (_frames.Count == 0)
+            {
+                System.Diagnostics.Debug.WriteLine($"[PreRecording] PruneToMaxDuration: No frames to prune");
+                return;
+            }
+
+            // Calculate cutoff based on video PTS timestamps (not wall-clock time)
+            var lastFrameTimestamp = _frames[_frames.Count - 1].Timestamp;
+            var cutoffTimestamp = lastFrameTimestamp - _maxDuration;
+            int beforePrune = _frames.Count;
+
+            _frames.RemoveAll(f => f.Timestamp < cutoffTimestamp);
+
+            // CRITICAL: Ensure first frame is a keyframe after pruning
+            // H.264 video must start with an IDR frame or it will be undecodable
+            while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"[PreRecording] PruneToMaxDuration: First frame at {_frames[0].Timestamp.TotalSeconds:F3}s is not a keyframe, removing...");
+                _frames.RemoveAt(0);
+            }
+
+            int afterPrune = _frames.Count;
+            int pruned = beforePrune - afterPrune;
+
+            if (pruned > 0)
+            {
+                if (_frames.Count > 0)
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[PreRecording] PruneToMaxDuration: {beforePrune} -> {afterPrune} frames " +
+                        $"(pruned {pruned} frames, first frame now at {_frames[0].Timestamp.TotalSeconds:F3}s is KEYFRAME)");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[PreRecording] PruneToMaxDuration: WARNING: All frames pruned!");
+                }
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"[PreRecording] PruneToMaxDuration: No frames needed pruning " +
+                    $"(all {_frames.Count} frames within last {_maxDuration.TotalSeconds:F1}s)");
+            }
+        }
+    }
+
+    /// <summary>
     /// Clears both buffers and resets state
     /// </summary>
     public void Clear()
@@ -450,6 +555,41 @@ public class PrerecordingEncodedBuffer : IDisposable
             _stateB = new BufferState { BytesUsed = 0, FrameCount = 0, StartTime = DateTime.MinValue };
             _currentBuffer = 0;
         }
+    }
+
+    /// <summary>
+    /// Detects if an H.264 frame is a keyframe (IDR) by checking NAL unit types
+    /// </summary>
+    private static bool IsKeyFrame(byte[] nalUnits, int size)
+    {
+        if (nalUnits == null || size < 5)
+            return false;
+
+        // H.264 NAL units: scan for IDR NAL unit (type 5)
+        // Format: 4-byte length + 1-byte NAL header + payload
+        // NAL header: forbidden_zero_bit(1) + nal_ref_idc(2) + nal_unit_type(5)
+        int offset = 0;
+        while (offset + 4 < size)
+        {
+            // Read 4-byte network order length
+            int nalLength = (nalUnits[offset] << 24) | (nalUnits[offset + 1] << 16) |
+                           (nalUnits[offset + 2] << 8) | nalUnits[offset + 3];
+            offset += 4;
+
+            if (nalLength <= 0 || offset + nalLength > size)
+                break; // Invalid NAL unit
+
+            // Check NAL unit type (bits 0-4 of first byte)
+            byte nalHeader = nalUnits[offset];
+            int nalType = nalHeader & 0x1F;
+
+            if (nalType == 5) // IDR frame (keyframe)
+                return true;
+
+            offset += nalLength;
+        }
+
+        return false;
     }
 
     public void Dispose()
