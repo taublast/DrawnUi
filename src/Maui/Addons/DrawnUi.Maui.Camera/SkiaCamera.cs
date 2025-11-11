@@ -1138,6 +1138,7 @@ public partial class SkiaCamera : SkiaControl
             _diagDroppedFrames = 0;
             _diagSubmittedFrames = 0;
             _diagLastSubmitMs = 0;
+            _captureVideoTotalStartTime = DateTime.Now;
         }
 
         _targetFps = fps;
@@ -1177,6 +1178,7 @@ public partial class SkiaCamera : SkiaControl
                 return;
 
             var elapsed = DateTime.Now - _captureVideoStartTime;
+            var elapsedTotal = DateTime.Now - _captureVideoTotalStartTime;
 
 #if WINDOWS
             // GPU-first path on Windows: draw directly into encoder-owned GPU surface
@@ -1330,7 +1332,7 @@ public partial class SkiaCamera : SkiaControl
                             Width = frameWidth,
                             Height = frameHeight,
                             Canvas = canvas,
-                            Time = elapsed
+                            Time = elapsedTotal
                         };
                         FrameProcessor?.Invoke(frame);
 
@@ -1953,6 +1955,7 @@ public partial class SkiaCamera : SkiaControl
     private ICaptureVideoEncoder _captureVideoEncoder;
     private System.Threading.Timer _frameCaptureTimer;
     private DateTime _captureVideoStartTime;
+    private DateTime _captureVideoTotalStartTime;
 
     // Pre-recording file fields (streaming to disk, not memory)
     private object _preRecordingLock = new object();
