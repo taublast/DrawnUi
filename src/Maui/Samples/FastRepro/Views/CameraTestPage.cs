@@ -349,7 +349,8 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             };
 
             // text at top left
-            frame.Canvas.DrawText("LIVE", 50, 100, paint);
+            var text = CameraControl.IsPreRecording ? "PRE-RECORDED" : "LIVE";
+            frame.Canvas.DrawText(text, 50, 100, paint);
 
             // Draw timestamp at top left (below LIVE)
             frame.Canvas.DrawText($"{frame.Time:mm\\:ss}", 50, 160, paint);

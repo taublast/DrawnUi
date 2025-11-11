@@ -1128,11 +1128,11 @@ public partial class SkiaCamera : SkiaControl
             Debug.WriteLine($"[StartCaptureVideoFlow] Skipping StartAsync - pre-recording mode will buffer frames in memory");
         }
 
-        _captureVideoStartTime = DateTime.Now;
         _capturePtsBaseTime = null;
+        _captureVideoStartTime = DateTime.Now;
 
         // Diagnostics
-        if (!IsPreRecording && _preRecordingDurationTracked > TimeSpan.Zero)
+        if (IsPreRecording  || (!IsPreRecording &&  _preRecordingDurationTracked == TimeSpan.Zero))
         {
             _diagStartTime = DateTime.Now;
             _diagDroppedFrames = 0;

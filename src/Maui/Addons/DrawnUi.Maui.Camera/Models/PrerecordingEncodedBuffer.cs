@@ -222,7 +222,7 @@ public class PrerecordingEncodedBuffer : IDisposable
     /// </summary>
     public void AppendEncodedFrame(byte[] nalUnits, int size, TimeSpan timestamp, CMTime presentationTime, CMTime duration)
     {
-        System.Diagnostics.Debug.WriteLine($"[PreRecording] AppendEncodedFrame called: size={size}, timestamp={timestamp.TotalSeconds:F3}s, PTS={presentationTime.Seconds:F3}s");
+        //System.Diagnostics.Debug.WriteLine($"[PreRecording] AppendEncodedFrame called: size={size}, timestamp={timestamp.TotalSeconds:F3}s, PTS={presentationTime.Seconds:F3}s");
 
         if (_isDisposed)
         {
@@ -338,7 +338,7 @@ public class PrerecordingEncodedBuffer : IDisposable
             });
             int afterAdd = _frames.Count;
 
-            System.Diagnostics.Debug.WriteLine($"[PreRecording] Frame ADDED to list: {beforeAdd} -> {afterAdd}, Total frames now: {_frames.Count}, KeyFrame={isKeyFrame}");
+            //System.Diagnostics.Debug.WriteLine($"[PreRecording] Frame ADDED to list: {beforeAdd} -> {afterAdd}, Total frames now: {_frames.Count}, KeyFrame={isKeyFrame}");
 
         } // Lock released here
     }
@@ -444,7 +444,7 @@ public class PrerecordingEncodedBuffer : IDisposable
         lock (_swapLock)
         {
             int count = _frames.Count;
-            System.Diagnostics.Debug.WriteLine($"[PreRecording] GetFrameCount() called: returning {count} frames");
+            //System.Diagnostics.Debug.WriteLine($"[PreRecording] GetFrameCount() called: returning {count} frames");
             return count;
         }
     }
@@ -513,14 +513,13 @@ public class PrerecordingEncodedBuffer : IDisposable
             // H.264 video must start with an IDR frame or it will be undecodable
             while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
             {
-                System.Diagnostics.Debug.WriteLine(
-                    $"[PreRecording] PruneToMaxDuration: First frame at {_frames[0].Timestamp.TotalSeconds:F3}s is not a keyframe, removing...");
+                //System.Diagnostics.Debug.WriteLine($"[PreRecording] PruneToMaxDuration: First frame at {_frames[0].Timestamp.TotalSeconds:F3}s is not a keyframe, removing...");
                 _frames.RemoveAt(0);
             }
 
+            /*
             int afterPrune = _frames.Count;
-            int pruned = beforePrune - afterPrune;
-
+               int pruned = beforePrune - afterPrune;
             if (pruned > 0)
             {
                 if (_frames.Count > 0)
@@ -541,6 +540,8 @@ public class PrerecordingEncodedBuffer : IDisposable
                     $"[PreRecording] PruneToMaxDuration: No frames needed pruning " +
                     $"(all {_frames.Count} frames within last {_maxDuration.TotalSeconds:F1}s)");
             }
+            */
+
         }
     }
 
