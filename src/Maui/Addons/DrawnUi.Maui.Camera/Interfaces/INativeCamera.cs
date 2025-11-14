@@ -31,7 +31,7 @@ public interface INativeCamera : IDisposable
 
     /// <summary>
     /// Gets whether flash is supported on this camera
-    /// </summary>
+    /// /// </summary>
     /// <returns>True if flash is supported</returns>
     bool IsFlashSupported();
 
@@ -144,6 +144,16 @@ public interface INativeCamera : IDisposable
     /// Event fired when video recording progress updates
     /// </summary>
     Action<TimeSpan> VideoRecordingProgress { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether pre-recording is enabled.
+    /// </summary>
+    bool EnablePreRecording { get; set; }
+
+    /// <summary>
+    /// Gets or sets the duration of the pre-recording buffer.
+    /// </summary>
+    TimeSpan PreRecordDuration { get; set; }
 
     #endregion
 }

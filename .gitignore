@@ -204,3 +204,4 @@ FakesAssemblies/
 
 .idea/
 .meteor/
+.aider*

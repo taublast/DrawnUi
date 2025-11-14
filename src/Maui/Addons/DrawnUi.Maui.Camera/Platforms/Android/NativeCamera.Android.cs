@@ -703,6 +703,30 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     private DateTime _recordingStartTime;
     private System.Threading.Timer _progressTimer;
 
+    // Pre-recording buffer fields
+    private bool _enablePreRecording;
+    private TimeSpan _preRecordDuration = TimeSpan.FromSeconds(5);
+    private readonly object _preRecordingLock = new();
+    private Queue<EncodedFrame> _preRecordingBuffer;
+    private int _maxPreRecordingFrames = 0;
+    private long _preRecordingStartTimeNs = 0;
+
+    /// <summary>
+    /// Represents an encoded frame with timestamp for pre-recording buffer
+    /// </summary>
+    private class EncodedFrame : IDisposable
+    {
+        public byte[] Data { get; set; }
+        public long TimestampNs { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+
+        public void Dispose()
+        {
+            // Frame data will be managed by GC
+        }
+    }
+
     /// <summary>
     /// Camera sensor orientation in degrees
     /// </summary>
@@ -1222,6 +1246,45 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                             break;
                     }
                 }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets whether pre-recording is enabled.
+    /// </summary>
+    public bool EnablePreRecording
+    {
+        get => _enablePreRecording;
+        set
+        {
+            if (_enablePreRecording != value)
+            {
+                _enablePreRecording = value;
+                if (value)
+                {
+                    InitializePreRecordingBuffer();
+                }
+                else
+                {
+                    ClearPreRecordingBuffer();
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the duration of the pre-recording buffer.
+    /// </summary>
+    public TimeSpan PreRecordDuration
+    {
+        get => _preRecordDuration;
+        set
+        {
+            if (_preRecordDuration != value)
+            {
+                _preRecordDuration = value;
+                CalculateMaxPreRecordingFrames();
             }
         }
     }
@@ -2422,6 +2485,16 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         try
         {
+            // Note: Android's MediaRecorder does not support injecting pre-recorded frames
+            // like AVAssetWriter on iOS. The pre-recording buffer is maintained for future
+            // enhancement with custom MediaCodec integration. For now, clear the buffer
+            // when recording starts to prepare for fresh recording session.
+            if (_enablePreRecording)
+            {
+                ClearPreRecordingBuffer();
+                InitializePreRecordingBuffer();
+            }
+
             // Stop current preview
             CaptureSession.StopRepeating();
 
@@ -2501,15 +2574,15 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             _mediaRecorder.Stop();
             _mediaRecorder.Reset();
 
-            var recordingEndTime = DateTime.Now;
-            var duration = recordingEndTime - _recordingStartTime;
+            DateTime recordingEndTime = DateTime.Now;
+            TimeSpan duration = recordingEndTime - _recordingStartTime;
 
             // Get file info
-            var fileInfo = new Java.IO.File(_currentVideoFile);
-            var fileSizeBytes = fileInfo.Length();
+            Java.IO.File fileInfo = new Java.IO.File(_currentVideoFile);
+            long fileSizeBytes = fileInfo.Length();
 
             // Create captured video object
-            var capturedVideo = new CapturedVideo
+            CapturedVideo capturedVideo = new CapturedVideo
             {
                 FilePath = _currentVideoFile,
                 Duration = duration,
@@ -2529,6 +2602,12 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             _isRecordingVideo = false;
             CleanupMediaRecorder();
+
+            // Resume pre-recording buffer after recording stops
+            if (_enablePreRecording)
+            {
+                InitializePreRecordingBuffer();
+            }
 
             // Restart preview
             CreateCameraPreviewSession();
@@ -2683,6 +2762,136 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     public Action<TimeSpan> VideoRecordingProgress { get; set; }
 
     #endregion
+
+    /// <summary>
+    /// Initialize the pre-recording buffer
+    /// </summary>
+    private void InitializePreRecordingBuffer()
+    {
+        lock (_preRecordingLock)
+        {
+            if (_preRecordingBuffer == null)
+            {
+                _preRecordingBuffer = new Queue<EncodedFrame>();
+                CalculateMaxPreRecordingFrames();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Calculate the maximum number of frames to keep in the pre-recording buffer
+    /// Assumes ~30 fps average frame rate for estimation
+    /// </summary>
+    private void CalculateMaxPreRecordingFrames()
+    {
+        // Assuming average frame rate of 30 fps
+        int averageFps = 30;
+        _maxPreRecordingFrames = Math.Max(1, (int)(_preRecordDuration.TotalSeconds * averageFps));
+    }
+
+    /// <summary>
+    /// Clear the pre-recording buffer
+    /// </summary>
+    private void ClearPreRecordingBuffer()
+    {
+        lock (_preRecordingLock)
+        {
+            if (_preRecordingBuffer != null)
+            {
+                while (_preRecordingBuffer.Count > 0)
+                {
+                    _preRecordingBuffer.Dequeue()?.Dispose();
+                }
+                _preRecordingBuffer = null;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Add a frame to the pre-recording buffer with automatic size management
+    /// </summary>
+    private void BufferPreRecordingFrame(Image image, long timestampNs)
+    {
+        if (!_enablePreRecording || _preRecordingBuffer == null)
+            return;
+
+        try
+        {
+            // Convert image to byte array for buffering
+            byte[] frameData = ExtractImageData(image);
+            if (frameData == null)
+                return;
+
+            lock (_preRecordingLock)
+            {
+                if (_preRecordingBuffer == null)
+                    return;
+
+                var frame = new EncodedFrame
+                {
+                    Data = frameData,
+                    TimestampNs = timestampNs,
+                    Width = image.Width,
+                    Height = image.Height
+                };
+
+                _preRecordingBuffer.Enqueue(frame);
+
+                // Trim buffer to maintain PreRecordDuration
+                while (_preRecordingBuffer.Count > _maxPreRecordingFrames)
+                {
+                    _preRecordingBuffer.Dequeue()?.Dispose();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[Android PreRecording] Error buffering frame: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Extract image data from an Android Image object
+    /// </summary>
+    private byte[] ExtractImageData(Image image)
+    {
+        try
+        {
+            // Get image planes (Y, U, V for YUV420)
+            Image.Plane[] planes = image.GetPlanes();
+            int bufferSize = planes[0].Buffer.Remaining();
+
+            for (int i = 1; i < planes.Length; i++)
+            {
+                bufferSize += planes[i].Buffer.Remaining();
+            }
+
+            byte[] nv21 = new byte[bufferSize];
+            int offset = 0;
+
+            for (int i = 0; i < planes.Length; i++)
+            {
+                Java.Nio.ByteBuffer buffer = planes[i].Buffer;
+                int pixelStride = planes[i].PixelStride;
+                int w = (i == 0) ? image.Width : image.Width / 2;
+                int h = (i == 0) ? image.Height : image.Height / 2;
+
+                for (int row = 0; row < h; row++)
+                {
+                    int bytesToRead = (i == 0) ? w : w * pixelStride;
+                    buffer.Get(nv21, offset, bytesToRead);
+                    offset += bytesToRead;
+                }
+            }
+
+            return nv21;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[Android PreRecording] Error extracting image data: {ex.Message}");
+            return null;
+        }
+    }
 
     /// <summary>
     /// Camera capture session state callback for video recording

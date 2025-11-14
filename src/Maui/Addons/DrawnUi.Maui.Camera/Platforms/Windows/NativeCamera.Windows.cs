@@ -126,6 +126,28 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     private readonly SemaphoreSlim _frameSemaphore = new(1, 1);
     private volatile bool _isProcessingFrame = false;
 
+    // Pre-recording buffer fields
+    private bool _enablePreRecording;
+    private TimeSpan _preRecordDuration = TimeSpan.FromSeconds(5);
+    private readonly object _preRecordingLock = new();
+    private Queue<Direct3DFrameData> _preRecordingBuffer;
+    private int _maxPreRecordingFrames = 0;
+
+    /// <summary>
+    /// Represents a Direct3D frame with timestamp for pre-recording buffer
+    /// </summary>
+    private class Direct3DFrameData : IDisposable
+    {
+        public byte[] Data { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public DateTime Timestamp { get; set; }
+
+        public void Dispose()
+        {
+            // Frame data will be managed by GC
+        }
+    }
 
         // Reused buffers for managed fallback conversion (apply capture-path trick: single reusable buffers)
         private InMemoryRandomAccessStream _scratchPreviewStream;
@@ -171,6 +193,45 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     public Action<CapturedImage> PreviewCaptureSuccess { get; set; }
     public Action<CapturedImage> StillImageCaptureSuccess { get; set; }
     public Action<Exception> StillImageCaptureFailed { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether pre-recording is enabled.
+    /// </summary>
+    public bool EnablePreRecording
+    {
+        get => _enablePreRecording;
+        set
+        {
+            if (_enablePreRecording != value)
+            {
+                _enablePreRecording = value;
+                if (value)
+                {
+                    InitializePreRecordingBuffer();
+                }
+                else
+                {
+                    ClearPreRecordingBuffer();
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the duration of the pre-recording buffer.
+    /// </summary>
+    public TimeSpan PreRecordDuration
+    {
+        get => _preRecordDuration;
+        set
+        {
+            if (_preRecordDuration != value)
+            {
+                _preRecordDuration = value;
+                CalculateMaxPreRecordingFrames();
+            }
+        }
+    }
 
     #endregion
 
@@ -740,6 +801,12 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
         try
         {
+            // Handle pre-recording buffer when enabled and not currently recording
+            if (_enablePreRecording && !_isRecordingVideo)
+            {
+                BufferPreRecordingFrameFromBitmap(softwareBitmap);
+            }
+
             var skImage = await ConvertToSKImageDirectAsync(softwareBitmap);
             if (skImage != null)
             {
@@ -1811,6 +1878,16 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
         try
         {
+            // Note: Windows MediaCapture does not support injecting pre-recorded frames
+            // like AVAssetWriter on iOS. The pre-recording buffer is maintained for future
+            // enhancement with custom encoding. For now, clear the buffer when recording starts
+            // to prepare for fresh recording session.
+            if (_enablePreRecording)
+            {
+                ClearPreRecordingBuffer();
+                InitializePreRecordingBuffer();
+            }
+
             // Create video encoding profile based on current video quality
             var profile = GetVideoEncodingProfile();
 
@@ -1849,7 +1926,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 /// <summary>
 /// Stops video recording
 /// </summary>
-public async Task StopVideoRecording()
+    public async Task StopVideoRecording()
     {
         if (!_isRecordingVideo || _mediaCapture == null || _currentVideoFile == null)
             return;
@@ -1865,17 +1942,17 @@ public async Task StopVideoRecording()
             // Stop recording
             await _mediaCapture.StopRecordAsync();
 
-            var recordingEndTime = DateTime.Now;
-            var duration = recordingEndTime - _recordingStartTime;
+            DateTime recordingEndTime = DateTime.Now;
+            TimeSpan duration = recordingEndTime - _recordingStartTime;
 
             // Get file size
             var properties = await _currentVideoFile.GetBasicPropertiesAsync();
-            var fileSizeBytes = (long)properties.Size;
+            long fileSizeBytes = (long)properties.Size;
 
             Debug.WriteLine($"[NativeCameraWindows] Video recording stopped. Duration: {duration:mm\\:ss}, Size: {fileSizeBytes / (1024 * 1024):F1} MB");
 
             // Create captured video object
-            var capturedVideo = new CapturedVideo
+            CapturedVideo capturedVideo = new CapturedVideo
             {
                 FilePath = _currentVideoFile.Path,
                 Duration = duration,
@@ -1894,6 +1971,12 @@ public async Task StopVideoRecording()
 
             _isRecordingVideo = false;
 
+            // Resume pre-recording buffer after recording stops
+            if (_enablePreRecording)
+            {
+                InitializePreRecordingBuffer();
+            }
+
             // Fire success event
             VideoRecordingSuccess?.Invoke(capturedVideo);
 
@@ -1908,6 +1991,139 @@ public async Task StopVideoRecording()
         finally
         {
             _currentVideoFile = null;
+        }
+    }    /// <summary>
+    /// Initialize the pre-recording buffer
+    /// </summary>
+    private void InitializePreRecordingBuffer()
+    {
+        lock (_preRecordingLock)
+        {
+            if (_preRecordingBuffer == null)
+            {
+                _preRecordingBuffer = new Queue<Direct3DFrameData>();
+                CalculateMaxPreRecordingFrames();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Calculate the maximum number of frames to keep in the pre-recording buffer
+    /// Assumes ~30 fps average frame rate for estimation
+    /// </summary>
+    private void CalculateMaxPreRecordingFrames()
+    {
+        // Assuming average frame rate of 30 fps
+        int averageFps = 30;
+        _maxPreRecordingFrames = Math.Max(1, (int)(_preRecordDuration.TotalSeconds * averageFps));
+    }
+
+    /// <summary>
+    /// Clear the pre-recording buffer
+    /// </summary>
+    private void ClearPreRecordingBuffer()
+    {
+        lock (_preRecordingLock)
+        {
+            if (_preRecordingBuffer != null)
+            {
+                while (_preRecordingBuffer.Count > 0)
+                {
+                    _preRecordingBuffer.Dequeue()?.Dispose();
+                }
+                _preRecordingBuffer = null;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Add a frame to the pre-recording buffer with automatic size management
+    /// </summary>
+    private void BufferPreRecordingFrame(byte[] frameData, int width, int height)
+    {
+        if (!_enablePreRecording || _preRecordingBuffer == null || frameData == null)
+            return;
+
+        try
+        {
+            lock (_preRecordingLock)
+            {
+                if (_preRecordingBuffer == null)
+                    return;
+
+                byte[] bufferedData = new byte[frameData.Length];
+                Array.Copy(frameData, bufferedData, frameData.Length);
+
+                var frame = new Direct3DFrameData
+                {
+                    Data = bufferedData,
+                    Width = width,
+                    Height = height,
+                    Timestamp = DateTime.UtcNow
+                };
+
+                _preRecordingBuffer.Enqueue(frame);
+
+                // Trim buffer to maintain PreRecordDuration
+                while (_preRecordingBuffer.Count > _maxPreRecordingFrames)
+                {
+                    _preRecordingBuffer.Dequeue()?.Dispose();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[Windows PreRecording] Error buffering frame: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Add a frame to the pre-recording buffer from a SoftwareBitmap
+    /// </summary>
+    private void BufferPreRecordingFrameFromBitmap(SoftwareBitmap softwareBitmap)
+    {
+        if (!_enablePreRecording || _preRecordingBuffer == null || softwareBitmap == null)
+            return;
+
+        try
+        {
+            byte[] frameData = ExtractBitmapData(softwareBitmap);
+            if (frameData != null)
+            {
+                BufferPreRecordingFrame(frameData, softwareBitmap.PixelWidth, softwareBitmap.PixelHeight);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[Windows PreRecording] Error buffering frame from bitmap: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Extract raw pixel data from a SoftwareBitmap
+    /// </summary>
+    private byte[] ExtractBitmapData(SoftwareBitmap softwareBitmap)
+    {
+        try
+        {
+            using var buffer = softwareBitmap.LockBuffer(BitmapBufferAccessMode.Read);
+            using var reference = buffer.CreateReference();
+
+            unsafe
+            {
+                byte* dataInBytes;
+                uint capacity;
+                ((IMemoryBufferByteAccess)reference).GetBuffer(out dataInBytes, out capacity);
+
+                byte[] managedArray = new byte[capacity];
+                System.Runtime.InteropServices.Marshal.Copy((IntPtr)dataInBytes, managedArray, 0, (int)capacity);
+                return managedArray;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[Windows PreRecording] Error extracting bitmap data: {ex.Message}");
+            return null;
         }
     }
 

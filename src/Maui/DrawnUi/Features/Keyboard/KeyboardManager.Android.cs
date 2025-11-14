@@ -1,4 +1,4 @@
-#if ANDROID
+﻿#if ANDROID
 
 using Android.InputMethodServices;
 using Android.Views;
@@ -118,7 +118,7 @@ public partial class KeyboardManager
             case Keycode.CapsLock: return MauiKey.CapsLock;
             case Keycode.Insert: return MauiKey.Insert;
             case Keycode.Del: return MauiKey.Delete;
-            // Android doesn�t have a dedicated Print Screen key in most cases.
+            // Android doesn’t have a dedicated Print Screen key in most cases.
             case Keycode.Home: return MauiKey.Home;
             case Keycode.MoveEnd: return MauiKey.End;
             case Keycode.PageDown: return MauiKey.PageDown;

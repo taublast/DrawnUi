@@ -33,15 +33,9 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
 
 ---
 
-## 🆕 What's new for 1.7.4.1
+## 🆕 What's new for 1.7.4.4
 
-* Fix Windows startup initialization, sometimes not finding main thread and not loading fonts.
-* Fix Windows rendering sometimes updating non-stop in dynamic mode.
-* Fix gestures sometimes passing panning to previously focused element.
-* Fix animator sometimes never starting
-* Fix `SkiaScroll` scrolling bounds
-* Fix `MaximumHeightRequest` affecting width.
-* Performance optimizations for cells and layouts, some other fixes.
+* HOTFIX Windows startup not found main thread for displays with a < 120Hz refresh rate.
  
 ## 💡 Hint of the Day
 

@@ -13,6 +13,7 @@ using CoreVideo;
 using DrawnUi.Controls;
 using Foundation;
 using ImageIO;
+using IOSurface;
 using Microsoft.Maui.Controls.Compatibility;
 using Microsoft.Maui.Media;
 using Photos;
@@ -63,7 +64,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     private UIDeviceOrientation _deviceOrientation;
     private AVCaptureVideoOrientation _videoOrientation;
     private UIImageOrientation _imageOrientation;
- 
+
 
     public Rotation CurrentRotation { get; private set; } = Rotation.rotate0Degrees;
 
@@ -147,220 +148,222 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
     private void SetupHardware()
     {
-        lock(lockSetup)
+        lock (lockSetup)
         {
             _session.BeginConfiguration();
-            _cameraUnitInitialized = false;
+
+            try
+            {
+                _cameraUnitInitialized = false;
 
 #if MACCATALYST
             _session.SessionPreset = AVCaptureSession.PresetHigh;
 #else
-            // Set session preset
-            if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
-            {
-                _session.SessionPreset = AVCaptureSession.PresetHigh;
-            }
-            else
-            {
-                _session.SessionPreset = AVCaptureSession.PresetInputPriority;
-            }
-#endif
-
-            AVCaptureDevice videoDevice = null;
-
-            // Manual camera selection
-            if (FormsControl.Facing == CameraPosition.Manual && FormsControl.CameraIndex >= 0)
-            {
-                var allDevices = AVCaptureDevice.DevicesWithMediaType(AVMediaTypes.Video.GetConstant());
-                if (FormsControl.CameraIndex < allDevices.Length)
+                // Set session preset
+                if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
                 {
-                    videoDevice = allDevices[FormsControl.CameraIndex];
-                    Console.WriteLine($"[NativeCameraApple] Selected camera by index {FormsControl.CameraIndex}: {videoDevice.LocalizedName}");
+                    _session.SessionPreset = AVCaptureSession.PresetHigh;
                 }
                 else
                 {
-                    Console.WriteLine($"[NativeCameraApple] Invalid camera index {FormsControl.CameraIndex}, falling back to default");
-                    videoDevice = allDevices.FirstOrDefault();
+                    _session.SessionPreset = AVCaptureSession.PresetInputPriority;
                 }
-            }
-            else
-            {
-                // Automatic selection based on facing
-                var cameraPosition = FormsControl.Facing == CameraPosition.Selfie
-                    ? AVCaptureDevicePosition.Front
-                    : AVCaptureDevicePosition.Back;
+#endif
 
-                if (UIDevice.CurrentDevice.CheckSystemVersion(13, 0) && FormsControl.Type == CameraType.Max)
-                {
-                    videoDevice = AVCaptureDevice.GetDefaultDevice(AVCaptureDeviceType.BuiltInTripleCamera, AVMediaTypes.Video, cameraPosition);
-                }
+                AVCaptureDevice videoDevice = null;
 
-                if (videoDevice == null)
+                // Manual camera selection
+                if (FormsControl.Facing == CameraPosition.Manual && FormsControl.CameraIndex >= 0)
                 {
-                    if (UIDevice.CurrentDevice.CheckSystemVersion(10, 2) && FormsControl.Type == CameraType.Max)
+                    var allDevices = AVCaptureDevice.DevicesWithMediaType(AVMediaTypes.Video.GetConstant());
+                    if (FormsControl.CameraIndex < allDevices.Length)
                     {
-                        videoDevice = AVCaptureDevice.GetDefaultDevice(AVCaptureDeviceType.BuiltInDualCamera, AVMediaTypes.Video, cameraPosition);
+                        videoDevice = allDevices[FormsControl.CameraIndex];
+                        Console.WriteLine($"[NativeCameraApple] Selected camera by index {FormsControl.CameraIndex}: {videoDevice.LocalizedName}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"[NativeCameraApple] Invalid camera index {FormsControl.CameraIndex}, falling back to default");
+                        videoDevice = allDevices.FirstOrDefault();
+                    }
+                }
+                else
+                {
+                    // Automatic selection based on facing
+                    var cameraPosition = FormsControl.Facing == CameraPosition.Selfie
+                        ? AVCaptureDevicePosition.Front
+                        : AVCaptureDevicePosition.Back;
+
+                    if (UIDevice.CurrentDevice.CheckSystemVersion(13, 0) && FormsControl.Type == CameraType.Max)
+                    {
+                        videoDevice = AVCaptureDevice.GetDefaultDevice(AVCaptureDeviceType.BuiltInTripleCamera, AVMediaTypes.Video, cameraPosition);
                     }
 
                     if (videoDevice == null)
                     {
-                        var videoDevices = AVCaptureDevice.DevicesWithMediaType(AVMediaTypes.Video.GetConstant());
+                        if (UIDevice.CurrentDevice.CheckSystemVersion(10, 2) && FormsControl.Type == CameraType.Max)
+                        {
+                            videoDevice = AVCaptureDevice.GetDefaultDevice(AVCaptureDeviceType.BuiltInDualCamera, AVMediaTypes.Video, cameraPosition);
+                        }
 
-#if MACCATALYST
-                    videoDevice = videoDevices.FirstOrDefault();
-#else
-                        videoDevice = videoDevices.FirstOrDefault(d => d.Position == cameraPosition);
-#endif
                         if (videoDevice == null)
                         {
-                            State = CameraProcessorState.Error;
-                            _session.CommitConfiguration();
-                            return;
+                            var videoDevices = AVCaptureDevice.DevicesWithMediaType(AVMediaTypes.Video.GetConstant());
+
+#if MACCATALYST
+                        videoDevice = videoDevices.FirstOrDefault();
+#else
+                            videoDevice = videoDevices.FirstOrDefault(d => d.Position == cameraPosition);
+#endif
+                            if (videoDevice == null)
+                            {
+                                State = CameraProcessorState.Error;
+                                return;
+                            }
                         }
                     }
                 }
-            }
 
-            var allFormats = videoDevice.Formats.ToList();
-            AVCaptureDeviceFormat format = null;
+                var allFormats = videoDevice.Formats.ToList();
+                AVCaptureDeviceFormat format = null;
 
-            SetupStillFormats(allFormats);
+                SetupStillFormats(allFormats);
 
-            // Select format based on CaptureMode
-            if (FormsControl.CaptureMode == CaptureModeType.Video)
-            {
-                format = SelectFormatForVideoAspect(allFormats);
-            }
-            else
-            {
-                format = SelectOptimalFormat(allFormats, FormsControl.PhotoQuality);
-            }
-
-            NSError error;
-            if (videoDevice.LockForConfiguration(out error))
-            {
-                if (videoDevice.SmoothAutoFocusSupported)
-                    videoDevice.SmoothAutoFocusEnabled = true;
-
-                videoDevice.ActiveFormat = format;
-
-                // Ensure exposure is set to continuous auto exposure during setup
-                if (videoDevice.IsExposureModeSupported(AVCaptureExposureMode.ContinuousAutoExposure))
+                // Select format based on CaptureMode
+                if (FormsControl.CaptureMode == CaptureModeType.Video)
                 {
-                    videoDevice.ExposureMode = AVCaptureExposureMode.ContinuousAutoExposure;
-                    System.Diagnostics.Debug.WriteLine($"[CAMERA SETUP] Set initial exposure mode to ContinuousAutoExposure");
+                    format = SelectFormatForVideoAspect(allFormats);
+                }
+                else
+                {
+                    format = SelectOptimalFormat(allFormats, FormsControl.PhotoQuality);
                 }
 
-                // Reset exposure bias to neutral
-                if (videoDevice.MinExposureTargetBias != videoDevice.MaxExposureTargetBias)
+                NSError error;
+                if (videoDevice.LockForConfiguration(out error))
                 {
-                    videoDevice.SetExposureTargetBias(0, null);
-                    System.Diagnostics.Debug.WriteLine($"[CAMERA SETUP] Reset exposure bias to 0");
+                    if (videoDevice.SmoothAutoFocusSupported)
+                        videoDevice.SmoothAutoFocusEnabled = true;
+
+                    videoDevice.ActiveFormat = format;
+
+                    // Ensure exposure is set to continuous auto exposure during setup
+                    if (videoDevice.IsExposureModeSupported(AVCaptureExposureMode.ContinuousAutoExposure))
+                    {
+                        videoDevice.ExposureMode = AVCaptureExposureMode.ContinuousAutoExposure;
+                        System.Diagnostics.Debug.WriteLine($"[CAMERA SETUP] Set initial exposure mode to ContinuousAutoExposure");
+                    }
+
+                    // Reset exposure bias to neutral
+                    if (videoDevice.MinExposureTargetBias != videoDevice.MaxExposureTargetBias)
+                    {
+                        videoDevice.SetExposureTargetBias(0, null);
+                        System.Diagnostics.Debug.WriteLine($"[CAMERA SETUP] Reset exposure bias to 0");
+                    }
+
+                    videoDevice.UnlockForConfiguration();
                 }
 
-                videoDevice.UnlockForConfiguration();
-            }
-
-            while (_session.Inputs.Any())
-            {
-                _session.RemoveInput(_session.Inputs[0]);
-            }
-
-            // Remove all existing outputs before adding new ones
-            while (_session.Outputs.Any())
-            {
-                _session.RemoveOutput(_session.Outputs[0]);
-            }
-
-            _deviceInput = new AVCaptureDeviceInput(videoDevice, out error);
-            if (error != null)
-            {
-                Console.WriteLine($"Could not create video device input: {error.LocalizedDescription}");
-                _session.CommitConfiguration();
-                State = CameraProcessorState.Error;
-                return;
-            }
-
-            _session.AddInput(_deviceInput);
-
-            var dictionary = new NSMutableDictionary();
-            dictionary[AVVideo.CodecKey] = new NSNumber((int)AVVideoCodec.JPEG);
-            _stillImageOutput = new AVCaptureStillImageOutput()
-            {
-                OutputSettings = new NSDictionary()
-            };
-            _stillImageOutput.HighResolutionStillImageOutputEnabled = true;
-
-            if (_session.CanAddOutput(_stillImageOutput))
-            {
-                _session.AddOutput(_stillImageOutput);
-            }
-            else
-            {
-                Console.WriteLine("Could not add still image output to the session");
-                _session.CommitConfiguration();
-                State = CameraProcessorState.Error;
-                return;
-            }
-
-            if (_session.CanAddOutput(_videoDataOutput))
-            {
-                // Configure video data output BEFORE adding to session
-                _session.AddOutput(_videoDataOutput);
-                _videoDataOutput.AlwaysDiscardsLateVideoFrames = true;
-                _videoDataOutput.WeakVideoSettings = new NSDictionary(CVPixelBuffer.PixelFormatTypeKey,
-                    CVPixelFormatType.CV32BGRA);
-                _videoDataOutput.SetSampleBufferDelegate(this, _videoDataOutputQueue);
-
-                // Set initial video orientation from the connection
-                var videoConnection = _videoDataOutput.ConnectionFromMediaType(AVMediaTypes.Video.GetConstant());
-                if (videoConnection != null && videoConnection.SupportsVideoOrientation)
+                while (_session.Inputs.Any())
                 {
-                    _videoOrientation = videoConnection.VideoOrientation;
-                    System.Diagnostics.Debug.WriteLine($"[CAMERA SETUP] Initial video orientation: {_videoOrientation}");
+                    _session.RemoveInput(_session.Inputs[0]);
+                }
+
+                // Remove all existing outputs before adding new ones
+                while (_session.Outputs.Any())
+                {
+                    _session.RemoveOutput(_session.Outputs[0]);
+                }
+
+                _deviceInput = new AVCaptureDeviceInput(videoDevice, out error);
+                if (error != null)
+                {
+                    Console.WriteLine($"Could not create video device input: {error.LocalizedDescription}");
+                    State = CameraProcessorState.Error;
+                    return;
+                }
+
+                _session.AddInput(_deviceInput);
+
+                var dictionary = new NSMutableDictionary();
+                dictionary[AVVideo.CodecKey] = new NSNumber((int)AVVideoCodec.JPEG);
+                _stillImageOutput = new AVCaptureStillImageOutput()
+                {
+                    OutputSettings = new NSDictionary()
+                };
+                _stillImageOutput.HighResolutionStillImageOutputEnabled = true;
+
+                if (_session.CanAddOutput(_stillImageOutput))
+                {
+                    _session.AddOutput(_stillImageOutput);
+                }
+                else
+                {
+                    Console.WriteLine("Could not add still image output to the session");
+                    State = CameraProcessorState.Error;
+                    return;
+                }
+
+                if (_session.CanAddOutput(_videoDataOutput))
+                {
+                    // Configure video data output BEFORE adding to session
+                    _session.AddOutput(_videoDataOutput);
+                    _videoDataOutput.AlwaysDiscardsLateVideoFrames = true;
+                    _videoDataOutput.WeakVideoSettings = new NSDictionary(CVPixelBuffer.PixelFormatTypeKey,
+                        CVPixelFormatType.CV32BGRA);
+                    _videoDataOutput.SetSampleBufferDelegate(this, _videoDataOutputQueue);
+
+                    // Set initial video orientation from the connection
+                    var videoConnection = _videoDataOutput.ConnectionFromMediaType(AVMediaTypes.Video.GetConstant());
+                    if (videoConnection != null && videoConnection.SupportsVideoOrientation)
+                    {
+                        _videoOrientation = videoConnection.VideoOrientation;
+                        System.Diagnostics.Debug.WriteLine($"[CAMERA SETUP] Initial video orientation: {_videoOrientation}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Could not add video data output to the session");
+                    State = CameraProcessorState.Error;
+                    return;
+                }
+
+                _flashSupported = videoDevice.FlashAvailable;
+
+                var focalLengths = new List<float>();
+                //var physicalFocalLength = 4.15f;
+                //focalLengths.Add(physicalFocalLength);
+
+                var cameraUnit = new CameraUnit
+                {
+                    Id = videoDevice.UniqueID,
+                    Facing = FormsControl.Facing,
+                    FocalLengths = focalLengths,
+                    FieldOfView = videoDevice.ActiveFormat.VideoFieldOfView,
+                    Meta = FormsControl.CreateMetadata()
+                };
+
+                //other data will be filled when camera starts working..
+
+                FormsControl.CameraDevice = cameraUnit;
+
+                var formatDescription = videoDevice.ActiveFormat.FormatDescription as CMVideoFormatDescription;
+                if (formatDescription != null)
+                {
+                    var dimensions = formatDescription.Dimensions;
+                    FormsControl.SetRotatedContentSize(new SKSize(dimensions.Width, dimensions.Height), 0);
                 }
             }
-            else
+            finally
             {
-                Console.WriteLine("Could not add video data output to the session");
                 _session.CommitConfiguration();
-                State = CameraProcessorState.Error;
-                return;
             }
-
-            _flashSupported = videoDevice.FlashAvailable;
-
-            var focalLengths = new List<float>();
-            //var physicalFocalLength = 4.15f;
-            //focalLengths.Add(physicalFocalLength);
-
-            var cameraUnit = new CameraUnit
-            {
-                Id = videoDevice.UniqueID,
-                Facing = FormsControl.Facing,
-                FocalLengths = focalLengths,
-                FieldOfView = videoDevice.ActiveFormat.VideoFieldOfView,
-                Meta = FormsControl.CreateMetadata()
-            };
-
-            //other data will be filled when camera starts working..
-
-            FormsControl.CameraDevice = cameraUnit;
-
-            var formatDescription = videoDevice.ActiveFormat.FormatDescription as CMVideoFormatDescription;
-            if (formatDescription != null)
-            {
-                var dimensions = formatDescription.Dimensions;
-                FormsControl.SetRotatedContentSize(new SKSize(dimensions.Width, dimensions.Height), 0);
-            }
-
-            _session.CommitConfiguration();
 
             UpdateDetectOrientation();
         }
     }
 
-    public List<CaptureFormat> StillFormats {get; protected set;}
+    public List<CaptureFormat> StillFormats { get; protected set; }
 
     private void SetupStillFormats(List<AVCaptureDeviceFormat> allFormats)
     {
@@ -412,7 +415,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     {
         var availableFormats = allFormats
             .Where(f => f.HighResolutionStillImageDimensions.Width > 0 && f.HighResolutionStillImageDimensions.Height > 0)
-            .Select(f => new {
+            .Select(f => new
+            {
                 Format = f,
                 VideoDims = (f.FormatDescription as CMVideoFormatDescription)?.Dimensions ?? new CMVideoDimensions()
             })
@@ -664,25 +668,28 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         if (State == CameraProcessorState.Enabled && _session.Running)
             return;
 
-        try
+        lock (lockSetup)
         {
-            Setup();
-
-            _session.StartRunning();
-            State = CameraProcessorState.Enabled;
-
-            // Apply current flash modes after session starts
-            ApplyFlashMode();
-
-            MainThread.BeginInvokeOnMainThread(() =>
+            try
             {
-                DeviceDisplay.Current.KeepScreenOn = true;
-            });
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"[NativeCameraiOS] Start error: {e}");
-            State = CameraProcessorState.Error;
+                Setup();
+
+                _session.StartRunning();
+                State = CameraProcessorState.Enabled;
+
+                // Apply current flash modes after session starts
+                ApplyFlashMode();
+
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    DeviceDisplay.Current.KeepScreenOn = true;
+                });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"[NativeCameraiOS] Start error: {e}");
+                State = CameraProcessorState.Error;
+            }
         }
     }
 
@@ -992,6 +999,108 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         UpdateOrientationFromMainThread();
     }
 
+    /// <summary>
+    /// Handles bitmap orientation for still captures with proper dimension swapping for rotations.
+    /// Combines sensor orientation with device rotation to produce correctly oriented output.
+    /// </summary>
+    /// <param name="bitmap">Source bitmap from camera sensor (in sensor's natural orientation)</param>
+    /// <param name="sensor">Sensor rotation relative to device (CurrentRotation)</param>
+    /// <param name="deviceRotation">Physical device rotation in degrees (0, 90, 180, 270)</param>
+    /// <param name="flip">Whether to flip horizontally (for selfie camera)</param>
+    /// <returns>Rotated bitmap with correct dimensions for user processing</returns>
+    public SKBitmap HandleOrientationForStillCapture(SKBitmap bitmap, double sensor, int deviceRotation, bool flip)
+    {
+        // Calculate final rotation: device rotation minus sensor offset
+        // Sensor tells us how raw image is rotated from device portrait
+        // deviceRotation tells us current device orientation
+        // We subtract to align image with current device orientation
+        var finalRotation = (deviceRotation - (int)sensor + 360) % 360;
+
+        // Portrait orientations need an additional 180° flip for correct orientation
+        if (deviceRotation == 0 || deviceRotation == 180)
+        {
+            finalRotation = (finalRotation + 180) % 360;
+        }
+
+        Debug.WriteLine($"[STILL CAPTURE] sensor: {sensor}°, deviceRotation: {deviceRotation}°, finalRotation: {finalRotation}°, isSelfie: {flip}");
+
+        SKBitmap rotated;
+        switch (finalRotation)
+        {
+            case 180: //iphone landscape on left side
+                if (flip)
+                {
+                    rotated = new SKBitmap(bitmap.Width, bitmap.Height);
+                    using (var surface = new SKCanvas(rotated))
+                    {
+                        surface.Translate(0, bitmap.Height);
+                        surface.Scale(1, -1);
+                        surface.DrawBitmap(bitmap, 0, 0);
+                    }
+                    return rotated;
+                }
+                return bitmap;
+
+            case 270: //iphone portrait upside down
+                rotated = new SKBitmap(bitmap.Height, bitmap.Width);
+                using (var surface = new SKCanvas(rotated))
+                {
+                    surface.Translate(0, rotated.Height);
+                    surface.RotateDegrees(270);
+                    if (flip)
+                    {
+                        surface.Scale(1, -1);
+                        surface.Translate(0, -bitmap.Height);
+                    }
+                    surface.DrawBitmap(bitmap, 0, 0);
+                }
+                return rotated;
+
+            case 90: //iphone portrait
+                rotated = new SKBitmap(bitmap.Height, bitmap.Width);
+                using (var surface = new SKCanvas(rotated))
+                {
+                    surface.Translate(rotated.Width, 0);
+                    surface.RotateDegrees(90);
+                    if (flip)
+                    {
+                        surface.Scale(1, -1);
+                        surface.Translate(0, -bitmap.Height);
+                    }
+                    surface.DrawBitmap(bitmap, 0, 0);
+                }
+                return rotated;
+
+            case 0: //iphone landscape on right side
+            case 360: //cant happen?
+                rotated = new SKBitmap(bitmap.Width, bitmap.Height);
+                if (!flip)
+                {
+                    using (var surface = new SKCanvas(rotated))
+                    {
+                        surface.Translate(0, bitmap.Height);
+                        surface.Scale(1, -1);
+                        surface.DrawBitmap(bitmap, 0, 0);
+                    }
+                    return rotated;
+                }
+                else
+                {
+                    using (var surface = new SKCanvas(rotated)) //mirror X
+                    {
+                        surface.Translate(bitmap.Width, 0);
+                        surface.Scale(-1, 1);
+                        surface.DrawBitmap(bitmap, 0, 0);
+                    }
+                    return rotated;
+                }
+
+            default:
+                Debug.WriteLine($"[STILL CAPTURE] Unexpected rotation {finalRotation}°, returning original");
+                return bitmap;
+        }
+    }
+
     public void TakePicture()
     {
         if (_isCapturingStill || _stillImageOutput == null)
@@ -1048,97 +1157,11 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                 // Apply rotation if needed
                 using var bitmap = SKBitmap.FromImage(rawImage);
-                using var skBitmap = HandleOrientation(bitmap, (double)CurrentRotation, FormsControl.Facing == CameraPosition.Selfie);
+                using var skBitmap = HandleOrientationForStillCapture(bitmap, (double)CurrentRotation, deviceRotation, FormsControl.Facing == CameraPosition.Selfie);
 
                 var skImage = SKImage.FromBitmap(skBitmap);
-                
-                /*
-                var rotation = 0;
-                bool flipHorizontal = false;
-                bool flipVertical = false;
 
-                //we have 2 steps or adjusting final image:
-                // 1: reorient image to be upright
-                // 2: set new EXIF erientation to display landscape correctly in gallery
-
-                //step 1
-                //if (cameraPosition == AVCaptureDevicePosition.Front)
-                {
-                    switch (orientation)
-                    {
-                        case 1: //Horizontal / normal
-                            break;
-                        case 2: //Mirror horizontal
-                            flipHorizontal = true;
-                            break;
-                        case 3: //Rotate 180
-                            rotation = 180;
-                            break;
-                        case 4: //Mirror vertical
-                            flipVertical = true;
-                            break;
-                        case 5: //Mirror horizontal and rotate 270 CW
-                            rotation = 270;
-                            flipHorizontal = true;
-                            break;
-                        case 6: //Rotate 90 CW
-                            rotation = 90;
-                            //if (deviceRotation == 90 || deviceRotation == 270 || deviceRotation == 180)
-                            //{
-                            //    flipVertical = true;
-                            //}
-                            break;
-                        case 7: //Mirror horizontal and rotate 90 CW
-                            flipHorizontal = true;
-                            rotation = 90;
-                            //if (deviceRotation == 90 || deviceRotation == 270 || deviceRotation == 180)
-                            //{
-                            //    flipVertical = true;
-                            //}
-                            break;
-                        case 8: //Rotate 270 CW
-                            rotation = 270;
-                            //flipHorizontal = true;
-                            //if (deviceRotation == 90 || deviceRotation == 270 || deviceRotation == 180)
-                            //{
-                            //    flipVertical = true;
-                            //}
-                            break;
-                    }
-                }
-                
-                SKBitmap skBitmap = SKBitmap.FromImage(skImage);
-            
-                var nonRotated = skBitmap;
-
-                skBitmap = SkiaCamera.Reorient(skBitmap, rotation, flipHorizontal, flipVertical);
-
-                if (nonRotated != skBitmap)
-                {
-                    nonRotated.Dispose();
-                    skImage.Dispose();
-                    skImage = SKImage.FromBitmap(skBitmap);
-                }
-                */
-
-                //step 2
                 var newExif = 1;
-                //todo later after we fix step 1
-                //switch (FormsControl.DeviceRotation)
-                //{
-                //    case 90:
-                //        newExif = 6;
-                //        break;
-                //    case 270:
-                //        newExif = 8;
-                //        break;
-                //    case 180:
-                //        newExif = 3;
-                //        break;
-                //    default:
-                //        newExif = 1;
-                //        break;
-                //}
 
                 Debug.WriteLine($"[CAPTURED] {cameraPosition}  exif {orientation} => {newExif} for {FormsControl.DeviceRotation}, {CurrentRotation}");
 
@@ -1147,7 +1170,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     Facing = FormsControl.Facing,
                     Time = DateTime.UtcNow,
                     Image = skImage,
-                    Rotation = FormsControl.DeviceRotation,
+                    Rotation = 0, //we already applied rotation
                     Meta = Metadata.CreateMetadataFromProperties(props, metaData)
                 };
 
@@ -1212,7 +1235,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                     // Apply rotation if needed
                     using var bitmap = SKBitmap.FromImage(rawImage);
-                    using var rotatedBitmap = HandleOrientation(bitmap, (double)_latestRawFrame.CurrentRotation, _latestRawFrame.Facing == CameraPosition.Selfie);
+                    using var rotatedBitmap = HandleOrientationForPreview(bitmap, (double)_latestRawFrame.CurrentRotation, _latestRawFrame.Facing == CameraPosition.Selfie);
                     return SKImage.FromBitmap(rotatedBitmap);
                 }
                 finally
@@ -1416,12 +1439,12 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         _processedFrameCount++;
 
         // Log stats every 300 frames
-        if (_processedFrameCount % 300 == 0)
-        {
-            System.Diagnostics.Debug.WriteLine($"[NativeCameraiOS] Frame stats - Processed: {_processedFrameCount}, Skipped: {_skippedFrameCount}");
-        }
+        //if (_processedFrameCount % 300 == 0)
+        //{
+        //    System.Diagnostics.Debug.WriteLine($"[NativeCameraiOS] Frame stats - Processed: {_processedFrameCount}, Skipped: {_skippedFrameCount}");
+        //}
 
-        bool hasFrame=false;
+        bool hasFrame = false;
         try
         {
             using var pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
@@ -1507,7 +1530,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         break;
                 }
 
-               var width = (int)pixelBuffer.Width;
+                var width = (int)pixelBuffer.Width;
                 var height = (int)pixelBuffer.Height;
                 var bytesPerRow = (int)pixelBuffer.BytesPerRow;
                 var baseAddress = pixelBuffer.BaseAddress;
@@ -1517,7 +1540,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 var pixelData = new byte[dataSize];
                 System.Runtime.InteropServices.Marshal.Copy(baseAddress, pixelData, 0, dataSize);
 
-                var time  = DateTime.UtcNow;
+                var time = DateTime.UtcNow;
 
                 // Store raw frame data for SKImage creation on main thread
                 var rawFrame = new RawFrameData
@@ -1533,7 +1556,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 };
 
                 SetRawFrame(rawFrame);
-                hasFrame=true;
+                hasFrame = true;
             }
             catch (Exception e)
             {
@@ -1614,7 +1637,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     /// <param name="bitmap"></param>
     /// <param name="sensor"></param>
     /// <returns></returns>
-    public SKBitmap HandleOrientation(SKBitmap bitmap, double sensor, bool flip)
+    public SKBitmap HandleOrientationForPreview(SKBitmap bitmap, double sensor, bool flip)
     {
         SKBitmap rotated;
         switch (sensor)
@@ -1698,10 +1721,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 _videoOrientation = videoConnection.VideoOrientation;
             }
 
-                CurrentRotation = GetRotation(
-                    _uiOrientation,
-                    _videoOrientation,
-                    _deviceInput?.Device?.Position ?? AVCaptureDevicePosition.Back);
+            CurrentRotation = GetRotation(
+                _uiOrientation,
+                _videoOrientation,
+                _deviceInput?.Device?.Position ?? AVCaptureDevicePosition.Back);
 
         }
     }
@@ -2414,6 +2437,16 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     /// Event fired when video recording progress updates
     /// </summary>
     public Action<TimeSpan> VideoRecordingProgress { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether pre-recording is enabled.
+    /// </summary>
+    public bool EnablePreRecording { get; set; }
+
+    /// <summary>
+    /// Gets or sets the duration of the pre-recording buffer.
+    /// </summary>
+    public TimeSpan PreRecordDuration { get; set; }
 
     #endregion
 
