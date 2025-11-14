@@ -106,9 +106,38 @@ namespace DrawnUi.Controls
             }
         }
 
+        public virtual void OnScrollingStateChanged(bool value)
+        {
+            _autoCacheContent = value;
+
+            AdjustCache();
+        }
+
+
+        private bool _autoCacheContent;
+        private SkiaCacheType _cacheType;
+
+        protected void AdjustCache()
+        {
+            if (Content != null && AutoCache)
+            {
+                //Debug.WriteLine($"[c] cacheContent: {cacheContent}");
+                if (_autoCacheContent)
+                {
+                    Content.UseCache = SkiaCacheType.Operations;
+                }
+                else
+                {
+                    Content.UseCache = _cacheType;
+                }
+            }
+        }
+
         public override void OnTransitionChanged()
         {
             base.OnTransitionChanged();
+
+            OnScrollingStateChanged(InTransition);
 
             if (!InTransition)
             {
@@ -242,6 +271,10 @@ namespace DrawnUi.Controls
                 {
                     AddSubView(view);
                 }
+
+                _cacheType = view.UseCache;
+                _autoCacheContent = AutoCache;
+                AdjustCache();
             }
         }
 

@@ -73,7 +73,7 @@ namespace DrawnUi.Draw
                 return devMode.dmDisplayFrequency;
             }
 
-            return fallback; 
+            return fallback;
         }
 
         public static int RefreshRate { get; protected set; }
@@ -99,12 +99,14 @@ namespace DrawnUi.Draw
             //VisualDiagnostics.VisualTreeChanged += OnVisualTreeChanged;
             InitShared();
 
-            RefreshRate = GetDisplayRefreshRate(60);
+            //RefreshRate = GetDisplayRefreshRate(60);
 
             UsingDisplaySync = RefreshRate >= 120;
 
             if (UsingDisplaySync)
             {
+                object lockFrane = new();
+
                 Tasks.StartDelayed(TimeSpan.FromMilliseconds(250), async () =>
                 {
                     while (!_loopStarted)
@@ -113,37 +115,43 @@ namespace DrawnUi.Draw
                         {
                             MainThread.BeginInvokeOnMainThread(async () =>
                             {
-                                if (_loopStarting)
-                                    return;
-                                _loopStarting = true;
-
-                                if (MainThread.IsMainThread) //UI thread is available
+                                lock (lockFrane)
                                 {
-                                    if (!_loopStarted)
+                                    if (_loopStarting)
+                                        return;
+                                    _loopStarting = true;
+
+                                    if (MainThread.IsMainThread) //UI thread is available
                                     {
-                                        _loopStarted = true;
-                                        try
+                                        if (!_loopStarted)
                                         {
-                                            CompositionTarget.Rendering += (s, a) =>
+                                            _loopStarted = true;
+                                            try
                                             {
-                                                OnFrame?.Invoke(null, null);
-                                            };
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            Console.WriteLine(e);
+                                                CompositionTarget.Rendering += (s, a) =>
+                                                {
+                                                    OnFrame?.Invoke(null, null);
+                                                };
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                Console.WriteLine(e);
+                                            }
                                         }
                                     }
-                                }
 
-                                _loopStarting = false;
+                                    _loopStarting = false;
+                                }
                             });
-                            await Task.Delay(100);
+
+                            if (_loopStarted)
+                                break;
                         }
                         catch
                         {
-                            //ignore unable to find main thread at startup until it does
+                            //unable to find mainthread?
                         }
+                        await Task.Delay(100);
                     }
                 });
             }

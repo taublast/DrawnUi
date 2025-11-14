@@ -2286,7 +2286,7 @@ namespace DrawnUi.Draw
         private bool _autoCacheContent;
         private SkiaCacheType _cacheType;
 
-        void AdjustCache()
+        protected void AdjustCache()
         {
             if (Content != null && AutoCache)
             {
@@ -2301,8 +2301,8 @@ namespace DrawnUi.Draw
                 }
             }
         }
-        private bool _IsScrolling;
 
+        private bool _IsScrolling;
         public bool IsScrolling
         {
             get { return _IsScrolling; }

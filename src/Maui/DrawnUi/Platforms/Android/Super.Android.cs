@@ -96,31 +96,36 @@ public partial class Super
 
             while (!_loopStarted)
             {
-                MainThread.BeginInvokeOnMainThread(async () =>
+                try
                 {
-                    lock (lockFrane)
+                    MainThread.BeginInvokeOnMainThread(async () =>
                     {
-                        if (_loopStarting)
-                            return;
-
-                        _loopStarting = true;
-
-                        if (MainThread.IsMainThread) // Choreographer is available
+                        lock (lockFrane)
                         {
-                            if (!_loopStarted)
+                            if (_loopStarting)
+                                return;
+                            _loopStarting = true;
+
+                            if (MainThread.IsMainThread) // Choreographer is available
                             {
-                                _loopStarted = true;
-                                Choreographer.Instance.PostFrameCallback(_frameCallback);
+                                if (!_loopStarted)
+                                {
+                                    _loopStarted = true;
+                                    Choreographer.Instance.PostFrameCallback(_frameCallback);
+                                }
                             }
+
+                            _loopStarting = false;
                         }
+                    });
 
-                        _loopStarting = false;
-                    }
-                });
-
-                if (_loopStarted)
-                    break;
-
+                    if (_loopStarted)
+                        break;
+                }
+                catch (Exception e)
+                {
+                    //unable to find mainthread?
+                }
                 await Task.Delay(100);
             }
         });

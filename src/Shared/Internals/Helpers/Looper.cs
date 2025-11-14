@@ -19,7 +19,7 @@ public class Looper : IDisposable
     public void Start(int targetFps, bool useLegacy = false)
     {
         var existingCanel = Cancel;
-        existingCanel?.Cancel(); 
+        existingCanel?.Cancel();
         existingCanel?.Dispose();
         Cancel = new();
         Tasks.StartDelayed(TimeSpan.FromMilliseconds(1), async () =>
@@ -46,32 +46,40 @@ public class Looper : IDisposable
         {
             while (!_loopStarted)
             {
-                MainThread.BeginInvokeOnMainThread(async () =>
+                try           
                 {
-                    if (_loopStarting)
-                        return;
-                    _loopStarting = true;
-
-                    if (MainThread.IsMainThread)
+                    MainThread.BeginInvokeOnMainThread(async () =>
                     {
-                        if (!_loopStarted)
-                        {
-                            _loopStarted = true;
+                        if (_loopStarting)
+                            return;
+                        _loopStarting = true;
 
-                            var existingCanel = Cancel;
-                            existingCanel?.Cancel();
-                            existingCanel?.Dispose();
-                            Cancel = new();
-                            SetTargetFps(targetFps);
-                            if (useLegacy)
-                                await StartLegacyLooperAsync(Cancel.Token);
-                            else
-                                await StartLooperAsync(Cancel.Token);
-                            existingCanel?.Dispose();
+                        if (MainThread.IsMainThread)
+                        {
+                            if (!_loopStarted)
+                            {
+                                _loopStarted = true;
+
+                                var existingCanel = Cancel;
+                                existingCanel?.Cancel();
+                                existingCanel?.Dispose();
+                                Cancel = new();
+                                SetTargetFps(targetFps);
+                                if (useLegacy)
+                                    await StartLegacyLooperAsync(Cancel.Token);
+                                else
+                                    await StartLooperAsync(Cancel.Token);
+                                existingCanel?.Dispose();
+                            }
                         }
-                    }
-                    _loopStarting = false;
-                });
+                        _loopStarting = false;
+                    });
+                    //
+                }
+                catch
+                {
+                    //mainthread not found
+                }
                 await Task.Delay(100);
             }
         });

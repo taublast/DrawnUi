@@ -669,7 +669,7 @@ namespace DrawnUi.Views
         {
             if (state)
             {
-                NeedMeasureDrawn = true;
+                //NeedMeasureDrawn = true;
                 Update();
             }
         }
@@ -2079,6 +2079,9 @@ namespace DrawnUi.Views
             RenderingModeType.Default,
             propertyChanged: OnHardwareModeChanged);
 
+        /// <summary>
+        /// Whether is using hardware acceleration or software rendering
+        /// </summary>
         public RenderingModeType RenderingMode
         {
             get { return (RenderingModeType)GetValue(RenderingModeProperty); }
@@ -2092,7 +2095,7 @@ namespace DrawnUi.Views
             false);
 
         /// <summary>
-        /// If this is check you view will be refreshed even offScreen or hidden
+        /// If this is check you view will be refreshed even off-screen or hidden
         /// </summary>
         public bool CanRenderOffScreen
         {
