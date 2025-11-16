@@ -505,6 +505,26 @@ namespace DrawnUi.Camera
             _muxer = new MediaMuxer(_outputPath, MuxerOutputType.Mpeg4);
             _muxer.SetOrientationHint(_deviceRotation);
 
+            // CRITICAL: Request IMMEDIATE keyframe for normal recording!
+            // MediaMuxer REQUIRES first frame to be I-frame
+            RequestKeyFrame();
+            _lastKeyframeRequest = DateTime.Now;
+            System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Requested IMMEDIATE keyframe for normal recording");
+
+            // CRITICAL: Start muxer immediately using format from warm-up!
+            // We already got FORMAT_CHANGED during warm-up, won't get it again
+            if (_videoFormat != null)
+            {
+                _videoTrackIndex = _muxer.AddTrack(_videoFormat);
+                _muxer.Start();
+                _muxerStarted = true;
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] MediaMuxer started for normal recording (using format from warm-up)");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] ⚠️ WARNING: No video format available! Waiting for FORMAT_CHANGED...");
+            }
+
             _isRecording = true;
             _startTime = DateTime.Now;
             EncodedFrameCount = 0;
@@ -638,16 +658,17 @@ namespace DrawnUi.Camera
 
             // Drain encoder
             bool bufferingMode = IsPreRecordingMode && _preRecordingBuffer != null;
+
+            // CRITICAL: Request keyframes periodically (every ~900ms) for BOTH buffering AND normal/live recording
+            // This ensures MediaMuxer always gets I-frames to write
+            if (DateTime.Now - _lastKeyframeRequest >= _keyframeRequestInterval)
+            {
+                RequestKeyFrame();
+                _lastKeyframeRequest = DateTime.Now;
+            }
+
             if (bufferingMode)
             {
-                // CRITICAL: Request keyframes periodically during buffering (every ~900ms)
-                // This ensures buffer always has recent I-frames, no pruning needed when user presses record!
-                if (DateTime.Now - _lastKeyframeRequest >= _keyframeRequestInterval)
-                {
-                    RequestKeyFrame();
-                    _lastKeyframeRequest = DateTime.Now;
-                }
-
                 // Drain aggressively during buffering
                 for (int i = 0; i < 5; i++)
                 {
@@ -880,24 +901,22 @@ namespace DrawnUi.Camera
                             // LIVE RECORDING MODE: Write to muxer
                             else if (_muxerStarted)
                             {
-                                // If we have pre-recording, offset live timestamps
                                 long pts = bufferInfo.PresentationTimeUs;
-                                if (_preRecordingDuration > TimeSpan.Zero)
-                                {
-                                    // Track first live frame for normalization
-                                    if (_firstEncodedFrameOffset == TimeSpan.MinValue)
-                                    {
-                                        _firstEncodedFrameOffset = TimeSpan.FromMicroseconds(pts);
-                                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] First live frame at {pts / 1000.0:F2}ms");
-                                    }
 
-                                    // Normalize and add offset
-                                    long normalizedPts = pts - (long)_firstEncodedFrameOffset.TotalMicroseconds;
-                                    pts = normalizedPts + (long)_preRecordingDuration.TotalMicroseconds;
+                                // CRITICAL: Always normalize timestamps (both normal recording AND pre-rec+live)
+                                // Track first live frame for normalization
+                                if (_firstEncodedFrameOffset == TimeSpan.MinValue)
+                                {
+                                    _firstEncodedFrameOffset = TimeSpan.FromMicroseconds(pts);
+                                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] First live frame at {pts / 1000.0:F2}ms");
                                 }
 
+                                // Normalize to start from 0, then add pre-recording offset (if any)
+                                long normalizedPts = pts - (long)_firstEncodedFrameOffset.TotalMicroseconds;
+                                long finalPts = normalizedPts + (long)_preRecordingDuration.TotalMicroseconds;
+
                                 var normalizedBufferInfo = new MediaCodec.BufferInfo();
-                                normalizedBufferInfo.Set(bufferInfo.Offset, bufferInfo.Size, pts, bufferInfo.Flags);
+                                normalizedBufferInfo.Set(bufferInfo.Offset, bufferInfo.Size, finalPts, bufferInfo.Flags);
 
                                 encodedData.Position(bufferInfo.Offset);
                                 encodedData.Limit(bufferInfo.Offset + bufferInfo.Size);
