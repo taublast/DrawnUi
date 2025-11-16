@@ -258,36 +258,167 @@ public partial class SkiaCamera
 
     /// <summary>
     /// Mux pre-recorded and live video files using MediaMuxer
+    /// CRITICAL FIX: Must add ALL tracks from BOTH files BEFORE calling muxer.Start()
     /// </summary>
     private async Task<string> MuxVideosInternal(string preRecordedPath, string liveRecordingPath, string outputPath)
     {
+        Android.Media.MediaExtractor preExtractor = null;
+        Android.Media.MediaExtractor liveExtractor = null;
+        Android.Media.MediaMuxer muxer = null;
+
         try
         {
-            using (var muxer = new Android.Media.MediaMuxer(outputPath, Android.Media.MuxerOutputType.Mpeg4))
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] === Starting Video Muxing ===");
+            System.Diagnostics.Debug.WriteLine($"  Pre-recording: {preRecordedPath}");
+            System.Diagnostics.Debug.WriteLine($"  Live recording: {liveRecordingPath}");
+            System.Diagnostics.Debug.WriteLine($"  Output: {outputPath}");
+
+            // Check file sizes for debugging
+            var preFileSize = new System.IO.FileInfo(preRecordedPath).Length;
+            var liveFileSize = new System.IO.FileInfo(liveRecordingPath).Length;
+            System.Diagnostics.Debug.WriteLine($"  Pre-rec file size: {preFileSize / 1024.0:F2} KB");
+            System.Diagnostics.Debug.WriteLine($"  Live file size: {liveFileSize / 1024.0:F2} KB");
+
+            // Create extractors for both files
+            preExtractor = new Android.Media.MediaExtractor();
+            preExtractor.SetDataSource(preRecordedPath);
+
+            liveExtractor = new Android.Media.MediaExtractor();
+            liveExtractor.SetDataSource(liveRecordingPath);
+
+            // Create muxer
+            muxer = new Android.Media.MediaMuxer(outputPath, Android.Media.MuxerOutputType.Mpeg4);
+
+            // CRITICAL FIX: Create clean format WITHOUT duration constraints
+            var preTrackMap = new Dictionary<int, int>();
+            var liveTrackMap = new Dictionary<int, int>();
+
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Pre-recorded file has {preExtractor.TrackCount} tracks");
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Live recording file has {liveExtractor.TrackCount} tracks");
+
+            // CRITICAL: Use original format directly - duration metadata doesn't cause issues with sequential writes
+            int sharedVideoTrackIndex = -1;
+            for (int i = 0; i < preExtractor.TrackCount; i++)
             {
-                // Extract and re-mux pre-recorded file
-                ExtractTracksAndWriteToMuxer(muxer, preRecordedPath, timeOffsetUs: 0);
+                var sourceFormat = preExtractor.GetTrackFormat(i);
 
-                // Get duration of pre-recorded file to calculate offset for live recording
-                long preRecordedDurationUs = GetMediaDurationMicroseconds(preRecordedPath);
+                sharedVideoTrackIndex = muxer.AddTrack(sourceFormat);
+                preTrackMap[i] = sharedVideoTrackIndex;
+                liveTrackMap[i] = sharedVideoTrackIndex;  // Both files write to same track
 
-                // Extract and re-mux live recording with time offset
-                ExtractTracksAndWriteToMuxer(muxer, liveRecordingPath, timeOffsetUs: preRecordedDurationUs);
+                preExtractor.SelectTrack(i);
+                liveExtractor.SelectTrack(i);
 
-                muxer.Stop();
+                System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Added track {sharedVideoTrackIndex} - both pre-rec and live will write to same track");
             }
 
-            System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Success: {outputPath}");
+            // CRITICAL: Seek both extractors to the beginning before reading!
+            preExtractor.SeekTo(0, Android.Media.MediaExtractorSeekTo.PreviousSync);
+            liveExtractor.SeekTo(0, Android.Media.MediaExtractorSeekTo.PreviousSync);
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Seeked both extractors to beginning");
+
+            // Start muxer ONCE after track added
+            muxer.Start();
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Muxer started - ready to write concatenated samples");
+
+            // Write samples from pre-recorded file (timeOffset = 0)
+            var (preFrameCount, preFirstPts, preLastPts) = WriteSamplesToMuxer(muxer, preExtractor, preTrackMap, timeOffsetUs: 0);
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] PRE-REC: {preFrameCount} frames, timestamps {preFirstPts / 1000.0:F2}ms → {preLastPts / 1000.0:F2}ms");
+
+            // CRITICAL: Use ACTUAL last frame PTS as offset, NOT file metadata duration!
+            // This ensures seamless continuation with no gaps
+            long liveOffsetUs = preLastPts + 33333;  // Add one frame duration (~33ms @ 30fps) to avoid overlap
+
+            // Write samples from live recording (timeOffset = last pre-rec frame + 1 frame)
+            var (liveFrameCount, liveFirstPts, liveLastPts) = WriteSamplesToMuxer(muxer, liveExtractor, liveTrackMap, timeOffsetUs: liveOffsetUs);
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] LIVE: {liveFrameCount} frames, timestamps {liveFirstPts / 1000.0:F2}ms → {liveLastPts / 1000.0:F2}ms");
+
+            // Stop muxer
+            muxer.Stop();
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Muxing completed successfully");
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Total frames: {preFrameCount + liveFrameCount}");
+
             return await Task.FromResult(outputPath);
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Error: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Stack trace: {ex.StackTrace}");
             throw;
+        }
+        finally
+        {
+            preExtractor?.Release();
+            liveExtractor?.Release();
+            muxer?.Release();
         }
     }
 
-    private void ExtractTracksAndWriteToMuxer(Android.Media.MediaMuxer muxer, string inputPath, long timeOffsetUs)
+    /// <summary>
+    /// Write all samples from extractor to muxer with time offset
+    /// CRITICAL: Normalizes timestamps to start from 0 before applying offset (prevents gaps!)
+    /// </summary>
+    private (long frameCount, long firstPtsUs, long lastPtsUs) WriteSamplesToMuxer(Android.Media.MediaMuxer muxer, Android.Media.MediaExtractor extractor, Dictionary<int, int> trackIndexMap, long timeOffsetUs)
+    {
+        long frameCount = 0;
+        long firstFrameTimeUs = -1;  // Track first frame timestamp for normalization
+        long firstWrittenPtsUs = -1;
+        long lastWrittenPtsUs = -1;
+        var sampleData = Java.Nio.ByteBuffer.Allocate(1024 * 1024);
+        var sampleInfo = new Android.Media.MediaCodec.BufferInfo();
+
+        try
+        {
+            while (true)
+            {
+                sampleData.Clear();
+                int trackIndex = extractor.SampleTrackIndex;
+
+                if (trackIndex < 0)
+                    break;
+
+                sampleInfo.Offset = 0;
+                sampleInfo.Size = extractor.ReadSampleData(sampleData, 0);
+
+                if (sampleInfo.Size <= 0)
+                {
+                    extractor.Advance();
+                    continue;
+                }
+
+                // CRITICAL: Capture first frame timestamp for normalization
+                if (firstFrameTimeUs == -1)
+                    firstFrameTimeUs = extractor.SampleTime;
+
+                // CRITICAL: Normalize timestamp to start from 0, THEN add offset
+                long normalizedTimeUs = extractor.SampleTime - firstFrameTimeUs;
+                sampleInfo.PresentationTimeUs = normalizedTimeUs + timeOffsetUs;
+                sampleInfo.Flags = (Android.Media.MediaCodecBufferFlags)(int)extractor.SampleFlags;
+
+                if (trackIndexMap.ContainsKey(trackIndex))
+                {
+                    muxer.WriteSampleData(trackIndexMap[trackIndex], sampleData, sampleInfo);
+                    frameCount++;
+
+                    // Track first and last written PTS
+                    if (firstWrittenPtsUs == -1)
+                        firstWrittenPtsUs = sampleInfo.PresentationTimeUs;
+                    lastWrittenPtsUs = sampleInfo.PresentationTimeUs;
+                }
+
+                extractor.Advance();
+            }
+        }
+        finally
+        {
+            sampleData?.Dispose();
+        }
+
+        return (frameCount, firstWrittenPtsUs, lastWrittenPtsUs);
+    }
+
+    // DELETE OLD BROKEN METHOD
+    private void ExtractTracksAndWriteToMuxer_OLD_BROKEN_DO_NOT_USE(Android.Media.MediaMuxer muxer, string inputPath, long timeOffsetUs)
     {
         using (var extractor = new Android.Media.MediaExtractor())
         {
@@ -305,7 +436,7 @@ public partial class SkiaCamera
                 }
             }
 
-            muxer.Start();
+            muxer.Start();  // ❌ BUG: This gets called TWICE!
 
             var sampleData = Java.Nio.ByteBuffer.Allocate(1024 * 1024);
             var sampleInfo = new Android.Media.MediaCodec.BufferInfo();
