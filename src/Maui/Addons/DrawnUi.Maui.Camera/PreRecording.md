@@ -47,6 +47,7 @@ You can control the feature using two simple properties on the `SkiaCamera` cont
 
 - **`EnablePreRecording` (bool):** Set this to `true` to activate the pre-recording functionality. The default value is `false`.
 - **`PreRecordDuration` (TimeSpan):** This property determines the duration of the look-back period. The default is 5 seconds.
+-  **`IsPreRecording` (bool):** This will be set by camera to show if actually recording the pre-recording step. If `true` the next time we invoke `StartVideoRecording` this property will go `false` and you will be recording the live step.
 
 ### Example in XAML
 ```xml

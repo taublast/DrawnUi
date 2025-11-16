@@ -5,8 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using AppoMobi.Specials;
 using DrawnUi.Views;
-using Microsoft.Maui.Controls;
-using static Microsoft.Maui.ApplicationModel.Permissions;
 using Color = Microsoft.Maui.Graphics.Color;
 
 #if WINDOWS
@@ -553,34 +551,53 @@ public partial class SkiaCamera : SkiaControl
             {
                 Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecordingVideo (file recording with mux)");
 
-                // CRITICAL: Stop and finalize the pre-recording encoder BEFORE starting live recording
+                // CRITICAL ANDROID FIX: Single-file approach - reuse existing encoder!
+                // Encoder was already initialized and warmed up during pre-recording phase
+                // Just call StartAsync() to write buffer + continue with live frames in same muxer session
+#if ANDROID
+                // Change states
+                IsPreRecording = false;
+                IsRecordingVideo = true;
+                RecordingLockedRotation = DeviceRotation;
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+
+                // CRITICAL: Reuse existing encoder (single-file pattern)
+                // This will write buffer to muxer, then continue with live frames in same session
+                if (_captureVideoEncoder != null)
+                {
+                    Debug.WriteLine("[StartVideoRecording] ========================================");
+                    Debug.WriteLine("[StartVideoRecording] SINGLE-FILE PATTERN (professional)");
+                    Debug.WriteLine("[StartVideoRecording] Reusing pre-warmed encoder for live recording");
+                    Debug.WriteLine("[StartVideoRecording] No encoder recreation = zero frame loss!");
+                    Debug.WriteLine("[StartVideoRecording] Buffer already has keyframes from periodic requests");
+                    Debug.WriteLine("[StartVideoRecording] ========================================");
+
+                    await _captureVideoEncoder.StartAsync();
+
+                    Debug.WriteLine("[StartVideoRecording] Encoder transitioned to live recording mode");
+                    Debug.WriteLine("[StartVideoRecording] Buffer written, live frames continuing in same muxer");
+                }
+                else
+                {
+                    Debug.WriteLine("[StartVideoRecording] ERROR: No encoder found for transition!");
+                }
+#else
+                // iOS: Stop old encoder, then create new one (iOS doesn't have the same preview issues)
                 if (_captureVideoEncoder != null)
                 {
                     Debug.WriteLine("[StartVideoRecording] Stopping pre-recording encoder to finalize file");
-
-                    // Stop frame capture timer first
-                    _frameCaptureTimer?.Dispose();
-                    _frameCaptureTimer = null;
 
                     try
                     {
                         var preRecResult = await _captureVideoEncoder.StopAsync();
                         Debug.WriteLine("[StartVideoRecording] Pre-recording encoder stopped and file finalized");
 
-                        // ✅ CRITICAL: Capture pre-recording file path AND duration from StopAsync result
-                        // The encoder wrote the file, so we must use ITS path, not generate our own!
                         if (preRecResult != null && !string.IsNullOrEmpty(preRecResult.FilePath))
                         {
                             _preRecordingFilePath = preRecResult.FilePath;
                             _preRecordingDurationTracked = _captureVideoEncoder.EncodingDuration;
                             Debug.WriteLine($"[StartVideoRecording] Captured pre-recording file: {_preRecordingFilePath}");
                             Debug.WriteLine($"[StartVideoRecording] Captured pre-recording duration: {_preRecordingDurationTracked.TotalSeconds:F2}s");
-                        }
-                        else
-                        {
-                            Debug.WriteLine($"[StartVideoRecording] WARNING: No pre-recording file path returned from encoder!");
-                            _preRecordingFilePath = null;
-                            _preRecordingDurationTracked = TimeSpan.Zero;
                         }
                     }
                     catch (Exception ex)
@@ -594,20 +611,20 @@ public partial class SkiaCamera : SkiaControl
 
                 IsPreRecording = false;
                 IsRecordingVideo = true;
-
-                // Lock the current device rotation for the entire recording session
                 RecordingLockedRotation = DeviceRotation;
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
-                // Start recording to file (will be muxed with pre-recorded file later)
                 if (UseCaptureVideoFlow && FrameProcessor != null)
                 {
                     await StartCaptureVideoFlow();
+                    Debug.WriteLine("[StartVideoRecording] New encoder created and ready for live recording");
                 }
                 else
                 {
                     await StartNativeVideoRecording();
+                    Debug.WriteLine("[StartVideoRecording] Native recording started for live recording");
                 }
+#endif
             }
             // Normal recording (no pre-recording)
             else if (!IsRecordingVideo)
@@ -707,6 +724,11 @@ public partial class SkiaCamera : SkiaControl
             Debug.WriteLine($"[StartCaptureVideoFlow] Recording to file: {outputPath}");
         }
 
+        // CRITICAL: Set start time BEFORE initializing encoder to avoid losing initial frames!
+        // Encoder initialization can take 1-2 seconds on Android, and we calculate PTS from this time
+        _captureVideoStartTime = DateTime.Now;
+        _capturePtsBaseTime = null;
+
         // Get current video format dimensions from native camera
         var currentFormat = NativeControl?.GetCurrentVideoFormat();
         var width = currentFormat?.Width ?? 1280;
@@ -731,9 +753,6 @@ public partial class SkiaCamera : SkiaControl
         {
             Debug.WriteLine($"[StartCaptureVideoFlow] Skipping StartAsync - pre-recording mode will buffer frames in memory");
         }
-
-        _captureVideoStartTime = DateTime.Now;
-        _capturePtsBaseTime = null;
 
         // Reset diagnostics
         _diagStartTime = DateTime.Now;
@@ -797,25 +816,20 @@ public partial class SkiaCamera : SkiaControl
             _droidEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
         }
 
-        // Output path in app's Movies dir or pre-recording file path
-        string outputPath;
+        // CRITICAL: Always use final Movies directory path (single-file approach)
+        // Buffer stays in memory, so output path doesn't matter during pre-recording phase
+        var ctx = Android.App.Application.Context;
+        var moviesDir =
+            ctx.GetExternalFilesDir(Android.OS.Environment.DirectoryMovies)?.AbsolutePath ??
+            ctx.FilesDir?.AbsolutePath ?? ".";
+        string outputPath = Path.Combine(moviesDir, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
+
         if (IsPreRecording)
         {
-            outputPath = _preRecordingFilePath;
-            if (string.IsNullOrEmpty(outputPath))
-            {
-                Debug.WriteLine("[StartCaptureVideoFlow] ERROR: Pre-recording file path not initialized");
-                return;
-            }
-            Debug.WriteLine($"[StartCaptureVideoFlow] Android pre-recording to file: {outputPath}");
+            Debug.WriteLine($"[StartCaptureVideoFlow] Android pre-recording (buffer to memory, final output: {outputPath})");
         }
         else
         {
-            var ctx = Android.App.Application.Context;
-            var moviesDir =
-                ctx.GetExternalFilesDir(Android.OS.Environment.DirectoryMovies)?.AbsolutePath ??
-                ctx.FilesDir?.AbsolutePath ?? ".";
-            outputPath = Path.Combine(moviesDir, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
             Debug.WriteLine($"[StartCaptureVideoFlow] Android recording to file: {outputPath}");
         }
 
@@ -914,9 +928,10 @@ public partial class SkiaCamera : SkiaControl
             {
                 try
                 {
-                    if (!IsRecordingVideo || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
+                    // CRITICAL: Process frames during BOTH pre-recording AND live recording
+                    // If encoder is null/disposed during transition, this check will catch it and return gracefully
+                    if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
                         return;
-
 
                     // Warmup: drop the first frame to avoid occasional corrupted first frame artifacts
                     if (System.Threading.Volatile.Read(ref _androidWarmupDropRemaining) > 0)
@@ -933,10 +948,11 @@ public partial class SkiaCamera : SkiaControl
                         return;
                     }
 
-                    // PTS from image Time using first frame as monotonic base
-                    if (_capturePtsBaseTime == null)
-                        _capturePtsBaseTime = captured.Time;
-                    var elapsedLocal = captured.Time - _capturePtsBaseTime.Value;
+                    // CRITICAL FIX: Use wall clock time from recording start, not camera monotonic timestamps
+                    // captured.Time is a monotonic timestamp that continues from camera session start
+                    // If camera ran in preview mode before recording, captured.Time is already at high value
+                    // We need PTS relative to when recording STARTED (wall clock), not first frame arrival
+                    var elapsedLocal = DateTime.Now - _captureVideoStartTime;
                     if (elapsedLocal.Ticks < 0)
                         elapsedLocal = TimeSpan.Zero;
 
@@ -1484,7 +1500,25 @@ public partial class SkiaCamera : SkiaControl
             // Stop encoder and get result
             CapturedVideo capturedVideo = await encoder?.StopAsync();
 
-            // If we have both pre-recorded and live recording, mux them together
+#if ANDROID
+            // ANDROID: Single-file approach - no muxing needed!
+            // Encoder already wrote buffer + live frames to ONE file
+            Debug.WriteLine($"[StopCaptureVideoFlow] Android single-file approach - no muxing needed");
+            Debug.WriteLine($"[StopCaptureVideoFlow] Video file: {capturedVideo?.FilePath}");
+
+            // Clean up pre-recording file if it exists (shouldn't exist with new approach)
+            if (!string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath))
+            {
+                try
+                {
+                    File.Delete(_preRecordingFilePath);
+                    Debug.WriteLine($"[StopCaptureVideoFlow] Deleted old pre-recording temp file");
+                }
+                catch { }
+            }
+            ClearPreRecordingBuffer();
+#else
+            // iOS/Windows: Mux two files together (legacy approach)
             if (capturedVideo != null && !string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath))
             {
                 Debug.WriteLine($"[StopCaptureVideoFlow] Muxing pre-recorded file with live recording");
@@ -1526,6 +1560,7 @@ public partial class SkiaCamera : SkiaControl
             {
                 ClearPreRecordingBuffer();
             }
+#endif
 
             // Update state and notify success
             IsRecordingVideo = false;
