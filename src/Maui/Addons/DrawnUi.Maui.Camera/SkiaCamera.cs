@@ -62,6 +62,11 @@ public partial class SkiaCamera : SkiaControl
         Super.OnNativeAppResumed -= Super_OnNativeAppResumed;
         Super.OnNativeAppPaused -= Super_OnNativeAppPaused;
 
+        if (Display != null)
+        {
+            Display.DisplayRectChanged -= DisplayWasChanged;
+        }
+
         if (Superview != null)
         {
             Superview.OrientationChanged -= DeviceOrientationChanged;
@@ -193,6 +198,11 @@ public partial class SkiaCamera : SkiaControl
     /// </summary>
     public SkiaImage Display { get; protected set; }
 
+    /// <summary>
+    /// Raised when the display rectangle changes
+    /// </summary>
+    public event EventHandler<SKRect> DisplayRectChanged;
+
     protected override void InvalidateMeasure()
     {
         if (Display != null)
@@ -249,6 +259,13 @@ public partial class SkiaCamera : SkiaControl
     protected virtual void OnDisplayReady()
     {
         DisplayReady?.Invoke(this, EventArgs.Empty);
+
+        Display.DisplayRectChanged += DisplayWasChanged;
+    }
+
+    private void DisplayWasChanged(object sender, SKRect e)
+    {
+        DisplayRectChanged?.Invoke(this, e);
     }
 
     /// <summary>
