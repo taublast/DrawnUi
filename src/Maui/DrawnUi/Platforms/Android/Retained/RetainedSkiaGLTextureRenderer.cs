@@ -110,6 +110,24 @@ namespace DrawnUi
                 _needsFullRedraw = true;
             }
 
+            // NORMAL RENDERING PATH
+
+            if (_retainedSurface == null)
+            {
+                _retainedSurface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType);
+                _needsFullRedraw = true;
+            }
+
+            if (_framebufferSurface == null)
+            {
+                _framebufferSurface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType);
+            }
+
+            if (_needsFullRedraw)
+            {
+                _retainedSurface.Canvas.Clear(SKColors.Transparent);
+            }
+
             // FAST FIRST FRAME: Use CPU pre-rendered image if available
             if (PreRenderedImage != null)
             {
@@ -146,23 +164,6 @@ namespace DrawnUi
                 }
             }
 
-            // NORMAL RENDERING PATH
-
-            if (_retainedSurface == null)
-            {
-                _retainedSurface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType);
-                _needsFullRedraw = true;
-            }
-
-            if (_framebufferSurface == null)
-            {
-                _framebufferSurface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType);
-            }
-
-            if (_needsFullRedraw)
-            {
-                _retainedSurface.Canvas.Clear(SKColors.Transparent);
-            }
 
             try
             {
