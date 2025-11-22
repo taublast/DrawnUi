@@ -112,7 +112,9 @@ public class SkiaImage : SkiaControl
                 {
                     var context = new SkiaDrawingContext()
                     {
-                        Canvas = surface.Canvas, Width = width, Height = height
+                        Canvas = surface.Canvas,
+                        Width = width,
+                        Height = height
                     };
                     var destination = new SKRect(0, 0, width, height);
                     var ctx = new DrawingContext(context, destination, 1, null);
@@ -326,7 +328,7 @@ public class SkiaImage : SkiaControl
         get { return (bool)GetValue(RescaleSourceProperty); }
         set { SetValue(RescaleSourceProperty, value); }
     }
-    
+
     private static void OnLoadSourceChanged(BindableObject bindable, object oldvalue, object newvalue)
     {
         if (bindable is SkiaImage control)
@@ -434,7 +436,8 @@ public class SkiaImage : SkiaControl
     {
         return SetImage(new LoadedImageSource(bitmap)
         {
-            ProtectFromDispose = protectFromDispose, ProtectBitmapFromDispose = SkiaImageManager.ReuseBitmaps
+            ProtectFromDispose = protectFromDispose,
+            ProtectBitmapFromDispose = SkiaImageManager.ReuseBitmaps
         });
     }
 
@@ -442,7 +445,8 @@ public class SkiaImage : SkiaControl
     {
         return SetImage(new LoadedImageSource(image)
         {
-            ProtectFromDispose = protectFromDispose, ProtectBitmapFromDispose = SkiaImageManager.ReuseBitmaps
+            ProtectFromDispose = protectFromDispose,
+            ProtectBitmapFromDispose = SkiaImageManager.ReuseBitmaps
         });
     }
 
@@ -1126,7 +1130,8 @@ public class SkiaImage : SkiaControl
         {
             ImagePaint = new()
             {
-                IsAntialias = true, IsDither = IsDistorted,
+                IsAntialias = true,
+                IsDither = IsDistorted,
                 //FilterQuality = SKFilterQuality.Medium
             };
         }
@@ -1516,7 +1521,9 @@ public class SkiaImage : SkiaControl
 
                         ScaledSource = new()
                         {
-                            Source = source.Id, Bitmap = resizedBmp, Quality = RescalingQuality
+                            Source = source.Id,
+                            Bitmap = resizedBmp,
+                            Quality = RescalingQuality
                         };
                         kill?.Dispose();
 
@@ -1551,9 +1558,23 @@ public class SkiaImage : SkiaControl
     }
 
     /// <summary>
-    /// The viewport scaled source will be rendered into, can be different from the control output area.
+    /// The viewport scaled source will be rendered into, can be different from the control output area. Will raise DisplayRectChanged event.
     /// </summary>
-    public SKRect DisplayRect { get; protected set; }
+    SKRect _displayRect;
+    public SKRect DisplayRect
+    {
+        get => _displayRect;
+        set
+        {
+            if (_displayRect != value)
+            {
+                _displayRect = value;
+                DisplayRectChanged?.Invoke(this, value);
+            }
+        }
+    }
+
+    public event EventHandler<SKRect> DisplayRectChanged;
 
     public SKPoint TextureScale { get; protected set; }
     public ScaledRect SourceImageSize { get; protected set; }
