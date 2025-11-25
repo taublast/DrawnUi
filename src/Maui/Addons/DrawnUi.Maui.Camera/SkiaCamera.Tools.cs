@@ -866,7 +866,7 @@ public partial class SkiaCamera : SkiaControl
         try
         {
             var context = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity ?? Android.App.Application.Context;
-            
+
             if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Q)
             {
                 // Android 10+ - Use MediaStore
@@ -889,9 +889,11 @@ public partial class SkiaCamera : SkiaControl
     {
         var context = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity ?? Android.App.Application.Context;
         var resolver = context.ContentResolver;
-        
+
         var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
-        var fileName = $"{albumName}_video_{DateTime.Now:yyyyMMdd_HHmmss}.mp4";
+
+        // Use the existing filename from the path (may have been renamed by caller)
+        var fileName = Path.GetFileName(privateVideoPath);
         
         var contentValues = new Android.Content.ContentValues();
         contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.DisplayName, fileName);
@@ -931,11 +933,12 @@ public partial class SkiaCamera : SkiaControl
         var dcimDir = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDcim);
         var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
         var appDir = new Java.IO.File(dcimDir, albumName);
-        
+
         if (!appDir.Exists())
             appDir.Mkdirs();
-        
-        var fileName = $"{albumName}_video_{DateTime.Now:yyyyMMdd_HHmmss}.mp4";
+
+        // Use the existing filename from the path (may have been renamed by caller)
+        var fileName = Path.GetFileName(privateVideoPath);
         var publicVideoFile = new Java.IO.File(appDir, fileName);
         
         try
@@ -1065,22 +1068,24 @@ public partial class SkiaCamera : SkiaControl
         try
         {
             var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
-            
+
             // Try Pictures/Camera Roll first, then fallback to Videos
             var paths = new[]
             {
                 Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), albumName)
                 //Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "Camera", albumName),
             };
-            
+
+            // Use the existing filename from the path (may have been renamed by caller)
+            var fileName = Path.GetFileName(privateVideoPath);
+
             foreach (var targetPath in paths)
             {
                 try
                 {
                     if (!Directory.Exists(targetPath))
                         Directory.CreateDirectory(targetPath);
-                    
-                    var fileName = $"{albumName}_video_{DateTime.Now:yyyyMMdd_HHmmss}.mp4";
+
                     var publicVideoPath = Path.Combine(targetPath, fileName);
                     
                     if (deleteOriginal)
