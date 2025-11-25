@@ -313,6 +313,21 @@ public class SkiaImage : SkiaControl
         set { SetValue(RescalingQualityProperty, value); }
     }
 
+    public static readonly BindableProperty CacheRescaledSourceProperty = BindableProperty.Create(
+        nameof(CacheRescaledSource),
+        typeof(bool),
+        typeof(SkiaImage),
+        true);
+
+    /// <summary>
+    /// Defines if we should cached the rescaled source when RescalingQuality is set or apply the quality on every draw instead. Default is true. You might want to set this to false for very fast changing source, like camera/video feed etc.
+    /// </summary>
+    public bool CacheRescaledSource
+    {
+        get { return (bool)GetValue(CacheRescaledSourceProperty); }
+        set { SetValue(CacheRescaledSourceProperty, value); }
+    }
+
     public static readonly BindableProperty RescaleSourceProperty = BindableProperty.Create(
         nameof(RescaleSource),
         typeof(bool),
@@ -437,7 +452,7 @@ public class SkiaImage : SkiaControl
         return SetImage(new LoadedImageSource(bitmap)
         {
             ProtectFromDispose = protectFromDispose,
-            ProtectBitmapFromDispose = SkiaImageManager.ReuseBitmaps
+            ProtectBitmapFromDispose = SkiaImageManager.ReuseBitmaps || protectFromDispose
         });
     }
 
@@ -446,7 +461,7 @@ public class SkiaImage : SkiaControl
         return SetImage(new LoadedImageSource(image)
         {
             ProtectFromDispose = protectFromDispose,
-            ProtectBitmapFromDispose = SkiaImageManager.ReuseBitmaps
+            ProtectBitmapFromDispose = SkiaImageManager.ReuseBitmaps || protectFromDispose
         });
     }
 
@@ -1389,6 +1404,7 @@ public class SkiaImage : SkiaControl
         }
 
         public SKFilterQuality Quality { get; set; }
+
         public Guid Source { get; set; }
 
         public void Dispose()
@@ -1423,14 +1439,29 @@ public class SkiaImage : SkiaControl
         };
     }
 
-    protected virtual void DrawSourceBitmap(DrawingContext ctx, SKBitmap bitmap, SKRect display, SKPaint paint)
+    protected virtual void DrawSourceBitmap(DrawingContext ctx, SKBitmap bitmap, SKRect display, SKPaint paint, SKFilterQuality quality = SKFilterQuality.None)
     {
-        ctx.Context.Canvas.DrawBitmap(bitmap, display, paint);
+        if (quality != SKFilterQuality.None)
+        {
+            paint.FilterQuality = quality;
+            ctx.Context.Canvas.DrawBitmap(bitmap, display, paint);
+        }
+        else
+        {
+            ctx.Context.Canvas.DrawBitmap(bitmap, display, paint);
+        }
     }
 
-    protected virtual void DrawSourceImage(DrawingContext ctx, SKImage image, SKRect display, SKPaint paint)
+    protected virtual void DrawSourceImage(DrawingContext ctx, SKImage image, SKRect display, SKPaint paint, SKFilterQuality quality = SKFilterQuality.None)
     {
-        ctx.Context.Canvas.DrawImage(image, display, paint);
+        if (quality != SKFilterQuality.None)
+        {
+            ctx.Context.Canvas.DrawImage(image, display, GetSamplingOptions(quality, false), paint);
+        }
+        else
+        {
+            ctx.Context.Canvas.DrawImage(image, display, paint);
+        }
     }
 
     /// <summary>
@@ -1468,7 +1499,7 @@ public class SkiaImage : SkiaControl
 
             TextureScale = new(dest.Width / display.Width, dest.Height / display.Height);
 
-            if (this.RescalingQuality != SKFilterQuality.None)
+            if (this.RescalingQuality != SKFilterQuality.None && CacheRescaledSource)
             {
                 var targetWidth = (int)Math.Round(display.Width);
                 var targetHeight = (int)Math.Round(display.Height);
@@ -1543,11 +1574,11 @@ public class SkiaImage : SkiaControl
             {
                 if (source.Bitmap != null)
                 {
-                    DrawSourceBitmap(ctx, source.Bitmap, display, paint);
+                    DrawSourceBitmap(ctx, source.Bitmap, display, paint, RescalingQuality);
                 }
                 else if (source.Image != null)
                 {
-                    DrawSourceImage(ctx, source.Image, display, paint);
+                    DrawSourceImage(ctx, source.Image, display, paint, RescalingQuality);
                 }
             }
         }
