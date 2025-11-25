@@ -593,8 +593,13 @@ namespace DrawnUi.Camera
                     using var gpuSnap = _surface.Snapshot();
                     if (gpuSnap != null)
                     {
-                        int pw = Math.Min(_width, 480);
+                        //int pw = Math.Min(_width, 480);
+                        //int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+
+                        int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                        int pw = Math.Min(_width, maxPreviewWidth);
                         int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+
                         var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
                         using var raster = SKSurface.Create(pInfo);
                         raster.Canvas.Clear(SKColors.Transparent);

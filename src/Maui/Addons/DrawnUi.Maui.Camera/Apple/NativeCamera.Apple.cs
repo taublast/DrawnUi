@@ -351,6 +351,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 if (formatDescription != null)
                 {
                     var dimensions = formatDescription.Dimensions;
+                    PreviewWidth = (int)dimensions.Width;  
+                    PreviewHeight = (int)dimensions.Height; 
                     FormsControl.SetRotatedContentSize(new SKSize(dimensions.Width, dimensions.Height), 0);
                 }
             }
@@ -362,6 +364,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             UpdateDetectOrientation();
         }
     }
+
+    public int PreviewWidth { get; private set; }
+    public int PreviewHeight { get; private set; }
 
     public List<CaptureFormat> StillFormats { get; protected set; }
 
