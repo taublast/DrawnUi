@@ -222,11 +222,12 @@ namespace DrawnUi.Views
                 metalInfo);
 
             // FAST FIRST FRAME: Use CPU pre-rendered image if available
+            // CRITICAL: Check placement - must happen BEFORE normal rendering setup
             if (_preRenderedImage != null)
             {
                 try
                 {
-                    // Fast blit: Just draw pre-rendered image to texture
+                    // Fast blit: Draw pre-rendered image to texture surface
                     using (var surface = SKSurface.Create(_context, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888))
                     {
                         surface.Canvas.DrawImage(_preRenderedImage, 0, 0);
@@ -235,11 +236,30 @@ namespace DrawnUi.Views
 
                     _context.Flush();
 
-                    // Dispose pre-rendered image and clear reference
+                    // Dispose pre-rendered image and clear reference BEFORE returning
+                    // This ensures no other frame can see or use this image
                     _preRenderedImage.Dispose();
                     _preRenderedImage = null;
 
+                    _needsFullRedraw = false;
+
                     //Debug.WriteLine("[SKMetalView] First frame: Used CPU pre-rendered image (fast blit)");
+
+                    // Immediately copy to screen and return - skip normal rendering
+                    using var commandBuffer = _backendContext.Queue.CommandBuffer();
+                    if (commandBuffer == null) return;
+                    using var blitEncoder = commandBuffer.BlitCommandEncoder;
+
+                    blitEncoder.CopyFromTexture(
+                        textureToUse, 0, 0, new MTLOrigin(0, 0, 0),
+                        new MTLSize((int)_canvasSize.Width, (int)_canvasSize.Height, 1),
+                        CurrentDrawable.Texture, 0, 0, new MTLOrigin(0, 0, 0));
+
+                    blitEncoder.EndEncoding();
+                    commandBuffer.PresentDrawable(CurrentDrawable);
+                    commandBuffer.Commit();
+
+                    return; // CRITICAL: Exit here - do NOT run normal rendering path
                 }
                 catch (Exception ex)
                 {
@@ -250,35 +270,39 @@ namespace DrawnUi.Views
                 }
             }
 
-            // NORMAL RENDERING PATH (skip if fast path succeeded)
-            if (_preRenderedImage == null)
+            // NORMAL RENDERING PATH
+            // Create surface from the render target
+            using var surfaceNormal = SKSurface.Create(_context, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
+            using var canvas = surfaceNormal.Canvas;
+
+            // Clear if needed
+            if (_needsFullRedraw)
             {
-                // Create surface from the render target
-                using var surface = SKSurface.Create(_context, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
-                using var canvas = surface.Canvas;
-
-                // Pass surface to user for incremental updates
-                var e = new SKPaintMetalSurfaceEventArgs(surface, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
-                OnPaintSurface(e);
-
-                //canvas.Flush();
-                surface.Flush();
-                _context.Flush();
+                canvas.Clear(SKColors.Transparent);
             }
 
-            // Copy retained texture to screen
-            using var commandBuffer = _backendContext.Queue.CommandBuffer();
-            if (commandBuffer == null) return;
-            using var blitEncoder = commandBuffer.BlitCommandEncoder;
+            // Pass surface to user for incremental updates
+            var e = new SKPaintMetalSurfaceEventArgs(surfaceNormal, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
+            OnPaintSurface(e);
 
-            blitEncoder.CopyFromTexture(
+            surfaceNormal.Flush();
+            _context.Flush();
+
+            _needsFullRedraw = false;
+
+            // Copy retained texture to screen
+            using var commandBuffer2 = _backendContext.Queue.CommandBuffer();
+            if (commandBuffer2 == null) return;
+            using var blitEncoder2 = commandBuffer2.BlitCommandEncoder;
+
+            blitEncoder2.CopyFromTexture(
                 textureToUse, 0, 0, new MTLOrigin(0, 0, 0),
                 new MTLSize((int)_canvasSize.Width, (int)_canvasSize.Height, 1),
                 CurrentDrawable.Texture, 0, 0, new MTLOrigin(0, 0, 0));
 
-            blitEncoder.EndEncoding();
-            commandBuffer.PresentDrawable(CurrentDrawable);
-            commandBuffer.Commit();
+            blitEncoder2.EndEncoding();
+            commandBuffer2.PresentDrawable(CurrentDrawable);
+            commandBuffer2.Commit();
         }
 
         /// <summary>
