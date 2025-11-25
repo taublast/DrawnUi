@@ -3,21 +3,26 @@
     x:Class="Sandbox.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:sandbox="clr-namespace:Sandbox"
     xmlns:mauiApp8="clr-namespace:MauiApp8"
+    xmlns:sandbox="clr-namespace:Sandbox"
     xmlns:views="clr-namespace:Sandbox.Views"
     Title="DrawnUI for .NET MAUI"
     Shell.FlyoutBehavior="Disabled">
+
+    <!--<ShellContent
+        Title="SkiaCamera Test"
+        ContentTemplate="{DataTemplate sandbox:TestRandom}"
+        Route="MainPage" />-->
 
     <!--<ShellContent
         Title="DrawnUI for .NET MAUI"
         ContentTemplate="{DataTemplate sandbox:PlanesTest}"
         Route="MainPage" />-->
 
-     <ShellContent
+    <!--<ShellContent
         Title="DrawnUI for .NET MAUI"
         ContentTemplate="{DataTemplate sandbox:MainPageCode}"
-        Route="MainPage" /> 
+        Route="MainPage" />-->
 
     <!--<ShellContent
         Title="DrawnUI for .NET MAUI"
@@ -35,18 +40,18 @@
         ContentTemplate="{DataTemplate sandbox:SpriteTestPage}"
         Route="MainPage" />-->
 
-    <!-- Optional: switch to board page -->
-    
+    <!--  Optional: switch to board page  -->
+
     <!--<ShellContent
         Title="DrawnUI for .NET MAUI"
         ContentTemplate="{DataTemplate sandbox:SpriteBoardPage}"
         Route="MainPage" />-->
 
-    <!-- Camera -->
-    <!--<ShellContent
+    <!--  Camera  -->
+    <ShellContent
         Title="SkiaCamera Test"
         ContentTemplate="{DataTemplate views:CameraTestPage}"
-        Route="MainPage" />-->
+        Route="MainPage" />
 
     <!--<ShellContent
         Title="Carousel IsLooped Test"

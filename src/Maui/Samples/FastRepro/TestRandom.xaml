@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="Sandbox.TestRandom"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:sandbox="clr-namespace:Sandbox"
+    x:Name="ThisPage"
+    Title="SoftLock Test">
+
+    <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+
+        <draw:Canvas
+            x:Name="GalleryCanvas"
+            Gestures="Enabled"
+            HorizontalOptions="Fill"
+            RenderingMode="Accelerated"
+            VerticalOptions="Fill">
+
+            <draw:SkiaGrid
+                ColumnSpacing="1"
+                HorizontalOptions="Fill"
+                RowDefinitions="Auto,Auto,*,Auto"
+                RowSpacing="1"
+                VerticalOptions="Fill">
+
+                <!--  Header  -->
+                <draw:SkiaShape
+                    Grid.Row="0"
+                    Margin="20,10,20,0"
+                    Padding="20,15"
+                    BackgroundColor="White"
+                    StrokeWidth="0"
+                    Type="Rectangle"
+                    UseCache="Image">
+                    <draw:SkiaShape.Shadow>
+                        <Shadow
+                            Brush="{StaticResource Gray500}"
+                            Opacity="0.1"
+                            Radius="10"
+                            Offset="0,2" />
+                    </draw:SkiaShape.Shadow>
+
+                    <draw:SkiaStack Spacing="8">
+                        <!--  Logo and App Name  -->
+                        <draw:SkiaRow HorizontalOptions="Center" Spacing="12">
+                            <draw:SkiaShape
+                                BackgroundColor="Transparent"
+                                HeightRequest="60"
+                                StrokeWidth="0"
+                                Type="Circle"
+                                VerticalOptions="Center"
+                                WidthRequest="60">
+
+                                <draw:SkiaImage Aspect="AspectCover" Source="Images/logo_simple.png" />
+
+                            </draw:SkiaShape>
+
+                            <draw:SkiaLabel
+                                FontAttributes="Bold"
+                                FontSize="32"
+                                Text="Snapimals"
+                                TextColor="{StaticResource Primary}"
+                                VerticalOptions="Center" />
+                        </draw:SkiaRow>
+
+                        <draw:SkiaLabel
+                            FontSize="14"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="Your adorable pet stickers"
+                            TextColor="Gray" />
+                    </draw:SkiaStack>
+                </draw:SkiaShape>
+
+                <!--  Filter Picker  -->
+                <draw:SkiaShape
+                    Grid.Row="1"
+                    Margin="20,15,20,0"
+                    Padding="15"
+                    BackgroundColor="White"
+                    StrokeWidth="0"
+                    Type="Rectangle">
+                    <draw:SkiaShape.Shadow>
+                        <Shadow
+                            Brush="{StaticResource Gray500}"
+                            Opacity="0.08"
+                            Radius="8"
+                            Offset="0,2" />
+                    </draw:SkiaShape.Shadow>
+
+                    <draw:SkiaMauiElement
+                        x:Name="mauiElementPickerField"
+                        HeightRequest="60"
+                        HorizontalOptions="Fill">
+
+                        <Border BackgroundColor="Transparent" StrokeThickness="0">
+
+                            <!--<mc:PickerField
+                                x:Name="pickerField"
+                                Title="Filter by:"
+                                VerticalOptions="Fill"
+                                Icon="{FontImageSource FontFamily=MaterialRegular,
+            Glyph={x:Static fonts:MaterialRegular.Pets}}">
+                            </mc:PickerField>-->
+
+                        </Border>
+                    </draw:SkiaMauiElement>
+                </draw:SkiaShape>
+
+                <draw:SkiaShape
+                    Grid.Row="2"
+                    Margin="20,15,20,0"
+                    Padding="15"
+                    BackgroundColor="White"
+                    HorizontalOptions="Fill"
+                    StrokeWidth="0"
+                    Type="Rectangle"
+                    UseCache="Image"
+                    VerticalOptions="Fill">
+                    <draw:SkiaShape.Shadow>
+                        <Shadow
+                            Brush="{StaticResource Gray500}"
+                            Opacity="0.08"
+                            Radius="8"
+                            Offset="0,2" />
+                    </draw:SkiaShape.Shadow>
+
+                    <draw:SkiaScroll>
+
+                        <draw:SkiaLayout HorizontalOptions="Fill">
+
+                            <draw:SkiaLayout
+                                Margin="0,0"
+                                HorizontalOptions="Fill"
+                                ItemsSource="{Binding Stickers}"
+                                Spacing="10"
+                                Split="2"
+                                Type="Wrap">
+
+                                <draw:SkiaLayout.ItemTemplate>
+
+                                    <DataTemplate>
+
+                                        <draw:SkiaShape
+                                            Padding="5"
+                                            BackgroundColor="{StaticResource Gray100}"
+                                            CornerRadius="16"
+                                            HorizontalOptions="Fill"
+                                            UseCache="Image">
+                                            <draw:SkiaStack Spacing="5">
+                                                <draw:SkiaImage
+                                                    AnimationTapped="Ripple"
+                                                    HeightRequest="140"
+                                                    Source="{Binding SkiaImageFilePath}"
+                                                    Tag="{Binding FilePath}"
+                                                    UseCache="Image" />
+                                                <draw:SkiaLabel
+                                                    FontAttributes="Bold"
+                                                    FontSize="12"
+                                                    HorizontalOptions="Center"
+                                                    Text="{Binding Name}"
+                                                    TextColor="{StaticResource TextPrimary}" />
+                                            </draw:SkiaStack>
+                                        </draw:SkiaShape>
+                                    </DataTemplate>
+                                </draw:SkiaLayout.ItemTemplate>
+
+                            </draw:SkiaLayout>
+
+                            <draw:SkiaLottie
+                                AutoPlay="True"
+                                ColorTint="{StaticResource Primary}"
+                                HeightRequest="150"
+                                HorizontalOptions="Center"
+                                IsVisible="{Binding IsLoading}"
+                                Opacity="0.8"
+                                Repeat="-1"
+                                Source="bounching_ball.json"
+                                VerticalOptions="Center"
+                                WidthRequest="150" />
+
+                        </draw:SkiaLayout>
+
+                    </draw:SkiaScroll>
+                </draw:SkiaShape>
+
+                <!--  Navigation Bar with Floating Camera Button  -->
+                <draw:SkiaGrid Grid.Row="3" UseCache="Image">
+                    <!--  Custom Navigation Bar  -->
+                    <draw:SkiaFrame
+                        Padding="0"
+                        BackgroundColor="{StaticResource Primary}"
+                        CornerRadius="20,20,0,0"
+                        HeightRequest="75"
+                        VerticalOptions="End">
+                        <draw:SkiaFrame.Shadow>
+                            <Shadow
+                                Brush="Black"
+                                Opacity="0.3"
+                                Radius="20"
+                                Offset="0,8" />
+                        </draw:SkiaFrame.Shadow>
+
+                        <draw:SkiaGrid ColumnDefinitions="*,Auto,*">
+
+                            <!--  Home Button  -->
+                            <draw:SkiaShape
+                                Grid.Column="0"
+                                BackgroundColor="Transparent"
+                                HorizontalOptions="Center"
+                                StrokeWidth="0"
+                                VerticalOptions="Fill">
+                                <draw:SkiaStack
+                                    HorizontalOptions="Center"
+                                    Spacing="2"
+                                    VerticalOptions="Center">
+
+                                    <draw:SkiaShape
+                                        BackgroundColor="Transparent"
+                                        HeightRequest="40"
+                                        StrokeWidth="0"
+                                        Type="Circle"
+                                        WidthRequest="40">
+                                        <draw:SkiaImage
+                                            Aspect="AspectCover"
+                                            HorizontalOptions="Fill"
+                                            Source="Images/logo_simple.png"
+                                            VerticalOptions="Fill" />
+                                    </draw:SkiaShape>
+
+                                    <draw:SkiaLabel
+                                        FontAttributes="Bold"
+                                        FontSize="12"
+                                        HorizontalOptions="Center"
+                                        Text="Home"
+                                        TextColor="White" />
+                                </draw:SkiaStack>
+                            </draw:SkiaShape>
+
+                            <!--  Spacer for Camera Button  -->
+                            <draw:SkiaShape
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                StrokeColor="{StaticResource Primary}"
+                                WidthRequest="90" />
+
+                            <!--  Gallery Button  -->
+                            <draw:SkiaShape
+                                Grid.Column="2"
+                                BackgroundColor="Transparent"
+                                HorizontalOptions="Center"
+                                StrokeWidth="0"
+                                VerticalOptions="Fill">
+                                <draw:SkiaStack
+                                    HorizontalOptions="Center"
+                                    Spacing="2"
+                                    VerticalOptions="Center">
+                                    <draw:SkiaShape
+                                        BackgroundColor="Transparent"
+                                        HeightRequest="40"
+                                        StrokeWidth="0"
+                                        Type="Circle"
+                                        WidthRequest="40">
+                                        <draw:SkiaImage Aspect="AspectCover" Source="Images/stickers.png" />
+                                    </draw:SkiaShape>
+
+                                    <draw:SkiaLabel
+                                        FontAttributes="Bold"
+                                        FontSize="12"
+                                        HorizontalOptions="Center"
+                                        Text="Stickers"
+                                        TextColor="White" />
+                                    <draw:SkiaShape
+                                        BackgroundColor="White"
+                                        CornerRadius="2"
+                                        HeightRequest="4"
+                                        HorizontalOptions="Fill"
+                                        StrokeColor="White"
+                                        Type="Rectangle"
+                                        WidthRequest="50"
+                                        ZIndex="999" />
+                                </draw:SkiaStack>
+                            </draw:SkiaShape>
+                        </draw:SkiaGrid>
+                    </draw:SkiaFrame>
+
+                    <draw:SkiaGrid
+                        Margin="0,0,0,25"
+                        HorizontalOptions="Center"
+                        VerticalOptions="End"
+                        ZIndex="999">
+                        <draw:SkiaShape
+                            BackgroundColor="{StaticResource Primary}"
+                            HeightRequest="75"
+                            HorizontalOptions="Center"
+                            StrokeColor="White"
+                            StrokeWidth="5"
+                            Type="Circle"
+                            VerticalOptions="Center"
+                            WidthRequest="75">
+                            <draw:SkiaRichLabel
+                                FontSize="36"
+                                HorizontalOptions="Center"
+                                Text="📷"
+                                VerticalOptions="Center" />
+                        </draw:SkiaShape>
+                    </draw:SkiaGrid>
+                </draw:SkiaGrid>
+
+                <draw:SkiaLabelFps
+                    Grid.Row="3"
+                    Margin="0,0,0,0"
+                    FontSize="16"
+                    HorizontalOptions="End"
+                    TextColor="Red"
+                    VerticalOptions="End" />
+
+            </draw:SkiaGrid>
+        </draw:Canvas>
+
+    </Grid>
+
+</ContentPage>

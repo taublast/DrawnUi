@@ -8,10 +8,22 @@
     <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AppoMobi.Specials" Version="8.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.2" />
-    <PackageReference Include="SkiaSharp.Views.Blazor" Version="3.116.1" />
+    <ItemGroup>
+        <SupportedPlatform Include="browser" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <DefineConstants>$(DefineConstants);BROWSER</DefineConstants>
+    </PropertyGroup>
+
+    <ItemGroup>
+    
+      <PackageReference Include="AppoMobi.Specials" Version="9.0.3" />
+    
+      <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.2" />
+
+    <PackageReference Include="SkiaSharp.Views.Blazor" Version="3.119.2-preview.1" />
+
   </ItemGroup>
 
   <ItemGroup>
@@ -19,7 +31,8 @@
     <Folder Include="Controls\" />
   </ItemGroup>
 
-  <Import Project="..\Shared\Shared.projitems" Label="Shared" />
+  <Import Project="..\..\Shared\Shared.projitems" Label="Shared" />
+ 
 
 
 </Project>

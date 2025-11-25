@@ -1,0 +1,73 @@
+﻿@using System.Drawing
+@using SkiaSharp.Views.Blazor
+@inherits VisualElement
+
+@if (IsVisible)
+{
+  
+    <div class="xaml-element xaml-contentview @Class" style="@CssMargins @CssPadding @CssGridPosition @CssStyle">
+        @if(RenderingMode == RenderingModeType.Default)
+        {
+            <SKCanvasView OnPaintSurface="OnPaintSurface" Width="100%" Height="100%"/>
+        }
+        else
+        {
+            <SKGLView OnPaintSurface="OnPaintSurfaceAccelerated" Width="100%" Height="100%"/>
+        }
+    </div>
+ 
+}
+
+@code {
+
+    private void OnPaintSurfaceAccelerated(SKPaintGLSurfaceEventArgs obj)
+    {
+ 
+    }
+
+    private void OnPaintSurface(SKPaintSurfaceEventArgs e)
+    {
+        var canvas = e.Surface.Canvas;
+
+    }
+
+
+
+    /// <summary>
+    /// Whether is using hardware acceleration or software rendering
+    /// </summary>
+    [Parameter]
+    public RenderingModeType RenderingMode { get; set; }
+
+    /// <summary>
+    ///  If this is check you view will be refreshed even off-screen or hidden
+    /// </summary>
+    [Parameter]
+    public bool CanRenderOffScreen { get; set; }
+
+    public MarkupString CssStyle
+    {
+        get
+        {
+            var ret = $"background: {BackgroundColor}; {CssLayoutAlignment} {Style}";
+
+            return new MarkupString(ret);
+        }
+    }
+
+
+
+
+
+    /// <summary>
+    /// Hex string
+    /// </summary>
+    [Parameter]
+    public string BackgroundColor { get; set; } = "#00000000";
+
+
+
+
+}
+
+

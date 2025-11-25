@@ -79,6 +79,10 @@ public partial class SkiaCamera : SkiaControl
             NativeControl?.Dispose();
         }
 
+        // Clean up restart debounce timer
+        _restartDebounceTimer?.Dispose();
+        _restartDebounceTimer = null;
+
         // Clean up capture video resources (stop recording first if active)
         if (IsRecordingVideo && _captureVideoEncoder != null)
         {
@@ -228,7 +232,8 @@ public partial class SkiaCamera : SkiaControl
         return new SkiaImage()
         {
             LoadSourceOnFirstDraw = true,
-            RescalingQuality = SKFilterQuality.None,
+            //RescalingQuality = SKFilterQuality.None,
+            CacheRescaledSource = false,
             HorizontalOptions = this.NeedAutoWidth ? LayoutOptions.Start : LayoutOptions.Fill,
             VerticalOptions = this.NeedAutoHeight ? LayoutOptions.Start : LayoutOptions.Fill,
             Aspect = this.Aspect,
@@ -599,20 +604,44 @@ public partial class SkiaCamera : SkiaControl
                     Debug.WriteLine("[StartVideoRecording] ERROR: No encoder found for transition!");
                 }
 #else
-                // iOS: Stop old encoder, then create new one (iOS doesn't have the same preview issues)
+                // iOS: Create new encoder FIRST, swap atomically, THEN stop old one (prevents frame loss)
+                ICaptureVideoEncoder oldEncoder = null;
                 if (_captureVideoEncoder != null)
                 {
-                    Debug.WriteLine("[StartVideoRecording] Stopping pre-recording encoder to finalize file");
+                    Debug.WriteLine("[StartVideoRecording] Preparing to transition encoders without frame loss");
+
+                    // Keep reference to old encoder
+                    oldEncoder = _captureVideoEncoder;
+                }
+
+                // Update state flags BEFORE creating new encoder
+                IsPreRecording = false;
+                IsRecordingVideo = true;
+                RecordingLockedRotation = DeviceRotation;
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+
+                if (UseCaptureVideoFlow && FrameProcessor != null)
+                {
+                    // Create new encoder - this ATOMICALLY swaps _captureVideoEncoder to the new instance
+                    // Any frames arriving now will go to the new encoder (no gap!)
+                    await StartCaptureVideoFlow();
+                    Debug.WriteLine("[StartVideoRecording] New encoder created and active - frames now routing to encoder #2");
+                }
+
+                // NOW stop the old encoder (frames already going to new encoder, zero frame loss)
+                if (oldEncoder != null)
+                {
+                    Debug.WriteLine("[StartVideoRecording] Stopping old pre-recording encoder to finalize file");
 
                     try
                     {
-                        var preRecResult = await _captureVideoEncoder.StopAsync();
+                        var preRecResult = await oldEncoder.StopAsync();
                         Debug.WriteLine("[StartVideoRecording] Pre-recording encoder stopped and file finalized");
 
                         if (preRecResult != null && !string.IsNullOrEmpty(preRecResult.FilePath))
                         {
                             _preRecordingFilePath = preRecResult.FilePath;
-                            _preRecordingDurationTracked = _captureVideoEncoder.EncodingDuration;
+                            _preRecordingDurationTracked = oldEncoder.EncodingDuration;
                             Debug.WriteLine($"[StartVideoRecording] Captured pre-recording file: {_preRecordingFilePath}");
                             Debug.WriteLine($"[StartVideoRecording] Captured pre-recording duration: {_preRecordingDurationTracked.TotalSeconds:F2}s");
                         }
@@ -622,19 +651,9 @@ public partial class SkiaCamera : SkiaControl
                         Debug.WriteLine($"[StartVideoRecording] Error stopping pre-recording encoder: {ex.Message}");
                     }
 
-                    _captureVideoEncoder?.Dispose();
-                    _captureVideoEncoder = null;
-                }
-
-                IsPreRecording = false;
-                IsRecordingVideo = true;
-                RecordingLockedRotation = DeviceRotation;
-                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
-
-                if (UseCaptureVideoFlow && FrameProcessor != null)
-                {
-                    await StartCaptureVideoFlow();
-                    Debug.WriteLine("[StartVideoRecording] New encoder created and ready for live recording");
+                    oldEncoder?.Dispose();
+                    oldEncoder = null;
+                    Debug.WriteLine("[StartVideoRecording] Old encoder disposed");
                 }
                 else
                 {
@@ -781,11 +800,12 @@ public partial class SkiaCamera : SkiaControl
         // Windows uses real-time preview-driven capture (no timer)
         _useWindowsPreviewDrivenCapture = true;
 
-        // Mirroring of composed frames to preview is optional
-        UseRecordingFramesForPreview = MirrorRecordingToPreview;
+        // Control preview source: processed frames from encoder (PreviewVideoFlow=true) or raw camera (PreviewVideoFlow=false)
+        // Only applies when UseCaptureVideoFlow is TRUE (enforced by caller)
+        UseRecordingFramesForPreview = PreviewVideoFlow;
 
         // Invalidate preview when the encoder publishes a new composed frame (Windows mirror)
-        if (MirrorRecordingToPreview && _captureVideoEncoder is WindowsCaptureVideoEncoder _winEncPrev)
+        if (PreviewVideoFlow && _captureVideoEncoder is WindowsCaptureVideoEncoder _winEncPrev)
         {
             _encoderPreviewInvalidateHandler = (s, e) =>
             {
@@ -814,11 +834,12 @@ public partial class SkiaCamera : SkiaControl
         _captureVideoEncoder.IsPreRecordingMode = IsPreRecording;
         Debug.WriteLine($"[StartCaptureVideoFlow] Android encoder initialized with IsPreRecordingMode={IsPreRecording}");
 
-        // Mirroring of composed frames to preview is optional
-        UseRecordingFramesForPreview = MirrorRecordingToPreview;
+        // Control preview source: processed frames from encoder (PreviewVideoFlow=true) or raw camera (PreviewVideoFlow=false)
+        // Only applies when UseCaptureVideoFlow is TRUE (enforced by caller)
+        UseRecordingFramesForPreview = PreviewVideoFlow;
 
         // Invalidate preview when the encoder publishes a new composed frame (Android mirror)
-        if (MirrorRecordingToPreview && _captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
+        if (PreviewVideoFlow && _captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
         {
             _encoderPreviewInvalidateHandler = (s, e) =>
             {
@@ -1056,9 +1077,10 @@ public partial class SkiaCamera : SkiaControl
         _captureVideoEncoder.IsPreRecordingMode = IsPreRecording;
         Debug.WriteLine($"[StartCaptureVideoFlow] iOS encoder initialized with IsPreRecordingMode={IsPreRecording}");
 
-        // Mirror composed frames to preview when enabled
-        UseRecordingFramesForPreview = MirrorRecordingToPreview;
-        if (MirrorRecordingToPreview && _captureVideoEncoder is AppleVideoToolboxEncoder _appleEncPrev)
+        // Control preview source: processed frames from encoder (PreviewVideoFlow=true) or raw camera (PreviewVideoFlow=false)
+        // Only applies when UseCaptureVideoFlow is TRUE (enforced by caller)
+        UseRecordingFramesForPreview = PreviewVideoFlow;
+        if (PreviewVideoFlow && _captureVideoEncoder is AppleVideoToolboxEncoder _appleEncPrev)
         {
             _encoderPreviewInvalidateHandler = (s, e) =>
             {
@@ -1195,7 +1217,10 @@ public partial class SkiaCamera : SkiaControl
     private async void CaptureFrame(object state)
     {
         if (!(IsRecordingVideo || IsPreRecording) || _captureVideoEncoder == null)
+        {
+            Debug.WriteLine($"[CaptureFrame] Early exit: IsRecordingVideo={IsRecordingVideo}, IsPreRecording={IsPreRecording}, encoder={(_captureVideoEncoder == null ? "NULL" : "EXISTS")}");
             return;
+        }
 
         // Make sure we never queue more than one frame — drop if previous is still processing
         if (System.Threading.Interlocked.CompareExchange(ref _frameInFlight, 1, 0) != 0)
@@ -1208,7 +1233,10 @@ public partial class SkiaCamera : SkiaControl
         {
             // Double-check encoder still exists (race condition protection)
             if (_captureVideoEncoder == null || (!IsRecordingVideo && !IsPreRecording))
+            {
+                Debug.WriteLine($"[CaptureFrame] Double-check failed: encoder={(_captureVideoEncoder == null ? "NULL" : "EXISTS")}, IsRecordingVideo={IsRecordingVideo}, IsPreRecording={IsPreRecording}");
                 return;
+            }
 
             var elapsed = DateTime.Now - _captureVideoStartTime;
             var elapsedTotal = DateTime.Now - _captureVideoTotalStartTime;
@@ -1342,9 +1370,12 @@ public partial class SkiaCamera : SkiaControl
                 using var previewImage = NativeControl?.GetPreviewImage();
                 if (previewImage == null)
                 {
-                    Debug.WriteLine("[CaptureFrame] No preview image available from camera");
+                    Debug.WriteLine("[CaptureFrame] No preview image available from camera (NativeControl exists: {0})", NativeControl != null);
                     return;
                 }
+
+                // Remove debug logging once issue is identified
+                // Debug.WriteLine($"[CaptureFrame] Got preview image: {previewImage.Width}x{previewImage.Height}, encoder expects: {_diagEncWidth}x{_diagEncHeight}");
 
                 using (appleEnc.BeginFrame(elapsed, out var canvas, out var info, DeviceRotation))
                 {
@@ -1417,7 +1448,7 @@ public partial class SkiaCamera : SkiaControl
 
         Debug.WriteLine($"[StopVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
 
-        IsRecordingVideo = false;
+        IsRecordingVideo = false; //CRITICAL for logic
 
         // Reset locked rotation
         RecordingLockedRotation = -1;
@@ -1452,6 +1483,9 @@ public partial class SkiaCamera : SkiaControl
 #endif
                 // Note: IsRecordingVideo will be set to false by the VideoRecordingSuccess/Failed callbacks
             }
+
+            //IsRecordingVideo = false;
+            //IsPreRecording = false;
         }
         catch (Exception ex)
         {
@@ -1459,6 +1493,9 @@ public partial class SkiaCamera : SkiaControl
             IsRecordingVideo = false;
             ClearPreRecordingBuffer();
             VideoRecordingFailed?.Invoke(this, ex);
+            IsRecordingVideo = false;
+            IsPreRecording = false;
+
             throw;
         }
     }
@@ -1638,9 +1675,10 @@ public partial class SkiaCamera : SkiaControl
     /// <param name="capturedVideo">The captured video to move</param>
     /// <param name="album">Optional album name</param>
     /// <param name="deleteOriginal">Whether to delete the original file after successful move (default true)</param>
+    /// <param name="filename">Optional custom filename (without path, just the name). If provided, the file will be renamed before moving.</param>
     /// <returns>Gallery path if successful, null if failed</returns>
     public async Task<string> MoveVideoToGalleryAsync(CapturedVideo capturedVideo, string album = null,
-        bool deleteOriginal = true)
+        bool deleteOriginal = true, string filename = null)
     {
         if (capturedVideo == null || string.IsNullOrEmpty(capturedVideo.FilePath) ||
             !File.Exists(capturedVideo.FilePath))
@@ -1648,14 +1686,49 @@ public partial class SkiaCamera : SkiaControl
 
         try
         {
-            Debug.WriteLine($"[SkiaCamera] Moving video to gallery: {capturedVideo.FilePath}");
+            var currentPath = capturedVideo.FilePath;
+
+            // Rename file if custom filename provided
+            if (!string.IsNullOrWhiteSpace(filename))
+            {
+                // Validate filename (no path separators)
+                if (filename.Contains(Path.DirectorySeparatorChar) || filename.Contains(Path.AltDirectorySeparatorChar))
+                {
+                    Debug.WriteLine($"[SkiaCamera] Invalid filename (contains path separators): {filename}");
+                    return null;
+                }
+
+                // Ensure .mp4 extension
+                if (!filename.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase))
+                {
+                    filename = Path.GetFileNameWithoutExtension(filename) + ".mp4";
+                }
+
+                // Rename file in place
+                var directory = Path.GetDirectoryName(currentPath);
+                var newPath = Path.Combine(directory, filename);
+
+                if (File.Exists(newPath) && newPath != currentPath)
+                {
+                    File.Delete(newPath); // Overwrite if exists
+                }
+
+                if (newPath != currentPath)
+                {
+                    File.Move(currentPath, newPath);
+                    currentPath = newPath;
+                    Debug.WriteLine($"[SkiaCamera] Renamed video file to: {filename}");
+                }
+            }
+
+            Debug.WriteLine($"[SkiaCamera] Moving video to gallery: {currentPath}");
 
 #if ANDROID
-            return await MoveVideoToGalleryAndroid(capturedVideo.FilePath, album, deleteOriginal);
+            return await MoveVideoToGalleryAndroid(currentPath, album, deleteOriginal);
 #elif IOS || MACCATALYST
-            return await MoveVideoToGalleryApple(capturedVideo.FilePath, album, deleteOriginal);
+            return await MoveVideoToGalleryApple(currentPath, album, deleteOriginal);
 #elif WINDOWS
-            return await MoveVideoToGalleryWindows(capturedVideo.FilePath, album, deleteOriginal);
+            return await MoveVideoToGalleryWindows(currentPath, album, deleteOriginal);
 #else
             Debug.WriteLine("[SkiaCamera] MoveVideoToGalleryAsync not implemented for this platform");
             return null;
@@ -1871,7 +1944,7 @@ public partial class SkiaCamera : SkiaControl
     /// Enable on-screen diagnostics overlay (effective FPS, dropped frames, last submit ms)
     /// during capture video flow to validate performance.
     /// </summary>
-    public bool EnableCaptureDiagnostics { get; set; } = true;
+    public bool EnableCaptureDiagnostics { get; set; }
 
     /// <summary>
     /// Mirror diagnostics toggle used in drawing overlays
@@ -2006,6 +2079,7 @@ public partial class SkiaCamera : SkiaControl
 
     private ICaptureVideoEncoder _captureVideoEncoder;
     private System.Threading.Timer _frameCaptureTimer;
+    private System.Threading.Timer _restartDebounceTimer;
     private DateTime _captureVideoStartTime;
     private DateTime _captureVideoTotalStartTime;
 
@@ -2901,6 +2975,23 @@ public partial class SkiaCamera : SkiaControl
     /// </summary>
     public bool UseRecordingFramesForPreview { get; set; } = true;
 
+    public static readonly BindableProperty PreviewVideoFlowProperty = BindableProperty.Create(
+        nameof(PreviewVideoFlow),
+        typeof(bool),
+        typeof(SkiaCamera),
+        true);
+
+    /// <summary>
+    /// Controls whether preview shows processed frames from the video flow encoder (TRUE) or raw camera frames (FALSE).
+    /// Only applies when UseCaptureVideoFlow is TRUE. Default is TRUE to show processed preview with overlays.
+    /// Set to FALSE to show raw camera preview while still recording processed video with overlays.
+    /// </summary>
+    public bool PreviewVideoFlow
+    {
+        get { return (bool)GetValue(PreviewVideoFlowProperty); }
+        set { SetValue(PreviewVideoFlowProperty, value); }
+    }
+
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(
         nameof(Type),
         typeof(CameraType),
@@ -3530,17 +3621,46 @@ public partial class SkiaCamera : SkiaControl
             // Only restart if camera is currently on
             if (camera.IsOn)
             {
-                try
-                {
-                    camera.StopInternal(true);
-                    camera.StartWithPermissionsInternal();
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"[SkiaCamera] Restart failed: {ex.Message}");
-                }
+                camera.ScheduleRestartDebounced();
             }
         }
+    }
+
+    /// <summary>
+    /// Debounces rapid restart requests using a settling period.
+    /// Waits for property changes to settle before restarting the camera.
+    /// This prevents camera restart spam when multiple properties change in quick succession.
+    ///
+    /// How it works:
+    /// - First property change: starts 500ms settling timer
+    /// - More property changes during settling: timer resets to 500ms (waits for "peace")
+    /// - No changes for 500ms: camera restarts once with all accumulated changes
+    /// </summary>
+    private void ScheduleRestartDebounced()
+    {
+        // Cancel any pending restart (resets the 500ms settling period)
+        _restartDebounceTimer?.Dispose();
+
+        // Schedule restart after 500ms of no property changes
+        // If another property change happens before this fires, it will cancel and reschedule again
+        _restartDebounceTimer = new System.Threading.Timer(_ =>
+        {
+            try
+            {
+                Debug.WriteLine($"[SkiaCamera] Settings settled, restarting camera");
+                StopInternal(true);
+                StartWithPermissionsInternal();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera] Debounced restart failed: {ex.Message}");
+            }
+            finally
+            {
+                _restartDebounceTimer?.Dispose();
+                _restartDebounceTimer = null;
+            }
+        }, null, TimeSpan.FromMilliseconds(500), Timeout.InfiniteTimeSpan);
     }
 
     #endregion

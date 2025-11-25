@@ -134,6 +134,9 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>ResStrings.resx</DependentUpon>
         </Compile>
+        <Compile Update="TestRandom.xaml.cs">
+          <DependentUpon>TestRandom.xaml</DependentUpon>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -145,6 +148,12 @@
 
     <ItemGroup>
       <Folder Include="Extensions\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiXaml Update="TestRandom.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
     </ItemGroup>
 
 

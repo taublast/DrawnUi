@@ -155,5 +155,9 @@ public interface INativeCamera : IDisposable
     /// </summary>
     TimeSpan PreRecordDuration { get; set; }
 
+    int PreviewHeight { get; }
+
+    int PreviewWidth { get; }
+
     #endregion
 }

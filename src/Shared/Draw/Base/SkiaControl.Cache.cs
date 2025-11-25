@@ -12,6 +12,9 @@ public partial class SkiaControl
 {
     private readonly LimitedQueue<Action> _offscreenCacheRenderingQueue = new(1);
 
+#if BROWSER
+
+#else
     public static readonly BindableProperty AutoCacheProperty = BindableProperty.Create(nameof(AutoCache),
         typeof(bool),
         typeof(SkiaControl),
@@ -26,6 +29,7 @@ public partial class SkiaControl
         get { return (bool)GetValue(AutoCacheProperty); }
         set { SetValue(AutoCacheProperty, value); }
     }
+#endif
 
     public static readonly BindableProperty UseCacheProperty = BindableProperty.Create(nameof(UseCache),
         typeof(SkiaCacheType),
@@ -410,7 +414,7 @@ public partial class SkiaControl
                         return null; //would be unexpected
                     }
 
-                    reuseSurfaceFrom.PreserveSourceFromDispose=true; //we will dispose that source in this new object
+                    reuseSurfaceFrom.PreserveSourceFromDispose = true; //we will dispose that source in this new object
 
                     if (usingCacheType != SkiaCacheType.ImageComposite)
                         surface.Canvas.Clear();

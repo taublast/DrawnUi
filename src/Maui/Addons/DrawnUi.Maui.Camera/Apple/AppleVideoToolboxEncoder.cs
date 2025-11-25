@@ -593,12 +593,12 @@ namespace DrawnUi.Camera
                     using var gpuSnap = _surface.Snapshot();
                     if (gpuSnap != null)
                     {
-                        //int pw = Math.Min(_width, 480);
-                        //int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
-
-                        int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
-                        int pw = Math.Min(_width, maxPreviewWidth);
+                        int pw = Math.Min(_width, 480);
                         int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+
+                        //int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                        //int pw = Math.Min(_width, maxPreviewWidth);
+                        //int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
 
                         var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
                         using var raster = SKSurface.Create(pInfo);
@@ -857,7 +857,13 @@ namespace DrawnUi.Camera
                     _latestPreviewImage = null;
                 }
 
-                _surface?.Dispose(); _surface = null;
+                // CRITICAL: Acquire _frameLock before disposing _surface to prevent race condition
+                // with frames that may still be processing in SubmitFrameAsync
+                lock (_frameLock)
+                {
+                    _surface?.Dispose();
+                    _surface = null;
+                }
             }
 
             // If pre-recording mode: concatenate pre-recording + live recording → final output

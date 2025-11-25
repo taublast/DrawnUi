@@ -123,6 +123,9 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     FlashMode _flashMode = FlashMode.Off;
     CaptureFlashMode _captureFlashMode = CaptureFlashMode.Auto;
 
+    public int PreviewWidth { get; private set; }
+    public int PreviewHeight { get; private set; }
+
     private readonly SemaphoreSlim _frameSemaphore = new(1, 1);
     private volatile bool _isProcessingFrame = false;
 
@@ -571,6 +574,9 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             var fps = preferredFormat.FrameRate.Numerator / (double)preferredFormat.FrameRate.Denominator;
             Debug.WriteLine($"[NativeCameraWindows] Setting preview format: {preferredFormat.VideoFormat.Width}x{preferredFormat.VideoFormat.Height} @ {fps:F1} FPS (AR: {(double)preferredFormat.VideoFormat.Width / preferredFormat.VideoFormat.Height:F2})");
             await _frameSource.SetFormatAsync(preferredFormat);
+
+            PreviewWidth = (int)preferredFormat.VideoFormat.Width;
+            PreviewHeight = (int)preferredFormat.VideoFormat.Height;
         }
         else
         {
@@ -1368,6 +1374,9 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
                 // Set new format
                 await _frameSource.SetFormatAsync(newPreviewFormat);
+
+                PreviewWidth = (int)newPreviewFormat.VideoFormat.Width;
+                PreviewHeight = (int)newPreviewFormat.VideoFormat.Height;
 
                 var fps = newPreviewFormat.FrameRate.Numerator / (double)newPreviewFormat.FrameRate.Denominator;
                 Debug.WriteLine($"[NativeCameraWindows] Updated preview format: {newPreviewFormat.VideoFormat.Width}x{newPreviewFormat.VideoFormat.Height} @ {fps:F1} FPS");

@@ -629,7 +629,8 @@ namespace DrawnUi.Camera
                 using var gpuSnap = _skSurface?.Snapshot();
                 if (gpuSnap != null)
                 {
-                    const int maxPreviewWidth = 480;
+                    int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+
                     int pw = Math.Min(_width, maxPreviewWidth);
                     int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
 

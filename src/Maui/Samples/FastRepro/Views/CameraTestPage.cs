@@ -197,7 +197,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                 UseCache = SkiaCacheType.Image
                             }
                             .Assign(out _videoRecordButton)
-                            .OnTapped(async me => { await ToggleVideoRecording(); })
+                            .OnTapped(async me => { ToggleVideoRecording(); })
                             .ObserveProperty(CameraControl, nameof(CameraControl.IsRecordingVideo), me =>
                             {
                                 if (CameraControl.IsRecordingVideo)
@@ -654,7 +654,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         }
     }
 
-    private async Task ToggleVideoRecording()
+    private void ToggleVideoRecording()
     {
         MainThread.BeginInvokeOnMainThread(async () =>
         {
