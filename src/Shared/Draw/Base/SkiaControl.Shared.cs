@@ -1342,8 +1342,18 @@ namespace DrawnUi.Draw
             if (child.Control != null && !child.Control.IsDisposing && !child.Control.IsDisposed &&
                 !child.Control.InputTransparent && child.Control.CanDraw)
             {
-                var transformed = child.Control.ApplyTransforms(child.HitRect);
-                inside = transformed.ContainsInclusive(point.X, point.Y);
+                if (child.Control.HasTransform && child.Control.RenderTransformMatrix.TryInvert(out SKMatrix inverse))
+                {
+                    // Transform point into child's local space
+                    var localPoint = inverse.MapPoint(point);
+                    inside = child.HitRect.ContainsInclusive(localPoint.X, localPoint.Y);
+                }
+                else
+                {
+                    // No transform or simple translation - use original ApplyTransforms
+                    var transformed = child.Control.ApplyTransforms(child.HitRect);
+                    inside = transformed.ContainsInclusive(point.X, point.Y);
+                }
             }
 
             return inside;
@@ -1505,9 +1515,19 @@ namespace DrawnUi.Draw
             var thisOffset = TranslateInputCoords(apply.ChildOffset);
             var touchLocationWIthOffset = new SKPoint(apply.MappedLocation.X + thisOffset.X,
                 apply.MappedLocation.Y + thisOffset.Y);
-            var transformed = ApplyTransforms(DrawingRect);
-            var inside = transformed.ContainsInclusive(touchLocationWIthOffset.X, touchLocationWIthOffset.Y);
-            return inside;
+
+            if (HasTransform && RenderTransformMatrix.TryInvert(out SKMatrix inverse))
+            {
+                // Transform point into local space
+                var localPoint = inverse.MapPoint(touchLocationWIthOffset);
+                return DrawingRect.ContainsInclusive(localPoint.X, localPoint.Y);
+            }
+            else
+            {
+                // No transform or simple translation
+                var transformed = ApplyTransforms(DrawingRect);
+                return transformed.ContainsInclusive(touchLocationWIthOffset.X, touchLocationWIthOffset.Y);
+            }
         }
 
 
@@ -1644,6 +1664,7 @@ namespace DrawnUi.Draw
                         if (listener != null)
                         {
                             bool forChild;
+
                             if (Super.UseFrozenVisualLayers && Super.UseFrozenVisualLayers)
                             {
                                 forChild = IsGestureForChild(child.Control, args);
@@ -3624,8 +3645,6 @@ namespace DrawnUi.Draw
 
             float pivotX = (float)(destination.Left + destination.Width * AnchorX);
             float pivotY = (float)(destination.Top + destination.Height * AnchorY);
-            var centerX = moveX + destination.Left + destination.Width * AnchorX;
-            var centerY = moveY + destination.Top + destination.Height * AnchorY;
             var skewX = SkewX > 0 ? (float)Math.Tan(Math.PI * SkewX / 180f) : 0f;
             var skewY = SkewY > 0 ? (float)Math.Tan(Math.PI * SkewY / 180f) : 0f;
 
@@ -3634,11 +3653,18 @@ namespace DrawnUi.Draw
             // Start with translation to pivot point
             SKMatrix matrix = SKMatrix.CreateTranslation(-pivotX, -pivotY);
 
-            // Apply transforms
+            // Apply rotation first (in local space around pivot)
+            if (provider.Rotation != 0)
+            {
+                SKMatrix rotationMatrix = SKMatrix.CreateRotationDegrees((float)provider.Rotation, 0, 0);
+                matrix = matrix.PostConcat(rotationMatrix);
+            }
+
+            // Apply scale and skew (without translation)
             var transformMatrix = new SKMatrix
             {
-                TransX = (float)moveX,
-                TransY = (float)moveY,
+                TransX = 0,
+                TransY = 0,
                 Persp0 = Perspective1,
                 Persp1 = Perspective2,
                 SkewX = skewX,
@@ -3666,12 +3692,10 @@ namespace DrawnUi.Draw
             // Translate back from pivot point
             matrix = matrix.PostConcat(SKMatrix.CreateTranslation(pivotX, pivotY));
 
-            // Apply rotation around center if needed
-            if (provider.Rotation != 0)
+            // Apply translation last (moves entire transformed object)
+            if (moveX != 0 || moveY != 0)
             {
-                SKMatrix rotationMatrix =
-                    SKMatrix.CreateRotationDegrees((float)Rotation, (float)centerX, (float)centerY);
-                matrix = matrix.PostConcat(rotationMatrix);
+                matrix = matrix.PostConcat(SKMatrix.CreateTranslation((float)moveX, (float)moveY));
             }
 
             // Save the complete transformation matrix for hit testing
@@ -3699,8 +3723,6 @@ namespace DrawnUi.Draw
 
             float pivotX = (float)(destination.Left + destination.Width * AnchorX);
             float pivotY = (float)(destination.Top + destination.Height * AnchorY);
-            var centerX = moveX + destination.Left + destination.Width * AnchorX;
-            var centerY = moveY + destination.Top + destination.Height * AnchorY;
             var skewX = SkewX > 0 ? (float)Math.Tan(Math.PI * SkewX / 180f) : 0f;
             var skewY = SkewY > 0 ? (float)Math.Tan(Math.PI * SkewY / 180f) : 0f;
 
@@ -3709,11 +3731,18 @@ namespace DrawnUi.Draw
             // Start with translation to pivot point
             SKMatrix matrix = SKMatrix.CreateTranslation(-pivotX, -pivotY);
 
-            // Apply transforms
+            // Apply rotation first (in local space around pivot)
+            if (Rotation != 0)
+            {
+                SKMatrix rotationMatrix = SKMatrix.CreateRotationDegrees((float)Rotation, 0, 0);
+                matrix = matrix.PostConcat(rotationMatrix);
+            }
+
+            // Apply scale and skew (without translation)
             var transformMatrix = new SKMatrix
             {
-                TransX = (float)moveX,
-                TransY = (float)moveY,
+                TransX = 0,
+                TransY = 0,
                 Persp0 = Perspective1,
                 Persp1 = Perspective2,
                 SkewX = skewX,
@@ -3740,12 +3769,10 @@ namespace DrawnUi.Draw
             // Translate back from pivot point
             matrix = matrix.PostConcat(SKMatrix.CreateTranslation(pivotX, pivotY));
 
-            // Apply rotation around center if needed
-            if (Rotation != 0)
+            // Apply translation last (moves entire transformed object)
+            if (moveX != 0 || moveY != 0)
             {
-                SKMatrix rotationMatrix =
-                    SKMatrix.CreateRotationDegrees((float)Rotation, (float)centerX, (float)centerY);
-                matrix = matrix.PostConcat(rotationMatrix);
+                matrix = matrix.PostConcat(SKMatrix.CreateTranslation((float)moveX, (float)moveY));
             }
 
             // Save the complete transformation matrix for hit testing
