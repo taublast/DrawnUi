@@ -1126,6 +1126,19 @@ namespace DrawnUi.Camera
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Live recording inserted successfully");
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Total composition duration: {composition.Duration.Seconds:F3}s");
 
+                // CRITICAL: Set preferred transform on composition video track to preserve orientation
+                // Without this, the exported video will always be portrait regardless of recording orientation
+                // Log source track transforms for diagnostics
+                var preTransform = preRecordingVideoTrack.PreferredTransform;
+                var liveTransform = liveRecordingVideoTrack.PreferredTransform;
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording track transform: xx={preTransform.xx}, xy={preTransform.xy}, yx={preTransform.yx}, yy={preTransform.yy}, tx={preTransform.x0}, ty={preTransform.y0}");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Live recording track transform: xx={liveTransform.xx}, xy={liveTransform.xy}, yx={liveTransform.yx}, yy={liveTransform.yy}, tx={liveTransform.x0}, ty={liveTransform.y0}");
+
+                // Use _deviceRotation directly since both segments were recorded with the same orientation
+                var compositionTransform = GetTransformForRotation(_deviceRotation);
+                videoTrack.PreferredTransform = compositionTransform;
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Set composition preferredTransform for deviceRotation={_deviceRotation}, dimensions={_width}x{_height}: xx={compositionTransform.xx}, xy={compositionTransform.xy}, yx={compositionTransform.yx}, yy={compositionTransform.yy}, tx={compositionTransform.x0}, ty={compositionTransform.y0}");
+
                 // Export composition to output file
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Starting export to: {outputPath}");
                 if (File.Exists(outputPath))
