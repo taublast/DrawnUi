@@ -25,7 +25,7 @@ namespace DrawnUi.Camera
     /// Skia → CVPixelBuffer → AVAssetWriterInputPixelBufferAdaptor → MP4
     ///
     /// Pipeline (Pre-Recording):
-    /// Skia → CVPixelBuffer → VTCompressionSession → H.264 → PrerecordingEncodedBuffer (memory)
+    /// Skia → CVPixelBuffer → VTCompressionSession → H.264 → PrerecordingEncodedBufferApple (memory)
     /// </summary>
     public class AppleVideoToolboxEncoder : ICaptureVideoEncoder
     {
@@ -59,7 +59,7 @@ namespace DrawnUi.Camera
 
         // VTCompressionSession for pre-recording buffer
         private VTCompressionSession _compressionSession;
-        private PrerecordingEncodedBuffer _preRecordingBuffer;
+        private PrerecordingEncodedBufferApple _preRecordingBuffer;
         private CMVideoFormatDescription _videoFormatDescription;
 
         // Mirror-to-preview support
@@ -127,7 +127,7 @@ namespace DrawnUi.Camera
 
                 // Initialize circular buffer for storing encoded frames
                 var preRecordDuration = ParentCamera.PreRecordDuration;
-                _preRecordingBuffer = new PrerecordingEncodedBuffer(preRecordDuration);
+                _preRecordingBuffer = new PrerecordingEncodedBufferApple(preRecordDuration);
 
                 // CRITICAL: Start recording immediately to buffer frames
                 _isRecording = true;
@@ -593,12 +593,12 @@ namespace DrawnUi.Camera
                     using var gpuSnap = _surface.Snapshot();
                     if (gpuSnap != null)
                     {
-                        int pw = Math.Min(_width, 480);
-                        int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
-
-                        //int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
-                        //int pw = Math.Min(_width, maxPreviewWidth);
+                        //int pw = Math.Min(_width, 480);
                         //int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+
+                        int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                        int pw = Math.Min(_width, maxPreviewWidth);
+                        int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
 
                         var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
                         using var raster = SKSurface.Create(pInfo);
@@ -857,13 +857,7 @@ namespace DrawnUi.Camera
                     _latestPreviewImage = null;
                 }
 
-                // CRITICAL: Acquire _frameLock before disposing _surface to prevent race condition
-                // with frames that may still be processing in SubmitFrameAsync
-                lock (_frameLock)
-                {
-                    _surface?.Dispose();
-                    _surface = null;
-                }
+                _surface?.Dispose(); _surface = null;
             }
 
             // If pre-recording mode: concatenate pre-recording + live recording → final output
@@ -1207,7 +1201,7 @@ namespace DrawnUi.Camera
             }
         }
 
-        private async Task WriteBufferedFramesToMp4Async(PrerecordingEncodedBuffer buffer, string outputPath)
+        private async Task WriteBufferedFramesToMp4Async(PrerecordingEncodedBufferApple buffer, string outputPath)
         {
             var frames = buffer.GetAllFrames();
             if (frames == null || frames.Count == 0)
@@ -1465,7 +1459,7 @@ namespace DrawnUi.Camera
             }
         }
 
-        public async Task<string> GetCombinedPreRecordingFileAsync(PrerecordingEncodedBuffer prerecordingBuffer)
+        public async Task<string> GetCombinedPreRecordingFileAsync(PrerecordingEncodedBufferApple prerecordingBuffer)
         {
             if (prerecordingBuffer == null || prerecordingBuffer.GetFrameCount() == 0)
             {
@@ -1499,7 +1493,17 @@ namespace DrawnUi.Camera
         {
             if (_isRecording)
             {
-                try { StopAsync().GetAwaiter().GetResult(); } catch { }
+                Task.Run(async () =>
+                {
+                    try
+                    {
+                        await StopAsync();
+                    }
+                    catch
+                    {
+                    }
+                    _isRecording = false;
+                });
             }
             _progressTimer?.Dispose();
             _compressionSession?.Dispose();
