@@ -97,6 +97,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GesturesTester", "..\..\App
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurfingApp", "..\..\SurfingApp\src\SurfingApp\SurfingApp.csproj", "{0607D36D-F5E9-8651-B27B-6080507D9878}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentColors.Maui", "..\..\FluentColors.Maui\src\FluentColors.Maui.csproj", "{7CC499BF-8572-E3E8-2BC1-61316345D0B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -201,6 +203,10 @@ Global
 		{0607D36D-F5E9-8651-B27B-6080507D9878}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0607D36D-F5E9-8651-B27B-6080507D9878}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0607D36D-F5E9-8651-B27B-6080507D9878}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{7CC499BF-8572-E3E8-2BC1-61316345D0B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CC499BF-8572-E3E8-2BC1-61316345D0B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CC499BF-8572-E3E8-2BC1-61316345D0B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CC499BF-8572-E3E8-2BC1-61316345D0B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -226,6 +232,7 @@ Global
 		{50581392-AB0E-5E19-2D2F-3EA4409BC9A1} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 		{D48E1DB4-747E-A7BE-5632-7A9857EFA9AB} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 		{0607D36D-F5E9-8651-B27B-6080507D9878} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
+		{7CC499BF-8572-E3E8-2BC1-61316345D0B9} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {329E3D0C-A3F7-4A3E-B61C-6B2D1BD7F708}
