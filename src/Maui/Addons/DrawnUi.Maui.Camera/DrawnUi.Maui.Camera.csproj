@@ -55,5 +55,8 @@
       <PackageReference Include="TerraFX.Interop.Windows" Version="10.0.26100.2" />
     </ItemGroup>
 
+    <ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+      <PackageReference Include="Xamarin.AndroidX.Media3.Transformer" Version="1.8.0" />
+    </ItemGroup>
 
 </Project>

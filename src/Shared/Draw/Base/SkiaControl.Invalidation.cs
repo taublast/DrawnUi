@@ -60,7 +60,10 @@
         public virtual void InvalidateParent()
         {
             if (IsParentIndependent)
+            {
+                Repaint();
                 return;
+            }
 
             //if (InvalidatedParent)
             //{

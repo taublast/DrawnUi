@@ -32,6 +32,8 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             CameraControl = null;
             this.Content = null;
             Canvas?.Dispose();
+            _paint?.Dispose();
+            _paint = null;
         }
 
         base.Dispose(isDisposing);
@@ -195,7 +197,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                 UseCache = SkiaCacheType.Image
                             }
                             .Assign(out _videoRecordButton)
-                            .OnTapped(async me => { await ToggleVideoRecording(); })
+                            .OnTapped(async me => { ToggleVideoRecording(); })
                             .ObserveProperty(CameraControl, nameof(CameraControl.IsRecordingVideo), me =>
                             {
                                 if (CameraControl.IsRecordingVideo)
@@ -341,33 +343,38 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         CameraControl.FrameProcessor = (frame) =>
         {
             // Simple text overlay for testing
-            using var paint = new SKPaint
+            if (_paint == null)
             {
-                Color = SKColors.White,
-                TextSize = 48,
-                IsAntialias = true,
-            };
+                _paint = new SKPaint
+                {
+                    TextSize = 48,
+                    IsAntialias = true,
+                };
+            }
+
+            _paint.Color = CameraControl.IsPreRecording ? SKColors.White : SKColors.Red;
+            _paint.Style = SKPaintStyle.Fill;
 
             // text at top left
             var text = CameraControl.IsPreRecording ? "PRE-RECORDED" : "LIVE";
-            frame.Canvas.DrawText(text, 50, 100, paint);
+            frame.Canvas.DrawText(text, 50, 100, _paint);
 
             // Draw timestamp at top left (below LIVE)
-            frame.Canvas.DrawText($"{frame.Time:mm\\:ss}", 50, 160, paint);
+            frame.Canvas.DrawText($"{frame.Time:mm\\:ss}", 50, 160, _paint);
 
             // Draw a simple border around the frame
             // Use orange during pre-recording, red during file recording
-            var borderColor = CameraControl.IsPreRecording ? SKColors.Orange : SKColors.Red;
-            using var borderPaint = new SKPaint
-            {
-                Color = borderColor, Style = SKPaintStyle.Stroke, StrokeWidth = 4, IsAntialias = true
-            };
-            frame.Canvas.DrawRect(10, 10, frame.Width - 20, frame.Height - 20, borderPaint);
+            _paint.Style = SKPaintStyle.Stroke;
+            _paint.StrokeWidth = 4;
+
+            frame.Canvas.DrawRect(10, 10, frame.Width - 20, frame.Height - 20, _paint);
         };
 
         // Setup camera event handlers
         SetupCameraEvents();
     }
+
+    private SKPaint _paint;
 
     private SkiaLayer CreatePreviewOverlay()
     {
@@ -647,7 +654,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         }
     }
 
-    private async Task ToggleVideoRecording()
+    private void ToggleVideoRecording()
     {
         MainThread.BeginInvokeOnMainThread(async () =>
         {

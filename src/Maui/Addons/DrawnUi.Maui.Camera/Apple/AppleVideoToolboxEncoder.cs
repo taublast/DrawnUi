@@ -25,7 +25,7 @@ namespace DrawnUi.Camera
     /// Skia → CVPixelBuffer → AVAssetWriterInputPixelBufferAdaptor → MP4
     ///
     /// Pipeline (Pre-Recording):
-    /// Skia → CVPixelBuffer → VTCompressionSession → H.264 → PrerecordingEncodedBuffer (memory)
+    /// Skia → CVPixelBuffer → VTCompressionSession → H.264 → PrerecordingEncodedBufferApple (memory)
     /// </summary>
     public class AppleVideoToolboxEncoder : ICaptureVideoEncoder
     {
@@ -59,7 +59,7 @@ namespace DrawnUi.Camera
 
         // VTCompressionSession for pre-recording buffer
         private VTCompressionSession _compressionSession;
-        private PrerecordingEncodedBuffer _preRecordingBuffer;
+        private PrerecordingEncodedBufferApple _preRecordingBuffer;
         private CMVideoFormatDescription _videoFormatDescription;
 
         // Mirror-to-preview support
@@ -127,7 +127,7 @@ namespace DrawnUi.Camera
 
                 // Initialize circular buffer for storing encoded frames
                 var preRecordDuration = ParentCamera.PreRecordDuration;
-                _preRecordingBuffer = new PrerecordingEncodedBuffer(preRecordDuration);
+                _preRecordingBuffer = new PrerecordingEncodedBufferApple(preRecordDuration);
 
                 // CRITICAL: Start recording immediately to buffer frames
                 _isRecording = true;
@@ -593,8 +593,13 @@ namespace DrawnUi.Camera
                     using var gpuSnap = _surface.Snapshot();
                     if (gpuSnap != null)
                     {
-                        int pw = Math.Min(_width, 480);
+                        //int pw = Math.Min(_width, 480);
+                        //int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+
+                        int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                        int pw = Math.Min(_width, maxPreviewWidth);
                         int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+
                         var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
                         using var raster = SKSurface.Create(pInfo);
                         raster.Canvas.Clear(SKColors.Transparent);
@@ -1121,6 +1126,19 @@ namespace DrawnUi.Camera
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Live recording inserted successfully");
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Total composition duration: {composition.Duration.Seconds:F3}s");
 
+                // CRITICAL: Set preferred transform on composition video track to preserve orientation
+                // Without this, the exported video will always be portrait regardless of recording orientation
+                // Log source track transforms for diagnostics
+                var preTransform = preRecordingVideoTrack.PreferredTransform;
+                var liveTransform = liveRecordingVideoTrack.PreferredTransform;
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording track transform: xx={preTransform.xx}, xy={preTransform.xy}, yx={preTransform.yx}, yy={preTransform.yy}, tx={preTransform.x0}, ty={preTransform.y0}");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Live recording track transform: xx={liveTransform.xx}, xy={liveTransform.xy}, yx={liveTransform.yx}, yy={liveTransform.yy}, tx={liveTransform.x0}, ty={liveTransform.y0}");
+
+                // Use _deviceRotation directly since both segments were recorded with the same orientation
+                var compositionTransform = GetTransformForRotation(_deviceRotation);
+                videoTrack.PreferredTransform = compositionTransform;
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Set composition preferredTransform for deviceRotation={_deviceRotation}, dimensions={_width}x{_height}: xx={compositionTransform.xx}, xy={compositionTransform.xy}, yx={compositionTransform.yx}, yy={compositionTransform.yy}, tx={compositionTransform.x0}, ty={compositionTransform.y0}");
+
                 // Export composition to output file
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Starting export to: {outputPath}");
                 if (File.Exists(outputPath))
@@ -1196,7 +1214,7 @@ namespace DrawnUi.Camera
             }
         }
 
-        private async Task WriteBufferedFramesToMp4Async(PrerecordingEncodedBuffer buffer, string outputPath)
+        private async Task WriteBufferedFramesToMp4Async(PrerecordingEncodedBufferApple buffer, string outputPath)
         {
             var frames = buffer.GetAllFrames();
             if (frames == null || frames.Count == 0)
@@ -1454,7 +1472,7 @@ namespace DrawnUi.Camera
             }
         }
 
-        public async Task<string> GetCombinedPreRecordingFileAsync(PrerecordingEncodedBuffer prerecordingBuffer)
+        public async Task<string> GetCombinedPreRecordingFileAsync(PrerecordingEncodedBufferApple prerecordingBuffer)
         {
             if (prerecordingBuffer == null || prerecordingBuffer.GetFrameCount() == 0)
             {
@@ -1488,7 +1506,17 @@ namespace DrawnUi.Camera
         {
             if (_isRecording)
             {
-                try { StopAsync().GetAwaiter().GetResult(); } catch { }
+                Task.Run(async () =>
+                {
+                    try
+                    {
+                        await StopAsync();
+                    }
+                    catch
+                    {
+                    }
+                    _isRecording = false;
+                });
             }
             _progressTimer?.Dispose();
             _compressionSession?.Dispose();

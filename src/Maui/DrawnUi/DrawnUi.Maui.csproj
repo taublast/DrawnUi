@@ -39,6 +39,18 @@
         <WarningsAsErrors>$(WarningsAsErrors);CS0108;XLS0501</WarningsAsErrors>
     </PropertyGroup>
 
+    <!-- Testing custom WINUI stuff -->
+    <!--<ItemGroup Condition="$(TargetFramework.Contains('windows')) == true">
+        <Reference Include="SkiaSharp.DrawnUi.WinUI.Native">
+            <HintPath>..\..\Native\winui\SkiaSharp.Views.WinUI.Native\SkiaSharp.Views.WinUI.Native\bin\x64\Debug\SkiaSharp.DrawnUi.WinUI.Native.dll</HintPath>
+        </Reference>
+        <None Include="..\..\Native\winui\SkiaSharp.Views.WinUI.Native\SkiaSharp.Views.WinUI.Native\bin\x64\$(Configuration)\SkiaSharp.DrawnUi.WinUI.Native.dll">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <Link>SkiaSharp.DrawnUi.WinUI.Native.dll</Link>
+            <Visible>false</Visible>
+        </None>
+    </ItemGroup>-->
+
     <ItemGroup>
         <Compile Remove="Draw\SkiaControl.Legacy.cs" />
         <Compile Remove="Draw\SkiaControl.States.cs" />

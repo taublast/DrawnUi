@@ -4,6 +4,14 @@ Camera control drawn with SkiaSharp, part of DrawnUI for for .NET MAUI.
 
 **For iOS, MacCatalyst, Android and Windows**.
 
+
+## Knows Issues To Be Fixed ASAP
+
+
+- Android video recording orientation wronf if recored with UseCaptureVideoFlow=false;
+- Android camera start with UseCaptureVideoFlow=true fails if run on NOT MainThread (EGL failed to make current)
+
+
 ## Features:
 
 - **Renders on a hardware-accelerated SkiaSharp canvas** with all the power of Skia rendering.

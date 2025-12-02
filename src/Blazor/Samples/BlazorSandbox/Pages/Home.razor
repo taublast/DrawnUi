@@ -1,0 +1,30 @@
+﻿@page "/"
+@using SkiaSharp
+@using SkiaSharp.Views.Blazor
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SKCanvasView OnPaintSurface="OnPaintSurface" Width="400" Height="300" />
+
+@code {
+    private void OnPaintSurface(SKPaintSurfaceEventArgs e)
+    {
+        var canvas = e.Surface.Canvas;
+        canvas.Clear(SKColors.White);
+
+        using var paint = new SKPaint
+        {
+            Color = SKColors.DeepSkyBlue,
+            IsAntialias = true,
+            StrokeWidth = 4,
+            Style = SKPaintStyle.Stroke
+        };
+
+        canvas.DrawCircle(150, 100, 80, paint);
+        canvas.DrawText("Hello Skia!", 80, 200, new SKPaint { Color = SKColors.Black, TextSize = 32 });
+    }
+}

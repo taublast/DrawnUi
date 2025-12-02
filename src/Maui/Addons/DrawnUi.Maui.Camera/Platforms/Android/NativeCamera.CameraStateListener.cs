@@ -22,18 +22,21 @@ namespace DrawnUi.Camera
                 // owner.StopBackgroundThread();
             }
 
+            // This method is called when the camera is opened.  We start camera preview here.
             public override void OnOpened(CameraDevice cameraDevice)
             {
-                try
+                if (owner != null)
                 {
-                    // This method is called when the camera is opened.  We start camera preview here.
-                    owner.mCameraOpenCloseLock.Release();
-                    owner.mCameraDevice = cameraDevice;
-                    owner.CreateCameraPreviewSession();
-                }
-                catch (Exception e)
-                {
-                    Super.Log(e);
+                    try
+                    {
+                        owner.mCameraOpenCloseLock.Release();
+                        owner.mCameraDevice = cameraDevice;
+                        owner.CreateCameraPreviewSession();
+                    }
+                    catch (Exception e)
+                    {
+                        Super.Log(e);
+                    }
                 }
             }
 

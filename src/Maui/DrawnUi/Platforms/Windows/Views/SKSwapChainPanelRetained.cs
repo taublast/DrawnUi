@@ -11,7 +11,7 @@ namespace DrawnUi.Views
     /// <summary>
     /// SwapChain panel with retained surface rendering for improved performance
     /// </summary>
-    public class SKSwapChainPanelRetained : AngleSwapChainPanel//AngleAcceleratedView
+    public class SKSwapChainPanelRetained : AngleSwapChainPanel //AngleAcceleratedView
     {
         public Guid Uid = Guid.NewGuid();
 
@@ -92,6 +92,8 @@ namespace DrawnUi.Views
 
                     _lastSize = newSize;
                     _needsFullRedraw = true;
+
+                    //Super.NeedGlobalUpdate();
                 }
 
                 if (_retainedSurface == null || _framebufferSurface == null)
@@ -127,7 +129,7 @@ namespace DrawnUi.Views
             base.OnDestroyingContext();
 
             //all controls have to clear any gpu resources they might have cached
-            Super.NeedGlobalUpdate();
+            //Super.NeedGlobalUpdate();
 
             lock (_surfaceLock)
             {

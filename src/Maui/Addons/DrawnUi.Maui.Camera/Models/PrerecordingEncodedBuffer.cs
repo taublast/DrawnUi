@@ -184,12 +184,24 @@ public class PrerecordingEncodedBuffer : IDisposable
                 currentState = ref nextState;
             }
 
-            // Bounds check: drop frame if buffer full
+            // CIRCULAR BUFFER: Remove oldest frames if buffer full (don't drop new frames!)
+            while (currentState.BytesUsed + size > currentBuffer.Length && _frames.Count > 0)
+            {
+                var oldestFrame = _frames[0];
+                _frames.RemoveAt(0);
+                currentState.BytesUsed -= oldestFrame.Data.Length;
+                currentState.FrameCount--;
+                System.Diagnostics.Debug.WriteLine(
+                    $"[PreRecording] CIRCULAR: Removed oldest frame at {oldestFrame.Timestamp.TotalSeconds:F3}s " +
+                    $"({oldestFrame.Data.Length} bytes) to make room for new frame");
+            }
+
+            // Final safety check (should never happen now)
             if (currentState.BytesUsed + size > currentBuffer.Length)
             {
                 System.Diagnostics.Debug.WriteLine(
-                    $"[PreRecording] Buffer full! Dropping frame. " +
-                    $"BytesUsed={currentState.BytesUsed}, FrameSize={size}");
+                    $"[PreRecording] ❌ ERROR: Still can't fit frame after removing old frames! " +
+                    $"BytesUsed={currentState.BytesUsed}, FrameSize={size}, BufferSize={currentBuffer.Length}");
                 return;
             }
 
@@ -304,12 +316,24 @@ public class PrerecordingEncodedBuffer : IDisposable
                 currentState = ref nextState;
             }
 
-            // Bounds check: drop frame if buffer full
+            // CIRCULAR BUFFER: Remove oldest frames if buffer full (don't drop new frames!)
+            while (currentState.BytesUsed + size > currentBuffer.Length && _frames.Count > 0)
+            {
+                var oldestFrame = _frames[0];
+                _frames.RemoveAt(0);
+                currentState.BytesUsed -= oldestFrame.Data.Length;
+                currentState.FrameCount--;
+                System.Diagnostics.Debug.WriteLine(
+                    $"[PreRecording] CIRCULAR: Removed oldest frame at {oldestFrame.Timestamp.TotalSeconds:F3}s " +
+                    $"({oldestFrame.Data.Length} bytes) to make room for new frame");
+            }
+
+            // Final safety check (should never happen now)
             if (currentState.BytesUsed + size > currentBuffer.Length)
             {
                 System.Diagnostics.Debug.WriteLine(
-                    $"[PreRecording] Buffer full! Dropping frame. " +
-                    $"BytesUsed={currentState.BytesUsed}, FrameSize={size}");
+                    $"[PreRecording] ❌ ERROR: Still can't fit frame after removing old frames! " +
+                    $"BytesUsed={currentState.BytesUsed}, FrameSize={size}, BufferSize={currentBuffer.Length}");
                 return;
             }
 
@@ -451,7 +475,7 @@ public class PrerecordingEncodedBuffer : IDisposable
 
 #if IOS || MACCATALYST
     /// <summary>
-    /// Gets all frames with timing information for writing to MP4
+    /// Gets all frames with timing information for writing to MP4 (iOS/MacCatalyst)
     /// </summary>
     public List<(byte[] Data, CMTime PresentationTime, CMTime Duration)> GetAllFrames()
     {
@@ -461,6 +485,22 @@ public class PrerecordingEncodedBuffer : IDisposable
             foreach (var frame in _frames)
             {
                 result.Add((frame.Data, frame.PresentationTime, frame.Duration));
+            }
+            return result;
+        }
+    }
+#else
+    /// <summary>
+    /// Gets all frames with timing information for writing to MP4 (Android/Windows)
+    /// </summary>
+    public List<(byte[] Data, TimeSpan Timestamp, bool IsKeyFrame)> GetAllFrames()
+    {
+        lock (_swapLock)
+        {
+            var result = new List<(byte[], TimeSpan, bool)>(_frames.Count);
+            foreach (var frame in _frames)
+            {
+                result.Add((frame.Data, frame.Timestamp, frame.IsKeyFrame));
             }
             return result;
         }
@@ -509,29 +549,29 @@ public class PrerecordingEncodedBuffer : IDisposable
 
             _frames.RemoveAll(f => f.Timestamp < cutoffTimestamp);
 
-            // CRITICAL: Ensure first frame is a keyframe after pruning
-            // H.264 video must start with an IDR frame or it will be undecodable
-            while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
-            {
-                //System.Diagnostics.Debug.WriteLine($"[PreRecording] PruneToMaxDuration: First frame at {_frames[0].Timestamp.TotalSeconds:F3}s is not a keyframe, removing...");
-                _frames.RemoveAt(0);
-            }
-
-            /*
             int afterPrune = _frames.Count;
-               int pruned = beforePrune - afterPrune;
+            int pruned = beforePrune - afterPrune;
+
+            // DON'T remove leading P-frames for pre-recording!
+            // We write ALL frames at once to MediaMuxer in StartAsync, so it can handle P-frames at start.
+            // Removing leading P-frames loses ~1 second of video (time between cutoff and first keyframe).
+
             if (pruned > 0)
             {
                 if (_frames.Count > 0)
                 {
+                    bool firstIsKeyframe = _frames[0].IsKeyFrame;
                     System.Diagnostics.Debug.WriteLine(
-                        $"[PreRecording] PruneToMaxDuration: {beforePrune} -> {afterPrune} frames " +
-                        $"(pruned {pruned} frames, first frame now at {_frames[0].Timestamp.TotalSeconds:F3}s is KEYFRAME)");
+                        $"[PreRecording] PruneToMaxDuration: {beforePrune} -> {afterPrune} frames (pruned {pruned} by time cutoff)");
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[PreRecording] First frame at {_frames[0].Timestamp.TotalSeconds:F3}s ({(firstIsKeyframe ? "I-frame" : "P-frame")})");
                 }
                 else
                 {
                     System.Diagnostics.Debug.WriteLine(
-                        $"[PreRecording] PruneToMaxDuration: WARNING: All frames pruned!");
+                        $"[PreRecording] PruneToMaxDuration: ❌ WARNING: All {beforePrune} frames pruned!");
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[PreRecording] LastFrameTs={lastFrameTimestamp.TotalSeconds:F3}s, MaxDuration={_maxDuration.TotalSeconds:F1}s, Cutoff={cutoffTimestamp.TotalSeconds:F3}s");
                 }
             }
             else
@@ -540,7 +580,6 @@ public class PrerecordingEncodedBuffer : IDisposable
                     $"[PreRecording] PruneToMaxDuration: No frames needed pruning " +
                     $"(all {_frames.Count} frames within last {_maxDuration.TotalSeconds:F1}s)");
             }
-            */
 
         }
     }

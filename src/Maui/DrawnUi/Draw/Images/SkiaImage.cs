@@ -112,7 +112,9 @@ public class SkiaImage : SkiaControl
                 {
                     var context = new SkiaDrawingContext()
                     {
-                        Canvas = surface.Canvas, Width = width, Height = height
+                        Canvas = surface.Canvas,
+                        Width = width,
+                        Height = height
                     };
                     var destination = new SKRect(0, 0, width, height);
                     var ctx = new DrawingContext(context, destination, 1, null);
@@ -311,6 +313,21 @@ public class SkiaImage : SkiaControl
         set { SetValue(RescalingQualityProperty, value); }
     }
 
+    public static readonly BindableProperty CacheRescaledSourceProperty = BindableProperty.Create(
+        nameof(CacheRescaledSource),
+        typeof(bool),
+        typeof(SkiaImage),
+        true);
+
+    /// <summary>
+    /// Defines if we should cached the rescaled source when RescalingQuality is set or apply the quality on every draw instead. Default is true. You might want to set this to false for very fast changing source, like camera/video feed etc.
+    /// </summary>
+    public bool CacheRescaledSource
+    {
+        get { return (bool)GetValue(CacheRescaledSourceProperty); }
+        set { SetValue(CacheRescaledSourceProperty, value); }
+    }
+
     public static readonly BindableProperty RescaleSourceProperty = BindableProperty.Create(
         nameof(RescaleSource),
         typeof(bool),
@@ -326,7 +343,7 @@ public class SkiaImage : SkiaControl
         get { return (bool)GetValue(RescaleSourceProperty); }
         set { SetValue(RescaleSourceProperty, value); }
     }
-    
+
     private static void OnLoadSourceChanged(BindableObject bindable, object oldvalue, object newvalue)
     {
         if (bindable is SkiaImage control)
@@ -434,7 +451,8 @@ public class SkiaImage : SkiaControl
     {
         return SetImage(new LoadedImageSource(bitmap)
         {
-            ProtectFromDispose = protectFromDispose, ProtectBitmapFromDispose = SkiaImageManager.ReuseBitmaps
+            ProtectFromDispose = protectFromDispose,
+            ProtectBitmapFromDispose = SkiaImageManager.ReuseBitmaps || protectFromDispose
         });
     }
 
@@ -442,7 +460,8 @@ public class SkiaImage : SkiaControl
     {
         return SetImage(new LoadedImageSource(image)
         {
-            ProtectFromDispose = protectFromDispose, ProtectBitmapFromDispose = SkiaImageManager.ReuseBitmaps
+            ProtectFromDispose = protectFromDispose,
+            ProtectBitmapFromDispose = SkiaImageManager.ReuseBitmaps || protectFromDispose
         });
     }
 
@@ -1126,7 +1145,8 @@ public class SkiaImage : SkiaControl
         {
             ImagePaint = new()
             {
-                IsAntialias = true, IsDither = IsDistorted,
+                IsAntialias = true,
+                IsDither = IsDistorted,
                 //FilterQuality = SKFilterQuality.Medium
             };
         }
@@ -1384,6 +1404,7 @@ public class SkiaImage : SkiaControl
         }
 
         public SKFilterQuality Quality { get; set; }
+
         public Guid Source { get; set; }
 
         public void Dispose()
@@ -1418,14 +1439,29 @@ public class SkiaImage : SkiaControl
         };
     }
 
-    protected virtual void DrawSourceBitmap(DrawingContext ctx, SKBitmap bitmap, SKRect display, SKPaint paint)
+    protected virtual void DrawSourceBitmap(DrawingContext ctx, SKBitmap bitmap, SKRect display, SKPaint paint, SKFilterQuality quality = SKFilterQuality.None)
     {
-        ctx.Context.Canvas.DrawBitmap(bitmap, display, paint);
+        if (quality != SKFilterQuality.None)
+        {
+            paint.FilterQuality = quality;
+            ctx.Context.Canvas.DrawBitmap(bitmap, display, paint);
+        }
+        else
+        {
+            ctx.Context.Canvas.DrawBitmap(bitmap, display, paint);
+        }
     }
 
-    protected virtual void DrawSourceImage(DrawingContext ctx, SKImage image, SKRect display, SKPaint paint)
+    protected virtual void DrawSourceImage(DrawingContext ctx, SKImage image, SKRect display, SKPaint paint, SKFilterQuality quality = SKFilterQuality.None)
     {
-        ctx.Context.Canvas.DrawImage(image, display, paint);
+        if (quality != SKFilterQuality.None)
+        {
+            ctx.Context.Canvas.DrawImage(image, display, GetSamplingOptions(quality, false), paint);
+        }
+        else
+        {
+            ctx.Context.Canvas.DrawImage(image, display, paint);
+        }
     }
 
     /// <summary>
@@ -1463,7 +1499,7 @@ public class SkiaImage : SkiaControl
 
             TextureScale = new(dest.Width / display.Width, dest.Height / display.Height);
 
-            if (this.RescalingQuality != SKFilterQuality.None)
+            if (this.RescalingQuality != SKFilterQuality.None && CacheRescaledSource)
             {
                 var targetWidth = (int)Math.Round(display.Width);
                 var targetHeight = (int)Math.Round(display.Height);
@@ -1516,7 +1552,9 @@ public class SkiaImage : SkiaControl
 
                         ScaledSource = new()
                         {
-                            Source = source.Id, Bitmap = resizedBmp, Quality = RescalingQuality
+                            Source = source.Id,
+                            Bitmap = resizedBmp,
+                            Quality = RescalingQuality
                         };
                         kill?.Dispose();
 
@@ -1536,11 +1574,11 @@ public class SkiaImage : SkiaControl
             {
                 if (source.Bitmap != null)
                 {
-                    DrawSourceBitmap(ctx, source.Bitmap, display, paint);
+                    DrawSourceBitmap(ctx, source.Bitmap, display, paint, RescalingQuality);
                 }
                 else if (source.Image != null)
                 {
-                    DrawSourceImage(ctx, source.Image, display, paint);
+                    DrawSourceImage(ctx, source.Image, display, paint, RescalingQuality);
                 }
             }
         }
@@ -1551,9 +1589,23 @@ public class SkiaImage : SkiaControl
     }
 
     /// <summary>
-    /// The viewport scaled source will be rendered into, can be different from the control output area.
+    /// The viewport scaled source will be rendered into, can be different from the control output area. Will raise DisplayRectChanged event.
     /// </summary>
-    public SKRect DisplayRect { get; protected set; }
+    SKRect _displayRect;
+    public SKRect DisplayRect
+    {
+        get => _displayRect;
+        set
+        {
+            if (_displayRect != value)
+            {
+                _displayRect = value;
+                DisplayRectChanged?.Invoke(this, value);
+            }
+        }
+    }
+
+    public event EventHandler<SKRect> DisplayRectChanged;
 
     public SKPoint TextureScale { get; protected set; }
     public ScaledRect SourceImageSize { get; protected set; }

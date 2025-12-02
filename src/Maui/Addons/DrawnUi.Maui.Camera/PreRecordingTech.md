@@ -513,20 +513,289 @@ _bufferB = new byte[bufferSize];
 ## Platform-Specific Notes
 
 ### iOS/MacCatalyst
-- Uses **VTCompressionSession** for hardware H.264 encoding
-- Uses **AVAssetWriter** with null output settings (pass-through mode)
-- Uses **CMSampleBuffer** with timing information
-- Uses **AVMutableComposition** for muxing
 
-### Android (Future)
-- Use **MediaCodec** for hardware H.264 encoding
-- Use **MediaMuxer** for MP4 writing
-- Use **MediaExtractor** + **MediaMuxer** for concatenation
+**✅ STATUS: FULLY IMPLEMENTED AND TESTED**
 
-### Windows (Future)
-- Use **MediaFoundation** MFT (Media Foundation Transform)
-- Use **IMFSinkWriter** for MP4 writing
-- Use **IMFSourceReader** + **IMFSinkWriter** for concatenation
+**Core Components:**
+- **VTCompressionSession** - Hardware H.264 encoding
+- **PrerecordingEncodedBuffer** - Circular buffer for encoded frames (27MB total)
+- **AVAssetWriter** - MP4 file writing
+- **AVMutableComposition** - Seamless video concatenation
+
+**Implementation Flow:**
+
+*Initialization (`AppleVideoToolboxEncoder.InitializeAsync()`:93-155):*
+```csharp
+if (IsPreRecordingMode)
+{
+    // 1. Create VTCompressionSession for H.264 encoding
+    InitializeCompressionSession();
+
+    // 2. Initialize circular buffer
+    _preRecordingBuffer = new PrerecordingEncodedBuffer(preRecordDuration);
+
+    // 3. Start buffering immediately
+    _isRecording = true;  // Buffering starts NOW
+    EncodingStatus = "Buffering";
+}
+```
+
+*Buffering Phase (`CompressionOutputCallback()`:249-273, `BufferEncodedFrame()`:275-335):*
+- VTCompressionSession calls callback for each encoded frame
+- Extract H.264 NAL units from CMSampleBuffer
+- Append to circular buffer with full timing: `_preRecordingBuffer.AppendEncodedFrame(h264Data, size, timestamp, presentationTime, duration)`
+- Buffer automatically rotates and prunes to maintain max duration
+- Saves `_videoFormatDescription` from first frame (contains SPS/PPS headers)
+
+*User Presses Record (`StartAsync()`:378-532):*
+```csharp
+// 1. Prune buffer (line 797)
+_preRecordingBuffer.PruneToMaxDuration();
+
+// 2. Write buffer to MP4 (line 396-412)
+await WriteBufferedFramesToMp4Async(_preRecordingBuffer, _preRecordingFilePath);
+
+// 3. Calculate pre-recording duration from ACTUAL frame timestamps (line 410)
+_preRecordingDuration = _preRecordingBuffer.GetBufferedDuration();
+
+// 4. Dispose compression session (line 419-421)
+_compressionSession?.Dispose();
+_preRecordingBuffer = null;
+
+// 5. Initialize AVAssetWriter for live recording (line 423-453)
+_writer = new AVAssetWriter(url, "public.mpeg-4", ...);
+_pixelBufferAdaptor = new AVAssetWriterInputPixelBufferAdaptor(...);
+_writer.StartSessionAtSourceTime(CMTime.Zero);
+```
+
+*Live Recording Phase (`SubmitFrameToAssetWriter()`:704-773):*
+```csharp
+// CRITICAL: Offset timestamps by pre-recording duration (line 746-749)
+double timestamp = _pendingTimestamp.TotalSeconds;
+if (_preRecordingDuration > TimeSpan.Zero)
+{
+    timestamp += _preRecordingDuration.TotalSeconds;
+}
+CMTime ts = CMTime.FromSeconds(timestamp, 1_000_000);
+_pixelBufferAdaptor.AppendPixelBufferWithPresentationTime(pixelBuffer, ts);
+```
+
+*Stop and Muxing (`StopAsync()`:776-970, `ConcatenateVideosAsync()`:988-1197):*
+```csharp
+// 1. Finalize live recording
+_writer.FinishWriting();
+
+// 2. Create composition
+var composition = AVMutableComposition.Create();
+var videoTrack = composition.AddMutableTrack(...);
+
+// 3. Insert pre-recording at time 0
+videoTrack.InsertTimeRange(preRecTimeRange, preRecVideoTrack, CMTime.Zero, out error);
+
+// 4. Insert live recording after pre-recording
+videoTrack.InsertTimeRange(liveRecTimeRange, liveRecVideoTrack, preRecAsset.Duration, out error);
+
+// 5. Export to final file
+var exportSession = new AVAssetExportSession(composition, AVAssetExportSessionPreset.Passthrough);
+exportSession.ExportAsynchronously();
+```
+
+**Critical Implementation Details:**
+
+*Writing Buffered Frames to MP4 (`WriteBufferedFramesToMp4Async()`:1199-1455):*
+```csharp
+// 1. Create AVAssetWriter with NULL output settings (pass-through, no re-encoding)
+videoInput = new AVAssetWriterInput(
+    AVMediaTypes.Video,
+    outputSettings: null,  // CRITICAL: null = pass-through H.264
+    sourceFormatHint: _videoFormatDescription  // Provides SPS/PPS
+);
+
+// 2. Adjust ALL timestamps to start from zero (line 1283-1340)
+CMTime firstFramePts = frames[0].PresentationTime;
+foreach (var frame in frames)
+{
+    var adjustedPts = CMTime.Subtract(presentationTime, firstFramePts);
+    var timing = new CMSampleTimingInfo
+    {
+        PresentationTimeStamp = adjustedPts,  // 0.0s, 0.033s, 0.066s...
+        Duration = duration,
+        DecodeTimeStamp = CMTime.Invalid
+    };
+    // Create CMSampleBuffer and append...
+}
+```
+
+**Key Files and Line Numbers:**
+- `AppleVideoToolboxEncoder.cs`:
+  - Initialization: 93-155
+  - Compression callback: 249-273
+  - Buffer frame: 275-335
+  - Start (transition): 378-532
+  - Live frame submit: 704-773
+  - Stop: 776-970
+  - Write buffered frames: 1199-1455
+  - Concatenate videos: 988-1197
+- `PrerecordingEncodedBuffer.cs`: Complete implementation
+- `SkiaCamera.Apple.cs:498-612`: Muxing wrapper (delegates to encoder)
+
+### Android
+
+**Implementation:** `AndroidCaptureVideoEncoder.cs`
+
+**Key Differences from iOS:**
+- **No circular buffer in memory** - Writes frames directly to file using Media Foundation
+- **Direct file writing** during pre-recording to `pre_rec_*.mp4`
+- **No keyframe detection needed** - MediaCodec handles MP4 structure automatically
+- **Timestamp offset** applied during live recording phase
+
+**Architecture:**
+```
+Pre-Recording Phase:
+  Camera → Frame Processor → MediaCodec (Surface input) → MediaMuxer → pre_rec_*.mp4
+
+Live Recording Phase:
+  Camera → Frame Processor → MediaCodec (Surface input) → MediaMuxer → live_rec_*.mp4
+  (timestamps offset by pre-recording duration)
+
+Finalization:
+  Mux pre_rec_*.mp4 + live_rec_*.mp4 → final output
+```
+
+**✅ STATUS: IMPLEMENTED - READY FOR TESTING**
+
+The Android implementation now mirrors the iOS architecture. All core pre-recording features have been implemented and compile successfully. Testing on actual Android devices is pending.
+
+**Encoding Architecture:**
+- **MediaCodec** with Surface input for hardware H.264 encoding
+- GPU path: EGL/OpenGL ES + Skia for compositing overlays
+- Configuration: H.264, 1 second keyframe interval, adaptive bitrate
+
+**Two-Phase Recording (Implemented):**
+
+*Phase 1 - Pre-Recording (Buffering):*
+```
+Camera → EGL Surface → MediaCodec → H.264 output → PrerecordingEncodedBuffer (memory)
+```
+- Extract encoded frames from MediaCodec.DequeueOutputBuffer()
+- Store in PrerecordingEncodedBuffer circular buffer (same as iOS)
+- Buffer rotates every PreRecordDuration seconds
+- Keyframe detection via H.264 NAL unit parsing
+
+*Phase 2 - Live Recording:*
+```
+Camera → EGL Surface → MediaCodec → MediaMuxer → live_rec_*.mp4 (file)
+```
+- Switch from buffer to file writing
+- Write buffered frames to `pre_rec_*.mp4` first
+- Offset live timestamps by pre-recording duration
+- Mux both files at end
+
+**File Writing:**
+- Pre-recording: Extract from circular buffer → write to `pre_rec_{guid}.mp4`
+- Live recording: Direct MediaCodec output → `live_rec_{guid}.mp4`
+- Both files use **MediaMuxer** for MP4 container
+
+**Timestamp Handling:**
+```csharp
+// Phase 1: Buffering - Store raw timestamps
+var timestamp = TimeSpan.FromNanoseconds(sampleInfo.PresentationTimeUs * 1000);
+_preRecordingBuffer.AppendEncodedFrame(encodedData, size, timestamp);
+
+// Phase 2: Live Recording - Offset timestamps
+double timestampMs = _pendingTimestamp.TotalMilliseconds;
+if (_preRecordingDuration > TimeSpan.Zero)
+{
+    timestampMs += _preRecordingDuration.TotalMilliseconds;
+}
+long ptsNanos = (long)(timestampMs * 1_000_000.0);
+EGLExt.EglPresentationTimeANDROID(_eglDisplay, _eglSurface, ptsNanos);
+```
+
+**Muxing:**
+- **MediaExtractor + MediaMuxer** - Extract tracks from both files, write sequentially with time offsets
+- Implemented in `AndroidCaptureVideoEncoder.cs:747-843`
+- Reads pre-recorded file first, then live file with duration offset
+
+**Implementation Checklist:**
+1. ✅ PrerecordingEncodedBuffer class (shared with iOS)
+2. ✅ Instantiate buffer in AndroidCaptureVideoEncoder
+3. ✅ Extract encoded frames from MediaCodec during buffering
+4. ✅ Implement two-phase recording (buffer → file transition)
+5. ✅ Write buffered frames to MP4 on StartAsync()
+6. ⚠️ Keyframe detection (inherited from buffer class, needs Android H.264 testing)
+7. ✅ Muxing logic (fully implemented)
+
+**Memory Profile:**
+- ~27 MB (PrerecordingEncodedBuffer - same as iOS)
+- ~2 MB (EGL surfaces + encoder working buffers)
+- Total: ~29 MB vs iOS ~29 MB (parity achieved)
+
+**Key Files and Line Numbers:**
+- `AndroidCaptureVideoEncoder.cs`:
+  - Initialization with buffer: 82-153
+  - DrainEncoder (buffer extraction): 346-432
+  - StartAsync (transition): 155-260
+  - StopAsync (muxing): 390-563
+  - WriteBufferedFramesToMp4Async: 620-742
+  - MuxVideosAsync: 747-843
+- `PrerecordingEncodedBuffer.cs`: Shared implementation with iOS
+- `SkiaCamera.Android.cs:262-288`: Platform wrapper (delegates to encoder)
+
+### Windows
+
+**Implementation:** `WindowsCaptureVideoEncoder.cs`
+
+**Key Differences from iOS:**
+- **No circular buffer in memory** - Writes frames directly to file using Media Foundation
+- **Direct file writing** during pre-recording to `pre_rec_*.mp4`
+- **No keyframe detection needed** - Media Foundation handles MP4 structure automatically
+- **Timestamp offset** applied during live recording phase
+
+**Architecture:**
+```
+Pre-Recording Phase:
+  Camera → Frame Processor → IMFSinkWriter → pre_rec_*.mp4
+
+Live Recording Phase:
+  Camera → Frame Processor → IMFSinkWriter → live_rec_*.mp4
+  (timestamps offset by pre-recording duration)
+
+Finalization:
+  Mux pre_rec_*.mp4 + live_rec_*.mp4 → final output
+```
+
+**Encoding:**
+- Uses **Media Foundation** IMFSinkWriter for hardware H.264 encoding
+- Direct GPU path using D3D11/Skia interop (when GRContext available)
+- Configuration: H.264, 1 second keyframe interval, adaptive bitrate
+
+**File Writing:**
+- Pre-recording writes to temporary file: `pre_rec_{guid}.mp4`
+- Live recording writes to temporary file: `live_rec_{guid}.mp4`
+- Both files use **IMFSinkWriter** for MP4 container
+
+**Timestamp Handling:**
+```csharp
+// Apply pre-recording offset to timestamp if live recording after pre-recording
+double timestampSeconds = _pendingTimestamp.TotalSeconds;
+if (_preRecordingDuration > TimeSpan.Zero)
+{
+    timestampSeconds += _preRecordingDuration.TotalSeconds;
+}
+
+long sampleTime = (long)(timestampSeconds * 10_000_000L); // 100ns units
+sample.SetSampleTime(sampleTime);
+```
+
+**Muxing:**
+1. **FFmpeg** (preferred) - Uses concat demuxer for lossless muxing
+2. **Simple concatenation** (fallback) - Binary file concatenation (may produce invalid MP4)
+
+**Memory Profile:**
+- ~3-5 MB (Media Foundation buffers + encoder state)
+- No large circular buffer needed
+- Relies on file system for buffering
 
 ## Diagnostics and Logging
 

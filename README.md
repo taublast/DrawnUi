@@ -33,10 +33,12 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
 
 ---
 
-## 🆕 What's new for 1.7.4.4
+## 🆕 What's new for 1.7.4.5
 
-* HOTFIX Windows startup not found main thread for displays with a < 120Hz refresh rate.
- 
+* FIX Windows active/inactive canvas check
+* FIX gestures location mapping for conttrols with complex transforms
+* SkiaCamera pre-recording feature, saved video orientaton Apple/Android fixes.
+
 ## 💡 Hint of the Day
 
 **❓ Q: How to make images to Fade-In when loaded?**

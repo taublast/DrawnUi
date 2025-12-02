@@ -483,7 +483,6 @@ namespace DrawnUi.Infrastructure
 
         #endregion
 
-
         #region Drawing (Updated for ES 2.0)
 
         [DllImport(WindowsModernLibraryName, EntryPoint = "glEnable")]

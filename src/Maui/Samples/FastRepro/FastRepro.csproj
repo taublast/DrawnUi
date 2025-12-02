@@ -114,18 +114,19 @@
 	<ItemGroup>
         <!--https://github.com/BretJohnson/hot-preview-->
         <!--<PackageReference Include="HotPreview.App.Maui" Version="0.12.6" />-->
-        <PackageReference Include="FluentColors.Maui" Version="1.0.0.5">
+
+        <PackageReference Include="FluentColors.Maui" Version="1.0.0.6">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+
         <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
         <!--<PackageReference Include="DrawnUi.Maui" Version="1.6.2.5" />-->
 	</ItemGroup>
 
-
-	<ItemGroup>
-	  <ProjectReference Include="..\..\Addons\DrawnUi.Maui.Camera\DrawnUi.Maui.Camera.csproj" />
+    <ItemGroup>
+        <ProjectReference Include="..\..\Addons\DrawnUi.Maui.Camera\DrawnUi.Maui.Camera.csproj" />
 	</ItemGroup>
 
     <ItemGroup>
@@ -133,6 +134,9 @@
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>ResStrings.resx</DependentUpon>
+        </Compile>
+        <Compile Update="TestRandom.xaml.cs">
+          <DependentUpon>TestRandom.xaml</DependentUpon>
         </Compile>
     </ItemGroup>
 
@@ -145,6 +149,12 @@
 
     <ItemGroup>
       <Folder Include="Extensions\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiXaml Update="TestRandom.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
     </ItemGroup>
 
 

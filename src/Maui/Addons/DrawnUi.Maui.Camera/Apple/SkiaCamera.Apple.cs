@@ -545,13 +545,27 @@ public partial class SkiaCamera
 
                 // Add live recording video
                 var liveTracks = liveAsset.TracksWithMediaType(AVMediaTypes.Video.GetConstant());
+                AVFoundation.AVAssetTrack liveTrack = null;
                 if (liveTracks != null && liveTracks.Length > 0)
                 {
-                    var liveTrack = liveTracks[0];
+                    liveTrack = liveTracks[0];
                     var liveRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = liveAsset.Duration };
                     videoTrack.InsertTimeRange(liveRange, liveTrack, currentTime, out var error);
                     if (error != null)
                         throw new InvalidOperationException($"Failed to insert live track: {error.LocalizedDescription}");
+                }
+
+                // CRITICAL: Copy transform from source track to composition to preserve orientation
+                // Both source files have correct transform, so copy from live track (or pre-track if live is null)
+                if (liveTrack != null)
+                {
+                    videoTrack.PreferredTransform = liveTrack.PreferredTransform;
+                    System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Copied PreferredTransform from live track to composition");
+                }
+                else if (preTracks != null && preTracks.Length > 0)
+                {
+                    videoTrack.PreferredTransform = preTracks[0].PreferredTransform;
+                    System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Copied PreferredTransform from pre-recording track to composition");
                 }
 
                 // Export composition to file
