@@ -99,7 +99,6 @@ namespace DrawnUi.Views
                 PropertySetExtensions.AddSize(surfaceCreationProperties, Egl.EGLRenderSurfaceSizeProperty, renderSurfaceSize.Value.Width, renderSurfaceSize.Value.Height);
             }
 
-
             // If a resolution scale is specified, add it to the surface creation properties
             if (resolutionScale.HasValue)
             {
