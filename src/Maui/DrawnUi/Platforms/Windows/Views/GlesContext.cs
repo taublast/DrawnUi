@@ -8,6 +8,7 @@ using EGLContext = System.IntPtr;
 using EGLDisplay = System.IntPtr;
 using EGLSurface = System.IntPtr;
 using Size = Windows.Foundation.Size;
+ 
 
 namespace DrawnUi.Views
 {
@@ -95,8 +96,9 @@ namespace DrawnUi.Views
             // If a render surface size is specified, add it to the surface creation properties
             if (renderSurfaceSize.HasValue)
             {
-                PropertySetExtensions.AddSize(surfaceCreationProperties, Egl.EGLRenderSurfaceSizeProperty, renderSurfaceSize.Value);
+                PropertySetExtensions.AddSize(surfaceCreationProperties, Egl.EGLRenderSurfaceSizeProperty, renderSurfaceSize.Value.Width, renderSurfaceSize.Value.Height);
             }
+
 
             // If a resolution scale is specified, add it to the surface creation properties
             if (resolutionScale.HasValue)
