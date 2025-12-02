@@ -121,6 +121,7 @@ namespace DrawnUi.Views
                 if (Handler?.PlatformView is FrameworkElement element)
                 {
                     element.EffectiveViewportChanged += ElementOnEffectiveViewportChanged;
+                    element.LayoutUpdated += ElementOnLayoutUpdated;
                 }
                 CompositionTarget.Rendering += OnRendering;
             }
@@ -130,6 +131,7 @@ namespace DrawnUi.Views
                 if (Handler?.PlatformView is FrameworkElement element)
                 {
                     element.EffectiveViewportChanged -= ElementOnEffectiveViewportChanged;
+                    element.LayoutUpdated -= ElementOnLayoutUpdated;
                 }
             }
         }
@@ -141,6 +143,15 @@ namespace DrawnUi.Views
             _checkVisibility = true;
             _viewportChangedTime = DateTime.UtcNow;
             //Debug.WriteLine($"[DrawnView] CHANGED {Tag}");
+        }
+
+        private void ElementOnLayoutUpdated(object sender, object e)
+        {
+            // Similar to Android's OnGlobalLayout - fires when visual tree layout changes
+            if (Handler?.PlatformView != null)
+            {
+                NeedCheckParentVisibility = true;
+            }
         }
 
         private void OnRendering(object sender, object e)
@@ -226,23 +237,23 @@ namespace DrawnUi.Views
             return CanvasView != null
                    && this.Handler != null
                    && this.Handler.PlatformView != null
-                   && !CanvasView.IsDrawing
+                   //&& !CanvasView.IsDrawing
                    && IsDirty
                    && !(UpdateLocks > 0 && StopDrawingWhenUpdateIsLocked)
                    && IsVisible
-                   && Super.EnableRendering
-                   && !IsHiddenInViewTree; // Added check
+                   && Super.EnableRendering;
         }
 #endif
 
         private void OnSuperFrame(object sender, EventArgs e)
         {
+            if (NeedCheckParentVisibility)
+            {
+                CheckElementVisibility(this);
+            }
+
             if (CheckCanDraw())
             {
-                if (NeedCheckParentVisibility)
-                {
-                    CheckElementVisibility(this);
-                }
                 if (CanDraw && !IsHiddenInViewTree)
                 {
                     CanvasView.Update();
