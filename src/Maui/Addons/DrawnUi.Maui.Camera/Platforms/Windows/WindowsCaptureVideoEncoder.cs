@@ -31,12 +31,16 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     private System.Threading.Timer _progressTimer;
     private int _totalFrameCount; // Track total frames processed
 
-    // Pre-recording support
-    private string _preRecordingFilePath;     // Pre-recording buffer MP4
-    private string _liveRecordingFilePath;    // Live recording MP4
-    private string _outputPath;               // Final output path
-    private PrerecordingEncodedBuffer _preRecordingBuffer; // Not used on Windows (no direct H.264 access)
+    // Pre-recording circular buffer files (2-file swap pattern like iOS)
+    private string _preRecBufferA;           // First buffer file
+    private string _preRecBufferB;           // Second buffer file
+    private string _currentPreRecBuffer;     // Which buffer is active (A or B)
+    private string _outputPath;              // Final output path
+    private TimeSpan _preRecordDuration;     // Max duration per buffer (e.g., 5 seconds)
+    private DateTime _currentBufferStartTime; // When current buffer started writing
+    private bool _isBufferA = true;          // Track which buffer is active
     private TimeSpan _preRecordingDuration;   // Offset for live recording timestamps
+    private TimeSpan _preRecordDurationLimit; // Limit for clamping offset (matches PreRecordDuration property)
     private bool _encodingDurationSetFromFrames = false;
 
     // GPU composition fields (temporary bridge until full Media Foundation path is implemented)
@@ -101,104 +105,146 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         var outputDir = Path.GetDirectoryName(_outputPath);
         Directory.CreateDirectory(outputDir);
 
-        string targetFilePath;
-
-        // Initialize based on mode
-        if (IsPreRecordingMode && ParentCamera != null)
-        {
-            // Pre-recording mode: Write directly to temp file for pre-recording buffer
-            var guid = Guid.NewGuid().ToString("N");
-            _preRecordingFilePath = Path.Combine(outputDir, $"pre_rec_{guid}.mp4");
-            _liveRecordingFilePath = Path.Combine(outputDir, $"live_rec_{guid}.mp4");
-            targetFilePath = _preRecordingFilePath;
-
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Pre-recording mode: Writing to {_preRecordingFilePath}");
-        }
-        else
-        {
-            // Normal/live recording mode
-            targetFilePath = _outputPath;
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Normal recording mode: Writing to {_outputPath}");
-        }
-
-        // Create/replace output file
-        var folder = await StorageFolder.GetFolderFromPathAsync(Path.GetDirectoryName(targetFilePath));
-        var fileName = Path.GetFileName(targetFilePath);
-        _outputFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
-
-        // Initialize Media Foundation
+        // Initialize Media Foundation (needed for both paths)
         var hr = PInvoke.MFStartup(MF_VERSION_CONST, 0);
         if (hr.Failed)
             throw new InvalidOperationException($"MFStartup failed: 0x{hr.Value:X8}");
         _mfStarted = true;
 
-        // Create sink writer
-        unsafe
-        {
-            fixed (char* p = _outputFile.Path)
-            {
-                hr = PInvoke.MFCreateSinkWriterFromURL(new PCWSTR(p), null, null, out _sinkWriter);
-            }
-        }
-        if (hr.Failed || _sinkWriter == null)
-            throw new InvalidOperationException($"MFCreateSinkWriterFromURL failed: 0x{hr.Value:X8}");
-
-        // Configure output type (H.264)
-        hr = PInvoke.MFCreateMediaType(out var outType);
-        if (hr.Failed)
-            throw new InvalidOperationException($"MFCreateMediaType(out) failed: 0x{hr.Value:X8}");
-        try
-        {
-            outType.SetGUID(MFGuids.MF_MT_MAJOR_TYPE, MFGuids.MFMediaType_Video);
-            outType.SetGUID(MFGuids.MF_MT_SUBTYPE, MFGuids.MFVideoFormat_H264);
-
-            // Frame size / rate / pixel aspect
-            SetAttributeSize(outType, MFGuids.MF_MT_FRAME_SIZE, (uint)_width, (uint)_height);
-            SetAttributeRatio(outType, MFGuids.MF_MT_FRAME_RATE, (uint)_frameRate, 1);
-            SetAttributeRatio(outType, MFGuids.MF_MT_PIXEL_ASPECT_RATIO, 1, 1);
-            outType.SetUINT32(MFGuids.MF_MT_INTERLACE_MODE, 2); // Progressive
-            outType.SetUINT32(MFGuids.MF_MT_MPEG2_PROFILE, 100); // H.264 High profile
-
-            // Bitrate estimate (simple heuristic)
-            uint bitrate = (uint)(Math.Max(1, _width * _height) * Math.Max(1, _frameRate) * 4 / 10);
-            outType.SetUINT32(MFGuids.MF_MT_AVG_BITRATE, bitrate);
-
-            _sinkWriter.AddStream(outType, out _streamIndex);
-        }
-        finally
-        {
-            Marshal.ReleaseComObject(outType);
-        }
-
-        // Configure input type (ARGB32 frames)
-        hr = PInvoke.MFCreateMediaType(out var inType);
-        if (hr.Failed)
-            throw new InvalidOperationException($"MFCreateMediaType(in) failed: 0x{hr.Value:X8}");
-        try
-        {
-            inType.SetGUID(MFGuids.MF_MT_MAJOR_TYPE, MFGuids.MFMediaType_Video);
-            inType.SetGUID(MFGuids.MF_MT_SUBTYPE, MFGuids.MFVideoFormat_RGB32);
-            SetAttributeSize(inType, MFGuids.MF_MT_FRAME_SIZE, (uint)_width, (uint)_height);
-            SetAttributeRatio(inType, MFGuids.MF_MT_FRAME_RATE, (uint)_frameRate, 1);
-            SetAttributeRatio(inType, MFGuids.MF_MT_PIXEL_ASPECT_RATIO, 1, 1);
-            inType.SetUINT32(MFGuids.MF_MT_INTERLACE_MODE, 2); // Progressive
-            inType.SetUINT32(MFGuids.MF_MT_ALL_SAMPLES_INDEPENDENT, 1);
-            inType.SetUINT32(MFGuids.MF_MT_DEFAULT_STRIDE, (uint)(_width * 4));
-            inType.SetUINT32(MFGuids.MF_MT_FIXED_SIZE_SAMPLES, 1);
-            inType.SetUINT32(MFGuids.MF_MT_SAMPLE_SIZE, (uint)(_width * _height * 4));
-
-            _sinkWriter.SetInputMediaType(_streamIndex, inType, null);
-        }
-        finally
-        {
-            Marshal.ReleaseComObject(inType);
-        }
-
-        // Ready to start writing
-        _sinkWriter.BeginWriting();
-
         _rtDurationPerFrame = (long)(10_000_000L / Math.Max(1, _frameRate)); // 100-ns units per frame
         _lastSampleTime100ns = -1;
+
+        // Initialize limit for BOTH pre-rec and live encoders (needed for offset clamping)
+        if (ParentCamera != null)
+        {
+            _preRecordDurationLimit = ParentCamera.PreRecordDuration;
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Initialized pre-recording duration limit: {_preRecordDurationLimit.TotalSeconds:F2}s");
+        }
+
+        // Initialize based on mode
+        if (IsPreRecordingMode && ParentCamera != null)
+        {
+            // PRE-RECORDING MODE: Use IMFSinkWriter with 2-file circular buffer (iOS-like)
+            // NOTE: This encoder handles ONLY pre-recording. Live recording is handled by a separate encoder instance.
+            var guid = Guid.NewGuid().ToString("N");
+
+            // Create two temp buffer files for circular buffering
+            _preRecBufferA = Path.Combine(outputDir, $"pre_rec_a_{guid}.mp4");
+            _preRecBufferB = Path.Combine(outputDir, $"pre_rec_b_{guid}.mp4");
+            _outputPath = outputPath;
+            _preRecordDuration = ParentCamera.PreRecordDuration;
+            _isBufferA = true;
+            _currentPreRecBuffer = _preRecBufferA;
+            _currentBufferStartTime = DateTime.UtcNow;
+
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Pre-recording mode (2-encoder pattern):");
+            Debug.WriteLine($"  Buffer A: {_preRecBufferA}");
+            Debug.WriteLine($"  Buffer B: {_preRecBufferB}");
+            Debug.WriteLine($"  Output path: {_outputPath}");
+            Debug.WriteLine($"  Max duration per buffer: {_preRecordDuration.TotalSeconds}s");
+            Debug.WriteLine($"  NOTE: Live recording will be handled by separate encoder instance");
+
+            // Create IMFSinkWriter for first buffer (Buffer A)
+            var folder = await StorageFolder.GetFolderFromPathAsync(Path.GetDirectoryName(_currentPreRecBuffer));
+            var fileName = Path.GetFileName(_currentPreRecBuffer);
+            _outputFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+
+            // Create sink writer (SAME as normal mode)
+            unsafe
+            {
+                fixed (char* p = _outputFile.Path)
+                {
+                    var hr2 = PInvoke.MFCreateSinkWriterFromURL(new PCWSTR(p), null, null, out _sinkWriter);
+                    if (hr2.Failed)
+                        throw new InvalidOperationException($"MFCreateSinkWriterFromURL failed: 0x{hr2.Value:X8}");
+                }
+            }
+
+            // Configure H.264 output + RGB32 input (SAME as normal mode)
+            ConfigureH264OutputAndRGB32Input();
+
+            _sinkWriter.BeginWriting();
+            _isRecording = true;
+
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Pre-recording started to buffer A");
+            return;
+        }
+        else
+        {
+            // NORMAL RECORDING MODE: Use IMFSinkWriter directly (existing behavior)
+            string targetFilePath = _outputPath;
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Normal recording mode: Writing to {_outputPath}");
+
+            // Create/replace output file
+            var folder = await StorageFolder.GetFolderFromPathAsync(Path.GetDirectoryName(targetFilePath));
+            var fileName = Path.GetFileName(targetFilePath);
+            _outputFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+
+            // Create sink writer
+            unsafe
+            {
+                fixed (char* p = _outputFile.Path)
+                {
+                    hr = PInvoke.MFCreateSinkWriterFromURL(new PCWSTR(p), null, null, out _sinkWriter);
+                }
+            }
+            if (hr.Failed || _sinkWriter == null)
+                throw new InvalidOperationException($"MFCreateSinkWriterFromURL failed: 0x{hr.Value:X8}");
+
+            // Configure output type (H.264)
+            hr = PInvoke.MFCreateMediaType(out var outType);
+            if (hr.Failed)
+                throw new InvalidOperationException($"MFCreateMediaType(out) failed: 0x{hr.Value:X8}");
+            try
+            {
+                outType.SetGUID(MFGuids.MF_MT_MAJOR_TYPE, MFGuids.MFMediaType_Video);
+                outType.SetGUID(MFGuids.MF_MT_SUBTYPE, MFGuids.MFVideoFormat_H264);
+
+                // Frame size / rate / pixel aspect
+                SetAttributeSize(outType, MFGuids.MF_MT_FRAME_SIZE, (uint)_width, (uint)_height);
+                SetAttributeRatio(outType, MFGuids.MF_MT_FRAME_RATE, (uint)_frameRate, 1);
+                SetAttributeRatio(outType, MFGuids.MF_MT_PIXEL_ASPECT_RATIO, 1, 1);
+                outType.SetUINT32(MFGuids.MF_MT_INTERLACE_MODE, 2); // Progressive
+                outType.SetUINT32(MFGuids.MF_MT_MPEG2_PROFILE, 100); // H.264 High profile
+
+                // Bitrate estimate (simple heuristic)
+                uint bitrate = (uint)(Math.Max(1, _width * _height) * Math.Max(1, _frameRate) * 4 / 10);
+                outType.SetUINT32(MFGuids.MF_MT_AVG_BITRATE, bitrate);
+
+                _sinkWriter.AddStream(outType, out _streamIndex);
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(outType);
+            }
+
+            // Configure input type (ARGB32 frames)
+            hr = PInvoke.MFCreateMediaType(out var inType);
+            if (hr.Failed)
+                throw new InvalidOperationException($"MFCreateMediaType(in) failed: 0x{hr.Value:X8}");
+            try
+            {
+                inType.SetGUID(MFGuids.MF_MT_MAJOR_TYPE, MFGuids.MFMediaType_Video);
+                inType.SetGUID(MFGuids.MF_MT_SUBTYPE, MFGuids.MFVideoFormat_RGB32);
+                SetAttributeSize(inType, MFGuids.MF_MT_FRAME_SIZE, (uint)_width, (uint)_height);
+                SetAttributeRatio(inType, MFGuids.MF_MT_FRAME_RATE, (uint)_frameRate, 1);
+                SetAttributeRatio(inType, MFGuids.MF_MT_PIXEL_ASPECT_RATIO, 1, 1);
+                inType.SetUINT32(MFGuids.MF_MT_INTERLACE_MODE, 2); // Progressive
+                inType.SetUINT32(MFGuids.MF_MT_ALL_SAMPLES_INDEPENDENT, 1);
+                inType.SetUINT32(MFGuids.MF_MT_DEFAULT_STRIDE, (uint)(_width * 4));
+                inType.SetUINT32(MFGuids.MF_MT_FIXED_SIZE_SAMPLES, 1);
+                inType.SetUINT32(MFGuids.MF_MT_SAMPLE_SIZE, (uint)(_width * _height * 4));
+
+                _sinkWriter.SetInputMediaType(_streamIndex, inType, null);
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(inType);
+            }
+
+            // Ready to start writing
+            _sinkWriter.BeginWriting();
+        }
     }
 
 
@@ -304,14 +350,39 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     /// </summary>
     public void SetPreRecordingDuration(TimeSpan duration)
     {
-        _preRecordingDuration = duration;
-        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Set pre-recording duration offset: {duration.TotalSeconds:F2}s");
+        // Clamp to PreRecordDuration limit (for trimming scenarios)
+        // If pre-rec buffers will be trimmed to last N seconds, live must start at N (not actual time)
+        var clampedDuration = duration > _preRecordDurationLimit
+            ? _preRecordDurationLimit
+            : duration;
+
+        _preRecordingDuration = clampedDuration;
+
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Set pre-recording duration offset: actual={duration.TotalSeconds:F2}s, limit={_preRecordDurationLimit.TotalSeconds:F2}s, using={clampedDuration.TotalSeconds:F2}s");
     }
 
-    public Task StartAsync()
+    public async Task StartAsync()
     {
-        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] StartAsync CALLED: IsPreRecordingMode={IsPreRecordingMode}");
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== StartAsync CALLED ==========");
+        Debug.WriteLine($"  IsPreRecordingMode: {IsPreRecordingMode}");
+        Debug.WriteLine($"  _sinkWriter != null: {_sinkWriter != null}");
+        Debug.WriteLine($"  _isRecording: {_isRecording}");
 
+        // PRE-RECORDING MODE: This encoder handles ONLY pre-recording.
+        // In the 2-encoder pattern, there is NO transition from pre-rec to live.
+        // Live recording is handled by a completely separate encoder instance.
+        if (IsPreRecordingMode)
+        {
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Pre-recording encoder - StartAsync is NO-OP (2-encoder pattern)");
+            Debug.WriteLine($"  NOTE: Live recording will be handled by separate encoder instance");
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== StartAsync END ==========");
+            return;
+        }
+
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Normal mode - starting recording");
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== StartAsync END ==========");
+
+        // NORMAL RECORDING MODE: Just start recording (existing behavior)
         _isRecording = true;
         _startTime = DateTime.Now;
 
@@ -328,14 +399,34 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         {
             Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Live recording started after pre-recording offset: {_preRecordingDuration.TotalSeconds:F2}s");
         }
-
-        return Task.CompletedTask;
     }
 
     public async Task AddFrameAsync(SKBitmap bitmap, TimeSpan timestamp)
     {
-        if (!_isRecording || _sinkWriter == null)
+        if (!_isRecording)
             return;
+
+        // Track frame count for debugging
+        _totalFrameCount++;
+
+        // PRE-RECORDING MODE: Check if we need to swap buffers
+        if (IsPreRecordingMode && _sinkWriter != null)
+        {
+            // Check if current buffer duration exceeded
+            var elapsed = DateTime.UtcNow - _currentBufferStartTime;
+            if (elapsed >= _preRecordDuration)
+            {
+                await SwapPreRecordingBuffer();
+            }
+
+            // Fall through to normal frame writing (same RGB32 encoding path!)
+        }
+
+        // NORMAL RECORDING MODE (and pre-recording): Write directly to IMFSinkWriter
+        if (_sinkWriter == null)
+        {
+            return;
+        }
 
         // Ensure format is BGRA8888, premultiplied, matching encoder size
         SKBitmap source = bitmap;
@@ -394,14 +485,10 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 {
                     sample.AddBuffer(mediaBuffer);
 
-                    // Apply pre-recording offset to timestamp if live recording after pre-recording
-                    double timestampSeconds = _pendingTimestamp.TotalSeconds;
-                    if (_preRecordingDuration > TimeSpan.Zero)
-                    {
-                        timestampSeconds += _preRecordingDuration.TotalSeconds;
-                    }
-
-                    long sampleTime = (long)(timestampSeconds * 10_000_000L);
+                    // NOTE: Do NOT apply pre-recording offset here - Media Foundation sink writer
+                    // normalizes timestamps to start from 0 in the output file anyway.
+                    // Offset is applied during muxing instead.
+                    long sampleTime = (long)(_pendingTimestamp.TotalSeconds * 10_000_000L);
                     if (sampleTime <= _lastSampleTime100ns)
                     {
                         sampleTime = _lastSampleTime100ns + _rtDurationPerFrame;
@@ -412,7 +499,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                     _sinkWriter.WriteSample(_streamIndex, sample);
 
                     _lastSampleTime100ns = sampleTime;
-                    
+
                     // Update statistics
                     EncodedFrameCount++;
                     EncodedDataSize += (long)dataSize;
@@ -513,6 +600,244 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         // Update status
         EncodingStatus = "Stopping";
 
+        // Pre-recording mode: Handle file finalization and muxing
+        bool wasPreRecordingMode = false;
+        if (!string.IsNullOrEmpty(_preRecBufferA) || !string.IsNullOrEmpty(_preRecBufferB))
+        {
+            wasPreRecordingMode = true;
+
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== PRE-REC STOP DEBUG ==========");
+            Debug.WriteLine($"  MODE: Pre-recording ONLY (2-encoder pattern)");
+            Debug.WriteLine($"  _preRecBufferA path: {_preRecBufferA}");
+            Debug.WriteLine($"  _preRecBufferB path: {_preRecBufferB}");
+            Debug.WriteLine($"  _outputPath path: {_outputPath}");
+            Debug.WriteLine($"  _isBufferA: {_isBufferA}");
+            Debug.WriteLine($"  NOTE: Live recording is handled by separate encoder instance");
+
+            // Finalize whichever sink is active
+            if (_sinkWriter != null)
+            {
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Finalizing active sink writer...");
+                try
+                {
+                    _sinkWriter.Finalize();
+                    Marshal.ReleaseComObject(_sinkWriter);
+                    _sinkWriter = null;
+
+                    // CRITICAL: Verify file is fully flushed and readable
+                    // Wait until IMFSourceReader can successfully open the file
+                    string fileToVerify = _isBufferA ? _preRecBufferA : _preRecBufferB;
+                    if (!string.IsNullOrEmpty(fileToVerify) && File.Exists(fileToVerify))
+                    {
+                        await WaitForFileReadable(fileToVerify);
+                    }
+
+                    Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Sink writer finalized successfully");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[WindowsCaptureVideoEncoder] Finalize error: {ex.Message}");
+                }
+            }
+            else
+            {
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] No active sink writer to finalize");
+            }
+
+            // Determine which files exist
+            bool hasBufferA = !string.IsNullOrEmpty(_preRecBufferA) && File.Exists(_preRecBufferA);
+            bool hasBufferB = !string.IsNullOrEmpty(_preRecBufferB) && File.Exists(_preRecBufferB);
+
+            // Collect files to output (in order: older buffer → newer buffer)
+            var filesToOutput = new List<string>();
+
+            // Add buffers in chronological order (older → newer)
+            if (_isBufferA)
+            {
+                // Buffer A is active (newest), so B is older
+                if (hasBufferB)
+                {
+                    filesToOutput.Add(_preRecBufferB);
+                }
+                if (hasBufferA)
+                {
+                    filesToOutput.Add(_preRecBufferA);
+                }
+            }
+            else
+            {
+                // Buffer B is active (newest), so A is older
+                if (hasBufferA)
+                {
+                    filesToOutput.Add(_preRecBufferA);
+                }
+                if (hasBufferB)
+                {
+                    filesToOutput.Add(_preRecBufferB);
+                }
+            }
+
+            if (filesToOutput.Count == 0)
+            {
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] WARNING: No pre-recording buffers to output!");
+            }
+            else if (filesToOutput.Count == 1)
+            {
+                // Only one buffer - check if it needs trimming
+                var singleBuffer = filesToOutput[0];
+                var sourceSize = new FileInfo(singleBuffer).Length;
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Single buffer output:");
+                Debug.WriteLine($"  Source: {Path.GetFileName(singleBuffer)} ({sourceSize / 1024} KB)");
+                Debug.WriteLine($"  Output: {_outputPath}");
+
+                try
+                {
+                    var singleDuration = await GetVideoDuration(singleBuffer);
+                    Debug.WriteLine($"  Single buffer duration: {singleDuration.TotalSeconds:F3}s");
+                    Debug.WriteLine($"  Limit: {_preRecordDuration.TotalSeconds:F3}s");
+
+                    if (singleDuration > _preRecordDuration)
+                    {
+                        // Single buffer exceeds limit - trim to last N seconds
+                        Debug.WriteLine($"  Single buffer exceeds limit, trimming to last {_preRecordDuration.TotalSeconds:F2}s");
+                        var trimmedBuffer = await TrimVideoFromEnd(singleBuffer, _preRecordDuration);
+                        File.Copy(trimmedBuffer, _outputPath, overwrite: true);
+
+                        // Clean up trimmed temp file
+                        if (trimmedBuffer != singleBuffer && File.Exists(trimmedBuffer))
+                        {
+                            try { File.Delete(trimmedBuffer); } catch { }
+                        }
+                    }
+                    else
+                    {
+                        // Single buffer within limit - just copy
+                        Debug.WriteLine($"  Single buffer within limit, copying as-is");
+                        File.Copy(singleBuffer, _outputPath, overwrite: true);
+                    }
+
+                    var outputSize = new FileInfo(_outputPath).Length;
+                    Debug.WriteLine($"  Result: {outputSize / 1024} KB");
+
+                    // Check actual output duration
+                    var finalDuration = await GetVideoDuration(_outputPath);
+                    Debug.WriteLine($"[INVESTIGATION] Final pre-rec output duration: {finalDuration.TotalSeconds:F3}s");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"  Duration check failed: {ex.Message}, copying without trim");
+                    File.Copy(singleBuffer, _outputPath, overwrite: true);
+                }
+
+                // Clean up temp files
+                CleanupPreRecTempFiles();
+            }
+            else if (filesToOutput.Count == 2)
+            {
+                // Two buffers - check if total duration exceeds PreRecordDuration
+                var olderBuffer = filesToOutput[0];
+                var newerBuffer = filesToOutput[1];
+
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Two-buffer finalization:");
+                Debug.WriteLine($"  Older: {Path.GetFileName(olderBuffer)}");
+                Debug.WriteLine($"  Newer: {Path.GetFileName(newerBuffer)}");
+                Debug.WriteLine($"  PreRecordDuration limit: {_preRecordDuration.TotalSeconds:F2}s");
+
+                try
+                {
+                    var olderDuration = await GetVideoDuration(olderBuffer);
+                    var newerDuration = await GetVideoDuration(newerBuffer);
+                    var totalDuration = olderDuration + newerDuration;
+
+                    Debug.WriteLine($"  Older duration: {olderDuration.TotalSeconds:F2}s");
+                    Debug.WriteLine($"  Newer duration: {newerDuration.TotalSeconds:F2}s");
+                    Debug.WriteLine($"  Total duration: {totalDuration.TotalSeconds:F2}s");
+
+                    Debug.WriteLine($"[INVESTIGATION] Buffer durations:");
+                    Debug.WriteLine($"  Older: {olderDuration.TotalSeconds:F3}s");
+                    Debug.WriteLine($"  Newer: {newerDuration.TotalSeconds:F3}s");
+                    Debug.WriteLine($"  Total: {totalDuration.TotalSeconds:F3}s");
+                    Debug.WriteLine($"  Limit: {_preRecordDuration.TotalSeconds:F3}s");
+
+                    if (totalDuration > _preRecordDuration)
+                    {
+                        // Total exceeds limit - need to trim or skip older buffer
+                        var neededFromOlder = _preRecordDuration - newerDuration;
+
+                        Debug.WriteLine($"  Total exceeds limit by {(totalDuration - _preRecordDuration).TotalSeconds:F2}s");
+                        Debug.WriteLine($"[INVESTIGATION] neededFromOlder = {neededFromOlder.TotalSeconds:F3}s");
+
+                        if (neededFromOlder <= TimeSpan.Zero)
+                        {
+                            // Newer buffer alone meets or exceeds limit - use ONLY newer buffer
+                            Debug.WriteLine($"  Newer buffer alone meets limit, discarding older buffer entirely");
+                            Debug.WriteLine($"[INVESTIGATION] Copied ONLY newer buffer: {Path.GetFileName(newerBuffer)}");
+                            File.Copy(newerBuffer, _outputPath, overwrite: true);
+                        }
+                        else
+                        {
+                            // Need part of older buffer
+                            Debug.WriteLine($"  Trimming older buffer to keep last {neededFromOlder.TotalSeconds:F2}s");
+                            Debug.WriteLine($"[INVESTIGATION] Muxed trimmed older + newer");
+                            var trimmedOlder = await TrimVideoFromEnd(olderBuffer, neededFromOlder);
+
+                            // Mux trimmed older + newer
+                            await MuxVideosWindows(trimmedOlder, newerBuffer, _outputPath);
+
+                            // Clean up trimmed temp file
+                            if (trimmedOlder != olderBuffer && File.Exists(trimmedOlder))
+                            {
+                                try { File.Delete(trimmedOlder); } catch { }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Total within limit - use both buffers
+                        Debug.WriteLine($"  Total within limit, using both buffers");
+                        await MuxVideosWindows(olderBuffer, newerBuffer, _outputPath);
+                    }
+
+                    if (File.Exists(_outputPath))
+                    {
+                        var muxedSize = new FileInfo(_outputPath).Length;
+                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Mux result: {muxedSize / 1024} KB");
+
+                        // CRITICAL: Check actual output duration
+                        var finalDuration = await GetVideoDuration(_outputPath);
+                        Debug.WriteLine($"[INVESTIGATION] Final pre-rec output duration: {finalDuration.TotalSeconds:F3}s");
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ERROR: Mux output file not created!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Duration check failed: {ex.Message}");
+                    Debug.WriteLine($"  Falling back to direct mux without trimming");
+
+                    // Fallback: mux without trimming using Media Foundation for timestamp control
+                    await MuxVideosWindows(olderBuffer, newerBuffer, _outputPath);
+
+                    if (File.Exists(_outputPath))
+                    {
+                        var muxedSize = new FileInfo(_outputPath).Length;
+                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Mux result: {muxedSize / 1024} KB");
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ERROR: Mux output file not created!");
+                    }
+                }
+
+                CleanupPreRecTempFiles();
+            }
+
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== PRE-REC STOP END ==========");
+        }
+
+        // Finalize Media Foundation (if not already done)
         try
         {
             if (_sinkWriter != null)
@@ -531,69 +856,48 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             }
         }
 
-        // Handle pre-recording mode
-        if (IsPreRecordingMode && !string.IsNullOrEmpty(_preRecordingFilePath))
+        // Handle normal recording mode (no pre-recording)
+        if (!wasPreRecordingMode && _outputFile != null && File.Exists(_outputFile.Path))
         {
-            // Pre-recording encoder stopping: file is already written
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Pre-recording encoder stopped");
+            var fileSize = new FileInfo(_outputFile.Path).Length;
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== NORMAL RECORDING STOP DEBUG ==========");
+            Debug.WriteLine($"  Output file path: {_outputFile.Path}");
+            Debug.WriteLine($"  Output file size: {fileSize / 1024} KB ({fileSize} bytes)");
+            Debug.WriteLine($"  _outputPath: {_outputPath}");
+            Debug.WriteLine($"  EncodedFrameCount: {EncodedFrameCount}");
+            Debug.WriteLine($"  EncodingDuration: {EncodingDuration.TotalSeconds:F2}s");
 
-            if (File.Exists(_preRecordingFilePath))
-            {
-                var fileInfo = new FileInfo(_preRecordingFilePath);
-                EncodingDuration = DateTime.Now - _startTime;
-                _encodingDurationSetFromFrames = true;
-
-                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Pre-recording file: {fileInfo.Length / 1024.0:F2} KB");
-                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Actual pre-recording duration: {EncodingDuration.TotalSeconds:F3}s");
-
-                EncodingStatus = "Completed";
-
-                return new CapturedVideo
-                {
-                    FilePath = _preRecordingFilePath,
-                    FileSizeBytes = fileInfo.Length,
-                    Duration = EncodingDuration,
-                    Time = _startTime
-                };
-            }
-        }
-
-        // Handle normal/live recording mode
-        // Check if we need to mux pre-recording + live recording
-        bool hasPreRecording = !string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath);
-        bool hasLiveRecording = _outputFile != null && File.Exists(_outputFile.Path);
-
-        if (hasPreRecording && hasLiveRecording)
-        {
-            // Mux both files
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Muxing pre-recorded file with live recording");
-            await MuxVideosWindows(_preRecordingFilePath, _outputFile.Path, _outputPath);
-
-            // Clean up temporary files
-            try
-            {
-                if (File.Exists(_preRecordingFilePath))
-                    File.Delete(_preRecordingFilePath);
-                if (File.Exists(_outputFile.Path))
-                    File.Delete(_outputFile.Path);
-            }
-            catch { }
-        }
-        else if (hasPreRecording)
-        {
-            // Only pre-recording exists, use it as output
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Only pre-recording exists, using as output");
-            File.Copy(_preRecordingFilePath, _outputPath, true);
-            try { File.Delete(_preRecordingFilePath); } catch { }
-        }
-        else if (hasLiveRecording)
-        {
-            // Only live recording exists
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Only live recording exists");
             if (_outputFile.Path != _outputPath)
             {
+                Debug.WriteLine($"  Copying file to: {_outputPath}");
                 File.Copy(_outputFile.Path, _outputPath, true);
+                var copiedSize = new FileInfo(_outputPath).Length;
+                Debug.WriteLine($"  Copied successfully: {copiedSize / 1024} KB");
             }
+            else
+            {
+                Debug.WriteLine($"  File already at correct location");
+            }
+
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== NORMAL RECORDING STOP END ==========");
+        }
+        else if (!wasPreRecordingMode)
+        {
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== NORMAL RECORDING STOP DEBUG ==========");
+            Debug.WriteLine($"  ERROR: Output file not found!");
+            Debug.WriteLine($"  _outputFile != null: {_outputFile != null}");
+            Debug.WriteLine($"  _outputFile?.Path: {_outputFile?.Path}");
+            Debug.WriteLine($"  File.Exists: {(_outputFile != null ? File.Exists(_outputFile.Path) : false)}");
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== NORMAL RECORDING STOP END ==========");
+        }
+
+        // CRITICAL: Use actual last sample timestamp for duration, not wall-clock time
+        // This fixes the issue where EncodingDuration includes idle time before first frame
+        if (_lastSampleTime100ns > 0)
+        {
+            EncodingDuration = TimeSpan.FromSeconds(_lastSampleTime100ns / 10_000_000.0);
+            _encodingDurationSetFromFrames = true;
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Set duration from last sample timestamp: {EncodingDuration.TotalSeconds:F3}s");
         }
 
         // Update final statistics
@@ -632,89 +936,413 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     }
 
     /// <summary>
-    /// Muxes pre-recorded and live recording MP4 files using FFmpeg (fallback: simple file concatenation).
-    /// Windows doesn't have built-in MP4 concatenation like iOS's AVMutableComposition.
+    /// Swaps pre-recording buffer (A → B or B → A) - circular buffer pattern like iOS
     /// </summary>
-    private async Task MuxVideosWindows(string preRecordingPath, string liveRecordingPath, string outputPath)
+    private async Task SwapPreRecordingBuffer()
     {
-        Debug.WriteLine($"[MuxVideosWindows] Input files:");
-        Debug.WriteLine($"  Pre-recorded: {preRecordingPath} (exists: {File.Exists(preRecordingPath)})");
-        Debug.WriteLine($"  Live recording: {liveRecordingPath} (exists: {File.Exists(liveRecordingPath)})");
-        Debug.WriteLine($"  Output: {outputPath}");
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Pre-rec buffer swap triggered");
+        Debug.WriteLine($"  Current buffer: {(_isBufferA ? "A" : "B")}");
+        Debug.WriteLine($"  Duration: {(DateTime.UtcNow - _currentBufferStartTime).TotalSeconds:F2}s");
 
+        // Finalize current buffer
+        if (_sinkWriter != null)
+        {
+            try
+            {
+                _sinkWriter.Finalize();
+                Marshal.ReleaseComObject(_sinkWriter);
+                _sinkWriter = null;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Buffer finalize error: {ex.Message}");
+            }
+        }
+
+        // Switch to other buffer
+        _isBufferA = !_isBufferA;
+
+        // Determine which buffer to write to next
+        string nextBuffer = _isBufferA ? _preRecBufferA : _preRecBufferB;
+        string oldBuffer = _isBufferA ? _preRecBufferB : _preRecBufferA;
+
+        // Delete the OLD buffer file (circular behavior)
         try
         {
-            // Try FFmpeg first (best quality)
-            if (await TryMuxWithFFmpeg(preRecordingPath, liveRecordingPath, outputPath))
+            if (File.Exists(oldBuffer))
             {
-                Debug.WriteLine($"[MuxVideosWindows] Successfully muxed with FFmpeg");
-                return;
+                File.Delete(oldBuffer);
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Deleted old buffer: {oldBuffer}");
             }
-
-            // Fallback: Simple binary concatenation (may not work for all MP4 files)
-            Debug.WriteLine($"[MuxVideosWindows] FFmpeg not available, using simple concatenation fallback");
-            await SimpleConcatenateMP4Files(preRecordingPath, liveRecordingPath, outputPath);
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[MuxVideosWindows] Error: {ex.Message}");
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder] Failed to delete old buffer: {ex.Message}");
+        }
+
+        // Create new sink writer for next buffer
+        _currentPreRecBuffer = nextBuffer;
+        _currentBufferStartTime = DateTime.UtcNow;
+
+        var folder = await StorageFolder.GetFolderFromPathAsync(Path.GetDirectoryName(_currentPreRecBuffer));
+        var fileName = Path.GetFileName(_currentPreRecBuffer);
+        _outputFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+
+        unsafe
+        {
+            fixed (char* p = _outputFile.Path)
+            {
+                var hr2 = PInvoke.MFCreateSinkWriterFromURL(new PCWSTR(p), null, null, out _sinkWriter);
+                if (hr2.Failed)
+                    throw new InvalidOperationException($"MFCreateSinkWriterFromURL failed: 0x{hr2.Value:X8}");
+            }
+        }
+
+        ConfigureH264OutputAndRGB32Input();
+        _sinkWriter.BeginWriting();
+
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Swapped to buffer {(_isBufferA ? "A" : "B")}: {nextBuffer}");
+    }
+
+    /// <summary>
+    /// Muxes two MP4 files using Windows Media Foundation APIs (IMFSourceReader + IMFSinkWriter).
+    /// NO FFmpeg - Windows native APIs only.
+    /// </summary>
+    private async Task MuxVideosWindows(string preRecordingPath, string liveRecordingPath, string outputPath)
+    {
+        Debug.WriteLine($"[MuxVideosWindows] ========== MUXING WITH WINDOWS MEDIA FOUNDATION ==========");
+        Debug.WriteLine($"[MuxVideosWindows] Pre-recording: {preRecordingPath} ({(File.Exists(preRecordingPath) ? new FileInfo(preRecordingPath).Length / 1024 : 0)} KB)");
+        Debug.WriteLine($"[MuxVideosWindows] Live recording: {liveRecordingPath} ({(File.Exists(liveRecordingPath) ? new FileInfo(liveRecordingPath).Length / 1024 : 0)} KB)");
+        Debug.WriteLine($"[MuxVideosWindows] Output: {outputPath}");
+
+        global::Windows.Win32.Media.MediaFoundation.IMFSourceReader? reader1 = null;
+        global::Windows.Win32.Media.MediaFoundation.IMFSourceReader? reader2 = null;
+        global::Windows.Win32.Media.MediaFoundation.IMFSinkWriter? writer = null;
+
+        try
+        {
+            // Create source readers for both input files
+            unsafe
+            {
+                fixed (char* p1 = preRecordingPath)
+                {
+                    var hr = PInvoke.MFCreateSourceReaderFromURL(new PCWSTR(p1), null, out reader1);
+                    if (hr.Failed)
+                        throw new InvalidOperationException($"MFCreateSourceReaderFromURL failed for pre-rec: 0x{hr.Value:X8}");
+                }
+
+                fixed (char* p2 = liveRecordingPath)
+                {
+                    var hr = PInvoke.MFCreateSourceReaderFromURL(new PCWSTR(p2), null, out reader2);
+                    if (hr.Failed)
+                        throw new InvalidOperationException($"MFCreateSourceReaderFromURL failed for live: 0x{hr.Value:X8}");
+                }
+
+                fixed (char* pOut = outputPath)
+                {
+                    var hr = PInvoke.MFCreateSinkWriterFromURL(new PCWSTR(pOut), null, null, out writer);
+                    if (hr.Failed)
+                        throw new InvalidOperationException($"MFCreateSinkWriterFromURL failed for output: 0x{hr.Value:X8}");
+                }
+            }
+
+            // Configure sink writer based on first input file's media type
+            reader1.GetCurrentMediaType(0xFFFFFFFC, out var inputMediaType); // MF_SOURCE_READER_FIRST_VIDEO_STREAM = 0xFFFFFFFC
+
+            if (inputMediaType == null)
+                throw new InvalidOperationException("Failed to get input media type");
+
+            // Add output stream to sink writer using same media type
+            writer.AddStream(inputMediaType, out var streamIndex);
+            Marshal.ReleaseComObject(inputMediaType);
+
+            // Begin writing
+            writer.BeginWriting();
+
+            // Copy samples from first file (pre-recording)
+            long lastTimestamp = await CopySamplesFromReader(reader1, writer, streamIndex, 0, "pre-rec");
+
+            Debug.WriteLine($"[MuxVideosWindows] Pre-rec end timestamp: {lastTimestamp / 10000000.0:F2}s");
+
+            // Copy samples from second file (live recording) with offset
+            // Media Foundation resets timestamps to 0 in files, so we apply offset here during muxing
+            await CopySamplesFromReader(reader2, writer, streamIndex, lastTimestamp, "live");
+
+            // Finalize output
+            writer.Finalize();
+
+            Debug.WriteLine($"[MuxVideosWindows] Finalized output");
+
+            if (File.Exists(outputPath))
+            {
+                var outputSize = new FileInfo(outputPath).Length;
+                Debug.WriteLine($"[MuxVideosWindows] Output file created: {outputSize / 1024} KB ({outputSize} bytes)");
+            }
+
+            Debug.WriteLine($"[MuxVideosWindows] ========== MUXING COMPLETE ==========");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[MuxVideosWindows] ERROR: {ex.Message}");
+            Debug.WriteLine($"[MuxVideosWindows] Stack trace: {ex.StackTrace}");
+            throw;
+        }
+        finally
+        {
+            // Clean up COM objects
+            if (reader1 != null)
+            {
+                Marshal.ReleaseComObject(reader1);
+            }
+            if (reader2 != null)
+            {
+                Marshal.ReleaseComObject(reader2);
+            }
+            if (writer != null)
+            {
+                Marshal.ReleaseComObject(writer);
+            }
+        }
+
+        await Task.CompletedTask;
+    }
+
+    /// <summary>
+    /// Muxes two video files using Windows.Media.Editing.MediaComposition (WinRT API).
+    /// This handles H.264 keyframe discontinuities automatically and uses lossless stream copy when possible.
+    /// </summary>
+    private async Task<string> MuxVideosWithMediaComposition(string preRecPath, string liveRecPath, string outputPath)
+    {
+        try
+        {
+            Debug.WriteLine($"[MediaComposition] Starting lossless concatenation");
+            Debug.WriteLine($"  Pre-rec: {preRecPath}");
+            Debug.WriteLine($"  Live: {liveRecPath}");
+            Debug.WriteLine($"  Output: {outputPath}");
+
+            // Ensure output file exists for GetFileFromPathAsync
+            if (!File.Exists(outputPath))
+            {
+                await File.WriteAllBytesAsync(outputPath, Array.Empty<byte>());
+            }
+
+            // Load both video files as StorageFile
+            var file1 = await global::Windows.Storage.StorageFile.GetFileFromPathAsync(preRecPath);
+            var file2 = await global::Windows.Storage.StorageFile.GetFileFromPathAsync(liveRecPath);
+            var outputFile = await global::Windows.Storage.StorageFile.GetFileFromPathAsync(outputPath);
+
+            // Create composition and add clips
+            var composition = new global::Windows.Media.Editing.MediaComposition();
+            composition.Clips.Add(await global::Windows.Media.Editing.MediaClip.CreateFromFileAsync(file1));
+            composition.Clips.Add(await global::Windows.Media.Editing.MediaClip.CreateFromFileAsync(file2));
+
+            Debug.WriteLine($"[MediaComposition] Added {composition.Clips.Count} clips to composition");
+
+            // Create encoding profile (will attempt stream copy if compatible)
+            var profile = global::Windows.Media.MediaProperties.MediaEncodingProfile.CreateMp4(
+                global::Windows.Media.MediaProperties.VideoEncodingQuality.HD1080p);
+
+            // Ensure H.264 + AAC (matches our encoder output)
+            profile.Video.Subtype = "H264";
+            profile.Audio.Subtype = "AAC";
+
+            Debug.WriteLine($"[MediaComposition] Rendering to file (will use stream copy if possible)...");
+
+            // Render composition to file (automatically uses stream copy if compatible, otherwise re-encodes)
+            var result = await composition.RenderToFileAsync(
+                outputFile,
+                global::Windows.Media.Editing.MediaTrimmingPreference.Fast,
+                profile
+            );
+
+            Debug.WriteLine($"[MediaComposition] Concatenation successful!");
+
+            // Verify output file exists and has content
+            if (!File.Exists(outputPath))
+            {
+                throw new InvalidOperationException("Output file was not created");
+            }
+
+            var outputSize = new FileInfo(outputPath).Length;
+            Debug.WriteLine($"[MediaComposition] Output file: {outputSize / 1024} KB");
+
+            return outputPath;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[MediaComposition] ERROR: {ex.Message}");
             throw;
         }
     }
 
-    private async Task<bool> TryMuxWithFFmpeg(string preRecPath, string liveRecPath, string outputPath)
+    /// <summary>
+    /// Muxes two video files with automatic fallback strategy.
+    /// Tries MediaComposition first (handles H.264 keyframes properly), falls back to Media Foundation if needed.
+    /// </summary>
+    private async Task<string> MuxVideos(string preRecPath, string liveRecPath, string outputPath)
     {
         try
         {
-            // Create concat file list for FFmpeg
-            var tempListFile = Path.Combine(Path.GetTempPath(), $"concat_{Guid.NewGuid():N}.txt");
-            await File.WriteAllTextAsync(tempListFile,
-                $"file '{preRecPath.Replace("\\", "/")}'\n" +
-                $"file '{liveRecPath.Replace("\\", "/")}'");
-
-            var ffmpegArgs = $"-f concat -safe 0 -i \"{tempListFile}\" -c copy \"{outputPath}\"";
-
-            var processStartInfo = new ProcessStartInfo
-            {
-                FileName = "ffmpeg",
-                Arguments = ffmpegArgs,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
-
-            using var process = Process.Start(processStartInfo);
-            if (process != null)
-            {
-                await process.WaitForExitAsync();
-                try { File.Delete(tempListFile); } catch { }
-                return process.ExitCode == 0 && File.Exists(outputPath);
-            }
-
-            return false;
+            // Try MediaComposition first (handles H.264 keyframes properly, lossless)
+            return await MuxVideosWithMediaComposition(preRecPath, liveRecPath, outputPath);
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[TryMuxWithFFmpeg] Failed: {ex.Message}");
-            return false;
+            Debug.WriteLine($"[Muxing] MediaComposition failed, falling back to Media Foundation: {ex.Message}");
+
+            // Fallback to Media Foundation (may have keyframe issues but works as last resort)
+            await MuxVideosWindows(preRecPath, liveRecPath, outputPath);
+            return outputPath;
         }
     }
 
-    private async Task SimpleConcatenateMP4Files(string file1, string file2, string outputPath)
+    /// <summary>
+    /// Gets the duration of a video file using MediaComposition.
+    /// </summary>
+    private async Task<TimeSpan> GetVideoDuration(string videoPath)
     {
-        // WARNING: This is a naive concatenation that may not work for all MP4 files
-        // It simply appends the bytes, which works for some simple cases but is not a proper MP4 mux
-        Debug.WriteLine($"[SimpleConcatenateMP4Files] WARNING: Using simple byte concatenation (may produce invalid MP4)");
+        var file = await global::Windows.Storage.StorageFile.GetFileFromPathAsync(videoPath);
+        var clip = await global::Windows.Media.Editing.MediaClip.CreateFromFileAsync(file);
+        return clip.OriginalDuration;
+    }
 
-        using var output = File.Create(outputPath);
-        using var input1 = File.OpenRead(file1);
-        using var input2 = File.OpenRead(file2);
+    /// <summary>
+    /// Trims video to keep only the last N seconds by trimming the beginning.
+    /// Returns path to trimmed file.
+    /// </summary>
+    private async Task<string> TrimVideoFromEnd(string inputPath, TimeSpan keepDuration)
+    {
+        var file = await global::Windows.Storage.StorageFile.GetFileFromPathAsync(inputPath);
+        var clip = await global::Windows.Media.Editing.MediaClip.CreateFromFileAsync(file);
 
-        await input1.CopyToAsync(output);
-        await input2.CopyToAsync(output);
+        var totalDuration = clip.OriginalDuration;
+        var trimStart = totalDuration - keepDuration;
 
-        Debug.WriteLine($"[SimpleConcatenateMP4Files] Wrote {output.Length} bytes to {outputPath}");
+        if (trimStart <= TimeSpan.Zero)
+        {
+            // No trim needed, duration is already <= keepDuration
+            return inputPath;
+        }
+
+        // Trim from start to keep last N seconds
+        clip.TrimTimeFromStart = trimStart;
+
+        // Create output file
+        var trimmedPath = Path.Combine(
+            Path.GetDirectoryName(inputPath),
+            $"trimmed_{Path.GetFileName(inputPath)}"
+        );
+
+        if (!File.Exists(trimmedPath))
+        {
+            await File.WriteAllBytesAsync(trimmedPath, Array.Empty<byte>());
+        }
+
+        var outputFile = await global::Windows.Storage.StorageFile.GetFileFromPathAsync(trimmedPath);
+
+        // Render single clip with trim
+        var composition = new global::Windows.Media.Editing.MediaComposition();
+        composition.Clips.Add(clip);
+
+        // Create encoding profile (needed to avoid "missing headers" error)
+        var profile = global::Windows.Media.MediaProperties.MediaEncodingProfile.CreateMp4(
+            global::Windows.Media.MediaProperties.VideoEncodingQuality.HD1080p);
+        profile.Video.Subtype = "H264";
+        profile.Audio.Subtype = "AAC";
+
+        await composition.RenderToFileAsync(
+            outputFile,
+            global::Windows.Media.Editing.MediaTrimmingPreference.Fast,
+            profile
+        );
+
+        Debug.WriteLine($"[TrimVideoFromEnd] Trimmed {inputPath}");
+        Debug.WriteLine($"  Original duration: {totalDuration.TotalSeconds:F2}s");
+        Debug.WriteLine($"  Trim start: {trimStart.TotalSeconds:F2}s");
+        Debug.WriteLine($"  Output duration: {keepDuration.TotalSeconds:F2}s");
+
+        return trimmedPath;
+    }
+
+    /// <summary>
+    /// Copies all video samples from an IMFSourceReader to an IMFSinkWriter.
+    /// </summary>
+    /// <param name="reader">Source reader to read samples from</param>
+    /// <param name="writer">Sink writer to write samples to</param>
+    /// <param name="streamIndex">Output stream index in the sink writer</param>
+    /// <param name="timestampOffset">Timestamp offset to add to each sample (100-nanosecond units)</param>
+    /// <param name="debugName">Name for debug logging</param>
+    /// <returns>The timestamp of the last sample written (100-nanosecond units)</returns>
+    private async Task<long> CopySamplesFromReader(
+        global::Windows.Win32.Media.MediaFoundation.IMFSourceReader reader,
+        global::Windows.Win32.Media.MediaFoundation.IMFSinkWriter writer,
+        uint streamIndex,
+        long timestampOffset,
+        string debugName)
+    {
+        int sampleCount = 0;
+        long lastTimestamp = timestampOffset;
+
+        while (true)
+        {
+            global::Windows.Win32.Media.MediaFoundation.IMFSample? sample = null;
+
+            try
+            {
+                // Read next sample - using pointers for all output parameters
+                uint actualStreamIndex = 0;
+                uint streamFlags = 0;
+                long timestamp = 0;
+
+                unsafe
+                {
+                    global::Windows.Win32.Media.MediaFoundation.IMFSample_unmanaged* pSample = null;
+                    reader.ReadSample(
+                        0xFFFFFFFC, // MF_SOURCE_READER_FIRST_VIDEO_STREAM
+                        0,          // No flags
+                        &actualStreamIndex,
+                        &streamFlags,
+                        &timestamp,
+                        &pSample
+                    );
+
+                    // Convert unmanaged pointer to managed interface
+                    if (pSample != null)
+                    {
+                        sample = (global::Windows.Win32.Media.MediaFoundation.IMFSample)Marshal.GetObjectForIUnknown(new IntPtr(pSample));
+                    }
+                }
+
+                // Check if end of stream
+                if ((streamFlags & 1) != 0 || sample == null) // MF_SOURCE_READERF_ENDOFSTREAM = 1
+                {
+                    break;
+                }
+
+                // Adjust timestamp
+                long adjustedTimestamp = timestamp + timestampOffset;
+                sample.SetSampleTime(adjustedTimestamp);
+
+                // Get sample duration
+                sample.GetSampleDuration(out var duration);
+                lastTimestamp = adjustedTimestamp + duration;
+
+                // Write sample to output
+                writer.WriteSample(streamIndex, sample);
+
+                sampleCount++;
+            }
+            finally
+            {
+                if (sample != null)
+                {
+                    Marshal.ReleaseComObject(sample);
+                }
+            }
+        }
+
+        await Task.CompletedTask;
+        return lastTimestamp;
     }
 
     private async Task CreateVideoFromFrames()
@@ -1017,6 +1645,9 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         public static readonly System.Guid MFVideoFormat_H264 = new System.Guid("34363248-0000-0010-8000-00aa00389b71");
         public static readonly System.Guid MFVideoFormat_ARGB32 = new System.Guid("00000015-0000-0010-8000-00aa00389b71");
         public static readonly System.Guid MFVideoFormat_RGB32 = new System.Guid("00000016-0000-0010-8000-00aa00389b71");
+
+        public static readonly System.Guid MFT_CATEGORY_VIDEO_ENCODER = new System.Guid("f79eac7d-e545-4387-bdee-d647d7bde42a");
+        public static readonly System.Guid MFSampleExtension_CleanPoint = new System.Guid("9cdf01d8-a0f0-43ba-b077-eaa06cbd728a");
     }
 
 
@@ -1032,11 +1663,165 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         mt.SetUINT64(key, val);
     }
 
+    /// <summary>
+    /// Configures IMFSinkWriter with H.264 output and RGB32 input.
+    /// Extracted from InitializeAsync normal mode for reuse in pre-recording.
+    /// </summary>
+    private void ConfigureH264OutputAndRGB32Input()
+    {
+        // Configure OUTPUT type (H.264)
+        var hr = PInvoke.MFCreateMediaType(out var outType);
+        if (hr.Failed)
+            throw new InvalidOperationException($"MFCreateMediaType(out) failed: 0x{hr.Value:X8}");
+
+        try
+        {
+            outType.SetGUID(MFGuids.MF_MT_MAJOR_TYPE, MFGuids.MFMediaType_Video);
+            outType.SetGUID(MFGuids.MF_MT_SUBTYPE, MFGuids.MFVideoFormat_H264);
+
+            SetAttributeSize(outType, MFGuids.MF_MT_FRAME_SIZE, (uint)_width, (uint)_height);
+            SetAttributeRatio(outType, MFGuids.MF_MT_FRAME_RATE, (uint)_frameRate, 1);
+            SetAttributeRatio(outType, MFGuids.MF_MT_PIXEL_ASPECT_RATIO, 1, 1);
+            outType.SetUINT32(MFGuids.MF_MT_INTERLACE_MODE, 2); // Progressive
+            outType.SetUINT32(MFGuids.MF_MT_MPEG2_PROFILE, 100); // H.264 High profile
+
+            uint bitrate = (uint)(Math.Max(1, _width * _height) * Math.Max(1, _frameRate) * 4 / 10);
+            outType.SetUINT32(MFGuids.MF_MT_AVG_BITRATE, bitrate);
+
+            _sinkWriter.AddStream(outType, out _streamIndex);
+        }
+        finally
+        {
+            Marshal.ReleaseComObject(outType);
+        }
+
+        // Configure INPUT type (RGB32)
+        hr = PInvoke.MFCreateMediaType(out var inType);
+        if (hr.Failed)
+            throw new InvalidOperationException($"MFCreateMediaType(in) failed: 0x{hr.Value:X8}");
+
+        try
+        {
+            inType.SetGUID(MFGuids.MF_MT_MAJOR_TYPE, MFGuids.MFMediaType_Video);
+            inType.SetGUID(MFGuids.MF_MT_SUBTYPE, MFGuids.MFVideoFormat_RGB32);
+            SetAttributeSize(inType, MFGuids.MF_MT_FRAME_SIZE, (uint)_width, (uint)_height);
+            SetAttributeRatio(inType, MFGuids.MF_MT_FRAME_RATE, (uint)_frameRate, 1);
+            SetAttributeRatio(inType, MFGuids.MF_MT_PIXEL_ASPECT_RATIO, 1, 1);
+            inType.SetUINT32(MFGuids.MF_MT_INTERLACE_MODE, 2);
+            inType.SetUINT32(MFGuids.MF_MT_ALL_SAMPLES_INDEPENDENT, 1);
+            inType.SetUINT32(MFGuids.MF_MT_DEFAULT_STRIDE, (uint)(_width * 4));
+            inType.SetUINT32(MFGuids.MF_MT_FIXED_SIZE_SAMPLES, 1);
+            inType.SetUINT32(MFGuids.MF_MT_SAMPLE_SIZE, (uint)(_width * _height * 4));
+
+            _sinkWriter.SetInputMediaType(_streamIndex, inType, null);
+        }
+        finally
+        {
+            Marshal.ReleaseComObject(inType);
+        }
+
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder] Configured H.264 output + RGB32 input");
+    }
+
+    /// <summary>
+    /// Waits for an MP4 file to be fully flushed and readable by IMFSourceReader.
+    /// Retries up to 10 times with 50ms delays between attempts.
+    /// </summary>
+    private async Task WaitForFileReadable(string filePath)
+    {
+        const int maxRetries = 10;
+        const int delayMs = 50;
+
+        Debug.WriteLine($"[WaitForFileReadable] Verifying file is readable: {Path.GetFileName(filePath)}");
+
+        for (int attempt = 0; attempt < maxRetries; attempt++)
+        {
+            global::Windows.Win32.Media.MediaFoundation.IMFSourceReader? testReader = null;
+            try
+            {
+                // Try to create a source reader - this will fail if MP4 structure is incomplete
+                unsafe
+                {
+                    fixed (char* p = filePath)
+                    {
+                        var hr = PInvoke.MFCreateSourceReaderFromURL(new PCWSTR(p), null, out testReader);
+                        if (hr.Succeeded && testReader != null)
+                        {
+                            // Try to get media type - verifies MP4 has valid video track
+                            testReader.GetCurrentMediaType(0xFFFFFFFC, out var mediaType);
+                            if (mediaType != null)
+                            {
+                                Marshal.ReleaseComObject(mediaType);
+                                Debug.WriteLine($"[WaitForFileReadable] File is readable after {attempt} attempts ({attempt * delayMs}ms)");
+                                return; // Success!
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // File not ready yet, continue retrying
+            }
+            finally
+            {
+                if (testReader != null)
+                {
+                    Marshal.ReleaseComObject(testReader);
+                }
+            }
+
+            if (attempt < maxRetries - 1)
+            {
+                await Task.Delay(delayMs);
+            }
+        }
+
+        Debug.WriteLine($"[WaitForFileReadable] WARNING: File may not be fully readable after {maxRetries} attempts ({maxRetries * delayMs}ms)");
+    }
+
+    /// <summary>
+    /// Cleans up pre-recording temporary buffer files
+    /// </summary>
+    private void CleanupPreRecTempFiles()
+    {
+        try
+        {
+            if (!string.IsNullOrEmpty(_preRecBufferA) && File.Exists(_preRecBufferA))
+            {
+                File.Delete(_preRecBufferA);
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Deleted temp buffer A: {_preRecBufferA}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder] Failed to delete buffer A: {ex.Message}");
+        }
+
+        try
+        {
+            if (!string.IsNullOrEmpty(_preRecBufferB) && File.Exists(_preRecBufferB))
+            {
+                File.Delete(_preRecBufferB);
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Deleted temp buffer B: {_preRecBufferB}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder] Failed to delete buffer B: {ex.Message}");
+        }
+
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder] Pre-recording temp file cleanup complete");
+    }
+
 
     public void Dispose()
     {
         _isRecording = false;
         _progressTimer?.Dispose();
+
+        // Clean up pre-recording temp files
+        CleanupPreRecTempFiles();
 
         if (_frames != null)
         {
