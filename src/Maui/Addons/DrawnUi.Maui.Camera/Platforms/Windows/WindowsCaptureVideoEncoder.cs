@@ -570,9 +570,6 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
     }
 
-
-     
-
     public async Task<CapturedVideo> StopAsync()
     {
         Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] StopAsync CALLED: IsPreRecordingMode={IsPreRecordingMode}");
@@ -589,16 +586,9 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         {
             wasPreRecordingMode = true;
 
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== PRE-REC STOP DEBUG ==========");
-            Debug.WriteLine($"  _preRecBufferA path: {_preRecBufferA}");
-            Debug.WriteLine($"  _preRecBufferB path: {_preRecBufferB}");
-            Debug.WriteLine($"  _outputPath path: {_outputPath}");
-            Debug.WriteLine($"  _isBufferA: {_isBufferA}");
-
             // Finalize whichever sink is active
             if (_sinkWriter != null)
             {
-                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Finalizing active sink writer...");
                 try
                 {
                     _sinkWriter.Finalize();
@@ -612,17 +602,15 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                     {
                         await WaitForFileReadable(fileToVerify);
                     }
-
-                    Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Sink writer finalized successfully");
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"[WindowsCaptureVideoEncoder] Finalize error: {ex.Message}");
+                    Super.Log($"[WindowsCaptureVideoEncoder] Finalize error: {ex.Message}");
                 }
             }
             else
             {
-                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] No active sink writer to finalize");
+                Super.Log($"[WindowsCaptureVideoEncoder #{_instanceId}] No active sink writer to finalize");
             }
 
             // Determine which files exist
@@ -657,29 +645,21 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 // Only one buffer - check if it needs trimming
                 var singleBuffer = filesToOutput[0];
                 var sourceSize = new FileInfo(singleBuffer).Length;
-                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Single buffer output:");
-                Debug.WriteLine($"  Source: {Path.GetFileName(singleBuffer)} ({sourceSize / 1024} KB)");
-                Debug.WriteLine($"  Output: {_outputPath}");
+
                 // Extra debug: check if this buffer is the live buffer by comparing file paths
                 if (_outputPath == singleBuffer)
                 {
                     Debug.WriteLine($"  [WARNING] Single buffer is the output path itself! This may indicate a logic error.");
                 }
-                if (singleBuffer == _preRecBufferA)
-                    Debug.WriteLine($"  [DEBUG] Trimming/copying pre-record buffer A");
-                if (singleBuffer == _preRecBufferB)
-                    Debug.WriteLine($"  [DEBUG] Trimming/copying pre-record buffer B");
+
 
                 try
                 {
                     var singleDuration = await GetVideoDuration(singleBuffer);
-                    Debug.WriteLine($"  Single buffer duration: {singleDuration.TotalSeconds:F3}s");
-                    Debug.WriteLine($"  Limit: {_preRecordDuration.TotalSeconds:F3}s");
-
+                
                     if (singleDuration > _preRecordDuration)
                     {
                         // Single buffer exceeds limit - trim to last N seconds
-                        Debug.WriteLine($"  Single buffer exceeds limit, trimming to last {_preRecordDuration.TotalSeconds:F2}s");
                         var trimmedBuffer = await TrimVideoFromEnd(singleBuffer, _preRecordDuration);
                         File.Copy(trimmedBuffer, _outputPath, overwrite: true);
 
@@ -718,11 +698,6 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 var olderBuffer = filesToOutput[0];
                 var newerBuffer = filesToOutput[1];
 
-                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Two-buffer finalization (robust, trim older):");
-                Debug.WriteLine($"  Older: {Path.GetFileName(olderBuffer)}");
-                Debug.WriteLine($"  Newer: {Path.GetFileName(newerBuffer)}");
-                Debug.WriteLine($"  PreRecordDuration limit: {_preRecordDuration.TotalSeconds:F2}s");
-
                 // Use tracked timestamps for valid duration
                 TimeSpan validOlderDuration = TimeSpan.Zero;
                 if (olderBuffer == _preRecBufferA)
@@ -737,8 +712,6 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 {
                     validOlderDuration = await GetVideoDuration(olderBuffer); // fallback
                 }
-
-                Debug.WriteLine($"  [Tracked] Valid duration in older buffer: {validOlderDuration.TotalSeconds:F2}s");
 
                 string trimmedOlderPath = null;
                 string combinedPath = Path.Combine(Path.GetDirectoryName(_outputPath), $"combined_{Guid.NewGuid():N}.mp4");
@@ -758,31 +731,19 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                     // Step 4: Copy trimmed file to output
                     File.Copy(trimmedPath, _outputPath, overwrite: true);
 
-                    if (File.Exists(_outputPath))
+                    if (!File.Exists(_outputPath))
                     {
-                        var muxedSize = new FileInfo(_outputPath).Length;
-                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Mux+Trim result: {muxedSize / 1024} KB");
-                        var finalDuration = await GetVideoDuration(_outputPath);
-                        Debug.WriteLine($"[INVESTIGATION] Final pre-rec output duration: {finalDuration.TotalSeconds:F3}s");
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ERROR: Mux+Trim output file not created!");
+                        Super.Log($"[WindowsCaptureVideoEncoder #{_instanceId}] ERROR: Mux+Trim output file not created!");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Robust two-buffer finalization failed: {ex.Message}");
-                    Debug.WriteLine($"  Fallback: Copying ONLY newer buffer to output");
+                    Super.Log($"[WindowsCaptureVideoEncoder #{_instanceId}] Robust two-buffer finalization failed: {ex}");
+
                     File.Copy(newerBuffer, _outputPath, overwrite: true);
-                    if (File.Exists(_outputPath))
+                    if (!File.Exists(_outputPath))
                     {
-                        var muxedSize = new FileInfo(_outputPath).Length;
-                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Fallback result: {muxedSize / 1024} KB");
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ERROR: Fallback output file not created!");
+                        Super.Log($"[WindowsCaptureVideoEncoder #{_instanceId}] ERROR: Fallback output file not created!");
                     }
                 }
                 finally
@@ -804,7 +765,6 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 }
             }
 
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== PRE-REC STOP END ==========");
         }
 
         // Finalize Media Foundation (if not already done)
@@ -830,12 +790,12 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         if (!wasPreRecordingMode && _outputFile != null && File.Exists(_outputFile.Path))
         {
             var fileSize = new FileInfo(_outputFile.Path).Length;
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== NORMAL RECORDING STOP DEBUG ==========");
-            Debug.WriteLine($"  Output file path: {_outputFile.Path}");
-            Debug.WriteLine($"  Output file size: {fileSize / 1024} KB ({fileSize} bytes)");
-            Debug.WriteLine($"  _outputPath: {_outputPath}");
-            Debug.WriteLine($"  EncodedFrameCount: {EncodedFrameCount}");
-            Debug.WriteLine($"  EncodingDuration: {EncodingDuration.TotalSeconds:F2}s");
+            //Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== NORMAL RECORDING STOP DEBUG ==========");
+            //Debug.WriteLine($"  Output file path: {_outputFile.Path}");
+            //Debug.WriteLine($"  Output file size: {fileSize / 1024} KB ({fileSize} bytes)");
+            //Debug.WriteLine($"  _outputPath: {_outputPath}");
+            //Debug.WriteLine($"  EncodedFrameCount: {EncodedFrameCount}");
+            //Debug.WriteLine($"  EncodingDuration: {EncodingDuration.TotalSeconds:F2}s");
 
             if (_outputFile.Path != _outputPath)
             {
@@ -844,22 +804,16 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 var copiedSize = new FileInfo(_outputPath).Length;
                 Debug.WriteLine($"  Copied successfully: {copiedSize / 1024} KB");
             }
-            else
-            {
-                Debug.WriteLine($"  File already at correct location");
-            }
-
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== NORMAL RECORDING STOP END ==========");
         }
-        else if (!wasPreRecordingMode)
-        {
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== NORMAL RECORDING STOP DEBUG ==========");
-            Debug.WriteLine($"  ERROR: Output file not found!");
-            Debug.WriteLine($"  _outputFile != null: {_outputFile != null}");
-            Debug.WriteLine($"  _outputFile?.Path: {_outputFile?.Path}");
-            Debug.WriteLine($"  File.Exists: {(_outputFile != null ? File.Exists(_outputFile.Path) : false)}");
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== NORMAL RECORDING STOP END ==========");
-        }
+        //else if (!wasPreRecordingMode)
+        //{
+        //    Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== NORMAL RECORDING STOP DEBUG ==========");
+        //    Debug.WriteLine($"  ERROR: Output file not found!");
+        //    Debug.WriteLine($"  _outputFile != null: {_outputFile != null}");
+        //    Debug.WriteLine($"  _outputFile?.Path: {_outputFile?.Path}");
+        //    Debug.WriteLine($"  File.Exists: {(_outputFile != null ? File.Exists(_outputFile.Path) : false)}");
+        //    Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== NORMAL RECORDING STOP END ==========");
+        //}
 
         // CRITICAL: Use actual last sample timestamp for duration, not wall-clock time
         // This fixes the issue where EncodingDuration includes idle time before first frame
@@ -867,7 +821,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         {
             EncodingDuration = TimeSpan.FromSeconds(_lastSampleTime100ns / 10_000_000.0);
             _encodingDurationSetFromFrames = true;
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Set duration from last sample timestamp: {EncodingDuration.TotalSeconds:F3}s");
+            //Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Set duration from last sample timestamp: {EncodingDuration.TotalSeconds:F3}s");
         }
 
         // Update final statistics
@@ -893,7 +847,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Stop: failed to get file props: {ex.Message}");
+            Super.Log($"[WindowsCaptureVideoEncoder #{_instanceId}] Stop: failed to get file props: {ex.Message}");
         }
 
         return new CapturedVideo
@@ -925,7 +879,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Buffer finalize error: {ex.Message}");
+                Super.Log($"[WindowsCaptureVideoEncoder] Buffer finalize error: {ex.Message}");
             }
         }
 
@@ -1058,8 +1012,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[MuxVideosWindows] ERROR: {ex.Message}");
-            Debug.WriteLine($"[MuxVideosWindows] Stack trace: {ex.StackTrace}");
+            Super.Log($"[MuxVideosWindows] ERROR: {ex}");
             throw;
         }
         finally
@@ -1152,7 +1105,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[MediaComposition] ERROR: {ex.Message}");
+            Super.Log($"[MediaComposition] ERROR: {ex.Message}");
             throw;
         }
     }
@@ -1170,7 +1123,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[Muxing] MediaComposition failed, falling back to Media Foundation: {ex.Message}");
+            Super.Log($"[Muxing] MediaComposition failed, falling back to Media Foundation: {ex.Message}");
 
             // Fallback to Media Foundation (may have keyframe issues but works as last resort)
             await MuxVideosWindows(preRecPath, liveRecPath, outputPath);
@@ -1357,7 +1310,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder] CreateVideoFromFrames failed: {ex.Message}");
+            Super.Log($"[WindowsCaptureVideoEncoder] CreateVideoFromFrames failed: {ex.Message}");
             throw;
         }
     }
@@ -1388,7 +1341,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder] CreateRealMp4Video failed: {ex.Message}");
+            Super.Log($"[WindowsCaptureVideoEncoder] CreateRealMp4Video failed: {ex.Message}");
             throw;
         }
     }
@@ -1451,7 +1404,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder] FFmpeg encoding failed: {ex.Message}");
+            Super.Log($"[WindowsCaptureVideoEncoder] FFmpeg encoding failed: {ex.Message}");
             return false;
         }
     }
@@ -1482,7 +1435,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder] CreateUncompressedAvi failed: {ex.Message}");
+            Super.Log($"[WindowsCaptureVideoEncoder] CreateUncompressedAvi failed: {ex.Message}");
             throw;
         }
     }
@@ -1780,12 +1733,11 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             if (!string.IsNullOrEmpty(_preRecBufferA) && File.Exists(_preRecBufferA))
             {
                 File.Delete(_preRecBufferA);
-                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Deleted temp buffer A: {_preRecBufferA}");
             }
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder] Failed to delete buffer A: {ex.Message}");
+            Super.Log($"[WindowsCaptureVideoEncoder] Failed to delete buffer A: {ex.Message}");
         }
 
         try
@@ -1793,15 +1745,12 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             if (!string.IsNullOrEmpty(_preRecBufferB) && File.Exists(_preRecBufferB))
             {
                 File.Delete(_preRecBufferB);
-                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Deleted temp buffer B: {_preRecBufferB}");
             }
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder] Failed to delete buffer B: {ex.Message}");
+            Super.Log($"[WindowsCaptureVideoEncoder] Failed to delete buffer B: {ex.Message}");
         }
-
-        Debug.WriteLine($"[WindowsCaptureVideoEncoder] Pre-recording temp file cleanup complete");
     }
 
 
