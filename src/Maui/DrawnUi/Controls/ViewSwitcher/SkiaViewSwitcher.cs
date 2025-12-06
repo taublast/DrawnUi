@@ -139,7 +139,14 @@ namespace DrawnUi.Controls
 
             var previous = Views.Count - 2;
             if (previous >= 0)
+            {
                 HideView(view as SkiaControl, Views.Count - 1, false);
+            }
+            else
+            {
+                //initial
+                UpdateSelectedView(SelectedIndex, null);
+            }
         }
 
         public override void SetChildren(IEnumerable<SkiaControl> views)
@@ -985,14 +992,17 @@ namespace DrawnUi.Controls
 
                 DisplayingIndex = selectedIndex;
 
-                if (selectedIndex < 0 || Superview == null)
+                if (selectedIndex < 0)
                 {
                     return;
                 }
 
                 //TouchEffect.CloseKeyboard(); todo maybe add ???
 
-                Superview.FocusedChild = null;
+                if (Superview != null)
+                {
+                    Superview.FocusedChild = null;
+                }
 
                 lastSelectedIndex = selectedIndex;
 
