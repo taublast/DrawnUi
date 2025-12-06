@@ -193,7 +193,8 @@ public partial class SkiaCamera : SkiaControl
         nameof(PreRecordDuration),
         typeof(TimeSpan),
         typeof(SkiaCamera),
-        TimeSpan.FromSeconds(5));
+        TimeSpan.FromSeconds(5),
+        propertyChanged: OnPreRecordDurationChanged);
 
     /// <summary>
     /// Duration of pre-recording buffer to maintain (default: 3 seconds).
@@ -205,10 +206,20 @@ public partial class SkiaCamera : SkiaControl
         set { SetValue(PreRecordDurationProperty, value); }
     }
 
+    private static void OnPreRecordDurationChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is SkiaCamera camera && (camera.IsRecordingVideo || camera.IsPreRecording))
+        {
+            camera.AbortVideoRecording();
+        }
+    }
+
     private static void OnPreRecordingEnabledChanged(BindableObject bindable, object oldValue, object newValue)
     {
         if (bindable is SkiaCamera camera)
         {
+            camera.AbortVideoRecording();
+
             bool enabled = (bool)newValue;
             if (enabled && !camera.IsRecordingVideo)
             {
@@ -1715,7 +1726,7 @@ public partial class SkiaCamera : SkiaControl
 #endif
     }
 
-    public async Task AbortVideoRecording()
+    public void AbortVideoRecording()
     {
         if (!IsRecordingVideo && !IsPreRecording)
             return;
@@ -1749,7 +1760,7 @@ public partial class SkiaCamera : SkiaControl
             // Check if using capture video flow
             if (_captureVideoEncoder != null)
             {
-                await AbortCaptureVideoFlow();
+                AbortCaptureVideoFlow();
             }
             else
             {
