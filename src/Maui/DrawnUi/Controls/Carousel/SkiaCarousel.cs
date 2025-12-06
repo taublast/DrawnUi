@@ -1021,7 +1021,10 @@ public class SkiaCarousel : SnappingLayout
                     {
                         ApplyPosition(value);
                     },
-                    Finished = () => { _isSnapping = null; },
+                    Finished = () =>
+                    {
+                        _isSnapping = null;
+                    },
                 };
                 AnimatorRange = new(this)
                 {
@@ -1036,7 +1039,10 @@ public class SkiaCarousel : SnappingLayout
              
                         }
                     },
-                    Finished = () => { _isSnapping = null; },
+                    Finished = () =>
+                    {
+                        _isSnapping = null;
+                    },
                 };
             }
 
@@ -1546,6 +1552,8 @@ public class SkiaCarousel : SnappingLayout
 
     public void GoNext()
     {
+        _isSnapping = null;
+
         var index = SelectedIndex;
         if (index < MaxIndex)
         {
@@ -1562,6 +1570,8 @@ public class SkiaCarousel : SnappingLayout
 
     public virtual void GoPrev()
     {
+        _isSnapping = null;
+
         var index = SelectedIndex;
         if (index > 0)
         {
