@@ -33,12 +33,13 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
 
 ---
 
-## 🆕 What's new for 1.7.4.5
+## 🆕 What's new for 1.7.4.7
 
-* FIX Windows active/inactive canvas check
-* FIX gestures location mapping for conttrols with complex transforms
-* SkiaCamera pre-recording feature, saved video orientaton Apple/Android fixes.
-
+* FIX SkiaCarousel stuck when manually changing index is being spammed.
+* Fix Refreshview not shown when refreshing started long before layout was ready
+* FIX SkiaViewSwitcher not firing onAppearing event to first tab on startup
+* FIX Windows Canvas not unfrozing sometimes after going back to viewtree
+ 
 ## 💡 Hint of the Day
 
 **❓ Q: How to make images to Fade-In when loaded?**
