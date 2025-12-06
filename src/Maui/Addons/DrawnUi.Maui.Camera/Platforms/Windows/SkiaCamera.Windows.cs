@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using Windows.Win32;
+using Windows.Win32.Foundation;
 
 namespace DrawnUi.Camera;
 
@@ -252,28 +254,273 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
-    /// Mux pre-recorded and live video files (Windows: basic concatenation)
+    /// Mux pre-recorded and live video files using Windows Media Foundation APIs.
+    /// NO FFmpeg - Windows native APIs only.
     /// </summary>
-    private async Task<string> MuxVideosInternal(string preRecordedPath, string liveRecordingPath, string outputPath)
+    private async Task<string> MuxVideosWindows(string preRecordedPath, string liveRecordingPath, string outputPath)
     {
+        Debug.WriteLine($"[MuxVideosWindows] ========== MUXING WITH WINDOWS MEDIA FOUNDATION ==========");
+        Debug.WriteLine($"[MuxVideosWindows] Pre-recording: {preRecordedPath} ({(File.Exists(preRecordedPath) ? new FileInfo(preRecordedPath).Length / 1024 : 0)} KB)");
+        Debug.WriteLine($"[MuxVideosWindows] Live recording: {liveRecordingPath} ({(File.Exists(liveRecordingPath) ? new FileInfo(liveRecordingPath).Length / 1024 : 0)} KB)");
+        Debug.WriteLine($"[MuxVideosWindows] Output: {outputPath}");
+
+        global::Windows.Win32.Media.MediaFoundation.IMFSourceReader? reader1 = null;
+        global::Windows.Win32.Media.MediaFoundation.IMFSourceReader? reader2 = null;
+        global::Windows.Win32.Media.MediaFoundation.IMFSinkWriter? writer = null;
+
         try
         {
-            // Windows: Simple file concatenation as fallback
-            using (var output = File.Create(outputPath))
+            // Create source readers for both input files
+            unsafe
             {
-                using (var preFile = File.OpenRead(preRecordedPath))
-                    await preFile.CopyToAsync(output);
-                using (var liveFile = File.OpenRead(liveRecordingPath))
-                    await liveFile.CopyToAsync(output);
+                fixed (char* p1 = preRecordedPath)
+                {
+                    var hr = PInvoke.MFCreateSourceReaderFromURL(new PCWSTR(p1), null, out reader1);
+                    if (hr.Failed)
+                        throw new InvalidOperationException($"MFCreateSourceReaderFromURL failed for pre-rec: 0x{hr.Value:X8}");
+                }
+
+                fixed (char* p2 = liveRecordingPath)
+                {
+                    var hr = PInvoke.MFCreateSourceReaderFromURL(new PCWSTR(p2), null, out reader2);
+                    if (hr.Failed)
+                        throw new InvalidOperationException($"MFCreateSourceReaderFromURL failed for live: 0x{hr.Value:X8}");
+                }
+
+                fixed (char* pOut = outputPath)
+                {
+                    var hr = PInvoke.MFCreateSinkWriterFromURL(new PCWSTR(pOut), null, null, out writer);
+                    if (hr.Failed)
+                        throw new InvalidOperationException($"MFCreateSinkWriterFromURL failed for output: 0x{hr.Value:X8}");
+                }
             }
-            Debug.WriteLine($"[MuxVideosWindows] Concatenation: {outputPath}");
+
+            // Configure sink writer based on first input file's media type
+            reader1.GetCurrentMediaType(0xFFFFFFFC, out var inputMediaType); // MF_SOURCE_READER_FIRST_VIDEO_STREAM = 0xFFFFFFFC
+
+            if (inputMediaType == null)
+                throw new InvalidOperationException("Failed to get input media type");
+
+            // Add output stream to sink writer using same media type
+            writer.AddStream(inputMediaType, out var streamIndex);
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(inputMediaType);
+
+            // Begin writing
+            writer.BeginWriting();
+
+            // Copy samples from first file (pre-recording)
+            long lastTimestamp = await CopySamplesFromReader(reader1, writer, streamIndex, 0, "pre-rec");
+
+            Debug.WriteLine($"[MuxVideosWindows] Pre-rec end timestamp: {lastTimestamp / 10000000.0:F2}s");
+
+            // Copy samples from second file (live recording) with offset
+            // Media Foundation resets timestamps to 0 in files, so we apply offset here during muxing
+            await CopySamplesFromReader(reader2, writer, streamIndex, lastTimestamp, "live");
+
+            // Finalize output
+            writer.Finalize();
+
+            Debug.WriteLine($"[MuxVideosWindows] Finalized output");
+
+            if (File.Exists(outputPath))
+            {
+                var outputSize = new FileInfo(outputPath).Length;
+                Debug.WriteLine($"[MuxVideosWindows] Output file created: {outputSize / 1024} KB ({outputSize} bytes)");
+            }
+
+            Debug.WriteLine($"[MuxVideosWindows] ========== MUXING COMPLETE ==========");
+
             return outputPath;
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[MuxVideosWindows] Error: {ex.Message}");
+            Debug.WriteLine($"[MuxVideosWindows] ERROR: {ex.Message}");
+            Debug.WriteLine($"[MuxVideosWindows] Stack trace: {ex.StackTrace}");
             throw;
         }
+        finally
+        {
+            // Clean up COM objects
+            if (reader1 != null)
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(reader1);
+            }
+            if (reader2 != null)
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(reader2);
+            }
+            if (writer != null)
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(writer);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Platform interface for muxing videos. Delegates to Windows-specific MuxVideos() with MediaComposition and fallback.
+    /// </summary>
+    private async Task<string> MuxVideosInternal(string preRecordedPath, string liveRecordingPath, string outputPath)
+    {
+        return await MuxVideos(preRecordedPath, liveRecordingPath, outputPath);
+    }
+
+    /// <summary>
+    /// Muxes two video files using Windows.Media.Editing.MediaComposition (WinRT API).
+    /// This handles H.264 keyframe discontinuities automatically and uses lossless stream copy when possible.
+    /// </summary>
+    private async Task<string> MuxVideosWithMediaComposition(string preRecPath, string liveRecPath, string outputPath)
+    {
+        try
+        {
+            Debug.WriteLine($"[MediaComposition] Starting lossless concatenation");
+            Debug.WriteLine($"  Pre-rec: {preRecPath}");
+            Debug.WriteLine($"  Live: {liveRecPath}");
+            Debug.WriteLine($"  Output: {outputPath}");
+
+            // Ensure output file exists for GetFileFromPathAsync
+            if (!File.Exists(outputPath))
+            {
+                await File.WriteAllBytesAsync(outputPath, Array.Empty<byte>());
+            }
+
+            // Load both video files as StorageFile
+            var file1 = await global::Windows.Storage.StorageFile.GetFileFromPathAsync(preRecPath);
+            var file2 = await global::Windows.Storage.StorageFile.GetFileFromPathAsync(liveRecPath);
+            var outputFile = await global::Windows.Storage.StorageFile.GetFileFromPathAsync(outputPath);
+
+            // Create composition and add clips
+            var composition = new global::Windows.Media.Editing.MediaComposition();
+            composition.Clips.Add(await global::Windows.Media.Editing.MediaClip.CreateFromFileAsync(file1));
+            composition.Clips.Add(await global::Windows.Media.Editing.MediaClip.CreateFromFileAsync(file2));
+
+            Debug.WriteLine($"[MediaComposition] Added {composition.Clips.Count} clips to composition");
+
+            // Create encoding profile (will attempt stream copy if compatible)
+            var profile = global::Windows.Media.MediaProperties.MediaEncodingProfile.CreateMp4(
+                global::Windows.Media.MediaProperties.VideoEncodingQuality.HD1080p);
+
+            // Ensure H.264 + AAC (matches our encoder output)
+            profile.Video.Subtype = "H264";
+            profile.Audio.Subtype = "AAC";
+
+            Debug.WriteLine($"[MediaComposition] Rendering to file (will use stream copy if possible)...");
+
+            // Render composition to file (automatically uses stream copy if compatible, otherwise re-encodes)
+            var result = await composition.RenderToFileAsync(outputFile, global::Windows.Media.Editing.MediaTrimmingPreference.Fast);
+
+            Debug.WriteLine($"[MediaComposition] Concatenation successful!");
+
+            // Verify output file exists and has content
+            if (!File.Exists(outputPath))
+            {
+                throw new InvalidOperationException("Output file was not created");
+            }
+
+            var outputSize = new FileInfo(outputPath).Length;
+            Debug.WriteLine($"[MediaComposition] Output file: {outputSize / 1024} KB");
+
+            return outputPath;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[MediaComposition] ERROR: {ex.Message}");
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Muxes two video files with automatic fallback strategy.
+    /// Tries MediaComposition first (handles H.264 keyframes properly), falls back to Media Foundation if needed.
+    /// </summary>
+    private async Task<string> MuxVideos(string preRecPath, string liveRecPath, string outputPath)
+    {
+        try
+        {
+            // Try MediaComposition first (handles H.264 keyframes properly, lossless)
+            return await MuxVideosWithMediaComposition(preRecPath, liveRecPath, outputPath);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[Muxing] MediaComposition failed, falling back to Media Foundation: {ex.Message}");
+
+            // Fallback to Media Foundation (may have keyframe issues but works as last resort)
+            return await MuxVideosWindows(preRecPath, liveRecPath, outputPath);
+        }
+    }
+
+    /// <summary>
+    /// Copies all video samples from an IMFSourceReader to an IMFSinkWriter.
+    /// </summary>
+    private async Task<long> CopySamplesFromReader(
+        global::Windows.Win32.Media.MediaFoundation.IMFSourceReader reader,
+        global::Windows.Win32.Media.MediaFoundation.IMFSinkWriter writer,
+        uint streamIndex,
+        long timestampOffset,
+        string debugName)
+    {
+        int sampleCount = 0;
+        long lastTimestamp = timestampOffset;
+
+        while (true)
+        {
+            global::Windows.Win32.Media.MediaFoundation.IMFSample? sample = null;
+
+            try
+            {
+                // Read next sample - using pointers for all output parameters
+                uint actualStreamIndex = 0;
+                uint streamFlags = 0;
+                long timestamp = 0;
+
+                unsafe
+                {
+                    global::Windows.Win32.Media.MediaFoundation.IMFSample_unmanaged* pSample = null;
+                    reader.ReadSample(
+                        0xFFFFFFFC, // MF_SOURCE_READER_FIRST_VIDEO_STREAM
+                        0,          // No flags
+                        &actualStreamIndex,
+                        &streamFlags,
+                        &timestamp,
+                        &pSample
+                    );
+
+                    // Convert unmanaged pointer to managed interface
+                    if (pSample != null)
+                    {
+                        sample = (global::Windows.Win32.Media.MediaFoundation.IMFSample)System.Runtime.InteropServices.Marshal.GetObjectForIUnknown(new IntPtr(pSample));
+                    }
+                }
+
+                // Check if end of stream
+                if ((streamFlags & 1) != 0 || sample == null) // MF_SOURCE_READERF_ENDOFSTREAM = 1
+                {
+                    break;
+                }
+
+                // Adjust timestamp
+                long adjustedTimestamp = timestamp + timestampOffset;
+                sample.SetSampleTime(adjustedTimestamp);
+
+                // Get sample duration
+                sample.GetSampleDuration(out var duration);
+                lastTimestamp = adjustedTimestamp + duration;
+
+                // Write sample to output
+                writer.WriteSample(streamIndex, sample);
+
+                sampleCount++;
+            }
+            finally
+            {
+                if (sample != null)
+                {
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(sample);
+                }
+            }
+        }
+
+        await Task.CompletedTask;
+        return lastTimestamp;
     }
 
     //public SKBitmap GetPreviewBitmap()

@@ -216,7 +216,7 @@ namespace DrawnUi.Draw
             if (indicator is SkiaControl newControl)
             {
                 InternalRefreshIndicator = indicator;
-
+   
                 //if (Orientation == ScrollOrientation.Vertical)
                 //{
                 //    newControl.HeightRequest = RefreshDistanceLimit;
@@ -2382,7 +2382,7 @@ namespace DrawnUi.Draw
                 var overscroll = RefreshShowDistance * RenderingScale;
                 if (Orientation == ScrollOrientation.Vertical)
                 {
-                    if (OverscrollDistance.Y < RefreshShowDistance)
+                    if (OverscrollDistance.Y <= RefreshShowDistance)
                     {
                         SetScrollOffset(DrawingRect, _updatedViewportForPixX, overscroll, _zoomedScale, RenderingScale,
                             true);
@@ -2391,7 +2391,7 @@ namespace DrawnUi.Draw
                 }
                 else if (Orientation == ScrollOrientation.Horizontal)
                 {
-                    if (OverscrollDistance.Y < RefreshShowDistance)
+                    if (OverscrollDistance.Y <= RefreshShowDistance)
                     {
                         SetScrollOffset(DrawingRect, overscroll, _updatedViewportForPixY, _zoomedScale, RenderingScale,
                             true);
@@ -2941,6 +2941,8 @@ namespace DrawnUi.Draw
         protected override void OnLayoutReady()
         {
             base.OnLayoutReady();
+
+            SetIsRefreshing(IsRefreshing);
 
             _autoCacheContent = false;
         }

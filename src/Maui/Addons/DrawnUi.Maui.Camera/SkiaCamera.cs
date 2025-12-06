@@ -123,6 +123,7 @@ public partial class SkiaCamera : SkiaControl
 
                     // Keep reference to old encoder
                     oldEncoder = _captureVideoEncoder;
+                    Debug.WriteLine("[StartVideoRecording] Old encoder captured for transition");
                 }
 
                 // Update state flags BEFORE creating new encoder
@@ -137,6 +138,8 @@ public partial class SkiaCamera : SkiaControl
                     // Any frames arriving now will go to the new encoder (no gap!)
                     await StartCaptureVideoFlow();
                     Debug.WriteLine("[StartVideoRecording] New encoder created and active - frames now routing to encoder #2");
+
+                    // NOTE: Pre-recording offset will be set AFTER stopping old encoder and getting correct duration
                 }
 
                 // NOW stop the old encoder (frames already going to new encoder, zero frame loss)
@@ -152,9 +155,30 @@ public partial class SkiaCamera : SkiaControl
                         if (preRecResult != null && !string.IsNullOrEmpty(preRecResult.FilePath))
                         {
                             _preRecordingFilePath = preRecResult.FilePath;
-                            _preRecordingDurationTracked = oldEncoder.EncodingDuration;
+
+                            // CRITICAL: Use corrected duration from StopAsync result, NOT the wall-clock duration captured earlier
+                            _preRecordingDurationTracked = preRecResult.Duration;
                             Debug.WriteLine($"[StartVideoRecording] Captured pre-recording file: {_preRecordingFilePath}");
-                            Debug.WriteLine($"[StartVideoRecording] Captured pre-recording duration: {_preRecordingDurationTracked.TotalSeconds:F2}s");
+                            Debug.WriteLine($"[StartVideoRecording] Captured pre-recording duration (corrected): {_preRecordingDurationTracked.TotalSeconds:F2}s");
+
+                            // CRITICAL: Set pre-recording duration offset on NEW encoder with CORRECTED duration
+                            if (_preRecordingDurationTracked > TimeSpan.Zero && _captureVideoEncoder != null)
+                            {
+                                // Platform-specific: set offset on encoder
+#if WINDOWS
+                                if (_captureVideoEncoder is WindowsCaptureVideoEncoder winEncoder)
+                                {
+                                    winEncoder.SetPreRecordingDuration(_preRecordingDurationTracked);
+                                    Debug.WriteLine($"[StartVideoRecording] Set pre-recording offset on new Windows encoder: {_preRecordingDurationTracked.TotalSeconds:F2}s");
+                                }
+#elif IOS || MACCATALYST
+                                if (_captureVideoEncoder is AppleVideoToolboxEncoder appleEncoder)
+                                {
+                                    appleEncoder.SetPreRecordingDuration(_preRecordingDurationTracked);
+                                    Debug.WriteLine($"[StartVideoRecording] Set pre-recording offset on new Apple encoder: {_preRecordingDurationTracked.TotalSeconds:F2}s");
+                                }
+#endif
+                            }
                         }
                     }
                     catch (Exception ex)
