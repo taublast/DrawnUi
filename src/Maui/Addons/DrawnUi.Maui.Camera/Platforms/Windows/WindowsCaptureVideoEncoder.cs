@@ -679,18 +679,15 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                     if (singleDuration > _preRecordDuration)
                     {
                         // Single buffer exceeds limit - trim to last N seconds
-                        // DEBUG: SKIP TRIMMING to verify content
-                        Debug.WriteLine($"  [DEBUG] Single buffer exceeds limit, but SKIPPING TRIM to verify content");
-                        // Debug.WriteLine($"  Single buffer exceeds limit, trimming to last {_preRecordDuration.TotalSeconds:F2}s");
-                        // var trimmedBuffer = await TrimVideoFromEnd(singleBuffer, _preRecordDuration);
-                        // File.Copy(trimmedBuffer, _outputPath, overwrite: true);
-                        File.Copy(singleBuffer, _outputPath, overwrite: true);
+                        Debug.WriteLine($"  Single buffer exceeds limit, trimming to last {_preRecordDuration.TotalSeconds:F2}s");
+                        var trimmedBuffer = await TrimVideoFromEnd(singleBuffer, _preRecordDuration);
+                        File.Copy(trimmedBuffer, _outputPath, overwrite: true);
 
                         // Clean up trimmed temp file
-                        // if (trimmedBuffer != singleBuffer && File.Exists(trimmedBuffer))
-                        // {
-                        //    try { File.Delete(trimmedBuffer); } catch { }
-                        // }
+                        if (trimmedBuffer != singleBuffer && File.Exists(trimmedBuffer))
+                        {
+                            try { File.Delete(trimmedBuffer); } catch { }
+                        }
                     }
                     else
                     {
@@ -748,28 +745,15 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 string trimmedPath = null;
                 try
                 {
-                    // DEBUG: SKIP TRIMMING OLDER BUFFER
+                    // DEBUG: SKIP TRIMMING OLDER BUFFER - use full content as it should be valid now
                     trimmedOlderPath = olderBuffer;
-                    /*
-                    if (validOlderDuration > TimeSpan.Zero && validOlderDuration < _preRecordDuration)
-                    {
-                        // Only use the valid part of the older buffer
-                        trimmedOlderPath = await TrimVideoFromEnd(olderBuffer, validOlderDuration);
-                    }
-                    else
-                    {
-                        trimmedOlderPath = olderBuffer;
-                    }
-                    */
 
                     // Step 2: Concatenate trimmed older buffer and newer buffer
                     await MuxVideos(trimmedOlderPath, newerBuffer, combinedPath);
 
                     // Step 3: Trim the combined file to the last N seconds
                     // NOTE: We use the combined path as input, and trim to keep the last N seconds
-                    // DEBUG: SKIP TRIMMING COMBINED FILE
-                    // trimmedPath = await TrimVideoFromEnd(combinedPath, _preRecordDuration);
-                    trimmedPath = combinedPath;
+                    trimmedPath = await TrimVideoFromEnd(combinedPath, _preRecordDuration);
 
                     // Step 4: Copy trimmed file to output
                     File.Copy(trimmedPath, _outputPath, overwrite: true);
