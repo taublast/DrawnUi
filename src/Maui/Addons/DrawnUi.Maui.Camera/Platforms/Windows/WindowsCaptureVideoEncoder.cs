@@ -17,6 +17,11 @@ namespace DrawnUi.Camera.Platforms.Windows;
 /// </summary>
 public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 {
+    // Track first and last frame timestamps for each buffer
+    private TimeSpan _bufferAFirstTimestamp = TimeSpan.Zero;
+    private TimeSpan _bufferALastTimestamp = TimeSpan.Zero;
+    private TimeSpan _bufferBFirstTimestamp = TimeSpan.Zero;
+    private TimeSpan _bufferBLastTimestamp = TimeSpan.Zero;
     private static int _instanceCounter = 0;
     private readonly int _instanceId;
 
@@ -403,6 +408,23 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
     public async Task AddFrameAsync(SKBitmap bitmap, TimeSpan timestamp)
     {
+        // Track first and last frame timestamps for the active buffer
+        if (IsPreRecordingMode)
+        {
+            if (_isBufferA)
+            {
+                if (_bufferAFirstTimestamp == TimeSpan.Zero || timestamp < _bufferAFirstTimestamp)
+                    _bufferAFirstTimestamp = timestamp;
+                _bufferALastTimestamp = timestamp;
+            }
+            else
+            {
+                if (_bufferBFirstTimestamp == TimeSpan.Zero || timestamp < _bufferBFirstTimestamp)
+                    _bufferBFirstTimestamp = timestamp;
+                _bufferBLastTimestamp = timestamp;
+            }
+        }
+
         if (!_isRecording)
             return;
 
@@ -417,6 +439,20 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             if (elapsed >= _preRecordDuration)
             {
                 await SwapPreRecordingBuffer();
+
+                // CRITICAL: The current frame belongs to the NEW buffer now.
+                // We must initialize the timestamp trackers for the new buffer with this frame's timestamp
+                // so that the base timestamp calculation below works correctly (resulting in 0 for the first frame).
+                if (_isBufferA)
+                {
+                    _bufferAFirstTimestamp = timestamp;
+                    _bufferALastTimestamp = timestamp;
+                }
+                else
+                {
+                    _bufferBFirstTimestamp = timestamp;
+                    _bufferBLastTimestamp = timestamp;
+                }
             }
 
             // Fall through to normal frame writing (same RGB32 encoding path!)
@@ -485,10 +521,16 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 {
                     sample.AddBuffer(mediaBuffer);
 
-                    // NOTE: Do NOT apply pre-recording offset here - Media Foundation sink writer
-                    // normalizes timestamps to start from 0 in the output file anyway.
-                    // Offset is applied during muxing instead.
+                    // Calculate sample time
                     long sampleTime = (long)(_pendingTimestamp.TotalSeconds * 10_000_000L);
+
+                    // In pre-recording mode, normalize timestamps relative to the start of the current buffer
+                    // This ensures each buffer file starts at timestamp 0, preventing gaps when muxing
+                    if (IsPreRecordingMode)
+                    {
+                        TimeSpan baseTimestamp = _isBufferA ? _bufferAFirstTimestamp : _bufferBFirstTimestamp;
+                        sampleTime -= (long)(baseTimestamp.TotalSeconds * 10_000_000L);
+                    }
                     if (sampleTime <= _lastSampleTime100ns)
                     {
                         sampleTime = _lastSampleTime100ns + _rtDurationPerFrame;
@@ -528,67 +570,8 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
     }
 
-    private async Task EncodeFrameToStream(SKBitmap frame)
-    {
-        // Immediately process frame to avoid memory buildup and UI freezing
-        try
-        {
-            // For now, we'll still use the AVI approach but write frames immediately
-            // In production, this would use MediaFoundation pipeline for real-time encoding
 
-            // This is where you'd send frame to MediaFoundation encoder in real implementation
-            // For demo: just process the frame data immediately
-            var frameData = ConvertFrameToAviFormat(frame);
-
-            // Write frame data immediately to stream (would be done by MediaFoundation)
-            // For demo: store in memory but process immediately to prevent UI blocking
-
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder] Processed frame {_totalFrameCount} in real-time");
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder] EncodeFrameToStream failed: {ex.Message}");
-        }
-    }
-
-    private byte[] ConvertFrameToAviFormat(SKBitmap frame)
-    {
-        // Convert SKBitmap to BGR24 format for AVI (same as before but immediate)
-        var frameData = new byte[frame.Width * frame.Height * 3];
-
-        for (int y = 0; y < frame.Height; y++)
-        {
-            for (int x = 0; x < frame.Width; x++)
-            {
-                var color = frame.GetPixel(x, frame.Height - 1 - y); // Flip vertically
-
-                var dataIndex = (y * frame.Width + x) * 3;
-                frameData[dataIndex] = color.Blue;   // B
-                frameData[dataIndex + 1] = color.Green; // G
-                frameData[dataIndex + 2] = color.Red;   // R
-            }
-        }
-
-        return frameData;
-    }
-
-    public async Task PrependBufferedEncodedDataAsync(PrerecordingEncodedBuffer prerecordingBuffer)
-    {
-        if (!_isRecording || _sinkWriter == null || prerecordingBuffer == null)
-            return;
-
-        try
-        {
-            // Write pre-encoded data directly to media sink
-            // This is a no-op for the current implementation which requires re-encoding from bitmaps
-            // In a full implementation, would write prerecordingBuffer.GetBufferedData() to _sinkWriter
-            await Task.CompletedTask;
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder] PrependBufferedEncodedDataAsync failed: {ex.Message}");
-        }
-    }
+     
 
     public async Task<CapturedVideo> StopAsync()
     {
@@ -607,12 +590,10 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             wasPreRecordingMode = true;
 
             Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== PRE-REC STOP DEBUG ==========");
-            Debug.WriteLine($"  MODE: Pre-recording ONLY (2-encoder pattern)");
             Debug.WriteLine($"  _preRecBufferA path: {_preRecBufferA}");
             Debug.WriteLine($"  _preRecBufferB path: {_preRecBufferB}");
             Debug.WriteLine($"  _outputPath path: {_outputPath}");
             Debug.WriteLine($"  _isBufferA: {_isBufferA}");
-            Debug.WriteLine($"  NOTE: Live recording is handled by separate encoder instance");
 
             // Finalize whichever sink is active
             if (_sinkWriter != null)
@@ -651,30 +632,19 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             // Collect files to output (in order: older buffer → newer buffer)
             var filesToOutput = new List<string>();
 
-            // Add buffers in chronological order (older → newer)
+            // Always add buffers in chronological order: older first, newer second
+            // The buffer that is NOT currently active is the older one
             if (_isBufferA)
             {
-                // Buffer A is active (newest), so B is older
-                if (hasBufferB)
-                {
-                    filesToOutput.Add(_preRecBufferB);
-                }
-                if (hasBufferA)
-                {
-                    filesToOutput.Add(_preRecBufferA);
-                }
+                // Buffer B is older, Buffer A is newer
+                if (hasBufferB) filesToOutput.Add(_preRecBufferB);
+                if (hasBufferA) filesToOutput.Add(_preRecBufferA);
             }
             else
             {
-                // Buffer B is active (newest), so A is older
-                if (hasBufferA)
-                {
-                    filesToOutput.Add(_preRecBufferA);
-                }
-                if (hasBufferB)
-                {
-                    filesToOutput.Add(_preRecBufferB);
-                }
+                // Buffer A is older, Buffer B is newer
+                if (hasBufferA) filesToOutput.Add(_preRecBufferA);
+                if (hasBufferB) filesToOutput.Add(_preRecBufferB);
             }
 
             if (filesToOutput.Count == 0)
@@ -683,12 +653,22 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             }
             else if (filesToOutput.Count == 1)
             {
+
                 // Only one buffer - check if it needs trimming
                 var singleBuffer = filesToOutput[0];
                 var sourceSize = new FileInfo(singleBuffer).Length;
                 Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Single buffer output:");
                 Debug.WriteLine($"  Source: {Path.GetFileName(singleBuffer)} ({sourceSize / 1024} KB)");
                 Debug.WriteLine($"  Output: {_outputPath}");
+                // Extra debug: check if this buffer is the live buffer by comparing file paths
+                if (_outputPath == singleBuffer)
+                {
+                    Debug.WriteLine($"  [WARNING] Single buffer is the output path itself! This may indicate a logic error.");
+                }
+                if (singleBuffer == _preRecBufferA)
+                    Debug.WriteLine($"  [DEBUG] Trimming/copying pre-record buffer A");
+                if (singleBuffer == _preRecBufferB)
+                    Debug.WriteLine($"  [DEBUG] Trimming/copying pre-record buffer B");
 
                 try
                 {
@@ -699,15 +679,18 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                     if (singleDuration > _preRecordDuration)
                     {
                         // Single buffer exceeds limit - trim to last N seconds
-                        Debug.WriteLine($"  Single buffer exceeds limit, trimming to last {_preRecordDuration.TotalSeconds:F2}s");
-                        var trimmedBuffer = await TrimVideoFromEnd(singleBuffer, _preRecordDuration);
-                        File.Copy(trimmedBuffer, _outputPath, overwrite: true);
+                        // DEBUG: SKIP TRIMMING to verify content
+                        Debug.WriteLine($"  [DEBUG] Single buffer exceeds limit, but SKIPPING TRIM to verify content");
+                        // Debug.WriteLine($"  Single buffer exceeds limit, trimming to last {_preRecordDuration.TotalSeconds:F2}s");
+                        // var trimmedBuffer = await TrimVideoFromEnd(singleBuffer, _preRecordDuration);
+                        // File.Copy(trimmedBuffer, _outputPath, overwrite: true);
+                        File.Copy(singleBuffer, _outputPath, overwrite: true);
 
                         // Clean up trimmed temp file
-                        if (trimmedBuffer != singleBuffer && File.Exists(trimmedBuffer))
-                        {
-                            try { File.Delete(trimmedBuffer); } catch { }
-                        }
+                        // if (trimmedBuffer != singleBuffer && File.Exists(trimmedBuffer))
+                        // {
+                        //    try { File.Delete(trimmedBuffer); } catch { }
+                        // }
                     }
                     else
                     {
@@ -734,104 +717,107 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             }
             else if (filesToOutput.Count == 2)
             {
-                // Two buffers - check if total duration exceeds PreRecordDuration
+                // Two buffers - robust: trim older buffer to valid timestamp duration, then concatenate, then trim combined file to last N seconds
                 var olderBuffer = filesToOutput[0];
                 var newerBuffer = filesToOutput[1];
 
-                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Two-buffer finalization:");
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Two-buffer finalization (robust, trim older):");
                 Debug.WriteLine($"  Older: {Path.GetFileName(olderBuffer)}");
                 Debug.WriteLine($"  Newer: {Path.GetFileName(newerBuffer)}");
                 Debug.WriteLine($"  PreRecordDuration limit: {_preRecordDuration.TotalSeconds:F2}s");
 
+                // Use tracked timestamps for valid duration
+                TimeSpan validOlderDuration = TimeSpan.Zero;
+                if (olderBuffer == _preRecBufferA)
+                {
+                    validOlderDuration = _bufferALastTimestamp - _bufferAFirstTimestamp;
+                }
+                else if (olderBuffer == _preRecBufferB)
+                {
+                    validOlderDuration = _bufferBLastTimestamp - _bufferBFirstTimestamp;
+                }
+                else
+                {
+                    validOlderDuration = await GetVideoDuration(olderBuffer); // fallback
+                }
+
+                Debug.WriteLine($"  [Tracked] Valid duration in older buffer: {validOlderDuration.TotalSeconds:F2}s");
+
+                string trimmedOlderPath = null;
+                string combinedPath = Path.Combine(Path.GetDirectoryName(_outputPath), $"combined_{Guid.NewGuid():N}.mp4");
+                string trimmedPath = null;
                 try
                 {
-                    var olderDuration = await GetVideoDuration(olderBuffer);
-                    var newerDuration = await GetVideoDuration(newerBuffer);
-                    var totalDuration = olderDuration + newerDuration;
-
-                    Debug.WriteLine($"  Older duration: {olderDuration.TotalSeconds:F2}s");
-                    Debug.WriteLine($"  Newer duration: {newerDuration.TotalSeconds:F2}s");
-                    Debug.WriteLine($"  Total duration: {totalDuration.TotalSeconds:F2}s");
-
-                    Debug.WriteLine($"[INVESTIGATION] Buffer durations:");
-                    Debug.WriteLine($"  Older: {olderDuration.TotalSeconds:F3}s");
-                    Debug.WriteLine($"  Newer: {newerDuration.TotalSeconds:F3}s");
-                    Debug.WriteLine($"  Total: {totalDuration.TotalSeconds:F3}s");
-                    Debug.WriteLine($"  Limit: {_preRecordDuration.TotalSeconds:F3}s");
-
-                    if (totalDuration > _preRecordDuration)
+                    // DEBUG: SKIP TRIMMING OLDER BUFFER
+                    trimmedOlderPath = olderBuffer;
+                    /*
+                    if (validOlderDuration > TimeSpan.Zero && validOlderDuration < _preRecordDuration)
                     {
-                        // Total exceeds limit - need to trim or skip older buffer
-                        var neededFromOlder = _preRecordDuration - newerDuration;
-
-                        Debug.WriteLine($"  Total exceeds limit by {(totalDuration - _preRecordDuration).TotalSeconds:F2}s");
-                        Debug.WriteLine($"[INVESTIGATION] neededFromOlder = {neededFromOlder.TotalSeconds:F3}s");
-
-                        if (neededFromOlder <= TimeSpan.Zero)
-                        {
-                            // Newer buffer alone meets or exceeds limit - use ONLY newer buffer
-                            Debug.WriteLine($"  Newer buffer alone meets limit, discarding older buffer entirely");
-                            Debug.WriteLine($"[INVESTIGATION] Copied ONLY newer buffer: {Path.GetFileName(newerBuffer)}");
-                            File.Copy(newerBuffer, _outputPath, overwrite: true);
-                        }
-                        else
-                        {
-                            // Need part of older buffer
-                            Debug.WriteLine($"  Trimming older buffer to keep last {neededFromOlder.TotalSeconds:F2}s");
-                            Debug.WriteLine($"[INVESTIGATION] Muxed trimmed older + newer");
-                            var trimmedOlder = await TrimVideoFromEnd(olderBuffer, neededFromOlder);
-
-                            // Mux trimmed older + newer
-                            await MuxVideosWindows(trimmedOlder, newerBuffer, _outputPath);
-
-                            // Clean up trimmed temp file
-                            if (trimmedOlder != olderBuffer && File.Exists(trimmedOlder))
-                            {
-                                try { File.Delete(trimmedOlder); } catch { }
-                            }
-                        }
+                        // Only use the valid part of the older buffer
+                        trimmedOlderPath = await TrimVideoFromEnd(olderBuffer, validOlderDuration);
                     }
                     else
                     {
-                        // Total within limit - use both buffers
-                        Debug.WriteLine($"  Total within limit, using both buffers");
-                        await MuxVideosWindows(olderBuffer, newerBuffer, _outputPath);
+                        trimmedOlderPath = olderBuffer;
                     }
+                    */
+
+                    // Step 2: Concatenate trimmed older buffer and newer buffer
+                    await MuxVideos(trimmedOlderPath, newerBuffer, combinedPath);
+
+                    // Step 3: Trim the combined file to the last N seconds
+                    // NOTE: We use the combined path as input, and trim to keep the last N seconds
+                    // DEBUG: SKIP TRIMMING COMBINED FILE
+                    // trimmedPath = await TrimVideoFromEnd(combinedPath, _preRecordDuration);
+                    trimmedPath = combinedPath;
+
+                    // Step 4: Copy trimmed file to output
+                    File.Copy(trimmedPath, _outputPath, overwrite: true);
 
                     if (File.Exists(_outputPath))
                     {
                         var muxedSize = new FileInfo(_outputPath).Length;
-                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Mux result: {muxedSize / 1024} KB");
-
-                        // CRITICAL: Check actual output duration
+                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Mux+Trim result: {muxedSize / 1024} KB");
                         var finalDuration = await GetVideoDuration(_outputPath);
                         Debug.WriteLine($"[INVESTIGATION] Final pre-rec output duration: {finalDuration.TotalSeconds:F3}s");
                     }
                     else
                     {
-                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ERROR: Mux output file not created!");
+                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ERROR: Mux+Trim output file not created!");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Duration check failed: {ex.Message}");
-                    Debug.WriteLine($"  Falling back to direct mux without trimming");
-
-                    // Fallback: mux without trimming using Media Foundation for timestamp control
-                    await MuxVideosWindows(olderBuffer, newerBuffer, _outputPath);
-
+                    Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Robust two-buffer finalization failed: {ex.Message}");
+                    Debug.WriteLine($"  Fallback: Copying ONLY newer buffer to output");
+                    File.Copy(newerBuffer, _outputPath, overwrite: true);
                     if (File.Exists(_outputPath))
                     {
                         var muxedSize = new FileInfo(_outputPath).Length;
-                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Mux result: {muxedSize / 1024} KB");
+                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Fallback result: {muxedSize / 1024} KB");
                     }
                     else
                     {
-                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ERROR: Mux output file not created!");
+                        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ERROR: Fallback output file not created!");
                     }
                 }
-
-                CleanupPreRecTempFiles();
+                finally
+                {
+                    // Clean up temp files
+                    if (trimmedPath != null && File.Exists(trimmedPath))
+                    {
+                        try { File.Delete(trimmedPath); } catch { }
+                    }
+                    if (combinedPath != null && File.Exists(combinedPath))
+                    {
+                        try { File.Delete(combinedPath); } catch { }
+                    }
+                    if (trimmedOlderPath != null && trimmedOlderPath != olderBuffer && File.Exists(trimmedOlderPath))
+                    {
+                        try { File.Delete(trimmedOlderPath); } catch { }
+                    }
+                    CleanupPreRecTempFiles();
+                }
             }
 
             Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] ========== PRE-REC STOP END ==========");
@@ -962,23 +948,25 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         // Switch to other buffer
         _isBufferA = !_isBufferA;
 
+        // On buffer swap, reset timestamp tracking for the new buffer
+        if (_isBufferA)
+        {
+            // Swapped to A, so reset A's timestamps
+            _bufferAFirstTimestamp = TimeSpan.Zero;
+            _bufferALastTimestamp = TimeSpan.Zero;
+        }
+        else
+        {
+            // Swapped to B, so reset B's timestamps
+            _bufferBFirstTimestamp = TimeSpan.Zero;
+            _bufferBLastTimestamp = TimeSpan.Zero;
+        }
+
         // Determine which buffer to write to next
         string nextBuffer = _isBufferA ? _preRecBufferA : _preRecBufferB;
         string oldBuffer = _isBufferA ? _preRecBufferB : _preRecBufferA;
 
-        // Delete the OLD buffer file (circular behavior)
-        try
-        {
-            if (File.Exists(oldBuffer))
-            {
-                File.Delete(oldBuffer);
-                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Deleted old buffer: {oldBuffer}");
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder] Failed to delete old buffer: {ex.Message}");
-        }
+        // Do NOT delete the old buffer here. Both buffers are needed for correct prerecording reconstruction.
 
         // Create new sink writer for next buffer
         _currentPreRecBuffer = nextBuffer;
@@ -1000,6 +988,9 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
         ConfigureH264OutputAndRGB32Input();
         _sinkWriter.BeginWriting();
+
+        // Reset last sample time for the new writer to ensure timestamps start from 0
+        _lastSampleTime100ns = -1;
 
         Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Swapped to buffer {(_isBufferA ? "A" : "B")}: {nextBuffer}");
     }
@@ -1138,9 +1129,16 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
             Debug.WriteLine($"[MediaComposition] Added {composition.Clips.Count} clips to composition");
 
-            // Create encoding profile (will attempt stream copy if compatible)
+            // Create encoding profile matching the source dimensions and framerate
             var profile = global::Windows.Media.MediaProperties.MediaEncodingProfile.CreateMp4(
                 global::Windows.Media.MediaProperties.VideoEncodingQuality.HD1080p);
+
+            // Override with actual settings to avoid unnecessary re-encoding/scaling
+            profile.Video.Width = (uint)_width;
+            profile.Video.Height = (uint)_height;
+            profile.Video.FrameRate.Numerator = (uint)_frameRate;
+            profile.Video.FrameRate.Denominator = 1;
+            profile.Video.Bitrate = (uint)(Math.Max(1, _width * _height) * Math.Max(1, _frameRate) * 4 / 10); // Match encoder bitrate
 
             // Ensure H.264 + AAC (matches our encoder output)
             profile.Video.Subtype = "H264";
@@ -1244,9 +1242,17 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         var composition = new global::Windows.Media.Editing.MediaComposition();
         composition.Clips.Add(clip);
 
-        // Create encoding profile (needed to avoid "missing headers" error)
+        // Create encoding profile matching the source dimensions and framerate
         var profile = global::Windows.Media.MediaProperties.MediaEncodingProfile.CreateMp4(
             global::Windows.Media.MediaProperties.VideoEncodingQuality.HD1080p);
+        
+        // Override with actual settings to avoid unnecessary re-encoding/scaling
+        profile.Video.Width = (uint)_width;
+        profile.Video.Height = (uint)_height;
+        profile.Video.FrameRate.Numerator = (uint)_frameRate;
+        profile.Video.FrameRate.Denominator = 1;
+        profile.Video.Bitrate = (uint)(Math.Max(1, _width * _height) * Math.Max(1, _frameRate) * 4 / 10); // Match encoder bitrate
+
         profile.Video.Subtype = "H264";
         profile.Audio.Subtype = "AAC";
 
