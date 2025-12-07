@@ -2491,7 +2491,7 @@ namespace DrawnUi.Draw
                 {
                     ScrollToTop(SystemAnimationTimeSecs);
                 }
-
+                LockGesturesUntilDown = false;
                 ScrollLocked = false;
             }
         }
