@@ -64,6 +64,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
         // Media Foundation pipeline (production path)
         private global::Windows.Win32.Media.MediaFoundation.IMFSinkWriter _sinkWriter;
+        private readonly System.Threading.SemaphoreSlim _sinkWriterSemaphore = new(1, 1);
         private uint _streamIndex;
         private bool _mfStarted;
 
@@ -94,6 +95,19 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     // Interface implementation - required by ICaptureVideoEncoder
     public bool IsPreRecordingMode { get; set; }
     public SkiaCamera ParentCamera { get; set; }
+
+    private void CreateSinkWriterInternal(string path)
+    {
+        unsafe
+        {
+            fixed (char* p = path)
+            {
+                var hr = PInvoke.MFCreateSinkWriterFromURL(new PCWSTR(p), null, null, out _sinkWriter);
+                if (hr.Failed)
+                    throw new InvalidOperationException($"MFCreateSinkWriterFromURL failed: 0x{hr.Value:X8}");
+            }
+        }
+    }
 
     public async Task InitializeAsync(string outputPath, int width, int height, int frameRate, bool recordAudio)
     {
@@ -155,20 +169,14 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             _outputFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
             // Create sink writer (SAME as normal mode)
-            unsafe
+            var path = _outputFile.Path;
+            await Task.Run(() => 
             {
-                fixed (char* p = _outputFile.Path)
-                {
-                    var hr2 = PInvoke.MFCreateSinkWriterFromURL(new PCWSTR(p), null, null, out _sinkWriter);
-                    if (hr2.Failed)
-                        throw new InvalidOperationException($"MFCreateSinkWriterFromURL failed: 0x{hr2.Value:X8}");
-                }
-            }
+                CreateSinkWriterInternal(path);
+                ConfigureH264OutputAndRGB32Input();
+                _sinkWriter.BeginWriting();
+            });
 
-            // Configure H.264 output + RGB32 input (SAME as normal mode)
-            ConfigureH264OutputAndRGB32Input();
-
-            _sinkWriter.BeginWriting();
             _isRecording = true;
 
             Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Pre-recording started to buffer A");
@@ -186,69 +194,13 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             _outputFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
             // Create sink writer
-            unsafe
+            var path = _outputFile.Path;
+            await Task.Run(() => 
             {
-                fixed (char* p = _outputFile.Path)
-                {
-                    hr = PInvoke.MFCreateSinkWriterFromURL(new PCWSTR(p), null, null, out _sinkWriter);
-                }
-            }
-            if (hr.Failed || _sinkWriter == null)
-                throw new InvalidOperationException($"MFCreateSinkWriterFromURL failed: 0x{hr.Value:X8}");
-
-            // Configure output type (H.264)
-            hr = PInvoke.MFCreateMediaType(out var outType);
-            if (hr.Failed)
-                throw new InvalidOperationException($"MFCreateMediaType(out) failed: 0x{hr.Value:X8}");
-            try
-            {
-                outType.SetGUID(MFGuids.MF_MT_MAJOR_TYPE, MFGuids.MFMediaType_Video);
-                outType.SetGUID(MFGuids.MF_MT_SUBTYPE, MFGuids.MFVideoFormat_H264);
-
-                // Frame size / rate / pixel aspect
-                SetAttributeSize(outType, MFGuids.MF_MT_FRAME_SIZE, (uint)_width, (uint)_height);
-                SetAttributeRatio(outType, MFGuids.MF_MT_FRAME_RATE, (uint)_frameRate, 1);
-                SetAttributeRatio(outType, MFGuids.MF_MT_PIXEL_ASPECT_RATIO, 1, 1);
-                outType.SetUINT32(MFGuids.MF_MT_INTERLACE_MODE, 2); // Progressive
-                outType.SetUINT32(MFGuids.MF_MT_MPEG2_PROFILE, 100); // H.264 High profile
-
-                // Bitrate estimate (simple heuristic)
-                uint bitrate = (uint)(Math.Max(1, _width * _height) * Math.Max(1, _frameRate) * 4 / 10);
-                outType.SetUINT32(MFGuids.MF_MT_AVG_BITRATE, bitrate);
-
-                _sinkWriter.AddStream(outType, out _streamIndex);
-            }
-            finally
-            {
-                Marshal.ReleaseComObject(outType);
-            }
-
-            // Configure input type (ARGB32 frames)
-            hr = PInvoke.MFCreateMediaType(out var inType);
-            if (hr.Failed)
-                throw new InvalidOperationException($"MFCreateMediaType(in) failed: 0x{hr.Value:X8}");
-            try
-            {
-                inType.SetGUID(MFGuids.MF_MT_MAJOR_TYPE, MFGuids.MFMediaType_Video);
-                inType.SetGUID(MFGuids.MF_MT_SUBTYPE, MFGuids.MFVideoFormat_RGB32);
-                SetAttributeSize(inType, MFGuids.MF_MT_FRAME_SIZE, (uint)_width, (uint)_height);
-                SetAttributeRatio(inType, MFGuids.MF_MT_FRAME_RATE, (uint)_frameRate, 1);
-                SetAttributeRatio(inType, MFGuids.MF_MT_PIXEL_ASPECT_RATIO, 1, 1);
-                inType.SetUINT32(MFGuids.MF_MT_INTERLACE_MODE, 2); // Progressive
-                inType.SetUINT32(MFGuids.MF_MT_ALL_SAMPLES_INDEPENDENT, 1);
-                inType.SetUINT32(MFGuids.MF_MT_DEFAULT_STRIDE, (uint)(_width * 4));
-                inType.SetUINT32(MFGuids.MF_MT_FIXED_SIZE_SAMPLES, 1);
-                inType.SetUINT32(MFGuids.MF_MT_SAMPLE_SIZE, (uint)(_width * _height * 4));
-
-                _sinkWriter.SetInputMediaType(_streamIndex, inType, null);
-            }
-            finally
-            {
-                Marshal.ReleaseComObject(inType);
-            }
-
-            // Ready to start writing
-            _sinkWriter.BeginWriting();
+                CreateSinkWriterInternal(path);
+                ConfigureH264OutputAndRGB32Input();
+                _sinkWriter.BeginWriting();
+            });
         }
     }
 
@@ -431,7 +383,10 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         // Track frame count for debugging
         _totalFrameCount++;
 
-        // PRE-RECORDING MODE: Check if we need to swap buffers
+        await _sinkWriterSemaphore.WaitAsync();
+        try
+        {
+            // PRE-RECORDING MODE: Check if we need to swap buffers
         if (IsPreRecordingMode && _sinkWriter != null)
         {
             // Check if current buffer duration exceeded
@@ -459,114 +414,139 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
 
         // NORMAL RECORDING MODE (and pre-recording): Write directly to IMFSinkWriter
-        if (_sinkWriter == null)
-        {
-            return;
-        }
+            if (_sinkWriter == null || !_isRecording)
+            {
+                return;
+            }
 
-        // Ensure format is BGRA8888, premultiplied, matching encoder size
-        SKBitmap source = bitmap;
-        if (bitmap.ColorType != SKColorType.Bgra8888 || bitmap.Width != _width || bitmap.Height != _height)
-        {
-            var info = new SKImageInfo(_width, _height, SKColorType.Bgra8888, SKAlphaType.Premul);
-            source = new SKBitmap(info);
-            using var canvas = new SKCanvas(source);
-            canvas.DrawBitmap(bitmap, new SKRect(0,0,_width,_height));
-        }
-
-        try
-        {
-            var dataSize = (uint)(_width * _height * 4);
-            var hr = PInvoke.MFCreateMemoryBuffer(dataSize, out var mediaBuffer);
-            if (hr.Failed)
-                throw new InvalidOperationException($"MFCreateMemoryBuffer failed: 0x{hr.Value:X8}");
+            // Ensure format is BGRA8888, premultiplied, matching encoder size
+            SKBitmap source = bitmap;
+            if (bitmap.ColorType != SKColorType.Bgra8888 || bitmap.Width != _width || bitmap.Height != _height)
+            {
+                var info = new SKImageInfo(_width, _height, SKColorType.Bgra8888, SKAlphaType.Premul);
+                source = new SKBitmap(info);
+                using var canvas = new SKCanvas(source);
+                canvas.DrawBitmap(bitmap, new SKRect(0, 0, _width, _height));
+            }
 
             try
             {
-                unsafe
+                // Capture state for background thread
+                var dataSize = (uint)(_width * _height * 4);
+                var width = _width;
+                var height = _height;
+                var streamIndex = _streamIndex;
+                var rtDurationPerFrame = _rtDurationPerFrame;
+                var pendingTimestamp = _pendingTimestamp;
+                var isPreRecordingMode = IsPreRecordingMode;
+                var isBufferA = _isBufferA;
+                var bufferAFirstTimestamp = _bufferAFirstTimestamp;
+                var bufferBFirstTimestamp = _bufferBFirstTimestamp;
+                
+                // We need to copy the bitmap data to a byte array or similar to pass to the background thread safely
+                // OR we can just do the memory copy inside the Task.Run if we keep 'source' alive.
+                // Since 'source' is disposed in finally, we must ensure Task.Run completes before finally.
+                
+                await Task.Run(() => 
                 {
-                    byte* dst;
-                    uint maxLen, curLen;
-                    mediaBuffer.Lock(&dst, &maxLen, &curLen);
+                    var hr = PInvoke.MFCreateMemoryBuffer(dataSize, out var mediaBuffer);
+                    if (hr.Failed)
+                        throw new InvalidOperationException($"MFCreateMemoryBuffer failed: 0x{hr.Value:X8}");
 
                     try
                     {
-                        var srcPtrInt = source.GetPixels();
-                        if (srcPtrInt == IntPtr.Zero)
-                            throw new InvalidOperationException("Source pixels not available");
-
-                        byte* src = (byte*)srcPtrInt.ToPointer();
-
-                        int srcRowBytes = (int)source.RowBytes;
-                        int rowBytes = _width * 4;
-
-                        for (int y = 0; y < _height; y++)
+                        unsafe
                         {
-                            System.Buffer.MemoryCopy(src + (long)y * srcRowBytes, dst + (long)y * rowBytes, maxLen - (uint)(y * rowBytes), rowBytes);
+                            byte* dst;
+                            uint maxLen, curLen;
+                            mediaBuffer.Lock(&dst, &maxLen, &curLen);
+
+                            try
+                            {
+                                var srcPtrInt = source.GetPixels();
+                                if (srcPtrInt == IntPtr.Zero)
+                                    throw new InvalidOperationException("Source pixels not available");
+
+                                byte* src = (byte*)srcPtrInt.ToPointer();
+
+                                int srcRowBytes = (int)source.RowBytes;
+                                int rowBytes = width * 4;
+
+                                for (int y = 0; y < height; y++)
+                                {
+                                    System.Buffer.MemoryCopy(src + (long)y * srcRowBytes, dst + (long)y * rowBytes, maxLen - (uint)(y * rowBytes), rowBytes);
+                                }
+
+                                mediaBuffer.SetCurrentLength(dataSize);
+                            }
+                            finally
+                            {
+                                mediaBuffer.Unlock();
+                            }
                         }
 
-                        mediaBuffer.SetCurrentLength(dataSize);
+                        hr = PInvoke.MFCreateSample(out var sample);
+                        if (hr.Failed)
+                            throw new InvalidOperationException($"MFCreateSample failed: 0x{hr.Value:X8}");
+
+                        try
+                        {
+                            sample.AddBuffer(mediaBuffer);
+
+                            // Calculate sample time
+                            long sampleTime = (long)(pendingTimestamp.TotalSeconds * 10_000_000L);
+
+                            // In pre-recording mode, normalize timestamps relative to the start of the current buffer
+                            if (isPreRecordingMode)
+                            {
+                                TimeSpan baseTimestamp = isBufferA ? bufferAFirstTimestamp : bufferBFirstTimestamp;
+                                sampleTime -= (long)(baseTimestamp.TotalSeconds * 10_000_000L);
+                            }
+                            if (sampleTime <= _lastSampleTime100ns)
+                            {
+                                sampleTime = _lastSampleTime100ns + rtDurationPerFrame;
+                            }
+                            sample.SetSampleTime(sampleTime);
+                            sample.SetSampleDuration(rtDurationPerFrame);
+
+                            _sinkWriter.WriteSample(streamIndex, sample);
+
+                            _lastSampleTime100ns = sampleTime;
+
+                            // Update statistics (thread-safe increment needed or just simple increment since we are in semaphore)
+                            EncodedFrameCount++;
+                            EncodedDataSize += (long)dataSize;
+                            // EncodingDuration is calculated on read, so no write needed here usually, but we set it
+                            // EncodingDuration = DateTime.Now - _startTime; // This accesses _startTime which is fine
+                        }
+                        finally
+                        {
+                            Marshal.ReleaseComObject(sample);
+                        }
                     }
                     finally
                     {
-                        mediaBuffer.Unlock();
+                        Marshal.ReleaseComObject(mediaBuffer);
                     }
-                }
-
-                hr = PInvoke.MFCreateSample(out var sample);
-                if (hr.Failed)
-                    throw new InvalidOperationException($"MFCreateSample failed: 0x{hr.Value:X8}");
-
-                try
-                {
-                    sample.AddBuffer(mediaBuffer);
-
-                    // Calculate sample time
-                    long sampleTime = (long)(_pendingTimestamp.TotalSeconds * 10_000_000L);
-
-                    // In pre-recording mode, normalize timestamps relative to the start of the current buffer
-                    // This ensures each buffer file starts at timestamp 0, preventing gaps when muxing
-                    if (IsPreRecordingMode)
-                    {
-                        TimeSpan baseTimestamp = _isBufferA ? _bufferAFirstTimestamp : _bufferBFirstTimestamp;
-                        sampleTime -= (long)(baseTimestamp.TotalSeconds * 10_000_000L);
-                    }
-                    if (sampleTime <= _lastSampleTime100ns)
-                    {
-                        sampleTime = _lastSampleTime100ns + _rtDurationPerFrame;
-                    }
-                    sample.SetSampleTime(sampleTime);
-                    sample.SetSampleDuration(_rtDurationPerFrame);
-
-                    _sinkWriter.WriteSample(_streamIndex, sample);
-
-                    _lastSampleTime100ns = sampleTime;
-
-                    // Update statistics
-                    EncodedFrameCount++;
-                    EncodedDataSize += (long)dataSize;
-                    EncodingDuration = DateTime.Now - _startTime;
-                    EncodingStatus = "Encoding";
-                }
-                finally
-                {
-                    Marshal.ReleaseComObject(sample);
-                }
+                });
+                
+                EncodingDuration = DateTime.Now - _startTime;
+                EncodingStatus = "Encoding";
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] AddFrameAsync failed: {ex.Message}");
+                // Don't throw here to avoid crashing the app loop, just log
             }
             finally
             {
-                Marshal.ReleaseComObject(mediaBuffer);
+                if (!ReferenceEquals(source, bitmap))
+                    source.Dispose();
             }
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder] AddFrameAsync failed: {ex.Message}");
-            throw;
         }
         finally
         {
-            if (!ReferenceEquals(source, bitmap))
-                source.Dispose();
+            _sinkWriterSemaphore.Release();
         }
     }
 
@@ -587,13 +567,31 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             wasPreRecordingMode = true;
 
             // Finalize whichever sink is active
-            if (_sinkWriter != null)
+            await _sinkWriterSemaphore.WaitAsync();
+            try
             {
-                try
+                if (_sinkWriter != null)
                 {
-                    _sinkWriter.Finalize();
-                    Marshal.ReleaseComObject(_sinkWriter);
-                    _sinkWriter = null;
+                    try
+                    {
+                        await Task.Run(() => _sinkWriter.Finalize());
+                    }
+                    catch (Exception ex)
+                    {
+                        Super.Log($"[WindowsCaptureVideoEncoder #{_instanceId}] Finalize error: {ex.Message}");
+                    }
+                    finally
+                    {
+                        try
+                        {
+                            if (_sinkWriter != null)
+                            {
+                                Marshal.ReleaseComObject(_sinkWriter);
+                            }
+                        }
+                        catch { }
+                        _sinkWriter = null;
+                    }
 
                     // CRITICAL: Verify file is fully flushed and readable
                     // Wait until IMFSourceReader can successfully open the file
@@ -603,14 +601,14 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                         await WaitForFileReadable(fileToVerify);
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Super.Log($"[WindowsCaptureVideoEncoder] Finalize error: {ex.Message}");
+                    Super.Log($"[WindowsCaptureVideoEncoder #{_instanceId}] No active sink writer to finalize");
                 }
             }
-            else
+            finally
             {
-                Super.Log($"[WindowsCaptureVideoEncoder #{_instanceId}] No active sink writer to finalize");
+                _sinkWriterSemaphore.Release();
             }
 
             // Determine which files exist
@@ -770,11 +768,33 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         // Finalize Media Foundation (if not already done)
         try
         {
-            if (_sinkWriter != null)
+            await _sinkWriterSemaphore.WaitAsync();
+            try
             {
-                try { _sinkWriter.Finalize(); } catch { }
-                Marshal.ReleaseComObject(_sinkWriter);
-                _sinkWriter = null;
+                if (_sinkWriter != null)
+                {
+                    try
+                    {
+                        await Task.Run(() => _sinkWriter.Finalize());
+                    }
+                    catch { }
+                    finally
+                    {
+                        try
+                        {
+                            if (_sinkWriter != null)
+                            {
+                                Marshal.ReleaseComObject(_sinkWriter);
+                            }
+                        }
+                        catch { }
+                        _sinkWriter = null;
+                    }
+                }
+            }
+            finally
+            {
+                _sinkWriterSemaphore.Release();
             }
         }
         finally
@@ -873,13 +893,23 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         {
             try
             {
-                _sinkWriter.Finalize();
-                Marshal.ReleaseComObject(_sinkWriter);
-                _sinkWriter = null;
+                await Task.Run(() => _sinkWriter.Finalize());
             }
             catch (Exception ex)
             {
-                Super.Log($"[WindowsCaptureVideoEncoder] Buffer finalize error: {ex.Message}");
+                Super.Log($"[WindowsCaptureVideoEncoder #{_instanceId}] Buffer finalize error: {ex.Message}");
+            }
+            finally
+            {
+                try
+                {
+                    if (_sinkWriter != null)
+                    {
+                        Marshal.ReleaseComObject(_sinkWriter);
+                    }
+                }
+                catch { }
+                _sinkWriter = null;
             }
         }
 
@@ -914,18 +944,13 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         var fileName = Path.GetFileName(_currentPreRecBuffer);
         _outputFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
-        unsafe
+        var path = _outputFile.Path;
+        await Task.Run(() => 
         {
-            fixed (char* p = _outputFile.Path)
-            {
-                var hr2 = PInvoke.MFCreateSinkWriterFromURL(new PCWSTR(p), null, null, out _sinkWriter);
-                if (hr2.Failed)
-                    throw new InvalidOperationException($"MFCreateSinkWriterFromURL failed: 0x{hr2.Value:X8}");
-            }
-        }
-
-        ConfigureH264OutputAndRGB32Input();
-        _sinkWriter.BeginWriting();
+            CreateSinkWriterInternal(path);
+            ConfigureH264OutputAndRGB32Input();
+            _sinkWriter.BeginWriting();
+        });
 
         // Reset last sample time for the new writer to ensure timestamps start from 0
         _lastSampleTime100ns = -1;
@@ -964,7 +989,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 {
                     var hr = PInvoke.MFCreateSourceReaderFromURL(new PCWSTR(p2), null, out reader2);
                     if (hr.Failed)
-                        throw new InvalidOperationException($"MFCreateSourceReaderFromURL failed for live: 0x{hr.Value:X8}");
+                        throw new InvalidOperationException($"MFCreateSourceReaderFromURL 2 failed for live: 0x{hr.Value:X8}");
                 }
 
                 fixed (char* pOut = outputPath)
@@ -1758,6 +1783,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     {
         _isRecording = false;
         _progressTimer?.Dispose();
+        _sinkWriterSemaphore?.Dispose();
 
         // Clean up pre-recording temp files
         CleanupPreRecTempFiles();
