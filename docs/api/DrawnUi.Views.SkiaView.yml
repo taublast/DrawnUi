@@ -764,7 +764,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 166
+    startLine: 165
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views

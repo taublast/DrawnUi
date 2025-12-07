@@ -2384,16 +2384,16 @@ namespace DrawnUi.Draw
                 {
                     if (OverscrollDistance.Y <= RefreshShowDistance)
                     {
-                        SetScrollOffset(DrawingRect, _updatedViewportForPixX, overscroll, _zoomedScale, RenderingScale,
+                        SetScrollOffset(DrawingRect, _updatedViewportForPixY, overscroll, _zoomedScale, RenderingScale,
                             true);
                     }
                     RefreshIndicator.SetDragRatio(ratio, InternalViewportOffset.Units.Y, RefreshShowDistance, RefreshDistanceLimit);
                 }
                 else if (Orientation == ScrollOrientation.Horizontal)
                 {
-                    if (OverscrollDistance.Y <= RefreshShowDistance)
+                    if (OverscrollDistance.X <= RefreshShowDistance)
                     {
-                        SetScrollOffset(DrawingRect, overscroll, _updatedViewportForPixY, _zoomedScale, RenderingScale,
+                        SetScrollOffset(DrawingRect, overscroll, _updatedViewportForPixX, _zoomedScale, RenderingScale,
                             true);
                     }
                     RefreshIndicator.SetDragRatio(ratio, InternalViewportOffset.Units.X, RefreshShowDistance, RefreshDistanceLimit);
@@ -2491,7 +2491,7 @@ namespace DrawnUi.Draw
                 {
                     ScrollToTop(SystemAnimationTimeSecs);
                 }
-
+                LockGesturesUntilDown = false;
                 ScrollLocked = false;
             }
         }

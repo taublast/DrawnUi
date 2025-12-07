@@ -2,11 +2,21 @@ MFStartup
 MFShutdown
 MFCreateAttributes
 MFCreateSinkWriterFromURL
+MFCreateSourceReaderFromURL
 MFCreateMediaType
 MFCreateSample
 MFCreateMemoryBuffer
 MFCreateDXGISurfaceBuffer
 MFCreateDXGIDeviceManager
+MFTEnumEx
+IMFTransform
+IMFActivate
+IMFSourceReader
+MFT_MESSAGE_TYPE
+MFT_OUTPUT_DATA_BUFFER
+MFT_CATEGORY_VIDEO_ENCODER
+CoCreateInstance
+CLSCTX
 
 MF_VERSION
 MF_MT_MAJOR_TYPE

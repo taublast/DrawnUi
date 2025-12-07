@@ -33,12 +33,10 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
 
 ---
 
-## 🆕 What's new for 1.7.4.7
+## 🆕 What's new for 1.7.5.1
 
-* FIX SkiaCarousel stuck when manually changing index is being spammed.
-* Fix Refreshview not shown when refreshing started long before layout was ready
-* FIX SkiaViewSwitcher not firing onAppearing event to first tab on startup
-* FIX Windows Canvas not unfrozing sometimes after going back to viewtree
+* `SkiaCamera` pre-recording feature for all platforms
+* Canvas gesture processing fixes
  
 ## 💡 Hint of the Day
 

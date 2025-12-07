@@ -92,6 +92,8 @@ items:
   - DrawnUi.Draw.SkiaImage.LoadSourceOnFirstDraw
   - DrawnUi.Draw.SkiaImage.RescalingQualityProperty
   - DrawnUi.Draw.SkiaImage.RescalingQuality
+  - DrawnUi.Draw.SkiaImage.CacheRescaledSourceProperty
+  - DrawnUi.Draw.SkiaImage.CacheRescaledSource
   - DrawnUi.Draw.SkiaImage.RescaleSourceProperty
   - DrawnUi.Draw.SkiaImage.RescaleSource
   - DrawnUi.Draw.SkiaImage.PreviewBase64Property
@@ -182,10 +184,11 @@ items:
   - DrawnUi.Draw.SkiaImage.AspectScale
   - DrawnUi.Draw.SkiaImage.ScaledSource
   - DrawnUi.Draw.SkiaImage.GetSamplingOptions(SkiaSharp.SKFilterQuality,System.Boolean)
-  - DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint)
-  - DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+  - DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint,SkiaSharp.SKFilterQuality)
+  - DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint,SkiaSharp.SKFilterQuality)
   - DrawnUi.Draw.SkiaImage.DrawSource(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LoadedImageSource,DrawnUi.Draw.TransformAspect,DrawnUi.Draw.DrawImageAlignment,DrawnUi.Draw.DrawImageAlignment,SkiaSharp.SKPaint)
   - DrawnUi.Draw.SkiaImage.DisplayRect
+  - DrawnUi.Draw.SkiaImage.DisplayRectChanged
   - DrawnUi.Draw.SkiaImage.TextureScale
   - DrawnUi.Draw.SkiaImage.SourceImageSize
   - DrawnUi.Draw.SkiaImage.SetAspectScale(System.Int32,System.Int32,SkiaSharp.SKRect,DrawnUi.Draw.TransformAspect,System.Single)
@@ -586,7 +589,7 @@ items:
   - DrawnUi.Draw.SkiaControl.OnBindingContextChanged
   - DrawnUi.Draw.SkiaControl.MeasureInternal(DrawnUi.Draw.MeasureRequest)
   - DrawnUi.Draw.SkiaControl.Measure(System.Single,System.Single,System.Single)
-  - DrawnUi.Draw.SkiaControl.InitializeMeasuring
+  - DrawnUi.Draw.SkiaControl.UpdateSizeRequest
   - DrawnUi.Draw.SkiaControl.InitializeDefaultContent(System.Boolean)
   - DrawnUi.Draw.SkiaControl.GetContentSizeForAutosizeInPixels
   - DrawnUi.Draw.SkiaControl.SetMeasuredAdaptToContentSize(DrawnUi.Infrastructure.MeasuringConstraints,System.Single)
@@ -700,6 +703,7 @@ items:
   - DrawnUi.Draw.SkiaControl.WillNotUpdateParent
   - DrawnUi.Draw.SkiaControl.UpdateInternal
   - DrawnUi.Draw.SkiaControl.UpdatedRendering
+  - DrawnUi.Draw.SkiaControl.UpdatedInvalidation
   - DrawnUi.Draw.SkiaControl.Update
   - DrawnUi.Draw.SkiaControl.Updated
   - DrawnUi.Draw.SkiaControl.StreamFromString(System.String)
@@ -1812,6 +1816,20 @@ references:
   name: RescalingQuality
   nameWithType: SkiaImage.RescalingQuality
   fullName: DrawnUi.Draw.SkiaImage.RescalingQuality
+- uid: DrawnUi.Draw.SkiaImage.CacheRescaledSourceProperty
+  commentId: F:DrawnUi.Draw.SkiaImage.CacheRescaledSourceProperty
+  parent: DrawnUi.Draw.SkiaImage
+  href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_CacheRescaledSourceProperty
+  name: CacheRescaledSourceProperty
+  nameWithType: SkiaImage.CacheRescaledSourceProperty
+  fullName: DrawnUi.Draw.SkiaImage.CacheRescaledSourceProperty
+- uid: DrawnUi.Draw.SkiaImage.CacheRescaledSource
+  commentId: P:DrawnUi.Draw.SkiaImage.CacheRescaledSource
+  parent: DrawnUi.Draw.SkiaImage
+  href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_CacheRescaledSource
+  name: CacheRescaledSource
+  nameWithType: SkiaImage.CacheRescaledSource
+  fullName: DrawnUi.Draw.SkiaImage.CacheRescaledSource
 - uid: DrawnUi.Draw.SkiaImage.RescaleSourceProperty
   commentId: F:DrawnUi.Draw.SkiaImage.RescaleSourceProperty
   parent: DrawnUi.Draw.SkiaImage
@@ -2942,18 +2960,18 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
-- uid: DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint)
-  commentId: M:DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+- uid: DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint,SkiaSharp.SKFilterQuality)
+  commentId: M:DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint,SkiaSharp.SKFilterQuality)
   parent: DrawnUi.Draw.SkiaImage
   isExternal: true
-  href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceBitmap_DrawnUi_Draw_DrawingContext_SkiaSharp_SKBitmap_SkiaSharp_SKRect_SkiaSharp_SKPaint_
-  name: DrawSourceBitmap(DrawingContext, SKBitmap, SKRect, SKPaint)
-  nameWithType: SkiaImage.DrawSourceBitmap(DrawingContext, SKBitmap, SKRect, SKPaint)
-  fullName: DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext, SkiaSharp.SKBitmap, SkiaSharp.SKRect, SkiaSharp.SKPaint)
+  href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceBitmap_DrawnUi_Draw_DrawingContext_SkiaSharp_SKBitmap_SkiaSharp_SKRect_SkiaSharp_SKPaint_SkiaSharp_SKFilterQuality_
+  name: DrawSourceBitmap(DrawingContext, SKBitmap, SKRect, SKPaint, SKFilterQuality)
+  nameWithType: SkiaImage.DrawSourceBitmap(DrawingContext, SKBitmap, SKRect, SKPaint, SKFilterQuality)
+  fullName: DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext, SkiaSharp.SKBitmap, SkiaSharp.SKRect, SkiaSharp.SKPaint, SkiaSharp.SKFilterQuality)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+  - uid: DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint,SkiaSharp.SKFilterQuality)
     name: DrawSourceBitmap
-    href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceBitmap_DrawnUi_Draw_DrawingContext_SkiaSharp_SKBitmap_SkiaSharp_SKRect_SkiaSharp_SKPaint_
+    href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceBitmap_DrawnUi_Draw_DrawingContext_SkiaSharp_SKBitmap_SkiaSharp_SKRect_SkiaSharp_SKPaint_SkiaSharp_SKFilterQuality_
   - name: (
   - uid: DrawnUi.Draw.DrawingContext
     name: DrawingContext
@@ -2976,11 +2994,17 @@ references:
     name: SKPaint
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKFilterQuality
+    name: SKFilterQuality
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skfilterquality
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+  - uid: DrawnUi.Draw.SkiaImage.DrawSourceBitmap(DrawnUi.Draw.DrawingContext,SkiaSharp.SKBitmap,SkiaSharp.SKRect,SkiaSharp.SKPaint,SkiaSharp.SKFilterQuality)
     name: DrawSourceBitmap
-    href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceBitmap_DrawnUi_Draw_DrawingContext_SkiaSharp_SKBitmap_SkiaSharp_SKRect_SkiaSharp_SKPaint_
+    href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceBitmap_DrawnUi_Draw_DrawingContext_SkiaSharp_SKBitmap_SkiaSharp_SKRect_SkiaSharp_SKPaint_SkiaSharp_SKFilterQuality_
   - name: (
   - uid: DrawnUi.Draw.DrawingContext
     name: DrawingContext
@@ -3003,19 +3027,25 @@ references:
     name: SKPaint
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKFilterQuality
+    name: SKFilterQuality
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skfilterquality
   - name: )
-- uid: DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint)
-  commentId: M:DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+- uid: DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint,SkiaSharp.SKFilterQuality)
+  commentId: M:DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint,SkiaSharp.SKFilterQuality)
   parent: DrawnUi.Draw.SkiaImage
   isExternal: true
-  href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceImage_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_SkiaSharp_SKRect_SkiaSharp_SKPaint_
-  name: DrawSourceImage(DrawingContext, SKImage, SKRect, SKPaint)
-  nameWithType: SkiaImage.DrawSourceImage(DrawingContext, SKImage, SKRect, SKPaint)
-  fullName: DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext, SkiaSharp.SKImage, SkiaSharp.SKRect, SkiaSharp.SKPaint)
+  href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceImage_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_SkiaSharp_SKRect_SkiaSharp_SKPaint_SkiaSharp_SKFilterQuality_
+  name: DrawSourceImage(DrawingContext, SKImage, SKRect, SKPaint, SKFilterQuality)
+  nameWithType: SkiaImage.DrawSourceImage(DrawingContext, SKImage, SKRect, SKPaint, SKFilterQuality)
+  fullName: DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext, SkiaSharp.SKImage, SkiaSharp.SKRect, SkiaSharp.SKPaint, SkiaSharp.SKFilterQuality)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+  - uid: DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint,SkiaSharp.SKFilterQuality)
     name: DrawSourceImage
-    href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceImage_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_SkiaSharp_SKRect_SkiaSharp_SKPaint_
+    href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceImage_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_SkiaSharp_SKRect_SkiaSharp_SKPaint_SkiaSharp_SKFilterQuality_
   - name: (
   - uid: DrawnUi.Draw.DrawingContext
     name: DrawingContext
@@ -3038,11 +3068,17 @@ references:
     name: SKPaint
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKFilterQuality
+    name: SKFilterQuality
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skfilterquality
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint)
+  - uid: DrawnUi.Draw.SkiaImage.DrawSourceImage(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage,SkiaSharp.SKRect,SkiaSharp.SKPaint,SkiaSharp.SKFilterQuality)
     name: DrawSourceImage
-    href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceImage_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_SkiaSharp_SKRect_SkiaSharp_SKPaint_
+    href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DrawSourceImage_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_SkiaSharp_SKRect_SkiaSharp_SKPaint_SkiaSharp_SKFilterQuality_
   - name: (
   - uid: DrawnUi.Draw.DrawingContext
     name: DrawingContext
@@ -3065,6 +3101,12 @@ references:
     name: SKPaint
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKFilterQuality
+    name: SKFilterQuality
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skfilterquality
   - name: )
 - uid: DrawnUi.Draw.SkiaImage.DrawSource(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LoadedImageSource,DrawnUi.Draw.TransformAspect,DrawnUi.Draw.DrawImageAlignment,DrawnUi.Draw.DrawImageAlignment,SkiaSharp.SKPaint)
   commentId: M:DrawnUi.Draw.SkiaImage.DrawSource(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LoadedImageSource,DrawnUi.Draw.TransformAspect,DrawnUi.Draw.DrawImageAlignment,DrawnUi.Draw.DrawImageAlignment,SkiaSharp.SKPaint)
@@ -3151,6 +3193,13 @@ references:
   name: DisplayRect
   nameWithType: SkiaImage.DisplayRect
   fullName: DrawnUi.Draw.SkiaImage.DisplayRect
+- uid: DrawnUi.Draw.SkiaImage.DisplayRectChanged
+  commentId: E:DrawnUi.Draw.SkiaImage.DisplayRectChanged
+  parent: DrawnUi.Draw.SkiaImage
+  href: DrawnUi.Draw.SkiaImage.html#DrawnUi_Draw_SkiaImage_DisplayRectChanged
+  name: DisplayRectChanged
+  nameWithType: SkiaImage.DisplayRectChanged
+  fullName: DrawnUi.Draw.SkiaImage.DisplayRectChanged
 - uid: DrawnUi.Draw.SkiaImage.TextureScale
   commentId: P:DrawnUi.Draw.SkiaImage.TextureScale
   parent: DrawnUi.Draw.SkiaImage
@@ -11638,23 +11687,23 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
-- uid: DrawnUi.Draw.SkiaControl.InitializeMeasuring
-  commentId: M:DrawnUi.Draw.SkiaControl.InitializeMeasuring
+- uid: DrawnUi.Draw.SkiaControl.UpdateSizeRequest
+  commentId: M:DrawnUi.Draw.SkiaControl.UpdateSizeRequest
   parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InitializeMeasuring
-  name: InitializeMeasuring()
-  nameWithType: SkiaControl.InitializeMeasuring()
-  fullName: DrawnUi.Draw.SkiaControl.InitializeMeasuring()
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateSizeRequest
+  name: UpdateSizeRequest()
+  nameWithType: SkiaControl.UpdateSizeRequest()
+  fullName: DrawnUi.Draw.SkiaControl.UpdateSizeRequest()
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.InitializeMeasuring
-    name: InitializeMeasuring
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InitializeMeasuring
+  - uid: DrawnUi.Draw.SkiaControl.UpdateSizeRequest
+    name: UpdateSizeRequest
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateSizeRequest
   - name: (
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.InitializeMeasuring
-    name: InitializeMeasuring
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InitializeMeasuring
+  - uid: DrawnUi.Draw.SkiaControl.UpdateSizeRequest
+    name: UpdateSizeRequest
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateSizeRequest
   - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.InitializeDefaultContent(System.Boolean)
@@ -14204,6 +14253,13 @@ references:
   name: UpdatedRendering
   nameWithType: SkiaControl.UpdatedRendering
   fullName: DrawnUi.Draw.SkiaControl.UpdatedRendering
+- uid: DrawnUi.Draw.SkiaControl.UpdatedInvalidation
+  commentId: F:DrawnUi.Draw.SkiaControl.UpdatedInvalidation
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdatedInvalidation
+  name: UpdatedInvalidation
+  nameWithType: SkiaControl.UpdatedInvalidation
+  fullName: DrawnUi.Draw.SkiaControl.UpdatedInvalidation
 - uid: DrawnUi.Draw.SkiaControl.Update
   commentId: M:DrawnUi.Draw.SkiaControl.Update
   parent: DrawnUi.Draw.SkiaControl

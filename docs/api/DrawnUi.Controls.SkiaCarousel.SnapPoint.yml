@@ -21,7 +21,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SnapPoint
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1356
+    startLine: 1362
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -58,7 +58,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Id
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1358
+    startLine: 1364
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -87,7 +87,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Location
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1359
+    startLine: 1365
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls

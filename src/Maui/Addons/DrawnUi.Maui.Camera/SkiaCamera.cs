@@ -1146,7 +1146,7 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-    private async Task AbortCaptureVideoFlow()
+    private void AbortCaptureVideoFlow()
     {
         ICaptureVideoEncoder encoder = null;
 
@@ -1158,7 +1158,7 @@ public partial class SkiaCamera : SkiaControl
             _frameCaptureTimer = null;
 
             // Give any in-flight CaptureFrame calls time to complete
-            await Task.Delay(50);
+            //await Task.Delay(50);
 
 #if WINDOWS
             _useWindowsPreviewDrivenCapture = false;

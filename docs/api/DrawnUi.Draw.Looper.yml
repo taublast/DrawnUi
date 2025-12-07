@@ -228,7 +228,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetTargetFps
     path: ../src/Shared/Internals/Helpers/Looper.cs
-    startLine: 82
+    startLine: 90
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -260,7 +260,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
     path: ../src/Shared/Internals/Helpers/Looper.cs
-    startLine: 87
+    startLine: 95
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -286,7 +286,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Shared/Internals/Helpers/Looper.cs
-    startLine: 92
+    startLine: 100
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -316,7 +316,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRunning
     path: ../src/Shared/Internals/Helpers/Looper.cs
-    startLine: 101
+    startLine: 109
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -345,7 +345,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StartLegacyLooperAsync
     path: ../src/Shared/Internals/Helpers/Looper.cs
-    startLine: 103
+    startLine: 111
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -376,7 +376,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StartLooperAsync
     path: ../src/Shared/Internals/Helpers/Looper.cs
-    startLine: 134
+    startLine: 142
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -407,7 +407,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnFrame
     path: ../src/Shared/Internals/Helpers/Looper.cs
-    startLine: 173
+    startLine: 181
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

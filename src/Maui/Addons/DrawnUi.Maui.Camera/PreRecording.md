@@ -4,26 +4,29 @@
 
 The pre-recording feature, also known as "look-back" recording, allows you to capture video footage starting from a few seconds *before* the record button is pressed. This is incredibly useful for capturing spontaneous moments without missing the beginning of the action.
 
-## Current Implementation Status (2025-11-10)
+## Current Implementation Status (2025-12-06)
+
+✅ **Windows Implementation Complete:**
+- Circular buffer architecture implemented using file-based buffers (`bufferA.mp4`, `bufferB.mp4`)
+- Seamless muxing of pre-recorded buffers with live recording
+- Trimming logic ensures exact duration compliance
+- Timestamp normalization fixes applied
+
+✅ **Android Implementation Complete:**
+- Single-file approach (no muxing needed)
+- Zero frame loss transition from pre-recording to live recording
 
 ✅ **iOS Foundation Complete:**
 - AppleVideoToolboxEncoder integrated for hardware H.264 encoding
 - Normal recording works with frame processing and preview
 - MP4 output functional
 
-⏳ **Pre-Recording Not Yet Implemented:**
-- Circular buffer architecture not yet built
-- Two-file muxing not yet operational
-- `EnablePreRecording` property exists but feature is inactive
-
-**Next Steps:**
-1. Validate normal recording flow works correctly
-2. Implement circular buffer for pre-recording frames
-3. Add two-file muxing on recording start/stop
+**Recent Updates:**
+- Added safety mechanism: Changing `EnablePreRecording` or `PreRecordDuration` while recording is active will automatically abort the recording to prevent instability.
 
 ---
 
-## How it Works (Planned Architecture)
+## How it Works (Architecture)
 
 When the pre-recording feature is enabled, the camera maintains a **separate pre-recording encoder** that continuously captures frames to a temporary `pre_recorded.mp4` file. When you press the record button, a **live recording encoder** starts capturing to a `recording.mp4` file. 
 

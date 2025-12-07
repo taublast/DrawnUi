@@ -55,7 +55,7 @@ Phase 2: Live Recording (After user presses Record)
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## Two-Buffer Circular System
+## iOS Architecture: Memory-Based Circular Buffer
 
 ### Memory Layout
 
@@ -87,7 +87,67 @@ Time 10s:   Rotation trigger!
 Result: At any point, only last 5 seconds are kept
 ```
 
+## Windows Architecture: File-Based Circular Buffer
+
+On Windows, the implementation uses a file-based circular buffer to leverage Media Foundation's file writing capabilities and avoid memory pressure.
+
+### Two-File System
+
+```
+Buffer A (File): [=============================] (e.g. 5s)
+Buffer B (File): [=============================] (e.g. 5s)
+
+Current: Buffer A (active for writes)
+```
+
+1. **Phase 1 (Pre-Recording):**
+   - Frames are written to `bufferA.mp4`.
+   - When `bufferA` exceeds the duration limit, it switches to `bufferB.mp4`.
+   - When `bufferB` exceeds the limit, it switches back to `bufferA` (overwriting it).
+   - This ensures we always have at least `PreRecordDuration` of history between the two files.
+
+2. **Transition to Live:**
+   - The pre-recording encoder is stopped.
+   - `bufferA` and `bufferB` are muxed together (ordered by timestamp) into a single `pre_recorded.mp4` file.
+   - This file is trimmed to the exact `PreRecordDuration`.
+
+3. **Phase 2 (Live Recording):**
+   - A new encoder starts writing to `live_rec.mp4`.
+
+4. **Finalization:**
+   - `pre_recorded.mp4` and `live_rec.mp4` are muxed into the final output.
+
 ### Frame Metadata Storage
+
+```csharp
+// Windows uses Media Foundation attributes for metadata
+// No separate C# class needed as attributes are stored in the sink writer
+```
+
+## Android Architecture: Hybrid Memory/Single-File System
+
+Android uses a hybrid approach that combines memory buffering with a single-file output stream to ensure zero frame loss and no post-processing muxing.
+
+### Workflow
+
+1. **Phase 1 (Pre-Recording):**
+   - Frames are encoded via `MediaCodec` (hardware encoding).
+   - Encoded NAL units are stored in a `PrerecordingEncodedBuffer` (Circular Memory Buffer).
+   - This buffer works identically to the iOS memory buffer (fixed size, pruning).
+
+2. **Transition to Live:**
+   - The existing `MediaCodec` instance is kept alive (no restart).
+   - A `MediaMuxer` is started.
+   - The entire contents of the memory buffer are written to the `MediaMuxer` first.
+   - This effectively "prepends" the history to the file instantly.
+
+3. **Phase 2 (Live Recording):**
+   - New encoded frames from `MediaCodec` are written directly to the same `MediaMuxer`.
+
+4. **Finalization:**
+   - `MediaMuxer` is stopped.
+   - The result is a single MP4 file containing [Pre-Record History] + [Live Recording].
+   - **Benefit:** No post-process muxing is required, resulting in faster save times.
 
 ```csharp
 private class EncodedFrame
