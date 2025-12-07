@@ -36,7 +36,7 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
 ## 🆕 What's new for 1.7.5.1
 
 * `SkiaCamera` pre-recording feature for all platforms
-* Some gesture processing fixes
+* Canvas gesture processing fixes
  
 ## 💡 Hint of the Day
 

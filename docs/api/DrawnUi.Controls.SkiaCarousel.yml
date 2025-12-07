@@ -756,7 +756,7 @@ items:
   - DrawnUi.Draw.SkiaControl.OnBindingContextChanged
   - DrawnUi.Draw.SkiaControl.MeasureInternal(DrawnUi.Draw.MeasureRequest)
   - DrawnUi.Draw.SkiaControl.Measure(System.Single,System.Single,System.Single)
-  - DrawnUi.Draw.SkiaControl.InitializeMeasuring
+  - DrawnUi.Draw.SkiaControl.UpdateSizeRequest
   - DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
   - DrawnUi.Draw.SkiaControl.InitializeDefaultContent(System.Boolean)
   - DrawnUi.Draw.SkiaControl.SetMeasuredAsEmpty(System.Single)
@@ -861,6 +861,7 @@ items:
   - DrawnUi.Draw.SkiaControl.WillNotUpdateParent
   - DrawnUi.Draw.SkiaControl.UpdateInternal
   - DrawnUi.Draw.SkiaControl.UpdatedRendering
+  - DrawnUi.Draw.SkiaControl.UpdatedInvalidation
   - DrawnUi.Draw.SkiaControl.Update
   - DrawnUi.Draw.SkiaControl.Updated
   - DrawnUi.Draw.SkiaControl.StreamFromString(System.String)
@@ -2268,7 +2269,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetContentOffsetBounds
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1049
+    startLine: 1055
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2299,7 +2300,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CheckConstraints
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1105
+    startLine: 1111
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2325,7 +2326,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnChildAdded
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1115
+    startLine: 1121
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2356,7 +2357,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutChanged
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1125
+    startLine: 1131
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2385,7 +2386,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupViewport
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1132
+    startLine: 1138
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2411,7 +2412,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ChildrenInitialized
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1162
+    startLine: 1168
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2438,7 +2439,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxIndex
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1166
+    startLine: 1172
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2467,7 +2468,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InitializeChildren
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1188
+    startLine: 1194
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2495,7 +2496,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnChildrenInitialized
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1270
+    startLine: 1276
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2521,7 +2522,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CellSize
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1276
+    startLine: 1282
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2550,7 +2551,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdaptChildren
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1281
+    startLine: 1287
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2578,7 +2579,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ChildrenCount
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1306
+    startLine: 1312
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2607,7 +2608,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTemplatesPoolLimit
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1320
+    startLine: 1326
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2637,7 +2638,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTemplatesPoolPrefill
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1329
+    startLine: 1335
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2667,7 +2668,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetVirtualSnapPoints
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1363
+    startLine: 1369
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2695,7 +2696,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetVirtualAnchor
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1386
+    startLine: 1392
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2728,7 +2729,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FindNearestAnchorInternal
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1392
+    startLine: 1398
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2763,7 +2764,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SnapPointsVirtual
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1415
+    startLine: 1421
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2792,7 +2793,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SwipeSpeedProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1421
+    startLine: 1427
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2819,7 +2820,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SwipeSpeed
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1430
+    startLine: 1436
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2850,7 +2851,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PreloadNeighboorsProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1436
+    startLine: 1442
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2877,7 +2878,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PreloadNeighboors
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1445
+    startLine: 1451
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2908,7 +2909,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DynamicSizeProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1451
+    startLine: 1457
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2935,7 +2936,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DynamicSize
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1462
+    startLine: 1468
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2971,7 +2972,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLoopedProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1469
+    startLine: 1475
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2998,7 +2999,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLooped
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1478
+    startLine: 1484
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3029,7 +3030,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVerticalProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1485
+    startLine: 1491
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3056,7 +3057,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVertical
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1494
+    startLine: 1500
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3087,7 +3088,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyDynamicSize
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1501
+    startLine: 1507
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3119,7 +3120,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SafeIndex
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1541
+    startLine: 1547
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3153,7 +3154,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GoNext
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1546
+    startLine: 1552
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3179,7 +3180,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GoPrev
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1562
+    startLine: 1570
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3205,7 +3206,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAtStart
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1578
+    startLine: 1588
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3234,7 +3235,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAtEnd
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1583
+    startLine: 1593
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3263,7 +3264,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnSelectedIndexChanged
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1588
+    startLine: 1598
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3295,7 +3296,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LinearSpeedMsProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1622
+    startLine: 1632
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3322,7 +3323,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LinearSpeedMs
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1633
+    startLine: 1643
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3358,7 +3359,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LastIndex
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1641
+    startLine: 1651
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3387,7 +3388,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SelectedIndexProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1655
+    startLine: 1665
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3414,7 +3415,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SelectedIndex
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1672
+    startLine: 1682
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3445,7 +3446,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ChildrenTotal
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1682
+    startLine: 1692
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3476,7 +3477,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ChildrenTotalProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1688
+    startLine: 1698
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3503,7 +3504,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRightToLeftProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1695
+    startLine: 1705
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3530,7 +3531,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRightToLeft
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1704
+    startLine: 1714
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3561,7 +3562,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SidesOffsetProperty
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1710
+    startLine: 1720
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3588,7 +3589,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SidesOffset
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1719
+    startLine: 1729
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3619,7 +3620,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsUserFocused
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1738
+    startLine: 1748
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3648,7 +3649,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsUserPanning
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1739
+    startLine: 1749
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3677,7 +3678,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _panningOffset
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1741
+    startLine: 1751
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3704,7 +3705,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _panningStartOffset
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1742
+    startLine: 1752
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3731,7 +3732,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: VelocityAccumulator
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1745
+    startLine: 1755
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3760,7 +3761,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessGestures
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-    startLine: 1747
+    startLine: 1757
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -16356,23 +16357,23 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
-- uid: DrawnUi.Draw.SkiaControl.InitializeMeasuring
-  commentId: M:DrawnUi.Draw.SkiaControl.InitializeMeasuring
+- uid: DrawnUi.Draw.SkiaControl.UpdateSizeRequest
+  commentId: M:DrawnUi.Draw.SkiaControl.UpdateSizeRequest
   parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InitializeMeasuring
-  name: InitializeMeasuring()
-  nameWithType: SkiaControl.InitializeMeasuring()
-  fullName: DrawnUi.Draw.SkiaControl.InitializeMeasuring()
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateSizeRequest
+  name: UpdateSizeRequest()
+  nameWithType: SkiaControl.UpdateSizeRequest()
+  fullName: DrawnUi.Draw.SkiaControl.UpdateSizeRequest()
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.InitializeMeasuring
-    name: InitializeMeasuring
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InitializeMeasuring
+  - uid: DrawnUi.Draw.SkiaControl.UpdateSizeRequest
+    name: UpdateSizeRequest
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateSizeRequest
   - name: (
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.InitializeMeasuring
-    name: InitializeMeasuring
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InitializeMeasuring
+  - uid: DrawnUi.Draw.SkiaControl.UpdateSizeRequest
+    name: UpdateSizeRequest
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateSizeRequest
   - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
@@ -18568,6 +18569,13 @@ references:
   name: UpdatedRendering
   nameWithType: SkiaControl.UpdatedRendering
   fullName: DrawnUi.Draw.SkiaControl.UpdatedRendering
+- uid: DrawnUi.Draw.SkiaControl.UpdatedInvalidation
+  commentId: F:DrawnUi.Draw.SkiaControl.UpdatedInvalidation
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdatedInvalidation
+  name: UpdatedInvalidation
+  nameWithType: SkiaControl.UpdatedInvalidation
+  fullName: DrawnUi.Draw.SkiaControl.UpdatedInvalidation
 - uid: DrawnUi.Draw.SkiaControl.Update
   commentId: M:DrawnUi.Draw.SkiaControl.Update
   parent: DrawnUi.Draw.SkiaControl

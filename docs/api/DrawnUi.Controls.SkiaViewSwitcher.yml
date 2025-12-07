@@ -701,7 +701,7 @@ items:
   - DrawnUi.Draw.SkiaControl.OnBindingContextChanged
   - DrawnUi.Draw.SkiaControl.MeasureInternal(DrawnUi.Draw.MeasureRequest)
   - DrawnUi.Draw.SkiaControl.Measure(System.Single,System.Single,System.Single)
-  - DrawnUi.Draw.SkiaControl.InitializeMeasuring
+  - DrawnUi.Draw.SkiaControl.UpdateSizeRequest
   - DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
   - DrawnUi.Draw.SkiaControl.InitializeDefaultContent(System.Boolean)
   - DrawnUi.Draw.SkiaControl.SetMeasuredAsEmpty(System.Single)
@@ -808,6 +808,7 @@ items:
   - DrawnUi.Draw.SkiaControl.WillNotUpdateParent
   - DrawnUi.Draw.SkiaControl.UpdateInternal
   - DrawnUi.Draw.SkiaControl.UpdatedRendering
+  - DrawnUi.Draw.SkiaControl.UpdatedInvalidation
   - DrawnUi.Draw.SkiaControl.Update
   - DrawnUi.Draw.SkiaControl.Updated
   - DrawnUi.Draw.SkiaControl.StreamFromString(System.String)
@@ -1542,7 +1543,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetChildren
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 144
+    startLine: 151
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1576,7 +1577,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetNavigationStack
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 153
+    startLine: 160
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1610,7 +1611,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTopView
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 179
+    startLine: 186
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1648,7 +1649,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetRootView
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 198
+    startLine: 205
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1682,7 +1683,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PushView
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 212
+    startLine: 219
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1720,7 +1721,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCurrentPage
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 269
+    startLine: 276
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1754,7 +1755,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FindPageInStack
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 295
+    startLine: 302
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1790,7 +1791,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RemovePageFromStack
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 320
+    startLine: 327
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1824,7 +1825,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BringPageToFront
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 343
+    startLine: 350
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1860,7 +1861,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PopModal
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 375
+    startLine: 382
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1892,7 +1893,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PopPage
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 379
+    startLine: 386
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1926,7 +1927,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCurrentTabNavigationIndex
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 418
+    startLine: 425
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1954,7 +1955,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RevealNavigationView
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 440
+    startLine: 447
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1986,7 +1987,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PopTabToRoot
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 456
+    startLine: 463
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2016,7 +2017,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PopAllTabsToRoot
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 502
+    startLine: 509
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2042,7 +2043,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NavigationStacks
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 511
+    startLine: 518
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2071,7 +2072,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SelectedIndexProperty
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 513
+    startLine: 520
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2098,7 +2099,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SelectedIndex
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 521
+    startLine: 528
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2127,7 +2128,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisplayingIndexProperty
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 527
+    startLine: 534
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2154,7 +2155,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisplayingIndex
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 533
+    startLine: 540
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2183,7 +2184,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimatePages
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 539
+    startLine: 546
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2212,7 +2213,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimateTabs
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 540
+    startLine: 547
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2241,7 +2242,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Reset
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 542
+    startLine: 549
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2267,7 +2268,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAppearing
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 555
+    startLine: 562
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2298,7 +2299,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisappearing
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 565
+    startLine: 572
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2328,7 +2329,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAppeared
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 575
+    startLine: 582
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2359,7 +2360,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsPushing
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 593
+    startLine: 600
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2388,7 +2389,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsPopping
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 594
+    startLine: 601
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2417,7 +2418,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NavigationBusyProperty
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 601
+    startLine: 608
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2444,7 +2445,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NavigationBusy
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 604
+    startLine: 611
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2473,7 +2474,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TabsAnimationSpeedProperty
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 610
+    startLine: 617
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2500,7 +2501,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TabsAnimationSpeed
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 614
+    startLine: 621
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2529,7 +2530,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PagesAnimationSpeedProperty
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 620
+    startLine: 627
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2556,7 +2557,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PagesAnimationSpeed
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 624
+    startLine: 631
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2585,7 +2586,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TabsAnimationEasingProperty
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 630
+    startLine: 637
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2612,7 +2613,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TabsAnimationEasing
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 634
+    startLine: 641
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2641,7 +2642,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PagesAnimationEasingProperty
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 640
+    startLine: 647
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2668,7 +2669,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PagesAnimationEasing
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 644
+    startLine: 651
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2697,7 +2698,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Custom
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 650
+    startLine: 657
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2724,7 +2725,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PreviousVisibleViewIndex
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 653
+    startLine: 660
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2751,7 +2752,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PreviousVisibleView
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 654
+    startLine: 661
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2780,7 +2781,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LauchTimerOnLock
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 656
+    startLine: 663
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2814,7 +2815,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TimerUpdateLocked
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 670
+    startLine: 677
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2841,7 +2842,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TopView
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 671
+    startLine: 678
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2870,7 +2871,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ChangeViewVisibility
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 673
+    startLine: 680
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2904,7 +2905,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PushIndex
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 693
+    startLine: 700
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2933,7 +2934,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SemaphoreNavigationStack
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 706
+    startLine: 713
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2960,7 +2961,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DebugAction
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 708
+    startLine: 715
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2986,7 +2987,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessIndexBufferAsync
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 720
+    startLine: 727
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3014,7 +3015,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupTransitionAnimation
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 809
+    startLine: 816
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3049,7 +3050,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ExecuteTransitionAnimation
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 857
+    startLine: 864
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3087,7 +3088,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FirstViewAppeared
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 976
+    startLine: 983
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3114,7 +3115,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsApplyingIdex
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 977
+    startLine: 984
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3141,7 +3142,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplySelectedIndex
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 979
+    startLine: 986
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3172,7 +3173,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 1177
+    startLine: 1187
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3201,7 +3202,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BusyChanged
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 1185
+    startLine: 1195
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3228,7 +3229,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadedLazyView
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 1186
+    startLine: 1196
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3255,7 +3256,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SendOnDisappearing
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 1192
+    startLine: 1202
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3284,7 +3285,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UnloadView
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 1200
+    startLine: 1210
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3313,7 +3314,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Viewport
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 1233
+    startLine: 1243
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3345,7 +3346,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateVisibleIndex
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 1235
+    startLine: 1245
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3374,7 +3375,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TrackIndexPosition
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 1239
+    startLine: 1249
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3406,7 +3407,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollTo
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 1241
+    startLine: 1251
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -15486,23 +15487,23 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
-- uid: DrawnUi.Draw.SkiaControl.InitializeMeasuring
-  commentId: M:DrawnUi.Draw.SkiaControl.InitializeMeasuring
+- uid: DrawnUi.Draw.SkiaControl.UpdateSizeRequest
+  commentId: M:DrawnUi.Draw.SkiaControl.UpdateSizeRequest
   parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InitializeMeasuring
-  name: InitializeMeasuring()
-  nameWithType: SkiaControl.InitializeMeasuring()
-  fullName: DrawnUi.Draw.SkiaControl.InitializeMeasuring()
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateSizeRequest
+  name: UpdateSizeRequest()
+  nameWithType: SkiaControl.UpdateSizeRequest()
+  fullName: DrawnUi.Draw.SkiaControl.UpdateSizeRequest()
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.InitializeMeasuring
-    name: InitializeMeasuring
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InitializeMeasuring
+  - uid: DrawnUi.Draw.SkiaControl.UpdateSizeRequest
+    name: UpdateSizeRequest
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateSizeRequest
   - name: (
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.InitializeMeasuring
-    name: InitializeMeasuring
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InitializeMeasuring
+  - uid: DrawnUi.Draw.SkiaControl.UpdateSizeRequest
+    name: UpdateSizeRequest
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateSizeRequest
   - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
@@ -17776,6 +17777,13 @@ references:
   name: UpdatedRendering
   nameWithType: SkiaControl.UpdatedRendering
   fullName: DrawnUi.Draw.SkiaControl.UpdatedRendering
+- uid: DrawnUi.Draw.SkiaControl.UpdatedInvalidation
+  commentId: F:DrawnUi.Draw.SkiaControl.UpdatedInvalidation
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdatedInvalidation
+  name: UpdatedInvalidation
+  nameWithType: SkiaControl.UpdatedInvalidation
+  fullName: DrawnUi.Draw.SkiaControl.UpdatedInvalidation
 - uid: DrawnUi.Draw.SkiaControl.Update
   commentId: M:DrawnUi.Draw.SkiaControl.Update
   parent: DrawnUi.Draw.SkiaControl

@@ -1340,7 +1340,7 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Measure_System_Single_System_Single_System_Single_">SkiaControl.Measure(float, float, float)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InitializeMeasuring">SkiaControl.InitializeMeasuring()</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateSizeRequest">SkiaControl.UpdateSizeRequest()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_">SkiaControl.AvoidRemeasuring(MeasureRequest)</a>
@@ -1659,6 +1659,9 @@ Class SkiaLayout  <a class="header-action link-secondary" title="View source" hr
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdatedRendering">SkiaControl.UpdatedRendering</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdatedInvalidation">SkiaControl.UpdatedInvalidation</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Update">SkiaControl.Update()</a>
@@ -3978,7 +3981,7 @@ public RowDefinition DefaultRowDefinition { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_EstimatedTotalItems" data-uid="DrawnUi.Draw.SkiaLayout.EstimatedTotalItems">
   EstimatedTotalItems
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L2307"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L2320"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4513,7 +4516,7 @@ binding contexts will contasntly be changing triggering screen update.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_NeedMeasure" data-uid="DrawnUi.Draw.SkiaLayout.NeedMeasure">
   NeedMeasure
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L813"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L820"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5197,7 +5200,7 @@ But in a case we have measured us ourselves inside PreArrange etc we must call A
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ApplyResetChange" data-uid="DrawnUi.Draw.SkiaLayout.ApplyResetChange">
   ApplyResetChange()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L1368"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L1379"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Applies Reset changes to StackStructure</p>
@@ -5224,7 +5227,7 @@ But in a case we have measured us ourselves inside PreArrange etc we must call A
 
   <h3 id="DrawnUi_Draw_SkiaLayout_ApplyStructureChanges" data-uid="DrawnUi.Draw.SkiaLayout.ApplyStructureChanges">
   ApplyStructureChanges()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L830"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L838"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Applies all pending structure changes to StackStructure - called from rendering pipeline</p>
@@ -5529,7 +5532,7 @@ But in a case we have measured us ourselves inside PreArrange etc we must call A
 
   <h3 id="DrawnUi_Draw_SkiaLayout_DrawList_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_LayoutStructure_" data-uid="DrawnUi.Draw.SkiaLayout.DrawList(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)">
   DrawList(DrawingContext, LayoutStructure)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L2122"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L2135"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Renders Templated Column/Row todo in some cases..</p>
@@ -5935,7 +5938,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_GetEstimatedContentSize_System_Single_" data-uid="DrawnUi.Draw.SkiaLayout.GetEstimatedContentSize(System.Single)">
   GetEstimatedContentSize(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L2336"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L2349"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Gets estimated total content size for virtualized lists with unmeasured items</p>
@@ -5972,7 +5975,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_SkiaLayout_GetMeasuredContentEnd" data-uid="DrawnUi.Draw.SkiaLayout.GetMeasuredContentEnd">
   GetMeasuredContentEnd()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L2310"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L2323"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6817,7 +6820,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_MeasureAdditionalItems_System_Int32_System_Int32_System_Single_" data-uid="DrawnUi.Draw.SkiaLayout.MeasureAdditionalItems(System.Int32,System.Int32,System.Single)">
   MeasureAdditionalItems(int, int, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L2562"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L2575"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7020,7 +7023,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaLayout_MeasureSingleItem_System_Int32_SkiaSharp_SKRect_System_Single_System_Threading_CancellationToken_System_Boolean_" data-uid="DrawnUi.Draw.SkiaLayout.MeasureSingleItem(System.Int32,SkiaSharp.SKRect,System.Single,System.Threading.CancellationToken,System.Boolean)">
   MeasureSingleItem(int, SKRect, float, CancellationToken, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L2040"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/2-A/src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs/#L2051"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Measures a single item in the background and stages it for structure update.
