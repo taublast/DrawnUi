@@ -284,7 +284,7 @@ public partial class SkiaCamera : SkiaControl
                 {
                     var hr = PInvoke.MFCreateSourceReaderFromURL(new PCWSTR(p2), null, out reader2);
                     if (hr.Failed)
-                        throw new InvalidOperationException($"MFCreateSourceReaderFromURL failed for live: 0x{hr.Value:X8}");
+                        throw new InvalidOperationException($"MFCreateSourceReaderFromURL 1 failed for live: 0x{hr.Value:X8}");
                 }
 
                 fixed (char* pOut = outputPath)
