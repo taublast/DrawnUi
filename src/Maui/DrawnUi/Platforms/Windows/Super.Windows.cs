@@ -99,7 +99,7 @@ namespace DrawnUi.Draw
             //VisualDiagnostics.VisualTreeChanged += OnVisualTreeChanged;
             InitShared();
 
-            //RefreshRate = GetDisplayRefreshRate(60);
+            RefreshRate = GetDisplayRefreshRate(60);
 
             UsingDisplaySync = RefreshRate >= 120;
 
