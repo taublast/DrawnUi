@@ -3275,7 +3275,7 @@ namespace DrawnUi.Draw
         /// <param name="widthRequest">UNITS</param>
         /// <param name="heightRequest">UNITS</param>
         /// <param name="scale"></param>
-        public SKRect CalculateLayout(SKRect destination, float widthRequest, float heightRequest, float scale)
+        public virtual SKRect CalculateLayout(SKRect destination, float widthRequest, float heightRequest, float scale)
         {
             var rectAvailable = DefineAvailableSize(destination, widthRequest, heightRequest, scale);
 
@@ -7211,7 +7211,7 @@ namespace DrawnUi.Draw
 
         private List<SkiaControl> _orderedChildren;
 
-        public List<SkiaControl> GetOrderedSubviews(bool recalculate = false)
+        public virtual List<SkiaControl> GetOrderedSubviews(bool recalculate = false)
         {
             if (_orderedChildren == null || recalculate)
             {
@@ -7221,7 +7221,7 @@ namespace DrawnUi.Draw
             return _orderedChildren;
         }
 
-        public IReadOnlyList<SkiaControl> GetUnorderedSubviews(bool recalculate = false)
+        public virtual IReadOnlyList<SkiaControl> GetUnorderedSubviews(bool recalculate = false)
         {
             return Views;
         }

@@ -670,6 +670,8 @@ namespace DrawnUi.Draw
                     return MeasureContent(children, rectForChildrenPixels, scale);
                 }
 
+                //DATA TEMPLATED
+
                 var maxHeight = 0.0f;
                 var maxWidth = 0.0f;
 
@@ -717,15 +719,14 @@ namespace DrawnUi.Draw
                     {
                         // Optimize: only allocate collection if templated
                         List<SkiaControl> cellsToRelease = null;
-                        if (IsTemplated)
-                            cellsToRelease = new List<SkiaControl>();
+                        cellsToRelease = new List<SkiaControl>();
 
                         try
                         {
                             for (int index = 0; index < childrenCount; index++)
                             {
                                 var child = ChildrenFactory.GetViewForIndex(index, null, 0, true);
-                                if (IsTemplated) cellsToRelease?.Add(child);
+                                cellsToRelease?.Add(child);
 
                                 if (child == null)
                                 {

@@ -96,12 +96,12 @@ public partial class SkiaLayout
             var destination = context.Destination;
             var scale = context.Scale;
 
-            using var cells = ChildrenFactory.GetViewsIterator();
+            var cells = GetOrderedSubviews();
 
             List<SkiaControlWithRect> tree = new();
 
             var cellIndex = 0;
-            foreach (var child in cells.ToList())
+            foreach (var child in cells)
             {
                 child.OptionalOnBeforeDrawing(); //could set IsVisible or whatever inside
 
