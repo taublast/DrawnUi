@@ -128,7 +128,16 @@ public partial class SkiaLayout
                                 controlInStack.Area.Top + layoutHeight);
                         }
 
-                        _layout.LayoutCell(controlInStack.Measured, controlInStack, controlInStack.View, controlInStack.Area, scale);
+                        // Re-measure fill-Y children with the final row height
+                        ScaledSize measured = controlInStack.Measured;
+                        if (controlInStack.View != null && controlInStack.View.NeedFillY)
+                        {
+                            measured = _layout.MeasureChild(controlInStack.View,
+                                controlInStack.Area.Width, controlInStack.Area.Height, scale);
+                            controlInStack.Measured = measured;
+                        }
+
+                        _layout.LayoutCell(measured, controlInStack, controlInStack.View, controlInStack.Area, scale);
                     }
                 }
                 cellsToLayoutLater.Clear();
