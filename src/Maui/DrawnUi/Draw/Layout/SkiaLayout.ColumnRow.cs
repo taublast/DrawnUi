@@ -868,7 +868,7 @@ else
             //    return MeasureStackLegacy(rectForChildrenPixels, scale);
             //}
 
-            return MeasureStackCore(rectForChildrenPixels, scale, layoutStructure, false, null, nonTemplated);
+            return MeasureStack(rectForChildrenPixels, scale, layoutStructure, false, null, nonTemplated);
         }
 
         /// <summary>
@@ -998,7 +998,7 @@ else
                 }
                 else
                 {
-                    return MeasureStackCore(rectForChildrenPixels, scale, layoutStructure, true, template, null);
+                    return MeasureStack(rectForChildrenPixels, scale, layoutStructure, true, template, null);
                 }
             }
             finally
@@ -1172,7 +1172,7 @@ else
         /// <summary>
         /// Core measurement logic shared between templated and non-templated scenarios
         /// </summary>
-        protected virtual ScaledSize MeasureStackCore(SKRect rectForChildrenPixels, float scale, LayoutStructure layoutStructure,
+        protected virtual ScaledSize MeasureStack(SKRect rectForChildrenPixels, float scale, LayoutStructure layoutStructure,
             bool isTemplated, SkiaControl template, SkiaControl[] nonTemplated)
         {
             var stackHeight = 0.0f;
