@@ -84,8 +84,16 @@
                 if (parent is SkiaControl skia)
                 {
 
-                    if (skia.IgnoreChildrenInvalidations && skia.UsingCacheType == SkiaCacheType.None)
+                    if (skia.IgnoreChildrenInvalidations)
                     {
+                        if (skia.UsingCacheType == SkiaCacheType.None)
+                        {
+                            skia.Repaint();
+                        }
+                        else
+                        {
+                            skia.Update();
+                        }
                         return;
                     }
 

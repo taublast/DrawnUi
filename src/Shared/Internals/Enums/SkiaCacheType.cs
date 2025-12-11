@@ -15,7 +15,8 @@ public enum SkiaCacheType
     Operations,
 
     /// <summary>
-    /// This records operations out of the controls destination, up to canvas limits. If you would need to offset cache later (ex: animate inside scroll) you must cache parent (ex: with simple Operations) to record this one within virtual parent canvas.
+    /// This records operations out of the controls destination, up to canvas limits.
+    /// If you would need to offset cache later (ex: animate inside scroll) you must cache parent (ex: with simple Operations) to record this one within virtual parent canvas.
     /// Try this first for labels, svg etc. 
     /// Do not use this when dropping shadows or with other effects, better use Bitmap. 
     /// </summary>
