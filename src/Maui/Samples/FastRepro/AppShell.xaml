@@ -24,10 +24,10 @@
         ContentTemplate="{DataTemplate sandbox:MainPageCode}"
         Route="MainPage" />-->
 
-    <!--<ShellContent
+    <ShellContent
         Title="DrawnUI for .NET MAUI"
-        ContentTemplate="{DataTemplate sandbox:SpinnerPage}"
-        Route="MainPage" />-->
+        ContentTemplate="{DataTemplate sandbox:MainPageSpinner}"
+        Route="MainPage" />
 
     <!--<ShellContent
     Title="DrawnUI for .NET MAUI"
@@ -46,12 +46,6 @@
         Title="DrawnUI for .NET MAUI"
         ContentTemplate="{DataTemplate sandbox:SpriteBoardPage}"
         Route="MainPage" />-->
-
-    <!--  Camera  -->
-    <ShellContent
-        Title="SkiaCamera Test"
-        ContentTemplate="{DataTemplate views:CameraTestPage}"
-        Route="MainPage" />
 
     <!--<ShellContent
         Title="Carousel IsLooped Test"

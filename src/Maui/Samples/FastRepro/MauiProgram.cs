@@ -54,8 +54,8 @@ namespace Sandbox
                 //portrait
                 DesktopWindow = new()
                 {
-                    Height = 1200,
-                    Width = 500,
+                    Height = 500,
+                    Width = 800,
                 }
 
                 //landscape
