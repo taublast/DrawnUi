@@ -83,9 +83,12 @@ public class SkiaSpinner : SkiaLayout
             Wheel.ItemsSource = this.ItemsSource;
             Wheel.ItemTemplate = this.ItemTemplate ?? DefaultTemplate;
             Wheel.InverseVisualRotation = this.InverseVisualRotation;
+
+            Wheel.Invalidate();
         }
 
         UpdateSelectedIndexFromRotation();
+
     }
 
     public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(
@@ -177,9 +180,6 @@ public class SkiaSpinner : SkiaLayout
 
         return cell;
     });
-
-
-
 
     public new DataTemplate ItemTemplate
     {
@@ -660,7 +660,8 @@ public class SkiaSpinner : SkiaLayout
     {
         var consumedDefault = BlockGesturesBelow ? this : null;
 
-        if (!RespondsToGestures || Wheel == null || ItemsCount < 1)
+        if (!RespondsToGestures || Wheel == null || ItemsCount < 1
+            || (args.Type != TouchActionResult.Down && args.Type != TouchActionResult.Up && args.Type != TouchActionResult.Panning))
         {
             return consumedDefault;
         }
