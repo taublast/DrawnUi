@@ -10,6 +10,8 @@ Rendering engine for .NET MAUI with gestures and animations and much more, power
 
 Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware acceleration.
 
+Please note this is a .NET9 library, entry controls are not yet fully compatible with .NET10 due to MAUI changes.
+
 * To use inside a usual MAUI app, by wrapping drawn controls into `Canvas` views.
 * To create a totally drawn apps with just one `Canvas` as root view.
 * Drawn controls are totally virtual, no native views/handlers.
@@ -33,10 +35,14 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
 
 ---
 
-## 🆕 What's new for 1.7.5.1
+## 🆕 What's new for 1.7.6.1
 
-* `SkiaCamera` pre-recording feature for all platforms
-* Canvas gesture processing fixes
+* Fix regression of refresh rate on Windows for displays supporting it above 60. 
+* `SkiaLayout` of type `Grid` now supports automatically creating items from `ItemsSource` with `ItemTemplate`, use `Split` property to indicate wanted number of columns. Will use `DefaultRowDefinition` and `DefaultColumnDefinition` properties for auto-generated items.
+* `SkiaSpinner` control updated to align with latest API, can check out use-case inside FastRepro project
+* `SkiaCamera` fixes
+* Layout fixes and optimizations
+
  
 ## 💡 Hint of the Day
 
