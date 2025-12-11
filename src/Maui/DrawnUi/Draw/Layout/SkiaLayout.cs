@@ -1012,7 +1012,7 @@ namespace DrawnUi.Draw
 
             InvalidatedChildren.Add(child);
 
-            if ((!NeedAutoSize && (child.NeedAutoSize || IsTemplated)) ||
+            if (Type!= LayoutType.Grid &&  (!NeedAutoSize && (child.NeedAutoSize || IsTemplated)) ||
                 (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible))
             {
                 UpdateByChild(child); //simple update
