@@ -297,11 +297,15 @@ public class SkiaMauiEntry : SkiaMauiElement, ISkiaGestureListener
         base.OnDisposing();
     }
 
-    public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
+    protected override void OnLayoutReady()
     {
-        GetOrCreateControl();
+        base.OnLayoutReady();
 
-        return base.OnMeasuring(widthConstraint, heightConstraint, scale);
+        if (Control == null)
+        {
+            GetOrCreateControl();
+            Invalidate();
+        }
     }
 
     protected virtual void WhenFocusChanged(bool state)
