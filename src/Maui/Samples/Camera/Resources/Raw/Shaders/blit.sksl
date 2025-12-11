@@ -1,0 +1,16 @@
+﻿uniform float4 iMouse;           // Mouse drag pos=.xy Click pos=.zw (pixels)
+uniform float  iTime;            // Shader playback time (s)
+uniform float2 iResolution;      // Viewport resolution (pixels)
+uniform float2 iImageResolution; // iImage1 resolution (pixels)
+uniform shader iImage1;  // Texture
+uniform float2 iOffset;  // Top-left corner of DrawingRect
+uniform float2 iOrigin; // Mouse drag started here
+
+half4 main(float2 fragCoord) 
+{	
+    float2 renderingScale = iImageResolution.xy / iResolution.xy;
+	 float2 inputCoord = (fragCoord - iOffset) * renderingScale;
+
+	return iImage1.eval(inputCoord);
+
+}

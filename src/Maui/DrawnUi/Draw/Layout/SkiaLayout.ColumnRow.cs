@@ -45,7 +45,7 @@ namespace DrawnUi.Draw
             cell.Area = destination;
 
             ScaledSize measured = child.MeasuredSize;
-            //if (child.NeedMeasure) //todo
+            if (IsTemplated || child.NeedMeasure) 
             {
                 measured = MeasureChild(child, cell.Area.Width, cell.Area.Height, scale);
             }
@@ -868,7 +868,7 @@ else
             //    return MeasureStackLegacy(rectForChildrenPixels, scale);
             //}
 
-            return MeasureStackCore(rectForChildrenPixels, scale, layoutStructure, false, null, nonTemplated);
+            return MeasureStack(rectForChildrenPixels, scale, layoutStructure, false, null, nonTemplated);
         }
 
         /// <summary>
@@ -998,7 +998,7 @@ else
                 }
                 else
                 {
-                    return MeasureStackCore(rectForChildrenPixels, scale, layoutStructure, true, template, null);
+                    return MeasureStack(rectForChildrenPixels, scale, layoutStructure, true, template, null);
                 }
             }
             finally
@@ -1172,7 +1172,7 @@ else
         /// <summary>
         /// Core measurement logic shared between templated and non-templated scenarios
         /// </summary>
-        private ScaledSize MeasureStackCore(SKRect rectForChildrenPixels, float scale, LayoutStructure layoutStructure,
+        protected virtual ScaledSize MeasureStack(SKRect rectForChildrenPixels, float scale, LayoutStructure layoutStructure,
             bool isTemplated, SkiaControl template, SkiaControl[] nonTemplated)
         {
             var stackHeight = 0.0f;
@@ -1283,11 +1283,17 @@ else
                         if (!measured.IsEmpty)
                         {
                             // Inline UpdateRowDimensions
+                            // Width calculation:
+                            // - For Row (stacking horizontally): fill-X children already handled by second pass (keep original logic)
+                            // - For Column (perpendicular): fill-X children should NOT contribute to width
                             if (isTemplated || !child.NeedFillX || !isColumn)
                             {
                                 maxWidth += measured.Pixels.Width + GetSpacingForIndex(column, scale);
                             }
 
+                            // Height calculation:
+                            // - For Column (stacking vertically): fill-Y children already handled by second pass (keep original logic)
+                            // - For Row (perpendicular): fill-Y children should NOT contribute to height
                             if (isTemplated || !child.NeedFillY || isColumn)
                             {
                                 if (measured.Pixels.Height > maxHeight)
@@ -1614,7 +1620,33 @@ else
             foreach (var secondPass in _tempSecondPassList)
             {
                 AdjustSecondPassCell(secondPass.Cell, stackWidth, stackHeight);
-                LayoutCell(secondPass.Child.MeasuredSize, secondPass.Cell, secondPass.Child, autoRect,
+
+                // Only re-measure fill children in the perpendicular direction with the final stack size
+                bool needRemeasure = false;
+                if (Type == LayoutType.Column && secondPass.Child.NeedFillX)
+                {
+                    // Column layout: remeasure fill-X children (perpendicular) with final width
+                    needRemeasure = true;
+                }
+                else if (Type == LayoutType.Row && secondPass.Child.NeedFillY)
+                {
+                    // Row layout: remeasure fill-Y children (perpendicular) with final height
+                    needRemeasure = true;
+                }
+
+                ScaledSize measured;
+                if (needRemeasure)
+                {
+                    measured = MeasureChild(secondPass.Child, secondPass.Cell.Area.Width,
+                        secondPass.Cell.Area.Height, secondPass.Scale);
+                    secondPass.Cell.Measured = measured;
+                }
+                else
+                {
+                    measured = secondPass.Child.MeasuredSize;
+                }
+
+                LayoutCell(measured, secondPass.Cell, secondPass.Child, autoRect,
                     secondPass.Scale);
             }
         }

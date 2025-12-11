@@ -7,10 +7,53 @@ using DrawnUi.Draw;
 using DrawnUi.Infrastructure.Enums;
 using DrawnUi.Views;
 using Sandbox.Resources;
-using Sandbox.Views.Controls;
+
 
 namespace Sandbox
 {
+
+
+    public class FinalStack : SkiaStack
+    {
+        public override ScaledSize MeasureLayout(MeasureRequest request, bool force)
+        {
+            var ret = base.MeasureLayout(request, force);
+            return ret;
+        }
+
+        public override SKRect CalculateLayout(SKRect destination, float widthRequest, float heightRequest, float scale)
+        {
+            return base.CalculateLayout(destination, widthRequest, heightRequest, scale);
+        }
+    }
+
+    public class DebugStack : SkiaStack
+    {
+        public override ScaledSize MeasureLayout(MeasureRequest request, bool force)
+        {
+            var ret = base.MeasureLayout(request, force);
+            return ret;
+        }
+
+        public override SKRect CalculateLayout(SKRect destination, float widthRequest, float heightRequest, float scale)
+        {
+            return base.CalculateLayout(destination, widthRequest, heightRequest, scale);
+        }
+    }
+
+    public class DebugLabel : SkiaLabel
+    {
+        public override SKRect CalculateLayout(SKRect destination, float widthRequest, float heightRequest, float scale)
+        {
+            return base.CalculateLayout(destination, widthRequest, heightRequest, scale);
+        }
+
+        protected override void AdaptCachedLayout(SKRect destination, float scale)
+        {
+            base.AdaptCachedLayout(destination, scale);
+        }
+    }
+
     public class MainPageCode : BasePageReloadable, IDisposable, INotifyPropertyChanged
     {
         Canvas Canvas;
@@ -50,7 +93,83 @@ namespace Sandbox
                         HorizontalOptions = LayoutOptions.Fill,
                         Children =
                         {
-                            new RenderSceneOptimized(),
+                            //new RenderSceneOptimized(),
+
+                         new FinalStack()
+                        {
+                            BackgroundColor = Color.Parse("#66000000"),
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.Center,
+                            Spacing = 0,
+                            Children =
+                            {
+                                //header 
+                                new SkiaLayer()
+                                {
+                                    HeightRequest = 28,
+                                    BackgroundColor = Color.Parse("#66000000"),
+                                },
+
+                                //overlay data
+                                new DebugStack()
+                                {
+                                    HorizontalOptions = LayoutOptions.Fill,
+                                    BackgroundColor = Colors.Blue,
+                                    UseCache = SkiaCacheType.Operations,
+                                    Spacing = 0,
+                                    Padding = new(8, 4),
+                                    Children =
+                                    {
+                                        //driver
+                                        new DebugLabel()
+                                        {
+                                            Text = "FirstName LastName",
+                                            UseCache = SkiaCacheType.Operations,
+                                            MaxLines = 1,
+                                            Margin = new(0, 0, 0, 4),
+                                            FontSize = 12,
+                                            HorizontalOptions = LayoutOptions.End,
+                                        },
+
+                                        //car
+                                        new SkiaLabel("BMW X1 xDrive 20i")
+                                        {
+                                            MaxLines = 1,
+                                            Margin = new(0, 0, 0, 4),
+                                            FontSize = 12,
+                                            HorizontalOptions = LayoutOptions.Start,
+                                        },
+
+
+                                    }
+                                },
+
+                                new SkiaLabel("Debugging End")
+                                {
+                                    MaxLines = 1,
+                                    TextColor = Colors.GreenYellow,
+                                    Margin = new(0, 0, 0, 4),
+                                    FontSize = 12,
+                                    HorizontalOptions = LayoutOptions.End,
+                                },
+
+                                new SkiaRichLabel("⏱️ Результаты замера") //MainShortStatus
+                                    {
+                                        IsParentIndependent = true,
+                                        UseCache = SkiaCacheType.Image,
+                                        MaxLines = 1,
+                                        FontSize = 11,
+                                        TextColor = Colors.White,
+                                        Padding = new(0, 0, 0, 12),
+                                        VerticalTextAlignment = TextAlignment.Center,
+                                        HorizontalTextAlignment = DrawTextAlignment.Center,
+                                        HeightRequest = 28,
+                                        WidthRequest = 300,
+                                        BackgroundColor = Color.Parse("#66000000")
+                                    }
+                            }},
+
+
 #if DEBUG
                             new SkiaLabelFps()
                             {

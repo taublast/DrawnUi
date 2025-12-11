@@ -102,7 +102,6 @@ unsafe interface IMemoryBufferByteAccess
 #endregion
 
 
-
 public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyChanged
 {
     protected readonly SkiaCamera FormsControl;
@@ -159,7 +158,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     public NativeCamera(SkiaCamera formsControl)
     {
         FormsControl = formsControl;
-        Setup();
+        //Setup();
     }
 
     #region Properties
@@ -247,7 +246,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             //Debug.WriteLine("[NativeCameraWindows] Starting setup...");
             await SetupHardware();
             //Debug.WriteLine("[NativeCameraWindows] Hardware setup completed successfully");
-            State = CameraProcessorState.Enabled;
+            //State = CameraProcessorState.Enabled;
         }
         catch (Exception e)
         {
@@ -1021,6 +1020,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
     public async void Start()
     {
+        Setup();
+
         if (State == CameraProcessorState.Enabled && _frameReader != null)
         {
             //Debug.WriteLine("[NativeCameraWindows] Camera already started");
@@ -1731,31 +1732,28 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     #region VIDEO RECORDING
 
     /// <summary>
-    /// Gets the currently selected video format
+    /// Gets the currently selected video format based on user settings.
+    /// CRITICAL: Returns format extracted from GetVideoEncodingProfile() to ensure
+    /// consistency - this returns EXACTLY what the encoder will use.
+    /// This matches iOS/Android pattern (they extract from their encoding profiles).
     /// </summary>
     /// <returns>Current video format or null if not available</returns>
     public VideoFormat GetCurrentVideoFormat()
     {
         try
         {
-            var cf = _frameSource?.CurrentFormat;
-            if (cf != null)
-            {
-                var w = (int)cf.VideoFormat.Width;
-                var h = (int)cf.VideoFormat.Height;
-                var fps = (int)Math.Round(cf.FrameRate.Numerator / (double)cf.FrameRate.Denominator);
+            // Get the MediaEncodingProfile that the encoder will actually use
+            // This handles all quality modes (Low, Standard, High, Ultra, Manual)
+            var profile = GetVideoEncodingProfile();
 
-                // Estimate bitrate ~ bits per pixel per frame * fps
-                // Conservative default factor: 0.07 bpp (tunable)
-                int EstimateBitrate(int width, int height, int fr)
-                {
-                    var pixelsPerSec = (long)width * height * fr;
-                    var bps = (long)(pixelsPerSec * 0.07);
-                    // Clamp between 3 Mbps and 35 Mbps
-                    if (bps < 3_000_000) bps = 3_000_000;
-                    if (bps > 35_000_000) bps = 35_000_000;
-                    return (int)bps;
-                }
+            if (profile?.Video != null)
+            {
+                var w = (int)profile.Video.Width;
+                var h = (int)profile.Video.Height;
+                var fps = (int)(profile.Video.FrameRate.Numerator / Math.Max(1, profile.Video.FrameRate.Denominator));
+                var bitrate = (int)profile.Video.Bitrate;
+
+                Debug.WriteLine($"[NativeCameraWindows] GetCurrentVideoFormat: Extracted from encoding profile -> {w}x{h}@{fps}fps, {bitrate / 1_000_000}Mbps");
 
                 return new VideoFormat
                 {
@@ -1763,7 +1761,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                     Height = h,
                     FrameRate = Math.Max(1, fps),
                     Codec = "H.264",
-                    BitRate = EstimateBitrate(w, h, Math.Max(1, fps)),
+                    BitRate = bitrate,
                     FormatId = $"{w}x{h}@{fps}"
                 };
             }
@@ -1773,41 +1771,143 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             Debug.WriteLine($"[NativeCameraWindows] GetCurrentVideoFormat error: {ex.Message}");
         }
 
-        // Fallback: use a safe default
+        // Final fallback: use a safe default
+        Debug.WriteLine($"[NativeCameraWindows] GetCurrentVideoFormat: Using fallback default 720p30");
         return new VideoFormat { Width = 1280, Height = 720, FrameRate = 30, Codec = "H.264", BitRate = 5_000_000, FormatId = "720p30" };
     }
 
     /// <summary>
-    /// Gets predefined video formats for Windows platform
+    /// Gets video formats from ACTUAL camera capabilities, not hardcoded values.
+    /// Queries _frameSource.SupportedFormats to return what the hardware actually supports.
     /// </summary>
     public List<VideoFormat> GetPredefinedVideoFormats()
     {
-        return new List<VideoFormat>
+        var formats = new List<VideoFormat>();
+
+        try
         {
-            new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8000000, FormatId = "1080p30" },
-            new VideoFormat { Width = 1920, Height = 1080, FrameRate = 60, Codec = "H.264", BitRate = 12000000, FormatId = "1080p60" },
-            new VideoFormat { Width = 1280, Height = 720, FrameRate = 30, Codec = "H.264", BitRate = 5000000, FormatId = "720p30" },
-            new VideoFormat { Width = 1280, Height = 720, FrameRate = 60, Codec = "H.264", BitRate = 7500000, FormatId = "720p60" },
-            new VideoFormat { Width = 3840, Height = 2160, FrameRate = 30, Codec = "H.264", BitRate = 25000000, FormatId = "2160p30" }
-        };
+            if (_frameSource?.SupportedFormats != null)
+            {
+                // Extract unique resolutions from actual camera formats
+                var uniqueFormats = _frameSource.SupportedFormats
+                    .Select(f => new
+                    {
+                        Width = (int)f.VideoFormat.Width,
+                        Height = (int)f.VideoFormat.Height,
+                        FPS = (int)Math.Round(f.FrameRate.Numerator / (double)Math.Max(1, f.FrameRate.Denominator)),
+                        Pixels = f.VideoFormat.Width * f.VideoFormat.Height
+                    })
+                    .GroupBy(f => new { f.Width, f.Height, f.FPS })
+                    .Select(g => g.First())
+                    .OrderByDescending(f => f.Pixels)
+                    .ThenByDescending(f => f.FPS)
+                    .ToList();
+
+                foreach (var fmt in uniqueFormats)
+                {
+                    // Estimate bitrate based on resolution and framerate
+                    int EstimateBitrate(int width, int height, int fps)
+                    {
+                        var pixelsPerSec = (long)width * height * fps;
+                        var bps = (long)(pixelsPerSec * 0.07); // ~0.07 bits per pixel
+                        if (bps < 2_000_000) bps = 2_000_000;   // Min 2 Mbps
+                        if (bps > 35_000_000) bps = 35_000_000; // Max 35 Mbps
+                        return (int)bps;
+                    }
+
+                    formats.Add(new VideoFormat
+                    {
+                        Width = fmt.Width,
+                        Height = fmt.Height,
+                        FrameRate = fmt.FPS,
+                        Codec = "H.264",
+                        BitRate = EstimateBitrate(fmt.Width, fmt.Height, fmt.FPS),
+                        FormatId = $"{fmt.Width}x{fmt.Height}@{fmt.FPS}"
+                    });
+                }
+
+                Debug.WriteLine($"[NativeCameraWindows] GetPredefinedVideoFormats: Found {formats.Count} actual formats from camera");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] GetPredefinedVideoFormats error: {ex.Message}");
+        }
+
+        // Fallback if no formats found: return safe defaults
+        if (formats.Count == 0)
+        {
+            Debug.WriteLine("[NativeCameraWindows] GetPredefinedVideoFormats: No camera formats available, using fallback defaults");
+            formats.AddRange(new[]
+            {
+                new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8_000_000, FormatId = "1080p30" },
+                new VideoFormat { Width = 1280, Height = 720, FrameRate = 30, Codec = "H.264", BitRate = 5_000_000, FormatId = "720p30" },
+                new VideoFormat { Width = 640, Height = 480, FrameRate = 30, Codec = "H.264", BitRate = 2_000_000, FormatId = "480p30" }
+            });
+        }
+
+        return formats;
     }
 
     /// <summary>
-    /// Gets the appropriate video encoding profile based on current video quality setting
+    /// Gets the appropriate video encoding profile based on current video quality setting.
+    /// For presets: picks best available format from camera instead of hardcoded resolutions.
     /// </summary>
     private MediaEncodingProfile GetVideoEncodingProfile()
     {
         var quality = FormsControl.VideoQuality;
+        MediaEncodingProfile profile;
 
-        MediaEncodingProfile profile = quality switch
+        if (quality == VideoQuality.Manual)
         {
-            VideoQuality.Low => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD720p),
-            VideoQuality.Standard => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p),
-            VideoQuality.High => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p),
-            VideoQuality.Ultra => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.Uhd2160p),
-            VideoQuality.Manual => GetManualVideoEncodingProfile(),
-            _ => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p)
-        };
+            profile = GetManualVideoEncodingProfile();
+        }
+        else
+        {
+            // For preset modes: find best match from actual available formats
+            var availableFormats = GetPredefinedVideoFormats();
+
+            // Target resolutions for each quality level
+            var targetResolution = quality switch
+            {
+                VideoQuality.Low => (width: 1280, height: 720),      // 720p
+                VideoQuality.Standard => (width: 1920, height: 1080), // 1080p
+                VideoQuality.High => (width: 1920, height: 1080),     // 1080p
+                VideoQuality.Ultra => (width: 3840, height: 2160),    // 4K
+                _ => (width: 1920, height: 1080)
+            };
+
+            // Find closest match from available formats
+            var bestFormat = availableFormats
+                .OrderBy(f => Math.Abs((f.Width * f.Height) - (targetResolution.width * targetResolution.height)))
+                .ThenByDescending(f => f.FrameRate)
+                .FirstOrDefault();
+
+            if (bestFormat != null)
+            {
+                // Start with a base profile and customize it
+                profile = MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p);
+                profile.Video.Width = (uint)bestFormat.Width;
+                profile.Video.Height = (uint)bestFormat.Height;
+                profile.Video.FrameRate.Numerator = (uint)bestFormat.FrameRate;
+                profile.Video.FrameRate.Denominator = 1;
+                profile.Video.Bitrate = (uint)bestFormat.BitRate;
+
+                Debug.WriteLine($"[NativeCamera.Windows] {quality} quality -> matched to {bestFormat.Width}x{bestFormat.Height}@{bestFormat.FrameRate}fps");
+            }
+            else
+            {
+                // Fallback to hardcoded preset if no formats available
+                profile = quality switch
+                {
+                    VideoQuality.Low => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD720p),
+                    VideoQuality.Ultra => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.Uhd2160p),
+                    _ => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p)
+                };
+
+                Debug.WriteLine($"[NativeCamera.Windows] {quality} quality -> using fallback preset");
+            }
+        }
 
         // Remove audio if not recording audio
         if (!FormsControl.RecordAudio)

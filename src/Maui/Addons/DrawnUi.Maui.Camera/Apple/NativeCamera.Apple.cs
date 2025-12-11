@@ -1931,7 +1931,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     #region VIDEO RECORDING
 
     /// <summary>
-    /// Gets the currently selected video format
+    /// Gets the currently selected video format based on user settings.
+    /// Returns format from actual camera capabilities, matching Windows/Android pattern.
     /// </summary>
     /// <returns>Current video format or null if not available</returns>
     public VideoFormat GetCurrentVideoFormat()
@@ -1939,25 +1940,43 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         try
         {
             var quality = FormsControl.VideoQuality;
-            var (preset, settings) = GetVideoPresetAndSettings(quality);
 
-            // Extract dimensions from settings
-            if (settings != null)
+            // Manual mode: use VideoFormatIndex to select from predefined formats
+            if (quality == VideoQuality.Manual)
             {
-                var width = ((NSNumber)settings[AVVideo.WidthKey])?.Int32Value ?? 1920;
-                var height = ((NSNumber)settings[AVVideo.HeightKey])?.Int32Value ?? 1080;
-                var compressionProps = settings[AVVideo.CompressionPropertiesKey] as NSDictionary;
-                var bitRate = ((NSNumber)compressionProps?[AVVideo.AverageBitRateKey])?.Int32Value ?? 8000000;
-
-                return new VideoFormat
+                var formats = GetPredefinedVideoFormats();
+                var idx = FormsControl.VideoFormatIndex;
+                if (idx >= 0 && idx < formats.Count)
                 {
-                    Width = width,
-                    Height = height,
-                    FrameRate = 30, // Default, could be extracted from settings
-                    Codec = "H.264",
-                    BitRate = bitRate,
-                    FormatId = $"ios_{width}x{height}_{quality}"
-                };
+                    Debug.WriteLine($"[NativeCamera.Apple] GetCurrentVideoFormat: Manual mode, index {idx} -> {formats[idx].Width}x{formats[idx].Height}@{formats[idx].FrameRate}");
+                    return formats[idx];
+                }
+
+                Debug.WriteLine($"[NativeCamera.Apple] GetCurrentVideoFormat: Manual mode but invalid index {idx}, using first format");
+                return formats.FirstOrDefault() ?? new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8_000_000, FormatId = "1080p30" };
+            }
+
+            // Preset modes: find best match from actual available formats
+            var availableFormats = GetPredefinedVideoFormats();
+
+            var targetResolution = quality switch
+            {
+                VideoQuality.Low => (width: 640, height: 480),
+                VideoQuality.Standard => (width: 1280, height: 720),
+                VideoQuality.High => (width: 1920, height: 1080),
+                VideoQuality.Ultra => (width: 3840, height: 2160),
+                _ => (width: 1920, height: 1080)
+            };
+
+            var bestFormat = availableFormats
+                .OrderBy(f => Math.Abs((f.Width * f.Height) - (targetResolution.width * targetResolution.height)))
+                .ThenByDescending(f => f.FrameRate)
+                .FirstOrDefault();
+
+            if (bestFormat != null)
+            {
+                Debug.WriteLine($"[NativeCamera.Apple] GetCurrentVideoFormat: {quality} quality -> {bestFormat.Width}x{bestFormat.Height}@{bestFormat.FrameRate}");
+                return bestFormat;
             }
         }
         catch (Exception ex)
@@ -1965,7 +1984,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             Debug.WriteLine($"[NativeCamera.Apple] Error getting current video format: {ex.Message}");
         }
 
-        return new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8000000, FormatId = "1080p30" };
+        // Final fallback
+        Debug.WriteLine($"[NativeCamera.Apple] GetCurrentVideoFormat: Using fallback default 1080p30");
+        return new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8_000_000, FormatId = "1080p30" };
     }
 
     /// <summary>
@@ -2075,7 +2096,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     }
 
     /// <summary>
-    /// Get video preset and settings based on video quality
+    /// Get video preset and settings based on video quality.
+    /// For presets: picks best available format from camera instead of hardcoded resolutions.
     /// </summary>
     private (NSString preset, NSDictionary settings) GetVideoPresetAndSettings(VideoQuality quality)
     {
@@ -2089,21 +2111,58 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             return AVCaptureSession.PresetHigh;
         }
 
-        switch (quality)
+        if (quality == VideoQuality.Manual)
         {
-            case VideoQuality.Low:
-                return (ChoosePreset(AVCaptureSession.Preset640x480, AVCaptureSession.PresetLow, AVCaptureSession.Preset352x288), CreateVideoSettings(640, 480, 30));
-            case VideoQuality.Standard: // target 720p
-                return (ChoosePreset(AVCaptureSession.Preset1280x720, AVCaptureSession.Preset1920x1080, AVCaptureSession.PresetHigh, AVCaptureSession.Preset640x480), CreateVideoSettings(1280, 720, 30));
-            case VideoQuality.High: // target 1080p
-                return (ChoosePreset(AVCaptureSession.Preset1920x1080, AVCaptureSession.Preset1280x720, AVCaptureSession.PresetHigh), CreateVideoSettings(1920, 1080, 30));
-            case VideoQuality.Ultra: // target 4K
-                return (ChoosePreset(AVCaptureSession.Preset3840x2160, AVCaptureSession.Preset1920x1080, AVCaptureSession.PresetHigh), CreateVideoSettings(3840, 2160, 30));
-            case VideoQuality.Manual:
-                return GetManualVideoSettings();
-            default:
-                return (ChoosePreset(AVCaptureSession.Preset1920x1080, AVCaptureSession.Preset1280x720, AVCaptureSession.PresetHigh), CreateVideoSettings(1920, 1080, 30));
+            return GetManualVideoSettings();
         }
+
+        // For preset modes: find best match from actual available formats
+        var availableFormats = GetPredefinedVideoFormats();
+
+        // Target resolutions for each quality level
+        var targetResolution = quality switch
+        {
+            VideoQuality.Low => (width: 640, height: 480),       // 480p
+            VideoQuality.Standard => (width: 1280, height: 720),  // 720p
+            VideoQuality.High => (width: 1920, height: 1080),     // 1080p
+            VideoQuality.Ultra => (width: 3840, height: 2160),    // 4K
+            _ => (width: 1920, height: 1080)
+        };
+
+        // Find closest match from available formats
+        var bestFormat = availableFormats
+            .OrderBy(f => Math.Abs((f.Width * f.Height) - (targetResolution.width * targetResolution.height)))
+            .ThenByDescending(f => f.FrameRate)
+            .FirstOrDefault();
+
+        if (bestFormat != null)
+        {
+            var settings = CreateVideoSettings(bestFormat.Width, bestFormat.Height, (int)bestFormat.FrameRate);
+
+            // Pick appropriate preset based on actual resolution
+            NSString preset = (bestFormat.Width, bestFormat.Height) switch
+            {
+                (3840, 2160) => ChoosePreset(AVCaptureSession.Preset3840x2160, AVCaptureSession.PresetHigh),
+                (1920, 1080) => ChoosePreset(AVCaptureSession.Preset1920x1080, AVCaptureSession.PresetHigh),
+                (1280, 720) => ChoosePreset(AVCaptureSession.Preset1280x720, AVCaptureSession.PresetHigh),
+                (640, 480) => ChoosePreset(AVCaptureSession.Preset640x480, AVCaptureSession.PresetLow),
+                _ => AVCaptureSession.PresetHigh
+            };
+
+            Debug.WriteLine($"[NativeCamera.Apple] {quality} quality -> matched to {bestFormat.Width}x{bestFormat.Height}@{bestFormat.FrameRate}fps");
+            return (preset, settings);
+        }
+
+        // Fallback to hardcoded presets if no formats available
+        Debug.WriteLine($"[NativeCamera.Apple] {quality} quality -> using fallback preset");
+        return quality switch
+        {
+            VideoQuality.Low => (ChoosePreset(AVCaptureSession.Preset640x480, AVCaptureSession.PresetLow), CreateVideoSettings(640, 480, 30)),
+            VideoQuality.Standard => (ChoosePreset(AVCaptureSession.Preset1280x720, AVCaptureSession.PresetHigh), CreateVideoSettings(1280, 720, 30)),
+            VideoQuality.High => (ChoosePreset(AVCaptureSession.Preset1920x1080, AVCaptureSession.PresetHigh), CreateVideoSettings(1920, 1080, 30)),
+            VideoQuality.Ultra => (ChoosePreset(AVCaptureSession.Preset3840x2160, AVCaptureSession.PresetHigh), CreateVideoSettings(3840, 2160, 30)),
+            _ => (ChoosePreset(AVCaptureSession.Preset1920x1080, AVCaptureSession.PresetHigh), CreateVideoSettings(1920, 1080, 30))
+        };
     }
 
     /// <summary>
@@ -2156,19 +2215,92 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     }
 
     /// <summary>
-    /// Get predefined video formats for iOS/Mac
+    /// Get video formats from ACTUAL camera device capabilities, not hardcoded values.
+    /// Queries AVCaptureDevice.Formats to return what the hardware actually supports.
     /// </summary>
     public List<VideoFormat> GetPredefinedVideoFormats()
     {
-        return new List<VideoFormat>
+        var formats = new List<VideoFormat>();
+
+        try
         {
-            new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8000000, FormatId = "1080p30" },
-            new VideoFormat { Width = 1920, Height = 1080, FrameRate = 60, Codec = "H.264", BitRate = 12000000, FormatId = "1080p60" },
-            new VideoFormat { Width = 1280, Height = 720, FrameRate = 30, Codec = "H.264", BitRate = 5000000, FormatId = "720p30" },
-            new VideoFormat { Width = 1280, Height = 720, FrameRate = 60, Codec = "H.264", BitRate = 7500000, FormatId = "720p60" },
-            new VideoFormat { Width = 3840, Height = 2160, FrameRate = 30, Codec = "H.264", BitRate = 25000000, FormatId = "2160p30" },
-            new VideoFormat { Width = 640, Height = 480, FrameRate = 30, Codec = "H.264", BitRate = 2000000, FormatId = "480p30" }
-        };
+            var device = CaptureDevice;
+            if (device?.Formats != null)
+            {
+                // Extract unique video resolutions from actual device formats
+                var uniqueFormats = device.Formats
+                    .Where(f => f.FormatDescription is CMVideoFormatDescription)
+                    .Select(f =>
+                    {
+                        var desc = f.FormatDescription as CMVideoFormatDescription;
+                        var dims = desc.Dimensions;
+
+                        // Get max frame rate for this format
+                        var maxFrameRate = 30; // Default
+                        if (f.VideoSupportedFrameRateRanges?.Length > 0)
+                        {
+                            maxFrameRate = (int)Math.Round(f.VideoSupportedFrameRateRanges
+                                .Max(r => r.MaxFrameRate));
+                        }
+
+                        return new
+                        {
+                            Width = (int)dims.Width,
+                            Height = (int)dims.Height,
+                            FPS = maxFrameRate,
+                            Pixels = dims.Width * dims.Height
+                        };
+                    })
+                    .GroupBy(f => new { f.Width, f.Height, f.FPS })
+                    .Select(g => g.First())
+                    .OrderByDescending(f => f.Pixels)
+                    .ThenByDescending(f => f.FPS)
+                    .ToList();
+
+                foreach (var fmt in uniqueFormats)
+                {
+                    // Estimate bitrate based on resolution and framerate
+                    int EstimateBitrate(int width, int height, int fps)
+                    {
+                        var pixelsPerSec = (long)width * height * fps;
+                        var bps = (long)(pixelsPerSec * 0.07); // ~0.07 bits per pixel
+                        if (bps < 2_000_000) bps = 2_000_000;   // Min 2 Mbps
+                        if (bps > 35_000_000) bps = 35_000_000; // Max 35 Mbps
+                        return (int)bps;
+                    }
+
+                    formats.Add(new VideoFormat
+                    {
+                        Width = fmt.Width,
+                        Height = fmt.Height,
+                        FrameRate = fmt.FPS,
+                        Codec = "H.264",
+                        BitRate = EstimateBitrate(fmt.Width, fmt.Height, fmt.FPS),
+                        FormatId = $"{fmt.Width}x{fmt.Height}@{fmt.FPS}"
+                    });
+                }
+
+                Debug.WriteLine($"[NativeCamera.Apple] GetPredefinedVideoFormats: Found {formats.Count} actual formats from camera");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCamera.Apple] GetPredefinedVideoFormats error: {ex.Message}");
+        }
+
+        // Fallback if no formats found: return safe defaults
+        if (formats.Count == 0)
+        {
+            Debug.WriteLine("[NativeCamera.Apple] GetPredefinedVideoFormats: No camera formats available, using fallback defaults");
+            formats.AddRange(new[]
+            {
+                new VideoFormat { Width = 1920, Height = 1080, FrameRate = 30, Codec = "H.264", BitRate = 8_000_000, FormatId = "1080p30" },
+                new VideoFormat { Width = 1280, Height = 720, FrameRate = 30, Codec = "H.264", BitRate = 5_000_000, FormatId = "720p30" },
+                new VideoFormat { Width = 640, Height = 480, FrameRate = 30, Codec = "H.264", BitRate = 2_000_000, FormatId = "480p30" }
+            });
+        }
+
+        return formats;
     }
 
     /// <summary>

@@ -9,6 +9,56 @@ public partial class SkiaLayout
 {
     #region GRID
 
+    private List<SkiaControl> _orderedChildren;
+
+    public override List<SkiaControl> GetOrderedSubviews(bool recalculate = false)
+    {
+        if (Type == LayoutType.Grid)
+        {
+            if (_orderedChildren == null || recalculate)
+            {
+                if (IsTemplated)
+                {
+                    var list = new List<SkiaControl>();
+                    if (ChildrenFactory.TemplatesAvailable)
+                    {
+                        var row = 0;
+                        var col = 0;
+                        int split = Split;
+                        if (split < 1) split = 1;
+
+                        for (int index = 0; index < ChildrenFactory.GetChildrenCount(); index++)
+                        {
+                            var child = ChildrenFactory.GetViewForIndex(index, null, 0, true);
+
+                            if (child == null)
+                            {
+                                break; //unexpected but..
+                            }
+
+                            row = index / split;
+                            col = index % split;
+
+                            Grid.SetRow(child, row);
+                            Grid.SetColumn(child, col);
+
+                            list.Add(child);
+                        }
+                    }
+                    _orderedChildren = list;
+                    return list;
+                }
+                else
+                {
+                    return base.GetOrderedSubviews(recalculate);
+                }
+            }
+
+            return _orderedChildren;
+        }
+
+        return base.GetOrderedSubviews(recalculate);
+    }
 
     /// <summary>
     /// Measures the grid layout and ensures columns fill available width when NeedAutoWidth is false
@@ -96,12 +146,12 @@ public partial class SkiaLayout
             var destination = context.Destination;
             var scale = context.Scale;
 
-            using var cells = ChildrenFactory.GetViewsIterator();
+            var cells = GetOrderedSubviews();
 
             List<SkiaControlWithRect> tree = new();
 
             var cellIndex = 0;
-            foreach (var child in cells.ToList())
+            foreach (var child in cells)
             {
                 child.OptionalOnBeforeDrawing(); //could set IsVisible or whatever inside
 

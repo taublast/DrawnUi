@@ -1047,7 +1047,8 @@ namespace DrawnUi.Camera
                     return;
                 }
 
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording video track: {preRecordingVideoTrack.NaturalSize.Width}x{preRecordingVideoTrack.NaturalSize.Height}");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] ============ MUXING DEBUG: SOURCE CHUNKS ============");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording track NaturalSize: {preRecordingVideoTrack.NaturalSize.Width}x{preRecordingVideoTrack.NaturalSize.Height}");
 
                 // Load live recording asset and wait for it to load
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Loading live recording asset...");
@@ -1071,7 +1072,8 @@ namespace DrawnUi.Camera
                     return;
                 }
 
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Live recording video track: {liveRecordingVideoTrack.NaturalSize.Width}x{liveRecordingVideoTrack.NaturalSize.Height}");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Live recording track NaturalSize: {liveRecordingVideoTrack.NaturalSize.Width}x{liveRecordingVideoTrack.NaturalSize.Height}");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Encoder _width={_width}, _height={_height}, _frameRate={_frameRate}");
 
                 // Create AVMutableComposition for concatenation
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Creating composition...");
@@ -1139,6 +1141,24 @@ namespace DrawnUi.Camera
                 videoTrack.PreferredTransform = compositionTransform;
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Set composition preferredTransform for deviceRotation={_deviceRotation}, dimensions={_width}x{_height}: xx={compositionTransform.xx}, xy={compositionTransform.xy}, yx={compositionTransform.yx}, yy={compositionTransform.yy}, tx={compositionTransform.x0}, ty={compositionTransform.y0}");
 
+                // CRITICAL BUG FIX: Create AVMutableVideoComposition with explicit renderSize
+                // Without this, AVAssetExportSession.PresetPassthrough may use default/preview dimensions
+                // This was causing 1920x1080 videos to be exported as 568x320 (preview size)
+                var videoComposition = AVMutableVideoComposition.Create();
+                videoComposition.FrameDuration = new CMTime(1, _frameRate);
+                videoComposition.RenderSize = new CoreGraphics.CGSize(_width, _height);
+
+                var instruction = new AVMutableVideoCompositionInstruction
+                {
+                    TimeRange = new CMTimeRange { Start = CMTime.Zero, Duration = composition.Duration }
+                };
+                var layerInstruction = AVMutableVideoCompositionLayerInstruction.FromAssetTrack(videoTrack);
+                layerInstruction.SetTransform(compositionTransform, CMTime.Zero);
+                instruction.LayerInstructions = new[] { layerInstruction };
+                videoComposition.Instructions = new[] { instruction };
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Created video composition with renderSize={_width}x{_height}, frameDuration=1/{_frameRate}");
+
                 // Export composition to output file
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Starting export to: {outputPath}");
                 if (File.Exists(outputPath))
@@ -1147,7 +1167,8 @@ namespace DrawnUi.Camera
                     System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Deleted existing output file");
                 }
 
-                var exportSession = new AVAssetExportSession(composition, AVAssetExportSession.PresetPassthrough);
+                // Use highest quality preset instead of Passthrough when we have video composition
+                var exportSession = new AVAssetExportSession(composition, AVAssetExportSession.PresetHighestQuality);
                 if (exportSession == null)
                 {
                     System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] ERROR: Failed to create AVAssetExportSession");
@@ -1156,9 +1177,11 @@ namespace DrawnUi.Camera
 
                 exportSession.OutputUrl = NSUrl.FromFilename(outputPath);
                 exportSession.OutputFileType = AVFileTypes.Mpeg4.GetConstant();
+                exportSession.VideoComposition = videoComposition;
 
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Export session created:");
-                System.Diagnostics.Debug.WriteLine($"  Preset: {AVAssetExportSession.PresetPassthrough}");
+                System.Diagnostics.Debug.WriteLine($"  Preset: {AVAssetExportSession.PresetHighestQuality}");
+                System.Diagnostics.Debug.WriteLine($"  VideoComposition: renderSize={videoComposition.RenderSize.Width}x{videoComposition.RenderSize.Height}");
                 System.Diagnostics.Debug.WriteLine($"  Output URL: {exportSession.OutputUrl}");
                 System.Diagnostics.Debug.WriteLine($"  Output file type: {exportSession.OutputFileType}");
                 System.Diagnostics.Debug.WriteLine($"  Supported file types: {string.Join(", ", exportSession.SupportedFileTypes ?? new string[0])}");
@@ -1254,6 +1277,11 @@ namespace DrawnUi.Camera
                     System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] No format description available");
                     return;
                 }
+
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] ============ PRE-RECORDING BUFFER FORMAT ============");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] _videoFormatDescription dimensions: {formatDesc.Dimensions.Width}x{formatDesc.Dimensions.Height}");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] _videoFormatDescription MediaSubType: {formatDesc.MediaSubType}");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Encoder _width={_width}, _height={_height}");
 
                 // Create AVAssetWriter for MP4 output (use temp path)
                 var url = NSUrl.FromFilename(tempPath);
@@ -1447,6 +1475,28 @@ namespace DrawnUi.Camera
 
                         var fileInfo = new FileInfo(outputPath);
                         System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording MP4 written: {fileInfo.Length / 1024.0:F2} KB, {appendedCount} frames");
+
+                        // CRITICAL DEBUG: Read back pre-recording file dimensions
+                        #if DEBUG
+                        try
+                        {
+                            var preRecAsset = AVAsset.FromUrl(NSUrl.FromFilename(outputPath));
+                            var preRecLoadTcs = new TaskCompletionSource<bool>();
+                            preRecAsset.LoadValuesAsynchronously(new[] { "tracks" }, () => preRecLoadTcs.TrySetResult(true));
+                            await preRecLoadTcs.Task.ConfigureAwait(false);
+
+                            var preRecVideoTrack = preRecAsset.TracksWithMediaType(AVMediaTypes.Video.GetConstant()).FirstOrDefault();
+                            if (preRecVideoTrack != null)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] ============ PRE-RECORDING FILE DIMENSIONS ============");
+                                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording file NaturalSize: {preRecVideoTrack.NaturalSize.Width}x{preRecVideoTrack.NaturalSize.Height}");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Error reading pre-recording file dimensions: {ex.Message}");
+                        }
+                        #endif
                     }
                     catch (Exception ex)
                     {

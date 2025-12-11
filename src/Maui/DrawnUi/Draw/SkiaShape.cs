@@ -267,35 +267,6 @@ namespace DrawnUi.Draw
             set { SetValue(StrokeCapProperty, value); }
         }
 
-        public static readonly BindableProperty LayoutChildrenProperty = BindableProperty.Create(
-            nameof(LayoutChildren),
-            typeof(LayoutType),
-            typeof(SkiaShape),
-            LayoutType.Absolute,
-            propertyChanged: NeedDraw);
-
-        /// <summary>
-        /// Gets or sets how child elements are arranged within the shape.
-        /// </summary>
-        /// <remarks>
-        /// Available layout types:
-        /// - Absolute (default): Position children using explicit coordinates and size
-        /// - Column: Stack children vertically from top to bottom
-        /// - Row: Stack children horizontally from left to right
-        /// - Grid: Arrange children in rows and columns
-        /// 
-        /// The SkiaShape can work as a container with specific layout behavior while
-        /// still clipping its content to the shape's boundaries. This allows for creating
-        /// complex UI components with custom shapes and internal layouts.
-        /// 
-        /// Child elements are always clipped to the shape's boundaries regardless of layout type.
-        /// </remarks>
-        public LayoutType LayoutChildren
-        {
-            get { return (LayoutType)GetValue(LayoutChildrenProperty); }
-            set { SetValue(LayoutChildrenProperty, value); }
-        }
-
         public static readonly BindableProperty StrokeBlendModeProperty = BindableProperty.Create(
             nameof(StrokeBlendMode),
             typeof(SKBlendMode), typeof(SkiaShape),

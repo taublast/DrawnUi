@@ -1146,7 +1146,7 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-    private void AbortCaptureVideoFlow()
+    private async Task AbortCaptureVideoFlow()
     {
         ICaptureVideoEncoder encoder = null;
 
@@ -1181,6 +1181,10 @@ public partial class SkiaCamera : SkiaControl
             // Get local reference to encoder before clearing field to prevent disposal race
             encoder = _captureVideoEncoder;
             _captureVideoEncoder = null;
+            await encoder?.StopAsync();
+
+            // Give any in-flight CaptureFrame calls time to complete
+            await Task.Delay(50);
 
 #if WINDOWS
             // Stop mirroring recording frames to preview and detach event

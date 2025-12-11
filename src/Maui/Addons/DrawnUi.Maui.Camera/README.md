@@ -5,11 +5,13 @@ Camera control drawn with SkiaSharp, part of DrawnUI for for .NET MAUI.
 **For iOS, MacCatalyst, Android and Windows**.
 
 
-## Knows Issues To Be Fixed ASAP
+## About
 
 
-- Android video recording orientation wronf if recored with UseCaptureVideoFlow=false;
-- Android camera start with UseCaptureVideoFlow=true fails if run on NOT MainThread (EGL failed to make current)
+Camera is working in one of the two modes: Still and Video (CaptureMode property). Why? Because still and video formats are different and we must present a preview according to this format. So selecting this mode affects mainly the preview.  
+For the still image capture you can select camera, format, flash.   
+For video capture, it's same but separate methods/properties for video.   
+On top of that the video capture has an optional pre-recording feature. What is it for? Imagine you want to trigger recording a video on some conditions. Like a rabbit appeared within camera range, some tech conditions are met etc. But when you then watch the video it would start at the exact moment the recording was triggered, while the pre-recording feature can for example record 5 seconds preceding that event, making the video wich recording was triggered by tech conditions to look natural.
 
 
 ## Features:

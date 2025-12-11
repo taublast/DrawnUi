@@ -1170,11 +1170,15 @@ namespace DrawnUi.Controls
             }
             finally
             {
-                Invalidate();
-
+                OnSelectedIndexApplied();
                 NavigationBusy = false; //can be still animating!
-
             }
+        }
+
+        protected virtual void OnSelectedIndexApplied()
+        {
+            //Invalidate();
+            Repaint();
         }
 
         private async void UpdateSelectedView(int selectedIndex, bool? animate = null)

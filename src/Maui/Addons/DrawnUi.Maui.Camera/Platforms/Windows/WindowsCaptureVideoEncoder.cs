@@ -229,8 +229,16 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                     : SKSurface.Create(_gpuInfo);
             }
 
-            canvas = _gpuSurface.Canvas;
-            canvas.Clear(SKColors.Transparent);
+            if (_gpuSurface != null)
+            {
+                canvas = _gpuSurface.Canvas;
+                canvas.Clear(SKColors.Transparent);
+            }
+            else
+            {
+                canvas = null;
+            }
+
             info = _gpuInfo;
 
             return new FrameScope();
@@ -442,12 +450,12 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 var isBufferA = _isBufferA;
                 var bufferAFirstTimestamp = _bufferAFirstTimestamp;
                 var bufferBFirstTimestamp = _bufferBFirstTimestamp;
-                
+
                 // We need to copy the bitmap data to a byte array or similar to pass to the background thread safely
                 // OR we can just do the memory copy inside the Task.Run if we keep 'source' alive.
                 // Since 'source' is disposed in finally, we must ensure Task.Run completes before finally.
-                
-                await Task.Run(() => 
+
+                await Task.Run(() =>
                 {
                     var hr = PInvoke.MFCreateMemoryBuffer(dataSize, out var mediaBuffer);
                     if (hr.Failed)
@@ -529,7 +537,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                         Marshal.ReleaseComObject(mediaBuffer);
                     }
                 });
-                
+
                 EncodingDuration = DateTime.Now - _startTime;
                 EncodingStatus = "Encoding";
             }

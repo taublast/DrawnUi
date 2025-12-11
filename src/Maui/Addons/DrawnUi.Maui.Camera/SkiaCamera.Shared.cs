@@ -210,7 +210,10 @@ public partial class SkiaCamera : SkiaControl
     {
         if (bindable is SkiaCamera camera && (camera.IsRecordingVideo || camera.IsPreRecording))
         {
-            camera.AbortVideoRecording();
+            Task.Run(async () =>
+            {
+                await camera.StopVideoRecording(true);
+            });
         }
     }
 
@@ -218,17 +221,20 @@ public partial class SkiaCamera : SkiaControl
     {
         if (bindable is SkiaCamera camera)
         {
-            camera.AbortVideoRecording();
+            Task.Run(async () =>
+            {
+                await camera.StopVideoRecording(true);
 
-            bool enabled = (bool)newValue;
-            if (enabled && !camera.IsRecordingVideo)
-            {
-                camera.InitializePreRecordingBuffer();
-            }
-            else if (!enabled)
-            {
-                camera.ClearPreRecordingBuffer();
-            }
+                bool enabled = (bool)newValue;
+                if (enabled && !camera.IsRecordingVideo)
+                {
+                    camera.InitializePreRecordingBuffer();
+                }
+                else if (!enabled)
+                {
+                    camera.ClearPreRecordingBuffer();
+                }
+            });
         }
     }
 
@@ -938,6 +944,76 @@ public partial class SkiaCamera : SkiaControl
     }
 
     #endregion
+
+    /// <summary>
+    /// Stop video recording and finalize the video file.
+    /// Resets the locked rotation and restores normal preview behavior.
+    /// The video file path will be provided through the VideoRecordingSuccess event.
+    /// </summary>
+    /// <returns>Async task</returns>
+    public async Task StopVideoRecording(bool abort = false)
+    {
+        if (!IsRecordingVideo && !IsPreRecording)
+            return;
+
+        Debug.WriteLine($"[StopVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
+
+        IsRecordingVideo = false;
+
+        // Reset locked rotation
+        RecordingLockedRotation = -1;
+        Debug.WriteLine($"[StopVideoRecording] Reset locked rotation");
+
+#if ANDROID
+        // Stop Android event-driven capture and restore normal preview behavior
+        try
+        {
+            if (NativeControl is NativeCamera androidCam)
+            {
+                androidCam.PreviewCaptureSuccess = null;
+            }
+        }
+        catch
+        {
+        }
+
+        UseRecordingFramesForPreview = false;
+#endif
+        try
+        {
+            // Check if using capture video flow
+            if (_captureVideoEncoder != null)
+            {
+                if (abort)
+                {
+                    await AbortCaptureVideoFlow();
+                }
+                else
+                {
+                    await StopCaptureVideoFlow();
+                }
+
+                ClearPreRecordingBuffer();
+            }
+            else
+            {
+#if ONPLATFORM
+                await NativeControl.StopVideoRecording();
+#endif
+                // Note: IsRecordingVideo will be set to false by the VideoRecordingSuccess/Failed callbacks
+            }
+
+            IsPreRecording = false;
+        }
+        catch (Exception ex)
+        {
+            IsPreRecording = false;
+            IsRecordingVideo = false;
+            //ClearPreRecordingBuffer();
+            VideoRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+    }
 
     private void Super_OnNativeAppPaused(object sender, EventArgs e)
     {
@@ -1726,7 +1802,7 @@ public partial class SkiaCamera : SkiaControl
 #endif
     }
 
-    public void AbortVideoRecording()
+    public void AbortVideoRecordingBak()
     {
         if (!IsRecordingVideo && !IsPreRecording)
             return;
@@ -2038,6 +2114,7 @@ public partial class SkiaCamera : SkiaControl
         NeedUpdate = false;
         Update();
 
+        //todo maybe make this match other platforms like apple and android?
 #if WINDOWS
         // If using capture video flow and preview-driven capture, submit frames in real-time with the preview
         if (_useWindowsPreviewDrivenCapture && (IsRecordingVideo || IsPreRecording) &&
@@ -2451,6 +2528,8 @@ public partial class SkiaCamera : SkiaControl
             return;
 
         System.Diagnostics.Debug.WriteLine($"[CAMERA] Stopped {Uid} {Tag}");
+
+        _ = StopVideoRecording(true);
 
         NativeControl?.Stop(force);
         State = CameraState.Off;
