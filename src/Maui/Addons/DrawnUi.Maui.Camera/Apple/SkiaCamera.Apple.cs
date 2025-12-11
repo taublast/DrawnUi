@@ -557,16 +557,50 @@ public partial class SkiaCamera
 
                 // CRITICAL: Copy transform from source track to composition to preserve orientation
                 // Both source files have correct transform, so copy from live track (or pre-track if live is null)
+                CoreGraphics.CGAffineTransform compositionTransform = CoreGraphics.CGAffineTransform.MakeIdentity();
+                CoreGraphics.CGSize sourceSize = CoreGraphics.CGSize.Empty;
+
                 if (liveTrack != null)
                 {
                     videoTrack.PreferredTransform = liveTrack.PreferredTransform;
-                    System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Copied PreferredTransform from live track to composition");
+                    compositionTransform = liveTrack.PreferredTransform;
+                    sourceSize = liveTrack.NaturalSize;
+                    System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Live track: {sourceSize.Width}x{sourceSize.Height}, transform: {compositionTransform}");
                 }
                 else if (preTracks != null && preTracks.Length > 0)
                 {
                     videoTrack.PreferredTransform = preTracks[0].PreferredTransform;
-                    System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Copied PreferredTransform from pre-recording track to composition");
+                    compositionTransform = preTracks[0].PreferredTransform;
+                    sourceSize = preTracks[0].NaturalSize;
+                    System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Pre-recording track: {sourceSize.Width}x{sourceSize.Height}, transform: {compositionTransform}");
                 }
+
+                // CRITICAL BUG FIX: Create AVMutableVideoComposition with explicit renderSize
+                // Using preset alone (like MediumQuality) produces wrong dimensions (568x320)
+                // We need to explicitly set the output dimensions from the source track
+                var videoComposition = AVFoundation.AVMutableVideoComposition.Create();
+
+                // Get frame rate from source track
+                int frameRate = 30; // default
+                if (liveTrack != null && liveTrack.NominalFrameRate > 0)
+                    frameRate = (int)liveTrack.NominalFrameRate;
+                else if (preTracks != null && preTracks.Length > 0 && preTracks[0].NominalFrameRate > 0)
+                    frameRate = (int)preTracks[0].NominalFrameRate;
+
+                videoComposition.FrameDuration = new CoreMedia.CMTime(1, frameRate);
+                videoComposition.RenderSize = sourceSize; // Use source dimensions
+
+                var instruction = new AVFoundation.AVMutableVideoCompositionInstruction
+                {
+                    TimeRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = composition.Duration }
+                };
+
+                var layerInstruction = AVFoundation.AVMutableVideoCompositionLayerInstruction.FromAssetTrack(videoTrack);
+                layerInstruction.SetTransform(compositionTransform, CoreMedia.CMTime.Zero);
+                instruction.LayerInstructions = new[] { layerInstruction };
+                videoComposition.Instructions = new[] { instruction };
+
+                System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Video composition renderSize: {videoComposition.RenderSize.Width}x{videoComposition.RenderSize.Height}, fps: {frameRate}");
 
                 // Export composition to file
                 // CRITICAL: AVAssetExportSession fails if output file already exists
@@ -580,11 +614,12 @@ public partial class SkiaCamera
                 }
 
                 var outputUrl = Foundation.NSUrl.FromFilename(outputPath);
-                var exporter = new AVFoundation.AVAssetExportSession(composition, AVFoundation.AVAssetExportSessionPreset.MediumQuality)
+                var exporter = new AVFoundation.AVAssetExportSession(composition, AVFoundation.AVAssetExportSessionPreset.HighestQuality)
                 {
                     OutputUrl = outputUrl,
                     OutputFileType = AVFoundation.AVFileTypes.Mpeg4.GetConstant(),
-                    ShouldOptimizeForNetworkUse = false
+                    ShouldOptimizeForNetworkUse = false,
+                    VideoComposition = videoComposition // Apply our explicit video composition
                 };
 
                 var tcs = new TaskCompletionSource<string>();

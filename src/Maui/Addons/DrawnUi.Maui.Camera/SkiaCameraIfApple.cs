@@ -870,66 +870,6 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-    /// <summary>
-    /// Stop video recording and finalize the video file.
-    /// Resets the locked rotation and restores normal preview behavior.
-    /// The video file path will be provided through the VideoRecordingSuccess event.
-    /// </summary>
-    /// <returns>Async task</returns>
-    public async Task StopVideoRecording()
-    {
-        if (!IsRecordingVideo && !IsPreRecording)
-            return;
-
-        Debug.WriteLine($"[StopVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
-
-        IsRecordingVideo = false;
-
-        // Reset locked rotation
-        RecordingLockedRotation = -1;
-        Debug.WriteLine($"[StopVideoRecording] Reset locked rotation");
-
-#if ANDROID
-        // Stop Android event-driven capture and restore normal preview behavior
-        try
-        {
-            if (NativeControl is NativeCamera androidCam)
-            {
-                androidCam.PreviewCaptureSuccess = null;
-            }
-        }
-        catch
-        {
-        }
-
-        UseRecordingFramesForPreview = false;
-#endif
-        try
-        {
-            // Check if using capture video flow
-            if (_captureVideoEncoder != null)
-            {
-                await StopCaptureVideoFlow();
-            }
-            else
-            {
-#if ONPLATFORM
-                await NativeControl.StopVideoRecording();
-#endif
-                // Note: IsRecordingVideo will be set to false by the VideoRecordingSuccess/Failed callbacks
-            }
-
-            IsPreRecording = false;
-        }
-        catch (Exception ex)
-        {
-            IsPreRecording = false;
-            IsRecordingVideo = false;
-            ClearPreRecordingBuffer();
-            VideoRecordingFailed?.Invoke(this, ex);
-            throw;
-        }
-    }
 
     private async Task StopCaptureVideoFlow()
     {

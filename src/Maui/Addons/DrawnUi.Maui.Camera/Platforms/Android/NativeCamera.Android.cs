@@ -2156,7 +2156,9 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     #region VIDEO RECORDING
 
     /// <summary>
-    /// Gets the currently selected video format
+    /// Gets the currently selected video format.
+    /// For Manual: Uses GetPredefinedVideoFormats()[VideoFormatIndex]
+    /// For presets: Calls GetVideoProfile() which returns an actual CamcorderProfile from the device
     /// </summary>
     /// <returns>Current video format or null if not available</returns>
     public VideoFormat GetCurrentVideoFormat()

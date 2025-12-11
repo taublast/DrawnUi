@@ -219,29 +219,6 @@ public partial class SkiaCamera : SkiaControl
         return formats;
     }
 
-    /// <summary>
-    /// Updates preview format to match current capture format aspect ratio
-    /// </summary>
-    protected virtual void UpdatePreviewFormatForAspectRatio()
-    {
-        if (NativeControl is NativeCamera windowsCamera)
-        {
-            Debug.WriteLine("[SkiaCameraWindows] Updating preview format for aspect ratio match");
-
-            // Trigger preview format update in native camera
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await windowsCamera.UpdatePreviewFormatAsync();
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"[SkiaCameraWindows] Error updating preview format: {ex.Message}");
-                }
-            });
-        }
-    }
 
     /// <summary>
     /// Call on UI thread only. Called by CheckPermissions.
