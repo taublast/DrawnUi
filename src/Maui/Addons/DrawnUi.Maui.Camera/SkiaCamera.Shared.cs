@@ -1118,7 +1118,6 @@ public partial class SkiaCamera : SkiaControl
         try
         {
             Debug.WriteLine("[SkiaCamera] Requesting permissions...");
-
             SkiaCamera.CheckPermissions((presented) =>
                 {
                     Debug.WriteLine("[SkiaCamera] Starting..");
@@ -2328,9 +2327,9 @@ public partial class SkiaCamera : SkiaControl
     /// </summary>
     /// <param name="granted">Action to invoke if permissions are granted</param>
     /// <param name="notGranted">Action to invoke if permissions are denied</param>
-    public static void CheckGalleryPermissions(Action granted, Action notGranted)
+    public static void CheckGalleryPermissions(Action granted, Action notGranted, bool avoidSpam=false)
     {
-        if (lastTimeChecked + TimeSpan.FromSeconds(5) < DateTime.Now) //avoid spam
+        if (!avoidSpam || lastTimeChecked + TimeSpan.FromSeconds(5) < DateTime.Now) //avoid spam
         {
             lastTimeChecked = DateTime.Now;
 

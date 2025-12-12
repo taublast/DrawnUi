@@ -146,6 +146,22 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                             HorizontalOptions = LayoutOptions.Center,
                             Children =
                             {
+                                // Power toggle button
+                                new SkiaButton("⚡ Power: OFF")
+                                    {
+                                        BackgroundColor = Colors.Red,
+                                        TextColor = Colors.White,
+                                        CornerRadius = 8,
+                                        UseCache = SkiaCacheType.Image,
+                                        Padding = new Thickness(20, 8)
+                                    }
+                                    .OnTapped(me => { CameraControl.IsOn = !CameraControl.IsOn; })
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.State), me =>
+                                    {
+                                        me.Text = CameraControl.State == CameraState.On ? "⚡ Power: ON" : "⚡ Power: OFF";
+                                        me.BackgroundColor = CameraControl.State == CameraState.On ? Colors.Green : Colors.Red;
+                                    }),
+
                                 // Mode switch button
                                 new SkiaButton("📸 Photo Mode")
                                     {
@@ -190,26 +206,6 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     }
                                     .Assign(out _cameraSelectButton)
                                     .OnTapped(async me => { await SelectCamera(); }),
-
-                                // Start Camera button
-                                new SkiaButton("Start Camera")
-                                    {
-                                        BackgroundColor = Colors.Green,
-                                        TextColor = Colors.White,
-                                        CornerRadius = 8,
-                                        UseCache = SkiaCacheType.Image
-                                    }
-                                    .OnTapped(me => { CameraControl.IsOn = true; }),
-
-                                // Stop Camera button
-                                new SkiaButton("Stop Camera")
-                                    {
-                                        BackgroundColor = Colors.Red,
-                                        TextColor = Colors.White,
-                                        CornerRadius = 8,
-                                        UseCache = SkiaCacheType.Image
-                                    }
-                                    .OnTapped(me => { CameraControl.IsOn = false; }),
 
                                 // Take Picture button (only visible in Still mode)
                                 new SkiaButton("Take Picture")
@@ -294,6 +290,25 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                                     {
                                         me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                                    }),
+
+                                // Abort Recording button (only visible when recording)
+                                new SkiaButton("❌ Abort")
+                                    {
+                                        BackgroundColor = Colors.DarkRed,
+                                        TextColor = Colors.White,
+                                        CornerRadius = 8,
+                                        UseCache = SkiaCacheType.Image,
+                                        IsVisible = false
+                                    }
+                                    .OnTapped(async me => { await AbortVideoRecording(); })
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.IsRecordingVideo), me =>
+                                    {
+                                        me.IsVisible = CameraControl.IsRecordingVideo && CameraControl.CaptureMode == CaptureModeType.Video;
+                                    })
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                    {
+                                        me.IsVisible = CameraControl.IsRecordingVideo && CameraControl.CaptureMode == CaptureModeType.Video;
                                     }),
 
                                 // Video Formats button (only visible in Video mode)
@@ -655,31 +670,9 @@ public class CameraTestPage : BasePageReloadable, IDisposable
 
     private void ToggleCaptureMode()
     {
-        // Stop camera before switching modes
-        var wasOn = CameraControl.IsOn;
-        if (wasOn)
-        {
-            CameraControl.IsOn = false;
-        }
-
-        // Toggle between Still and Video modes
         CameraControl.CaptureMode = CameraControl.CaptureMode == CaptureModeType.Still
             ? CaptureModeType.Video
             : CaptureModeType.Still;
-
-        // Restart camera if it was on
-        if (wasOn)
-        {
-            Tasks.StartDelayed(TimeSpan.FromMilliseconds(300), () =>
-            {
-                CameraControl.IsOn = true;
-            });
-        }
-
-        Debug.WriteLine($"Capture mode switched to: {CameraControl.CaptureMode}");
-        Debug.WriteLine($"Duration button exists: {_preRecordingDurationButton != null}");
-        Debug.WriteLine($"Duration button visible: {_preRecordingDurationButton?.IsVisible}");
-        Debug.WriteLine($"Pre-record toggle visible: {_preRecordingToggleButton?.IsVisible}");
     }
 
     private CapturedImage _currentCapturedImage;
@@ -830,6 +823,23 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                 ShowAlert("Video Recording Error", $"Error: {ex.Message}");
             }
         });
+    }
+
+    private async Task AbortVideoRecording()
+    {
+        if (CameraControl.State != CameraState.On || !CameraControl.IsRecordingVideo)
+            return;
+
+        try
+        {
+            await CameraControl.StopVideoRecording(true);
+            Debug.WriteLine("❌ Video recording aborted");
+        }
+        catch (Exception ex)
+        {
+            Super.Log(ex);
+            ShowAlert("Abort Error", $"Error aborting video: {ex.Message}");
+        }
     }
 
     private async Task ShowPhotoFormatPicker()
