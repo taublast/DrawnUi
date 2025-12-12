@@ -77,4 +77,6 @@ public interface ICaptureVideoEncoder : IDisposable
     /// Progress reporting event (optional).
     /// </summary>
     event EventHandler<TimeSpan> ProgressReported;
+
+    Task AbortAsync();
 }

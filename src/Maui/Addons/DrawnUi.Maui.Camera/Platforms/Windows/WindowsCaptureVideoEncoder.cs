@@ -558,6 +558,74 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
     }
 
+
+    public async Task AbortAsync()
+    {
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] AbortAsync CALLED");
+
+        _isRecording = false;
+        _progressTimer?.Dispose();
+
+        EncodingStatus = "Canceled";
+
+        await _sinkWriterSemaphore.WaitAsync();
+        try
+        {
+            if (_sinkWriter != null)
+            {
+                try
+                {
+                    // Try to finalize to close file handle properly, but ignore errors
+                    await Task.Run(() => _sinkWriter.Finalize());
+                }
+                catch { }
+                finally
+                {
+                    try
+                    {
+                        if (_sinkWriter != null)
+                        {
+                            Marshal.ReleaseComObject(_sinkWriter);
+                        }
+                    }
+                    catch { }
+                    _sinkWriter = null;
+                }
+            }
+        }
+        finally
+        {
+            _sinkWriterSemaphore.Release();
+        }
+
+        // Cleanup files
+        try
+        {
+            if (_outputFile != null)
+            {
+                try { await _outputFile.DeleteAsync(); } catch { }
+                _outputFile = null;
+            }
+            if (!string.IsNullOrEmpty(_preRecBufferA) && File.Exists(_preRecBufferA)) File.Delete(_preRecBufferA);
+            if (!string.IsNullOrEmpty(_preRecBufferB) && File.Exists(_preRecBufferB)) File.Delete(_preRecBufferB);
+            if (!string.IsNullOrEmpty(_outputPath) && File.Exists(_outputPath)) File.Delete(_outputPath);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Abort cleanup error: {ex.Message}");
+        }
+
+        lock (_previewLock)
+        {
+            _latestPreviewImage?.Dispose();
+            _latestPreviewImage = null;
+        }
+        _readbackBitmap?.Dispose();
+        _readbackBitmap = null;
+        _gpuSurface?.Dispose();
+        _gpuSurface = null;
+    }
+
     public async Task<CapturedVideo> StopAsync()
     {
         Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] StopAsync CALLED: IsPreRecordingMode={IsPreRecordingMode}");

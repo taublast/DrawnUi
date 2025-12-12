@@ -1158,7 +1158,7 @@ public partial class SkiaCamera : SkiaControl
             _frameCaptureTimer = null;
 
             // Give any in-flight CaptureFrame calls time to complete
-            //await Task.Delay(50);
+            await Task.Delay(50);
 
 #if WINDOWS
             _useWindowsPreviewDrivenCapture = false;
@@ -1181,10 +1181,6 @@ public partial class SkiaCamera : SkiaControl
             // Get local reference to encoder before clearing field to prevent disposal race
             encoder = _captureVideoEncoder;
             _captureVideoEncoder = null;
-            await encoder?.StopAsync();
-
-            // Give any in-flight CaptureFrame calls time to complete
-            await Task.Delay(50);
 
 #if WINDOWS
             // Stop mirroring recording frames to preview and detach event
@@ -1201,60 +1197,39 @@ public partial class SkiaCamera : SkiaControl
             }
 #endif
 
-            // Dispose encoder directly WITHOUT calling StopAsync - this should abandon the recording
-            Debug.WriteLine($"[AbortCaptureVideoFlow] Disposing encoder without finalizing video");
-            encoder?.Dispose();
+            // Stop encoder
+            await encoder?.AbortAsync();
 
-            // Clean up any pre-recording files
+#if ANDROID
             if (!string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath))
             {
                 try
                 {
                     File.Delete(_preRecordingFilePath);
-                    Debug.WriteLine($"[AbortCaptureVideoFlow] Deleted pre-recording file: {_preRecordingFilePath}");
+                    Debug.WriteLine($"[StopCaptureVideoFlow] Deleted old pre-recording temp file");
                 }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"[AbortCaptureVideoFlow] Failed to delete pre-recording file: {ex.Message}");
-                }
+                catch { }
             }
-
             ClearPreRecordingBuffer();
+#endif
 
-            // Update state - recording is now aborted
             IsRecordingVideo = false;
-            IsPreRecording = false;
-
-            Debug.WriteLine($"[AbortCaptureVideoFlow] Capture video flow aborted successfully");
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[AbortCaptureVideoFlow] Error during abort: {ex.Message}");
-
             // Clean up on error
             _frameCaptureTimer?.Dispose();
             _frameCaptureTimer = null;
             _captureVideoEncoder = null;
 
             IsRecordingVideo = false;
-            IsPreRecording = false;
-
-            // Don't throw - we want abort to always succeed in stopping the recording
+            //VideoRecordingFailed?.Invoke(this, ex);
+            throw;
         }
         finally
         {
-            // Ensure encoder is disposed even if errors occurred
-            if (encoder != null)
-            {
-                try
-                {
-                    encoder.Dispose();
-                }
-                catch
-                {
-                    // Ignore disposal errors
-                }
-            }
+            // Clean up encoder after StopAsync completes
+            encoder?.Dispose();
         }
     }
 

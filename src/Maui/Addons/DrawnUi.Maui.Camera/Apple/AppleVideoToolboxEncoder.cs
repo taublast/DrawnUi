@@ -778,6 +778,56 @@ namespace DrawnUi.Camera
             await Task.CompletedTask;
         }
 
+        public async Task AbortAsync()
+        {
+            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] AbortAsync CALLED");
+
+            _isRecording = false;
+            _progressTimer?.Dispose();
+            EncodingStatus = "Canceled";
+
+            if (IsPreRecordingMode)
+            {
+                _compressionSession?.Dispose();
+                _compressionSession = null;
+                _preRecordingBuffer?.Dispose();
+                _preRecordingBuffer = null;
+            }
+
+            try
+            {
+                _videoInput?.MarkAsFinished();
+                _writer?.CancelWriting();
+            }
+            catch { }
+            finally
+            {
+                _pixelBufferAdaptor = null;
+                _videoInput?.Dispose(); _videoInput = null;
+                _writer?.Dispose(); _writer = null;
+
+                lock (_previewLock)
+                {
+                    _latestPreviewImage?.Dispose();
+                    _latestPreviewImage = null;
+                }
+
+                _surface?.Dispose(); _surface = null;
+            }
+
+            // Cleanup files
+            try
+            {
+                if (!string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath))
+                    File.Delete(_preRecordingFilePath);
+                if (!string.IsNullOrEmpty(_liveRecordingFilePath) && File.Exists(_liveRecordingFilePath))
+                    File.Delete(_liveRecordingFilePath);
+                if (!string.IsNullOrEmpty(_outputPath) && File.Exists(_outputPath))
+                    File.Delete(_outputPath);
+            }
+            catch { }
+        }
+
         public async Task<CapturedVideo> StopAsync()
         {
             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] StopAsync CALLED: IsPreRecordingMode={IsPreRecordingMode}, BufferFrames={(_preRecordingBuffer?.GetFrameCount() ?? 0)}");
