@@ -4190,7 +4190,7 @@ namespace DrawnUi.Draw
         /// <summary>
         /// Core 3-pass measurement logic for absolute layouts with full FILL support
         /// </summary>
-        private ScaledSize MeasureContentCore(
+        protected virtual ScaledSize MeasureContentCore(
             IEnumerable<SkiaControl> children,
             SKRect rectForChildrenPixels,
             float scale)
@@ -4338,6 +4338,22 @@ namespace DrawnUi.Draw
                 {
                     var hasHorizontalFill = child.NeedFillHorizontally;
                     var hasVerticalFill = child.NeedFillVertically;
+
+                    bool remeasureX=false, remeasureY= false;
+                    if (hasHorizontalFill)
+                    {
+                        remeasureX = child.MeasuredSize.Pixels.Width != rectForChildrenPixels.Width;
+                    }
+
+                    if (hasVerticalFill)
+                    {
+                        remeasureY = child.MeasuredSize.Pixels.Height != rectForChildrenPixels.Height;
+                    }
+
+                    if (!remeasureX && !remeasureY)
+                    {
+                        continue;
+                    }
 
                     var provideWidth = hasHorizontalFill
                         ? (NeedAutoWidth && maxWidth >= 0 ? maxWidth : rectForChildrenPixels.Width)
