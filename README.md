@@ -35,7 +35,7 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 
 ---
 
-## 🆕 What's new for 1.7.6.1
+## 🆕 What's new for 1.7.6.2
 
 * Fix regression of refresh rate on Windows for displays supporting it above 60. 
 * `SkiaLayout` of type `Grid` now supports automatically creating items from `ItemsSource` with `ItemTemplate`, use `Split` property to indicate wanted number of columns. Will use `DefaultRowDefinition` and `DefaultColumnDefinition` properties for auto-generated items.
