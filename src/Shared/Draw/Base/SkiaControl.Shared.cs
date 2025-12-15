@@ -2968,7 +2968,10 @@ namespace DrawnUi.Draw
 
                 return value;
             }
-            set { SetValue(RenderingScaleProperty, value); }
+            set
+            {
+                SetValue(RenderingScaleProperty, value);
+            }
         }
 
         //public double RenderingScaleSafe
@@ -6426,10 +6429,47 @@ namespace DrawnUi.Draw
             get { return ClipEffects; }
         }
 
+        private float independetScale = -1;
+
         /// <summary>
         /// Will not invalidate the measurement of parent if True
         /// </summary>
-        public virtual bool IsParentIndependent { get; set; }
+        bool _isParentIndependent;
+        long useParentIndependent;
+
+        public bool IsParentIndependent
+        {
+            get
+            {
+                if (_isParentIndependent)
+                {
+                    if (independetScale != RenderingScale)
+                    {
+                        useParentIndependent = 0;
+                        independetScale = RenderingScale;
+                        return false;
+                    }
+
+                    useParentIndependent++;
+
+                    if (useParentIndependent < 3)
+                    {
+                        return false;
+                    }
+
+                    return true;
+                }
+                return false;
+            } 
+        	set
+        	{
+        		if (_isParentIndependent != value)
+        		{
+               		_isParentIndependent = value;
+        			OnPropertyChanged();	
+        		}
+        	}
+        }
 
         /// <summary>
         /// Will not call Update on Parent if True
