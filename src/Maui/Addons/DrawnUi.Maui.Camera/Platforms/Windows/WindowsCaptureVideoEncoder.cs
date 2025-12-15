@@ -576,7 +576,17 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 try
                 {
                     // Try to finalize to close file handle properly, but ignore errors
-                    await Task.Run(() => _sinkWriter.Finalize());
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            _sinkWriter.Finalize();
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
+                    });
                 }
                 catch { }
                 finally

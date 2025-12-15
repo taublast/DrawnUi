@@ -2130,36 +2130,42 @@ public partial class SkiaCamera : SkiaControl
 
                     using (winEnc.BeginFrame(elapsed, out var canvas, out var info))
                     {
-                        var __rects3 =
-                            GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
-                        canvas.DrawImage(previewImage, __rects3.src, __rects3.dst);
-
-                        if (FrameProcessor != null || VideoDiagnosticsOn)
+                        if (canvas != null)
                         {
-                            // Apply rotation based on device orientation
-                            var rotation = GetActiveRecordingRotation();
-                            canvas.Save();
-                            ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+                            var __rects3 =
+                                GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
+                            canvas.DrawImage(previewImage, __rects3.src, __rects3.dst);
 
-                            var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
-                            var frame = new DrawableFrame
+                            if (FrameProcessor != null || VideoDiagnosticsOn)
                             {
-                                Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed
-                            };
-                            FrameProcessor?.Invoke(frame);
+                                // Apply rotation based on device orientation
+                                var rotation = GetActiveRecordingRotation();
+                                canvas.Save();
+                                ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
 
-                            if (VideoDiagnosticsOn)
-                                DrawDiagnostics(canvas, info.Width, info.Height);
+                                var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                                var frame = new DrawableFrame
+                                {
+                                    Width = frameWidth,
+                                    Height = frameHeight,
+                                    Canvas = canvas,
+                                    Time = elapsed
+                                };
+                                FrameProcessor?.Invoke(frame);
 
-                            canvas.Restore();
+                                if (VideoDiagnosticsOn)
+                                    DrawDiagnostics(canvas, info.Width, info.Height);
+
+                                canvas.Restore();
+                            }
+
+                            var sw = System.Diagnostics.Stopwatch.StartNew();
+                            await winEnc.SubmitFrameAsync();
+                            sw.Stop();
+                            _diagLastSubmitMs = sw.Elapsed.TotalMilliseconds;
+                            System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
                         }
                     }
-
-                    var sw = System.Diagnostics.Stopwatch.StartNew();
-                    await winEnc.SubmitFrameAsync();
-                    sw.Stop();
-                    _diagLastSubmitMs = sw.Elapsed.TotalMilliseconds;
-                    System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
                 }
                 catch (Exception ex)
                 {
