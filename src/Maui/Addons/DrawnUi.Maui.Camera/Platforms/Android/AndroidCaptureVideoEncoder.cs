@@ -709,6 +709,38 @@ namespace DrawnUi.Camera
             await Task.CompletedTask;
         }
 
+        public async Task AbortAsync()
+        {
+
+            _isRecording = false;
+            _progressTimer?.Dispose();
+
+            if (IsPreRecordingMode && _preRecordingBuffer != null && _videoCodec != null)
+            {
+                _preRecordingBuffer?.Dispose();
+                _preRecordingBuffer = null;
+            }
+
+            try
+            {
+                _videoCodec?.SignalEndOfInputStream();
+                DrainEncoder(endOfStream: true, bufferingMode: false);
+
+                if (_muxerStarted)
+                {
+                    try { _muxer.Stop(); } catch { }
+                }
+            }
+            finally
+            {
+                TryReleaseCodec();
+                TryReleaseMuxer();
+                TearDownEgl();
+            }
+
+            EncodingStatus = "Canceled";
+        }
+
         public async Task<CapturedVideo> StopAsync()
         {
             System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] StopAsync CALLED: IsPreRecordingMode={IsPreRecordingMode}, BufferFrames={(_preRecordingBuffer?.GetFrameCount() ?? 0)}");

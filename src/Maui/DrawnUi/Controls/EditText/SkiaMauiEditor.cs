@@ -5,6 +5,15 @@ namespace DrawnUi.Controls;
 
 public class SkiaMauiEditor : SkiaMauiElement, ISkiaGestureListener
 {
+    protected override void Paint(DrawingContext ctx)
+    {
+        base.Paint(ctx);
+
+        if (PlaceholderLabel != null && PlaceholderLabel.IsVisible)
+        {
+            DrawViews(ctx);
+        }
+    }
 
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
@@ -91,9 +100,10 @@ public class SkiaMauiEditor : SkiaMauiElement, ISkiaGestureListener
         control.Keyboard = this.KeyboardType;
         if (Text != control.Text)
             control.Text = Text;
-        //todo customize
-        control.Placeholder = this.Placeholder;
-        control.PlaceholderColor = this.PlaceholderColor;
+
+        // Disable native placeholder - using drawn placeholder instead
+        control.Placeholder = string.Empty;
+        control.PlaceholderColor = Colors.Transparent;
     }
 
     protected virtual Editor GetOrCreateControl()
@@ -121,6 +131,7 @@ public class SkiaMauiEditor : SkiaMauiElement, ISkiaGestureListener
     }
 
     public MauiEditor Control { get; protected set; }
+    protected SkiaLabel PlaceholderLabel;
 
     protected void FocusNative()
     {
@@ -169,6 +180,25 @@ public class SkiaMauiEditor : SkiaMauiElement, ISkiaGestureListener
 
     }
 
+    protected virtual SkiaLabel CreatePlaceholderLabel()
+    {
+        return new SkiaLabel
+        {
+            Text = PlaceholderText,
+            TextColor = PlaceholderTextColor,
+            FontSize = PlaceholderFontSize,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            HorizontalTextAlignment = PlaceholderHorizontalAlignment,
+            VerticalTextAlignment = PlaceholderVerticalAlignment,
+            Padding = new Thickness(0),
+            Margin = new Thickness(0),
+            InputTransparent = true,
+            UseCache = SkiaCacheType.Operations,
+            ZIndex = 1 // Render on top
+        };
+    }
+
     public virtual void UpdateControl()
     {
         MainThread.BeginInvokeOnMainThread(() =>
@@ -181,6 +211,32 @@ public class SkiaMauiEditor : SkiaMauiElement, ISkiaGestureListener
 
             AdaptControlSize();
         });
+    }
+
+    protected virtual void UpdatePlaceholderLabel()
+    {
+        if (PlaceholderLabel == null)
+            return;
+
+        PlaceholderLabel.Text = PlaceholderText;
+        PlaceholderLabel.TextColor = PlaceholderTextColor;
+        PlaceholderLabel.FontFamily = PlaceholderFontFamily;
+        PlaceholderLabel.FontSize = PlaceholderFontSize;
+        PlaceholderLabel.HorizontalTextAlignment = PlaceholderHorizontalAlignment;
+        PlaceholderLabel.VerticalTextAlignment = PlaceholderVerticalAlignment;
+
+        // Update visibility based on Text property
+        UpdatePlaceholderVisibility();
+
+        PlaceholderLabel.Update();
+    }
+
+    protected virtual void UpdatePlaceholderVisibility()
+    {
+        if (PlaceholderLabel != null)
+        {
+            PlaceholderLabel.IsVisible = string.IsNullOrEmpty(Text);
+        }
     }
 
     protected override void OnLayoutChanged()
@@ -301,6 +357,12 @@ public class SkiaMauiEditor : SkiaMauiElement, ISkiaGestureListener
             Control = null;
         }
 
+        if (PlaceholderLabel != null)
+        {
+            PlaceholderLabel.Dispose();
+            PlaceholderLabel = null;
+        }
+
         TextChanged = null;
         FocusChanged = null;
         TextSubmitted = null;
@@ -308,9 +370,22 @@ public class SkiaMauiEditor : SkiaMauiElement, ISkiaGestureListener
         base.OnDisposing();
     }
 
+    protected override void CheckChildAdded()
+    {
+        //allow adding more views
+    }
+
     public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
     {
         GetOrCreateControl();
+
+        if (PlaceholderLabel == null)
+        {
+            PlaceholderLabel = CreatePlaceholderLabel();
+            AddSubView(PlaceholderLabel);
+            UpdatePlaceholderLabel();
+            UpdatePlaceholderVisibility();
+        }
 
         return base.OnMeasuring(widthConstraint, heightConstraint, scale);
     }
@@ -349,6 +424,14 @@ public class SkiaMauiEditor : SkiaMauiElement, ISkiaGestureListener
         }
     }
 
+    private static void NeedUpdatePlaceholder(BindableObject bindable, object oldvalue, object newvalue)
+    {
+        if (bindable is SkiaMauiEditor control)
+        {
+            control.UpdatePlaceholderLabel();
+        }
+    }
+
     private static void OnControlTextChanged(BindableObject bindable, object oldvalue, object newvalue)
     {
         if (bindable is SkiaMauiEditor control)
@@ -356,6 +439,7 @@ public class SkiaMauiEditor : SkiaMauiElement, ISkiaGestureListener
             control.TextChanged?.Invoke(control, (string)newvalue);
             control.CommandOnTextChanged?.Execute((string)newvalue);
             control.UpdateControl();
+            control.UpdatePlaceholderVisibility();
             if (control.NeedAutoSize)
             {
                 control.NativeInvalidate();
@@ -398,14 +482,14 @@ public class SkiaMauiEditor : SkiaMauiElement, ISkiaGestureListener
         set { SetValue(TextColorProperty, value); }
     }
 
-    public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(
-        nameof(PlaceholderColor), typeof(Color), typeof(SkiaMauiEditor),
+    public static readonly BindableProperty PlaceholderTextColorProperty = BindableProperty.Create(
+        nameof(PlaceholderTextColor), typeof(Color), typeof(SkiaMauiEditor),
         Colors.DarkGray,
-        propertyChanged: NeedUpdateControl);
-    public Color PlaceholderColor
+        propertyChanged: NeedUpdatePlaceholder);
+    public Color PlaceholderTextColor
     {
-        get { return (Color)GetValue(PlaceholderColorProperty); }
-        set { SetValue(PlaceholderColorProperty, value); }
+        get { return (Color)GetValue(PlaceholderTextColorProperty); }
+        set { SetValue(PlaceholderTextColorProperty, value); }
     }
 
     public static readonly BindableProperty FontWeightProperty = BindableProperty.Create(
@@ -446,18 +530,65 @@ public class SkiaMauiEditor : SkiaMauiElement, ISkiaGestureListener
         set { SetValue(TextProperty, value); }
     }
 
-    public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(
-        nameof(Placeholder),
+    public static readonly BindableProperty PlaceholderTextProperty = BindableProperty.Create(
+        nameof(PlaceholderText),
         typeof(string),
         typeof(SkiaMauiEditor),
         default(string),
-        propertyChanged: NeedUpdateControl);
+        propertyChanged: NeedUpdatePlaceholder);
 
-
-    public string Placeholder
+    public string PlaceholderText
     {
-        get { return (string)GetValue(PlaceholderProperty); }
-        set { SetValue(PlaceholderProperty, value); }
+        get { return (string)GetValue(PlaceholderTextProperty); }
+        set { SetValue(PlaceholderTextProperty, value); }
+    }
+
+    public static readonly BindableProperty PlaceholderFontFamilyProperty = BindableProperty.Create(nameof(PlaceholderFontFamily),
+        typeof(string), typeof(SkiaMauiEditor), string.Empty, propertyChanged: NeedUpdatePlaceholder);
+
+    public string PlaceholderFontFamily
+    {
+        get { return (string)GetValue(PlaceholderFontFamilyProperty); }
+        set { SetValue(PlaceholderFontFamilyProperty, value); }
+    }
+
+    public static readonly BindableProperty PlaceholderFontSizeProperty = BindableProperty.Create(
+        nameof(PlaceholderFontSize),
+        typeof(double),
+        typeof(SkiaMauiEditor),
+        12.0,
+        propertyChanged: NeedUpdatePlaceholder);
+
+    public double PlaceholderFontSize
+    {
+        get { return (double)GetValue(PlaceholderFontSizeProperty); }
+        set { SetValue(PlaceholderFontSizeProperty, value); }
+    }
+
+    public static readonly BindableProperty PlaceholderHorizontalAlignmentProperty = BindableProperty.Create(
+        nameof(PlaceholderHorizontalAlignment),
+        typeof(DrawTextAlignment),
+        typeof(SkiaMauiEditor),
+        DrawTextAlignment.Start,
+        propertyChanged: NeedUpdatePlaceholder);
+
+    public DrawTextAlignment PlaceholderHorizontalAlignment
+    {
+        get { return (DrawTextAlignment)GetValue(PlaceholderHorizontalAlignmentProperty); }
+        set { SetValue(PlaceholderHorizontalAlignmentProperty, value); }
+    }
+
+    public static readonly BindableProperty PlaceholderVerticalAlignmentProperty = BindableProperty.Create(
+        nameof(PlaceholderVerticalAlignment),
+        typeof(TextAlignment),
+        typeof(SkiaMauiEditor),
+        TextAlignment.Center,
+        propertyChanged: NeedUpdatePlaceholder);
+
+    public TextAlignment PlaceholderVerticalAlignment
+    {
+        get { return (TextAlignment)GetValue(PlaceholderVerticalAlignmentProperty); }
+        set { SetValue(PlaceholderVerticalAlignmentProperty, value); }
     }
 
     public static readonly BindableProperty ReturnTypeProperty = BindableProperty.Create(

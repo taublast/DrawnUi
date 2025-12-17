@@ -2968,7 +2968,10 @@ namespace DrawnUi.Draw
 
                 return value;
             }
-            set { SetValue(RenderingScaleProperty, value); }
+            set
+            {
+                SetValue(RenderingScaleProperty, value);
+            }
         }
 
         //public double RenderingScaleSafe
@@ -4061,10 +4064,10 @@ namespace DrawnUi.Draw
                 layoutChanged = true;
             }
             else
-            if (oldDrawingRect.Left != DrawingRect.Left || oldDrawingRect.Top != DrawingRect.Top)
-            {
-                OnLayoutPositionChanged();
-            }
+                if (oldDrawingRect.Left != DrawingRect.Left || oldDrawingRect.Top != DrawingRect.Top)
+                {
+                    OnLayoutPositionChanged();
+                }
 
             if (layoutChanged)
                 OnLayoutChanged();
@@ -4190,7 +4193,7 @@ namespace DrawnUi.Draw
         /// <summary>
         /// Core 3-pass measurement logic for absolute layouts with full FILL support
         /// </summary>
-        private ScaledSize MeasureContentCore(
+        protected virtual ScaledSize MeasureContentCore(
             IEnumerable<SkiaControl> children,
             SKRect rectForChildrenPixels,
             float scale)
@@ -4338,6 +4341,22 @@ namespace DrawnUi.Draw
                 {
                     var hasHorizontalFill = child.NeedFillHorizontally;
                     var hasVerticalFill = child.NeedFillVertically;
+
+                    bool remeasureX = false, remeasureY = false;
+                    if (hasHorizontalFill)
+                    {
+                        remeasureX = child.MeasuredSize.Pixels.Width != rectForChildrenPixels.Width;
+                    }
+
+                    if (hasVerticalFill)
+                    {
+                        remeasureY = child.MeasuredSize.Pixels.Height != rectForChildrenPixels.Height;
+                    }
+
+                    if (!remeasureX && !remeasureY)
+                    {
+                        continue;
+                    }
 
                     var provideWidth = hasHorizontalFill
                         ? (NeedAutoWidth && maxWidth >= 0 ? maxWidth : rectForChildrenPixels.Width)
@@ -5142,63 +5161,70 @@ namespace DrawnUi.Draw
             //for the double buffering case it's safer to delay
             Tasks.StartDelayed(DisposalDelay, () =>
             {
-                // Execute all cleanup actions
-                foreach (var action in ExecuteUponDisposal.Values)
+                try
                 {
-                    action?.Invoke();
+                    // Execute all cleanup actions
+                    foreach (var action in ExecuteUponDisposal.Values)
+                    {
+                        action?.Invoke();
+                    }
+
+                    ExecuteUponDisposal.Clear();
+
+                    RenderObject = null;
+
+                    PaintSystem?.Dispose();
+
+                    _lastAnimatorManager = null;
+
+                    DisposeChildren();
+
+                    RenderTree?.Clear();
+
+                    GestureListeners?.Clear();
+
+                    VisualEffects?.Clear();
+
+                    OnDisposing();
+
+                    Parent = null;
+
+                    Superview = null;
+
+                    LastGradient?.Dispose();
+                    LastGradient = null;
+
+                    LastShadow?.Dispose();
+                    LastShadow = null;
+
+                    CustomizeLayerPaint = null;
+
+                    var kill2 = RenderObjectPreparing;
+                    RenderObjectPreparing = null;
+                    kill2?.Dispose();
+
+                    clipPreviousCachePath?.Dispose();
+                    PaintErase?.Dispose();
+
+                    var kill3 = RenderObjectPrevious;
+                    RenderObjectPrevious = null;
+                    kill3?.Dispose();
+
+                    _paintWithOpacity?.Dispose();
+                    _paintWithEffects?.Dispose();
+                    _preparedClipBounds?.Dispose();
+
+                    EffectColorFilter = null;
+                    EffectImageFilter = null;
+                    EffectRenderers = null;
+                    EffectsState = null;
+                    EffectsGestureProcessors = null;
+                    EffectPostRenderer = null;
                 }
-
-                ExecuteUponDisposal.Clear();
-
-                RenderObject = null;
-
-                PaintSystem?.Dispose();
-
-                _lastAnimatorManager = null;
-
-                DisposeChildren();
-
-                RenderTree?.Clear();
-
-                GestureListeners?.Clear();
-
-                VisualEffects?.Clear();
-
-                OnDisposing();
-
-                Parent = null;
-
-                Superview = null;
-
-                LastGradient?.Dispose();
-                LastGradient = null;
-
-                LastShadow?.Dispose();
-                LastShadow = null;
-
-                CustomizeLayerPaint = null;
-
-                var kill2 = RenderObjectPreparing;
-                RenderObjectPreparing = null;
-                kill2?.Dispose();
-
-                clipPreviousCachePath?.Dispose();
-                PaintErase?.Dispose();
-
-                var kill3 = RenderObjectPrevious;
-                RenderObjectPrevious = null;
-                kill3?.Dispose();
-
-                _paintWithOpacity?.Dispose();
-                _paintWithEffects?.Dispose();
-                _preparedClipBounds?.Dispose();
-
-                EffectColorFilter = null;
-                EffectImageFilter = null;
-                EffectRenderers = null;
-                EffectsState = null;
-                EffectsGestureProcessors = null;
-                EffectPostRenderer = null;
+                catch (Exception e)
+                {
+                    Super.Log(e);
+                }
             });
         }
 
@@ -6410,10 +6436,47 @@ namespace DrawnUi.Draw
             get { return ClipEffects; }
         }
 
+        private float independetScale = -1;
+
         /// <summary>
         /// Will not invalidate the measurement of parent if True
         /// </summary>
-        public virtual bool IsParentIndependent { get; set; }
+        bool _isParentIndependent;
+        long useParentIndependent;
+
+        public bool IsParentIndependent
+        {
+            get
+            {
+                if (_isParentIndependent)
+                {
+                    if (independetScale != RenderingScale)
+                    {
+                        useParentIndependent = 0;
+                        independetScale = RenderingScale;
+                        return false;
+                    }
+
+                    useParentIndependent++;
+
+                    if (useParentIndependent < 3)
+                    {
+                        return false;
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                if (_isParentIndependent != value)
+                {
+                    _isParentIndependent = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         /// <summary>
         /// Will not call Update on Parent if True

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
     x:Class="MauiApp8.ReproEditors"
@@ -16,16 +16,21 @@
                 HorizontalOptions="Fill"
                 RowDefinitions="32,*"
                 RowSpacing="10">
+
                 <draw:SkiaMauiEntry
-                    BackgroundColor="LightGray"
+                    BackgroundColor="Transparent"
                     HorizontalOptions="Fill"
+                    PlaceholderText="Enter text.."
                     TextColor="Black"
                     VerticalOptions="Fill" />
+
                 <draw:SkiaMauiEditor
                     Grid.Row="1"
                     BackgroundColor="Bisque"
                     HorizontalOptions="Fill"
+                    PlaceholderText="Enter text.."
                     VerticalOptions="Fill" />
+
             </draw:GridLayout>
         </draw:Canvas>
     </VerticalStackLayout>

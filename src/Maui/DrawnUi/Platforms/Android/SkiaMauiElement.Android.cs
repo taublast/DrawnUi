@@ -58,7 +58,10 @@ public partial class SkiaMauiElement
         NativeInvalidated = true;
         if (Element != null)
         {
-            MainThread.BeginInvokeOnMainThread(() => { LayoutNativeView(Element); });
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                LayoutNativeView(Element);
+            });
         }
     }
 
@@ -94,6 +97,8 @@ public partial class SkiaMauiElement
                     (int)(locationY + VisualTransformNative.Rect.Height - this.Padding.Bottom * RenderingScale));
 
                 ArrangedAt = VisualTransformNative.Rect.Location;
+
+                //nativeView.Invalidate();
             }
 
             if (!WasRendered)
@@ -149,7 +154,7 @@ public partial class SkiaMauiElement
                     {
                         //create handler
                         var childHandler = element.ToHandler(handler.MauiContext);
-                        LayoutNativeView(Element);
+                        //LayoutNativeView(Element);
                     }
                     catch (Exception e)
                     {
