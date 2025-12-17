@@ -97,6 +97,8 @@ public partial class SkiaMauiElement
                     (int)(locationY + VisualTransformNative.Rect.Height - this.Padding.Bottom * RenderingScale));
 
                 ArrangedAt = VisualTransformNative.Rect.Location;
+
+                //nativeView.Invalidate();
             }
 
             if (!WasRendered)

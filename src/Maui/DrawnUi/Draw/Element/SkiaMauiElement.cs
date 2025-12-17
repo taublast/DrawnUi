@@ -31,19 +31,6 @@
                 Element.BindingContext = this.BindingContext;
         }
 
-        public override bool NeedMeasure
-        {
-            get
-            {
-                return base.NeedMeasure;
-            }
-            set
-            {
-                //Debug.WriteLine($"[SkiaMauiElement] NeedMeasure {value}");
-                base.NeedMeasure = value;
-            }
-        }
-
         public override ScaledSize MeasureAbsolute(SKRect rectForChildrenPixels, float scale)
         {
             try
@@ -63,6 +50,7 @@
             catch (Exception e)
             {
                 Super.Log(e);
+                InvalidateMeasure();
             }
 
             return ScaledSize.Default;
@@ -284,13 +272,18 @@
         /// </summary>
         public override void OnChildAdded(SkiaControl child)
         {
+            CheckChildAdded();
+
+            base.OnChildAdded(child);
+        }
+
+        protected virtual void CheckChildAdded()
+        {
             if (this.Views.Count > 0)
             {
                 throw new Exception(
                     "SkiaMauiElement cannot have SkiaControl subviews. Please use Content property of type VisualElement.");
             }
-
-            base.OnChildAdded(child);
         }
 
         public override void SuperViewChanged()
