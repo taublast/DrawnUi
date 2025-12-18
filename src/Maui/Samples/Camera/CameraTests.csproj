@@ -44,6 +44,7 @@
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <!--<EnableLLVM>True</EnableLLVM>-->
+
     <Optimize>True</Optimize>
     <!--<RunAOTCompilation>True</RunAOTCompilation>
     <PublishTrimmed>True</PublishTrimmed>

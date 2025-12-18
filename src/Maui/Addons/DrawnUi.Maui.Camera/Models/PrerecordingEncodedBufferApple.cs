@@ -1,21 +1,18 @@
-
 #if IOS || MACCATALYST
 using CoreMedia;
 #endif
+
+using System;
+using System.Linq;
 
 namespace DrawnUi.Camera
 {
     /// <summary>
     /// Two-buffer pre-recording system for H.264 encoded video frames.
     ///
-    /// Maintains two fixed-size byte[] buffers (~13.5 MB each) with automatic rotation.
-    /// When one buffer exceeds PreRecordDuration, swaps to the other buffer atomically.
-    /// Enables zero-drop pre-recording with minimal locking (~100ns per frame append).
-    ///
-    /// Memory efficiency:
-    /// - H.264 @ 1080p 30fps: ~75 KB/frame ? 150 frames/5s = ~11.25 MB
-    /// - Buffer size: 11.25 MB � 1.2 (IDR headroom) = ~13.5 MB per buffer
-    /// - Total: ~27 MB vs 1.245 GB uncompressed (46:1 compression!)
+    /// Maintains two byte buffers sized dynamically from target bitrate and retention window.
+    /// When data reaches the configured time horizon the buffers swap atomically, ensuring
+    /// pre-roll retention without dropping keyframes.
     /// </summary>
     public class PrerecordingEncodedBufferApple : IDisposable
     {
@@ -57,6 +54,11 @@ namespace DrawnUi.Camera
         private BufferState _stateA;
         private BufferState _stateB;
 
+        private const double HeadroomFactor = 1.3;
+        private const int MinBufferBytes = 4 * 1024 * 1024;   // 4 MB floor
+        private const int MaxBufferBytes = 512 * 1024 * 1024; // 512 MB guardrail
+        private int _bufferCapacity;
+
         // Frame metadata tracking (for reconstructing CMSampleBuffers)
         private readonly List<EncodedFrame> _frames = new();
 
@@ -71,16 +73,14 @@ namespace DrawnUi.Camera
         /// Initializes the two-buffer system with pre-allocated buffers.
         /// </summary>
         /// <param name="maxDuration">Maximum duration to maintain in buffer (e.g., 5 seconds)</param>
-        public PrerecordingEncodedBufferApple(TimeSpan maxDuration)
+        public PrerecordingEncodedBufferApple(TimeSpan maxDuration, long targetBitrateBitsPerSecond = 0)
         {
             _maxDuration = maxDuration == TimeSpan.Zero ? TimeSpan.FromSeconds(5) : maxDuration;
+            _bufferCapacity = CalculateInitialCapacity(_maxDuration, targetBitrateBitsPerSecond);
 
             // Pre-allocate both buffers (no GC during recording)
-            // 13.5 MB = 11.25 MB (5s @ 75KB/frame) + 20% IDR headroom
-            const int bufferSize = (int)(11.25 * 1024 * 1024 * 1.2);
-
-            _bufferA = new byte[bufferSize];
-            _bufferB = new byte[bufferSize];
+            _bufferA = new byte[_bufferCapacity];
+            _bufferB = new byte[_bufferCapacity];
 
             // Initialize buffer states
             _stateA = new BufferState
@@ -100,8 +100,64 @@ namespace DrawnUi.Camera
             };
 
             System.Diagnostics.Debug.WriteLine(
-                $"[PrerecordingEncodedBufferApple] Initialized: bufferSize={bufferSize / 1024 / 1024}MB, " +
+                $"[PrerecordingEncodedBufferApple] Initialized: bufferSize={_bufferCapacity / 1024 / 1024}MB, " +
                 $"maxDuration={maxDuration.TotalSeconds:F1}s");
+        }
+
+        private static int CalculateInitialCapacity(TimeSpan maxDuration, long targetBitrateBitsPerSecond)
+        {
+            double seconds = Math.Max(1d, maxDuration.TotalSeconds);
+            double fallbackBitrate = 12_000_000d; // 12 Mbps baseline if encoder bitrate unknown
+            double bitrate = targetBitrateBitsPerSecond > 0 ? targetBitrateBitsPerSecond : fallbackBitrate;
+            double bytesPerSecond = bitrate / 8d;
+            double estimatedBytes = bytesPerSecond * seconds * HeadroomFactor;
+            long bounded = (long)Math.Ceiling(estimatedBytes);
+
+            bounded = Math.Max(bounded, (long)MinBufferBytes);
+            bounded = Math.Min(bounded, (long)MaxBufferBytes);
+
+            if (bounded > int.MaxValue - 1)
+            {
+                bounded = int.MaxValue - 1;
+            }
+
+            return (int)bounded;
+        }
+
+        private void EnsureCapacity(int requiredBytes)
+        {
+            if (requiredBytes <= _bufferCapacity)
+                return;
+
+            int guard = Math.Min(int.MaxValue - 1, MaxBufferBytes);
+            if (requiredBytes > guard)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"[PrerecordingEncodedBufferApple] Frame payload {requiredBytes / 1024}KB exceeds guard limit of {guard / 1024}KB; dropping frame");
+                return;
+            }
+
+            long grown = Math.Max(requiredBytes, (long)Math.Ceiling(_bufferCapacity * 1.5));
+            int proposed = (int)Math.Min(Math.Max(grown, MinBufferBytes), guard);
+
+            var newA = new byte[proposed];
+            var newB = new byte[proposed];
+
+            if (_stateA.BytesUsed > 0)
+            {
+                Buffer.BlockCopy(_bufferA, 0, newA, 0, _stateA.BytesUsed);
+            }
+            if (_stateB.BytesUsed > 0)
+            {
+                Buffer.BlockCopy(_bufferB, 0, newB, 0, _stateB.BytesUsed);
+            }
+
+            _bufferA = newA;
+            _bufferB = newB;
+            _bufferCapacity = proposed;
+
+            System.Diagnostics.Debug.WriteLine(
+                $"[PrerecordingEncodedBufferApple] Resized buffers to {_bufferCapacity / 1024 / 1024}MB to fit {requiredBytes / 1024}KB frame payload");
         }
 
         /// <summary>
@@ -115,7 +171,7 @@ namespace DrawnUi.Camera
         /// <param name="nalUnits">H.264 NAL unit bytes</param>
         /// <param name="size">Size in bytes</param>
         /// <param name="timestamp">Frame presentation time (for duration calculation)</param>
-        public void AppendEncodedFrame(byte[] nalUnits, int size, TimeSpan timestamp)
+        public void AppendEncodedFrame(byte[] nalUnits, int size, TimeSpan timestamp, bool isKeyFrame = false)
         {
             if (_isDisposed || nalUnits == null || size == 0)
                 return;
@@ -181,11 +237,15 @@ namespace DrawnUi.Camera
                     currentState = ref nextState;
                 }
 
-                // Bounds check: drop frame if buffer full
+                // Ensure backing buffers large enough for this payload
+                int requiredBytes = currentState.BytesUsed + size;
+                EnsureCapacity(requiredBytes);
+                currentBuffer = _currentBuffer == 0 ? _bufferA : _bufferB;
+
                 if (currentState.BytesUsed + size > currentBuffer.Length)
                 {
                     System.Diagnostics.Debug.WriteLine(
-                        $"[PreRecording] Buffer full! Dropping frame. " +
+                        $"[PreRecording] Guard prevented buffer growth. Dropping frame. " +
                         $"BytesUsed={currentState.BytesUsed}, FrameSize={size}");
                     return;
                 }
@@ -197,7 +257,7 @@ namespace DrawnUi.Camera
                 currentState.FrameCount++;
 
                 // Detect if this is a keyframe (IDR frame)
-                bool isKeyFrame = IsKeyFrame(nalUnits, size);
+                bool detectedKeyFrame = isKeyFrame || IsKeyFrame(nalUnits, size);
 
                 // Store frame metadata
                 byte[] frameCopy = new byte[size];
@@ -207,7 +267,7 @@ namespace DrawnUi.Camera
                     Data = frameCopy,
                     Timestamp = timestamp,
                     AddedAt = DateTime.UtcNow,
-                    IsKeyFrame = isKeyFrame
+                    IsKeyFrame = detectedKeyFrame
                 });
 
             } // Lock released here
@@ -217,7 +277,7 @@ namespace DrawnUi.Camera
         /// <summary>
         /// iOS/MacCatalyst version with CMTime timing information
         /// </summary>
-        public void AppendEncodedFrame(byte[] nalUnits, int size, TimeSpan timestamp, CMTime presentationTime, CMTime duration)
+        public void AppendEncodedFrame(byte[] nalUnits, int size, TimeSpan timestamp, CMTime presentationTime, CMTime duration, bool isKeyFrame = false)
         {
             //System.Diagnostics.Debug.WriteLine($"[PreRecording] AppendEncodedFrame called: size={size}, timestamp={timestamp.TotalSeconds:F3}s, PTS={presentationTime.Seconds:F3}s");
 
@@ -301,11 +361,15 @@ namespace DrawnUi.Camera
                     currentState = ref nextState;
                 }
 
-                // Bounds check: drop frame if buffer full
+                // Ensure backing buffers large enough for this payload
+                int requiredBytes = currentState.BytesUsed + size;
+                EnsureCapacity(requiredBytes);
+                currentBuffer = _currentBuffer == 0 ? _bufferA : _bufferB;
+
                 if (currentState.BytesUsed + size > currentBuffer.Length)
                 {
                     System.Diagnostics.Debug.WriteLine(
-                        $"[PreRecording] Buffer full! Dropping frame. " +
+                        $"[PreRecording] Guard prevented buffer growth. Dropping frame. " +
                         $"BytesUsed={currentState.BytesUsed}, FrameSize={size}");
                     return;
                 }
@@ -317,7 +381,7 @@ namespace DrawnUi.Camera
 
                 // Detect if this is a keyframe (IDR frame) by checking H.264 NAL unit type
                 // NAL unit type is in bits 0-4 of first byte: type 5 = IDR (keyframe)
-                bool isKeyFrame = IsKeyFrame(nalUnits, size);
+                bool detectedKeyFrame = isKeyFrame || IsKeyFrame(nalUnits, size);
 
                 // Store frame metadata with timing
                 byte[] frameCopy = new byte[size];
@@ -331,7 +395,7 @@ namespace DrawnUi.Camera
                     PresentationTime = presentationTime,
                     Duration = duration,
                     AddedAt = DateTime.UtcNow,
-                    IsKeyFrame = isKeyFrame
+                    IsKeyFrame = detectedKeyFrame
                 });
                 int afterAdd = _frames.Count;
 
@@ -506,12 +570,18 @@ namespace DrawnUi.Camera
 
                 _frames.RemoveAll(f => f.Timestamp < cutoffTimestamp);
 
-                // CRITICAL: Ensure first frame is a keyframe after pruning
-                // H.264 video must start with an IDR frame or it will be undecodable
-                while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
+                bool hasKeyFrame = _frames.Any(f => f.IsKeyFrame);
+                if (hasKeyFrame)
                 {
-                    //System.Diagnostics.Debug.WriteLine($"[PreRecording] PruneToMaxDuration: First frame at {_frames[0].Timestamp.TotalSeconds:F3}s is not a keyframe, removing...");
-                    _frames.RemoveAt(0);
+                    // CRITICAL: Ensure first frame is a keyframe after pruning
+                    while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
+                    {
+                        _frames.RemoveAt(0);
+                    }
+                }
+                else if (_frames.Count > 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("[PreRecording] PruneToMaxDuration: No keyframes remain in window; keeping leading P-frame");
                 }
 
                 /*
@@ -563,28 +633,54 @@ namespace DrawnUi.Camera
             if (nalUnits == null || size < 5)
                 return false;
 
-            // H.264 NAL units: scan for IDR NAL unit (type 5)
-            // Format: 4-byte length + 1-byte NAL header + payload
-            // NAL header: forbidden_zero_bit(1) + nal_ref_idc(2) + nal_unit_type(5)
+            // Try length-prefixed (AVCC) layout first
             int offset = 0;
-            while (offset + 4 < size)
+            bool parsedLengthPrefixed = false;
+            while (offset + 4 <= size)
             {
-                // Read 4-byte network order length
                 int nalLength = (nalUnits[offset] << 24) | (nalUnits[offset + 1] << 16) |
                                 (nalUnits[offset + 2] << 8) | nalUnits[offset + 3];
-                offset += 4;
 
-                if (nalLength <= 0 || offset + nalLength > size)
-                    break; // Invalid NAL unit
+                if (nalLength <= 0)
+                    break;
 
-                // Check NAL unit type (bits 0-4 of first byte)
-                byte nalHeader = nalUnits[offset];
-                int nalType = nalHeader & 0x1F;
+                if (offset + 4 + nalLength > size)
+                    break;
 
-                if (nalType == 5) // IDR frame (keyframe)
+                parsedLengthPrefixed = true;
+                int nalHeaderIndex = offset + 4;
+                int nalType = nalUnits[nalHeaderIndex] & 0x1F;
+                if (nalType == 5)
                     return true;
 
-                offset += nalLength;
+                offset += 4 + nalLength;
+            }
+
+            if (parsedLengthPrefixed)
+                return false;
+
+            // Fallback to Annex-B start-code search
+            for (int i = 0; i < size - 4; i++)
+            {
+                if (nalUnits[i] != 0 || nalUnits[i + 1] != 0)
+                    continue;
+
+                int nalHeaderIndex = -1;
+                if (nalUnits[i + 2] == 1)
+                {
+                    nalHeaderIndex = i + 3;
+                }
+                else if (nalUnits[i + 2] == 0 && nalUnits[i + 3] == 1)
+                {
+                    nalHeaderIndex = i + 4;
+                }
+
+                if (nalHeaderIndex <= 0 || nalHeaderIndex >= size)
+                    continue;
+
+                int nalType = nalUnits[nalHeaderIndex] & 0x1F;
+                if (nalType == 5)
+                    return true;
             }
 
             return false;

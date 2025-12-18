@@ -61,6 +61,7 @@ namespace DrawnUi.Camera
         private VTCompressionSession _compressionSession;
         private PrerecordingEncodedBufferApple _preRecordingBuffer;
         private CMVideoFormatDescription _videoFormatDescription;
+        private long _targetBitRate;
 
         // Mirror-to-preview support
         private readonly object _previewLock = new();
@@ -127,7 +128,7 @@ namespace DrawnUi.Camera
 
                 // Initialize circular buffer for storing encoded frames
                 var preRecordDuration = ParentCamera.PreRecordDuration;
-                _preRecordingBuffer = new PrerecordingEncodedBufferApple(preRecordDuration);
+                _preRecordingBuffer = new PrerecordingEncodedBufferApple(preRecordDuration, _targetBitRate);
 
                 // CRITICAL: Start recording immediately to buffer frames
                 _isRecording = true;
@@ -227,6 +228,7 @@ namespace DrawnUi.Camera
 
             // Set bitrate
             int bitrate = _width * _height * _frameRate / 10;
+            _targetBitRate = Math.Max(1, bitrate);
             _compressionSession.SetProperty(
                 VTCompressionPropertyKey.AverageBitRate,
                 new NSNumber(bitrate));
@@ -234,6 +236,13 @@ namespace DrawnUi.Camera
             // Keyframe interval (1 per second)
             _compressionSession.SetProperty(
                 VTCompressionPropertyKey.MaxKeyFrameInterval,
+                new NSNumber(_frameRate));
+            _compressionSession.SetProperty(
+                VTCompressionPropertyKey.MaxKeyFrameIntervalDuration,
+                new NSNumber(1.0));
+
+            _compressionSession.SetProperty(
+                VTCompressionPropertyKey.ExpectedFrameRate,
                 new NSNumber(_frameRate));
 
             // Disable B-frames
