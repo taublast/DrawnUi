@@ -320,10 +320,10 @@ namespace DrawnUi.Camera
                 var timestamp = TimeSpan.FromSeconds(presentationTime.Seconds);
 
                 // Log first few frames for diagnostics
-                if (_preRecordingBuffer.GetFrameCount() < 3)
-                {
-                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Buffering frame #{_preRecordingBuffer.GetFrameCount() + 1}: PTS={presentationTime.Seconds:F3}s, Duration={duration.Seconds:F3}s, Size={h264Data.Length} bytes");
-                }
+                //if (_preRecordingBuffer.GetFrameCount() < 3)
+                //{
+                //    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Buffering frame #{_preRecordingBuffer.GetFrameCount() + 1}: PTS={presentationTime.Seconds:F3}s, Duration={duration.Seconds:F3}s, Size={h264Data.Length} bytes");
+                //}
 
                 // Append to buffer with full timing info
                 _preRecordingBuffer.AppendEncodedFrame(h264Data, h264Data.Length, timestamp, presentationTime, duration);
