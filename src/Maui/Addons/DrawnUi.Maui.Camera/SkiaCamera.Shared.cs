@@ -2195,8 +2195,10 @@ public partial class SkiaCamera : SkiaControl
 
     protected virtual SKImage AquireFrameFromNative()
     {
-        // If we are recording and not mirroring encoder frames to preview, suppress raw preview updates
-        if (IsRecordingVideo && !UseRecordingFramesForPreview)
+        // If using capture video encoder and not mirroring to preview, suppress raw camera frames
+        // This ONLY applies when we actually have an encoder providing processed frames
+        // When using native recording (_captureVideoEncoder == null), raw frames should always be shown
+        if (IsRecordingVideo && _captureVideoEncoder != null && !UseRecordingFramesForPreview)
             return null;
 
 #if WINDOWS
