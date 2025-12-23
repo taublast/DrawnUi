@@ -805,48 +805,139 @@ public partial class SkiaCamera : SkiaControl
             // GPU path on Apple: draw via Skia into VideoToolbox encoder's pixel buffer
             if (_captureVideoEncoder is DrawnUi.Camera.AppleVideoToolboxEncoder appleEnc)
             {
-                using var previewImage = NativeControl?.GetPreviewImage();
-                if (previewImage == null)
+                SKImage imageToDraw = null;
+                bool shouldDisposeImage = true;
+                int imageRotation = 0;
+                bool imageFlip = false;
+
+                // Try to get raw frame (faster)
+                if (NativeControl is NativeCamera nativeCam)
+                {
+                    var raw = nativeCam.GetRawPreviewImage();
+                    if (raw.Image != null)
+                    {
+                        imageToDraw = raw.Image;
+                        imageRotation = raw.Rotation;
+                        imageFlip = raw.Flip;
+                    }
+                }
+
+                // Fallback to standard preview image (slower, already rotated)
+                if (imageToDraw == null)
+                {
+                    imageToDraw = NativeControl?.GetPreviewImage();
+                    // GetPreviewImage returns already rotated image
+                }
+
+                if (imageToDraw == null)
                 {
                     Debug.WriteLine("[CaptureFrame] No preview image available from camera");
                     return;
                 }
 
-                using (appleEnc.BeginFrame(elapsed, out var canvas, out var info, DeviceRotation))
+                try
                 {
-                    var __rectsA = GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
-
-                    canvas.DrawImage(previewImage, __rectsA.src, __rectsA.dst);
-
-                    if (FrameProcessor != null || VideoDiagnosticsOn)
+                    using (appleEnc.BeginFrame(elapsed, out var canvas, out var info, DeviceRotation))
                     {
-                        // Apply rotation based on device orientation
-                        var rotation = GetActiveRecordingRotation();
-                        var checkpoint = canvas.Save();
-                        ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
-
-                        var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
-                        var frame = new DrawableFrame
+                        // If we have raw image, we need to handle rotation here
+                        if (imageRotation != 0 || imageFlip)
                         {
-                            Width = frameWidth,
-                            Height = frameHeight,
-                            Canvas = canvas,
-                            Time = elapsed
-                        };
-                        FrameProcessor?.Invoke(frame);
+                            canvas.Save();
 
-                        if (VideoDiagnosticsOn)
-                            DrawDiagnostics(canvas, info.Width, info.Height);
+                            // Apply transform to match HandleOrientationForPreview
+                            switch (imageRotation)
+                            {
+                                case 90:
+                                    canvas.Translate(info.Width, 0);
+                                    canvas.RotateDegrees(90);
+                                    if (imageFlip)
+                                    {
+                                        canvas.Scale(1, -1);
+                                        canvas.Translate(0, -imageToDraw.Height);
+                                    }
+                                    break;
+                                case 180:
+                                    canvas.Translate(info.Width, info.Height);
+                                    canvas.RotateDegrees(180);
+                                    if (imageFlip)
+                                    {
+                                        canvas.Scale(1, -1);
+                                        canvas.Translate(0, -imageToDraw.Height);
+                                    }
+                                    break;
+                                case 270:
+                                    canvas.Translate(0, info.Height);
+                                    canvas.RotateDegrees(270);
+                                    if (imageFlip)
+                                    {
+                                        canvas.Scale(1, -1);
+                                        canvas.Translate(0, -imageToDraw.Height);
+                                    }
+                                    break;
+                                default:
+                                    if (imageFlip)
+                                    {
+                                        canvas.Translate(0, info.Height);
+                                        canvas.Scale(1, -1);
+                                    }
+                                    break;
+                            }
 
-                        canvas.RestoreToCount(checkpoint);
+                            // Calculate virtual canvas size (swapped if 90/270)
+                            int virtualW = info.Width;
+                            int virtualH = info.Height;
+                            if (imageRotation == 90 || imageRotation == 270)
+                            {
+                                virtualW = info.Height;
+                                virtualH = info.Width;
+                            }
+
+                            var __rectsA = GetAspectFillRects(imageToDraw.Width, imageToDraw.Height, virtualW, virtualH);
+                            canvas.DrawImage(imageToDraw, __rectsA.src, __rectsA.dst);
+
+                            canvas.Restore();
+                        }
+                        else
+                        {
+                            var __rectsA = GetAspectFillRects(imageToDraw.Width, imageToDraw.Height, info.Width, info.Height);
+                            canvas.DrawImage(imageToDraw, __rectsA.src, __rectsA.dst);
+                        }
+
+                        if (FrameProcessor != null || VideoDiagnosticsOn)
+                        {
+                            // Apply rotation based on device orientation
+                            var rotation = GetActiveRecordingRotation();
+                            var checkpoint = canvas.Save();
+                            ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+
+                            var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                            var frame = new DrawableFrame
+                            {
+                                Width = frameWidth,
+                                Height = frameHeight,
+                                Canvas = canvas,
+                                Time = elapsed
+                            };
+                            FrameProcessor?.Invoke(frame);
+
+                            if (VideoDiagnosticsOn)
+                                DrawDiagnostics(canvas, info.Width, info.Height);
+
+                            canvas.RestoreToCount(checkpoint);
+                        }
                     }
-                }
 
-                var __swA = System.Diagnostics.Stopwatch.StartNew();
-                await appleEnc.SubmitFrameAsync();
-                __swA.Stop();
-                _diagLastSubmitMs = __swA.Elapsed.TotalMilliseconds;
-                System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                    var __swA = System.Diagnostics.Stopwatch.StartNew();
+                    await appleEnc.SubmitFrameAsync();
+                    __swA.Stop();
+                    _diagLastSubmitMs = __swA.Elapsed.TotalMilliseconds;
+                    System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                }
+                finally
+                {
+                    if (shouldDisposeImage)
+                        imageToDraw?.Dispose();
+                }
                 return;
             }
 #endif

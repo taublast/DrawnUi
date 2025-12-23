@@ -247,6 +247,41 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                     videoDevice.ActiveFormat = format;
 
+                    // Set FPS if video mode
+                    if (FormsControl.CaptureMode == CaptureModeType.Video && FormsControl.VideoQuality != VideoQuality.Manual)
+                    {
+                        double targetFps = 30.0;
+                        if (FormsControl.VideoQuality == VideoQuality.High || FormsControl.VideoQuality == VideoQuality.Ultra)
+                        {
+                            targetFps = 60.0;
+                        }
+                        
+                        // Check if format supports this FPS
+                        bool supported = false;
+                        foreach(var range in format.VideoSupportedFrameRateRanges)
+                        {
+                            if (Math.Abs(range.MaxFrameRate - targetFps) < 0.1)
+                            {
+                                supported = true;
+                                break;
+                            }
+                        }
+                        
+                        if (supported)
+                        {
+                            try
+                            {
+                                videoDevice.ActiveVideoMinFrameDuration = new CMTime(1, (int)targetFps);
+                                videoDevice.ActiveVideoMaxFrameDuration = new CMTime(1, (int)targetFps);
+                                Console.WriteLine($"[NativeCameraiOS] Set FPS to {targetFps}");
+                            }
+                            catch(Exception e)
+                            {
+                                Console.WriteLine($"[NativeCameraiOS] Failed to set FPS: {e.Message}");
+                            }
+                        }
+                    }
+
                     // Ensure exposure is set to continuous auto exposure during setup
                     if (videoDevice.IsExposureModeSupported(AVCaptureExposureMode.ContinuousAutoExposure))
                     {
@@ -450,11 +485,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         // limit preview size for performance
         var videoPixels = width * height;
 
-        var maxVideoPixels = 1024 * 768;
-        if (DeviceInfo.Idiom != DeviceIdiom.Phone)
-        {
-            maxVideoPixels = 1920 * 1080;
-        }
+        // With optimized pipeline we can allow 1080p on phones too
+        var maxVideoPixels = 1920 * 1080; 
 
         if (videoPixels > maxVideoPixels)
             return false;
@@ -610,15 +642,50 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
         double targetAR = targetH > 0 ? (double)targetW / targetH : 16.0 / 9.0;
 
+        // Determine target FPS
+        double targetFps = 30.0;
+        if (FormsControl.VideoQuality == VideoQuality.High || FormsControl.VideoQuality == VideoQuality.Ultra)
+        {
+            targetFps = 60.0;
+        }
+
         var best = formatDetails
-            .Select(d => new { d, ar = d.VideoDims.Height > 0 ? (double)d.VideoDims.Width / d.VideoDims.Height : 0.0 })
-            .OrderBy(x => Math.Abs(x.ar - targetAR))
-            .ThenByDescending(x => x.d.VideoDims.Width * x.d.VideoDims.Height)
+            .Select(d => new { 
+                d, 
+                ar = d.VideoDims.Height > 0 ? (double)d.VideoDims.Width / d.VideoDims.Height : 0.0,
+                maxFps = GetMaxFps(d.Format),
+                supportsTargetFps = SupportsFps(d.Format, targetFps)
+            })
+            .OrderBy(x => Math.Abs(x.ar - targetAR)) // 1. Aspect Ratio
+            .ThenByDescending(x => x.supportsTargetFps) // 2. Must support target FPS
+            .ThenBy(x => Math.Abs((x.d.VideoDims.Width * x.d.VideoDims.Height) - (targetW * targetH))) // 3. Closest Resolution to Target
+            .ThenBy(x => Math.Abs(x.maxFps - targetFps)) // 4. Closest Max FPS (prefer 60 over 240 for 60 target)
             .FirstOrDefault();
 
         var chosen = best?.d.Format ?? availableFormats.First();
-        Console.WriteLine($"[NativeCameraiOS] Selected format for video aspect {targetW}x{targetH}: Video {best?.d.VideoDims.Width}x{best?.d.VideoDims.Height}");
+        Debug.WriteLine($"[NativeCameraiOS] Selected format for video aspect {targetW}x{targetH}: Video {best?.d.VideoDims.Width}x{best?.d.VideoDims.Height} @ {best?.maxFps}fps (Supports {targetFps}: {best?.supportsTargetFps})");
         return chosen;
+    }
+
+    private bool SupportsFps(AVCaptureDeviceFormat format, double targetFps)
+    {
+        foreach(var range in format.VideoSupportedFrameRateRanges)
+        {
+            // Check if targetFps is within range (with small epsilon for float comparison)
+            if (range.MinFrameRate <= targetFps + 0.1 && range.MaxFrameRate >= targetFps - 0.1)
+                return true;
+        }
+        return false;
+    }
+
+    private double GetMaxFps(AVCaptureDeviceFormat format)
+    {
+        double max = 0;
+        foreach(var range in format.VideoSupportedFrameRateRanges)
+        {
+            if (range.MaxFrameRate > max) max = range.MaxFrameRate;
+        }
+        return max;
     }
 
     /// <summary>
@@ -1201,6 +1268,32 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         });
     }
 
+
+    public (SKImage Image, int Rotation, bool Flip) GetRawPreviewImage()
+    {
+        lock (_lockRawFrame)
+        {
+            if (_latestRawFrame == null)
+                return (null, 0, false);
+
+            try
+            {
+                var info = new SKImageInfo(_latestRawFrame.Width, _latestRawFrame.Height, SKColorType.Bgra8888, SKAlphaType.Premul);
+                
+                // Create a copy of the pixel data to be safe and independent
+                // This is faster than GetPreviewImage which does rotation/drawing
+                using var data = SKData.CreateCopy(_latestRawFrame.PixelData);
+                var image = SKImage.FromPixels(info, data, _latestRawFrame.BytesPerRow);
+                
+                return (image, (int)_latestRawFrame.CurrentRotation, _latestRawFrame.Facing == CameraPosition.Selfie);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"[NativeCameraiOS] GetRawPreviewImage error: {e}");
+                return (null, 0, false);
+            }
+        }
+    }
 
     public SKImage GetPreviewImage()
     {
@@ -1939,6 +2032,32 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     {
         try
         {
+            // 1. Try to return actual active format if camera is running
+            if (CaptureDevice?.ActiveFormat != null)
+            {
+                int activeFps = 30;
+                if (CaptureDevice.ActiveVideoMinFrameDuration.Value > 0)
+                {
+                    activeFps = (int)(CaptureDevice.ActiveVideoMinFrameDuration.TimeScale / CaptureDevice.ActiveVideoMinFrameDuration.Value);
+                }
+
+                var desc = CaptureDevice.ActiveFormat.FormatDescription as CMVideoFormatDescription;
+                if (desc != null)
+                {
+                    var dims = desc.Dimensions;
+                    Debug.WriteLine($"[NativeCamera.Apple] GetCurrentVideoFormat: Returning ACTIVE format {dims.Width}x{dims.Height}@{activeFps}");
+                    return new VideoFormat
+                    {
+                        Width = dims.Width,
+                        Height = dims.Height,
+                        FrameRate = activeFps,
+                        Codec = "H.264",
+                        BitRate = 8_000_000, // Estimate or placeholder
+                        FormatId = $"Active_{dims.Width}x{dims.Height}@{activeFps}"
+                    };
+                }
+            }
+
             var quality = FormsControl.VideoQuality;
 
             // Manual mode: use VideoFormatIndex to select from predefined formats
@@ -1968,15 +2087,41 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 _ => (width: 1920, height: 1080)
             };
 
+            // Determine target FPS
+            int targetFps = 30;
+            if (quality == VideoQuality.High || quality == VideoQuality.Ultra)
+            {
+                targetFps = 60;
+            }
+
             var bestFormat = availableFormats
                 .OrderBy(f => Math.Abs((f.Width * f.Height) - (targetResolution.width * targetResolution.height)))
+                .ThenBy(f => Math.Abs(f.FrameRate - targetFps)) // Prefer closest FPS (60 vs 240 -> 60 wins)
                 .ThenByDescending(f => f.FrameRate)
                 .FirstOrDefault();
 
             if (bestFormat != null)
             {
-                Debug.WriteLine($"[NativeCamera.Apple] GetCurrentVideoFormat: {quality} quality -> {bestFormat.Width}x{bestFormat.Height}@{bestFormat.FrameRate}");
-                return bestFormat;
+                // Clamp reported FPS to target if the format supports higher
+                // This reflects that we will limit the FPS in ConfigureSession
+                var reportedFps = bestFormat.FrameRate;
+                if (reportedFps > targetFps)
+                {
+                    reportedFps = targetFps;
+                }
+
+                Debug.WriteLine($"[NativeCamera.Apple] GetCurrentVideoFormat: {quality} quality -> {bestFormat.Width}x{bestFormat.Height}@{reportedFps} (Base: {bestFormat.FrameRate})");
+                
+                // Return a copy with adjusted FPS
+                return new VideoFormat 
+                { 
+                    Width = bestFormat.Width, 
+                    Height = bestFormat.Height, 
+                    FrameRate = reportedFps, 
+                    Codec = bestFormat.Codec, 
+                    BitRate = bestFormat.BitRate, 
+                    FormatId = bestFormat.FormatId 
+                };
             }
         }
         catch (Exception ex)

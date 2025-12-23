@@ -699,6 +699,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     // Video recording fields
     private bool _isRecordingVideo;
     private MediaRecorder _mediaRecorder;
+    private int _recordingFps = 30;
     private string _currentVideoFile;
     private DateTime _recordingStartTime;
     private System.Threading.Timer _progressTimer;
@@ -2341,14 +2342,74 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 break;
         }
 
+        CamcorderProfile profile = null;
         foreach (var q in tryOrder)
         {
             if (CamcorderProfile.HasProfile(cameraId, q))
-                return CamcorderProfile.Get(cameraId, q);
+            {
+                profile = CamcorderProfile.Get(cameraId, q);
+                break;
+            }
         }
 
-        // Last resort
-        return CamcorderProfile.Get(cameraId, CamcorderQuality.Low);
+        if (profile == null)
+        {
+            // Last resort
+            if (CamcorderProfile.HasProfile(cameraId, CamcorderQuality.High))
+                profile = CamcorderProfile.Get(cameraId, CamcorderQuality.High);
+            else
+                profile = CamcorderProfile.Get(cameraId, CamcorderQuality.Low);
+        }
+
+        // Apply FPS preference
+        if (quality != VideoQuality.Manual)
+        {
+            int targetFps = 30;
+            if (quality == VideoQuality.High || quality == VideoQuality.Ultra)
+            {
+                targetFps = 60;
+            }
+
+            // Check if camera supports this FPS
+            int bestFps = GetBestSupportedFps(cameraId, targetFps);
+            if (bestFps > 0)
+            {
+                profile.VideoFrameRate = bestFps;
+            }
+        }
+
+        _recordingFps = profile.VideoFrameRate;
+
+        return profile;
+    }
+
+    private int GetBestSupportedFps(int cameraId, int targetFps)
+    {
+        try
+        {
+            var activity = Platform.CurrentActivity;
+            var manager = (CameraManager)activity.GetSystemService(Context.CameraService);
+            var characteristics = manager.GetCameraCharacteristics(cameraId.ToString());
+
+            var ranges = characteristics.Get(CameraCharacteristics.ControlAeAvailableTargetFpsRanges).ToArray<Android.Util.Range>();
+
+            // Find range that contains targetFps as upper bound
+            // We prefer fixed frame rate, e.g. [30, 30] or [60, 60]
+            // But [30, 60] is also fine for 60fps.
+
+            // First check for exact match on upper bound
+            var exactMatch = ranges.FirstOrDefault(r => (int)r.Upper == targetFps);
+            if (exactMatch != null) return targetFps;
+
+            // If not found, find closest upper bound
+            var closest = ranges.OrderBy(r => Math.Abs((int)r.Upper - targetFps)).First();
+            return (int)closest.Upper;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCameraAndroid] Error checking FPS: {ex.Message}");
+            return 0; // Keep default
+        }
     }
 
     /// <summary>
@@ -2528,6 +2589,34 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             mPreviewRequestBuilder.AddTarget(mImageReaderPreview.Surface);
             mPreviewRequestBuilder.AddTarget(recorderSurface);
+
+            // Set FPS range
+            try
+            {
+                var activity = Platform.CurrentActivity;
+                var manager = (CameraManager)activity.GetSystemService(Context.CameraService);
+                var characteristics = manager.GetCameraCharacteristics(CameraId);
+                var ranges = characteristics.Get(CameraCharacteristics.ControlAeAvailableTargetFpsRanges).ToArray<Android.Util.Range>();
+                
+                // Find best range for _recordingFps
+                // Prefer fixed range [fps, fps]
+                var bestRange = ranges.FirstOrDefault(r => (int)r.Lower == _recordingFps && (int)r.Upper == _recordingFps);
+                if (bestRange == null)
+                {
+                    // Fallback to variable range ending at fps
+                    bestRange = ranges.FirstOrDefault(r => (int)r.Upper == _recordingFps);
+                }
+                
+                if (bestRange != null)
+                {
+                    mPreviewRequestBuilder.Set(CaptureRequest.ControlAeTargetFpsRange, bestRange);
+                    Debug.WriteLine($"[NativeCameraAndroid] Set recording FPS range: {bestRange}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[NativeCameraAndroid] Error setting recording FPS range: {ex.Message}");
+            }
 
             // Configure flash for video recording
             if (mFlashSupported)

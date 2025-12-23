@@ -1870,16 +1870,24 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             // Target resolutions for each quality level
             var targetResolution = quality switch
             {
-                VideoQuality.Low => (width: 1280, height: 720),      // 720p
-                VideoQuality.Standard => (width: 1920, height: 1080), // 1080p
+                VideoQuality.Low => (width: 640, height: 480),        // 480p
+                VideoQuality.Standard => (width: 1280, height: 720),  // 720p
                 VideoQuality.High => (width: 1920, height: 1080),     // 1080p
                 VideoQuality.Ultra => (width: 3840, height: 2160),    // 4K
                 _ => (width: 1920, height: 1080)
             };
 
+            // Target FPS
+            int targetFps = 30;
+            if (quality == VideoQuality.High || quality == VideoQuality.Ultra)
+            {
+                targetFps = 60;
+            }
+
             // Find closest match from available formats
             var bestFormat = availableFormats
                 .OrderBy(f => Math.Abs((f.Width * f.Height) - (targetResolution.width * targetResolution.height)))
+                .ThenBy(f => Math.Abs(f.FrameRate - targetFps))
                 .ThenByDescending(f => f.FrameRate)
                 .FirstOrDefault();
 
@@ -1900,7 +1908,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 // Fallback to hardcoded preset if no formats available
                 profile = quality switch
                 {
-                    VideoQuality.Low => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD720p),
+                    VideoQuality.Low => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.Vga),
+                    VideoQuality.Standard => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD720p),
                     VideoQuality.Ultra => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.Uhd2160p),
                     _ => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p)
                 };
