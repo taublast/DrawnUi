@@ -476,10 +476,23 @@ public partial class SkiaCamera
     public async Task<bool> RequestPermissions()
     {
         var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
+        if (status == PermissionStatus.Granted && this.CaptureMode == CaptureModeType.Video)
+        {
+            status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+        }
         return status == PermissionStatus.Granted;
     }
 
-
+    /// <summary>
+    /// Request Photos library access up front so saving does not trigger a late system prompt.
+    /// Call on UI thread only.
+    /// </summary>
+    public async Task<bool> RequestGalleryPermissions()
+    {
+        // Photos AddOnly (iOS 14+) returns Authorized or Limited when the user allows adding media
+        var authStatus = await Photos.PHPhotoLibrary.RequestAuthorizationAsync(Photos.PHAccessLevel.ReadWrite);
+        return authStatus == Photos.PHAuthorizationStatus.Authorized || authStatus == Photos.PHAuthorizationStatus.Limited;
+    }
 
 
     //public SKBitmap GetPreviewBitmap()

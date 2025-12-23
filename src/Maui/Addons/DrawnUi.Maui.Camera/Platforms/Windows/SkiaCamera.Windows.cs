@@ -231,6 +231,21 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
+    /// Request gallery/media write permissions so saving captures succeeds without later prompts.
+    /// Call on UI thread only.
+    /// </summary>
+    public async Task<bool> RequestGalleryPermissions()
+    {
+        var status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+        if (status != PermissionStatus.Granted)
+        {
+            status = await Permissions.RequestAsync<Permissions.StorageWrite>();
+        }
+
+        return status == PermissionStatus.Granted;
+    }
+
+    /// <summary>
     /// Mux pre-recorded and live video files using Windows Media Foundation APIs.
     /// NO FFmpeg - Windows native APIs only.
     /// </summary>

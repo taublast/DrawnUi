@@ -1009,7 +1009,7 @@ public partial class SkiaCamera : SkiaControl
             await Task.Delay(100);
 
             // Request Photos AddOnly authorization (iOS 14+); falls back to Authorized for earlier
-            var authStatus = await Photos.PHPhotoLibrary.RequestAuthorizationAsync(Photos.PHAccessLevel.AddOnly);
+            var authStatus = await Photos.PHPhotoLibrary.RequestAuthorizationAsync(Photos.PHAccessLevel.ReadWrite);
             if (authStatus != Photos.PHAuthorizationStatus.Authorized)
             {
                 Debug.WriteLine("[SkiaCamera] iOS Photos save error: not authorized (AddOnly)");

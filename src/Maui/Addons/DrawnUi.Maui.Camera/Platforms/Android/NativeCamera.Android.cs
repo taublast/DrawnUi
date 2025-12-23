@@ -458,7 +458,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         {
             if (Splines.Current != null)
                 Rendering.BlitWithLUT(rs, Splines.Renderer, Splines.Current.RendererLUT, image, output, rotation,
-                    Gamma);
+                    Gamma, false, false);
             else
                 Rendering.TestOutput(rs, output);
         }
@@ -466,20 +466,20 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         {
             if (Effect == CameraEffect.ColorNegativeManual)
             {
-                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, false, true);
+                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, false, true, false, false);
             }
             else if (Effect == CameraEffect.GrayscaleNegative)
             {
-                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, true, true);
+                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, true, true, false, false);
             }
             else if (Effect == CameraEffect.Grayscale)
             {
-                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, true, false);
+                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, true, false, false, false);
             }
             else
             {
                 //default, no effects
-                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, false, false);
+                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, false, false, false, false);
                 //Rendering.TestOutput(rs, output);
             }
         }

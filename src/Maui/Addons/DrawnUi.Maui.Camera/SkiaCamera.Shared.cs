@@ -2335,7 +2335,7 @@ public partial class SkiaCamera : SkiaControl
     /// </summary>
     /// <param name="granted">Action to invoke if permissions are granted</param>
     /// <param name="notGranted">Action to invoke if permissions are denied</param>
-    public static void CheckGalleryPermissions(Action granted, Action notGranted, bool avoidSpam=false)
+    public static void CheckGalleryPermissions(Action granted, Action notGranted, bool avoidSpam = false)
     {
         if (!avoidSpam || lastTimeChecked + TimeSpan.FromSeconds(5) < DateTime.Now) //avoid spam
         {
@@ -2349,25 +2349,49 @@ public partial class SkiaCamera : SkiaControl
                 bool okay1 = false;
 
                 ChecksBusy = true;
-                // Update the UI
                 try
                 {
+                    // Camera permission is still needed for capture
                     var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
                     if (status != PermissionStatus.Granted)
                     {
                         status = await Permissions.RequestAsync<Permissions.Camera>();
-
-                        if (status == PermissionStatus.Granted)
-                        {
-                            okay1 = true;
-                        }
                     }
-                    else
+
+                    if (status == PermissionStatus.Granted)
                     {
-                        okay1 = true;
+#if IOS || MACCATALYST
+                        var photoStatus = await Photos.PHPhotoLibrary.RequestAuthorizationAsync(Photos.PHAccessLevel.ReadWrite);
+                        okay1 = photoStatus == Photos.PHAuthorizationStatus.Authorized || photoStatus == Photos.PHAuthorizationStatus.Limited;
+#elif ANDROID
+                        if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Q)
+                        {
+                            // Scoped storage: request read access (maps to READ_MEDIA_* on API 33+)
+                            var readStatus = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+                            if (readStatus != PermissionStatus.Granted)
+                            {
+                                readStatus = await Permissions.RequestAsync<Permissions.StorageRead>();
+                            }
+                            okay1 = readStatus == PermissionStatus.Granted;
+                        }
+                        else
+                        {
+                            var writeStatus = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+                            if (writeStatus != PermissionStatus.Granted)
+                            {
+                                writeStatus = await Permissions.RequestAsync<Permissions.StorageWrite>();
+                            }
+                            okay1 = writeStatus == PermissionStatus.Granted;
+                        }
+#else
+                        var storageStatus = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+                        if (storageStatus != PermissionStatus.Granted)
+                        {
+                            storageStatus = await Permissions.RequestAsync<Permissions.StorageWrite>();
+                        }
+                        okay1 = storageStatus == PermissionStatus.Granted;
+#endif
                     }
-
-                    // Could prompt to enable in settings if needed
                 }
                 catch (Exception ex)
                 {

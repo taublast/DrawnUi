@@ -257,6 +257,34 @@ public partial class SkiaCamera
     }
 
     /// <summary>
+    /// Request gallery/media permissions proactively so Android does not prompt during save.
+    /// For Android 10+ (scoped storage) we request read access, for pre-10 we request legacy write.
+    /// </summary>
+    public async Task<bool> RequestGalleryPermissions()
+    {
+        // Android 10+ uses MediaStore scoped access; request read media on modern OS (Tiramisu+)
+        if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Q)
+        {
+            var readStatus = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+            if (readStatus != PermissionStatus.Granted)
+            {
+                readStatus = await Permissions.RequestAsync<Permissions.StorageRead>();
+            }
+
+            return readStatus == PermissionStatus.Granted;
+        }
+
+        // Legacy external storage write for Android 9 and below
+        var writeStatus = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+        if (writeStatus != PermissionStatus.Granted)
+        {
+            writeStatus = await Permissions.RequestAsync<Permissions.StorageWrite>();
+        }
+
+        return writeStatus == PermissionStatus.Granted;
+    }
+
+    /// <summary>
     /// Mux pre-recorded and live video files using MediaMuxer
     /// CRITICAL FIX: Must add ALL tracks from BOTH files BEFORE calling muxer.Start()
     /// </summary>

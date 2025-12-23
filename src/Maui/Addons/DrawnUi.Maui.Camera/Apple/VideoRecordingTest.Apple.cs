@@ -113,7 +113,7 @@ public static class AppleVideoRecordingTest
         try
         {
             // Test authorization check (don't actually request permission in test)
-            var currentStatus = PHPhotoLibrary.GetAuthorizationStatus(PHAccessLevel.AddOnly);
+            var currentStatus = PHPhotoLibrary.GetAuthorizationStatus(PHAccessLevel.ReadWrite);
             
             // Just verify we can check the status and access the PHPhotoLibrary
             var sharedLibrary = PHPhotoLibrary.SharedPhotoLibrary;
