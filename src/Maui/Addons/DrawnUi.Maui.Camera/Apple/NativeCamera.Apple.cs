@@ -2290,7 +2290,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 (3840, 2160) => ChoosePreset(AVCaptureSession.Preset3840x2160, AVCaptureSession.PresetHigh),
                 (1920, 1080) => ChoosePreset(AVCaptureSession.Preset1920x1080, AVCaptureSession.PresetHigh),
                 (1280, 720) => ChoosePreset(AVCaptureSession.Preset1280x720, AVCaptureSession.PresetHigh),
-                (640, 480) => ChoosePreset(AVCaptureSession.Preset640x480, AVCaptureSession.PresetLow),
+                (640, 480) => ChoosePreset(AVCaptureSession.Preset640x480, AVCaptureSession.PresetHigh),
                 _ => AVCaptureSession.PresetHigh
             };
 
@@ -2302,7 +2302,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         Debug.WriteLine($"[NativeCamera.Apple] {quality} quality -> using fallback preset");
         return quality switch
         {
-            VideoQuality.Low => (ChoosePreset(AVCaptureSession.Preset640x480, AVCaptureSession.PresetLow), CreateVideoSettings(640, 480, 30)),
+            VideoQuality.Low => (ChoosePreset(AVCaptureSession.Preset640x480, AVCaptureSession.PresetHigh), CreateVideoSettings(640, 480, 30)),
             VideoQuality.Standard => (ChoosePreset(AVCaptureSession.Preset1280x720, AVCaptureSession.PresetHigh), CreateVideoSettings(1280, 720, 30)),
             VideoQuality.High => (ChoosePreset(AVCaptureSession.Preset1920x1080, AVCaptureSession.PresetHigh), CreateVideoSettings(1920, 1080, 30)),
             VideoQuality.Ultra => (ChoosePreset(AVCaptureSession.Preset3840x2160, AVCaptureSession.PresetHigh), CreateVideoSettings(3840, 2160, 30)),
