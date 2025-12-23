@@ -5365,7 +5365,8 @@ namespace DrawnUi.Draw
 
             if (NeedToMeasureSelf())
             {
-                MeasureSelf(destination, widthRequest, heightRequest, scale);
+                //MeasureSelf(destination, widthRequest, heightRequest, scale);
+                MeasureSelf(destination, (float)WidthRequest, (float)HeightRequest, scale);
             }
             else
             {
@@ -6934,6 +6935,7 @@ namespace DrawnUi.Draw
                     DestroyRenderingObject();
                 }
                 NeedMeasure = true;
+                WasMeasured = false;
             }
             else
             {
