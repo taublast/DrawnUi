@@ -118,6 +118,27 @@ namespace DrawnUi.Views
 
         public const int EGL_FIXED_SIZE_ANGLE = 0x3201;
 
+        // ANGLE D3D11 texture client buffer extension (EGL_ANGLE_d3d_texture_client_buffer)
+        public const int EGL_D3D_TEXTURE_2D_ANGLE = 0x33A3;
+        public const int EGL_D3D_TEXTURE_ANGLE = 0x33A3;  // Alias
+        public const int EGL_TEXTURE_OFFSET_X_ANGLE = 0x3490;
+        public const int EGL_TEXTURE_OFFSET_Y_ANGLE = 0x3491;
+
+        // ANGLE device query extension (EGL_ANGLE_device_d3d)
+        public const int EGL_D3D11_DEVICE_ANGLE = 0x33A1;
+        public const int EGL_D3D9_DEVICE_ANGLE = 0x33A0;
+
+        // EGL device extension
+        public const int EGL_DEVICE_EXT = 0x322C;
+        public const int EGL_NO_DEVICE_EXT = 0;
+
+        // Texture target for pbuffer from client buffer
+        public const int EGL_TEXTURE_FORMAT = 0x3080;
+        public const int EGL_TEXTURE_TARGET = 0x3081;
+        public const int EGL_TEXTURE_RGBA = 0x305E;
+        public const int EGL_TEXTURE_2D = 0x305F;
+        public const int EGL_NO_TEXTURE = 0x305C;
+
         public const string EGLNativeWindowTypeProperty = "EGLNativeWindowTypeProperty";
         public const string EGLRenderSurfaceSizeProperty = "EGLRenderSurfaceSizeProperty";
         public const string EGLRenderResolutionScaleProperty = "EGLRenderResolutionScaleProperty";
@@ -158,6 +179,18 @@ namespace DrawnUi.Views
         public static extern EGLSurface eglCreatePbufferSurface(EGLDisplay dpy, EGLConfig config, int[] attrib_list);
         [DllImport(libEGL)]
         public static extern glbool eglSurfaceAttrib(EGLDisplay dpy, EGLSurface surface, int attribute, int value);
+
+        // ANGLE D3D11 texture client buffer - create EGL surface from D3D11 texture
+        [DllImport(libEGL)]
+        public static extern EGLSurface eglCreatePbufferFromClientBuffer(
+            EGLDisplay dpy, int buftype, IntPtr buffer, EGLConfig config, int[] attrib_list);
+
+        // ANGLE device query - get D3D11 device from EGL display
+        [DllImport(libEGL)]
+        public static extern glbool eglQueryDisplayAttribEXT(EGLDisplay dpy, int attribute, out IntPtr value);
+
+        [DllImport(libEGL)]
+        public static extern glbool eglQueryDeviceAttribEXT(IntPtr device, int attribute, out IntPtr value);
 
         #endregion
 
