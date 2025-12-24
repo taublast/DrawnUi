@@ -1085,6 +1085,12 @@ public int VideoFormatIndex { get; set; }         // Manual format index
 public bool UseCaptureVideoFlow { get; set; }     // Enable frame-by-frame capture mode
 public Action<DrawableFrame> FrameProcessor { get; set; } // Frame processing callback
 
+// Pre-Recording
+public bool EnablePreRecording { get; set; }      // Enable pre-recording buffer
+public TimeSpan PreRecordDuration { get; set; }   // Duration of pre-recording buffer (default: 5s)
+public bool IsPreRecording { get; }               // Pre-recording state (read-only)
+public TimeSpan LiveRecordingDuration { get; }    // Duration of current live recording (excluding buffer)
+
 // Zoom & Limits
 public double Zoom { get; set; }                  // Current zoom level
 public double ZoomLimitMin { get; set; }          // Minimum zoom
@@ -1113,7 +1119,7 @@ public void OpenFileInGallery(string filePath)               // Open file in sys
 
 // Video Recording Operations
 public async Task StartVideoRecording()                      // Start video recording
-public async Task StopVideoRecording()                       // Stop video recording
+public async Task StopVideoRecording()                       // Stop video recording (aborts if < 1s in pre-recording mode)
 public bool CanRecordVideo()                                 // Check recording support
 public async Task<List<VideoFormat>> GetAvailableVideoFormatsAsync()  // Get video formats
 public VideoFormat GetCurrentVideoFormat()                  // Current video format

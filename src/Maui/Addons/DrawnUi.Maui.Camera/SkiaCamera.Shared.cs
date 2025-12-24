@@ -138,6 +138,17 @@ public partial class SkiaCamera : SkiaControl
     /// <summary>
     /// Gets the current recording duration (if recording)
     /// </summary>
+    public TimeSpan LiveRecordingDuration
+    {
+        get
+        {
+            if (_captureVideoEncoder != null)
+            {
+                return _captureVideoEncoder.LiveRecordingDuration;
+            }
+            return TimeSpan.Zero;
+        }
+    }
 
     public static readonly BindableProperty RecordAudioProperty = BindableProperty.Create(
         nameof(RecordAudio),

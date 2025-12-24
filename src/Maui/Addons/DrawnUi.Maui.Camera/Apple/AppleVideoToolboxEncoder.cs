@@ -78,6 +78,18 @@ namespace DrawnUi.Camera
 
         public bool IsRecording => _isRecording;
 
+        public TimeSpan LiveRecordingDuration
+        {
+            get
+            {
+                if (_isRecording)
+                {
+                    return DateTime.Now - _startTime;
+                }
+                return TimeSpan.Zero;
+            }
+        }
+
         // Interface properties
         public bool IsPreRecordingMode { get; set; }
         public SkiaCamera ParentCamera { get; set; }

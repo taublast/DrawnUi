@@ -42,6 +42,11 @@ public interface ICaptureVideoEncoder : IDisposable
     bool IsRecording { get; }
 
     /// <summary>
+    /// Gets the duration of the current live recording session (excluding pre-recording buffer).
+    /// </summary>
+    TimeSpan LiveRecordingDuration { get; }
+
+    /// <summary>
     /// Sets whether the encoder is in pre-recording mode (buffering to memory only).
     /// When true, encoded frames should be buffered instead of written to file.
     /// </summary>

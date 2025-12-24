@@ -558,6 +558,17 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
     }
 
+    public TimeSpan LiveRecordingDuration
+    {
+        get
+        {
+            if (_isRecording)
+            {
+                return DateTime.Now - _startTime;
+            }
+            return TimeSpan.Zero;
+        }
+    }
 
     public async Task AbortAsync()
     {

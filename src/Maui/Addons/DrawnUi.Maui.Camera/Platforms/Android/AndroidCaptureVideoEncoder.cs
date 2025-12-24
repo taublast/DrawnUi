@@ -100,6 +100,18 @@ namespace DrawnUi.Camera
         public bool IsPreRecordingMode { get; set; }
         public SkiaCamera ParentCamera { get; set; }
 
+        public TimeSpan LiveRecordingDuration
+        {
+            get
+            {
+                if (_isRecording)
+                {
+                    return DateTime.Now - _startTime;
+                }
+                return TimeSpan.Zero;
+            }
+        }
+
         /// <summary>
         /// Request immediate keyframe from encoder (Bundle.PARAMETER_KEY_REQUEST_SYNC_FRAME)
         /// Used when transitioning from pre-recording to live recording

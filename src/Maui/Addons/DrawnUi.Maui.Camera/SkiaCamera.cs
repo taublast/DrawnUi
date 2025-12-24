@@ -1007,6 +1007,13 @@ public partial class SkiaCamera : SkiaControl
 
     private async Task StopCaptureVideoFlow()
     {
+
+        if (_captureVideoEncoder.LiveRecordingDuration < TimeSpan.FromSeconds(1))
+        {
+            await  AbortCaptureVideoFlow();
+            return;
+        }
+
         ICaptureVideoEncoder encoder = null;
 
         try
