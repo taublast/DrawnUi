@@ -2233,28 +2233,20 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         _mediaRecorder.SetOutputFile(_currentVideoFile);
 
-        // Set orientation hint - native recording uses camera's native format (already landscape 1280x720)
-        // So we need to compensate: if device is landscape but video is already landscape, don't rotate
-        // The custom capture flow swaps encoder dims, but native recording doesn't
+        // Set orientation hint using sensor orientation and device rotation
+        // MediaRecorder records raw frames without rotation - orientation hint tells players how to rotate
         var deviceRotation = FormsControl?.RecordingLockedRotation ?? 0;
-        bool deviceIsLandscape = (deviceRotation == 90 || deviceRotation == 270);
-        bool videoIsLandscape = (profile.VideoFrameWidth > profile.VideoFrameHeight);
 
         int orientationHint;
-        if (deviceIsLandscape && videoIsLandscape)
+        if (FormsControl.Facing == CameraPosition.Selfie)
         {
-            // Selfie camera sensor is opposite to back camera, needs 180° rotation in landscape
-            orientationHint = (FormsControl.Facing == CameraPosition.Selfie) ? 180 : 0;
-        }
-        else if (!deviceIsLandscape && !videoIsLandscape)
-        {
-            // Device is portrait, video is portrait - already correct, no rotation
-            orientationHint = 0;
+            // Front camera: compensate for mirroring
+            orientationHint = (SensorOrientation - deviceRotation + 360) % 360;
         }
         else
         {
-            // Orientations don't match, apply device rotation
-            orientationHint = deviceRotation;
+            // Back camera: standard calculation
+            orientationHint = (SensorOrientation + deviceRotation) % 360;
         }
 
         _mediaRecorder.SetOrientationHint(orientationHint);
