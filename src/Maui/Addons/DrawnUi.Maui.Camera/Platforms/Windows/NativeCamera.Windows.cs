@@ -104,6 +104,10 @@ unsafe interface IMemoryBufferByteAccess
 
 public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyChanged
 {
+    // Global lock to prevent overlapping camera sessions on Windows
+    private static readonly SemaphoreSlim _cameraLock = new(1, 1);
+    private bool _hasLock = false;
+
     protected readonly SkiaCamera FormsControl;
     private MediaCapture _mediaCapture;
     private MediaFrameReader _frameReader;
@@ -1020,55 +1024,90 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
     public async void Start()
     {
-        Setup();
-
-        if (State == CameraProcessorState.Enabled && _frameReader != null)
+        // Acquire global lock to ensure previous camera is fully stopped
+        if (!_hasLock)
         {
-            //Debug.WriteLine("[NativeCameraWindows] Camera already started");
-            return;
+            if (await _cameraLock.WaitAsync(5000))
+            {
+                _hasLock = true;
+            }
+            else
+            {
+                Debug.WriteLine("[NativeCameraWindows] FAILED to acquire camera lock - potential resource conflict");
+                return; // Abort start if lock cannot be acquired
+            }
         }
 
-        await StartFrameReaderAsync();
-
-        // Apply current flash modes after camera starts
-        if (State == CameraProcessorState.Enabled)
+        try
         {
-            ApplyFlashMode();
+            Setup();
+
+            if (State == CameraProcessorState.Enabled && _frameReader != null)
+            {
+                //Debug.WriteLine("[NativeCameraWindows] Camera already started");
+                return;
+            }
+
+            await StartFrameReaderAsync();
+
+            // Apply current flash modes after camera starts
+            if (State == CameraProcessorState.Enabled)
+            {
+                ApplyFlashMode();
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] Start error: {e}");
+            // Release lock if start failed
+            if (_hasLock)
+            {
+                _cameraLock.Release();
+                _hasLock = false;
+            }
         }
     }
 
     public async void Stop(bool force = false)
     {
-        if (State == CameraProcessorState.None && !force)
+        // Only return early if we definitely don't need to do anything AND we don't hold the lock
+        if (!_hasLock && State == CameraProcessorState.None && !force)
             return;
 
-        if (State != CameraProcessorState.Enabled && !force)
+        if (!_hasLock && State != CameraProcessorState.Enabled && !force)
             return; //avoid spam
 
         try
         {
-            //Debug.WriteLine("[NativeCameraWindows] Stopping frame reader...");
-            if (_frameReader != null)
+            try
             {
-                await _frameReader.StopAsync();
-                //Debug.WriteLine("[NativeCameraWindows] Frame reader stopped");
+                //Debug.WriteLine("[NativeCameraWindows] Stopping frame reader...");
+                if (_frameReader != null)
+                {
+                    await _frameReader.StopAsync();
+                    //Debug.WriteLine("[NativeCameraWindows] Frame reader stopped");
+                }
+
+                State = CameraProcessorState.None;
+
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    DeviceDisplay.Current.KeepScreenOn = false;
+                });
             }
-
-
-
-
-
-            State = CameraProcessorState.None;
-
-            MainThread.BeginInvokeOnMainThread(() =>
+            catch (Exception e)
             {
-                DeviceDisplay.Current.KeepScreenOn = false;
-            });
+                Debug.WriteLine($"[NativeCameraWindows] Stop error: {e}");
+                State = CameraProcessorState.Error;
+            }
         }
-        catch (Exception e)
+        finally
         {
-            Debug.WriteLine($"[NativeCameraWindows] Stop error: {e}");
-            State = CameraProcessorState.Error;
+            if (_hasLock)
+            {
+                _cameraLock.Release();
+                _hasLock = false;
+            }
         }
     }
 

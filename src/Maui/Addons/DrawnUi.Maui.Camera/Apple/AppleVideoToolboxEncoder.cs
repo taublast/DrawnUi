@@ -671,14 +671,23 @@ namespace DrawnUi.Camera
             try
             {
                 // Create pixel buffer
-                var attrs = new CVPixelBufferAttributes
+                var pool = _compressionSession?.GetPixelBufferPool();
+                if (pool != null)
                 {
-                    PixelFormatType = CVPixelFormatType.CV32BGRA,
-                    Width = _width,
-                    Height = _height
-                };
+                    pixelBuffer = pool.CreatePixelBuffer(null, out var err);
+                }
 
-                pixelBuffer = new CVPixelBuffer(_width, _height, CVPixelFormatType.CV32BGRA, attrs);
+                if (pixelBuffer == null)
+                {
+                    var attrs = new CVPixelBufferAttributes
+                    {
+                        PixelFormatType = CVPixelFormatType.CV32BGRA,
+                        Width = _width,
+                        Height = _height
+                    };
+                    pixelBuffer = new CVPixelBuffer(_width, _height, CVPixelFormatType.CV32BGRA, attrs);
+                }
+
                 if (pixelBuffer == null)
                     return;
 

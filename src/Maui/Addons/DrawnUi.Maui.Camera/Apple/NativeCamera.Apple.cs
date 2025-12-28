@@ -1518,7 +1518,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
     }
 
-    #region AVCaptureVideoDataOutputSampleBufferDelegate
+    // Buffer pool to reduce GC pressure
+    private readonly System.Collections.Concurrent.ConcurrentQueue<byte[]> _pixelBufferPool = new();
 
     [Export("captureOutput:didOutputSampleBuffer:fromConnection:")]
     public void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
@@ -1635,7 +1636,18 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                 // Copy pixel data to avoid CVPixelBuffer lifetime issues - minimal memory copy
                 var dataSize = height * bytesPerRow;
-                var pixelData = new byte[dataSize];
+                
+                // Reuse buffer from pool if available
+                byte[] pixelData = null;
+                if (_pixelBufferPool.TryDequeue(out var pooledBuffer) && pooledBuffer.Length == dataSize)
+                {
+                    pixelData = pooledBuffer;
+                }
+                else
+                {
+                    pixelData = new byte[dataSize];
+                }
+                
                 System.Runtime.InteropServices.Marshal.Copy(baseAddress, pixelData, 0, dataSize);
 
                 var time = DateTime.UtcNow;
@@ -1686,6 +1698,12 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     {
         lock (_lockRawFrame)
         {
+            // Recycle old buffer if it exists
+            if (_latestRawFrame != null && _latestRawFrame.PixelData != null)
+            {
+                _pixelBufferPool.Enqueue(_latestRawFrame.PixelData);
+            }
+            
             // Dispose old raw frame data immediately to prevent memory accumulation
             _latestRawFrame?.Dispose();
             _latestRawFrame = rawFrame;
@@ -1710,8 +1728,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             _preview = capturedImage;
         }
     }
-
-    #endregion
 
 
 
