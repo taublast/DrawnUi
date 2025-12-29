@@ -172,6 +172,21 @@ camera.IsOn = false; // Stop camera
 - `IsOn = true`: Proper lifecycle management, handles permissions, app backgrounding
 - `Start()`: Direct method call, bypasses safety checks
 
+#### Global Instance Management
+
+SkiaCamera maintains a static list of all active instances to prevent resource conflicts, especially on Windows where hardware release can be slow.
+
+```csharp
+// Access all tracked camera instances
+var activeCameras = SkiaCamera.Instances;
+
+// Stop all active cameras globally
+await SkiaCamera.StopAllAsync();
+```
+
+**Automatic Conflict Resolution**:
+When a new camera starts, it automatically checks `SkiaCamera.Instances` for other active cameras. If another camera is found to be busy or stopping (common during Hot Reload or rapid page navigation), the new instance will wait until the hardware is fully released before attempting to initialize. This prevents "Zombie" camera states and FPS drops on Windows.
+
 ### 4. Flash Control
 
 SkiaCamera provides comprehensive flash control for both preview torch and still image capture:

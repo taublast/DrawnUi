@@ -426,9 +426,29 @@ public partial class SkiaCamera : SkiaControl
         _diagBitrate = Math.Max((long)width * height * 4, 2_000_000L);
 
         // Pass locked rotation to encoder for proper video orientation metadata (Android-specific)
+        bool useGpuCameraPath = false;
         if (_captureVideoEncoder is DrawnUi.Camera.AndroidCaptureVideoEncoder androidEncoder)
         {
             await androidEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio, RecordingLockedRotation);
+
+            // Try to initialize GPU camera path for zero-copy frame capture
+            if (GpuCameraFrameProvider.IsSupported())
+            {
+                bool isFrontCamera = Facing == CameraPosition.Selfie;
+                useGpuCameraPath = androidEncoder.InitializeGpuCameraPath(isFrontCamera);
+                if (useGpuCameraPath)
+                {
+                    Debug.WriteLine($"[StartCaptureVideoFlow] GPU camera path ENABLED");
+                }
+                else
+                {
+                    Debug.WriteLine($"[StartCaptureVideoFlow] GPU camera path failed, using legacy SKBitmap path");
+                }
+            }
+            else
+            {
+                Debug.WriteLine($"[StartCaptureVideoFlow] GPU camera path not supported, using legacy SKBitmap path");
+            }
         }
         else
         {
@@ -466,105 +486,188 @@ public partial class SkiaCamera : SkiaControl
 
         if (NativeControl is NativeCamera androidCam)
         {
-            _androidPreviewHandler = async (captured) =>
+            // GPU CAMERA PATH: Use SurfaceTexture for zero-copy frame capture
+            if (useGpuCameraPath && _captureVideoEncoder is AndroidCaptureVideoEncoder gpuEncoder && gpuEncoder.GpuFrameProvider != null)
             {
-                try
+                Debug.WriteLine($"[StartCaptureVideoFlow] Setting up GPU camera session");
+
+                // Get the GPU surface and create camera session
+                var gpuSurface = gpuEncoder.GpuFrameProvider.GetCameraOutputSurface();
+                if (gpuSurface != null)
                 {
-                    // CRITICAL: Process frames during BOTH pre-recording AND live recording
-                    // If encoder is null/disposed during transition, this check will catch it and return gracefully
-                    if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
-                        return;
+                    // Start the GPU frame provider
+                    gpuEncoder.GpuFrameProvider.Start();
 
-                    // Warmup: drop the first frame to avoid occasional corrupted first frame artifacts
-                    if (System.Threading.Volatile.Read(ref _androidWarmupDropRemaining) > 0)
+                    // Create camera session with GPU surface
+                    androidCam.CreateGpuCameraSession(gpuSurface);
+
+                    // Set up SurfaceTexture frame callback
+                    // CRITICAL: OnFrameAvailable fires on arbitrary Android thread, NOT EGL context thread!
+                    // We must NOT call UpdateTexImage here - only signal and let encoder thread process.
+                    gpuEncoder.GpuFrameProvider.Renderer.OnFrameAvailable += async (sender, surfaceTexture) =>
                     {
-                        System.Threading.Interlocked.Decrement(ref _androidWarmupDropRemaining);
-                        System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
-                        return;
-                    }
-
-                    // Ensure single-frame processing
-                    if (System.Threading.Interlocked.CompareExchange(ref _androidFrameGate, 1, 0) != 0)
-                    {
-                        System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
-                        return;
-                    }
-
-                    // CRITICAL FIX: Use wall clock time from recording start, not camera monotonic timestamps
-                    // captured.Time is a monotonic timestamp that continues from camera session start
-                    // If camera ran in preview mode before recording, captured.Time is already at high value
-                    // We need PTS relative to when recording STARTED (wall clock), not first frame arrival
-                    var elapsedLocal = DateTime.Now - _captureVideoStartTime;
-                    if (elapsedLocal.Ticks < 0)
-                        elapsedLocal = TimeSpan.Zero;
-
-                    try
-                    {
-                        using (droidEnc.BeginFrame(elapsedLocal, out var canvas, out var info))
+                        try
                         {
-                            var img = captured?.Image;
-                            if (img == null)
+                            if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
+                            {
                                 return;
-
-                            var rects = GetAspectFillRects(img.Width, img.Height, info.Width, info.Height);
-
-                            // Apply 180° flip for selfie camera in landscape (sensor is opposite orientation)
-                            var isSelfieInLandscape = Facing == CameraPosition.Selfie && (RecordingLockedRotation == 90 || RecordingLockedRotation == 270);
-                            if (isSelfieInLandscape)
-                            {
-                                canvas.Save();
-                                canvas.Scale(-1, -1, info.Width / 2f, info.Height / 2f);
                             }
 
-                            canvas.DrawImage(img, rects.src, rects.dst);
-
-                            if (isSelfieInLandscape)
+                            // Ensure single-frame processing (prevent overlap)
+                            if (System.Threading.Interlocked.CompareExchange(ref _androidFrameGate, 1, 0) != 0)
                             {
-                                canvas.Restore();
+                                System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
+                                return;
                             }
 
-                            if (FrameProcessor != null || VideoDiagnosticsOn)
+                            try
                             {
-                                // Apply rotation based on device orientation
-                                var rotation = GetActiveRecordingRotation();
-                                canvas.Save();
-                                ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+                                // Use wall clock time from recording start
+                                var elapsedLocal = DateTime.Now - _captureVideoStartTime;
+                                if (elapsedLocal.Ticks < 0)
+                                    elapsedLocal = TimeSpan.Zero;
 
-                                var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
-                                var frame = new DrawableFrame
-                                {
-                                    Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsedLocal
-                                };
-                                FrameProcessor?.Invoke(frame);
+                                var __sw = System.Diagnostics.Stopwatch.StartNew();
 
-                                if (VideoDiagnosticsOn)
-                                    DrawDiagnostics(canvas, info.Width, info.Height);
+                                // Process frame via GPU zero-copy path
+                                await droidEnc.ProcessGpuCameraFrameAsync(
+                                    elapsedLocal,
+                                    FrameProcessor,
+                                    VideoDiagnosticsOn,
+                                    DrawDiagnostics
+                                );
 
-                                canvas.Restore();
+                                __sw.Stop();
+                                _diagLastSubmitMs = __sw.Elapsed.TotalMilliseconds;
+                                System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"[GPU-FRAME] Error: {ex.Message}");
+                            }
+                            finally
+                            {
+                                System.Threading.Volatile.Write(ref _androidFrameGate, 0);
                             }
                         }
+                        catch (Exception outerEx)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"[GPU-FRAME] Outer error: {outerEx.Message}");
+                        }
+                    };
 
-                        var __sw = System.Diagnostics.Stopwatch.StartNew();
-                        await droidEnc.SubmitFrameAsync();
-                        __sw.Stop();
-                        _diagLastSubmitMs = __sw.Elapsed.TotalMilliseconds;
-                        System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"[CaptureFrame/Event] Error: {ex.Message}");
-                    }
-                    finally
-                    {
-                        System.Threading.Volatile.Write(ref _androidFrameGate, 0);
-                    }
+                    Debug.WriteLine($"[StartCaptureVideoFlow] GPU camera session created");
                 }
-                catch
+                else
                 {
+                    Debug.WriteLine($"[StartCaptureVideoFlow] GPU surface is null, falling back to legacy path");
+                    useGpuCameraPath = false;
                 }
-            };
+            }
 
-            androidCam.PreviewCaptureSuccess = _androidPreviewHandler;
+            // LEGACY PATH: Use preview callback with SKBitmap
+            if (!useGpuCameraPath)
+            {
+                _androidPreviewHandler = async (captured) =>
+                {
+                    try
+                    {
+                        // CRITICAL: Process frames during BOTH pre-recording AND live recording
+                        // If encoder is null/disposed during transition, this check will catch it and return gracefully
+                        if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
+                            return;
+
+                        // Warmup: drop the first frame to avoid occasional corrupted first frame artifacts
+                        if (System.Threading.Volatile.Read(ref _androidWarmupDropRemaining) > 0)
+                        {
+                            System.Threading.Interlocked.Decrement(ref _androidWarmupDropRemaining);
+                            System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
+                            return;
+                        }
+
+                        // Ensure single-frame processing
+                        if (System.Threading.Interlocked.CompareExchange(ref _androidFrameGate, 1, 0) != 0)
+                        {
+                            System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
+                            return;
+                        }
+
+                        // CRITICAL FIX: Use wall clock time from recording start, not camera monotonic timestamps
+                        // captured.Time is a monotonic timestamp that continues from camera session start
+                        // If camera ran in preview mode before recording, captured.Time is already at high value
+                        // We need PTS relative to when recording STARTED (wall clock), not first frame arrival
+                        var elapsedLocal = DateTime.Now - _captureVideoStartTime;
+                        if (elapsedLocal.Ticks < 0)
+                            elapsedLocal = TimeSpan.Zero;
+
+                        try
+                        {
+                            using (droidEnc.BeginFrame(elapsedLocal, out var canvas, out var info))
+                            {
+                                var img = captured?.Image;
+                                if (img == null)
+                                    return;
+
+                                var rects = GetAspectFillRects(img.Width, img.Height, info.Width, info.Height);
+
+                                // Apply 180° flip for selfie camera in landscape (sensor is opposite orientation)
+                                var isSelfieInLandscape = Facing == CameraPosition.Selfie && (RecordingLockedRotation == 90 || RecordingLockedRotation == 270);
+                                if (isSelfieInLandscape)
+                                {
+                                    canvas.Save();
+                                    canvas.Scale(-1, -1, info.Width / 2f, info.Height / 2f);
+                                }
+
+                                canvas.DrawImage(img, rects.src, rects.dst);
+
+                                if (isSelfieInLandscape)
+                                {
+                                    canvas.Restore();
+                                }
+
+                                if (FrameProcessor != null || VideoDiagnosticsOn)
+                                {
+                                    // Apply rotation based on device orientation
+                                    var rotation = GetActiveRecordingRotation();
+                                    canvas.Save();
+                                    ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+
+                                    var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                                    var frame = new DrawableFrame
+                                    {
+                                        Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsedLocal
+                                    };
+                                    FrameProcessor?.Invoke(frame);
+
+                                    if (VideoDiagnosticsOn)
+                                        DrawDiagnostics(canvas, info.Width, info.Height);
+
+                                    canvas.Restore();
+                                }
+                            }
+
+                            var __sw = System.Diagnostics.Stopwatch.StartNew();
+                            await droidEnc.SubmitFrameAsync();
+                            __sw.Stop();
+                            _diagLastSubmitMs = __sw.Elapsed.TotalMilliseconds;
+                            System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"[CaptureFrame/Event] Error: {ex.Message}");
+                        }
+                        finally
+                        {
+                            System.Threading.Volatile.Write(ref _androidFrameGate, 0);
+                        }
+                    }
+                    catch
+                    {
+                    }
+                };
+
+                androidCam.PreviewCaptureSuccess = _androidPreviewHandler;
+            }
         }
 
         // Progress reporting
@@ -1041,6 +1144,15 @@ public partial class SkiaCamera : SkiaControl
                 catch
                 {
                 }
+
+                // Stop GPU camera path if active
+                _droidEncPrev.DisposeGpuCameraPath();
+            }
+
+            // Revert to normal preview session if GPU path was active
+            if (NativeControl is NativeCamera camForGpuCleanup)
+            {
+                camForGpuCleanup.StopGpuCameraSession();
             }
 #endif
 
@@ -1182,6 +1294,15 @@ public partial class SkiaCamera : SkiaControl
                 catch
                 {
                 }
+
+                // Stop GPU camera path if active
+                _droidEncPrev.DisposeGpuCameraPath();
+            }
+
+            // Revert to normal preview session if GPU path was active
+            if (NativeControl is NativeCamera camForGpuCleanup)
+            {
+                camForGpuCleanup.StopGpuCameraSession();
             }
 #endif
 

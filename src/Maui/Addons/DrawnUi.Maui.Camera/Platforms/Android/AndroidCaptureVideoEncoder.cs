@@ -85,7 +85,18 @@ namespace DrawnUi.Camera
         // Preview-from-recording support
         private readonly object _previewLock = new();
         private SKImage _latestPreviewImage;
+        private SKSurface _previewRasterSurface;  // Cached to avoid allocation every frame
+        private int _previewWidth, _previewHeight;
+        private int _previewFrameCounter = 0;
+        private const int PreviewFrameSkip = 2;  // Only update preview every Nth frame (2 = every other frame)
         public event EventHandler PreviewAvailable;
+
+        // GPU camera path support (SurfaceTexture zero-copy)
+        private GpuCameraFrameProvider _gpuFrameProvider;
+        private bool _useGpuCameraPath;
+        private bool _isFrontCamera;
+        public bool UseGpuCameraPath => _useGpuCameraPath;
+        public GpuCameraFrameProvider GpuFrameProvider => _gpuFrameProvider;
 
         public bool IsRecording => _isRecording;
         public event EventHandler<TimeSpan> ProgressReported;
@@ -709,6 +720,268 @@ namespace DrawnUi.Camera
             }
         }
 
+        /// <summary>
+        /// Initialize GPU camera path with SurfaceTexture.
+        /// Must be called on GL thread with valid EGL context (after SetupEglForCodecSurface).
+        /// </summary>
+        /// <param name="isFrontCamera">True if using front/selfie camera</param>
+        public bool InitializeGpuCameraPath(bool isFrontCamera)
+        {
+            if (!GpuCameraFrameProvider.IsSupported())
+            {
+                System.Diagnostics.Debug.WriteLine("[AndroidEncoder] GPU camera path not supported on this device");
+                return false;
+            }
+
+            try
+            {
+                // Ensure EGL context is current
+                MakeCurrent();
+
+                _gpuFrameProvider = new GpuCameraFrameProvider();
+                if (!_gpuFrameProvider.Initialize(_width, _height))
+                {
+                    System.Diagnostics.Debug.WriteLine("[AndroidEncoder] Failed to initialize GpuCameraFrameProvider");
+                    _gpuFrameProvider?.Dispose();
+                    _gpuFrameProvider = null;
+                    return false;
+                }
+
+                _isFrontCamera = isFrontCamera;
+                _useGpuCameraPath = true;
+
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] GPU camera path initialized: {_width}x{_height}, frontCamera={isFrontCamera}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] InitializeGpuCameraPath error: {ex.Message}");
+                _gpuFrameProvider?.Dispose();
+                _gpuFrameProvider = null;
+                _useGpuCameraPath = false;
+                return false;
+            }
+            finally
+            {
+                // Unbind context
+                try { EGL14.EglMakeCurrent(_eglDisplay, EGL14.EglNoSurface, EGL14.EglNoSurface, EGL14.EglNoContext); } catch { }
+            }
+        }
+
+        /// <summary>
+        /// Process a frame from the GPU camera path.
+        /// Renders camera texture to encoder surface and applies FrameProcessor overlays.
+        /// </summary>
+        /// <param name="timestamp">Frame timestamp relative to recording start</param>
+        /// <param name="frameProcessor">Optional frame processor for overlays</param>
+        /// <param name="videoDiagnosticsOn">Whether to draw diagnostics</param>
+        /// <param name="drawDiagnostics">Diagnostics drawing callback</param>
+        public async Task ProcessGpuCameraFrameAsync(
+            TimeSpan timestamp,
+            Action<DrawableFrame> frameProcessor,
+            bool videoDiagnosticsOn,
+            Action<SKCanvas, int, int> drawDiagnostics)
+        {
+            if (!_isRecording || !_useGpuCameraPath || _gpuFrameProvider == null) return;
+
+            // Defensive EGL check
+            if (_eglDisplay == EGL14.EglNoDisplay || _eglSurface == EGL14.EglNoSurface || _eglContext == EGL14.EglNoContext)
+            {
+                System.Diagnostics.Debug.WriteLine("[AndroidEncoder] ProcessGpuCameraFrame: EGL torn down");
+                return;
+            }
+
+            if (!_encoderReady)
+            {
+                System.Diagnostics.Debug.WriteLine("[AndroidEncoder] ProcessGpuCameraFrame: Encoder not ready");
+                return;
+            }
+
+            try
+            {
+                _pendingTimestamp = timestamp;
+
+                // Make EGL context current - CRITICAL: Must be done before UpdateTexImage!
+                MakeCurrent();
+
+                // CRITICAL: Update the SurfaceTexture on the EGL context thread
+                // This calls UpdateTexImage() which MUST run on the thread that owns the EGL context
+                if (!_gpuFrameProvider.TryProcessFrameNoWait(out long timestampNs))
+                {
+                    // No frame available yet
+                    return;
+                }
+
+                // 1. Render camera texture to the encoder's framebuffer
+                // CRITICAL: Reset GL state before rendering OES texture!
+                // Skia modifies many GL states (blend, depth, stencil, scissor, program, etc.)
+                // We MUST reset to clean state or subsequent frames will render black
+                ResetGlStateForOesRendering();
+
+                GLES20.GlViewport(0, 0, _width, _height);
+                GLES20.GlClear(GLES20.GlColorBufferBit);
+
+                // Render OES texture from SurfaceTexture
+                _gpuFrameProvider.RenderToFramebuffer(_width, _height, _isFrontCamera);
+
+                // 2. Ensure Skia surface is ready for overlays
+                if (_grContext == null)
+                {
+                    var glInterface = GRGlInterface.Create();
+                    _grContext = GRContext.CreateGl(glInterface);
+                }
+                else
+                {
+                    // Full reset required - OES rendering touches many GL states
+                    _grContext.ResetContext();
+                }
+                
+                if (_skSurface == null || _skInfo.Width != _width || _skInfo.Height != _height)
+                {
+                    _skInfo = new SKImageInfo(_width, _height, SKColorType.Rgba8888, SKAlphaType.Premul);
+
+                    int[] fb = new int[1];
+                    GLES20.GlGetIntegerv(GLES20.GlFramebufferBinding, fb, 0);
+                    int[] samples = new int[1];
+                    GLES20.GlGetIntegerv(GLES20.GlSamples, samples, 0);
+                    int[] stencil = new int[1];
+                    GLES20.GlGetIntegerv(GLES20.GlStencilBits, stencil, 0);
+
+                    var fbInfo = new GRGlFramebufferInfo((uint)fb[0], 0x8058);
+                    var backendRT = new GRBackendRenderTarget(_width, _height, samples[0], stencil[0], fbInfo);
+
+                    _skSurface?.Dispose();
+                    _skSurface = SKSurface.Create(_grContext, backendRT, GRSurfaceOrigin.BottomLeft, SKColorType.Rgba8888);
+                }
+
+                // 3. Apply FrameProcessor overlays (user can draw on top of camera frame)
+                var canvas = _skSurface.Canvas;
+                // Note: Camera frame is already rendered to framebuffer, don't clear!
+
+                if (frameProcessor != null || videoDiagnosticsOn)
+                {
+                    var frame = new DrawableFrame
+                    {
+                        Width = _width,
+                        Height = _height,
+                        Canvas = canvas,
+                        Time = timestamp
+                    };
+
+                    frameProcessor?.Invoke(frame);
+
+                    if (videoDiagnosticsOn)
+                    {
+                        drawDiagnostics?.Invoke(canvas, _width, _height);
+                    }
+                }
+
+                // 4. Flush and submit to encoder
+                canvas.Flush();
+                _grContext.Flush();
+
+                // Publish preview snapshot - skip frames to reduce GPU->CPU copy overhead
+                _previewFrameCounter++;
+                bool needsPreview = false;
+                if (_previewFrameCounter >= PreviewFrameSkip)
+                {
+                    _previewFrameCounter = 0;
+                    lock (_previewLock) { needsPreview = _latestPreviewImage == null; }
+                }
+
+                if (needsPreview)
+                {
+                    SKImage keepAlive = null;
+                    try
+                    {
+                        using var gpuSnap = _skSurface.Snapshot();
+                        if (gpuSnap != null)
+                        {
+                            int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                            int pw = Math.Min(_width, maxPreviewWidth);
+                            int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+
+                            // Reuse cached preview surface to avoid allocation every frame
+                            if (_previewRasterSurface == null || _previewWidth != pw || _previewHeight != ph)
+                            {
+                                _previewRasterSurface?.Dispose();
+                                var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
+                                _previewRasterSurface = SKSurface.Create(pInfo);
+                                _previewWidth = pw;
+                                _previewHeight = ph;
+                            }
+
+                            var pCanvas = _previewRasterSurface.Canvas;
+                            pCanvas.Clear(SKColors.Transparent);
+                            pCanvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
+
+                            keepAlive = _previewRasterSurface.Snapshot();
+                            lock (_previewLock)
+                            {
+                                _latestPreviewImage?.Dispose();
+                                _latestPreviewImage = keepAlive;
+                                keepAlive = null;
+                            }
+                            PreviewAvailable?.Invoke(this, EventArgs.Empty);
+                        }
+                    }
+                    catch { keepAlive?.Dispose(); }
+                    finally { keepAlive?.Dispose(); }
+                }
+
+                // 5. Set presentation timestamp and swap to encoder
+                long ptsNanos = (long)(timestamp.TotalMilliseconds * 1_000_000.0);
+                EGLExt.EglPresentationTimeANDROID(_eglDisplay, _eglSurface, ptsNanos);
+                EGL14.EglSwapBuffers(_eglDisplay, _eglSurface);
+
+                // 6. Drain encoder
+                bool bufferingMode = IsPreRecordingMode && _preRecordingBuffer != null;
+
+                if (DateTime.Now - _lastKeyframeRequest >= _keyframeRequestInterval)
+                {
+                    RequestKeyFrame();
+                    _lastKeyframeRequest = DateTime.Now;
+                }
+
+                if (bufferingMode)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        DrainEncoder(endOfStream: false, bufferingMode: true);
+                    }
+                }
+                else
+                {
+                    DrainEncoder(endOfStream: false, bufferingMode: false);
+                }
+
+                EncodedFrameCount++;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] ProcessGpuCameraFrame error: {ex.Message}");
+            }
+            finally
+            {
+                // Unbind context
+                try { EGL14.EglMakeCurrent(_eglDisplay, EGL14.EglNoSurface, EGL14.EglNoSurface, EGL14.EglNoContext); } catch { }
+            }
+
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Dispose GPU camera path resources.
+        /// </summary>
+        public void DisposeGpuCameraPath()
+        {
+            _gpuFrameProvider?.Stop();
+            _gpuFrameProvider?.Dispose();
+            _gpuFrameProvider = null;
+            _useGpuCameraPath = false;
+            System.Diagnostics.Debug.WriteLine("[AndroidEncoder] GPU camera path disposed");
+        }
+
         public async Task AddFrameAsync(SKBitmap bitmap, TimeSpan timestamp)
         {
             // CPU fallback not used in Android GPU path
@@ -1030,6 +1303,50 @@ namespace DrawnUi.Camera
                 throw new InvalidOperationException("EGL make current failed");
         }
 
+        /// <summary>
+        /// Reset OpenGL ES state to clean defaults before rendering OES texture.
+        /// CRITICAL: Skia modifies many GL states during overlay rendering.
+        /// Without resetting, subsequent frames render black because blend/stencil/etc are wrong.
+        /// </summary>
+        private void ResetGlStateForOesRendering()
+        {
+            // Unbind any program Skia left bound
+            GLES20.GlUseProgram(0);
+
+            // Disable blending (Skia enables this for transparency)
+            GLES20.GlDisable(GLES20.GlBlend);
+
+            // Disable depth test
+            GLES20.GlDisable(GLES20.GlDepthTest);
+
+            // Disable stencil test (Skia uses stencil for clipping paths)
+            GLES20.GlDisable(GLES20.GlStencilTest);
+
+            // Disable scissor test (Skia may use this for clipping)
+            GLES20.GlDisable(GLES20.GlScissorTest);
+
+            // Reset color mask to write all channels
+            GLES20.GlColorMask(true, true, true, true);
+
+            // Reset depth mask
+            GLES20.GlDepthMask(true);
+
+            // Unbind any texture from texture unit 0
+            GLES20.GlActiveTexture(GLES20.GlTexture0);
+            GLES20.GlBindTexture(GLES20.GlTexture2d, 0);
+            GLES20.GlBindTexture(GLES11Ext.GlTextureExternalOes, 0);
+
+            // Bind default framebuffer
+            GLES20.GlBindFramebuffer(GLES20.GlFramebuffer, 0);
+
+            // Unbind VBO and VAO that Skia may have left bound
+            GLES20.GlBindBuffer(GLES20.GlArrayBuffer, 0);
+            GLES20.GlBindBuffer(GLES20.GlElementArrayBuffer, 0);
+
+            // Clear any errors that accumulated
+            while (GLES20.GlGetError() != GLES20.GlNoError) { }
+        }
+
         private sealed class FrameScope : IDisposable { public void Dispose() { } }
 
         private void TryReleaseCodec()
@@ -1073,6 +1390,9 @@ namespace DrawnUi.Camera
                 _latestPreviewImage?.Dispose();
                 _latestPreviewImage = null;
             }
+
+            _previewRasterSurface?.Dispose();
+            _previewRasterSurface = null;
         }
 
         public void Dispose()
@@ -1081,6 +1401,7 @@ namespace DrawnUi.Camera
             {
                 try { StopAsync().GetAwaiter().GetResult(); } catch { }
             }
+            DisposeGpuCameraPath();
             _progressTimer?.Dispose();
             _preRecordingBuffer?.Dispose();
             TryReleaseCodec();

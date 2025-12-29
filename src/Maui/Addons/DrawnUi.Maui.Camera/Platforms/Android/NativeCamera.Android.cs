@@ -681,6 +681,11 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
     private ImageReader mImageReaderPhoto;
 
+    // GPU camera path: SurfaceTexture surface for zero-copy frame capture
+    private Surface _gpuCameraSurface;
+    private bool _useGpuCameraPath;
+    public bool IsGpuCameraPathActive => _useGpuCameraPath && _gpuCameraSurface != null;
+
     //{@link CaptureRequest.Builder} for the camera preview
     public CaptureRequest.Builder mPreviewRequestBuilder;
 
@@ -1697,7 +1702,93 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         }
     }
 
+    /// <summary>
+    /// Create a capture session that includes the GPU camera surface for zero-copy recording.
+    /// The GPU surface receives camera frames that are rendered directly to the encoder.
+    /// </summary>
+    /// <param name="gpuSurface">Surface from SurfaceTexture for GPU rendering</param>
+    public void CreateGpuCameraSession(Surface gpuSurface)
+    {
+        if (gpuSurface == null)
+        {
+            System.Diagnostics.Debug.WriteLine("[NativeCamera] CreateGpuCameraSession: gpuSurface is null");
+            return;
+        }
 
+        try
+        {
+            _gpuCameraSurface = gpuSurface;
+            _useGpuCameraPath = true;
+
+            mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
+
+            // Disable video stabilization for consistent FOV
+            try { mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode, (int)ControlVideoStabilizationMode.Off); } catch { }
+
+            // Apply flash mode
+            if (mFlashSupported)
+            {
+                switch (_flashMode)
+                {
+                    case FlashMode.Off:
+                        mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                        mPreviewRequestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Off);
+                        _isTorchOn = false;
+                        break;
+                    case FlashMode.On:
+                    case FlashMode.Strobe:
+                        mPreviewRequestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                        mPreviewRequestBuilder.Set(CaptureRequest.FlashMode, (int)Android.Hardware.Camera2.FlashMode.Torch);
+                        _isTorchOn = true;
+                        break;
+                }
+            }
+
+            // Include GPU surface for recording + preview ImageReader for display
+            var surfaces = new List<Surface>
+            {
+                _gpuCameraSurface,      // GPU path for encoder
+                mImageReaderPreview.Surface  // Preview for display (legacy path still needed for preview during recording)
+            };
+
+            if (mImageReaderPhoto != null)
+                surfaces.Add(mImageReaderPhoto.Surface);
+
+            // Add targets: GPU surface for encoder, preview for display
+            mPreviewRequestBuilder.AddTarget(_gpuCameraSurface);
+            mPreviewRequestBuilder.AddTarget(mImageReaderPreview.Surface);
+
+            System.Diagnostics.Debug.WriteLine($"[NativeCamera] Creating GPU camera session with {surfaces.Count} surfaces");
+
+            mCameraDevice.CreateCaptureSession(
+                surfaces,
+                new CameraCaptureSessionCallback(this),
+                mBackgroundHandler);
+        }
+        catch (CameraAccessException e)
+        {
+            System.Diagnostics.Debug.WriteLine($"[NativeCamera] Failed to create GPU camera session: {e.Message}");
+            _useGpuCameraPath = false;
+            _gpuCameraSurface = null;
+            State = CameraProcessorState.Error;
+        }
+    }
+
+    /// <summary>
+    /// Stop using GPU camera path and revert to normal preview session.
+    /// </summary>
+    public void StopGpuCameraSession()
+    {
+        if (!_useGpuCameraPath) return;
+
+        _useGpuCameraPath = false;
+        _gpuCameraSurface = null;
+
+        // Recreate normal preview session
+        CreateCameraPreviewSession();
+
+        System.Diagnostics.Debug.WriteLine("[NativeCamera] GPU camera session stopped, reverted to normal preview");
+    }
 
 
 

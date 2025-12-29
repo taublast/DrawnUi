@@ -255,7 +255,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     {
                                         if (CameraControl.IsRecordingVideo)
                                         {
-                                            me.Text = "🛑 Stop (00:00)";
+                                            me.Text = "🛑 Stop";
                                             me.BackgroundColor = Colors.Red;
                                         }
                                         else if (CameraControl.IsPreRecording)
@@ -273,7 +273,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     {
                                         if (CameraControl.IsRecordingVideo)
                                         {
-                                            me.Text = "🛑 Stop (00:00)";
+                                            me.Text = "🛑";
                                             me.BackgroundColor = Colors.Red;
                                         }
                                         else if (CameraControl.IsPreRecording)
