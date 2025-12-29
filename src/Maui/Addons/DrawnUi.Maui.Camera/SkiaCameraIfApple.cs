@@ -218,6 +218,7 @@ public partial class SkiaCamera : SkiaControl
         _diagEncWidth = width;
         _diagEncHeight = height;
         _diagBitrate = (long)Math.Max(1, width * height) * Math.Max(1, fps) * 4 / 10;
+        SetSourceFrameDimensions(width, height);
         await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
 
         // CRITICAL: In pre-recording mode, do NOT call StartAsync during initialization
@@ -369,6 +370,7 @@ public partial class SkiaCamera : SkiaControl
         _diagEncWidth = width;
         _diagEncHeight = height;
         _diagBitrate = Math.Max((long)width * height * 4, 2_000_000L);
+        SetSourceFrameDimensions(width, height);
 
         // Pass locked rotation to encoder for proper video orientation metadata (Android-specific)
         if (_captureVideoEncoder is DrawnUi.Camera.AndroidCaptureVideoEncoder androidEncoder)
@@ -476,7 +478,7 @@ public partial class SkiaCamera : SkiaControl
                                 var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
                                 var frame = new DrawableFrame
                                 {
-                                    Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsedLocal
+                                    Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsedLocal, Scale = 1f
                                 };
                                 FrameProcessor?.Invoke(frame);
 
@@ -584,6 +586,7 @@ public partial class SkiaCamera : SkiaControl
         _diagEncWidth = (int)width;
         _diagEncHeight = (int)height;
         _diagBitrate = (long)Math.Max((long)width * height * 4, 2_000_000L);
+        SetSourceFrameDimensions(width, height);
 
         // Pass locked rotation to encoder for proper video orientation metadata (iOS-specific)
         if (_captureVideoEncoder is DrawnUi.Camera.AppleVideoToolboxEncoder appleEncoder)
@@ -707,7 +710,7 @@ public partial class SkiaCamera : SkiaControl
                         var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
                         var frame = new DrawableFrame
                         {
-                            Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed
+                            Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed, Scale = 1f
                         };
                         FrameProcessor?.Invoke(frame);
 
@@ -775,7 +778,7 @@ public partial class SkiaCamera : SkiaControl
                             var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
                             var frame = new DrawableFrame
                             {
-                                Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed
+                                Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed, Scale = 1f
                             };
                             FrameProcessor?.Invoke(frame);
 
@@ -916,7 +919,8 @@ public partial class SkiaCamera : SkiaControl
                                 Width = frameWidth,
                                 Height = frameHeight,
                                 Canvas = canvas,
-                                Time = elapsed
+                                Time = elapsed,
+                                Scale = 1f
                             };
                             FrameProcessor?.Invoke(frame);
 

@@ -865,7 +865,8 @@ namespace DrawnUi.Camera
                         Width = _width,
                         Height = _height,
                         Canvas = canvas,
-                        Time = timestamp
+                        Time = timestamp,
+                        Scale = 1f  // Recording frame - full size
                     };
 
                     frameProcessor?.Invoke(frame);
@@ -880,13 +881,16 @@ namespace DrawnUi.Camera
                 canvas.Flush();
                 _grContext.Flush();
 
-                // Publish preview snapshot - skip frames to reduce GPU->CPU copy overhead
+                // Preview is now provided by ImageReader stream, not encoder output
+                // This avoids expensive GPU->CPU transfer during recording
+                // Keeping code commented for reference:
+                /*
                 _previewFrameCounter++;
                 bool needsPreview = false;
-                if (_previewFrameCounter >= PreviewFrameSkip)
+                if (_previewFrameCounter >= 3)
                 {
                     _previewFrameCounter = 0;
-                    lock (_previewLock) { needsPreview = _latestPreviewImage == null; }
+                    needsPreview = true;
                 }
 
                 if (needsPreview)
@@ -901,7 +905,6 @@ namespace DrawnUi.Camera
                             int pw = Math.Min(_width, maxPreviewWidth);
                             int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
 
-                            // Reuse cached preview surface to avoid allocation every frame
                             if (_previewRasterSurface == null || _previewWidth != pw || _previewHeight != ph)
                             {
                                 _previewRasterSurface?.Dispose();
@@ -928,6 +931,7 @@ namespace DrawnUi.Camera
                     catch { keepAlive?.Dispose(); }
                     finally { keepAlive?.Dispose(); }
                 }
+                */
 
                 // 5. Set presentation timestamp and swap to encoder
                 long ptsNanos = (long)(timestamp.TotalMilliseconds * 1_000_000.0);

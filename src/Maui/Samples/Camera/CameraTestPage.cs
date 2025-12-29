@@ -7,7 +7,7 @@ namespace CameraTests.Views;
 
 public class CameraTestPage : BasePageReloadable, IDisposable
 {
-    private SkiaCamera CameraControl;
+    private AppCamera CameraControl;
     private SkiaButton _takePictureButton;
     private SkiaButton _flashButton;
     private SkiaLabel _statusLabel;
@@ -20,6 +20,49 @@ public class CameraTestPage : BasePageReloadable, IDisposable
     private SkiaLabel _preRecordingStatusLabel;
     private SkiaButton _modeSwitchButton;
     Canvas Canvas;
+
+    public class AppCamera : SkiaCamera
+    {
+        public override void OnWillDisposeWithChildren()
+        {
+            base.OnWillDisposeWithChildren();
+
+            _paint?.Dispose();
+            _paint = null;
+        }
+
+        public void DrawOverlay(SKCanvas canvas, int width, int height, float scale, TimeSpan time)
+        {
+            // Simple text overlay for testing
+            if (_paint == null)
+            {
+                _paint = new SKPaint
+                {
+                    IsAntialias = true,
+                };
+            }
+
+            _paint.TextSize = 48 * scale;
+            _paint.Color = IsPreRecording ? SKColors.White : SKColors.Red;
+            _paint.Style = SKPaintStyle.Fill;
+
+            // text at top left
+            var text = IsPreRecording ? "PRE-RECORDED" : "LIVE";
+            canvas.DrawText(text, 50 * scale, 100 * scale, _paint);
+
+            // Draw timestamp at top left (below LIVE)
+            canvas.DrawText($"{time:mm\\:ss}", 50 * scale, 160 * scale, _paint);
+
+            // Draw a simple border around the frame
+            // Use orange during pre-recording, red during file recording
+            _paint.Style = SKPaintStyle.Stroke;
+            _paint.StrokeWidth = 4 * scale;
+
+            canvas.DrawRect(10 * scale, 10 * scale, width - 20 * scale, height - 20 * scale, _paint);
+        }
+
+        private SKPaint _paint;
+    }
 
     public class DebugStack : SkiaStack
     {
@@ -62,8 +105,6 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             CameraControl = null;
             this.Content = null;
             Canvas?.Dispose();
-            _paint?.Dispose();
-            _paint = null;
         }
 
         base.Dispose(isDisposing);
@@ -103,7 +144,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             {
 
                 // Camera preview
-                new SkiaCamera()
+                new AppCamera()
                     {
                         HorizontalOptions = LayoutOptions.Fill,
                         VerticalOptions = LayoutOptions.Fill,
@@ -474,39 +515,22 @@ public class CameraTestPage : BasePageReloadable, IDisposable
 
         CameraControl.FrameProcessor = (frame) =>
         {
-            // Simple text overlay for testing
-            if (_paint == null)
+            CameraControl.DrawOverlay(frame.Canvas, frame.Width, frame.Height, frame.Scale, frame.Time);
+        };
+
+        CameraControl.PreviewProcessor = (frame) =>
+        {
+            if (CameraControl.IsRecordingVideo || CameraControl.IsPreRecording)
             {
-                _paint = new SKPaint
-                {
-                    TextSize = 48,
-                    IsAntialias = true,
-                };
+                CameraControl.DrawOverlay(frame.Canvas, frame.Width, frame.Height, frame.Scale, frame.Time);
             }
-
-            _paint.Color = CameraControl.IsPreRecording ? SKColors.White : SKColors.Red;
-            _paint.Style = SKPaintStyle.Fill;
-
-            // text at top left
-            var text = CameraControl.IsPreRecording ? "PRE-RECORDED" : "LIVE";
-            frame.Canvas.DrawText(text, 50, 100, _paint);
-
-            // Draw timestamp at top left (below LIVE)
-            frame.Canvas.DrawText($"{frame.Time:mm\\:ss}", 50, 160, _paint);
-
-            // Draw a simple border around the frame
-            // Use orange during pre-recording, red during file recording
-            _paint.Style = SKPaintStyle.Stroke;
-            _paint.StrokeWidth = 4;
-
-            frame.Canvas.DrawRect(10, 10, frame.Width - 20, frame.Height - 20, _paint);
         };
 
         // Setup camera event handlers
         SetupCameraEvents();
     }
 
-    private SKPaint _paint;
+   
 
     private SkiaLayer CreatePreviewOverlay()
     {

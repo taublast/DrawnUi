@@ -279,6 +279,7 @@ public partial class SkiaCamera : SkiaControl
         _diagEncWidth = width;
         _diagEncHeight = height;
         _diagBitrate = (long)Math.Max(1, width * height) * Math.Max(1, fps) * 4 / 10;
+        SetSourceFrameDimensions(width, height);
         await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
 
         // CRITICAL: In pre-recording mode, do NOT call StartAsync during initialization
@@ -299,6 +300,7 @@ public partial class SkiaCamera : SkiaControl
         _diagDroppedFrames = 0;
         _diagSubmittedFrames = 0;
         _diagLastSubmitMs = 0;
+        ResetRecordingFps();
         _targetFps = fps;
 
         // Windows uses real-time preview-driven capture (no timer)
@@ -306,7 +308,7 @@ public partial class SkiaCamera : SkiaControl
 
         // Control preview source: processed frames from encoder (PreviewVideoFlow=true) or raw camera (PreviewVideoFlow=false)
         // Only applies when UseCaptureVideoFlow is TRUE (enforced by caller)
-        UseRecordingFramesForPreview = PreviewVideoFlow;
+        UseRecordingFramesForPreview = false;//PreviewVideoFlow;
 
         // Invalidate preview when the encoder publishes a new composed frame (Windows mirror)
         if (PreviewVideoFlow && _captureVideoEncoder is WindowsCaptureVideoEncoder _winEncPrev)
@@ -340,7 +342,7 @@ public partial class SkiaCamera : SkiaControl
 
         // Control preview source: processed frames from encoder (PreviewVideoFlow=true) or raw camera (PreviewVideoFlow=false)
         // Only applies when UseCaptureVideoFlow is TRUE (enforced by caller)
-        UseRecordingFramesForPreview = PreviewVideoFlow;
+        UseRecordingFramesForPreview = false;//PreviewVideoFlow;
 
         // Invalidate preview when the encoder publishes a new composed frame (Android mirror)
         if (PreviewVideoFlow && _captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
@@ -424,6 +426,7 @@ public partial class SkiaCamera : SkiaControl
         _diagEncWidth = width;
         _diagEncHeight = height;
         _diagBitrate = Math.Max((long)width * height * 4, 2_000_000L);
+        SetSourceFrameDimensions(width, height);
 
         // Pass locked rotation to encoder for proper video orientation metadata (Android-specific)
         bool useGpuCameraPath = false;
@@ -479,6 +482,7 @@ public partial class SkiaCamera : SkiaControl
         _diagDroppedFrames = 0;
         _diagSubmittedFrames = 0;
         _diagLastSubmitMs = 0;
+        ResetRecordingFps();
         _targetFps = fps;
 
         // Event-driven capture on Android: drive encoder from camera preview callback
@@ -498,8 +502,8 @@ public partial class SkiaCamera : SkiaControl
                     // Start the GPU frame provider
                     gpuEncoder.GpuFrameProvider.Start();
 
-                    // Create camera session with GPU surface
-                    androidCam.CreateGpuCameraSession(gpuSurface);
+                    // Create camera session with GPU surface and target FPS
+                    androidCam.CreateGpuCameraSession(gpuSurface, fps);
 
                     // Set up SurfaceTexture frame callback
                     // CRITICAL: OnFrameAvailable fires on arbitrary Android thread, NOT EGL context thread!
@@ -508,6 +512,9 @@ public partial class SkiaCamera : SkiaControl
                     {
                         try
                         {
+                            // Track camera input FPS (count every frame camera delivers)
+                            CalculateCameraInputFps();
+
                             if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
                             {
                                 return;
@@ -540,6 +547,7 @@ public partial class SkiaCamera : SkiaControl
                                 __sw.Stop();
                                 _diagLastSubmitMs = __sw.Elapsed.TotalMilliseconds;
                                 System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                                CalculateRecordingFps();
                             }
                             catch (Exception ex)
                             {
@@ -572,6 +580,9 @@ public partial class SkiaCamera : SkiaControl
                 {
                     try
                     {
+                        // Track camera input FPS (count every frame camera delivers)
+                        CalculateCameraInputFps();
+
                         // CRITICAL: Process frames during BOTH pre-recording AND live recording
                         // If encoder is null/disposed during transition, this check will catch it and return gracefully
                         if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
@@ -635,7 +646,7 @@ public partial class SkiaCamera : SkiaControl
                                     var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
                                     var frame = new DrawableFrame
                                     {
-                                        Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsedLocal
+                                        Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsedLocal, Scale = 1f
                                     };
                                     FrameProcessor?.Invoke(frame);
 
@@ -651,6 +662,7 @@ public partial class SkiaCamera : SkiaControl
                             __sw.Stop();
                             _diagLastSubmitMs = __sw.Elapsed.TotalMilliseconds;
                             System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                            CalculateRecordingFps();
                         }
                         catch (Exception ex)
                         {
@@ -745,6 +757,7 @@ public partial class SkiaCamera : SkiaControl
         _diagEncWidth = (int)width;
         _diagEncHeight = (int)height;
         _diagBitrate = (long)Math.Max((long)width * height * 4, 2_000_000L);
+        SetSourceFrameDimensions((int)width, (int)height);
 
         // Pass locked rotation to encoder for proper video orientation metadata (iOS-specific)
         if (_captureVideoEncoder is DrawnUi.Camera.AppleVideoToolboxEncoder appleEncoder)
@@ -800,6 +813,7 @@ public partial class SkiaCamera : SkiaControl
             _diagDroppedFrames = 0;
             _diagSubmittedFrames = 0;
             _diagLastSubmitMs = 0;
+            ResetRecordingFps();
             _captureVideoTotalStartTime = DateTime.Now;
         }
 
@@ -876,7 +890,7 @@ public partial class SkiaCamera : SkiaControl
                         var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
                         var frame = new DrawableFrame
                         {
-                            Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed
+                            Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed, Scale = 1f
                         };
                         FrameProcessor?.Invoke(frame);
 
@@ -892,6 +906,7 @@ public partial class SkiaCamera : SkiaControl
                 __sw.Stop();
                 _diagLastSubmitMs = __sw.Elapsed.TotalMilliseconds;
                 System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                CalculateRecordingFps();
                 return;
             }
 #elif ANDROID
@@ -944,7 +959,7 @@ public partial class SkiaCamera : SkiaControl
                             var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
                             var frame = new DrawableFrame
                             {
-                                Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed
+                                Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed, Scale = 1f
                             };
                             FrameProcessor?.Invoke(frame);
 
@@ -960,6 +975,7 @@ public partial class SkiaCamera : SkiaControl
                     __sw.Stop();
                     _diagLastSubmitMs = __sw.Elapsed.TotalMilliseconds;
                     System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                    CalculateRecordingFps();
                 }
                 catch (Exception ex)
                 {
@@ -1003,7 +1019,8 @@ public partial class SkiaCamera : SkiaControl
                             Width = frameWidth,
                             Height = frameHeight,
                             Canvas = canvas,
-                            Time = elapsedTotal
+                            Time = elapsedTotal,
+                            Scale = 1f
                         };
                         FrameProcessor?.Invoke(frame);
 
@@ -1019,6 +1036,7 @@ public partial class SkiaCamera : SkiaControl
                 __swA.Stop();
                 _diagLastSubmitMs = __swA.Elapsed.TotalMilliseconds;
                 System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                CalculateRecordingFps();
                 return;
             }
 #endif
@@ -1449,17 +1467,131 @@ public partial class SkiaCamera : SkiaControl
     private int _diagEncWidth = 0, _diagEncHeight = 0;
     private long _diagBitrate = 0;
 
+    /// <summary>
+    /// Current encoder width (for preview scale calculation)
+    /// </summary>
+    public int EncoderWidth => _diagEncWidth;
+
+    /// <summary>
+    /// Current encoder height (for preview scale calculation)
+    /// </summary>
+    public int EncoderHeight => _diagEncHeight;
+
+    // Rolling average FPS calculation for encoder output (same approach as DrawnView)
+    private double _diagFpsAverage;
+    private int _diagFpsCount;
+    private long _diagLastFrameTimestamp;
+    private double _diagReportFps;
+
+    // Camera input FPS tracking (frames arriving from camera)
+    private double _diagInputFpsAverage;
+    private int _diagInputFpsCount;
+    private long _diagLastInputFrameTimestamp;
+    private double _diagInputReportFps;
+
+    /// <summary>
+    /// Calculates the recording FPS using rolling average over N frames.
+    /// Same approach as DrawnView uses for display FPS.
+    /// </summary>
+    /// <param name="averageAmount">Number of frames over which to average. Default is 10.</param>
+    private void CalculateRecordingFps(int averageAmount = 10)
+    {
+        long currentTimestamp = Super.GetCurrentTimeNanos();
+
+        if (_diagLastFrameTimestamp == 0)
+        {
+            // First frame - just record timestamp, can't calculate FPS yet
+            _diagLastFrameTimestamp = currentTimestamp;
+            return;
+        }
+
+        // Convert nanoseconds to seconds for elapsed time calculation
+        double elapsedSeconds = (currentTimestamp - _diagLastFrameTimestamp) / 1_000_000_000.0;
+        _diagLastFrameTimestamp = currentTimestamp;
+
+        // Avoid division by zero or unrealistic values
+        if (elapsedSeconds <= 0 || elapsedSeconds > 1.0)
+            return;
+
+        double currentFps = 1.0 / elapsedSeconds;
+
+        _diagFpsAverage = ((_diagFpsAverage * _diagFpsCount) + currentFps) / (_diagFpsCount + 1);
+        _diagFpsCount++;
+
+        if (_diagFpsCount >= averageAmount)
+        {
+            _diagReportFps = _diagFpsAverage;
+            _diagFpsCount = 0;
+            _diagFpsAverage = 0.0;
+        }
+    }
+
+    /// <summary>
+    /// Calculates the camera input FPS using rolling average over N frames.
+    /// Called when a frame arrives from the camera (before processing).
+    /// </summary>
+    /// <param name="averageAmount">Number of frames over which to average. Default is 10.</param>
+    private void CalculateCameraInputFps(int averageAmount = 10)
+    {
+        long currentTimestamp = Super.GetCurrentTimeNanos();
+
+        if (_diagLastInputFrameTimestamp == 0)
+        {
+            // First frame - just record timestamp, can't calculate FPS yet
+            _diagLastInputFrameTimestamp = currentTimestamp;
+            return;
+        }
+
+        // Convert nanoseconds to seconds for elapsed time calculation
+        double elapsedSeconds = (currentTimestamp - _diagLastInputFrameTimestamp) / 1_000_000_000.0;
+        _diagLastInputFrameTimestamp = currentTimestamp;
+
+        // Avoid division by zero or unrealistic values
+        if (elapsedSeconds <= 0 || elapsedSeconds > 1.0)
+            return;
+
+        double currentFps = 1.0 / elapsedSeconds;
+
+        _diagInputFpsAverage = ((_diagInputFpsAverage * _diagInputFpsCount) + currentFps) / (_diagInputFpsCount + 1);
+        _diagInputFpsCount++;
+
+        if (_diagInputFpsCount >= averageAmount)
+        {
+            _diagInputReportFps = _diagInputFpsAverage;
+            _diagInputFpsCount = 0;
+            _diagInputFpsAverage = 0.0;
+        }
+    }
+
+    /// <summary>
+    /// Resets the FPS calculation state. Called when starting a new recording.
+    /// </summary>
+    private void ResetRecordingFps()
+    {
+        // Reset encoder output FPS
+        _diagFpsAverage = 0;
+        _diagFpsCount = 0;
+        _diagLastFrameTimestamp = 0;
+        _diagReportFps = 0;
+
+        // Reset camera input FPS
+        _diagInputFpsAverage = 0;
+        _diagInputFpsCount = 0;
+        _diagLastInputFrameTimestamp = 0;
+        _diagInputReportFps = 0;
+    }
+
     private void DrawDiagnostics(SKCanvas canvas, int width, int height)
     {
         if (!EnableCaptureDiagnostics || canvas == null)
             return;
 
-        var elapsed = (DateTime.Now - _diagStartTime).TotalSeconds;
-        var effFps = elapsed > 0 ? _diagSubmittedFrames / elapsed : 0;
+        var inputFps = _diagInputReportFps;
+        var outputFps = _diagReportFps;
 
         // Compose text
-        string line1 = $"FPS: {effFps:F1} / {_targetFps}  dropped: {_diagDroppedFrames}";
-        string line2 = $"submit: {_diagLastSubmitMs:F1} ms";
+        string line1 = $"cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}";
+        string line2 = $"dropped: {_diagDroppedFrames}  submit: {_diagLastSubmitMs:F1} ms";
         double mbps = _diagBitrate > 0 ? _diagBitrate / 1_000_000.0 : 0.0;
         string line3 = _diagEncWidth > 0 && _diagEncHeight > 0
             ? $"rec: {_diagEncWidth}x{_diagEncHeight}@{_targetFps}  bitrate: {mbps:F1} Mbps"

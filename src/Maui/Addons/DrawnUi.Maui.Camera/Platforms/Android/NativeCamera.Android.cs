@@ -1707,7 +1707,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// The GPU surface receives camera frames that are rendered directly to the encoder.
     /// </summary>
     /// <param name="gpuSurface">Surface from SurfaceTexture for GPU rendering</param>
-    public void CreateGpuCameraSession(Surface gpuSurface)
+    public void CreateGpuCameraSession(Surface gpuSurface, int targetFps = 30)
     {
         if (gpuSurface == null)
         {
@@ -1721,6 +1721,9 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             _useGpuCameraPath = true;
 
             mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
+
+            // Let camera use default FPS range for proper auto-exposure
+            // FPS is controlled by encoder frame pacing, not camera capture rate
 
             // Disable video stabilization for consistent FOV
             try { mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode, (int)ControlVideoStabilizationMode.Off); } catch { }
@@ -1744,21 +1747,23 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 }
             }
 
-            // Include GPU surface for recording + preview ImageReader for display
+            // GPU path: 2 streams - GPU surface for recording, ImageReader for preview
+            // Preview comes from ImageReader (lightweight), recording from GPU surface (full processing)
             var surfaces = new List<Surface>
             {
-                _gpuCameraSurface,      // GPU path for encoder
-                mImageReaderPreview.Surface  // Preview for display (legacy path still needed for preview during recording)
+                _gpuCameraSurface,           // GPU path for encoder
+                mImageReaderPreview.Surface  // ImageReader for preview display
             };
 
+            // Still need photo surface for photo capture during recording
             if (mImageReaderPhoto != null)
                 surfaces.Add(mImageReaderPhoto.Surface);
 
-            // Add targets: GPU surface for encoder, preview for display
+            // Target both surfaces - camera outputs to encoder AND preview
             mPreviewRequestBuilder.AddTarget(_gpuCameraSurface);
             mPreviewRequestBuilder.AddTarget(mImageReaderPreview.Surface);
 
-            System.Diagnostics.Debug.WriteLine($"[NativeCamera] Creating GPU camera session with {surfaces.Count} surfaces");
+            System.Diagnostics.Debug.WriteLine($"[NativeCamera] Creating GPU camera session with {surfaces.Count} surfaces - GPU + ImageReader preview");
 
             mCameraDevice.CreateCaptureSession(
                 surfaces,
@@ -1887,7 +1892,6 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     {
         PreviewCaptureSuccess?.Invoke(result);
     }
-
 
     public void StopCapturingStillImage()
     {
@@ -2658,7 +2662,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             surfaces.Add(recorderSurface);
 
             // Create capture request for video recording
-            mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Record);
+            mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
             // Ensure consistent FOV during recording: explicitly disable video stabilization
             try
             {

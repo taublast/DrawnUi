@@ -712,6 +712,12 @@ public partial class SkiaCamera : SkiaControl
         base.OnLayoutChanged();
 
         ApplyDisplayProperties();
+
+        // Update preview scale when layout changes
+        if (_sourceFrameWidth > 0)
+        {
+            UpdatePreviewScale();
+        }
     }
 
     public static readonly BindableProperty IsMirroredProperty = BindableProperty.Create(
@@ -725,6 +731,101 @@ public partial class SkiaCamera : SkiaControl
     {
         get { return (bool)GetValue(IsMirroredProperty); }
         set { SetValue(IsMirroredProperty, value); }
+    }
+
+    private static readonly BindablePropertyKey PreviewScalePropertyKey = BindableProperty.CreateReadOnly(
+        nameof(PreviewScale),
+        typeof(float),
+        typeof(SkiaCamera),
+        1f);
+
+    public static readonly BindableProperty PreviewScaleProperty = PreviewScalePropertyKey.BindableProperty;
+
+    /// <summary>
+    /// Scale factor of preview relative to recording/capture frame size.
+    /// 1.0 = same size, less than 1.0 = preview is smaller than recording frame.
+    /// Use this to scale overlay drawings consistently between preview and recording.
+    /// </summary>
+    public float PreviewScale
+    {
+        get => (float)GetValue(PreviewScaleProperty);
+        private set => SetValue(PreviewScalePropertyKey, value);
+    }
+
+    /// <summary>
+    /// Tracks the source frame dimensions (from camera/encoder) for scale calculation
+    /// </summary>
+    private int _sourceFrameWidth;
+    private int _sourceFrameHeight;
+
+    /// <summary>
+    /// Tracks the actual preview image dimensions (after rotation) for scale calculation
+    /// </summary>
+    private int _actualPreviewWidth;
+    private int _actualPreviewHeight;
+
+    /// <summary>
+    /// Updates PreviewScale based on actual preview image width and encoder/recording width.
+    /// Scale = actualPreviewImageWidth / encoderWidth
+    /// </summary>
+    protected void UpdatePreviewScale()
+    {
+        // _actualPreviewWidth = actual preview image width (after rotation, from SKImage)
+        // _sourceFrameWidth = encoder/recording frame width
+        if (_sourceFrameWidth > 0 && _actualPreviewWidth > 0)
+        {
+            PreviewScale = (float)_actualPreviewWidth / _sourceFrameWidth;
+            System.Diagnostics.Debug.WriteLine($"[SkiaCamera] PreviewScale updated: {_actualPreviewWidth} / {_sourceFrameWidth} = {PreviewScale:F3}");
+        }
+        else
+        {
+            PreviewScale = 1f;
+        }
+    }
+
+    /// <summary>
+    /// Sets the source frame dimensions (encoder/recording size) and updates PreviewScale
+    /// </summary>
+    public void SetSourceFrameDimensions(int width, int height)
+    {
+        _sourceFrameWidth = width;
+        _sourceFrameHeight = height;
+
+        // Update scale using preview image width vs encoder width
+        UpdatePreviewScale();
+    }
+
+    /// <summary>
+    /// Updates source frame dimensions from the current video format.
+    /// Called when camera starts or format changes.
+    /// PreviewScale will be updated once actual preview frames arrive.
+    /// </summary>
+    protected void UpdatePreviewScaleFromFormat()
+    {
+#if ONPLATFORM
+        try
+        {
+            var format = NativeControl?.GetCurrentVideoFormat();
+            if (format != null && format.Width > 0)
+            {
+                // Store source frame dimensions from format (this is the recording size)
+                _sourceFrameWidth = format.Width;
+                _sourceFrameHeight = format.Height;
+                System.Diagnostics.Debug.WriteLine($"[SkiaCamera] Source frame dimensions set from format: {_sourceFrameWidth}x{_sourceFrameHeight}");
+
+                // PreviewScale will be updated when actual preview frames arrive in SetFrameFromNative()
+                // because we need the actual rotated preview image dimensions
+                if (_actualPreviewWidth > 0)
+                {
+                    UpdatePreviewScale();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[SkiaCamera] UpdatePreviewScaleFromFormat error: {ex.Message}");
+        }
+#endif
     }
 
     public static readonly BindableProperty AspectProperty = BindableProperty.Create(
@@ -756,6 +857,12 @@ public partial class SkiaCamera : SkiaControl
         {
             control.StateChanged?.Invoke(control, control.State);
             control.UpdateInfo();
+
+            // Update preview scale when camera becomes ready
+            if (control.State == CameraState.On)
+            {
+                control.UpdatePreviewScaleFromFormat();
+            }
         }
     }
 
@@ -1228,6 +1335,12 @@ public partial class SkiaCamera : SkiaControl
     private void DisplayWasChanged(object sender, SKRect e)
     {
         DisplayRectChanged?.Invoke(this, e);
+
+        // Update preview scale when display dimensions change
+        if (_sourceFrameWidth > 0)
+        {
+            UpdatePreviewScale();
+        }
     }
 
     public override void OnWillDisposeWithChildren()
@@ -1998,9 +2111,16 @@ public partial class SkiaCamera : SkiaControl
     public TimeSpan CurrentRecordingDuration { get; private set; }
 
     /// <summary>
-    /// Custom frame processor for video capture
+    /// Custom frame processor for video capture (recording frames).
+    /// Called for each frame being encoded to video. Scale is always 1.0.
     /// </summary>
     public Action<DrawableFrame> FrameProcessor { get; set; }
+
+    /// <summary>
+    /// Custom frame processor for preview display.
+    /// Called for each preview frame before display. Use PreviewScale to match recording overlay sizing.
+    /// </summary>
+    public Action<DrawableFrame> PreviewProcessor { get; set; }
 
     /// <summary>
     /// Whether to mirror recording frames to preview
@@ -2024,6 +2144,11 @@ public partial class SkiaCamera : SkiaControl
     private ICaptureVideoEncoder _captureVideoEncoder;
     private System.Threading.Timer _frameCaptureTimer;
     private DateTime _captureVideoStartTime;
+
+    /// <summary>
+    /// Start time of current capture video recording (for overlay time sync)
+    /// </summary>
+    public DateTime CaptureVideoStartTime => _captureVideoStartTime;
 
     // Pre-recording file fields (streaming to disk, not memory)
     private object _preRecordingLock = new object();
@@ -2160,7 +2285,8 @@ public partial class SkiaCamera : SkiaControl
                                     Width = frameWidth,
                                     Height = frameHeight,
                                     Canvas = canvas,
-                                    Time = elapsed
+                                    Time = elapsed,
+                                    Scale = 1f
                                 };
                                 FrameProcessor?.Invoke(frame);
 
@@ -2206,11 +2332,7 @@ public partial class SkiaCamera : SkiaControl
 
     protected virtual SKImage AquireFrameFromNative()
     {
-        // If using capture video encoder and not mirroring to preview, suppress raw camera frames
-        // This ONLY applies when we actually have an encoder providing processed frames
-        // When using native recording (_captureVideoEncoder == null), raw frames should always be shown
-        if (IsRecordingVideo && _captureVideoEncoder != null && !UseRecordingFramesForPreview)
-            return null;
+        // When UseRecordingFramesForPreview=false, we want raw ImageReader preview (don't suppress)
 
 #if WINDOWS
         if ((IsRecordingVideo || IsPreRecording) && UseRecordingFramesForPreview &&
@@ -2256,11 +2378,82 @@ public partial class SkiaCamera : SkiaControl
             {
                 FrameAquired = true;
 
+                // Capture actual preview image dimensions for PreviewScale calculation
+                if (_actualPreviewWidth != image.Width)
+                {
+                    _actualPreviewWidth = image.Width;
+                    _actualPreviewHeight = image.Height;
+                    if (_sourceFrameWidth > 0)
+                    {
+                        UpdatePreviewScale();
+                    }
+                }
+
+                // Apply PreviewProcessor if set
+                SKImage finalImage = image;
+                if (PreviewProcessor != null)
+                {
+                    var processed = ApplyPreviewProcessor(image);
+                    if (processed != null)
+                    {
+                        finalImage = processed;
+                    }
+                }
+
                 // Note: Pre-recording frame buffering happens at the encoder level (platform-specific)
                 // The encoder intercepts encoded frames during the pre-recording phase and buffers them
 
-                OnNewFrameSet(Display.SetImageInternal(image, false));
+                OnNewFrameSet(Display.SetImageInternal(finalImage, false));
             }
+        }
+    }
+
+    /// <summary>
+    /// Applies PreviewProcessor to the preview image and returns the composited result.
+    /// </summary>
+    private SKImage ApplyPreviewProcessor(SKImage source)
+    {
+        if (source == null || PreviewProcessor == null)
+            return null;
+
+        try
+        {
+            var width = source.Width;
+            var height = source.Height;
+
+            var info = new SKImageInfo(width, height, SKColorType.Rgba8888, SKAlphaType.Premul);
+            using var surface = SKSurface.Create(info);
+            if (surface == null)
+                return null;
+
+            var canvas = surface.Canvas;
+
+            // Draw raw preview image
+            canvas.DrawImage(source, 0, 0);
+
+            // Calculate elapsed time (for animation sync with recording)
+            var elapsed = (IsRecordingVideo || IsPreRecording)
+                ? DateTime.Now - _captureVideoStartTime
+                : TimeSpan.Zero;
+
+            // Call PreviewProcessor with preview frame info
+            var frame = new DrawableFrame
+            {
+                Width = width,
+                Height = height,
+                Canvas = canvas,
+                Time = elapsed,
+                Scale = PreviewScale  // Use PreviewScale so user can match recording overlay
+            };
+            PreviewProcessor.Invoke(frame);
+
+            // Return composited image
+            return surface.Snapshot();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[SkiaCamera] ApplyPreviewProcessor error: {ex.Message}");
+            return null;
         }
     }
 

@@ -20,6 +20,9 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             if (lockProcessing || FormsControl.Height <= 0 || FormsControl.Width <= 0 || CapturingStill)
                 return;
 
+            // For GPU recording: ImageReader provides preview, GPU surface provides encoder frames
+            // We still process ImageReader for preview display (raw, no heavy processing)
+
             FramesReader = reader;
 
             if (Output != null)
@@ -72,15 +75,14 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                                     Rotation = rotation
                                 };
 
-                                // Always notify encoder path
-                                OnPreviewCaptureSuccess(outImage);
-
-                                // Only push to UI preview when NOT recording in capture flow
+                                // Notify encoder path (for non-GPU recording scenarios)
                                 if (!inCaptureRecording)
                                 {
-                                    Preview = outImage;
-                                    FormsControl.UpdatePreview();
+                                    OnPreviewCaptureSuccess(outImage);
                                 }
+
+                                Preview = outImage;
+                                FormsControl.UpdatePreview();
                             }
                         }
                     }
