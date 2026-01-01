@@ -2549,6 +2549,15 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             throw new InvalidOperationException("Cannot add movie file output to capture session");
         }
 
+        // CRITICAL: Ensure video data output connection remains enabled for preview
+        // After adding movie file output, verify the video data output is still active
+        var videoDataConnection = _videoDataOutput?.ConnectionFromMediaType(AVMediaTypes.Video.GetConstant());
+        if (videoDataConnection != null)
+        {
+            videoDataConnection.Enabled = true;
+            Debug.WriteLine($"[NativeCamera.Apple] Video data output connection enabled: {videoDataConnection.Enabled}, active: {videoDataConnection.Active}");
+        }
+
         _session.CommitConfiguration();
 
         // Reset preview texture after session reconfiguration - IOSurface pool changes
@@ -2887,9 +2896,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         {
             Debug.WriteLine("[NativeCamera.Apple] Starting video recording...");
 
-            // Setup movie file output if not already created
-            await SetupMovieFileOutput();
-
             // Apply target session preset based on VideoQuality (with fallbacks)
             try
             {
@@ -2903,6 +2909,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 }
             }
             catch { }
+
+            // Setup movie file output if not already created
+            await SetupMovieFileOutput();
 
             // Create temporary file URL for video recording
             var fileName = $"video_{DateTime.Now:yyyyMMdd_HHmmss}.mov";
