@@ -214,6 +214,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     {
         lock (lockSetup)
         {
+            ResetPreviewTexture();
+
             _session.BeginConfiguration();
 
             try
@@ -2548,6 +2550,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
 
         _session.CommitConfiguration();
+
+        // Reset preview texture after session reconfiguration - IOSurface pool changes
+        ResetPreviewTexture();
     }
 
     /// <summary>
@@ -2618,6 +2623,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         // The movie file output will automatically configure appropriate settings
 
         Debug.WriteLine($"[NativeCamera.Apple] Configured video settings for quality: {quality}");
+
+        ResetPreviewTexture();
     }
 
     /// <summary>
@@ -2854,6 +2861,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 }
 
                 _session.CommitConfiguration();
+
+                // Reset preview texture after session reconfiguration - IOSurface pool changes
+                ResetPreviewTexture();
             }
 
             _movieFileOutput?.Dispose();
