@@ -14,6 +14,7 @@ using DrawnUi.Controls;
 using Foundation;
 using ImageIO;
 using IOSurface;
+using Metal;
 using Microsoft.Maui.Controls.Compatibility;
 using Microsoft.Maui.Media;
 using Photos;
@@ -55,9 +56,72 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     private int _skippedFrameCount = 0;
     private int _processedFrameCount = 0;
 
+    // Raw frame arrival diagnostics (counts ALL frames before filtering)
+    private long _rawFrameCount = 0;
+    private long _rawFrameLastReportTime = 0;
+    private double _rawFrameFps = 0;
+
+    /// <summary>
+    /// Raw camera frame delivery rate (all frames before any filtering/processing)
+    /// </summary>
+    public double RawCameraFps => _rawFrameFps;
+
     // Raw frame data for lazy SKImage creation - fixed memory leak version
     private readonly object _lockRawFrame = new();
     private RawFrameData _latestRawFrame;
+
+    // Pool RawFrameData to avoid GC allocations every frame
+    private readonly System.Collections.Concurrent.ConcurrentQueue<RawFrameData> _rawFrameDataPool = new();
+
+    // Preview scaling for smooth performance in Video mode
+    private int _previewMaxWidth = 960;  // Max preview resolution for smooth performance
+    private int _previewMaxHeight = 540;
+
+    // Metal-based scaling (zero ObjC allocation per frame)
+    private MetalPreviewScaler _metalScaler;
+
+    // ARTOFFOTO PATTERN: Metal texture cache - create texture ONCE, it auto-updates!
+    // Camera writes to IOSurface pool, our texture view shows new frames automatically
+    private CVMetalTextureCache _previewTextureCache;
+    private IMTLTexture _previewTexture;  // Created ONCE, accessed from preview thread
+    private IMTLDevice _metalDevice;
+    private readonly object _lockPreviewTexture = new();
+    private int _previewTextureWidth;
+    private int _previewTextureHeight;
+
+    // Frame processing on separate thread (ArtOfFoto pattern)
+    // Camera callback just signals new frame, processing thread reads from _previewTexture
+    private Thread _frameProcessingThread;
+    private volatile bool _stopProcessingThread;
+    private volatile bool _hasNewFrame;
+    private readonly object _lockPendingBuffer = new();
+
+    // Full-res frame callback for recording (called from camera thread)
+    private Action<CVPixelBuffer, long> _fullResFrameCallback;
+    private readonly object _lockFullResCallback = new();
+
+    /// <summary>
+    /// Set callback to receive full-resolution frames for recording.
+    /// Callback is invoked on camera thread with CVPixelBuffer and timestamp in nanoseconds.
+    /// </summary>
+    public void SetFullResFrameCallback(Action<CVPixelBuffer, long> callback)
+    {
+        lock (_lockFullResCallback)
+        {
+            _fullResFrameCallback = callback;
+        }
+    }
+
+    /// <summary>
+    /// Clear the full-res frame callback.
+    /// </summary>
+    public void ClearFullResFrameCallback()
+    {
+        lock (_lockFullResCallback)
+        {
+            _fullResFrameCallback = null;
+        }
+    }
 
     // Orientation tracking properties
     private UIInterfaceOrientation _uiOrientation;
@@ -485,8 +549,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         // limit preview size for performance
         var videoPixels = width * height;
 
-        // With optimized pipeline we can allow 1080p on phones too
-        var maxVideoPixels = 1920 * 1080; 
+        // Allow up to 1080p - GPU scaling handles high-res efficiently
+        var maxVideoPixels = 1920 * 1080;
 
         if (videoPixels > maxVideoPixels)
             return false;
@@ -767,6 +831,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
     public void Stop(bool force = false)
     {
+        // Stop frame processing thread first
+        StopFrameProcessingThread();
+
         SetCapture(null);
 
         // Clear raw frame data
@@ -1271,27 +1338,41 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
     public (SKImage Image, int Rotation, bool Flip) GetRawPreviewImage()
     {
+        // CRITICAL: Copy references quickly under lock, then release lock before expensive operations!
+        // Otherwise camera thread blocks waiting for lock while we copy megabytes of data
+        int width, height, bytesPerRow, rotation;
+        bool flip;
+        byte[] pixelData;
+
         lock (_lockRawFrame)
         {
             if (_latestRawFrame == null)
                 return (null, 0, false);
 
-            try
-            {
-                var info = new SKImageInfo(_latestRawFrame.Width, _latestRawFrame.Height, SKColorType.Bgra8888, SKAlphaType.Premul);
-                
-                // Create a copy of the pixel data to be safe and independent
-                // This is faster than GetPreviewImage which does rotation/drawing
-                using var data = SKData.CreateCopy(_latestRawFrame.PixelData);
-                var image = SKImage.FromPixels(info, data, _latestRawFrame.BytesPerRow);
-                
-                return (image, (int)_latestRawFrame.CurrentRotation, _latestRawFrame.Facing == CameraPosition.Selfie);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"[NativeCameraiOS] GetRawPreviewImage error: {e}");
-                return (null, 0, false);
-            }
+            // Quick copy of references/values - lock held for microseconds
+            width = _latestRawFrame.Width;
+            height = _latestRawFrame.Height;
+            bytesPerRow = _latestRawFrame.BytesPerRow;
+            rotation = (int)_latestRawFrame.CurrentRotation;
+            flip = _latestRawFrame.Facing == CameraPosition.Selfie;
+            pixelData = _latestRawFrame.PixelData;
+        }
+        // Lock released! Camera thread can now proceed
+
+        try
+        {
+            var info = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
+
+            // Expensive data copy happens OUTSIDE lock - no contention!
+            using var data = SKData.CreateCopy(pixelData);
+            var image = SKImage.FromPixels(info, data, bytesPerRow);
+
+            return (image, rotation, flip);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"[NativeCameraiOS] GetRawPreviewImage error: {e}");
+            return (null, 0, false);
         }
     }
 
@@ -1313,39 +1394,53 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             }
         }
 
-        // No ready preview, create one from raw frame data if available
+        // CRITICAL: Copy references quickly under lock, then release before expensive operations!
+        int width, height, bytesPerRow;
+        double rotation;
+        bool flip;
+        byte[] pixelData;
+
         lock (_lockRawFrame)
         {
             if (_latestRawFrame == null)
                 return null;
 
+            // Quick copy of references/values - lock held for microseconds
+            width = _latestRawFrame.Width;
+            height = _latestRawFrame.Height;
+            bytesPerRow = _latestRawFrame.BytesPerRow;
+            rotation = (double)_latestRawFrame.CurrentRotation;
+            flip = _latestRawFrame.Facing == CameraPosition.Selfie;
+            pixelData = _latestRawFrame.PixelData;
+        }
+        // Lock released! Camera thread can now proceed
+
+        try
+        {
+            // All expensive operations happen OUTSIDE the lock
+            var info = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
+
+            // Pin the byte array and create SKImage
+            var gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(pixelData, System.Runtime.InteropServices.GCHandleType.Pinned);
             try
             {
-                // Create SKImage on main thread from copied pixel data
-                var info = new SKImageInfo(_latestRawFrame.Width, _latestRawFrame.Height, SKColorType.Bgra8888, SKAlphaType.Premul);
+                var pinnedPtr = gcHandle.AddrOfPinnedObject();
+                using var rawImage = SKImage.FromPixels(info, pinnedPtr, bytesPerRow);
 
-                // Pin the byte array and create SKImage
-                var gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(_latestRawFrame.PixelData, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
-                {
-                    var pinnedPtr = gcHandle.AddrOfPinnedObject();
-                    using var rawImage = SKImage.FromPixels(info, pinnedPtr, _latestRawFrame.BytesPerRow);
-
-                    // Apply rotation if needed
-                    using var bitmap = SKBitmap.FromImage(rawImage);
-                    using var rotatedBitmap = HandleOrientationForPreview(bitmap, (double)_latestRawFrame.CurrentRotation, _latestRawFrame.Facing == CameraPosition.Selfie);
-                    return SKImage.FromBitmap(rotatedBitmap);
-                }
-                finally
-                {
-                    gcHandle.Free();
-                }
+                // Apply rotation if needed
+                using var bitmap = SKBitmap.FromImage(rawImage);
+                using var rotatedBitmap = HandleOrientationForPreview(bitmap, rotation, flip);
+                return SKImage.FromBitmap(rotatedBitmap);
             }
-            catch (Exception e)
+            finally
             {
-                Console.WriteLine($"[NativeCameraiOS] GetPreviewImage error: {e}");
-                return null;
+                gcHandle.Free();
             }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"[NativeCameraiOS] GetPreviewImage error: {e}");
+            return null;
         }
     }
 
@@ -1521,97 +1616,380 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     // Buffer pool to reduce GC pressure
     private readonly System.Collections.Concurrent.ConcurrentQueue<byte[]> _pixelBufferPool = new();
 
+    // CFRetain to keep CVPixelBuffer alive after camera callback returns
+    [System.Runtime.InteropServices.DllImport("/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation")]
+    private static extern IntPtr CFRetain(IntPtr cf);
+
+    [System.Runtime.InteropServices.DllImport("/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation")]
+    private static extern void CFRelease(IntPtr cf);
+
+    /// <summary>
+    /// Start the frame processing thread. Call this when camera starts.
+    /// </summary>
+    private void StartFrameProcessingThread()
+    {
+        if (_frameProcessingThread != null)
+            return;
+
+        _stopProcessingThread = false;
+        _frameProcessingThread = new Thread(FrameProcessingLoop)
+        {
+            IsBackground = true,
+            Name = "CameraFrameProcessor",
+            Priority = ThreadPriority.AboveNormal
+        };
+        _frameProcessingThread.Start();
+        System.Diagnostics.Debug.WriteLine("[NativeCameraiOS] Frame processing thread started");
+    }
+
+    /// <summary>
+    /// Stop the frame processing thread. Call this when camera stops.
+    /// </summary>
+    private void StopFrameProcessingThread()
+    {
+        _stopProcessingThread = true;
+
+        // Wake up the thread if it's waiting
+        lock (_lockPendingBuffer)
+        {
+            Monitor.PulseAll(_lockPendingBuffer);
+        }
+
+        // Wait for thread to finish (with timeout)
+        if (_frameProcessingThread != null)
+        {
+            _frameProcessingThread.Join(500);
+            _frameProcessingThread = null;
+        }
+
+        // Reset frame flag
+        lock (_lockPendingBuffer)
+        {
+            _hasNewFrame = false;
+        }
+
+        // Clean up Metal preview texture (will be recreated on next start)
+        ResetPreviewTexture();
+
+        System.Diagnostics.Debug.WriteLine("[NativeCameraiOS] Frame processing thread stopped");
+    }
+
+    /// <summary>
+    /// Reset the preview texture so it will be recreated on next camera frame.
+    /// Call this when camera format changes, recording starts/stops, etc.
+    /// </summary>
+    private void ResetPreviewTexture()
+    {
+        lock (_lockPreviewTexture)
+        {
+            _previewTexture = null;
+            _previewTextureWidth = 0;
+            _previewTextureHeight = 0;
+        }
+        // Flush texture cache to release memory
+        _previewTextureCache?.Flush(CVOptionFlags.None);
+        System.Diagnostics.Debug.WriteLine("[NativeCameraiOS] Preview texture reset");
+    }
+
     [Export("captureOutput:didOutputSampleBuffer:fromConnection:")]
     public void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
     {
+        // Count ALL incoming frames for raw FPS calculation (before any filtering)
+        _rawFrameCount++;
+        var now = System.Diagnostics.Stopwatch.GetTimestamp();
+        if (_rawFrameLastReportTime == 0)
+        {
+            _rawFrameLastReportTime = now;
+        }
+        else
+        {
+            var elapsedTicks = now - _rawFrameLastReportTime;
+            var elapsedSeconds = (double)elapsedTicks / System.Diagnostics.Stopwatch.Frequency;
+            if (elapsedSeconds >= 1.0)
+            {
+                _rawFrameFps = _rawFrameCount / elapsedSeconds;
+                _rawFrameCount = 0;
+                _rawFrameLastReportTime = now;
+            }
+        }
+
         if (FormsControl == null || _isCapturingStill || State != CameraProcessorState.Enabled)
             return;
 
-        // THROTTLING: Only skip if previous frame is still being processed (prevents thread overwhelm)
-        if (_isProcessingFrame)
+        // Start processing thread if not running
+        if (_frameProcessingThread == null)
         {
-            _skippedFrameCount++;
-            return;
+            StartFrameProcessingThread();
         }
 
-        _isProcessingFrame = true;
-        _processedFrameCount++;
+        // RECORDING PATH: Call full-res callback if set (for video encoding)
+        Action<CVPixelBuffer, long> recordingCallback;
+        lock (_lockFullResCallback)
+        {
+            recordingCallback = _fullResFrameCallback;
+        }
 
-        // Log stats every 300 frames
-        //if (_processedFrameCount % 300 == 0)
-        //{
-        //    System.Diagnostics.Debug.WriteLine($"[NativeCameraiOS] Frame stats - Processed: {_processedFrameCount}, Skipped: {_skippedFrameCount}");
-        //}
-
-        bool hasFrame = false;
+        CVPixelBuffer pixelBuffer = null;
         try
         {
-            using var pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
-            if (pixelBuffer == null)
-                return;
+            // ============================================================
+            // Create Metal texture ONCE, then do NOTHING!
+            // The texture auto-updates because camera reuses IOSurface pool.
+            // ============================================================
+            if (_previewTexture == null)
+            {
+                // FIRST FRAME ONLY: Create texture cache and texture
+                pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
+                if (pixelBuffer == null)
+                    return;
 
-            pixelBuffer.Lock(CVPixelBufferLock.ReadOnly);
+                pixelBuffer.Lock(CVPixelBufferLock.None);
+                try
+                {
+                    // Initialize Metal device and texture cache
+                    if (_metalDevice == null)
+                    {
+                        _metalDevice = MTLDevice.SystemDefault;
+                        if (_metalDevice == null)
+                        {
+                            System.Diagnostics.Debug.WriteLine("[NativeCameraiOS] No Metal device!");
+                            return;
+                        }
+                    }
+
+                    if (_previewTextureCache == null)
+                    {
+                        _previewTextureCache = new CVMetalTextureCache(_metalDevice);
+                        if (_previewTextureCache == null)
+                        {
+                            System.Diagnostics.Debug.WriteLine("[NativeCameraiOS] Failed to create texture cache!");
+                            return;
+                        }
+                    }
+
+                    // Create Metal texture from pixel buffer (zero-copy!)
+                    var width = pixelBuffer.Width;
+                    var height = pixelBuffer.Height;
+                    var cvTexture = _previewTextureCache.TextureFromImage(
+                        pixelBuffer,
+                        MTLPixelFormat.BGRA8Unorm,
+                        width,
+                        height,
+                        0,
+                        out CVReturn error);
+
+                    if (error != CVReturn.Success || cvTexture == null)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[NativeCameraiOS] TextureFromImage failed: {error}");
+                        return;
+                    }
+
+                    lock (_lockPreviewTexture)
+                    {
+                        _previewTexture = cvTexture.Texture;
+                        _previewTextureWidth = (int)width;
+                        _previewTextureHeight = (int)height;
+                    }
+
+                    System.Diagnostics.Debug.WriteLine($"[NativeCameraiOS] Metal texture created ONCE: {width}x{height}");
+
+                    // Recording callback for first frame
+                    if (recordingCallback != null)
+                    {
+                        var presentationTime = sampleBuffer.PresentationTimeStamp;
+                        long timestampNs = (long)(presentationTime.Seconds * 1_000_000_000);
+                        try { recordingCallback(pixelBuffer, timestampNs); } catch { }
+                    }
+                }
+                finally
+                {
+                    pixelBuffer.Unlock(CVPixelBufferLock.None);
+                }
+            }
+            else
+            {
+                // SUBSEQUENT FRAMES: Just signal new frame - texture auto-updates!
+                // Recording callback still needs the buffer
+                if (recordingCallback != null)
+                {
+                    pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
+                    if (pixelBuffer != null)
+                    {
+                        var presentationTime = sampleBuffer.PresentationTimeStamp;
+                        long timestampNs = (long)(presentationTime.Seconds * 1_000_000_000);
+                        try { recordingCallback(pixelBuffer, timestampNs); } catch { }
+                    }
+                }
+            }
+
+            // Signal preview thread that new frame data is available in texture
+            lock (_lockPendingBuffer)
+            {
+                _hasNewFrame = true;
+                Monitor.Pulse(_lockPendingBuffer);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"[NativeCameraiOS] DidOutputSampleBuffer error: {e}");
+        }
+        finally
+        {
+            sampleBuffer?.Dispose();
+            pixelBuffer?.Dispose();
+        }
+    }
+
+    /// <summary>
+    /// Frame processing loop - reads from Metal texture (created ONCE) for preview.
+    /// </summary>
+    private void FrameProcessingLoop()
+    {
+        System.Diagnostics.Debug.WriteLine("[NativeCameraiOS] Frame processing loop started");
+
+        while (!_stopProcessingThread)
+        {
+            // Wait for new frame signal
+            lock (_lockPendingBuffer)
+            {
+                while (!_hasNewFrame && !_stopProcessingThread)
+                {
+                    Monitor.Wait(_lockPendingBuffer, 100);
+                }
+
+                if (_stopProcessingThread)
+                    break;
+
+                _hasNewFrame = false;
+            }
+
+            // Get texture reference (thread-safe)
+            IMTLTexture texture;
+            int width, height;
+            lock (_lockPreviewTexture)
+            {
+                texture = _previewTexture;
+                width = _previewTextureWidth;
+                height = _previewTextureHeight;
+            }
+
+            if (texture == null)
+                continue;
+
+            _processedFrameCount++;
+            bool hasFrame = false;
 
             try
             {
+                int previewWidth = width;
+                int previewHeight = height;
+                byte[] pixelData = null;
+                int bytesPerRow = 0;
+                bool scalingSucceeded = false;
 
-                var (iso, aperture, shutterSpeed) = GetLiveExposureSettings();
+                // Use Metal scaling for Video mode (reduces data to copy)
+                bool needsScaling = FormsControl.CaptureMode == CaptureModeType.Video &&
+                                   (width > _previewMaxWidth || height > _previewMaxHeight);
 
-                var attachments = sampleBuffer.GetAttachments(CMAttachmentMode.ShouldPropagate);
-                var exif = attachments["{Exif}"] as NSDictionary;
-                var focal = exif["FocalLength"].ToString().ToFloat();
-
-
-                if (!_cameraUnitInitialized)
+                if (needsScaling)
                 {
-                    _cameraUnitInitialized = true;
+                    // Calculate scaled dimensions
+                    float scale = Math.Min((float)_previewMaxWidth / width, (float)_previewMaxHeight / height);
+                    int scaledWidth = ((int)(width * scale) / 2) * 2;
+                    int scaledHeight = ((int)(height * scale) / 2) * 2;
 
-                    var focals = new List<float>();
-                    var focal35mm = exif["FocalLenIn35mmFilm"].ToString().ToFloat();
-                    var name = exif["LensModel"].ToString();
-                    var lenses = exif["LensSpecification "] as NSDictionary;
-                    if (lenses != null)
+                    // Initialize Metal scaler on first use
+                    if (_metalScaler == null)
                     {
-                        foreach (var lens in lenses)
+                        _metalScaler = new MetalPreviewScaler();
+                        if (!_metalScaler.Initialize(width, height, scaledWidth, scaledHeight))
                         {
-                            var add = lens.ToString().ToDouble();
-                            focals.Add((float)add);
+                            _metalScaler.Dispose();
+                            _metalScaler = null;
                         }
+                    }
+
+                    // Try Metal scaling from texture
+                    if (_metalScaler != null && _metalScaler.IsInitialized)
+                    {
+                        previewWidth = _metalScaler.OutputWidth;
+                        previewHeight = _metalScaler.OutputHeight;
+                        int dataSize = previewWidth * previewHeight * 4;
+
+                        if (_pixelBufferPool.TryDequeue(out var pooledBuffer) && pooledBuffer.Length == dataSize)
+                        {
+                            pixelData = pooledBuffer;
+                        }
+                        else
+                        {
+                            pixelData = new byte[dataSize];
+                        }
+
+                        if (_metalScaler.ScaleFromTexture(texture, pixelData, out bytesPerRow))
+                        {
+                            scalingSucceeded = true;
+                        }
+                    }
+                }
+
+                // Full resolution if scaling not needed or failed
+                if (!scalingSucceeded)
+                {
+                    previewWidth = width;
+                    previewHeight = height;
+                    bytesPerRow = width * 4;
+                    int dataSize = height * bytesPerRow;
+
+                    if (_pixelBufferPool.TryDequeue(out var pooledBuffer) && pooledBuffer.Length == dataSize)
+                    {
+                        pixelData = pooledBuffer;
                     }
                     else
                     {
-                        focals.Add((float)focal);
+                        pixelData = new byte[dataSize];
                     }
 
-                    // FOV = 2 arctan (x / (2 f)), where x is the diagonal of the film.
-                    var unit = FormsControl.CameraDevice;
+                    var region = new MTLRegion
+                    {
+                        Origin = new MTLOrigin(0, 0, 0),
+                        Size = new MTLSize(width, height, 1)
+                    };
 
-                    //unit.Id = name;
-                    unit.SensorCropFactor = focal35mm / focal;
-                    unit.FocalLengths = focals;
-                    unit.PixelXDimension = exif["PixelXDimension"].ToString().ToFloat();
-                    unit.PixelYDimension = exif["PixelYDimension"].ToString().ToFloat();
-                    unit.FocalLength = focal;
-
-                    var formatInfo = _deviceInput.Device.ActiveFormat;
-                    var pixelsZoom = formatInfo.VideoZoomFactorUpscaleThreshold;
-                    float aspectH = unit.PixelXDimension / unit.PixelYDimension;
-                    float fovH = formatInfo.VideoFieldOfView;
-                    float fovV = fovH / aspectH;
-
-                    var sensorWidth = (float)(2 * unit.FocalLength * Math.Tan(fovH * Math.PI / 2.0f * 180));
-                    var sensorHeight = (float)(2 * unit.FocalLength * Math.Tan(fovV * Math.PI / 2.0f * 180));
-
-                    unit.SensorHeight = sensorHeight;
-                    unit.SensorWidth = sensorWidth;
-                    unit.FieldOfView = fovH;
-
+                    unsafe
+                    {
+                        fixed (byte* ptr = pixelData)
+                        {
+                            texture.GetBytes((IntPtr)ptr, (nuint)bytesPerRow, region, 0);
+                        }
+                    }
                 }
 
-                FormsControl.CameraDevice.Meta.FocalLength = focal;
-                FormsControl.CameraDevice.Meta.ISO = (int)iso;
-                FormsControl.CameraDevice.Meta.Aperture = aperture;
-                FormsControl.CameraDevice.Meta.Shutter = shutterSpeed;
+                // Update camera metadata occasionally
+                if (_processedFrameCount % 10 == 0)
+                {
+                    try
+                    {
+                        var (iso, aperture, shutterSpeed) = GetLiveExposureSettings();
+                        FormsControl.CameraDevice.Meta.ISO = (int)iso;
+                        FormsControl.CameraDevice.Meta.Aperture = aperture;
+                        FormsControl.CameraDevice.Meta.Shutter = shutterSpeed;
+
+                        if (!_cameraUnitInitialized)
+                        {
+                            _cameraUnitInitialized = true;
+                            var unit = FormsControl.CameraDevice;
+                            unit.PixelXDimension = width;
+                            unit.PixelYDimension = height;
+
+                            var formatInfo = _deviceInput?.Device?.ActiveFormat;
+                            if (formatInfo != null)
+                            {
+                                unit.FieldOfView = formatInfo.VideoFieldOfView;
+                            }
+                    }
+                }
+                catch { }
+            }
 
                 switch ((int)CurrentRotation)
                 {
@@ -1629,67 +2007,37 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         break;
                 }
 
-                var width = (int)pixelBuffer.Width;
-                var height = (int)pixelBuffer.Height;
-                var bytesPerRow = (int)pixelBuffer.BytesPerRow;
-                var baseAddress = pixelBuffer.BaseAddress;
-
-                // Copy pixel data to avoid CVPixelBuffer lifetime issues - minimal memory copy
-                var dataSize = height * bytesPerRow;
-                
-                // Reuse buffer from pool if available
-                byte[] pixelData = null;
-                if (_pixelBufferPool.TryDequeue(out var pooledBuffer) && pooledBuffer.Length == dataSize)
-                {
-                    pixelData = pooledBuffer;
-                }
-                else
-                {
-                    pixelData = new byte[dataSize];
-                }
-                
-                System.Runtime.InteropServices.Marshal.Copy(baseAddress, pixelData, 0, dataSize);
-
                 var time = DateTime.UtcNow;
 
-                // Store raw frame data for SKImage creation on main thread
-                var rawFrame = new RawFrameData
+                // Get RawFrameData from pool to avoid GC allocation every frame
+                if (!_rawFrameDataPool.TryDequeue(out var rawFrame))
                 {
-                    Width = width,
-                    Height = height,
-                    BytesPerRow = bytesPerRow,
-                    Time = time,
-                    CurrentRotation = CurrentRotation,
-                    Facing = FormsControl.Facing,
-                    Orientation = (int)CurrentRotation,
-                    PixelData = pixelData
-                };
+                    rawFrame = new RawFrameData();
+                }
+                rawFrame.Width = previewWidth;
+                rawFrame.Height = previewHeight;
+                rawFrame.BytesPerRow = bytesPerRow;
+                rawFrame.Time = time;
+                rawFrame.CurrentRotation = CurrentRotation;
+                rawFrame.Facing = FormsControl.Facing;
+                rawFrame.Orientation = (int)CurrentRotation;
+                rawFrame.PixelData = pixelData;
 
                 SetRawFrame(rawFrame);
                 hasFrame = true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"[NativeCameraiOS] pixelBuffer processing error: {e}");
-            }
-            finally
-            {
-                pixelBuffer.Unlock(CVPixelBufferLock.ReadOnly);
+
                 if (hasFrame)
                 {
                     FormsControl.UpdatePreview();
                 }
             }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"[NativeCameraiOS] Frame processing error: {e}");
-        }
-        finally
-        {
-            // IMPORTANT: Always reset processing flag
-            _isProcessingFrame = false;
-        }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[NativeCameraiOS] Frame processing error: {ex}");
+            }
+        } // end while loop
+
+        System.Diagnostics.Debug.WriteLine("[NativeCameraiOS] Frame processing loop exited");
     }
 
     CapturedImage _kill;
@@ -1699,13 +2047,16 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         lock (_lockRawFrame)
         {
             // Recycle old buffer if it exists
-            if (_latestRawFrame != null && _latestRawFrame.PixelData != null)
+            if (_latestRawFrame != null)
             {
-                _pixelBufferPool.Enqueue(_latestRawFrame.PixelData);
+                if (_latestRawFrame.PixelData != null)
+                {
+                    _pixelBufferPool.Enqueue(_latestRawFrame.PixelData);
+                }
+                // Return RawFrameData to pool instead of disposing
+                _latestRawFrame.PixelData = null; // Clear reference before pooling
+                _rawFrameDataPool.Enqueue(_latestRawFrame);
             }
-            
-            // Dispose old raw frame data immediately to prevent memory accumulation
-            _latestRawFrame?.Dispose();
             _latestRawFrame = rawFrame;
         }
     }
@@ -2015,6 +2366,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             _progressTimer = null;
             CleanupMovieFileOutput();
 
+            // Stop frame processing thread
+            StopFrameProcessingThread();
+
             Stop();
 
             _session?.Dispose();
@@ -2031,6 +2385,16 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             {
                 _latestRawFrame?.Dispose();
                 _latestRawFrame = null;
+            }
+
+            // Clean up Metal scaler
+            _metalScaler?.Dispose();
+            _metalScaler = null;
+
+            // Clear callback
+            lock (_lockFullResCallback)
+            {
+                _fullResFrameCallback = null;
             }
         }
 

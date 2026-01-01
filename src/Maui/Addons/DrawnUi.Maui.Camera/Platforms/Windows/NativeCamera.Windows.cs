@@ -132,6 +132,11 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     private readonly SemaphoreSlim _frameSemaphore = new(1, 1);
     private volatile bool _isProcessingFrame = false;
 
+    // Raw frame arrival diagnostics (counts ALL frames before filtering)
+    private long _rawFrameCount = 0;
+    private long _rawFrameLastReportTime = 0;
+    private double _rawFrameFps = 0;
+
     // Pre-recording buffer fields
     private bool _enablePreRecording;
     private TimeSpan _preRecordDuration = TimeSpan.FromSeconds(5);
@@ -199,6 +204,11 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     public Action<CapturedImage> PreviewCaptureSuccess { get; set; }
     public Action<CapturedImage> StillImageCaptureSuccess { get; set; }
     public Action<Exception> StillImageCaptureFailed { get; set; }
+
+    /// <summary>
+    /// Raw camera frame delivery rate (all frames before any filtering/processing)
+    /// </summary>
+    public double RawCameraFps => _rawFrameFps;
 
     /// <summary>
     /// Gets or sets whether pre-recording is enabled.
@@ -749,6 +759,9 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 // Update camera metadata with current exposure settings
                 UpdateCameraMetadata();
 
+                // Invoke capture callback for encoder (same pattern as Android)
+                PreviewCaptureSuccess?.Invoke(capturedImage);
+
                 //PREVIEW FRAME READY
                 FormsControl.UpdatePreview();
             }
@@ -761,6 +774,26 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     /// </summary>
     private void OnFrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
     {
+        // Count ALL incoming frames for raw FPS calculation (before any filtering)
+        _rawFrameCount++;
+        var now = System.Diagnostics.Stopwatch.GetTimestamp();
+        if (_rawFrameLastReportTime == 0)
+        {
+            _rawFrameLastReportTime = now;
+        }
+        else
+        {
+            var elapsedTicks = now - _rawFrameLastReportTime;
+            var elapsedSeconds = (double)elapsedTicks / System.Diagnostics.Stopwatch.Frequency;
+            if (elapsedSeconds >= 1.0) // Report every second
+            {
+                _rawFrameFps = _rawFrameCount / elapsedSeconds;
+                //Debug.WriteLine($"[NativeCameraWindows] RAW camera FPS: {_rawFrameFps:F1} (frames: {_rawFrameCount} in {elapsedSeconds:F2}s)");
+                _rawFrameCount = 0;
+                _rawFrameLastReportTime = now;
+            }
+        }
+
         // Skip if already processing a frame to prevent backlog
         if (_isProcessingFrame)
             return;
@@ -841,6 +874,9 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
                 // Update camera metadata with current exposure settings
                 UpdateCameraMetadata();
+
+                // Invoke capture callback for encoder (same pattern as Android)
+                PreviewCaptureSuccess?.Invoke(capturedImage);
 
                 //PREVIEW FRAME READY
                 FormsControl.UpdatePreview();

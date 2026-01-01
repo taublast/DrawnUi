@@ -46,19 +46,24 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             _paint.Color = IsPreRecording ? SKColors.White : SKColors.Red;
             _paint.Style = SKPaintStyle.Fill;
 
-            // text at top left
-            var text = IsPreRecording ? "PRE-RECORDED" : "LIVE";
-            canvas.DrawText(text, 50 * scale, 100 * scale, _paint);
+            if (IsRecordingVideo || IsPreRecording)
+            {
+                // text at top left
+                var text = IsPreRecording ? "PRE-RECORDED" : "LIVE";
+                canvas.DrawText(text, 50 * scale, 100 * scale, _paint);
+                canvas.DrawText($"{time:mm\\:ss}", 50 * scale, 160 * scale, _paint);
 
-            // Draw timestamp at top left (below LIVE)
-            canvas.DrawText($"{time:mm\\:ss}", 50 * scale, 160 * scale, _paint);
-
-            // Draw a simple border around the frame
-            // Use orange during pre-recording, red during file recording
-            _paint.Style = SKPaintStyle.Stroke;
-            _paint.StrokeWidth = 4 * scale;
-
-            canvas.DrawRect(10 * scale, 10 * scale, width - 20 * scale, height - 20 * scale, _paint);
+                // Draw a simple border around the frame
+                _paint.Style = SKPaintStyle.Stroke;
+                _paint.StrokeWidth = 4 * scale;
+                canvas.DrawRect(10 * scale, 10 * scale, width - 20 * scale, height - 20 * scale, _paint);
+            }
+            else
+            {
+                _paint.Color = SKColors.White;
+                var text =$"PREVIEW {this.CaptureMode}";
+                canvas.DrawText(text, 50 * scale, 100 * scale, _paint);
+            }
         }
 
         private SKPaint _paint;
@@ -520,7 +525,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
 
         CameraControl.PreviewProcessor = (frame) =>
         {
-            if (CameraControl.IsRecordingVideo || CameraControl.IsPreRecording)
+            //if (CameraControl.IsRecordingVideo || CameraControl.IsPreRecording)
             {
                 CameraControl.DrawOverlay(frame.Canvas, frame.Width, frame.Height, frame.Scale, frame.Time);
             }

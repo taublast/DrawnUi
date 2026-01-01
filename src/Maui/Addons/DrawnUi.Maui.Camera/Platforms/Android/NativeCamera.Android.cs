@@ -620,6 +620,16 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     private object lockProcessingPreviewFrame = new();
     bool lockProcessing;
 
+    // Raw frame arrival diagnostics (counts ALL frames before filtering)
+    private long _rawFrameCount = 0;
+    private long _rawFrameLastReportTime = 0;
+    private double _rawFrameFps = 0;
+
+    /// <summary>
+    /// Raw camera frame delivery rate (all frames before any filtering/processing)
+    /// </summary>
+    public double RawCameraFps => _rawFrameFps;
+
     //volatile bool lockAllocation;
 
 

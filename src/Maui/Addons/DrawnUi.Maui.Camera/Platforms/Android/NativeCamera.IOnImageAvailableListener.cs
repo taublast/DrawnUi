@@ -15,6 +15,26 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// <param name="reader"></param>
     public void OnImageAvailable(ImageReader reader)
     {
+        // Count ALL incoming frames for raw FPS calculation (before any filtering)
+        _rawFrameCount++;
+        var now = System.Diagnostics.Stopwatch.GetTimestamp();
+        if (_rawFrameLastReportTime == 0)
+        {
+            _rawFrameLastReportTime = now;
+        }
+        else
+        {
+            var elapsedTicks = now - _rawFrameLastReportTime;
+            var elapsedSeconds = (double)elapsedTicks / System.Diagnostics.Stopwatch.Frequency;
+            if (elapsedSeconds >= 1.0) // Report every second
+            {
+                _rawFrameFps = _rawFrameCount / elapsedSeconds;
+                System.Diagnostics.Debug.WriteLine($"[NativeCameraAndroid] RAW camera FPS: {_rawFrameFps:F1} (frames: {_rawFrameCount} in {elapsedSeconds:F2}s)");
+                _rawFrameCount = 0;
+                _rawFrameLastReportTime = now;
+            }
+        }
+
         lock (lockProcessingPreviewFrame)
         {
             if (lockProcessing || FormsControl.Height <= 0 || FormsControl.Width <= 0 || CapturingStill)

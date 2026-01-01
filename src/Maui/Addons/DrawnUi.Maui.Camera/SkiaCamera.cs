@@ -303,34 +303,111 @@ public partial class SkiaCamera : SkiaControl
         ResetRecordingFps();
         _targetFps = fps;
 
-        // Windows uses real-time preview-driven capture (no timer)
-        _useWindowsPreviewDrivenCapture = true;
+        // Don't use preview-driven capture - use callback like Android
+        _useWindowsPreviewDrivenCapture = false;
 
-        // Control preview source: processed frames from encoder (PreviewVideoFlow=true) or raw camera (PreviewVideoFlow=false)
-        // Only applies when UseCaptureVideoFlow is TRUE (enforced by caller)
-        UseRecordingFramesForPreview = false;//PreviewVideoFlow;
-
-        // Invalidate preview when the encoder publishes a new composed frame (Windows mirror)
-        if (PreviewVideoFlow && _captureVideoEncoder is WindowsCaptureVideoEncoder _winEncPrev)
-        {
-            _encoderPreviewInvalidateHandler = (s, e) =>
-            {
-                try
-                {
-                    MainThread.BeginInvokeOnMainThread(() => UpdatePreview());
-                }
-                catch
-                {
-                }
-            };
-            _winEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
-        }
+        // Control preview source: raw camera frames (preview works normally)
+        UseRecordingFramesForPreview = false;
 
         // Set up progress reporting
         _captureVideoEncoder.ProgressReported += (sender, duration) =>
         {
             MainThread.BeginInvokeOnMainThread(() => OnVideoRecordingProgress(duration));
         };
+
+        // Use PreviewCaptureSuccess callback like Android - encoder gets frames without stealing from preview
+        if (NativeControl is NativeCamera winCam)
+        {
+            winCam.PreviewCaptureSuccess = (captured) =>
+            {
+                CalculateCameraInputFps();
+
+                if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not WindowsCaptureVideoEncoder winEnc)
+                    return;
+
+                if (System.Threading.Interlocked.CompareExchange(ref _frameInFlight, 1, 0) != 0)
+                {
+                    System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
+                    return;
+                }
+
+                // Make a copy of the image (original may be disposed after callback returns)
+                var srcImg = captured?.Image;
+                if (srcImg == null)
+                {
+                    System.Threading.Interlocked.Exchange(ref _frameInFlight, 0);
+                    return;
+                }
+
+                // Create a raster copy that's safe to use on main thread
+                SKImage imgCopy;
+                try
+                {
+                    using var bmp = new SKBitmap(srcImg.Width, srcImg.Height);
+                    using var canvas = new SKCanvas(bmp);
+                    canvas.DrawImage(srcImg, 0, 0);
+                    imgCopy = SKImage.FromBitmap(bmp);
+                }
+                catch
+                {
+                    System.Threading.Interlocked.Exchange(ref _frameInFlight, 0);
+                    return;
+                }
+
+                var elapsed = DateTime.Now - _captureVideoStartTime;
+
+                // GPU surface must be accessed from main thread
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    try
+                    {
+                        using (imgCopy)
+                        using (winEnc.BeginFrame(elapsed, out var canvas, out var info))
+                        {
+                            if (canvas != null)
+                            {
+                                var rects = GetAspectFillRects(imgCopy.Width, imgCopy.Height, info.Width, info.Height);
+                                canvas.DrawImage(imgCopy, rects.src, rects.dst);
+
+                                if (FrameProcessor != null || VideoDiagnosticsOn)
+                                {
+                                    var rotation = GetActiveRecordingRotation();
+                                    canvas.Save();
+                                    ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+
+                                    var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                                    var frame = new DrawableFrame
+                                    {
+                                        Width = frameWidth, Height = frameHeight, Canvas = canvas, Time = elapsed, Scale = 1f
+                                    };
+                                    FrameProcessor?.Invoke(frame);
+
+                                    if (VideoDiagnosticsOn)
+                                        DrawDiagnostics(canvas, info.Width, info.Height);
+
+                                    canvas.Restore();
+                                }
+
+                                var sw = System.Diagnostics.Stopwatch.StartNew();
+                                await winEnc.SubmitFrameAsync();
+                                sw.Stop();
+                                _diagLastSubmitMs = sw.Elapsed.TotalMilliseconds;
+                                System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                                CalculateRecordingFps();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[Windows CaptureFrame] Error: {ex.Message}");
+                    }
+                    finally
+                    {
+                        System.Threading.Interlocked.Exchange(ref _frameInFlight, 0);
+                    }
+                });
+            };
+        }
 #elif ANDROID
         // Create Android encoder (GPU path via MediaCodec Surface + EGL + Skia GL)
         _captureVideoEncoder = new AndroidCaptureVideoEncoder();
@@ -873,6 +950,8 @@ public partial class SkiaCamera : SkiaControl
                     return;
                 }
 
+                CalculateCameraInputFps();
+
                 using (winEnc.BeginFrame(elapsed, out var canvas, out var info))
                 {
                     // Draw camera frame to encoder surface (aspect-fill)
@@ -1149,6 +1228,11 @@ public partial class SkiaCamera : SkiaControl
 
 #if WINDOWS
             _useWindowsPreviewDrivenCapture = false;
+            // Clear frame callback
+            if (NativeControl is NativeCamera winCamCleanup)
+            {
+                winCamCleanup.PreviewCaptureSuccess = null;
+            }
 #endif
 
 #if ANDROID
@@ -1299,6 +1383,11 @@ public partial class SkiaCamera : SkiaControl
 
 #if WINDOWS
             _useWindowsPreviewDrivenCapture = false;
+            // Clear frame callback
+            if (NativeControl is NativeCamera winCamCleanup)
+            {
+                winCamCleanup.PreviewCaptureSuccess = null;
+            }
 #endif
 
 #if ANDROID
@@ -1589,8 +1678,19 @@ public partial class SkiaCamera : SkiaControl
         var inputFps = _diagInputReportFps;
         var outputFps = _diagReportFps;
 
-        // Compose text
-        string line1 = $"cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}";
+        // Get raw camera FPS from native control
+        double rawCamFps = 0;
+#if WINDOWS
+        if (NativeControl is NativeCamera winCam)
+        {
+            rawCamFps = winCam.RawCameraFps;
+        }
+#endif
+
+        // Compose text - show both raw and processed FPS
+        string line1 = rawCamFps > 0
+            ? $"raw: {rawCamFps:F1}  cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}"
+            : $"cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}";
         string line2 = $"dropped: {_diagDroppedFrames}  submit: {_diagLastSubmitMs:F1} ms";
         double mbps = _diagBitrate > 0 ? _diagBitrate / 1_000_000.0 : 0.0;
         string line3 = _diagEncWidth > 0 && _diagEncHeight > 0

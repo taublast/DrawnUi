@@ -247,8 +247,8 @@ public partial class SkiaCamera : SkiaControl
         // Windows uses real-time preview-driven capture (no timer)
         _useWindowsPreviewDrivenCapture = true;
 
-        // Mirroring of composed frames to preview is optional
-        UseRecordingFramesForPreview = MirrorRecordingToPreview;
+        // Always use raw camera frames for preview (PreviewProcessor only, not FrameProcessor)
+        UseRecordingFramesForPreview = false;
 
         // Invalidate preview when the encoder publishes a new composed frame (Windows mirror)
         if (MirrorRecordingToPreview && _captureVideoEncoder is WindowsCaptureVideoEncoder _winEncPrev)
@@ -280,8 +280,8 @@ public partial class SkiaCamera : SkiaControl
         _captureVideoEncoder.IsPreRecordingMode = IsPreRecording;
         Debug.WriteLine($"[StartCaptureVideoFlow] Android encoder initialized with IsPreRecordingMode={IsPreRecording}");
 
-        // Mirroring of composed frames to preview is optional
-        UseRecordingFramesForPreview = MirrorRecordingToPreview;
+        // Always use raw camera frames for preview (PreviewProcessor only, not FrameProcessor)
+        UseRecordingFramesForPreview = false;
 
         // Invalidate preview when the encoder publishes a new composed frame (Android mirror)
         if (MirrorRecordingToPreview && _captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
@@ -526,8 +526,8 @@ public partial class SkiaCamera : SkiaControl
         _captureVideoEncoder.IsPreRecordingMode = IsPreRecording;
         Debug.WriteLine($"[StartCaptureVideoFlow] iOS encoder initialized with IsPreRecordingMode={IsPreRecording}");
 
-        // Mirror composed frames to preview when enabled
-        UseRecordingFramesForPreview = MirrorRecordingToPreview;
+        // Always use raw camera frames for preview (PreviewProcessor only, not FrameProcessor)
+        UseRecordingFramesForPreview = false;
         if (MirrorRecordingToPreview && _captureVideoEncoder is AppleVideoToolboxEncoder _appleEncPrev)
         {
             _encoderPreviewInvalidateHandler = (s, e) =>
@@ -1293,8 +1293,17 @@ public partial class SkiaCamera : SkiaControl
         var elapsed = (DateTime.Now - _diagStartTime).TotalSeconds;
         var effFps = elapsed > 0 ? _diagSubmittedFrames / elapsed : 0;
 
-        // Compose text
-        string line1 = $"FPS: {effFps:F1} / {_targetFps}  dropped: {_diagDroppedFrames}";
+        // Get raw camera FPS from native control
+        double rawCamFps = 0;
+        if (NativeControl is NativeCamera nativeCam)
+        {
+            rawCamFps = nativeCam.RawCameraFps;
+        }
+
+        // Compose text - show both raw and processed FPS
+        string line1 = rawCamFps > 0
+            ? $"raw: {rawCamFps:F1}  enc: {effFps:F1} / {_targetFps}  dropped: {_diagDroppedFrames}"
+            : $"FPS: {effFps:F1} / {_targetFps}  dropped: {_diagDroppedFrames}";
         string line2 = $"submit: {_diagLastSubmitMs:F1} ms";
         double mbps = _diagBitrate > 0 ? _diagBitrate / 1_000_000.0 : 0.0;
         string line3 = _diagEncWidth > 0 && _diagEncHeight > 0

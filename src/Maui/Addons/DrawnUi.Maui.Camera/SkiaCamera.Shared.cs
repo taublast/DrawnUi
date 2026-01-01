@@ -2249,70 +2249,85 @@ public partial class SkiaCamera : SkiaControl
         NeedUpdate = false;
         Update();
 
-        //todo maybe make this match other platforms like apple and android?
 #if WINDOWS
         // If using capture video flow and preview-driven capture, submit frames in real-time with the preview
+        // Use fire-and-forget Task instead of SafeAction to avoid cascading repaints that cause preview lag
         if (_useWindowsPreviewDrivenCapture && (IsRecordingVideo || IsPreRecording) &&
             _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
         {
-            SafeAction(async () =>
+            // Ensure single-frame processing - drop if previous is still in progress
+            if (System.Threading.Interlocked.CompareExchange(ref _frameInFlight, 1, 0) != 0)
             {
-                try
+                System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
+            }
+            else
+            {
+                // Track camera input fps
+                CalculateCameraInputFps();
+
+                // Fire-and-forget frame processing (no SafeAction to avoid repaint cascade)
+                _ = Task.Run(async () =>
                 {
-                    var elapsed = DateTime.Now - _captureVideoStartTime;
-                    using var previewImage = NativeControl?.GetPreviewImage();
-                    if (previewImage == null)
-                        return;
-
-                    using (winEnc.BeginFrame(elapsed, out var canvas, out var info))
+                    try
                     {
-                        if (canvas != null)
+                        var elapsed = DateTime.Now - _captureVideoStartTime;
+                        using var previewImage = NativeControl?.GetPreviewImage();
+                        if (previewImage == null)
+                            return;
+
+                        using (winEnc.BeginFrame(elapsed, out var canvas, out var info))
                         {
-                            var __rects3 =
-                                GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
-                            canvas.DrawImage(previewImage, __rects3.src, __rects3.dst);
-
-                            if (FrameProcessor != null || VideoDiagnosticsOn)
+                            if (canvas != null)
                             {
-                                // Apply rotation based on device orientation
-                                var rotation = GetActiveRecordingRotation();
-                                canvas.Save();
-                                ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+                                var __rects3 =
+                                    GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
+                                canvas.DrawImage(previewImage, __rects3.src, __rects3.dst);
 
-                                var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
-                                var frame = new DrawableFrame
+                                if (FrameProcessor != null || VideoDiagnosticsOn)
                                 {
-                                    Width = frameWidth,
-                                    Height = frameHeight,
-                                    Canvas = canvas,
-                                    Time = elapsed,
-                                    Scale = 1f
-                                };
-                                FrameProcessor?.Invoke(frame);
+                                    // Apply rotation based on device orientation
+                                    var rotation = GetActiveRecordingRotation();
+                                    canvas.Save();
+                                    ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
 
-                                if (VideoDiagnosticsOn)
-                                    DrawDiagnostics(canvas, info.Width, info.Height);
+                                    var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                                    var frame = new DrawableFrame
+                                    {
+                                        Width = frameWidth,
+                                        Height = frameHeight,
+                                        Canvas = canvas,
+                                        Time = elapsed,
+                                        Scale = 1f
+                                    };
+                                    FrameProcessor?.Invoke(frame);
 
-                                canvas.Restore();
+                                    if (VideoDiagnosticsOn)
+                                        DrawDiagnostics(canvas, info.Width, info.Height);
+
+                                    canvas.Restore();
+                                }
+
+                                var sw = System.Diagnostics.Stopwatch.StartNew();
+                                await winEnc.SubmitFrameAsync();
+                                sw.Stop();
+                                _diagLastSubmitMs = sw.Elapsed.TotalMilliseconds;
+                                System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+
+                                // Track encoder output fps
+                                CalculateRecordingFps();
                             }
-
-                            var sw = System.Diagnostics.Stopwatch.StartNew();
-                            await winEnc.SubmitFrameAsync();
-                            sw.Stop();
-                            _diagLastSubmitMs = sw.Elapsed.TotalMilliseconds;
-                            System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"[UpdatePreview Capture] {ex.Message}");
-                }
-                finally
-                {
-                    System.Threading.Interlocked.Exchange(ref _frameInFlight, 0);
-                }
-            });
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[UpdatePreview Capture] {ex.Message}");
+                    }
+                    finally
+                    {
+                        System.Threading.Interlocked.Exchange(ref _frameInFlight, 0);
+                    }
+                });
+            }
         }
 #endif
     }
@@ -2390,6 +2405,7 @@ public partial class SkiaCamera : SkiaControl
                 }
 
                 // Apply PreviewProcessor if set
+                // PreviewProcessor is a separate callback from FrameProcessor - user controls what each does
                 SKImage finalImage = image;
                 if (PreviewProcessor != null)
                 {
