@@ -17,6 +17,7 @@ namespace DrawnUi.Camera
 
             public override void OnConfigureFailed(CameraCaptureSession session)
             {
+                System.Diagnostics.Debug.WriteLine("[CameraCallback] OnConfigureFailed - session configuration FAILED!");
                 //owner.ShowToast(ResStrings.Error);
             }
 
@@ -24,15 +25,18 @@ namespace DrawnUi.Camera
             {
                 // The camera is already closed
                 if (null == owner.mCameraDevice)
-                {
                     return;
-                }
 
                 // When the session is ready, we start displaying the preview.
                 owner.CaptureSession = session;
                 try
                 {
-                    owner.mPreviewRequestBuilder.AddTarget(owner.mImageReaderPreview.Surface);
+                    // For GPU path, targets are already set in CreateGpuCameraSession
+                    // For normal path, we need to add the preview surface
+                    if (!owner._useGpuCameraPath)
+                    {
+                        owner.mPreviewRequestBuilder.AddTarget(owner.mImageReaderPreview.Surface);
+                    }
 
                     // Apply preview-specific settings (focus mode only, flash already set in CreateCameraPreviewSession)
                     owner.SetPreviewOptions(owner.mPreviewRequestBuilder);
@@ -48,7 +52,6 @@ namespace DrawnUi.Camera
                 catch (Exception e)
                 {
                     Super.Log(e);
-                    //owner.ShowToast(ResStrings.Error);
                 }
             }
         }
