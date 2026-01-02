@@ -14,6 +14,7 @@ using AppoMobi.Maui.Native.Droid.Graphics;
 using Java.Lang;
 using Java.Util.Concurrent;
 using SkiaSharp.Views.Android;
+using System.Buffers;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -733,13 +734,19 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     private class EncodedFrame : IDisposable
     {
         public byte[] Data { get; set; }
+        public int DataLength { get; set; }  // Actual data length (rented array may be larger)
         public long TimestampNs { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public bool IsRentedFromPool { get; set; }
 
         public void Dispose()
         {
-            // Frame data will be managed by GC
+            if (IsRentedFromPool && Data != null)
+            {
+                ArrayPool<byte>.Shared.Return(Data);
+                Data = null;
+            }
         }
     }
 
@@ -2996,22 +3003,28 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         try
         {
-            // Convert image to byte array for buffering
-            byte[] frameData = ExtractImageData(image);
+            // Convert image to byte array for buffering (uses ArrayPool)
+            var (frameData, dataLength) = ExtractImageData(image);
             if (frameData == null)
                 return;
 
             lock (_preRecordingLock)
             {
                 if (_preRecordingBuffer == null)
+                {
+                    // Return buffer to pool since we can't use it
+                    ArrayPool<byte>.Shared.Return(frameData);
                     return;
+                }
 
                 var frame = new EncodedFrame
                 {
                     Data = frameData,
+                    DataLength = dataLength,
                     TimestampNs = timestampNs,
                     Width = image.Width,
-                    Height = image.Height
+                    Height = image.Height,
+                    IsRentedFromPool = true
                 };
 
                 _preRecordingBuffer.Enqueue(frame);
@@ -3030,9 +3043,10 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     }
 
     /// <summary>
-    /// Extract image data from an Android Image object
+    /// Extract image data from an Android Image object using ArrayPool to reduce GC pressure
     /// </summary>
-    private byte[] ExtractImageData(Image image)
+    /// <returns>Tuple of (buffer from ArrayPool, actual data length)</returns>
+    private (byte[] buffer, int length) ExtractImageData(Image image)
     {
         try
         {
@@ -3045,7 +3059,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 bufferSize += planes[i].Buffer.Remaining();
             }
 
-            byte[] nv21 = new byte[bufferSize];
+            // Rent buffer from pool instead of allocating new array
+            byte[] nv21 = ArrayPool<byte>.Shared.Rent(bufferSize);
             int offset = 0;
 
             for (int i = 0; i < planes.Length; i++)
@@ -3063,12 +3078,12 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 }
             }
 
-            return nv21;
+            return (nv21, offset);  // Return buffer and actual data length
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"[Android PreRecording] Error extracting image data: {ex.Message}");
-            return null;
+            return (null, 0);
         }
     }
 

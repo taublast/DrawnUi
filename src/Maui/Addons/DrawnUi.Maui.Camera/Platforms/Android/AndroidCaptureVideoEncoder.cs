@@ -1,5 +1,6 @@
 #if ANDROID
 using System;
+using System.Buffers;
 using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -657,13 +658,21 @@ namespace DrawnUi.Camera
                     int pw = Math.Min(_width, maxPreviewWidth);
                     int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
 
-                    var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
-                    using var rasterSurface = SKSurface.Create(pInfo);
-                    var pCanvas = rasterSurface.Canvas;
+                    // Reuse cached surface to avoid GC pressure (was allocating ~2MB per frame)
+                    if (_previewRasterSurface == null || _previewWidth != pw || _previewHeight != ph)
+                    {
+                        _previewRasterSurface?.Dispose();
+                        var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
+                        _previewRasterSurface = SKSurface.Create(pInfo);
+                        _previewWidth = pw;
+                        _previewHeight = ph;
+                    }
+
+                    var pCanvas = _previewRasterSurface.Canvas;
                     pCanvas.Clear(SKColors.Transparent);
                     pCanvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
 
-                    keepAlive = rasterSurface.Snapshot();
+                    keepAlive = _previewRasterSurface.Snapshot();
                     lock (_previewLock)
                     {
                         _latestPreviewImage?.Dispose();
@@ -1199,26 +1208,35 @@ namespace DrawnUi.Camera
                             // BUFFERING MODE: Append to circular buffer
                             if (bufferingMode)
                             {
-                                byte[] frameData = new byte[bufferInfo.Size];
-                                encodedData.Position(bufferInfo.Offset);
-                                encodedData.Get(frameData, 0, bufferInfo.Size);
-
-                                // Track first frame offset for timestamp normalization
-                                var rawTimestamp = TimeSpan.FromMicroseconds(bufferInfo.PresentationTimeUs);
-                                if (_firstEncodedFrameOffset == TimeSpan.MinValue)
+                                // Use ArrayPool to avoid per-frame allocations (reduces GC pressure)
+                                byte[] frameData = ArrayPool<byte>.Shared.Rent(bufferInfo.Size);
+                                try
                                 {
-                                    _firstEncodedFrameOffset = rawTimestamp;
-                                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] First buffered frame at {rawTimestamp.TotalSeconds:F3}s");
+                                    encodedData.Position(bufferInfo.Offset);
+                                    encodedData.Get(frameData, 0, bufferInfo.Size);
+
+                                    // Track first frame offset for timestamp normalization
+                                    var rawTimestamp = TimeSpan.FromMicroseconds(bufferInfo.PresentationTimeUs);
+                                    if (_firstEncodedFrameOffset == TimeSpan.MinValue)
+                                    {
+                                        _firstEncodedFrameOffset = rawTimestamp;
+                                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] First buffered frame at {rawTimestamp.TotalSeconds:F3}s");
+                                    }
+
+                                    // Normalize to start from 0
+                                    var normalizedTimestamp = rawTimestamp - _firstEncodedFrameOffset;
+                                    // AppendEncodedFrame copies data internally, so buffer can be returned immediately
+                                    _preRecordingBuffer.AppendEncodedFrame(frameData, bufferInfo.Size, normalizedTimestamp);
+
+                                    EncodedFrameCount++;
+                                    EncodedDataSize += bufferInfo.Size;
+                                    EncodingDuration = DateTime.Now - _startTime;
+                                    EncodingStatus = "Buffering";
                                 }
-
-                                // Normalize to start from 0
-                                var normalizedTimestamp = rawTimestamp - _firstEncodedFrameOffset;
-                                _preRecordingBuffer.AppendEncodedFrame(frameData, bufferInfo.Size, normalizedTimestamp);
-
-                                EncodedFrameCount++;
-                                EncodedDataSize += bufferInfo.Size;
-                                EncodingDuration = DateTime.Now - _startTime;
-                                EncodingStatus = "Buffering";
+                                finally
+                                {
+                                    ArrayPool<byte>.Shared.Return(frameData);
+                                }
                             }
                             // LIVE RECORDING MODE: Write to muxer
                             else if (_muxerStarted)
