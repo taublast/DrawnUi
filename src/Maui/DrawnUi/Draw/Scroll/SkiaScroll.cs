@@ -2538,6 +2538,9 @@ namespace DrawnUi.Draw
 
         protected override void Draw(DrawingContext context)
         {
+            if (_animatorFlingY==null)
+                return;
+
             isDrawing = true;
 
             if (IsContentActive)
