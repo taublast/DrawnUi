@@ -774,7 +774,7 @@ public partial class SkiaCamera : SkiaControl
         // _sourceFrameWidth = encoder/recording frame width
         if (_sourceFrameWidth > 0 && _actualPreviewWidth > 0)
         {
-            PreviewScale = (float)_actualPreviewWidth / _sourceFrameWidth;
+            PreviewScale = (float)Math.Max(_actualPreviewWidth, _actualPreviewHeight) / Math.Max(_sourceFrameWidth, _sourceFrameHeight);
             System.Diagnostics.Debug.WriteLine($"[SkiaCamera] PreviewScale updated: {_actualPreviewWidth} / {_sourceFrameWidth} = {PreviewScale:F3}");
         }
         else
@@ -796,6 +796,43 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
+    /// Gets rotation-corrected dimensions for encoder/recording based on platform and sensor orientation.
+    /// Use this to align encoder dimensions with preview orientation.
+    /// </summary>
+    /// <param name="rawWidth">Raw format width</param>
+    /// <param name="rawHeight">Raw format height</param>
+    /// <returns>Tuple of (correctedWidth, correctedHeight)</returns>
+    public (int width, int height) GetRotationCorrectedDimensions(int rawWidth, int rawHeight)
+    {
+#if IOS || MACCATALYST
+        // iOS/Mac: formats are always landscape, swap for portrait video
+        return (rawHeight, rawWidth);
+#elif ANDROID
+        // Android: swap based on sensor orientation to align encoder with preview
+        if (NativeControl is NativeCamera cam)
+        {
+            int sensor = cam.SensorOrientation;
+            bool previewRotated = (sensor == 90 || sensor == 270);
+
+            // If preview is rotated (portrait logical orientation), make encoder portrait too
+            if (previewRotated && rawWidth >= rawHeight)
+            {
+                return (rawHeight, rawWidth);
+            }
+            // If preview is not rotated but format is portrait, make encoder landscape to match
+            else if (!previewRotated && rawHeight > rawWidth)
+            {
+                return (rawHeight, rawWidth);
+            }
+        }
+        return (rawWidth, rawHeight);
+#else
+        // Windows: no rotation correction needed - uses raw format dimensions
+        return (rawWidth, rawHeight);
+#endif
+    }
+
+    /// <summary>
     /// Updates source frame dimensions from the current video format.
     /// Called when camera starts or format changes.
     /// PreviewScale will be updated once actual preview frames arrive.
@@ -808,10 +845,11 @@ public partial class SkiaCamera : SkiaControl
             var format = NativeControl?.GetCurrentVideoFormat();
             if (format != null && format.Width > 0)
             {
-                // Store source frame dimensions from format (this is the recording size)
-                _sourceFrameWidth = format.Width;
-                _sourceFrameHeight = format.Height;
-                System.Diagnostics.Debug.WriteLine($"[SkiaCamera] Source frame dimensions set from format: {_sourceFrameWidth}x{_sourceFrameHeight}");
+                var (width, height) = GetRotationCorrectedDimensions(format.Width, format.Height);
+
+                _sourceFrameWidth = width;
+                _sourceFrameHeight = height;
+                System.Diagnostics.Debug.WriteLine($"[SkiaCamera] Source frame dimensions set from format: {_sourceFrameWidth}x{_sourceFrameHeight} (raw: {format.Width}x{format.Height})");
 
                 // PreviewScale will be updated when actual preview frames arrive in SetFrameFromNative()
                 // because we need the actual rotated preview image dimensions
@@ -2455,6 +2493,7 @@ public partial class SkiaCamera : SkiaControl
             // Call PreviewProcessor with preview frame info
             var frame = new DrawableFrame
             {
+                IsPreview = true,
                 Width = width,
                 Height = height,
                 Canvas = canvas,

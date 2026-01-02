@@ -42,8 +42,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     // Camera configuration constants
 
     // Max preview dimensions
-    public int MaxPreviewWidth = 800;
-    public int MaxPreviewHeight = 800;
+    public int MaxPreviewWidth = 1280;
+    public int MaxPreviewHeight = 1280;
 
     // Still capture formats - same pattern as Apple implementation
     public List<CaptureFormat> StillFormats { get; protected set; } = new List<CaptureFormat>();
@@ -985,19 +985,10 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
                     int maxPreviewWidth, maxPreviewHeight;
 
-                    if (rotated)
-                    {
-                        // Landscape sensor: allow wider preview sizes to match camera native format
-                        // Use 1.78 ratio (16:9) with max height of 1024 -> width can be up to 1820
-                        maxPreviewWidth = MaxPreviewHeight * 2; // Allow up to 2:1 aspect ratio
-                        maxPreviewHeight = MaxPreviewWidth;     // Height limited to 1024
-                    }
-                    else
-                    {
-                        // Portrait sensor: use standard limits
+ 
                         maxPreviewWidth = MaxPreviewWidth;
                         maxPreviewHeight = MaxPreviewHeight;
-                    }
+ 
 
                     #region STILL PHOTO
 

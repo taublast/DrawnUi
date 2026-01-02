@@ -456,50 +456,28 @@ public partial class SkiaCamera : SkiaControl
 
         // Use camera-reported format if available; else fall back to preview size or 1280x720
         var currentFormat = NativeControl?.GetCurrentVideoFormat();
-        var width =
+        var rawWidth =
             currentFormat?.Width > 0 ? currentFormat.Width : (int)(PreviewSize.Width > 0 ? PreviewSize.Width : 1280);
-        var height =
+        var rawHeight =
             currentFormat?.Height > 0 ? currentFormat.Height : (int)(PreviewSize.Height > 0 ? PreviewSize.Height : 720);
         var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
 
-        // IMPORTANT: Align encoder orientation with the live preview to avoid instant crop/"zoom" when recording starts.
-        // If preview is portrait (h > w) but the selected video format is landscape (w >= h),
-        // swap encoder dimensions so we record a vertical video instead of cropping it to fit a horizontal surface.
-        int prevW = 0, prevH = 0;
-        int encWBefore = width, encHBefore = height;
-        int sensor = -1;
-        bool previewRotated = false;
-        try
-        {
-            if (NativeControl is NativeCamera cam)
-            {
-                prevW = cam.PreviewWidth;
-                prevH = cam.PreviewHeight;
-                sensor = cam.SensorOrientation;
-                previewRotated = (sensor == 90 || sensor == 270);
+        // Apply rotation correction to align encoder with preview orientation
+        var (width, height) = GetRotationCorrectedDimensions(rawWidth, rawHeight);
 
-                // If preview is rotated (portrait logical orientation), make encoder portrait too
-                if (previewRotated && width >= height)
-                {
-                    var tmp = width;
-                    width = height;
-                    height = tmp;
-                }
-                // If preview is not rotated but encoder is portrait, make encoder landscape to match
-                else if (!previewRotated && height > width)
-                {
-                    var tmp = width;
-                    width = height;
-                    height = tmp;
-                }
-            }
-        }
-        catch
+        // Diagnostic info
+        int prevW = 0, prevH = 0, sensor = -1;
+        bool previewRotated = false;
+        if (NativeControl is NativeCamera cam)
         {
+            prevW = cam.PreviewWidth;
+            prevH = cam.PreviewHeight;
+            sensor = cam.SensorOrientation;
+            previewRotated = (sensor == 90 || sensor == 270);
         }
 
         System.Diagnostics.Debug.WriteLine(
-            $"[CAPTURE-ENCODER] preview={prevW}x{prevH} rotated={previewRotated} sensor={sensor} currentFormat={(currentFormat?.Width ?? 0)}x{(currentFormat?.Height ?? 0)}@{fps} encoderBefore={encWBefore}x{encHBefore} encoderFinal={width}x{height} UseRecordingFramesForPreview={UseRecordingFramesForPreview}");
+            $"[CAPTURE-ENCODER] preview={prevW}x{prevH} rotated={previewRotated} sensor={sensor} currentFormat={(currentFormat?.Width ?? 0)}x{(currentFormat?.Height ?? 0)}@{fps} encoderBefore={rawWidth}x{rawHeight} encoderFinal={width}x{height} UseRecordingFramesForPreview={UseRecordingFramesForPreview}");
         _diagEncWidth = width;
         _diagEncHeight = height;
         _diagBitrate = Math.Max((long)width * height * 4, 2_000_000L);
@@ -817,24 +795,17 @@ public partial class SkiaCamera : SkiaControl
         // Use camera format if available; fallback to preview size or 1280x720
         var currentFormat = NativeControl?.GetCurrentVideoFormat();
 
-        // on ios video format is defined for landscape width x height
-        // so our width/height are swapped below to orient resulting video.
-
-        var width = (int)PreviewSize.Height;
-        var height = (int)PreviewSize.Width;
-
-        if (currentFormat != null)
-        {
-            width = currentFormat.Height;
-            height = currentFormat.Width;
-        }
-
+        var rawWidth = currentFormat?.Width > 0 ? currentFormat.Width : (int)(PreviewSize.Width > 0 ? PreviewSize.Width : 1280);
+        var rawHeight = currentFormat?.Height > 0 ? currentFormat.Height : (int)(PreviewSize.Height > 0 ? PreviewSize.Height : 720);
         var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
 
-        _diagEncWidth = (int)width;
-        _diagEncHeight = (int)height;
+        // Apply rotation correction (iOS formats are landscape, swap for portrait video)
+        var (width, height) = GetRotationCorrectedDimensions(rawWidth, rawHeight);
+
+        _diagEncWidth = width;
+        _diagEncHeight = height;
         _diagBitrate = (long)Math.Max((long)width * height * 4, 2_000_000L);
-        SetSourceFrameDimensions((int)width, (int)height);
+        SetSourceFrameDimensions(width, height);
 
         // Pass locked rotation to encoder for proper video orientation metadata (iOS-specific)
         if (_captureVideoEncoder is DrawnUi.Camera.AppleVideoToolboxEncoder appleEncoder)

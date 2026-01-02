@@ -14,5 +14,7 @@
         /// Use this to multiply your drawing scale for consistent overlay sizing.
         /// </summary>
         public float Scale { get; set; }
+
+        public bool IsPreview { get; set; }
     }
 }
