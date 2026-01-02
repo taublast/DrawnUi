@@ -651,7 +651,11 @@ namespace DrawnUi.Draw
                     this.Opacity = startOpacity + (end - startOpacity) * value;
                     //Debug.WriteLine($"[ANIM] Opacity: {this.Opacity}");
                 },
-                () => { this.Opacity = end; },
+                () =>
+                {
+                    this.Opacity = end;
+                    //Debug.WriteLine($"[ANIM] Opacity END: {this.Opacity}");
+                },
                 ms,
                 easing,
                 _fadeCancelTokenSource);
@@ -3182,18 +3186,18 @@ namespace DrawnUi.Draw
         /// <param name="heightRequest"></param>
         /// <param name="scale"></param>
         /// <returns></returns>
-        public ScaledSize DefineAvailableSize(SKRect destination,
+        public virtual ScaledSize DefineAvailableSize(SKRect destination,
             float widthRequest, float heightRequest, float scale, bool useModifiers = true)
         {
             var rectWidth = destination.Width;
             var wants = widthRequest * scale;
             if (wants >= 0 && wants < rectWidth)
-                rectWidth = (int)wants;
+                rectWidth = wants;
 
             var rectHeight = destination.Height;
             wants = heightRequest * scale;
             if (wants >= 0 && wants < rectHeight)
-                rectHeight = (int)wants;
+                rectHeight =wants;
 
             if (useModifiers)
             {
@@ -3208,7 +3212,7 @@ namespace DrawnUi.Draw
                 }
             }
 
-            return ScaledSize.FromPixels(rectWidth, rectHeight, scale);
+            return ScaledSize.FromPixels((int)Math.Ceiling(rectWidth), (int)Math.Ceiling(rectHeight), scale);
         }
 
         /// <summary>
@@ -3456,7 +3460,7 @@ namespace DrawnUi.Draw
 
             layout.Offset(offsetX, offsetY);
 
-            return layout;
+            return RoundToPixels(layout);
         }
 
         private ScaledSize _contentSize = new();
@@ -3487,7 +3491,7 @@ namespace DrawnUi.Draw
 
             newDestination.Offset(destination.Left, destination.Top);
 
-            Destination = newDestination;
+            Destination = RoundToPixels(newDestination);
             DrawingRect = GetDrawingRectWithMargins(newDestination, scale);
 
             IsLayoutDirty = false;
@@ -4896,7 +4900,7 @@ namespace DrawnUi.Draw
                 }
             }
 
-            return rectForChild;
+            return RoundToPixels(rectForChild);
         }
 
         protected object lockMeasured = new();
@@ -6374,6 +6378,18 @@ namespace DrawnUi.Draw
             }
         }
 
+        /// <summary>
+        /// Manually sets Superview to this control and its children
+        /// </summary>
+        public void SetSuperview(DrawnView view)
+        {
+            Superview = view;
+            foreach (var child in GetUnorderedSubviews())
+            {
+                child.SetSuperview(view);
+            }
+        }
+
         public Func<Vector2, ScaledRect> DelegateGetOnScreenVisibleArea;
 
         /// <summary>
@@ -7815,23 +7831,33 @@ namespace DrawnUi.Draw
         private bool _needUpdateFrontCache;
         private SKRect _drawingRect;
 
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        //public static bool CompareRects(SKRect a, SKRect b, float precision)
-        //{
-        //    return
-        //        Math.Abs(a.Left - b.Left) <= precision
-        //                 && Math.Abs(a.Top - b.Top) <= precision
-        //                             && Math.Abs(a.Right - b.Right) <= precision
-        //                             && Math.Abs(a.Bottom - b.Bottom) <= precision;
-        //}
+        /// <summary>
+        /// Rounds SKRect coordinates to nearest pixel values
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SKRect RoundToPixels(SKRect rect)
+        {
+            return new SKRect(
+                (float)Math.Round(rect.Left),
+                (float)Math.Round(rect.Top),
+                (float)Math.Round(rect.Right),
+                (float)Math.Round(rect.Bottom)
+            );
+        }
 
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        //public static bool CompareRectsSize(SKRect a, SKRect b, float precision)
-        //{
-        //    return
-        //        Math.Abs(a.Width - b.Width) <= precision
-        //        && Math.Abs(a.Height - b.Height) <= precision;
-        //}
+        /// <summary>
+        /// Rounds SKRect coordinates to nearest pixel values
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SKRect RoundToPixels(float left, float top, float right, float bottom)
+        {
+            return new SKRect(
+                (float)Math.Round(left),
+                (float)Math.Round(top),
+                (float)Math.Round(right),
+                (float)Math.Round(bottom)
+            );
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool CompareFloats(float a, float b, float precision = float.Epsilon)

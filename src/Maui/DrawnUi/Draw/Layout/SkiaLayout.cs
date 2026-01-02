@@ -575,7 +575,7 @@ namespace DrawnUi.Draw
 
         public override void InvalidateViewsList()
         {
-            base.InvalidateViewsList(); 
+            base.InvalidateViewsList();
 
             ActualizeSubviews();
         }
@@ -680,97 +680,96 @@ namespace DrawnUi.Draw
                 {
                     return ScaledSize.CreateEmpty(scale);
                 }
-                else
+
+                if (this.MeasureItemsStrategy == MeasuringStrategy.MeasureFirst)
                 {
-                    if (this.MeasureItemsStrategy == MeasuringStrategy.MeasureFirst)
+                    standalone = true;
+                    var template = ChildrenFactory.GetTemplateInstance();
+                    var child = ChildrenFactory.GetViewForIndex(0, template, 0, true);
+
+                    var measured = MeasureChild(child, rectForChildrenPixels.Width, rectForChildrenPixels.Height,
+                        scale);
+                    if (!measured.IsEmpty)
                     {
-                        standalone = true;
-                        var template = ChildrenFactory.GetTemplateInstance();
-                        var child = ChildrenFactory.GetViewForIndex(0, template, 0, true);
-
-                        var measured = MeasureChild(child, rectForChildrenPixels.Width, rectForChildrenPixels.Height,
-                            scale);
-                        if (!measured.IsEmpty)
+                        // FastMeasurement: skip FILL checks for performance
+                        if (FastMeasurement)
                         {
-                            // FastMeasurement: skip FILL checks for performance
-                            if (FastMeasurement)
-                            {
-                                if (measured.Pixels.Width > maxWidth)
-                                    maxWidth = measured.Pixels.Width;
-                                if (measured.Pixels.Height > maxHeight)
-                                    maxHeight = measured.Pixels.Height;
-                            }
-                            else
-                            {
-                                if (measured.Pixels.Width > maxWidth
-                                    && child.HorizontalOptions.Alignment != LayoutAlignment.Fill)
-                                    maxWidth = measured.Pixels.Width;
-
-                                if (measured.Pixels.Height > maxHeight
-                                    && child.VerticalOptions.Alignment != LayoutAlignment.Fill)
-                                    maxHeight = measured.Pixels.Height;
-                            }
+                            if (measured.Pixels.Width > maxWidth)
+                                maxWidth = measured.Pixels.Width;
+                            if (measured.Pixels.Height > maxHeight)
+                                maxHeight = measured.Pixels.Height;
                         }
-
-                        ChildrenFactory.ReleaseTemplateInstance(template);
-                    }
-                    else if (this.MeasureItemsStrategy == MeasuringStrategy.MeasureAll
-                             || RecyclingTemplate == RecyclingTemplate.Disabled)
-                    {
-                        // Optimize: only allocate collection if templated
-                        List<SkiaControl> cellsToRelease = null;
-                        cellsToRelease = new List<SkiaControl>();
-
-                        try
+                        else
                         {
-                            for (int index = 0; index < childrenCount; index++)
-                            {
-                                var child = ChildrenFactory.GetViewForIndex(index, null, 0, true);
-                                cellsToRelease?.Add(child);
+                            if (measured.Pixels.Width > maxWidth
+                                && child.HorizontalOptions.Alignment != LayoutAlignment.Fill)
+                                maxWidth = measured.Pixels.Width;
 
-                                if (child == null)
-                                {
-                                    break; //unexpected but..
-                                }
-
-                                var measured = MeasureChild(child, rectForChildrenPixels.Width,
-                                    rectForChildrenPixels.Height, scale);
-                                if (!measured.IsEmpty)
-                                {
-                                    // FastMeasurement: skip FILL checks for performance
-                                    if (true) //FastMeasurement)
-                                    {
-                                        if (measured.Pixels.Width > maxWidth)
-                                            maxWidth = measured.Pixels.Width;
-                                        if (measured.Pixels.Height > maxHeight)
-                                            maxHeight = measured.Pixels.Height;
-                                    }
-                                    else
-                                    {
-                                        if (measured.Pixels.Width > maxWidth &&
-                                            child.HorizontalOptions.Alignment != LayoutAlignment.Fill)
-                                            maxWidth = measured.Pixels.Width;
-                                        if (measured.Pixels.Height > maxHeight &&
-                                            child.VerticalOptions.Alignment != LayoutAlignment.Fill)
-                                            maxHeight = measured.Pixels.Height;
-                                    }
-                                }
-                            }
-                        }
-                        finally
-                        {
-                            if (cellsToRelease?.Count > 0)
-                            {
-                                foreach (var cell in cellsToRelease)
-                                {
-                                    ChildrenFactory.ReleaseViewInUse(cell.ContextIndex, cell);
-                                }
-                            }
+                            if (measured.Pixels.Height > maxHeight
+                                && child.VerticalOptions.Alignment != LayoutAlignment.Fill)
+                                maxHeight = measured.Pixels.Height;
                         }
                     }
 
-                    return ScaledSize.FromPixels(maxWidth, maxHeight, scale);
+                    ChildrenFactory.ReleaseTemplateInstance(template);
                 }
+                else if (this.MeasureItemsStrategy == MeasuringStrategy.MeasureAll
+                         || RecyclingTemplate == RecyclingTemplate.Disabled)
+                {
+                    // Optimize: only allocate collection if templated
+                    List<SkiaControl> cellsToRelease = null;
+                    cellsToRelease = new List<SkiaControl>();
+
+                    try
+                    {
+                        for (int index = 0; index < childrenCount; index++)
+                        {
+                            var child = ChildrenFactory.GetViewForIndex(index, null, 0, true);
+                            cellsToRelease?.Add(child);
+
+                            if (child == null)
+                            {
+                                break; //unexpected but..
+                            }
+
+                            var measured = MeasureChild(child, rectForChildrenPixels.Width,
+                                rectForChildrenPixels.Height, scale);
+                            if (!measured.IsEmpty)
+                            {
+                                // FastMeasurement: skip FILL checks for performance
+                                if (true) //FastMeasurement)
+                                {
+                                    if (measured.Pixels.Width > maxWidth)
+                                        maxWidth = measured.Pixels.Width;
+                                    if (measured.Pixels.Height > maxHeight)
+                                        maxHeight = measured.Pixels.Height;
+                                }
+                                else
+                                {
+                                    if (measured.Pixels.Width > maxWidth &&
+                                        child.HorizontalOptions.Alignment != LayoutAlignment.Fill)
+                                        maxWidth = measured.Pixels.Width;
+                                    if (measured.Pixels.Height > maxHeight &&
+                                        child.VerticalOptions.Alignment != LayoutAlignment.Fill)
+                                        maxHeight = measured.Pixels.Height;
+                                }
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        if (cellsToRelease?.Count > 0)
+                        {
+                            foreach (var cell in cellsToRelease)
+                            {
+                                ChildrenFactory.ReleaseViewInUse(cell.ContextIndex, cell);
+                            }
+                        }
+                    }
+                }
+
+                return ScaledSize.FromPixels(maxWidth, maxHeight, scale);
+
             }
             //empty container
             else if (NeedAutoHeight || NeedAutoWidth)
@@ -833,7 +832,7 @@ namespace DrawnUi.Draw
                                     ContentSize = MeasureList(constraints.Content, request.Scale);
                                     break;
                                 }
-                                
+
                                 ContentSize = MeasureStackTemplated(constraints.Content, request.Scale);
                             }
                             else
@@ -1012,7 +1011,7 @@ namespace DrawnUi.Draw
 
             InvalidatedChildren.Add(child);
 
-            if (Type!= LayoutType.Grid &&  (!NeedAutoSize && (child.NeedAutoSize || IsTemplated)) ||
+            if (Type != LayoutType.Grid && (!NeedAutoSize && (child.NeedAutoSize || IsTemplated)) ||
                 (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible))
             {
                 UpdateByChild(child); //simple update
@@ -1058,26 +1057,26 @@ namespace DrawnUi.Draw
                 }
                 else
                     //stacklayout
-                if (IsStack)
-                {
-                    var structure = LatestStackStructure;
-                    if (structure != null && structure.GetCount() > 0)
+                    if (IsStack)
                     {
-                        //if (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
-                        //{
-                        //    drawnChildrenCount = DrawList(ctx.WithDestination(rectForChildren), structure);
-                        //}
-                        //else
+                        var structure = LatestStackStructure;
+                        if (structure != null && structure.GetCount() > 0)
                         {
-                            drawnChildrenCount = DrawStack(ctx.WithDestination(rectForChildren), structure);
+                            //if (IsTemplated && MeasureItemsStrategy == MeasuringStrategy.MeasureVisible)
+                            //{
+                            //    drawnChildrenCount = DrawList(ctx.WithDestination(rectForChildren), structure);
+                            //}
+                            //else
+                            {
+                                drawnChildrenCount = DrawStack(ctx.WithDestination(rectForChildren), structure);
+                            }
                         }
                     }
-                }
-                else
+                    else
                     //absolute layout
-                {
-                    drawnChildrenCount = DrawViews(ctx.WithDestination(rectForChildren));
-                }
+                    {
+                        drawnChildrenCount = DrawViews(ctx.WithDestination(rectForChildren));
+                    }
 
                 ApplyIsEmpty(drawnChildrenCount == 0);
 
@@ -1167,41 +1166,41 @@ namespace DrawnUi.Draw
                         }
 
                         // Log the current cell's DirtyRegion
-                      /*
-                        var cellRect = cell.Control.DirtyRegion;
-                        Trace.WriteLine($"Checking cell.Control: {cell.Control}, DirtyRegion: X={cellRect.Left}, Y={cellRect.Top}, Width={cellRect.Width}, Height={cellRect.Height}");
+                        /*
+                          var cellRect = cell.Control.DirtyRegion;
+                          Trace.WriteLine($"Checking cell.Control: {cell.Control}, DirtyRegion: X={cellRect.Left}, Y={cellRect.Top}, Width={cellRect.Width}, Height={cellRect.Height}");
 
-                        if (!DirtyChildrenInternal.Contains(cell.Control))
-                        {
-                            bool intersects = false;
-                            foreach (var dirtyChild in DirtyChildrenInternal)
-                            {
-                                var dirtyChildRect = dirtyChild.DirtyRegion;
-                                bool doesIntersect = dirtyChild.DirtyRegion.IntersectsWith(cell.Control.DirtyRegion);
+                          if (!DirtyChildrenInternal.Contains(cell.Control))
+                          {
+                              bool intersects = false;
+                              foreach (var dirtyChild in DirtyChildrenInternal)
+                              {
+                                  var dirtyChildRect = dirtyChild.DirtyRegion;
+                                  bool doesIntersect = dirtyChild.DirtyRegion.IntersectsWith(cell.Control.DirtyRegion);
 
-                                // Log the comparison details
-                                Trace.WriteLine($"  Comparing with dirtyChild: {dirtyChild}, DirtyRegion: X={dirtyChildRect.Left}, Y={dirtyChildRect.Top}, Width={dirtyChildRect.Width}, Height={dirtyChildRect.Height}");
-                                Trace.WriteLine($"  Intersects: {doesIntersect}");
+                                  // Log the comparison details
+                                  Trace.WriteLine($"  Comparing with dirtyChild: {dirtyChild}, DirtyRegion: X={dirtyChildRect.Left}, Y={dirtyChildRect.Top}, Width={dirtyChildRect.Width}, Height={dirtyChildRect.Height}");
+                                  Trace.WriteLine($"  Intersects: {doesIntersect}");
 
-                                if (doesIntersect)
-                                {
-                                    intersects = true;
-                                    // Optionally break early if you only need one intersection
-                                    // break;
-                                }
-                            }
+                                  if (doesIntersect)
+                                  {
+                                      intersects = true;
+                                      // Optionally break early if you only need one intersection
+                                      // break;
+                                  }
+                              }
 
-                            if (intersects)
-                            {
-                                Trace.WriteLine($"Adding cell.Control: {cell.Control} to DirtyChildrenInternal");
-                                DirtyChildrenInternal.Add(cell.Control);
-                            }
-                        }
-                        else
-                        {
-                            Trace.WriteLine($"Skipping cell.Control: {cell.Control} (already in DirtyChildrenInternal)");
-                        }
-                       */
+                              if (intersects)
+                              {
+                                  Trace.WriteLine($"Adding cell.Control: {cell.Control} to DirtyChildrenInternal");
+                                  DirtyChildrenInternal.Add(cell.Control);
+                              }
+                          }
+                          else
+                          {
+                              Trace.WriteLine($"Skipping cell.Control: {cell.Control} (already in DirtyChildrenInternal)");
+                          }
+                         */
                     }
 
                     var count = 0;
@@ -1598,8 +1597,8 @@ namespace DrawnUi.Draw
 
             return;
 
-            ExistingLogic:
-            // Fall back to existing logic if needed
+ExistingLogic:
+// Fall back to existing logic if needed
             lock (LockMeasure)
             {
                 SafeAction(() =>

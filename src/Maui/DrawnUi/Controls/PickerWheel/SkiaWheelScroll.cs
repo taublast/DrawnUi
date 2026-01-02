@@ -12,6 +12,19 @@ namespace DrawnUi.Controls
             return false;
         }
 
+        public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+        {
+            var consumedDefault = BlockGesturesBelow ? this : null;
+
+            if (!RespondsToGestures  
+                || (args.Type != TouchActionResult.Down && args.Type != TouchActionResult.Up && args.Type != TouchActionResult.Panning))
+            {
+                return consumedDefault;
+            }
+
+            return base.ProcessGestures(args, apply);
+        }
+
         //public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
         //{
         //    var consumed = base.ProcessGestures(args, apply);
@@ -293,8 +306,7 @@ namespace DrawnUi.Controls
         {
             if (ItemsWrapper!=null && CellsPool != null && DrawingRect.Height > 1)
             {
-
-                Debug.WriteLine($"[PICKER] at {context.Destination} with {DrawingRect}");
+                //Debug.WriteLine($"[PICKER] at {context.Destination} with {DrawingRect}");
 
                 var logicalIndexes = new int[CellsCount + 2];
                 int startingIndex = this.GetIndexAtScrollOffset(this.WheelScrollingOffset, false, false) - this.VisibleCellsCountHalf;

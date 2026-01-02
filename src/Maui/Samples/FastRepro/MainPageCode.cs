@@ -1,12 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
-using AppoMobi.Specials;
-using DrawnUi.Controls;
-using DrawnUi.Draw;
+ 
 using DrawnUi.Infrastructure.Enums;
 using DrawnUi.Views;
 using Sandbox.Resources;
+ 
 
 
 namespace Sandbox
@@ -98,8 +96,9 @@ namespace Sandbox
                          new FinalStack()
                         {
                             BackgroundColor = Color.Parse("#66000000"),
-                            HorizontalOptions = LayoutOptions.Center,
-                            VerticalOptions = LayoutOptions.Center,
+                            HorizontalOptions = LayoutOptions.Fill,
+                            VerticalOptions = LayoutOptions.Fill,
+                            WidthRequest = 300,
                             Spacing = 0,
                             Children =
                             {
@@ -166,7 +165,27 @@ namespace Sandbox
                                         HeightRequest = 28,
                                         WidthRequest = 300,
                                         BackgroundColor = Color.Parse("#66000000")
+                                    },
+
+                                new SkiaLayer()
+                                {
+                                    HeightRequest = 28,
+                                    BackgroundColor = Color.Parse("#66FF0000"),
+                                    Padding = new(0, 0, 0, 10),
+                                    Children =
+                                    {
+                                        new SkiaRichLabel() //MainShortStatus
+                                            {
+                                                IsParentIndependent = true,
+                                                VerticalOptions = LayoutOptions.Center,
+                                                UseCache = SkiaCacheType.Image,
+                                                MaxLines = 1,
+                                                FontSize = 16,
+                                                HorizontalOptions = LayoutOptions.Center,
+                                            }
                                     }
+
+                                },
                             }},
 
 

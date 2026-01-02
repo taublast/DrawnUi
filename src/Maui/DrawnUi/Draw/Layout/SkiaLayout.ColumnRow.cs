@@ -38,7 +38,7 @@ namespace DrawnUi.Draw
             }
         }
 
-        protected ScaledSize MeasureAndArrangeCell(SKRect destination,
+        protected virtual ScaledSize MeasureAndArrangeCell(SKRect destination,
             ControlInStack cell, SkiaControl child,
             SKRect rectForChildrenPixels, float scale)
         {
@@ -1205,11 +1205,14 @@ else
             // Cache layout type check
             var isColumn = Type == LayoutType.Column;
 
+            // Subpixel accumulation
+            double stackY = rectForChildrenPixels.Top;
+
             try
             {
                 for (var row = 0; row < layoutStructure.MaxRows; row++)
                 {
-                    var maxHeight = 0.0f;
+                    var maxRowHeight = 0.0f;
                     var maxWidth = 0.0f;
 
                     // Inline GetEffectiveColumnsCount
@@ -1232,6 +1235,8 @@ else
                                                 columnsCount)
                             : rectForChildrenPixels.Width)
                         : rectForChildrenPixels.Width;
+
+                    double stackX = rectForChildrenPixels.Left;
 
                     for (int column = 0; column < columnsCount; column++)
                     {
@@ -1265,8 +1270,13 @@ else
 
                         // Inline ApplySpacing
                         if (column == 0)
-                            rectForChild.Top += GetSpacingForIndex(row, scale);
-                        rectForChild.Left += GetSpacingForIndex(column, scale);
+                        {
+                            stackY += GetSpacingForIndex(row, scale);
+                        }
+                        rectForChild.Top = (float)Math.Round(stackY);
+
+                        stackX += GetSpacingForIndex(column, scale);
+                        rectForChild.Left = (float)Math.Round(stackX);
 
                         var rectFitChild = CreateChildMeasureRect(rectForChild, widthPerColumn, cell,
                             hasFillHandling, spacePerFillChild, nonTemplated);
@@ -1296,11 +1306,43 @@ else
                             // - For Row (perpendicular): fill-Y children should NOT contribute to height
                             if (isTemplated || !child.NeedFillY || isColumn)
                             {
-                                if (measured.Pixels.Height > maxHeight)
-                                    maxHeight = measured.Pixels.Height;
+                                if (measured.Pixels.Height > maxRowHeight)
+                                    maxRowHeight = measured.Pixels.Height;
                             }
 
-                            rectForChild.Left += measured.Pixels.Width;
+                            // Subpixel snapping correction
+                            if (!isColumn) // Horizontal stacking
+                            {
+                                stackX += measured.Pixels.Width;
+                                float snappedRight = (float)Math.Round(stackX);
+                                float snappedWidth = snappedRight - rectForChild.Left;
+
+                                // Force the cell destination to match snapped width
+                                var dest = cell.Destination;
+                                dest.Right = dest.Left + snappedWidth;
+                                cell.Destination = dest;
+
+                                widthPerColumn -= measured.Pixels.Width;
+                            }
+                            else
+                            {
+                                // Vertical stacking (single column)
+                                if (columnsCount == 1)
+                                {
+                                    double tempY = stackY + measured.Pixels.Height;
+                                    float snappedBottom = (float)Math.Round(tempY);
+                                    float snappedHeight = snappedBottom - rectForChild.Top;
+
+                                    var dest = cell.Destination;
+                                    dest.Bottom = dest.Top + snappedHeight;
+                                    cell.Destination = dest;
+
+                                    if (snappedHeight > maxRowHeight)
+                                    {
+                                        maxRowHeight = snappedHeight;
+                                    }
+                                }
+                            }
                         }
 
                         // Inline CheckSecondPassNeeded
@@ -1323,10 +1365,9 @@ else
                     // Inline UpdateStackSize
                     if (maxWidth > stackWidth)
                         stackWidth = maxWidth;
-                    stackHeight += maxHeight + GetSpacingForIndex(row, scale);
+                    stackHeight += maxRowHeight + GetSpacingForIndex(row, scale);
 
-                    rectForChild.Top += maxHeight;
-                    rectForChild.Left = 0;
+                    stackY += maxRowHeight;
                 }
 
                 // Inline ApplyFillConstraints
@@ -1371,6 +1412,11 @@ else
 
                 for (int column = 0; column < columnsCount; column++)
                 {
+                    if (Type == LayoutType.Row)
+                    {
+                        spacingUsed += GetSpacingForIndex(column, scale);
+                    }
+
                     if (layoutStructure.GetColumnCountForRow(row) < column + 1)
                         continue;
 
@@ -1531,21 +1577,20 @@ else
         {
             if (Type == LayoutType.Column && child.HeightRequest >= 0)
             {
-                return (float)((child.HeightRequest + child.Margins.VerticalThickness) * scale);
+                return (float)Math.Round((child.HeightRequest + child.Margins.VerticalThickness) * scale);
             }
-            else if (Type == LayoutType.Row && child.WidthRequest >= 0)
-            {
-                return (float)((child.WidthRequest + child.Margins.HorizontalThickness) * scale);
-            }
-            else
-            {
-                var tempRect = Type == LayoutType.Column
-                    ? new SKRect(0, 0, rectForChildrenPixels.Width, float.PositiveInfinity)
-                    : new SKRect(0, 0, float.PositiveInfinity, rectForChildrenPixels.Height);
 
-                var tempMeasured = MeasureChild(child, tempRect.Width, tempRect.Height, scale);
-                return Type == LayoutType.Column ? tempMeasured.Pixels.Height : tempMeasured.Pixels.Width;
+            if (Type == LayoutType.Row && child.WidthRequest >= 0)
+            {
+                return (float)Math.Round((child.WidthRequest + child.Margins.HorizontalThickness) * scale);
             }
+
+            var tempRect = Type == LayoutType.Column
+                ? new SKRect(0, 0, rectForChildrenPixels.Width, float.PositiveInfinity)
+                : new SKRect(0, 0, float.PositiveInfinity, rectForChildrenPixels.Height);
+
+            var tempMeasured = MeasureChild(child, tempRect.Width, tempRect.Height, scale);
+            return Type == LayoutType.Column ? tempMeasured.Pixels.Height : tempMeasured.Pixels.Width;
         }
 
         private void ApplySpacing(ref SKRect rectForChild, int row, int column, float scale)
@@ -2061,6 +2106,20 @@ else
 
         private long _countVisible;
 
+        protected virtual SKRect GetStackChildDrawRect(int index, float x, float y, ControlInStack cell)
+        {
+            if (IsTemplated)
+            {
+                return new SKRect(x, y,
+                    x + cell.Area.Width, y + cell.Area.Bottom);
+            }
+            else
+            {
+                return new SKRect(x, y, x + cell.Drawn.Width,
+                    y + cell.Drawn.Height);
+            }
+        }
+
         /// <summary>
         /// Renders stack/wrap layout.
         /// Returns number of drawn children.
@@ -2128,7 +2187,7 @@ else
                             continue; // Skip unmeasured
                         }
 
-                        // Calculate screen position (unchanged)
+                        // Calculate screen position  
                         var x = ctx.Destination.Left + cell.Destination.Left;
                         var y = ctx.Destination.Top + cell.Destination.Top;
 
@@ -2281,6 +2340,7 @@ else
                         }
                     }
 
+  
                     foreach (var cell in CollectionsMarshal.AsSpan(visibleElements))
                     {
                         // Update measured items access time for visible items
@@ -2322,7 +2382,6 @@ else
                             SKRect destinationRect;
                             var x = offsetOthers.X + cell.Drawn.Left;
                             var y = offsetOthers.Y + cell.Drawn.Top;
-
 
                             if (child.NeedMeasure)
                             {
@@ -2384,23 +2443,13 @@ else
                                 }
                             }
 
-
                             if (child.IsVisible)
                             {
                                 bool willDraw = true;
 
                                 if (child.MeasuredSize.Pixels.Width >= 1 && child.MeasuredSize.Pixels.Height >= 1)
                                 {
-                                    if (IsTemplated)
-                                    {
-                                        destinationRect = new SKRect(x, y,
-                                            x + cell.Area.Width, y + cell.Area.Bottom);
-                                    }
-                                    else
-                                    {
-                                        destinationRect = new SKRect(x, y, x + cell.Drawn.Width,
-                                            y + cell.Drawn.Height);
-                                    }
+                                    destinationRect = GetStackChildDrawRect(index, x, y, cell);
 
                                     if (IsRenderingWithComposition)
                                     {
