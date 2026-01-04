@@ -30,7 +30,7 @@ namespace DrawnUi.Camera;
 /// </summary>
 public partial class SkiaCamera : SkiaControl
 {
- 
+
 
 #if IOS || MACCATALYST
 
@@ -816,7 +816,7 @@ public partial class SkiaCamera : SkiaControl
                 // Try to get raw frame (faster)
                 if (NativeControl is NativeCamera nativeCam)
                 {
-                    var raw = nativeCam.GetRawPreviewImage();
+                    var raw = nativeCam.GetRawFullImage();
                     if (raw.Image != null)
                     {
                         imageToDraw = raw.Image;

@@ -73,6 +73,12 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     // Pool RawFrameData to avoid GC allocations every frame
     private readonly System.Collections.Concurrent.ConcurrentQueue<RawFrameData> _rawFrameDataPool = new();
 
+    // Recording frame data
+    private readonly object _lockRecordingFrame = new();
+    private RawFrameData _latestRecordingFrame;
+    private readonly System.Collections.Concurrent.ConcurrentQueue<RawFrameData> _recordingFrameDataPool = new();
+    private readonly System.Collections.Concurrent.ConcurrentQueue<byte[]> _recordingPixelBufferPool = new();
+
     // Preview scaling for smooth performance in Video mode
     private int _previewMaxWidth = 960;  // Max preview resolution for smooth performance
     private int _previewMaxHeight = 540;
@@ -321,10 +327,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         {
                             targetFps = 60.0;
                         }
-                        
+
                         // Check if format supports this FPS
                         bool supported = false;
-                        foreach(var range in format.VideoSupportedFrameRateRanges)
+                        foreach (var range in format.VideoSupportedFrameRateRanges)
                         {
                             if (Math.Abs(range.MaxFrameRate - targetFps) < 0.1)
                             {
@@ -332,7 +338,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                                 break;
                             }
                         }
-                        
+
                         if (supported)
                         {
                             try
@@ -341,7 +347,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                                 videoDevice.ActiveVideoMaxFrameDuration = new CMTime(1, (int)targetFps);
                                 Console.WriteLine($"[NativeCameraiOS] Set FPS to {targetFps}");
                             }
-                            catch(Exception e)
+                            catch (Exception e)
                             {
                                 Console.WriteLine($"[NativeCameraiOS] Failed to set FPS: {e.Message}");
                             }
@@ -459,8 +465,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 if (formatDescription != null)
                 {
                     var dimensions = formatDescription.Dimensions;
-                    PreviewWidth = (int)dimensions.Width;  
-                    PreviewHeight = (int)dimensions.Height; 
+                    PreviewWidth = (int)dimensions.Width;
+                    PreviewHeight = (int)dimensions.Height;
                     FormsControl.SetRotatedContentSize(new SKSize(dimensions.Width, dimensions.Height), 0);
                 }
             }
@@ -723,8 +729,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
 
         var best = formatDetails
-            .Select(d => new { 
-                d, 
+            .Select(d => new {
+                d,
                 ar = d.VideoDims.Height > 0 ? (double)d.VideoDims.Width / d.VideoDims.Height : 0.0,
                 maxFps = GetMaxFps(d.Format),
                 supportsTargetFps = SupportsFps(d.Format, targetFps)
@@ -742,7 +748,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
     private bool SupportsFps(AVCaptureDeviceFormat format, double targetFps)
     {
-        foreach(var range in format.VideoSupportedFrameRateRanges)
+        foreach (var range in format.VideoSupportedFrameRateRanges)
         {
             // Check if targetFps is within range (with small epsilon for float comparison)
             if (range.MinFrameRate <= targetFps + 0.1 && range.MaxFrameRate >= targetFps - 0.1)
@@ -754,7 +760,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     private double GetMaxFps(AVCaptureDeviceFormat format)
     {
         double max = 0;
-        foreach(var range in format.VideoSupportedFrameRateRanges)
+        foreach (var range in format.VideoSupportedFrameRateRanges)
         {
             if (range.MaxFrameRate > max) max = range.MaxFrameRate;
         }
@@ -1386,6 +1392,46 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
     }
 
+    public (SKImage Image, int Rotation, bool Flip) GetRawFullImage()
+    {
+        // CRITICAL: Copy references quickly under lock, then release lock before expensive operations!
+        // Otherwise camera thread blocks waiting for lock while we copy megabytes of data
+        int width, height, bytesPerRow, rotation;
+        bool flip;
+        byte[] pixelData;
+
+        lock (_lockRecordingFrame)
+        {
+            if (_latestRecordingFrame == null)
+                return (null, 0, false);
+
+            // Quick copy of references/values - lock held for microseconds
+            width = _latestRecordingFrame.Width;
+            height = _latestRecordingFrame.Height;
+            bytesPerRow = _latestRecordingFrame.BytesPerRow;
+            rotation = (int)_latestRecordingFrame.CurrentRotation;
+            flip = _latestRecordingFrame.Facing == CameraPosition.Selfie;
+            pixelData = _latestRecordingFrame.PixelData;
+        }
+        // Lock released! Camera thread can now proceed
+
+        try
+        {
+            var info = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
+
+            // Expensive data copy happens OUTSIDE lock - no contention!
+            using var data = SKData.CreateCopy(pixelData);
+            var image = SKImage.FromPixels(info, data, bytesPerRow);
+
+            return (image, rotation, flip);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"[NativeCameraiOS] GetRawFullImage error: {e}");
+            return (null, 0, false);
+        }
+    }
+
     public SKImage GetPreviewImage()
     {
         // First check if we have a ready preview
@@ -1450,6 +1496,55 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         catch (Exception e)
         {
             Console.WriteLine($"[NativeCameraiOS] GetPreviewImage error: {e}");
+            return null;
+        }
+    }
+
+    public SKImage GetRecordingImage()
+    {
+        int width, height, bytesPerRow;
+        double rotation;
+        bool flip;
+        byte[] pixelData;
+
+        lock (_lockRecordingFrame)
+        {
+            if (_latestRecordingFrame == null)
+                return null;
+
+            // Quick copy of references/values
+            width = _latestRecordingFrame.Width;
+            height = _latestRecordingFrame.Height;
+            bytesPerRow = _latestRecordingFrame.BytesPerRow;
+            rotation = (double)_latestRecordingFrame.CurrentRotation;
+            flip = _latestRecordingFrame.Facing == CameraPosition.Selfie;
+            pixelData = _latestRecordingFrame.PixelData;
+        }
+
+        try
+        {
+            var info = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
+
+            var gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(pixelData, System.Runtime.InteropServices.GCHandleType.Pinned);
+            try
+            {
+                var pinnedPtr = gcHandle.AddrOfPinnedObject();
+                using var rawImage = SKImage.FromPixels(info, pinnedPtr, bytesPerRow);
+
+                // Apply rotation if needed
+                using var bitmap = SKBitmap.FromImage(rawImage);
+                // Use the same rotation logic as preview
+                using var rotatedBitmap = HandleOrientationForPreview(bitmap, rotation, flip);
+                return SKImage.FromBitmap(rotatedBitmap);
+            }
+            finally
+            {
+                gcHandle.Free();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"[NativeCameraiOS] GetRecordingImage error: {e}");
             return null;
         }
     }
@@ -1891,6 +1986,61 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
             try
             {
+                // RECORDING FRAME EXTRACTION (Full Resolution)
+                if (FormsControl.IsRecordingVideo)
+                {
+                    try
+                    {
+                        int recWidth = width;
+                        int recHeight = height;
+                        int recBytesPerRow = width * 4;
+                        int recDataSize = recHeight * recBytesPerRow;
+                        byte[] recPixelData = null;
+
+                        if (_recordingPixelBufferPool.TryDequeue(out var pooledBuffer) && pooledBuffer.Length == recDataSize)
+                        {
+                            recPixelData = pooledBuffer;
+                        }
+                        else
+                        {
+                            recPixelData = new byte[recDataSize];
+                        }
+
+                        var region = new MTLRegion
+                        {
+                            Origin = new MTLOrigin(0, 0, 0),
+                            Size = new MTLSize(width, height, 1)
+                        };
+
+                        unsafe
+                        {
+                            fixed (byte* ptr = recPixelData)
+                            {
+                                texture.GetBytes((IntPtr)ptr, (nuint)recBytesPerRow, region, 0);
+                            }
+                        }
+
+                        if (!_recordingFrameDataPool.TryDequeue(out var recFrame))
+                        {
+                            recFrame = new RawFrameData();
+                        }
+                        recFrame.Width = recWidth;
+                        recFrame.Height = recHeight;
+                        recFrame.BytesPerRow = recBytesPerRow;
+                        recFrame.Time = DateTime.UtcNow;
+                        recFrame.CurrentRotation = CurrentRotation;
+                        recFrame.Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing;
+                        recFrame.Orientation = (int)CurrentRotation;
+                        recFrame.PixelData = recPixelData;
+
+                        SetRecordingFrame(recFrame);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"[NativeCameraiOS] Recording frame extraction error: {ex}");
+                    }
+                }
+
                 int previewWidth = width;
                 int previewHeight = height;
                 byte[] pixelData = null;
@@ -1908,9 +2058,12 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     int scaledWidth = ((int)(width * scale) / 2) * 2;
                     int scaledHeight = ((int)(height * scale) / 2) * 2;
 
-                    // Initialize Metal scaler on first use
-                    if (_metalScaler == null)
+                    // Initialize Metal scaler on first use OR if dimensions changed
+                    if (_metalScaler == null ||
+                        _metalScaler.OutputWidth != scaledWidth ||
+                        _metalScaler.OutputHeight != scaledHeight)
                     {
+                        _metalScaler?.Dispose();
                         _metalScaler = new MetalPreviewScaler();
                         if (!_metalScaler.Initialize(width, height, scaledWidth, scaledHeight))
                         {
@@ -1996,10 +2149,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                             {
                                 unit.FieldOfView = formatInfo.VideoFieldOfView;
                             }
+                        }
                     }
+                    catch { }
                 }
-                catch { }
-            }
 
                 switch ((int)CurrentRotation)
                 {
@@ -2068,6 +2221,25 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 _rawFrameDataPool.Enqueue(_latestRawFrame);
             }
             _latestRawFrame = rawFrame;
+        }
+    }
+
+    void SetRecordingFrame(RawFrameData rawFrame)
+    {
+        lock (_lockRecordingFrame)
+        {
+            // Recycle old buffer if it exists
+            if (_latestRecordingFrame != null)
+            {
+                if (_latestRecordingFrame.PixelData != null)
+                {
+                    _recordingPixelBufferPool.Enqueue(_latestRecordingFrame.PixelData);
+                }
+                // Return RawFrameData to pool instead of disposing
+                _latestRecordingFrame.PixelData = null; // Clear reference before pooling
+                _recordingFrameDataPool.Enqueue(_latestRecordingFrame);
+            }
+            _latestRecordingFrame = rawFrame;
         }
     }
 
@@ -2501,16 +2673,16 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 }
 
                 Debug.WriteLine($"[NativeCamera.Apple] GetCurrentVideoFormat: {quality} quality -> {bestFormat.Width}x{bestFormat.Height}@{reportedFps} (Base: {bestFormat.FrameRate})");
-                
+
                 // Return a copy with adjusted FPS
-                return new VideoFormat 
-                { 
-                    Width = bestFormat.Width, 
-                    Height = bestFormat.Height, 
-                    FrameRate = reportedFps, 
-                    Codec = bestFormat.Codec, 
-                    BitRate = bestFormat.BitRate, 
-                    FormatId = bestFormat.FormatId 
+                return new VideoFormat
+                {
+                    Width = bestFormat.Width,
+                    Height = bestFormat.Height,
+                    FrameRate = reportedFps,
+                    Codec = bestFormat.Codec,
+                    BitRate = bestFormat.BitRate,
+                    FormatId = bestFormat.FormatId
                 };
             }
         }
