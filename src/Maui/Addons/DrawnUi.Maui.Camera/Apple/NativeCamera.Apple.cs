@@ -435,10 +435,17 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 //var physicalFocalLength = 4.15f;
                 //focalLengths.Add(physicalFocalLength);
 
+                // Determine actual facing
+                var actualFacing = FormsControl.Facing;
+                if (videoDevice.Position == AVCaptureDevicePosition.Front)
+                    actualFacing = CameraPosition.Selfie;
+                else if (videoDevice.Position == AVCaptureDevicePosition.Back)
+                    actualFacing = CameraPosition.Default;
+
                 var cameraUnit = new CameraUnit
                 {
                     Id = videoDevice.UniqueID,
-                    Facing = FormsControl.Facing,
+                    Facing = actualFacing,
                     FocalLengths = focalLengths,
                     FieldOfView = videoDevice.ActiveFormat.VideoFieldOfView,
                     Meta = FormsControl.CreateMetadata()
@@ -1298,7 +1305,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                 // Apply rotation if needed
                 using var bitmap = SKBitmap.FromImage(rawImage);
-                using var skBitmap = HandleOrientationForStillCapture(bitmap, (double)CurrentRotation, deviceRotation, FormsControl.Facing == CameraPosition.Selfie);
+                var isSelfie = (FormsControl.CameraDevice?.Facing ?? FormsControl.Facing) == CameraPosition.Selfie;
+                using var skBitmap = HandleOrientationForStillCapture(bitmap, (double)CurrentRotation, deviceRotation, isSelfie);
 
                 var skImage = SKImage.FromBitmap(skBitmap);
 
@@ -1308,7 +1316,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                 var capturedImage = new CapturedImage()
                 {
-                    Facing = FormsControl.Facing,
+                    Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
                     Time = DateTime.UtcNow,
                     Image = skImage,
                     Rotation = 0, //we already applied rotation
@@ -2021,7 +2029,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 rawFrame.BytesPerRow = bytesPerRow;
                 rawFrame.Time = time;
                 rawFrame.CurrentRotation = CurrentRotation;
-                rawFrame.Facing = FormsControl.Facing;
+                rawFrame.Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing;
                 rawFrame.Orientation = (int)CurrentRotation;
                 rawFrame.PixelData = pixelData;
 
@@ -3167,7 +3175,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 FilePath = filePath,
                 Duration = duration,
                 Format = GetCurrentVideoFormat(),
-                Facing = FormsControl.Facing,
+                Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
                 Time = _recordingStartTime,
                 FileSizeBytes = fileSizeBytes,
                 Metadata = new Dictionary<string, object>

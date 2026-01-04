@@ -901,10 +901,21 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     var sensorSize =
                         (Android.Util.SizeF)characteristics.Get(CameraCharacteristics.SensorInfoPhysicalSize);
 
+                    // Determine actual facing
+                    var actualFacing = FormsControl.Facing;
+                    if (facing != null)
+                    {
+                        int faceInt = facing.IntValue();
+                        if (faceInt == (int)LensFacing.Front)
+                            actualFacing = CameraPosition.Selfie;
+                        else if (faceInt == (int)LensFacing.Back)
+                            actualFacing = CameraPosition.Default;
+                    }
+
                     var unit = new CameraUnit
                     {
                         Id = cameraId,
-                        Facing = FormsControl.Facing,
+                        Facing = actualFacing,
                         MinFocalDistance =
                             (float)characteristics.Get(CameraCharacteristics.LensInfoMinimumFocusDistance),
                         //LensDistortion = (???)characteristics.Get(CameraCharacteristics.LensDistortion),
@@ -2125,7 +2136,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             var outImage = new CapturedImage()
             {
-                Facing = FormsControl.Facing,
+                Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
                 Time = DateTime.UtcNow,
                 Image = allocated.Bitmap.ToSKImage(),
                 Meta = meta,
@@ -2775,7 +2786,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 FilePath = _currentVideoFile,
                 Duration = duration,
                 Format = GetCurrentVideoFormat(),
-                Facing = FormsControl.Facing,
+                Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
                 Time = _recordingStartTime,
                 FileSizeBytes = fileSizeBytes,
                 Metadata = new Dictionary<string, object>
