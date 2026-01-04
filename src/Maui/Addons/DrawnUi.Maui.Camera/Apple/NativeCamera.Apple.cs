@@ -2929,7 +2929,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         // Find closest match from available formats
         var bestFormat = availableFormats
             .OrderBy(f => Math.Abs((f.Width * f.Height) - (targetResolution.width * targetResolution.height)))
-            .ThenByDescending(f => f.FrameRate)
+            .ThenBy(f => Math.Abs(f.FrameRate - 30)) // Prioritize 30fps
             .FirstOrDefault();
 
         if (bestFormat != null)
