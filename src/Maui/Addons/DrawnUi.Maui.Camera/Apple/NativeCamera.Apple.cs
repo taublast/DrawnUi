@@ -2957,8 +2957,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     }
 
     /// <summary>
-    /// Converts device rotation (degrees) to AVCaptureVideoOrientation
-    /// Selfie camera sensor is opposite to back camera, so landscape orientations are flipped
+    /// Converts device rotation (degrees) to AVCaptureVideoOrientation for native recording.
+    /// Selfie camera sensor is mirrored, so landscape orientations are swapped.
     /// </summary>
     private AVCaptureVideoOrientation DeviceRotationToVideoOrientation(int deviceRotation)
     {
@@ -2971,9 +2971,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         return normalizedRotation switch
         {
             0 => AVCaptureVideoOrientation.Portrait,
-            90 => isSelfie ? AVCaptureVideoOrientation.LandscapeLeft : AVCaptureVideoOrientation.LandscapeRight,
+            90 => isSelfie ? AVCaptureVideoOrientation.LandscapeRight : AVCaptureVideoOrientation.LandscapeLeft,
             180 => AVCaptureVideoOrientation.PortraitUpsideDown,
-            270 => isSelfie ? AVCaptureVideoOrientation.LandscapeRight : AVCaptureVideoOrientation.LandscapeLeft,
+            270 => isSelfie ? AVCaptureVideoOrientation.LandscapeLeft : AVCaptureVideoOrientation.LandscapeRight,
             _ => AVCaptureVideoOrientation.Portrait
         };
     }
