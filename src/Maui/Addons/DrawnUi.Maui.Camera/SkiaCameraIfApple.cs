@@ -90,9 +90,11 @@ public partial class SkiaCamera : SkiaControl
                 {
                     Debug.WriteLine("[StartVideoRecording] Stopping pre-recording encoder to finalize file");
 
-                    // Stop frame capture timer first
-                    _frameCaptureTimer?.Dispose();
-                    _frameCaptureTimer = null;
+                    // Stop frame capture first
+                    if (NativeControl is NativeCamera nativeCam)
+                    {
+                        nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+                    }
 
                     try
                     {
@@ -649,17 +651,23 @@ public partial class SkiaCamera : SkiaControl
         // Progress reporting
         _captureVideoEncoder.ProgressReported += (sender, duration) =>
         {
-            MainThread.BeginInvokeOnMainThread(() => OnVideoRecordingProgress(duration));
+            OnVideoRecordingProgress(duration);
         };
 
-        // Start frame capture timer for Apple (drive encoder frames)
-        _frameCaptureTimer?.Dispose();
-        var periodMs = Math.Max(1, (int)Math.Round(1000.0 / Math.Max(1, fps)));
-        _frameCaptureTimer =
-            new System.Threading.Timer(CaptureFrame, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(periodMs));
+        // Start frame capture for Apple (drive encoder frames)
+        if (NativeControl is NativeCamera nativeCam)
+        {
+            nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+            nativeCam.RecordingFrameAvailable += OnRecordingFrameAvailable;
+        }
 #else
         throw new NotSupportedException("Capture video flow is currently only supported on Windows, Android and Apple");
 #endif
+    }
+
+    private void OnRecordingFrameAvailable()
+    {
+        CaptureFrame(null);
     }
 
     private async void CaptureFrame(object state)
@@ -972,10 +980,12 @@ public partial class SkiaCamera : SkiaControl
 
         try
         {
-            // CRITICAL: Stop frame capture timer FIRST before clearing encoder reference
+            // CRITICAL: Stop frame capture FIRST before clearing encoder reference
             // This prevents race conditions where CaptureFrame is still executing
-            _frameCaptureTimer?.Dispose();
-            _frameCaptureTimer = null;
+            if (NativeControl is NativeCamera nativeCam)
+            {
+                nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+            }
 
             // Give any in-flight CaptureFrame calls time to complete
             await Task.Delay(50);
@@ -1073,8 +1083,10 @@ public partial class SkiaCamera : SkiaControl
         catch (Exception ex)
         {
             // Clean up on error
-            _frameCaptureTimer?.Dispose();
-            _frameCaptureTimer = null;
+            if (NativeControl is NativeCamera nativeCam)
+            {
+                nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+            }
             _captureVideoEncoder = null;
 
             IsRecordingVideo = false;
@@ -1094,10 +1106,12 @@ public partial class SkiaCamera : SkiaControl
 
         try
         {
-            // CRITICAL: Stop frame capture timer FIRST before clearing encoder reference
+            // CRITICAL: Stop frame capture FIRST before clearing encoder reference
             // This prevents race conditions where CaptureFrame is still executing
-            _frameCaptureTimer?.Dispose();
-            _frameCaptureTimer = null;
+            if (NativeControl is NativeCamera nativeCam)
+            {
+                nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+            }
 
 #if WINDOWS
             _useWindowsPreviewDrivenCapture = false;
@@ -1171,8 +1185,10 @@ public partial class SkiaCamera : SkiaControl
             Debug.WriteLine($"[AbortCaptureVideoFlow] Error during abort: {ex.Message}");
 
             // Clean up on error
-            _frameCaptureTimer?.Dispose();
-            _frameCaptureTimer = null;
+            if (NativeControl is NativeCamera nativeCam)
+            {
+                nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+            }
             _captureVideoEncoder = null;
 
             IsRecordingVideo = false;

@@ -1413,6 +1413,12 @@ public partial class SkiaCamera : SkiaControl
         if (IsRecordingVideo && _captureVideoEncoder != null)
         {
             // Force stop capture video flow to prevent disposal race
+#if IOS || MACCATALYST
+            if (NativeControl is NativeCamera nativeCam)
+            {
+                nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+            }
+#endif
             _frameCaptureTimer?.Dispose();
             _frameCaptureTimer = null;
 
@@ -1430,6 +1436,12 @@ public partial class SkiaCamera : SkiaControl
         }
         else
         {
+#if IOS || MACCATALYST
+            if (NativeControl is NativeCamera nativeCam)
+            {
+                nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+            }
+#endif
             _frameCaptureTimer?.Dispose();
             _frameCaptureTimer = null;
             _captureVideoEncoder?.Dispose();
@@ -2760,7 +2772,13 @@ public partial class SkiaCamera : SkiaControl
     internal void OnVideoRecordingProgress(TimeSpan duration)
     {
         CurrentRecordingDuration = duration;
-        VideoRecordingProgress?.Invoke(this, duration);
+        if (VideoRecordingProgress != null)
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                VideoRecordingProgress?.Invoke(this, duration);
+            });
+        }
     }
 
     /// <summary>
