@@ -575,14 +575,12 @@ public partial class SkiaCamera
 
                 if (liveTrack != null)
                 {
-                    videoTrack.PreferredTransform = liveTrack.PreferredTransform;
                     compositionTransform = liveTrack.PreferredTransform;
                     sourceSize = liveTrack.NaturalSize;
                     System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Live track: {sourceSize.Width}x{sourceSize.Height}, transform: {compositionTransform}");
                 }
                 else if (preTracks != null && preTracks.Length > 0)
                 {
-                    videoTrack.PreferredTransform = preTracks[0].PreferredTransform;
                     compositionTransform = preTracks[0].PreferredTransform;
                     sourceSize = preTracks[0].NaturalSize;
                     System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Pre-recording track: {sourceSize.Width}x{sourceSize.Height}, transform: {compositionTransform}");
@@ -601,7 +599,52 @@ public partial class SkiaCamera
                     frameRate = (int)preTracks[0].NominalFrameRate;
 
                 videoComposition.FrameDuration = new CoreMedia.CMTime(1, frameRate);
-                videoComposition.RenderSize = sourceSize; // Use source dimensions
+                
+                // Detect rotation and swap RenderSize if needed
+                var renderSize = sourceSize;
+                bool isPortrait = false;
+                // Check for 90 or 270 degree rotation (xx and yy are 0)
+                if (Math.Abs(compositionTransform.xx) < 0.001 && Math.Abs(compositionTransform.yy) < 0.001 && 
+                    (Math.Abs(compositionTransform.yx) > 0.001 || Math.Abs(compositionTransform.xy) > 0.001))
+                {
+                     isPortrait = true;
+                     renderSize = new CoreGraphics.CGSize(sourceSize.Height, sourceSize.Width);
+                     System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Detected 90/270 rotation, swapping RenderSize to {renderSize.Width}x{renderSize.Height}");
+                }
+                
+                videoComposition.RenderSize = renderSize;
+
+                // Calculate corrected transform to center video in RenderSize
+                // We ignore the translation in the source transform and calculate our own
+                var correctedTransform = compositionTransform;
+                
+                if (isPortrait)
+                {
+                    // 90 degrees: yx=1, xy=-1. 270 degrees: yx=-1, xy=1
+                    if (compositionTransform.yx > 0) // 90 degrees
+                    {
+                         correctedTransform = new CoreGraphics.CGAffineTransform(0, 1, -1, 0, renderSize.Width, 0);
+                    }
+                    else // 270 degrees
+                    {
+                         correctedTransform = new CoreGraphics.CGAffineTransform(0, -1, 1, 0, 0, renderSize.Height);
+                    }
+                }
+                else
+                {
+                    // 0 or 180 degrees
+                    if (compositionTransform.xx < 0) // 180 degrees
+                    {
+                        correctedTransform = new CoreGraphics.CGAffineTransform(-1, 0, 0, -1, renderSize.Width, renderSize.Height);
+                    }
+                    else // 0 degrees
+                    {
+                        correctedTransform = CoreGraphics.CGAffineTransform.MakeIdentity();
+                    }
+                }
+                
+                // Reset track transform to Identity since we are baking the rotation
+                videoTrack.PreferredTransform = CoreGraphics.CGAffineTransform.MakeIdentity();
 
                 var instruction = new AVFoundation.AVMutableVideoCompositionInstruction
                 {
@@ -609,7 +652,7 @@ public partial class SkiaCamera
                 };
 
                 var layerInstruction = AVFoundation.AVMutableVideoCompositionLayerInstruction.FromAssetTrack(videoTrack);
-                layerInstruction.SetTransform(compositionTransform, CoreMedia.CMTime.Zero);
+                layerInstruction.SetTransform(correctedTransform, CoreMedia.CMTime.Zero);
                 instruction.LayerInstructions = new[] { layerInstruction };
                 videoComposition.Instructions = new[] { instruction };
 
