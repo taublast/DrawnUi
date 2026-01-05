@@ -917,15 +917,15 @@ public partial class SkiaCamera : SkiaControl
                         if (FrameProcessor != null || VideoDiagnosticsOn)
                         {
                             // Apply rotation based on device orientation
-                            var rotation = GetActiveRecordingRotation();
+                            //var rotation = GetActiveRecordingRotation();
                             var checkpoint = canvas.Save();
-                            ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+                            //ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
 
-                            var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                            //var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
                             var frame = new DrawableFrame
                             {
-                                Width = frameWidth,
-                                Height = frameHeight,
+                                Width = info.Width,
+                                Height = info.Height,
                                 Canvas = canvas,
                                 Time = elapsed,
                                 Scale = 1f
