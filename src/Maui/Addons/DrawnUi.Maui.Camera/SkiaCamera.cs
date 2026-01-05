@@ -10,9 +10,7 @@ using Color = Microsoft.Maui.Graphics.Color;
 #if WINDOWS
 using DrawnUi.Camera.Platforms.Windows; 
 #elif IOS || MACCATALYST
-using AVFoundation;
-using CoreMedia;
-using Foundation;
+// READ SkiaCameraIfApple.cs !!!!!
 #endif
 
 namespace DrawnUi.Camera;
@@ -172,11 +170,7 @@ public partial class SkiaCamera : SkiaControl
                                     Debug.WriteLine($"[StartVideoRecording] Set pre-recording offset on new Windows encoder: {_preRecordingDurationTracked.TotalSeconds:F2}s");
                                 }
 #elif IOS || MACCATALYST
-                                if (_captureVideoEncoder is AppleVideoToolboxEncoder appleEncoder)
-                                {
-                                    appleEncoder.SetPreRecordingDuration(_preRecordingDurationTracked);
-                                    Debug.WriteLine($"[StartVideoRecording] Set pre-recording offset on new Apple encoder: {_preRecordingDurationTracked.TotalSeconds:F2}s");
-                                }
+                            // READ SkiaCameraIfApple.cs !!!!!
 #endif
                             }
                         }
@@ -765,148 +759,7 @@ public partial class SkiaCamera : SkiaControl
             MainThread.BeginInvokeOnMainThread(() => OnVideoRecordingProgress(duration));
         };
 #elif IOS || MACCATALYST
-        // Create Apple encoder using VideoToolbox for hardware H.264 encoding
-        _captureVideoEncoder = new AppleVideoToolboxEncoder();
-
-        // Set parent reference and pre-recording mode
-        _captureVideoEncoder.ParentCamera = this;
-        _captureVideoEncoder.IsPreRecordingMode = IsPreRecording;
-        Debug.WriteLine($"[StartCaptureVideoFlow] iOS encoder initialized with IsPreRecordingMode={IsPreRecording}");
-
-        // Control preview source: processed frames from encoder (PreviewVideoFlow=true) or raw camera (PreviewVideoFlow=false)
-        // Only applies when UseCaptureVideoFlow is TRUE (enforced by caller)
-        UseRecordingFramesForPreview = PreviewVideoFlow;
-        if (PreviewVideoFlow && _captureVideoEncoder is AppleVideoToolboxEncoder _appleEncPrev)
-        {
-            _encoderPreviewInvalidateHandler = (s, e) =>
-            {
-                try
-                {
-                    SafeAction(() => UpdatePreview());
-                }
-                catch
-                {
-                }
-            };
-            _appleEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
-        }
-
-        // Output path (Documents) or pre-recording file path
-        string outputPath;
-        if (IsPreRecording)
-        {
-            outputPath = _preRecordingFilePath;
-            if (string.IsNullOrEmpty(outputPath))
-            {
-                Debug.WriteLine("[StartCaptureVideoFlow] ERROR: Pre-recording file path not initialized");
-                return;
-            }
-            Debug.WriteLine($"[StartCaptureVideoFlow] iOS pre-recording to file: {outputPath}");
-        }
-        else
-        {
-            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            outputPath = Path.Combine(documentsPath, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
-            Debug.WriteLine($"[StartCaptureVideoFlow] iOS recording to file: {outputPath}");
-        }
-
-        // Treat DeviceRotation 0/180 as portrait, 90/270 as landscape
-        var rot = DeviceRotation % 360;
-        bool portrait = (rot == 0 || rot == 180);
-
-        // Use camera format if available; fallback to preview size or 1280x720
-        var currentFormat = NativeControl?.GetCurrentVideoFormat();
-
-        // on ios video format is defined for landscape width x height
-        // so our width/height are swapped below to orient resulting video.
-
-        var width = (int)PreviewSize.Height;
-        var height = (int)PreviewSize.Width;
-
-        if (currentFormat != null)
-        {
-            width = currentFormat.Height;
-            height = currentFormat.Width;
-        }
-
-        var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
-
-        _diagEncWidth = (int)width;
-        _diagEncHeight = (int)height;
-        _diagBitrate = (long)Math.Max((long)width * height * 4, 2_000_000L);
-        SetSourceFrameDimensions((int)width, (int)height);
-
-        // Pass locked rotation to encoder for proper video orientation metadata (iOS-specific)
-        if (_captureVideoEncoder is DrawnUi.Camera.AppleVideoToolboxEncoder appleEncoder)
-        {
-            await appleEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio, RecordingLockedRotation);
-
-            // ✅ CRITICAL: If transitioning from pre-recording to live, set the duration offset BEFORE StartAsync
-            // BUT ONLY if pre-recording file actually exists and has content (otherwise standalone live recording will be corrupted!)
-            if (!IsPreRecording && _preRecordingDurationTracked > TimeSpan.Zero)
-            {
-                // Verify pre-recording file exists and has content before setting offset
-                bool hasValidPreRecording = !string.IsNullOrEmpty(_preRecordingFilePath) &&
-                                           File.Exists(_preRecordingFilePath) &&
-                                           new FileInfo(_preRecordingFilePath).Length > 0;
-
-                if (hasValidPreRecording)
-                {
-                    appleEncoder.SetPreRecordingDuration(_preRecordingDurationTracked);
-                    Debug.WriteLine($"[StartCaptureVideoFlow] Set pre-recording duration offset: {_preRecordingDurationTracked.TotalSeconds:F2}s (pre-recording file valid)");
-                }
-                else
-                {
-                    Debug.WriteLine($"[StartCaptureVideoFlow] WARNING: Pre-recording duration tracked ({_preRecordingDurationTracked.TotalSeconds:F2}s) but file is invalid/empty. NOT setting offset to avoid corrupting standalone live recording!");
-                    _preRecordingDurationTracked = TimeSpan.Zero; // Reset to avoid muxing attempt later
-                }
-            }
-        }
-        else
-        {
-            await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
-        }
-
-        // CRITICAL: In pre-recording mode, do NOT call StartAsync during initialization
-        // Pre-recording mode should just buffer frames in memory without starting file writing
-        // StartAsync will be called later when transitioning to live recording
-        if (!IsPreRecording)
-        {
-            await _captureVideoEncoder.StartAsync();
-            Debug.WriteLine($"[StartCaptureVideoFlow] StartAsync called for live/normal recording");
-        }
-        else
-        {
-            Debug.WriteLine($"[StartCaptureVideoFlow] Skipping StartAsync - pre-recording mode will buffer frames in memory");
-        }
-
-        _capturePtsBaseTime = null;
-        _captureVideoStartTime = DateTime.Now;
-
-        // Diagnostics
-        if (IsPreRecording  || (!IsPreRecording &&  _preRecordingDurationTracked == TimeSpan.Zero))
-        {
-            _diagStartTime = DateTime.Now;
-            _diagDroppedFrames = 0;
-            _diagSubmittedFrames = 0;
-            _diagLastSubmitMs = 0;
-            ResetRecordingFps();
-            _captureVideoTotalStartTime = DateTime.Now;
-        }
-
-        _targetFps = fps;
-
-        // Progress reporting
-        _captureVideoEncoder.ProgressReported += (sender, duration) =>
-        {
-            MainThread.BeginInvokeOnMainThread(() => OnVideoRecordingProgress(duration));
-        };
-
-        // Start frame capture timer for Apple (drive encoder frames)
-        _frameCaptureTimer?.Dispose();
-        var periodMs = Math.Max(1, (int)Math.Round(1000.0 / Math.Max(1, fps)));
-        _frameCaptureTimer =
-            new System.Threading.Timer(CaptureFrame, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(periodMs));
+       // READ SkiaCameraIfApple.cs !!!!!
 #else
         throw new NotSupportedException("Capture video flow is currently only supported on Windows, Android and Apple");
 #endif
@@ -1066,58 +919,7 @@ public partial class SkiaCamera : SkiaControl
                 }
             }
 #elif IOS || MACCATALYST
-            // GPU path on Apple: draw via Skia into VideoToolbox encoder's pixel buffer
-            if (_captureVideoEncoder is DrawnUi.Camera.AppleVideoToolboxEncoder appleEnc)
-            {
-                using var previewImage = NativeControl?.GetPreviewImage();
-                if (previewImage == null)
-                {
-                    Debug.WriteLine("[CaptureFrame] No preview image available from camera (NativeControl exists: {0})", NativeControl != null);
-                    return;
-                }
-
-                // Remove debug logging once issue is identified
-                // Debug.WriteLine($"[CaptureFrame] Got preview image: {previewImage.Width}x{previewImage.Height}, encoder expects: {_diagEncWidth}x{_diagEncHeight}");
-
-                using (appleEnc.BeginFrame(elapsed, out var canvas, out var info, DeviceRotation))
-                {
-                    var __rectsA = GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
-
-                    canvas.DrawImage(previewImage, __rectsA.src, __rectsA.dst);
-
-                    if (FrameProcessor != null || VideoDiagnosticsOn)
-                    {
-                        // Apply rotation based on device orientation
-                        var rotation = GetActiveRecordingRotation();
-                        var checkpoint = canvas.Save();
-                        ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
-
-                        var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
-                        var frame = new DrawableFrame
-                        {
-                            Width = frameWidth,
-                            Height = frameHeight,
-                            Canvas = canvas,
-                            Time = elapsedTotal,
-                            Scale = 1f
-                        };
-                        FrameProcessor?.Invoke(frame);
-
-                        if (VideoDiagnosticsOn)
-                            DrawDiagnostics(canvas, info.Width, info.Height);
-
-                        canvas.RestoreToCount(checkpoint);
-                    }
-                }
-
-                var __swA = System.Diagnostics.Stopwatch.StartNew();
-                await appleEnc.SubmitFrameAsync();
-                __swA.Stop();
-                _diagLastSubmitMs = __swA.Elapsed.TotalMilliseconds;
-                System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
-                CalculateRecordingFps();
-                return;
-            }
+            // READ SkiaCameraIfApple.cs !!!!!
 #endif
         }
         catch (Exception ex)
