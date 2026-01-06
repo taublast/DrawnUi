@@ -1,5 +1,6 @@
 ﻿#if IOS || MACCATALYST
 
+using System.Diagnostics;
 using AVFoundation;
 using DrawnUi.Maui.Navigation;
 using Foundation;
@@ -10,8 +11,8 @@ namespace DrawnUi.Camera;
 
 public partial class SkiaCamera
 {
- 
- 
+
+
     public virtual void SetZoom(double value)
     {
         TextureScale = value;
@@ -26,6 +27,343 @@ public partial class SkiaCamera
         Zoomed?.Invoke(this, value);
     }
 
+    private void OnRecordingFrameAvailable()
+    {
+        _ = CaptureFrame();
+    }
+
+    private async Task CaptureFrame()
+    {
+        if (!(IsRecordingVideo || IsPreRecording) || _captureVideoEncoder == null)
+            return;
+
+        // Make sure we never queue more than one frame — drop if previous is still processing
+        if (System.Threading.Interlocked.CompareExchange(ref _frameInFlight, 1, 0) != 0)
+        {
+            System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
+            return;
+        }
+
+        try
+        {
+            // Double-check encoder still exists (race condition protection)
+            if (_captureVideoEncoder == null || (!IsRecordingVideo && !IsPreRecording))
+                return;
+
+            var elapsed = DateTime.Now - _captureVideoStartTime;
+
+            // GPU path on Apple: draw via Skia into VideoToolbox encoder's pixel buffer
+            if (_captureVideoEncoder is DrawnUi.Camera.AppleVideoToolboxEncoder appleEnc)
+            {
+                SKImage imageToDraw = null;
+                bool shouldDisposeImage = true;
+                int imageRotation = 0;
+                bool imageFlip = false;
+
+                // Try to get raw frame (faster)
+                if (NativeControl is NativeCamera nativeCam)
+                {
+                    var raw = nativeCam.GetRawFullImage();
+                    if (raw.Image != null)
+                    {
+                        imageToDraw = raw.Image;
+                        imageRotation = raw.Rotation;
+                        imageFlip = raw.Flip;
+                    }
+                }
+
+                // Fallback to standard preview image (slower, already rotated)
+                if (imageToDraw == null)
+                {
+                    imageToDraw = NativeControl?.GetPreviewImage();
+                    // GetPreviewImage returns already rotated image
+                }
+
+                if (imageToDraw == null)
+                {
+                    Debug.WriteLine("[CaptureFrame] No preview image available from camera");
+                    return;
+                }
+
+                try
+                {
+                    using (appleEnc.BeginFrame(elapsed, out var canvas, out var info, DeviceRotation))
+                    {
+                        // If we have raw image, we need to handle rotation here
+                        if (imageRotation != 0 || imageFlip)
+                        {
+                            canvas.Save();
+
+                            // Apply transform to match HandleOrientationForPreview
+                            switch (imageRotation)
+                            {
+                                case 90:
+                                    canvas.Translate(info.Width, 0);
+                                    canvas.RotateDegrees(90);
+                                    if (imageFlip)
+                                    {
+                                        canvas.Scale(1, -1);
+                                        canvas.Translate(0, -imageToDraw.Height);
+                                    }
+
+                                    break;
+                                case 180:
+                                    canvas.Translate(info.Width, info.Height);
+                                    canvas.RotateDegrees(180);
+                                    if (imageFlip)
+                                    {
+                                        canvas.Scale(1, -1);
+                                        canvas.Translate(0, -imageToDraw.Height);
+                                    }
+
+                                    break;
+                                case 270:
+                                    canvas.Translate(0, info.Height);
+                                    canvas.RotateDegrees(270);
+                                    if (imageFlip)
+                                    {
+                                        canvas.Scale(1, -1);
+                                        canvas.Translate(0, -imageToDraw.Height);
+                                    }
+
+                                    break;
+                                default:
+                                    if (imageFlip)
+                                    {
+                                        canvas.Translate(0, info.Height);
+                                        canvas.Scale(1, -1);
+                                    }
+
+                                    break;
+                            }
+
+                            // Calculate virtual canvas size (swapped if 90/270)
+                            int virtualW = info.Width;
+                            int virtualH = info.Height;
+                            if (imageRotation == 90 || imageRotation == 270)
+                            {
+                                virtualW = info.Height;
+                                virtualH = info.Width;
+                            }
+
+                            var __rectsA = GetAspectFillRects(imageToDraw.Width, imageToDraw.Height, virtualW,
+                                virtualH);
+                            canvas.DrawImage(imageToDraw, __rectsA.src, __rectsA.dst);
+
+                            canvas.Restore();
+                        }
+                        else
+                        {
+                            var __rectsA = GetAspectFillRects(imageToDraw.Width, imageToDraw.Height, info.Width,
+                                info.Height);
+                            canvas.DrawImage(imageToDraw, __rectsA.src, __rectsA.dst);
+                        }
+
+                        if (FrameProcessor != null || VideoDiagnosticsOn)
+                        {
+                            // Apply rotation based on device orientation
+                            //var rotation = GetActiveRecordingRotation();
+                            var checkpoint = canvas.Save();
+                            //ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+
+                            //var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                            var frame = new DrawableFrame
+                            {
+                                Width = info.Width,
+                                Height = info.Height,
+                                Canvas = canvas,
+                                Time = elapsed,
+                                Scale = 1f
+                            };
+                            FrameProcessor?.Invoke(frame);
+
+                            if (VideoDiagnosticsOn)
+                                DrawDiagnostics(canvas, info.Width, info.Height);
+
+                            canvas.RestoreToCount(checkpoint);
+                        }
+                    }
+
+                    var __swA = System.Diagnostics.Stopwatch.StartNew();
+                    await appleEnc.SubmitFrameAsync();
+                    __swA.Stop();
+                    _diagLastSubmitMs = __swA.Elapsed.TotalMilliseconds;
+                    System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                }
+                finally
+                {
+                    if (shouldDisposeImage)
+                        imageToDraw?.Dispose();
+                }
+
+                return;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            // Silently ignore exceptions during frame capture - this can happen during disposal/shutdown
+            // The frame will simply be dropped and the next one processed
+            if (ex is NullReferenceException || ex is ObjectDisposedException || ex is InvalidOperationException)
+            {
+                // These are expected during shutdown - just return silently
+            }
+            else
+            {
+                Debug.WriteLine($"[CaptureFrame] Error: {ex.Message}");
+            }
+        }
+        finally
+        {
+            System.Threading.Interlocked.Exchange(ref _frameInFlight, 0);
+        }
+    }
+
+    private async Task StartCaptureVideoFlow()
+    {
+
+        // Create Apple encoder using VideoToolbox for hardware H.264 encoding
+        _captureVideoEncoder = new AppleVideoToolboxEncoder();
+
+        // Set parent reference and pre-recording mode
+        _captureVideoEncoder.ParentCamera = this;
+        _captureVideoEncoder.IsPreRecordingMode = IsPreRecording;
+        Debug.WriteLine($"[StartCaptureVideoFlow] iOS encoder initialized with IsPreRecordingMode={IsPreRecording}");
+
+        // Always use raw camera frames for preview (PreviewProcessor only, not FrameProcessor)
+        UseRecordingFramesForPreview = false;
+        if (MirrorRecordingToPreview && _captureVideoEncoder is AppleVideoToolboxEncoder _appleEncPrev)
+        {
+            _encoderPreviewInvalidateHandler = (s, e) =>
+            {
+                try
+                {
+                    SafeAction(() => UpdatePreview());
+                }
+                catch
+                {
+                }
+            };
+            _appleEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
+        }
+
+        // Output path (Documents) or pre-recording file path
+        string outputPath;
+        if (IsPreRecording)
+        {
+            outputPath = _preRecordingFilePath;
+            if (string.IsNullOrEmpty(outputPath))
+            {
+                Debug.WriteLine("[StartCaptureVideoFlow] ERROR: Pre-recording file path not initialized");
+                return;
+            }
+            Debug.WriteLine($"[StartCaptureVideoFlow] iOS pre-recording to file: {outputPath}");
+        }
+        else
+        {
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            outputPath = Path.Combine(documentsPath, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
+            Debug.WriteLine($"[StartCaptureVideoFlow] iOS recording to file: {outputPath}");
+        }
+
+        // Treat DeviceRotation 0/180 as portrait, 90/270 as landscape
+        var rot = DeviceRotation % 360;
+        bool portrait = (rot == 0 || rot == 180);
+
+        // Use camera format if available; fallback to preview size or 1280x720
+        var currentFormat = NativeControl?.GetCurrentVideoFormat();
+
+        // on ios video format is defined for landscape width x height
+        // so our width/height are swapped below to orient resulting video.
+
+        var width = (int)PreviewSize.Height;
+        var height = (int)PreviewSize.Width;
+
+        if (currentFormat != null)
+        {
+            width = currentFormat.Height;
+            height = currentFormat.Width;
+        }
+
+        var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
+
+        _diagEncWidth = (int)width;
+        _diagEncHeight = (int)height;
+        _diagBitrate = (long)Math.Max((long)width * height * 4, 2_000_000L);
+        SetSourceFrameDimensions(width, height);
+
+        // Pass locked rotation to encoder for proper video orientation metadata (iOS-specific)
+        if (_captureVideoEncoder is DrawnUi.Camera.AppleVideoToolboxEncoder appleEncoder)
+        {
+            await appleEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio, RecordingLockedRotation);
+
+            // ✅ CRITICAL: If transitioning from pre-recording to live, set the duration offset BEFORE StartAsync
+            // BUT ONLY if pre-recording file actually exists and has content (otherwise standalone live recording will be corrupted!)
+            if (!IsPreRecording && _preRecordingDurationTracked > TimeSpan.Zero)
+            {
+                // Verify pre-recording file exists and has content before setting offset
+                bool hasValidPreRecording = !string.IsNullOrEmpty(_preRecordingFilePath) &&
+                                           File.Exists(_preRecordingFilePath) &&
+                                           new FileInfo(_preRecordingFilePath).Length > 0;
+
+                if (hasValidPreRecording)
+                {
+                    appleEncoder.SetPreRecordingDuration(_preRecordingDurationTracked);
+                    Debug.WriteLine($"[StartCaptureVideoFlow] Set pre-recording duration offset: {_preRecordingDurationTracked.TotalSeconds:F2}s (pre-recording file valid)");
+                }
+                else
+                {
+                    Debug.WriteLine($"[StartCaptureVideoFlow] WARNING: Pre-recording duration tracked ({_preRecordingDurationTracked.TotalSeconds:F2}s) but file is invalid/empty. NOT setting offset to avoid corrupting standalone live recording!");
+                    _preRecordingDurationTracked = TimeSpan.Zero; // Reset to avoid muxing attempt later
+                }
+            }
+        }
+        else
+        {
+            await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+        }
+
+        // CRITICAL: In pre-recording mode, do NOT call StartAsync during initialization
+        // Pre-recording mode should just buffer frames in memory without starting file writing
+        // StartAsync will be called later when transitioning to live recording
+        if (!IsPreRecording)
+        {
+            await _captureVideoEncoder.StartAsync();
+            Debug.WriteLine($"[StartCaptureVideoFlow] StartAsync called for live/normal recording");
+        }
+        else
+        {
+            Debug.WriteLine($"[StartCaptureVideoFlow] Skipping StartAsync - pre-recording mode will buffer frames in memory");
+        }
+
+        _capturePtsBaseTime = null;
+        _captureVideoStartTime = DateTime.Now;
+
+        // Diagnostics
+        if (IsPreRecording || (!IsPreRecording && _preRecordingDurationTracked == TimeSpan.Zero))
+        {
+            _diagStartTime = DateTime.Now;
+            _diagDroppedFrames = 0;
+            _diagSubmittedFrames = 0;
+            _diagLastSubmitMs = 0;
+        }
+
+        _targetFps = fps;
+
+        // Progress reporting
+        _captureVideoEncoder.ProgressReported += (sender, duration) =>
+        {
+            OnVideoRecordingProgress(duration);
+        };
+
+        // Start frame capture for Apple (drive encoder frames)
+        if (NativeControl is NativeCamera nativeCam)
+        {
+            nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+            nativeCam.RecordingFrameAvailable += OnRecordingFrameAvailable;
+        }
+
+    }
 
     /// <summary>
     /// Opens a file or displays a photo from assets-library URL
@@ -83,7 +421,8 @@ public partial class SkiaCamera
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine($"[SkiaCamera Apple] File not found and not a valid assets-library URL: {imageFilePathOrUrl}");
+                System.Diagnostics.Debug.WriteLine(
+                    $"[SkiaCamera Apple] File not found and not a valid assets-library URL: {imageFilePathOrUrl}");
             }
         }
         catch (Exception ex)
@@ -119,12 +458,14 @@ public partial class SkiaCamera
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine($"[SkiaCamera Apple] Asset not found for identifier: {localIdentifier}");
+                System.Diagnostics.Debug.WriteLine(
+                    $"[SkiaCamera Apple] Asset not found for identifier: {localIdentifier}");
             }
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"[SkiaCamera Apple] Error showing photo from assets-library: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine(
+                $"[SkiaCamera Apple] Error showing photo from assets-library: {ex.Message}");
         }
     }
 
@@ -159,10 +500,7 @@ public partial class SkiaCamera
             {
                 if (image != null)
                 {
-                    MainThread.BeginInvokeOnMainThread(() =>
-                    {
-                        photoViewController.SetImage(image);
-                    });
+                    MainThread.BeginInvokeOnMainThread(() => { photoViewController.SetImage(image); });
                 }
             });
 
@@ -209,17 +547,11 @@ public partial class SkiaCamera
             View.AddSubview(scrollView);
 
             // Add tap gesture to close
-            var tapGesture = new UITapGestureRecognizer(() =>
-            {
-                DismissViewController(true, null);
-            });
+            var tapGesture = new UITapGestureRecognizer(() => { DismissViewController(true, null); });
             View.AddGestureRecognizer(tapGesture);
 
             // Add double tap to zoom
-            var doubleTapGesture = new UITapGestureRecognizer(HandleDoubleTap)
-            {
-                NumberOfTapsRequired = 2
-            };
+            var doubleTapGesture = new UITapGestureRecognizer(HandleDoubleTap) { NumberOfTapsRequired = 2 };
             View.AddGestureRecognizer(doubleTapGesture);
 
             // Make sure single tap doesn't interfere with double tap
@@ -261,12 +593,15 @@ public partial class SkiaCamera
             var scrollViewSize = scrollView.Bounds.Size;
             var imageViewSize = imageView.Frame.Size;
 
-            var horizontalPadding = imageViewSize.Width < scrollViewSize.Width ?
-                (scrollViewSize.Width - imageViewSize.Width) / 2 : 0;
-            var verticalPadding = imageViewSize.Height < scrollViewSize.Height ?
-                (scrollViewSize.Height - imageViewSize.Height) / 2 : 0;
+            var horizontalPadding = imageViewSize.Width < scrollViewSize.Width
+                ? (scrollViewSize.Width - imageViewSize.Width) / 2
+                : 0;
+            var verticalPadding = imageViewSize.Height < scrollViewSize.Height
+                ? (scrollViewSize.Height - imageViewSize.Height) / 2
+                : 0;
 
-            scrollView.ContentInset = new UIEdgeInsets(verticalPadding, horizontalPadding, verticalPadding, horizontalPadding);
+            scrollView.ContentInset =
+                new UIEdgeInsets(verticalPadding, horizontalPadding, verticalPadding, horizontalPadding);
         }
 
         /// <summary>
@@ -286,9 +621,9 @@ public partial class SkiaCamera
                 var tapPoint = gesture.LocationInView(imageView);
                 var newZoomScale = scrollView.MaximumZoomScale;
                 var size = new CoreGraphics.CGSize(scrollView.Frame.Size.Width / newZoomScale,
-                                                   scrollView.Frame.Size.Height / newZoomScale);
+                    scrollView.Frame.Size.Height / newZoomScale);
                 var origin = new CoreGraphics.CGPoint(tapPoint.X - size.Width / 2,
-                                                      tapPoint.Y - size.Height / 2);
+                    tapPoint.Y - size.Height / 2);
                 scrollView.ZoomToRect(new CoreGraphics.CGRect(origin, size), true);
             }
         }
@@ -480,6 +815,7 @@ public partial class SkiaCamera
         {
             status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
         }
+
         return status == PermissionStatus.Granted;
     }
 
@@ -491,7 +827,8 @@ public partial class SkiaCamera
     {
         // Photos AddOnly (iOS 14+) returns Authorized or Limited when the user allows adding media
         var authStatus = await Photos.PHPhotoLibrary.RequestAuthorizationAsync(Photos.PHAccessLevel.ReadWrite);
-        return authStatus == Photos.PHAuthorizationStatus.Authorized || authStatus == Photos.PHAuthorizationStatus.Limited;
+        return authStatus == Photos.PHAuthorizationStatus.Authorized ||
+               authStatus == Photos.PHAuthorizationStatus.Limited;
     }
 
 
@@ -515,7 +852,8 @@ public partial class SkiaCamera
             // If pre-recorded is raw H.264 files, convert to MP4 first
             if (preRecordedPath.EndsWith(".h264"))
             {
-                System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Pre-recorded file is H.264, converting to MP4 first");
+                System.Diagnostics.Debug.WriteLine(
+                    $"[MuxVideosApple] Pre-recorded file is H.264, converting to MP4 first");
                 preRecordedPath = await ConvertH264ToMp4Async(preRecordedPath, outputPath + ".prec.mp4");
                 if (string.IsNullOrEmpty(preRecordedPath))
                 {
@@ -525,8 +863,10 @@ public partial class SkiaCamera
 
             // Log input/output file paths for debugging
             System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Input files:");
-            System.Diagnostics.Debug.WriteLine($"  Pre-recorded: {preRecordedPath} (exists: {File.Exists(preRecordedPath)})");
-            System.Diagnostics.Debug.WriteLine($"  Live recording: {liveRecordingPath} (exists: {File.Exists(liveRecordingPath)})");
+            System.Diagnostics.Debug.WriteLine(
+                $"  Pre-recorded: {preRecordedPath} (exists: {File.Exists(preRecordedPath)})");
+            System.Diagnostics.Debug.WriteLine(
+                $"  Live recording: {liveRecordingPath} (exists: {File.Exists(liveRecordingPath)})");
             System.Diagnostics.Debug.WriteLine($"  Output: {outputPath}");
 
             using (var preAsset = AVFoundation.AVAsset.FromUrl(Foundation.NSUrl.FromFilename(preRecordedPath)))
@@ -548,11 +888,13 @@ public partial class SkiaCamera
                 if (preTracks != null && preTracks.Length > 0)
                 {
                     var preTrack = preTracks[0];
-                    var preRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = preAsset.Duration };
+                    var preRange =
+                        new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = preAsset.Duration };
                     videoTrack.InsertTimeRange(preRange, preTrack, currentTime, out var error);
                     if (error != null)
-                        throw new InvalidOperationException($"Failed to insert pre-recorded track: {error.LocalizedDescription}");
-                    
+                        throw new InvalidOperationException(
+                            $"Failed to insert pre-recorded track: {error.LocalizedDescription}");
+
                     currentTime = CoreMedia.CMTime.Add(currentTime, preAsset.Duration);
                 }
 
@@ -562,10 +904,12 @@ public partial class SkiaCamera
                 if (liveTracks != null && liveTracks.Length > 0)
                 {
                     liveTrack = liveTracks[0];
-                    var liveRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = liveAsset.Duration };
+                    var liveRange =
+                        new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = liveAsset.Duration };
                     videoTrack.InsertTimeRange(liveRange, liveTrack, currentTime, out var error);
                     if (error != null)
-                        throw new InvalidOperationException($"Failed to insert live track: {error.LocalizedDescription}");
+                        throw new InvalidOperationException(
+                            $"Failed to insert live track: {error.LocalizedDescription}");
                 }
 
                 // CRITICAL: Copy transform from source track to composition to preserve orientation
@@ -577,13 +921,15 @@ public partial class SkiaCamera
                 {
                     compositionTransform = liveTrack.PreferredTransform;
                     sourceSize = liveTrack.NaturalSize;
-                    System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Live track: {sourceSize.Width}x{sourceSize.Height}, transform: {compositionTransform}");
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[MuxVideosApple] Live track: {sourceSize.Width}x{sourceSize.Height}, transform: {compositionTransform}");
                 }
                 else if (preTracks != null && preTracks.Length > 0)
                 {
                     compositionTransform = preTracks[0].PreferredTransform;
                     sourceSize = preTracks[0].NaturalSize;
-                    System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Pre-recording track: {sourceSize.Width}x{sourceSize.Height}, transform: {compositionTransform}");
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[MuxVideosApple] Pre-recording track: {sourceSize.Width}x{sourceSize.Height}, transform: {compositionTransform}");
                 }
 
                 // CRITICAL BUG FIX: Create AVMutableVideoComposition with explicit renderSize
@@ -599,35 +945,36 @@ public partial class SkiaCamera
                     frameRate = (int)preTracks[0].NominalFrameRate;
 
                 videoComposition.FrameDuration = new CoreMedia.CMTime(1, frameRate);
-                
+
                 // Detect rotation and swap RenderSize if needed
                 var renderSize = sourceSize;
                 bool isPortrait = false;
                 // Check for 90 or 270 degree rotation (xx and yy are 0)
-                if (Math.Abs(compositionTransform.xx) < 0.001 && Math.Abs(compositionTransform.yy) < 0.001 && 
+                if (Math.Abs(compositionTransform.xx) < 0.001 && Math.Abs(compositionTransform.yy) < 0.001 &&
                     (Math.Abs(compositionTransform.yx) > 0.001 || Math.Abs(compositionTransform.xy) > 0.001))
                 {
-                     isPortrait = true;
-                     renderSize = new CoreGraphics.CGSize(sourceSize.Height, sourceSize.Width);
-                     System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Detected 90/270 rotation, swapping RenderSize to {renderSize.Width}x{renderSize.Height}");
+                    isPortrait = true;
+                    renderSize = new CoreGraphics.CGSize(sourceSize.Height, sourceSize.Width);
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[MuxVideosApple] Detected 90/270 rotation, swapping RenderSize to {renderSize.Width}x{renderSize.Height}");
                 }
-                
+
                 videoComposition.RenderSize = renderSize;
 
                 // Calculate corrected transform to center video in RenderSize
                 // We ignore the translation in the source transform and calculate our own
                 var correctedTransform = compositionTransform;
-                
+
                 if (isPortrait)
                 {
                     // 90 degrees: yx=1, xy=-1. 270 degrees: yx=-1, xy=1
                     if (compositionTransform.yx > 0) // 90 degrees
                     {
-                         correctedTransform = new CoreGraphics.CGAffineTransform(0, 1, -1, 0, renderSize.Width, 0);
+                        correctedTransform = new CoreGraphics.CGAffineTransform(0, 1, -1, 0, renderSize.Width, 0);
                     }
                     else // 270 degrees
                     {
-                         correctedTransform = new CoreGraphics.CGAffineTransform(0, -1, 1, 0, 0, renderSize.Height);
+                        correctedTransform = new CoreGraphics.CGAffineTransform(0, -1, 1, 0, 0, renderSize.Height);
                     }
                 }
                 else
@@ -635,48 +982,62 @@ public partial class SkiaCamera
                     // 0 or 180 degrees
                     if (compositionTransform.xx < 0) // 180 degrees
                     {
-                        correctedTransform = new CoreGraphics.CGAffineTransform(-1, 0, 0, -1, renderSize.Width, renderSize.Height);
+                        correctedTransform =
+                            new CoreGraphics.CGAffineTransform(-1, 0, 0, -1, renderSize.Width, renderSize.Height);
                     }
                     else // 0 degrees
                     {
                         correctedTransform = CoreGraphics.CGAffineTransform.MakeIdentity();
                     }
                 }
-                
+
                 // Reset track transform to Identity since we are baking the rotation
                 videoTrack.PreferredTransform = CoreGraphics.CGAffineTransform.MakeIdentity();
 
                 var instruction = new AVFoundation.AVMutableVideoCompositionInstruction
                 {
-                    TimeRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = composition.Duration }
+                    TimeRange = new CoreMedia.CMTimeRange
+                    {
+                        Start = CoreMedia.CMTime.Zero,
+                        Duration = composition.Duration
+                    }
                 };
 
-                var layerInstruction = AVFoundation.AVMutableVideoCompositionLayerInstruction.FromAssetTrack(videoTrack);
+                var layerInstruction =
+                    AVFoundation.AVMutableVideoCompositionLayerInstruction.FromAssetTrack(videoTrack);
                 layerInstruction.SetTransform(correctedTransform, CoreMedia.CMTime.Zero);
                 instruction.LayerInstructions = new[] { layerInstruction };
                 videoComposition.Instructions = new[] { instruction };
 
-                System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Video composition renderSize: {videoComposition.RenderSize.Width}x{videoComposition.RenderSize.Height}, fps: {frameRate}");
+                System.Diagnostics.Debug.WriteLine(
+                    $"[MuxVideosApple] Video composition renderSize: {videoComposition.RenderSize.Width}x{videoComposition.RenderSize.Height}, fps: {frameRate}");
 
                 // Export composition to file
                 // CRITICAL: AVAssetExportSession fails if output file already exists
                 if (File.Exists(outputPath))
                 {
                     System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Deleting existing output file: {outputPath}");
-                    try { File.Delete(outputPath); } catch (Exception ex)
+                    try
                     {
-                        System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Warning: Failed to delete existing output file: {ex.Message}");
+                        File.Delete(outputPath);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine(
+                            $"[MuxVideosApple] Warning: Failed to delete existing output file: {ex.Message}");
                     }
                 }
 
                 var outputUrl = Foundation.NSUrl.FromFilename(outputPath);
-                var exporter = new AVFoundation.AVAssetExportSession(composition, AVFoundation.AVAssetExportSessionPreset.HighestQuality)
-                {
-                    OutputUrl = outputUrl,
-                    OutputFileType = AVFoundation.AVFileTypes.Mpeg4.GetConstant(),
-                    ShouldOptimizeForNetworkUse = false,
-                    VideoComposition = videoComposition // Apply our explicit video composition
-                };
+                var exporter =
+                    new AVFoundation.AVAssetExportSession(composition,
+                        AVFoundation.AVAssetExportSessionPreset.HighestQuality)
+                    {
+                        OutputUrl = outputUrl,
+                        OutputFileType = AVFoundation.AVFileTypes.Mpeg4.GetConstant(),
+                        ShouldOptimizeForNetworkUse = false,
+                        VideoComposition = videoComposition // Apply our explicit video composition
+                    };
 
                 var tcs = new TaskCompletionSource<string>();
 
@@ -698,6 +1059,7 @@ public partial class SkiaCamera
                         System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Export cancelled");
                         tcs.TrySetCanceled();
                     }
+
                     exporter.Dispose();
                 });
 
@@ -723,18 +1085,25 @@ public partial class SkiaCamera
     {
         try
         {
-            System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Converting H.264 to MP4: {h264FilePath} → {outputMp4Path}");
+            System.Diagnostics.Debug.WriteLine(
+                $"[MuxVideosApple] Converting H.264 to MP4: {h264FilePath} → {outputMp4Path}");
 
             // Delete output if exists
             if (File.Exists(outputMp4Path))
             {
-                try { File.Delete(outputMp4Path); } catch { }
+                try
+                {
+                    File.Delete(outputMp4Path);
+                }
+                catch
+                {
+                }
             }
 
             // Create AVAssetWriter for MP4 output
             var url = Foundation.NSUrl.FromFilename(outputMp4Path);
             var writer = new AVFoundation.AVAssetWriter(url, "public.mpeg-4", out var err);
-            
+
             if (writer == null || err != null)
                 throw new InvalidOperationException($"Failed to create AVAssetWriter: {err?.LocalizedDescription}");
 
@@ -742,8 +1111,8 @@ public partial class SkiaCamera
             var videoSettings = new AVFoundation.AVVideoSettingsCompressed
             {
                 Codec = AVFoundation.AVVideoCodec.H264,
-                Width = 1920,  // Will be overridden by source
-                Height = 1080  // Will be overridden by source
+                Width = 1920, // Will be overridden by source
+                Height = 1080 // Will be overridden by source
             };
 
             var videoInput = new AVFoundation.AVAssetWriterInput(AVMediaTypes.Video.GetConstant(), videoSettings)
@@ -768,7 +1137,8 @@ public partial class SkiaCamera
 
             // Note: This is a simplified approach. A full implementation would need to parse H.264 NAL units
             // and create proper CMSampleBuffers. For now, log that conversion was attempted.
-            System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] H.264 conversion: Note - Full NAL unit parsing not yet implemented. Using pre-recorded MP4 directly if available.");
+            System.Diagnostics.Debug.WriteLine(
+                $"[MuxVideosApple] H.264 conversion: Note - Full NAL unit parsing not yet implemented. Using pre-recorded MP4 directly if available.");
 
             // For now, just copy the file if it exists as MP4
             // In production, you'd parse H.264 and reconstruct CMSampleBuffers
@@ -801,7 +1171,13 @@ public partial class SkiaCamera
             // Delete output if exists
             if (File.Exists(outputMp4Path))
             {
-                try { File.Delete(outputMp4Path); } catch { }
+                try
+                {
+                    File.Delete(outputMp4Path);
+                }
+                catch
+                {
+                }
             }
 
             // Combine H.264 files into single byte array
@@ -835,7 +1211,7 @@ public partial class SkiaCamera
             // The muxing code will need to handle H.264 files directly
 
             System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Combined H.264 saved to: {tempH264Path}");
-            
+
             return tempH264Path; // Return the combined H.264 file path
         }
         catch (Exception ex)
@@ -844,6 +1220,334 @@ public partial class SkiaCamera
             throw;
         }
     }
+
+
+
+    private async Task StopCaptureVideoFlow()
+    {
+        ICaptureVideoEncoder encoder = null;
+
+        try
+        {
+            // CRITICAL: Stop frame capture FIRST before clearing encoder reference
+            // This prevents race conditions where CaptureFrame is still executing
+            if (NativeControl is NativeCamera nativeCam)
+            {
+                nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+            }
+
+            // Give any in-flight CaptureFrame calls time to complete
+            await Task.Delay(50);
+
+            // Get local reference to encoder before clearing field to prevent disposal race
+            encoder = _captureVideoEncoder;
+            _captureVideoEncoder = null;
+
+            // Stop encoder and get result
+            CapturedVideo capturedVideo = await encoder?.StopAsync();
+
+            // If we have both pre-recorded and live recording, mux them together
+            if (capturedVideo != null && !string.IsNullOrEmpty(_preRecordingFilePath) &&
+                File.Exists(_preRecordingFilePath))
+            {
+                Debug.WriteLine($"[StopCaptureVideoFlow] Muxing pre-recorded file with live recording");
+                try
+                {
+                    // Save original live recording path before overwriting capturedVideo
+                    string originalLiveRecordingPath = capturedVideo.FilePath;
+
+                    // Mux pre-recorded file + live file into final output
+                    string finalOutputPath = await MuxVideosAsync(_preRecordingFilePath, originalLiveRecordingPath);
+                    if (!string.IsNullOrEmpty(finalOutputPath) && File.Exists(finalOutputPath))
+                    {
+                        // Update captured video to point to muxed file
+                        var muxedInfo = new FileInfo(finalOutputPath);
+                        capturedVideo = new CapturedVideo
+                        {
+                            FilePath = finalOutputPath,
+                            FileSizeBytes = muxedInfo.Length,
+                            Duration = capturedVideo.Duration,
+                            Time = capturedVideo.Time
+                        };
+
+                        // Delete temp live recording file (NOT the muxed file!)
+                        try
+                        {
+                            File.Delete(originalLiveRecordingPath);
+                        }
+                        catch
+                        {
+                        }
+
+                        Debug.WriteLine($"[StopCaptureVideoFlow] Muxing successful: {finalOutputPath}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[StopCaptureVideoFlow] Muxing failed: {ex.Message}. Using live recording only.");
+                }
+                finally
+                {
+                    ClearPreRecordingBuffer();
+                }
+            }
+            else
+            {
+                ClearPreRecordingBuffer();
+            }
+
+            // Update state and notify success
+            IsRecordingVideo = false;
+            if (capturedVideo != null)
+            {
+                OnVideoRecordingSuccess(capturedVideo);
+            }
+        }
+        catch (Exception ex)
+        {
+            // Clean up on error
+            if (NativeControl is NativeCamera nativeCam)
+            {
+                nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+            }
+
+            _captureVideoEncoder = null;
+
+            IsRecordingVideo = false;
+            VideoRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+        finally
+        {
+            // Clean up encoder after StopAsync completes
+            encoder?.Dispose();
+        }
+    }
+
+    private async Task AbortCaptureVideoFlow()
+    {
+        ICaptureVideoEncoder encoder = null;
+
+        try
+        {
+            // CRITICAL: Stop frame capture FIRST before clearing encoder reference
+            // This prevents race conditions where CaptureFrame is still executing
+            if (NativeControl is NativeCamera nativeCam)
+            {
+                nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+            }
+
+            // Get local reference to encoder before clearing field to prevent disposal race
+            encoder = _captureVideoEncoder;
+            _captureVideoEncoder = null;
+            await encoder?.StopAsync();
+
+            // Give any in-flight CaptureFrame calls time to complete
+            await Task.Delay(50);
+
+            // Dispose encoder directly WITHOUT calling StopAsync - this should abandon the recording
+            Debug.WriteLine($"[AbortCaptureVideoFlow] Disposing encoder without finalizing video");
+            encoder?.Dispose();
+
+            // Clean up any pre-recording files
+            if (!string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath))
+            {
+                try
+                {
+                    File.Delete(_preRecordingFilePath);
+                    Debug.WriteLine($"[AbortCaptureVideoFlow] Deleted pre-recording file: {_preRecordingFilePath}");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[AbortCaptureVideoFlow] Failed to delete pre-recording file: {ex.Message}");
+                }
+            }
+
+            ClearPreRecordingBuffer();
+
+            // Update state - recording is now aborted
+            IsRecordingVideo = false;
+            IsPreRecording = false;
+
+            Debug.WriteLine($"[AbortCaptureVideoFlow] Capture video flow aborted successfully");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[AbortCaptureVideoFlow] Error during abort: {ex.Message}");
+
+            // Clean up on error
+            if (NativeControl is NativeCamera nativeCam)
+            {
+                nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+            }
+
+            _captureVideoEncoder = null;
+
+            IsRecordingVideo = false;
+            IsPreRecording = false;
+
+            // Don't throw - we want abort to always succeed in stopping the recording
+        }
+        finally
+        {
+            // Ensure encoder is disposed even if errors occurred
+            if (encoder != null)
+            {
+                try
+                {
+                    encoder.Dispose();
+                }
+                catch
+                {
+                    // Ignore disposal errors
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Start video recording. Run this in background thread!
+    /// Locks the device rotation for the entire recording session.
+    /// Uses either native video recording or capture video flow depending on UseCaptureVideoFlow setting.
+    /// 
+    /// State machine logic:
+    /// - If EnablePreRecording && !IsPreRecording: Start memory-only recording (pre-recording phase)
+    /// - If IsPreRecording && !IsRecordingVideo: Prepend buffer and start file recording (normal phase)
+    /// - Otherwise: Start normal file recording
+    /// </summary>
+    /// <returns>Async task</returns>
+    public async Task StartVideoRecording()
+    {
+        if (IsBusy)
+            return;
+
+        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
+
+        IsBusy = true;
+
+        try
+        {
+            // State 1 -> State 2: If pre-recording enabled and not yet in pre-recording phase, start memory-only recording
+            if (EnablePreRecording && !IsPreRecording && !IsRecordingVideo)
+            {
+                Debug.WriteLine("[StartVideoRecording] Transitioning to IsPreRecording (memory-only recording)");
+                IsPreRecording = true;
+                InitializePreRecordingBuffer();
+
+                // Lock the current device rotation for the entire recording session
+                RecordingLockedRotation = DeviceRotation;
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+
+                // Start recording in memory-only mode
+                if (UseCaptureVideoFlow && FrameProcessor != null)
+                {
+                    await StartCaptureVideoFlow();
+                }
+                else
+                {
+                    await StartNativeVideoRecording();
+                }
+            }
+            // State 2 -> State 3: If in pre-recording phase, transition to file recording with muxing
+            else if (IsPreRecording && !IsRecordingVideo)
+            {
+                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecordingVideo (file recording with mux)");
+
+                // CRITICAL: Stop and finalize the pre-recording encoder BEFORE starting live recording
+                if (_captureVideoEncoder != null)
+                {
+                    Debug.WriteLine("[StartVideoRecording] Stopping pre-recording encoder to finalize file");
+
+                    // Stop frame capture first
+                    if (NativeControl is NativeCamera nativeCam)
+                    {
+                        nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+                    }
+
+                    try
+                    {
+                        var preRecResult = await _captureVideoEncoder.StopAsync();
+                        Debug.WriteLine("[StartVideoRecording] Pre-recording encoder stopped and file finalized");
+
+                        // ✅ CRITICAL: Capture pre-recording file path AND duration from StopAsync result
+                        // The encoder wrote the file, so we must use ITS path, not generate our own!
+                        if (preRecResult != null && !string.IsNullOrEmpty(preRecResult.FilePath))
+                        {
+                            _preRecordingFilePath = preRecResult.FilePath;
+                            _preRecordingDurationTracked = _captureVideoEncoder.EncodingDuration;
+                            Debug.WriteLine($"[StartVideoRecording] Captured pre-recording file: {_preRecordingFilePath}");
+                            Debug.WriteLine($"[StartVideoRecording] Captured pre-recording duration: {_preRecordingDurationTracked.TotalSeconds:F2}s");
+                        }
+                        else
+                        {
+                            Debug.WriteLine($"[StartVideoRecording] WARNING: No pre-recording file path returned from encoder!");
+                            _preRecordingFilePath = null;
+                            _preRecordingDurationTracked = TimeSpan.Zero;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"[StartVideoRecording] Error stopping pre-recording encoder: {ex.Message}");
+                    }
+
+                    _captureVideoEncoder?.Dispose();
+                    _captureVideoEncoder = null;
+                }
+
+                IsPreRecording = false;
+                IsRecordingVideo = true;
+
+                // Lock the current device rotation for the entire recording session
+                RecordingLockedRotation = DeviceRotation;
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+
+                // Start recording to file (will be muxed with pre-recorded file later)
+                if (UseCaptureVideoFlow && FrameProcessor != null)
+                {
+                    await StartCaptureVideoFlow();
+                }
+                else
+                {
+                    await StartNativeVideoRecording();
+                }
+            }
+            // Normal recording (no pre-recording)
+            else if (!IsRecordingVideo)
+            {
+                Debug.WriteLine("[StartVideoRecording] Starting normal recording (no pre-recording)");
+                IsRecordingVideo = true;
+
+                // Lock the current device rotation for the entire recording session
+                RecordingLockedRotation = DeviceRotation;
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+
+                if (UseCaptureVideoFlow && FrameProcessor != null)
+                {
+                    await StartCaptureVideoFlow();
+                }
+                else
+                {
+                    await StartNativeVideoRecording();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            IsRecordingVideo = false;
+            IsPreRecording = false;
+            IsBusy = false;
+            RecordingLockedRotation = -1; // Reset on error
+            ClearPreRecordingBuffer();
+            VideoRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+
+        IsBusy = false;
+    }
+
+
+    //end of class declaration
 }
+
 #endif
 

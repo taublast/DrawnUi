@@ -1135,6 +1135,8 @@ public partial class SkiaCamera : SkiaControl
 
         UseRecordingFramesForPreview = false;
 #endif
+
+#if ONPLATFORM
         try
         {
             // Check if using capture video flow
@@ -1153,9 +1155,9 @@ public partial class SkiaCamera : SkiaControl
             }
             else
             {
-#if ONPLATFORM
+ 
                 await NativeControl.StopVideoRecording();
-#endif
+
                 // Note: IsRecordingVideo will be set to false by the VideoRecordingSuccess/Failed callbacks
             }
 
@@ -1169,6 +1171,8 @@ public partial class SkiaCamera : SkiaControl
             VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
+#endif
+
     }
 
     private void Super_OnNativeAppPaused(object sender, EventArgs e)
@@ -1944,8 +1948,75 @@ public partial class SkiaCamera : SkiaControl
 
     #region VIDEO RECORDING SHARED METHODS
 
+    /// <summary>
+    /// Clear the pre-recording buffer/file
+    /// </summary>
+    private void ClearPreRecordingBuffer()
+    {
+        lock (_preRecordingLock)
+        {
+            // Stop any active pre-recording encoder first
+            if (_captureVideoEncoder != null && IsPreRecording)
+            {
+                try
+                {
+                    _captureVideoEncoder.Dispose();
+                }
+                catch { }
+                _captureVideoEncoder = null;
+            }
+
+            // Delete temp file if it exists
+            if (!string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath))
+            {
+                try
+                {
+                    File.Delete(_preRecordingFilePath);
+                    Debug.WriteLine($"[ClearPreRecordingBuffer] Deleted: {_preRecordingFilePath}");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[ClearPreRecordingBuffer] Failed to delete: {ex.Message}");
+                }
+            }
+
+            _preRecordingFilePath = null;
+            _maxPreRecordingFrames = 0;
+        }
+    }
+
+    /// <summary>
+    /// Save captured video to gallery (copies the video file)
+    /// </summary>
+    /// <param name="capturedVideo">The captured video to save</param>
+    /// <param name="album">Optional album name</param>
+    /// <returns>Gallery path if successful, null if failed</returns>
+    public async Task<string> SaveVideoToGalleryAsync(CapturedVideo capturedVideo, string album = null)
+    {
+        if (capturedVideo == null || string.IsNullOrEmpty(capturedVideo.FilePath) ||
+            !File.Exists(capturedVideo.FilePath))
+            return null;
+
+        try
+        {
+#if ONPLATFORM
+            var path = await NativeControl.SaveVideoToGallery(capturedVideo.FilePath, album);
+            return path;
+#else
+            return null;
+#endif
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] Failed to save video to gallery: {ex.Message}");
+            return null;
+        }
+    }
+
     private async Task StartNativeVideoRecording()
     {
+#if ONPLATFORM
+
         // Set up video recording callbacks to handle state synchronization
         NativeControl.VideoRecordingFailed = ex =>
         {
@@ -1970,67 +2041,10 @@ public partial class SkiaCamera : SkiaControl
             MainThread.BeginInvokeOnMainThread(() => { OnVideoRecordingProgress(duration); });
         };
 
-#if ONPLATFORM
+
         await NativeControl.StartVideoRecording();
+
 #endif
-    }
-
-    public void AbortVideoRecordingBak()
-    {
-        if (!IsRecordingVideo && !IsPreRecording)
-            return;
-
-        Debug.WriteLine($"[AbortVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
-
-        IsRecordingVideo = false;
-        IsPreRecording = false;
-
-        // Reset locked rotation
-        RecordingLockedRotation = -1;
-        Debug.WriteLine($"[AbortVideoRecording] Reset locked rotation");
-
-#if ANDROID
-        // Stop Android event-driven capture and restore normal preview behavior
-        try
-        {
-            if (NativeControl is NativeCamera androidCam)
-            {
-                androidCam.PreviewCaptureSuccess = null;
-            }
-        }
-        catch
-        {
-        }
-
-        UseRecordingFramesForPreview = false;
-#endif
-        try
-        {
-            // Check if using capture video flow
-            if (_captureVideoEncoder != null)
-            {
-                AbortCaptureVideoFlow();
-            }
-            else
-            {
-                // For native platform recording, just reset state without saving
-                // Native implementations don't have explicit abort, so we just cleanup
-                Debug.WriteLine($"[AbortVideoRecording] Aborting native recording - no file will be saved");
-            }
-
-            // Clear any pre-recording buffer
-            ClearPreRecordingBuffer();
-
-            Debug.WriteLine($"[AbortVideoRecording] Recording aborted successfully");
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[AbortVideoRecording] Error during abort: {ex.Message}");
-            // Still cleanup state even if abort fails
-            IsRecordingVideo = false;
-            IsPreRecording = false;
-            ClearPreRecordingBuffer();
-        }
     }
 
     public async Task RefreshLocation(int msTimeout)
@@ -2380,6 +2394,52 @@ public partial class SkiaCamera : SkiaControl
             }
         }
 #endif
+    }
+
+
+    /// <summary>
+    /// Returns frame dimensions after rotation (swaps width/height for 90/270 degrees)
+    /// </summary>
+    private static (int width, int height) GetRotatedDimensions(int width, int height, int rotation)
+    {
+        var normalizedRotation = rotation % 360;
+        if (normalizedRotation < 0)
+            normalizedRotation += 360;
+
+        // Swap dimensions for 90 and 270 degree rotations
+        if (normalizedRotation == 90 || normalizedRotation == 270)
+            return (height, width);
+
+        return (width, height);
+    }
+
+    /// <summary>
+    /// Applies canvas rotation based on device orientation (0, 90, 180, 270 degrees)
+    /// </summary>
+    private static void ApplyCanvasRotation(SKCanvas canvas, int width, int height, int rotation)
+    {
+        var normalizedRotation = rotation % 360;
+        if (normalizedRotation < 0)
+            normalizedRotation += 360;
+
+        switch (normalizedRotation)
+        {
+            case 90:
+                // Rotate 90° clockwise: translate to bottom-left, then rotate
+                canvas.Translate(0, height);
+                canvas.RotateDegrees(-90);
+                break;
+            case 180:
+                canvas.Translate(width, height);
+                canvas.RotateDegrees(180);
+                break;
+            case 270:
+                // Rotate 270° clockwise (or 90° counter-clockwise): translate to top-right, then rotate
+                canvas.Translate(width, 0);
+                canvas.RotateDegrees(90);
+                break;
+            // case 0: no rotation needed
+        }
     }
 
     /// <summary>
@@ -2927,7 +2987,33 @@ public partial class SkiaCamera : SkiaControl
 
     #endregion
 
-#endregion
+    #endregion
 
+    private static (SKRect src, SKRect dst) GetAspectFillRects(int srcW, int srcH, int dstW, int dstH)
+    {
+        var dst = new SKRect(0, 0, dstW, dstH);
+        if (srcW <= 0 || srcH <= 0 || dstW <= 0 || dstH <= 0)
+            return (new SKRect(0, 0, srcW, srcH), dst);
+
+        float srcAR = (float)srcW / srcH;
+        float dstAR = (float)dstW / dstH;
+        SKRect src;
+        if (srcAR > dstAR)
+        {
+            // Crop width
+            float newW = srcH * dstAR;
+            float left = (srcW - newW) * 0.5f;
+            src = new SKRect(left, 0, left + newW, srcH);
+        }
+        else
+        {
+            // Crop height
+            float newH = srcW / dstAR;
+            float top = (srcH - newH) * 0.5f;
+            src = new SKRect(0, top, srcW, top + newH);
+        }
+
+        return (src, dst);
+    }
 
 }

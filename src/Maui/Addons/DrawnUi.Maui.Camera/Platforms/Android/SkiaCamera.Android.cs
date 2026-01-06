@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using System.Diagnostics;
+using Android.Content;
 using Android.Hardware.Camera2;
 using Android.Media;
 using Android.Telecom;
@@ -509,6 +510,646 @@ public partial class SkiaCamera
         }
     }
 
+    private async Task StopCaptureVideoFlow()
+    {
 
+        if (_captureVideoEncoder.LiveRecordingDuration < TimeSpan.FromSeconds(1))
+        {
+            await AbortCaptureVideoFlow();
+            return;
+        }
 
+        ICaptureVideoEncoder encoder = null;
+
+        try
+        {
+            // CRITICAL: Stop frame capture timer FIRST before clearing encoder reference
+            // This prevents race conditions where CaptureFrame is still executing
+            _frameCaptureTimer?.Dispose();
+            _frameCaptureTimer = null;
+
+            // Give any in-flight CaptureFrame calls time to complete
+            await Task.Delay(50);
+
+            // Detach Android mirror event
+            if (_captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
+            {
+                try
+                {
+                    _droidEncPrev.PreviewAvailable -= _encoderPreviewInvalidateHandler;
+                }
+                catch
+                {
+                }
+
+                // Stop GPU camera path if active
+                _droidEncPrev.DisposeGpuCameraPath();
+            }
+
+            // Revert to normal preview session if GPU path was active
+            if (NativeControl is NativeCamera camForGpuCleanup)
+            {
+                camForGpuCleanup.StopGpuCameraSession();
+            }
+
+            // Get local reference to encoder before clearing field to prevent disposal race
+            encoder = _captureVideoEncoder;
+            _captureVideoEncoder = null;
+
+            // Stop encoder and get result
+            CapturedVideo capturedVideo = await encoder?.StopAsync();
+ 
+            // ANDROID: Single-file approach - no muxing needed!
+            // Encoder already wrote buffer + live frames to ONE file
+            Debug.WriteLine($"[StopCaptureVideoFlow] Android single-file approach - no muxing needed");
+            Debug.WriteLine($"[StopCaptureVideoFlow] Video file: {capturedVideo?.FilePath}");
+
+            // Clean up pre-recording file if it exists (shouldn't exist with new approach)
+            if (!string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath))
+            {
+                try
+                {
+                    File.Delete(_preRecordingFilePath);
+                    Debug.WriteLine($"[StopCaptureVideoFlow] Deleted old pre-recording temp file");
+                }
+                catch { }
+            }
+            ClearPreRecordingBuffer();
+
+            // Update state and notify success
+            IsRecordingVideo = false;
+            if (capturedVideo != null)
+            {
+                OnVideoRecordingSuccess(capturedVideo);
+            }
+        }
+        catch (Exception ex)
+        {
+            // Clean up on error
+            _frameCaptureTimer?.Dispose();
+            _frameCaptureTimer = null;
+            _captureVideoEncoder = null;
+
+            IsRecordingVideo = false;
+            VideoRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+        finally
+        {
+            // Clean up encoder after StopAsync completes
+            encoder?.Dispose();
+        }
+    }
+
+    private async Task AbortCaptureVideoFlow()
+    {
+        ICaptureVideoEncoder encoder = null;
+
+        try
+        {
+            // CRITICAL: Stop frame capture timer FIRST before clearing encoder reference
+            // This prevents race conditions where CaptureFrame is still executing
+            _frameCaptureTimer?.Dispose();
+            _frameCaptureTimer = null;
+
+            // Give any in-flight CaptureFrame calls time to complete
+            await Task.Delay(50);
+
+            // Detach Android mirror event
+            if (_captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
+            {
+                try
+                {
+                    _droidEncPrev.PreviewAvailable -= _encoderPreviewInvalidateHandler;
+                }
+                catch
+                {
+                }
+
+                // Stop GPU camera path if active
+                _droidEncPrev.DisposeGpuCameraPath();
+            }
+
+            // Revert to normal preview session if GPU path was active
+            if (NativeControl is NativeCamera camForGpuCleanup)
+            {
+                camForGpuCleanup.StopGpuCameraSession();
+            }
+ 
+
+            // Get local reference to encoder before clearing field to prevent disposal race
+            encoder = _captureVideoEncoder;
+            _captureVideoEncoder = null;
+
+            // Stop encoder
+            await encoder?.AbortAsync();
+
+            if (!string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath))
+            {
+                try
+                {
+                    File.Delete(_preRecordingFilePath);
+                    Debug.WriteLine($"[StopCaptureVideoFlow] Deleted old pre-recording temp file");
+                }
+                catch { }
+            }
+            ClearPreRecordingBuffer();
+
+            IsRecordingVideo = false;
+        }
+        catch (Exception ex)
+        {
+            // Clean up on error
+            _frameCaptureTimer?.Dispose();
+            _frameCaptureTimer = null;
+            _captureVideoEncoder = null;
+
+            IsRecordingVideo = false;
+            //VideoRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+        finally
+        {
+            // Clean up encoder after StopAsync completes
+            encoder?.Dispose();
+        }
+    }
+
+    private async Task StartCaptureVideoFlow()
+    {
+        // Create Android encoder (GPU path via MediaCodec Surface + EGL + Skia GL)
+        _captureVideoEncoder = new AndroidCaptureVideoEncoder();
+
+        // Set parent reference and pre-recording mode
+        _captureVideoEncoder.ParentCamera = this;
+        _captureVideoEncoder.IsPreRecordingMode = IsPreRecording;
+        Debug.WriteLine($"[StartCaptureVideoFlow] Android encoder initialized with IsPreRecordingMode={IsPreRecording}");
+
+        // Control preview source: processed frames from encoder (PreviewVideoFlow=true) or raw camera (PreviewVideoFlow=false)
+        // Only applies when UseCaptureVideoFlow is TRUE (enforced by caller)
+        UseRecordingFramesForPreview = false;//PreviewVideoFlow;
+
+        // Invalidate preview when the encoder publishes a new composed frame (Android mirror)
+        if (PreviewVideoFlow && _captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
+        {
+            _encoderPreviewInvalidateHandler = (s, e) =>
+            {
+                try
+                {
+                    SafeAction(() => UpdatePreview());
+                }
+                catch
+                {
+                }
+            };
+            _droidEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
+        }
+
+        // CRITICAL: Always use final Movies directory path (single-file approach)
+        // Buffer stays in memory, so output path doesn't matter during pre-recording phase
+        var ctx = Android.App.Application.Context;
+        var moviesDir =
+            ctx.GetExternalFilesDir(Android.OS.Environment.DirectoryMovies)?.AbsolutePath ??
+            ctx.FilesDir?.AbsolutePath ?? ".";
+        string outputPath = Path.Combine(moviesDir, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
+
+        if (IsPreRecording)
+        {
+            Debug.WriteLine($"[StartCaptureVideoFlow] Android pre-recording (buffer to memory, final output: {outputPath})");
+        }
+        else
+        {
+            Debug.WriteLine($"[StartCaptureVideoFlow] Android recording to file: {outputPath}");
+        }
+
+        // Use camera-reported format if available; else fall back to preview size or 1280x720
+        var currentFormat = NativeControl?.GetCurrentVideoFormat();
+        var width =
+            currentFormat?.Width > 0 ? currentFormat.Width : (int)(PreviewSize.Width > 0 ? PreviewSize.Width : 1280);
+        var height =
+            currentFormat?.Height > 0 ? currentFormat.Height : (int)(PreviewSize.Height > 0 ? PreviewSize.Height : 720);
+        var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
+
+        // IMPORTANT: Align encoder orientation with the live preview to avoid instant crop/"zoom" when recording starts.
+        // If preview is portrait (h > w) but the selected video format is landscape (w >= h),
+        // swap encoder dimensions so we record a vertical video instead of cropping it to fit a horizontal surface.
+        int prevW = 0, prevH = 0;
+        int encWBefore = width, encHBefore = height;
+        int sensor = -1;
+        bool previewRotated = false;
+        try
+        {
+            if (NativeControl is NativeCamera cam)
+            {
+                prevW = cam.PreviewWidth;
+                prevH = cam.PreviewHeight;
+                sensor = cam.SensorOrientation;
+                previewRotated = (sensor == 90 || sensor == 270);
+
+                // If preview is rotated (portrait logical orientation), make encoder portrait too
+                if (previewRotated && width >= height)
+                {
+                    var tmp = width;
+                    width = height;
+                    height = tmp;
+                }
+                // If preview is not rotated but encoder is portrait, make encoder landscape to match
+                else if (!previewRotated && height > width)
+                {
+                    var tmp = width;
+                    width = height;
+                    height = tmp;
+                }
+            }
+        }
+        catch
+        {
+        }
+
+        System.Diagnostics.Debug.WriteLine(
+            $"[CAPTURE-ENCODER] preview={prevW}x{prevH} rotated={previewRotated} sensor={sensor} currentFormat={(currentFormat?.Width ?? 0)}x{(currentFormat?.Height ?? 0)}@{fps} encoderBefore={encWBefore}x{encHBefore} encoderFinal={width}x{height} UseRecordingFramesForPreview={UseRecordingFramesForPreview}");
+        _diagEncWidth = width;
+        _diagEncHeight = height;
+        _diagBitrate = Math.Max((long)width * height * 4, 2_000_000L);
+        SetSourceFrameDimensions(width, height);
+
+        // Pass locked rotation to encoder for proper video orientation metadata (Android-specific)
+        bool useGpuCameraPath = false;
+        if (_captureVideoEncoder is DrawnUi.Camera.AndroidCaptureVideoEncoder androidEncoder)
+        {
+            await androidEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio, RecordingLockedRotation);
+
+            // Try to initialize GPU camera path for zero-copy frame capture
+            if (GpuCameraFrameProvider.IsSupported())
+            {
+                bool isFrontCamera = Facing == CameraPosition.Selfie;
+                useGpuCameraPath = androidEncoder.InitializeGpuCameraPath(isFrontCamera);
+                if (useGpuCameraPath)
+                {
+                    Debug.WriteLine($"[StartCaptureVideoFlow] GPU camera path ENABLED");
+                }
+                else
+                {
+                    Debug.WriteLine($"[StartCaptureVideoFlow] GPU camera path failed, using legacy SKBitmap path");
+                }
+            }
+            else
+            {
+                Debug.WriteLine($"[StartCaptureVideoFlow] GPU camera path not supported, using legacy SKBitmap path");
+            }
+        }
+        else
+        {
+            await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+        }
+
+        // CRITICAL: In pre-recording mode, do NOT call StartAsync during initialization
+        // Pre-recording mode should just buffer frames in memory without starting file writing
+        // StartAsync will be called later when transitioning to live recording
+        if (!IsPreRecording)
+        {
+            await _captureVideoEncoder.StartAsync();
+            Debug.WriteLine($"[StartCaptureVideoFlow] StartAsync called for live/normal recording");
+        }
+        else
+        {
+            Debug.WriteLine($"[StartCaptureVideoFlow] Skipping StartAsync - pre-recording mode will buffer frames in memory");
+        }
+
+        // Drop the first camera frame to avoid occasional corrupted first frame from the camera/RenderScript pipeline
+        _androidWarmupDropRemaining = 1;
+
+        _captureVideoStartTime = DateTime.Now;
+        _capturePtsBaseTime = null;
+
+        // Diagnostics
+        _diagStartTime = DateTime.Now;
+        _diagDroppedFrames = 0;
+        _diagSubmittedFrames = 0;
+        _diagLastSubmitMs = 0;
+        ResetRecordingFps();
+        _targetFps = fps;
+
+        // Event-driven capture on Android: drive encoder from camera preview callback
+        int diagCounter = 0;
+
+        if (NativeControl is NativeCamera androidCam)
+        {
+            // GPU CAMERA PATH: Use SurfaceTexture for zero-copy frame capture
+            if (useGpuCameraPath && _captureVideoEncoder is AndroidCaptureVideoEncoder gpuEncoder && gpuEncoder.GpuFrameProvider != null)
+            {
+                Debug.WriteLine($"[StartCaptureVideoFlow] Setting up GPU camera session");
+
+                // Get the GPU surface and create camera session
+                var gpuSurface = gpuEncoder.GpuFrameProvider.GetCameraOutputSurface();
+                if (gpuSurface != null)
+                {
+                    // Start the GPU frame provider
+                    gpuEncoder.GpuFrameProvider.Start();
+
+                    // Create camera session with GPU surface and target FPS
+                    androidCam.CreateGpuCameraSession(gpuSurface, fps);
+
+                    // Set up SurfaceTexture frame callback
+                    // CRITICAL: OnFrameAvailable fires on arbitrary Android thread, NOT EGL context thread!
+                    // We must NOT call UpdateTexImage here - only signal and let encoder thread process.
+                    gpuEncoder.GpuFrameProvider.Renderer.OnFrameAvailable += async (sender, surfaceTexture) =>
+                    {
+                        try
+                        {
+                            // Track camera input FPS (count every frame camera delivers)
+                            CalculateCameraInputFps();
+
+                            if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
+                            {
+                                return;
+                            }
+
+                            // Ensure single-frame processing (prevent overlap)
+                            if (System.Threading.Interlocked.CompareExchange(ref _androidFrameGate, 1, 0) != 0)
+                            {
+                                System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
+                                return;
+                            }
+
+                            try
+                            {
+                                // Use wall clock time from recording start
+                                var elapsedLocal = DateTime.Now - _captureVideoStartTime;
+                                if (elapsedLocal.Ticks < 0)
+                                    elapsedLocal = TimeSpan.Zero;
+
+                                var __sw = System.Diagnostics.Stopwatch.StartNew();
+
+                                // Process frame via GPU zero-copy path
+                                await droidEnc.ProcessGpuCameraFrameAsync(
+                                    elapsedLocal,
+                                    FrameProcessor,
+                                    VideoDiagnosticsOn,
+                                    DrawDiagnostics
+                                );
+
+                                __sw.Stop();
+                                _diagLastSubmitMs = __sw.Elapsed.TotalMilliseconds;
+                                System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                                CalculateRecordingFps();
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"[GPU-FRAME] Error: {ex.Message}");
+                            }
+                            finally
+                            {
+                                System.Threading.Volatile.Write(ref _androidFrameGate, 0);
+                            }
+                        }
+                        catch (Exception outerEx)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"[GPU-FRAME] Outer error: {outerEx.Message}");
+                        }
+                    };
+
+                    Debug.WriteLine($"[StartCaptureVideoFlow] GPU camera session created");
+                }
+                else
+                {
+                    Debug.WriteLine($"[StartCaptureVideoFlow] GPU surface is null, falling back to legacy path");
+                    useGpuCameraPath = false;
+                }
+            }
+
+            // LEGACY PATH: Use preview callback with SKBitmap
+            if (!useGpuCameraPath)
+            {
+                _androidPreviewHandler = async (captured) =>
+                {
+                    try
+                    {
+                        // Track camera input FPS (count every frame camera delivers)
+                        CalculateCameraInputFps();
+
+                        // CRITICAL: Process frames during BOTH pre-recording AND live recording
+                        // If encoder is null/disposed during transition, this check will catch it and return gracefully
+                        if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
+                            return;
+
+                        // Warmup: drop the first frame to avoid occasional corrupted first frame artifacts
+                        if (System.Threading.Volatile.Read(ref _androidWarmupDropRemaining) > 0)
+                        {
+                            System.Threading.Interlocked.Decrement(ref _androidWarmupDropRemaining);
+                            System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
+                            return;
+                        }
+
+                        // Ensure single-frame processing
+                        if (System.Threading.Interlocked.CompareExchange(ref _androidFrameGate, 1, 0) != 0)
+                        {
+                            System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
+                            return;
+                        }
+
+                        // CRITICAL FIX: Use wall clock time from recording start, not camera monotonic timestamps
+                        // captured.Time is a monotonic timestamp that continues from camera session start
+                        // If camera ran in preview mode before recording, captured.Time is already at high value
+                        // We need PTS relative to when recording STARTED (wall clock), not first frame arrival
+                        var elapsedLocal = DateTime.Now - _captureVideoStartTime;
+                        if (elapsedLocal.Ticks < 0)
+                            elapsedLocal = TimeSpan.Zero;
+
+                        try
+                        {
+                            using (droidEnc.BeginFrame(elapsedLocal, out var canvas, out var info))
+                            {
+                                var img = captured?.Image;
+                                if (img == null)
+                                    return;
+
+                                var rects = GetAspectFillRects(img.Width, img.Height, info.Width, info.Height);
+
+                                // Apply 180° flip for selfie camera in landscape (sensor is opposite orientation)
+                                var isSelfieInLandscape = Facing == CameraPosition.Selfie && (RecordingLockedRotation == 90 || RecordingLockedRotation == 270);
+                                if (isSelfieInLandscape)
+                                {
+                                    canvas.Save();
+                                    canvas.Scale(-1, -1, info.Width / 2f, info.Height / 2f);
+                                }
+
+                                canvas.DrawImage(img, rects.src, rects.dst);
+
+                                if (isSelfieInLandscape)
+                                {
+                                    canvas.Restore();
+                                }
+
+                                if (FrameProcessor != null || VideoDiagnosticsOn)
+                                {
+                                    // Apply rotation based on device orientation
+                                    var rotation = GetActiveRecordingRotation();
+                                    canvas.Save();
+                                    ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+
+                                    var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                                    var frame = new DrawableFrame
+                                    {
+                                        Width = frameWidth,
+                                        Height = frameHeight,
+                                        Canvas = canvas,
+                                        Time = elapsedLocal,
+                                        Scale = 1f
+                                    };
+                                    FrameProcessor?.Invoke(frame);
+
+                                    if (VideoDiagnosticsOn)
+                                        DrawDiagnostics(canvas, info.Width, info.Height);
+
+                                    canvas.Restore();
+                                }
+                            }
+
+                            var __sw = System.Diagnostics.Stopwatch.StartNew();
+                            await droidEnc.SubmitFrameAsync();
+                            __sw.Stop();
+                            _diagLastSubmitMs = __sw.Elapsed.TotalMilliseconds;
+                            System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                            CalculateRecordingFps();
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"[CaptureFrame/Event] Error: {ex.Message}");
+                        }
+                        finally
+                        {
+                            System.Threading.Volatile.Write(ref _androidFrameGate, 0);
+                        }
+                    }
+                    catch
+                    {
+                    }
+                };
+
+                androidCam.PreviewCaptureSuccess = _androidPreviewHandler;
+            }
+        }
+
+        // Progress reporting
+        _captureVideoEncoder.ProgressReported += (sender, duration) =>
+        {
+            MainThread.BeginInvokeOnMainThread(() => OnVideoRecordingProgress(duration));
+        };
+ 
+    }
+
+    /// <summary>
+    /// Start video recording. Run this in background thread!
+    /// Locks the device rotation for the entire recording session.
+    /// Uses either native video recording or capture video flow depending on UseCaptureVideoFlow setting.
+    /// 
+    /// State machine logic:
+    /// - If EnablePreRecording && !IsPreRecording: Start memory-only recording (pre-recording phase)
+    /// - If IsPreRecording && !IsRecordingVideo: Prepend buffer and start file recording (normal phase)
+    /// - Otherwise: Start normal file recording
+    /// </summary>
+    /// <returns>Async task</returns>
+    public async Task StartVideoRecording()
+    {
+        if (IsBusy)
+            return;
+
+        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
+
+        IsBusy = true;
+
+        try
+        {
+            // State 1 -> State 2: If pre-recording enabled and not yet in pre-recording phase, start memory-only recording
+            if (EnablePreRecording && !IsPreRecording && !IsRecordingVideo)
+            {
+                Debug.WriteLine("[StartVideoRecording] Transitioning to IsPreRecording (memory-only recording)");
+                IsPreRecording = true;
+                InitializePreRecordingBuffer();
+
+                // Lock the current device rotation for the entire recording session
+                RecordingLockedRotation = DeviceRotation;
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+
+                // Start recording in memory-only mode
+                if (UseCaptureVideoFlow && FrameProcessor != null)
+                {
+                    await StartCaptureVideoFlow();
+                }
+                else
+                {
+                    await StartNativeVideoRecording();
+                }
+            }
+            // State 2 -> State 3: If in pre-recording phase, transition to file recording with muxing
+            else if (IsPreRecording && !IsRecordingVideo)
+            {
+                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecordingVideo (file recording with mux)");
+
+                // CRITICAL ANDROID FIX: Single-file approach - reuse existing encoder!
+                // Encoder was already initialized and warmed up during pre-recording phase
+                // Just call StartAsync() to write buffer + continue with live frames in same muxer session
+ 
+                // Change states
+                IsPreRecording = false;
+                IsRecordingVideo = true;
+                RecordingLockedRotation = DeviceRotation;
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+
+                // CRITICAL: Reuse existing encoder (single-file pattern)
+                // This will write buffer to muxer, then continue with live frames in same session
+                if (_captureVideoEncoder != null)
+                {
+                    Debug.WriteLine("[StartVideoRecording] ========================================");
+                    Debug.WriteLine("[StartVideoRecording] SINGLE-FILE PATTERN (professional)");
+                    Debug.WriteLine("[StartVideoRecording] Reusing pre-warmed encoder for live recording");
+                    Debug.WriteLine("[StartVideoRecording] No encoder recreation = zero frame loss!");
+                    Debug.WriteLine("[StartVideoRecording] Buffer already has keyframes from periodic requests");
+                    Debug.WriteLine("[StartVideoRecording] ========================================");
+
+                    await _captureVideoEncoder.StartAsync();
+
+                    Debug.WriteLine("[StartVideoRecording] Encoder transitioned to live recording mode");
+                    Debug.WriteLine("[StartVideoRecording] Buffer written, live frames continuing in same muxer");
+                }
+                else
+                {
+                    Debug.WriteLine("[StartVideoRecording] ERROR: No encoder found for transition!");
+                }
+ 
+            }
+            // Normal recording (no pre-recording)
+            else if (!IsRecordingVideo)
+            {
+                Debug.WriteLine("[StartVideoRecording] Starting normal recording (no pre-recording)");
+                IsRecordingVideo = true;
+
+                // Lock the current device rotation for the entire recording session
+                RecordingLockedRotation = DeviceRotation;
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+
+                if (UseCaptureVideoFlow && FrameProcessor != null)
+                {
+                    await StartCaptureVideoFlow();
+                }
+                else
+                {
+                    await StartNativeVideoRecording();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            IsRecordingVideo = false;
+            IsPreRecording = false;
+            IsBusy = false;
+            RecordingLockedRotation = -1; // Reset on error
+            ClearPreRecordingBuffer();
+            VideoRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+
+        IsBusy = false;
+    }
 }

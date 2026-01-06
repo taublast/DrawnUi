@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using DrawnUi.Camera.Platforms.Windows;
+using DrawnUi.Views;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 
@@ -515,14 +517,533 @@ public partial class SkiaCamera : SkiaControl
         return lastTimestamp;
     }
 
-    //public SKBitmap GetPreviewBitmap()
-    //{
-    //    var preview = NativeControl?.GetPreviewImage();
-    //    if (preview?.Image != null)
-    //    {
-    //        return SKBitmap.FromImage(preview.Image);
-    //    }
-    //    return null;
-    //}
+    private async Task StopCaptureVideoFlow()
+    {
+
+        if (_captureVideoEncoder.LiveRecordingDuration < TimeSpan.FromSeconds(1))
+        {
+            await AbortCaptureVideoFlow();
+            return;
+        }
+
+        ICaptureVideoEncoder encoder = null;
+
+        try
+        {
+            // CRITICAL: Stop frame capture timer FIRST before clearing encoder reference
+            // This prevents race conditions where CaptureFrame is still executing
+            _frameCaptureTimer?.Dispose();
+            _frameCaptureTimer = null;
+
+            // Give any in-flight CaptureFrame calls time to complete
+            await Task.Delay(50);
+
+            _useWindowsPreviewDrivenCapture = false;
+            // Clear frame callback
+            if (NativeControl is NativeCamera winCamCleanup)
+            {
+                winCamCleanup.PreviewCaptureSuccess = null;
+            }
+ 
+
+            // Get local reference to encoder before clearing field to prevent disposal race
+            encoder = _captureVideoEncoder;
+            _captureVideoEncoder = null;
+
+ 
+            // Stop mirroring recording frames to preview and detach event
+            UseRecordingFramesForPreview = false;
+            if (encoder is WindowsCaptureVideoEncoder _winEncPrev)
+            {
+                try
+                {
+                    _winEncPrev.PreviewAvailable -= _encoderPreviewInvalidateHandler;
+                }
+                catch
+                {
+                }
+            }
+ 
+
+            // Stop encoder and get result
+            CapturedVideo capturedVideo = await encoder?.StopAsync();
+ 
+            // iOS/Windows: Mux two files together (legacy approach)
+            if (capturedVideo != null && !string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath))
+            {
+                Debug.WriteLine($"[StopCaptureVideoFlow] Muxing pre-recorded file with live recording");
+                try
+                {
+                    // Save original live recording path before overwriting capturedVideo
+                    string originalLiveRecordingPath = capturedVideo.FilePath;
+
+                    // Mux pre-recorded file + live file into final output
+                    string finalOutputPath = await MuxVideosAsync(_preRecordingFilePath, originalLiveRecordingPath);
+                    if (!string.IsNullOrEmpty(finalOutputPath) && File.Exists(finalOutputPath))
+                    {
+                        // Update captured video to point to muxed file
+                        var muxedInfo = new FileInfo(finalOutputPath);
+                        capturedVideo = new CapturedVideo
+                        {
+                            FilePath = finalOutputPath,
+                            FileSizeBytes = muxedInfo.Length,
+                            Duration = capturedVideo.Duration,
+                            Time = capturedVideo.Time
+                        };
+
+                        // Delete temp live recording file (NOT the muxed file!)
+                        try { File.Delete(originalLiveRecordingPath); } catch { }
+
+                        Debug.WriteLine($"[StopCaptureVideoFlow] Muxing successful: {finalOutputPath}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[StopCaptureVideoFlow] Muxing failed: {ex.Message}. Using live recording only.");
+                }
+                finally
+                {
+                    ClearPreRecordingBuffer();
+                }
+            }
+            else
+            {
+                ClearPreRecordingBuffer();
+            }
+ 
+
+            // Update state and notify success
+            IsRecordingVideo = false;
+            if (capturedVideo != null)
+            {
+                OnVideoRecordingSuccess(capturedVideo);
+            }
+        }
+        catch (Exception ex)
+        {
+            // Clean up on error
+            _frameCaptureTimer?.Dispose();
+            _frameCaptureTimer = null;
+            _captureVideoEncoder = null;
+
+            IsRecordingVideo = false;
+            VideoRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+        finally
+        {
+            // Clean up encoder after StopAsync completes
+            encoder?.Dispose();
+        }
+    }
+
+    private async Task AbortCaptureVideoFlow()
+    {
+        ICaptureVideoEncoder encoder = null;
+
+        try
+        {
+            // CRITICAL: Stop frame capture timer FIRST before clearing encoder reference
+            // This prevents race conditions where CaptureFrame is still executing
+            _frameCaptureTimer?.Dispose();
+            _frameCaptureTimer = null;
+
+            // Give any in-flight CaptureFrame calls time to complete
+            await Task.Delay(50);
+
+ 
+            _useWindowsPreviewDrivenCapture = false;
+            // Clear frame callback
+            if (NativeControl is NativeCamera winCamCleanup)
+            {
+                winCamCleanup.PreviewCaptureSuccess = null;
+            }
+
+            // Get local reference to encoder before clearing field to prevent disposal race
+            encoder = _captureVideoEncoder;
+            _captureVideoEncoder = null;
+
+ 
+            // Stop mirroring recording frames to preview and detach event
+            UseRecordingFramesForPreview = false;
+            if (encoder is WindowsCaptureVideoEncoder _winEncPrev)
+            {
+                try
+                {
+                    _winEncPrev.PreviewAvailable -= _encoderPreviewInvalidateHandler;
+                }
+                catch
+                {
+                }
+            }
+            
+            // Stop encoder
+            await encoder?.AbortAsync();
+
+            IsRecordingVideo = false;
+        }
+        catch (Exception ex)
+        {
+            // Clean up on error
+            _frameCaptureTimer?.Dispose();
+            _frameCaptureTimer = null;
+            _captureVideoEncoder = null;
+
+            IsRecordingVideo = false;
+            //VideoRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+        finally
+        {
+            // Clean up encoder after StopAsync completes
+            encoder?.Dispose();
+        }
+    }
+
+    private async Task StartCaptureVideoFlow()
+    {
+ 
+        // Create platform-specific encoder with existing GRContext (GPU path)
+        var grContext = (Superview?.CanvasView as SkiaViewAccelerated)?.GRContext;
+        _captureVideoEncoder = new WindowsCaptureVideoEncoder(grContext);
+
+        // Set parent reference and pre-recording mode
+        _captureVideoEncoder.ParentCamera = this;
+        _captureVideoEncoder.IsPreRecordingMode = IsPreRecording;
+        Debug.WriteLine($"[StartCaptureVideoFlow] Encoder initialized with IsPreRecordingMode={IsPreRecording}");
+
+        // Generate output path
+        // If pre-recording, use temp file for streaming encoded frames
+        string outputPath;
+        if (IsPreRecording)
+        {
+            // Use temp file path from InitializePreRecordingBuffer
+            outputPath = _preRecordingFilePath;
+            if (string.IsNullOrEmpty(outputPath))
+            {
+                Debug.WriteLine("[StartCaptureVideoFlow] ERROR: Pre-recording file path not initialized");
+                return;
+            }
+            Debug.WriteLine($"[StartCaptureVideoFlow] Pre-recording to file: {outputPath}");
+        }
+        else
+        {
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            outputPath = Path.Combine(documentsPath, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
+            Debug.WriteLine($"[StartCaptureVideoFlow] Recording to file: {outputPath}");
+        }
+
+        // CRITICAL: Set start time BEFORE initializing encoder to avoid losing initial frames!
+        // Encoder initialization can take 1-2 seconds on Android, and we calculate PTS from this time
+        _captureVideoStartTime = DateTime.Now;
+        _capturePtsBaseTime = null;
+
+        // Get current video format dimensions from native camera
+        var currentFormat = NativeControl?.GetCurrentVideoFormat();
+        var width = currentFormat?.Width ?? 1280;
+        var height = currentFormat?.Height ?? 720;
+        var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
+
+        // Initialize encoder with current settings (follow camera defaults)
+        _diagEncWidth = width;
+        _diagEncHeight = height;
+        _diagBitrate = (long)Math.Max(1, width * height) * Math.Max(1, fps) * 4 / 10;
+        SetSourceFrameDimensions(width, height);
+        await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+
+        // CRITICAL: In pre-recording mode, do NOT call StartAsync during initialization
+        // Pre-recording mode should just buffer frames in memory without starting file writing
+        // StartAsync will be called later when transitioning to live recording
+        if (!IsPreRecording)
+        {
+            await _captureVideoEncoder.StartAsync();
+            Debug.WriteLine($"[StartCaptureVideoFlow] StartAsync called for live/normal recording");
+        }
+        else
+        {
+            Debug.WriteLine($"[StartCaptureVideoFlow] Skipping StartAsync - pre-recording mode will buffer frames in memory");
+        }
+
+        // Reset diagnostics
+        _diagStartTime = DateTime.Now;
+        _diagDroppedFrames = 0;
+        _diagSubmittedFrames = 0;
+        _diagLastSubmitMs = 0;
+        ResetRecordingFps();
+        _targetFps = fps;
+
+        // Don't use preview-driven capture - use callback like Android
+        _useWindowsPreviewDrivenCapture = false;
+
+        // Control preview source: raw camera frames (preview works normally)
+        UseRecordingFramesForPreview = false;
+
+        // Set up progress reporting
+        _captureVideoEncoder.ProgressReported += (sender, duration) =>
+        {
+            MainThread.BeginInvokeOnMainThread(() => OnVideoRecordingProgress(duration));
+        };
+
+        // Use PreviewCaptureSuccess callback like Android - encoder gets frames without stealing from preview
+        if (NativeControl is NativeCamera winCam)
+        {
+            winCam.PreviewCaptureSuccess = (captured) =>
+            {
+                CalculateCameraInputFps();
+
+                if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not WindowsCaptureVideoEncoder winEnc)
+                    return;
+
+                if (System.Threading.Interlocked.CompareExchange(ref _frameInFlight, 1, 0) != 0)
+                {
+                    System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
+                    return;
+                }
+
+                // Make a copy of the image (original may be disposed after callback returns)
+                var srcImg = captured?.Image;
+                if (srcImg == null)
+                {
+                    System.Threading.Interlocked.Exchange(ref _frameInFlight, 0);
+                    return;
+                }
+
+                // Create a raster copy that's safe to use on main thread
+                SKImage imgCopy;
+                try
+                {
+                    using var bmp = new SKBitmap(srcImg.Width, srcImg.Height);
+                    using var canvas = new SKCanvas(bmp);
+                    canvas.DrawImage(srcImg, 0, 0);
+                    imgCopy = SKImage.FromBitmap(bmp);
+                }
+                catch
+                {
+                    System.Threading.Interlocked.Exchange(ref _frameInFlight, 0);
+                    return;
+                }
+
+                var elapsed = DateTime.Now - _captureVideoStartTime;
+
+                // GPU surface must be accessed from main thread
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    try
+                    {
+                        using (imgCopy)
+                        using (winEnc.BeginFrame(elapsed, out var canvas, out var info))
+                        {
+                            if (canvas != null)
+                            {
+                                var rects = GetAspectFillRects(imgCopy.Width, imgCopy.Height, info.Width, info.Height);
+                                canvas.DrawImage(imgCopy, rects.src, rects.dst);
+
+                                if (FrameProcessor != null || VideoDiagnosticsOn)
+                                {
+                                    var rotation = GetActiveRecordingRotation();
+                                    canvas.Save();
+                                    ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+
+                                    var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                                    var frame = new DrawableFrame
+                                    {
+                                        Width = frameWidth,
+                                        Height = frameHeight,
+                                        Canvas = canvas,
+                                        Time = elapsed,
+                                        Scale = 1f
+                                    };
+                                    FrameProcessor?.Invoke(frame);
+
+                                    if (VideoDiagnosticsOn)
+                                        DrawDiagnostics(canvas, info.Width, info.Height);
+
+                                    canvas.Restore();
+                                }
+
+                                var sw = System.Diagnostics.Stopwatch.StartNew();
+                                await winEnc.SubmitFrameAsync();
+                                sw.Stop();
+                                _diagLastSubmitMs = sw.Elapsed.TotalMilliseconds;
+                                System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                                CalculateRecordingFps();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[Windows CaptureFrame] Error: {ex.Message}");
+                    }
+                    finally
+                    {
+                        System.Threading.Interlocked.Exchange(ref _frameInFlight, 0);
+                    }
+                });
+            };
+        }
+    }
+
+    /// <summary>
+    /// Start video recording. Run this in background thread!
+    /// Locks the device rotation for the entire recording session.
+    /// Uses either native video recording or capture video flow depending on UseCaptureVideoFlow setting.
+    /// 
+    /// State machine logic:
+    /// - If EnablePreRecording && !IsPreRecording: Start memory-only recording (pre-recording phase)
+    /// - If IsPreRecording && !IsRecordingVideo: Prepend buffer and start file recording (normal phase)
+    /// - Otherwise: Start normal file recording
+    /// </summary>
+    /// <returns>Async task</returns>
+    public async Task StartVideoRecording()
+    {
+        if (IsBusy)
+            return;
+
+        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
+
+        IsBusy = true;
+
+        try
+        {
+            // State 1 -> State 2: If pre-recording enabled and not yet in pre-recording phase, start memory-only recording
+            if (EnablePreRecording && !IsPreRecording && !IsRecordingVideo)
+            {
+                Debug.WriteLine("[StartVideoRecording] Transitioning to IsPreRecording (memory-only recording)");
+                IsPreRecording = true;
+                InitializePreRecordingBuffer();
+
+                // Lock the current device rotation for the entire recording session
+                RecordingLockedRotation = DeviceRotation;
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+
+                // Start recording in memory-only mode
+                if (UseCaptureVideoFlow && FrameProcessor != null)
+                {
+                    await StartCaptureVideoFlow();
+                }
+                else
+                {
+                    await StartNativeVideoRecording();
+                }
+            }
+            // State 2 -> State 3: If in pre-recording phase, transition to file recording with muxing
+            else if (IsPreRecording && !IsRecordingVideo)
+            {
+                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecordingVideo (file recording with mux)");
+
+                // CRITICAL ANDROID FIX: Single-file approach - reuse existing encoder!
+                // Encoder was already initialized and warmed up during pre-recording phase
+                // Just call StartAsync() to write buffer + continue with live frames in same muxer session
+
+                // iOS: Create new encoder FIRST, swap atomically, THEN stop old one (prevents frame loss)
+                ICaptureVideoEncoder oldEncoder = null;
+                if (_captureVideoEncoder != null)
+                {
+                    Debug.WriteLine("[StartVideoRecording] Preparing to transition encoders without frame loss");
+
+                    // Keep reference to old encoder
+                    oldEncoder = _captureVideoEncoder;
+                    Debug.WriteLine("[StartVideoRecording] Old encoder captured for transition");
+                }
+
+                // Update state flags BEFORE creating new encoder
+                IsPreRecording = false;
+                IsRecordingVideo = true;
+                RecordingLockedRotation = DeviceRotation;
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+
+                if (UseCaptureVideoFlow && FrameProcessor != null)
+                {
+                    // Create new encoder - this ATOMICALLY swaps _captureVideoEncoder to the new instance
+                    // Any frames arriving now will go to the new encoder (no gap!)
+                    await StartCaptureVideoFlow();
+                    Debug.WriteLine("[StartVideoRecording] New encoder created and active - frames now routing to encoder #2");
+
+                    // NOTE: Pre-recording offset will be set AFTER stopping old encoder and getting correct duration
+                }
+
+                // NOW stop the old encoder (frames already going to new encoder, zero frame loss)
+                if (oldEncoder != null)
+                {
+                    Debug.WriteLine("[StartVideoRecording] Stopping old pre-recording encoder to finalize file");
+
+                    try
+                    {
+                        var preRecResult = await oldEncoder.StopAsync();
+                        Debug.WriteLine("[StartVideoRecording] Pre-recording encoder stopped and file finalized");
+
+                        if (preRecResult != null && !string.IsNullOrEmpty(preRecResult.FilePath))
+                        {
+                            _preRecordingFilePath = preRecResult.FilePath;
+
+                            // CRITICAL: Use corrected duration from StopAsync result, NOT the wall-clock duration captured earlier
+                            _preRecordingDurationTracked = preRecResult.Duration;
+                            Debug.WriteLine($"[StartVideoRecording] Captured pre-recording file: {_preRecordingFilePath}");
+                            Debug.WriteLine($"[StartVideoRecording] Captured pre-recording duration (corrected): {_preRecordingDurationTracked.TotalSeconds:F2}s");
+
+                            // CRITICAL: Set pre-recording duration offset on NEW encoder with CORRECTED duration
+                            if (_preRecordingDurationTracked > TimeSpan.Zero && _captureVideoEncoder != null)
+                            {
+                                // Platform-specific: set offset on encoder
+ 
+                                if (_captureVideoEncoder is WindowsCaptureVideoEncoder winEncoder)
+                                {
+                                    winEncoder.SetPreRecordingDuration(_preRecordingDurationTracked);
+                                    Debug.WriteLine($"[StartVideoRecording] Set pre-recording offset on new Windows encoder: {_preRecordingDurationTracked.TotalSeconds:F2}s");
+                                }
+ 
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"[StartVideoRecording] Error stopping pre-recording encoder: {ex.Message}");
+                    }
+
+                    oldEncoder?.Dispose();
+                    oldEncoder = null;
+                    Debug.WriteLine("[StartVideoRecording] Old encoder disposed");
+                }
+                else
+                {
+                    await StartNativeVideoRecording();
+                    Debug.WriteLine("[StartVideoRecording] Native recording started for live recording");
+                }
+ 
+            }
+            // Normal recording (no pre-recording)
+            else if (!IsRecordingVideo)
+            {
+                Debug.WriteLine("[StartVideoRecording] Starting normal recording (no pre-recording)");
+                IsRecordingVideo = true;
+
+                // Lock the current device rotation for the entire recording session
+                RecordingLockedRotation = DeviceRotation;
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+
+                if (UseCaptureVideoFlow && FrameProcessor != null)
+                {
+                    await StartCaptureVideoFlow();
+                }
+                else
+                {
+                    await StartNativeVideoRecording();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            IsRecordingVideo = false;
+            IsPreRecording = false;
+            IsBusy = false;
+            RecordingLockedRotation = -1; // Reset on error
+            ClearPreRecordingBuffer();
+            VideoRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+
+        IsBusy = false;
+    }
+
 }
 
