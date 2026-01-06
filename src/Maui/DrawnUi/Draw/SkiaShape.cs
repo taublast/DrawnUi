@@ -346,7 +346,7 @@ namespace DrawnUi.Draw
 
                 if (kill != null)
                 {
-                    Tasks.StartDelayed(TimeSpan.FromSeconds(3), () => { kill.Dispose(); });
+                    DisposeObject(kill);
                 }
             }
 

@@ -3138,9 +3138,9 @@ namespace DrawnUi.Draw
                         try
                         {
                             disposable?.Dispose();
-                            if (disposable is ISkiaDisposable skia)
+                            if (disposable is ISkiaDisposable s)
                             {
-                                skia.IsAlive = ObjectAliveType.Disposed;
+                                s.IsAlive = ObjectAliveType.Disposed;
                             }
                         }
                         catch (Exception e)
@@ -5162,8 +5162,7 @@ namespace DrawnUi.Draw
 
             StopPostAnimators();
 
-            //for the double buffering case it's safer to delay
-            Tasks.StartDelayed(DisposalDelay, () =>
+            DisposeObject(new DisposableAction(() =>
             {
                 try
                 {
@@ -5229,7 +5228,26 @@ namespace DrawnUi.Draw
                 {
                     Super.Log(e);
                 }
-            });
+            }));
+ 
+        }
+
+        public class DisposableAction : IDisposable
+        {
+            private readonly Action _action;
+            private bool _isDisposed;
+            public DisposableAction(Action action)
+            {
+                _action = action ?? throw new ArgumentNullException(nameof(action));
+            }
+            public void Dispose()
+            {
+                if (!_isDisposed)
+                {
+                    _action();
+                    _isDisposed = true;
+                }
+            }
         }
 
         protected virtual void OnLifecycleStateChanged(ControlLifecycleState state)
