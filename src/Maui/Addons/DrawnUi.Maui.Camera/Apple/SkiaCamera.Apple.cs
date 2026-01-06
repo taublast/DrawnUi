@@ -6,6 +6,8 @@ using DrawnUi.Maui.Navigation;
 using Foundation;
 using Photos;
 using UIKit;
+using Metal; // Added for Zero-Copy path
+using SkiaSharp.Views.Maui.Controls; // For SKGLView
 
 namespace DrawnUi.Camera;
 
@@ -66,12 +68,47 @@ public partial class SkiaCamera
                 // Try to get raw frame (faster)
                 if (NativeControl is NativeCamera nativeCam)
                 {
-                    var raw = nativeCam.GetRawFullImage();
-                    if (raw.Image != null)
+                    // ZERO-COPY PATH (Metal)
+                    // Check EncodingContext (preferred) or legacy Context
+                    var encoderContext = appleEnc.EncodingContext ?? appleEnc.Context;
+
+                    if (imageToDraw == null && encoderContext != null && nativeCam.PreviewTexture != null)
                     {
-                        imageToDraw = raw.Image;
-                        imageRotation = raw.Rotation;
-                        imageFlip = raw.Flip;
+                        try 
+                        {
+                            var texture = nativeCam.PreviewTexture;
+                            var width = (int)texture.Width;
+                            var height = (int)texture.Height;
+                            
+                            var textureInfo = new GRMtlTextureInfo(texture.Handle);
+                            using var backendTexture = new GRBackendTexture(width, height, false, textureInfo);
+
+                            // Create image (BORROWED texture, will NOT dispose underlying Metal texture)
+                            // Use encoder-specific context to ensure compatibility
+                            var image = SKImage.FromTexture(encoderContext, backendTexture, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
+                            
+                            if (image != null)
+                            {
+                                imageToDraw = image;
+                                imageRotation = (int)nativeCam.CurrentRotation;
+                                imageFlip = (CameraDevice?.Facing ?? Facing) == CameraPosition.Selfie;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"[CaptureFrame] Zero-copy texture failed: {ex.Message}");
+                        }
+                    }
+
+                    if (imageToDraw == null)
+                    {
+                        var raw = nativeCam.GetRawFullImage();
+                        if (raw.Image != null)
+                        {
+                            imageToDraw = raw.Image;
+                            imageRotation = raw.Rotation;
+                            imageFlip = raw.Flip;
+                        }
                     }
                 }
 
@@ -224,9 +261,23 @@ public partial class SkiaCamera
 
     private async Task StartCaptureVideoFlow()
     {
-
         // Create Apple encoder using VideoToolbox for hardware H.264 encoding
-        _captureVideoEncoder = new AppleVideoToolboxEncoder();
+        // Note: _captureVideoEncoder is defined in Shared partial
+        // Re-use existing or create new; but usually we create new.
+        // Cast to local variable for configuration
+        var appleEncoder = new AppleVideoToolboxEncoder(); 
+        
+        // Inject GRContext for Zero-Copy path (Metal)
+        // CRITICAL FIX: Do NOT pass UI Thread's GRContext to background recording thread to avoid crash.
+        // The encoder will create its own dedicated Metal GRContext for thread safety.
+        /*
+        if (Superview?.CanvasView is SkiaSharp.Views.Maui.Controls.SKGLView glView)
+        {
+            appleEncoder.Context = glView.GRContext;
+        }
+        */
+
+        _captureVideoEncoder = appleEncoder;
 
         // Set parent reference and pre-recording mode
         _captureVideoEncoder.ParentCamera = this;
@@ -296,9 +347,9 @@ public partial class SkiaCamera
         SetSourceFrameDimensions(width, height);
 
         // Pass locked rotation to encoder for proper video orientation metadata (iOS-specific)
-        if (_captureVideoEncoder is DrawnUi.Camera.AppleVideoToolboxEncoder appleEncoder)
+        if (_captureVideoEncoder is DrawnUi.Camera.AppleVideoToolboxEncoder encoder)
         {
-            await appleEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio, RecordingLockedRotation);
+            await encoder.InitializeAsync(outputPath, width, height, fps, RecordAudio, RecordingLockedRotation);
 
             // ✅ CRITICAL: If transitioning from pre-recording to live, set the duration offset BEFORE StartAsync
             // BUT ONLY if pre-recording file actually exists and has content (otherwise standalone live recording will be corrupted!)
@@ -311,7 +362,7 @@ public partial class SkiaCamera
 
                 if (hasValidPreRecording)
                 {
-                    appleEncoder.SetPreRecordingDuration(_preRecordingDurationTracked);
+                    encoder.SetPreRecordingDuration(_preRecordingDurationTracked);
                     Debug.WriteLine($"[StartCaptureVideoFlow] Set pre-recording duration offset: {_preRecordingDurationTracked.TotalSeconds:F2}s (pre-recording file valid)");
                 }
                 else

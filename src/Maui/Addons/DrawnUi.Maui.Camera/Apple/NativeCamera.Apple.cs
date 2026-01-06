@@ -90,6 +90,18 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     // Camera writes to IOSurface pool, our texture view shows new frames automatically
     private CVMetalTextureCache _previewTextureCache;
     private IMTLTexture _previewTexture;  // Created ONCE, accessed from preview thread
+
+    public IMTLTexture PreviewTexture
+    {
+        get
+        {
+            lock (_lockPreviewTexture)
+            {
+                return _previewTexture;
+            }
+        }
+    }
+
     private IMTLDevice _metalDevice;
     private readonly object _lockPreviewTexture = new();
     private int _previewTextureWidth;

@@ -11,6 +11,7 @@ using Foundation;
 using VideoToolbox;
 using SkiaSharp;
 using ObjCRuntime;
+using Metal; // Added for Zero-Copy path
 
 namespace DrawnUi.Camera
 {
@@ -56,6 +57,15 @@ namespace DrawnUi.Camera
         private AVAssetWriterInput _videoInput;
         private AVAssetWriterInputPixelBufferAdaptor _pixelBufferAdaptor;
         private System.Threading.Timer _progressTimer;
+
+        // Zero-Copy Metal Support
+        private CVMetalTextureCache _metalCache;
+        private IMTLDevice _metalDevice;
+        private IMTLCommandQueue _commandQueue;
+        private GRContext _encodingContext;
+        private CVPixelBuffer _currentPixelBuffer; // The buffer backing the current _surface
+        public GRContext Context { get; set; }     // Public Context (usually UI) - deprecated/unused for encoding logic now
+        public GRContext EncodingContext => _encodingContext; // Read-only access to dedicated encoding context
 
         // VTCompressionSession for pre-recording buffer
         private VTCompressionSession _compressionSession;
@@ -118,6 +128,9 @@ namespace DrawnUi.Camera
         {
             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] InitializeAsync CALLED: IsPreRecordingMode={IsPreRecordingMode}");
 
+            // Ensure Metal Context is initialized immediately
+            EnsureMetalContext();
+
             _outputPath = outputPath;
             _width = Math.Max(16, width);
             _height = Math.Max(16, height);
@@ -175,6 +188,41 @@ namespace DrawnUi.Camera
             await Task.CompletedTask;
         }
 
+        private void EnsureMetalContext()
+        {
+            lock (_frameLock)
+            {
+                if (_encodingContext == null)
+                {
+                    try
+                    {
+                        if (_metalDevice == null)
+                            _metalDevice = MTLDevice.SystemDefault;
+
+                        if (_metalDevice != null)
+                        {
+                            if (_commandQueue == null)
+                                _commandQueue = _metalDevice.CreateCommandQueue();
+
+                            var backend = new GRMtlBackendContext
+                            {
+                                Device = _metalDevice,
+                                Queue = _commandQueue
+                            };
+                            _encodingContext = GRContext.CreateMetal(backend);
+                            _metalCache = new CVMetalTextureCache(_metalDevice);
+                            
+                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Dedicated Metal GRContext initialized.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Failed to initialize Metal context: {ex.Message}");
+                    }
+                }
+            }
+        }
+
         private void InitializeAssetWriter()
         {
             // Create AVAssetWriter for MP4 container
@@ -203,13 +251,16 @@ namespace DrawnUi.Camera
                 throw new InvalidOperationException("Cannot add video input to AVAssetWriter");
             _writer.AddInput(_videoInput);
 
-            _pixelBufferAdaptor = new AVAssetWriterInputPixelBufferAdaptor(_videoInput,
-                new CVPixelBufferAttributes
-                {
-                    PixelFormatType = CVPixelFormatType.CV32BGRA,
-                    Width = _width,
-                    Height = _height
-                });
+            // Zero-Copy Requirement: Attributes must allow Metal access
+            var pbaAttributes = new CVPixelBufferAttributes
+            {
+                PixelFormatType = CVPixelFormatType.CV32BGRA,
+                Width = _width,
+                Height = _height,
+                 MetalCompatibility = true
+            };
+
+            _pixelBufferAdaptor = new AVAssetWriterInputPixelBufferAdaptor(_videoInput, pbaAttributes);
 
             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] AVAssetWriter initialized: {_width}x{_height} @ {_frameRate}fps");
         }
@@ -221,7 +272,8 @@ namespace DrawnUi.Camera
             {
                 PixelFormatType = CVPixelFormatType.CV32BGRA,
                 Width = _width,
-                Height = _height
+                Height = _height,
+                MetalCompatibility = true
             };
 
             // Create VTCompressionSession for H.264 encoding
@@ -581,11 +633,85 @@ namespace DrawnUi.Camera
             {
                 _pendingTimestamp = timestamp;
 
+                // ZERO-COPY PATH: Create Metal-backed Surface directly from Encoder's PixelBuffer
+                
+                // 1. Initialize Thread-Safe Metal Context if needed
+                EnsureMetalContext();
+
+                if (_encodingContext != null)
+                {
+                    try
+                    {
+                        // 1. Get Destination Buffer from Pool (AVAssetWriter or VTCompressionSession)
+                        CVPixelBufferPool pool = IsPreRecordingMode && _compressionSession != null
+                            ? _compressionSession.GetPixelBufferPool()
+                            : _pixelBufferAdaptor?.PixelBufferPool;
+
+                        CVPixelBuffer pixelBuffer = null;
+                        if (pool != null)
+                        {
+                            pixelBuffer = pool.CreatePixelBuffer(null, out var err);
+                        }
+
+                        // Fallback allocation if pool is empty/invalid
+                        if (pixelBuffer == null)
+                        {
+                            var attrs = new CVPixelBufferAttributes
+                            {
+                                PixelFormatType = CVPixelFormatType.CV32BGRA,
+                                Width = _width,
+                                Height = _height,
+                                MetalCompatibility = true
+                            };
+                            pixelBuffer = new CVPixelBuffer(_width, _height, CVPixelFormatType.CV32BGRA, attrs);
+                        }
+
+                        // 2. Prepare for new frame
+                        _currentPixelBuffer?.Dispose();
+                        _currentPixelBuffer = pixelBuffer;
+                        _surface?.Dispose();
+
+                        // 3. Create Metal Texture from Pixel Buffer
+                        var cvTexture = _metalCache.TextureFromImage(pixelBuffer, MTLPixelFormat.BGRA8Unorm, _width, _height, 0, out var cvErr);
+
+                        if (cvTexture != null)
+                        {
+                            // 4. Create Skia Surface wrapping the Metal texture
+                            // Note: Skia will draw directly into the CVPixelBuffer via GPU
+                            var textureInfo = new GRMtlTextureInfo(cvTexture.Texture.Handle);
+                            var backendTexture = new GRBackendTexture(_width, _height, false, textureInfo);
+
+                            _surface = SKSurface.Create(_encodingContext, backendTexture, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
+                            
+                            // cvTexture can be let go, underlying texture is kept by backendTexture/pixelBuffer interaction scope
+                            // but generally explicit dispose of CVMetalTextureRef is safer? 
+                            // usage: using (cvTexture) { ... } but we need it for the life of surface.
+                            // The CVPixelBuffer is the root owner.
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Zero-Copy Init Failed: {ex}");
+                        // Fallback to CPU
+                        _currentPixelBuffer?.Dispose();
+                        _currentPixelBuffer = null;
+                        _encodingContext = null; // Disable for session
+                    }
+                }
+
                 if (_surface == null || _info.Width != _width || _info.Height != _height)
                 {
+                    // Always update info if dimensions match current target
                     _info = new SKImageInfo(_width, _height, SKColorType.Bgra8888, SKAlphaType.Premul);
-                    _surface?.Dispose();
-                    _surface = SKSurface.Create(_info);
+                    
+                    if (_surface?.Handle == IntPtr.Zero || _surface == null) // Check if valid (Zero-Copy might have created it already)
+                    {
+                        if (_currentPixelBuffer == null) // Only create CPU-backed surface if NOT in Zero-Copy mode
+                        {
+                            _surface?.Dispose();
+                            _surface = SKSurface.Create(_info);
+                        }
+                    }
                 }
 
                 canvas = _surface.Canvas;
@@ -656,6 +782,13 @@ namespace DrawnUi.Camera
                 // ROUTE TO CORRECT ENCODER
                 // ============================================================================
 
+                // FLUSH GPU COMMANDS (Zero-Copy)
+                if (_currentPixelBuffer != null)
+                {
+                    _surface.Canvas.Flush();
+                    _encodingContext?.Flush(); // Ensure Metal commands are committed to CVPixelBuffer
+                }
+
                 if (IsPreRecordingMode && _compressionSession != null)
                 {
                     // PRE-RECORDING MODE: Write ONLY to circular buffer in memory
@@ -682,49 +815,64 @@ namespace DrawnUi.Camera
 
         private async Task SubmitFrameToCompressionSession()
         {
-            CVPixelBuffer pixelBuffer = null;
+            // Zero-Copy Optimization:
+            // If we are in Metal mode, _currentPixelBuffer already contains the rendered frame (GPU-resident).
+            // We just submit it directly.
+            CVPixelBuffer pixelBuffer = _currentPixelBuffer;
+            bool isZeroCopy = pixelBuffer != null;
 
             try
             {
-                // Create pixel buffer
-                var pool = _compressionSession?.GetPixelBufferPool();
-                if (pool != null)
-                {
-                    pixelBuffer = pool.CreatePixelBuffer(null, out var err);
-                }
-
                 if (pixelBuffer == null)
                 {
-                    var attrs = new CVPixelBufferAttributes
+                    // CPU/Raster Path: Allocate new buffer
+                    var pool = _compressionSession?.GetPixelBufferPool();
+                    if (pool != null)
                     {
-                        PixelFormatType = CVPixelFormatType.CV32BGRA,
-                        Width = _width,
-                        Height = _height
-                    };
-                    pixelBuffer = new CVPixelBuffer(_width, _height, CVPixelFormatType.CV32BGRA, attrs);
+                        pixelBuffer = pool.CreatePixelBuffer(null, out var err);
+                    }
+
+                    if (pixelBuffer == null)
+                    {
+                        var attrs = new CVPixelBufferAttributes
+                        {
+                            PixelFormatType = CVPixelFormatType.CV32BGRA,
+                            Width = _width,
+                            Height = _height
+                        };
+                        pixelBuffer = new CVPixelBuffer(_width, _height, CVPixelFormatType.CV32BGRA, attrs);
+                    }
                 }
 
                 if (pixelBuffer == null)
                     return;
 
-                // Copy pixels
-                pixelBuffer.Lock(CVPixelBufferLock.None);
-                try
+                // CPU Copy (only if not Zero-Copy)
+                if (!isZeroCopy)
                 {
-                    IntPtr baseAddress = pixelBuffer.BaseAddress;
-                    nint bytesPerRow = pixelBuffer.BytesPerRow;
-
-                    lock (_frameLock)
+                    pixelBuffer.Lock(CVPixelBufferLock.None);
+                    try
                     {
-                        if (_surface == null) return;
-                        var srcInfo = new SKImageInfo(_width, _height, SKColorType.Bgra8888, SKAlphaType.Premul);
-                        if (!_surface.ReadPixels(srcInfo, baseAddress, (int)bytesPerRow, 0, 0))
-                            return;
+                        IntPtr baseAddress = pixelBuffer.BaseAddress;
+                        nint bytesPerRow = pixelBuffer.BytesPerRow;
+
+                        lock (_frameLock)
+                        {
+                            if (_surface == null) return;
+                            var srcInfo = new SKImageInfo(_width, _height, SKColorType.Bgra8888, SKAlphaType.Premul);
+                            if (!_surface.ReadPixels(srcInfo, baseAddress, (int)bytesPerRow, 0, 0))
+                                return;
+                        }
+                    }
+                    finally
+                    {
+                        pixelBuffer.Unlock(CVPixelBufferLock.None);
                     }
                 }
-                finally
+                else
                 {
-                    pixelBuffer.Unlock(CVPixelBufferLock.None);
+                    // Zero-Copy: Just ensure GPU commands are flushed
+                     // (Done in SubmitFrameAsync main block)
                 }
 
                 // Submit to VTCompressionSession
@@ -746,7 +894,10 @@ namespace DrawnUi.Camera
             }
             finally
             {
-                pixelBuffer?.Dispose();
+                // In Zero-Copy mode, buffer is owned by _currentPixelBuffer (reused/disposed next frame)
+                // In CPU mode, we dispose our local allocation
+                if (!isZeroCopy)
+                    pixelBuffer?.Dispose();
             }
 
             await Task.CompletedTask;
@@ -754,7 +905,10 @@ namespace DrawnUi.Camera
 
         private async Task SubmitFrameToAssetWriter()
         {
-            CVPixelBuffer pixelBuffer = null;
+            // Zero-Copy Optimization:
+            // Use current pixel buffer (Metal-backed) if available
+            CVPixelBuffer pixelBuffer = _currentPixelBuffer;
+            bool isZeroCopy = pixelBuffer != null;
 
             try
             {
@@ -764,33 +918,44 @@ namespace DrawnUi.Camera
                     return; // Backpressure: drop frame
                 }
 
-                // Allocate from pool
-                CVReturn errCode = CVReturn.Error;
-                var pool = _pixelBufferAdaptor?.PixelBufferPool;
-                if (pool == null)
-                    return;
-                pixelBuffer = pool.CreatePixelBuffer(null, out errCode);
-                if (pixelBuffer == null || errCode != CVReturn.Success)
-                    return;
-
-                // Copy pixels
-                pixelBuffer.Lock(CVPixelBufferLock.None);
-                try
+                if (pixelBuffer == null)
                 {
-                    IntPtr baseAddress = pixelBuffer.BaseAddress;
-                    int bytesPerRow = (int)pixelBuffer.BytesPerRow;
+                    // Allocate from pool (CPU Path)
+                    CVReturn errCode = CVReturn.Error;
+                    var pool = _pixelBufferAdaptor?.PixelBufferPool;
+                    if (pool == null)
+                        return;
+                    pixelBuffer = pool.CreatePixelBuffer(null, out errCode);
+                    if (pixelBuffer == null || errCode != CVReturn.Success)
+                        return;
+                }
 
-                    lock (_frameLock)
+                if (!isZeroCopy)
+                {
+                    // Copy pixels (CPU Slow Path)
+                    pixelBuffer.Lock(CVPixelBufferLock.None);
+                    try
                     {
-                        if (_surface == null) return;
-                        SKImageInfo srcInfo = new SKImageInfo(_width, _height, SKColorType.Bgra8888, SKAlphaType.Premul);
-                        if (!_surface.ReadPixels(srcInfo, baseAddress, bytesPerRow, 0, 0))
-                            return;
+                        IntPtr baseAddress = pixelBuffer.BaseAddress;
+                        int bytesPerRow = (int)pixelBuffer.BytesPerRow;
+
+                        lock (_frameLock)
+                        {
+                            if (_surface == null) return;
+                            SKImageInfo srcInfo = new SKImageInfo(_width, _height, SKColorType.Bgra8888, SKAlphaType.Premul);
+                            if (!_surface.ReadPixels(srcInfo, baseAddress, bytesPerRow, 0, 0))
+                                return;
+                        }
+                    }
+                    finally
+                    {
+                        pixelBuffer.Unlock(CVPixelBufferLock.None);
                     }
                 }
-                finally
+                else
                 {
-                    pixelBuffer.Unlock(CVPixelBufferLock.None);
+                    // Zero-Copy: Just ensure GPU commands are flushed
+                     // (Done in SubmitFrameAsync main block)
                 }
 
                 // Append to AVAssetWriter
@@ -821,7 +986,8 @@ namespace DrawnUi.Camera
             }
             finally
             {
-                pixelBuffer?.Dispose();
+                if (!isZeroCopy)
+                    pixelBuffer?.Dispose();
             }
 
             await Task.CompletedTask;
@@ -1674,6 +1840,14 @@ namespace DrawnUi.Camera
             _compressionSession = null;
             _preRecordingBuffer?.Dispose();
             _preRecordingBuffer = null;
+
+            _encodingContext?.Dispose();
+            _encodingContext = null;
+
+            _metalCache?.Dispose();
+            _metalCache = null;
+            _commandQueue = null; // Release reference
+
             _previewSurface?.Dispose();
             _previewSurface = null;
             _surface?.Dispose();
