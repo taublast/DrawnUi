@@ -324,7 +324,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     if (FormsControl.CaptureMode == CaptureModeType.Video && FormsControl.VideoQuality != VideoQuality.Manual)
                     {
                         double targetFps = 30.0;
-                        if (FormsControl.VideoQuality == VideoQuality.High || FormsControl.VideoQuality == VideoQuality.Ultra)
+                        if (FormsControl.VideoQuality == VideoQuality.Ultra)
                         {
                             targetFps = 60.0;
                         }
@@ -354,6 +354,48 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                             }
                         }
                     }
+
+                    /*
+                                         // Set FPS if video mode
+                       if (FormsControl.CaptureMode == CaptureModeType.Video)
+                       {
+                           double targetFps = 30.0;
+                           if (FormsControl.VideoQuality == VideoQuality.Ultra)
+                           {
+                               targetFps = 60.0;
+                           }
+
+                           // Try to find the supported range that matches targetFps with tolerance
+                           AVFrameRateRange bestRange = null;
+                           foreach (var range in videoDevice.ActiveFormat.VideoSupportedFrameRateRanges)
+                           {
+                               if (Math.Abs(range.MaxFrameRate - targetFps) < 1.0)
+                               {
+                                   bestRange = range;
+                                   break;
+                               }
+                           }
+
+                           if (bestRange != null)
+                           {
+                               try
+                               {
+                                   // We must use the exact duration from the supported range to avoid "fake formats" issues
+                                   videoDevice.ActiveVideoMinFrameDuration = bestRange.MinFrameDuration;
+                                   videoDevice.ActiveVideoMaxFrameDuration = bestRange.MinFrameDuration;
+                                   //Console.WriteLine($"[NativeCameraiOS] Set FPS to {bestRange.MaxFrameRate} (Target: {targetFps})");
+                               }
+                               catch (Exception e)
+                               {
+                                   Console.WriteLine($"[NativeCameraiOS] Failed to set FPS: {e.Message}");
+                               }
+                           }
+                           else
+                           {
+                               Console.WriteLine($"[NativeCameraiOS] Warning: Desired FPS {targetFps} not found in active format. Ranges: {string.Join(", ", videoDevice.ActiveFormat.VideoSupportedFrameRateRanges.Select(r => r.MaxFrameRate))}");
+                           }
+                       }
+                     */
 
                     // Ensure exposure is set to continuous auto exposure during setup
                     if (videoDevice.IsExposureModeSupported(AVCaptureExposureMode.ContinuousAutoExposure))
@@ -724,7 +766,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
         // Determine target FPS
         double targetFps = 30.0;
-        if (FormsControl.VideoQuality == VideoQuality.High || FormsControl.VideoQuality == VideoQuality.Ultra)
+        if (FormsControl.VideoQuality == VideoQuality.Ultra)
         {
             targetFps = 60.0;
         }
@@ -1395,41 +1437,34 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
     public (SKImage Image, int Rotation, bool Flip) GetRawFullImage()
     {
-        // CRITICAL: Copy references quickly under lock, then release lock before expensive operations!
-        // Otherwise camera thread blocks waiting for lock while we copy megabytes of data
-        int width, height, bytesPerRow, rotation;
-        bool flip;
-        byte[] pixelData;
-
+        // Must hold lock during entire copy to prevent camera from overwriting buffer mid-copy
         lock (_lockRecordingFrame)
         {
-            if (_latestRecordingFrame == null)
+            if (_latestRecordingFrame == null || _latestRecordingFrame.PixelData == null)
                 return (null, 0, false);
 
-            // Quick copy of references/values - lock held for microseconds
-            width = _latestRecordingFrame.Width;
-            height = _latestRecordingFrame.Height;
-            bytesPerRow = _latestRecordingFrame.BytesPerRow;
-            rotation = (int)_latestRecordingFrame.CurrentRotation;
-            flip = _latestRecordingFrame.Facing == CameraPosition.Selfie;
-            pixelData = _latestRecordingFrame.PixelData;
-        }
-        // Lock released! Camera thread can now proceed
+            try
+            {
+                var width = _latestRecordingFrame.Width;
+                var height = _latestRecordingFrame.Height;
+                var bytesPerRow = _latestRecordingFrame.BytesPerRow;
+                var rotation = (int)_latestRecordingFrame.CurrentRotation;
+                var flip = _latestRecordingFrame.Facing == CameraPosition.Selfie;
+                var pixelData = _latestRecordingFrame.PixelData;
 
-        try
-        {
-            var info = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
+                var info = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
 
-            // Expensive data copy happens OUTSIDE lock - no contention!
-            using var data = SKData.CreateCopy(pixelData);
-            var image = SKImage.FromPixels(info, data, bytesPerRow);
+                // Copy happens under lock - safe from camera overwrites
+                using var data = SKData.CreateCopy(pixelData);
+                var image = SKImage.FromPixels(info, data, bytesPerRow);
 
-            return (image, rotation, flip);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"[NativeCameraiOS] GetRawFullImage error: {e}");
-            return (null, 0, false);
+                return (image, rotation, flip);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"[NativeCameraiOS] GetRawFullImage error: {e}");
+                return (null, 0, false);
+            }
         }
     }
 
@@ -1772,9 +1807,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         {
             lock (_lockRecordingSignal)
             {
+                // Short timeout (8ms) - if pulse missed, max 1/4 frame delay at 30fps
                 while (!_hasNewRecordingFrame && !_stopRecordingThread)
                 {
-                    Monitor.Wait(_lockRecordingSignal, 100);
+                    Monitor.Wait(_lockRecordingSignal, 8);
                 }
 
                 if (_stopRecordingThread) break;
@@ -2727,7 +2763,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
             // Determine target FPS
             int targetFps = 30;
-            if (quality == VideoQuality.High || quality == VideoQuality.Ultra)
+            if (quality == VideoQuality.Ultra)
             {
                 targetFps = 60;
             }

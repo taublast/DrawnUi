@@ -79,10 +79,18 @@ public partial class SkiaCamera : SkiaControl
             rawCamFps = nativeCam.RawCameraFps;
         }
 
-        // Compose text - show both raw and processed FPS
+        // Get encoder backpressure drops
+        int backpressureDrops = 0;
+        if (_captureVideoEncoder is DrawnUi.Camera.AppleVideoToolboxEncoder appleEnc)
+        {
+            backpressureDrops = appleEnc.BackpressureDroppedFrames;
+        }
+
+        // Compose text - show both raw and processed FPS, and both drop counters
+        // dropped = frame-in-flight drops, bp = encoder backpressure drops
         string line1 = rawCamFps > 0
-            ? $"raw: {rawCamFps:F1}  enc: {effFps:F1} / {_targetFps}  dropped: {_diagDroppedFrames}"
-            : $"FPS: {effFps:F1} / {_targetFps}  dropped: {_diagDroppedFrames}";
+            ? $"raw: {rawCamFps:F1}  enc: {effFps:F1} / {_targetFps}  drop: {_diagDroppedFrames} bp: {backpressureDrops}"
+            : $"FPS: {effFps:F1} / {_targetFps}  drop: {_diagDroppedFrames} bp: {backpressureDrops}";
         string line2 = $"submit: {_diagLastSubmitMs:F1} ms";
         double mbps = _diagBitrate > 0 ? _diagBitrate / 1_000_000.0 : 0.0;
         string line3 = _diagEncWidth > 0 && _diagEncHeight > 0

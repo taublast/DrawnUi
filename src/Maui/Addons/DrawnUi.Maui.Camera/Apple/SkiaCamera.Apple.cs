@@ -29,11 +29,8 @@ public partial class SkiaCamera
 
     private void OnRecordingFrameAvailable()
     {
-        _ = CaptureFrame();
-    }
-
-    private async Task CaptureFrame()
-    {
+        // CRITICAL: Do synchronous checks BEFORE creating any Task to avoid async state machine
+        // and Task allocation overhead when frames are dropped (fixes memory/GC pressure)
         if (!(IsRecordingVideo || IsPreRecording) || _captureVideoEncoder == null)
             return;
 
@@ -44,6 +41,12 @@ public partial class SkiaCamera
             return;
         }
 
+        // Only now fire the async work - we've already acquired the frame slot
+        _ = CaptureFrameCore();
+    }
+
+    private async Task CaptureFrameCore()
+    {
         try
         {
             // Double-check encoder still exists (race condition protection)

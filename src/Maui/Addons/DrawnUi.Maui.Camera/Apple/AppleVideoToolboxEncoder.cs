@@ -68,11 +68,18 @@ namespace DrawnUi.Camera
         private SKImage _latestPreviewImage;
         public event EventHandler PreviewAvailable;
 
+        // Cached preview surface to avoid allocating every frame
+        private SKSurface _previewSurface;
+        private SKImageInfo _previewSurfaceInfo;
+
         // Statistics
         public int EncodedFrameCount { get; private set; }
         public long EncodedDataSize { get; private set; }
         public TimeSpan EncodingDuration { get; private set; }
         public string EncodingStatus { get; private set; } = "Idle";
+
+        // Diagnostic counter for frames dropped due to encoder backpressure
+        public int BackpressureDroppedFrames { get; private set; }
 
         // ✅ No GCHandle needed - callback is instance method
 
@@ -148,6 +155,7 @@ namespace DrawnUi.Camera
                 EncodedFrameCount = 0;
                 EncodedDataSize = 0;
                 EncodingDuration = TimeSpan.Zero;
+                BackpressureDroppedFrames = 0;
                 EncodingStatus = "Buffering";
 
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Pre-recording mode initialized and started:");
@@ -484,6 +492,7 @@ namespace DrawnUi.Camera
                 EncodedFrameCount = 0;
                 EncodedDataSize = 0;
                 EncodingDuration = TimeSpan.Zero;
+                BackpressureDroppedFrames = 0;
                 EncodingStatus = "Recording Live";
 
                 _progressTimer = new System.Threading.Timer(_ =>
@@ -537,6 +546,7 @@ namespace DrawnUi.Camera
             // Initialize statistics (only reset if normal recording)
             EncodedFrameCount = 0;
             EncodedDataSize = 0;
+            BackpressureDroppedFrames = 0;
             EncodingStatus = "Started";
 
             _progressTimer = new System.Threading.Timer(_ =>
@@ -622,10 +632,16 @@ namespace DrawnUi.Camera
                         int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
 
                         var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
-                        using var raster = SKSurface.Create(pInfo);
-                        raster.Canvas.Clear(SKColors.Transparent);
-                        raster.Canvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
-                        snapshot = raster.Snapshot();
+
+                        if (_previewSurface == null || _previewSurfaceInfo.Width != pInfo.Width || _previewSurfaceInfo.Height != pInfo.Height)
+                        {
+                            _previewSurface?.Dispose();
+                            _previewSurfaceInfo = pInfo;
+                            _previewSurface = SKSurface.Create(pInfo);
+                        }
+                        _previewSurface.Canvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
+                        snapshot = _previewSurface.Snapshot();
+
                         lock (_previewLock)
                         {
                             _latestPreviewImage?.Dispose();
@@ -743,7 +759,10 @@ namespace DrawnUi.Camera
             try
             {
                 if (!_videoInput.ReadyForMoreMediaData)
+                {
+                    BackpressureDroppedFrames++;
                     return; // Backpressure: drop frame
+                }
 
                 // Allocate from pool
                 CVReturn errCode = CVReturn.Error;
@@ -843,6 +862,7 @@ namespace DrawnUi.Camera
                 }
 
                 _surface?.Dispose(); _surface = null;
+                _previewSurface?.Dispose(); _previewSurface = null;
             }
 
             // Cleanup files
@@ -938,6 +958,7 @@ namespace DrawnUi.Camera
                 }
 
                 _surface?.Dispose(); _surface = null;
+                _previewSurface?.Dispose(); _previewSurface = null;
             }
 
             // If pre-recording mode: concatenate pre-recording + live recording → final output
@@ -1653,6 +1674,10 @@ namespace DrawnUi.Camera
             _compressionSession = null;
             _preRecordingBuffer?.Dispose();
             _preRecordingBuffer = null;
+            _previewSurface?.Dispose();
+            _previewSurface = null;
+            _surface?.Dispose();
+            _surface = null;
         }
 
         private sealed class FrameScope : IDisposable
