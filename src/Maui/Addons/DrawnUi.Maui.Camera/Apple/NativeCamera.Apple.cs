@@ -1958,7 +1958,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             // Create Metal texture ONCE, then do NOTHING!
             // The texture auto-updates because camera reuses IOSurface pool.
             // ============================================================
-            if (_previewTexture == null)
+            if (_previewTexture == null) //our lill trick we wrap (create _previewTexture) only once, then camera writes directly to it
             {
                 // FIRST FRAME ONLY: Create texture cache and texture
                 pixelBuffer = sampleBuffer.GetImageBuffer() as CVPixelBuffer;
