@@ -1,5 +1,6 @@
 #if ANDROID
 using System;
+using System.Buffers;
 using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -97,6 +98,33 @@ namespace DrawnUi.Camera
         private bool _isFrontCamera;
         public bool UseGpuCameraPath => _useGpuCameraPath;
         public GpuCameraFrameProvider GpuFrameProvider => _gpuFrameProvider;
+
+        // Cached BufferInfo objects to avoid per-frame Java allocations (reduces GC pressure)
+        private MediaCodec.BufferInfo _drainBufferInfo;
+        private MediaCodec.BufferInfo _muxerBufferInfo;
+
+        // GPU resource management (prevent Skia GPU memory accumulation during long recordings)
+        private int _gpuFrameCounter = 0;
+        private const int GpuPurgeInterval = 300;  // Purge every 300 frames (~10 seconds at 30fps)
+
+        // GPU encoding thread (async processing - decouples camera from encoding)
+        private System.Threading.Thread _gpuEncodingThread;
+        private System.Threading.ManualResetEventSlim _gpuFrameSignal;
+        private volatile bool _stopGpuThread = false;
+        private volatile bool _gpuFrameReady = false;
+
+        // Frame context passed from callback to encoding thread
+        private TimeSpan _pendingGpuFrameTimestamp;
+        private Action<DrawableFrame> _pendingFrameProcessor;
+        private bool _pendingDiagnosticsOn;
+        private Action<SKCanvas, int, int> _pendingDrawDiagnostics;
+        private readonly object _gpuFrameLock = new();
+
+        /// <summary>
+        /// Event fired when a GPU frame has been successfully processed and encoded.
+        /// Used by SkiaCamera to track recording FPS.
+        /// </summary>
+        public event Action OnGpuFrameProcessed;
 
         public bool IsRecording => _isRecording;
         public event EventHandler<TimeSpan> ProgressReported;
@@ -202,6 +230,8 @@ namespace DrawnUi.Camera
             _recordAudio = recordAudio;
             _preRecordingDuration = TimeSpan.Zero;
             _firstEncodedFrameOffset = TimeSpan.MinValue;
+            _skipFirstEncodedSample = true;  // Reset for new session
+            _gpuFrameCounter = 0;  // Reset GPU purge counter
 
             // Reset encoder readiness flags (new initialization)
             _encoderReady = false;
@@ -234,6 +264,9 @@ namespace DrawnUi.Camera
             // Set up EGL context bound to the codec surface
             SetupEglForCodecSurface();
 
+            // Start GPU encoding thread for async frame processing (decouples camera from encoding)
+            StartGpuEncodingThread();
+
             // CRITICAL: Warm up encoder BEFORE accepting any frames (professional pattern)
             // This ensures MediaCodec is ready and no frames are dropped
             // Instagram/Snapchat/TikTok all do this - encoder ready before user even presses record
@@ -247,7 +280,8 @@ namespace DrawnUi.Camera
             // Initialize based on mode (mirrors iOS)
             if (IsPreRecordingMode && ParentCamera != null)
             {
-                // Pre-recording mode: Initialize circular buffer
+                // Pre-recording mode: Create new buffer (size may differ between sessions)
+                _preRecordingBuffer?.Dispose();
                 var preRecordDuration = ParentCamera.PreRecordDuration;
                 _preRecordingBuffer = new PrerecordingEncodedBuffer(preRecordDuration);
 
@@ -452,10 +486,11 @@ namespace DrawnUi.Camera
 
                             var buffer = ByteBuffer.Wrap(data);
                             var flags = isKeyFrame ? MediaCodecBufferFlags.KeyFrame : MediaCodecBufferFlags.None;
-                            var bufferInfo = new MediaCodec.BufferInfo();
-                            bufferInfo.Set(0, data.Length, (long)normalizedTimestamp.TotalMicroseconds, flags);
+                            // Reuse cached BufferInfo to avoid per-frame Java allocations
+                            _muxerBufferInfo ??= new MediaCodec.BufferInfo();
+                            _muxerBufferInfo.Set(0, data.Length, (long)normalizedTimestamp.TotalMicroseconds, flags);
 
-                            _muxer.WriteSampleData(_videoTrackIndex, buffer, bufferInfo);
+                            _muxer.WriteSampleData(_videoTrackIndex, buffer, _muxerBufferInfo);
                             writtenCount++;
 
                             // Log first/last frame
@@ -485,9 +520,8 @@ namespace DrawnUi.Camera
                     _muxer.SetOrientationHint(_deviceRotation);
                 }
 
-                // Step 4: Clear buffer, switch to live recording mode
-                _preRecordingBuffer?.Dispose();
-                _preRecordingBuffer = null;
+                // Step 4: Clear buffer (keep for reuse), switch to live recording mode
+                _preRecordingBuffer?.Clear();
 
                 // CRITICAL: Disable pre-recording mode so live frames go to muxer, not buffer!
                 IsPreRecordingMode = false;
@@ -657,13 +691,21 @@ namespace DrawnUi.Camera
                     int pw = Math.Min(_width, maxPreviewWidth);
                     int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
 
-                    var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
-                    using var rasterSurface = SKSurface.Create(pInfo);
-                    var pCanvas = rasterSurface.Canvas;
+                    // Reuse cached surface to avoid GC pressure (was allocating ~2MB per frame)
+                    if (_previewRasterSurface == null || _previewWidth != pw || _previewHeight != ph)
+                    {
+                        _previewRasterSurface?.Dispose();
+                        var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
+                        _previewRasterSurface = SKSurface.Create(pInfo);
+                        _previewWidth = pw;
+                        _previewHeight = ph;
+                    }
+
+                    var pCanvas = _previewRasterSurface.Canvas;
                     pCanvas.Clear(SKColors.Transparent);
                     pCanvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
 
-                    keepAlive = rasterSurface.Snapshot();
+                    keepAlive = _previewRasterSurface.Snapshot();
                     lock (_previewLock)
                     {
                         _latestPreviewImage?.Dispose();
@@ -720,12 +762,301 @@ namespace DrawnUi.Camera
             }
         }
 
+        #region GPU Encoding Thread (Async Processing)
+
+        /// <summary>
+        /// Start the GPU encoding thread for async frame processing.
+        /// Called when recording starts to decouple camera from encoding.
+        /// </summary>
+        private void StartGpuEncodingThread()
+        {
+            if (_gpuEncodingThread != null) return;
+
+            _gpuFrameSignal = new System.Threading.ManualResetEventSlim(false);
+            _stopGpuThread = false;
+            _gpuFrameReady = false;
+            _gpuEncodingThread = new System.Threading.Thread(GpuEncodingLoop)
+            {
+                IsBackground = true,
+                Name = "AndroidGpuEncoder",
+                Priority = System.Threading.ThreadPriority.AboveNormal
+            };
+            _gpuEncodingThread.Start();
+            System.Diagnostics.Debug.WriteLine("[AndroidEncoder] GPU encoding thread started");
+        }
+
+        /// <summary>
+        /// Stop the GPU encoding thread.
+        /// Called when recording stops.
+        /// </summary>
+        private void StopGpuEncodingThread()
+        {
+            if (_gpuEncodingThread == null) return;
+
+            _stopGpuThread = true;
+            _gpuFrameSignal?.Set(); // Wake thread to exit
+            _gpuEncodingThread?.Join(1000);
+            _gpuEncodingThread = null;
+            _gpuFrameSignal?.Dispose();
+            _gpuFrameSignal = null;
+            _gpuFrameReady = false;
+            System.Diagnostics.Debug.WriteLine("[AndroidEncoder] GPU encoding thread stopped");
+        }
+
+        /// <summary>
+        /// GPU encoding loop - runs on dedicated background thread.
+        /// Waits for signal from camera callback, then processes frame.
+        /// </summary>
+        private void GpuEncodingLoop()
+        {
+            while (!_stopGpuThread)
+            {
+                try
+                {
+                    _gpuFrameSignal?.Wait(100); // Wait for signal with timeout
+                }
+                catch (ObjectDisposedException)
+                {
+                    break;
+                }
+
+                if (_stopGpuThread) break;
+
+                // Check if frame is ready
+                if (!_gpuFrameReady)
+                {
+                    _gpuFrameSignal?.Reset();
+                    continue;
+                }
+
+                // Get frame context atomically
+                TimeSpan timestamp;
+                Action<DrawableFrame> frameProcessor;
+                bool diagOn;
+                Action<SKCanvas, int, int> drawDiag;
+
+                lock (_gpuFrameLock)
+                {
+                    timestamp = _pendingGpuFrameTimestamp;
+                    frameProcessor = _pendingFrameProcessor;
+                    diagOn = _pendingDiagnosticsOn;
+                    drawDiag = _pendingDrawDiagnostics;
+                    _gpuFrameReady = false;
+                }
+
+                _gpuFrameSignal?.Reset();
+
+                try
+                {
+                    // ALL heavy work happens here on background thread
+                    ProcessGpuFrameOnThread(timestamp, frameProcessor, diagOn, drawDiag);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] GpuEncodingLoop error: {ex.Message}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Signal the GPU encoding thread that a new frame is available.
+        /// Called from camera OnFrameAvailable callback - MUST BE FAST!
+        /// Just stores context and signals, no heavy work here.
+        /// </summary>
+        public void SignalGpuFrame(
+            TimeSpan timestamp,
+            Action<DrawableFrame> frameProcessor,
+            bool videoDiagnosticsOn,
+            Action<SKCanvas, int, int> drawDiagnostics)
+        {
+            if (!_isRecording || !_useGpuCameraPath || _gpuFrameProvider == null)
+                return;
+
+            // Store frame context for background thread
+            lock (_gpuFrameLock)
+            {
+                _pendingGpuFrameTimestamp = timestamp;
+                _pendingFrameProcessor = frameProcessor;
+                _pendingDiagnosticsOn = videoDiagnosticsOn;
+                _pendingDrawDiagnostics = drawDiagnostics;
+                _gpuFrameReady = true;
+            }
+
+            // Signal encoding thread - non-blocking
+            _gpuFrameSignal?.Set();
+
+            // EXIT IMMEDIATELY - callback returns to camera in microseconds
+        }
+
+        /// <summary>
+        /// Process GPU frame on background thread - all heavy work here.
+        /// Called from GpuEncodingLoop on dedicated thread.
+        /// </summary>
+        private void ProcessGpuFrameOnThread(
+            TimeSpan timestamp,
+            Action<DrawableFrame> frameProcessor,
+            bool videoDiagnosticsOn,
+            Action<SKCanvas, int, int> drawDiagnostics)
+        {
+            if (!_isRecording || !_useGpuCameraPath || _gpuFrameProvider == null) return;
+
+            // Defensive EGL check
+            if (_eglDisplay == EGL14.EglNoDisplay || _eglSurface == EGL14.EglNoSurface || _eglContext == EGL14.EglNoContext)
+            {
+                System.Diagnostics.Debug.WriteLine("[AndroidEncoder] ProcessGpuFrameOnThread: EGL torn down");
+                return;
+            }
+
+            if (!_encoderReady)
+            {
+                System.Diagnostics.Debug.WriteLine("[AndroidEncoder] ProcessGpuFrameOnThread: Encoder not ready");
+                return;
+            }
+
+            try
+            {
+                _pendingTimestamp = timestamp;
+
+                // Make EGL context current - CRITICAL: Must be done before UpdateTexImage!
+                MakeCurrent();
+
+                // CRITICAL: Update the SurfaceTexture on the EGL context thread
+                // This calls UpdateTexImage() which MUST run on the thread that owns the EGL context
+                if (!_gpuFrameProvider.TryProcessFrameNoWait(out long timestampNs))
+                {
+                    // No frame available yet
+                    return;
+                }
+
+                // 1. Render camera texture to the encoder's framebuffer
+                // CRITICAL: Reset GL state before rendering OES texture!
+                // Skia modifies many GL states (blend, depth, stencil, scissor, program, etc.)
+                // We MUST reset to clean state or subsequent frames will render black
+                ResetGlStateForOesRendering();
+
+                GLES20.GlViewport(0, 0, _width, _height);
+                GLES20.GlClear(GLES20.GlColorBufferBit);
+
+                // Render OES texture from SurfaceTexture
+                _gpuFrameProvider.RenderToFramebuffer(_width, _height, _isFrontCamera);
+
+                // 2. Ensure Skia surface is ready for overlays
+                if (_grContext == null)
+                {
+                    var glInterface = GRGlInterface.Create();
+                    _grContext = GRContext.CreateGl(glInterface);
+                }
+                else
+                {
+                    // Full reset required - OES rendering touches many GL states
+                    _grContext.ResetContext();
+                }
+
+                if (_skSurface == null || _skInfo.Width != _width || _skInfo.Height != _height)
+                {
+                    _skInfo = new SKImageInfo(_width, _height, SKColorType.Rgba8888, SKAlphaType.Premul);
+
+                    int[] fb = new int[1];
+                    GLES20.GlGetIntegerv(GLES20.GlFramebufferBinding, fb, 0);
+                    int[] samples = new int[1];
+                    GLES20.GlGetIntegerv(GLES20.GlSamples, samples, 0);
+                    int[] stencil = new int[1];
+                    GLES20.GlGetIntegerv(GLES20.GlStencilBits, stencil, 0);
+
+                    var fbInfo = new GRGlFramebufferInfo((uint)fb[0], 0x8058);
+                    var backendRT = new GRBackendRenderTarget(_width, _height, samples[0], stencil[0], fbInfo);
+
+                    _skSurface?.Dispose();
+                    _skSurface = SKSurface.Create(_grContext, backendRT, GRSurfaceOrigin.BottomLeft, SKColorType.Rgba8888);
+                }
+
+                // 3. Apply FrameProcessor overlays (user can draw on top of camera frame)
+                var canvas = _skSurface.Canvas;
+                // Note: Camera frame is already rendered to framebuffer, don't clear!
+
+                if (frameProcessor != null || videoDiagnosticsOn)
+                {
+                    var frame = new DrawableFrame
+                    {
+                        Width = _width,
+                        Height = _height,
+                        Canvas = canvas,
+                        Time = timestamp,
+                        Scale = 1f  // Recording frame - full size
+                    };
+
+                    frameProcessor?.Invoke(frame);
+
+                    if (videoDiagnosticsOn)
+                    {
+                        drawDiagnostics?.Invoke(canvas, _width, _height);
+                    }
+                }
+
+                // 4. Flush and submit to encoder
+                canvas.Flush();
+                _grContext.Flush();
+
+                // Periodic GPU resource cleanup to prevent memory accumulation during long recordings
+                _gpuFrameCounter++;
+                if (_gpuFrameCounter >= GpuPurgeInterval)
+                {
+                    _gpuFrameCounter = 0;
+                    _grContext.PurgeUnlockedResources(false);  // false = don't scratchResourcesOnly
+                }
+
+                // 5. Set presentation timestamp and swap to encoder
+                long ptsNanos = (long)(timestamp.TotalMilliseconds * 1_000_000.0);
+                EGLExt.EglPresentationTimeANDROID(_eglDisplay, _eglSurface, ptsNanos);
+                EGL14.EglSwapBuffers(_eglDisplay, _eglSurface);
+
+                // 6. Drain encoder
+                bool bufferingMode = IsPreRecordingMode && _preRecordingBuffer != null;
+
+                if (DateTime.Now - _lastKeyframeRequest >= _keyframeRequestInterval)
+                {
+                    RequestKeyFrame();
+                    _lastKeyframeRequest = DateTime.Now;
+                }
+
+                if (bufferingMode)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        DrainEncoder(endOfStream: false, bufferingMode: true);
+                    }
+                }
+                else
+                {
+                    DrainEncoder(endOfStream: false, bufferingMode: false);
+                }
+
+                EncodedFrameCount++;
+
+                // Notify SkiaCamera for FPS tracking
+                OnGpuFrameProcessed?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] ProcessGpuFrameOnThread error: {ex.Message}");
+            }
+            finally
+            {
+                // Unbind context
+                try { EGL14.EglMakeCurrent(_eglDisplay, EGL14.EglNoSurface, EGL14.EglNoSurface, EGL14.EglNoContext); } catch { }
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// Initialize GPU camera path with SurfaceTexture.
         /// Must be called on GL thread with valid EGL context (after SetupEglForCodecSurface).
         /// </summary>
         /// <param name="isFrontCamera">True if using front/selfie camera</param>
-        public bool InitializeGpuCameraPath(bool isFrontCamera)
+        /// <param name="cameraWidth">Camera's native output width (before rotation correction)</param>
+        /// <param name="cameraHeight">Camera's native output height (before rotation correction)</param>
+        public bool InitializeGpuCameraPath(bool isFrontCamera, int cameraWidth = 0, int cameraHeight = 0)
         {
             if (!GpuCameraFrameProvider.IsSupported())
             {
@@ -738,8 +1069,14 @@ namespace DrawnUi.Camera
                 // Ensure EGL context is current
                 MakeCurrent();
 
+                // Use camera's native dimensions for SurfaceTexture if provided,
+                // otherwise use encoder dimensions. Camera frames come in camera's
+                // native orientation, and the transform matrix handles rotation.
+                int surfaceW = cameraWidth > 0 ? cameraWidth : _width;
+                int surfaceH = cameraHeight > 0 ? cameraHeight : _height;
+
                 _gpuFrameProvider = new GpuCameraFrameProvider();
-                if (!_gpuFrameProvider.Initialize(_width, _height))
+                if (!_gpuFrameProvider.Initialize(surfaceW, surfaceH))
                 {
                     System.Diagnostics.Debug.WriteLine("[AndroidEncoder] Failed to initialize GpuCameraFrameProvider");
                     _gpuFrameProvider?.Dispose();
@@ -750,7 +1087,7 @@ namespace DrawnUi.Camera
                 _isFrontCamera = isFrontCamera;
                 _useGpuCameraPath = true;
 
-                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] GPU camera path initialized: {_width}x{_height}, frontCamera={isFrontCamera}");
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] GPU camera path initialized: encoder={_width}x{_height}, camera={surfaceW}x{surfaceH}, frontCamera={isFrontCamera}");
                 return true;
             }
             catch (Exception ex)
@@ -1000,8 +1337,11 @@ namespace DrawnUi.Camera
 
         public async Task AbortAsync()
         {
-
             _isRecording = false;
+
+            // Stop GPU encoding thread first
+            StopGpuEncodingThread();
+
             _progressTimer?.Dispose();
 
             if (IsPreRecordingMode && _preRecordingBuffer != null && _videoCodec != null)
@@ -1035,6 +1375,10 @@ namespace DrawnUi.Camera
             System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] StopAsync CALLED: IsPreRecordingMode={IsPreRecordingMode}, BufferFrames={(_preRecordingBuffer?.GetFrameCount() ?? 0)}");
 
             _isRecording = false;
+
+            // Stop GPU encoding thread first (ensures no more frames are processed)
+            StopGpuEncodingThread();
+
             _progressTimer?.Dispose();
             EncodingStatus = "Stopping";
 
@@ -1077,9 +1421,10 @@ namespace DrawnUi.Camera
 
                             var buffer = ByteBuffer.Wrap(data);
                             var flags = isKeyFrame ? MediaCodecBufferFlags.KeyFrame : MediaCodecBufferFlags.None;
-                            var bufferInfo = new MediaCodec.BufferInfo();
-                            bufferInfo.Set(0, data.Length, (long)timestamp.TotalMicroseconds, flags);
-                            _muxer.WriteSampleData(_videoTrackIndex, buffer, bufferInfo);
+                            // Reuse cached BufferInfo to avoid per-frame Java allocations
+                            _muxerBufferInfo ??= new MediaCodec.BufferInfo();
+                            _muxerBufferInfo.Set(0, data.Length, (long)timestamp.TotalMicroseconds, flags);
+                            _muxer.WriteSampleData(_videoTrackIndex, buffer, _muxerBufferInfo);
                         }
 
                         EncodingDuration = _preRecordingBuffer.GetBufferedDuration();
@@ -1126,7 +1471,9 @@ namespace DrawnUi.Camera
 
         private void DrainEncoder(bool endOfStream, bool bufferingMode)
         {
-            var bufferInfo = new MediaCodec.BufferInfo();
+            // Reuse cached BufferInfo to avoid per-call Java allocations
+            _drainBufferInfo ??= new MediaCodec.BufferInfo();
+            var bufferInfo = _drainBufferInfo;
             int maxIterations = endOfStream ? 100 : 1;  // Prevent infinite loop on endOfStream
             int iterations = 0;
 
@@ -1199,26 +1546,35 @@ namespace DrawnUi.Camera
                             // BUFFERING MODE: Append to circular buffer
                             if (bufferingMode)
                             {
-                                byte[] frameData = new byte[bufferInfo.Size];
-                                encodedData.Position(bufferInfo.Offset);
-                                encodedData.Get(frameData, 0, bufferInfo.Size);
-
-                                // Track first frame offset for timestamp normalization
-                                var rawTimestamp = TimeSpan.FromMicroseconds(bufferInfo.PresentationTimeUs);
-                                if (_firstEncodedFrameOffset == TimeSpan.MinValue)
+                                // Use ArrayPool to avoid per-frame allocations (reduces GC pressure)
+                                byte[] frameData = ArrayPool<byte>.Shared.Rent(bufferInfo.Size);
+                                try
                                 {
-                                    _firstEncodedFrameOffset = rawTimestamp;
-                                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] First buffered frame at {rawTimestamp.TotalSeconds:F3}s");
+                                    encodedData.Position(bufferInfo.Offset);
+                                    encodedData.Get(frameData, 0, bufferInfo.Size);
+
+                                    // Track first frame offset for timestamp normalization
+                                    var rawTimestamp = TimeSpan.FromMicroseconds(bufferInfo.PresentationTimeUs);
+                                    if (_firstEncodedFrameOffset == TimeSpan.MinValue)
+                                    {
+                                        _firstEncodedFrameOffset = rawTimestamp;
+                                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] First buffered frame at {rawTimestamp.TotalSeconds:F3}s");
+                                    }
+
+                                    // Normalize to start from 0
+                                    var normalizedTimestamp = rawTimestamp - _firstEncodedFrameOffset;
+                                    // AppendEncodedFrame copies data internally, so buffer can be returned immediately
+                                    _preRecordingBuffer.AppendEncodedFrame(frameData, bufferInfo.Size, normalizedTimestamp);
+
+                                    EncodedFrameCount++;
+                                    EncodedDataSize += bufferInfo.Size;
+                                    EncodingDuration = DateTime.Now - _startTime;
+                                    EncodingStatus = "Buffering";
                                 }
-
-                                // Normalize to start from 0
-                                var normalizedTimestamp = rawTimestamp - _firstEncodedFrameOffset;
-                                _preRecordingBuffer.AppendEncodedFrame(frameData, bufferInfo.Size, normalizedTimestamp);
-
-                                EncodedFrameCount++;
-                                EncodedDataSize += bufferInfo.Size;
-                                EncodingDuration = DateTime.Now - _startTime;
-                                EncodingStatus = "Buffering";
+                                finally
+                                {
+                                    ArrayPool<byte>.Shared.Return(frameData);
+                                }
                             }
                             // LIVE RECORDING MODE: Write to muxer
                             else if (_muxerStarted)
@@ -1237,12 +1593,13 @@ namespace DrawnUi.Camera
                                 long normalizedPts = pts - (long)_firstEncodedFrameOffset.TotalMicroseconds;
                                 long finalPts = normalizedPts + (long)_preRecordingDuration.TotalMicroseconds;
 
-                                var normalizedBufferInfo = new MediaCodec.BufferInfo();
-                                normalizedBufferInfo.Set(bufferInfo.Offset, bufferInfo.Size, finalPts, bufferInfo.Flags);
+                                // Reuse cached BufferInfo to avoid per-frame Java allocations
+                                _muxerBufferInfo ??= new MediaCodec.BufferInfo();
+                                _muxerBufferInfo.Set(bufferInfo.Offset, bufferInfo.Size, finalPts, bufferInfo.Flags);
 
                                 encodedData.Position(bufferInfo.Offset);
                                 encodedData.Limit(bufferInfo.Offset + bufferInfo.Size);
-                                _muxer.WriteSampleData(_videoTrackIndex, encodedData, normalizedBufferInfo);
+                                _muxer.WriteSampleData(_videoTrackIndex, encodedData, _muxerBufferInfo);
 
                                 EncodedFrameCount++;
                                 EncodedDataSize += bufferInfo.Size;
@@ -1401,6 +1758,9 @@ namespace DrawnUi.Camera
 
         public void Dispose()
         {
+            // Ensure GPU encoding thread is stopped
+            StopGpuEncodingThread();
+
             if (_isRecording)
             {
                 try { StopAsync().GetAwaiter().GetResult(); } catch { }
@@ -1408,6 +1768,13 @@ namespace DrawnUi.Camera
             DisposeGpuCameraPath();
             _progressTimer?.Dispose();
             _preRecordingBuffer?.Dispose();
+
+            // Dispose cached Java objects to avoid native memory leaks
+            _drainBufferInfo?.Dispose();
+            _drainBufferInfo = null;
+            _muxerBufferInfo?.Dispose();
+            _muxerBufferInfo = null;
+
             TryReleaseCodec();
             TryReleaseMuxer();
             TearDownEgl();

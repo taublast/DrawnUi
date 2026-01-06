@@ -14,6 +14,7 @@ using AppoMobi.Maui.Native.Droid.Graphics;
 using Java.Lang;
 using Java.Util.Concurrent;
 using SkiaSharp.Views.Android;
+using System.Buffers;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -42,8 +43,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     // Camera configuration constants
 
     // Max preview dimensions
-    public int MaxPreviewWidth = 800;
-    public int MaxPreviewHeight = 800;
+    public int MaxPreviewWidth = 1280;
+    public int MaxPreviewHeight = 1280;
 
     // Still capture formats - same pattern as Apple implementation
     public List<CaptureFormat> StillFormats { get; protected set; } = new List<CaptureFormat>();
@@ -485,6 +486,152 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         }
     }
 
+    #region Async Frame Processing (iOS-style)
+
+    /// <summary>
+    /// Start background thread for frame processing
+    /// </summary>
+    private void StartFrameProcessingThread()
+    {
+        if (_frameProcessingThread != null) return;
+
+        _frameAvailable = new ManualResetEventSlim(false);
+        _stopProcessingThread = false;
+        _frameProcessingThread = new System.Threading.Thread(FrameProcessingLoop)
+        {
+            IsBackground = true,
+            Name = "AndroidCameraFrameProcessor",
+            Priority = System.Threading.ThreadPriority.AboveNormal
+        };
+        _frameProcessingThread.Start();
+        System.Diagnostics.Debug.WriteLine("[NativeCamera] Frame processing thread started");
+    }
+
+    /// <summary>
+    /// Stop background frame processing thread
+    /// </summary>
+    private void StopFrameProcessingThread()
+    {
+        if (_frameProcessingThread == null) return;
+
+        _stopProcessingThread = true;
+        _frameAvailable?.Set();  // Wake thread to exit
+        _frameProcessingThread?.Join(1000);
+        _frameProcessingThread = null;
+
+        lock (_imageLock)
+        {
+            _currentImage?.Close();
+            _currentImage = null;
+        }
+
+        _frameAvailable?.Dispose();
+        _frameAvailable = null;
+        System.Diagnostics.Debug.WriteLine("[NativeCamera] Frame processing thread stopped");
+    }
+
+    /// <summary>
+    /// Background thread loop for processing camera frames
+    /// </summary>
+    private void FrameProcessingLoop()
+    {
+        while (!_stopProcessingThread)
+        {
+            // Wait for new frame signal
+            try
+            {
+                _frameAvailable?.Wait(100);
+            }
+            catch (ObjectDisposedException)
+            {
+                break;
+            }
+
+            if (_stopProcessingThread) break;
+
+            // Grab current frame (atomic swap to null)
+            Image image;
+            lock (_imageLock)
+            {
+                image = _currentImage;
+                _currentImage = null;
+            }
+
+            _frameAvailable?.Reset();
+
+            if (image == null) continue;
+
+            try
+            {
+                ProcessFrameOnBackgroundThread(image);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[NativeCamera] Error processing frame: {ex.Message}");
+            }
+            finally
+            {
+                image.Close();  // Return to ImageReader pool
+            }
+        }
+    }
+
+    /// <summary>
+    /// Process a camera frame on the background thread (all heavy work happens here)
+    /// </summary>
+    private void ProcessFrameOnBackgroundThread(Image image)
+    {
+        var allocated = Output;
+        if (allocated?.Allocation == null || allocated.Bitmap == null)
+            return;
+
+        // Handle pre-recording buffer when enabled and not currently recording
+        if (_enablePreRecording && !_isRecordingVideo)
+        {
+            BufferPreRecordingFrame(image, image.Timestamp);
+        }
+
+        // RenderScript YUV→RGB conversion
+        ProcessImage(image, allocated.Allocation);
+        allocated.Update();
+
+        // During capture video flow recording, avoid any UI preview work
+        bool inCaptureRecording = FormsControl.UseCaptureVideoFlow && FormsControl.IsRecordingVideo;
+
+        // Convert to SKImage
+        var sk = allocated.Bitmap.ToSKImage();
+        if (sk == null) return;
+
+        // Build CapturedImage
+        var meta = FormsControl.CameraDevice.Meta;
+        var rotation = FormsControl.DeviceRotation;
+        Metadata.ApplyRotation(meta, rotation);
+
+        var tsNs = image.Timestamp;
+        var micros = tsNs / 1000L;
+        var monotonicTime = new DateTime(micros * 10, DateTimeKind.Utc);
+
+        var outImage = new CapturedImage()
+        {
+            Facing = FormsControl.Facing,
+            Time = monotonicTime,
+            Image = sk,
+            Meta = meta,
+            Rotation = rotation
+        };
+
+        // Callbacks
+        if (!inCaptureRecording)
+        {
+            OnPreviewCaptureSuccess(outImage);
+        }
+
+        Preview = outImage;
+        FormsControl.UpdatePreview();
+    }
+
+    #endregion
+
     //public SKImage GetPreviewImage(Allocation androidAllocation, int width, int height)
     //{
     //    // Create an SKImageInfo object to describe the allocation's properties
@@ -630,6 +777,13 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// </summary>
     public double RawCameraFps => _rawFrameFps;
 
+    // Async frame processing (iOS-style 2-buffer ping-pong)
+    private Image _currentImage;
+    private readonly object _imageLock = new();
+    private ManualResetEventSlim _frameAvailable;
+    private volatile bool _stopProcessingThread = false;
+    private System.Threading.Thread _frameProcessingThread;
+
     //volatile bool lockAllocation;
 
 
@@ -733,13 +887,19 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     private class EncodedFrame : IDisposable
     {
         public byte[] Data { get; set; }
+        public int DataLength { get; set; }  // Actual data length (rented array may be larger)
         public long TimestampNs { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public bool IsRentedFromPool { get; set; }
 
         public void Dispose()
         {
-            // Frame data will be managed by GC
+            if (IsRentedFromPool && Data != null)
+            {
+                ArrayPool<byte>.Shared.Return(Data);
+                Data = null;
+            }
         }
     }
 
@@ -901,21 +1061,10 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     var sensorSize =
                         (Android.Util.SizeF)characteristics.Get(CameraCharacteristics.SensorInfoPhysicalSize);
 
-                    // Determine actual facing
-                    var actualFacing = FormsControl.Facing;
-                    if (facing != null)
-                    {
-                        int faceInt = facing.IntValue();
-                        if (faceInt == (int)LensFacing.Front)
-                            actualFacing = CameraPosition.Selfie;
-                        else if (faceInt == (int)LensFacing.Back)
-                            actualFacing = CameraPosition.Default;
-                    }
-
                     var unit = new CameraUnit
                     {
                         Id = cameraId,
-                        Facing = actualFacing,
+                        Facing = FormsControl.Facing,
                         MinFocalDistance =
                             (float)characteristics.Get(CameraCharacteristics.LensInfoMinimumFocusDistance),
                         //LensDistortion = (???)characteristics.Get(CameraCharacteristics.LensDistortion),
@@ -996,19 +1145,10 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
                     int maxPreviewWidth, maxPreviewHeight;
 
-                    if (rotated)
-                    {
-                        // Landscape sensor: allow wider preview sizes to match camera native format
-                        // Use 1.78 ratio (16:9) with max height of 1024 -> width can be up to 1820
-                        maxPreviewWidth = MaxPreviewHeight * 2; // Allow up to 2:1 aspect ratio
-                        maxPreviewHeight = MaxPreviewWidth;     // Height limited to 1024
-                    }
-                    else
-                    {
-                        // Portrait sensor: use standard limits
+ 
                         maxPreviewWidth = MaxPreviewWidth;
                         maxPreviewHeight = MaxPreviewHeight;
-                    }
+ 
 
                     #region STILL PHOTO
 
@@ -1369,6 +1509,9 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 State = CameraProcessorState.Enabled;
                 Debug.WriteLine($"[CAMERA] {CameraId} Started");
 
+                // Start async frame processing thread (iOS-style)
+                StartFrameProcessingThread();
+
                 return true;
             }
             catch (Exception e)
@@ -1420,6 +1563,9 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             mStateCallback = null;
             mCaptureCallback = null;
+
+            // Stop async frame processing thread before closing ImageReader
+            StopFrameProcessingThread();
 
             if (null != mImageReaderPreview)
             {
@@ -2136,7 +2282,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             var outImage = new CapturedImage()
             {
-                Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
+                Facing = FormsControl.Facing,
                 Time = DateTime.UtcNow,
                 Image = allocated.Bitmap.ToSKImage(),
                 Meta = meta,
@@ -2786,7 +2932,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 FilePath = _currentVideoFile,
                 Duration = duration,
                 Format = GetCurrentVideoFormat(),
-                Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
+                Facing = FormsControl.Facing,
                 Time = _recordingStartTime,
                 FileSizeBytes = fileSizeBytes,
                 Metadata = new Dictionary<string, object>
@@ -3016,22 +3162,28 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         try
         {
-            // Convert image to byte array for buffering
-            byte[] frameData = ExtractImageData(image);
+            // Convert image to byte array for buffering (uses ArrayPool)
+            var (frameData, dataLength) = ExtractImageData(image);
             if (frameData == null)
                 return;
 
             lock (_preRecordingLock)
             {
                 if (_preRecordingBuffer == null)
+                {
+                    // Return buffer to pool since we can't use it
+                    ArrayPool<byte>.Shared.Return(frameData);
                     return;
+                }
 
                 var frame = new EncodedFrame
                 {
                     Data = frameData,
+                    DataLength = dataLength,
                     TimestampNs = timestampNs,
                     Width = image.Width,
-                    Height = image.Height
+                    Height = image.Height,
+                    IsRentedFromPool = true
                 };
 
                 _preRecordingBuffer.Enqueue(frame);
@@ -3050,9 +3202,10 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     }
 
     /// <summary>
-    /// Extract image data from an Android Image object
+    /// Extract image data from an Android Image object using ArrayPool to reduce GC pressure
     /// </summary>
-    private byte[] ExtractImageData(Image image)
+    /// <returns>Tuple of (buffer from ArrayPool, actual data length)</returns>
+    private (byte[] buffer, int length) ExtractImageData(Image image)
     {
         try
         {
@@ -3065,7 +3218,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 bufferSize += planes[i].Buffer.Remaining();
             }
 
-            byte[] nv21 = new byte[bufferSize];
+            // Rent buffer from pool instead of allocating new array
+            byte[] nv21 = ArrayPool<byte>.Shared.Rent(bufferSize);
             int offset = 0;
 
             for (int i = 0; i < planes.Length; i++)
@@ -3083,12 +3237,12 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 }
             }
 
-            return nv21;
+            return (nv21, offset);  // Return buffer and actual data length
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"[Android PreRecording] Error extracting image data: {ex.Message}");
-            return null;
+            return (null, 0);
         }
     }
 

@@ -601,7 +601,7 @@ public partial class SkiaCamera
         }
     }
 
-    private async Task AbortCaptureVideoFlow()
+    private async Task AbortCaptureVideoFlow() //OK
     {
         ICaptureVideoEncoder encoder = null;
 
@@ -635,7 +635,7 @@ public partial class SkiaCamera
             {
                 camForGpuCleanup.StopGpuCameraSession();
             }
- 
+
 
             // Get local reference to encoder before clearing field to prevent disposal race
             encoder = _captureVideoEncoder;
@@ -675,7 +675,7 @@ public partial class SkiaCamera
         }
     }
 
-    private async Task StartCaptureVideoFlow()
+    private async Task StartCaptureVideoFlow() //OK
     {
         // Create Android encoder (GPU path via MediaCodec Surface + EGL + Skia GL)
         _captureVideoEncoder = new AndroidCaptureVideoEncoder();
@@ -724,50 +724,28 @@ public partial class SkiaCamera
 
         // Use camera-reported format if available; else fall back to preview size or 1280x720
         var currentFormat = NativeControl?.GetCurrentVideoFormat();
-        var width =
+        var rawWidth =
             currentFormat?.Width > 0 ? currentFormat.Width : (int)(PreviewSize.Width > 0 ? PreviewSize.Width : 1280);
-        var height =
+        var rawHeight =
             currentFormat?.Height > 0 ? currentFormat.Height : (int)(PreviewSize.Height > 0 ? PreviewSize.Height : 720);
         var fps = currentFormat?.FrameRate > 0 ? currentFormat.FrameRate : 30;
 
-        // IMPORTANT: Align encoder orientation with the live preview to avoid instant crop/"zoom" when recording starts.
-        // If preview is portrait (h > w) but the selected video format is landscape (w >= h),
-        // swap encoder dimensions so we record a vertical video instead of cropping it to fit a horizontal surface.
-        int prevW = 0, prevH = 0;
-        int encWBefore = width, encHBefore = height;
-        int sensor = -1;
-        bool previewRotated = false;
-        try
-        {
-            if (NativeControl is NativeCamera cam)
-            {
-                prevW = cam.PreviewWidth;
-                prevH = cam.PreviewHeight;
-                sensor = cam.SensorOrientation;
-                previewRotated = (sensor == 90 || sensor == 270);
+        // Apply rotation correction to align encoder with preview orientation
+        var (width, height) = GetRotationCorrectedDimensions(rawWidth, rawHeight);
 
-                // If preview is rotated (portrait logical orientation), make encoder portrait too
-                if (previewRotated && width >= height)
-                {
-                    var tmp = width;
-                    width = height;
-                    height = tmp;
-                }
-                // If preview is not rotated but encoder is portrait, make encoder landscape to match
-                else if (!previewRotated && height > width)
-                {
-                    var tmp = width;
-                    width = height;
-                    height = tmp;
-                }
-            }
-        }
-        catch
+        // Diagnostic info
+        int prevW = 0, prevH = 0, sensor = -1;
+        bool previewRotated = false;
+        if (NativeControl is NativeCamera cam)
         {
+            prevW = cam.PreviewWidth;
+            prevH = cam.PreviewHeight;
+            sensor = cam.SensorOrientation;
+            previewRotated = (sensor == 90 || sensor == 270);
         }
 
         System.Diagnostics.Debug.WriteLine(
-            $"[CAPTURE-ENCODER] preview={prevW}x{prevH} rotated={previewRotated} sensor={sensor} currentFormat={(currentFormat?.Width ?? 0)}x{(currentFormat?.Height ?? 0)}@{fps} encoderBefore={encWBefore}x{encHBefore} encoderFinal={width}x{height} UseRecordingFramesForPreview={UseRecordingFramesForPreview}");
+            $"[CAPTURE-ENCODER] preview={prevW}x{prevH} rotated={previewRotated} sensor={sensor} currentFormat={(currentFormat?.Width ?? 0)}x{(currentFormat?.Height ?? 0)}@{fps} encoderBefore={rawWidth}x{rawHeight} encoderFinal={width}x{height} UseRecordingFramesForPreview={UseRecordingFramesForPreview}");
         _diagEncWidth = width;
         _diagEncHeight = height;
         _diagBitrate = Math.Max((long)width * height * 4, 2_000_000L);
@@ -783,10 +761,12 @@ public partial class SkiaCamera
             if (GpuCameraFrameProvider.IsSupported())
             {
                 bool isFrontCamera = Facing == CameraPosition.Selfie;
-                useGpuCameraPath = androidEncoder.InitializeGpuCameraPath(isFrontCamera);
+                // Pass raw camera dimensions for SurfaceTexture - camera outputs frames in native orientation
+                // Transform matrix from SurfaceTexture handles rotation to match encoder dimensions
+                useGpuCameraPath = androidEncoder.InitializeGpuCameraPath(isFrontCamera, rawWidth, rawHeight);
                 if (useGpuCameraPath)
                 {
-                    Debug.WriteLine($"[StartCaptureVideoFlow] GPU camera path ENABLED");
+                    Debug.WriteLine($"[StartCaptureVideoFlow] GPU camera path ENABLED (camera={rawWidth}x{rawHeight})");
                 }
                 else
                 {
@@ -853,60 +833,41 @@ public partial class SkiaCamera
                     // Set up SurfaceTexture frame callback
                     // CRITICAL: OnFrameAvailable fires on arbitrary Android thread, NOT EGL context thread!
                     // We must NOT call UpdateTexImage here - only signal and let encoder thread process.
-                    gpuEncoder.GpuFrameProvider.Renderer.OnFrameAvailable += async (sender, surfaceTexture) =>
+                    // ASYNC DECOUPLING: This callback just signals, returns immediately to camera.
+                    // Heavy processing happens on dedicated GpuEncodingThread.
+                    gpuEncoder.GpuFrameProvider.Renderer.OnFrameAvailable += (sender, surfaceTexture) =>
                     {
-                        try
+                        // Track camera input FPS (count every frame camera delivers)
+                        CalculateCameraInputFps();
+
+                        if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
                         {
-                            // Track camera input FPS (count every frame camera delivers)
-                            CalculateCameraInputFps();
-
-                            if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
-                            {
-                                return;
-                            }
-
-                            // Ensure single-frame processing (prevent overlap)
-                            if (System.Threading.Interlocked.CompareExchange(ref _androidFrameGate, 1, 0) != 0)
-                            {
-                                System.Threading.Interlocked.Increment(ref _diagDroppedFrames);
-                                return;
-                            }
-
-                            try
-                            {
-                                // Use wall clock time from recording start
-                                var elapsedLocal = DateTime.Now - _captureVideoStartTime;
-                                if (elapsedLocal.Ticks < 0)
-                                    elapsedLocal = TimeSpan.Zero;
-
-                                var __sw = System.Diagnostics.Stopwatch.StartNew();
-
-                                // Process frame via GPU zero-copy path
-                                await droidEnc.ProcessGpuCameraFrameAsync(
-                                    elapsedLocal,
-                                    FrameProcessor,
-                                    VideoDiagnosticsOn,
-                                    DrawDiagnostics
-                                );
-
-                                __sw.Stop();
-                                _diagLastSubmitMs = __sw.Elapsed.TotalMilliseconds;
-                                System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
-                                CalculateRecordingFps();
-                            }
-                            catch (Exception ex)
-                            {
-                                System.Diagnostics.Debug.WriteLine($"[GPU-FRAME] Error: {ex.Message}");
-                            }
-                            finally
-                            {
-                                System.Threading.Volatile.Write(ref _androidFrameGate, 0);
-                            }
+                            return;
                         }
-                        catch (Exception outerEx)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"[GPU-FRAME] Outer error: {outerEx.Message}");
-                        }
+
+                        // Calculate timestamp
+                        var elapsedLocal = DateTime.Now - _captureVideoStartTime;
+                        if (elapsedLocal.Ticks < 0)
+                            elapsedLocal = TimeSpan.Zero;
+
+                        // JUST SIGNAL - no await, no heavy work, no frame gate needed
+                        // Background thread handles serialization via single-slot pattern
+                        droidEnc.SignalGpuFrame(
+                            elapsedLocal,
+                            FrameProcessor,
+                            VideoDiagnosticsOn,
+                            DrawDiagnostics
+                        );
+
+                        // EXIT IMMEDIATELY - camera callback complete in microseconds
+                    };
+
+                    // Subscribe to GPU frame processed event for FPS tracking
+                    // This fires on the background encoding thread after each frame is successfully processed
+                    gpuEncoder.OnGpuFrameProcessed += () =>
+                    {
+                        System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                        CalculateRecordingFps();
                     };
 
                     Debug.WriteLine($"[StartCaptureVideoFlow] GPU camera session created");
@@ -1036,7 +997,7 @@ public partial class SkiaCamera
         {
             MainThread.BeginInvokeOnMainThread(() => OnVideoRecordingProgress(duration));
         };
- 
+
     }
 
     /// <summary>
@@ -1050,7 +1011,7 @@ public partial class SkiaCamera
     /// - Otherwise: Start normal file recording
     /// </summary>
     /// <returns>Async task</returns>
-    public async Task StartVideoRecording()
+    public async Task StartVideoRecording() //OK
     {
         if (IsBusy)
             return;

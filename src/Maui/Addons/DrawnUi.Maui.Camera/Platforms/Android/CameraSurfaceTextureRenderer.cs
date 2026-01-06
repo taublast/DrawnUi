@@ -149,12 +149,6 @@ namespace DrawnUi.Camera
                 _surfaceTexture.GetTransformMatrix(_transformMatrix);
 
                 _updateCount++;
-                bool changed = afterTs != _lastTimestamp;
-                // Only log first few frames and then every 100th, or if frame didn't change (problem indicator)
-                if (_updateCount <= 3 || (!changed && _updateCount < 10))
-                {
-                    System.Diagnostics.Debug.WriteLine($"[SurfaceTexture] UpdateTexImage #{_updateCount}: changed={changed}");
-                }
                 _lastTimestamp = afterTs;
             }
             catch (Exception ex)
