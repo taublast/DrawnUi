@@ -36,6 +36,7 @@ public partial class SkiaCamera : SkiaControl
 
 
 
+
     #region VIDEO RECORDING PROPERTIES
 
     public static readonly BindableProperty IsRecordingVideoProperty = BindableProperty.Create(
@@ -1025,6 +1026,11 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
+    void ClearInternalCache()
+    {
+        _currentVideoFormat = null;
+    }
+
     /// <summary>
     /// Debounces rapid restart requests using a settling period.
     /// Waits for property changes to settle before restarting the camera.
@@ -1038,7 +1044,9 @@ public partial class SkiaCamera : SkiaControl
     private void ScheduleRestartDebounced()
     {
         // Cancel any pending restart (resets the 500ms settling period)
+        ClearInternalCache();
         _restartDebounceTimer?.Dispose();
+
 
         // Schedule restart after 500ms of no property changes
         // If another property change happens before this fires, it will cancel and reschedule again
@@ -1274,6 +1282,8 @@ public partial class SkiaCamera : SkiaControl
         }
 
         lockStartup = true;
+
+        ClearInternalCache();
 
         try
         {
@@ -1910,16 +1920,22 @@ public partial class SkiaCamera : SkiaControl
 #if ONPLATFORM
             try
             {
-                return NativeControl?.GetCurrentVideoFormat();
+                if (_currentVideoFormat == null)
+                {
+                    _currentVideoFormat = NativeControl?.GetCurrentVideoFormat();
+                }
+                return _currentVideoFormat;
             }
             catch (Exception ex)
             {
-                Trace.WriteLine($"[SkiaCamera] Error getting current video format: {ex.Message}");
+                Super.Log($"[SkiaCamera] Error getting current video format: {ex.Message}");
             }
 #endif
             return null;
         }
     }
+
+    private VideoFormat? _currentVideoFormat;
 
     /// <summary>
     /// Internal method to get available cameras with caching

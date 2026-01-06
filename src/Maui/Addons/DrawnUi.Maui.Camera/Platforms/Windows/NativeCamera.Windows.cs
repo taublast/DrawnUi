@@ -1828,7 +1828,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 var fps = (int)(profile.Video.FrameRate.Numerator / Math.Max(1, profile.Video.FrameRate.Denominator));
                 var bitrate = (int)profile.Video.Bitrate;
 
-                Debug.WriteLine($"[NativeCameraWindows] GetCurrentVideoFormat: Extracted from encoding profile -> {w}x{h}@{fps}fps, {bitrate / 1_000_000}Mbps");
+                //Debug.WriteLine($"[NativeCameraWindows] GetCurrentVideoFormat: Extracted from encoding profile -> {w}x{h}@{fps}fps, {bitrate / 1_000_000}Mbps");
 
                 return new VideoFormat
                 {
@@ -1997,11 +1997,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         if (!FormsControl.RecordAudio)
         {
             profile.Audio = null;
-            Debug.WriteLine("[NativeCamera.Windows] Audio disabled for video recording");
-        }
-        else
-        {
-            Debug.WriteLine("[NativeCamera.Windows] Audio enabled for video recording");
+            //Debug.WriteLine("[NativeCamera.Windows] Audio disabled for video recording");
         }
 
         return profile;

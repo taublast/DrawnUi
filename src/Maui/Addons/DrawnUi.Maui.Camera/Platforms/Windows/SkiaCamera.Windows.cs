@@ -702,7 +702,6 @@ public partial class SkiaCamera : SkiaControl
 
     private async Task StartCaptureVideoFlow()
     {
- 
         // Create platform-specific encoder with existing GRContext (GPU path)
         var grContext = (Superview?.CanvasView as SkiaViewAccelerated)?.GRContext;
         _captureVideoEncoder = new WindowsCaptureVideoEncoder(grContext);
