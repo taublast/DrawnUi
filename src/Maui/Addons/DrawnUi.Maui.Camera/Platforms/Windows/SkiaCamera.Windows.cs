@@ -703,7 +703,11 @@ public partial class SkiaCamera : SkiaControl
     private async Task StartCaptureVideoFlow()
     {
         // Create platform-specific encoder with existing GRContext (GPU path)
-        var grContext = (Superview?.CanvasView as SkiaViewAccelerated)?.GRContext;
+        // BUGFIX: Passing GRContext from the UI thread causes freeze/deadlock during window resize because the context 
+        // is destroyed/recreated while the background encoder task is trying to use it. 
+        // Also, since we do CPU readback anyway (ReadPixels), using a GPU surface here is actually slower (upload + readback).
+        // By passing null, we force a CPU-backed surface which is thread-safe and faster for this specific pipeline.
+        GRContext grContext = null; // (Superview?.CanvasView as SkiaViewAccelerated)?.GRContext;
         _captureVideoEncoder = new WindowsCaptureVideoEncoder(grContext);
 
         // Set parent reference and pre-recording mode
