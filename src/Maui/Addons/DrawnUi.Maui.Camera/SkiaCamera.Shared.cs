@@ -1969,6 +1969,8 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
+ 
+
     private VideoFormat? _currentVideoFormat;
 
     /// <summary>
@@ -1977,7 +1979,7 @@ public partial class SkiaCamera : SkiaControl
     /// <returns>List of device names</returns>
     public virtual async Task<List<string>> GetAvailableAudioDevicesAsync()
     {
-#if WINDOWS//todo ONPLATFORM
+#if WINDOWS || ANDROID//todo ONPLATFORM
         return await GetAvailableAudioDevicesPlatform(); 
 #endif
         return new List<string>();
@@ -1989,7 +1991,7 @@ public partial class SkiaCamera : SkiaControl
     /// <returns></returns>
     public virtual async Task<List<string>> GetAvailableAudioCodecsAsync()
     {
-#if WINDOWS//todo ONPLATFORM
+#if WINDOWS || ANDROID//todo ONPLATFORM
         return await GetAvailableAudioCodecsPlatform();
 #endif
         return new List<string>();
@@ -2056,6 +2058,7 @@ public partial class SkiaCamera : SkiaControl
 
             _preRecordingFilePath = null;
             _maxPreRecordingFrames = 0;
+            _audioBuffer = null;
         }
     }
 

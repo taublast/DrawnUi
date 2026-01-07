@@ -2473,8 +2473,18 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         var moviesDir = activity.GetExternalFilesDir(Android.OS.Environment.DirectoryMovies);
         _currentVideoFile = System.IO.Path.Combine(moviesDir.AbsolutePath, fileName);
 
+        bool includeAudio = FormsControl?.RecordAudio == true;
+        if (includeAudio)
+        {
+            includeAudio = await FormsControl.EnsureMicrophonePermissionAsync();
+            if (!includeAudio)
+            {
+                Debug.WriteLine("[NativeCameraAndroid] Microphone permission denied; recording silent video instead.");
+            }
+        }
+
         // Configure MediaRecorder
-        if (FormsControl.RecordAudio)
+        if (includeAudio)
         {
             _mediaRecorder.SetAudioSource(AudioSource.Mic);
         }
@@ -2483,10 +2493,15 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         // Set output format and encoding
         var profile = GetVideoProfile();
         _mediaRecorder.SetOutputFormat(profile.FileFormat);
-        if (FormsControl.RecordAudio)
+        if (includeAudio)
         {
             _mediaRecorder.SetAudioEncoder(profile.AudioCodec);
-            _mediaRecorder.SetAudioEncodingBitRate(profile.AudioBitRate);
+            if (profile.AudioBitRate > 0)
+                _mediaRecorder.SetAudioEncodingBitRate(profile.AudioBitRate);
+            if (profile.AudioSampleRate > 0)
+                _mediaRecorder.SetAudioSamplingRate(profile.AudioSampleRate);
+            if (profile.AudioChannels > 0)
+                _mediaRecorder.SetAudioChannels(profile.AudioChannels);
         }
         _mediaRecorder.SetVideoEncoder(profile.VideoCodec);
         _mediaRecorder.SetVideoSize(profile.VideoFrameWidth, profile.VideoFrameHeight);

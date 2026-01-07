@@ -39,6 +39,7 @@ namespace DrawnUi.Camera
                 // Audio frames are short (~23ms), strict cut is fine for now.
                 
                 var result = _samples.Where(s => s.TimestampNs >= cutPointNs).ToArray();
+                _samples.Clear();
                 return result;
             }
         }

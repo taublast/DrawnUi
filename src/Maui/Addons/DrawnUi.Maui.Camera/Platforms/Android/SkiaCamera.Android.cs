@@ -285,6 +285,29 @@ public partial class SkiaCamera
         return writeStatus == PermissionStatus.Granted;
     }
 
+    internal async Task<bool> EnsureMicrophonePermissionAsync()
+    {
+        try
+        {
+            var status = await Permissions.CheckStatusAsync<Permissions.Microphone>();
+            if (status != PermissionStatus.Granted)
+            {
+                status = await Permissions.RequestAsync<Permissions.Microphone>();
+            }
+
+            if (status == PermissionStatus.Granted)
+                return true;
+
+            Debug.WriteLine("[SkiaCameraAndroid] Microphone permission denied; recording will be silent.");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCameraAndroid] Error requesting microphone permission: {ex.Message}");
+        }
+
+        return false;
+    }
+
     /// <summary>
     /// Mux pre-recorded and live video files using MediaMuxer
     /// CRITICAL FIX: Must add ALL tracks from BOTH files BEFORE calling muxer.Start()
@@ -510,6 +533,14 @@ public partial class SkiaCamera
         }
     }
 
+    private void OnAudioSampleAvailable(object sender, AudioSample e)
+    {
+        if (_captureVideoEncoder is AndroidCaptureVideoEncoder droidEnc)
+        {
+             droidEnc.WriteAudioSample(e);
+        }
+    }
+
     private async Task StopCaptureVideoFlow()
     {
 
@@ -523,6 +554,27 @@ public partial class SkiaCamera
 
         try
         {
+             if (_audioCapture != null)
+            {
+                try
+                {
+                    await _audioCapture.StopAsync();
+                    _audioCapture.SampleAvailable -= OnAudioSampleAvailable;
+                    if (_audioCapture is IDisposable disposableAudio)
+                    {
+                        disposableAudio.Dispose();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
+                }
+                finally
+                {
+                    _audioCapture = null;
+                }
+            }
+
             // CRITICAL: Stop frame capture timer FIRST before clearing encoder reference
             // This prevents race conditions where CaptureFrame is still executing
             _frameCaptureTimer?.Dispose();
@@ -607,6 +659,27 @@ public partial class SkiaCamera
 
         try
         {
+             if (_audioCapture != null)
+            {
+                try
+                {
+                    await _audioCapture.StopAsync();
+                    _audioCapture.SampleAvailable -= OnAudioSampleAvailable;
+                    if (_audioCapture is IDisposable disposableAudio)
+                    {
+                        disposableAudio.Dispose();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
+                }
+                finally
+                {
+                    _audioCapture = null;
+                }
+            }
+
             // CRITICAL: Stop frame capture timer FIRST before clearing encoder reference
             // This prevents race conditions where CaptureFrame is still executing
             _frameCaptureTimer?.Dispose();
@@ -752,10 +825,20 @@ public partial class SkiaCamera
         SetSourceFrameDimensions(width, height);
 
         // Pass locked rotation to encoder for proper video orientation metadata (Android-specific)
+        var audioEnabled = RecordAudio;
+        if (audioEnabled)
+        {
+            audioEnabled = await EnsureMicrophonePermissionAsync();
+            if (!audioEnabled)
+            {
+                Debug.WriteLine("[StartCaptureVideoFlow] Microphone permission denied; recording will continue without audio.");
+            }
+        }
+
         bool useGpuCameraPath = false;
         if (_captureVideoEncoder is DrawnUi.Camera.AndroidCaptureVideoEncoder androidEncoder)
         {
-            await androidEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio, RecordingLockedRotation);
+            await androidEncoder.InitializeAsync(outputPath, width, height, fps, audioEnabled, RecordingLockedRotation);
 
             // Try to initialize GPU camera path for zero-copy frame capture
             if (GpuCameraFrameProvider.IsSupported())
@@ -780,7 +863,52 @@ public partial class SkiaCamera
         }
         else
         {
-            await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+            await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, audioEnabled);
+        }
+
+        if (audioEnabled)
+        {
+            try
+            {
+                // Create audio capture if not exists
+                if (_audioCapture == null)
+                {
+                    _audioCapture = CreateAudioCapturePlatform();
+                    _audioCapture.SampleAvailable += OnAudioSampleAvailable;
+                }
+
+                if (IsPreRecording)
+                {
+                    _audioBuffer = new CircularAudioBuffer(PreRecordDuration);
+                    if (_captureVideoEncoder is AndroidCaptureVideoEncoder enc)
+                    {
+                        enc.SetAudioBuffer(_audioBuffer);
+                    }
+                }
+                else
+                {
+                    _audioBuffer = null;
+                    if (_captureVideoEncoder is AndroidCaptureVideoEncoder enc)
+                    {
+                        enc.SetAudioBuffer(null);
+                    }
+                }
+
+                await _audioCapture.StartAsync();
+                Debug.WriteLine("[StartCaptureVideoFlow] Audio capture started");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[StartCaptureVideoFlow] Failed to start audio: {ex.Message}");
+            }
+        }
+        else
+        {
+            _audioBuffer = null;
+            if (_captureVideoEncoder is AndroidCaptureVideoEncoder enc)
+            {
+                enc.SetAudioBuffer(null);
+            }
         }
 
         // CRITICAL: In pre-recording mode, do NOT call StartAsync during initialization
@@ -1112,5 +1240,63 @@ public partial class SkiaCamera
         }
 
         IsBusy = false;
+    }
+
+    protected IAudioCapture CreateAudioCapturePlatform()
+    {
+        return new AudioCaptureAndroid();
+    }
+
+    protected async Task<List<string>> GetAvailableAudioDevicesPlatform()
+    {
+        var devices = new List<string>();
+        // Android creates AudioRecord with AudioSource.Mic usually. 
+        // Enumerating devices requires API 23+ (Marshmallow).
+        if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.M)
+        {
+             var audioManager = (AudioManager)Android.App.Application.Context.GetSystemService(Context.AudioService);
+             var inputs = audioManager.GetDevices(GetDevicesTargets.Inputs);
+             foreach(var device in inputs)
+             {
+                 devices.Add($"{device.ProductName} ({device.Type})");
+             }
+        }
+        else
+        {
+            devices.Add("Default Microphone");
+        }
+        return devices;
+    }
+
+    protected async Task<List<string>> GetAvailableAudioCodecsPlatform()
+    {
+        return await Task.Run(() => 
+        {
+            var codecs = new List<string>();
+            try
+            {
+                // Using MediaCodecList to find encoders
+                var list = new MediaCodecList(MediaCodecListKind.RegularCodecs);
+                var formats = list.GetCodecInfos();
+                foreach(var info in formats)
+                {
+                    if (info.IsEncoder) 
+                    {
+                         foreach(var type in info.GetSupportedTypes())
+                         {
+                             if (type.StartsWith("audio/"))
+                             {
+                                 codecs.Add($"{info.Name} ({type})");
+                             }
+                         }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[SkiaCameraAndroid] Error listing codecs: {ex}");
+            }
+            return codecs.Distinct().ToList();
+        });
     }
 }
