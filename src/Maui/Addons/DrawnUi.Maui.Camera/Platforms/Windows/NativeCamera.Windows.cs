@@ -2684,7 +2684,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             if (!_debugAudioFormatsLogged)
             {
                 _debugAudioFormatsLogged = true;
-                LogSupportedMediaProperties();
+                //LogSupportedMediaProperties();
             }
 
             if (_audioFrameSource?.CurrentFormat?.AudioEncodingProperties != null)
@@ -2711,6 +2711,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
              Debug.WriteLine("---- MediaCapture Supported Properties ----");
 
              // 1. Video
+             /*
              if (_mediaCapture?.VideoDeviceController != null)
              {
                 try 
@@ -2731,7 +2732,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                     Debug.WriteLine($"[LogSupportedMediaProperties] Video List Error: {ex.Message}");
                 }
              }
-
+             */
              // 2. Audio
              if (_mediaCapture?.AudioDeviceController != null) 
              {
@@ -2777,6 +2778,33 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             catch {}
             
             return Channels > 0 ? Channels: 1;
+        }
+    }
+
+    /// <summary>
+    /// Returns true if the audio device outputs IEEE Float format (instead of PCM).
+    /// </summary>
+    public bool ActualAudioIsFloat
+    {
+        get
+        {
+            if (_audioFrameSource?.CurrentFormat?.AudioEncodingProperties != null)
+            {
+                var subtype = _audioFrameSource.CurrentFormat.AudioEncodingProperties.Subtype;
+                return string.Equals(subtype, "Float", StringComparison.OrdinalIgnoreCase);
+            }
+
+            try
+            {
+                var props = _mediaCapture?.AudioDeviceController?.GetMediaStreamProperties(MediaStreamType.Audio) as AudioEncodingProperties;
+                if (props != null)
+                {
+                    return string.Equals(props.Subtype, "Float", StringComparison.OrdinalIgnoreCase);
+                }
+            }
+            catch { }
+
+            return false; // Default to PCM
         }
     }
 

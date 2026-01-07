@@ -378,6 +378,118 @@ public Task<List<string>> GetAvailableAudioCodecsAsync();
 *   **Android:** Use `MediaCodecList` to find encoders supporting audio types (AAC, AMR, FLAC in container).
 *   **iOS:** AVAssetWriter supported file types (usually tied to container, but can specify `AudioSettings`).
 
+### 2.8 Thread Safety & Semaphore Decoupling
+
+**Critical Design Principle:** Audio and video writes MUST use separate synchronization primitives to prevent one stream from blocking the other. This is essential for maintaining consistent frame rates.
+
+**Problem Without Decoupling:**
+```
+Video frame ready (t=0ms)  → Acquire shared lock → Write video → Release (took 5ms)
+Audio sample ready (t=2ms) → Wait for lock...
+Video frame ready (t=33ms) → Wait for lock... ← FPS DROP!
+Audio finishes (t=8ms)     → Release lock
+```
+
+When audio and video share a single semaphore/lock:
+- Audio writes can block video writes, causing frame drops
+- Video writes can block audio writes, causing audio buffer overflow
+- Lock contention increases CPU overhead
+
+**Solution: Separate Semaphores**
+
+Each encoder should maintain independent synchronization for audio and video streams:
+
+```csharp
+// In video encoder base pattern
+private readonly SemaphoreSlim _videoSemaphore = new(1, 1);
+private readonly SemaphoreSlim _audioSemaphore = new(1, 1);
+
+// Video write path
+public async Task WriteVideoFrameAsync(...)
+{
+    await _videoSemaphore.WaitAsync();
+    try
+    {
+        // Write video data to muxer/encoder
+    }
+    finally
+    {
+        _videoSemaphore.Release();
+    }
+}
+
+// Audio write path - INDEPENDENT of video
+public async Task WriteAudioSampleAsync(...)
+{
+    await _audioSemaphore.WaitAsync();
+    try
+    {
+        // Write audio data to muxer/encoder
+    }
+    finally
+    {
+        _audioSemaphore.Release();
+    }
+}
+```
+
+**Platform-Specific Implementation Notes:**
+
+| Platform | Video Sync | Audio Sync | Notes |
+|----------|-----------|------------|-------|
+| **Windows** | `_sinkWriterSemaphore` | `_audioSemaphore` | IMFSinkWriter is thread-safe for writes to different streams |
+| **Android** | `_videoLock` | `_audioLock` | MediaMuxer.writeSampleData() requires external sync per track |
+| **iOS** | `_writerLock` | `_audioWriterLock` | AVAssetWriterInput.append() should use separate queues |
+
+**Windows Implementation (Reference):**
+```csharp
+// WindowsCaptureVideoEncoder.cs
+private readonly SemaphoreSlim _sinkWriterSemaphore = new(1, 1);
+private readonly SemaphoreSlim _audioSemaphore = new(1, 1);
+
+// Video: EndFrame() uses _sinkWriterSemaphore
+// Audio: AddAudioSamplesAsync() uses _audioSemaphore
+```
+
+**Android Implementation Pattern:**
+```csharp
+// AndroidCaptureVideoEncoder.cs
+private readonly object _videoMuxerLock = new();
+private readonly object _audioMuxerLock = new();
+
+// Or use SemaphoreSlim for async pattern:
+private readonly SemaphoreSlim _videoSemaphore = new(1, 1);
+private readonly SemaphoreSlim _audioSemaphore = new(1, 1);
+```
+
+**iOS Implementation Pattern:**
+```csharp
+// AppleVideoToolboxEncoder.cs
+// Use dedicated dispatch queues (preferred on Apple platforms):
+private DispatchQueue _videoWriteQueue = new DispatchQueue("VideoWriteQueue");
+private DispatchQueue _audioWriteQueue = new DispatchQueue("AudioWriteQueue");
+
+// Or semaphores if using C# threading:
+private readonly SemaphoreSlim _videoSemaphore = new(1, 1);
+private readonly SemaphoreSlim _audioSemaphore = new(1, 1);
+```
+
+**Cleanup:** Always dispose both semaphores in the encoder's `Dispose()` method:
+```csharp
+public void Dispose()
+{
+    _videoSemaphore?.Dispose();
+    _audioSemaphore?.Dispose();
+    // ... other cleanup
+}
+```
+
+**Muxer Thread Safety:**
+Most muxers (MediaMuxer, AVAssetWriter, IMFSinkWriter) are thread-safe for concurrent writes to *different* tracks, but NOT for concurrent writes to the *same* track. The separate semaphores ensure:
+1. Only one video frame writes at a time
+2. Only one audio sample writes at a time
+3. Video and audio can write concurrently to their respective tracks
+
 ---
 
 ## 3. Interface Updates

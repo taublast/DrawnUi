@@ -819,7 +819,8 @@ public partial class SkiaCamera : SkiaControl
              {
                  winEncoder.SetAudioParameters(
                      windowsCamera.ActualAudioSampleRate,
-                     windowsCamera.ActualAudioChannels
+                     windowsCamera.ActualAudioChannels,
+                     windowsCamera.ActualAudioIsFloat
                  );
 
                  // Apply codec selection if set
@@ -838,14 +839,20 @@ public partial class SkiaCamera : SkiaControl
 
         await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
 
-        // Setup Audio if enabled
-        if (RecordAudio && NativeControl is IAudioCapture audioCapture)
+        // Setup Audio ONLY if encoding was successfully initialized
+        // This prevents audio capture from running when encoder failed to configure audio
+        bool audioEncodingEnabled = (_captureVideoEncoder is WindowsCaptureVideoEncoder winEnc) && winEnc.IsAudioEncodingEnabled;
+
+        if (RecordAudio && audioEncodingEnabled && NativeControl is IAudioCapture audioCapture)
         {
             _audioCapture = audioCapture;
             _audioCapture.SampleAvailable += OnAudioSampleAvailable;
-            // Assuming default 44100/1 channel/16-bit for now as per encoder config
-            bool audioStarted = await _audioCapture.StartAsync(); 
+            bool audioStarted = await _audioCapture.StartAsync();
             Debug.WriteLine($"[StartCaptureVideoFlow] Audio capture started: {audioStarted}");
+        }
+        else if (RecordAudio && !audioEncodingEnabled)
+        {
+            Debug.WriteLine($"[StartCaptureVideoFlow] Audio encoding failed to initialize - skipping audio capture to avoid performance impact");
         }
 
         // CRITICAL: In pre-recording mode, do NOT call StartAsync during initialization
