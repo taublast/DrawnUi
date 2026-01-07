@@ -48,6 +48,18 @@ namespace DrawnUi.Camera
 
         // Skia composition surface
         private SKSurface _surface;
+        
+        public bool SupportsAudio => true;
+        
+        public void SetAudioBuffer(CircularAudioBuffer buffer)
+        {
+            // TODO: Wiring for circular audio buffer on iOS
+        }
+
+        public void WriteAudioSample(AudioSample sample)
+        {
+            // TODO: Wiring for writing audio sample on iOS
+        }
         private SKImageInfo _info;
         private readonly object _frameLock = new();
         private TimeSpan _pendingTimestamp;

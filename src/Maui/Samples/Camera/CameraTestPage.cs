@@ -13,6 +13,8 @@ public class CameraTestPage : BasePageReloadable, IDisposable
     private SkiaLabel _statusLabel;
     private SkiaButton _videoRecordButton;
     private SkiaButton _cameraSelectButton;
+    private SkiaButton _audioSelectButton;
+    private SkiaButton _audioCodecButton;
     private SkiaLayer _previewOverlay;
     private SkiaImage _previewImage;
     private SkiaButton _preRecordingToggleButton;
@@ -252,6 +254,36 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     }
                                     .Assign(out _cameraSelectButton)
                                     .OnTapped(async me => { await SelectCamera(); }),
+
+                                // Audio selection button
+                                new SkiaButton("🎤 Audio: Default")
+                                    {
+                                        BackgroundColor = Colors.DarkGoldenrod,
+                                        TextColor = Colors.White,
+                                        CornerRadius = 8,
+                                        UseCache = SkiaCacheType.Image
+                                    }
+                                    .Assign(out _audioSelectButton)
+                                    .OnTapped(async me => { await SelectAudioSource(); })
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                    {
+                                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                                    }),
+
+                                // Audio Codec selection button
+                                new SkiaButton("🎵 Codec: Default")
+                                    {
+                                        BackgroundColor = Colors.DarkSlateGray,
+                                        TextColor = Colors.White,
+                                        CornerRadius = 8,
+                                        UseCache = SkiaCacheType.Image
+                                    }
+                                    .Assign(out _audioCodecButton)
+                                    .OnTapped(async me => { await SelectAudioCodec(); })
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                    {
+                                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                                    }),
 
                                 // Take Picture button (only visible in Still mode)
                                 new SkiaButton("Take Picture")
@@ -514,9 +546,9 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         };
 
         // Configure camera for capture video flow testing
-        CameraControl.RecordAudio = false; // Test with audio recording
         CameraControl.UseCaptureVideoFlow = true; // Enable capture video flow
         CameraControl.VideoQuality = VideoQuality.High;
+        CameraControl.RecordAudio = true;
 
         CameraControl.FrameProcessor = (frame) =>
         {
@@ -998,6 +1030,143 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                 ShowAlert("Error", $"Error getting cameras: {ex.Message}");
             }
         });
+    }
+
+    private async Task SelectAudioSource()
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            try
+            {
+                var inputDevices = await CameraControl.GetAvailableAudioDevicesAsync();
+
+                if (inputDevices?.Count > 0)
+                {
+                    // Prefix the list with "System Default" option
+                    var options = new string[inputDevices.Count + 1];
+                    options[0] = "System Default";
+                    for (int i = 0; i < inputDevices.Count; i++)
+                    {
+                        options[i + 1] = inputDevices[i];
+                    }
+
+                    var result = await DisplayActionSheet("Select Audio Source", "Cancel", null, options);
+
+                    if (!string.IsNullOrEmpty(result) && result != "Cancel")
+                    {
+                        if (result == "System Default")
+                        {
+                            CameraControl.AudioDeviceIndex = -1;
+                            _audioSelectButton.Text = "🎤 Audio: Default";
+                        }
+                        else
+                        {
+                            // Find the index in our original list
+                            // Careful: option list was shifted by 1
+                            int selectedIndex = -1;
+                            for (int i = 0; i < inputDevices.Count; i++)
+                            {
+                                if (inputDevices[i] == result)
+                                {
+                                    selectedIndex = i;
+                                    break;
+                                }
+                            }
+
+                            if (selectedIndex >= 0)
+                            {
+                                CameraControl.AudioDeviceIndex = selectedIndex;
+                                _audioSelectButton.Text = $"🎤 {result}";
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    ShowAlert("No Input Devices", "No audio input devices found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                 ShowAlert("Error", $"Error getting audio devices: {ex.Message}");
+            }
+        });
+    }
+
+    private async Task SelectAudioCodec()
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            try
+            {
+                var codecs = await CameraControl.GetAvailableAudioCodecsAsync();
+                
+                if (codecs?.Count > 0)
+                {
+                    // Prefix the list with "System Default" option
+                    var options = new string[codecs.Count + 1];
+                    options[0] = "System Default";
+                    for (int i = 0; i < codecs.Count; i++)
+                    {
+                        options[i + 1] = codecs[i];
+                    }
+                    
+                    var result = await DisplayActionSheet("Select Audio Codec", "Cancel", null, options);
+                    
+                    if (!string.IsNullOrEmpty(result) && result != "Cancel")
+                    {
+                        if (result == "System Default")
+                        {
+                            CameraControl.AudioCodecIndex = -1;
+                             _audioCodecButton.Text = "🎵 Codec: Default";
+                        }
+                        else
+                        {
+                            // Find the index in our original list
+                            // Careful: option list was shifted by 1
+                            int selectedIndex = -1;
+                            for (int i = 0; i < codecs.Count; i++)
+                            {
+                                if (codecs[i] == result)
+                                {
+                                    selectedIndex = i;
+                                    break;
+                                }
+                            }
+
+                            if (selectedIndex >= 0)
+                            {
+                                CameraControl.AudioCodecIndex = selectedIndex;
+                                _audioCodecButton.Text = $"🎵 {CodecsHelper.GetShortName(result)}";
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    ShowAlert("No Audio Codecs", "No audio codecs available.");
+                }
+            }
+            catch (Exception ex) 
+            {
+                ShowAlert("Error", $"Error getting audio codecs: {ex.Message}");
+            }
+        });
+    }
+
+    public static class CodecsHelper
+    {
+        public static string GetShortName(string fullName)
+        {
+            if (string.IsNullOrEmpty(fullName)) return "";
+            if (fullName.Contains("AAC", StringComparison.OrdinalIgnoreCase)) return "AAC";
+            if (fullName.Contains("MP3", StringComparison.OrdinalIgnoreCase)) return "MP3";
+            if (fullName.Contains("FLAC", StringComparison.OrdinalIgnoreCase)) return "FLAC";
+            if (fullName.Contains("PCM", StringComparison.OrdinalIgnoreCase)) return "PCM";
+            if (fullName.Contains("WMA", StringComparison.OrdinalIgnoreCase)) return "WMA";
+            if (fullName.Contains("LPCM", StringComparison.OrdinalIgnoreCase)) return "LPCM";
+            return fullName.Length > 10 ? fullName.Substring(0, 10) + ".." : fullName;
+        }
     }
 
     protected override void OnDisappearing()

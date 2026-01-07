@@ -157,6 +157,40 @@ public partial class SkiaCamera : SkiaControl
         typeof(SkiaCamera),
         false);
 
+    public static readonly BindableProperty AudioDeviceIndexProperty = BindableProperty.Create(
+        nameof(AudioDeviceIndex),
+        typeof(int),
+        typeof(SkiaCamera),
+        -1, // -1 means "Default" or "Auto"
+        propertyChanged: NeedRestart); 
+
+    /// <summary>
+    /// Index of the audio device to use. -1 for default.
+    /// Use GetAvailableAudioDevicesAsync() to get the list of devices.
+    /// </summary>
+    public int AudioDeviceIndex
+    {
+        get { return (int)GetValue(AudioDeviceIndexProperty); }
+        set { SetValue(AudioDeviceIndexProperty, value); }
+    }
+
+    public static readonly BindableProperty AudioCodecIndexProperty = BindableProperty.Create(
+        nameof(AudioCodecIndex),
+        typeof(int),
+        typeof(SkiaCamera),
+        -1, // -1 means "Default" or "Auto"
+        propertyChanged: NeedRestart);
+
+    /// <summary>
+    /// Index of the audio codec to use. -1 for default (usually AAC).
+    /// Use GetAvailableAudioCodecsAsync() to get the list of available codecs.
+    /// </summary>
+    public int AudioCodecIndex
+    {
+        get { return (int)GetValue(AudioCodecIndexProperty); }
+        set { SetValue(AudioCodecIndexProperty, value); }
+    }
+
     /// <summary>
     /// Whether to record audio with video. Default is false (silent video).
     /// Must be set before starting video recording.
@@ -1938,6 +1972,30 @@ public partial class SkiaCamera : SkiaControl
     private VideoFormat? _currentVideoFormat;
 
     /// <summary>
+    /// Get available microphones/audio capture devices.
+    /// </summary>
+    /// <returns>List of device names</returns>
+    public virtual async Task<List<string>> GetAvailableAudioDevicesAsync()
+    {
+#if WINDOWS//todo ONPLATFORM
+        return await GetAvailableAudioDevicesPlatform(); 
+#endif
+        return new List<string>();
+    }
+
+    /// <summary>
+    /// Get available audio codecs for video recording.
+    /// </summary>
+    /// <returns></returns>
+    public virtual async Task<List<string>> GetAvailableAudioCodecsAsync()
+    {
+#if WINDOWS//todo ONPLATFORM
+        return await GetAvailableAudioCodecsPlatform();
+#endif
+        return new List<string>();
+    }
+    
+    /// <summary>
     /// Internal method to get available cameras with caching
     /// </summary>
     protected virtual async Task<List<CameraInfo>> GetAvailableCamerasInternal(bool refresh = false)
@@ -2220,6 +2278,10 @@ public partial class SkiaCamera : SkiaControl
     #endregion
 
     public INativeCamera NativeControl;
+
+    private IAudioCapture _audioCapture;
+    private CircularAudioBuffer _audioBuffer;
+    private long _captureEpochNs;
 
     private ICaptureVideoEncoder _captureVideoEncoder;
     private System.Threading.Timer _frameCaptureTimer;
@@ -2643,6 +2705,7 @@ public partial class SkiaCamera : SkiaControl
     public class CameraPicturesQueue : Queue<CameraQueuedPictured>
     {
     }
+ 
 
     private bool _IsTakingPhoto;
 

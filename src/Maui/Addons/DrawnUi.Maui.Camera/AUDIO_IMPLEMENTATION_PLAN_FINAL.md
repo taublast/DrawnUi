@@ -26,23 +26,58 @@ Audio cannot be piped directly to file encoder for pre-recording. We must:
 
 ### 2.2 Shared Data Structures
 
+**File:** `Shared/AudioBitDepth.cs`
+```csharp
+namespace DrawnUi.Camera.Shared
+{
+    /// <summary>
+    /// Supported audio bit depths for recording.
+    /// </summary>
+    public enum AudioBitDepth
+    {
+        Pcm8Bit = 8,      // Low quality, smallest size
+        Pcm16Bit = 16,    // Default - good quality, standard size
+        Pcm24Bit = 24,    // High quality, larger size
+        Float32Bit = 32   // Professional quality, largest size
+    }
+}
+```
+
 **File:** `Shared/AudioSample.cs`
 ```csharp
 namespace DrawnUi.Camera.Shared
 {
     public struct AudioSample
     {
-        public byte[] Data;           // Raw PCM data (16-bit)
+        public byte[] Data;           // Raw PCM data
         public long TimestampNs;      // Nanoseconds since capture epoch
         public int SampleRate;        // e.g., 44100
         public int Channels;          // 1 = Mono, 2 = Stereo
-        public int BytesPerSample;    // 2 for 16-bit PCM
+        public AudioBitDepth BitDepth; // Bit depth of the sample
+
+        public int BytesPerSample => BitDepth switch
+        {
+            AudioBitDepth.Pcm8Bit => 1,
+            AudioBitDepth.Pcm16Bit => 2,
+            AudioBitDepth.Pcm24Bit => 3,
+            AudioBitDepth.Float32Bit => 4,
+            _ => 2
+        };
 
         public TimeSpan Timestamp => TimeSpan.FromTicks(TimestampNs / 100);
         public int SampleCount => Data.Length / (Channels * BytesPerSample);
     }
 }
 ```
+
+**Platform Bit Depth Support:**
+| Platform | 8-bit | 16-bit | 24-bit | 32-bit float |
+|----------|-------|--------|--------|--------------|
+| Android | `Encoding.Pcm8Bit` | `Encoding.Pcm16Bit` | ❌ | `Encoding.PcmFloat` |
+| iOS | `AVAudioCommonFormat` | ✅ All formats supported | ✅ | ✅ |
+| Windows | `MF_MT_AUDIO_BITS_PER_SAMPLE` | ✅ All formats supported | ✅ | ✅ |
+
+**Note:** Android does not natively support 24-bit; use 32-bit float and convert if needed.
 
 ### 2.3 Shared Circular Audio Buffer
 
@@ -76,7 +111,161 @@ namespace DrawnUi.Camera.Shared
 
 **Memory footprint:** ~1MB for 5 seconds of 44.1kHz mono 16-bit PCM (negligible).
 
-### 2.4 Unified Timestamp Strategy (Solving the Drift Problem)
+### 2.4 Pre-Recording Audio Flow
+
+The audio circular buffer works in tandem with the video pre-recording buffer. Here's the detailed flow:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        PRE-RECORDING PHASE                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  Microphone ──► AudioCapture ──► CircularAudioBuffer (5s rolling window)   │
+│                                         │                                   │
+│  Camera ─────► VideoEncoder ──► PrerecordingEncodedBuffer (5s keyframes)   │
+│                                         │                                   │
+│                              [Both buffers filling continuously]            │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼ User presses RECORD
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        TRANSITION PHASE                                      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  1. LOCK both buffers (stop accepting new samples momentarily)             │
+│  2. Find video keyframe closest to (Now - PreRecordDuration)               │
+│  3. Find audio sample closest to that keyframe timestamp                   │
+│  4. DRAIN video buffer → write to encoder/muxer                            │
+│  5. DRAIN audio buffer → write to encoder/muxer (aligned timestamps)       │
+│  6. UNLOCK and switch to LIVE mode                                         │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        LIVE RECORDING PHASE                                  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  Microphone ──► AudioCapture ──► [Direct to Encoder] ──► Muxer ──► File    │
+│                                                              │              │
+│  Camera ─────► VideoEncoder ──► [Direct to Encoder] ────────┘              │
+│                                                                             │
+│                     [No more buffering, direct write]                       │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Detailed Buffer Implementation:**
+```csharp
+public class CircularAudioBuffer
+{
+    private readonly Queue<AudioSample> _samples = new();
+    private readonly object _lock = new();
+    private readonly TimeSpan _maxDuration;
+    private long _oldestTimestampNs;
+    private long _newestTimestampNs;
+
+    public CircularAudioBuffer(TimeSpan maxDuration)
+    {
+        _maxDuration = maxDuration;
+    }
+
+    /// <summary>
+    /// Called from microphone capture thread. Thread-safe.
+    /// Automatically trims samples older than MaxDuration.
+    /// </summary>
+    public void Write(AudioSample sample)
+    {
+        lock (_lock)
+        {
+            _samples.Enqueue(sample);
+            _newestTimestampNs = sample.TimestampNs;
+
+            // Trim old samples beyond max duration
+            var cutoffNs = _newestTimestampNs - (long)(_maxDuration.TotalSeconds * 1_000_000_000);
+            while (_samples.Count > 0 && _samples.Peek().TimestampNs < cutoffNs)
+            {
+                _samples.Dequeue();
+            }
+
+            if (_samples.Count > 0)
+                _oldestTimestampNs = _samples.Peek().TimestampNs;
+        }
+    }
+
+    /// <summary>
+    /// Called at pre-recording → live transition.
+    /// Returns all samples from cutPointNs onwards, then clears buffer.
+    /// </summary>
+    public AudioSample[] DrainFrom(long cutPointNs)
+    {
+        lock (_lock)
+        {
+            var result = _samples
+                .Where(s => s.TimestampNs >= cutPointNs)
+                .OrderBy(s => s.TimestampNs)
+                .ToArray();
+
+            _samples.Clear();
+            return result;
+        }
+    }
+
+    /// <summary>
+    /// Find the timestamp of the sample closest to the target.
+    /// Used to align with video keyframe.
+    /// </summary>
+    public long GetSampleTimestampClosestTo(long targetNs)
+    {
+        lock (_lock)
+        {
+            if (_samples.Count == 0) return targetNs;
+
+            return _samples
+                .OrderBy(s => Math.Abs(s.TimestampNs - targetNs))
+                .First()
+                .TimestampNs;
+        }
+    }
+
+    public TimeSpan BufferedDuration => TimeSpan.FromTicks((_newestTimestampNs - _oldestTimestampNs) / 100);
+    public int SampleCount { get { lock (_lock) return _samples.Count; } }
+    public void Clear() { lock (_lock) _samples.Clear(); }
+}
+```
+
+**Transition Coordination (in SkiaCamera):**
+```csharp
+private async Task TransitionToLiveRecording()
+{
+    // 1. Calculate cut point aligned with video keyframe
+    var (videoStartNs, audioStartNs) = PreRecordingTransition.CalculateCutPoint(
+        _videoPreRecordingBuffer,
+        _audioBuffer,
+        PreRecordDuration
+    );
+
+    // 2. Drain and write video buffer (existing logic)
+    await _videoEncoder.DrainPreRecordingBuffer(videoStartNs);
+
+    // 3. Drain and write audio buffer (aligned with video)
+    var audioSamples = _audioBuffer.DrainFrom(audioStartNs);
+    foreach (var sample in audioSamples)
+    {
+        // Adjust timestamp to be relative to video start (t=0 in output file)
+        var adjustedSample = sample;
+        adjustedSample.TimestampNs -= videoStartNs;
+        _audioEncoder.WriteAudioSample(adjustedSample);
+    }
+
+    // 4. Switch to live mode - direct write, no buffering
+    _isPreRecording = false;
+    _isLiveRecording = true;
+}
+```
+
+### 2.5 Unified Timestamp Strategy (Solving the Drift Problem)
 
 Audio and video run on different clocks. This drift is the #1 risk.
 - **Video:** ~33ms intervals (Variable; System/Stopwatch).
@@ -123,6 +312,72 @@ private long ConvertMachTimeToEpoch(CMTime presentationTime)
 }
 ```
 
+### 2.6 Audio Device Selection
+
+Just like video cameras, the user must be able to select which microphone to use (e.g., internal mic, headset, USB mic).
+
+**Shared API:**
+```csharp
+// In SkiaCamera.Shared.cs
+
+/// <summary>
+/// Index of the audio device to use.
+/// -1 = System Default (auto-select)
+/// 0+ = Index in the list returned by GetAvailableAudioDevicesAsync
+/// </summary>
+public static readonly BindableProperty AudioDeviceIndexProperty = BindableProperty.Create(
+    nameof(AudioDeviceIndex), typeof(int), typeof(SkiaCamera), -1);
+
+public int AudioDeviceIndex
+{
+    get => (int)GetValue(AudioDeviceIndexProperty);
+    set => SetValue(AudioDeviceIndexProperty, value);
+}
+
+/// <summary>
+/// Returns list of available audio input devices.
+/// </summary>
+public Task<List<string>> GetAvailableAudioDevicesAsync();
+```
+
+**Platform Implementation:**
+*   **Windows:** Use `DeviceInformation.FindAllAsync(DeviceClass.AudioCapture)` to list devices. Map selection index to `DeviceInformation.Id` when initializing `MediaCapture`.
+*   **Android:** Use `AudioManager.GetDevices(GetDevicesTargets.Inputs)` (API 23+) or iteration. When starting `AudioRecord` or `MediaRecorder`, specify the source. Note: Android audio routing is complex; usually preferring `AudioSource.Mic` or `AudioSource.Camcorder` and letting OS handle routing is safest, but explicit device selection is possible via `setPreferredDevice`.
+*   **iOS:** Use `AVAudioSession.SharedInstance().AvailableInputs`. Set `AVAudioSession.SharedInstance().SetPreferredInput()` based on selection.
+
+### 2.7 Audio Codec Selection
+
+Users may want to choose a specific audio codec (e.g., AAC, MP3, FLAC, PCM) or use the system default.
+
+**Shared API:**
+```csharp
+// In SkiaCamera.Shared.cs
+
+/// <summary>
+/// Index of the audio codec to use.
+/// -1 = System Default (AAC or platform preferred)
+/// 0+ = Index in the list returned by GetAvailableAudioCodecsAsync
+/// </summary>
+public static readonly BindableProperty AudioCodecIndexProperty = BindableProperty.Create(
+    nameof(AudioCodecIndex), typeof(int), typeof(SkiaCamera), -1);
+
+public int AudioCodecIndex
+{
+    get => (int)GetValue(AudioCodecIndexProperty);
+    set => SetValue(AudioCodecIndexProperty, value);
+}
+
+/// <summary>
+/// Returns list of available audio encoder codecs.
+/// </summary>
+public Task<List<string>> GetAvailableAudioCodecsAsync();
+```
+
+**Platform Implementation:**
+*   **Windows:** Use `CodecQuery.FindAllAsync(CodecKind.Audio, CodecCategory.Encoder, null)`. Return `DisplayName`.
+*   **Android:** Use `MediaCodecList` to find encoders supporting audio types (AAC, AMR, FLAC in container).
+*   **iOS:** AVAssetWriter supported file types (usually tied to container, but can specify `AudioSettings`).
+
 ---
 
 ## 3. Interface Updates
@@ -131,6 +386,11 @@ private long ConvertMachTimeToEpoch(CMTime presentationTime)
 ```csharp
 // Existing property (line 154-167)
 public bool RecordAudio { get; set; }
+
+// NEW: Audio configuration properties
+public AudioBitDepth AudioBitDepth { get; set; } = AudioBitDepth.Pcm16Bit;
+public int AudioSampleRate { get; set; } = 44100;        // 44100, 48000, etc.
+public int AudioChannels { get; set; } = 1;              // 1 = Mono, 2 = Stereo
 
 // Add audio capture coordination
 private IAudioCapture _audioCapture;
@@ -146,10 +406,14 @@ namespace DrawnUi.Camera.Interfaces
         bool IsCapturing { get; }
         int SampleRate { get; }
         int Channels { get; }
+        AudioBitDepth BitDepth { get; }
 
         event EventHandler<AudioSample> SampleAvailable;
 
-        Task<bool> StartAsync(int sampleRate = 44100, int channels = 1);
+        Task<bool> StartAsync(
+            int sampleRate = 44100,
+            int channels = 1,
+            AudioBitDepth bitDepth = AudioBitDepth.Pcm16Bit);
         Task StopAsync();
     }
 }
@@ -354,26 +618,30 @@ public class PreRecordingTransition
 3.  Create `Interfaces/IAudioCapture.cs`.
 4.  Add audio-related methods to `ICaptureVideoEncoder`.
 5.  Add `_captureEpochNs` timestamp to `SkiaCamera.Shared.cs`.
+6.  Add `GetAvailableAudioDevicesAsync` and `AudioDeviceIndex` to `SkiaCamera.Shared.cs`.
 
 ### Phase 2: iOS/macOS Implementation
 1.  Extend `SetupAudioInput()` with `AVCaptureAudioDataOutput`.
 2.  Implement audio sample delegate.
 3.  Add audio track to `AVAssetWriter` in encoder.
 4.  Implement pre-recording audio buffer drain.
-5.  Test live + pre-recording modes.
+5.  Implement `GetAvailableAudioDevicesAsync` and selection.
+6.  Test live + pre-recording modes.
 
 ### Phase 3: Android Implementation
 1.  Add `RECORD_AUDIO` permission handling.
 2.  Implement `AudioRecord` capture thread.
 3.  Implement `MediaCodec` AAC encoder.
 4.  Add `AudioTimestamp` logic.
-5.  Test live + pre-recording modes.
+5.  Implement `GetAvailableAudioDevicesAsync` and selection.
+6.  Test live + pre-recording modes.
 
 ### Phase 4: Windows Implementation (Live Only)
 1.  Add microphone capability.
 2.  Verify `MediaCapture` audio initialization.
-3.  Add audio stream to `IMFSinkWriter`.
-4.  Test live recording mode.
+3.  Implement `GetAvailableAudioDevicesAsync` and selection.
+4.  Add audio stream to `IMFSinkWriter`.
+5.  Test live recording mode.
 
 ---
 
@@ -448,14 +716,15 @@ private async Task<bool> TryInitializeAudio()
 ### New Files
 | File | Purpose |
 |------|---------|
+| `Shared/AudioBitDepth.cs` | Enum for supported bit depths (8/16/24/32-bit) |
 | `Shared/AudioSample.cs` | Cross-platform audio data structure |
-| `Shared/CircularAudioBuffer.cs` | Thread-safe pre-recording buffer |
+| `Shared/CircularAudioBuffer.cs` | Thread-safe pre-recording buffer with drain logic |
 | `Interfaces/IAudioCapture.cs` | Platform audio capture interface |
 
 ### Modified Files
 | File | Changes |
 |------|---------|
-| `SkiaCamera.Shared.cs` | Capture epoch, audio buffer coordination, error handling |
+| `SkiaCamera.Shared.cs` | Capture epoch, audio buffer coordination, error handling, AudioBitDepth/SampleRate/Channels properties |
 | `Interfaces/ICaptureVideoEncoder.cs` | Audio support methods |
 | `Apple/NativeCamera.Apple.cs` | AVCaptureAudioDataOutput setup, Mach time offset |
 | `Apple/AppleVideoToolboxEncoder.cs` | AVAssetWriterInput for audio track |

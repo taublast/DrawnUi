@@ -83,5 +83,20 @@ public interface ICaptureVideoEncoder : IDisposable
     /// </summary>
     event EventHandler<TimeSpan> ProgressReported;
 
+    /// <summary>
+    /// Sets the circular audio buffer to use for pre-recording.
+    /// </summary>
+    void SetAudioBuffer(CircularAudioBuffer buffer);
+
+    /// <summary>
+    /// Writes an audio sample to the encoder (or buffer if pre-recording).
+    /// </summary>
+    void WriteAudioSample(AudioSample sample);
+
+    /// <summary>
+    /// Whether this encoder supports audio recording.
+    /// </summary>
+    bool SupportsAudio { get; }
+
     Task AbortAsync();
 }

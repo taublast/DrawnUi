@@ -75,6 +75,49 @@ public partial class SkiaCamera : SkiaControl
         NativeControl?.ApplyDeviceOrientation(DeviceRotation);
     }
 
+
+    protected async Task<List<string>> GetAvailableAudioCodecsPlatform()
+    {
+        var codecNames = new List<string>();
+        try
+        {
+            var query = new Windows.Media.Core.CodecQuery();
+            var codecs = await query.FindAllAsync(Windows.Media.Core.CodecKind.Audio, Windows.Media.Core.CodecCategory.Encoder, null);
+
+            var aacGuid = new Guid("00001610-0000-0010-8000-00aa00389b71");
+
+            foreach (var codec in codecs)
+            {
+                // Clean up display name (optional, but helpful if they are verbose like "Microsoft AAC Encoder")
+                codecNames.Add(codec.DisplayName);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCameraWindows] GetAvailableAudioCodecsPlatform error: {ex.Message}");
+        }
+        return codecNames;
+    }
+
+
+    protected async Task<List<string>> GetAvailableAudioDevicesPlatform()
+    {
+        var deviceNames = new List<string>();
+        try
+        {
+            var devices = await Windows.Devices.Enumeration.DeviceInformation.FindAllAsync(Windows.Devices.Enumeration.DeviceClass.AudioCapture);
+            foreach (var device in devices)
+            {
+                deviceNames.Add(device.Name);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCameraWindows] GetAvailableAudioDevicesPlatform error: {ex.Message}");
+        }
+        return deviceNames;
+    }
+
     protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform(bool refresh)
     {
         var cameras = new List<CameraInfo>();
@@ -538,6 +581,21 @@ public partial class SkiaCamera : SkiaControl
             // Give any in-flight CaptureFrame calls time to complete
             await Task.Delay(50);
 
+            // Cleanup Audio
+            if (_audioCapture != null)
+            {
+                try 
+                {
+                    _audioCapture.SampleAvailable -= OnAudioSampleAvailable;
+                    await _audioCapture.StopAsync();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[StopCaptureVideoFlow] Audio stop error: {ex.Message}");
+                }
+                _audioCapture = null;
+            }
+
             _useWindowsPreviewDrivenCapture = false;
             // Clear frame callback
             if (NativeControl is NativeCamera winCamCleanup)
@@ -752,7 +810,43 @@ public partial class SkiaCamera : SkiaControl
         _diagEncHeight = height;
         _diagBitrate = (long)Math.Max(1, width * height) * Math.Max(1, fps) * 4 / 10;
         SetSourceFrameDimensions(width, height);
+
+        // Configure audio requirements BEFORE initialization if needed
+        if (RecordAudio && NativeControl is NativeCamera windowsCamera)
+        {
+            // Pass the actual captured format to the encoder
+             if (_captureVideoEncoder is WindowsCaptureVideoEncoder winEncoder)
+             {
+                 winEncoder.SetAudioParameters(
+                     windowsCamera.ActualAudioSampleRate,
+                     windowsCamera.ActualAudioChannels
+                 );
+
+                 // Apply codec selection if set
+                 if (AudioCodecIndex >= 0)
+                 {
+                     var codecs = await GetAvailableAudioCodecsAsync();
+                     if (AudioCodecIndex < codecs.Count)
+                     {
+                         var codecName = codecs[AudioCodecIndex];
+                         winEncoder.SetAudioCodec(codecName);
+                         Debug.WriteLine($"[SkiaCameraWindows] Selected Audio Codec: {codecName}");
+                     }
+                 }
+             }
+        }
+
         await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+
+        // Setup Audio if enabled
+        if (RecordAudio && NativeControl is IAudioCapture audioCapture)
+        {
+            _audioCapture = audioCapture;
+            _audioCapture.SampleAvailable += OnAudioSampleAvailable;
+            // Assuming default 44100/1 channel/16-bit for now as per encoder config
+            bool audioStarted = await _audioCapture.StartAsync(); 
+            Debug.WriteLine($"[StartCaptureVideoFlow] Audio capture started: {audioStarted}");
+        }
 
         // CRITICAL: In pre-recording mode, do NOT call StartAsync during initialization
         // Pre-recording mode should just buffer frames in memory without starting file writing
@@ -917,7 +1011,7 @@ public partial class SkiaCamera : SkiaControl
 
                 // Lock the current device rotation for the entire recording session
                 RecordingLockedRotation = DeviceRotation;
-                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}ï¿½");
 
                 // Start recording in memory-only mode
                 if (UseCaptureVideoFlow && FrameProcessor != null)
@@ -953,7 +1047,7 @@ public partial class SkiaCamera : SkiaControl
                 IsPreRecording = false;
                 IsRecordingVideo = true;
                 RecordingLockedRotation = DeviceRotation;
-                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}ï¿½");
 
                 if (UseCaptureVideoFlow && FrameProcessor != null)
                 {
@@ -1022,7 +1116,7 @@ public partial class SkiaCamera : SkiaControl
 
                 // Lock the current device rotation for the entire recording session
                 RecordingLockedRotation = DeviceRotation;
-                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}ï¿½");
 
                 if (UseCaptureVideoFlow && FrameProcessor != null)
                 {
@@ -1048,5 +1142,9 @@ public partial class SkiaCamera : SkiaControl
         IsBusy = false;
     }
 
+    private void OnAudioSampleAvailable(object sender, AudioSample sample)
+    {
+        _captureVideoEncoder?.WriteAudioSample(sample);
+    }
 }
 

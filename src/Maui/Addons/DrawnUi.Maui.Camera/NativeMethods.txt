@@ -9,6 +9,8 @@ MFCreateMemoryBuffer
 MFCreateDXGISurfaceBuffer
 MFCreateDXGIDeviceManager
 MFTEnumEx
+MFTEnum
+MFT_REGISTER_TYPE_INFO
 IMFTransform
 IMFActivate
 IMFSourceReader

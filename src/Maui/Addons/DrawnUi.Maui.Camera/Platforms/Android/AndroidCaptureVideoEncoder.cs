@@ -30,6 +30,17 @@ namespace DrawnUi.Camera
     /// </summary>
     public class AndroidCaptureVideoEncoder : ICaptureVideoEncoder
     {
+        public bool SupportsAudio => true;
+        
+        public void SetAudioBuffer(CircularAudioBuffer buffer)
+        {
+            // TODO: Wiring for circular audio buffer on Android
+        }
+
+        public void WriteAudioSample(AudioSample sample)
+        {
+            // TODO: Wiring for writing audio sample on Android
+        }
         private string _outputPath;
         private int _width;
         private int _height;
