@@ -463,18 +463,19 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     .OnTapped(me =>
                                     {
                                         CameraControl.RecordAudio = !CameraControl.RecordAudio;
-                                        me.Text = CameraControl.RecordAudio ? "Audio: ON" : "Audio: OFF";
-                                        me.BackgroundColor = CameraControl.RecordAudio ? Colors.Green : Colors.DarkGray;
                                     })
                                     .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                                     {
                                         me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
                                     })
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.RecordAudio), me =>
+                                    {
+                                        me.Text = CameraControl.RecordAudio ? "Audio: ON" : "Audio: OFF";
+                                        me.BackgroundColor = CameraControl.RecordAudio ? Colors.Green : Colors.DarkGray;
+                                    })
                             }
                         },
-
-
-
+                      
                     }
                 }.WithRow(1),
 
@@ -566,8 +567,6 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         // Setup camera event handlers
         SetupCameraEvents();
     }
-
-   
 
     private SkiaLayer CreatePreviewOverlay()
     {
