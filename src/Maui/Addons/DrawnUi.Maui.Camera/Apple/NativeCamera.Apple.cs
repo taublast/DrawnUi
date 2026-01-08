@@ -2887,6 +2887,46 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         // Configure video settings based on current video quality
         ConfigureVideoSettings();
 
+        // Configure AVAudioSession for video recording with AGC (system-level voice processing)
+        if (_recordAudio)
+        {
+            try
+            {
+                var audioSession = AVAudioSession.SharedInstance();
+                NSError sessionError;
+
+                // Use VideoRecording mode for system-level AGC and voice processing
+                audioSession.SetCategory(AVAudioSessionCategory.PlayAndRecord,
+                    AVAudioSessionCategoryOptions.DefaultToSpeaker | AVAudioSessionCategoryOptions.AllowBluetooth,
+                    out sessionError);
+                if (sessionError != null)
+                {
+                    Debug.WriteLine($"[NativeCamera.Apple] Audio session category error: {sessionError}");
+                }
+
+                // VideoRecording mode enables system-level AGC and echo cancellation
+                audioSession.SetMode(AVAudioSession.ModeVideoRecording, out sessionError);
+                if (sessionError != null)
+                {
+                    Debug.WriteLine($"[NativeCamera.Apple] Audio session mode error: {sessionError}");
+                }
+                else
+                {
+                    Debug.WriteLine("[NativeCamera.Apple] Audio session set to VideoRecording mode (AGC enabled)");
+                }
+
+                audioSession.SetActive(true, out sessionError);
+                if (sessionError != null)
+                {
+                    Debug.WriteLine($"[NativeCamera.Apple] Audio session activation error: {sessionError}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[NativeCamera.Apple] AVAudioSession setup error: {ex.Message}");
+            }
+        }
+
         _session.BeginConfiguration();
 
         // Add audio input if audio recording is enabled
@@ -2976,13 +3016,16 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     #endregion
 
     /// <summary>
-    /// Setup audio input and output for video recording
+    /// Setup audio input for video recording (microphone device only).
+    /// For native recording with AVCaptureMovieFileOutput, we only need the audio INPUT device.
+    /// We do NOT add AVCaptureAudioDataOutput because it would consume audio samples
+    /// before AVCaptureMovieFileOutput can capture them.
     /// </summary>
     private async Task SetupAudioInput()
     {
         try
         {
-            // 1. Setup Input
+            // Setup Audio Input (microphone device)
             if (_audioInput == null)
             {
                 var audioDevice = AVCaptureDevice.GetDefaultDevice(AVMediaTypes.Audio);
@@ -2992,7 +3035,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     if (_audioInput != null && _session.CanAddInput(_audioInput))
                     {
                         _session.AddInput(_audioInput);
-                        Debug.WriteLine("[NativeCamera.Apple] Audio input added");
+                        Debug.WriteLine("[NativeCamera.Apple] Audio input (microphone) added for native recording");
                     }
                     else
                     {
@@ -3003,25 +3046,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 }
             }
 
-            // 2. Setup Output (for frame-by-frame access)
-            if (_audioDataOutput == null)
-            {
-                _audioDataOutput = new AVCaptureAudioDataOutput();
-                _audioDataOutputQueue = new DispatchQueue("AudioCaptureQueue");
-                _audioDataOutput.SetSampleBufferDelegate(this, _audioDataOutputQueue);
-
-                if (_session.CanAddOutput(_audioDataOutput))
-                {
-                    _session.AddOutput(_audioDataOutput);
-                    Debug.WriteLine("[NativeCamera.Apple] Audio data output added");
-                }
-                else
-                {
-                    Debug.WriteLine("[NativeCamera.Apple] Failed to add audio output");
-                    _audioDataOutput.Dispose();
-                    _audioDataOutput = null;
-                }
-            }
+            // NOTE: We do NOT add AVCaptureAudioDataOutput here.
+            // For native recording, AVCaptureMovieFileOutput handles audio capture directly.
+            // Adding AVCaptureAudioDataOutput would consume audio samples before the movie output can get them.
         }
         catch (Exception ex)
         {

@@ -59,6 +59,12 @@ public class AudioCaptureApple : IAudioCapture
                 Debug.WriteLine($"[AudioCaptureApple] Audio session category error: {sessionError}");
             }
 
+            //audioSession.SetMode(AVAudioSession.ModeVideoRecording, out NSError modeError);
+            //if (sessionError != null)
+            //{
+            //    Debug.WriteLine($"[AudioCaptureApple] Audio mode adjustment error: {sessionError}");
+            //}
+
             audioSession.SetActive(true, out sessionError);
             if (sessionError != null)
             {
@@ -74,7 +80,25 @@ public class AudioCaptureApple : IAudioCapture
             _audioEngine = new AVAudioEngine();
             var inputNode = _audioEngine.InputNode;
 
-            // Get the native format of the input
+            // Enable voice processing for AGC, echo cancellation, and noise suppression (iOS 13+)
+            try
+            {
+                NSError vpError;
+                if (inputNode.SetVoiceProcessingEnabled(true, out vpError))
+                {
+                    Debug.WriteLine("[AudioCaptureApple] Voice processing enabled (AGC, echo cancellation, noise suppression)");
+                }
+                else
+                {
+                    Debug.WriteLine($"[AudioCaptureApple] Voice processing not available: {vpError?.LocalizedDescription}");
+                }
+            }
+            catch (Exception vpEx)
+            {
+                Debug.WriteLine($"[AudioCaptureApple] Voice processing setup failed: {vpEx.Message}");
+            }
+
+            // Get the native format of the input (may change after enabling voice processing)
             var inputFormat = inputNode.GetBusOutputFormat(0);
 
             Debug.WriteLine($"[AudioCaptureApple] Input format: {inputFormat.SampleRate}Hz, {inputFormat.ChannelCount}ch");
