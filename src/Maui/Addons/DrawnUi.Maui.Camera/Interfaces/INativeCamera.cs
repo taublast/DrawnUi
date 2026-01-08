@@ -106,6 +106,12 @@ public interface INativeCamera : IDisposable
     VideoFormat GetCurrentVideoFormat();
 
     /// <summary>
+    /// Sets whether audio should be recorded with video
+    /// </summary>
+    /// <param name="recordAudio">True to record audio, false for silent video</param>
+    void SetRecordAudio(bool recordAudio);
+
+    /// <summary>
     /// Starts video recording
     /// </summary>
     Task StartVideoRecording();

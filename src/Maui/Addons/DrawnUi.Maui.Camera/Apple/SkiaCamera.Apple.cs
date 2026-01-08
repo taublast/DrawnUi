@@ -259,6 +259,26 @@ public partial class SkiaCamera
         }
     }
 
+    /// <summary>
+    /// Creates a platform-specific audio capture using AVAudioEngine.
+    /// CRITICAL: This is completely separate from the camera session to avoid video freezing!
+    /// Using NativeCamera (AVCaptureSession) for audio would cause BeginConfiguration/CommitConfiguration
+    /// during recording, which disrupts video frames.
+    /// </summary>
+    protected IAudioCapture CreateAudioCapturePlatform()
+    {
+        // Use AVAudioEngine-based capture - completely independent from camera
+        return new AudioCaptureApple();
+    }
+
+    private void OnAudioSampleAvailable(object sender, AudioSample e)
+    {
+        if (_captureVideoEncoder is AppleVideoToolboxEncoder appleEnc)
+        {
+             appleEnc.WriteAudioSample(e);
+        }
+    }
+
     private async Task StartCaptureVideoFlow()
     {
         // Create Apple encoder using VideoToolbox for hardware H.264 encoding
@@ -278,6 +298,39 @@ public partial class SkiaCamera
         */
 
         _captureVideoEncoder = appleEncoder;
+
+        if (RecordAudio)
+        {
+            try
+            {
+                if (_audioCapture == null)
+                {
+                    _audioCapture = CreateAudioCapturePlatform();
+                    if (_audioCapture != null)
+                        _audioCapture.SampleAvailable += OnAudioSampleAvailable;
+                }
+
+                if (IsPreRecording)
+                {
+                    _audioBuffer = new CircularAudioBuffer(PreRecordDuration);
+                    appleEncoder.SetAudioBuffer(_audioBuffer);
+                }
+                else
+                {
+                    _audioBuffer = null;
+                    appleEncoder.SetAudioBuffer(null);
+                }
+
+                if (_audioCapture != null)
+                {
+                    await _audioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera] Audio init error: {ex}");
+            }
+        }
 
         // Set parent reference and pre-recording mode
         _captureVideoEncoder.ParentCamera = this;
@@ -1599,6 +1652,40 @@ public partial class SkiaCamera
         IsBusy = false;
     }
 
+    protected async Task<List<string>> GetAvailableAudioDevicesPlatform()
+    {
+        return await Task.Run(() =>
+        {
+            var detected = new List<string>();
+            try
+            {
+                // AVCaptureDeviceDiscoverySession available iOS 10+
+                var discoverySession = AVCaptureDeviceDiscoverySession.Create(
+                    new AVCaptureDeviceType[] { AVCaptureDeviceType.BuiltInMicrophone },
+                    AVMediaTypes.Audio,
+                    AVCaptureDevicePosition.Unspecified);
+                
+                if (discoverySession != null && discoverySession.Devices != null)
+                {
+                    foreach(var device in discoverySession.Devices)
+                    {
+                        detected.Add(device.LocalizedName);
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine($"[SkiaCamera] Audio device discovery error: {e}");
+            }
+            return detected;
+        });
+    }
+
+    protected async Task<List<string>> GetAvailableAudioCodecsPlatform()
+    {
+        // iOS primarily supports AAC for MP4
+        return await Task.FromResult(new List<string> { "AAC" });
+    }
 
     //end of class declaration
 }

@@ -3121,6 +3121,17 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// </summary>
     public Action<TimeSpan> VideoRecordingProgress { get; set; }
 
+    /// <summary>
+    /// Sets whether audio should be recorded with video.
+    /// Android handles this via separate audio capture flow.
+    /// </summary>
+    public void SetRecordAudio(bool recordAudio)
+    {
+        // Android native recording uses separate audio capture via IAudioCapture interface
+        // This method is here for interface compliance - actual audio is handled by SkiaCamera
+        System.Diagnostics.Debug.WriteLine($"[NativeCamera.Android] SetRecordAudio: {recordAudio}");
+    }
+
     #endregion
 
     /// <summary>

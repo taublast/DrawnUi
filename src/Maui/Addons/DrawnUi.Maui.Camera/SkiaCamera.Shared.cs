@@ -107,6 +107,45 @@ public partial class SkiaCamera : SkiaControl
         set { SetValue(VideoFormatIndexProperty, value); }
     }
 
+    public static readonly BindableProperty AudioSampleRateProperty = BindableProperty.Create(
+        nameof(AudioSampleRate),
+        typeof(int),
+        typeof(SkiaCamera),
+        44100,
+        BindingMode.OneWay);
+
+    public int AudioSampleRate
+    {
+        get => (int)GetValue(AudioSampleRateProperty);
+        set => SetValue(AudioSampleRateProperty, value);
+    }
+
+    public static readonly BindableProperty AudioChannelsProperty = BindableProperty.Create(
+        nameof(AudioChannels),
+        typeof(int),
+        typeof(SkiaCamera),
+        1,
+        BindingMode.OneWay);
+
+    public int AudioChannels
+    {
+        get => (int)GetValue(AudioChannelsProperty);
+        set => SetValue(AudioChannelsProperty, value);
+    }
+
+    public static readonly BindableProperty AudioBitDepthProperty = BindableProperty.Create(
+        nameof(AudioBitDepth),
+        typeof(AudioBitDepth),
+        typeof(SkiaCamera),
+        AudioBitDepth.Pcm16Bit,
+        BindingMode.OneWay);
+
+    public AudioBitDepth AudioBitDepth
+    {
+        get => (AudioBitDepth)GetValue(AudioBitDepthProperty);
+        set => SetValue(AudioBitDepthProperty, value);
+    }
+
     /// <summary>
     /// Controls which stream/aspect the live preview should match.
     /// Still: preview matches still-capture aspect. Video: preview matches intended video recording aspect.
@@ -1979,7 +2018,7 @@ public partial class SkiaCamera : SkiaControl
     /// <returns>List of device names</returns>
     public virtual async Task<List<string>> GetAvailableAudioDevicesAsync()
     {
-#if WINDOWS || ANDROID//todo ONPLATFORM
+#if WINDOWS || ANDROID || IOS || MACCATALYST //todo ONPLATFORM
         return await GetAvailableAudioDevicesPlatform(); 
 #endif
         return new List<string>();
@@ -1991,7 +2030,7 @@ public partial class SkiaCamera : SkiaControl
     /// <returns></returns>
     public virtual async Task<List<string>> GetAvailableAudioCodecsAsync()
     {
-#if WINDOWS || ANDROID//todo ONPLATFORM
+#if WINDOWS || ANDROID || IOS || MACCATALYST //todo ONPLATFORM
         return await GetAvailableAudioCodecsPlatform();
 #endif
         return new List<string>();
@@ -2093,6 +2132,9 @@ public partial class SkiaCamera : SkiaControl
     private async Task StartNativeVideoRecording()
     {
 #if ONPLATFORM
+
+        // Tell native camera whether to record audio
+        NativeControl.SetRecordAudio(RecordAudio);
 
         // Set up video recording callbacks to handle state synchronization
         NativeControl.VideoRecordingFailed = ex =>

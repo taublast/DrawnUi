@@ -26,15 +26,17 @@ using static AVFoundation.AVMetadataIdentifiers;
 namespace DrawnUi.Camera;
 
 
-public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotifyPropertyChanged, IAVCaptureVideoDataOutputSampleBufferDelegate, IAVCaptureFileOutputRecordingDelegate
+public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotifyPropertyChanged, IAVCaptureVideoDataOutputSampleBufferDelegate, IAVCaptureFileOutputRecordingDelegate, IAudioCapture, IAVCaptureAudioDataOutputSampleBufferDelegate
 {
     protected readonly SkiaCamera FormsControl;
     private AVCaptureSession _session;
     private AVCaptureVideoDataOutput _videoDataOutput;
+    private AVCaptureAudioDataOutput _audioDataOutput;
     private AVCaptureStillImageOutput _stillImageOutput;
     private AVCaptureDeviceInput _deviceInput;
     private AVCaptureDeviceInput _audioInput;
     private DispatchQueue _videoDataOutputQueue;
+    private DispatchQueue _audioDataOutputQueue;
     private CameraProcessorState _state = CameraProcessorState.None;
     private bool _flashSupported;
     private bool _isCapturingStill;
@@ -1916,6 +1918,17 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     [Export("captureOutput:didOutputSampleBuffer:fromConnection:")]
     public void DidOutputSampleBuffer(AVCaptureOutput captureOutput, CMSampleBuffer sampleBuffer, AVCaptureConnection connection)
     {
+        // Audio Path
+        if (captureOutput == _audioDataOutput)
+        {
+            if (_isAudioCapturing)
+            {
+                ProcessAudioSample(sampleBuffer);
+            }
+            sampleBuffer.Dispose();
+            return;
+        }
+
         // Count ALL incoming frames for raw FPS calculation (before any filtering)
         _rawFrameCount++;
         var now = System.Diagnostics.Stopwatch.GetTimestamp();
@@ -2059,6 +2072,47 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         {
             sampleBuffer?.Dispose();
             pixelBuffer?.Dispose();
+        }
+    }
+
+    private void ProcessAudioSample(CMSampleBuffer sampleBuffer)
+    {
+        if (SampleAvailable == null) return;
+
+        try
+        {
+            using (var blockBuffer = sampleBuffer.GetDataBuffer())
+            {
+                if (blockBuffer == null) return;
+
+                int length = (int)blockBuffer.DataLength;
+                byte[] data = new byte[length];
+                
+                unsafe 
+                {
+                    fixed (byte* p = data)
+                    {
+                        blockBuffer.CopyDataBytes(0, (uint)length, (IntPtr)p);
+                    }
+                }
+
+                long timestampNs = (long)(sampleBuffer.PresentationTimeStamp.Seconds * 1_000_000_000.0);
+
+                var sample = new AudioSample
+                {
+                    Data = data,
+                    TimestampNs = timestampNs,
+                    SampleRate = SampleRate,
+                    Channels = Channels,
+                    BitDepth = BitDepth
+                };
+
+                SampleAvailable?.Invoke(this, sample);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCamera] Audio processing error: {ex}");
         }
     }
 
@@ -2868,47 +2922,105 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         ResetPreviewTexture();
     }
 
+    #region IAudioCapture Implementation
+
+    public bool IsCapturing => _isAudioCapturing;
+    private volatile bool _isAudioCapturing;
+    public int SampleRate { get; private set; }
+    public int Channels { get; private set; }
+    public AudioBitDepth BitDepth { get; private set; } = AudioBitDepth.Pcm16Bit;
+
+    public event EventHandler<AudioSample> SampleAvailable;
+
+    public async Task<bool> StartAsync(int sampleRate = 44100, int channels = 1, AudioBitDepth bitDepth = AudioBitDepth.Pcm16Bit)
+    {
+        if (_isAudioCapturing) return true;
+
+        try
+        {
+            var authStatus = AVCaptureDevice.GetAuthorizationStatus(AVMediaTypes.Audio.GetConstant());
+            if (authStatus != AVAuthorizationStatus.Authorized)
+            {
+                var allowed = await AVCaptureDevice.RequestAccessForMediaTypeAsync(AVMediaTypes.Audio.GetConstant());
+                if (!allowed)
+                {
+                    Debug.WriteLine("[NativeCamera] Audio permission denied");
+                    return false;
+                }
+            }
+
+            _session.BeginConfiguration();
+            await SetupAudioInput();
+            _session.CommitConfiguration();
+
+            SampleRate = sampleRate;
+            Channels = channels;
+            BitDepth = bitDepth;
+
+            _isAudioCapturing = true;
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCamera] StartAsync failed: {ex}");
+            return false;
+        }
+    }
+
+    public Task StopAsync()
+    {
+        _isAudioCapturing = false;
+        return Task.CompletedTask;
+    }
+
+    #endregion
+
     /// <summary>
-    /// Setup audio input for video recording
+    /// Setup audio input and output for video recording
     /// </summary>
     private async Task SetupAudioInput()
     {
         try
         {
-            // Check if audio input already exists
-            if (_audioInput != null)
+            // 1. Setup Input
+            if (_audioInput == null)
             {
-                Debug.WriteLine("[NativeCamera.Apple] Audio input already set up");
-                return;
+                var audioDevice = AVCaptureDevice.GetDefaultDevice(AVMediaTypes.Audio);
+                if (audioDevice != null)
+                {
+                    _audioInput = AVCaptureDeviceInput.FromDevice(audioDevice, out var error);
+                    if (_audioInput != null && _session.CanAddInput(_audioInput))
+                    {
+                        _session.AddInput(_audioInput);
+                        Debug.WriteLine("[NativeCamera.Apple] Audio input added");
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"[NativeCamera.Apple] Failed to add audio input: {error?.LocalizedDescription}");
+                        _audioInput?.Dispose();
+                        _audioInput = null;
+                    }
+                }
             }
 
-            // Get default audio capture device
-            var audioDevice = AVCaptureDevice.GetDefaultDevice(AVMediaTypes.Audio);
-            if (audioDevice == null)
+            // 2. Setup Output (for frame-by-frame access)
+            if (_audioDataOutput == null)
             {
-                Debug.WriteLine("[NativeCamera.Apple] No audio capture device available");
-                return;
-            }
+                _audioDataOutput = new AVCaptureAudioDataOutput();
+                _audioDataOutputQueue = new DispatchQueue("AudioCaptureQueue");
+                _audioDataOutput.SetSampleBufferDelegate(this, _audioDataOutputQueue);
 
-            // Create audio input
-            _audioInput = AVCaptureDeviceInput.FromDevice(audioDevice, out var error);
-            if (_audioInput == null || error != null)
-            {
-                Debug.WriteLine($"[NativeCamera.Apple] Failed to create audio input: {error?.LocalizedDescription}");
-                return;
-            }
-
-            // Add audio input to session
-            if (_session.CanAddInput(_audioInput))
-            {
-                _session.AddInput(_audioInput);
-                Debug.WriteLine("[NativeCamera.Apple] Audio input added to session");
-            }
-            else
-            {
-                Debug.WriteLine("[NativeCamera.Apple] Cannot add audio input to session");
-                _audioInput?.Dispose();
-                _audioInput = null;
+                if (_session.CanAddOutput(_audioDataOutput))
+                {
+                    _session.AddOutput(_audioDataOutput);
+                    Debug.WriteLine("[NativeCamera.Apple] Audio data output added");
+                }
+                else
+                {
+                    Debug.WriteLine("[NativeCamera.Apple] Failed to add audio output");
+                    _audioDataOutput.Dispose();
+                    _audioDataOutput = null;
+                }
             }
         }
         catch (Exception ex)

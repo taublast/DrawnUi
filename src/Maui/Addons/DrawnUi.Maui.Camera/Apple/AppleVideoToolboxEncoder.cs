@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using AudioToolbox;
 using AVFoundation;
 using CoreMedia;
 using CoreVideo;
@@ -30,6 +31,9 @@ namespace DrawnUi.Camera
     /// </summary>
     public class AppleVideoToolboxEncoder : ICaptureVideoEncoder
     {
+        // AudioSettings removed
+
+
         private static int _instanceCounter = 0;
         private readonly int _instanceId;
 
@@ -48,18 +52,158 @@ namespace DrawnUi.Camera
 
         // Skia composition surface
         private SKSurface _surface;
-        
+
+        private AVAssetWriterInput _audioWriterInput;
+        private CircularAudioBuffer _audioBuffer;
+        private readonly object _audioWriterLock = new object();
+        private CMAudioFormatDescription _audioFormatDescription;
+
         public bool SupportsAudio => true;
-        
+
         public void SetAudioBuffer(CircularAudioBuffer buffer)
         {
-            // TODO: Wiring for circular audio buffer on iOS
+             _audioBuffer = buffer;
         }
 
         public void WriteAudioSample(AudioSample sample)
         {
-            // TODO: Wiring for writing audio sample on iOS
+            if (IsPreRecordingMode)
+            {
+                _audioBuffer?.Write(sample);
+                return;
+            }
+
+            // Live Mode
+            WriteAudioToAssetWriter(sample);
         }
+
+        private void WriteAudioToAssetWriter(AudioSample sample)
+        {
+            lock (_audioWriterLock)
+            {
+                if (_writer == null || _writer.Status != AVAssetWriterStatus.Writing 
+                    || _audioWriterInput == null || !_audioWriterInput.ReadyForMoreMediaData)
+                    return;
+
+                using var cmsample = CreateSampleBuffer(sample);
+                if (cmsample != null)
+                {
+                    _audioWriterInput.AppendSampleBuffer(cmsample);
+                }
+            }
+        }
+
+        [DllImport("/System/Library/Frameworks/CoreMedia.framework/CoreMedia")]
+        private static extern int CMAudioFormatDescriptionCreate(
+            IntPtr allocator,
+            ref AudioStreamBasicDescription asbd,
+            nuint layoutSize,
+            IntPtr layout,
+            nuint magicCookieSize,
+            IntPtr magicCookie,
+            IntPtr extensions,
+            out IntPtr formatDescriptionOut
+        );
+
+        private CMSampleBuffer CreateSampleBuffer(AudioSample sample)
+        {
+            try
+            {
+                if (_audioFormatDescription == null)
+                {
+                    // Create format desc
+                    AudioStreamBasicDescription audioFormat = new AudioStreamBasicDescription
+                    {
+                        SampleRate = sample.SampleRate,
+                        Format = AudioFormatType.LinearPCM, 
+                        FormatFlags = AudioFormatFlags.LinearPCMIsPacked | AudioFormatFlags.LinearPCMIsSignedInteger,
+                        ChannelsPerFrame = (int)sample.Channels,
+                        BytesPerPacket = (int)(sample.Channels * 2), // Assuming 16-bit
+                        FramesPerPacket = 1,
+                        BytesPerFrame = (int)(sample.Channels * 2),
+                        BitsPerChannel = 16 
+                    };
+                    
+                    if (sample.BitDepth == AudioBitDepth.Pcm8Bit) 
+                    {
+                        audioFormat.BitsPerChannel = 8;
+                        audioFormat.BytesPerFrame = (int)sample.Channels;
+                        audioFormat.BytesPerPacket = (int)sample.Channels;
+                    }
+                    else if (sample.BitDepth == AudioBitDepth.Float32Bit)
+                    {
+                         audioFormat.BitsPerChannel = 32;
+                         audioFormat.FormatFlags = AudioFormatFlags.LinearPCMIsFloat | AudioFormatFlags.LinearPCMIsPacked;
+                         audioFormat.BytesPerFrame = (int)(sample.Channels * 4);
+                         audioFormat.BytesPerPacket = (int)(sample.Channels * 4);
+                    }
+                    
+                    IntPtr formatDescPtr;
+                    var result = CMAudioFormatDescriptionCreate(
+                        IntPtr.Zero,
+                        ref audioFormat,
+                        0,
+                        IntPtr.Zero,
+                        0,
+                        IntPtr.Zero,
+                        IntPtr.Zero,
+                        out formatDescPtr
+                    );
+
+                    if (result != 0 || formatDescPtr == IntPtr.Zero)
+                    {
+                        return null;
+                    }
+
+                    var desc = CMFormatDescription.Create(formatDescPtr, true);
+
+                    if (desc == null) return null;
+                    _audioFormatDescription = (CMAudioFormatDescription)desc;
+                }
+
+                var unmanagedPtr = Marshal.AllocHGlobal(sample.Data.Length);
+                Marshal.Copy(sample.Data, 0, unmanagedPtr, sample.Data.Length);
+
+                CMBlockBuffer blockBuffer = null;
+                try
+                {
+                    blockBuffer = CMBlockBuffer.FromMemoryBlock(
+                        unmanagedPtr,
+                        (nuint)sample.Data.Length,
+                        null,
+                        0, 
+                        (nuint)sample.Data.Length,
+                        CMBlockBufferFlags.AssureMemoryNow,
+                        out var err);
+                }
+                catch
+                {
+                     Marshal.FreeHGlobal(unmanagedPtr);
+                     return null;
+                }
+                if (blockBuffer == null) 
+                {
+                    Marshal.FreeHGlobal(unmanagedPtr);
+                    return null;
+                }
+                
+                CMTime presentationTime = CMTime.FromSeconds((double)sample.TimestampNs / 1_000_000_000.0, 1000000000);
+                var timing = new CMSampleTimingInfo { PresentationTimeStamp = presentationTime, Duration = CMTime.Invalid, DecodeTimeStamp = CMTime.Invalid };
+
+                CMSampleBufferError sbErr;
+                var sampleBuffer = CMSampleBuffer.CreateReady(blockBuffer, _audioFormatDescription, 1, new[] { timing }, new nuint[] { (nuint)sample.Data.Length }, out sbErr);
+                
+                if (sbErr != CMSampleBufferError.None) return null;
+                
+                return sampleBuffer;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
+                return null;
+            }
+        }
+
         private SKImageInfo _info;
         private readonly object _frameLock = new();
         private TimeSpan _pendingTimestamp;
@@ -251,10 +395,8 @@ namespace DrawnUi.Camera
                 Height = _height
             };
 
-            _videoInput = new AVAssetWriterInput(AVMediaTypes.Video.GetConstant(), videoSettings)
-            {
-                ExpectsMediaDataInRealTime = true
-            };
+            _videoInput = new AVAssetWriterInput(AVMediaTypes.Video.GetConstant(), videoSettings);
+            _videoInput.ExpectsMediaDataInRealTime = true;
 
             // Set transform based on device rotation to ensure correct playback orientation
             _videoInput.Transform = GetTransformForRotation(_deviceRotation);
@@ -262,6 +404,26 @@ namespace DrawnUi.Camera
             if (!_writer.CanAddInput(_videoInput))
                 throw new InvalidOperationException("Cannot add video input to AVAssetWriter");
             _writer.AddInput(_videoInput);
+
+            // Audio Input
+            if (_recordAudio)
+            {
+                var settingsDict = new NSMutableDictionary();
+                settingsDict[AVAudioSettings.AVFormatIDKey] = NSNumber.FromInt32((int)AudioFormatType.MPEG4AAC);
+                settingsDict[AVAudioSettings.AVSampleRateKey] = NSNumber.FromDouble(44100);
+                settingsDict[AVAudioSettings.AVNumberOfChannelsKey] = NSNumber.FromInt32(1);
+                settingsDict[AVAudioSettings.AVEncoderBitRateKey] = NSNumber.FromInt32(128000);
+                var audioSettings = new AudioSettings(settingsDict); // Use Dictionary directly if AudioSettings is unavailable or static
+
+                _audioWriterInput = new AVAssetWriterInput(AVMediaTypes.Audio.GetConstant(), audioSettings);
+                _audioWriterInput.ExpectsMediaDataInRealTime = true;
+
+                if (_writer.CanAddInput(_audioWriterInput))
+                {
+                    _writer.AddInput(_audioWriterInput);
+                    System.Diagnostics.Debug.WriteLine("[AppleVideoToolboxEncoder] Audio input added");
+                }
+            }
 
             // Zero-Copy Requirement: Attributes must allow Metal access
             var pbaAttributes = new CVPixelBufferAttributes
@@ -486,7 +648,7 @@ namespace DrawnUi.Camera
                     System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Buffer stats: {_preRecordingBuffer.GetStats()}");
                     System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Writing {bufferFrameCount} buffered frames to: {_preRecordingFilePath}");
 
-                    await WriteBufferedFramesToMp4Async(_preRecordingBuffer, _preRecordingFilePath);
+                    await WriteBufferedFramesToMp4Async(_preRecordingBuffer, _preRecordingFilePath, _audioBuffer);
 
                     // Verify file was written
                     if (File.Exists(_preRecordingFilePath))
@@ -519,6 +681,25 @@ namespace DrawnUi.Camera
                 if (_writer == null || err != null)
                     throw new InvalidOperationException($"AVAssetWriter failed: {err?.LocalizedDescription}");
 
+                // Audio Input for Live
+                if (_recordAudio)
+                {
+                    var settingsDict = new NSMutableDictionary();
+                    settingsDict[AVAudioSettings.AVFormatIDKey] = NSNumber.FromInt32((int)AudioFormatType.MPEG4AAC);
+                    settingsDict[AVAudioSettings.AVSampleRateKey] = NSNumber.FromDouble(44100);
+                    settingsDict[AVAudioSettings.AVNumberOfChannelsKey] = NSNumber.FromInt32(1);
+                    settingsDict[AVAudioSettings.AVEncoderBitRateKey] = NSNumber.FromInt32(128000);
+                    
+                    _audioWriterInput = new AVAssetWriterInput(AVMediaTypes.Audio.GetConstant(), new AudioSettings(settingsDict));
+                    _audioWriterInput.ExpectsMediaDataInRealTime = true;
+                    
+                    if (_writer.CanAddInput(_audioWriterInput))
+                    {
+                        _writer.AddInput(_audioWriterInput);
+                        System.Diagnostics.Debug.WriteLine("[AppleVideoToolboxEncoder] Audio input added (Live)");
+                    }
+                }
+
                 var videoSettings = new AVVideoSettingsCompressed
                 {
                     Codec = AVVideoCodec.H264,
@@ -526,10 +707,8 @@ namespace DrawnUi.Camera
                     Height = _height
                 };
 
-                _videoInput = new AVAssetWriterInput(AVMediaTypes.Video.GetConstant(), videoSettings)
-                {
-                    ExpectsMediaDataInRealTime = true
-                };
+                _videoInput = new AVAssetWriterInput(AVMediaTypes.Video.GetConstant(), videoSettings);
+                _videoInput.ExpectsMediaDataInRealTime = true;
 
                 _videoInput.Transform = GetTransformForRotation(_deviceRotation);
 
@@ -1080,7 +1259,7 @@ namespace DrawnUi.Camera
                     _preRecordingBuffer.PruneToMaxDuration();
 
                     System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Writing buffer to: {_preRecordingFilePath}");
-                    await WriteBufferedFramesToMp4Async(_preRecordingBuffer, _preRecordingFilePath);
+                    await WriteBufferedFramesToMp4Async(_preRecordingBuffer, _preRecordingFilePath, _audioBuffer);
 
                     // CRITICAL: Update EncodingDuration to reflect ACTUAL video duration from frame timestamps
                     // NOT wall-clock time! This is used by SkiaCamera for timestamp offset calculation
@@ -1516,7 +1695,7 @@ namespace DrawnUi.Camera
             }
         }
 
-        private async Task WriteBufferedFramesToMp4Async(PrerecordingEncodedBufferApple buffer, string outputPath)
+        private async Task WriteBufferedFramesToMp4Async(PrerecordingEncodedBufferApple buffer, string outputPath, CircularAudioBuffer audioBuffer = null)
         {
             var frames = buffer.GetAllFrames();
             if (frames == null || frames.Count == 0)
@@ -1576,11 +1755,9 @@ namespace DrawnUi.Camera
                 // - Provide sourceFormatHint so AVAssetWriter knows the format
                 videoInput = new AVAssetWriterInput(
                     AVMediaTypes.Video.GetConstant(),
-                    outputSettings: (AVVideoSettingsCompressed)null,
-                    sourceFormatHint: formatDesc)
-                {
-                    ExpectsMediaDataInRealTime = false
-                };
+                    (AVVideoSettingsCompressed)null,
+                    formatDesc);
+                videoInput.ExpectsMediaDataInRealTime = false;
 
                 // Set transform based on device rotation
                 videoInput.Transform = GetTransformForRotation(_deviceRotation);
@@ -1594,6 +1771,20 @@ namespace DrawnUi.Camera
                 }
 
                 writer.AddInput(videoInput);
+
+                AVAssetWriterInput audioInput = null;
+                if (audioBuffer != null)
+                {
+                     var audioSettings = new AudioSettings
+                    {
+                        Format = AudioFormatType.MPEG4AAC,
+                        SampleRate = 44100,
+                        NumberChannels = 1,
+                        EncoderBitRate = 128000
+                    };
+                    audioInput = new AVAssetWriterInput(AVMediaTypes.Audio.GetConstant(), audioSettings) { ExpectsMediaDataInRealTime = false };
+                    if (writer.CanAddInput(audioInput)) writer.AddInput(audioInput);
+                }
 
                 if (!writer.StartWriting())
                 {
@@ -1721,6 +1912,38 @@ namespace DrawnUi.Camera
                 }
 
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Successfully wrote {appendedCount}/{frames.Count} frames to MP4");
+
+                // Write Audio
+                if (audioInput != null && audioBuffer != null)
+                {
+                    long startNs = frames.Count > 0 ? (long)(frames[0].PresentationTime.Seconds * 1_000_000_000.0) : 0;
+                    var samples = audioBuffer.DrainFrom(startNs);
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Writing {samples.Length} audio samples");
+
+                    CMTime firstFramePtsCM = frames.Count > 0 ? frames[0].PresentationTime : CMTime.Zero;
+                    
+                    foreach(var sample in samples)
+                    {
+                        using var sBuf = CreateSampleBuffer(sample);
+                        if (sBuf != null)
+                        {
+                            CMTime origPts = sBuf.PresentationTimeStamp;
+                            CMTime adjPts = CMTime.Subtract(origPts, firstFramePtsCM);
+                             
+                            var timingInfo = new CMSampleTimingInfo { PresentationTimeStamp = adjPts, Duration = sBuf.Duration, DecodeTimeStamp = CMTime.Invalid };
+                            nint createTxErr;
+                            var adjustedBuf = CMSampleBuffer.CreateWithNewTiming(sBuf, new[] { timingInfo }, out createTxErr);
+                             
+                            if (createTxErr == 0 && adjustedBuf != null)
+                            {
+                                while(!audioInput.ReadyForMoreMediaData) await Task.Delay(5);
+                                audioInput.AppendSampleBuffer(adjustedBuf);
+                                adjustedBuf.Dispose();
+                            }
+                        }
+                    }
+                    audioInput.MarkAsFinished();
+                }
 
                 // Finalize writing
                 videoInput.MarkAsFinished();

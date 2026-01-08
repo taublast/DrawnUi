@@ -2660,6 +2660,17 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     /// </summary>
     public Action<TimeSpan> VideoRecordingProgress { get; set; }
 
+    /// <summary>
+    /// Sets whether audio should be recorded with video.
+    /// Windows handles this via separate audio capture flow.
+    /// </summary>
+    public void SetRecordAudio(bool recordAudio)
+    {
+        // Windows native recording uses separate audio capture via IAudioCapture interface
+        // This method is here for interface compliance - actual audio is handled by SkiaCamera
+        System.Diagnostics.Debug.WriteLine($"[NativeCamera.Windows] SetRecordAudio: {recordAudio}");
+    }
+
     #endregion
 
     #region Audio
