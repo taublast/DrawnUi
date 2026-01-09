@@ -13,7 +13,7 @@ namespace DrawnUi.Draw
         /// <summary>
         /// Min velocity in points/sec to flee/swipe when finger is up
         /// </summary>
-        public static float ThesholdSwipeOnUp = 40f;
+        public static float ThesholdSwipeOnUp = 20f;
 
         /// <summary>
         /// To filter micro-gestures while manually panning
