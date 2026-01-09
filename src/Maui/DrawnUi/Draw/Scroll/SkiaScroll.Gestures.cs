@@ -459,14 +459,31 @@ public partial class SkiaScroll
                             }
                         }
 
-                        //accumulate velocity for different gestures before drawing
-                        _pannedVelocity = _pannedVelocity + new Vector2(VelocityX, VelocityY);
+                        if (Orientation == ScrollOrientation.Vertical)
+                        {
+                            ViewportOffsetY = clamped.Y;
+                        }
+                        else
+                        if (Orientation == ScrollOrientation.Horizontal)
+                        {
+                            ViewportOffsetX = clamped.X;
+                        }
+                        else
+                        {
+                            ViewportOffsetY = clamped.Y;
+                            ViewportOffsetX = clamped.X;
+                        }
 
-                        _pannedOffset = clamped; //will be applied once when drawing by ApplyPannedOffsetWithVelocity
+                        IsUserPanning = true;
+                        //_lastVelocity = new Vector2(VelocityX, VelocityY);
+
+                        //accumulate velocity for different gestures before drawing
+                        //_pannedVelocity += new Vector2(VelocityX, VelocityY);
+                        //_pannedOffset = clamped; //will be applied once when drawing by ApplyPannedOffsetWithVelocity
 
                         consumed = this;
 
-                        Repaint();
+                        //Repaint();
                     }
 
                     break;

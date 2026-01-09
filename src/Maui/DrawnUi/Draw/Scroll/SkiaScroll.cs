@@ -2568,7 +2568,7 @@ namespace DrawnUi.Draw
 
             if (!CheckIsGhost())
             {
-                ApplyPannedOffsetWithVelocity(context.Context);
+                //ApplyPannedOffsetWithVelocity(context.Context);
                 var posX = (float)(ViewportOffsetX * zoomedScale);
                 var posY = (float)(ViewportOffsetY * zoomedScale);
 
