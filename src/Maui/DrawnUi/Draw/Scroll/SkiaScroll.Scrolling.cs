@@ -461,9 +461,9 @@ public partial class SkiaScroll
         if (width < 0)
             width = 0;
 
-        if (contentOffset.X < 0) //scrolling to  right
+        if (contentOffset.X < contentRect.Left) //scrolling to  right
             closestPoint.X = contentRect.Left;
-        else if (contentOffset.X > 0) //scrolling to left
+        else if (contentOffset.X > width) //scrolling to left
             closestPoint.X = width;
         else
             closestPoint.X = contentOffset.X;
@@ -472,9 +472,9 @@ public partial class SkiaScroll
         if (height < 0)
             height = 0;
 
-        if (contentOffset.Y < 0) //scrolling to bottom
+        if (contentOffset.Y < contentRect.Top) //scrolling to bottom
             closestPoint.Y = contentRect.Top;
-        else if (contentOffset.Y > 0) //scrolling to top
+        else if (contentOffset.Y > height) //scrolling to top
             closestPoint.Y = height;
         else
             closestPoint.Y = contentOffset.Y;
