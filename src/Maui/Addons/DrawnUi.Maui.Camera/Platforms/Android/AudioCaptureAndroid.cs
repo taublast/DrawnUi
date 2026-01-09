@@ -1,7 +1,9 @@
+using Android.Content;
 using Android.Media;
 using System.Text;
 using Debug = System.Diagnostics.Debug;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Encoding = Android.Media.Encoding;
 
 namespace DrawnUi.Camera;
@@ -13,6 +15,7 @@ public class AudioCaptureAndroid : IAudioCapture
     private volatile bool _isCapturing;
     private int _bufferSize;
     private AudioTimestamp _audioTimestamp;
+    private Android.Media.AudioDeviceInfo[] _availableDevices;
 
     public bool IsCapturing => _isCapturing;
     public int SampleRate { get; private set; }
@@ -21,7 +24,58 @@ public class AudioCaptureAndroid : IAudioCapture
 
     public event EventHandler<AudioSample> SampleAvailable;
 
-    public async Task<bool> StartAsync(int sampleRate = 44100, int channels = 1, AudioBitDepth bitDepth = AudioBitDepth.Pcm16Bit)
+    /// <summary>
+    /// Get list of available audio input devices
+    /// </summary>
+    public Task<List<DrawnUi.Camera.AudioDeviceInfo>> GetAvailableDevicesAsync()
+    {
+        var devices = new List<DrawnUi.Camera.AudioDeviceInfo>();
+        try
+        {
+            var audioManager = (AudioManager)Android.App.Application.Context.GetSystemService(Context.AudioService);
+            if (audioManager != null && Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.M)
+            {
+                _availableDevices = audioManager.GetDevices(GetDevicesTargets.Inputs);
+                if (_availableDevices != null)
+                {
+                    for (int i = 0; i < _availableDevices.Length; i++)
+                    {
+                        var device = _availableDevices[i];
+                        var productName = device.ProductName?.ToString() ?? "";
+                        var deviceType = device.Type.ToString();
+                        devices.Add(new DrawnUi.Camera.AudioDeviceInfo
+                        {
+                            Index = i,
+                            Id = device.Id.ToString(),
+                            Name = !string.IsNullOrEmpty(productName)
+                                ? $"{productName} ({deviceType})"
+                                : deviceType,
+                            IsDefault = device.Type == AudioDeviceType.BuiltinMic
+                        });
+                        Debug.WriteLine($"[AudioCaptureAndroid] Available audio device [{i}]: {productName} (ID: {device.Id}, Type: {deviceType})");
+                    }
+                }
+            }
+            else
+            {
+                // Fallback for older APIs - just report default microphone
+                devices.Add(new DrawnUi.Camera.AudioDeviceInfo
+                {
+                    Index = 0,
+                    Id = "default",
+                    Name = "Default Microphone",
+                    IsDefault = true
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[AudioCaptureAndroid] Error getting audio devices: {ex.Message}");
+        }
+        return Task.FromResult(devices);
+    }
+
+    public async Task<bool> StartAsync(int sampleRate = 44100, int channels = 1, AudioBitDepth bitDepth = AudioBitDepth.Pcm16Bit, int deviceIndex = -1)
     {
         if (_isCapturing) return true;
 
@@ -61,11 +115,39 @@ public class AudioCaptureAndroid : IAudioCapture
             // Initialize AudioRecord
             // Requires RECORD_AUDIO permission
             _audioRecord = new AudioRecord(AudioSource.Mic, sampleRate, channelConfig, audioFormat, _bufferSize);
-            
+
             if (_audioRecord.State != State.Initialized)
             {
                 Debug.WriteLine("[AudioCaptureAndroid] AudioRecord failed to initialize.");
                 return false;
+            }
+
+            // Select specific audio input device if requested (API 23+)
+            if (deviceIndex >= 0 && Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.M)
+            {
+                // Get available devices if not already cached
+                if (_availableDevices == null)
+                {
+                    var audioManager = (AudioManager)Android.App.Application.Context.GetSystemService(Context.AudioService);
+                    _availableDevices = audioManager?.GetDevices(GetDevicesTargets.Inputs);
+                }
+
+                if (_availableDevices != null && deviceIndex < _availableDevices.Length)
+                {
+                    var selectedDevice = _availableDevices[deviceIndex];
+                    if (_audioRecord.SetPreferredDevice(selectedDevice))
+                    {
+                        Debug.WriteLine($"[AudioCaptureAndroid] Selected audio device [{deviceIndex}]: {selectedDevice.ProductName?.ToString() ?? "Unknown"} (ID: {selectedDevice.Id})");
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"[AudioCaptureAndroid] Failed to select audio device {deviceIndex}");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine($"[AudioCaptureAndroid] Invalid device index {deviceIndex}, using default");
+                }
             }
 
             _audioTimestamp = new AudioTimestamp();

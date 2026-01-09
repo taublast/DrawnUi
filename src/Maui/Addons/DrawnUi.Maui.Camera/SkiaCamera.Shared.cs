@@ -2966,9 +2966,12 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
-    /// Mux two video files (pre-recorded + live) into a single output file
-    /// Platform-specific implementation for iOS, Android, and Windows
+    /// Mux two video files (pre-recorded + live) into a single output file.
+    /// Platform-specific implementation for iOS, Android, and Windows.
+    /// Note: Audio handling is platform-specific and not part of this shared interface.
     /// </summary>
+    /// <param name="preRecordedPath">Path to pre-recorded video file</param>
+    /// <param name="liveRecordingPath">Path to live recording video file</param>
     private async Task<string> MuxVideosAsync(string preRecordedPath, string liveRecordingPath)
     {
 #if ONPLATFORM

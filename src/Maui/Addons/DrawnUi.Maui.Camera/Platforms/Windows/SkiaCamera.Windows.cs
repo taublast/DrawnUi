@@ -395,6 +395,7 @@ public partial class SkiaCamera : SkiaControl
 
     /// <summary>
     /// Platform interface for muxing videos. Delegates to Windows-specific MuxVideos() with MediaComposition and fallback.
+    /// Note: Audio is already embedded in video files on Windows (handled by encoder).
     /// </summary>
     private async Task<string> MuxVideosInternal(string preRecordedPath, string liveRecordingPath, string outputPath)
     {
@@ -847,7 +848,7 @@ public partial class SkiaCamera : SkiaControl
         {
             _audioCapture = audioCapture;
             _audioCapture.SampleAvailable += OnAudioSampleAvailable;
-            bool audioStarted = await _audioCapture.StartAsync();
+            bool audioStarted = await _audioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
             Debug.WriteLine($"[StartCaptureVideoFlow] Audio capture started: {audioStarted}");
         }
         else if (RecordAudio && !audioEncodingEnabled)

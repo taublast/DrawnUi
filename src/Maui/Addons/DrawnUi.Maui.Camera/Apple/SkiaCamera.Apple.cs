@@ -14,6 +14,7 @@ namespace DrawnUi.Camera;
 public partial class SkiaCamera
 {
 
+    private AudioSample[] _preRecordedAudioSamples;  // Saved at pre-rec → live transition
 
     public virtual void SetZoom(double value)
     {
@@ -273,10 +274,10 @@ public partial class SkiaCamera
 
     private void OnAudioSampleAvailable(object sender, AudioSample e)
     {
-        if (_captureVideoEncoder is AppleVideoToolboxEncoder appleEnc)
-        {
-             appleEnc.WriteAudioSample(e);
-        }
+        // ARCHITECTURAL FIX: Always write to session-wide buffer, never to encoder
+        // This ensures continuous audio capture through pre-recording → live transition
+        // Audio will be muxed into final file at StopCaptureVideoFlow time
+        _audioBuffer?.Write(e);
     }
 
     private async Task StartCaptureVideoFlow()
@@ -303,6 +304,8 @@ public partial class SkiaCamera
         {
             try
             {
+                // ARCHITECTURAL FIX: Audio capture runs continuously through entire session
+                // Create audio capture ONCE at session start (first call)
                 if (_audioCapture == null)
                 {
                     _audioCapture = CreateAudioCapturePlatform();
@@ -310,20 +313,38 @@ public partial class SkiaCamera
                         _audioCapture.SampleAvailable += OnAudioSampleAvailable;
                 }
 
-                if (IsPreRecording)
+                // AUDIO BUFFER MODE:
+                // - Pre-recording phase: CIRCULAR buffer matching video duration (keeps last N seconds)
+                // - Live-only (no pre-recording): LINEAR buffer (keeps all samples)
+                // Buffer is recreated at pre-rec → live transition (see StartVideoRecording)
+                if (_audioBuffer == null)
                 {
-                    _audioBuffer = new CircularAudioBuffer(PreRecordDuration);
-                    appleEncoder.SetAudioBuffer(_audioBuffer);
-                }
-                else
-                {
-                    _audioBuffer = null;
-                    appleEncoder.SetAudioBuffer(null);
+                    if (EnablePreRecording && !IsRecordingVideo)
+                    {
+                        // Pre-recording phase: Circular buffer matching video duration
+                        _audioBuffer = new CircularAudioBuffer(PreRecordDuration);
+                        Debug.WriteLine($"[StartCaptureVideoFlow] Created CIRCULAR audio buffer ({PreRecordDuration.TotalSeconds:F1}s)");
+                    }
+                    else
+                    {
+                        // Live-only (no pre-recording): Linear buffer for full recording
+                        _audioBuffer = CircularAudioBuffer.CreateLinear();
+                        Debug.WriteLine("[StartCaptureVideoFlow] Created LINEAR audio buffer for live recording");
+                    }
                 }
 
-                if (_audioCapture != null)
+                // ARCHITECTURAL FIX: Encoder handles VIDEO ONLY - never pass audio buffer to encoder
+                appleEncoder.SetAudioBuffer(null);
+
+                // Start audio capture if not already running (survives transition)
+                if (_audioCapture != null && !_audioCapture.IsCapturing)
                 {
-                    await _audioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth);
+                    await _audioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
+                    Debug.WriteLine("[StartCaptureVideoFlow] Audio capture started");
+                }
+                else if (_audioCapture?.IsCapturing == true)
+                {
+                    Debug.WriteLine("[StartCaptureVideoFlow] Audio capture already running (surviving transition)");
                 }
             }
             catch (Exception ex)
@@ -950,9 +971,14 @@ public partial class SkiaCamera
     //}
 
     /// <summary>
-    /// Mux pre-recorded and live video files using AVAssetComposition
+    /// Mux pre-recorded and live video files using AVAssetComposition.
+    /// Optionally includes a separate audio file that spans the entire recording session.
     /// </summary>
-    private async Task<string> MuxVideosInternal(string preRecordedPath, string liveRecordingPath, string outputPath)
+    /// <param name="preRecordedPath">Path to pre-recorded video file (video only)</param>
+    /// <param name="liveRecordingPath">Path to live recording video file (video only)</param>
+    /// <param name="outputPath">Output file path for muxed result</param>
+    /// <param name="audioFilePath">Optional: Path to audio file (M4A) to include in output</param>
+    private async Task<string> MuxVideosInternal(string preRecordedPath, string liveRecordingPath, string outputPath, string audioFilePath = null)
     {
         try
         {
@@ -974,6 +1000,8 @@ public partial class SkiaCamera
                 $"  Pre-recorded: {preRecordedPath} (exists: {File.Exists(preRecordedPath)})");
             System.Diagnostics.Debug.WriteLine(
                 $"  Live recording: {liveRecordingPath} (exists: {File.Exists(liveRecordingPath)})");
+            System.Diagnostics.Debug.WriteLine(
+                $"  Audio file: {audioFilePath ?? "none"} (exists: {audioFilePath != null && File.Exists(audioFilePath)})");
             System.Diagnostics.Debug.WriteLine($"  Output: {outputPath}");
 
             using (var preAsset = AVFoundation.AVAsset.FromUrl(Foundation.NSUrl.FromFilename(preRecordedPath)))
@@ -1018,6 +1046,115 @@ public partial class SkiaCamera
                         throw new InvalidOperationException(
                             $"Failed to insert live track: {error.LocalizedDescription}");
                 }
+
+                // ========================= AUDIO TRACK HANDLING =========================
+                // ARCHITECTURAL FIX: Audio is now provided as a separate file (session-wide continuous audio)
+                // First priority: External audio file (new architecture)
+                // Fallback: Audio tracks from source video files (legacy/compatibility)
+
+                AVFoundation.AVAsset audioAsset = null;
+                bool hasExternalAudio = !string.IsNullOrEmpty(audioFilePath) && File.Exists(audioFilePath);
+
+                if (hasExternalAudio)
+                {
+                    audioAsset = AVFoundation.AVAsset.FromUrl(Foundation.NSUrl.FromFilename(audioFilePath));
+                    var externalAudioTracks = audioAsset?.TracksWithMediaType(AVMediaTypes.Audio.GetConstant());
+
+                    if (externalAudioTracks != null && externalAudioTracks.Length > 0)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Using external audio file: {audioFilePath}");
+
+                        var audioTrack = composition.AddMutableTrack(AVMediaTypes.Audio.GetConstant(), 0);
+                        if (audioTrack != null)
+                        {
+                            var externalAudioTrack = externalAudioTracks[0];
+                            var totalVideoDuration = composition.Duration;
+
+                            // Use the shorter of audio duration and video duration to avoid mismatch
+                            var audioDuration = audioAsset.Duration;
+                            var insertDuration = audioDuration.Seconds <= totalVideoDuration.Seconds ? audioDuration : totalVideoDuration;
+
+                            var audioRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = insertDuration };
+                            audioTrack.InsertTimeRange(audioRange, externalAudioTrack, CoreMedia.CMTime.Zero, out var audioError);
+
+                            if (audioError != null)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Warning: Failed to insert external audio: {audioError.LocalizedDescription}");
+                            }
+                            else
+                            {
+                                System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Added external audio track ({insertDuration.Seconds:F2}s of {audioDuration.Seconds:F2}s available)");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] External audio file has no audio tracks");
+                        hasExternalAudio = false;
+                    }
+                }
+
+                // Fallback: Check if source video files have audio tracks (legacy behavior for backward compatibility)
+                if (!hasExternalAudio)
+                {
+                    var preAudioTracks = preAsset.TracksWithMediaType(AVMediaTypes.Audio.GetConstant());
+                    var liveAudioTracks = liveAsset.TracksWithMediaType(AVMediaTypes.Audio.GetConstant());
+
+                    bool hasPreAudio = preAudioTracks != null && preAudioTracks.Length > 0;
+                    bool hasLiveAudio = liveAudioTracks != null && liveAudioTracks.Length > 0;
+
+                    System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Source video audio tracks: Pre-recording={hasPreAudio}, Live={hasLiveAudio}");
+
+                    if (hasPreAudio || hasLiveAudio)
+                    {
+                        var audioTrack = composition.AddMutableTrack(AVMediaTypes.Audio.GetConstant(), 0);
+                        if (audioTrack != null)
+                        {
+                            var audioCurrentTime = CoreMedia.CMTime.Zero;
+
+                            // Add pre-recorded audio
+                            if (hasPreAudio)
+                            {
+                                var preAudioTrack = preAudioTracks[0];
+                                var preAudioRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = preAsset.Duration };
+                                audioTrack.InsertTimeRange(preAudioRange, preAudioTrack, audioCurrentTime, out var audioError);
+                                if (audioError != null)
+                                {
+                                    System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Warning: Failed to insert pre-recorded audio: {audioError.LocalizedDescription}");
+                                }
+                                else
+                                {
+                                    audioCurrentTime = CoreMedia.CMTime.Add(audioCurrentTime, preAsset.Duration);
+                                    System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Added pre-recording audio track ({preAsset.Duration.Seconds:F2}s)");
+                                }
+                            }
+
+                            // Add live recording audio
+                            if (hasLiveAudio)
+                            {
+                                var liveAudioTrack = liveAudioTracks[0];
+                                var liveAudioRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = liveAsset.Duration };
+                                audioTrack.InsertTimeRange(liveAudioRange, liveAudioTrack, audioCurrentTime, out var audioError);
+                                if (audioError != null)
+                                {
+                                    System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Warning: Failed to insert live audio: {audioError.LocalizedDescription}");
+                                }
+                                else
+                                {
+                                    System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Added live audio track ({liveAsset.Duration.Seconds:F2}s)");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Warning: Failed to create audio track in composition");
+                        }
+                    }
+                }
+
+                // Dispose external audio asset if we loaded one
+                audioAsset?.Dispose();
+                // ========================================================================
 
                 // CRITICAL: Copy transform from source track to composition to preserve orientation
                 // Both source files have correct transform, so copy from live track (or pre-track if live is null)
@@ -1333,6 +1470,7 @@ public partial class SkiaCamera
     private async Task StopCaptureVideoFlow()
     {
         ICaptureVideoEncoder encoder = null;
+        string tempAudioFilePath = null;
 
         try
         {
@@ -1345,6 +1483,38 @@ public partial class SkiaCamera
 
             // Give any in-flight CaptureFrame calls time to complete
             await Task.Delay(50);
+
+            // Get audio samples: combine pre-recorded + live audio
+            AudioSample[] audioSamples = null;
+            if (RecordAudio && _audioBuffer != null)
+            {
+                Debug.WriteLine($"[StopCaptureVideoFlow] Getting audio samples from buffer");
+                var liveAudioSamples = _audioBuffer.GetAllSamples();
+                Debug.WriteLine($"[StopCaptureVideoFlow] Live audio: {liveAudioSamples?.Length ?? 0} samples, buffer duration: {_audioBuffer.BufferedDuration.TotalSeconds:F2}s");
+
+                // Combine pre-recorded + live audio if we have pre-rec samples
+                if (_preRecordedAudioSamples != null && _preRecordedAudioSamples.Length > 0)
+                {
+                    Debug.WriteLine($"[StopCaptureVideoFlow] Combining {_preRecordedAudioSamples.Length} pre-rec + {liveAudioSamples?.Length ?? 0} live audio samples");
+                    audioSamples = CombineAudioSamples(_preRecordedAudioSamples, liveAudioSamples);
+                    _preRecordedAudioSamples = null;  // Clean up
+                }
+                else
+                {
+                    audioSamples = liveAudioSamples;
+                }
+                Debug.WriteLine($"[StopCaptureVideoFlow] Total audio samples: {audioSamples?.Length ?? 0}");
+            }
+
+            // Stop audio capture
+            if (_audioCapture != null)
+            {
+                Debug.WriteLine($"[StopCaptureVideoFlow] Stopping audio capture");
+                _audioCapture.SampleAvailable -= OnAudioSampleAvailable;
+                await _audioCapture.StopAsync();
+                _audioCapture.Dispose();
+                _audioCapture = null;
+            }
 
             // Get local reference to encoder before clearing field to prevent disposal race
             encoder = _captureVideoEncoder;
@@ -1363,8 +1533,24 @@ public partial class SkiaCamera
                     // Save original live recording path before overwriting capturedVideo
                     string originalLiveRecordingPath = capturedVideo.FilePath;
 
-                    // Mux pre-recorded file + live file into final output
-                    string finalOutputPath = await MuxVideosAsync(_preRecordingFilePath, originalLiveRecordingPath);
+                    // Write audio samples to temporary audio file for muxing (iOS-specific)
+                    if (audioSamples != null && audioSamples.Length > 0)
+                    {
+                        tempAudioFilePath = Path.Combine(
+                            Path.GetDirectoryName(originalLiveRecordingPath),
+                            $"audio_temp_{Guid.NewGuid():N}.m4a"
+                        );
+                        Debug.WriteLine($"[StopCaptureVideoFlow] Writing {audioSamples.Length} audio samples to temp file: {tempAudioFilePath}");
+                        tempAudioFilePath = await WriteAudioSamplesToM4AAsync(audioSamples, tempAudioFilePath);
+                    }
+
+                    // Mux pre-recorded file + live file + audio file into final output
+                    // iOS calls MuxVideosInternal directly to pass audio file (iOS-specific audio handling)
+                    string muxedOutputPath = Path.Combine(
+                        Path.GetDirectoryName(originalLiveRecordingPath),
+                        $"muxed_{DateTime.Now:yyyyMMdd_HHmmss}_{Guid.NewGuid():N}.mp4"
+                    );
+                    string finalOutputPath = await MuxVideosInternal(_preRecordingFilePath, originalLiveRecordingPath, muxedOutputPath, tempAudioFilePath);
                     if (!string.IsNullOrEmpty(finalOutputPath) && File.Exists(finalOutputPath))
                     {
                         // Update captured video to point to muxed file
@@ -1395,11 +1581,69 @@ public partial class SkiaCamera
                 }
                 finally
                 {
+                    // Clean up temp audio file
+                    if (!string.IsNullOrEmpty(tempAudioFilePath) && File.Exists(tempAudioFilePath))
+                    {
+                        try { File.Delete(tempAudioFilePath); } catch { }
+                    }
                     ClearPreRecordingBuffer();
                 }
             }
             else
             {
+                // LIVE-ONLY recording (no pre-recording) - still need to add audio if present
+                if (capturedVideo != null && audioSamples != null && audioSamples.Length > 0)
+                {
+                    Debug.WriteLine($"[StopCaptureVideoFlow] Live-only recording with audio - adding audio track");
+                    try
+                    {
+                        string originalVideoPath = capturedVideo.FilePath;
+                        tempAudioFilePath = Path.Combine(
+                            Path.GetDirectoryName(originalVideoPath),
+                            $"audio_temp_{Guid.NewGuid():N}.m4a"
+                        );
+                        Debug.WriteLine($"[StopCaptureVideoFlow] Writing {audioSamples.Length} audio samples to temp file");
+                        tempAudioFilePath = await WriteAudioSamplesToM4AAsync(audioSamples, tempAudioFilePath);
+
+                        if (!string.IsNullOrEmpty(tempAudioFilePath))
+                        {
+                            // Add audio to video using composition
+                            string outputPath = Path.Combine(
+                                Path.GetDirectoryName(originalVideoPath),
+                                $"final_{Guid.NewGuid():N}.mp4"
+                            );
+                            string finalPath = await AddAudioToVideoAsync(originalVideoPath, tempAudioFilePath, outputPath);
+
+                            if (!string.IsNullOrEmpty(finalPath) && File.Exists(finalPath))
+                            {
+                                var muxedInfo = new FileInfo(finalPath);
+                                capturedVideo = new CapturedVideo
+                                {
+                                    FilePath = finalPath,
+                                    FileSizeBytes = muxedInfo.Length,
+                                    Duration = capturedVideo.Duration,
+                                    Time = capturedVideo.Time
+                                };
+
+                                // Delete original video-only file
+                                try { File.Delete(originalVideoPath); } catch { }
+                                Debug.WriteLine($"[StopCaptureVideoFlow] Live recording with audio successful: {finalPath}");
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"[StopCaptureVideoFlow] Failed to add audio to live recording: {ex.Message}");
+                    }
+                    finally
+                    {
+                        // Clean up temp audio file
+                        if (!string.IsNullOrEmpty(tempAudioFilePath) && File.Exists(tempAudioFilePath))
+                        {
+                            try { File.Delete(tempAudioFilePath); } catch { }
+                        }
+                    }
+                }
                 ClearPreRecordingBuffer();
             }
 
@@ -1416,6 +1660,25 @@ public partial class SkiaCamera
             if (NativeControl is NativeCamera nativeCam)
             {
                 nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+            }
+
+            // Clean up audio resources on error
+            if (_audioCapture != null)
+            {
+                try
+                {
+                    _audioCapture.SampleAvailable -= OnAudioSampleAvailable;
+                    await _audioCapture.StopAsync();
+                    _audioCapture.Dispose();
+                }
+                catch { }
+                _audioCapture = null;
+            }
+
+            // Clean up temp audio file on error
+            if (!string.IsNullOrEmpty(tempAudioFilePath) && File.Exists(tempAudioFilePath))
+            {
+                try { File.Delete(tempAudioFilePath); } catch { }
             }
 
             _captureVideoEncoder = null;
@@ -1455,6 +1718,20 @@ public partial class SkiaCamera
             // Dispose encoder directly WITHOUT calling StopAsync - this should abandon the recording
             Debug.WriteLine($"[AbortCaptureVideoFlow] Disposing encoder without finalizing video");
             encoder?.Dispose();
+
+            // Clean up audio resources
+            if (_audioCapture != null)
+            {
+                try
+                {
+                    _audioCapture.SampleAvailable -= OnAudioSampleAvailable;
+                    await _audioCapture.StopAsync();
+                    _audioCapture.Dispose();
+                }
+                catch { }
+                _audioCapture = null;
+                Debug.WriteLine($"[AbortCaptureVideoFlow] Audio capture stopped and disposed");
+            }
 
             // Clean up any pre-recording files
             if (!string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath))
@@ -1601,6 +1878,18 @@ public partial class SkiaCamera
                     _captureVideoEncoder = null;
                 }
 
+                // SAVE PRE-REC AUDIO before it gets trimmed by live audio
+                // The circular buffer only keeps last N seconds, so we must save now
+                if (_audioBuffer != null && RecordAudio)
+                {
+                    _preRecordedAudioSamples = _audioBuffer.GetAllSamples();
+                    Debug.WriteLine($"[StartVideoRecording] Saved {_preRecordedAudioSamples?.Length ?? 0} pre-rec audio samples");
+
+                    // Switch to LINEAR buffer for live phase (keep all live audio)
+                    _audioBuffer = CircularAudioBuffer.CreateLinear();
+                    Debug.WriteLine("[StartVideoRecording] Switched to LINEAR audio buffer for live phase");
+                }
+
                 IsPreRecording = false;
                 IsRecordingVideo = true;
 
@@ -1685,6 +1974,454 @@ public partial class SkiaCamera
     {
         // iOS primarily supports AAC for MP4
         return await Task.FromResult(new List<string> { "AAC" });
+    }
+
+    /// <summary>
+    /// Combines pre-recorded audio samples with live audio samples into a single array.
+    /// Used when muxing pre-recording + live video with continuous audio.
+    /// </summary>
+    private AudioSample[] CombineAudioSamples(AudioSample[] preRec, AudioSample[] live)
+    {
+        if (preRec == null || preRec.Length == 0) return live ?? Array.Empty<AudioSample>();
+        if (live == null || live.Length == 0) return preRec;
+
+        var combined = new AudioSample[preRec.Length + live.Length];
+        Array.Copy(preRec, 0, combined, 0, preRec.Length);
+        Array.Copy(live, 0, combined, preRec.Length, live.Length);
+        return combined;
+    }
+
+    /// <summary>
+    /// Writes audio samples to an M4A file using AVAssetWriter.
+    /// This is used to create a separate audio track file that can be muxed with video.
+    /// </summary>
+    private async Task<string> WriteAudioSamplesToM4AAsync(AudioSample[] samples, string outputPath)
+    {
+        if (samples == null || samples.Length == 0)
+        {
+            Debug.WriteLine("[WriteAudioSamplesToM4A] No audio samples provided");
+            return null;
+        }
+
+        // Declare memory tracker outside try block so we can clean up on exceptions
+        var memoryToFree = new List<IntPtr>();
+
+        try
+        {
+            // Delete existing file
+            if (File.Exists(outputPath))
+            {
+                File.Delete(outputPath);
+            }
+
+            var url = NSUrl.FromFilename(outputPath);
+            // Use UTType for M4A audio format - "com.apple.m4a-audio" is the standard UTI
+            var writer = new AVAssetWriter(url, "com.apple.m4a-audio", out var writerError);
+
+            if (writer == null || writerError != null)
+            {
+                Debug.WriteLine($"[WriteAudioSamplesToM4A] AVAssetWriter creation failed: {writerError?.LocalizedDescription}");
+                return null;
+            }
+
+            // Configure audio output (AAC)
+            var audioSettings = new NSDictionary(
+                AVAudioSettings.AVFormatIDKey, NSNumber.FromInt32((int)AudioToolbox.AudioFormatType.MPEG4AAC),
+                AVAudioSettings.AVSampleRateKey, NSNumber.FromDouble(samples[0].SampleRate),
+                AVAudioSettings.AVNumberOfChannelsKey, NSNumber.FromInt32(samples[0].Channels),
+                AVAudioSettings.AVEncoderBitRateKey, NSNumber.FromInt32(128000)
+            );
+
+            var audioInput = new AVAssetWriterInput(AVMediaTypes.Audio.GetConstant(), new AVFoundation.AudioSettings(audioSettings));
+            audioInput.ExpectsMediaDataInRealTime = false;
+
+            if (!writer.CanAddInput(audioInput))
+            {
+                Debug.WriteLine("[WriteAudioSamplesToM4A] Cannot add audio input to writer");
+                writer.Dispose();
+                return null;
+            }
+            writer.AddInput(audioInput);
+
+            // Start writing
+            if (!writer.StartWriting())
+            {
+                Debug.WriteLine($"[WriteAudioSamplesToM4A] StartWriting failed: {writer.Error?.LocalizedDescription}");
+                audioInput.Dispose();
+                writer.Dispose();
+                return null;
+            }
+            writer.StartSessionAtSourceTime(CoreMedia.CMTime.Zero);
+
+            // Get the first timestamp as baseline (normalize to 0)
+            long firstTimestampNs = samples[0].TimestampNs;
+            int writtenCount = 0;
+            int failedCount = 0;
+
+            Debug.WriteLine($"[WriteAudioSamplesToM4A] Writing {samples.Length} audio samples, first timestamp: {firstTimestampNs / 1_000_000_000.0:F3}s");
+
+            // Write all samples
+            // CRITICAL: CMBlockBuffer does NOT copy data, so we track memory in memoryToFree for deferred cleanup
+            foreach (var sample in samples)
+            {
+                // Normalize timestamp relative to session start
+                long normalizedNs = sample.TimestampNs - firstTimestampNs;
+                if (normalizedNs < 0) normalizedNs = 0;
+
+                // Create CMSampleBuffer from audio sample - memory is tracked for deferred cleanup
+                IntPtr memoryPtr;
+                using var cmSampleBuffer = CreateCMSampleBufferFromAudio(sample, normalizedNs, out memoryPtr);
+                if (cmSampleBuffer == null)
+                {
+                    failedCount++;
+                    continue;
+                }
+
+                // Wait for audio input to be ready
+                int waitCount = 0;
+                while (!audioInput.ReadyForMoreMediaData && writer.Status == AVAssetWriterStatus.Writing && waitCount < 100)
+                {
+                    await Task.Delay(1);
+                    waitCount++;
+                }
+
+                if (audioInput.ReadyForMoreMediaData && writer.Status == AVAssetWriterStatus.Writing)
+                {
+                    if (audioInput.AppendSampleBuffer(cmSampleBuffer))
+                    {
+                        writtenCount++;
+                        // Track memory for cleanup after writer finishes
+                        if (memoryPtr != IntPtr.Zero)
+                        {
+                            memoryToFree.Add(memoryPtr);
+                        }
+                    }
+                    else
+                    {
+                        failedCount++;
+                        // Free immediately on append failure
+                        if (memoryPtr != IntPtr.Zero)
+                        {
+                            System.Runtime.InteropServices.Marshal.FreeHGlobal(memoryPtr);
+                        }
+                    }
+                }
+                else
+                {
+                    failedCount++;
+                    // Free immediately if not appended
+                    if (memoryPtr != IntPtr.Zero)
+                    {
+                        System.Runtime.InteropServices.Marshal.FreeHGlobal(memoryPtr);
+                    }
+                }
+            }
+
+            // Finish writing
+            audioInput.MarkAsFinished();
+
+            var tcs = new TaskCompletionSource<bool>();
+            writer.FinishWriting(() =>
+            {
+                tcs.TrySetResult(writer.Status == AVAssetWriterStatus.Completed);
+            });
+            await tcs.Task;
+
+            audioInput.Dispose();
+            var status = writer.Status;
+            var error = writer.Error;
+            writer.Dispose();
+
+            // NOW it's safe to free all tracked memory - writer has finished consuming the data
+            int freedCount = memoryToFree.Count;
+            foreach (var ptr in memoryToFree)
+            {
+                if (ptr != IntPtr.Zero)
+                {
+                    System.Runtime.InteropServices.Marshal.FreeHGlobal(ptr);
+                }
+            }
+            memoryToFree.Clear();
+            Debug.WriteLine($"[WriteAudioSamplesToM4A] Freed {freedCount} memory allocations");
+
+            if (status == AVAssetWriterStatus.Completed && File.Exists(outputPath))
+            {
+                var fileSize = new FileInfo(outputPath).Length;
+                Debug.WriteLine($"[WriteAudioSamplesToM4A] Success: {writtenCount} samples written ({fileSize / 1024.0:F2} KB), {failedCount} failed");
+                return outputPath;
+            }
+            else
+            {
+                Debug.WriteLine($"[WriteAudioSamplesToM4A] Failed: status={status}, error={error?.LocalizedDescription}");
+                return null;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[WriteAudioSamplesToM4A] Exception: {ex.Message}");
+
+            // CRITICAL: Free all tracked memory on exception to prevent memory leaks
+            foreach (var ptr in memoryToFree)
+            {
+                if (ptr != IntPtr.Zero)
+                {
+                    try
+                    {
+                        System.Runtime.InteropServices.Marshal.FreeHGlobal(ptr);
+                    }
+                    catch
+                    {
+                        // Ignore errors during cleanup
+                    }
+                }
+            }
+            memoryToFree.Clear();
+
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Creates a CMSampleBuffer from an AudioSample with the specified timestamp.
+    /// IMPORTANT: The caller must track and free the returned memoryPtr AFTER AppendSampleBuffer completes,
+    /// because CMBlockBuffer does NOT copy the data - it just references it.
+    /// </summary>
+    /// <param name="sample">The audio sample to convert</param>
+    /// <param name="timestampNs">Timestamp in nanoseconds</param>
+    /// <param name="memoryPtr">Output: The unmanaged memory pointer that must be freed by caller after use</param>
+    private CoreMedia.CMSampleBuffer CreateCMSampleBufferFromAudio(AudioSample sample, long timestampNs, out IntPtr memoryPtr)
+    {
+        memoryPtr = IntPtr.Zero;
+        try
+        {
+            int bytesPerSample = sample.BitDepth == AudioBitDepth.Pcm8Bit ? 1 :
+                                 sample.BitDepth == AudioBitDepth.Float32Bit ? 4 : 2;
+            int bytesPerFrame = bytesPerSample * sample.Channels;
+            nint numSamples = sample.Data.Length / bytesPerFrame;
+
+            // Create audio format description
+            var audioFormat = new AudioToolbox.AudioStreamBasicDescription
+            {
+                SampleRate = sample.SampleRate,
+                Format = AudioToolbox.AudioFormatType.LinearPCM,
+                FormatFlags = AudioToolbox.AudioFormatFlags.LinearPCMIsPacked | AudioToolbox.AudioFormatFlags.LinearPCMIsSignedInteger,
+                ChannelsPerFrame = sample.Channels,
+                BytesPerPacket = bytesPerFrame,
+                FramesPerPacket = 1,
+                BytesPerFrame = bytesPerFrame,
+                BitsPerChannel = bytesPerSample * 8
+            };
+
+            if (sample.BitDepth == AudioBitDepth.Float32Bit)
+            {
+                audioFormat.FormatFlags = AudioToolbox.AudioFormatFlags.LinearPCMIsFloat | AudioToolbox.AudioFormatFlags.LinearPCMIsPacked;
+            }
+
+            // Create format description using P/Invoke
+            IntPtr formatDescPtr;
+            var result = CMAudioFormatDescriptionCreate(
+                IntPtr.Zero,
+                ref audioFormat,
+                0,
+                IntPtr.Zero,
+                0,
+                IntPtr.Zero,
+                IntPtr.Zero,
+                out formatDescPtr
+            );
+
+            if (result != 0 || formatDescPtr == IntPtr.Zero)
+            {
+                return null;
+            }
+
+            var formatDesc = CoreMedia.CMFormatDescription.Create(formatDescPtr, true);
+
+            // Allocate unmanaged memory for audio data
+            // CRITICAL: Caller must free this AFTER AppendSampleBuffer completes!
+            memoryPtr = System.Runtime.InteropServices.Marshal.AllocHGlobal(sample.Data.Length);
+            System.Runtime.InteropServices.Marshal.Copy(sample.Data, 0, memoryPtr, sample.Data.Length);
+
+            // Create block buffer - NOTE: This does NOT copy the data, just references memoryPtr!
+            var blockBuffer = CoreMedia.CMBlockBuffer.FromMemoryBlock(
+                memoryPtr,
+                (nuint)sample.Data.Length,
+                null,
+                0,
+                (nuint)sample.Data.Length,
+                CoreMedia.CMBlockBufferFlags.AssureMemoryNow,
+                out var blockErr);
+
+            if (blockBuffer == null || blockErr != CoreMedia.CMBlockBufferError.None)
+            {
+                System.Runtime.InteropServices.Marshal.FreeHGlobal(memoryPtr);
+                memoryPtr = IntPtr.Zero;
+                return null;
+            }
+
+            // Calculate presentation time
+            double timeSec = timestampNs / 1_000_000_000.0;
+            var pts = CoreMedia.CMTime.FromSeconds(timeSec, sample.SampleRate);
+
+            // Duration based on sample count
+            double durationSec = (double)numSamples / sample.SampleRate;
+            var duration = CoreMedia.CMTime.FromSeconds(durationSec, sample.SampleRate);
+
+            var timing = new CoreMedia.CMSampleTimingInfo
+            {
+                PresentationTimeStamp = pts,
+                DecodeTimeStamp = pts,
+                Duration = duration
+            };
+
+            var cmSampleBuffer = CoreMedia.CMSampleBuffer.CreateReady(
+                blockBuffer,
+                (CoreMedia.CMAudioFormatDescription)formatDesc,
+                (int)numSamples,
+                new[] { timing },
+                new nuint[] { (nuint)sample.Data.Length },
+                out var sbErr);
+
+            // DO NOT free memoryPtr here! Caller must free it after AppendSampleBuffer completes.
+            return cmSampleBuffer;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[CreateCMSampleBufferFromAudio] Error: {ex.Message}");
+            // Free memory on error
+            if (memoryPtr != IntPtr.Zero)
+            {
+                System.Runtime.InteropServices.Marshal.FreeHGlobal(memoryPtr);
+                memoryPtr = IntPtr.Zero;
+            }
+            return null;
+        }
+    }
+
+    [System.Runtime.InteropServices.DllImport("/System/Library/Frameworks/CoreMedia.framework/CoreMedia")]
+    private static extern int CMAudioFormatDescriptionCreate(
+        IntPtr allocator,
+        ref AudioToolbox.AudioStreamBasicDescription asbd,
+        nuint layoutSize,
+        IntPtr layout,
+        nuint magicCookieSize,
+        IntPtr magicCookie,
+        IntPtr extensions,
+        out IntPtr formatDescriptionOut
+    );
+
+    /// <summary>
+    /// Combines a video file with an audio file into a new output file using AVMutableComposition.
+    /// Used for live-only recording (no pre-recording) when audio needs to be added.
+    /// </summary>
+    private async Task<string> AddAudioToVideoAsync(string videoPath, string audioPath, string outputPath)
+    {
+        try
+        {
+            Debug.WriteLine($"[AddAudioToVideo] Combining video: {videoPath} with audio: {audioPath}");
+
+            // Delete existing output file
+            if (File.Exists(outputPath))
+            {
+                File.Delete(outputPath);
+            }
+
+            using var videoAsset = AVAsset.FromUrl(NSUrl.FromFilename(videoPath));
+            using var audioAsset = AVAsset.FromUrl(NSUrl.FromFilename(audioPath));
+
+            if (videoAsset == null)
+            {
+                Debug.WriteLine("[AddAudioToVideo] Failed to load video asset");
+                return null;
+            }
+
+            var composition = new AVMutableComposition();
+
+            // Add video track
+            var videoTrack = composition.AddMutableTrack(AVMediaTypes.Video.GetConstant(), 0);
+            var sourceVideoTracks = videoAsset.TracksWithMediaType(AVMediaTypes.Video.GetConstant());
+
+            if (sourceVideoTracks == null || sourceVideoTracks.Length == 0)
+            {
+                Debug.WriteLine("[AddAudioToVideo] No video tracks in source file");
+                return null;
+            }
+
+            var sourceVideoTrack = sourceVideoTracks[0];
+            var videoRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = videoAsset.Duration };
+            videoTrack.InsertTimeRange(videoRange, sourceVideoTrack, CoreMedia.CMTime.Zero, out var videoError);
+
+            if (videoError != null)
+            {
+                Debug.WriteLine($"[AddAudioToVideo] Failed to insert video track: {videoError.LocalizedDescription}");
+                return null;
+            }
+
+            // Copy transform from source video
+            videoTrack.PreferredTransform = sourceVideoTrack.PreferredTransform;
+
+            // Add audio track if audio asset is available
+            if (audioAsset != null)
+            {
+                var sourceAudioTracks = audioAsset.TracksWithMediaType(AVMediaTypes.Audio.GetConstant());
+                if (sourceAudioTracks != null && sourceAudioTracks.Length > 0)
+                {
+                    var audioTrack = composition.AddMutableTrack(AVMediaTypes.Audio.GetConstant(), 0);
+                    var sourceAudioTrack = sourceAudioTracks[0];
+
+                    // Use the shorter of video duration and audio duration
+                    var audioDuration = audioAsset.Duration;
+                    var insertDuration = audioDuration.Seconds <= videoAsset.Duration.Seconds ? audioDuration : videoAsset.Duration;
+
+                    var audioRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = insertDuration };
+                    audioTrack.InsertTimeRange(audioRange, sourceAudioTrack, CoreMedia.CMTime.Zero, out var audioError);
+
+                    if (audioError != null)
+                    {
+                        Debug.WriteLine($"[AddAudioToVideo] Failed to insert audio track: {audioError.LocalizedDescription}");
+                        // Continue without audio
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"[AddAudioToVideo] Added audio track ({insertDuration.Seconds:F2}s)");
+                    }
+                }
+            }
+
+            // Export the composition
+            var exportSession = new AVAssetExportSession(composition, AVAssetExportSessionPreset.HighestQuality);
+            exportSession.OutputUrl = NSUrl.FromFilename(outputPath);
+            exportSession.OutputFileType = AVFileTypes.Mpeg4.GetConstant();
+            exportSession.ShouldOptimizeForNetworkUse = true;
+
+            var tcs = new TaskCompletionSource<bool>();
+            exportSession.ExportAsynchronously(() =>
+            {
+                tcs.TrySetResult(exportSession.Status == AVAssetExportSessionStatus.Completed);
+            });
+
+            var success = await tcs.Task;
+            var status = exportSession.Status;
+            var error = exportSession.Error;
+            exportSession.Dispose();
+
+            if (success && File.Exists(outputPath))
+            {
+                var outputInfo = new FileInfo(outputPath);
+                Debug.WriteLine($"[AddAudioToVideo] Success: {outputPath} ({outputInfo.Length / 1024.0:F2} KB)");
+                return outputPath;
+            }
+            else
+            {
+                Debug.WriteLine($"[AddAudioToVideo] Export failed: status={status}, error={error?.LocalizedDescription}");
+                return null;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[AddAudioToVideo] Exception: {ex.Message}");
+            return null;
+        }
     }
 
     //end of class declaration

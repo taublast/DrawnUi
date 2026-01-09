@@ -29,46 +29,69 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         {
             base.OnWillDisposeWithChildren();
 
-            _paint?.Dispose();
-            _paint = null;
+            _paintRec?.Dispose();
+            _paintRec = null;
+            _paintPreview?.Dispose();
+            _paintPreview = null;
         }
 
-        public void DrawOverlay(SKCanvas canvas, int width, int height, float scale, TimeSpan time)
+        public void DrawOverlay(DrawableFrame frame)
         {
-            // Simple text overlay for testing
-            if (_paint == null)
+            SKPaint paint;
+            var canvas = frame.Canvas;
+            var width = frame.Width;
+            var height = frame.Height;
+            var scale = frame.Scale;
+
+            if (frame.IsPreview)
             {
-                _paint = new SKPaint
+                if (_paintPreview == null)
                 {
-                    IsAntialias = true,
-                };
+                    _paintPreview=new SKPaint
+                    {
+                        IsAntialias = true,
+                    };
+                }
+                paint = _paintPreview;
+            }
+            else
+            {
+                if (_paintRec == null)
+                {
+                    _paintRec = new SKPaint
+                    {
+                        IsAntialias = true,
+                    };
+                }
+                paint = _paintRec;
             }
 
-            _paint.TextSize = 48 * scale;
-            _paint.Color = IsPreRecording ? SKColors.White : SKColors.Red;
-            _paint.Style = SKPaintStyle.Fill;
+            paint.TextSize = 48 * scale;
+            paint.Color = IsPreRecording ? SKColors.White : SKColors.Red;
+            paint.Style = SKPaintStyle.Fill;
 
             if (IsRecordingVideo || IsPreRecording)
             {
                 // text at top left
                 var text = IsPreRecording ? "PRE-RECORDED" : "LIVE";
-                canvas.DrawText(text, 50 * scale, 100 * scale, _paint);
-                canvas.DrawText($"{time:mm\\:ss}", 50 * scale, 160 * scale, _paint);
+                canvas.DrawText(text, 50 * scale, 100 * scale, paint);
+                canvas.DrawText($"{frame.Time:mm\\:ss}", 50 * scale, 160 * scale, paint);
 
                 // Draw a simple border around the frame
-                _paint.Style = SKPaintStyle.Stroke;
-                _paint.StrokeWidth = 4 * scale;
-                canvas.DrawRect(10 * scale, 10 * scale, width - 20 * scale, height - 20 * scale, _paint);
+                paint.Style = SKPaintStyle.Stroke;
+                paint.StrokeWidth = 4 * scale;
+                canvas.DrawRect(10 * scale, 10 * scale, width - 20 * scale, height - 20 * scale, paint);
             }
             else
             {
-                _paint.Color = SKColors.White;
-                var text =$"PREVIEW {this.CaptureMode}";
-                canvas.DrawText(text, 50 * scale, 100 * scale, _paint);
+                paint.Color = SKColors.White;
+                var text = $"PREVIEW {this.CaptureMode}";
+                canvas.DrawText(text, 50 * scale, 100 * scale, paint);
             }
         }
 
-        private SKPaint _paint;
+        private SKPaint _paintPreview;
+        private SKPaint _paintRec;
     }
 
     public class DebugStack : SkiaStack
@@ -553,14 +576,14 @@ public class CameraTestPage : BasePageReloadable, IDisposable
 
         CameraControl.FrameProcessor = (frame) =>
         {
-            CameraControl.DrawOverlay(frame.Canvas, frame.Width, frame.Height, frame.Scale, frame.Time);
+            CameraControl.DrawOverlay(frame);
         };
 
         CameraControl.PreviewProcessor = (frame) =>
         {
             //if (CameraControl.IsRecordingVideo || CameraControl.IsPreRecording)
             {
-                CameraControl.DrawOverlay(frame.Canvas, frame.Width, frame.Height, frame.Scale, frame.Time);
+                CameraControl.DrawOverlay(frame);
             }
         };
 

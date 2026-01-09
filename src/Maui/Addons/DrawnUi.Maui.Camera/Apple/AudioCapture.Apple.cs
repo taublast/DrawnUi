@@ -1,7 +1,9 @@
 #if IOS || MACCATALYST
 using AVFoundation;
 using Foundation;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace DrawnUi.Camera;
@@ -24,8 +26,42 @@ public class AudioCaptureApple : IAudioCapture
 
     public event EventHandler<AudioSample> SampleAvailable;
 
+    /// <summary>
+    /// Get list of available audio input devices
+    /// </summary>
+    public Task<List<AudioDeviceInfo>> GetAvailableDevicesAsync()
+    {
+        var devices = new List<AudioDeviceInfo>();
+        try
+        {
+            var audioSession = AVAudioSession.SharedInstance();
+            var availableInputs = audioSession.AvailableInputs;
+
+            if (availableInputs != null)
+            {
+                for (int i = 0; i < availableInputs.Length; i++)
+                {
+                    var input = availableInputs[i];
+                    devices.Add(new AudioDeviceInfo
+                    {
+                        Index = i,
+                        Id = input.UID,
+                        Name = input.PortName,
+                        IsDefault = audioSession.CurrentRoute?.Inputs?.Any(r => r.UID == input.UID) ?? false
+                    });
+                    Debug.WriteLine($"[AudioCaptureApple] Available audio device [{i}]: {input.PortName} (UID: {input.UID}, Type: {input.PortType})");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[AudioCaptureApple] Error getting audio devices: {ex.Message}");
+        }
+        return Task.FromResult(devices);
+    }
+
     public async Task<bool> StartAsync(int sampleRate = 44100, int channels = 1,
-                                        AudioBitDepth bitDepth = AudioBitDepth.Pcm16Bit)
+                                        AudioBitDepth bitDepth = AudioBitDepth.Pcm16Bit, int deviceIndex = -1)
     {
         if (_isCapturing) return true;
 
@@ -59,11 +95,27 @@ public class AudioCaptureApple : IAudioCapture
                 Debug.WriteLine($"[AudioCaptureApple] Audio session category error: {sessionError}");
             }
 
-            //audioSession.SetMode(AVAudioSession.ModeVideoRecording, out NSError modeError);
-            //if (sessionError != null)
-            //{
-            //    Debug.WriteLine($"[AudioCaptureApple] Audio mode adjustment error: {sessionError}");
-            //}
+            // Select specific audio input device if requested
+            if (deviceIndex >= 0)
+            {
+                var availableInputs = audioSession.AvailableInputs;
+                if (availableInputs != null && deviceIndex < availableInputs.Length)
+                {
+                    var selectedInput = availableInputs[deviceIndex];
+                    if (audioSession.SetPreferredInput(selectedInput, out sessionError))
+                    {
+                        Debug.WriteLine($"[AudioCaptureApple] Selected audio device [{deviceIndex}]: {selectedInput.PortName}");
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"[AudioCaptureApple] Failed to select audio device: {sessionError?.LocalizedDescription}");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine($"[AudioCaptureApple] Invalid device index {deviceIndex}, using default");
+                }
+            }
 
             audioSession.SetActive(true, out sessionError);
             if (sessionError != null)
@@ -147,18 +199,11 @@ public class AudioCaptureApple : IAudioCapture
             var channelCount = (int)buffer.Format.ChannelCount;
             var nativeSampleRate = buffer.Format.SampleRate;
 
-            // Get timestamp - use sample time for accuracy
-            long timestampNs;
-            if (when != null && when.SampleTimeValid && nativeSampleRate > 0)
-            {
-                // Convert sample time to nanoseconds
-                double seconds = when.SampleTime / nativeSampleRate;
-                timestampNs = (long)(seconds * 1_000_000_000.0);
-            }
-            else
-            {
-                timestampNs = GetCurrentTimeNs();
-            }
+            // CRITICAL: Always use system uptime for timestamps to match video PTS time base
+            // The video CMSampleBuffer.PresentationTimeStamp uses the same monotonic clock
+            // DO NOT use when.SampleTime - it's a running sample counter that doesn't reset
+            // between recordings and will cause massive timestamp misalignment
+            long timestampNs = GetCurrentTimeNs();
 
             // Convert float samples to 16-bit PCM
             // AVAudioEngine always provides float data

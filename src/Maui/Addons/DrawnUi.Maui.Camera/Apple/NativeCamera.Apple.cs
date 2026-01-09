@@ -1,6 +1,8 @@
 ﻿#if IOS || MACCATALYST
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using AppoMobi.Specials;
@@ -2972,7 +2974,41 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
     public event EventHandler<AudioSample> SampleAvailable;
 
-    public async Task<bool> StartAsync(int sampleRate = 44100, int channels = 1, AudioBitDepth bitDepth = AudioBitDepth.Pcm16Bit)
+    /// <summary>
+    /// Get list of available audio input devices
+    /// </summary>
+    public Task<List<AudioDeviceInfo>> GetAvailableDevicesAsync()
+    {
+        var devices = new List<AudioDeviceInfo>();
+        try
+        {
+            var audioSession = AVAudioSession.SharedInstance();
+            var availableInputs = audioSession.AvailableInputs;
+
+            if (availableInputs != null)
+            {
+                for (int i = 0; i < availableInputs.Length; i++)
+                {
+                    var input = availableInputs[i];
+                    devices.Add(new AudioDeviceInfo
+                    {
+                        Index = i,
+                        Id = input.UID,
+                        Name = input.PortName,
+                        IsDefault = audioSession.CurrentRoute?.Inputs?.Any(r => r.UID == input.UID) ?? false
+                    });
+                    Debug.WriteLine($"[NativeCamera.Apple] Available audio device [{i}]: {input.PortName} (UID: {input.UID})");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCamera.Apple] Error getting audio devices: {ex.Message}");
+        }
+        return Task.FromResult(devices);
+    }
+
+    public async Task<bool> StartAsync(int sampleRate = 44100, int channels = 1, AudioBitDepth bitDepth = AudioBitDepth.Pcm16Bit, int deviceIndex = -1)
     {
         if (_isAudioCapturing) return true;
 
@@ -2986,6 +3022,26 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 {
                     Debug.WriteLine("[NativeCamera] Audio permission denied");
                     return false;
+                }
+            }
+
+            // Select specific audio input device if requested
+            if (deviceIndex >= 0)
+            {
+                var audioSession = AVAudioSession.SharedInstance();
+                var availableInputs = audioSession.AvailableInputs;
+                if (availableInputs != null && deviceIndex < availableInputs.Length)
+                {
+                    var selectedInput = availableInputs[deviceIndex];
+                    NSError sessionError;
+                    if (audioSession.SetPreferredInput(selectedInput, out sessionError))
+                    {
+                        Debug.WriteLine($"[NativeCamera.Apple] Selected audio device [{deviceIndex}]: {selectedInput.PortName}");
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"[NativeCamera.Apple] Failed to select audio device: {sessionError?.LocalizedDescription}");
+                    }
                 }
             }
 

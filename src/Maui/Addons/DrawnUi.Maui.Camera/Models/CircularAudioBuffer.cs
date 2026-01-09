@@ -5,19 +5,32 @@ using System.Linq;
 namespace DrawnUi.Camera
 {
     /// <summary>
-    /// Thread-safe circular buffer for audio samples.
-    /// Automatically trims old samples beyond MaxDuration.
+    /// Thread-safe audio buffer for audio samples.
+    /// When maxDuration > 0: Circular mode - automatically trims old samples beyond MaxDuration.
+    /// When maxDuration = 0: Linear mode - keeps ALL samples (for full session recording).
     /// </summary>
     public class CircularAudioBuffer
     {
         private readonly Queue<AudioSample> _samples = new();
         private readonly object _lock = new();
         private readonly TimeSpan _maxDuration;
+        private readonly bool _isLinearMode;
 
+        /// <summary>
+        /// Creates an audio buffer.
+        /// </summary>
+        /// <param name="maxDuration">Maximum duration to keep. Use TimeSpan.Zero for linear mode (keeps all samples).</param>
         public CircularAudioBuffer(TimeSpan maxDuration)
         {
             _maxDuration = maxDuration;
+            _isLinearMode = maxDuration <= TimeSpan.Zero;
         }
+
+        /// <summary>
+        /// Creates a linear audio buffer that keeps ALL samples (no trimming).
+        /// Use this for full session recording where all audio needs to be preserved.
+        /// </summary>
+        public static CircularAudioBuffer CreateLinear() => new CircularAudioBuffer(TimeSpan.Zero);
 
         public void Write(AudioSample sample)
         {
@@ -25,6 +38,14 @@ namespace DrawnUi.Camera
             {
                 _samples.Enqueue(sample);
                 Trim();
+            }
+        }
+
+        public AudioSample[] GetAllSamples()
+        {
+            lock (_lock)
+            {
+                return _samples.ToArray();
             }
         }
 
@@ -79,6 +100,9 @@ namespace DrawnUi.Camera
 
         private void Trim()
         {
+            // In linear mode, never trim - keep ALL samples
+            if (_isLinearMode) return;
+
             if (_samples.Count == 0) return;
 
             var last = _samples.Last();

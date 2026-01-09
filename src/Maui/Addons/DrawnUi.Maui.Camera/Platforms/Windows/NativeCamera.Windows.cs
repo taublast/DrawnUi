@@ -2821,8 +2821,39 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
     public event EventHandler<AudioSample> SampleAvailable;
 
-    public async Task<bool> StartAsync(int sampleRate = 44100, int channels = 1, AudioBitDepth bitDepth = AudioBitDepth.Pcm16Bit)
+    /// <summary>
+    /// Get list of available audio input devices (Windows uses AudioDeviceIndex set during initialization)
+    /// </summary>
+    public async Task<List<DrawnUi.Camera.AudioDeviceInfo>> GetAvailableDevicesAsync()
     {
+        var devices = new List<DrawnUi.Camera.AudioDeviceInfo>();
+        try
+        {
+            var audioDevices = await DeviceInformation.FindAllAsync(DeviceClass.AudioCapture);
+            for (int i = 0; i < audioDevices.Count; i++)
+            {
+                var device = audioDevices[i];
+                devices.Add(new DrawnUi.Camera.AudioDeviceInfo
+                {
+                    Index = i,
+                    Id = device.Id,
+                    Name = device.Name,
+                    IsDefault = device.IsDefault
+                });
+                Debug.WriteLine($"[NativeCameraWindows] Available audio device [{i}]: {device.Name} (ID: {device.Id})");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] Error getting audio devices: {ex.Message}");
+        }
+        return devices;
+    }
+
+    public async Task<bool> StartAsync(int sampleRate = 44100, int channels = 1, AudioBitDepth bitDepth = AudioBitDepth.Pcm16Bit, int deviceIndex = -1)
+    {
+        // Note: On Windows, device selection is handled during MediaCapture initialization via FormsControl.AudioDeviceIndex
+        // The deviceIndex parameter here is ignored since the audio device was selected at startup
         if (_mediaCapture == null)
             return false;
 

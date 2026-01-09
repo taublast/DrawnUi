@@ -309,8 +309,9 @@ public partial class SkiaCamera
     }
 
     /// <summary>
-    /// Mux pre-recorded and live video files using MediaMuxer
+    /// Mux pre-recorded and live video files using MediaMuxer.
     /// CRITICAL FIX: Must add ALL tracks from BOTH files BEFORE calling muxer.Start()
+    /// Note: Audio is already embedded in video files on Android (handled by encoder).
     /// </summary>
     private async Task<string> MuxVideosInternal(string preRecordedPath, string liveRecordingPath, string outputPath)
     {
@@ -894,7 +895,7 @@ public partial class SkiaCamera
                     }
                 }
 
-                await _audioCapture.StartAsync();
+                await _audioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
                 Debug.WriteLine("[StartCaptureVideoFlow] Audio capture started");
             }
             catch (Exception ex)
