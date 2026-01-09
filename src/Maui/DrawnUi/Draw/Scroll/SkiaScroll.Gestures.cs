@@ -558,10 +558,8 @@ public partial class SkiaScroll
                                 bool bounceX = false, bounceY = false;
                                 if (OverScrolled)
                                 {
-                                    var contentRect = new SKRect(0, 0, ptsContentWidth, ptsContentHeight);
-                                    var closestPoint = GetClosestSidePoint(
-                                        new SKPoint((float)InternalViewportOffset.Units.X,
-                                            (float)InternalViewportOffset.Units.Y), contentRect, Viewport.Units.Size);
+                                    var clamped = ClampOffset((float)InternalViewportOffset.Units.X, (float)InternalViewportOffset.Units.Y, ContentOffsetBounds, true);
+                                    var closestPoint = new SKPoint(clamped.X, clamped.Y);
 
                                     var axis = new Vector2(closestPoint.X, closestPoint.Y);
 
