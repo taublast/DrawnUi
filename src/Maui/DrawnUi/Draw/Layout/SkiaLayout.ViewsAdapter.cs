@@ -274,8 +274,14 @@ public class ViewsAdapter : IDisposable
 
             lock (lockVisible)
             {
+                foreach (var view in _cellsInUseViews.Values)
+                {
+                    view.Dispose();
+                }
                 _cellsInUseViews.Clear();
             }
+
+            _templatedViewsPool?.Dispose();
 
             _templatedViewsPool = new TemplatedViewsPool(template, poolSize, (k) => { _parent?.DisposeObject(k); });
 
@@ -473,6 +479,10 @@ public class ViewsAdapter : IDisposable
             // If smart handling fails, clean up and fall back to full reset
             lock (lockVisible)
             {
+                foreach (var view in _cellsInUseViews.Values)
+                {
+                    view.Dispose();
+                }
                 _cellsInUseViews.Clear();
             }
 
@@ -1784,7 +1794,10 @@ public class TemplatedViewsPool : IDisposable
         lock (_syncLock)
         {
             if (IsDisposing)
+            {
+                _dispose?.Invoke(viewModel);
                 return;
+            }
 
             _standalonePool.Push(viewModel);
         }
@@ -1907,7 +1920,10 @@ public class TemplatedViewsPool : IDisposable
         lock (_syncLock)
         {
             if (IsDisposing)
+            {
+                _dispose?.Invoke(viewModel);
                 return;
+            }
 
             if (Size < MaxSize)
             {
