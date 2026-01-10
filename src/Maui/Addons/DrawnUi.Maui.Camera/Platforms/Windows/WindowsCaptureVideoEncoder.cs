@@ -17,11 +17,16 @@ namespace DrawnUi.Camera.Platforms.Windows;
 /// </summary>
 public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 {
-    // Track first and last frame timestamps for each buffer
+    // Track first and last frame timestamps for each buffer (pre-recording mode)
     private TimeSpan _bufferAFirstTimestamp = TimeSpan.Zero;
     private TimeSpan _bufferALastTimestamp = TimeSpan.Zero;
     private TimeSpan _bufferBFirstTimestamp = TimeSpan.Zero;
     private TimeSpan _bufferBLastTimestamp = TimeSpan.Zero;
+
+    // Track first video frame for normal recording mode (audio sync)
+    private bool _hasFirstVideoFrame = false;
+    private TimeSpan _firstVideoFrameTimestamp = TimeSpan.Zero;
+
     private static int _instanceCounter = 0;
     private readonly int _instanceId;
 
@@ -115,6 +120,18 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                         return; // No video frame yet, drop audio
 
                     long baseHns = baseTimestamp.Ticks;
+                    hnsTime -= baseHns;
+                    if (hnsTime < 0) hnsTime = 0;
+                }
+                else
+                {
+                    // Normal recording mode: drop audio samples before first video frame
+                    // This prevents audio/video sync issues (audio crack) at the start
+                    if (!_hasFirstVideoFrame)
+                        return; // No video frame yet, drop audio
+
+                    // Adjust audio timestamp relative to first video frame
+                    long baseHns = _firstVideoFrameTimestamp.Ticks;
                     hnsTime -= baseHns;
                     if (hnsTime < 0) hnsTime = 0;
                 }
@@ -492,6 +509,10 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         _isRecording = true;
         _startTime = DateTime.Now;
 
+        // Reset first video frame tracking for audio sync
+        _hasFirstVideoFrame = false;
+        _firstVideoFrameTimestamp = TimeSpan.Zero;
+
         // Initialize statistics
         EncodedFrameCount = 0;
         EncodedDataSize = 0;
@@ -523,6 +544,16 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 if (_bufferBFirstTimestamp == TimeSpan.Zero || timestamp < _bufferBFirstTimestamp)
                     _bufferBFirstTimestamp = timestamp;
                 _bufferBLastTimestamp = timestamp;
+            }
+        }
+        else
+        {
+            // Normal recording mode: track first video frame for audio sync
+            if (!_hasFirstVideoFrame)
+            {
+                _firstVideoFrameTimestamp = timestamp;
+                _hasFirstVideoFrame = true;
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] First video frame timestamp: {timestamp.TotalMilliseconds:F1}ms");
             }
         }
 
@@ -745,6 +776,18 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                         }
 
                         long baseHns = baseTimestamp.Ticks;
+                        hnsTime -= baseHns;
+                        if (hnsTime < 0) hnsTime = 0;
+                    }
+                    else
+                    {
+                        // Normal recording mode: drop audio samples before first video frame
+                        // This prevents audio/video sync issues (audio crack) at the start
+                        if (!_hasFirstVideoFrame)
+                            return; // No video frame yet, drop audio
+
+                        // Adjust audio timestamp relative to first video frame
+                        long baseHns = _firstVideoFrameTimestamp.Ticks;
                         hnsTime -= baseHns;
                         if (hnsTime < 0) hnsTime = 0;
                     }
