@@ -1190,70 +1190,82 @@ public partial class SkiaCamera : SkiaControl
     /// <returns>Async task</returns>
     public async Task StopVideoRecording(bool abort = false)
     {
+        if (IsBusy)
+            return;
+
         if (!IsRecordingVideo && !IsPreRecording)
             return;
 
-        Debug.WriteLine($"[StopVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
+        IsBusy = true;
 
-        IsRecordingVideo = false;
-
-        // Reset locked rotation
-        RecordingLockedRotation = -1;
-        Debug.WriteLine($"[StopVideoRecording] Reset locked rotation");
-
-#if ANDROID
-        // Stop Android event-driven capture and restore normal preview behavior
         try
         {
-            if (NativeControl is NativeCamera androidCam)
-            {
-                androidCam.PreviewCaptureSuccess = null;
-            }
-        }
-        catch
-        {
-        }
+            Debug.WriteLine($"[StopVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
 
-        UseRecordingFramesForPreview = false;
+            IsRecordingVideo = false;
+
+            // Reset locked rotation
+            RecordingLockedRotation = -1;
+            Debug.WriteLine($"[StopVideoRecording] Reset locked rotation");
+
+#if ANDROID
+            // Stop Android event-driven capture and restore normal preview behavior
+            try
+            {
+                if (NativeControl is NativeCamera androidCam)
+                {
+                    androidCam.PreviewCaptureSuccess = null;
+                }
+            }
+            catch
+            {
+            }
+
+            UseRecordingFramesForPreview = false;
 #endif
 
 #if ONPLATFORM
-        try
-        {
-            // Check if using capture video flow
-            if (_captureVideoEncoder != null)
+            try
             {
-                if (abort)
+                // Check if using capture video flow
+                if (_captureVideoEncoder != null)
                 {
-                    await AbortCaptureVideoFlow();
+                    if (abort)
+                    {
+                        await AbortCaptureVideoFlow();
+                    }
+                    else
+                    {
+                        // Internal method will handle busy state too but we lock externally as well
+                        await StopCaptureVideoFlow();
+                    }
+
+                    ClearPreRecordingBuffer();
                 }
                 else
                 {
-                    await StopCaptureVideoFlow();
+    
+                    await NativeControl.StopVideoRecording();
+
+                    // Note: IsRecordingVideo will be set to false by the VideoRecordingSuccess/Failed callbacks
                 }
 
-                ClearPreRecordingBuffer();
+                IsPreRecording = false;
             }
-            else
+            catch (Exception ex)
             {
- 
-                await NativeControl.StopVideoRecording();
-
-                // Note: IsRecordingVideo will be set to false by the VideoRecordingSuccess/Failed callbacks
+                IsPreRecording = false;
+                IsRecordingVideo = false;
+                //ClearPreRecordingBuffer();
+                VideoRecordingFailed?.Invoke(this, ex);
+                throw;
             }
-
-            IsPreRecording = false;
-        }
-        catch (Exception ex)
-        {
-            IsPreRecording = false;
-            IsRecordingVideo = false;
-            //ClearPreRecordingBuffer();
-            VideoRecordingFailed?.Invoke(this, ex);
-            throw;
-        }
 #endif
-
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     private void Super_OnNativeAppPaused(object sender, EventArgs e)

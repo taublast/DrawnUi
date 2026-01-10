@@ -1521,6 +1521,12 @@ public partial class SkiaCamera
 
     private async Task StopCaptureVideoFlow()
     {
+        if (IsBusy)
+        {
+            Debug.WriteLine($"[StartVideoRecording] IsBusy cannot stop");
+            return;
+        }
+
         ICaptureVideoEncoder encoder = null;
         string tempAudioFilePath = null;
 
@@ -1879,11 +1885,12 @@ public partial class SkiaCamera
     public async Task StartVideoRecording()
     {
         if (IsBusy)
+        {
+            Debug.WriteLine($"[StartVideoRecording] IsBusy cannot start");
             return;
+        }
 
         Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
-
-        IsBusy = true;
 
         try
         {
@@ -2686,7 +2693,7 @@ public partial class SkiaCamera
             // Export the composition
             var exportSession = new AVAssetExportSession(composition, AVAssetExportSessionPreset.AppleM4A);
             exportSession.OutputUrl = NSUrl.FromFilename(outputPath);
-            exportSession.OutputFileType = new NSString("com.apple.m4a-audio");
+            exportSession.OutputFileType = AVFileTypes.AppleM4a.GetConstant();// new NSString("com.apple.m4a-audio");
 
             var tcs = new TaskCompletionSource<bool>();
             exportSession.ExportAsynchronously(() =>

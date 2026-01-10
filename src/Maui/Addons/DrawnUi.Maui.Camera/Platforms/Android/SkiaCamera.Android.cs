@@ -1147,11 +1147,13 @@ public partial class SkiaCamera
     public async Task StartVideoRecording() //OK
     {
         if (IsBusy)
+        {
+            Debug.WriteLine($"[StartVideoRecording] IsBusy cannot start");
             return;
+        }
+
 
         Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
-
-        IsBusy = true;
 
         try
         {

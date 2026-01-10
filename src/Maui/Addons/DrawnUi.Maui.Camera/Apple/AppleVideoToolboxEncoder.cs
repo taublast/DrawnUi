@@ -1854,31 +1854,6 @@ namespace DrawnUi.Camera
                 int audioWrittenCount = 0;
                 int audioFailedCount = 0;
 
-                // DIAGNOSTIC DUMP
-                if (frames.Count > 0)
-                {
-                    var lastV = frames.Last().PresentationTime;
-                    System.Diagnostics.Debug.WriteLine($"[Debug] Video Range: {firstFramePts.Seconds:F3}s -> {lastV.Seconds:F3}s (Duration: {(lastV - firstFramePts).Seconds:F3}s)");
-                }
-                if (aCount > 0)
-                {
-                     double firstA = audioSamples[0].TimestampNs / 1_000_000_000.0;
-                     double lastA = audioSamples.Last().TimestampNs / 1_000_000_000.0;
-                     System.Diagnostics.Debug.WriteLine($"[Debug] Audio Range (Raw): {firstA:F3}s -> {lastA:F3}s (Duration: {lastA - firstA:F3}s)");
-
-                     // ALIGNMENT CHECK: Video and Audio should have similar timestamps
-                     // If audio uses system uptime correctly, both should be within ~1s of each other
-                     double alignmentDiff = Math.Abs(firstFramePts.Seconds - firstA);
-                     if (alignmentDiff > 1.0)
-                     {
-                         System.Diagnostics.Debug.WriteLine($"[WARNING] TIMESTAMP MISALIGNMENT! Video starts at {firstFramePts.Seconds:F3}s but audio starts at {firstA:F3}s (diff: {alignmentDiff:F3}s)");
-                         System.Diagnostics.Debug.WriteLine($"[WARNING] This will cause audio/video desync. Check timestamp source in AudioCaptureApple!");
-                     }
-                     else
-                     {
-                         System.Diagnostics.Debug.WriteLine($"[Debug] Timestamp alignment OK (Video: {firstFramePts.Seconds:F3}s, Audio: {firstA:F3}s, diff: {alignmentDiff:F3}s)");
-                     }
-                }
 
                 // Interleaved write loop with Independent Normalization
                 // We normalize both streams to start at 0.0 to ensure correct interleaving 
