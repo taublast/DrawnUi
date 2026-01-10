@@ -544,12 +544,14 @@ public partial class SkiaCamera
 
     private async Task StopCaptureVideoFlow()
     {
-
         if (_captureVideoEncoder.LiveRecordingDuration < TimeSpan.FromSeconds(1))
         {
             await AbortCaptureVideoFlow();
             return;
         }
+
+        // Set busy while processing - prevents user actions during file finalization
+        IsBusy = true;
 
         ICaptureVideoEncoder encoder = null;
 
@@ -631,6 +633,7 @@ public partial class SkiaCamera
 
             // Update state and notify success
             IsRecordingVideo = false;
+            IsBusy = false; // Release busy state after successful processing
             if (capturedVideo != null)
             {
                 OnVideoRecordingSuccess(capturedVideo);
@@ -644,6 +647,7 @@ public partial class SkiaCamera
             _captureVideoEncoder = null;
 
             IsRecordingVideo = false;
+            IsBusy = false; // Release busy state on error
             VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
