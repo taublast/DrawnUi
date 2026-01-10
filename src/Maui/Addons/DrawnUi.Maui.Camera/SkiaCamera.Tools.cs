@@ -890,7 +890,7 @@ public partial class SkiaCamera : SkiaControl
         var context = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity ?? Android.App.Application.Context;
         var resolver = context.ContentResolver;
 
-        var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
+        var albumName = album;// string.IsNullOrEmpty(album) ? DefaultAlbum : album;
 
         // Use the existing filename from the path (may have been renamed by caller)
         var fileName = Path.GetFileName(privateVideoPath);
@@ -931,7 +931,7 @@ public partial class SkiaCamera : SkiaControl
     {
         var context = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity ?? Android.App.Application.Context;
         var dcimDir = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDcim);
-        var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
+        var albumName = album;//string.IsNullOrEmpty(album) ? DefaultAlbum : album;
         var appDir = new Java.IO.File(dcimDir, albumName);
 
         if (!appDir.Exists())
@@ -982,6 +982,50 @@ public partial class SkiaCamera : SkiaControl
 #endif
 
 #if IOS || MACCATALYST
+
+    private async Task<Photos.PHAssetCollection> FindOrCreateAlbumAsync(string albumName)
+    {
+        try 
+        {
+            // 1. Find existing
+            var fetchOptions = new Photos.PHFetchOptions();
+            fetchOptions.Predicate = Foundation.NSPredicate.FromFormat($"title = '{albumName}'");
+            var collection = Photos.PHAssetCollection.FetchAssetCollections(Photos.PHAssetCollectionType.Album, Photos.PHAssetCollectionSubtype.Any, fetchOptions);
+
+            if (collection.Count > 0)
+            {
+                return collection.FirstObject as Photos.PHAssetCollection;
+            }
+
+            // 2. Create new
+            var tcs = new TaskCompletionSource<bool>();
+            string albumLocalId = null;
+
+            Photos.PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
+            {
+                var request = Photos.PHAssetCollectionChangeRequest.CreateAssetCollection(albumName);
+                albumLocalId = request.PlaceholderForCreatedAssetCollection.LocalIdentifier;
+            }, (success, error) =>
+            {
+                if (!success) Debug.WriteLine($"[SkiaCamera] Error creating album: {error}");
+                tcs.TrySetResult(success);
+            });
+
+            if (await tcs.Task)
+            {
+                 var fetchOptions2 = new Photos.PHFetchOptions();
+                 fetchOptions2.Predicate = Foundation.NSPredicate.FromFormat($"localIdentifier = '{albumLocalId}'");
+                 var collection2 = Photos.PHAssetCollection.FetchAssetCollections(Photos.PHAssetCollectionType.Album, Photos.PHAssetCollectionSubtype.Any, fetchOptions2);
+                 return collection2.FirstObject as Photos.PHAssetCollection;
+            }
+        } 
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] FindOrCreateAlbumAsync error: {ex}");
+        }
+        return null;
+    }
+
     /// <summary>
     /// iOS/macOS implementation to move video from temp to Photos library
     /// </summary>
@@ -1016,8 +1060,16 @@ public partial class SkiaCamera : SkiaControl
                 return null;
             }
 
+            // Find or Create Album
+            var albumName = album;
+
+            Photos.PHAssetCollection albumCollection = null;
+            if (!string.IsNullOrEmpty(albumName))
+            {
+                albumCollection = await FindOrCreateAlbumAsync(albumName);
+            }
+
             // Use Photos framework to add video to Photos library
-            var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
             var tempUrl = Foundation.NSUrl.FromFilename(privateVideoPath);
             var tcs = new TaskCompletionSource<string>();
 
@@ -1025,7 +1077,13 @@ public partial class SkiaCamera : SkiaControl
             {
                 // Create video asset in Photos library
                 var request = Photos.PHAssetChangeRequest.FromVideo(tempUrl);
-                // TODO: Add to specific album if required (create/find PHAssetCollection, then add)
+                
+                // Add to specific album if found/created
+                if (albumCollection != null)
+                {
+                    var albumChangeRequest = Photos.PHAssetCollectionChangeRequest.ChangeRequest(albumCollection);
+                    albumChangeRequest?.AddAssets(new Photos.PHObject[] { request.PlaceholderForCreatedAsset });
+                }
             },
             (success, error) =>
             {
@@ -1067,7 +1125,7 @@ public partial class SkiaCamera : SkiaControl
     {
         try
         {
-            var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
+            var albumName = album;//string.IsNullOrEmpty(album) ? DefaultAlbum : album;
 
             // Try Pictures/Camera Roll first, then fallback to Videos
             var paths = new[]

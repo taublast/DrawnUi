@@ -1640,6 +1640,31 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
+    public static string DefaultAlbum = string.Empty;
+
+    /// <summary>
+    /// Returns the projected public directory path for the given album.
+    /// On Android this is the DCIM/{Album} folder.
+    /// On Windows this is the Videos/{Album} folder.
+    /// On iOS this returns "Photos Library" as there is no direct file access.
+    /// </summary>
+    /// <param name="album"></param>
+    /// <returns></returns>
+    public static string GetPublicGalleryDirectory(string albumName)
+    {
+#if ANDROID
+        var dcimDir = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDcim);
+        var appDir = new Java.IO.File(dcimDir, albumName);
+        return appDir.AbsolutePath;
+#elif WINDOWS
+        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), albumName);
+#elif IOS || MACCATALYST
+        return $"Photos Library/{albumName}";
+#else
+        return null;
+#endif
+    }
+
     /// <summary>
     /// Camera controls cannot use double buffering cache for performance reasons
     /// </summary>
