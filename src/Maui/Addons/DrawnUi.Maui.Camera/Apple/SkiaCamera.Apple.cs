@@ -2957,8 +2957,8 @@ public partial class SkiaCamera
                 }
             }
 
-            // Export the composition
-            using var exportSession = new AVAssetExportSession(composition, AVAssetExportSessionPreset.MediumQuality);
+            // Export the composition - use Passthrough since we're just muxing, not re-encoding
+            using var exportSession = new AVAssetExportSession(composition, AVAssetExportSessionPreset.Passthrough);
             exportSession.OutputUrl = NSUrl.FromFilename(outputPath);
             exportSession.OutputFileType = AVFileTypes.Mpeg4.GetConstant();
             exportSession.ShouldOptimizeForNetworkUse = true;
