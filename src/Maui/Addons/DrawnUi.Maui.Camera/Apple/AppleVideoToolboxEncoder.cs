@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using AppoMobi.Specials;
 using AudioToolbox;
 using AVFoundation;
 using CoreMedia;
@@ -81,7 +82,7 @@ namespace DrawnUi.Camera
         {
             lock (_audioWriterLock)
             {
-                if (_writer == null || _writer.Status != AVAssetWriterStatus.Writing 
+                if (_writer == null || _writer.Status != AVAssetWriterStatus.Writing
                     || _audioWriterInput == null || !_audioWriterInput.ReadyForMoreMediaData)
                     return;
 
@@ -124,16 +125,16 @@ namespace DrawnUi.Camera
                     AudioStreamBasicDescription audioFormat = new AudioStreamBasicDescription
                     {
                         SampleRate = sample.SampleRate,
-                        Format = AudioFormatType.LinearPCM, 
+                        Format = AudioFormatType.LinearPCM,
                         FormatFlags = AudioFormatFlags.LinearPCMIsPacked | AudioFormatFlags.LinearPCMIsSignedInteger,
                         ChannelsPerFrame = (int)sample.Channels,
                         BytesPerPacket = (int)(sample.Channels * 2), // Assuming 16-bit
                         FramesPerPacket = 1,
                         BytesPerFrame = (int)(sample.Channels * 2),
-                        BitsPerChannel = 16 
+                        BitsPerChannel = 16
                     };
-                    
-                    if (sample.BitDepth == AudioBitDepth.Pcm8Bit) 
+
+                    if (sample.BitDepth == AudioBitDepth.Pcm8Bit)
                     {
                         audioFormat.BitsPerChannel = 8;
                         audioFormat.BytesPerFrame = (int)sample.Channels;
@@ -141,12 +142,12 @@ namespace DrawnUi.Camera
                     }
                     else if (sample.BitDepth == AudioBitDepth.Float32Bit)
                     {
-                         audioFormat.BitsPerChannel = 32;
-                         audioFormat.FormatFlags = AudioFormatFlags.LinearPCMIsFloat | AudioFormatFlags.LinearPCMIsPacked;
-                         audioFormat.BytesPerFrame = (int)(sample.Channels * 4);
-                         audioFormat.BytesPerPacket = (int)(sample.Channels * 4);
+                        audioFormat.BitsPerChannel = 32;
+                        audioFormat.FormatFlags = AudioFormatFlags.LinearPCMIsFloat | AudioFormatFlags.LinearPCMIsPacked;
+                        audioFormat.BytesPerFrame = (int)(sample.Channels * 4);
+                        audioFormat.BytesPerPacket = (int)(sample.Channels * 4);
                     }
-                    
+
                     IntPtr formatDescPtr;
                     var result = CMAudioFormatDescriptionCreate(
                         IntPtr.Zero,
@@ -172,7 +173,7 @@ namespace DrawnUi.Camera
 
                 var unmanagedPtr = Marshal.AllocHGlobal(sample.Data.Length);
                 Marshal.Copy(sample.Data, 0, unmanagedPtr, sample.Data.Length);
-                
+
                 // Track memory for deferred cleanup
                 if (memoryTracker != null)
                 {
@@ -186,35 +187,35 @@ namespace DrawnUi.Camera
                         unmanagedPtr,
                         (nuint)sample.Data.Length,
                         null,
-                        0, 
+                        0,
                         (nuint)sample.Data.Length,
                         CMBlockBufferFlags.AssureMemoryNow,
                         out var err);
                 }
                 catch
                 {
-                     // If tracker used, we must free it here or let finally handle it?
-                     // If we fail here, we should free it immediately if we can remove from tracker
-                     if (memoryTracker != null) memoryTracker.Remove(unmanagedPtr);
-                     Marshal.FreeHGlobal(unmanagedPtr);
-                     return null;
+                    // If tracker used, we must free it here or let finally handle it?
+                    // If we fail here, we should free it immediately if we can remove from tracker
+                    if (memoryTracker != null) memoryTracker.Remove(unmanagedPtr);
+                    Marshal.FreeHGlobal(unmanagedPtr);
+                    return null;
                 }
-                if (blockBuffer == null) 
+                if (blockBuffer == null)
                 {
                     if (memoryTracker != null) memoryTracker.Remove(unmanagedPtr);
                     Marshal.FreeHGlobal(unmanagedPtr);
                     return null;
                 }
-                
+
                 CMTime presentationTime = CMTime.FromSeconds((double)sample.TimestampNs / 1_000_000_000.0, 1000000000);
                 var timing = new CMSampleTimingInfo { PresentationTimeStamp = presentationTime, Duration = CMTime.Invalid, DecodeTimeStamp = CMTime.Invalid };
 
                 CMSampleBufferError sbErr;
                 // Use calculated numSamples instead of 1
                 var sampleBuffer = CMSampleBuffer.CreateReady(blockBuffer, _audioFormatDescription, (int)numSamples, new[] { timing }, new nuint[] { (nuint)sample.Data.Length }, out sbErr);
-                
+
                 if (sbErr != CMSampleBufferError.None) return null;
-                
+
                 return sampleBuffer;
             }
             catch (Exception ex)
@@ -257,6 +258,7 @@ namespace DrawnUi.Camera
         // Cached preview surface to avoid allocating every frame
         private SKSurface _previewSurface;
         private SKImageInfo _previewSurfaceInfo;
+        private GCHandle _queuePin;
 
         // Statistics
         public int EncodedFrameCount { get; private set; }
@@ -288,8 +290,9 @@ namespace DrawnUi.Camera
         public SkiaCamera ParentCamera { get; set; }
         public event EventHandler<TimeSpan> ProgressReported;
 
-        public AppleVideoToolboxEncoder()
+        public AppleVideoToolboxEncoder(GRContext ctx)
         {
+            //_encodingContext = ctx;
             _instanceId = System.Threading.Interlocked.Increment(ref _instanceCounter);
             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] CONSTRUCTOR CALLED");
         }
@@ -385,9 +388,14 @@ namespace DrawnUi.Camera
                                 Device = _metalDevice,
                                 Queue = _commandQueue
                             };
+
                             _encodingContext = GRContext.CreateMetal(backend);
+
                             _metalCache = new CVMetalTextureCache(_metalDevice);
-                            
+
+                            //fix GC crash
+                            _queuePin = GCHandle.Alloc(backend.Queue, GCHandleType.Pinned);
+
                             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Dedicated Metal GRContext initialized.");
                         }
                     }
@@ -440,7 +448,7 @@ namespace DrawnUi.Camera
                 PixelFormatType = CVPixelFormatType.CV32BGRA,
                 Width = _width,
                 Height = _height,
-                 MetalCompatibility = true
+                MetalCompatibility = true
             };
 
             _pixelBufferAdaptor = new AVAssetWriterInputPixelBufferAdaptor(_videoInput, pbaAttributes);
@@ -823,7 +831,7 @@ namespace DrawnUi.Camera
                 _pendingTimestamp = timestamp;
 
                 // ZERO-COPY PATH: Create Metal-backed Surface directly from Encoder's PixelBuffer
-                
+
                 // 1. Initialize Thread-Safe Metal Context if needed
                 EnsureMetalContext();
 
@@ -832,8 +840,10 @@ namespace DrawnUi.Camera
                     try
                     {
                         // 1. Get Destination Buffer from Pool (AVAssetWriter or VTCompressionSession)
-                        CVPixelBufferPool pool = IsPreRecordingMode && _compressionSession != null
-                            ? _compressionSession.GetPixelBufferPool()
+                        // Capture local reference to avoid race condition during StopAsync
+                        var session = _compressionSession;
+                        CVPixelBufferPool pool = IsPreRecordingMode && session != null
+                            ? session.GetPixelBufferPool()
                             : _pixelBufferAdaptor?.PixelBufferPool;
 
                         CVPixelBuffer pixelBuffer = null;
@@ -861,7 +871,7 @@ namespace DrawnUi.Camera
                         _surface?.Dispose();
 
                         // 3. Create Metal Texture from Pixel Buffer
-                        var cvTexture = _metalCache.TextureFromImage(pixelBuffer, MTLPixelFormat.BGRA8Unorm, _width, _height, 0, out var cvErr);
+                        CVMetalTexture cvTexture = _metalCache.TextureFromImage(pixelBuffer, MTLPixelFormat.BGRA8Unorm, _width, _height, 0, out var cvErr);
 
                         if (cvTexture != null)
                         {
@@ -871,7 +881,7 @@ namespace DrawnUi.Camera
                             var backendTexture = new GRBackendTexture(_width, _height, false, textureInfo);
 
                             _surface = SKSurface.Create(_encodingContext, backendTexture, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
-                            
+
                             // cvTexture can be let go, underlying texture is kept by backendTexture/pixelBuffer interaction scope
                             // but generally explicit dispose of CVMetalTextureRef is safer? 
                             // usage: using (cvTexture) { ... } but we need it for the life of surface.
@@ -892,7 +902,7 @@ namespace DrawnUi.Camera
                 {
                     // Always update info if dimensions match current target
                     _info = new SKImageInfo(_width, _height, SKColorType.Bgra8888, SKAlphaType.Premul);
-                    
+
                     if (_surface?.Handle == IntPtr.Zero || _surface == null) // Check if valid (Zero-Copy might have created it already)
                     {
                         if (_currentPixelBuffer == null) // Only create CPU-backed surface if NOT in Zero-Copy mode
@@ -1010,12 +1020,17 @@ namespace DrawnUi.Camera
             CVPixelBuffer pixelBuffer = _currentPixelBuffer;
             bool isZeroCopy = pixelBuffer != null;
 
+            // Capture local reference early to avoid race condition during StopAsync
+            var session = _compressionSession;
+            if (session == null)
+                return; // Encoder is stopping, gracefully exit
+
             try
             {
                 if (pixelBuffer == null)
                 {
                     // CPU/Raster Path: Allocate new buffer
-                    var pool = _compressionSession?.GetPixelBufferPool();
+                    var pool = session.GetPixelBufferPool();
                     if (pool != null)
                     {
                         pixelBuffer = pool.CreatePixelBuffer(null, out var err);
@@ -1061,14 +1076,14 @@ namespace DrawnUi.Camera
                 else
                 {
                     // Zero-Copy: Just ensure GPU commands are flushed
-                     // (Done in SubmitFrameAsync main block)
+                    // (Done in SubmitFrameAsync main block)
                 }
 
-                // Submit to VTCompressionSession
+                // Submit to VTCompressionSession (using session reference captured at method start)
                 CMTime presentationTime = CMTime.FromSeconds(_pendingTimestamp.TotalSeconds, 1_000_000);
                 CMTime duration = CMTime.FromSeconds(1.0 / _frameRate, 1_000_000);
 
-                var status = _compressionSession.EncodeFrame(
+                var status = session.EncodeFrame(
                     imageBuffer: pixelBuffer,
                     presentationTimestamp: presentationTime,
                     duration: duration,
@@ -1144,7 +1159,7 @@ namespace DrawnUi.Camera
                 else
                 {
                     // Zero-Copy: Just ensure GPU commands are flushed
-                     // (Done in SubmitFrameAsync main block)
+                    // (Done in SubmitFrameAsync main block)
                 }
 
                 // Append to AVAssetWriter
@@ -1576,7 +1591,7 @@ namespace DrawnUi.Camera
                         preRecordingAudioTrack,
                         CMTime.Zero,
                         out var audioError);
-                    
+
                     if (audioError != null)
                     {
                         System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] WARNING: Failed to insert pre-recording audio: {audioError.LocalizedDescription}");
@@ -1743,7 +1758,7 @@ namespace DrawnUi.Camera
 
             // Use a temporary file to avoid conflicts with existing file
             var tempPath = Path.Combine(Path.GetDirectoryName(outputPath), $"temp_{Guid.NewGuid():N}.mp4");
-            
+
             // Memory tracking to prevent use-after-free in async writer
             var allocatedPointers = new List<IntPtr>();
 
@@ -1813,7 +1828,7 @@ namespace DrawnUi.Camera
                 AVAssetWriterInput audioInput = null;
                 if (audioBuffer != null)
                 {
-                     var audioSettings = new AudioSettings
+                    var audioSettings = new AudioSettings
                     {
                         Format = AudioFormatType.MPEG4AAC,
                         SampleRate = 44100,
@@ -1844,7 +1859,7 @@ namespace DrawnUi.Camera
                     firstAudioNs = audioSamples[0].TimestampNs;
                     System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] First Audio PTS: {firstAudioNs} ns");
                 }
-                
+
                 int appendedCount = 0;
                 int frameIndex = 0;
                 int vIndex = 0;
@@ -1859,7 +1874,7 @@ namespace DrawnUi.Camera
                 // We normalize both streams to start at 0.0 to ensure correct interleaving 
                 // and to avoid 'Writer DEADLOCK' caused by large gaps (e.g. Video@0, Audio@1.3s).
                 // This assumes the buffer content is roughly synced by wall-clock or that strict sync isn't critical for pre-recording.
-                
+
                 int loopGuard = 0;
                 while (vIndex < vCount || aIndex < aCount)
                 {
@@ -1872,13 +1887,13 @@ namespace DrawnUi.Camera
                     // Decision logic: Write video if it's earlier than next audio sample (normalized)
                     if (vIndex < vCount && aIndex < aCount)
                     {
-                         // Normalize Video to 0.0
-                         double vPos = (frames[vIndex].PresentationTime - firstFramePts).Seconds;
-                         
-                         // Normalize Audio to 0.0 (Independent)
-                         double aPos = (double)(audioSamples[aIndex].TimestampNs - firstAudioNs) / 1_000_000_000.0;
-                         
-                         if (vPos <= aPos) 
+                        // Normalize Video to 0.0
+                        double vPos = (frames[vIndex].PresentationTime - firstFramePts).Seconds;
+
+                        // Normalize Audio to 0.0 (Independent)
+                        double aPos = (double)(audioSamples[aIndex].TimestampNs - firstAudioNs) / 1_000_000_000.0;
+
+                        if (vPos <= aPos)
                             writeVideo = true;
                     }
                     else if (vIndex < vCount)
@@ -2009,19 +2024,19 @@ namespace DrawnUi.Camera
                         using var sBuf = CreateSampleBuffer(sample, allocatedPointers);
                         if (sBuf != null)
                         {
-                             // Create timing relative to First Audio (starts at 0)
-                             double relSeconds = (double)(sample.TimestampNs - firstAudioNs) / 1_000_000_000.0;
-                             var adjPts = CMTime.FromSeconds(relSeconds, 1_000_000_000);
-                             
-                             // Set duration correctly (1024 samples / 44100 = ~0.023s)
-                             // sBuf already has duration from CreateSampleBuffer? 
-                             // We should ensure duration is valid.
-                             var duration = sBuf.Duration;
-                             
+                            // Create timing relative to First Audio (starts at 0)
+                            double relSeconds = (double)(sample.TimestampNs - firstAudioNs) / 1_000_000_000.0;
+                            var adjPts = CMTime.FromSeconds(relSeconds, 1_000_000_000);
+
+                            // Set duration correctly (1024 samples / 44100 = ~0.023s)
+                            // sBuf already has duration from CreateSampleBuffer? 
+                            // We should ensure duration is valid.
+                            var duration = sBuf.Duration;
+
                             var timingInfo = new CMSampleTimingInfo { PresentationTimeStamp = adjPts, Duration = duration, DecodeTimeStamp = CMTime.Invalid };
                             nint createTxErr;
                             var adjustedBuf = CMSampleBuffer.CreateWithNewTiming(sBuf, new[] { timingInfo }, out createTxErr);
-                             
+
                             if (createTxErr == 0 && adjustedBuf != null)
                             {
                                 // Wait for Ready
@@ -2048,9 +2063,9 @@ namespace DrawnUi.Camera
                                     }
                                     else
                                     {
-                                         System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Audio AppendSampleBuffer FAILED at {aIndex} (Status: {writer.Status}, Error: {writer.Error?.LocalizedDescription})");
-                                         audioFailedCount++;
-                                         aIndex++;
+                                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Audio AppendSampleBuffer FAILED at {aIndex} (Status: {writer.Status}, Error: {writer.Error?.LocalizedDescription})");
+                                        audioFailedCount++;
+                                        aIndex++;
                                     }
                                 }
                                 else
@@ -2086,23 +2101,23 @@ namespace DrawnUi.Camera
 
                 // Finalize writing
                 videoInput.MarkAsFinished();
-                
+
                 if (writer.Status == AVAssetWriterStatus.Writing)
                 {
                     var tcs = new TaskCompletionSource<bool>();
                     writer.FinishWriting(() => tcs.TrySetResult(true));
                     await tcs.Task;
-                    
+
                     if (writer.Status == AVAssetWriterStatus.Completed)
                     {
-                         System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] MP4 file finalized to temp: {tempPath}");
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] MP4 file finalized to temp: {tempPath}");
                     }
                     else
                     {
-                         System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] FinishWriting failed. Status: {writer.Status}, Error: {writer.Error?.LocalizedDescription}");
-                         // Force cleanup?
-                         File.Delete(tempPath);
-                         return; // Abort
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] FinishWriting failed. Status: {writer.Status}, Error: {writer.Error?.LocalizedDescription}");
+                        // Force cleanup?
+                        File.Delete(tempPath);
+                        return; // Abort
                     }
                 }
                 else
@@ -2137,7 +2152,7 @@ namespace DrawnUi.Camera
                         System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording MP4 written: {fileInfo.Length / 1024.0:F2} KB, {appendedCount} frames");
 
                         // CRITICAL DEBUG: Read back pre-recording file dimensions
-                        #if DEBUG
+#if DEBUG
                         try
                         {
                             var preRecAsset = AVAsset.FromUrl(NSUrl.FromFilename(outputPath));
@@ -2156,7 +2171,7 @@ namespace DrawnUi.Camera
                         {
                             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Error reading pre-recording file dimensions: {ex.Message}");
                         }
-                        #endif
+#endif
                     }
                     catch (Exception ex)
                     {
@@ -2179,7 +2194,7 @@ namespace DrawnUi.Camera
             {
                 videoInput?.Dispose();
                 writer?.Dispose();
-                
+
                 // Free all tracked allocations
                 foreach (var ptr in allocatedPointers)
                 {
@@ -2201,10 +2216,10 @@ namespace DrawnUi.Camera
             {
                 // Log buffer statistics
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording buffer stats: {prerecordingBuffer.GetStats()}");
-                
+
                 // Flush buffers to disk files
                 var (fileA, fileB) = await prerecordingBuffer.FlushToFilesAsync();
-                
+
                 System.Diagnostics.Debug.WriteLine(
                     $"[AppleVideoToolboxEncoder] Pre-recording buffers flushed to files: " +
                     $"FileA={fileA}, FileB={fileB}");
@@ -2219,6 +2234,41 @@ namespace DrawnUi.Camera
             }
         }
 
+        void Cleanup()
+        {
+            lock (_frameLock)
+            {
+                _progressTimer?.Dispose();
+                _compressionSession?.Dispose();
+                _compressionSession = null;
+
+                _preRecordingBuffer?.Dispose();
+                _preRecordingBuffer = null;
+
+                _metalCache?.Dispose();
+                _metalCache = null;
+
+                _commandQueue = null; 
+
+                _previewSurface?.Dispose();
+                _previewSurface = null;
+
+                _surface?.Dispose();
+                _surface = null;
+
+                _currentPixelBuffer?.Dispose();
+                _currentPixelBuffer = null;
+
+                //if (_queuePin.IsAllocated) //will crash upon GC if we uncomment this
+                //{
+                //    _queuePin.Free();
+                //}
+
+                _encodingContext?.Dispose();
+                _encodingContext = null;
+            }
+        }
+
         public void Dispose()
         {
             if (_isRecording)
@@ -2228,6 +2278,7 @@ namespace DrawnUi.Camera
                     try
                     {
                         await StopAsync();
+                        Cleanup();
                     }
                     catch
                     {
@@ -2235,23 +2286,11 @@ namespace DrawnUi.Camera
                     _isRecording = false;
                 });
             }
-            _progressTimer?.Dispose();
-            _compressionSession?.Dispose();
-            _compressionSession = null;
-            _preRecordingBuffer?.Dispose();
-            _preRecordingBuffer = null;
-
-            _encodingContext?.Dispose();
-            _encodingContext = null;
-
-            _metalCache?.Dispose();
-            _metalCache = null;
-            _commandQueue = null; // Release reference
-
-            _previewSurface?.Dispose();
-            _previewSurface = null;
-            _surface?.Dispose();
-            _surface = null;
+            else
+            {
+                Cleanup();
+            }
+            GC.SuppressFinalize(this);
         }
 
         public sealed class FrameScope : IDisposable
