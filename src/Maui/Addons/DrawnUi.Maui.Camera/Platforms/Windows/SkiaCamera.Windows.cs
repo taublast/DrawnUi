@@ -561,11 +561,11 @@ public partial class SkiaCamera : SkiaControl
         return lastTimestamp;
     }
 
-    private async Task StopCaptureVideoFlow()
+    private async Task StopCaptureVideoFlowInternal()
     {
         if (_captureVideoEncoder.LiveRecordingDuration < TimeSpan.FromSeconds(1))
         {
-            await AbortCaptureVideoFlow();
+            await AbortCaptureVideoFlowInternal();
             return;
         }
 
@@ -700,7 +700,7 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-    private async Task AbortCaptureVideoFlow()
+    private async Task AbortCaptureVideoFlowInternal()
     {
         ICaptureVideoEncoder encoder = null;
 

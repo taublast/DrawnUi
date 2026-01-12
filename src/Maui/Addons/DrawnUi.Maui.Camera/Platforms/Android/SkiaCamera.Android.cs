@@ -542,11 +542,11 @@ public partial class SkiaCamera
         }
     }
 
-    private async Task StopCaptureVideoFlow()
+    private async Task StopCaptureVideoFlowInternal()
     {
         if (_captureVideoEncoder.LiveRecordingDuration < TimeSpan.FromSeconds(1))
         {
-            await AbortCaptureVideoFlow();
+            await AbortCaptureVideoFlowInternal();
             return;
         }
 
@@ -658,7 +658,7 @@ public partial class SkiaCamera
         }
     }
 
-    private async Task AbortCaptureVideoFlow() //OK
+    private async Task AbortCaptureVideoFlowInternal() //OK
     {
         ICaptureVideoEncoder encoder = null;
 
@@ -1151,7 +1151,6 @@ public partial class SkiaCamera
             Debug.WriteLine($"[StartVideoRecording] IsBusy cannot start");
             return;
         }
-
 
         Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
 
