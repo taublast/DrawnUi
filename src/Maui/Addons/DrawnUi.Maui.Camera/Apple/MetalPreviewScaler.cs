@@ -96,11 +96,11 @@ namespace DrawnUi.Camera
                 NSError error;
                 var compileOptions = new MTLCompileOptions();
                 var library = _device.CreateLibrary(ScaleShaderSource, compileOptions, out error);
-                if (library == null || error != null)
-                {
-                    System.Diagnostics.Debug.WriteLine($"[MetalPreviewScaler] Shader compile error: {error?.LocalizedDescription}");
-                    return false;
-                }
+                //if (library == null || error != null)
+                //{
+                //    System.Diagnostics.Debug.WriteLine($"[MetalPreviewScaler] Shader compile error: {error?.LocalizedDescription}");
+                //    return false;
+                //}
 
                 var scaleFunction = library.CreateFunction("scaleTexture");
                 if (scaleFunction == null)
@@ -110,11 +110,11 @@ namespace DrawnUi.Camera
                 }
 
                 _scalePipeline = _device.CreateComputePipelineState(scaleFunction, out error);
-                if (_scalePipeline == null || error != null)
-                {
-                    System.Diagnostics.Debug.WriteLine($"[MetalPreviewScaler] Pipeline state error: {error?.LocalizedDescription}");
-                    return false;
-                }
+                //if (_scalePipeline == null || error != null)
+                //{
+                //    System.Diagnostics.Debug.WriteLine($"[MetalPreviewScaler] Pipeline state error: {error?.LocalizedDescription}");
+                //    return false;
+                //}
 
                 // Create output texture
                 var descriptor = MTLTextureDescriptor.CreateTexture2DDescriptor(
