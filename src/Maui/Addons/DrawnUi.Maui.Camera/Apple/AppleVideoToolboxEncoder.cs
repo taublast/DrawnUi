@@ -290,9 +290,8 @@ namespace DrawnUi.Camera
         public SkiaCamera ParentCamera { get; set; }
         public event EventHandler<TimeSpan> ProgressReported;
 
-        public AppleVideoToolboxEncoder(GRContext ctx)
+        public AppleVideoToolboxEncoder()
         {
-            //_encodingContext = ctx;
             _instanceId = System.Threading.Interlocked.Increment(ref _instanceCounter);
             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] CONSTRUCTOR CALLED");
         }
@@ -451,6 +450,7 @@ namespace DrawnUi.Camera
                 MetalCompatibility = true
             };
 
+            _pixelBufferAdaptor?.Dispose();
             _pixelBufferAdaptor = new AVAssetWriterInputPixelBufferAdaptor(_videoInput, pbaAttributes);
 
             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] AVAssetWriter initialized: {_width}x{_height} @ {_frameRate}fps");
@@ -722,6 +722,7 @@ namespace DrawnUi.Camera
                     throw new InvalidOperationException("Cannot add video input to AVAssetWriter");
                 _writer.AddInput(_videoInput);
 
+                _pixelBufferAdaptor?.Dispose();
                 _pixelBufferAdaptor = new AVAssetWriterInputPixelBufferAdaptor(_videoInput,
                     new CVPixelBufferAttributes
                     {
@@ -2248,7 +2249,10 @@ namespace DrawnUi.Camera
                 _metalCache?.Dispose();
                 _metalCache = null;
 
-                _commandQueue = null; 
+                _pixelBufferAdaptor?.Dispose();
+                _pixelBufferAdaptor = null;
+
+                _commandQueue = null;
 
                 _previewSurface?.Dispose();
                 _previewSurface = null;

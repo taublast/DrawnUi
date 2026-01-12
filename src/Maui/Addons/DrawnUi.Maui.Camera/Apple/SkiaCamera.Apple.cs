@@ -312,7 +312,7 @@ public partial class SkiaCamera
         // Note: _captureVideoEncoder is defined in Shared partial
         // Re-use existing or create new; but usually we create new.
         // Cast to local variable for configuration
-        var appleEncoder = new AppleVideoToolboxEncoder(Superview?.GetGRContext()); 
+        var appleEncoder = new AppleVideoToolboxEncoder();
         
         // Inject GRContext for Zero-Copy path (Metal)
         // CRITICAL FIX: Do NOT pass UI Thread's GRContext to background recording thread to avoid crash.
@@ -1396,7 +1396,7 @@ public partial class SkiaCamera
                 var outputUrl = Foundation.NSUrl.FromFilename(outputPath);
                 var exporter =
                     new AVFoundation.AVAssetExportSession(composition,
-                        AVFoundation.AVAssetExportSessionPreset.HighestQuality)
+                        AVFoundation.AVAssetExportSessionPreset.MediumQuality)
                     {
                         OutputUrl = outputUrl,
                         OutputFileType = AVFoundation.AVFileTypes.Mpeg4.GetConstant(),
@@ -1606,7 +1606,14 @@ public partial class SkiaCamera
             }
 
             // Give any in-flight CaptureFrame calls time to complete
-            await Task.Delay(50);
+            // Wait for in-flight frame to complete before stopping encoder
+            // Prevents race condition where CaptureFrameCore still uses encoder being disposed
+            int retries = 0;
+            while (System.Threading.Interlocked.CompareExchange(ref _frameInFlight, 0, 0) != 0 && retries < 50)
+            {
+                await Task.Delay(10);
+                retries++;
+            }
 
             // OOM-SAFE AUDIO HANDLING:
             // 1. Stop live audio writer (instant - audio already on disk)
@@ -3001,7 +3008,7 @@ public partial class SkiaCamera
             }
 
             // Export the composition
-            var exportSession = new AVAssetExportSession(composition, AVAssetExportSessionPreset.HighestQuality);
+            var exportSession = new AVAssetExportSession(composition, AVAssetExportSessionPreset.MediumQuality);
             exportSession.OutputUrl = NSUrl.FromFilename(outputPath);
             exportSession.OutputFileType = AVFileTypes.Mpeg4.GetConstant();
             exportSession.ShouldOptimizeForNetworkUse = true;
