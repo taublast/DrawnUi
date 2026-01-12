@@ -1297,85 +1297,13 @@ public partial class SkiaCamera
                         $"[MuxVideosApple] Pre-recording track: {sourceSize.Width}x{sourceSize.Height}, transform: {compositionTransform}");
                 }
 
-                // CRITICAL BUG FIX: Create AVMutableVideoComposition with explicit renderSize
-                // Using preset alone (like MediumQuality) produces wrong dimensions (568x320)
-                // We need to explicitly set the output dimensions from the source track
-                var videoComposition = AVFoundation.AVMutableVideoComposition.Create();
-
-                // Get frame rate from source track
-                int frameRate = 30; // default
-                if (liveTrack != null && liveTrack.NominalFrameRate > 0)
-                    frameRate = (int)liveTrack.NominalFrameRate;
-                else if (preTracks != null && preTracks.Length > 0 && preTracks[0].NominalFrameRate > 0)
-                    frameRate = (int)preTracks[0].NominalFrameRate;
-
-                videoComposition.FrameDuration = new CoreMedia.CMTime(1, frameRate);
-
-                // Detect rotation and swap RenderSize if needed
-                var renderSize = sourceSize;
-                bool isPortrait = false;
-                // Check for 90 or 270 degree rotation (xx and yy are 0)
-                if (Math.Abs(compositionTransform.xx) < 0.001 && Math.Abs(compositionTransform.yy) < 0.001 &&
-                    (Math.Abs(compositionTransform.yx) > 0.001 || Math.Abs(compositionTransform.xy) > 0.001))
-                {
-                    isPortrait = true;
-                    renderSize = new CoreGraphics.CGSize(sourceSize.Height, sourceSize.Width);
-                    System.Diagnostics.Debug.WriteLine(
-                        $"[MuxVideosApple] Detected 90/270 rotation, swapping RenderSize to {renderSize.Width}x{renderSize.Height}");
-                }
-
-                videoComposition.RenderSize = renderSize;
-
-                // Calculate corrected transform to center video in RenderSize
-                // We ignore the translation in the source transform and calculate our own
-                var correctedTransform = compositionTransform;
-
-                if (isPortrait)
-                {
-                    // 90 degrees: yx=1, xy=-1. 270 degrees: yx=-1, xy=1
-                    if (compositionTransform.yx > 0) // 90 degrees
-                    {
-                        correctedTransform = new CoreGraphics.CGAffineTransform(0, 1, -1, 0, renderSize.Width, 0);
-                    }
-                    else // 270 degrees
-                    {
-                        correctedTransform = new CoreGraphics.CGAffineTransform(0, -1, 1, 0, 0, renderSize.Height);
-                    }
-                }
-                else
-                {
-                    // 0 or 180 degrees
-                    if (compositionTransform.xx < 0) // 180 degrees
-                    {
-                        correctedTransform =
-                            new CoreGraphics.CGAffineTransform(-1, 0, 0, -1, renderSize.Width, renderSize.Height);
-                    }
-                    else // 0 degrees
-                    {
-                        correctedTransform = CoreGraphics.CGAffineTransform.MakeIdentity();
-                    }
-                }
-
-                // Reset track transform to Identity since we are baking the rotation
-                videoTrack.PreferredTransform = CoreGraphics.CGAffineTransform.MakeIdentity();
-
-                var instruction = new AVFoundation.AVMutableVideoCompositionInstruction
-                {
-                    TimeRange = new CoreMedia.CMTimeRange
-                    {
-                        Start = CoreMedia.CMTime.Zero,
-                        Duration = composition.Duration
-                    }
-                };
-
-                var layerInstruction =
-                    AVFoundation.AVMutableVideoCompositionLayerInstruction.FromAssetTrack(videoTrack);
-                layerInstruction.SetTransform(correctedTransform, CoreMedia.CMTime.Zero);
-                instruction.LayerInstructions = new[] { layerInstruction };
-                videoComposition.Instructions = new[] { instruction };
+                // PASSTHROUGH MODE: No re-encoding, just container manipulation (FAST!)
+                // Orientation is preserved via track's PreferredTransform metadata
+                // The source videos already have correct transform set by the encoder
+                videoTrack.PreferredTransform = compositionTransform;
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"[MuxVideosApple] Video composition renderSize: {videoComposition.RenderSize.Width}x{videoComposition.RenderSize.Height}, fps: {frameRate}");
+                    $"[MuxVideosApple] Passthrough mode - preserving source transform: {compositionTransform}");
 
                 // Export composition to file
                 // CRITICAL: AVAssetExportSession fails if output file already exists
@@ -1396,12 +1324,12 @@ public partial class SkiaCamera
                 var outputUrl = Foundation.NSUrl.FromFilename(outputPath);
                 var exporter =
                     new AVFoundation.AVAssetExportSession(composition,
-                        AVFoundation.AVAssetExportSessionPreset.MediumQuality)
+                        AVFoundation.AVAssetExportSessionPreset.Passthrough)
                     {
                         OutputUrl = outputUrl,
                         OutputFileType = AVFoundation.AVFileTypes.Mpeg4.GetConstant(),
-                        ShouldOptimizeForNetworkUse = false,
-                        VideoComposition = videoComposition // Apply our explicit video composition
+                        ShouldOptimizeForNetworkUse = false
+                        // No VideoComposition - passthrough preserves original encoding
                     };
 
                 var tcs = new TaskCompletionSource<string>();
