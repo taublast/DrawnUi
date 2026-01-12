@@ -8,6 +8,10 @@ using Photos;
 using UIKit;
 using Metal; // Added for Zero-Copy path
 using SkiaSharp.Views.Maui.Controls; // For SKGLView
+using Foundation;
+using Photos;
+using AVFoundation;
+using AVKit;
 
 namespace DrawnUi.Camera;
 
@@ -61,7 +65,7 @@ public partial class SkiaCamera
         try
         {
             // Double-check encoder still exists (race condition protection)
-            if (_captureVideoEncoder == null || (!IsRecordingVideo && !IsPreRecording))
+           if (_captureVideoEncoder == null || (!IsRecordingVideo && !IsPreRecording))
                 return;
 
             var elapsed = DateTime.Now - _captureVideoStartTime;
@@ -300,11 +304,15 @@ public partial class SkiaCamera
 
     private async Task StartCaptureVideoFlow()
     {
+        // Dispose previous encoder if exists to prevent resource leaks and GC finalizer crashes
+        _captureVideoEncoder?.Dispose();
+        _captureVideoEncoder = null;
+
         // Create Apple encoder using VideoToolbox for hardware H.264 encoding
         // Note: _captureVideoEncoder is defined in Shared partial
         // Re-use existing or create new; but usually we create new.
         // Cast to local variable for configuration
-        var appleEncoder = new AppleVideoToolboxEncoder(); 
+        var appleEncoder = new AppleVideoToolboxEncoder(Superview?.GetGRContext()); 
         
         // Inject GRContext for Zero-Copy path (Metal)
         // CRITICAL FIX: Do NOT pass UI Thread's GRContext to background recording thread to avoid crash.
@@ -413,8 +421,8 @@ public partial class SkiaCamera
         }
         else
         {
-            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            outputPath = Path.Combine(documentsPath, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
+            var documentsPath = GetAppVideoFolder(string.Empty);
+            outputPath = Path.Combine(documentsPath, $"vid{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
             Debug.WriteLine($"[StartCaptureVideoFlow] iOS recording to file: {outputPath}");
         }
 
@@ -587,7 +595,7 @@ public partial class SkiaCamera
     /// Shows photo from assets-library URL using PHImageManager
     /// </summary>
     /// <param name="assetsLibraryUrl">assets-library:// URL</param>
-    private static void ShowPhotoFromAssetsLibrary(string assetsLibraryUrl)
+    public static void ShowPhotoFromAssetsLibrary(string assetsLibraryUrl)
     {
         try
         {
@@ -658,6 +666,67 @@ public partial class SkiaCamera
 
         viewController.PresentViewController(photoViewController, true, null);
     }
+
+    /// <summary>
+    /// Shows video directly in full-screen viewer using PHAsset and PHImageManager
+    /// </summary>
+    /// <param name="assetId">Local identifier of the PHAsset to display</param>
+    public static void PlayVideoDirectly(string assetId)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(assetId))
+                return;
+
+            var fetchResult = PHAsset.FetchAssetsUsingLocalIdentifiers(new[] { assetId }, null);
+
+            if (fetchResult.Count == 0)
+            {
+                Debug.WriteLine("[SkiaCamera Apple] Video not found for identifier: " + assetId);
+                return;
+            }
+
+            var asset = fetchResult[0] as PHAsset;
+
+            var viewController = Platform.GetCurrentUIViewController();
+            if (viewController == null) return;
+
+            var playerVC = new AVPlayerViewController();
+            playerVC.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
+
+            var options = new PHVideoRequestOptions
+            {
+                NetworkAccessAllowed = true,
+                DeliveryMode = PHVideoRequestOptionsDeliveryMode.HighQualityFormat
+            };
+
+            PHImageManager.DefaultManager.RequestAVAsset(asset, options, (avAsset, audioMix, info) =>
+            {
+                if (avAsset != null)
+                {
+                    var player = AVPlayer.FromPlayerItem(new AVPlayerItem(avAsset));
+                    playerVC.Player = player;
+
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        viewController.PresentViewController(playerVC, true, () =>
+                        {
+                            player.Play();
+                        });
+                    });
+                }
+                else
+                {
+                    Debug.WriteLine("[SkiaCamera Apple] Could not get AVAsset for video");
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera Apple] Error playing video: {ex.Message}");
+        }
+    }
+
 
     /// <summary>
     /// Full-screen zoomable photo viewer controller
@@ -1519,14 +1588,8 @@ public partial class SkiaCamera
 
 
 
-    private async Task StopCaptureVideoFlow()
+    private async Task StopCaptureVideoFlowInternal()
     {
-        if (IsBusy)
-        {
-            Debug.WriteLine($"[StartVideoRecording] IsBusy cannot stop");
-            return;
-        }
-
         ICaptureVideoEncoder encoder = null;
         string tempAudioFilePath = null;
 
@@ -1720,11 +1783,12 @@ public partial class SkiaCamera
             Debug.WriteLine($"[StopCaptureVideoFlow] TIMING: TOTAL stop time {stopwatchTotal.ElapsedMilliseconds}ms");
 
             IsRecordingVideo = false;
-            IsBusy = false; // Release busy state after successful muxing
             if (capturedVideo != null)
             {
                 OnVideoRecordingSuccess(capturedVideo);
             }
+
+            IsBusy = false; // Release busy state after successful muxing
         }
         catch (Exception ex)
         {
@@ -1770,7 +1834,7 @@ public partial class SkiaCamera
         }
     }
 
-    private async Task AbortCaptureVideoFlow()
+    private async Task AbortCaptureVideoFlowInternal()
     {
         ICaptureVideoEncoder encoder = null;
 
@@ -1868,6 +1932,8 @@ public partial class SkiaCamera
                     // Ignore disposal errors
                 }
             }
+
+            IsBusy = false;
         }
     }
 
@@ -1929,6 +1995,13 @@ public partial class SkiaCamera
                     if (NativeControl is NativeCamera nativeCam)
                     {
                         nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
+                    }
+
+                    // Wait for in-flight frame to complete before stopping encoder
+                    // Prevents race condition where CaptureFrameCore still uses encoder being disposed
+                    while (System.Threading.Interlocked.CompareExchange(ref _frameInFlight, 0, 0) != 0)
+                    {
+                        await Task.Yield();
                     }
 
                     try
@@ -2085,8 +2158,6 @@ public partial class SkiaCamera
             VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
-
-        IsBusy = false;
     }
 
     protected async Task<List<string>> GetAvailableAudioDevicesPlatform()
@@ -2229,7 +2300,7 @@ public partial class SkiaCamera
                 int waitCount = 0;
                 while (!audioInput.ReadyForMoreMediaData && writer.Status == AVAssetWriterStatus.Writing && waitCount < 100)
                 {
-                    await Task.Delay(1);
+                    await Task.Yield();
                     waitCount++;
                 }
 
