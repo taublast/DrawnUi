@@ -201,7 +201,7 @@ public partial class SkiaCamera : SkiaControl
         typeof(int),
         typeof(SkiaCamera),
         -1, // -1 means "Default" or "Auto"
-        propertyChanged: NeedRestart); 
+        propertyChanged: NeedRestart);
 
     /// <summary>
     /// Index of the audio device to use. -1 for default.
@@ -1191,7 +1191,10 @@ public partial class SkiaCamera : SkiaControl
     public async Task StopVideoRecording(bool abort = false)
     {
         if (IsBusy)
+        {
+            Debug.WriteLine($"[StopVideoRecording] IsBusy cannot stop");
             return;
+        }
 
         if (!IsRecordingVideo && !IsPreRecording)
             return;
@@ -1232,19 +1235,19 @@ public partial class SkiaCamera : SkiaControl
                 {
                     if (abort)
                     {
-                        await AbortCaptureVideoFlow();
+                        await AbortCaptureVideoFlowInternal();
                     }
                     else
                     {
                         // Internal method will handle busy state too but we lock externally as well
-                        await StopCaptureVideoFlow();
+                        await StopCaptureVideoFlowInternal();
                     }
 
                     ClearPreRecordingBuffer();
                 }
                 else
                 {
-    
+
                     await NativeControl.StopVideoRecording();
 
                     // Note: IsRecordingVideo will be set to false by the VideoRecordingSuccess/Failed callbacks
@@ -1258,13 +1261,17 @@ public partial class SkiaCamera : SkiaControl
                 IsRecordingVideo = false;
                 //ClearPreRecordingBuffer();
                 VideoRecordingFailed?.Invoke(this, ex);
+                IsBusy = false;
                 throw;
             }
 #endif
         }
         finally
         {
-            IsBusy = false;
+            if (abort)
+            {
+                IsBusy = false;
+            }
         }
     }
 
@@ -1373,7 +1380,7 @@ public partial class SkiaCamera : SkiaControl
         try
         {
             Debug.WriteLine("[SkiaCamera] Requesting permissions...");
-            SkiaCamera.CheckPermissions((presented) =>
+            CheckPermissions((presented) =>
                 {
                     Debug.WriteLine("[SkiaCamera] Starting..");
                     PermissionsWarning = false;
@@ -1500,8 +1507,6 @@ public partial class SkiaCamera : SkiaControl
         if (NativeControl != null)
         {
             StopInternal(true);
-
-            NativeControl?.Dispose();
         }
 
         // Clean up restart debounce timer
@@ -1509,47 +1514,30 @@ public partial class SkiaCamera : SkiaControl
         _restartDebounceTimer = null;
 
         // Clean up capture video resources (stop recording first if active)
-        if (IsRecordingVideo && _captureVideoEncoder != null)
-        {
-            // Force stop capture video flow to prevent disposal race
 #if IOS || MACCATALYST
-            if (NativeControl is NativeCamera nativeCam)
-            {
-                nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
-            }
-#endif
-            _frameCaptureTimer?.Dispose();
-            _frameCaptureTimer = null;
-
-            // Don't await - just force cleanup in disposal
-            try
-            {
-                var encoder = _captureVideoEncoder;
-                _captureVideoEncoder = null;
-                encoder?.Dispose();
-            }
-            catch
-            {
-                // Ignore errors during disposal cleanup
-            }
-        }
-        else
+        if (NativeControl is NativeCamera nativeCam)
         {
-#if IOS || MACCATALYST
-            if (NativeControl is NativeCamera nativeCam)
-            {
-                nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
-            }
-#endif
-            _frameCaptureTimer?.Dispose();
-            _frameCaptureTimer = null;
-            _captureVideoEncoder?.Dispose();
-            _captureVideoEncoder = null;
+            nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
         }
+#endif
 
+        _frameCaptureTimer?.Dispose();
+        _frameCaptureTimer = null;
+
+        _frameCaptureTimer?.Dispose();
+        _frameCaptureTimer = null;
+        _captureVideoEncoder?.Dispose();
+        _captureVideoEncoder = null;
+
+        NativeControl?.Dispose();
         NativeControl = null;
 
         Instances.Remove(this);
+
+        //will force crash if our implementation is not safe
+#if DEBUG
+        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
+#endif
     }
 
     public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
@@ -1643,14 +1631,11 @@ public partial class SkiaCamera : SkiaControl
     public static string DefaultAlbum = string.Empty;
 
     /// <summary>
-    /// Returns the projected public directory path for the given album.
-    /// On Android this is the DCIM/{Album} folder.
-    /// On Windows this is the Videos/{Album} folder.
-    /// On iOS this returns "Photos Library" as there is no direct file access.
+    /// Returns the projected public video directory path for the given album.
     /// </summary>
     /// <param name="album"></param>
     /// <returns></returns>
-    public static string GetPublicGalleryDirectory(string albumName)
+    public static string GetAppVideoFolder(string albumName)
     {
 #if ANDROID
         var dcimDir = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDcim);
@@ -1659,7 +1644,7 @@ public partial class SkiaCamera : SkiaControl
 #elif WINDOWS
         return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), albumName);
 #elif IOS || MACCATALYST
-        return $"Photos Library/{albumName}";
+        return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 #else
         return null;
 #endif
@@ -2045,7 +2030,7 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
- 
+
 
     private VideoFormat? _currentVideoFormat;
 
@@ -2056,7 +2041,7 @@ public partial class SkiaCamera : SkiaControl
     public virtual async Task<List<string>> GetAvailableAudioDevicesAsync()
     {
 #if WINDOWS || ANDROID || IOS || MACCATALYST //todo ONPLATFORM
-        return await GetAvailableAudioDevicesPlatform(); 
+        return await GetAvailableAudioDevicesPlatform();
 #endif
         return new List<string>();
     }
@@ -2072,7 +2057,7 @@ public partial class SkiaCamera : SkiaControl
 #endif
         return new List<string>();
     }
-    
+
     /// <summary>
     /// Internal method to get available cameras with caching
     /// </summary>
@@ -2598,7 +2583,7 @@ public partial class SkiaCamera : SkiaControl
                 canvas.Translate(width, 0);
                 canvas.RotateDegrees(90);
                 break;
-            // case 0: no rotation needed
+                // case 0: no rotation needed
         }
     }
 
@@ -2787,7 +2772,7 @@ public partial class SkiaCamera : SkiaControl
     public class CameraPicturesQueue : Queue<CameraQueuedPictured>
     {
     }
- 
+
 
     private bool _IsTakingPhoto;
 
@@ -2827,7 +2812,7 @@ public partial class SkiaCamera : SkiaControl
     /// </summary>
     /// <param name="granted">Action to invoke if permissions are granted</param>
     /// <param name="notGranted">Action to invoke if permissions are denied</param>
-    public static void CheckGalleryPermissions(Action granted, Action notGranted, bool avoidSpam = false)
+    public void CheckAllPermissions(Action granted, Action notGranted, bool avoidSpam = false)
     {
         if (!avoidSpam || lastTimeChecked + TimeSpan.FromSeconds(5) < DateTime.Now) //avoid spam
         {
@@ -2853,8 +2838,19 @@ public partial class SkiaCamera : SkiaControl
                     if (status == PermissionStatus.Granted)
                     {
 #if IOS || MACCATALYST
-                        var photoStatus = await Photos.PHPhotoLibrary.RequestAuthorizationAsync(Photos.PHAccessLevel.ReadWrite);
-                        okay1 = photoStatus == Photos.PHAuthorizationStatus.Authorized || photoStatus == Photos.PHAuthorizationStatus.Limited;
+                        okay1 = await RequestGalleryPermissions();
+                        if (okay1 && this.CaptureMode == CaptureModeType.Video && this.RecordAudio)
+                        {
+                            var s = AVCaptureDevice.GetAuthorizationStatus(AVAuthorizationMediaType.Audio);
+                            if (s == AVAuthorizationStatus.NotDetermined)
+                            {
+                                okay1 = await AVCaptureDevice.RequestAccessForMediaTypeAsync(AVAuthorizationMediaType.Audio);
+                            }
+                            else
+                            {
+                                okay1 = true;
+                            }
+                        }
 #elif ANDROID
                         if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Q)
                         {
@@ -2875,6 +2871,16 @@ public partial class SkiaCamera : SkiaControl
                             }
                             okay1 = writeStatus == PermissionStatus.Granted;
                         }
+
+                        if (okay1 && this.CaptureMode == CaptureModeType.Video && this.RecordAudio)
+                        {
+                            status = await Permissions.CheckStatusAsync<Permissions.Microphone>();
+                            if (status != PermissionStatus.Granted)
+                            {
+                                status = await Permissions.RequestAsync<Permissions.Microphone>();
+                                okay1 = status == PermissionStatus.Granted;
+                            }
+                        }
 #else
                         var storageStatus = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
                         if (storageStatus != PermissionStatus.Granted)
@@ -2887,7 +2893,7 @@ public partial class SkiaCamera : SkiaControl
                 }
                 catch (Exception ex)
                 {
-                    Trace.WriteLine(ex);
+                    Super.Log(ex);
                 }
                 finally
                 {
@@ -2971,9 +2977,9 @@ public partial class SkiaCamera : SkiaControl
     /// <summary>
     /// Wrapper used by existing code to request permissions then proceed
     /// </summary>
-    public static void CheckPermissions(Action<object> granted, Action<object> notGranted)
+    public void CheckPermissions(Action<object> granted, Action<object> notGranted)
     {
-        CheckGalleryPermissions(() => granted?.Invoke(null), () => notGranted?.Invoke(null));
+        CheckAllPermissions(() => granted?.Invoke(null), () => notGranted?.Invoke(null));
     }
 
     #endregion
@@ -3061,7 +3067,7 @@ public partial class SkiaCamera : SkiaControl
 
         System.Diagnostics.Debug.WriteLine($"[CAMERA] Stopped {Uid} {Tag}");
 
-        _ = StopVideoRecording(true);
+        //_ = StopVideoRecording(true);
 
         NativeControl?.Stop(force);
         State = CameraState.Off;

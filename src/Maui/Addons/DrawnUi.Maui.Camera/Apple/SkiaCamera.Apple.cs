@@ -1037,9 +1037,27 @@ public partial class SkiaCamera
     public async Task<bool> RequestPermissions()
     {
         var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
+
         if (status == PermissionStatus.Granted && this.CaptureMode == CaptureModeType.Video)
         {
             status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+        }
+
+        if (status == PermissionStatus.Granted && this.CaptureMode == CaptureModeType.Video && this.RecordAudio)
+        {
+            var s = AVCaptureDevice.GetAuthorizationStatus(AVAuthorizationMediaType.Audio);
+            if (s == AVAuthorizationStatus.NotDetermined)
+            {
+                var granted = await AVCaptureDevice.RequestAccessForMediaTypeAsync(AVAuthorizationMediaType.Audio);
+                if (!granted)
+                {
+                    status = PermissionStatus.Denied;
+                }
+            }
+            else
+            {
+                status = PermissionStatus.Granted;
+            }
         }
 
         return status == PermissionStatus.Granted;
@@ -1049,7 +1067,7 @@ public partial class SkiaCamera
     /// Request Photos library access up front so saving does not trigger a late system prompt.
     /// Call on UI thread only.
     /// </summary>
-    public async Task<bool> RequestGalleryPermissions()
+    public static async Task<bool> RequestGalleryPermissions()
     {
         // Photos AddOnly (iOS 14+) returns Authorized or Limited when the user allows adding media
         var authStatus = await Photos.PHPhotoLibrary.RequestAuthorizationAsync(Photos.PHAccessLevel.ReadWrite);
