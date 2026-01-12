@@ -424,7 +424,7 @@ public class Canvas : DrawnView, IGestureListener
         {
             OnGesturesAttachChanged();
 
-#if WINDOWS || ANDROID
+#if ONPLATFORM
             InitFrameworkPlatform(true);
 #endif
         }
@@ -437,7 +437,7 @@ public class Canvas : DrawnView, IGestureListener
             DetachGestures();
         }
 
-#if WINDOWS || ANDROID
+#if ONPLATFORM
         if (args.NewHandler == null)
             InitFrameworkPlatform(false);
 #endif
