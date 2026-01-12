@@ -691,6 +691,7 @@ namespace DrawnUi.Camera
                 // Step 2: Stop buffering to circular buffer (we'll switch to AVAssetWriter)
                 _compressionSession?.Dispose();
                 _compressionSession = null;
+                _preRecordingBuffer?.Dispose();
                 _preRecordingBuffer = null;
 
                 // Step 3: Initialize AVAssetWriter for live recording
@@ -1499,7 +1500,7 @@ namespace DrawnUi.Camera
 
                 // Load pre-recording asset and wait for it to load
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Loading pre-recording asset...");
-                var preRecordingAsset = AVAsset.FromUrl(NSUrl.FromFilename(preRecordingPath));
+                using var preRecordingAsset = AVAsset.FromUrl(NSUrl.FromFilename(preRecordingPath));
 
                 // Wait for asset to load
                 var preRecLoadTcs = new TaskCompletionSource<bool>();
@@ -1526,7 +1527,7 @@ namespace DrawnUi.Camera
 
                 // Load live recording asset and wait for it to load
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Loading live recording asset...");
-                var liveRecordingAsset = AVAsset.FromUrl(NSUrl.FromFilename(liveRecordingPath));
+                using var liveRecordingAsset = AVAsset.FromUrl(NSUrl.FromFilename(liveRecordingPath));
 
                 var liveRecLoadTcs = new TaskCompletionSource<bool>();
                 liveRecordingAsset.LoadValuesAsynchronously(new[] { "tracks", "duration" }, () =>
@@ -1552,7 +1553,7 @@ namespace DrawnUi.Camera
 
                 // Create AVMutableComposition for concatenation
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Creating composition...");
-                var composition = AVMutableComposition.Create();
+                using var composition = AVMutableComposition.Create();
                 var videoTrack = composition.AddMutableTrack(AVMediaTypes.Video.GetConstant(), 0);
                 var audioTrack = composition.AddMutableTrack(AVMediaTypes.Audio.GetConstant(), 0);
 
@@ -1653,7 +1654,7 @@ namespace DrawnUi.Camera
                 // CRITICAL BUG FIX: Create AVMutableVideoComposition with explicit renderSize
                 // Without this, AVAssetExportSession.PresetPassthrough may use default/preview dimensions
                 // This was causing 1920x1080 videos to be exported as 568x320 (preview size)
-                var videoComposition = AVMutableVideoComposition.Create();
+                using var videoComposition = AVMutableVideoComposition.Create();
                 videoComposition.FrameDuration = new CMTime(1, _frameRate);
                 videoComposition.RenderSize = new CoreGraphics.CGSize(_width, _height);
 
@@ -1677,7 +1678,7 @@ namespace DrawnUi.Camera
                 }
 
                 // Use highest quality preset instead of Passthrough when we have video composition
-                var exportSession = new AVAssetExportSession(composition, AVAssetExportSession.PresetHighestQuality);
+                using var exportSession = new AVAssetExportSession(composition, AVAssetExportSession.PresetHighestQuality);
                 if (exportSession == null)
                 {
                     System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] ERROR: Failed to create AVAssetExportSession");
@@ -2248,6 +2249,12 @@ namespace DrawnUi.Camera
 
                 _metalCache?.Dispose();
                 _metalCache = null;
+
+                // Dispose AVAssetWriter resources if still allocated
+                _videoInput?.Dispose();
+                _videoInput = null;
+                _writer?.Dispose();
+                _writer = null;
 
                 _pixelBufferAdaptor?.Dispose();
                 _pixelBufferAdaptor = null;

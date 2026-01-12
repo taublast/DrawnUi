@@ -305,6 +305,11 @@ public partial class SkiaCamera
     private async Task StartCaptureVideoFlow()
     {
         // Dispose previous encoder if exists to prevent resource leaks and GC finalizer crashes
+        // CRITICAL: Unsubscribe event handlers before disposal to prevent memory leaks
+        if (_captureVideoEncoder is AppleVideoToolboxEncoder prevAppleEnc && _encoderPreviewInvalidateHandler != null)
+        {
+            prevAppleEnc.PreviewAvailable -= _encoderPreviewInvalidateHandler;
+        }
         _captureVideoEncoder?.Dispose();
         _captureVideoEncoder = null;
 
@@ -1103,7 +1108,7 @@ public partial class SkiaCamera
                 if (preAsset == null || liveAsset == null)
                     throw new InvalidOperationException("Failed to load video assets");
 
-                var composition = new AVFoundation.AVMutableComposition();
+                using var composition = new AVFoundation.AVMutableComposition();
                 var videoTrack = composition.AddMutableTrack(AVMediaTypes.Video.GetConstant(), 0);
 
                 if (videoTrack == null)
@@ -1594,6 +1599,12 @@ public partial class SkiaCamera
                 _audioCapture = null;
             }
 
+            // CRITICAL: Unsubscribe event handlers before disposal to prevent memory leaks
+            if (_captureVideoEncoder is AppleVideoToolboxEncoder appleEncToStop && _encoderPreviewInvalidateHandler != null)
+            {
+                appleEncToStop.PreviewAvailable -= _encoderPreviewInvalidateHandler;
+            }
+
             // Get local reference to encoder before clearing field to prevent disposal race
             encoder = _captureVideoEncoder;
             _captureVideoEncoder = null;
@@ -1782,6 +1793,12 @@ public partial class SkiaCamera
                 nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
             }
 
+            // CRITICAL: Unsubscribe event handlers before disposal to prevent memory leaks
+            if (_captureVideoEncoder is AppleVideoToolboxEncoder appleEncToAbort && _encoderPreviewInvalidateHandler != null)
+            {
+                appleEncToAbort.PreviewAvailable -= _encoderPreviewInvalidateHandler;
+            }
+
             // Get local reference to encoder before clearing field to prevent disposal race
             encoder = _captureVideoEncoder;
             _captureVideoEncoder = null;
@@ -1965,6 +1982,11 @@ public partial class SkiaCamera
                         Debug.WriteLine($"[StartVideoRecording] Error stopping pre-recording encoder: {ex.Message}");
                     }
 
+                    // CRITICAL: Unsubscribe event handlers before disposal to prevent memory leaks
+                    if (_captureVideoEncoder is AppleVideoToolboxEncoder appleEncPreRec && _encoderPreviewInvalidateHandler != null)
+                    {
+                        appleEncPreRec.PreviewAvailable -= _encoderPreviewInvalidateHandler;
+                    }
                     _captureVideoEncoder?.Dispose();
                     _captureVideoEncoder = null;
                 }
@@ -2642,11 +2664,11 @@ public partial class SkiaCamera
             );
 
             // Load both audio files as assets
-            var firstAsset = AVAsset.FromUrl(NSUrl.FromFilename(firstAudioPath));
-            var secondAsset = AVAsset.FromUrl(NSUrl.FromFilename(secondAudioPath));
+            using var firstAsset = AVAsset.FromUrl(NSUrl.FromFilename(firstAudioPath));
+            using var secondAsset = AVAsset.FromUrl(NSUrl.FromFilename(secondAudioPath));
 
             // Create composition
-            var composition = new AVMutableComposition();
+            using var composition = new AVMutableComposition();
             var audioTrack = composition.AddMutableTrack(AVMediaTypes.Audio.GetConstant(), 0);
 
             // Get audio tracks from both assets
@@ -2697,7 +2719,7 @@ public partial class SkiaCamera
             }
 
             // Export the composition
-            var exportSession = new AVAssetExportSession(composition, AVAssetExportSessionPreset.AppleM4A);
+            using var exportSession = new AVAssetExportSession(composition, AVAssetExportSessionPreset.AppleM4A);
             exportSession.OutputUrl = NSUrl.FromFilename(outputPath);
             exportSession.OutputFileType = AVFileTypes.AppleM4a.GetConstant();// new NSString("com.apple.m4a-audio");
 
@@ -2882,7 +2904,7 @@ public partial class SkiaCamera
                 return null;
             }
 
-            var composition = new AVMutableComposition();
+            using var composition = new AVMutableComposition();
 
             // Add video track
             var videoTrack = composition.AddMutableTrack(AVMediaTypes.Video.GetConstant(), 0);
@@ -2936,7 +2958,7 @@ public partial class SkiaCamera
             }
 
             // Export the composition
-            var exportSession = new AVAssetExportSession(composition, AVAssetExportSessionPreset.MediumQuality);
+            using var exportSession = new AVAssetExportSession(composition, AVAssetExportSessionPreset.MediumQuality);
             exportSession.OutputUrl = NSUrl.FromFilename(outputPath);
             exportSession.OutputFileType = AVFileTypes.Mpeg4.GetConstant();
             exportSession.ShouldOptimizeForNetworkUse = true;
@@ -2950,7 +2972,6 @@ public partial class SkiaCamera
             var success = await tcs.Task;
             var status = exportSession.Status;
             var error = exportSession.Error;
-            exportSession.Dispose();
 
             if (success && File.Exists(outputPath))
             {

@@ -210,11 +210,14 @@ namespace DrawnUi.Camera
                         var lastFrameTimestamp = _frames[_frames.Count - 1].Timestamp;
                         var cutoffTimestamp = lastFrameTimestamp - _maxDuration;
                         int beforePrune = _frames.Count;
-                        _frames.RemoveAll(f => f.Timestamp < cutoffTimestamp);
+
+                        // CRITICAL: Clear frame Data BEFORE removing to help GC
+                        PruneFramesWithCleanup(f => f.Timestamp < cutoffTimestamp);
 
                         // CRITICAL: Ensure first frame is a keyframe after pruning
                         while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
                         {
+                            _frames[0].Data = null;
                             _frames.RemoveAt(0);
                         }
 
@@ -334,11 +337,14 @@ namespace DrawnUi.Camera
                         var lastFrameTimestamp = _frames[_frames.Count - 1].Timestamp;
                         var cutoffTimestamp = lastFrameTimestamp - _maxDuration;
                         int beforePrune = _frames.Count;
-                        _frames.RemoveAll(f => f.Timestamp < cutoffTimestamp);
+
+                        // CRITICAL: Clear frame Data BEFORE removing to help GC
+                        PruneFramesWithCleanup(f => f.Timestamp < cutoffTimestamp);
 
                         // CRITICAL: Ensure first frame is a keyframe after pruning
                         while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
                         {
+                            _frames[0].Data = null;
                             _frames.RemoveAt(0);
                         }
 
@@ -568,7 +574,8 @@ namespace DrawnUi.Camera
                 var cutoffTimestamp = lastFrameTimestamp - _maxDuration;
                 int beforePrune = _frames.Count;
 
-                _frames.RemoveAll(f => f.Timestamp < cutoffTimestamp);
+                // CRITICAL: Clear frame Data BEFORE removing to help GC
+                PruneFramesWithCleanup(f => f.Timestamp < cutoffTimestamp);
 
                 bool hasKeyFrame = _frames.Any(f => f.IsKeyFrame);
                 if (hasKeyFrame)
@@ -576,6 +583,7 @@ namespace DrawnUi.Camera
                     // CRITICAL: Ensure first frame is a keyframe after pruning
                     while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
                     {
+                        _frames[0].Data = null;
                         _frames.RemoveAt(0);
                     }
                 }
@@ -622,6 +630,7 @@ namespace DrawnUi.Camera
                 _stateA = new BufferState { BytesUsed = 0, FrameCount = 0, StartTime = DateTime.UtcNow };
                 _stateB = new BufferState { BytesUsed = 0, FrameCount = 0, StartTime = DateTime.MinValue };
                 _currentBuffer = 0;
+                _frames.Clear();
             }
         }
 
@@ -686,15 +695,44 @@ namespace DrawnUi.Camera
             return false;
         }
 
+        /// <summary>
+        /// Removes frames matching predicate and CLEARS their Data arrays to help GC.
+        /// MUST be called while holding _swapLock.
+        /// </summary>
+        private void PruneFramesWithCleanup(Predicate<EncodedFrame> match)
+        {
+            // First pass: null out Data arrays for frames that will be removed
+            foreach (var frame in _frames)
+            {
+                if (match(frame))
+                {
+                    frame.Data = null;
+                }
+            }
+
+            // Second pass: remove from list
+            _frames.RemoveAll(match);
+        }
+
         public void Dispose()
         {
             lock (_swapLock)
             {
                 if (!_isDisposed)
                 {
+                    // CRITICAL: Null out all frame Data to help GC collect large byte arrays
+                    foreach (var frame in _frames)
+                    {
+                        frame.Data = null;
+                    }
+                    _frames.Clear();
+
+                    // Clear buffer references
                     _bufferA = null;
                     _bufferB = null;
                     _isDisposed = true;
+
+                    System.Diagnostics.Debug.WriteLine("[PrerecordingEncodedBufferApple] Disposed - all frame data cleared");
                 }
             }
         }
