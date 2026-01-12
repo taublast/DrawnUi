@@ -30,6 +30,52 @@ namespace DrawnUi.Camera;
 
 public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotifyPropertyChanged, IAVCaptureVideoDataOutputSampleBufferDelegate, IAVCaptureFileOutputRecordingDelegate, IAudioCapture, IAVCaptureAudioDataOutputSampleBufferDelegate
 {
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            // Stop video recording if active
+            if (_isRecordingVideo)
+            {
+                try
+                {
+                    _movieFileOutput?.StopRecording();
+                }
+                catch { }
+                _isRecordingVideo = false;
+            }
+
+            _progressTimer?.Invalidate();
+            _progressTimer = null;
+
+            CleanupMovieFileOutput();
+
+            Stop();
+
+            _session?.Dispose();
+            _videoDataOutput?.Dispose();
+            _stillImageOutput?.Dispose();
+            _deviceInput?.Dispose();
+            _videoDataOutputQueue?.Dispose();
+
+            _kill?.Dispose();
+
+            // Clean up Metal scaler
+            _metalScaler?.Dispose();
+            _metalScaler = null;
+
+            // Clear callback
+            lock (_lockFullResCallback)
+            {
+                _fullResFrameCallback = null;
+            }
+        }
+
+        base.Dispose(disposing);
+
+        GC.SuppressFinalize(this);
+    }
+
     protected readonly SkiaCamera FormsControl;
     private AVCaptureSession _session;
     private AVCaptureVideoDataOutput _videoDataOutput;
@@ -2707,62 +2753,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
     #endregion
 
-    #region IDisposable
-
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            // Stop video recording if active
-            if (_isRecordingVideo)
-            {
-                try
-                {
-                    _movieFileOutput?.StopRecording();
-                }
-                catch { }
-                _isRecordingVideo = false;
-            }
-
-            _progressTimer?.Invalidate();
-            _progressTimer = null;
-            CleanupMovieFileOutput();
-
-            // Stop frame processing thread
-            StopFrameProcessingThread();
-
-            Stop();
-
-            _session?.Dispose();
-            _videoDataOutput?.Dispose();
-            _stillImageOutput?.Dispose();
-            _deviceInput?.Dispose();
-            _videoDataOutputQueue?.Dispose();
-
-            SetCapture(null);
-            _kill?.Dispose();
-
-            // Clean up raw frame data
-            lock (_lockRawFrame)
-            {
-                _latestRawFrame?.Dispose();
-                _latestRawFrame = null;
-            }
-
-            // Clean up Metal scaler
-            _metalScaler?.Dispose();
-            _metalScaler = null;
-
-            // Clear callback
-            lock (_lockFullResCallback)
-            {
-                _fullResFrameCallback = null;
-            }
-        }
-
-        base.Dispose(disposing);
-    }
-
     #region VIDEO RECORDING
 
     /// <summary>
@@ -3707,7 +3697,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     }
 
     #endregion
-
-    #endregion
+ 
 }
 #endif
