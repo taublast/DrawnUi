@@ -1,7 +1,15 @@
 ﻿global using DrawnUi.Draw;
 global using SkiaSharp;
-using SKCanvas = SkiaSharp.SKCanvas;
 using System.Diagnostics;
+
+#if IOS || MACCATALYST
+using Foundation;
+using Photos;
+using AVFoundation;
+using AVKit;
+#endif
+
+using SKCanvas = SkiaSharp.SKCanvas;
 
 namespace DrawnUi.Camera;
 
@@ -1033,76 +1041,70 @@ public partial class SkiaCamera : SkiaControl
     {
         try
         {
-            // Validate file exists and has content
             if (!File.Exists(privateVideoPath))
             {
-                Debug.WriteLine($"[SkiaCamera] iOS Photos save error: file does not exist at {privateVideoPath}");
+                Debug.WriteLine($"File does not exist: {privateVideoPath}");
                 return null;
             }
 
             var fileInfo = new FileInfo(privateVideoPath);
             if (fileInfo.Length == 0)
             {
-                Debug.WriteLine($"[SkiaCamera] iOS Photos save error: file is empty at {privateVideoPath}");
+                Debug.WriteLine($"File is empty: {privateVideoPath}");
                 return null;
             }
 
-            Debug.WriteLine($"[SkiaCamera] Saving video to Photos: {privateVideoPath} ({fileInfo.Length} bytes)");
+            await Task.Delay(100); // just in case
 
-            // Small delay to ensure file is fully flushed to disk
-            await Task.Delay(100);
-
-            // Request Photos AddOnly authorization (iOS 14+); falls back to Authorized for earlier
-            var authStatus = await Photos.PHPhotoLibrary.RequestAuthorizationAsync(Photos.PHAccessLevel.ReadWrite);
-            if (authStatus != Photos.PHAuthorizationStatus.Authorized)
+            var authStatus = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.ReadWrite);
+            if (authStatus != PHAuthorizationStatus.Authorized)
             {
-                Debug.WriteLine("[SkiaCamera] iOS Photos save error: not authorized (AddOnly)");
+                Debug.WriteLine("Photos permission not granted");
                 return null;
             }
 
-            // Find or Create Album
-            var albumName = album;
-
-            Photos.PHAssetCollection albumCollection = null;
-            if (!string.IsNullOrEmpty(albumName))
+            PHAssetCollection albumCollection = null;
+            if (!string.IsNullOrEmpty(album))
             {
-                albumCollection = await FindOrCreateAlbumAsync(albumName);
+                albumCollection = await FindOrCreateAlbumAsync(album);
             }
 
-            // Use Photos framework to add video to Photos library
-            var tempUrl = Foundation.NSUrl.FromFilename(privateVideoPath);
-            var tcs = new TaskCompletionSource<string>();
+            var tempUrl = NSUrl.FromFilename(privateVideoPath);
+            var tcs = new TaskCompletionSource<string>(); // will return localIdentifier
 
-            Photos.PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
+            PHObjectPlaceholder placeholder = null;
+
+            PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
             {
-                // Create video asset in Photos library
-                var request = Photos.PHAssetChangeRequest.FromVideo(tempUrl);
-                
-                // Add to specific album if found/created
+                var request = PHAssetChangeRequest.FromVideo(tempUrl);
+
+                // Important: capture the placeholder immediately
+                placeholder = request.PlaceholderForCreatedAsset;
+
                 if (albumCollection != null)
                 {
-                    var albumChangeRequest = Photos.PHAssetCollectionChangeRequest.ChangeRequest(albumCollection);
-                    albumChangeRequest?.AddAssets(new Photos.PHObject[] { request.PlaceholderForCreatedAsset });
+                    var albumRequest = PHAssetCollectionChangeRequest.ChangeRequest(albumCollection);
+                    albumRequest?.AddAssets(new PHObject[] { placeholder });
                 }
             },
             (success, error) =>
             {
-                if (success)
+                if (success && placeholder != null)
                 {
+                    string localId = placeholder.LocalIdentifier;
+
                     if (deleteOriginal)
                     {
-                        try { File.Delete(privateVideoPath); } catch { }
-                        Debug.WriteLine("[SkiaCamera] iOS: MOVED video to Photos library");
+                        try { File.Delete(privateVideoPath); }
+                        catch (Exception ex) { Debug.WriteLine($"Delete failed: {ex.Message}"); }
                     }
-                    else
-                    {
-                        Debug.WriteLine("[SkiaCamera] iOS: COPIED video to Photos library");
-                    }
-                    tcs.SetResult("Photos Library");
+
+                    Debug.WriteLine($"Video saved successfully. LocalIdentifier: {localId}");
+                    tcs.SetResult(localId);
                 }
                 else
                 {
-                    Debug.WriteLine($"[SkiaCamera] iOS Photos save error: {error?.LocalizedDescription}");
+                    Debug.WriteLine($"Photos save failed: {error?.LocalizedDescription}");
                     tcs.SetResult(null);
                 }
             });
@@ -1111,10 +1113,64 @@ public partial class SkiaCamera : SkiaControl
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[SkiaCamera] Apple video move error: {ex.Message}");
+            Debug.WriteLine($"Exception: {ex.Message}");
             return null;
         }
     }
+
+    /// <summary>
+    /// Invoke from Main thread only
+    /// </summary>
+    /// <param name="localIdentifier"></param>
+    /// <returns></returns>
+    public static async Task PlayVideoFromPhotosAsync(string localIdentifier)
+    {
+        if (string.IsNullOrEmpty(localIdentifier))
+            return;
+
+        // 1. Fetch the PHAsset
+        var fetchResult = PHAsset.FetchAssetsUsingLocalIdentifiers(new[] { localIdentifier }, null);
+
+        if (fetchResult.Count == 0)
+        {
+            Debug.WriteLine("Video no longer exists in Photos library");
+            // → maybe user deleted it manually
+            return;
+        }
+
+        var asset = fetchResult[0] as PHAsset;
+
+        // Option A – Most elegant: play directly using AVPlayer (recommended)
+        var playerVC = new AVPlayerViewController();
+
+        PHImageManager.DefaultManager.RequestAVAsset(asset, null, (avAsset, audioMix, info) =>
+        {
+            if (avAsset != null)
+            {
+                var player = AVPlayer.FromPlayerItem(new AVPlayerItem(avAsset));
+                playerVC.Player = player;
+
+                player.Play();
+                // Very important: run on main thread!
+                //InvokeOnMainThread(() =>
+                //{
+                //    PresentViewController(playerVC, true, () =>
+                //    {
+                //        player.Play();
+                //    });
+                //});
+            }
+            else
+            {
+                Debug.WriteLine("Could not get AVAsset");
+            }
+        });
+
+        // Option B – If you really need a temporary file (less recommended)
+        // PHImageManager.DefaultManager.RequestExportSessionForVideo(...)
+        // then export to temp folder and play with normal video player
+    }
+
 #endif
 
 #if WINDOWS
