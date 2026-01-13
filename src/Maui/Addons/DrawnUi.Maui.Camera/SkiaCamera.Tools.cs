@@ -1201,18 +1201,24 @@ public partial class SkiaCamera : SkiaControl
                         Directory.CreateDirectory(targetPath);
 
                     var publicVideoPath = Path.Combine(targetPath, fileName);
-                    
-                    if (deleteOriginal)
+
+                    if (publicVideoPath != privateVideoPath)
                     {
-                        File.Move(privateVideoPath, publicVideoPath);
-                        Debug.WriteLine($"[SkiaCamera] Windows: MOVED video to {publicVideoPath}");
+                        if (File.Exists(publicVideoPath))
+                            File.Delete(publicVideoPath);
+
+                        if (deleteOriginal)
+                        {
+                            File.Move(privateVideoPath, publicVideoPath);
+                            Debug.WriteLine($"[SkiaCamera] Windows: MOVED video to {publicVideoPath}");
+                        }
+                        else
+                        {
+                            File.Copy(privateVideoPath, publicVideoPath, true);
+                            Debug.WriteLine($"[SkiaCamera] Windows: COPIED video to {publicVideoPath}");
+                        }
                     }
-                    else
-                    {
-                        File.Copy(privateVideoPath, publicVideoPath, true);
-                        Debug.WriteLine($"[SkiaCamera] Windows: COPIED video to {publicVideoPath}");
-                    }
-                    
+
                     return publicVideoPath;
                 }
                 catch (Exception ex)
