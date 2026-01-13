@@ -216,7 +216,7 @@ namespace DrawnUi.Draw
             if (indicator is SkiaControl newControl)
             {
                 InternalRefreshIndicator = indicator;
-   
+
                 //if (Orientation == ScrollOrientation.Vertical)
                 //{
                 //    newControl.HeightRequest = RefreshDistanceLimit;
@@ -359,7 +359,10 @@ namespace DrawnUi.Draw
 
             var animation = new EdgeGlowAnimator(this)
             {
-                GlowPosition = GlowPosition.Top, Color = color.ToSKColor(), X = x, Y = y,
+                GlowPosition = GlowPosition.Top,
+                Color = color.ToSKColor(),
+                X = x,
+                Y = y,
             };
             animation.Start();
         }
@@ -1943,14 +1946,6 @@ namespace DrawnUi.Draw
 
                 var measuredContent = MeasureContent(viewport.Width, viewport.Height, zoomedScale);
 
-                if (ResetScrollPositionOnContentSizeChanged &&
-                    (!CompareFloats(ContentSize.Pixels.Height, measuredContent.Pixels.Height, 1) ||
-                     !CompareFloats(ContentSize.Pixels.Width, measuredContent.Pixels.Width, 1)))
-                {
-                    if (ViewportOffsetX != 0 || ViewportOffsetY != 0)
-                        ScrollTo(0, 0, 0, false);
-                }
-
                 ContentSize = ScaledSize.FromPixels(measuredContent.Pixels.Width, measuredContent.Pixels.Height,
                     request.Scale);
             }
@@ -2199,7 +2194,7 @@ namespace DrawnUi.Draw
                 if (_loadMoreTriggeredAt != 0
                     && Math.Abs(InternalViewportOffset.Units.Y - _loadMoreTriggeredAt) > (LoadMoreOffset + 100) * scale
                     && (DateTime.Now - _loadMoreTriggeredTime).TotalSeconds > 3)
-                    //we have scrolled out of the triggered loadMore by 100pts
+                //we have scrolled out of the triggered loadMore by 100pts
                 {
                     _loadMoreTriggeredAt = 0; //so can track loadMore again
                 }
@@ -2538,16 +2533,22 @@ namespace DrawnUi.Draw
 
         protected override void Draw(DrawingContext context)
         {
-            if (_animatorFlingY==null)
-                return;
+            if (_animatorFlingY == null)
+            {
+                InitializeScroller((float)context.Scale);
+            }
 
             isDrawing = true;
+
+            var needReposition = false;
 
             if (IsContentActive)
             {
                 //content size changed, we need to initialize scroller again at least
                 if (_lastContentSize != this.Content.MeasuredSize)
                 {
+                    needReposition = true;
+
                     if (NeedAutoSize)
                     {
                         NeedMeasure = true;
@@ -2576,15 +2577,33 @@ namespace DrawnUi.Draw
                               _vectorAnimatorBounceY.IsRunning || _vectorAnimatorBounceX.IsRunning
                               || _scrollerX.IsRunning || _scrollerY.IsRunning || IsUserPanning;
 
-                var needReposition =
-                    zoomedScale != _zoomedScale ||
-                    _updatedViewportForPixY != posY
-                    || _updatedViewportForPixX != posX
-                    || _destination != DrawingRect;
+                if (!needReposition)
+                {
+                    needReposition =
+                        zoomedScale != _zoomedScale ||
+                        _updatedViewportForPixY != posY
+                        || _updatedViewportForPixX != posX
+                        || _destination != DrawingRect;
+                }
 
                 //reposition viewport (scroll)
                 if (needReposition)
                 {
+                    if (ResetScrollPositionOnContentSizeChanged)
+                    {
+                        ViewportOffsetX = 0;
+                        ViewportOffsetY = 0;
+                        posX = 0;
+                        posY = 0;
+                    }
+                    else
+                    {
+                        //do not allow empty space when content became smaller than viewport
+                        var overscroll = CalculateOverscrollDistance(posX, posY);
+                        posX -= overscroll.X;
+                        posY -= overscroll.Y;
+                    }
+
                     SetScrollOffset(DrawingRect, posX, posY, zoomedScale, context.Scale, false);
                 }
 
