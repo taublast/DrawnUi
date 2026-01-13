@@ -1,10 +1,8 @@
 # Pre-Recording Feature
 
-**IMPORTANT:** This feature is currently being redesigned. The documentation below describes the intended architecture. See "Current Implementation Status" section for actual status.
-
 The pre-recording feature, also known as "look-back" recording, allows you to capture video footage starting from a few seconds *before* the record button is pressed. This is incredibly useful for capturing spontaneous moments without missing the beginning of the action.
 
-## Current Implementation Status (2025-12-06)
+## Current Implementation Status (2025-01)
 
 ✅ **Windows Implementation Complete:**
 - Circular buffer architecture implemented using file-based buffers (`bufferA.mp4`, `bufferB.mp4`)
@@ -16,41 +14,58 @@ The pre-recording feature, also known as "look-back" recording, allows you to ca
 - Single-file approach (no muxing needed)
 - Zero frame loss transition from pre-recording to live recording
 
-✅ **iOS Foundation Complete:**
-- AppleVideoToolboxEncoder integrated for hardware H.264 encoding
-- Normal recording works with frame processing and preview
-- MP4 output functional
+✅ **iOS/MacCatalyst Implementation Complete:**
+- AppleVideoToolboxEncoder with hardware H.264 encoding via VTCompressionSession
+- In-memory circular buffer (`PrerecordingEncodedBufferApple`) for encoded frames
+- AVAssetWriter-based muxing for seamless video output
+- Audio recording with synchronized circular buffer
+- Passthrough muxing (no re-encoding) for optimal performance
+- Proper resource disposal to prevent memory leaks
 
 **Recent Updates:**
 - Added safety mechanism: Changing `EnablePreRecording` or `PreRecordDuration` while recording is active will automatically abort the recording to prevent instability.
+- Fixed memory leaks in AVFoundation resource disposal (AVAsset, AVMutableComposition, AVAssetExportSession)
+- Fixed PrerecordingEncodedBufferApple frame Data cleanup in Dispose() and pruning operations
+- Added event handler unsubscription for PreviewAvailable to prevent memory leaks
+- Changed AddAudioToVideoAsync to use Passthrough preset (no re-encoding, faster muxing)
 
 ---
 
 ## How it Works (Architecture)
 
-When the pre-recording feature is enabled, the camera maintains a **separate pre-recording encoder** that continuously captures frames to a temporary `pre_recorded.mp4` file. When you press the record button, a **live recording encoder** starts capturing to a `recording.mp4` file. 
+### iOS/MacCatalyst: Memory-Based Circular Buffer
 
-When you stop recording:
-1. Both encoders finish writing their respective files
-2. The files are automatically **muxed** (merged) into a single output file with pre-recorded content first, then live content
-3. Temporary files are cleaned up
-4. The final combined video is returned to the user
+When pre-recording is enabled, the camera maintains a **circular buffer of encoded H.264 frames** in memory:
 
-### Key Design Principle: **Zero Memory Buffering**
+1. **Pre-Recording Phase:** Frames are hardware-encoded and stored in `PrerecordingEncodedBufferApple`
+2. **Live Recording Phase:** User presses record → live frames write to `recording.mp4` while circular buffer is frozen
+3. **Muxing Phase:** Circular buffer frames + live recording → combined output via AVAssetWriter
+4. **Audio Sync:** CircularAudioBuffer maintains synchronized audio data
 
-Unlike previous approaches that buffered raw pixel data in memory (causing 46MB OOM crashes), the current implementation:
+### Windows/Android: File-Based Approach
+
+When pre-recording is enabled, the camera maintains a **separate pre-recording encoder** that continuously captures frames to temporary files. When recording stops, files are muxed together.
+
+### Key Design Principles
+
+**iOS/MacCatalyst - Memory Buffering:**
+- Stores only H.264 encoded frames (not raw pixels)
+- ~20-40KB per frame at 1080p (vs ~8MB raw)
+- 5 seconds at 30fps ≈ 3-6MB total
+- Instant muxing via AVAssetWriter (no file I/O during buffer phase)
+
+**Windows - Zero Memory Buffering:**
 - Streams all video directly to disk files (H.264 encoded)
 - Uses only 1-2MB working buffer in memory for encoder operations
 - Pre-recorded file typically 2-5MB for 5 seconds at 30fps
-- Completely eliminates the OOM risk
 
 ## How to Use
 
-You can control the feature using two simple properties on the `SkiaCamera` control:
+You can control the feature using these properties on the `SkiaCamera` control:
 
-- **`EnablePreRecording` (bool):** Set this to `true` to activate the pre-recording functionality. The default value is `false`.
-- **`PreRecordDuration` (TimeSpan):** This property determines the duration of the look-back period. The default is 5 seconds.
--  **`IsPreRecording` (bool):** This will be set by camera to show if actually recording the pre-recording step. If `true` the next time we invoke `StartVideoRecording` this property will go `false` and you will be recording the live step.
+- **`EnablePreRecording` (bool):** Set to `true` to activate pre-recording. Default is `false`.
+- **`PreRecordDuration` (TimeSpan):** Duration of the look-back period. Default is 5 seconds.
+- **`IsPreRecording` (bool):** Read-only. Shows if currently in pre-recording phase. If `true`, the next `StartVideoRecording` call will transition to live recording.
 
 ### Example in XAML
 ```xml
@@ -68,11 +83,9 @@ var myCamera = new SkiaCamera
 };
 ```
 
-When you call `myCamera.StartVideoRecording()`, the resulting video file will automatically include the footage from the specified duration before the call was made. The footage is captured in real-time to disk without any memory buffering.
+When you call `myCamera.StartVideoRecording()`, the resulting video file will automatically include the footage from the specified duration before the call was made.
 
-## Implementation Details & Current Status
-
-The implementation uses a **two-file streaming + muxing** architecture that is platform-specific:
+## Implementation Details
 
 ### Architecture Overview
 
@@ -81,62 +94,87 @@ Pre-Recording Running (EnablePreRecording=true)
     ↓
 User clicks "Start Recording"
     ↓
-├─→ Pre-Recording Encoder: Creates "pre_recorded.mp4" (background, keeps running)
+├─→ iOS: Circular buffer frozen, live encoder starts
+│   └─→ Audio: CircularAudioBuffer continues with timestamp offset
 │
-└─→ Live Recording Encoder: Creates "recording.mp4" (user-initiated recording)
-    
+└─→ Windows/Android: Pre-recording encoder + Live encoder running
+
 User clicks "Stop Recording"
     ↓
-Both encoders finish and close files
+Finalization Phase
     ↓
-Muxing Phase (Platform-Specific)
+├─→ iOS: Write circular buffer → AVAssetWriter → append live → mux audio
+│
+└─→ Windows/Android: Close encoders → mux files together
     ↓
-Combine: "pre_recorded.mp4" + "recording.mp4" → "final_output.mp4"
-    ↓
-Cleanup: Delete temporary files
+Cleanup: Delete temporary files, dispose resources
     ↓
 Return final video to user
 ```
 
-### Platform Implementation Status
+### Platform Implementation Details
 
-- **iOS / MacCatalyst:**
-    - **Status:** ⏳ **In Development** (encoder complete, pre-recording buffer not yet implemented)
-    - **Encoder:** AppleVideoToolboxEncoder (hardware H.264 via VTCompressionSession)
-    - **Planned Method:** Circular buffer in memory + AVAssetComposition for two-file muxing
-    - **Current:** Normal recording operational, pre-recording feature pending
-    - **Location:** `Apple/SkiaCamera.Apple.cs` - `MuxVideosInternal()` method
-    - **Memory:** Pre-recording and live encoders each use ~1-2MB working buffer (reusable pixel buffers)
+#### iOS / MacCatalyst
 
-- **Android:**
-    - **Status:** ✅ **Implemented (muxing complete, API fixes applied).**
-    - **Method:** Uses `MediaExtractor` to read both video files and `MediaMuxer` to write them sequentially to the output file. Tracks are extracted from both files without re-decoding (stays as H.264), then muxed together with proper time offsets.
-    - **Location:** `Platforms/Android/SkiaCamera.Android.cs` - `MuxVideosInternal()` method
-    - **Memory:** Similar to iOS - each encoder maintains its own working buffer
+- **Status:** ✅ **Complete**
+- **Encoder:** AppleVideoToolboxEncoder (hardware H.264 via VTCompressionSession)
+- **Buffer:** PrerecordingEncodedBufferApple (in-memory circular buffer of encoded frames)
+- **Audio:** CircularAudioBuffer with synchronized timestamps
+- **Muxing:** AVAssetWriter for video, AVAssetExportSession (Passthrough) for audio
+- **Location:** `Apple/SkiaCamera.Apple.cs`, `Apple/AppleVideoToolboxEncoder.cs`
+- **Memory:** ~3-6MB for 5 seconds of 1080p H.264 frames + ~1MB audio
 
-- **Windows:**
-    - **Status:** ✅ **Implemented (file concatenation fallback).**
-    - **Method:** Uses FFmpeg command-line tool to concatenate the two video files efficiently with `-c copy` flag (no re-encoding, just stream copying).
-    - **Location:** `Platforms/Windows/SkiaCamera.Windows.cs` - `MuxVideosInternal()` method
-    - **Note:** Requires FFmpeg to be installed or bundled with the application
-    - **Memory:** Minimal - uses ffmpeg subprocess
+**Resource Management:**
+- All AVFoundation objects properly disposed via `using` statements
+- Frame Data explicitly nulled before removal from collections
+- Event handlers unsubscribed before encoder disposal
+- Metal resources (command queue, texture cache) shared statically
+
+#### Android
+
+- **Status:** ✅ **Complete**
+- **Method:** MediaExtractor + MediaMuxer for stream copying (no re-decoding)
+- **Location:** `Platforms/Android/SkiaCamera.Android.cs` - `MuxVideosInternal()`
+- **Memory:** ~1-2MB working buffer per encoder
+
+#### Windows
+
+- **Status:** ✅ **Complete**
+- **Method:** FFmpeg `-c copy` for efficient stream concatenation
+- **Location:** `Platforms/Windows/SkiaCamera.Windows.cs` - `MuxVideosInternal()`
+- **Note:** Requires FFmpeg installed or bundled
+- **Memory:** Minimal - uses ffmpeg subprocess
 
 ## Performance Characteristics
 
 - **Frame Rate:** Maintains target FPS without additional overhead
-- **Memory:** Constant ~2MB per encoder (pre-recording + live), no frame accumulation
-- **CPU:** H.264 encoding delegated to hardware accelerators where available
-- **Disk I/O:** Real-time streaming, no buffering phase
-- **File I/O:** Pre-recorded and live files finalized immediately; muxing is only metadata reorganization (fast)
+- **Memory:**
+  - iOS: ~5-7MB (circular buffer + audio buffer)
+  - Windows/Android: ~2-4MB (encoder working buffers)
+- **CPU:** H.264 encoding delegated to hardware accelerators
+- **Muxing:**
+  - iOS: AVAssetExportSession with Passthrough (no re-encoding)
+  - Windows: FFmpeg stream copy
+  - Android: MediaMuxer stream copy
 
 ## When Pre-Recording is Disabled
 
-When `EnablePreRecording` is `false` (the default setting), the camera uses standard direct-to-file recording on all platforms:
+When `EnablePreRecording` is `false` (default):
 - Only one encoder runs (live recording only)
 - No muxing phase occurs
-- Identical behavior to non-pre-recording cameras
+- No circular buffers allocated
 - Minimal memory overhead
+- Identical behavior to non-pre-recording cameras
+
+## Audio Recording
+
+Audio is recorded alongside video on iOS/MacCatalyst:
+
+- **CircularAudioBuffer:** Maintains synchronized audio samples
+- **Timestamp Synchronization:** Audio buffer tracks relative timestamps for proper alignment
+- **Muxing:** AddAudioToVideoAsync combines video and audio using AVAssetExportSession with Passthrough preset
+- **Format:** AAC audio in M4A container, combined into final MP4
 
 ## See Also
 
-For detailed technical documentation, see `Prerecording.md` in this directory.
+For detailed technical documentation including encoding parameters and buffer management, see `PreRecordingTech.md` in this directory.

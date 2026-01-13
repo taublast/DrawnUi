@@ -2,14 +2,16 @@
 
 ## Overview
 
-The pre-recording system allows capturing video frames continuously in memory before the user presses "Record". When recording starts, the last N seconds of buffered frames are written to an MP4 file and seamlessly muxed with the live recording.
+The pre-recording system allows capturing video AND audio frames continuously in memory before the user presses "Record". When recording starts, the last N seconds of buffered content are written to files and seamlessly muxed with the live recording.
 
 **Key Characteristics:**
 - Zero-drop frame capture (no frames lost during buffer rotation)
-- Fixed memory footprint (~27 MB for 5 seconds @ 1080p)
+- Fixed memory footprint (~27 MB video + ~2 MB audio for 5 seconds @ 1080p)
 - Hardware H.264 encoding via VTCompressionSession (iOS/Mac)
+- Separate audio circular buffer with M4A output
 - Automatic circular buffer rotation
 - Keyframe-aware pruning for valid H.264 output
+- Passthrough muxing for fast concatenation (no re-encoding)
 
 ## Architecture
 
@@ -17,12 +19,15 @@ The pre-recording system allows capturing video frames continuously in memory be
 
 ```
 Phase 1: Pre-Recording (Before user presses Record)
-  Camera → Frame Processor → VTCompressionSession → H.264 NAL units → Circular Buffer (Memory)
+  VIDEO: Camera → Frame Processor → VTCompressionSession → H.264 NAL units → Circular Buffer (Memory)
+  AUDIO: Microphone → AudioCapture → PCM samples → CircularAudioBuffer (Memory)
 
 Phase 2: Live Recording (After user presses Record)
-  Step 1: Write circular buffer to pre_rec_*.mp4
-  Step 2: Start AVAssetWriter → live_rec_*.mp4
-  Step 3: On stop, mux both files → final output
+  Step 1: Write video circular buffer to pre_rec_video_*.mp4
+  Step 2: Write audio circular buffer to pre_rec_audio_*.m4a
+  Step 3: Start AVAssetWriter for live video → live_rec_*.mp4
+  Step 4: Start live audio writer → live_audio_*.m4a
+  Step 5: On stop, mux all files → final output with audio
 ```
 
 ### Component Architecture
@@ -32,32 +37,149 @@ Phase 2: Live Recording (After user presses Record)
 │                       SkiaCamera                             │
 │  - Manages recording state                                   │
 │  - Coordinates encoder lifecycle                             │
+│  - Manages audio capture and buffers                         │
 │  - Tracks file paths and durations                           │
+│  - Handles audio-video synchronization                       │
 └────────────────────┬────────────────────────────────────────┘
                      │
-                     ▼
-┌─────────────────────────────────────────────────────────────┐
-│               AppleVideoToolboxEncoder                       │
-│  - VTCompressionSession (H.264 hardware encoding)            │
-│  - Manages PrerecordingEncodedBuffer                         │
-│  - Writes pre-recorded buffer to MP4                         │
-│  - AVAssetWriter for live recording                          │
-│  - Muxes pre-recording + live → final output                 │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-                     ▼
-┌─────────────────────────────────────────────────────────────┐
-│            PrerecordingEncodedBuffer                         │
-│  - Two fixed-size byte[] buffers (~13.5 MB each)             │
-│  - Circular buffer with automatic rotation                   │
-│  - Stores encoded H.264 frames with metadata                 │
-│  - Keyframe detection and pruning                            │
-└─────────────────────────────────────────────────────────────┘
+        ┌────────────┴────────────┐
+        ▼                         ▼
+┌───────────────────────┐  ┌───────────────────────────────────┐
+│    AudioCapture       │  │     AppleVideoToolboxEncoder      │
+│  - Native mic input   │  │  - VTCompressionSession (H.264)   │
+│  - PCM sample output  │  │  - PrerecordingEncodedBuffer      │
+│  - SampleAvailable    │  │  - AVAssetWriter for live rec     │
+│    event              │  │  - Video muxing                   │
+└───────────┬───────────┘  └────────────────┬──────────────────┘
+            │                               │
+            ▼                               ▼
+┌───────────────────────┐  ┌───────────────────────────────────┐
+│  CircularAudioBuffer  │  │     PrerecordingEncodedBuffer     │
+│  - Queue<AudioSample> │  │  - Two fixed-size byte[] buffers  │
+│  - MaxDuration trim   │  │  - Circular with auto rotation    │
+│  - Linear mode option │  │  - Keyframe detection & pruning   │
+└───────────────────────┘  └───────────────────────────────────┘
+```
+
+## Audio Recording Architecture
+
+### Audio Capture Flow
+
+```
+┌────────────────────────────────────────────────────────────────────┐
+│                         AUDIO CAPTURE                               │
+├────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  Pre-Recording Phase:                                               │
+│  ┌──────────┐    ┌─────────────────┐    ┌────────────────────────┐ │
+│  │   Mic    │ →  │  AudioCapture   │ →  │  CircularAudioBuffer   │ │
+│  │  Input   │    │  (PCM samples)  │    │  (last N seconds)      │ │
+│  └──────────┘    └─────────────────┘    └────────────────────────┘ │
+│                                                                     │
+│  Transition (User presses Record):                                  │
+│  ┌────────────────────────┐    ┌────────────────────────────────┐  │
+│  │ CircularAudioBuffer    │ →  │  pre_rec_audio_{guid}.m4a      │  │
+│  │ .GetAllSamples()       │    │  (AVAssetWriter)               │  │
+│  └────────────────────────┘    └────────────────────────────────┘  │
+│                                                                     │
+│  Live Recording Phase:                                              │
+│  ┌──────────┐    ┌─────────────────┐    ┌────────────────────────┐ │
+│  │   Mic    │ →  │  AudioCapture   │ →  │  live_audio_{guid}.m4a │ │
+│  │  Input   │    │  (PCM samples)  │    │  (AVAssetWriter)       │ │
+│  └──────────┘    └─────────────────┘    └────────────────────────┘ │
+│                                                                     │
+│  Finalization:                                                      │
+│  ┌────────────────────────────────────────────────────────────────┐│
+│  │ MuxVideosInternal():                                           ││
+│  │   - pre_rec_video.mp4 + pre_rec_audio.m4a                      ││
+│  │   - live_rec_video.mp4 + live_audio.m4a                        ││
+│  │   → final_output.mp4 (video + audio tracks)                    ││
+│  └────────────────────────────────────────────────────────────────┘│
+└────────────────────────────────────────────────────────────────────┘
+```
+
+### CircularAudioBuffer
+
+```csharp
+public class CircularAudioBuffer
+{
+    private readonly Queue<AudioSample> _samples = new();
+    private readonly TimeSpan _maxDuration;
+    private readonly bool _isLinearMode;
+
+    // Circular mode: Trim samples beyond MaxDuration
+    // Linear mode: Keep ALL samples (for full session recording)
+    public CircularAudioBuffer(TimeSpan maxDuration)
+    {
+        _maxDuration = maxDuration;
+        _isLinearMode = maxDuration <= TimeSpan.Zero;
+    }
+
+    public void Write(AudioSample sample)
+    {
+        lock (_lock)
+        {
+            _samples.Enqueue(sample);
+            Trim();  // Remove old samples if circular mode
+        }
+    }
+
+    public AudioSample[] GetAllSamples()
+    {
+        lock (_lock)
+        {
+            return _samples.ToArray();
+        }
+    }
+}
+
+public struct AudioSample
+{
+    public byte[] Data;           // Raw PCM data (16-bit default)
+    public long TimestampNs;      // Nanoseconds since capture epoch
+    public int SampleRate;        // e.g., 44100
+    public int Channels;          // 1 = Mono, 2 = Stereo
+    public AudioBitDepth BitDepth;// Bit depth of the sample
+}
+```
+
+### Audio-Video Synchronization
+
+**The Challenge:**
+Audio capture may start slightly before or after video encoding. The audio and video must be trimmed/aligned for proper sync.
+
+**Solution:**
+```csharp
+// In SkiaCamera.Apple.cs - StartVideoRecording() transition:
+
+// 1. Get pre-rec video duration from encoder
+_preRecordingDurationTracked = _captureVideoEncoder.EncodingDuration;
+
+// 2. Trim audio to match video duration
+if (allAudioSamples != null && allAudioSamples.Length > 0)
+{
+    var videoDurationMs = _preRecordingDurationTracked.TotalMilliseconds;
+    var lastSampleTimestamp = allAudioSamples[allAudioSamples.Length - 1].TimestampNs;
+    var firstSampleTimestamp = allAudioSamples[0].TimestampNs;
+    var audioDurationMs = (lastSampleTimestamp - firstSampleTimestamp) / 1_000_000.0;
+
+    if (audioDurationMs > videoDurationMs)
+    {
+        // Audio is longer - trim from the START to match video
+        var targetStartNs = lastSampleTimestamp - (long)(videoDurationMs * 1_000_000);
+        allAudioSamples = allAudioSamples
+            .Where(s => s.TimestampNs >= targetStartNs)
+            .ToArray();
+    }
+}
+
+// 3. Write trimmed audio to pre_rec_audio.m4a
+await WriteAudioSamplesToM4aAsync(allAudioSamples, preRecAudioFilePath);
 ```
 
 ## iOS Architecture: Memory-Based Circular Buffer
 
-### Memory Layout
+### Video Memory Layout
 
 ```
 Buffer A: [=============================] 13.5 MB
@@ -65,7 +187,20 @@ Buffer B: [=============================] 13.5 MB
 
 Current: A (active for writes)
 
-Total Memory: 27 MB (fixed, pre-allocated at startup)
+Total Video Memory: 27 MB (fixed, pre-allocated at startup)
+```
+
+### Audio Memory Layout
+
+```
+CircularAudioBuffer (Queue<AudioSample>):
+  - Sample rate: 44100 Hz
+  - Channels: 1 (mono) or 2 (stereo)
+  - Bit depth: 16-bit PCM
+  - Duration: PreRecordDuration (e.g., 5 seconds)
+  - Memory: ~2 MB for 5 seconds mono @ 44.1kHz
+
+Total Audio Memory: ~2 MB (dynamic, grows/trims with samples)
 ```
 
 ### How Rotation Works
@@ -74,99 +209,213 @@ Total Memory: 27 MB (fixed, pre-allocated at startup)
 
 ```
 Time 0-5s:  Buffer A active, accumulating frames
+            Audio buffer accumulating samples
 Time 5s:    Rotation trigger!
-            - Switch to Buffer B
-            - Prune frames older than 5s from metadata list
+            - Video: Switch to Buffer B, prune frames < 5s
+            - Audio: Trim() removes samples < 5s
             - Buffer A now contains stale data (will be overwritten)
 
 Time 5-10s: Buffer B active, accumulating frames
+            Audio buffer continues accumulating (auto-trimmed)
 Time 10s:   Rotation trigger!
             - Switch to Buffer A (overwrites old data)
             - Prune frames older than 5s from metadata list
 
-Result: At any point, only last 5 seconds are kept
+Result: At any point, only last 5 seconds of video AND audio are kept
 ```
 
-## Windows Architecture: File-Based Circular Buffer
+## Muxing Pre-Recording + Live Recording
 
-On Windows, the implementation uses a file-based circular buffer to leverage Media Foundation's file writing capabilities and avoid memory pressure.
-
-### Two-File System
-
-```
-Buffer A (File): [=============================] (e.g. 5s)
-Buffer B (File): [=============================] (e.g. 5s)
-
-Current: Buffer A (active for writes)
-```
-
-1. **Phase 1 (Pre-Recording):**
-   - Frames are written to `bufferA.mp4`.
-   - When `bufferA` exceeds the duration limit, it switches to `bufferB.mp4`.
-   - When `bufferB` exceeds the limit, it switches back to `bufferA` (overwriting it).
-   - This ensures we always have at least `PreRecordDuration` of history between the two files.
-
-2. **Transition to Live:**
-   - The pre-recording encoder is stopped.
-   - `bufferA` and `bufferB` are muxed together (ordered by timestamp) into a single `pre_recorded.mp4` file.
-   - This file is trimmed to the exact `PreRecordDuration`.
-
-3. **Phase 2 (Live Recording):**
-   - A new encoder starts writing to `live_rec.mp4`.
-
-4. **Finalization:**
-   - `pre_recorded.mp4` and `live_rec.mp4` are muxed into the final output.
-
-### Frame Metadata Storage
+### Passthrough Mode (Fast, No Re-encoding)
 
 ```csharp
-// Windows uses Media Foundation attributes for metadata
-// No separate C# class needed as attributes are stored in the sink writer
-```
+// In MuxVideosInternal() - SkiaCamera.Apple.cs
 
-## Android Architecture: Hybrid Memory/Single-File System
+// PASSTHROUGH MODE: No re-encoding, just container manipulation (FAST!)
+videoTrack.PreferredTransform = compositionTransform;
 
-Android uses a hybrid approach that combines memory buffering with a single-file output stream to ensure zero frame loss and no post-processing muxing.
-
-### Workflow
-
-1. **Phase 1 (Pre-Recording):**
-   - Frames are encoded via `MediaCodec` (hardware encoding).
-   - Encoded NAL units are stored in a `PrerecordingEncodedBuffer` (Circular Memory Buffer).
-   - This buffer works identically to the iOS memory buffer (fixed size, pruning).
-
-2. **Transition to Live:**
-   - The existing `MediaCodec` instance is kept alive (no restart).
-   - A `MediaMuxer` is started.
-   - The entire contents of the memory buffer are written to the `MediaMuxer` first.
-   - This effectively "prepends" the history to the file instantly.
-
-3. **Phase 2 (Live Recording):**
-   - New encoded frames from `MediaCodec` are written directly to the same `MediaMuxer`.
-
-4. **Finalization:**
-   - `MediaMuxer` is stopped.
-   - The result is a single MP4 file containing [Pre-Record History] + [Live Recording].
-   - **Benefit:** No post-process muxing is required, resulting in faster save times.
-
-```csharp
-private class EncodedFrame
+using var exporter = new AVAssetExportSession(composition,
+    AVAssetExportSessionPreset.Passthrough)  // ← KEY: Passthrough!
 {
-    public byte[] Data;              // H.264 NAL units (complete frame)
-    public TimeSpan Timestamp;       // Video PTS timestamp
-    public CMTime PresentationTime;  // CoreMedia presentation time
-    public CMTime Duration;          // Frame duration
-    public DateTime AddedAt;         // Wall-clock time (for diagnostics)
-    public bool IsKeyFrame;          // Critical for pruning
+    OutputUrl = outputUrl,
+    OutputFileType = AVFileTypes.Mpeg4.GetConstant(),
+    ShouldOptimizeForNetworkUse = false
+    // No VideoComposition - passthrough preserves original encoding
+};
+```
+
+**Why Passthrough:**
+- **Speed:** ~10x faster than re-encoding
+- **Quality:** Original H.264 quality preserved (no generation loss)
+- **Power:** Minimal CPU/GPU usage during muxing
+
+### Full Muxing Process with Audio
+
+```
+Input Files:
+  pre_rec_video_abc123.mp4    (5.0s video, starts at PTS 0.0s)
+  pre_rec_audio_abc123.m4a    (5.0s audio, synced to video)
+  live_rec_video_abc123.mp4   (3.0s video, continues after pre-rec)
+  live_audio_abc123.m4a       (3.0s audio, continues after pre-rec)
+
+Output:
+  final_timestamp_guid.mp4    (8.0s total, video + audio tracks)
+```
+
+**AVMutableComposition Timeline:**
+
+```
+Video Timeline:
+┌──────────────────────┬────────────────┐
+│  Pre-recording       │  Live recording│
+│  0.0s - 5.0s        │  5.0s - 8.0s   │
+└──────────────────────┴────────────────┘
+
+Audio Timeline:
+┌──────────────────────┬────────────────┐
+│  Pre-rec audio       │  Live audio    │
+│  0.0s - 5.0s        │  5.0s - 8.0s   │
+└──────────────────────┴────────────────┘
+
+Implementation:
+using var composition = new AVMutableComposition();
+var videoTrack = composition.AddMutableTrack(AVMediaTypes.Video, 0);
+
+// Insert pre-recording VIDEO at time 0
+videoTrack.InsertTimeRange(preRecVideoRange, preRecVideoTrack, CMTime.Zero, out error);
+
+// Insert live recording VIDEO after pre-recording
+videoTrack.InsertTimeRange(liveVideoRange, liveRecVideoTrack, preRecAsset.Duration, out error);
+
+// Add pre-rec AUDIO at time 0
+if (preRecAudioFilePath exists)
+{
+    using var preRecAudioAsset = AVAsset.FromUrl(preRecAudioFilePath);
+    var audioTrack = composition.AddMutableTrack(AVMediaTypes.Audio, 0);
+    audioTrack.InsertTimeRange(preRecAudioRange, preRecAudioTracks[0], CMTime.Zero, out error);
 }
 
-private List<EncodedFrame> _frames; // Metadata only, not the bulk data
+// Add live AUDIO starting after pre-rec video duration
+if (liveAudioFilePath exists)
+{
+    using var liveAudioAsset = AVAsset.FromUrl(liveAudioFilePath);
+    // Get or create audio track
+    var audioTrack = composition.TracksWithMediaType(AVMediaTypes.Audio)[0];
+    audioTrack.InsertTimeRange(liveAudioRange, liveAudioTracks[0], preRecVideoDuration, out error);
+}
+
+// Export with Passthrough (fast!)
+using var exporter = new AVAssetExportSession(composition, AVAssetExportSessionPreset.Passthrough);
+await exporter.ExportTaskAsync();
 ```
 
-**Why separate metadata from bulk data:**
-- Bulk data goes in pre-allocated byte[] buffers (fast, no GC)
-- Metadata in List for quick timestamp-based queries and pruning
-- During pruning, we only manipulate the List, not the 13.5 MB buffers
+## Resource Management
+
+### Critical Disposal Patterns
+
+**AVFoundation objects MUST be disposed to prevent memory leaks:**
+
+```csharp
+// CORRECT: Using statements ensure disposal
+using var preAsset = AVAsset.FromUrl(preRecordedPath);
+using var liveAsset = AVAsset.FromUrl(liveRecordingPath);
+using var composition = new AVMutableComposition();
+using var exportSession = new AVAssetExportSession(composition, preset);
+
+// The export is async, but 'using var' disposes AFTER await completes
+await exportSession.ExportTaskAsync();
+// ← Disposal happens here automatically
+```
+
+**PrerecordingEncodedBuffer Frame Data Cleanup:**
+
+```csharp
+// In Dispose() - NULL all frame Data to help GC
+public void Dispose()
+{
+    lock (_swapLock)
+    {
+        if (!_isDisposed)
+        {
+            // CRITICAL: Null out all frame Data to help GC collect large byte arrays
+            foreach (var frame in _frames)
+            {
+                frame.Data = null;
+            }
+            _frames.Clear();
+            _bufferA = null;
+            _bufferB = null;
+            _isDisposed = true;
+        }
+    }
+}
+
+// In pruning - Clear Data BEFORE removing from list
+private void PruneFramesWithCleanup(Predicate<EncodedFrame> match)
+{
+    foreach (var frame in _frames)
+    {
+        if (match(frame))
+            frame.Data = null;  // Clear before removal
+    }
+    _frames.RemoveAll(match);
+}
+```
+
+**Event Handler Unsubscription:**
+
+```csharp
+// CRITICAL: Unsubscribe before disposing encoder
+if (_captureVideoEncoder is AppleVideoToolboxEncoder appleEnc && _encoderPreviewInvalidateHandler != null)
+{
+    appleEnc.PreviewAvailable -= _encoderPreviewInvalidateHandler;
+}
+_captureVideoEncoder?.Dispose();
+_captureVideoEncoder = null;
+```
+
+### Metal Resource Management
+
+**Best Practice: Create Once, Reuse Forever**
+
+```csharp
+// In AppleVideoToolboxEncoder - STATIC shared resources
+private static IMTLDevice _sharedMetalDevice;
+private static IMTLCommandQueue _sharedCommandQueue;
+private static GCHandle _sharedQueuePin;
+private static readonly object _sharedMetalLock = new();
+
+private void EnsureMetalContext()
+{
+    lock (_sharedMetalLock)
+    {
+        if (_sharedMetalDevice == null)
+        {
+            _sharedMetalDevice = MTLDevice.SystemDefault;
+            if (_sharedMetalDevice != null)
+            {
+                _sharedCommandQueue = _sharedMetalDevice.CreateCommandQueue();
+                _sharedQueuePin = GCHandle.Alloc(_sharedCommandQueue, GCHandleType.Pinned);
+            }
+        }
+    }
+
+    // Per-instance GRContext using shared device/queue
+    if (_encodingContext == null && _sharedMetalDevice != null)
+    {
+        var backend = new GRMtlBackendContext
+        {
+            Device = _sharedMetalDevice,
+            Queue = _sharedCommandQueue
+        };
+        _encodingContext = GRContext.CreateMetal(backend);
+        _metalCache = new CVMetalTextureCache(_sharedMetalDevice);
+    }
+}
+
+// NOTE: _sharedMetalDevice, _sharedCommandQueue, _sharedQueuePin are NEVER disposed
+// They are reused across all encoder instances for the app lifetime
+```
 
 ## H.264 Encoding and Keyframe Handling
 
@@ -183,16 +432,10 @@ var session = VTCompressionSession.Create(
 );
 
 // Configure for low latency
-session.SetProperty(
-    VTCompressionPropertyKey.RealTime,
-    true
-);
+session.SetProperty(VTCompressionPropertyKey.RealTime, true);
 
 // Set max keyframe interval (every 30 frames @ 30fps = 1 keyframe/second)
-session.SetProperty(
-    VTCompressionPropertyKey.MaxKeyFrameInterval,
-    30
-);
+session.SetProperty(VTCompressionPropertyKey.MaxKeyFrameInterval, 30);
 ```
 
 ### Keyframe Detection
@@ -281,12 +524,15 @@ public void PruneToMaxDuration()
     // Step 1: Remove frames older than max duration based on timestamps
     var lastFrameTimestamp = _frames[_frames.Count - 1].Timestamp;
     var cutoffTimestamp = lastFrameTimestamp - _maxDuration;
-    _frames.RemoveAll(f => f.Timestamp < cutoffTimestamp);
+
+    // CRITICAL: Clear frame Data BEFORE removing to help GC
+    PruneFramesWithCleanup(f => f.Timestamp < cutoffTimestamp);
 
     // Step 2: CRITICAL - Ensure first frame is a keyframe
     while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
     {
-        _frames.RemoveAt(0);  // Keep removing until we hit a keyframe
+        _frames[0].Data = null;  // Clear data first!
+        _frames.RemoveAt(0);     // Keep removing until we hit a keyframe
     }
 
     // Now video starts with keyframe → valid H.264!
@@ -344,87 +590,6 @@ foreach (var (data, presentationTime, duration) in frames)
 }
 ```
 
-## File Path Synchronization
-
-**The Problem:**
-Two components need to reference the same pre-recording file:
-1. **Encoder** creates and writes the file
-2. **SkiaCamera** needs the path for muxing
-
-**Solution Flow:**
-
-```
-1. SkiaCamera.InitializePreRecordingBuffer():
-   - Generate base path (used for encoder initialization)
-   - Store in _preRecordingFilePath (temporary)
-
-2. Encoder.InitializeAsync(basePath):
-   - Receive base path
-   - Generate actual path: pre_rec_{guid}.mp4
-   - Store in encoder's _preRecordingFilePath
-
-3. User presses Record → Encoder.StopAsync():
-   - Write buffer to pre_rec_{guid}.mp4
-   - Return CapturedVideo with FilePath = pre_rec_{guid}.mp4
-
-4. SkiaCamera receives result:
-   - Update _preRecordingFilePath from result.FilePath
-   - Now both reference the SAME file!
-
-5. Muxing:
-   - SkiaCamera uses _preRecordingFilePath → Correct file ✓
-```
-
-## Muxing Pre-Recording + Live Recording
-
-**Process:**
-
-```
-Input Files:
-  pre_rec_abc123.mp4    (5.0s, starts at PTS 0.0s)
-  live_rec_abc123.mp4   (3.0s, starts at PTS 4.98s with offset)
-
-Output:
-  muxed_timestamp_guid.mp4  (8.0s total)
-```
-
-**AVMutableComposition Timeline:**
-
-```
-Timeline:
-┌──────────────────────┬────────────────┐
-│  Pre-recording       │  Live recording│
-│  0.0s - 5.0s        │  5.0s - 8.0s   │
-└──────────────────────┴────────────────┘
-
-Implementation:
-var composition = AVMutableComposition.Create();
-var videoTrack = composition.AddMutableTrack(AVMediaTypes.Video, 0);
-
-// Insert pre-recording at time 0
-videoTrack.InsertTimeRange(
-    new CMTimeRange { Start = CMTime.Zero, Duration = preRecAsset.Duration },
-    preRecVideoTrack,
-    CMTime.Zero,
-    out error
-);
-
-// Insert live recording after pre-recording
-CMTime insertTime = preRecAsset.Duration;
-videoTrack.InsertTimeRange(
-    new CMTimeRange { Start = CMTime.Zero, Duration = liveRecAsset.Duration },
-    liveRecVideoTrack,
-    insertTime,
-    out error
-);
-
-// Export to final file
-var exporter = new AVAssetExportSession(composition, AVAssetExportSessionPreset.HighestQuality);
-exporter.OutputUrl = outputUrl;
-exporter.OutputFileType = AVFileType.Mpeg4;
-await exporter.ExportTaskAsync();
-```
-
 ## Live Recording Timestamp Offset
 
 **The Problem:**
@@ -457,22 +622,38 @@ if (_preRecordingDuration > TimeSpan.Zero)
 CMTime ts = CMTime.FromSeconds(timestamp, 1_000_000);
 ```
 
-## Memory Efficiency Comparison
+## Memory Efficiency
 
-**Uncompressed Video (5 seconds @ 1080p 30fps):**
+**Video (5 seconds @ 1080p 30fps):**
 ```
-Frame size: 1920 × 1080 × 4 bytes (RGBA) = 8,294,400 bytes ≈ 8.3 MB
-Total: 8.3 MB × 150 frames = 1,245 MB (1.2 GB)
+Uncompressed:
+  Frame size: 1920 × 1080 × 4 bytes (RGBA) = 8.3 MB
+  Total: 8.3 MB × 150 frames = 1,245 MB (1.2 GB)
+
+H.264 Compressed (Our Implementation):
+  Frame size: ~75 KB average
+  Buffer A: 13.5 MB (fixed)
+  Buffer B: 13.5 MB (fixed)
+  Total Video: 27 MB (fixed, never grows)
+  Compression ratio: 46:1
 ```
 
-**H.264 Compressed (Our Implementation):**
+**Audio (5 seconds @ 44.1kHz mono 16-bit):**
 ```
-Frame size: ~75 KB average (H.264 compressed)
-Buffer A: 13.5 MB (fixed)
-Buffer B: 13.5 MB (fixed)
-Total: 27 MB (fixed, never grows)
+  Sample rate: 44,100 Hz
+  Bytes per sample: 2 (16-bit)
+  Duration: 5 seconds
+  Total: 44,100 × 2 × 5 = 441,000 bytes ≈ 0.4 MB
 
-Compression ratio: 1,245 MB / 27 MB ≈ 46:1
+  With overhead (struct, queue): ~2 MB
+```
+
+**Combined Memory Footprint:**
+```
+  Video buffers: 27 MB
+  Audio buffer: ~2 MB
+  Metal context: ~2 MB
+  Total: ~31 MB (fixed)
 ```
 
 ## Performance Characteristics
@@ -484,6 +665,13 @@ Compression ratio: 1,245 MB / 27 MB ≈ 46:1
 - Total: <1 millisecond per frame
 - CPU impact: <3% @ 30 fps
 
+**Audio Sample Write:**
+- Lock duration: ~50 nanoseconds
+- Queue enqueue: ~1 microsecond
+- Trim check: ~10 microseconds
+- Total: <0.1 milliseconds per sample
+- CPU impact: <1% @ 44.1kHz
+
 **Buffer Rotation (every 5 seconds):**
 - Swap buffers: ~100 nanoseconds (atomic int toggle)
 - Prune metadata list: ~5 milliseconds (150 frames)
@@ -492,51 +680,16 @@ Compression ratio: 1,245 MB / 27 MB ≈ 46:1
 
 **Buffer to MP4 Write (on Record button press):**
 - Create AVAssetWriter: ~50 milliseconds
-- Write 150 frames: ~200 milliseconds
-- Finalize file: ~100 milliseconds
-- Total: ~350 milliseconds (one-time cost when starting recording)
+- Write 150 video frames: ~200 milliseconds
+- Write audio to M4A: ~50 milliseconds
+- Finalize files: ~100 milliseconds
+- Total: ~400 milliseconds (one-time cost)
 
-## Error Handling and Edge Cases
-
-### Case 1: No Keyframe in Buffer
-```
-Scenario: User records for 0.5 seconds (no keyframe generated yet)
-Result: PruneToMaxDuration() removes all frames
-Solution: Check _frames.Count after pruning
-  - If empty: Skip pre-recording, use live recording only
-  - Log warning: "No keyframe found in pre-recording buffer"
-```
-
-### Case 2: Buffer Overflow
-```
-Scenario: Extremely high bitrate exceeds 13.5 MB buffer
-Detection: currentState.BytesUsed + size > bufferSize
-Action: Drop frame and log warning
-Result: Small gap in pre-recording, but continues operating
-```
-
-### Case 3: Muxing Failure
-```
-Scenario: Pre-recorded file is corrupted or missing
-Detection: AVAssetExportSession.Status == .Failed
-Fallback: Use live recording only
-Code:
-  if (exportSession.Status == AVAssetExportSessionStatus.Failed)
-  {
-      Debug.WriteLine("Muxing failed, using live recording only");
-      File.Copy(liveRecordingPath, outputPath, true);
-  }
-```
-
-### Case 4: Duration Exceeds Maximum
-```
-Scenario: User records pre-recording for 10 seconds (max is 5)
-Action:
-  1. Automatic pruning during buffer swap (removes 0-5s range)
-  2. Final pruning before file write (ensures exactly last 5s)
-  3. Keyframe adjustment (may reduce to 4.9s to start with keyframe)
-Result: Valid 4.9s pre-recording + live recording
-```
+**Muxing (Passthrough mode):**
+- Load assets: ~50 milliseconds
+- Build composition: ~10 milliseconds
+- Export (passthrough): ~100-200 milliseconds
+- Total: ~200-300 milliseconds (vs ~3-5 seconds with re-encoding!)
 
 ## Configuration
 
@@ -549,6 +702,9 @@ camera.EnablePreRecording = true;
 // Set maximum pre-recording duration (default: 5 seconds)
 camera.PreRecordDuration = TimeSpan.FromSeconds(5);
 
+// Enable audio recording
+camera.RecordAudio = true;
+
 // Auto-enable for first StartVideoRecording() call
 // Second call starts live recording
 ```
@@ -556,7 +712,7 @@ camera.PreRecordDuration = TimeSpan.FromSeconds(5);
 **Buffer Size Calculation:**
 
 ```csharp
-// Formula:
+// Video buffer formula:
 // bufferSize = expectedBytesPerSecond × duration × safetyMargin
 
 // Example for 1080p @ 30fps:
@@ -568,294 +724,46 @@ camera.PreRecordDuration = TimeSpan.FromSeconds(5);
 const int bufferSize = (int)(11.25 * 1024 * 1024 * 1.2); // ~13.5 MB
 _bufferA = new byte[bufferSize];
 _bufferB = new byte[bufferSize];
+
+// Audio buffer:
+// - Circular mode with PreRecordDuration
+_audioBuffer = new CircularAudioBuffer(PreRecordDuration);
 ```
 
 ## Platform-Specific Notes
 
 ### iOS/MacCatalyst
 
-**✅ STATUS: FULLY IMPLEMENTED AND TESTED**
+**STATUS: FULLY IMPLEMENTED AND TESTED**
 
 **Core Components:**
 - **VTCompressionSession** - Hardware H.264 encoding
 - **PrerecordingEncodedBuffer** - Circular buffer for encoded frames (27MB total)
-- **AVAssetWriter** - MP4 file writing
-- **AVMutableComposition** - Seamless video concatenation
+- **CircularAudioBuffer** - Audio sample queue with auto-trim
+- **AVAssetWriter** - MP4/M4A file writing
+- **AVMutableComposition** - Seamless video+audio muxing with Passthrough
 
-**Implementation Flow:**
-
-*Initialization (`AppleVideoToolboxEncoder.InitializeAsync()`:93-155):*
-```csharp
-if (IsPreRecordingMode)
-{
-    // 1. Create VTCompressionSession for H.264 encoding
-    InitializeCompressionSession();
-
-    // 2. Initialize circular buffer
-    _preRecordingBuffer = new PrerecordingEncodedBuffer(preRecordDuration);
-
-    // 3. Start buffering immediately
-    _isRecording = true;  // Buffering starts NOW
-    EncodingStatus = "Buffering";
-}
-```
-
-*Buffering Phase (`CompressionOutputCallback()`:249-273, `BufferEncodedFrame()`:275-335):*
-- VTCompressionSession calls callback for each encoded frame
-- Extract H.264 NAL units from CMSampleBuffer
-- Append to circular buffer with full timing: `_preRecordingBuffer.AppendEncodedFrame(h264Data, size, timestamp, presentationTime, duration)`
-- Buffer automatically rotates and prunes to maintain max duration
-- Saves `_videoFormatDescription` from first frame (contains SPS/PPS headers)
-
-*User Presses Record (`StartAsync()`:378-532):*
-```csharp
-// 1. Prune buffer (line 797)
-_preRecordingBuffer.PruneToMaxDuration();
-
-// 2. Write buffer to MP4 (line 396-412)
-await WriteBufferedFramesToMp4Async(_preRecordingBuffer, _preRecordingFilePath);
-
-// 3. Calculate pre-recording duration from ACTUAL frame timestamps (line 410)
-_preRecordingDuration = _preRecordingBuffer.GetBufferedDuration();
-
-// 4. Dispose compression session (line 419-421)
-_compressionSession?.Dispose();
-_preRecordingBuffer = null;
-
-// 5. Initialize AVAssetWriter for live recording (line 423-453)
-_writer = new AVAssetWriter(url, "public.mpeg-4", ...);
-_pixelBufferAdaptor = new AVAssetWriterInputPixelBufferAdaptor(...);
-_writer.StartSessionAtSourceTime(CMTime.Zero);
-```
-
-*Live Recording Phase (`SubmitFrameToAssetWriter()`:704-773):*
-```csharp
-// CRITICAL: Offset timestamps by pre-recording duration (line 746-749)
-double timestamp = _pendingTimestamp.TotalSeconds;
-if (_preRecordingDuration > TimeSpan.Zero)
-{
-    timestamp += _preRecordingDuration.TotalSeconds;
-}
-CMTime ts = CMTime.FromSeconds(timestamp, 1_000_000);
-_pixelBufferAdaptor.AppendPixelBufferWithPresentationTime(pixelBuffer, ts);
-```
-
-*Stop and Muxing (`StopAsync()`:776-970, `ConcatenateVideosAsync()`:988-1197):*
-```csharp
-// 1. Finalize live recording
-_writer.FinishWriting();
-
-// 2. Create composition
-var composition = AVMutableComposition.Create();
-var videoTrack = composition.AddMutableTrack(...);
-
-// 3. Insert pre-recording at time 0
-videoTrack.InsertTimeRange(preRecTimeRange, preRecVideoTrack, CMTime.Zero, out error);
-
-// 4. Insert live recording after pre-recording
-videoTrack.InsertTimeRange(liveRecTimeRange, liveRecVideoTrack, preRecAsset.Duration, out error);
-
-// 5. Export to final file
-var exportSession = new AVAssetExportSession(composition, AVAssetExportSessionPreset.Passthrough);
-exportSession.ExportAsynchronously();
-```
-
-**Critical Implementation Details:**
-
-*Writing Buffered Frames to MP4 (`WriteBufferedFramesToMp4Async()`:1199-1455):*
-```csharp
-// 1. Create AVAssetWriter with NULL output settings (pass-through, no re-encoding)
-videoInput = new AVAssetWriterInput(
-    AVMediaTypes.Video,
-    outputSettings: null,  // CRITICAL: null = pass-through H.264
-    sourceFormatHint: _videoFormatDescription  // Provides SPS/PPS
-);
-
-// 2. Adjust ALL timestamps to start from zero (line 1283-1340)
-CMTime firstFramePts = frames[0].PresentationTime;
-foreach (var frame in frames)
-{
-    var adjustedPts = CMTime.Subtract(presentationTime, firstFramePts);
-    var timing = new CMSampleTimingInfo
-    {
-        PresentationTimeStamp = adjustedPts,  // 0.0s, 0.033s, 0.066s...
-        Duration = duration,
-        DecodeTimeStamp = CMTime.Invalid
-    };
-    // Create CMSampleBuffer and append...
-}
-```
-
-**Key Files and Line Numbers:**
-- `AppleVideoToolboxEncoder.cs`:
-  - Initialization: 93-155
-  - Compression callback: 249-273
-  - Buffer frame: 275-335
-  - Start (transition): 378-532
-  - Live frame submit: 704-773
-  - Stop: 776-970
-  - Write buffered frames: 1199-1455
-  - Concatenate videos: 988-1197
-- `PrerecordingEncodedBuffer.cs`: Complete implementation
-- `SkiaCamera.Apple.cs:498-612`: Muxing wrapper (delegates to encoder)
+**Key Files:**
+- `AppleVideoToolboxEncoder.cs` - Video encoding and pre-recording buffer
+- `SkiaCamera.Apple.cs` - Audio management and muxing
+- `PrerecordingEncodedBufferApple.cs` - Video circular buffer
+- `CircularAudioBuffer.cs` - Audio circular buffer
 
 ### Android
 
-**Implementation:** `AndroidCaptureVideoEncoder.cs`
+**STATUS: IMPLEMENTED - READY FOR TESTING**
 
-**Key Differences from iOS:**
-- **No circular buffer in memory** - Writes frames directly to file using Media Foundation
-- **Direct file writing** during pre-recording to `pre_rec_*.mp4`
-- **No keyframe detection needed** - MediaCodec handles MP4 structure automatically
-- **Timestamp offset** applied during live recording phase
-
-**Architecture:**
-```
-Pre-Recording Phase:
-  Camera → Frame Processor → MediaCodec (Surface input) → MediaMuxer → pre_rec_*.mp4
-
-Live Recording Phase:
-  Camera → Frame Processor → MediaCodec (Surface input) → MediaMuxer → live_rec_*.mp4
-  (timestamps offset by pre-recording duration)
-
-Finalization:
-  Mux pre_rec_*.mp4 + live_rec_*.mp4 → final output
-```
-
-**✅ STATUS: IMPLEMENTED - READY FOR TESTING**
-
-The Android implementation now mirrors the iOS architecture. All core pre-recording features have been implemented and compile successfully. Testing on actual Android devices is pending.
-
-**Encoding Architecture:**
-- **MediaCodec** with Surface input for hardware H.264 encoding
-- GPU path: EGL/OpenGL ES + Skia for compositing overlays
-- Configuration: H.264, 1 second keyframe interval, adaptive bitrate
-
-**Two-Phase Recording (Implemented):**
-
-*Phase 1 - Pre-Recording (Buffering):*
-```
-Camera → EGL Surface → MediaCodec → H.264 output → PrerecordingEncodedBuffer (memory)
-```
-- Extract encoded frames from MediaCodec.DequeueOutputBuffer()
-- Store in PrerecordingEncodedBuffer circular buffer (same as iOS)
-- Buffer rotates every PreRecordDuration seconds
-- Keyframe detection via H.264 NAL unit parsing
-
-*Phase 2 - Live Recording:*
-```
-Camera → EGL Surface → MediaCodec → MediaMuxer → live_rec_*.mp4 (file)
-```
-- Switch from buffer to file writing
-- Write buffered frames to `pre_rec_*.mp4` first
-- Offset live timestamps by pre-recording duration
-- Mux both files at end
-
-**File Writing:**
-- Pre-recording: Extract from circular buffer → write to `pre_rec_{guid}.mp4`
-- Live recording: Direct MediaCodec output → `live_rec_{guid}.mp4`
-- Both files use **MediaMuxer** for MP4 container
-
-**Timestamp Handling:**
-```csharp
-// Phase 1: Buffering - Store raw timestamps
-var timestamp = TimeSpan.FromNanoseconds(sampleInfo.PresentationTimeUs * 1000);
-_preRecordingBuffer.AppendEncodedFrame(encodedData, size, timestamp);
-
-// Phase 2: Live Recording - Offset timestamps
-double timestampMs = _pendingTimestamp.TotalMilliseconds;
-if (_preRecordingDuration > TimeSpan.Zero)
-{
-    timestampMs += _preRecordingDuration.TotalMilliseconds;
-}
-long ptsNanos = (long)(timestampMs * 1_000_000.0);
-EGLExt.EglPresentationTimeANDROID(_eglDisplay, _eglSurface, ptsNanos);
-```
-
-**Muxing:**
-- **MediaExtractor + MediaMuxer** - Extract tracks from both files, write sequentially with time offsets
-- Implemented in `AndroidCaptureVideoEncoder.cs:747-843`
-- Reads pre-recorded file first, then live file with duration offset
-
-**Implementation Checklist:**
-1. ✅ PrerecordingEncodedBuffer class (shared with iOS)
-2. ✅ Instantiate buffer in AndroidCaptureVideoEncoder
-3. ✅ Extract encoded frames from MediaCodec during buffering
-4. ✅ Implement two-phase recording (buffer → file transition)
-5. ✅ Write buffered frames to MP4 on StartAsync()
-6. ⚠️ Keyframe detection (inherited from buffer class, needs Android H.264 testing)
-7. ✅ Muxing logic (fully implemented)
-
-**Memory Profile:**
-- ~27 MB (PrerecordingEncodedBuffer - same as iOS)
-- ~2 MB (EGL surfaces + encoder working buffers)
-- Total: ~29 MB vs iOS ~29 MB (parity achieved)
-
-**Key Files and Line Numbers:**
-- `AndroidCaptureVideoEncoder.cs`:
-  - Initialization with buffer: 82-153
-  - DrainEncoder (buffer extraction): 346-432
-  - StartAsync (transition): 155-260
-  - StopAsync (muxing): 390-563
-  - WriteBufferedFramesToMp4Async: 620-742
-  - MuxVideosAsync: 747-843
-- `PrerecordingEncodedBuffer.cs`: Shared implementation with iOS
-- `SkiaCamera.Android.cs:262-288`: Platform wrapper (delegates to encoder)
+- Uses MediaCodec for hardware H.264 encoding
+- PrerecordingEncodedBuffer shared implementation
+- MediaMuxer for MP4 container
 
 ### Windows
 
-**Implementation:** `WindowsCaptureVideoEncoder.cs`
+**STATUS: IMPLEMENTED**
 
-**Key Differences from iOS:**
-- **No circular buffer in memory** - Writes frames directly to file using Media Foundation
-- **Direct file writing** during pre-recording to `pre_rec_*.mp4`
-- **No keyframe detection needed** - Media Foundation handles MP4 structure automatically
-- **Timestamp offset** applied during live recording phase
-
-**Architecture:**
-```
-Pre-Recording Phase:
-  Camera → Frame Processor → IMFSinkWriter → pre_rec_*.mp4
-
-Live Recording Phase:
-  Camera → Frame Processor → IMFSinkWriter → live_rec_*.mp4
-  (timestamps offset by pre-recording duration)
-
-Finalization:
-  Mux pre_rec_*.mp4 + live_rec_*.mp4 → final output
-```
-
-**Encoding:**
-- Uses **Media Foundation** IMFSinkWriter for hardware H.264 encoding
-- Direct GPU path using D3D11/Skia interop (when GRContext available)
-- Configuration: H.264, 1 second keyframe interval, adaptive bitrate
-
-**File Writing:**
-- Pre-recording writes to temporary file: `pre_rec_{guid}.mp4`
-- Live recording writes to temporary file: `live_rec_{guid}.mp4`
-- Both files use **IMFSinkWriter** for MP4 container
-
-**Timestamp Handling:**
-```csharp
-// Apply pre-recording offset to timestamp if live recording after pre-recording
-double timestampSeconds = _pendingTimestamp.TotalSeconds;
-if (_preRecordingDuration > TimeSpan.Zero)
-{
-    timestampSeconds += _preRecordingDuration.TotalSeconds;
-}
-
-long sampleTime = (long)(timestampSeconds * 10_000_000L); // 100ns units
-sample.SetSampleTime(sampleTime);
-```
-
-**Muxing:**
-1. **FFmpeg** (preferred) - Uses concat demuxer for lossless muxing
-2. **Simple concatenation** (fallback) - Binary file concatenation (may produce invalid MP4)
-
-**Memory Profile:**
-- ~3-5 MB (Media Foundation buffers + encoder state)
-- No large circular buffer needed
-- Relies on file system for buffering
+- Uses Media Foundation for H.264 encoding
+- File-based circular buffer (two-file rotation)
+- FFmpeg for muxing (or fallback concatenation)
 
 ## Diagnostics and Logging
 
@@ -871,34 +779,63 @@ sample.SetSampleTime(sampleTime);
 [PreRecording] PruneToMaxDuration: 180 -> 150 frames (first frame now at 5.123s is KEYFRAME)
   → Final pruning before file write
 
-[AppleVideoToolboxEncoder] Frame 1: Adjusted PTS=0.000s (original was 5.123s)
-  → Timestamp adjustment applied
+[PrerecordingEncodedBufferApple] Disposed - all frame data cleared
+  → Proper cleanup with frame data nulled
 
-[MuxVideosApple] Export completed: 8.0s total (pre: 5.0s, live: 3.0s)
-  → Successful muxing
+[MuxVideosApple] Passthrough mode - preserving source transform
+  → Using fast passthrough (no re-encoding)
+
+[MuxVideosApple] Added pre-rec audio at 0s (5.00s)
+  → Pre-recording audio inserted
+
+[MuxVideosApple] Added live audio at 5.00s (3.00s)
+  → Live audio inserted after pre-rec
+
+[MuxVideosApple] Mux successful: /path/to/output.mp4
+  → Successful muxing with audio
 ```
 
-## Future Optimizations
+## Error Handling and Edge Cases
 
-1. **GPU-based encoding** (currently CPU-based VTCompressionSession)
-   - Use Metal shaders for color space conversion
-   - Direct texture-to-encoder pipeline
+### Case 1: No Keyframe in Buffer
+```
+Scenario: User records for 0.5 seconds (no keyframe generated yet)
+Result: PruneToMaxDuration() removes all frames
+Solution: Check _frames.Count after pruning
+  - If empty: Skip pre-recording, use live recording only
+  - Log warning: "No keyframe found in pre-recording buffer"
+```
 
-2. **Adaptive buffer sizing**
-   - Calculate buffer size based on actual bitrate
-   - Dynamically adjust for resolution changes
+### Case 2: Audio Longer Than Video
+```
+Scenario: Audio capture started before video encoding
+Detection: audioDurationMs > videoDurationMs
+Action: Trim audio from START to match video duration
+Code:
+  var targetStartNs = lastSampleTimestamp - (long)(videoDurationMs * 1_000_000);
+  allAudioSamples = allAudioSamples.Where(s => s.TimestampNs >= targetStartNs).ToArray();
+```
 
-3. **Smart keyframe insertion**
-   - Request keyframe when approaching max duration
-   - Reduces pruning waste (less frames discarded)
+### Case 3: Buffer Overflow
+```
+Scenario: Extremely high bitrate exceeds 13.5 MB buffer
+Detection: currentState.BytesUsed + size > bufferSize
+Action: Drop frame and log warning
+Result: Small gap in pre-recording, but continues operating
+```
 
-4. **Multi-threaded encoding**
-   - Encode frames on background thread
-   - Reduce main thread impact
-
-5. **Zero-copy buffer management**
-   - Use IOSurface for direct GPU→Encoder transfer
-   - Eliminate CPU memory copies
+### Case 4: Muxing Failure
+```
+Scenario: Pre-recorded file is corrupted or missing
+Detection: AVAssetExportSession.Status == .Failed
+Fallback: Use live recording only
+Code:
+  if (exportSession.Status == AVAssetExportSessionStatus.Failed)
+  {
+      Debug.WriteLine("Muxing failed, using live recording only");
+      File.Copy(liveRecordingPath, outputPath, true);
+  }
+```
 
 ## References
 
@@ -907,3 +844,4 @@ sample.SetSampleTime(sampleTime);
 - [H.264 NAL Unit Format (ITU-T H.264)](https://www.itu.int/rec/T-REC-H.264)
 - [AVMutableComposition for Video Editing](https://developer.apple.com/documentation/avfoundation/avmutablecomposition)
 - [CoreMedia Timing](https://developer.apple.com/documentation/coremedia/cmtime)
+- [Metal Best Practices - Command Queues](https://developer.apple.com/documentation/metal/resource_fundamentals/setting_resource_storage_modes)
