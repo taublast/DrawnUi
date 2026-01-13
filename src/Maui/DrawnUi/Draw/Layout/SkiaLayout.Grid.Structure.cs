@@ -53,10 +53,10 @@ public partial class SkiaLayout
         {
             _parentGrid = parentGrid;
 
-            //ported from xamarin Grid
+            //ported from Xamarin Grid and heavily modified
 
-            _explicitGridHeight = _parentGrid.Height; //todo this is incorrect but we don't care for the structure
             _explicitGridWidth = _parentGrid.Width;
+            _explicitGridHeight = _parentGrid.Height; //todo this is incorrect but we don't care for the structure
 
             _gridWidthConstraint = widthConstraint;//Dimension.IsExplicitSet(_explicitGridWidth) ? _explicitGridWidth : widthConstraint;
             _gridHeightConstraint = heightConstraint;//Dimension.IsExplicitSet(_explicitGridHeight) ? _explicitGridHeight : heightConstraint;
@@ -75,8 +75,8 @@ public partial class SkiaLayout
             ColumnDefinitions = parentGrid.ColumnDefinitions;
 
 
-            var layout = parentGrid as SkiaControl;
-            var children = layout.GetOrderedSubviews();
+            var layout = parentGrid as SkiaLayout;
+            var children = layout.GetOrderedSubviews(true);
 
             var gridChildCount = children.Count;
 
