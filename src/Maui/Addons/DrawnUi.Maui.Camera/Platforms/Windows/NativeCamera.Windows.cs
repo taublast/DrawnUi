@@ -129,7 +129,7 @@ interface ID3D11DeviceContext : ID3D11DeviceChild
     new void GetPrivateData(ref Guid guid, ref uint pDataSize, IntPtr pData);
     new void SetPrivateData(ref Guid guid, uint DataSize, IntPtr pData);
     new void SetPrivateDataInterface(ref Guid guid, [MarshalAs(UnmanagedType.IUnknown)] object pData);
-    
+
     // ID3D11DeviceContext methods
     void VSSetConstantBuffers(uint StartSlot, uint NumBuffers, IntPtr ppConstantBuffers);
     void PSSetShaderResources(uint StartSlot, uint NumViews, IntPtr ppShaderResourceViews);
@@ -278,7 +278,7 @@ unsafe interface IMemoryBufferByteAccess
 #endregion
 
 
-public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyChanged, IAudioCapture
+public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyChanged
 {
     // Global lock to prevent overlapping camera sessions on Windows
     private static readonly SemaphoreSlim _cameraLock = new(1, 1);
@@ -336,9 +336,9 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         }
     }
 
-        // Reused buffers for managed fallback conversion (apply capture-path trick: single reusable buffers)
-        private InMemoryRandomAccessStream _scratchPreviewStream;
-        private byte[] _scratchPreviewBytes;
+    // Reused buffers for managed fallback conversion (apply capture-path trick: single reusable buffers)
+    private InMemoryRandomAccessStream _scratchPreviewStream;
+    private byte[] _scratchPreviewBytes;
 
     public NativeCamera(SkiaCamera formsControl)
     {
@@ -496,87 +496,19 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
         Debug.WriteLine("[NativeCameraWindows] Initializing MediaCapture...");
         _mediaCapture = new MediaCapture();
-        
-        var captureMode = StreamingCaptureMode.Video;
-        string preferredAudioDeviceId = null;
-
-        if (FormsControl != null && FormsControl.RecordAudio)
-        {
-            // Try to find an audio device
-            var audioDevices = await DeviceInformation.FindAllAsync(DeviceClass.AudioCapture);
-            if (audioDevices.Count > 0)
-            {
-               captureMode = StreamingCaptureMode.AudioAndVideo;
-               
-               // Select audio device based on AudioDeviceIndex
-               DeviceInformation selectedAudio = null;
-               
-               if (FormsControl != null && FormsControl.AudioDeviceIndex >= 0 && FormsControl.AudioDeviceIndex < audioDevices.Count)
-               {
-                   selectedAudio = audioDevices[FormsControl.AudioDeviceIndex];
-                   Debug.WriteLine($"[NativeCameraWindows] Selected Audio Device by Index {FormsControl.AudioDeviceIndex}: {selectedAudio.Name}");
-               }
-               else
-               {
-                   // Fallback to default
-                   selectedAudio = audioDevices.FirstOrDefault(x => x.IsDefault) ?? audioDevices.First();
-                   Debug.WriteLine($"[NativeCameraWindows] Selected Default Audio Device: {selectedAudio.Name} (IsDefault={selectedAudio.IsDefault})");
-               }
-
-               preferredAudioDeviceId = selectedAudio.Id;
-               
-               Debug.WriteLine($"[NativeCameraWindows] Selected Audio Device ID: {preferredAudioDeviceId}");
-               
-               // List simple debug info
-               Debug.WriteLine($"[NativeCameraWindows] Available Audio Devices: {audioDevices.Count}");
-               for(int i=0; i<audioDevices.Count; i++)
-               {
-                   var ad = audioDevices[i];
-                   Debug.WriteLine($"   [{i}] {ad.Name} [ID: {ad.Id}] IsDefault: {ad.IsDefault}");
-               }
-            }
-            else
-            {
-               Debug.WriteLine("[NativeCameraWindows] RecordAudio is requested, but NO AudioCapture devices found! Fallback to Video only.");
-               captureMode = StreamingCaptureMode.Video;
-            }
-        }
-
         var settings = new MediaCaptureInitializationSettings
         {
             VideoDeviceId = _cameraDevice.Id,
-            StreamingCaptureMode = captureMode,
+            StreamingCaptureMode = StreamingCaptureMode.Video,
             PhotoCaptureSource = PhotoCaptureSource.VideoPreview
         };
 
-        if (!string.IsNullOrEmpty(preferredAudioDeviceId))
-        {
-            settings.AudioDeviceId = preferredAudioDeviceId;
-        }
-
         Debug.WriteLine($"[NativeCameraWindows] *** INITIALIZING MEDIACAPTURE WITH VideoDeviceId: {_cameraDevice.Id} ({_cameraDevice.Name}) ***");
 
-        try
-        {
-            await _mediaCapture.InitializeAsync(settings);
-        }
-        catch (Exception ex)
-        {
-            if (captureMode == StreamingCaptureMode.AudioAndVideo)
-            {
-                Debug.WriteLine($"[NativeCameraWindows] Failed to initialize with Audio: {ex.Message}. Retrying Video only...");
-                settings.StreamingCaptureMode = StreamingCaptureMode.Video;
-                await _mediaCapture.InitializeAsync(settings);
-            }
-            else
-            {
-                throw;
-            }
-        }
-        
-        Debug.WriteLine("[NativeCameraWindows] MediaCapture initialized successfully");
 
-        LogSupportedMediaProperties();
+
+        await _mediaCapture.InitializeAsync(settings);
+        Debug.WriteLine("[NativeCameraWindows] MediaCapture initialized successfully");
 
         _flashSupported = _mediaCapture.VideoDeviceController.FlashControl.Supported;
         Debug.WriteLine($"[NativeCameraWindows] Flash supported: {_flashSupported}");
@@ -926,11 +858,11 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
             D3D11_MAPPED_SUBRESOURCE mapped;
             bool useStaging = true;
-            
+
             // Checks if we can map directly (optimization)
             if (desc.Usage == (uint)D3D11_USAGE.STAGING && (desc.CPUAccessFlags & (uint)D3D11_CPU_ACCESS_FLAG.READ) != 0)
             {
-                 useStaging = false;
+                useStaging = false;
             }
 
             ID3D11Resource resourceToMap = null;
@@ -945,7 +877,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 stagingDesc.MiscFlags = 0; // Clear any shared flags
 
                 device.CreateTexture2D(ref stagingDesc, IntPtr.Zero, out stagingTexture);
-                
+
                 context.CopyResource((ID3D11Resource)stagingTexture, (ID3D11Resource)texture);
                 resourceToMap = (ID3D11Resource)stagingTexture;
             }
@@ -956,7 +888,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
             context.Map(resourceToMap, 0, (uint)D3D11_MAP.READ, 0, out mapped);
 
-            try 
+            try
             {
                 // Create SKImage from mapped memory
                 // We use SKImage.FromPixels which copies the data unless we use a ReleaseProc, but we need to Unmap immediately so copy is safer/easier.
@@ -2147,6 +2079,11 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         return new VideoFormat { Width = 1280, Height = 720, FrameRate = 30, Codec = "H.264", BitRate = 5_000_000, FormatId = "720p30" };
     }
 
+    public void SetRecordAudio(bool recordAudio)
+    {
+   
+    }
+
     /// <summary>
     /// Gets video formats from ACTUAL camera capabilities, not hardcoded values.
     /// Queries _frameSource.SupportedFormats to return what the hardware actually supports.
@@ -2408,9 +2345,9 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         }
     }
 
-/// <summary>
-/// Stops video recording
-/// </summary>
+    /// <summary>
+    /// Stops video recording
+    /// </summary>
     public async Task StopVideoRecording()
     {
         if (!_isRecordingVideo || _mediaCapture == null || _currentVideoFile == null)
@@ -2478,8 +2415,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             _currentVideoFile = null;
         }
     }    /// <summary>
-    /// Initialize the pre-recording buffer
-    /// </summary>
+         /// Initialize the pre-recording buffer
+         /// </summary>
     private void InitializePreRecordingBuffer()
     {
         lock (_preRecordingLock)
@@ -2659,338 +2596,6 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     /// Event fired when video recording progress updates
     /// </summary>
     public Action<TimeSpan> VideoRecordingProgress { get; set; }
-
-    /// <summary>
-    /// Sets whether audio should be recorded with video.
-    /// Windows handles this via separate audio capture flow.
-    /// </summary>
-    public void SetRecordAudio(bool recordAudio)
-    {
-        // Windows native recording uses separate audio capture via IAudioCapture interface
-        // This method is here for interface compliance - actual audio is handled by SkiaCamera
-        System.Diagnostics.Debug.WriteLine($"[NativeCamera.Windows] SetRecordAudio: {recordAudio}");
-    }
-
-    #endregion
-
-    #region Audio
-
-    private MediaFrameReader _audioFrameReader;
-    private MediaFrameSource _audioFrameSource;
-    private bool _isCapturingAudio;
-
-    public bool IsCapturing => _isCapturingAudio;
-    public int SampleRate { get; private set; }
-    public int Channels { get; private set; }
-    public AudioBitDepth AudioBitDepth { get; private set; }
-
-    /// <summary>
-    /// Gets the actual Audio Sample Rate from the source.
-    /// </summary>
-    public int ActualAudioSampleRate 
-    {
-        get
-        {
-            // Debug Log once
-            if (!_debugAudioFormatsLogged)
-            {
-                _debugAudioFormatsLogged = true;
-                //LogSupportedMediaProperties();
-            }
-
-            if (_audioFrameSource?.CurrentFormat?.AudioEncodingProperties != null)
-                return (int)_audioFrameSource.CurrentFormat.AudioEncodingProperties.SampleRate;
-             
-            // Fallback: Ask MediaCapture AudioDeviceController?
-            try
-            {
-               var props = _mediaCapture?.AudioDeviceController?.GetMediaStreamProperties(MediaStreamType.Audio) as AudioEncodingProperties;
-               if (props != null)
-                   return (int)props.SampleRate;
-            }
-            catch {}
-            
-            return SampleRate > 0 ? SampleRate : 44100;
-        }
-    }
-
-    private bool _debugAudioFormatsLogged = false;
-    public void LogSupportedMediaProperties()
-    {
-        try
-        {
-             Debug.WriteLine("---- MediaCapture Supported Properties ----");
-
-             // 1. Video
-             /*
-             if (_mediaCapture?.VideoDeviceController != null)
-             {
-                try 
-                {
-                    var videoProperties = _mediaCapture.VideoDeviceController
-                        .GetAvailableMediaStreamProperties(MediaStreamType.VideoRecord)
-                        .Select(p => p as VideoEncodingProperties)
-                        .Where(p => p != null);
-                    
-                    Debug.WriteLine($"-- Video Capture Formats ({videoProperties.Count()}) --");
-                    foreach (var prop in videoProperties)
-                    {
-                        Debug.WriteLine($"Video: {prop.Width}x{prop.Height} @ {prop.FrameRate.Numerator}/{prop.FrameRate.Denominator}fps [{prop.Subtype}] Bitrate:{prop.Bitrate}");
-                    }
-                }
-                catch(Exception ex)
-                {
-                    Debug.WriteLine($"[LogSupportedMediaProperties] Video List Error: {ex.Message}");
-                }
-             }
-             */
-             // 2. Audio
-             if (_mediaCapture?.AudioDeviceController != null) 
-             {
-                 var audioProperties = _mediaCapture.AudioDeviceController
-                       .GetAvailableMediaStreamProperties(MediaStreamType.Audio)
-                       .Select(p => p as AudioEncodingProperties)
-                       .Where(p => p != null);
-
-                   Debug.WriteLine($"-- Audio Microphone Formats ({audioProperties.Count()}) --");
-                   foreach (var prop in audioProperties)
-                   {
-                       Debug.WriteLine($"Audio: {prop.SampleRate}Hz {prop.ChannelCount}ch {prop.Bitrate}bps [{prop.Subtype}]");
-                   }
-             }
-             else
-             {
-                 Debug.WriteLine("[LogSupportedMediaProperties] AudioDeviceController is null.");
-             }
-             Debug.WriteLine("--------------------------------------------");
-        }
-        catch(Exception ex)
-        {
-            Debug.WriteLine($"[LogSupportedMediaProperties] Error: {ex.Message}");
-        }
-    }
-
-    /// <summary>
-    /// Gets the actual Audio Channels from the source.
-    /// </summary>
-    public int ActualAudioChannels 
-    {
-         get
-        {
-            if (_audioFrameSource?.CurrentFormat?.AudioEncodingProperties != null)
-                return (int)_audioFrameSource.CurrentFormat.AudioEncodingProperties.ChannelCount;
-
-             try
-            {
-               var props = _mediaCapture?.AudioDeviceController?.GetMediaStreamProperties(MediaStreamType.Audio) as AudioEncodingProperties;
-               if (props != null)
-                   return (int)props.ChannelCount;
-            }
-            catch {}
-            
-            return Channels > 0 ? Channels: 1;
-        }
-    }
-
-    /// <summary>
-    /// Returns true if the audio device outputs IEEE Float format (instead of PCM).
-    /// </summary>
-    public bool ActualAudioIsFloat
-    {
-        get
-        {
-            if (_audioFrameSource?.CurrentFormat?.AudioEncodingProperties != null)
-            {
-                var subtype = _audioFrameSource.CurrentFormat.AudioEncodingProperties.Subtype;
-                return string.Equals(subtype, "Float", StringComparison.OrdinalIgnoreCase);
-            }
-
-            try
-            {
-                var props = _mediaCapture?.AudioDeviceController?.GetMediaStreamProperties(MediaStreamType.Audio) as AudioEncodingProperties;
-                if (props != null)
-                {
-                    return string.Equals(props.Subtype, "Float", StringComparison.OrdinalIgnoreCase);
-                }
-            }
-            catch { }
-
-            return false; // Default to PCM
-        }
-    }
-
-    public event EventHandler<AudioSample> SampleAvailable;
-
-    /// <summary>
-    /// Get list of available audio input devices (Windows uses AudioDeviceIndex set during initialization)
-    /// </summary>
-    public async Task<List<DrawnUi.Camera.AudioDeviceInfo>> GetAvailableDevicesAsync()
-    {
-        var devices = new List<DrawnUi.Camera.AudioDeviceInfo>();
-        try
-        {
-            var audioDevices = await DeviceInformation.FindAllAsync(DeviceClass.AudioCapture);
-            for (int i = 0; i < audioDevices.Count; i++)
-            {
-                var device = audioDevices[i];
-                devices.Add(new DrawnUi.Camera.AudioDeviceInfo
-                {
-                    Index = i,
-                    Id = device.Id,
-                    Name = device.Name,
-                    IsDefault = device.IsDefault
-                });
-                Debug.WriteLine($"[NativeCameraWindows] Available audio device [{i}]: {device.Name} (ID: {device.Id})");
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[NativeCameraWindows] Error getting audio devices: {ex.Message}");
-        }
-        return devices;
-    }
-
-    public async Task<bool> StartAsync(int sampleRate = 44100, int channels = 1, AudioBitDepth bitDepth = AudioBitDepth.Pcm16Bit, int deviceIndex = -1)
-    {
-        // Note: On Windows, device selection is handled during MediaCapture initialization via FormsControl.AudioDeviceIndex
-        // The deviceIndex parameter here is ignored since the audio device was selected at startup
-        if (_mediaCapture == null)
-            return false;
-
-        try
-        {
-            if (_isCapturingAudio)
-                return true;
-
-            SampleRate = sampleRate;
-            Channels = channels;
-            AudioBitDepth = bitDepth;
-
-            await SetupAudioReader();
-
-            if (_audioFrameReader != null)
-            {
-                var status = await _audioFrameReader.StartAsync();
-                _isCapturingAudio = status == MediaFrameReaderStartStatus.Success;
-                Debug.WriteLine($"[NativeCameraWindows] Audio Reader Start Status: {status}");
-                return _isCapturingAudio;
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[NativeCameraWindows] StartAsync (Audio) error: {ex}");
-        }
-        return false;
-    }
-
-    public async Task StopAsync()
-    {
-        if (_audioFrameReader != null)
-        {
-            await _audioFrameReader.StopAsync();
-            _isCapturingAudio = false;
-        }
-    }
-
-    private async Task SetupAudioReader()
-    {
-        if (_audioFrameReader != null)
-            return;
-
-        try
-        {
-            // Debug: Log available formats using user's suggested logic
-            try 
-            {
-               var audioProperties = _mediaCapture.VideoDeviceController
-                   .GetAvailableMediaStreamProperties(MediaStreamType.Audio)
-                   .Select(p => p as AudioEncodingProperties)
-                   .Where(p => p != null);
-
-               Debug.WriteLine("---- Available Audio Device Formats ----");
-               foreach (var prop in audioProperties)
-               {
-                   Debug.WriteLine($"Audio: Channels: {prop.ChannelCount}, SampleRate: {prop.SampleRate}, " +
-                                     $"Bitrate: {prop.Bitrate}, Subtype: {prop.Subtype}");
-               }
-               Debug.WriteLine("----------------------------------------");
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine($"[NativeCameraWindows] Warning: Failed to list audio properties: {ex.Message}");
-            }
-
-            // Find Audio Source
-            var audioSource = _mediaCapture.FrameSources.Values.FirstOrDefault(x => x.Info.SourceKind == MediaFrameSourceKind.Audio);
-            
-            if (audioSource != null)
-            {
-                _audioFrameSource = audioSource;
-                Debug.WriteLine($"[NativeCameraWindows] Found Audio Source: {_audioFrameSource.Info.Id}");
-
-                // Create Reader
-                _audioFrameReader = await _mediaCapture.CreateFrameReaderAsync(_audioFrameSource);
-                _audioFrameReader.FrameArrived += OnAudioFrameArrived;
-                Debug.WriteLine($"[NativeCameraWindows] Created Audio Frame Reader");
-            }
-            else
-            {
-                 Debug.WriteLine($"[NativeCameraWindows] No Audio Frame Source found. (FrameSources count: {_mediaCapture.FrameSources.Count})");
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[NativeCameraWindows] SetupAudioReader error: {ex}");
-        }
-    }
-
-    private void OnAudioFrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
-    {
-        using (var frame = sender.TryAcquireLatestFrame())
-        {
-            if (frame != null && frame.AudioMediaFrame != null)
-            {
-                ProcessAudioFrame(frame.AudioMediaFrame);
-            }
-        }
-    }
-
-    private unsafe void ProcessAudioFrame(AudioMediaFrame audioFrame)
-    {
-        try
-        {
-            using (var buffer = audioFrame.GetAudioFrame().LockBuffer(global::Windows.Media.AudioBufferAccessMode.Read))
-            using (var reference = buffer.CreateReference())
-            {
-                byte* dataInBytes;
-                uint capacity;
-                ((IMemoryBufferByteAccess)reference).GetBuffer(out dataInBytes, out capacity);
-
-                if (capacity > 0)
-                {
-                     // TODO: Resampling/Format conversion if needed.
-                     
-                     byte[] processedData = new byte[capacity];
-                     Marshal.Copy((IntPtr)dataInBytes, processedData, 0, (int)capacity);
-
-                     var sample = new AudioSample
-                     {
-                         Data = processedData,
-                         TimestampNs = DateTime.UtcNow.Ticks * 100, // Or use frame.SystemRelativeTime
-                         SampleRate = (int)audioFrame.AudioEncodingProperties.SampleRate,
-                         Channels = (int)audioFrame.AudioEncodingProperties.ChannelCount,
-                         BitDepth = this.AudioBitDepth 
-                     };
-                     
-                     SampleAvailable?.Invoke(this, sample);
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            // Debug.WriteLine($"ProcessAudioFrame error: {ex}");
-        }
-    }
 
     #endregion
 
