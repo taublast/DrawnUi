@@ -2540,14 +2540,14 @@ namespace DrawnUi.Draw
 
             isDrawing = true;
 
-            var needReposition = false;
+            var needAdjustPos = false;
 
             if (IsContentActive)
             {
                 //content size changed, we need to initialize scroller again at least
                 if (_lastContentSize != this.Content.MeasuredSize)
                 {
-                    needReposition = true;
+                    needAdjustPos = true;
 
                     if (NeedAutoSize)
                     {
@@ -2577,17 +2577,13 @@ namespace DrawnUi.Draw
                               _vectorAnimatorBounceY.IsRunning || _vectorAnimatorBounceX.IsRunning
                               || _scrollerX.IsRunning || _scrollerY.IsRunning || IsUserPanning;
 
-                if (!needReposition)
-                {
-                    needReposition =
-                        zoomedScale != _zoomedScale ||
-                        _updatedViewportForPixY != posY
-                        || _updatedViewportForPixX != posX
-                        || _destination != DrawingRect;
-                }
+                var needReposition =
+                    zoomedScale != _zoomedScale ||
+                    _updatedViewportForPixY != posY
+                    || _updatedViewportForPixX != posX
+                    || _destination != DrawingRect;
 
-                //reposition viewport (scroll)
-                if (needReposition)
+                if (needAdjustPos)
                 {
                     if (ResetScrollPositionOnContentSizeChanged)
                     {
@@ -2603,7 +2599,11 @@ namespace DrawnUi.Draw
                         posX -= overscroll.X;
                         posY -= overscroll.Y;
                     }
+                }
 
+                //reposition viewport (scroll)
+                if (needReposition || needAdjustPos)
+                {
                     SetScrollOffset(DrawingRect, posX, posY, zoomedScale, context.Scale, false);
                 }
 
