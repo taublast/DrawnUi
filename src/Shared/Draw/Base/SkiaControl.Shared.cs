@@ -2004,6 +2004,8 @@ namespace DrawnUi.Draw
         /// <param name="newvalue"></param>
         public virtual void OnParentVisibilityChanged(bool newvalue)
         {
+            hiddenParent = !newvalue;
+
             if (!newvalue)
             {
                 StopPostAnimators();
@@ -3132,7 +3134,7 @@ namespace DrawnUi.Draw
                     {
                         skia.IsAlive = ObjectAliveType.BeingDisposed;
                     }
-
+                    
                     Tasks.StartDelayed(DisposalDelay, () =>
                     {
                         try
@@ -3148,6 +3150,7 @@ namespace DrawnUi.Draw
                             Super.Log($"DisposeObject EXCEPTION from {caller} {e}");
                         }
                     });
+                    
                 }
             }
         }
@@ -4543,6 +4546,11 @@ namespace DrawnUi.Draw
             if (IsDisposed || IsDisposing)
                 return ScaledSize.Default;
 
+            if (hiddenParent || !IsVisible)
+            {
+                return MeasuredSize;
+            }
+
             if (IsMeasuring) //basically we need this for cache double buffering to avoid conflicts with background thread
             {
                 NeedRemeasuring = true;
@@ -5398,6 +5406,8 @@ namespace DrawnUi.Draw
             return true;
         }
 
+        private bool hiddenParent;
+
         /// <summary>
         /// Self measuring, for top controls and those invalidated-redrawn when parents didn't re-measure them
         /// </summary>
@@ -6251,7 +6261,7 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
-        /// Use to render Absolute layout. Base method is not supporting templates, override it to implemen your logic.
+        /// Use to render Absolute layout. Base method is not supporting templates, override it to implement your logic.
         /// Returns number of drawn children.
         /// </summary>
         /// <param name="skiaControls"></param>
