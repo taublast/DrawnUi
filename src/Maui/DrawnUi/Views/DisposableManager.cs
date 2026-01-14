@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 
 namespace DrawnUi.Views
 {
@@ -65,6 +66,8 @@ namespace DrawnUi.Views
             _toBeDisposed.Enqueue(framedDisposable);
         }
 
+        public int Count => _toBeDisposed.Count;
+
         /// <summary>
         /// Disposes of all IDisposable objects that are old enough based on frame count.
         /// Call this before every frame start.
@@ -115,6 +118,8 @@ namespace DrawnUi.Views
 
             // Dispose remaining disposables
             DisposeAllRemaining();
+
+            IsDisposed = true;
         }
 
         /// <summary>
@@ -122,14 +127,7 @@ namespace DrawnUi.Views
         /// </summary>
         private void DisposeAllRemaining()
         {
-            List<FramedDisposable> remainingDisposables = new List<FramedDisposable>();
-
-            while (_toBeDisposed.TryDequeue(out var framedDisposable))
-            {
-                remainingDisposables.Add(framedDisposable);
-            }
-
-            foreach (var disposable in remainingDisposables)
+            while (_toBeDisposed.TryDequeue(out var disposable))
             {
                 try
                 {
@@ -147,5 +145,7 @@ namespace DrawnUi.Views
         /// Gets the number of items waiting for disposal.
         /// </summary>
         public int PendingDisposalCount => _toBeDisposed.Count;
+
+        public bool IsDisposed { get; set; }
     }
 }
