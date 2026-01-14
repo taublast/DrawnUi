@@ -1564,11 +1564,13 @@ namespace DrawnUi.Camera
                 }
 
                 // Insert pre-recording track at time zero
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Inserting pre-recording track (duration: {preRecordingAsset.Duration.Seconds:F3}s)...");
+                // CRITICAL: Use video track's actual TimeRange, NOT asset.Duration
+                // Asset duration can be slightly longer due to rounding, causing frame wrap-around in Passthrough mode
+                var preRecTimeRange = preRecordingVideoTrack.TimeRange;
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Inserting pre-recording track (track duration: {preRecTimeRange.Duration.Seconds:F3}s, asset duration: {preRecordingAsset.Duration.Seconds:F3}s)...");
                 NSError error;
-                var preRecTimeRange = new CMTimeRange { Start = CMTime.Zero, Duration = preRecordingAsset.Duration };
 
-                videoTrack.InsertTimeRange(
+                videoTrack.InsertTimeRange(  // Insert pre-recording track at time zero
                     preRecTimeRange,
                     preRecordingVideoTrack,
                     CMTime.Zero,
@@ -1601,13 +1603,14 @@ namespace DrawnUi.Camera
                 }
 
                 // Insert live recording track after pre-recording
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Inserting live recording track (duration: {liveRecordingAsset.Duration.Seconds:F3}s) at time {preRecordingAsset.Duration.Seconds:F3}s...");
-                var liveRecTimeRange = new CMTimeRange { Start = CMTime.Zero, Duration = liveRecordingAsset.Duration };
+                // CRITICAL: Use video track's actual TimeRange for both duration and insertion point
+                var liveRecTimeRange = liveRecordingVideoTrack.TimeRange;
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Inserting live recording track (track duration: {liveRecTimeRange.Duration.Seconds:F3}s) at time {preRecTimeRange.Duration.Seconds:F3}s...");
 
-                videoTrack.InsertTimeRange(
+                videoTrack.InsertTimeRange( // Insert LIVE-recording track at time after pre-rec
                     liveRecTimeRange,
                     liveRecordingVideoTrack,
-                    preRecordingAsset.Duration,
+                    preRecTimeRange.Duration,  // Use pre-rec TRACK duration, not asset duration
                     out error);
 
                 if (error != null)
@@ -1627,7 +1630,7 @@ namespace DrawnUi.Camera
                     audioTrack.InsertTimeRange(
                         liveRecTimeRange,
                         liveRecordingAudioTrack,
-                        preRecordingAsset.Duration,
+                        preRecTimeRange.Duration,  // Use pre-rec TRACK duration for consistency
                         out var audioError);
 
                     if (audioError != null)

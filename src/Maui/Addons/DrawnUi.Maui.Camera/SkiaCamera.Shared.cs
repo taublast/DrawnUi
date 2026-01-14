@@ -35,7 +35,26 @@ public partial class SkiaCamera : SkiaControl
     #region PROPERTIES
 
 
+    public event EventHandler<bool> IsPreRecordingVideoChanged;
+    public event EventHandler<bool> IsRecordingVideoChanged;
 
+    protected virtual void SetIsRecordingVideo(bool isRecording)
+    {
+        if (IsRecordingVideo != isRecording)
+        {
+            IsRecordingVideo = isRecording;
+            IsRecordingVideoChanged?.Invoke(this, isRecording);
+        }
+    }
+
+    protected virtual void SetIsPreRecording(bool isPreRecording)
+    {
+        if (IsPreRecording != isPreRecording)
+        {
+            IsPreRecording = isPreRecording;
+            IsPreRecordingVideoChanged?.Invoke(this, isPreRecording);
+        }
+    }
 
     #region VIDEO RECORDING PROPERTIES
 
@@ -1205,7 +1224,7 @@ public partial class SkiaCamera : SkiaControl
         {
             Debug.WriteLine($"[StopVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
 
-            IsRecordingVideo = false;
+            SetIsRecordingVideo(false);
 
             // Reset locked rotation
             RecordingLockedRotation = -1;
@@ -1253,12 +1272,12 @@ public partial class SkiaCamera : SkiaControl
                     // Note: IsRecordingVideo will be set to false by the VideoRecordingSuccess/Failed callbacks
                 }
 
-                IsPreRecording = false;
+                SetIsPreRecording(false);
             }
             catch (Exception ex)
             {
-                IsPreRecording = false;
-                IsRecordingVideo = false;
+                SetIsPreRecording(false);
+                SetIsRecordingVideo(false);
                 //ClearPreRecordingBuffer();
                 VideoRecordingFailed?.Invoke(this, ex);
                 IsBusy = false;
@@ -2163,7 +2182,7 @@ public partial class SkiaCamera : SkiaControl
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                IsRecordingVideo = false;
+                SetIsRecordingVideo(false);
                 VideoRecordingFailed?.Invoke(this, ex);
             });
         };
@@ -2172,7 +2191,7 @@ public partial class SkiaCamera : SkiaControl
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                IsRecordingVideo = false;
+                SetIsRecordingVideo(false);
                 OnVideoRecordingSuccess(capturedVideo);
             });
         };

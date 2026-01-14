@@ -526,6 +526,8 @@ public partial class SkiaCamera : SkiaControl
             return;
         }
 
+        IsBusy = true;
+
         ICaptureVideoEncoder encoder = null;
 
         try
@@ -613,20 +615,24 @@ public partial class SkiaCamera : SkiaControl
 
 
             // Update state and notify success
-            IsRecordingVideo = false;
+            SetIsRecordingVideo(false);
             if (capturedVideo != null)
             {
                 OnVideoRecordingSuccess(capturedVideo);
             }
+
+            IsBusy = false;
+
         }
         catch (Exception ex)
         {
             // Clean up on error
+            IsBusy = false;
             _frameCaptureTimer?.Dispose();
             _frameCaptureTimer = null;
             _captureVideoEncoder = null;
 
-            IsRecordingVideo = false;
+            SetIsRecordingVideo(false);
             VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
@@ -680,7 +686,7 @@ public partial class SkiaCamera : SkiaControl
             // Stop encoder
             await encoder?.AbortAsync();
 
-            IsRecordingVideo = false;
+            SetIsRecordingVideo(false);
         }
         catch (Exception ex)
         {
@@ -689,7 +695,7 @@ public partial class SkiaCamera : SkiaControl
             _frameCaptureTimer = null;
             _captureVideoEncoder = null;
 
-            IsRecordingVideo = false;
+            SetIsRecordingVideo(false);
             //VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
@@ -904,15 +910,13 @@ public partial class SkiaCamera : SkiaControl
 
         Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
 
-        IsBusy = true;
-
         try
         {
             // State 1 -> State 2: If pre-recording enabled and not yet in pre-recording phase, start memory-only recording
             if (EnablePreRecording && !IsPreRecording && !IsRecordingVideo)
             {
                 Debug.WriteLine("[StartVideoRecording] Transitioning to IsPreRecording (memory-only recording)");
-                IsPreRecording = true;
+                SetIsPreRecording(true);
                 InitializePreRecordingBuffer();
 
                 // Lock the current device rotation for the entire recording session
@@ -950,8 +954,8 @@ public partial class SkiaCamera : SkiaControl
                 }
 
                 // Update state flags BEFORE creating new encoder
-                IsPreRecording = false;
-                IsRecordingVideo = true;
+                SetIsPreRecording(false);
+                SetIsRecordingVideo(true);
                 RecordingLockedRotation = DeviceRotation;
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
@@ -1018,7 +1022,7 @@ public partial class SkiaCamera : SkiaControl
             else if (!IsRecordingVideo)
             {
                 Debug.WriteLine("[StartVideoRecording] Starting normal recording (no pre-recording)");
-                IsRecordingVideo = true;
+                SetIsRecordingVideo(true);
 
                 // Lock the current device rotation for the entire recording session
                 RecordingLockedRotation = DeviceRotation;
@@ -1036,16 +1040,15 @@ public partial class SkiaCamera : SkiaControl
         }
         catch (Exception ex)
         {
-            IsRecordingVideo = false;
-            IsPreRecording = false;
-            IsBusy = false;
+            SetIsRecordingVideo(false);
+            SetIsPreRecording(false);
             RecordingLockedRotation = -1; // Reset on error
             ClearPreRecordingBuffer();
             VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
 
-        IsBusy = false;
+
     }
 
     protected async Task<List<string>> GetAvailableAudioCodecsPlatform()

@@ -632,7 +632,7 @@ public partial class SkiaCamera
             ClearPreRecordingBuffer();
 
             // Update state and notify success
-            IsRecordingVideo = false;
+            SetIsRecordingVideo(false);
             IsBusy = false; // Release busy state after successful processing
             if (capturedVideo != null)
             {
@@ -646,7 +646,7 @@ public partial class SkiaCamera
             _frameCaptureTimer = null;
             _captureVideoEncoder = null;
 
-            IsRecordingVideo = false;
+            SetIsRecordingVideo(false);
             IsBusy = false; // Release busy state on error
             VideoRecordingFailed?.Invoke(this, ex);
             throw;
@@ -733,7 +733,7 @@ public partial class SkiaCamera
             }
             ClearPreRecordingBuffer();
 
-            IsRecordingVideo = false;
+            SetIsRecordingVideo(false);
         }
         catch (Exception ex)
         {
@@ -742,7 +742,7 @@ public partial class SkiaCamera
             _frameCaptureTimer = null;
             _captureVideoEncoder = null;
 
-            IsRecordingVideo = false;
+            SetIsRecordingVideo(false);
             //VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
@@ -1160,7 +1160,7 @@ public partial class SkiaCamera
             if (EnablePreRecording && !IsPreRecording && !IsRecordingVideo)
             {
                 Debug.WriteLine("[StartVideoRecording] Transitioning to IsPreRecording (memory-only recording)");
-                IsPreRecording = true;
+                SetIsPreRecording(true);
                 InitializePreRecordingBuffer();
 
                 // Lock the current device rotation for the entire recording session
@@ -1187,8 +1187,8 @@ public partial class SkiaCamera
                 // Just call StartAsync() to write buffer + continue with live frames in same muxer session
  
                 // Change states
-                IsPreRecording = false;
-                IsRecordingVideo = true;
+                SetIsPreRecording(false);
+                SetIsRecordingVideo(true);
                 RecordingLockedRotation = DeviceRotation;
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
@@ -1218,7 +1218,7 @@ public partial class SkiaCamera
             else if (!IsRecordingVideo)
             {
                 Debug.WriteLine("[StartVideoRecording] Starting normal recording (no pre-recording)");
-                IsRecordingVideo = true;
+                SetIsRecordingVideo(true);
 
                 // Lock the current device rotation for the entire recording session
                 RecordingLockedRotation = DeviceRotation;
@@ -1236,8 +1236,8 @@ public partial class SkiaCamera
         }
         catch (Exception ex)
         {
-            IsRecordingVideo = false;
-            IsPreRecording = false;
+            SetIsRecordingVideo(false);
+            SetIsPreRecording(false);
             IsBusy = false;
             RecordingLockedRotation = -1; // Reset on error
             ClearPreRecordingBuffer();
