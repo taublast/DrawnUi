@@ -439,7 +439,7 @@ public partial class Super
                 action().ConfigureAwait(false);
             }
 
-            await Task.Delay(1);
+            await Task.Yield();
         }
 
     }
