@@ -73,6 +73,12 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     private long _rtDurationPerFrame;   // 100-ns units
     private long _lastSampleTime100ns = -1;
 
+    // Audio encoding (Direct MFT approach)
+    private WindowsAudioEncoder _audioEncoder;
+    private uint _audioStreamIndex;
+    private bool _audioEnabled;
+    private readonly object _audioWriteLock = new();
+
 
     public WindowsCaptureVideoEncoder(GRContext grContext = null)
     {
@@ -92,10 +98,83 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
     public void WriteAudioSample(AudioSample sample)
     {
-        
+        if (!_audioEnabled || _audioEncoder == null || !_isRecording)
+            return;
+
+        // Encode PCM to AAC
+        _audioEncoder.EncodeSample(sample);
+
+        // Write encoded frames to SinkWriter
+        WriteEncodedAudioFrames();
     }
 
-    public bool SupportsAudio { get; }
+    private void WriteEncodedAudioFrames()
+    {
+        if (_sinkWriter == null)
+            return;
+
+        var frames = _audioEncoder.GetAllEncodedFrames();
+        if (frames.Length == 0)
+            return;
+
+        lock (_audioWriteLock)
+        {
+            foreach (var frame in frames)
+            {
+                try
+                {
+                    WriteAacFrameToSinkWriter(frame);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[WindowsCaptureVideoEncoder] WriteAacFrame error: {ex.Message}");
+                }
+            }
+        }
+    }
+
+    private unsafe void WriteAacFrameToSinkWriter(EncodedAudioFrame frame)
+    {
+        var hr = PInvoke.MFCreateMemoryBuffer((uint)frame.Data.Length, out var buffer);
+        if (hr.Failed)
+            return;
+
+        try
+        {
+            byte* bufPtr;
+            uint maxLen, curLen;
+            buffer.Lock(&bufPtr, &maxLen, &curLen);
+            Marshal.Copy(frame.Data, 0, (IntPtr)bufPtr, frame.Data.Length);
+            buffer.Unlock();
+            buffer.SetCurrentLength((uint)frame.Data.Length);
+
+            hr = PInvoke.MFCreateSample(out var sample);
+            if (hr.Failed)
+            {
+                Marshal.ReleaseComObject(buffer);
+                return;
+            }
+
+            try
+            {
+                sample.AddBuffer(buffer);
+                sample.SetSampleTime(frame.Timestamp100ns);
+                sample.SetSampleDuration(frame.Duration100ns);
+
+                _sinkWriter.WriteSample(_audioStreamIndex, sample);
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(sample);
+            }
+        }
+        finally
+        {
+            Marshal.ReleaseComObject(buffer);
+        }
+    }
+
+    public bool SupportsAudio => _audioEnabled;
 
     // Properties for platform-specific details
     public int EncodedFrameCount { get; private set; }
@@ -143,6 +222,25 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
         _rtDurationPerFrame = (long)(10_000_000L / Math.Max(1, _frameRate)); // 100-ns units per frame
         _lastSampleTime100ns = -1;
+
+        // Initialize audio encoder if audio recording is requested
+        _audioEnabled = false;
+        if (recordAudio)
+        {
+            _audioEncoder = new WindowsAudioEncoder();
+            // Use 48kHz stereo PCM - common for Windows audio capture
+            if (_audioEncoder.Initialize(48000, 2, AudioBitDepth.Pcm16Bit))
+            {
+                _audioEnabled = true;
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Audio encoder initialized (48kHz, 2ch, PCM16)");
+            }
+            else
+            {
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Audio encoder initialization failed - recording without audio");
+                _audioEncoder?.Dispose();
+                _audioEncoder = null;
+            }
+        }
 
         // Initialize limit for BOTH pre-rec and live encoders (needed for offset clamping)
         if (ParentCamera != null)
@@ -361,6 +459,13 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         // NORMAL RECORDING MODE: Just start recording (existing behavior)
         _isRecording = true;
         _startTime = DateTime.Now;
+
+        // Start audio encoder
+        if (_audioEnabled && _audioEncoder != null)
+        {
+            _audioEncoder.Start();
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Audio encoder started");
+        }
 
         // Initialize statistics
         EncodedFrameCount = 0;
@@ -588,6 +693,14 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         _isRecording = false;
         _progressTimer?.Dispose();
 
+        // Stop and dispose audio encoder
+        if (_audioEncoder != null)
+        {
+            _audioEncoder.Dispose();
+            _audioEncoder = null;
+            _audioEnabled = false;
+        }
+
         EncodingStatus = "Canceled";
 
         await _sinkWriterSemaphore.WaitAsync();
@@ -664,6 +777,14 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
         _isRecording = false;
         _progressTimer?.Dispose();
+
+        // Stop audio encoder and drain remaining frames
+        if (_audioEnabled && _audioEncoder != null)
+        {
+            _audioEncoder.Stop();
+            WriteEncodedAudioFrames(); // Write any remaining frames
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Audio encoder stopped and drained");
+        }
 
         // Update status
         EncodingStatus = "Stopping";
@@ -1797,6 +1918,26 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
 
         Debug.WriteLine($"[WindowsCaptureVideoEncoder] Configured H.264 output + RGB32 input");
+
+        // Configure AUDIO stream if enabled (passthrough AAC - input type = output type)
+        if (_audioEnabled && _audioEncoder?.AacOutputType != null)
+        {
+            try
+            {
+                // Add audio stream with AAC output type from encoder
+                _sinkWriter.AddStream(_audioEncoder.AacOutputType, out _audioStreamIndex);
+
+                // Set input type = output type (passthrough - we encode separately)
+                _sinkWriter.SetInputMediaType(_audioStreamIndex, _audioEncoder.AacOutputType, null);
+
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Configured AAC audio stream (index: {_audioStreamIndex})");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio stream config failed: {ex.Message}");
+                _audioEnabled = false;
+            }
+        }
     }
 
     /// <summary>
@@ -1892,6 +2033,14 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         _isRecording = false;
         _progressTimer?.Dispose();
         _sinkWriterSemaphore?.Dispose();
+
+        // Dispose audio encoder
+        if (_audioEncoder != null)
+        {
+            _audioEncoder.Dispose();
+            _audioEncoder = null;
+            _audioEnabled = false;
+        }
 
         // Clean up pre-recording temp files
         CleanupPreRecTempFiles();
