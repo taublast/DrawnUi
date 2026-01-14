@@ -106,6 +106,12 @@ public class SkiaLabelFps : SkiaLabel, ISkiaAnimator
     public bool IsRunning { get; set; }
     public bool WasStarted { get; }
 
+    public override void OnWillDisposeWithChildren()
+    {
+        Stop();
+
+        base.OnWillDisposeWithChildren();
+    }
 
     public void Stop()
     {
