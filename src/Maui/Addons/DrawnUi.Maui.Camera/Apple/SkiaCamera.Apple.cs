@@ -17,12 +17,6 @@ namespace DrawnUi.Camera;
 
 public partial class SkiaCamera
 {
-    /// <summary>
-    /// When true, uses AVAssetExportSessionPreset.Passthrough for video concatenation (faster, no re-encoding).
-    /// When false, uses MediumQuality with VideoComposition (slower, re-encodes, but more reliable frame ordering).
-    /// Default is false because Passthrough can cause frame ordering issues at pre-recording/live junction.
-    /// </summary>
-    public static bool UsePassthrough { get; set; } = false;
 
     private AudioSample[] _preRecordedAudioSamples;  // Saved at pre-rec → live transition
 
@@ -71,7 +65,7 @@ public partial class SkiaCamera
         try
         {
             // Double-check encoder still exists (race condition protection)
-           if (_captureVideoEncoder == null || (!IsRecordingVideo && !IsPreRecording))
+            if (_captureVideoEncoder == null || (!IsRecordingVideo && !IsPreRecording))
                 return;
 
             var elapsed = DateTime.Now - _captureVideoStartTime;
@@ -93,19 +87,19 @@ public partial class SkiaCamera
 
                     if (imageToDraw == null && encoderContext != null && nativeCam.PreviewTexture != null)
                     {
-                        try 
+                        try
                         {
                             var texture = nativeCam.PreviewTexture;
                             var width = (int)texture.Width;
                             var height = (int)texture.Height;
-                            
+
                             var textureInfo = new GRMtlTextureInfo(texture.Handle);
                             using var backendTexture = new GRBackendTexture(width, height, false, textureInfo);
 
                             // Create image (BORROWED texture, will NOT dispose underlying Metal texture)
                             // Use encoder-specific context to ensure compatibility
                             var image = SKImage.FromTexture(encoderContext, backendTexture, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
-                            
+
                             if (image != null)
                             {
                                 imageToDraw = image;
@@ -324,7 +318,7 @@ public partial class SkiaCamera
         // Re-use existing or create new; but usually we create new.
         // Cast to local variable for configuration
         var appleEncoder = new AppleVideoToolboxEncoder();
-        
+
         // Inject GRContext for Zero-Copy path (Metal)
         // CRITICAL FIX: Do NOT pass UI Thread's GRContext to background recording thread to avoid crash.
         // The encoder will create its own dedicated Metal GRContext for thread safety.
@@ -1326,6 +1320,14 @@ public partial class SkiaCamera
                         $"[MuxVideosApple] Pre-recording track: {sourceSize.Width}x{sourceSize.Height}, transform: {compositionTransform}");
                 }
 
+                // PASSTHROUGH MODE: No re-encoding, just container manipulation (FAST!)
+                // Orientation is preserved via track's PreferredTransform metadata
+                // The source videos already have correct transform set by the encoder
+                videoTrack.PreferredTransform = compositionTransform;
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"[MuxVideosApple] Passthrough mode - preserving source transform: {compositionTransform}");
+
                 // Export composition to file
                 // CRITICAL: AVAssetExportSession fails if output file already exists
                 if (File.Exists(outputPath))
@@ -1343,114 +1345,15 @@ public partial class SkiaCamera
                 }
 
                 var outputUrl = Foundation.NSUrl.FromFilename(outputPath);
-                AVFoundation.AVAssetExportSession exporter;
-
-                if (UsePassthrough)
-                {
-                    // PASSTHROUGH MODE: No re-encoding, just container manipulation (FAST!)
-                    // WARNING: Can cause frame ordering issues at pre-recording/live junction due to B-frame references
-                    videoTrack.PreferredTransform = compositionTransform;
-
-                    System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Passthrough mode - preserving source transform: {compositionTransform}");
-
-                    exporter = new AVFoundation.AVAssetExportSession(composition,
+                var exporter =
+                    new AVFoundation.AVAssetExportSession(composition,
                         AVFoundation.AVAssetExportSessionPreset.Passthrough)
                     {
                         OutputUrl = outputUrl,
                         OutputFileType = AVFoundation.AVFileTypes.Mpeg4.GetConstant(),
-                        ShouldOptimizeForNetworkUse = false //wassis???
+                        ShouldOptimizeForNetworkUse = false
                         // No VideoComposition - passthrough preserves original encoding
                     };
-                }
-                else
-                {
-                    // RE-ENCODE MODE: Uses VideoComposition for reliable frame ordering (slower but correct)
-                    // This re-encodes the video which fixes B-frame reference issues at concatenation junction
-                    var videoComposition = AVFoundation.AVMutableVideoComposition.Create();
-
-                    // Get frame rate from source track
-                    int frameRate = 30; // default
-                    if (liveTrack != null && liveTrack.NominalFrameRate > 0)
-                        frameRate = (int)liveTrack.NominalFrameRate;
-                    else if (preTracks != null && preTracks.Length > 0 && preTracks[0].NominalFrameRate > 0)
-                        frameRate = (int)preTracks[0].NominalFrameRate;
-
-                    videoComposition.FrameDuration = new CoreMedia.CMTime(1, frameRate);
-
-                    // Detect rotation and swap RenderSize if needed
-                    var renderSize = sourceSize;
-                    bool isPortrait = false;
-                    // Check for 90 or 270 degree rotation (xx and yy are 0)
-                    if (Math.Abs(compositionTransform.xx) < 0.001 && Math.Abs(compositionTransform.yy) < 0.001 &&
-                        (Math.Abs(compositionTransform.yx) > 0.001 || Math.Abs(compositionTransform.xy) > 0.001))
-                    {
-                        isPortrait = true;
-                        renderSize = new CoreGraphics.CGSize(sourceSize.Height, sourceSize.Width);
-                        System.Diagnostics.Debug.WriteLine(
-                            $"[MuxVideosApple] Detected 90/270 rotation, swapping RenderSize to {renderSize.Width}x{renderSize.Height}");
-                    }
-
-                    videoComposition.RenderSize = renderSize;
-
-                    // Calculate corrected transform to center video in RenderSize
-                    var correctedTransform = compositionTransform;
-
-                    if (isPortrait)
-                    {
-                        // 90 degrees: yx=1, xy=-1. 270 degrees: yx=-1, xy=1
-                        if (compositionTransform.yx > 0) // 90 degrees
-                        {
-                            correctedTransform = new CoreGraphics.CGAffineTransform(0, 1, -1, 0, renderSize.Width, 0);
-                        }
-                        else // 270 degrees
-                        {
-                            correctedTransform = new CoreGraphics.CGAffineTransform(0, -1, 1, 0, 0, renderSize.Height);
-                        }
-                    }
-                    else
-                    {
-                        // 0 or 180 degrees
-                        if (compositionTransform.xx < 0) // 180 degrees
-                        {
-                            correctedTransform =
-                                new CoreGraphics.CGAffineTransform(-1, 0, 0, -1, renderSize.Width, renderSize.Height);
-                        }
-                        else // 0 degrees
-                        {
-                            correctedTransform = CoreGraphics.CGAffineTransform.MakeIdentity();
-                        }
-                    }
-
-                    // Reset track transform to Identity since we are baking the rotation
-                    videoTrack.PreferredTransform = CoreGraphics.CGAffineTransform.MakeIdentity();
-
-                    var instruction = new AVFoundation.AVMutableVideoCompositionInstruction
-                    {
-                        TimeRange = new CoreMedia.CMTimeRange
-                        {
-                            Start = CoreMedia.CMTime.Zero,
-                            Duration = composition.Duration
-                        }
-                    };
-
-                    var layerInstruction =
-                        AVFoundation.AVMutableVideoCompositionLayerInstruction.FromAssetTrack(videoTrack);
-                    layerInstruction.SetTransform(correctedTransform, CoreMedia.CMTime.Zero);
-                    instruction.LayerInstructions = new[] { layerInstruction };
-                    videoComposition.Instructions = new[] { instruction };
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"[MuxVideosApple] Re-encode mode - VideoComposition renderSize: {videoComposition.RenderSize.Width}x{videoComposition.RenderSize.Height}, fps: {frameRate}");
-
-                    exporter = new AVFoundation.AVAssetExportSession(composition,
-                        AVFoundation.AVAssetExportSessionPreset.MediumQuality)
-                    {
-                        OutputUrl = outputUrl,
-                        OutputFileType = AVFoundation.AVFileTypes.Mpeg4.GetConstant(),
-                        ShouldOptimizeForNetworkUse = false,
-                        VideoComposition = videoComposition // Apply our explicit video composition
-                    };
-                }
 
                 var tcs = new TaskCompletionSource<string>();
 
@@ -2244,16 +2147,16 @@ public partial class SkiaCamera
                     new AVCaptureDeviceType[] { AVCaptureDeviceType.BuiltInMicrophone },
                     AVMediaTypes.Audio,
                     AVCaptureDevicePosition.Unspecified);
-                
+
                 if (discoverySession != null && discoverySession.Devices != null)
                 {
-                    foreach(var device in discoverySession.Devices)
+                    foreach (var device in discoverySession.Devices)
                     {
                         detected.Add(device.LocalizedName);
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine($"[SkiaCamera] Audio device discovery error: {e}");
             }

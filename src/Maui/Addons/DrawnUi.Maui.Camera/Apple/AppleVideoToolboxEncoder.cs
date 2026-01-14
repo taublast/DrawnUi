@@ -51,6 +51,9 @@ namespace DrawnUi.Camera
         private TimeSpan _preRecordingDuration;  // Duration of pre-recorded content
         private bool _encodingDurationSetFromFrames = false;  // Flag to prevent overwriting correct duration
 
+        // PASSTHROUGH FIX: Track first live frame to eliminate gap between pre-rec and live
+        private double _firstLiveFrameTimestamp = -1;  // -1 means not set yet
+
         // Skia composition surface
         private SKSurface _surface;
 
@@ -781,6 +784,7 @@ namespace DrawnUi.Camera
 
             _isRecording = true;
             _startTime = DateTime.Now;
+            _firstLiveFrameTimestamp = -1;  // Reset for gap elimination tracking
 
             if (_preRecordingDuration > TimeSpan.Zero)
             {
@@ -1165,13 +1169,26 @@ namespace DrawnUi.Camera
                 }
 
                 // Append to AVAssetWriter
-                // CRITICAL: If we have a pre-recording offset, ADD it to frame timestamps
-                // Session started at _preRecordingDuration, so all frames must be >= that time
+                // PASSTHROUGH FIX: Ensure continuous timestamps with no gap after pre-recording
+                // The first live frame must start at exactly _preRecordingDuration, not later
+                // This prevents Passthrough mode from filling gaps with frames from the start
                 double timestamp = _pendingTimestamp.TotalSeconds;
+
                 if (_preRecordingDuration > TimeSpan.Zero)
                 {
-                    timestamp += _preRecordingDuration.TotalSeconds;
+                    // Track the first live frame's actual timestamp to calculate the gap
+                    if (_firstLiveFrameTimestamp < 0)
+                    {
+                        _firstLiveFrameTimestamp = timestamp;
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] First live frame at {timestamp:F3}s, preRecDuration={_preRecordingDuration.TotalSeconds:F3}s, gap={timestamp:F3}s");
+                    }
+
+                    // Remove the gap: adjust timestamp so first frame is exactly at preRecordingDuration
+                    // Subsequent frames maintain their relative spacing
+                    double adjustedTimestamp = _preRecordingDuration.TotalSeconds + (timestamp - _firstLiveFrameTimestamp);
+                    timestamp = adjustedTimestamp;
                 }
+
                 CMTime ts = CMTime.FromSeconds(timestamp, 1_000_000);
 
                 if (!_pixelBufferAdaptor.AppendPixelBufferWithPresentationTime(pixelBuffer, ts))
@@ -1564,13 +1581,11 @@ namespace DrawnUi.Camera
                 }
 
                 // Insert pre-recording track at time zero
-                // CRITICAL: Use video track's actual TimeRange, NOT asset.Duration
-                // Asset duration can be slightly longer due to rounding, causing frame wrap-around in Passthrough mode
-                var preRecTimeRange = preRecordingVideoTrack.TimeRange;
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Inserting pre-recording track (track duration: {preRecTimeRange.Duration.Seconds:F3}s, asset duration: {preRecordingAsset.Duration.Seconds:F3}s)...");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Inserting pre-recording track (duration: {preRecordingAsset.Duration.Seconds:F3}s)...");
                 NSError error;
+                var preRecTimeRange = new CMTimeRange { Start = CMTime.Zero, Duration = preRecordingAsset.Duration };
 
-                videoTrack.InsertTimeRange(  // Insert pre-recording track at time zero
+                videoTrack.InsertTimeRange(
                     preRecTimeRange,
                     preRecordingVideoTrack,
                     CMTime.Zero,
@@ -1603,14 +1618,13 @@ namespace DrawnUi.Camera
                 }
 
                 // Insert live recording track after pre-recording
-                // CRITICAL: Use video track's actual TimeRange for both duration and insertion point
-                var liveRecTimeRange = liveRecordingVideoTrack.TimeRange;
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Inserting live recording track (track duration: {liveRecTimeRange.Duration.Seconds:F3}s) at time {preRecTimeRange.Duration.Seconds:F3}s...");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Inserting live recording track (duration: {liveRecordingAsset.Duration.Seconds:F3}s) at time {preRecordingAsset.Duration.Seconds:F3}s...");
+                var liveRecTimeRange = new CMTimeRange { Start = CMTime.Zero, Duration = liveRecordingAsset.Duration };
 
-                videoTrack.InsertTimeRange( // Insert LIVE-recording track at time after pre-rec
+                videoTrack.InsertTimeRange(
                     liveRecTimeRange,
                     liveRecordingVideoTrack,
-                    preRecTimeRange.Duration,  // Use pre-rec TRACK duration, not asset duration
+                    preRecordingAsset.Duration,
                     out error);
 
                 if (error != null)
@@ -1630,7 +1644,7 @@ namespace DrawnUi.Camera
                     audioTrack.InsertTimeRange(
                         liveRecTimeRange,
                         liveRecordingAudioTrack,
-                        preRecTimeRange.Duration,  // Use pre-rec TRACK duration for consistency
+                        preRecordingAsset.Duration,
                         out var audioError);
 
                     if (audioError != null)
