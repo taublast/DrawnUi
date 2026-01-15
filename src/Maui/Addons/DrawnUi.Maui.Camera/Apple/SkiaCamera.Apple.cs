@@ -18,6 +18,7 @@ namespace DrawnUi.Camera;
 public partial class SkiaCamera
 {
 
+    private Task _preRecFlushTask;
     private AudioSample[] _preRecordedAudioSamples;  // Saved at pre-rec → live transition
 
     // Streaming audio writer for OOM-safe live recording (audio goes to file, not memory)
@@ -302,35 +303,16 @@ public partial class SkiaCamera
         }
     }
 
-    private async Task StartCaptureVideoFlow()
+    private async Task<ICaptureVideoEncoder> StartCaptureVideoFlow(bool preserveCurrentEncoder = false)
     {
-        // Dispose previous encoder if exists to prevent resource leaks and GC finalizer crashes
-        // CRITICAL: Unsubscribe event handlers before disposal to prevent memory leaks
-        if (_captureVideoEncoder is AppleVideoToolboxEncoder prevAppleEnc && _encoderPreviewInvalidateHandler != null)
-        {
-            prevAppleEnc.PreviewAvailable -= _encoderPreviewInvalidateHandler;
-        }
-        _captureVideoEncoder?.Dispose();
-        _captureVideoEncoder = null;
-
-        // Create Apple encoder using VideoToolbox for hardware H.264 encoding
-        // Note: _captureVideoEncoder is defined in Shared partial
-        // Re-use existing or create new; but usually we create new.
-        // Cast to local variable for configuration
+        // 1. Create Apple encoder using VideoToolbox for hardware H.264 encoding
+        // Note: We create and configure the NEW encoder first, before touching the old one
+        // This allows for seamless transition/overlap
         var appleEncoder = new AppleVideoToolboxEncoder();
 
-        // Inject GRContext for Zero-Copy path (Metal)
-        // CRITICAL FIX: Do NOT pass UI Thread's GRContext to background recording thread to avoid crash.
-        // The encoder will create its own dedicated Metal GRContext for thread safety.
-        /*
-        if (Superview?.CanvasView is SkiaSharp.Views.Maui.Controls.SKGLView glView)
-        {
-            appleEncoder.Context = glView.GRContext;
-        }
-        */
-
-        _captureVideoEncoder = appleEncoder;
-
+        ICaptureVideoEncoder oldEncoderToReturn = null;
+        
+        // Configuration phase - working with local 'appleEncoder' variable
         if (RecordAudio)
         {
             try
@@ -391,13 +373,14 @@ public partial class SkiaCamera
         }
 
         // Set parent reference and pre-recording mode
-        _captureVideoEncoder.ParentCamera = this;
-        _captureVideoEncoder.IsPreRecordingMode = IsPreRecording;
+        appleEncoder.ParentCamera = this;
+        appleEncoder.IsPreRecordingMode = IsPreRecording;
         Debug.WriteLine($"[StartCaptureVideoFlow] iOS encoder initialized with IsPreRecordingMode={IsPreRecording}");
 
         // Always use raw camera frames for preview (PreviewProcessor only, not FrameProcessor)
         UseRecordingFramesForPreview = false;
-        if (MirrorRecordingToPreview && _captureVideoEncoder is AppleVideoToolboxEncoder _appleEncPrev)
+        
+        if (MirrorRecordingToPreview)
         {
             _encoderPreviewInvalidateHandler = (s, e) =>
             {
@@ -409,7 +392,7 @@ public partial class SkiaCamera
                 {
                 }
             };
-            _appleEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
+            appleEncoder.PreviewAvailable += _encoderPreviewInvalidateHandler;
         }
 
         // Output path (Documents) or pre-recording file path
@@ -420,7 +403,7 @@ public partial class SkiaCamera
             if (string.IsNullOrEmpty(outputPath))
             {
                 Debug.WriteLine("[StartCaptureVideoFlow] ERROR: Pre-recording file path not initialized");
-                return;
+                return null;
             }
             Debug.WriteLine($"[StartCaptureVideoFlow] iOS pre-recording to file: {outputPath}");
         }
@@ -458,34 +441,39 @@ public partial class SkiaCamera
         SetSourceFrameDimensions(width, height);
 
         // Pass locked rotation to encoder for proper video orientation metadata (iOS-specific)
-        if (_captureVideoEncoder is DrawnUi.Camera.AppleVideoToolboxEncoder encoder)
-        {
-            await encoder.InitializeAsync(outputPath, width, height, fps, RecordAudio, RecordingLockedRotation);
+        // Initialize the NEW encoder
+        await appleEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio, RecordingLockedRotation);
 
-            // ✅ CRITICAL: If transitioning from pre-recording to live, set the duration offset BEFORE StartAsync
-            // BUT ONLY if pre-recording file actually exists and has content (otherwise standalone live recording will be corrupted!)
-            if (!IsPreRecording && _preRecordingDurationTracked > TimeSpan.Zero)
+        // ✅ CRITICAL: If transitioning from pre-recording to live, set the duration offset BEFORE StartAsync
+        // BUT ONLY if pre-recording file actually exists and has content (otherwise standalone live recording will be corrupted!)
+        if (!IsPreRecording && _preRecordingDurationTracked > TimeSpan.Zero)
+        {
+            // Verify pre-recording file exists and has content before setting offset
+            bool hasValidPreRecording = !string.IsNullOrEmpty(_preRecordingFilePath) &&
+                                       File.Exists(_preRecordingFilePath) &&
+                                       new FileInfo(_preRecordingFilePath).Length > 0;
+            
+            // If we are preserving encoder (Overlap Mode), the file might not be flushed yet!
+            // In that case, we TRUST _preRecordingDurationTracked which should have been estimated from the old encoder.
+           
+            // GLOBAL TIMELINE: Don't set offset for overlap mode - timestamps are already continuous
+            // Live file will be normalized to start at 0, concatenation handles sequencing
+            if (preserveCurrentEncoder)
             {
-                // Verify pre-recording file exists and has content before setting offset
-                bool hasValidPreRecording = !string.IsNullOrEmpty(_preRecordingFilePath) &&
-                                           File.Exists(_preRecordingFilePath) &&
-                                           new FileInfo(_preRecordingFilePath).Length > 0;
-
-                if (hasValidPreRecording)
-                {
-                    encoder.SetPreRecordingDuration(_preRecordingDurationTracked);
-                    Debug.WriteLine($"[StartCaptureVideoFlow] Set pre-recording duration offset: {_preRecordingDurationTracked.TotalSeconds:F2}s (pre-recording file valid)");
-                }
-                else
-                {
-                    Debug.WriteLine($"[StartCaptureVideoFlow] WARNING: Pre-recording duration tracked ({_preRecordingDurationTracked.TotalSeconds:F2}s) but file is invalid/empty. NOT setting offset to avoid corrupting standalone live recording!");
-                    _preRecordingDurationTracked = TimeSpan.Zero; // Reset to avoid muxing attempt later
-                }
+                // Overlap mode: DON'T set offset - live will normalize its timestamps to 0
+                Debug.WriteLine($"[StartCaptureVideoFlow] GLOBAL TIMELINE: No offset needed, live will normalize timestamps (pre-rec duration: {_preRecordingDurationTracked.TotalSeconds:F2}s)");
             }
-        }
-        else
-        {
-            await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+            else if (hasValidPreRecording)
+            {
+                // Non-overlap mode with pre-recording: set offset for gap elimination
+                appleEncoder.SetPreRecordingDuration(_preRecordingDurationTracked);
+                Debug.WriteLine($"[StartCaptureVideoFlow] Set pre-recording duration offset: {_preRecordingDurationTracked.TotalSeconds:F2}s");
+            }
+            else if (_preRecordingDurationTracked > TimeSpan.Zero)
+            {
+                Debug.WriteLine($"[StartCaptureVideoFlow] WARNING: Pre-recording duration tracked ({_preRecordingDurationTracked.TotalSeconds:F2}s) but file is invalid/empty. NOT setting offset to avoid corrupting standalone live recording!");
+                _preRecordingDurationTracked = TimeSpan.Zero; // Reset to avoid muxing attempt later
+            }
         }
 
         // CRITICAL: In pre-recording mode, do NOT call StartAsync during initialization
@@ -493,16 +481,47 @@ public partial class SkiaCamera
         // StartAsync will be called later when transitioning to live recording
         if (!IsPreRecording)
         {
-            await _captureVideoEncoder.StartAsync();
+            await appleEncoder.StartAsync();
             Debug.WriteLine($"[StartCaptureVideoFlow] StartAsync called for live/normal recording");
         }
         else
         {
             Debug.WriteLine($"[StartCaptureVideoFlow] Skipping StartAsync - pre-recording mode will buffer frames in memory");
         }
+        
+        // Progress reporting
+        appleEncoder.ProgressReported += (sender, duration) =>
+        {
+            OnVideoRecordingProgress(duration);
+        };
+        
+        // Dispose previous encoder OR Preserve it
+        if (_captureVideoEncoder is AppleVideoToolboxEncoder prevAppleEnc && _encoderPreviewInvalidateHandler != null)
+        {
+            prevAppleEnc.PreviewAvailable -= _encoderPreviewInvalidateHandler;
+        }
+
+        if (preserveCurrentEncoder)
+        {
+             oldEncoderToReturn = _captureVideoEncoder;
+        }
+        else
+        {
+             _captureVideoEncoder?.Dispose();
+        }
+
+        // 2. SWAP to new encoder - atomic assignment
+        _captureVideoEncoder = appleEncoder;
 
         _capturePtsBaseTime = null;
-        _captureVideoStartTime = DateTime.Now;
+
+        // GLOBAL TIMELINE: Only reset start time for fresh recordings, NOT when transitioning from pre-rec
+        // This ensures live frames continue seamlessly from pre-rec timestamps
+        if (!preserveCurrentEncoder || _preRecordingDurationTracked == TimeSpan.Zero)
+        {
+            _captureVideoStartTime = DateTime.Now;
+        }
+        // else: Keep original _captureVideoStartTime for seamless pre-rec → live transition
 
         // Diagnostics
         if (IsPreRecording || (!IsPreRecording && _preRecordingDurationTracked == TimeSpan.Zero))
@@ -515,12 +534,6 @@ public partial class SkiaCamera
 
         _targetFps = fps;
 
-        // Progress reporting
-        _captureVideoEncoder.ProgressReported += (sender, duration) =>
-        {
-            OnVideoRecordingProgress(duration);
-        };
-
         // Start frame capture for Apple (drive encoder frames)
         if (NativeControl is NativeCamera nativeCam)
         {
@@ -528,6 +541,7 @@ public partial class SkiaCamera
             nativeCam.RecordingFrameAvailable += OnRecordingFrameAvailable;
         }
 
+        return oldEncoderToReturn;
     }
 
     /// <summary>
@@ -1633,6 +1647,15 @@ public partial class SkiaCamera
             stopwatchStep.Stop();
             Debug.WriteLine($"[StopCaptureVideoFlow] TIMING: StopEncoder took {stopwatchStep.ElapsedMilliseconds}ms");
 
+            // Wait for overlap background flush if pending
+            if (_preRecFlushTask != null)
+            {
+                Debug.WriteLine("[StopCaptureVideoFlow] Waiting for background pre-recording flush to complete...");
+                await _preRecFlushTask;
+                _preRecFlushTask = null;
+                Debug.WriteLine("[StopCaptureVideoFlow] Pre-recording flush completed.");
+            }
+
             // OPTIMIZED: Skip audio concatenation - pass both files directly to MuxVideosInternal
             // This saves one AVAssetExportSession call (much faster)
             Debug.WriteLine($"[StopCaptureVideoFlow] Audio files: preRec={preRecAudioFilePath ?? "none"}, live={liveAudioFilePath ?? "none"}");
@@ -1944,7 +1967,7 @@ public partial class SkiaCamera
                 // Start recording in memory-only mode
                 if (UseCaptureVideoFlow && FrameProcessor != null)
                 {
-                    await StartCaptureVideoFlow();
+                    await StartCaptureVideoFlow(false);
                 }
                 else
                 {
@@ -1954,122 +1977,33 @@ public partial class SkiaCamera
             // State 2 -> State 3: If in pre-recording phase, transition to file recording with muxing
             else if (IsPreRecording && !IsRecordingVideo)
             {
-                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecordingVideo (file recording with mux)");
+                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecordingVideo (file recording with mux) [OVERLAP MODE]");
 
-                // CRITICAL: Stop and finalize the pre-recording encoder BEFORE starting live recording
+                // 1. GLOBAL TIMELINE: Capture current duration but DON'T stop pre-rec
+                // Pre-rec continues running until the swap - ZERO frames lost
+                // Live encoder will use the same _captureVideoStartTime, so timestamps are seamless
                 if (_captureVideoEncoder != null)
                 {
-                    Debug.WriteLine("[StartVideoRecording] Stopping pre-recording encoder to finalize file");
-
-                    // Stop frame capture first
-                    if (NativeControl is NativeCamera nativeCam)
-                    {
-                        nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
-                    }
-
-                    // Wait for in-flight frame to complete before stopping encoder
-                    // Prevents race condition where CaptureFrameCore still uses encoder being disposed
-                    while (System.Threading.Interlocked.CompareExchange(ref _frameInFlight, 0, 0) != 0)
-                    {
-                        await Task.Yield();
-                    }
-
-                    try
-                    {
-                        var preRecResult = await _captureVideoEncoder.StopAsync();
-                        Debug.WriteLine("[StartVideoRecording] Pre-recording encoder stopped and file finalized");
-
-                        // ✅ CRITICAL: Capture pre-recording file path AND duration from StopAsync result
-                        // The encoder wrote the file, so we must use ITS path, not generate our own!
-                        if (preRecResult != null && !string.IsNullOrEmpty(preRecResult.FilePath))
-                        {
-                            _preRecordingFilePath = preRecResult.FilePath;
-                            _preRecordingDurationTracked = _captureVideoEncoder.EncodingDuration;
-                            Debug.WriteLine($"[StartVideoRecording] Captured pre-recording file: {_preRecordingFilePath}");
-                            Debug.WriteLine($"[StartVideoRecording] Captured pre-recording duration: {_preRecordingDurationTracked.TotalSeconds:F2}s");
-                        }
-                        else
-                        {
-                            Debug.WriteLine($"[StartVideoRecording] WARNING: No pre-recording file path returned from encoder!");
-                            _preRecordingFilePath = null;
-                            _preRecordingDurationTracked = TimeSpan.Zero;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine($"[StartVideoRecording] Error stopping pre-recording encoder: {ex.Message}");
-                    }
-
-                    // CRITICAL: Unsubscribe event handlers before disposal to prevent memory leaks
-                    if (_captureVideoEncoder is AppleVideoToolboxEncoder appleEncPreRec && _encoderPreviewInvalidateHandler != null)
-                    {
-                        appleEncPreRec.PreviewAvailable -= _encoderPreviewInvalidateHandler;
-                    }
-                    _captureVideoEncoder?.Dispose();
-                    _captureVideoEncoder = null;
+                    _preRecordingDurationTracked = _captureVideoEncoder.EncodingDuration;
+                    Debug.WriteLine($"[StartVideoRecording] Pre-rec duration estimate: {_preRecordingDurationTracked.TotalSeconds:F3}s (still running until swap)");
                 }
-
-                // SAVE PRE-REC AUDIO before transition
-                // The circular buffer only keeps last N seconds, so we must save now
-                // IMPORTANT: Trim audio to match video duration for proper sync
+                else
+                {
+                    _preRecordingDurationTracked = TimeSpan.Zero;
+                }
+                
+                // 2. Process Audio (Save buffer, start writer)
+                // SAVE PRE-REC AUDIO before transition - DON'T TRIM YET
+                // Audio will be trimmed in background task AFTER video is finalized (for correct sync)
                 if (_audioBuffer != null && RecordAudio)
                 {
                     var allAudioSamples = _audioBuffer.GetAllSamples();
-                    Debug.WriteLine($"[StartVideoRecording] Raw audio buffer: {allAudioSamples?.Length ?? 0} samples");
+                    Debug.WriteLine($"[StartVideoRecording] Saving ALL {allAudioSamples?.Length ?? 0} audio samples (will trim after video is finalized)");
 
-                    // AUDIO-VIDEO SYNC FIX: Trim audio to match pre-rec video duration
-                    // Audio capture may start before video encoding, causing audio to be longer
-                    if (allAudioSamples != null && allAudioSamples.Length > 0 && _preRecordingDurationTracked.TotalSeconds > 0)
-                    {
-                        var videoDurationMs = _preRecordingDurationTracked.TotalMilliseconds;
-                        var lastSampleTimestamp = allAudioSamples[allAudioSamples.Length - 1].TimestampNs;
-                        var firstSampleTimestamp = allAudioSamples[0].TimestampNs;
-                        var audioDurationMs = (lastSampleTimestamp - firstSampleTimestamp) / 1_000_000.0;
-
-                        Debug.WriteLine($"[StartVideoRecording] Video duration: {videoDurationMs:F0}ms, Audio duration: {audioDurationMs:F0}ms");
-
-                        if (audioDurationMs > videoDurationMs + 50) // Audio is longer than video (+50ms tolerance)
-                        {
-                            // Calculate the cutoff timestamp - keep only the LAST (videoDuration) of audio
-                            var cutoffTimestampNs = lastSampleTimestamp - (long)(videoDurationMs * 1_000_000);
-
-                            // Find first sample at or after cutoff
-                            int startIndex = 0;
-                            for (int i = 0; i < allAudioSamples.Length; i++)
-                            {
-                                if (allAudioSamples[i].TimestampNs >= cutoffTimestampNs)
-                                {
-                                    startIndex = i;
-                                    break;
-                                }
-                            }
-
-                            if (startIndex > 0)
-                            {
-                                var trimmedLength = allAudioSamples.Length - startIndex;
-                                _preRecordedAudioSamples = new AudioSample[trimmedLength];
-                                Array.Copy(allAudioSamples, startIndex, _preRecordedAudioSamples, 0, trimmedLength);
-                                Debug.WriteLine($"[StartVideoRecording] SYNC FIX: Trimmed {startIndex} samples from start, keeping {trimmedLength} samples");
-                            }
-                            else
-                            {
-                                _preRecordedAudioSamples = allAudioSamples;
-                            }
-                        }
-                        else
-                        {
-                            _preRecordedAudioSamples = allAudioSamples;
-                        }
-                    }
-                    else
-                    {
-                        _preRecordedAudioSamples = allAudioSamples;
-                    }
-
-                    Debug.WriteLine($"[StartVideoRecording] Saved {_preRecordedAudioSamples?.Length ?? 0} pre-rec audio samples (after sync trim)");
+                    // Save ALL samples - trimming happens in background task after we know actual video duration
+                    _preRecordedAudioSamples = allAudioSamples;
 
                     // OOM-SAFE: Start streaming audio to file instead of linear buffer
-                    // This prevents memory growth for long recordings
                     var firstSample = _preRecordedAudioSamples?.FirstOrDefault();
                     int sampleRate = firstSample?.SampleRate ?? AudioSampleRate;
                     int channels = firstSample?.Channels ?? AudioChannels;
@@ -2082,10 +2016,11 @@ public partial class SkiaCamera
                         Debug.WriteLine("[StartVideoRecording] Warning: Failed to start streaming audio writer");
                     }
 
-                    // Clear the pre-rec buffer (samples are saved in _preRecordedAudioSamples)
+                    // Clear the pre-rec buffer
                     _audioBuffer = null;
                 }
 
+                // 3. Update State Flags
                 SetIsPreRecording(false);
                 SetIsRecordingVideo(true);
 
@@ -2093,14 +2028,103 @@ public partial class SkiaCamera
                 RecordingLockedRotation = DeviceRotation;
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
-                // Start recording to file (will be muxed with pre-recorded file later)
+                // 4. Start Live Recording (Overlap)
+                ICaptureVideoEncoder oldEncoderToStop = null;
+
                 if (UseCaptureVideoFlow && FrameProcessor != null)
                 {
-                    await StartCaptureVideoFlow();
+                    oldEncoderToStop = await StartCaptureVideoFlow(preserveCurrentEncoder: true);
                 }
                 else
                 {
+                    // Fallback to native (no overlap support implemented here yet)
+                    if (_captureVideoEncoder != null)
+                    {
+                         // Classic stop behavior for native path to avoid issues
+                         var preRecResult = await _captureVideoEncoder.StopAsync();
+                         if (preRecResult != null && !string.IsNullOrEmpty(preRecResult.FilePath))
+                        {
+                            _preRecordingFilePath = preRecResult.FilePath;
+                            _preRecordingDurationTracked = _captureVideoEncoder.EncodingDuration;
+                        }
+                         _captureVideoEncoder.Dispose();
+                         _captureVideoEncoder = null;
+                    }
                     await StartNativeVideoRecording();
+                }
+                
+                // 5. Background Stop of Old Encoder (if overlap used)
+                if (oldEncoderToStop != null)
+                {
+                    Debug.WriteLine("[StartVideoRecording] Spawning background task to stop/flush old encoder");
+
+                    _preRecFlushTask = Task.Run(async () =>
+                    {
+                        try
+                        {
+                            // Pre-rec already stopped accepting frames (StopAcceptingFrames called earlier)
+                            // Just flush the buffer to file
+                            var preRecResult = await oldEncoderToStop.StopAsync();
+                            Debug.WriteLine("[StartVideoRecording] BkTask: Old encoder stopped");
+
+                            // Capture result
+                            if (preRecResult != null && !string.IsNullOrEmpty(preRecResult.FilePath))
+                            {
+                                _preRecordingFilePath = preRecResult.FilePath;
+                                // Update with FINAL duration for muxer (from actual frame timestamps, not wall-clock)
+                                _preRecordingDurationTracked = oldEncoderToStop.EncodingDuration;
+                                Debug.WriteLine($"[StartVideoRecording] BkTask: Captured pre-recording file: {_preRecordingFilePath}");
+                                Debug.WriteLine($"[StartVideoRecording] BkTask: Final video duration: {_preRecordingDurationTracked.TotalSeconds:F3}s");
+
+                                // AUDIO SYNC FIX: Now trim audio to match ACTUAL video duration
+                                if (_preRecordedAudioSamples != null && _preRecordedAudioSamples.Length > 0)
+                                {
+                                    var videoDurationMs = _preRecordingDurationTracked.TotalMilliseconds;
+                                    var lastSampleTimestamp = _preRecordedAudioSamples[_preRecordedAudioSamples.Length - 1].TimestampNs;
+                                    var firstSampleTimestamp = _preRecordedAudioSamples[0].TimestampNs;
+                                    var audioDurationMs = (lastSampleTimestamp - firstSampleTimestamp) / 1_000_000.0;
+
+                                    Debug.WriteLine($"[StartVideoRecording] BkTask: Audio sync - Video: {videoDurationMs:F0}ms, Audio: {audioDurationMs:F0}ms");
+
+                                    if (audioDurationMs > videoDurationMs + 50)
+                                    {
+                                        // Trim audio from START to match video duration
+                                        var cutoffTimestampNs = lastSampleTimestamp - (long)(videoDurationMs * 1_000_000);
+                                        int startIndex = 0;
+                                        for (int i = 0; i < _preRecordedAudioSamples.Length; i++)
+                                        {
+                                            if (_preRecordedAudioSamples[i].TimestampNs >= cutoffTimestampNs)
+                                            {
+                                                startIndex = i;
+                                                break;
+                                            }
+                                        }
+
+                                        if (startIndex > 0)
+                                        {
+                                            var trimmedLength = _preRecordedAudioSamples.Length - startIndex;
+                                            var trimmedSamples = new AudioSample[trimmedLength];
+                                            Array.Copy(_preRecordedAudioSamples, startIndex, trimmedSamples, 0, trimmedLength);
+                                            _preRecordedAudioSamples = trimmedSamples;
+                                            Debug.WriteLine($"[StartVideoRecording] BkTask: AUDIO SYNC - Trimmed {startIndex} samples, keeping {trimmedLength} to match video");
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Debug.WriteLine($"[StartVideoRecording] BkTask WARNING: No file path returned!");
+                            }
+
+                            // Dispose
+                            oldEncoderToStop.Dispose();
+                            Debug.WriteLine("[StartVideoRecording] BkTask: Old encoder disposed");
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"[StartVideoRecording] BkTask Error: {ex}");
+                        }
+                    });
                 }
             }
             // Normal recording (no pre-recording)

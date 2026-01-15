@@ -54,6 +54,14 @@ namespace DrawnUi.Camera
         // PASSTHROUGH FIX: Track first live frame to eliminate gap between pre-rec and live
         private double _firstLiveFrameTimestamp = -1;  // -1 means not set yet
 
+        // OVERLAP FIX: Stop accepting frames to compression session when transitioning to live
+        // This freezes the pre-recording duration at the exact moment we capture it
+        private volatile bool _stopAcceptingPreRecFrames = false;
+
+        // SEAMLESS HANDOFF: Cutoff timestamp for pre-recording (set from first live frame timestamp)
+        // When set, pre-recording buffer will be pruned to only include frames up to this timestamp
+        private double _preRecordingCutoffTimestamp = -1;  // -1 means no cutoff (use all frames)
+
         // Skia composition surface
         private SKSurface _surface;
 
@@ -319,6 +327,8 @@ namespace DrawnUi.Camera
             _recordAudio = recordAudio;
             _deviceRotation = deviceRotation;
             _preRecordingDuration = TimeSpan.Zero;
+            _stopAcceptingPreRecFrames = false;  // Reset for new recording session
+            _preRecordingCutoffTimestamp = -1;   // Reset cutoff for new recording session
 
             // Prepare output directory
             Directory.CreateDirectory(Path.GetDirectoryName(_outputPath));
@@ -828,6 +838,34 @@ namespace DrawnUi.Camera
         }
 
         /// <summary>
+        /// OVERLAP FIX: Stop accepting new frames to the pre-recording compression session.
+        /// Call this BEFORE capturing EncodingDuration to freeze the pre-recording at exact duration.
+        /// The encoder will still flush existing buffered frames when StopAsync is called.
+        /// </summary>
+        public void StopAcceptingFrames()
+        {
+            _stopAcceptingPreRecFrames = true;
+            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] StopAcceptingFrames called - pre-recording frozen at {EncodingDuration.TotalSeconds:F3}s");
+        }
+
+        /// <summary>
+        /// Gets the timestamp of the first live frame received (used for seamless handoff).
+        /// Returns -1 if no live frame has been received yet.
+        /// </summary>
+        public double GetFirstLiveFrameTimestamp() => _firstLiveFrameTimestamp;
+
+        /// <summary>
+        /// SEAMLESS HANDOFF: Set the cutoff timestamp for pre-recording.
+        /// When StopAsync is called, the buffer will be pruned to only include frames up to this timestamp.
+        /// This allows pre-recording to continue until live starts, then cut exactly at the handoff point.
+        /// </summary>
+        public void SetPreRecordingCutoffTimestamp(double timestamp)
+        {
+            _preRecordingCutoffTimestamp = timestamp;
+            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording cutoff set to {timestamp:F3}s");
+        }
+
+        /// <summary>
         /// Begin a frame for Skia composition. Returns canvas to draw on.
         /// </summary>
         public IDisposable BeginFrame(TimeSpan timestamp, out SKCanvas canvas, out SKImageInfo info, int orientation)
@@ -1020,6 +1058,10 @@ namespace DrawnUi.Camera
 
         private async Task SubmitFrameToCompressionSession()
         {
+            // OVERLAP FIX: Skip frames if we've frozen pre-recording for transition
+            if (_stopAcceptingPreRecFrames)
+                return;
+
             // Zero-Copy Optimization:
             // If we are in Metal mode, _currentPixelBuffer already contains the rendered frame (GPU-resident).
             // We just submit it directly.
@@ -1169,27 +1211,28 @@ namespace DrawnUi.Camera
                 }
 
                 // Append to AVAssetWriter
-                // PASSTHROUGH FIX: Ensure continuous timestamps with no gap after pre-recording
-                // The first live frame must start at exactly _preRecordingDuration, not later
-                // This prevents Passthrough mode from filling gaps with frames from the start
+                // TIMESTAMP NORMALIZATION: Always normalize timestamps to start at 0
+                // This ensures clean files for Passthrough concatenation
                 double timestamp = _pendingTimestamp.TotalSeconds;
 
-                if (_preRecordingDuration > TimeSpan.Zero)
+                // Always track first frame for normalization
+                if (_firstLiveFrameTimestamp < 0)
                 {
-                    // Track the first live frame's actual timestamp to calculate the gap
-                    if (_firstLiveFrameTimestamp < 0)
-                    {
-                        _firstLiveFrameTimestamp = timestamp;
-                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] First live frame at {timestamp:F3}s, preRecDuration={_preRecordingDuration.TotalSeconds:F3}s, gap={timestamp:F3}s");
-                    }
-
-                    // Remove the gap: adjust timestamp so first frame is exactly at preRecordingDuration
-                    // Subsequent frames maintain their relative spacing
-                    double adjustedTimestamp = _preRecordingDuration.TotalSeconds + (timestamp - _firstLiveFrameTimestamp);
-                    timestamp = adjustedTimestamp;
+                    _firstLiveFrameTimestamp = timestamp;
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] First frame at {timestamp:F3}s (will normalize to 0)");
                 }
 
-                CMTime ts = CMTime.FromSeconds(timestamp, 1_000_000);
+                // Normalize to 0 (all files start at timestamp 0)
+                double normalizedTimestamp = timestamp - _firstLiveFrameTimestamp;
+
+                // If offset is set (non-overlap legacy mode), add it
+                if (_preRecordingDuration > TimeSpan.Zero)
+                {
+                    normalizedTimestamp += _preRecordingDuration.TotalSeconds;
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Non-overlap mode: adding offset {_preRecordingDuration.TotalSeconds:F3}s");
+                }
+
+                CMTime ts = CMTime.FromSeconds(normalizedTimestamp, 1_000_000);
 
                 if (!_pixelBufferAdaptor.AppendPixelBufferWithPresentationTime(pixelBuffer, ts))
                 {
@@ -1285,10 +1328,20 @@ namespace DrawnUi.Camera
 
                 if (bufferFrameCount > 0 && !string.IsNullOrEmpty(_preRecordingFilePath))
                 {
-                    // CRITICAL: Prune buffer to max duration BEFORE writing to file
-                    // This ensures we never write more than PreRecordDuration seconds
-                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Pruning buffer to max duration before writing...");
-                    _preRecordingBuffer.PruneToMaxDuration();
+                    // SEAMLESS HANDOFF: If cutoff timestamp is set (from first live frame),
+                    // prune buffer to only include frames up to that timestamp
+                    if (_preRecordingCutoffTimestamp > 0)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] SEAMLESS HANDOFF: Pruning buffer to cutoff timestamp {_preRecordingCutoffTimestamp:F3}s");
+                        _preRecordingBuffer.PruneToCutoffTimestamp(TimeSpan.FromSeconds(_preRecordingCutoffTimestamp));
+                    }
+                    else
+                    {
+                        // Fallback: Prune buffer to max duration BEFORE writing to file
+                        // This ensures we never write more than PreRecordDuration seconds
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Pruning buffer to max duration before writing...");
+                        _preRecordingBuffer.PruneToMaxDuration();
+                    }
 
                     System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Writing buffer to: {_preRecordingFilePath}");
                     // ARCHITECTURAL FIX: Video only - audio is handled at SkiaCamera level

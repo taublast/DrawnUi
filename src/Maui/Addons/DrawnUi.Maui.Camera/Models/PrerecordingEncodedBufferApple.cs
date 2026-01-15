@@ -621,6 +621,56 @@ namespace DrawnUi.Camera
         }
 
         /// <summary>
+        /// SEAMLESS HANDOFF: Prunes buffer to only include frames up to the specified cutoff timestamp.
+        /// This is used when transitioning from pre-recording to live - the cutoff is the first live frame timestamp.
+        /// Ensures first remaining frame is a keyframe for valid H.264 decoding.
+        /// </summary>
+        /// <param name="cutoffTimestamp">Remove all frames with timestamp >= this value</param>
+        public void PruneToCutoffTimestamp(TimeSpan cutoffTimestamp)
+        {
+            lock (_swapLock)
+            {
+                if (_frames.Count == 0)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[PreRecording] PruneToCutoffTimestamp: No frames to prune");
+                    return;
+                }
+
+                int beforePrune = _frames.Count;
+
+                // Remove frames at or after the cutoff timestamp
+                PruneFramesWithCleanup(f => f.Timestamp >= cutoffTimestamp);
+
+                // CRITICAL: Ensure first frame is a keyframe after pruning (from the start)
+                bool hasKeyFrame = _frames.Any(f => f.IsKeyFrame);
+                if (hasKeyFrame)
+                {
+                    while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
+                    {
+                        _frames[0].Data = null;
+                        _frames.RemoveAt(0);
+                    }
+                }
+
+                int afterPrune = _frames.Count;
+                int pruned = beforePrune - afterPrune;
+
+                if (_frames.Count > 0)
+                {
+                    var lastTs = _frames[_frames.Count - 1].Timestamp;
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[PreRecording] PruneToCutoffTimestamp: {beforePrune} -> {afterPrune} frames " +
+                        $"(pruned {pruned} frames at cutoff={cutoffTimestamp.TotalSeconds:F3}s, last frame now at {lastTs.TotalSeconds:F3}s)");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[PreRecording] PruneToCutoffTimestamp: WARNING: All frames pruned at cutoff={cutoffTimestamp.TotalSeconds:F3}s!");
+                }
+            }
+        }
+
+        /// <summary>
         /// Clears both buffers and resets state
         /// </summary>
         public void Clear()
