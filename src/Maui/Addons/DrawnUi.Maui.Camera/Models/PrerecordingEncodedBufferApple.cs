@@ -4,6 +4,7 @@ using CoreMedia;
 
 using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace DrawnUi.Camera
 {
@@ -413,6 +414,138 @@ namespace DrawnUi.Camera
 
             } // Lock released here
         }
+
+        /// <summary>
+        /// ZERO-ALLOCATION: Appends encoded H.264 frame directly from unmanaged memory pointer.
+        /// Eliminates temporary byte[] allocation (~135KB per frame at 30fps = ~4MB/sec saved).
+        /// </summary>
+        /// <param name="sourcePtr">Pointer to H.264 NAL unit data in unmanaged memory</param>
+        /// <param name="size">Size in bytes</param>
+        /// <param name="timestamp">Frame presentation time</param>
+        /// <param name="presentationTime">CMTime presentation timestamp</param>
+        /// <param name="duration">CMTime duration</param>
+        /// <param name="isKeyFrame">Optional hint if this is a keyframe</param>
+        public void AppendEncodedFrameDirect(IntPtr sourcePtr, int size, TimeSpan timestamp, CMTime presentationTime, CMTime duration, bool isKeyFrame = false)
+        {
+            if (_isDisposed || _frozen)
+            {
+                if (_frozen)
+                    System.Diagnostics.Debug.WriteLine($"[PreRecording] REJECTED: Buffer is frozen for processing!");
+                return;
+            }
+
+            if (sourcePtr == IntPtr.Zero)
+            {
+                System.Diagnostics.Debug.WriteLine($"[PreRecording] REJECTED: sourcePtr is null!");
+                return;
+            }
+
+            if (size == 0)
+            {
+                System.Diagnostics.Debug.WriteLine($"[PreRecording] REJECTED: size is 0!");
+                return;
+            }
+
+            lock (_swapLock)
+            {
+                // Get current buffer and state
+                byte[] currentBuffer = _currentBuffer == 0 ? _bufferA : _bufferB;
+                ref BufferState currentState = ref _currentBuffer == 0 ? ref _stateA : ref _stateB;
+
+                // Initialize StartTime on first append
+                if (currentState.BytesUsed == 0)
+                {
+                    currentState.StartTime = DateTime.UtcNow;
+                    System.Diagnostics.Debug.WriteLine($"[PreRecording] Initialized buffer {(char)('A' + _currentBuffer)} StartTime");
+                }
+
+                // Check if current buffer duration exceeded
+                TimeSpan elapsed = DateTime.UtcNow - currentState.StartTime;
+                if (elapsed > _maxDuration)
+                {
+                    // SWAP BUFFERS: Toggle to other buffer (atomic int toggle)
+                    _currentBuffer = 1 - _currentBuffer;
+
+                    byte[] nextBuffer = _currentBuffer == 0 ? _bufferA : _bufferB;
+                    ref BufferState nextState = ref _currentBuffer == 0 ? ref _stateA : ref _stateB;
+
+                    // Reset new active buffer
+                    nextState.BytesUsed = 0;
+                    nextState.FrameCount = 0;
+                    nextState.StartTime = DateTime.UtcNow;
+                    nextState.IsLocked = false;
+
+                    // Prune frames to keep only the last _maxDuration seconds based on video PTS timestamps
+                    if (_frames.Count > 0)
+                    {
+                        var lastFrameTimestamp = _frames[_frames.Count - 1].Timestamp;
+                        var cutoffTimestamp = lastFrameTimestamp - _maxDuration;
+                        int beforePrune = _frames.Count;
+
+                        PruneFramesWithCleanup(f => f.Timestamp < cutoffTimestamp);
+
+                        // CRITICAL: Ensure first frame is a keyframe after pruning
+                        while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
+                        {
+                            _frames.RemoveAt(0);
+                        }
+
+                        int afterPrune = _frames.Count;
+
+                        System.Diagnostics.Debug.WriteLine(
+                            $"[PreRecording] Swapped buffers. Active={(char)('A' + _currentBuffer)}, " +
+                            $"ElapsedInOldBuffer={elapsed.TotalSeconds:F2}s, " +
+                            $"Pruned frames: {beforePrune} -> {afterPrune} (kept last {_maxDuration.TotalSeconds:F1}s, first is KEYFRAME)");
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine(
+                            $"[PreRecording] Swapped buffers. Active={(char)('A' + _currentBuffer)}, " +
+                            $"ElapsedInOldBuffer={elapsed.TotalSeconds:F2}s, No frames to prune");
+                    }
+
+                    // Point to next buffer for append
+                    currentBuffer = nextBuffer;
+                    currentState = ref nextState;
+                }
+
+                // Ensure backing buffers large enough for this payload
+                int requiredBytes = currentState.BytesUsed + size;
+                EnsureCapacity(requiredBytes);
+                currentBuffer = _currentBuffer == 0 ? _bufferA : _bufferB;
+
+                if (currentState.BytesUsed + size > currentBuffer.Length)
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[PreRecording] Guard prevented buffer growth. Dropping frame. " +
+                        $"BytesUsed={currentState.BytesUsed}, FrameSize={size}");
+                    return;
+                }
+
+                // DIRECT COPY: Copy from unmanaged pointer directly to managed buffer
+                // This avoids allocating a temporary byte[] array
+                Marshal.Copy(sourcePtr, currentBuffer, currentState.BytesUsed, size);
+                currentState.BytesUsed += size;
+                currentState.FrameCount++;
+
+                // Detect if this is a keyframe (IDR frame) by checking H.264 NAL unit type
+                bool detectedKeyFrame = isKeyFrame || IsKeyFrameFromPointer(sourcePtr, size);
+
+                // ZERO-COPY: Store reference to circular buffer with CMTime
+                _frames.Add(new EncodedFrame
+                {
+                    SourceBufferIndex = _currentBuffer,
+                    Offset = currentState.BytesUsed - size, // Points to start of this frame
+                    Length = size,
+                    Timestamp = timestamp,
+                    PresentationTime = presentationTime,
+                    Duration = duration,
+                    AddedAt = DateTime.UtcNow,
+                    IsKeyFrame = detectedKeyFrame
+                });
+
+            } // Lock released here
+        }
 #endif
 
         /// <summary>
@@ -716,6 +849,24 @@ namespace DrawnUi.Camera
         }
 
         /// <summary>
+        /// Resets buffer for reuse: clears all data and unfreezes.
+        /// Call this before starting a new recording session with the same buffer instance.
+        /// Does NOT deallocate the underlying byte arrays (preserves pre-allocation).
+        /// </summary>
+        public void Reset()
+        {
+            lock (_swapLock)
+            {
+                _frozen = false;
+                _stateA = new BufferState { BytesUsed = 0, FrameCount = 0, StartTime = DateTime.UtcNow };
+                _stateB = new BufferState { BytesUsed = 0, FrameCount = 0, StartTime = DateTime.MinValue };
+                _currentBuffer = 0;
+                _frames.Clear();
+                System.Diagnostics.Debug.WriteLine("[PrerecordingEncodedBufferApple] Buffer reset for reuse (memory preserved)");
+            }
+        }
+
+        /// <summary>
         /// Detects if an H.264 frame is a keyframe (IDR) by checking NAL unit types
         /// </summary>
         private static bool IsKeyFrame(byte[] nalUnits, int size)
@@ -769,6 +920,76 @@ namespace DrawnUi.Camera
                     continue;
 
                 int nalType = nalUnits[nalHeaderIndex] & 0x1F;
+                if (nalType == 5)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Detects if an H.264 frame is a keyframe (IDR) by checking NAL unit types.
+        /// ZERO-ALLOCATION version that reads directly from unmanaged memory pointer.
+        /// </summary>
+        private static bool IsKeyFrameFromPointer(IntPtr nalUnits, int size)
+        {
+            if (nalUnits == IntPtr.Zero || size < 5)
+                return false;
+
+            // Try length-prefixed (AVCC) layout first
+            int offset = 0;
+            bool parsedLengthPrefixed = false;
+            while (offset + 4 <= size)
+            {
+                int nalLength = (Marshal.ReadByte(nalUnits, offset) << 24) |
+                                (Marshal.ReadByte(nalUnits, offset + 1) << 16) |
+                                (Marshal.ReadByte(nalUnits, offset + 2) << 8) |
+                                Marshal.ReadByte(nalUnits, offset + 3);
+
+                if (nalLength <= 0)
+                    break;
+
+                if (offset + 4 + nalLength > size)
+                    break;
+
+                parsedLengthPrefixed = true;
+                int nalHeaderIndex = offset + 4;
+                int nalType = Marshal.ReadByte(nalUnits, nalHeaderIndex) & 0x1F;
+                if (nalType == 5)
+                    return true;
+
+                offset += 4 + nalLength;
+            }
+
+            if (parsedLengthPrefixed)
+                return false;
+
+            // Fallback to Annex-B start-code search
+            for (int i = 0; i < size - 4; i++)
+            {
+                byte b0 = Marshal.ReadByte(nalUnits, i);
+                byte b1 = Marshal.ReadByte(nalUnits, i + 1);
+
+                if (b0 != 0 || b1 != 0)
+                    continue;
+
+                byte b2 = Marshal.ReadByte(nalUnits, i + 2);
+                byte b3 = Marshal.ReadByte(nalUnits, i + 3);
+
+                int nalHeaderIndex = -1;
+                if (b2 == 1)
+                {
+                    nalHeaderIndex = i + 3;
+                }
+                else if (b2 == 0 && b3 == 1)
+                {
+                    nalHeaderIndex = i + 4;
+                }
+
+                if (nalHeaderIndex <= 0 || nalHeaderIndex >= size)
+                    continue;
+
+                int nalType = Marshal.ReadByte(nalUnits, nalHeaderIndex) & 0x1F;
                 if (nalType == 5)
                     return true;
             }

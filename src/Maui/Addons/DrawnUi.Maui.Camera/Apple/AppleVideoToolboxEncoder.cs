@@ -299,6 +299,14 @@ namespace DrawnUi.Camera
         // Interface properties
         public bool IsPreRecordingMode { get; set; }
         public SkiaCamera ParentCamera { get; set; }
+
+        /// <summary>
+        /// Optional pre-allocated buffer owned by SkiaCamera.
+        /// When set, the encoder will use this buffer instead of creating a new one,
+        /// and will NOT dispose it (SkiaCamera manages its lifecycle).
+        /// </summary>
+        public PrerecordingEncodedBufferApple SharedPreRecordingBuffer { get; set; }
+
         public event EventHandler<TimeSpan> ProgressReported;
 
         public AppleVideoToolboxEncoder()
@@ -350,8 +358,19 @@ namespace DrawnUi.Camera
                 InitializeCompressionSession();
 
                 // Initialize circular buffer for storing encoded frames
-                var preRecordDuration = ParentCamera.PreRecordDuration;
-                _preRecordingBuffer = new PrerecordingEncodedBufferApple(preRecordDuration, _targetBitRate);
+                // Use shared buffer if provided (pre-allocated by SkiaCamera), otherwise create new
+                if (SharedPreRecordingBuffer != null)
+                {
+                    _preRecordingBuffer = SharedPreRecordingBuffer;
+                    _preRecordingBuffer.Reset(); // Clear data but keep memory allocated
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Using pre-allocated shared buffer (no allocation lag)");
+                }
+                else
+                {
+                    var preRecordDuration = ParentCamera.PreRecordDuration;
+                    _preRecordingBuffer = new PrerecordingEncodedBufferApple(preRecordDuration, _targetBitRate);
+                    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Created new buffer (may cause lag spike)");
+                }
 
                 // CRITICAL: Start recording immediately to buffer frames
                 _isRecording = true;
@@ -366,7 +385,7 @@ namespace DrawnUi.Camera
                 System.Diagnostics.Debug.WriteLine($"  Pre-recording file: {_preRecordingFilePath}");
                 System.Diagnostics.Debug.WriteLine($"  Live recording file: {_liveRecordingFilePath}");
                 System.Diagnostics.Debug.WriteLine($"  Final output file: {_outputPath}");
-                System.Diagnostics.Debug.WriteLine($"  Buffer duration: {preRecordDuration.TotalSeconds}s");
+                System.Diagnostics.Debug.WriteLine($"  Buffer duration: {ParentCamera.PreRecordDuration.TotalSeconds}s");
                 System.Diagnostics.Debug.WriteLine($"  Buffering frames to memory...");
             }
             else
@@ -595,23 +614,14 @@ namespace DrawnUi.Camera
                 if (result != CMBlockBufferError.None || dataPointer == IntPtr.Zero)
                     return;
 
-                // Copy H.264 bytes to managed array
-                byte[] h264Data = new byte[totalLength];
-                Marshal.Copy(dataPointer, h264Data, 0, (int)totalLength);
-
                 // Get timing information from sample buffer
                 var presentationTime = sampleBuffer.PresentationTimeStamp;
                 var duration = sampleBuffer.Duration;
                 var timestamp = TimeSpan.FromSeconds(presentationTime.Seconds);
 
-                // Log first few frames for diagnostics
-                //if (_preRecordingBuffer.GetFrameCount() < 3)
-                //{
-                //    System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Buffering frame #{_preRecordingBuffer.GetFrameCount() + 1}: PTS={presentationTime.Seconds:F3}s, Duration={duration.Seconds:F3}s, Size={h264Data.Length} bytes");
-                //}
-
-                // Append to buffer with full timing info
-                _preRecordingBuffer.AppendEncodedFrame(h264Data, h264Data.Length, timestamp, presentationTime, duration);
+                // ZERO-ALLOCATION: Copy directly from unmanaged pointer to circular buffer
+                // This eliminates ~135KB allocation per frame (4MB/sec at 30fps)
+                _preRecordingBuffer.AppendEncodedFrameDirect(dataPointer, (int)totalLength, timestamp, presentationTime, duration);
             }
             catch (Exception ex)
             {
@@ -704,7 +714,11 @@ namespace DrawnUi.Camera
                 // Step 2: Stop buffering to circular buffer (we'll switch to AVAssetWriter)
                 _compressionSession?.Dispose();
                 _compressionSession = null;
-                _preRecordingBuffer?.Dispose();
+                // Don't dispose if it's the shared buffer (owned by SkiaCamera)
+                if (_preRecordingBuffer != SharedPreRecordingBuffer)
+                {
+                    _preRecordingBuffer?.Dispose();
+                }
                 _preRecordingBuffer = null;
 
                 // Step 3: Initialize AVAssetWriter for live recording
@@ -1040,7 +1054,7 @@ namespace DrawnUi.Camera
                 if (_currentPixelBuffer != null)
                 {
                     _surface.Canvas.Flush();
-                    _encodingContext?.Flush(); // Ensure Metal commands are committed to CVPixelBuffer
+                    //_encodingContext?.Flush(); // Ensure Metal commands are committed to CVPixelBuffer
                 }
 
                 if (IsPreRecordingMode && _compressionSession != null)
@@ -1282,7 +1296,11 @@ namespace DrawnUi.Camera
             {
                 _compressionSession?.Dispose();
                 _compressionSession = null;
-                _preRecordingBuffer?.Dispose();
+                // Don't dispose if it's the shared buffer (owned by SkiaCamera)
+                if (_preRecordingBuffer != SharedPreRecordingBuffer)
+                {
+                    _preRecordingBuffer?.Dispose();
+                }
                 _preRecordingBuffer = null;
             }
 
@@ -1383,7 +1401,11 @@ namespace DrawnUi.Camera
                 // Clean up compression session and buffer
                 _compressionSession?.Dispose();
                 _compressionSession = null;
-                _preRecordingBuffer?.Dispose();
+                // Don't dispose if it's the shared buffer (owned by SkiaCamera)
+                if (_preRecordingBuffer != SharedPreRecordingBuffer)
+                {
+                    _preRecordingBuffer?.Dispose();
+                }
                 _preRecordingBuffer = null;
             }
 
@@ -1735,25 +1757,9 @@ namespace DrawnUi.Camera
                 videoTrack.PreferredTransform = compositionTransform;
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Set composition preferredTransform for deviceRotation={_deviceRotation}, dimensions={_width}x{_height}: xx={compositionTransform.xx}, xy={compositionTransform.xy}, yx={compositionTransform.yx}, yy={compositionTransform.yy}, tx={compositionTransform.x0}, ty={compositionTransform.y0}");
 
-                // CRITICAL BUG FIX: Create AVMutableVideoComposition with explicit renderSize
-                // Without this, AVAssetExportSession.PresetPassthrough may use default/preview dimensions
-                // This was causing 1920x1080 videos to be exported as 568x320 (preview size)
-                using var videoComposition = AVMutableVideoComposition.Create();
-                videoComposition.FrameDuration = new CMTime(1, _frameRate);
-                videoComposition.RenderSize = new CoreGraphics.CGSize(_width, _height);
-
-                var instruction = new AVMutableVideoCompositionInstruction
-                {
-                    TimeRange = new CMTimeRange { Start = CMTime.Zero, Duration = composition.Duration }
-                };
-                var layerInstruction = AVMutableVideoCompositionLayerInstruction.FromAssetTrack(videoTrack);
-                layerInstruction.SetTransform(compositionTransform, CMTime.Zero);
-                instruction.LayerInstructions = new[] { layerInstruction };
-                videoComposition.Instructions = new[] { instruction };
-
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Created video composition with renderSize={_width}x{_height}, frameDuration=1/{_frameRate}");
-
                 // Export composition to output file
+                // Using Passthrough for zero re-encoding (fast, no quality loss)
+                // Orientation is preserved via PreferredTransform metadata on the track
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Starting export to: {outputPath}");
                 if (File.Exists(outputPath))
                 {
@@ -1761,8 +1767,7 @@ namespace DrawnUi.Camera
                     System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Deleted existing output file");
                 }
 
-                // Use highest quality preset instead of Passthrough when we have video composition
-                using var exportSession = new AVAssetExportSession(composition, AVAssetExportSession.PresetHighestQuality);
+                using var exportSession = new AVAssetExportSession(composition, AVAssetExportSessionPreset.Passthrough);
                 if (exportSession == null)
                 {
                     System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] ERROR: Failed to create AVAssetExportSession");
@@ -1771,11 +1776,9 @@ namespace DrawnUi.Camera
 
                 exportSession.OutputUrl = NSUrl.FromFilename(outputPath);
                 exportSession.OutputFileType = AVFileTypes.Mpeg4.GetConstant();
-                exportSession.VideoComposition = videoComposition;
 
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Export session created:");
-                System.Diagnostics.Debug.WriteLine($"  Preset: {AVAssetExportSession.PresetHighestQuality}");
-                System.Diagnostics.Debug.WriteLine($"  VideoComposition: renderSize={videoComposition.RenderSize.Width}x{videoComposition.RenderSize.Height}");
+                System.Diagnostics.Debug.WriteLine($"  Preset: Passthrough (no re-encoding)");
                 System.Diagnostics.Debug.WriteLine($"  Output URL: {exportSession.OutputUrl}");
                 System.Diagnostics.Debug.WriteLine($"  Output file type: {exportSession.OutputFileType}");
                 System.Diagnostics.Debug.WriteLine($"  Supported file types: {string.Join(", ", exportSession.SupportedFileTypes ?? new string[0])}");
@@ -2369,7 +2372,11 @@ namespace DrawnUi.Camera
                 _compressionSession?.Dispose();
                 _compressionSession = null;
 
-                _preRecordingBuffer?.Dispose();
+                // Don't dispose if it's the shared buffer (owned by SkiaCamera)
+                if (_preRecordingBuffer != SharedPreRecordingBuffer)
+                {
+                    _preRecordingBuffer?.Dispose();
+                }
                 _preRecordingBuffer = null;
 
                 _metalCache?.Dispose();

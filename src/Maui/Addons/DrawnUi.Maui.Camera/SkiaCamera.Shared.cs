@@ -3172,7 +3172,16 @@ public partial class SkiaCamera : SkiaControl
             _maxPreRecordingFrames = Math.Max(1, (int)(PreRecordDuration.TotalSeconds * 30)); // Assume 30 fps for diagnostics
             Debug.WriteLine($"[InitializePreRecordingBuffer] Base path for encoder: {_preRecordingFilePath}");
         }
+
+        // Platform-specific buffer pre-allocation (to avoid lag spike on record button press)
+        EnsurePreRecordingBufferPreAllocated();
     }
+
+    /// <summary>
+    /// Platform-specific: Pre-allocate memory for pre-recording buffer to avoid lag spike when recording starts.
+    /// Implemented in SkiaCamera.Apple.cs for iOS/MacCatalyst.
+    /// </summary>
+    partial void EnsurePreRecordingBufferPreAllocated();
 
     #endregion
 

@@ -21,6 +21,10 @@ public partial class SkiaCamera
     private Task _preRecFlushTask;
     private AudioSample[] _preRecordedAudioSamples;  // Saved at pre-rec → live transition
 
+    // Pre-allocated buffer for pre-recording (avoids lag spike on record button press)
+    // Allocated once when EnablePreRecording=true, reused across recording sessions
+    private PrerecordingEncodedBufferApple _sharedPreRecordingBuffer;
+
     // Streaming audio writer for OOM-safe live recording (audio goes to file, not memory)
     private AVAssetWriter _liveAudioWriter;
     private AVAssetWriterInput _liveAudioInput;
@@ -28,6 +32,26 @@ public partial class SkiaCamera
     private long _liveAudioFirstTimestampNs = -1;
     private readonly object _liveAudioWriterLock = new object();
     private List<IntPtr> _liveAudioMemoryToFree;  // Memory to free after writer finishes
+
+    /// <summary>
+    /// iOS/MacCatalyst implementation: Pre-allocates the circular buffer for pre-recording.
+    /// Called when EnablePreRecording is set to true, before user presses record.
+    /// This eliminates the ~20MB allocation lag spike on record button press.
+    /// </summary>
+    partial void EnsurePreRecordingBufferPreAllocated()
+    {
+        if (_sharedPreRecordingBuffer == null)
+        {
+            // Default to 12 Mbps if we don't have encoder bitrate yet
+            long estimatedBitrate = 12_000_000;
+            _sharedPreRecordingBuffer = new PrerecordingEncodedBufferApple(PreRecordDuration, estimatedBitrate);
+            Debug.WriteLine($"[SkiaCamera.Apple] Pre-allocated shared pre-recording buffer: {PreRecordDuration.TotalSeconds}s @ ~{estimatedBitrate / 1_000_000}Mbps");
+        }
+        else
+        {
+            Debug.WriteLine("[SkiaCamera.Apple] Shared pre-recording buffer already allocated, reusing");
+        }
+    }
 
     public virtual void SetZoom(double value)
     {
@@ -375,6 +399,14 @@ public partial class SkiaCamera
         // Set parent reference and pre-recording mode
         appleEncoder.ParentCamera = this;
         appleEncoder.IsPreRecordingMode = IsPreRecording;
+
+        // Pass pre-allocated buffer if available (avoids lag spike on record start)
+        if (IsPreRecording && _sharedPreRecordingBuffer != null)
+        {
+            appleEncoder.SharedPreRecordingBuffer = _sharedPreRecordingBuffer;
+            Debug.WriteLine($"[StartCaptureVideoFlow] Using pre-allocated shared buffer (no allocation lag)");
+        }
+
         Debug.WriteLine($"[StartCaptureVideoFlow] iOS encoder initialized with IsPreRecordingMode={IsPreRecording}");
 
         // Always use raw camera frames for preview (PreviewProcessor only, not FrameProcessor)
