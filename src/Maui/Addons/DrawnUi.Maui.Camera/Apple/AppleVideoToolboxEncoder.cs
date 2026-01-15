@@ -990,6 +990,9 @@ namespace DrawnUi.Camera
             }
         }
 
+        private int _previewFrameCounter = 0;
+        private const int PREVIEW_FRAME_INTERVAL = 3; // Generate 2 out of 3 frames = 20fps from 30fps
+
         /// <summary>
         /// Submit the composed frame for encoding
         /// Routes to VTCompressionSession (pre-recording) or AVAssetWriter (normal recording)
@@ -1001,6 +1004,7 @@ namespace DrawnUi.Camera
 
             SKImage snapshot = null;
             CVPixelBuffer pixelBuffer = null;
+            bool shouldGeneratePreview = (System.Threading.Interlocked.Increment(ref _previewFrameCounter) % PREVIEW_FRAME_INTERVAL) != 0;
 
             try
             {
@@ -1014,48 +1018,47 @@ namespace DrawnUi.Camera
 
                     _surface.Canvas.Flush();
 
-                    // Create CPU-backed preview snapshot (downscaled to reduce memory)
-                    using var gpuSnap = _surface.Snapshot();
-                    if (gpuSnap != null)
+                    if (shouldGeneratePreview)
                     {
-                        //int pw = Math.Min(_width, 480);
-                        //int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
-
-                        int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
-                        int pw = Math.Min(_width, maxPreviewWidth);
-                        int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
-
-                        var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
-
-                        if (_previewSurface == null || _previewSurfaceInfo.Width != pInfo.Width || _previewSurfaceInfo.Height != pInfo.Height)
+                        // Create CPU-backed preview snapshot (downscaled to reduce memory)
+                        using var gpuSnap = _surface.Snapshot();
+                        if (gpuSnap != null)
                         {
-                            _previewSurface?.Dispose();
-                            _previewSurfaceInfo = pInfo;
-                            _previewSurface = SKSurface.Create(pInfo);
-                        }
-                        _previewSurface.Canvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
-                        snapshot = _previewSurface.Snapshot();
+                            //int pw = Math.Min(_width, 480);
+                            //int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
 
-                        lock (_previewLock)
-                        {
-                            _latestPreviewImage?.Dispose();
-                            _latestPreviewImage = snapshot;
-                            snapshot = null; // Transfer ownership
+                            int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                            int pw = Math.Min(_width, maxPreviewWidth);
+                            int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+
+                            var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
+
+                            if (_previewSurface == null || _previewSurfaceInfo.Width != pInfo.Width || _previewSurfaceInfo.Height != pInfo.Height)
+                            {
+                                _previewSurface?.Dispose();
+                                _previewSurfaceInfo = pInfo;
+                                _previewSurface = SKSurface.Create(pInfo);
+                            }
+                            _previewSurface.Canvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
+                            snapshot = _previewSurface.Snapshot();
+
+                            lock (_previewLock)
+                            {
+                                _latestPreviewImage?.Dispose();
+                                _latestPreviewImage = snapshot;
+                                snapshot = null; // Transfer ownership
+                            }
+
+                            PreviewAvailable?.Invoke(this, EventArgs.Empty);
                         }
-                        PreviewAvailable?.Invoke(this, EventArgs.Empty);
                     }
+
+
                 }
 
                 // ============================================================================
                 // ROUTE TO CORRECT ENCODER
                 // ============================================================================
-
-                // FLUSH GPU COMMANDS (Zero-Copy)
-                if (_currentPixelBuffer != null)
-                {
-                    _surface.Canvas.Flush();
-                    //_encodingContext?.Flush(); // Ensure Metal commands are committed to CVPixelBuffer
-                }
 
                 if (IsPreRecordingMode && _compressionSession != null)
                 {

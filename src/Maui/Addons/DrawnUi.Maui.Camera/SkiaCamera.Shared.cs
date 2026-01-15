@@ -1773,7 +1773,9 @@ public partial class SkiaCamera : SkiaControl
         return new SkiaImage()
         {
             LoadSourceOnFirstDraw = true,
-            //RescalingQuality = SKFilterQuality.None,
+#if IOS || ANDROID
+            RescalingQuality = SKFilterQuality.None, //reduce power consumption
+#endif
             CacheRescaledSource = false,
             HorizontalOptions = this.NeedAutoWidth ? LayoutOptions.Start : LayoutOptions.Fill,
             VerticalOptions = this.NeedAutoHeight ? LayoutOptions.Start : LayoutOptions.Fill,
