@@ -1833,14 +1833,17 @@ namespace DrawnUi.Camera
 
         private async Task WriteBufferedFramesToMp4Async(PrerecordingEncodedBufferApple buffer, string outputPath, CircularAudioBuffer audioBuffer = null)
         {
-            var frames = buffer.GetAllFrames();
-            if (frames == null || frames.Count == 0)
+            // CRITICAL: Freeze buffer to prevent race conditions during enumeration
+            buffer.Freeze();
+            
+            int frameCount = buffer.GetFrameCount();
+            if (frameCount == 0)
             {
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] No frames to write");
                 return;
             }
 
-            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Writing {frames.Count} buffered frames to MP4: {outputPath}");
+            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Writing {frameCount} buffered frames to MP4: {outputPath}");
 
             // Use a temporary file to avoid conflicts with existing file
             var tempPath = Path.Combine(Path.GetDirectoryName(outputPath), $"temp_{Guid.NewGuid():N}.mp4");
@@ -1935,9 +1938,14 @@ namespace DrawnUi.Camera
 
                 var audioSamples = audioBuffer?.GetAllSamples();
 
+                // Get streaming enumerable and first frame for timestamp offset
+                var framesEnumerable = buffer.GetFramesEnumerable();
+                var videoEnumerator = framesEnumerable.GetEnumerator();
+                bool hasMoreVideo = videoEnumerator.MoveNext();
+                
                 // CRITICAL: Get first frame's PTS to use as offset for adjusting timestamps to start from zero
                 // This is needed because after pruning, frames might start at PTS=5.0s instead of 0.0s
-                CMTime firstFramePts = frames.Count > 0 ? frames[0].PresentationTime : CMTime.Zero;
+                CMTime firstFramePts = hasMoreVideo ? videoEnumerator.Current.PresentationTime : CMTime.Zero;
                 long firstAudioNs = 0;
 
                 if (audioSamples != null && audioSamples.Length > 0)
@@ -1948,9 +1956,7 @@ namespace DrawnUi.Camera
 
                 int appendedCount = 0;
                 int frameIndex = 0;
-                int vIndex = 0;
                 int aIndex = 0;
-                int vCount = frames.Count;
                 int aCount = audioSamples?.Length ?? 0;
                 int audioWrittenCount = 0;
                 int audioFailedCount = 0;
@@ -1962,19 +1968,19 @@ namespace DrawnUi.Camera
                 // This assumes the buffer content is roughly synced by wall-clock or that strict sync isn't critical for pre-recording.
 
                 int loopGuard = 0;
-                while (vIndex < vCount || aIndex < aCount)
+                while (hasMoreVideo || aIndex < aCount)
                 {
                     loopGuard++;
                     if (loopGuard % 100 == 0) // Log heartbeat every 100 items processed
-                        System.Diagnostics.Debug.WriteLine($"[Debug] Process loop: V={vIndex}/{vCount}, A={aIndex}/{aCount}");
+                        System.Diagnostics.Debug.WriteLine($"[Debug] Process loop: V={frameIndex}, A={aIndex}/{aCount}");
 
                     bool writeVideo = false;
 
                     // Decision logic: Write video if it's earlier than next audio sample (normalized)
-                    if (vIndex < vCount && aIndex < aCount)
+                    if (hasMoreVideo && aIndex < aCount)
                     {
                         // Normalize Video to 0.0
-                        double vPos = (frames[vIndex].PresentationTime - firstFramePts).Seconds;
+                        double vPos = (videoEnumerator.Current.PresentationTime - firstFramePts).Seconds;
 
                         // Normalize Audio to 0.0 (Independent)
                         double aPos = (double)(audioSamples[aIndex].TimestampNs - firstAudioNs) / 1_000_000_000.0;
@@ -1982,7 +1988,7 @@ namespace DrawnUi.Camera
                         if (vPos <= aPos)
                             writeVideo = true;
                     }
-                    else if (vIndex < vCount)
+                    else if (hasMoreVideo)
                     {
                         writeVideo = true;
                     }
@@ -1990,14 +1996,14 @@ namespace DrawnUi.Camera
 
                     if (writeVideo)
                     {
-                        var (data, presentationTime, duration) = frames[vIndex];
-                        vIndex++;
+                        var (data, presentationTime, duration) = videoEnumerator.Current;
                         frameIndex++;
 
                         // Skip empty frames but keep indexing
                         if (data == null || data.Length == 0)
                         {
                             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame {frameIndex}: SKIPPED (no data)");
+                            hasMoreVideo = videoEnumerator.MoveNext();
                             continue;
                         }
 
@@ -2018,7 +2024,7 @@ namespace DrawnUi.Camera
                         if (blockBuffer == null || blockError != CMBlockBufferError.None)
                         {
                             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame {frameIndex}: Failed to create block buffer: {blockError}");
-                            // Cannot easily remove from list safely if exceptions happen, but it's fine to free later
+                            hasMoreVideo = videoEnumerator.MoveNext();
                             continue;
                         }
 
@@ -2027,7 +2033,7 @@ namespace DrawnUi.Camera
                             // Adjust timestamp to be relative to start (starts at 0)
                             var adjustedPts = CMTime.Subtract(presentationTime, firstFramePts);
 
-                            if (frameIndex == 1 || frameIndex == frames.Count || frameIndex % 30 == 0)
+                            if (frameIndex == 1 || frameIndex % 30 == 0)
                             {
                                 System.Diagnostics.Debug.WriteLine($"[Debug] Writing Video Frame {frameIndex}: PTS={adjustedPts.Seconds:F3}s");
                             }
@@ -2053,6 +2059,7 @@ namespace DrawnUi.Camera
                                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame {frameIndex}: Failed to create sample buffer: {sampleError}");
                                 blockBuffer.Dispose();
                                 Marshal.FreeHGlobal(unmanagedPtr);
+                                hasMoreVideo = videoEnumerator.MoveNext();
                                 continue;
                             }
 
@@ -2100,6 +2107,9 @@ namespace DrawnUi.Camera
                             // Do NOT free unmanagedPtr here - writer might still be using it!
                             // It will be freed in main finally block
                         }
+                        
+                        // Advance to next video frame
+                        hasMoreVideo = videoEnumerator.MoveNext();
                     }
                     else
                     {
@@ -2178,7 +2188,7 @@ namespace DrawnUi.Camera
                     }
                 }
 
-                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Write complete: Video {appendedCount}/{frames.Count}, Audio {audioWrittenCount}/{aCount} (failed: {audioFailedCount})");
+                System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Write complete: Video {appendedCount}/{frameCount}, Audio {audioWrittenCount}/{aCount} (failed: {audioFailedCount})");
 
                 if (audioInput != null)
                 {

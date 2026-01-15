@@ -18,10 +18,15 @@ namespace DrawnUi.Camera
     {
         /// <summary>
         /// Stores a single encoded frame with timing information
+        /// ZERO-COPY: References circular buffer instead of copying data
         /// </summary>
         private class EncodedFrame
         {
-            public byte[] Data;
+            // ZERO-COPY: Reference to circular buffer instead of copying
+            public int SourceBufferIndex;  // 0=A, 1=B
+            public int Offset;             // Where in buffer
+            public int Length;             // Size of frame data
+            
             public TimeSpan Timestamp;
             public DateTime AddedAt;
             public bool IsKeyFrame;  // Critical for pruning: must start with keyframe for valid H.264
@@ -68,6 +73,7 @@ namespace DrawnUi.Camera
         // Configuration
         private TimeSpan _maxDuration;      // Maximum duration per buffer (typically 5 seconds)
         private bool _isDisposed;
+        private volatile bool _frozen;      // Stop accepting new frames (for safe processing)
 
         /// <summary>
         /// Initializes the two-buffer system with pre-allocated buffers.
@@ -217,7 +223,6 @@ namespace DrawnUi.Camera
                         // CRITICAL: Ensure first frame is a keyframe after pruning
                         while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
                         {
-                            _frames[0].Data = null;
                             _frames.RemoveAt(0);
                         }
 
@@ -262,12 +267,12 @@ namespace DrawnUi.Camera
                 // Detect if this is a keyframe (IDR frame)
                 bool detectedKeyFrame = isKeyFrame || IsKeyFrame(nalUnits, size);
 
-                // Store frame metadata
-                byte[] frameCopy = new byte[size];
-                Buffer.BlockCopy(nalUnits, 0, frameCopy, 0, size);
+                // ZERO-COPY: Store reference to circular buffer instead of copying
                 _frames.Add(new EncodedFrame
                 {
-                    Data = frameCopy,
+                    SourceBufferIndex = _currentBuffer,
+                    Offset = currentState.BytesUsed - size, // Points to start of this frame
+                    Length = size,
                     Timestamp = timestamp,
                     AddedAt = DateTime.UtcNow,
                     IsKeyFrame = detectedKeyFrame
@@ -284,9 +289,10 @@ namespace DrawnUi.Camera
         {
             //System.Diagnostics.Debug.WriteLine($"[PreRecording] AppendEncodedFrame called: size={size}, timestamp={timestamp.TotalSeconds:F3}s, PTS={presentationTime.Seconds:F3}s");
 
-            if (_isDisposed)
+            if (_isDisposed || _frozen)
             {
-                System.Diagnostics.Debug.WriteLine($"[PreRecording] REJECTED: Buffer is disposed!");
+                if (_frozen)
+                    System.Diagnostics.Debug.WriteLine($"[PreRecording] REJECTED: Buffer is frozen for processing!");
                 return;
             }
 
@@ -344,7 +350,6 @@ namespace DrawnUi.Camera
                         // CRITICAL: Ensure first frame is a keyframe after pruning
                         while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
                         {
-                            _frames[0].Data = null;
                             _frames.RemoveAt(0);
                         }
 
@@ -389,14 +394,13 @@ namespace DrawnUi.Camera
                 // NAL unit type is in bits 0-4 of first byte: type 5 = IDR (keyframe)
                 bool detectedKeyFrame = isKeyFrame || IsKeyFrame(nalUnits, size);
 
-                // Store frame metadata with timing
-                byte[] frameCopy = new byte[size];
-                Buffer.BlockCopy(nalUnits, 0, frameCopy, 0, size);
-
+                // ZERO-COPY: Store reference to circular buffer with CMTime
                 int beforeAdd = _frames.Count;
                 _frames.Add(new EncodedFrame
                 {
-                    Data = frameCopy,
+                    SourceBufferIndex = _currentBuffer,
+                    Offset = currentState.BytesUsed - size, // Points to start of this frame
+                    Length = size,
                     Timestamp = timestamp,
                     PresentationTime = presentationTime,
                     Duration = duration,
@@ -518,19 +522,48 @@ namespace DrawnUi.Camera
 
 #if IOS || MACCATALYST
         /// <summary>
-        /// Gets all frames with timing information for writing to MP4
+        /// Freezes buffer (stops accepting new frames) to prepare for safe enumeration
+        /// MUST call before GetFramesEnumerable() to prevent race conditions
+        /// </summary>
+        public void Freeze()
+        {
+            _frozen = true;
+            System.Diagnostics.Debug.WriteLine("[PreRecording] Buffer FROZEN - no new frames accepted");
+        }
+
+        /// <summary>
+        /// Streams frames on-demand (zero-copy until enumeration)
+        /// CRITICAL: Call Freeze() before using this to prevent race conditions
+        /// </summary>
+        public IEnumerable<(byte[] Data, CMTime PresentationTime, CMTime Duration)> GetFramesEnumerable()
+        {
+            List<EncodedFrame> framesCopy;
+            lock (_swapLock)
+            {
+                // Copy frame metadata list (cheap - just references)
+                framesCopy = new List<EncodedFrame>(_frames);
+            }
+
+            // Now enumerate outside lock, reading data on-demand
+            foreach (var frame in framesCopy)
+            {
+                byte[] data = new byte[frame.Length];
+                byte[] sourceBuffer = frame.SourceBufferIndex == 0 ? _bufferA : _bufferB;
+                
+                // Copy frame data from circular buffer on-demand
+                Buffer.BlockCopy(sourceBuffer, frame.Offset, data, 0, frame.Length);
+                
+                yield return (data, frame.PresentationTime, frame.Duration);
+            }
+        }
+
+        /// <summary>
+        /// DEPRECATED: Use GetFramesEnumerable() instead for better memory efficiency
+        /// Kept for compatibility
         /// </summary>
         public List<(byte[] Data, CMTime PresentationTime, CMTime Duration)> GetAllFrames()
         {
-            lock (_swapLock)
-            {
-                var result = new List<(byte[], CMTime, CMTime)>(_frames.Count);
-                foreach (var frame in _frames)
-                {
-                    result.Add((frame.Data, frame.PresentationTime, frame.Duration));
-                }
-                return result;
-            }
+            return GetFramesEnumerable().ToList();
         }
 #endif
 
@@ -583,7 +616,6 @@ namespace DrawnUi.Camera
                     // CRITICAL: Ensure first frame is a keyframe after pruning
                     while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
                     {
-                        _frames[0].Data = null;
                         _frames.RemoveAt(0);
                     }
                 }
@@ -647,7 +679,6 @@ namespace DrawnUi.Camera
                 {
                     while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
                     {
-                        _frames[0].Data = null;
                         _frames.RemoveAt(0);
                     }
                 }
@@ -746,21 +777,12 @@ namespace DrawnUi.Camera
         }
 
         /// <summary>
-        /// Removes frames matching predicate and CLEARS their Data arrays to help GC.
+        /// Removes frames matching predicate.
         /// MUST be called while holding _swapLock.
+        /// ZERO-COPY: No data to cleanup since we only store references
         /// </summary>
         private void PruneFramesWithCleanup(Predicate<EncodedFrame> match)
         {
-            // First pass: null out Data arrays for frames that will be removed
-            foreach (var frame in _frames)
-            {
-                if (match(frame))
-                {
-                    frame.Data = null;
-                }
-            }
-
-            // Second pass: remove from list
             _frames.RemoveAll(match);
         }
 
@@ -770,11 +792,9 @@ namespace DrawnUi.Camera
             {
                 if (!_isDisposed)
                 {
-                    // CRITICAL: Null out all frame Data to help GC collect large byte arrays
-                    foreach (var frame in _frames)
-                    {
-                        frame.Data = null;
-                    }
+                    _frozen = true;
+                    
+                    // ZERO-COPY: Just clear references, no individual frame data to null
                     _frames.Clear();
 
                     // Clear buffer references
@@ -782,7 +802,7 @@ namespace DrawnUi.Camera
                     _bufferB = null;
                     _isDisposed = true;
 
-                    System.Diagnostics.Debug.WriteLine("[PrerecordingEncodedBufferApple] Disposed - all frame data cleared");
+                    System.Diagnostics.Debug.WriteLine("[PrerecordingEncodedBufferApple] Disposed - buffer cleared");
                 }
             }
         }
