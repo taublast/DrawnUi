@@ -1848,8 +1848,15 @@ namespace DrawnUi.Camera
             // Use a temporary file to avoid conflicts with existing file
             var tempPath = Path.Combine(Path.GetDirectoryName(outputPath), $"temp_{Guid.NewGuid():N}.mp4");
 
-            // Memory tracking to prevent use-after-free in async writer
-            var allocatedPointers = new List<IntPtr>();
+            // Single reusable unmanaged buffer for frame data
+            // Using AlwaysCopyData flag in CMBlockBuffer ensures data is copied,
+            // allowing us to reuse this buffer for each frame instead of allocating per-frame
+            const int MaxFrameSize = 512 * 1024; // 512 KB - should cover any H.264 frame
+            IntPtr reusableFrameBuffer = IntPtr.Zero;
+            int reusableBufferSize = MaxFrameSize;
+
+            // Memory tracking for audio samples (audio still needs per-sample allocation due to async processing)
+            var audioAllocatedPointers = new List<IntPtr>();
 
             AVAssetWriter writer = null;
             AVAssetWriterInput videoInput = null;
@@ -2007,18 +2014,35 @@ namespace DrawnUi.Camera
                             continue;
                         }
 
-                        // Create CMBlockBuffer from H.264 data
-                        var unmanagedPtr = Marshal.AllocHGlobal(data.Length);
-                        Marshal.Copy(data, 0, unmanagedPtr, data.Length);
-                        allocatedPointers.Add(unmanagedPtr);
+                        // Create CMBlockBuffer from H.264 data using reusable buffer
+                        // Lazy allocation of reusable buffer
+                        if (reusableFrameBuffer == IntPtr.Zero)
+                        {
+                            reusableFrameBuffer = Marshal.AllocHGlobal(reusableBufferSize);
+                        }
 
+                        // Resize if frame is larger than current buffer (rare case for very large keyframes)
+                        if (data.Length > reusableBufferSize)
+                        {
+                            Marshal.FreeHGlobal(reusableFrameBuffer);
+                            reusableBufferSize = data.Length + 64 * 1024; // Add 64KB headroom
+                            reusableFrameBuffer = Marshal.AllocHGlobal(reusableBufferSize);
+                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Resized reusable buffer to {reusableBufferSize / 1024}KB for frame {frameIndex}");
+                        }
+
+                        // Copy frame data to reusable buffer
+                        Marshal.Copy(data, 0, reusableFrameBuffer, data.Length);
+
+                        // Use AlwaysCopyData flag (value=2) to force CMBlockBuffer to copy the data internally
+                        // This allows us to safely reuse reusableFrameBuffer for the next frame
+                        const CMBlockBufferFlags AlwaysCopyDataFlag = (CMBlockBufferFlags)2;
                         var blockBuffer = CMBlockBuffer.FromMemoryBlock(
-                            unmanagedPtr,
+                            reusableFrameBuffer,
                             (nuint)data.Length,
                             null,
                             0,
                             (nuint)data.Length,
-                            CMBlockBufferFlags.AssureMemoryNow,
+                            AlwaysCopyDataFlag | CMBlockBufferFlags.AssureMemoryNow,
                             out var blockError);
 
                         if (blockBuffer == null || blockError != CMBlockBufferError.None)
@@ -2058,7 +2082,7 @@ namespace DrawnUi.Camera
                             {
                                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame {frameIndex}: Failed to create sample buffer: {sampleError}");
                                 blockBuffer.Dispose();
-                                Marshal.FreeHGlobal(unmanagedPtr);
+                                // Note: reusableFrameBuffer is NOT freed here - it will be reused for next frame
                                 hasMoreVideo = videoEnumerator.MoveNext();
                                 continue;
                             }
@@ -2104,8 +2128,8 @@ namespace DrawnUi.Camera
                         finally
                         {
                             blockBuffer.Dispose();
-                            // Do NOT free unmanagedPtr here - writer might still be using it!
-                            // It will be freed in main finally block
+                            // reusableFrameBuffer is NOT freed here - it's reused for next frame
+                            // and freed once at the end in the main finally block
                         }
                         
                         // Advance to next video frame
@@ -2117,7 +2141,7 @@ namespace DrawnUi.Camera
                         var sample = audioSamples[aIndex];
                         // Do NOT increment aIndex yet
 
-                        using var sBuf = CreateSampleBuffer(sample, allocatedPointers);
+                        using var sBuf = CreateSampleBuffer(sample, audioAllocatedPointers);
                         if (sBuf != null)
                         {
                             // Create timing relative to First Audio (starts at 0)
@@ -2291,12 +2315,19 @@ namespace DrawnUi.Camera
                 videoInput?.Dispose();
                 writer?.Dispose();
 
-                // Free all tracked allocations
-                foreach (var ptr in allocatedPointers)
+                // Free the single reusable video buffer
+                if (reusableFrameBuffer != IntPtr.Zero)
+                {
+                    Marshal.FreeHGlobal(reusableFrameBuffer);
+                    reusableFrameBuffer = IntPtr.Zero;
+                }
+
+                // Free audio allocations (these still need per-sample allocation due to async writer)
+                foreach (var ptr in audioAllocatedPointers)
                 {
                     Marshal.FreeHGlobal(ptr);
                 }
-                allocatedPointers.Clear();
+                audioAllocatedPointers.Clear();
             }
         }
 
