@@ -870,7 +870,10 @@ namespace DrawnUi.Camera
         /// </summary>
         public IDisposable BeginFrame(TimeSpan timestamp, out SKCanvas canvas, out SKImageInfo info, int orientation)
         {
-            lock (_frameLock)
+            // Acquire lock preventing StopAsync from disposing surface while we draw
+            System.Threading.Monitor.Enter(_frameLock);
+
+            try
             {
                 _pendingTimestamp = timestamp;
 
@@ -961,7 +964,15 @@ namespace DrawnUi.Camera
                 canvas.Clear(SKColors.Transparent);
                 info = _info;
 
-                return new FrameScope();
+                // Return scope that holds the lock until disposed
+                // This ensures the lock is held while caller draws on the canvas
+                return new FrameScope(_frameLock);
+            }
+            catch
+            {
+                // If setting up frame fails, release lock immediately
+                System.Threading.Monitor.Exit(_frameLock);
+                throw;
             }
         }
 
@@ -1390,18 +1401,21 @@ namespace DrawnUi.Camera
             catch { }
             finally
             {
-                _pixelBufferAdaptor = null;
-                _videoInput?.Dispose(); _videoInput = null;
-                _writer?.Dispose(); _writer = null;
-
-                lock (_previewLock)
+                lock (_frameLock)
                 {
-                    _latestPreviewImage?.Dispose();
-                    _latestPreviewImage = null;
-                }
+                    _pixelBufferAdaptor = null;
+                    _videoInput?.Dispose(); _videoInput = null;
+                    _writer?.Dispose(); _writer = null;
 
-                _surface?.Dispose(); _surface = null;
-                _previewSurface?.Dispose(); _previewSurface = null;
+                    lock (_previewLock)
+                    {
+                        _latestPreviewImage?.Dispose();
+                        _latestPreviewImage = null;
+                    }
+
+                    _surface?.Dispose(); _surface = null;
+                    _previewSurface?.Dispose(); _previewSurface = null;
+                }
             }
 
             // If pre-recording mode: concatenate pre-recording + live recording → final output
@@ -2376,7 +2390,17 @@ namespace DrawnUi.Camera
 
         public sealed class FrameScope : IDisposable
         {
-            public void Dispose() { }
+            private readonly object _lockObj;
+
+            public FrameScope(object lockObj)
+            {
+                _lockObj = lockObj;
+            }
+
+            public void Dispose()
+            {
+                System.Threading.Monitor.Exit(_lockObj);
+            }
         }
     }
 }
