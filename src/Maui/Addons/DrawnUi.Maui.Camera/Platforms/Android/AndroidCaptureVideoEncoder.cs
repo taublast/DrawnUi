@@ -85,6 +85,13 @@ namespace DrawnUi.Camera
         private TimeSpan _preRecordingDuration = TimeSpan.Zero;
         private TimeSpan _firstEncodedFrameOffset = TimeSpan.MinValue;  // Offset to subtract from all frames
 
+        /// <summary>
+        /// Optional pre-allocated buffer provided by SkiaCamera.
+        /// When set, encoder will reuse this buffer instead of allocating a new one,
+        /// eliminating the ~27MB allocation lag spike when pre-recording starts.
+        /// </summary>
+        public PrerecordingEncodedBuffer SharedPreRecordingBuffer { get; set; }
+
         // EGL / GL / Skia
         private EGLDisplay _eglDisplay = EGL14.EglNoDisplay;
         private EGLContext _eglContext = EGL14.EglNoContext;
@@ -348,10 +355,19 @@ namespace DrawnUi.Camera
             // Initialize based on mode (mirrors iOS)
             if (IsPreRecordingMode && ParentCamera != null)
             {
-                // Pre-recording mode: Create new buffer (size may differ between sessions)
-                _preRecordingBuffer?.Dispose();
-                var preRecordDuration = ParentCamera.PreRecordDuration;
-                _preRecordingBuffer = new PrerecordingEncodedBuffer(preRecordDuration);
+                // Pre-recording mode: Use shared buffer if available, else allocate new one
+                if (SharedPreRecordingBuffer != null)
+                {
+                    _preRecordingBuffer = SharedPreRecordingBuffer;
+                    _preRecordingBuffer.Reset();
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Using pre-allocated shared buffer (no allocation lag)");
+                }
+                else
+                {
+                    _preRecordingBuffer?.Dispose();
+                    var preRecordDuration = ParentCamera.PreRecordDuration;
+                    _preRecordingBuffer = new PrerecordingEncodedBuffer(preRecordDuration);
+                }
 
                 // CRITICAL: Start recording immediately to buffer frames (mirrors iOS)
                 _isRecording = true;
@@ -363,7 +379,7 @@ namespace DrawnUi.Camera
 
                 System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Pre-recording mode initialized and started:");
                 System.Diagnostics.Debug.WriteLine($"  Final output file: {_outputPath}");
-                System.Diagnostics.Debug.WriteLine($"  Buffer duration: {preRecordDuration.TotalSeconds}s");
+                System.Diagnostics.Debug.WriteLine($"  Buffer duration: {ParentCamera.PreRecordDuration.TotalSeconds}s");
                 System.Diagnostics.Debug.WriteLine($"  Buffering frames to memory...");
 
                 // CRITICAL: Request FIRST keyframe immediately so buffer starts with I-frame!
@@ -1482,7 +1498,11 @@ namespace DrawnUi.Camera
 
             if (IsPreRecordingMode && _preRecordingBuffer != null && _videoCodec != null)
             {
-                _preRecordingBuffer?.Dispose();
+                // Only dispose if not a shared buffer (SkiaCamera owns shared buffers)
+                if (_preRecordingBuffer != SharedPreRecordingBuffer)
+                {
+                    _preRecordingBuffer?.Dispose();
+                }
                 _preRecordingBuffer = null;
             }
 
@@ -1569,7 +1589,11 @@ namespace DrawnUi.Camera
                     }
                 }
 
-                _preRecordingBuffer?.Dispose();
+                // Only dispose if not a shared buffer (SkiaCamera owns shared buffers)
+                if (_preRecordingBuffer != SharedPreRecordingBuffer)
+                {
+                    _preRecordingBuffer?.Dispose();
+                }
                 _preRecordingBuffer = null;
             }
 
@@ -2122,7 +2146,13 @@ namespace DrawnUi.Camera
             }
             DisposeGpuCameraPath();
             _progressTimer?.Dispose();
-            _preRecordingBuffer?.Dispose();
+
+            // Only dispose if not a shared buffer (SkiaCamera owns shared buffers)
+            if (_preRecordingBuffer != SharedPreRecordingBuffer)
+            {
+                _preRecordingBuffer?.Dispose();
+            }
+            _preRecordingBuffer = null;
 
             // Dispose cached Java objects to avoid native memory leaks
             _drainBufferInfo?.Dispose();

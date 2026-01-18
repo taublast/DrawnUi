@@ -467,6 +467,10 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     .OnTapped(me =>
                                     {
                                         CameraControl.UseCaptureVideoFlow = !CameraControl.UseCaptureVideoFlow;
+         
+                                    })
+                                    .ObserveProperty(()=>CameraControl, nameof(CameraControl.UseCaptureVideoFlow), me =>
+                                    {
                                         me.Text = CameraControl.UseCaptureVideoFlow ? "Capture Flow: ON" : "Capture Flow: OFF";
                                         me.BackgroundColor = CameraControl.UseCaptureVideoFlow ? Colors.Green : Colors.DarkGray;
                                     })
@@ -570,8 +574,8 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         };
 
         // Configure camera for capture video flow testing
-        CameraControl.UseCaptureVideoFlow = true; // Enable capture video flow
-        CameraControl.VideoQuality = VideoQuality.High;
+        CameraControl.UseCaptureVideoFlow = false; // Enable capture video flow
+        CameraControl.VideoQuality = VideoQuality.Standard;
         CameraControl.RecordAudio = true;
 
         CameraControl.FrameProcessor = (frame) =>

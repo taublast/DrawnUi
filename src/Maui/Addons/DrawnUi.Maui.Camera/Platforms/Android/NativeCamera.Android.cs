@@ -1145,10 +1145,10 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
                     int maxPreviewWidth, maxPreviewHeight;
 
- 
-                        maxPreviewWidth = MaxPreviewWidth;
-                        maxPreviewHeight = MaxPreviewHeight;
- 
+
+                    maxPreviewWidth = MaxPreviewWidth;
+                    maxPreviewHeight = MaxPreviewHeight;
+
 
                     #region STILL PHOTO
 
@@ -1815,13 +1815,16 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         }
     }
 
+    /// <summary>
+    /// For PHOTO and VIDEO
+    /// </summary>
     public void CreateCameraPreviewSession()
     {
         try
         {
             mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
             // Ensure consistent FOV: disable video stabilization for preview
-            try { mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode, (int)ControlVideoStabilizationMode.Off); } catch { }
+            // try { mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode, (int)ControlVideoStabilizationMode.Off); } catch { }
 
             // Apply current flash mode to preview request builder
             if (mFlashSupported)
@@ -1893,7 +1896,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             // FPS is controlled by encoder frame pacing, not camera capture rate
 
             // Disable video stabilization for consistent FOV
-            try { mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode, (int)ControlVideoStabilizationMode.Off); } catch { }
+            //   try { mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode, (int)ControlVideoStabilizationMode.Off); } catch { }
 
             // Apply flash mode
             if (mFlashSupported)
@@ -1929,6 +1932,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             // Target both surfaces - camera outputs to encoder AND preview
             mPreviewRequestBuilder.AddTarget(_gpuCameraSurface);
             mPreviewRequestBuilder.AddTarget(mImageReaderPreview.Surface);
+
 
             System.Diagnostics.Debug.WriteLine($"[NativeCamera] Creating GPU camera session with {surfaces.Count} surfaces - GPU + ImageReader preview");
 
@@ -2844,29 +2848,30 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             surfaces.Add(recorderSurface);
 
             // Create capture request for video recording
-            mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
+            mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Record);
             // Ensure consistent FOV during recording: explicitly disable video stabilization
-            try
-            {
-                mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode,
-                    (int)ControlVideoStabilizationMode.Off);
-            }
-            catch
-            {
+            //try
+            //{
+            //    mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode,
+            //        (int)ControlVideoStabilizationMode.Off);
+            //}
+            //catch
+            //{
 
-            }
+            //}
 
             mPreviewRequestBuilder.AddTarget(mImageReaderPreview.Surface);
             mPreviewRequestBuilder.AddTarget(recorderSurface);
 
+            var activity = Platform.CurrentActivity;
+            var manager = (CameraManager)activity.GetSystemService(Context.CameraService);
+            var characteristics = manager.GetCameraCharacteristics(CameraId);
+
             // Set FPS range
             try
             {
-                var activity = Platform.CurrentActivity;
-                var manager = (CameraManager)activity.GetSystemService(Context.CameraService);
-                var characteristics = manager.GetCameraCharacteristics(CameraId);
                 var ranges = characteristics.Get(CameraCharacteristics.ControlAeAvailableTargetFpsRanges).ToArray<Android.Util.Range>();
-                
+
                 // Find best range for _recordingFps
                 // Prefer fixed range [fps, fps]
                 var bestRange = ranges.FirstOrDefault(r => (int)r.Lower == _recordingFps && (int)r.Upper == _recordingFps);
@@ -2875,7 +2880,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     // Fallback to variable range ending at fps
                     bestRange = ranges.FirstOrDefault(r => (int)r.Upper == _recordingFps);
                 }
-                
+
                 if (bestRange != null)
                 {
                     mPreviewRequestBuilder.Set(CaptureRequest.ControlAeTargetFpsRange, bestRange);
@@ -2886,6 +2891,24 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             {
                 Debug.WriteLine($"[NativeCameraAndroid] Error setting recording FPS range: {ex.Message}");
             }
+
+            #region SET EV
+
+            var stepRational = (Android.Util.Rational)characteristics.Get(CameraCharacteristics.ControlAeCompensationStep);
+
+            // Convert to float / double safely
+            float exposureStep = stepRational.FloatValue();  // or stepRational.DoubleValue
+
+            // Now calculate the integer value needed for a desired EV adjustment
+            // Example: you want to apply +3 EV during recording
+            int desiredEv = 0;  // or 2, 4, etc. — test what matches your preview brightness
+            int compensationValue = (int)Math.Round(desiredEv / exposureStep);
+
+            // Apply it in the recording builder (StartVideoRecording)
+            mPreviewRequestBuilder.Set(CaptureRequest.ControlAeExposureCompensation, compensationValue);
+            Debug.WriteLine($"[Recording] Applied exposure compensation: {compensationValue} (step={exposureStep:F3}, desired ~{desiredEv} EV)");
+
+            #endregion
 
             // Configure flash for video recording
             if (mFlashSupported)

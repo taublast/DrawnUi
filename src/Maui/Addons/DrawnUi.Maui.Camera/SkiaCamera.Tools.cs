@@ -1,6 +1,7 @@
 ﻿global using DrawnUi.Draw;
 global using SkiaSharp;
 using System.Diagnostics;
+using AppoMobi.Specials;
 
 #if IOS || MACCATALYST
 using Foundation;
@@ -753,7 +754,8 @@ public partial class SkiaCamera : SkiaControl
             {
                 return new BrightnessResult
                 {
-                    Success = false, ErrorMessage = "Could not capture frame for fallback analysis"
+                    Success = false,
+                    ErrorMessage = "Could not capture frame for fallback analysis"
                 };
             }
 
@@ -785,7 +787,8 @@ public partial class SkiaCamera : SkiaControl
 
                     return new BrightnessResult
                     {
-                        Success = true, Brightness = Math.Min(brightness, 200000)
+                        Success = true,
+                        Brightness = Math.Min(brightness, 200000)
                     }; // Cap at reasonable maximum
                 }
                 else
@@ -993,7 +996,7 @@ public partial class SkiaCamera : SkiaControl
 
     private async Task<Photos.PHAssetCollection> FindOrCreateAlbumAsync(string albumName)
     {
-        try 
+        try
         {
             // 1. Find existing
             var fetchOptions = new Photos.PHFetchOptions();
@@ -1021,12 +1024,12 @@ public partial class SkiaCamera : SkiaControl
 
             if (await tcs.Task)
             {
-                 var fetchOptions2 = new Photos.PHFetchOptions();
-                 fetchOptions2.Predicate = Foundation.NSPredicate.FromFormat($"localIdentifier = '{albumLocalId}'");
-                 var collection2 = Photos.PHAssetCollection.FetchAssetCollections(Photos.PHAssetCollectionType.Album, Photos.PHAssetCollectionSubtype.Any, fetchOptions2);
-                 return collection2.FirstObject as Photos.PHAssetCollection;
+                var fetchOptions2 = new Photos.PHFetchOptions();
+                fetchOptions2.Predicate = Foundation.NSPredicate.FromFormat($"localIdentifier = '{albumLocalId}'");
+                var collection2 = Photos.PHAssetCollection.FetchAssetCollections(Photos.PHAssetCollectionType.Album, Photos.PHAssetCollectionSubtype.Any, fetchOptions2);
+                return collection2.FirstObject as Photos.PHAssetCollection;
             }
-        } 
+        }
         catch (Exception ex)
         {
             Debug.WriteLine($"[SkiaCamera] FindOrCreateAlbumAsync error: {ex}");
@@ -1095,8 +1098,12 @@ public partial class SkiaCamera : SkiaControl
 
                     if (deleteOriginal)
                     {
-                        try { File.Delete(privateVideoPath); }
-                        catch (Exception ex) { Debug.WriteLine($"Delete failed: {ex.Message}"); }
+                        //delay to make sure ios gallery picks all up
+                        Tasks.StartDelayed(TimeSpan.FromSeconds(2), () =>
+                        {
+                            try { File.Delete(privateVideoPath); }
+                            catch (Exception ex) { Debug.WriteLine($"Delete failed: {ex.Message}"); }
+                        });
                     }
 
                     Debug.WriteLine($"Video saved successfully. LocalIdentifier: {localId}");

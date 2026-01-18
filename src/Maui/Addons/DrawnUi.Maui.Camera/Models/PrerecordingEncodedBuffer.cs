@@ -598,6 +598,24 @@ public class PrerecordingEncodedBuffer : IDisposable
     }
 
     /// <summary>
+    /// Resets the buffer for reuse without reallocating memory.
+    /// Used by shared buffer pattern to avoid allocation lag when starting pre-recording.
+    /// </summary>
+    public void Reset()
+    {
+        lock (_swapLock)
+        {
+            _isDisposed = false;
+            _stateA = new BufferState { BytesUsed = 0, FrameCount = 0, StartTime = DateTime.UtcNow, IsLocked = false };
+            _stateB = new BufferState { BytesUsed = 0, FrameCount = 0, StartTime = DateTime.MinValue, IsLocked = false };
+            _currentBuffer = 0;
+            _frames.Clear();
+
+            System.Diagnostics.Debug.WriteLine($"[PrerecordingEncodedBuffer] Reset for reuse (no allocation)");
+        }
+    }
+
+    /// <summary>
     /// Detects if an H.264 frame is a keyframe (IDR) by checking NAL unit types
     /// </summary>
     private static bool IsKeyFrame(byte[] nalUnits, int size)

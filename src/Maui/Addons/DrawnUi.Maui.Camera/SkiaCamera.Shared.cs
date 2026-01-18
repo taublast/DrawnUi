@@ -1269,7 +1269,7 @@ public partial class SkiaCamera : SkiaControl
 
                     await NativeControl.StopVideoRecording();
 
-                    // Note: IsRecordingVideo will be set to false by the VideoRecordingSuccess/Failed callbacks
+                    IsBusy = false;
                 }
 
                 SetIsPreRecording(false);

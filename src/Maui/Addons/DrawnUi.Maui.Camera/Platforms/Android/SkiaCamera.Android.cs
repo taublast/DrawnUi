@@ -10,7 +10,26 @@ namespace DrawnUi.Camera;
 
 public partial class SkiaCamera
 {
-    
+    /// <summary>
+    /// Pre-allocated shared buffer for pre-recording.
+    /// Allocated once when EnablePreRecording=true, reused across recording sessions.
+    /// Eliminates ~27MB allocation lag spike when pressing record.
+    /// </summary>
+    private PrerecordingEncodedBuffer _sharedPreRecordingBuffer;
+
+    /// <summary>
+    /// Android implementation: Pre-allocates the shared buffer for pre-recording.
+    /// Called once when EnablePreRecording is set to true.
+    /// </summary>
+    partial void EnsurePreRecordingBufferPreAllocated()
+    {
+        if (_sharedPreRecordingBuffer == null)
+        {
+            _sharedPreRecordingBuffer = new PrerecordingEncodedBuffer(PreRecordDuration);
+            System.Diagnostics.Debug.WriteLine($"[SkiaCameraAndroid] Pre-allocated shared buffer for pre-recording ({PreRecordDuration.TotalSeconds}s)");
+        }
+    }
+
     public virtual void SetZoom(double value)
     {
         // Hardware zoom not supported on Android currently, using manual scaling
@@ -631,13 +650,16 @@ public partial class SkiaCamera
             }
             ClearPreRecordingBuffer();
 
-            // Update state and notify success
-            SetIsRecordingVideo(false);
-            IsBusy = false; // Release busy state after successful processing
+
             if (capturedVideo != null)
             {
                 OnVideoRecordingSuccess(capturedVideo);
             }
+
+            // Update state and notify success
+            SetIsRecordingVideo(false);
+
+            IsBusy = false; // Release busy state after successful processing
         }
         catch (Exception ex)
         {
@@ -755,12 +777,24 @@ public partial class SkiaCamera
 
     private async Task StartCaptureVideoFlow() //OK
     {
+        if (IsBusy)
+            return;
+
         // Create Android encoder (GPU path via MediaCodec Surface + EGL + Skia GL)
-        _captureVideoEncoder = new AndroidCaptureVideoEncoder();
+        var newEncoder = new AndroidCaptureVideoEncoder();
+        _captureVideoEncoder = newEncoder;
 
         // Set parent reference and pre-recording mode
         _captureVideoEncoder.ParentCamera = this;
         _captureVideoEncoder.IsPreRecordingMode = IsPreRecording;
+
+        // Pass pre-allocated shared buffer to eliminate allocation lag
+        if (IsPreRecording && _sharedPreRecordingBuffer != null)
+        {
+            newEncoder.SharedPreRecordingBuffer = _sharedPreRecordingBuffer;
+            Debug.WriteLine($"[StartCaptureVideoFlow] Passing pre-allocated shared buffer to encoder");
+        }
+
         Debug.WriteLine($"[StartCaptureVideoFlow] Android encoder initialized with IsPreRecordingMode={IsPreRecording}");
 
         // Control preview source: processed frames from encoder (PreviewVideoFlow=true) or raw camera (PreviewVideoFlow=false)
