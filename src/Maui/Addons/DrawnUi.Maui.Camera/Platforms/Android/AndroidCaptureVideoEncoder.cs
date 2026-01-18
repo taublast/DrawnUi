@@ -73,6 +73,8 @@ namespace DrawnUi.Camera
         private long _audioPresentationTimeUs = 0;
         private long _audioPtsBaseNs = -1;
         private long _audioPtsOffsetUs = 0;
+        private long _firstVideoFrameTimestampNs = -1; // First video frame timestamp for A/V sync
+        private int _droppedEarlyAudioSamples = 0; // Counter for diagnostic logging
         
         private MediaMuxer _muxer;
         private int _videoTrackIndex = -1;
@@ -638,7 +640,11 @@ namespace DrawnUi.Camera
                         {
                             _audioPresentationTimeUs = _audioPtsOffsetUs;
                         }
-                        _audioPtsBaseNs = -1;
+                        
+                        // NOTE: Do NOT reset _audioPtsBaseNs or _firstVideoFrameTimestampNs here!
+                        // Both audio and video are continuous from prerecording to live
+                        // Only reset these on full recording start (normal mode)
+                        
                         System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Wrote {writtenCount} buffered frames, last frame at: {lastNormalizedTimestamp.TotalSeconds:F3}s, live offset: {_preRecordingDuration.TotalSeconds:F3}s");
                     }
                     else
@@ -661,8 +667,15 @@ namespace DrawnUi.Camera
                 // CRITICAL: Disable pre-recording mode so live frames go to muxer, not buffer!
                 IsPreRecordingMode = false;
 
-                // Reset timestamp offset for live frames
-                _firstEncodedFrameOffset = TimeSpan.MinValue;
+                // NOTE: Do NOT reset _firstEncodedFrameOffset!
+                // It must continue from prerecording value so live frame timestamps are continuous
+                // (encoder PTS continues from prerecording, not from 0)
+
+                // CRITICAL: Request keyframe for live transition!
+                // Without keyframe, decoder can't start decoding live frames (will freeze on last prerecording frame)
+                RequestKeyFrame();
+                _lastKeyframeRequest = DateTime.Now;
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Requested keyframe for prerecording→live transition");
 
                 _isRecording = true;
                 _startTime = DateTime.Now;
@@ -696,6 +709,8 @@ namespace DrawnUi.Camera
             _audioPtsBaseNs = -1;
             _audioPtsOffsetUs = 0;
             _audioPresentationTimeUs = 0;
+            _firstVideoFrameTimestampNs = -1;
+            _droppedEarlyAudioSamples = 0;
 
             // Create muxer for normal recording
             _muxer = new MediaMuxer(_outputPath, MuxerOutputType.Mpeg4);
@@ -871,6 +886,13 @@ namespace DrawnUi.Camera
             finally { keepAlive?.Dispose(); }
 
             long ptsNanos = (long)(_pendingTimestamp.TotalMilliseconds * 1_000_000.0);
+            
+            // FIX: Capture audio clock timestamp when first video frame arrives
+            if (_firstVideoFrameTimestampNs < 0)
+            {
+                _firstVideoFrameTimestampNs = Android.OS.SystemClock.ElapsedRealtimeNanos();
+            }
+            
             EGLExt.EglPresentationTimeANDROID(_eglDisplay, _eglSurface, ptsNanos);
             EGL14.EglSwapBuffers(_eglDisplay, _eglSurface);
 
@@ -1159,6 +1181,14 @@ namespace DrawnUi.Camera
 
                 // 5. Set presentation timestamp and swap to encoder
                 long ptsNanos = (long)(timestamp.TotalMilliseconds * 1_000_000.0);
+                
+                // FIX: Capture audio clock timestamp when first video frame arrives
+                if (_firstVideoFrameTimestampNs < 0)
+                {
+                    _firstVideoFrameTimestampNs = Android.OS.SystemClock.ElapsedRealtimeNanos();
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] First video frame, audio baseline: {_firstVideoFrameTimestampNs / 1_000_000.0:F1}ms");
+                }
+                
                 EGLExt.EglPresentationTimeANDROID(_eglDisplay, _eglSurface, ptsNanos);
                 EGL14.EglSwapBuffers(_eglDisplay, _eglSurface);
 
@@ -1977,9 +2007,22 @@ namespace DrawnUi.Camera
                 timestampNs = 0;
             }
 
+            // FIX: Wait for first video frame to be processed before accepting audio
+            if (_firstVideoFrameTimestampNs < 0)
+            {
+                // First video frame not yet processed, skip this audio sample
+                _droppedEarlyAudioSamples++;
+                return -1;
+            }
+
+            // Set audio baseline from first valid audio sample (after first video frame processed)
             if (_audioPtsBaseNs < 0)
             {
                 _audioPtsBaseNs = timestampNs;
+                if (_droppedEarlyAudioSamples > 0)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Audio synced: dropped {_droppedEarlyAudioSamples} samples waiting for first video frame");
+                }
             }
 
             long relativeUs = (timestampNs - _audioPtsBaseNs) / 1000;
@@ -2032,6 +2075,13 @@ namespace DrawnUi.Camera
         {
             if (_audioCodec == null) return;
             
+            // Calculate PTS and check if sample should be dropped
+            var pts = CalculateAudioPts(sample.TimestampNs);
+            if (pts < 0)
+            {
+                return; // Skip audio samples before first video frame
+            }
+            
             try 
             {
                 // Lock audio semaphore
@@ -2056,7 +2106,7 @@ namespace DrawnUi.Camera
                     
                     buffer.Put(data);
                     
-                    long ptsUs = CalculateAudioPts(sample.TimestampNs);
+                    long ptsUs = pts; // Already calculated and validated at method start
 
                     _audioCodec.QueueInputBuffer(index, 0, data.Length, ptsUs, 0);
                 }
