@@ -96,9 +96,11 @@ namespace CameraTests.Views
                     paint.Style = SKPaintStyle.Stroke;
                     paint.StrokeWidth = 4 * scale;
                     canvas.DrawRect(10 * scale, 10 * scale, width - 20 * scale, height - 20 * scale, paint);
-                
-                    // Draw oscillograph at bottom (FASTEST implementation)
-                    DrawOscillograph(canvas, width, height, scale);
+
+                    if (UseRealtimeVideoProcessing)
+                    {
+                        DrawOscillograph(canvas, width, height, scale);
+                    }
                 }
                 else
                 {
@@ -108,6 +110,13 @@ namespace CameraTests.Views
                 }
             }
 
+            /// <summary>
+            /// Draw oscillograph at bottom (FASTEST implementation)
+            /// </summary>
+            /// <param name="canvas"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="scale"></param>
             private void DrawOscillograph(SKCanvas canvas, float width, float height, float scale)
             {
                 if (_paintWaveform == null)
