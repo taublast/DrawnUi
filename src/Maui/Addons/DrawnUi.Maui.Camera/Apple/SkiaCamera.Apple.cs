@@ -311,19 +311,23 @@ public partial class SkiaCamera
 
     private void OnAudioSampleAvailable(object sender, AudioSample e)
     {
+        WriteAudioSample(e);
+    }
+
+    public virtual void WriteAudioSample(AudioSample sample)
+    {
         // OOM-SAFE AUDIO HANDLING:
         // - Pre-recording phase: Write to circular buffer (bounded memory, ~5 sec max)
         // - Live recording phase: Stream directly to file (zero memory growth)
-
         if (IsPreRecording && !IsRecordingVideo)
         {
             // Pre-recording: Circular buffer keeps last N seconds (bounded memory)
-            _audioBuffer?.Write(e);
+            _audioBuffer?.Write(sample);
         }
         else if (IsRecordingVideo && _liveAudioWriter != null)
         {
             // Live recording: Stream directly to file (OOM-safe)
-            WriteSampleToLiveAudioWriter(e);
+            WriteSampleToLiveAudioWriter(sample);
         }
     }
 

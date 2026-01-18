@@ -37,7 +37,7 @@ namespace DrawnUi.Camera
             _audioBuffer = buffer;
         }
 
-        public void WriteAudioSample(AudioSample sample)
+        public void WriteAudio(AudioSample sample)
         {
             if (!_isRecording && !IsPreRecordingMode) return;
             

@@ -555,9 +555,14 @@ public partial class SkiaCamera
 
     private void OnAudioSampleAvailable(object sender, AudioSample e)
     {
+        WriteAudioSample(e);
+    }
+
+    public virtual void WriteAudioSample(AudioSample e)
+    {
         if (_captureVideoEncoder is AndroidCaptureVideoEncoder droidEnc)
         {
-             droidEnc.WriteAudioSample(e);
+            droidEnc.WriteAudio(e);
         }
     }
 

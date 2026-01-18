@@ -91,7 +91,7 @@ public interface ICaptureVideoEncoder : IDisposable
     /// <summary>
     /// Writes an audio sample to the encoder (or buffer if pre-recording).
     /// </summary>
-    void WriteAudioSample(AudioSample sample);
+    void WriteAudio(AudioSample sample);
 
     /// <summary>
     /// Whether this encoder supports audio recording.

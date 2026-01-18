@@ -56,7 +56,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         _audioBuffer = buffer;
     }
 
-    public void WriteAudioSample(AudioSample sample)
+    public void WriteAudio(AudioSample sample)
     {
         // CRITICAL: Early exit to avoid any overhead when audio is disabled
         if (!_recordAudio || !_isRecording || _sinkWriter == null)

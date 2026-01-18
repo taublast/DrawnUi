@@ -81,7 +81,7 @@ namespace DrawnUi.Camera
             _audioBuffer = null; // Always null - we don't use per-encoder audio buffers anymore
         }
 
-        public void WriteAudioSample(AudioSample sample)
+        public void WriteAudio(AudioSample sample)
         {
             // ARCHITECTURAL FIX: Encoder handles VIDEO ONLY
             // Audio is collected in SkiaCamera's session-wide buffer and muxed at final stop

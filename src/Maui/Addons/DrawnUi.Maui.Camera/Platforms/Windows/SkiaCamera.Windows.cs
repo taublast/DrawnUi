@@ -1151,7 +1151,13 @@ public partial class SkiaCamera : SkiaControl
 
     private void OnAudioSampleAvailable(object sender, AudioSample sample)
     {
-        _captureVideoEncoder?.WriteAudioSample(sample);
+        _captureVideoEncoder?.WriteAudio(sample);
+    }
+
+
+    public virtual void WriteAudioSample(AudioSample sample)
+    {
+        _captureVideoEncoder?.WriteAudio(sample);
     }
 }
 
