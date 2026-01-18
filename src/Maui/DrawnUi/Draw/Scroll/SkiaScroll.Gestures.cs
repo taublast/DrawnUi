@@ -459,14 +459,31 @@ public partial class SkiaScroll
                             }
                         }
 
-                        //accumulate velocity for different gestures before drawing
-                        _pannedVelocity = _pannedVelocity + new Vector2(VelocityX, VelocityY);
+                        if (Orientation == ScrollOrientation.Vertical)
+                        {
+                            ViewportOffsetY = clamped.Y;
+                        }
+                        else
+                        if (Orientation == ScrollOrientation.Horizontal)
+                        {
+                            ViewportOffsetX = clamped.X;
+                        }
+                        else
+                        {
+                            ViewportOffsetY = clamped.Y;
+                            ViewportOffsetX = clamped.X;
+                        }
 
-                        _pannedOffset = clamped; //will be applied once when drawing by ApplyPannedOffsetWithVelocity
+                        IsUserPanning = true;
+                        //_lastVelocity = new Vector2(VelocityX, VelocityY);
+
+                        //accumulate velocity for different gestures before drawing
+                        //_pannedVelocity += new Vector2(VelocityX, VelocityY);
+                        //_pannedOffset = clamped; //will be applied once when drawing by ApplyPannedOffsetWithVelocity
 
                         consumed = this;
 
-                        Repaint();
+                        //Repaint();
                     }
 
                     break;
@@ -541,10 +558,8 @@ public partial class SkiaScroll
                                 bool bounceX = false, bounceY = false;
                                 if (OverScrolled)
                                 {
-                                    var contentRect = new SKRect(0, 0, ptsContentWidth, ptsContentHeight);
-                                    var closestPoint = GetClosestSidePoint(
-                                        new SKPoint((float)InternalViewportOffset.Units.X,
-                                            (float)InternalViewportOffset.Units.Y), contentRect, Viewport.Units.Size);
+                                    var clamped = ClampOffset((float)InternalViewportOffset.Units.X, (float)InternalViewportOffset.Units.Y, ContentOffsetBounds, true);
+                                    var closestPoint = new SKPoint(clamped.X, clamped.Y);
 
                                     var axis = new Vector2(closestPoint.X, closestPoint.Y);
 

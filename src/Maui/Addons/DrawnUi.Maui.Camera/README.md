@@ -172,6 +172,21 @@ camera.IsOn = false; // Stop camera
 - `IsOn = true`: Proper lifecycle management, handles permissions, app backgrounding
 - `Start()`: Direct method call, bypasses safety checks
 
+#### Global Instance Management
+
+SkiaCamera maintains a static list of all active instances to prevent resource conflicts, especially on Windows where hardware release can be slow.
+
+```csharp
+// Access all tracked camera instances
+var activeCameras = SkiaCamera.Instances;
+
+// Stop all active cameras globally
+await SkiaCamera.StopAllAsync();
+```
+
+**Automatic Conflict Resolution**:
+When a new camera starts, it automatically checks `SkiaCamera.Instances` for other active cameras. If another camera is found to be busy or stopping (common during Hot Reload or rapid page navigation), the new instance will wait until the hardware is fully released before attempting to initialize. This prevents "Zombie" camera states and FPS drops on Windows.
+
 ### 4. Flash Control
 
 SkiaCamera provides comprehensive flash control for both preview torch and still image capture:
@@ -1082,8 +1097,14 @@ public SkiaImageEffect Effect { get; set; }       // Real-time simple color filt
 public bool IsRecordingVideo { get; }             // Recording state (read-only)
 public VideoQuality VideoQuality { get; set; }   // Video quality preset
 public int VideoFormatIndex { get; set; }         // Manual format index
-public bool UseCaptureVideoFlow { get; set; }     // Enable frame-by-frame capture mode
+public bool UseRealtimeVideoProcessing { get; set; }     // Enable frame-by-frame capture mode
 public Action<DrawableFrame> FrameProcessor { get; set; } // Frame processing callback
+
+// Pre-Recording
+public bool EnablePreRecording { get; set; }      // Enable pre-recording buffer
+public TimeSpan PreRecordDuration { get; set; }   // Duration of pre-recording buffer (default: 5s)
+public bool IsPreRecording { get; }               // Pre-recording state (read-only)
+public TimeSpan LiveRecordingDuration { get; }    // Duration of current live recording (excluding buffer)
 
 // Zoom & Limits
 public double Zoom { get; set; }                  // Current zoom level
@@ -1113,7 +1134,7 @@ public void OpenFileInGallery(string filePath)               // Open file in sys
 
 // Video Recording Operations
 public async Task StartVideoRecording()                      // Start video recording
-public async Task StopVideoRecording()                       // Stop video recording
+public async Task StopVideoRecording()                       // Stop video recording (aborts if < 1s in pre-recording mode)
 public bool CanRecordVideo()                                 // Check recording support
 public async Task<List<VideoFormat>> GetAvailableVideoFormatsAsync()  // Get video formats
 public VideoFormat GetCurrentVideoFormat()                  // Current video format
@@ -1488,7 +1509,7 @@ camera.RecordAudio = true;   // Record videos with audio
 
 #### Capture Video Flow (Advanced)
 
-SkiaCamera provides a **frame-by-frame video recording system** with real-time processing capabilities through `UseCaptureVideoFlow`. This allows you to process each camera frame before encoding, enabling watermarks, overlays, filters, and custom effects applied directly to the video output.
+SkiaCamera provides a **frame-by-frame video recording system** with real-time processing capabilities through `UseRealtimeVideoProcessing`. This allows you to process each camera frame before encoding, enabling watermarks, overlays, filters, and custom effects applied directly to the video output.
 
 **Key Features:**
 - **Real-time frame processing** with GPU acceleration
@@ -1504,7 +1525,7 @@ SkiaCamera provides a **frame-by-frame video recording system** with real-time p
 var camera = new SkiaCamera
 {
     // Enable capture video flow
-    UseCaptureVideoFlow = true,
+    UseRealtimeVideoProcessing = true,
 
     // Standard video properties work the same
     VideoQuality = VideoQuality.High,
@@ -1551,7 +1572,7 @@ The `FrameProcessor` callback receives a `DrawableFrame` object with:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `UseCaptureVideoFlow` | `bool` | `false` | Enable frame-by-frame capture mode |
+| `UseRealtimeVideoProcessing` | `bool` | `false` | Enable frame-by-frame capture mode |
 | `FrameProcessor` | `Action<DrawableFrame>` | `null` | Callback for processing each frame |
 | `RecordAudio` | `bool` | `false` | Include audio in recording |
 | `VideoQuality` | `VideoQuality` | `Standard` | Video quality preset |
@@ -1625,12 +1646,179 @@ camera.FrameProcessor = (frame) =>
 
 **Important Notes:**
 
-- When `UseCaptureVideoFlow = true`, the frame processor MUST be set for recording to work
+- When `UseRealtimeVideoProcessing = true`, the frame processor MUST be set for recording to work
 - Frame processing happens in real-time at the target video FPS (typically 30fps)
 - Keep `FrameProcessor` code efficient to avoid frame drops
 - The same `StartVideoRecording()` / `StopVideoRecording()` API works for both modes
 - All existing video events (`VideoRecordingSuccess`, `VideoRecordingFailed`, `VideoRecordingProgress`) work the same
 - Preview continues uninterrupted during recording in both modes
+
+#### Real-Time Audio Processing
+
+SkiaCamera allows you to process audio samples in real-time during video recording by overriding the `WriteAudioSample` method. **This feature requires `UseRealtimeVideoProcessing = true`** to enable frame-by-frame processing mode.
+
+**Key Features:**
+- **Requires `UseRealtimeVideoProcessing = true`** - Part of the capture video flow
+- **Synchronous processing** on audio capture thread
+- **In-place modification** of audio data before encoding
+- **Full PCM access** to raw audio samples
+- **Cross-platform support** (Android, iOS/macOS)
+- **Works with all recording modes** (live and pre-recording)
+
+**Basic Usage:**
+
+```csharp
+public class MyCamera : SkiaCamera 
+{
+    public MyCamera()
+    {
+        // REQUIRED: Enable realtime video processing
+        UseRealtimeVideoProcessing = true;
+        RecordAudio = true;
+        
+        FrameProcessor = (frame) =>
+        {
+            // Your video frame processing
+        };
+    }
+    
+    public override void WriteAudioSample(AudioSample sample)
+    {
+        // Process audio sample
+        // sample.Data is byte[] containing PCM audio data
+        // You can read and modify it in-place
+        
+        // Example: Apply volume adjustment
+        AdjustVolume(sample.Data, sample.Channels, sample.BitDepth, 0.8f);
+        
+        // Example: Generate oscillograph data
+        var peaks = CalculateAudioPeaks(sample.Data, sample.Channels, sample.BitDepth);
+        UpdateOscillographVisualization(peaks);
+        
+        // MUST call base to record the modified audio
+        base.WriteAudioSample(sample);
+    }
+}
+```
+
+**AudioSample Structure:**
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `Data` | `byte[]` | Raw PCM audio data (modify in-place for effects) |
+| `TimestampNs` | `long` | Sample timestamp in nanoseconds |
+| `SampleRate` | `int` | Sample rate (e.g., 44100 Hz) |
+| `Channels` | `int` | Number of channels (1=mono, 2=stereo) |
+| `BitDepth` | `AudioBitDepth` | Bit depth (Int16, Int24, Float32) |
+| `SampleCount` | `int` | Number of samples in this chunk |
+| `Timestamp` | `TimeSpan` | Converted timestamp as TimeSpan |
+
+**Advanced Example: Live Audio Oscillograph**
+
+```csharp
+public class CameraWithOscillograph : SkiaCamera 
+{
+    private float[] _audioWaveform = new float[100]; // Visual buffer
+    private readonly object _waveformLock = new object();
+    
+    public CameraWithOscillograph()
+    {
+        // REQUIRED: Enable realtime processing for audio/video sync
+        UseRealtimeVideoProcessing = true;
+        RecordAudio = true;
+        
+        // Video frame processor - draw oscillograph overlay
+        FrameProcessor = (frame) =>
+        {
+            DrawOscillograph(frame.Canvas, 50, frame.Height - 150, 
+                           frame.Width - 100, 100);
+        };
+    }
+    
+    public override void WriteAudioSample(AudioSample sample)
+    {
+        // Extract waveform data for visualization (downsampled)
+        lock (_waveformLock)
+        {
+            var stepSize = sample.SampleCount / _audioWaveform.Length;
+            for (int i = 0; i < _audioWaveform.Length; i++)
+            {
+                var sampleIndex = i * stepSize * sample.Channels * 2; // *2 for 16-bit
+                if (sampleIndex + 1 < sample.Data.Length)
+                {
+                    // Read as 16-bit PCM
+                    short pcmValue = (short)(sample.Data[sampleIndex] | 
+                                            (sample.Data[sampleIndex + 1] << 8));
+                    _audioWaveform[i] = pcmValue / 32768f; // Normalize to -1..1
+                }
+            }
+        }
+        
+        // Record the audio
+        base.WriteAudioSample(sample);
+    }
+    
+    // Draw oscillograph on video frames
+    private void DrawOscillograph(SKCanvas canvas, float x, float y, 
+                                  float width, float height)
+    {
+        lock (_waveformLock)
+        {
+            using var paint = new SKPaint
+            {
+                Color = SKColors.LimeGreen,
+                StrokeWidth = 2,
+                Style = SKPaintStyle.Stroke,
+                IsAntialias = true
+            };
+            
+            var centerY = y + height / 2;
+            var path = new SKPath();
+            
+            for (int i = 0; i < _audioWaveform.Length; i++)
+            {
+                var px = x + (i / (float)_audioWaveform.Length) * width;
+                var py = centerY + (_audioWaveform[i] * height / 2);
+                
+                if (i == 0)
+                    path.MoveTo(px, py);
+                else
+                    path.LineTo(px, py);
+            }
+            
+            canvas.DrawPath(path, paint);
+            path.Dispose();
+        }
+    }
+}
+```
+
+**Performance Considerations:**
+
+- **Requires `UseRealtimeVideoProcessing = true`** - audio processing only works in capture mode
+- **Runs on audio capture thread** - arrives every ~23ms at 44.1kHz (1024 sample chunks)
+- **Keep processing under 10ms** to avoid buffer overruns and audio glitches
+- **Avoid allocations** - reuse buffers, avoid creating objects in hot path
+- **Thread safety** - use locks when sharing data with UI thread
+- **Lightweight analysis only** - complex DSP should be offloaded to background thread
+
+**Common Use Cases:**
+
+1. **Audio visualization** - Create oscillographs, spectrum analyzers, VU meters overlaid on video
+2. **Custom effects** - Apply reverb, echo, distortion, pitch shift to recorded audio
+3. **Audio filtering** - Noise reduction, compression, EQ applied during recording
+4. **Level monitoring** - Peak detection, silence detection, clipping detection
+5. **Format conversion** - Channel mixing (stereo to mono), sample rate effects
+
+**Important Notes:**
+
+- **Only works with `UseRealtimeVideoProcessing = true`** - part of the capture video flow
+- You **MUST call `base.WriteAudioSample(sample)`** to record the audio
+- Modifications to `sample.Data` are recorded to the video file
+- Processing happens **before encoding** - your changes affect the final video
+- Works in both **live recording and pre-recording modes**
+- Thread-safe access required when sharing audio data with other threads
+- `RecordAudio = true` must be set to receive audio samples
 
 #### Video Recording UI Integration
 

@@ -10,7 +10,7 @@
         
         <ApplicationId>com.drawnioui.repro</ApplicationId>
         <ApplicationIdGuid>330e66b0-efc2-4fde-9ac8-074d5c3299b3</ApplicationIdGuid>
-        <ApplicationTitle>Repro DrawnUI</ApplicationTitle>
+        <ApplicationTitle>CameraTests DrawnUI</ApplicationTitle>
         <OutputType>Exe</OutputType>
         <RootNamespace>CameraTests</RootNamespace>
         <UseMaui>true</UseMaui>
@@ -44,6 +44,7 @@
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <!--<EnableLLVM>True</EnableLLVM>-->
+
     <Optimize>True</Optimize>
     <!--<RunAOTCompilation>True</RunAOTCompilation>
     <PublishTrimmed>True</PublishTrimmed>

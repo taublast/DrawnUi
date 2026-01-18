@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="MauiApp8.ReproRecycled"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
+    xmlns:loacl="clr-namespace:MauiApp8">
+
+    <Grid
+        x:DataType="loacl:ReproRecycled"
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill">
+
+        <draw:Canvas
+            Gestures="Enabled"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+            <draw:GridLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+                <draw:SkiaScroll
+                    Bounces="False"
+                    HorizontalOptions="Fill"
+                    IgnoreWrongDirection="True"
+                    Orientation="Vertical"
+                    VerticalOptions="Start"
+                    Virtualisation="Enabled">
+
+                    <draw:SkiaLayout
+                        HorizontalOptions="Fill"
+                        ItemsSource="{Binding Sources}"
+                        MeasureItemsStrategy="MeasureFirst"
+                        RecyclingTemplate="Enabled"
+                        Type="Column">
+
+                        <draw:SkiaLayout.ItemTemplate>
+                            <DataTemplate x:DataType="loacl:Card">
+
+                                <draw:SkiaLayout
+                                    BackgroundColor="LightGray"
+                                    HeightRequest="150"
+                                    HorizontalOptions="Fill"
+                                    UseCache="Operations">
+
+                                    <!--  Content  -->
+                                    <draw:SkiaDrawer
+                                        AmplitudeSize="60"
+                                        Direction="FromLeft"
+                                        HorizontalOptions="Fill"
+                                        IgnoreWrongDirection="True"
+                                        IsOpen="True"
+                                        Tag="Drawer"
+                                        VerticalOptions="Fill"
+                                        ZIndex="1">
+
+                                        <draw:SkiaLayout
+                                            BackgroundColor="White"
+                                            HorizontalOptions="Fill"
+                                            UseCache="Operations"
+                                            VerticalOptions="Fill">
+                                            <draw:SkiaLabel
+                                                FontSize="30"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Name}"
+                                                TextColor="Black"
+                                                VerticalOptions="Center" />
+                                        </draw:SkiaLayout>
+
+                                    </draw:SkiaDrawer>
+
+                                    <!--  Menus Item  -->
+                                    <draw:SkiaLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+                                        <draw:SkiaLabel
+                                            FontSize="30"
+                                            HorizontalOptions="End"
+                                            HorizontalTextAlignment="Center"
+                                            Text="×"
+                                            TextColor="Black"
+                                            VerticalOptions="Center"
+                                            WidthRequest="60" />
+                                    </draw:SkiaLayout>
+
+                                </draw:SkiaLayout>
+                            </DataTemplate>
+                        </draw:SkiaLayout.ItemTemplate>
+                    </draw:SkiaLayout>
+
+                </draw:SkiaScroll>
+
+            </draw:GridLayout>
+        </draw:Canvas>
+    </Grid>
+</ContentPage>

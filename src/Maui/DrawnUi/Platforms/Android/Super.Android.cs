@@ -539,7 +539,7 @@ public partial class Super
 
         while (wait)
         {
-            await Task.Delay(1);
+            await Task.Yield();
         }
 
         return buffer;

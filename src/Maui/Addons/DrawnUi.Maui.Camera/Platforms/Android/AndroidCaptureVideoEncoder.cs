@@ -1,5 +1,6 @@
 #if ANDROID
 using System;
+using System.Buffers;
 using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -29,6 +30,30 @@ namespace DrawnUi.Camera
     /// </summary>
     public class AndroidCaptureVideoEncoder : ICaptureVideoEncoder
     {
+        public bool SupportsAudio => true;
+        
+        public void SetAudioBuffer(CircularAudioBuffer buffer)
+        {
+            _audioBuffer = buffer;
+        }
+
+        public void WriteAudio(AudioSample sample)
+        {
+            if (!_isRecording && !IsPreRecordingMode) return;
+            
+            // In pre-recording mode, buffer PCM
+            if (IsPreRecordingMode && _audioBuffer != null)
+            {
+                _audioBuffer.Write(sample);
+            }
+            // In live recording, feed encoder directly
+            else if (_isRecording)
+            {
+                 // We fire and forget this on the thread pool to avoid blocking audio capture thread
+                 // or use the semaphore
+                 Task.Run(() => FeedAudioEncoder(sample));
+            }
+        }
         private string _outputPath;
         private int _width;
         private int _height;
@@ -37,6 +62,20 @@ namespace DrawnUi.Camera
         private int _deviceRotation = 0;
 
         private MediaCodec _videoCodec;
+
+        // Audio Fields
+        private MediaCodec _audioCodec;
+        private int _audioTrackIndex = -1;
+        private MediaFormat _audioFormat;
+        private CircularAudioBuffer _audioBuffer;
+        private readonly SemaphoreSlim _audioSemaphore = new(1, 1);
+        private readonly SemaphoreSlim _videoSemaphore = new(1, 1);
+        private long _audioPresentationTimeUs = 0;
+        private long _audioPtsBaseNs = -1;
+        private long _audioPtsOffsetUs = 0;
+        private long _firstVideoFrameTimestampNs = -1; // First video frame timestamp for A/V sync
+        private int _droppedEarlyAudioSamples = 0; // Counter for diagnostic logging
+        
         private MediaMuxer _muxer;
         private int _videoTrackIndex = -1;
         private bool _muxerStarted = false;
@@ -47,6 +86,13 @@ namespace DrawnUi.Camera
         private PrerecordingEncodedBuffer _preRecordingBuffer;
         private TimeSpan _preRecordingDuration = TimeSpan.Zero;
         private TimeSpan _firstEncodedFrameOffset = TimeSpan.MinValue;  // Offset to subtract from all frames
+
+        /// <summary>
+        /// Optional pre-allocated buffer provided by SkiaCamera.
+        /// When set, encoder will reuse this buffer instead of allocating a new one,
+        /// eliminating the ~27MB allocation lag spike when pre-recording starts.
+        /// </summary>
+        public PrerecordingEncodedBuffer SharedPreRecordingBuffer { get; set; }
 
         // EGL / GL / Skia
         private EGLDisplay _eglDisplay = EGL14.EglNoDisplay;
@@ -77,6 +123,10 @@ namespace DrawnUi.Camera
 
         // Drop the very first encoded sample; some devices emit a garbled first frame right after start
         private bool _skipFirstEncodedSample = true;
+        
+        // Timeout/Failsafe for audio initialization
+        private int _framesWaitingForAudio = 0;
+        private const int MaxFramesWaitingForAudio = 45; // ~1.5 seconds at 30fps
 
         // Keyframe request timing for pre-recording (request every ~1 second to keep buffer fresh)
         private DateTime _lastKeyframeRequest = DateTime.MinValue;
@@ -85,7 +135,45 @@ namespace DrawnUi.Camera
         // Preview-from-recording support
         private readonly object _previewLock = new();
         private SKImage _latestPreviewImage;
+        private SKSurface _previewRasterSurface;  // Cached to avoid allocation every frame
+        private int _previewWidth, _previewHeight;
+        private int _previewFrameCounter = 0;
+        private const int PreviewFrameSkip = 2;  // Only update preview every Nth frame (2 = every other frame)
         public event EventHandler PreviewAvailable;
+
+        // GPU camera path support (SurfaceTexture zero-copy)
+        private GpuCameraFrameProvider _gpuFrameProvider;
+        private bool _useGpuCameraPath;
+        private bool _isFrontCamera;
+        public bool UseGpuCameraPath => _useGpuCameraPath;
+        public GpuCameraFrameProvider GpuFrameProvider => _gpuFrameProvider;
+
+        // Cached BufferInfo objects to avoid per-frame Java allocations (reduces GC pressure)
+        private MediaCodec.BufferInfo _drainBufferInfo;
+        private MediaCodec.BufferInfo _muxerBufferInfo;
+
+        // GPU resource management (prevent Skia GPU memory accumulation during long recordings)
+        private int _gpuFrameCounter = 0;
+        private const int GpuPurgeInterval = 300;  // Purge every 300 frames (~10 seconds at 30fps)
+
+        // GPU encoding thread (async processing - decouples camera from encoding)
+        private System.Threading.Thread _gpuEncodingThread;
+        private System.Threading.ManualResetEventSlim _gpuFrameSignal;
+        private volatile bool _stopGpuThread = false;
+        private volatile bool _gpuFrameReady = false;
+
+        // Frame context passed from callback to encoding thread
+        private TimeSpan _pendingGpuFrameTimestamp;
+        private Action<DrawableFrame> _pendingFrameProcessor;
+        private bool _pendingDiagnosticsOn;
+        private Action<SKCanvas, int, int> _pendingDrawDiagnostics;
+        private readonly object _gpuFrameLock = new();
+
+        /// <summary>
+        /// Event fired when a GPU frame has been successfully processed and encoded.
+        /// Used by SkiaCamera to track recording FPS.
+        /// </summary>
+        public event Action OnGpuFrameProcessed;
 
         public bool IsRecording => _isRecording;
         public event EventHandler<TimeSpan> ProgressReported;
@@ -99,6 +187,18 @@ namespace DrawnUi.Camera
         // Interface implementation
         public bool IsPreRecordingMode { get; set; }
         public SkiaCamera ParentCamera { get; set; }
+
+        public TimeSpan LiveRecordingDuration
+        {
+            get
+            {
+                if (_isRecording)
+                {
+                    return DateTime.Now - _startTime;
+                }
+                return TimeSpan.Zero;
+            }
+        }
 
         /// <summary>
         /// Request immediate keyframe from encoder (Bundle.PARAMETER_KEY_REQUEST_SYNC_FRAME)
@@ -179,6 +279,9 @@ namespace DrawnUi.Camera
             _recordAudio = recordAudio;
             _preRecordingDuration = TimeSpan.Zero;
             _firstEncodedFrameOffset = TimeSpan.MinValue;
+            _skipFirstEncodedSample = true;  // Reset for new session
+            _gpuFrameCounter = 0;  // Reset GPU purge counter
+            ResetAudioTiming();
 
             // Reset encoder readiness flags (new initialization)
             _encoderReady = false;
@@ -208,8 +311,38 @@ namespace DrawnUi.Camera
             _inputSurface = _videoCodec.CreateInputSurface();
             _videoCodec.Start();
 
+            if (_recordAudio)
+            {
+                try
+                {
+                    // Basic AAC Setup
+                    // TODO: Get actual sample rate/channels from SkiaCamera properties if available
+                    int aSampleRate = 44100;
+                    int aChannels = 1; 
+                    
+                    MediaFormat aFormat = MediaFormat.CreateAudioFormat(MediaFormat.MimetypeAudioAac, aSampleRate, aChannels);
+                    aFormat.SetInteger(MediaFormat.KeyAacProfile, (int)MediaCodecProfileType.Aacobjectlc);
+                    aFormat.SetInteger(MediaFormat.KeyBitRate, 128000);
+                    aFormat.SetInteger(MediaFormat.KeyMaxInputSize, 16384 * 2);
+
+                    _audioCodec = MediaCodec.CreateEncoderByType(MediaFormat.MimetypeAudioAac);
+                    _audioCodec.Configure(aFormat, null, null, MediaCodecConfigFlags.Encode);
+                    _audioCodec.Start();
+                    
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Audio Codec initialized (AAC {aSampleRate}Hz)");
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Audio Codec init failed: {ex.Message}");
+                    _recordAudio = false;
+                }
+            }
+
             // Set up EGL context bound to the codec surface
             SetupEglForCodecSurface();
+
+            // Start GPU encoding thread for async frame processing (decouples camera from encoding)
+            StartGpuEncodingThread();
 
             // CRITICAL: Warm up encoder BEFORE accepting any frames (professional pattern)
             // This ensures MediaCodec is ready and no frames are dropped
@@ -224,9 +357,19 @@ namespace DrawnUi.Camera
             // Initialize based on mode (mirrors iOS)
             if (IsPreRecordingMode && ParentCamera != null)
             {
-                // Pre-recording mode: Initialize circular buffer
-                var preRecordDuration = ParentCamera.PreRecordDuration;
-                _preRecordingBuffer = new PrerecordingEncodedBuffer(preRecordDuration);
+                // Pre-recording mode: Use shared buffer if available, else allocate new one
+                if (SharedPreRecordingBuffer != null)
+                {
+                    _preRecordingBuffer = SharedPreRecordingBuffer;
+                    _preRecordingBuffer.Reset();
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Using pre-allocated shared buffer (no allocation lag)");
+                }
+                else
+                {
+                    _preRecordingBuffer?.Dispose();
+                    var preRecordDuration = ParentCamera.PreRecordDuration;
+                    _preRecordingBuffer = new PrerecordingEncodedBuffer(preRecordDuration);
+                }
 
                 // CRITICAL: Start recording immediately to buffer frames (mirrors iOS)
                 _isRecording = true;
@@ -238,7 +381,7 @@ namespace DrawnUi.Camera
 
                 System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Pre-recording mode initialized and started:");
                 System.Diagnostics.Debug.WriteLine($"  Final output file: {_outputPath}");
-                System.Diagnostics.Debug.WriteLine($"  Buffer duration: {preRecordDuration.TotalSeconds}s");
+                System.Diagnostics.Debug.WriteLine($"  Buffer duration: {ParentCamera.PreRecordDuration.TotalSeconds}s");
                 System.Diagnostics.Debug.WriteLine($"  Buffering frames to memory...");
 
                 // CRITICAL: Request FIRST keyframe immediately so buffer starts with I-frame!
@@ -399,14 +542,32 @@ namespace DrawnUi.Camera
                         }
                     }
 
-                    if (_videoFormat != null)
+                    // Attempt to get audio format if missing
+                    if (_recordAudio && _audioFormat == null) 
+                    {
+                         // Resurrect failed audio: try to drain again
+                         DrainAudioEncoder();
+                         
+                         // Increased timeout logic handled in DrainEncoder loop for frame-by-frame waiting
+                         if (_audioFormat == null)
+                         {
+                             System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Audio format missing at StartAsync. Determining strategy in DrainEncoder loop.");
+                         }
+                    }
+
+                    if (_videoFormat != null && (!_recordAudio || _audioFormat != null))
                     {
                         // Add track and start muxer
                         _videoTrackIndex = _muxer.AddTrack(_videoFormat);
+                        if (_recordAudio && _audioFormat != null)
+                        {
+                            _audioTrackIndex = _muxer.AddTrack(_audioFormat);
+                        }
+
                         _muxer.Start();
                         _muxerStarted = true;
 
-                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] MediaMuxer started, writing {bufferFrameCount} buffered frames...");
+                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] MediaMuxer started (Audio={(_audioTrackIndex >= 0)}), writing {bufferFrameCount} buffered frames...");
 
                         // Step 3: Write all buffered frames to muxer (timestamps 0 → N)
                         var bufferedFrames = _preRecordingBuffer.GetAllFrames();
@@ -429,10 +590,11 @@ namespace DrawnUi.Camera
 
                             var buffer = ByteBuffer.Wrap(data);
                             var flags = isKeyFrame ? MediaCodecBufferFlags.KeyFrame : MediaCodecBufferFlags.None;
-                            var bufferInfo = new MediaCodec.BufferInfo();
-                            bufferInfo.Set(0, data.Length, (long)normalizedTimestamp.TotalMicroseconds, flags);
+                            // Reuse cached BufferInfo to avoid per-frame Java allocations
+                            _muxerBufferInfo ??= new MediaCodec.BufferInfo();
+                            _muxerBufferInfo.Set(0, data.Length, (long)normalizedTimestamp.TotalMicroseconds, flags);
 
-                            _muxer.WriteSampleData(_videoTrackIndex, buffer, bufferInfo);
+                            _muxer.WriteSampleData(_videoTrackIndex, buffer, _muxerBufferInfo);
                             writtenCount++;
 
                             // Log first/last frame
@@ -442,10 +604,47 @@ namespace DrawnUi.Camera
                             }
                         }
 
+                        // Flush pre-recorded audio
+                        if (_recordAudio && _audioBuffer != null)
+                        {
+                            try
+                            {
+                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Processing pre-recorded audio...");
+                                var firstVideoActionTimestampNs = (long)(firstBufferedFrameTimestamp.Ticks * 100);
+                                var audioSamples = _audioBuffer.DrainFrom(firstVideoActionTimestampNs);
+                                
+                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Draining {audioSamples.Length} audio samples...");
+                                foreach(var sample in audioSamples)
+                                {
+                                    // Renormalize timestamp to match video start
+                                    long nTs = sample.TimestampNs - firstVideoActionTimestampNs;
+                                    if (nTs < 0) nTs = 0; 
+
+                                    var nSample = sample;
+                                    nSample.TimestampNs = nTs;
+                                    FeedAudioEncoder(nSample);
+                                }
+                            }
+                            catch(Exception ex)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Error draining audio buffer: {ex}");
+                            }
+                        }
+
                         // CRITICAL: Use actual last frame timestamp + one frame duration for live frame offset
                         // This ensures live frames start AFTER the last buffered frame (no overlap)
                         double frameDurationMs = 1000.0 / _frameRate;  // e.g., 33.33ms @ 30fps
                         _preRecordingDuration = lastNormalizedTimestamp + TimeSpan.FromMilliseconds(frameDurationMs);
+                        _audioPtsOffsetUs = (long)_preRecordingDuration.TotalMicroseconds;
+                        if (_audioPresentationTimeUs < _audioPtsOffsetUs)
+                        {
+                            _audioPresentationTimeUs = _audioPtsOffsetUs;
+                        }
+                        
+                        // NOTE: Do NOT reset _audioPtsBaseNs or _firstVideoFrameTimestampNs here!
+                        // Both audio and video are continuous from prerecording to live
+                        // Only reset these on full recording start (normal mode)
+                        
                         System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Wrote {writtenCount} buffered frames, last frame at: {lastNormalizedTimestamp.TotalSeconds:F3}s, live offset: {_preRecordingDuration.TotalSeconds:F3}s");
                     }
                     else
@@ -462,15 +661,21 @@ namespace DrawnUi.Camera
                     _muxer.SetOrientationHint(_deviceRotation);
                 }
 
-                // Step 4: Clear buffer, switch to live recording mode
-                _preRecordingBuffer?.Dispose();
-                _preRecordingBuffer = null;
+                // Step 4: Clear buffer (keep for reuse), switch to live recording mode
+                _preRecordingBuffer?.Clear();
 
                 // CRITICAL: Disable pre-recording mode so live frames go to muxer, not buffer!
                 IsPreRecordingMode = false;
 
-                // Reset timestamp offset for live frames
-                _firstEncodedFrameOffset = TimeSpan.MinValue;
+                // NOTE: Do NOT reset _firstEncodedFrameOffset!
+                // It must continue from prerecording value so live frame timestamps are continuous
+                // (encoder PTS continues from prerecording, not from 0)
+
+                // CRITICAL: Request keyframe for live transition!
+                // Without keyframe, decoder can't start decoding live frames (will freeze on last prerecording frame)
+                RequestKeyFrame();
+                _lastKeyframeRequest = DateTime.Now;
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Requested keyframe for prerecording→live transition");
 
                 _isRecording = true;
                 _startTime = DateTime.Now;
@@ -501,6 +706,12 @@ namespace DrawnUi.Camera
                 return;
             }
 
+            _audioPtsBaseNs = -1;
+            _audioPtsOffsetUs = 0;
+            _audioPresentationTimeUs = 0;
+            _firstVideoFrameTimestampNs = -1;
+            _droppedEarlyAudioSamples = 0;
+
             // Create muxer for normal recording
             _muxer = new MediaMuxer(_outputPath, MuxerOutputType.Mpeg4);
             _muxer.SetOrientationHint(_deviceRotation);
@@ -513,12 +724,25 @@ namespace DrawnUi.Camera
 
             // CRITICAL: Start muxer immediately using format from warm-up!
             // We already got FORMAT_CHANGED during warm-up, won't get it again
-            if (_videoFormat != null)
+            
+            // Check Audio Format first
+            if (_recordAudio && _audioFormat == null)
+            {
+                 // Try drain to catch up
+                 DrainAudioEncoder();
+            }
+
+            if (_videoFormat != null && (!_recordAudio || _audioFormat != null))
             {
                 _videoTrackIndex = _muxer.AddTrack(_videoFormat);
+                if (_recordAudio && _audioFormat != null)
+                {
+                    _audioTrackIndex = _muxer.AddTrack(_audioFormat);
+                }
+                
                 _muxer.Start();
                 _muxerStarted = true;
-                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] MediaMuxer started for normal recording (using format from warm-up)");
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] MediaMuxer started for normal recording (Audio={(_audioTrackIndex >= 0)})");
             }
             else
             {
@@ -634,13 +858,21 @@ namespace DrawnUi.Camera
                     int pw = Math.Min(_width, maxPreviewWidth);
                     int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
 
-                    var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
-                    using var rasterSurface = SKSurface.Create(pInfo);
-                    var pCanvas = rasterSurface.Canvas;
+                    // Reuse cached surface to avoid GC pressure (was allocating ~2MB per frame)
+                    if (_previewRasterSurface == null || _previewWidth != pw || _previewHeight != ph)
+                    {
+                        _previewRasterSurface?.Dispose();
+                        var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
+                        _previewRasterSurface = SKSurface.Create(pInfo);
+                        _previewWidth = pw;
+                        _previewHeight = ph;
+                    }
+
+                    var pCanvas = _previewRasterSurface.Canvas;
                     pCanvas.Clear(SKColors.Transparent);
                     pCanvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
 
-                    keepAlive = rasterSurface.Snapshot();
+                    keepAlive = _previewRasterSurface.Snapshot();
                     lock (_previewLock)
                     {
                         _latestPreviewImage?.Dispose();
@@ -654,6 +886,13 @@ namespace DrawnUi.Camera
             finally { keepAlive?.Dispose(); }
 
             long ptsNanos = (long)(_pendingTimestamp.TotalMilliseconds * 1_000_000.0);
+            
+            // FIX: Capture audio clock timestamp when first video frame arrives
+            if (_firstVideoFrameTimestampNs < 0)
+            {
+                _firstVideoFrameTimestampNs = Android.OS.SystemClock.ElapsedRealtimeNanos();
+            }
+            
             EGLExt.EglPresentationTimeANDROID(_eglDisplay, _eglSurface, ptsNanos);
             EGL14.EglSwapBuffers(_eglDisplay, _eglSurface);
 
@@ -697,6 +936,575 @@ namespace DrawnUi.Camera
             }
         }
 
+        #region GPU Encoding Thread (Async Processing)
+
+        /// <summary>
+        /// Start the GPU encoding thread for async frame processing.
+        /// Called when recording starts to decouple camera from encoding.
+        /// </summary>
+        private void StartGpuEncodingThread()
+        {
+            if (_gpuEncodingThread != null) return;
+
+            _gpuFrameSignal = new System.Threading.ManualResetEventSlim(false);
+            _stopGpuThread = false;
+            _gpuFrameReady = false;
+            _gpuEncodingThread = new System.Threading.Thread(GpuEncodingLoop)
+            {
+                IsBackground = true,
+                Name = "AndroidGpuEncoder",
+                Priority = System.Threading.ThreadPriority.AboveNormal
+            };
+            _gpuEncodingThread.Start();
+            System.Diagnostics.Debug.WriteLine("[AndroidEncoder] GPU encoding thread started");
+        }
+
+        /// <summary>
+        /// Stop the GPU encoding thread.
+        /// Called when recording stops.
+        /// </summary>
+        private void StopGpuEncodingThread()
+        {
+            if (_gpuEncodingThread == null) return;
+
+            _stopGpuThread = true;
+            _gpuFrameSignal?.Set(); // Wake thread to exit
+            _gpuEncodingThread?.Join(1000);
+            _gpuEncodingThread = null;
+            _gpuFrameSignal?.Dispose();
+            _gpuFrameSignal = null;
+            _gpuFrameReady = false;
+            System.Diagnostics.Debug.WriteLine("[AndroidEncoder] GPU encoding thread stopped");
+        }
+
+        /// <summary>
+        /// GPU encoding loop - runs on dedicated background thread.
+        /// Waits for signal from camera callback, then processes frame.
+        /// </summary>
+        private void GpuEncodingLoop()
+        {
+            while (!_stopGpuThread)
+            {
+                try
+                {
+                    _gpuFrameSignal?.Wait(100); // Wait for signal with timeout
+                }
+                catch (ObjectDisposedException)
+                {
+                    break;
+                }
+
+                if (_stopGpuThread) break;
+
+                // Check if frame is ready
+                if (!_gpuFrameReady)
+                {
+                    _gpuFrameSignal?.Reset();
+                    continue;
+                }
+
+                // Get frame context atomically
+                TimeSpan timestamp;
+                Action<DrawableFrame> frameProcessor;
+                bool diagOn;
+                Action<SKCanvas, int, int> drawDiag;
+
+                lock (_gpuFrameLock)
+                {
+                    timestamp = _pendingGpuFrameTimestamp;
+                    frameProcessor = _pendingFrameProcessor;
+                    diagOn = _pendingDiagnosticsOn;
+                    drawDiag = _pendingDrawDiagnostics;
+                    _gpuFrameReady = false;
+                }
+
+                _gpuFrameSignal?.Reset();
+
+                try
+                {
+                    // ALL heavy work happens here on background thread
+                    ProcessGpuFrameOnThread(timestamp, frameProcessor, diagOn, drawDiag);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] GpuEncodingLoop error: {ex.Message}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Signal the GPU encoding thread that a new frame is available.
+        /// Called from camera OnFrameAvailable callback - MUST BE FAST!
+        /// Just stores context and signals, no heavy work here.
+        /// </summary>
+        public void SignalGpuFrame(
+            TimeSpan timestamp,
+            Action<DrawableFrame> frameProcessor,
+            bool videoDiagnosticsOn,
+            Action<SKCanvas, int, int> drawDiagnostics)
+        {
+            if (!_isRecording || !_useGpuCameraPath || _gpuFrameProvider == null)
+                return;
+
+            // Store frame context for background thread
+            lock (_gpuFrameLock)
+            {
+                _pendingGpuFrameTimestamp = timestamp;
+                _pendingFrameProcessor = frameProcessor;
+                _pendingDiagnosticsOn = videoDiagnosticsOn;
+                _pendingDrawDiagnostics = drawDiagnostics;
+                _gpuFrameReady = true;
+            }
+
+            // Signal encoding thread - non-blocking
+            _gpuFrameSignal?.Set();
+
+            // EXIT IMMEDIATELY - callback returns to camera in microseconds
+        }
+
+        /// <summary>
+        /// Process GPU frame on background thread - all heavy work here.
+        /// Called from GpuEncodingLoop on dedicated thread.
+        /// </summary>
+        private void ProcessGpuFrameOnThread(
+            TimeSpan timestamp,
+            Action<DrawableFrame> frameProcessor,
+            bool videoDiagnosticsOn,
+            Action<SKCanvas, int, int> drawDiagnostics)
+        {
+            if (!_isRecording || !_useGpuCameraPath || _gpuFrameProvider == null) return;
+
+            // Defensive EGL check
+            if (_eglDisplay == EGL14.EglNoDisplay || _eglSurface == EGL14.EglNoSurface || _eglContext == EGL14.EglNoContext)
+            {
+                System.Diagnostics.Debug.WriteLine("[AndroidEncoder] ProcessGpuFrameOnThread: EGL torn down");
+                return;
+            }
+
+            if (!_encoderReady)
+            {
+                System.Diagnostics.Debug.WriteLine("[AndroidEncoder] ProcessGpuFrameOnThread: Encoder not ready");
+                return;
+            }
+
+            try
+            {
+                _pendingTimestamp = timestamp;
+
+                // Make EGL context current - CRITICAL: Must be done before UpdateTexImage!
+                MakeCurrent();
+
+                // CRITICAL: Update the SurfaceTexture on the EGL context thread
+                // This calls UpdateTexImage() which MUST run on the thread that owns the EGL context
+                if (!_gpuFrameProvider.TryProcessFrameNoWait(out long timestampNs))
+                {
+                    // No frame available yet
+                    return;
+                }
+
+                // 1. Render camera texture to the encoder's framebuffer
+                // CRITICAL: Reset GL state before rendering OES texture!
+                // Skia modifies many GL states (blend, depth, stencil, scissor, program, etc.)
+                // We MUST reset to clean state or subsequent frames will render black
+                ResetGlStateForOesRendering();
+
+                GLES20.GlViewport(0, 0, _width, _height);
+                GLES20.GlClear(GLES20.GlColorBufferBit);
+
+                // Render OES texture from SurfaceTexture
+                _gpuFrameProvider.RenderToFramebuffer(_width, _height, _isFrontCamera);
+
+                // 2. Ensure Skia surface is ready for overlays
+                if (_grContext == null)
+                {
+                    var glInterface = GRGlInterface.Create();
+                    _grContext = GRContext.CreateGl(glInterface);
+                }
+                else
+                {
+                    // Full reset required - OES rendering touches many GL states
+                    _grContext.ResetContext();
+                }
+
+                if (_skSurface == null || _skInfo.Width != _width || _skInfo.Height != _height)
+                {
+                    _skInfo = new SKImageInfo(_width, _height, SKColorType.Rgba8888, SKAlphaType.Premul);
+
+                    int[] fb = new int[1];
+                    GLES20.GlGetIntegerv(GLES20.GlFramebufferBinding, fb, 0);
+                    int[] samples = new int[1];
+                    GLES20.GlGetIntegerv(GLES20.GlSamples, samples, 0);
+                    int[] stencil = new int[1];
+                    GLES20.GlGetIntegerv(GLES20.GlStencilBits, stencil, 0);
+
+                    var fbInfo = new GRGlFramebufferInfo((uint)fb[0], 0x8058);
+                    var backendRT = new GRBackendRenderTarget(_width, _height, samples[0], stencil[0], fbInfo);
+
+                    _skSurface?.Dispose();
+                    _skSurface = SKSurface.Create(_grContext, backendRT, GRSurfaceOrigin.BottomLeft, SKColorType.Rgba8888);
+                }
+
+                // 3. Apply FrameProcessor overlays (user can draw on top of camera frame)
+                var canvas = _skSurface.Canvas;
+                // Note: Camera frame is already rendered to framebuffer, don't clear!
+
+                if (frameProcessor != null || videoDiagnosticsOn)
+                {
+                    var frame = new DrawableFrame
+                    {
+                        Width = _width,
+                        Height = _height,
+                        Canvas = canvas,
+                        Time = timestamp,
+                        Scale = 1f  // Recording frame - full size
+                    };
+
+                    frameProcessor?.Invoke(frame);
+
+                    if (videoDiagnosticsOn)
+                    {
+                        drawDiagnostics?.Invoke(canvas, _width, _height);
+                    }
+                }
+
+                // 4. Flush and submit to encoder
+                canvas.Flush();
+                _grContext.Flush();
+
+                // Periodic GPU resource cleanup to prevent memory accumulation during long recordings
+                _gpuFrameCounter++;
+                if (_gpuFrameCounter >= GpuPurgeInterval)
+                {
+                    _gpuFrameCounter = 0;
+                    _grContext.PurgeUnlockedResources(false);  // false = don't scratchResourcesOnly
+                }
+
+                // 5. Set presentation timestamp and swap to encoder
+                long ptsNanos = (long)(timestamp.TotalMilliseconds * 1_000_000.0);
+                
+                // FIX: Capture audio clock timestamp when first video frame arrives
+                if (_firstVideoFrameTimestampNs < 0)
+                {
+                    _firstVideoFrameTimestampNs = Android.OS.SystemClock.ElapsedRealtimeNanos();
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] First video frame, audio baseline: {_firstVideoFrameTimestampNs / 1_000_000.0:F1}ms");
+                }
+                
+                EGLExt.EglPresentationTimeANDROID(_eglDisplay, _eglSurface, ptsNanos);
+                EGL14.EglSwapBuffers(_eglDisplay, _eglSurface);
+
+                // 6. Drain encoder
+                bool bufferingMode = IsPreRecordingMode && _preRecordingBuffer != null;
+
+                if (DateTime.Now - _lastKeyframeRequest >= _keyframeRequestInterval)
+                {
+                    RequestKeyFrame();
+                    _lastKeyframeRequest = DateTime.Now;
+                }
+
+                if (bufferingMode)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        DrainEncoder(endOfStream: false, bufferingMode: true);
+                    }
+                }
+                else
+                {
+                    DrainEncoder(endOfStream: false, bufferingMode: false);
+                }
+
+                EncodedFrameCount++;
+
+                // Notify SkiaCamera for FPS tracking
+                OnGpuFrameProcessed?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] ProcessGpuFrameOnThread error: {ex.Message}");
+            }
+            finally
+            {
+                // Unbind context
+                try { EGL14.EglMakeCurrent(_eglDisplay, EGL14.EglNoSurface, EGL14.EglNoSurface, EGL14.EglNoContext); } catch { }
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Initialize GPU camera path with SurfaceTexture.
+        /// Must be called on GL thread with valid EGL context (after SetupEglForCodecSurface).
+        /// </summary>
+        /// <param name="isFrontCamera">True if using front/selfie camera</param>
+        /// <param name="cameraWidth">Camera's native output width (before rotation correction)</param>
+        /// <param name="cameraHeight">Camera's native output height (before rotation correction)</param>
+        public bool InitializeGpuCameraPath(bool isFrontCamera, int cameraWidth = 0, int cameraHeight = 0)
+        {
+            if (!GpuCameraFrameProvider.IsSupported())
+            {
+                System.Diagnostics.Debug.WriteLine("[AndroidEncoder] GPU camera path not supported on this device");
+                return false;
+            }
+
+            try
+            {
+                // Ensure EGL context is current
+                MakeCurrent();
+
+                // Use camera's native dimensions for SurfaceTexture if provided,
+                // otherwise use encoder dimensions. Camera frames come in camera's
+                // native orientation, and the transform matrix handles rotation.
+                int surfaceW = cameraWidth > 0 ? cameraWidth : _width;
+                int surfaceH = cameraHeight > 0 ? cameraHeight : _height;
+
+                _gpuFrameProvider = new GpuCameraFrameProvider();
+                if (!_gpuFrameProvider.Initialize(surfaceW, surfaceH))
+                {
+                    System.Diagnostics.Debug.WriteLine("[AndroidEncoder] Failed to initialize GpuCameraFrameProvider");
+                    _gpuFrameProvider?.Dispose();
+                    _gpuFrameProvider = null;
+                    return false;
+                }
+
+                _isFrontCamera = isFrontCamera;
+                _useGpuCameraPath = true;
+
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] GPU camera path initialized: encoder={_width}x{_height}, camera={surfaceW}x{surfaceH}, frontCamera={isFrontCamera}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] InitializeGpuCameraPath error: {ex.Message}");
+                _gpuFrameProvider?.Dispose();
+                _gpuFrameProvider = null;
+                _useGpuCameraPath = false;
+                return false;
+            }
+            finally
+            {
+                // Unbind context
+                try { EGL14.EglMakeCurrent(_eglDisplay, EGL14.EglNoSurface, EGL14.EglNoSurface, EGL14.EglNoContext); } catch { }
+            }
+        }
+
+        /// <summary>
+        /// Process a frame from the GPU camera path.
+        /// Renders camera texture to encoder surface and applies FrameProcessor overlays.
+        /// </summary>
+        /// <param name="timestamp">Frame timestamp relative to recording start</param>
+        /// <param name="frameProcessor">Optional frame processor for overlays</param>
+        /// <param name="videoDiagnosticsOn">Whether to draw diagnostics</param>
+        /// <param name="drawDiagnostics">Diagnostics drawing callback</param>
+        public async Task ProcessGpuCameraFrameAsync(
+            TimeSpan timestamp,
+            Action<DrawableFrame> frameProcessor,
+            bool videoDiagnosticsOn,
+            Action<SKCanvas, int, int> drawDiagnostics)
+        {
+            if (!_isRecording || !_useGpuCameraPath || _gpuFrameProvider == null) return;
+
+            // Defensive EGL check
+            if (_eglDisplay == EGL14.EglNoDisplay || _eglSurface == EGL14.EglNoSurface || _eglContext == EGL14.EglNoContext)
+            {
+                System.Diagnostics.Debug.WriteLine("[AndroidEncoder] ProcessGpuCameraFrame: EGL torn down");
+                return;
+            }
+
+            if (!_encoderReady)
+            {
+                System.Diagnostics.Debug.WriteLine("[AndroidEncoder] ProcessGpuCameraFrame: Encoder not ready");
+                return;
+            }
+
+            try
+            {
+                _pendingTimestamp = timestamp;
+
+                // Make EGL context current - CRITICAL: Must be done before UpdateTexImage!
+                MakeCurrent();
+
+                // CRITICAL: Update the SurfaceTexture on the EGL context thread
+                // This calls UpdateTexImage() which MUST run on the thread that owns the EGL context
+                if (!_gpuFrameProvider.TryProcessFrameNoWait(out long timestampNs))
+                {
+                    // No frame available yet
+                    return;
+                }
+
+                // 1. Render camera texture to the encoder's framebuffer
+                // CRITICAL: Reset GL state before rendering OES texture!
+                // Skia modifies many GL states (blend, depth, stencil, scissor, program, etc.)
+                // We MUST reset to clean state or subsequent frames will render black
+                ResetGlStateForOesRendering();
+
+                GLES20.GlViewport(0, 0, _width, _height);
+                GLES20.GlClear(GLES20.GlColorBufferBit);
+
+                // Render OES texture from SurfaceTexture
+                _gpuFrameProvider.RenderToFramebuffer(_width, _height, _isFrontCamera);
+
+                // 2. Ensure Skia surface is ready for overlays
+                if (_grContext == null)
+                {
+                    var glInterface = GRGlInterface.Create();
+                    _grContext = GRContext.CreateGl(glInterface);
+                }
+                else
+                {
+                    // Full reset required - OES rendering touches many GL states
+                    _grContext.ResetContext();
+                }
+                
+                if (_skSurface == null || _skInfo.Width != _width || _skInfo.Height != _height)
+                {
+                    _skInfo = new SKImageInfo(_width, _height, SKColorType.Rgba8888, SKAlphaType.Premul);
+
+                    int[] fb = new int[1];
+                    GLES20.GlGetIntegerv(GLES20.GlFramebufferBinding, fb, 0);
+                    int[] samples = new int[1];
+                    GLES20.GlGetIntegerv(GLES20.GlSamples, samples, 0);
+                    int[] stencil = new int[1];
+                    GLES20.GlGetIntegerv(GLES20.GlStencilBits, stencil, 0);
+
+                    var fbInfo = new GRGlFramebufferInfo((uint)fb[0], 0x8058);
+                    var backendRT = new GRBackendRenderTarget(_width, _height, samples[0], stencil[0], fbInfo);
+
+                    _skSurface?.Dispose();
+                    _skSurface = SKSurface.Create(_grContext, backendRT, GRSurfaceOrigin.BottomLeft, SKColorType.Rgba8888);
+                }
+
+                // 3. Apply FrameProcessor overlays (user can draw on top of camera frame)
+                var canvas = _skSurface.Canvas;
+                // Note: Camera frame is already rendered to framebuffer, don't clear!
+
+                if (frameProcessor != null || videoDiagnosticsOn)
+                {
+                    var frame = new DrawableFrame
+                    {
+                        Width = _width,
+                        Height = _height,
+                        Canvas = canvas,
+                        Time = timestamp,
+                        Scale = 1f  // Recording frame - full size
+                    };
+
+                    frameProcessor?.Invoke(frame);
+
+                    if (videoDiagnosticsOn)
+                    {
+                        drawDiagnostics?.Invoke(canvas, _width, _height);
+                    }
+                }
+
+                // 4. Flush and submit to encoder
+                canvas.Flush();
+                _grContext.Flush();
+
+                // Preview is now provided by ImageReader stream, not encoder output
+                // This avoids expensive GPU->CPU transfer during recording
+                // Keeping code commented for reference:
+                /*
+                _previewFrameCounter++;
+                bool needsPreview = false;
+                if (_previewFrameCounter >= 3)
+                {
+                    _previewFrameCounter = 0;
+                    needsPreview = true;
+                }
+
+                if (needsPreview)
+                {
+                    SKImage keepAlive = null;
+                    try
+                    {
+                        using var gpuSnap = _skSurface.Snapshot();
+                        if (gpuSnap != null)
+                        {
+                            int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                            int pw = Math.Min(_width, maxPreviewWidth);
+                            int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+
+                            if (_previewRasterSurface == null || _previewWidth != pw || _previewHeight != ph)
+                            {
+                                _previewRasterSurface?.Dispose();
+                                var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
+                                _previewRasterSurface = SKSurface.Create(pInfo);
+                                _previewWidth = pw;
+                                _previewHeight = ph;
+                            }
+
+                            var pCanvas = _previewRasterSurface.Canvas;
+                            pCanvas.Clear(SKColors.Transparent);
+                            pCanvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
+
+                            keepAlive = _previewRasterSurface.Snapshot();
+                            lock (_previewLock)
+                            {
+                                _latestPreviewImage?.Dispose();
+                                _latestPreviewImage = keepAlive;
+                                keepAlive = null;
+                            }
+                            PreviewAvailable?.Invoke(this, EventArgs.Empty);
+                        }
+                    }
+                    catch { keepAlive?.Dispose(); }
+                    finally { keepAlive?.Dispose(); }
+                }
+                */
+
+                // 5. Set presentation timestamp and swap to encoder
+                long ptsNanos = (long)(timestamp.TotalMilliseconds * 1_000_000.0);
+                EGLExt.EglPresentationTimeANDROID(_eglDisplay, _eglSurface, ptsNanos);
+                EGL14.EglSwapBuffers(_eglDisplay, _eglSurface);
+
+                // 6. Drain encoder
+                bool bufferingMode = IsPreRecordingMode && _preRecordingBuffer != null;
+
+                if (DateTime.Now - _lastKeyframeRequest >= _keyframeRequestInterval)
+                {
+                    RequestKeyFrame();
+                    _lastKeyframeRequest = DateTime.Now;
+                }
+
+                if (bufferingMode)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        DrainEncoder(endOfStream: false, bufferingMode: true);
+                    }
+                }
+                else
+                {
+                    DrainEncoder(endOfStream: false, bufferingMode: false);
+                }
+
+                EncodedFrameCount++;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] ProcessGpuCameraFrame error: {ex.Message}");
+            }
+            finally
+            {
+                // Unbind context
+                try { EGL14.EglMakeCurrent(_eglDisplay, EGL14.EglNoSurface, EGL14.EglNoSurface, EGL14.EglNoContext); } catch { }
+            }
+
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Dispose GPU camera path resources.
+        /// </summary>
+        public void DisposeGpuCameraPath()
+        {
+            _gpuFrameProvider?.Stop();
+            _gpuFrameProvider?.Dispose();
+            _gpuFrameProvider = null;
+            _useGpuCameraPath = false;
+            System.Diagnostics.Debug.WriteLine("[AndroidEncoder] GPU camera path disposed");
+        }
+
         public async Task AddFrameAsync(SKBitmap bitmap, TimeSpan timestamp)
         {
             // CPU fallback not used in Android GPU path
@@ -711,13 +1519,20 @@ namespace DrawnUi.Camera
 
         public async Task AbortAsync()
         {
-
             _isRecording = false;
+
+            // Stop GPU encoding thread first
+            StopGpuEncodingThread();
+
             _progressTimer?.Dispose();
 
             if (IsPreRecordingMode && _preRecordingBuffer != null && _videoCodec != null)
             {
-                _preRecordingBuffer?.Dispose();
+                // Only dispose if not a shared buffer (SkiaCamera owns shared buffers)
+                if (_preRecordingBuffer != SharedPreRecordingBuffer)
+                {
+                    _preRecordingBuffer?.Dispose();
+                }
                 _preRecordingBuffer = null;
             }
 
@@ -739,6 +1554,7 @@ namespace DrawnUi.Camera
             }
 
             EncodingStatus = "Canceled";
+            ResetAudioTiming();
         }
 
         public async Task<CapturedVideo> StopAsync()
@@ -746,6 +1562,10 @@ namespace DrawnUi.Camera
             System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] StopAsync CALLED: IsPreRecordingMode={IsPreRecordingMode}, BufferFrames={(_preRecordingBuffer?.GetFrameCount() ?? 0)}");
 
             _isRecording = false;
+
+            // Stop GPU encoding thread first (ensures no more frames are processed)
+            StopGpuEncodingThread();
+
             _progressTimer?.Dispose();
             EncodingStatus = "Stopping";
 
@@ -788,9 +1608,10 @@ namespace DrawnUi.Camera
 
                             var buffer = ByteBuffer.Wrap(data);
                             var flags = isKeyFrame ? MediaCodecBufferFlags.KeyFrame : MediaCodecBufferFlags.None;
-                            var bufferInfo = new MediaCodec.BufferInfo();
-                            bufferInfo.Set(0, data.Length, (long)timestamp.TotalMicroseconds, flags);
-                            _muxer.WriteSampleData(_videoTrackIndex, buffer, bufferInfo);
+                            // Reuse cached BufferInfo to avoid per-frame Java allocations
+                            _muxerBufferInfo ??= new MediaCodec.BufferInfo();
+                            _muxerBufferInfo.Set(0, data.Length, (long)timestamp.TotalMicroseconds, flags);
+                            _muxer.WriteSampleData(_videoTrackIndex, buffer, _muxerBufferInfo);
                         }
 
                         EncodingDuration = _preRecordingBuffer.GetBufferedDuration();
@@ -798,7 +1619,11 @@ namespace DrawnUi.Camera
                     }
                 }
 
-                _preRecordingBuffer?.Dispose();
+                // Only dispose if not a shared buffer (SkiaCamera owns shared buffers)
+                if (_preRecordingBuffer != SharedPreRecordingBuffer)
+                {
+                    _preRecordingBuffer?.Dispose();
+                }
                 _preRecordingBuffer = null;
             }
 
@@ -826,6 +1651,8 @@ namespace DrawnUi.Camera
                 EncodingDuration = DateTime.Now - _startTime;
             }
 
+            ResetAudioTiming();
+
             return new CapturedVideo
             {
                 FilePath = _outputPath,
@@ -837,7 +1664,9 @@ namespace DrawnUi.Camera
 
         private void DrainEncoder(bool endOfStream, bool bufferingMode)
         {
-            var bufferInfo = new MediaCodec.BufferInfo();
+            // Reuse cached BufferInfo to avoid per-call Java allocations
+            _drainBufferInfo ??= new MediaCodec.BufferInfo();
+            var bufferInfo = _drainBufferInfo;
             int maxIterations = endOfStream ? 100 : 1;  // Prevent infinite loop on endOfStream
             int iterations = 0;
 
@@ -885,10 +1714,48 @@ namespace DrawnUi.Camera
 
                     // Normal/live recording: start muxer if not already started
                     if (_muxerStarted) continue;
+
+                    if (_recordAudio && _audioFormat == null)
+                    {
+                        // Increment wait counter
+                        _framesWaitingForAudio++;
+                        
+                        // Force start if timeout exceeded
+                        bool forceStart = _framesWaitingForAudio > MaxFramesWaitingForAudio;
+                        
+                        if (!forceStart)
+                        {
+                            if (_framesWaitingForAudio % 10 == 0)
+                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Video format ready, waiting for audio format ({_framesWaitingForAudio}/{MaxFramesWaitingForAudio})...");
+                            
+                            // Check audio again (maybe it just arrived)
+                            DrainAudioEncoder(); 
+                            if (_audioFormat == null)
+                                continue; // Keep waiting
+                        }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] ⚠️ Audio initialization timed out ({MaxFramesWaitingForAudio} frames). Starting muxer VIDEO ONLY.");
+                        }
+                    }
+
                     _videoTrackIndex = _muxer.AddTrack(newFormat);
+                    // Add audio track if present (check again in case it arrived last moment)
+                     if (_recordAudio && _audioFormat != null)
+                    {
+                        _audioTrackIndex = _muxer.AddTrack(_audioFormat);
+                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Added audio track at index {_audioTrackIndex}");
+                    }
+                    else if (_recordAudio)
+                    {
+                         System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Warning: Starting muxer WITHOUT requested audio track (Timed out)!");
+                         // We must ensure we don't try to write audio later
+                         _audioTrackIndex = -1; 
+                    }
+
                     _muxer.Start();
                     _muxerStarted = true;
-                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] MediaMuxer started");
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] MediaMuxer started (OnFormatChanged)");
                 }
                 else if (outIndex >= 0)
                 {
@@ -910,31 +1777,69 @@ namespace DrawnUi.Camera
                             // BUFFERING MODE: Append to circular buffer
                             if (bufferingMode)
                             {
-                                byte[] frameData = new byte[bufferInfo.Size];
-                                encodedData.Position(bufferInfo.Offset);
-                                encodedData.Get(frameData, 0, bufferInfo.Size);
-
-                                // Track first frame offset for timestamp normalization
-                                var rawTimestamp = TimeSpan.FromMicroseconds(bufferInfo.PresentationTimeUs);
-                                if (_firstEncodedFrameOffset == TimeSpan.MinValue)
+                                // Use ArrayPool to avoid per-frame allocations (reduces GC pressure)
+                                byte[] frameData = ArrayPool<byte>.Shared.Rent(bufferInfo.Size);
+                                try
                                 {
-                                    _firstEncodedFrameOffset = rawTimestamp;
-                                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] First buffered frame at {rawTimestamp.TotalSeconds:F3}s");
+                                    encodedData.Position(bufferInfo.Offset);
+                                    encodedData.Get(frameData, 0, bufferInfo.Size);
+
+                                    // Track first frame offset for timestamp normalization
+                                    var rawTimestamp = TimeSpan.FromMicroseconds(bufferInfo.PresentationTimeUs);
+                                    if (_firstEncodedFrameOffset == TimeSpan.MinValue)
+                                    {
+                                        _firstEncodedFrameOffset = rawTimestamp;
+                                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] First buffered frame at {rawTimestamp.TotalSeconds:F3}s");
+                                    }
+
+                                    // Normalize to start from 0
+                                    var normalizedTimestamp = rawTimestamp - _firstEncodedFrameOffset;
+                                    // AppendEncodedFrame copies data internally, so buffer can be returned immediately
+                                    _preRecordingBuffer.AppendEncodedFrame(frameData, bufferInfo.Size, normalizedTimestamp);
+
+                                    EncodedFrameCount++;
+                                    EncodedDataSize += bufferInfo.Size;
+                                    EncodingDuration = DateTime.Now - _startTime;
+                                    EncodingStatus = "Buffering";
                                 }
-
-                                // Normalize to start from 0
-                                var normalizedTimestamp = rawTimestamp - _firstEncodedFrameOffset;
-                                _preRecordingBuffer.AppendEncodedFrame(frameData, bufferInfo.Size, normalizedTimestamp);
-
-                                EncodedFrameCount++;
-                                EncodedDataSize += bufferInfo.Size;
-                                EncodingDuration = DateTime.Now - _startTime;
-                                EncodingStatus = "Buffering";
+                                finally
+                                {
+                                    ArrayPool<byte>.Shared.Return(frameData);
+                                }
                             }
                             // LIVE RECORDING MODE: Write to muxer
-                            else if (_muxerStarted)
+                            else
                             {
-                                long pts = bufferInfo.PresentationTimeUs;
+                                // Lazy Start Failsafe: If Audio arrived late
+                                if (!_muxerStarted && _videoFormat != null)
+                                {
+                                    _framesWaitingForAudio++;
+                                    bool forceStart = _framesWaitingForAudio > MaxFramesWaitingForAudio;
+
+                                    if (!_recordAudio || _audioFormat != null || forceStart)
+                                    {
+                                        try
+                                        {
+                                            System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Lazy Muxer Start triggered in Data block (Force={forceStart})");
+                                            _videoTrackIndex = _muxer.AddTrack(_videoFormat);
+                                            if (_recordAudio && _audioFormat != null)
+                                                _audioTrackIndex = _muxer.AddTrack(_audioFormat);
+                                            else 
+                                                _audioTrackIndex = -1;
+
+                                            _muxer.Start();
+                                            _muxerStarted = true;
+                                        }
+                                        catch (Exception exMux)
+                                        {
+                                            System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Lazy Start Failed: {exMux.Message}");
+                                        }
+                                    }
+                                }
+
+                                if (_muxerStarted)
+                                {
+                                    long pts = bufferInfo.PresentationTimeUs;
 
                                 // CRITICAL: Always normalize timestamps (both normal recording AND pre-rec+live)
                                 // Track first live frame for normalization
@@ -948,12 +1853,13 @@ namespace DrawnUi.Camera
                                 long normalizedPts = pts - (long)_firstEncodedFrameOffset.TotalMicroseconds;
                                 long finalPts = normalizedPts + (long)_preRecordingDuration.TotalMicroseconds;
 
-                                var normalizedBufferInfo = new MediaCodec.BufferInfo();
-                                normalizedBufferInfo.Set(bufferInfo.Offset, bufferInfo.Size, finalPts, bufferInfo.Flags);
+                                // Reuse cached BufferInfo to avoid per-frame Java allocations
+                                _muxerBufferInfo ??= new MediaCodec.BufferInfo();
+                                _muxerBufferInfo.Set(bufferInfo.Offset, bufferInfo.Size, finalPts, bufferInfo.Flags);
 
                                 encodedData.Position(bufferInfo.Offset);
                                 encodedData.Limit(bufferInfo.Offset + bufferInfo.Size);
-                                _muxer.WriteSampleData(_videoTrackIndex, encodedData, normalizedBufferInfo);
+                                _muxer.WriteSampleData(_videoTrackIndex, encodedData, _muxerBufferInfo);
 
                                 EncodedFrameCount++;
                                 EncodedDataSize += bufferInfo.Size;
@@ -962,6 +1868,7 @@ namespace DrawnUi.Camera
                             }
                         }
                     }
+                }
                     _videoCodec.ReleaseOutputBuffer(outIndex, false);
 
                     if ((bufferInfo.Flags & MediaCodecBufferFlags.EndOfStream) != 0)
@@ -1018,6 +1925,50 @@ namespace DrawnUi.Camera
                 throw new InvalidOperationException("EGL make current failed");
         }
 
+        /// <summary>
+        /// Reset OpenGL ES state to clean defaults before rendering OES texture.
+        /// CRITICAL: Skia modifies many GL states during overlay rendering.
+        /// Without resetting, subsequent frames render black because blend/stencil/etc are wrong.
+        /// </summary>
+        private void ResetGlStateForOesRendering()
+        {
+            // Unbind any program Skia left bound
+            GLES20.GlUseProgram(0);
+
+            // Disable blending (Skia enables this for transparency)
+            GLES20.GlDisable(GLES20.GlBlend);
+
+            // Disable depth test
+            GLES20.GlDisable(GLES20.GlDepthTest);
+
+            // Disable stencil test (Skia uses stencil for clipping paths)
+            GLES20.GlDisable(GLES20.GlStencilTest);
+
+            // Disable scissor test (Skia may use this for clipping)
+            GLES20.GlDisable(GLES20.GlScissorTest);
+
+            // Reset color mask to write all channels
+            GLES20.GlColorMask(true, true, true, true);
+
+            // Reset depth mask
+            GLES20.GlDepthMask(true);
+
+            // Unbind any texture from texture unit 0
+            GLES20.GlActiveTexture(GLES20.GlTexture0);
+            GLES20.GlBindTexture(GLES20.GlTexture2d, 0);
+            GLES20.GlBindTexture(GLES11Ext.GlTextureExternalOes, 0);
+
+            // Bind default framebuffer
+            GLES20.GlBindFramebuffer(GLES20.GlFramebuffer, 0);
+
+            // Unbind VBO and VAO that Skia may have left bound
+            GLES20.GlBindBuffer(GLES20.GlArrayBuffer, 0);
+            GLES20.GlBindBuffer(GLES20.GlElementArrayBuffer, 0);
+
+            // Clear any errors that accumulated
+            while (GLES20.GlGetError() != GLES20.GlNoError) { }
+        }
+
         private sealed class FrameScope : IDisposable { public void Dispose() { } }
 
         private void TryReleaseCodec()
@@ -1025,6 +1976,11 @@ namespace DrawnUi.Camera
             try { _videoCodec?.Stop(); } catch { }
             try { _videoCodec?.Release(); } catch { }
             _videoCodec = null;
+
+            try { _audioCodec?.Stop(); } catch { }
+            try { _audioCodec?.Release(); } catch { }
+            _audioCodec = null;
+
             try { _inputSurface?.Release(); } catch { }
             _inputSurface = null;
         }
@@ -1035,6 +1991,55 @@ namespace DrawnUi.Camera
             _muxer = null;
             _muxerStarted = false;
             _videoTrackIndex = -1;
+        }
+
+        private void ResetAudioTiming()
+        {
+            _audioPtsBaseNs = -1;
+            _audioPtsOffsetUs = 0;
+            _audioPresentationTimeUs = 0;
+        }
+
+        private long CalculateAudioPts(long timestampNs)
+        {
+            if (timestampNs < 0)
+            {
+                timestampNs = 0;
+            }
+
+            // FIX: Wait for first video frame to be processed before accepting audio
+            if (_firstVideoFrameTimestampNs < 0)
+            {
+                // First video frame not yet processed, skip this audio sample
+                _droppedEarlyAudioSamples++;
+                return -1;
+            }
+
+            // Set audio baseline from first valid audio sample (after first video frame processed)
+            if (_audioPtsBaseNs < 0)
+            {
+                _audioPtsBaseNs = timestampNs;
+                if (_droppedEarlyAudioSamples > 0)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Audio synced: dropped {_droppedEarlyAudioSamples} samples waiting for first video frame");
+                }
+            }
+
+            long relativeUs = (timestampNs - _audioPtsBaseNs) / 1000;
+            if (relativeUs < 0)
+            {
+                relativeUs = 0;
+            }
+
+            long finalPtsUs = relativeUs + _audioPtsOffsetUs;
+
+            if (finalPtsUs <= _audioPresentationTimeUs)
+            {
+                finalPtsUs = _audioPresentationTimeUs + 1;
+            }
+
+            _audioPresentationTimeUs = finalPtsUs;
+            return finalPtsUs;
         }
 
         private void TearDownEgl()
@@ -1061,16 +2066,150 @@ namespace DrawnUi.Camera
                 _latestPreviewImage?.Dispose();
                 _latestPreviewImage = null;
             }
+
+            _previewRasterSurface?.Dispose();
+            _previewRasterSurface = null;
+        }
+
+        private void FeedAudioEncoder(AudioSample sample)
+        {
+            if (_audioCodec == null) return;
+            
+            // Calculate PTS and check if sample should be dropped
+            var pts = CalculateAudioPts(sample.TimestampNs);
+            if (pts < 0)
+            {
+                return; // Skip audio samples before first video frame
+            }
+            
+            try 
+            {
+                // Lock audio semaphore
+                _audioSemaphore.Wait();
+                
+                int index = _audioCodec.DequeueInputBuffer(1000); // 1ms wait
+                if (index >= 0)
+                {
+                    var buffer = _audioCodec.GetInputBuffer(index);
+                    buffer.Clear();
+                    
+                    var data = sample.Data;
+                    if (data.Length > buffer.Remaining())
+                    {
+                        // Truncate if too large (shouldn't happen if sized correctly)
+                        // data = data.Take(buffer.Remaining()).ToArray(); // Need using System.Linq
+                        // Better use Array.Copy for perf and no linq allocations
+                        var newData = new byte[buffer.Remaining()];
+                        Array.Copy(data, newData, newData.Length);
+                        data = newData;
+                    }
+                    
+                    buffer.Put(data);
+                    
+                    long ptsUs = pts; // Already calculated and validated at method start
+
+                    _audioCodec.QueueInputBuffer(index, 0, data.Length, ptsUs, 0);
+                }
+                
+                DrainAudioEncoder();
+            }
+            catch(Exception ex)
+            {
+                 System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] FeedAudio error: {ex.Message}");
+            }
+            finally
+            {
+                _audioSemaphore.Release();
+            }
+        }
+
+        private void DrainAudioEncoder()
+        {
+            if (_audioCodec == null) return;
+            
+            var info = new MediaCodec.BufferInfo();
+            while (true)
+            {
+                int encoderStatus = _audioCodec.DequeueOutputBuffer(info, 0); // No wait
+                if (encoderStatus == (int)MediaCodecInfoState.TryAgainLater)
+                {
+                    break;
+                }
+                else if (encoderStatus == (int)MediaCodecInfoState.OutputFormatChanged)
+                {
+                    if (_muxerStarted) 
+                    {
+                        // This can happen if audio starts later? 
+                        // But Muxer doesn't support adding tracks after start.
+                        // We must ensure this happens before Muxer.Start() in StartAsync logic
+                         _audioFormat = _audioCodec.OutputFormat;
+                    }
+                    else 
+                    {
+                        _audioFormat = _audioCodec.OutputFormat;
+                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Audio Format Changed: {_audioFormat}");
+                    }
+                }
+                else if (encoderStatus >= 0)
+                {
+                    var encodedData = _audioCodec.GetOutputBuffer(encoderStatus);
+                    if (encodedData == null) {
+                         _audioCodec.ReleaseOutputBuffer(encoderStatus, false);
+                         continue;
+                    }
+
+                    if ((info.Flags & MediaCodecBufferFlags.CodecConfig) != 0) 
+                    {
+                         // Codec config, ignore
+                         info.Size = 0;
+                    }
+
+                    if (info.Size > 0 && _muxerStarted && _audioTrackIndex >= 0)
+                    {
+                         // Write to muxer. Muxer is shared resource.
+                         // Use a lock. _warmupLock is used for warmup, maybe not best.
+                         // Use new lock object
+                         lock(_warmupLock)
+                         {
+                             _muxer.WriteSampleData(_audioTrackIndex, encodedData, info);
+                         }
+                    }
+                    
+                    _audioCodec.ReleaseOutputBuffer(encoderStatus, false);
+                    
+                    if ((info.Flags & MediaCodecBufferFlags.EndOfStream) != 0) 
+                    {
+                        break;
+                    }
+                }
+            }
         }
 
         public void Dispose()
         {
+            // Ensure GPU encoding thread is stopped
+            StopGpuEncodingThread();
+
             if (_isRecording)
             {
                 try { StopAsync().GetAwaiter().GetResult(); } catch { }
             }
+            DisposeGpuCameraPath();
             _progressTimer?.Dispose();
-            _preRecordingBuffer?.Dispose();
+
+            // Only dispose if not a shared buffer (SkiaCamera owns shared buffers)
+            if (_preRecordingBuffer != SharedPreRecordingBuffer)
+            {
+                _preRecordingBuffer?.Dispose();
+            }
+            _preRecordingBuffer = null;
+
+            // Dispose cached Java objects to avoid native memory leaks
+            _drainBufferInfo?.Dispose();
+            _drainBufferInfo = null;
+            _muxerBufferInfo?.Dispose();
+            _muxerBufferInfo = null;
+
             TryReleaseCodec();
             TryReleaseMuxer();
             TearDownEgl();

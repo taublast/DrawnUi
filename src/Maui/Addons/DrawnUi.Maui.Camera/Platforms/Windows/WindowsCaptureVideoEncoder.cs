@@ -17,11 +17,17 @@ namespace DrawnUi.Camera.Platforms.Windows;
 /// </summary>
 public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 {
-    // Track first and last frame timestamps for each buffer
+    // Track first and last frame timestamps for each buffer (pre-recording mode)
     private TimeSpan _bufferAFirstTimestamp = TimeSpan.Zero;
     private TimeSpan _bufferALastTimestamp = TimeSpan.Zero;
     private TimeSpan _bufferBFirstTimestamp = TimeSpan.Zero;
     private TimeSpan _bufferBLastTimestamp = TimeSpan.Zero;
+
+    // Track first video frame for normal recording mode (audio sync)
+    private bool _hasFirstVideoFrame = false;
+    private TimeSpan _firstVideoFrameTimestamp = TimeSpan.Zero;
+    private volatile bool _pauseAudioWrites = false; // Pause audio during buffer swap
+
     private static int _instanceCounter = 0;
     private readonly int _instanceId;
 
@@ -34,7 +40,121 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     private DateTime _startTime;
     private bool _isRecording;
     private System.Threading.Timer _progressTimer;
-    private int _totalFrameCount; // Track total frames processed
+    private long _totalFrameCount; // Track total frames processed
+    private CircularAudioBuffer _audioBuffer;
+    private Guid _selectedAudioCodecGuid = Guid.Empty;
+
+    public bool SupportsAudio => true;
+
+    /// <summary>
+    /// Returns true if audio encoding was successfully initialized.
+    /// Check this BEFORE starting audio capture to avoid wasting resources.
+    /// </summary>
+    public bool IsAudioEncodingEnabled => _recordAudio && _sinkWriter != null;
+
+    public void SetAudioBuffer(CircularAudioBuffer buffer)
+    {
+        _audioBuffer = buffer;
+    }
+
+    public void WriteAudio(AudioSample sample)
+    {
+        // CRITICAL: Early exit to avoid any overhead when audio is disabled
+        if (!_recordAudio || !_isRecording || _sinkWriter == null)
+            return;
+
+        // SYNCHRONOUS write - no Task creation, no thread pool
+        // Try to acquire semaphore with short timeout
+        // Drop sample if we can't acquire quickly (better than lagging)
+        if (!_audioSemaphore.Wait(5)) // 5ms timeout
+        {
+            // Semaphore busy - drop this sample to avoid backup
+            return;
+        }
+
+        try
+        {
+            WriteAudioSampleSync(sample.Data, sample.TimestampNs);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio write error: {ex.Message}");
+        }
+        finally
+        {
+            _audioSemaphore.Release();
+        }
+    }
+
+    /// <summary>
+    /// Synchronous audio sample write - MUST be called with _audioSemaphore held
+    /// Uses native encoder with IMFTransform Resampler to normalize format, then writes to SinkWriter for AAC transcoding
+    /// </summary>
+    private unsafe void WriteAudioSampleSync(byte[] pcmData, long timestampNs)
+    {
+        // Drop audio samples if we're pausing for buffer swap
+        if (_pauseAudioWrites)
+        {
+            return;
+        }
+
+        if (_sinkWriter == null || pcmData == null || pcmData.Length == 0)
+        {
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] WriteAudioSample SKIP: _sinkWriter={(_sinkWriter != null ? "OK" : "NULL")}, pcmData={pcmData?.Length ?? 0}, PreRecMode={IsPreRecordingMode}");
+            return;
+        }
+
+        // Normal recording mode: drop audio samples before first video frame
+        if (!_hasFirstVideoFrame && !IsPreRecordingMode)
+        {
+            //Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] WriteAudioSample DROP: Waiting for first video frame (timestamp={timestampNs / 1_000_000.0:F1}ms), PreRecMode={IsPreRecordingMode}");
+            return; // No video frame yet, drop audio
+        }
+
+        // Convert nanoseconds to 100-nanosecond units (HNS)
+        long hnsTime = timestampNs / 100;
+
+        // CRITICAL: Adjust timestamps in pre-recording mode only
+        // In live mode, use absolute timestamps for proper MediaComposition muxing
+        if (IsPreRecordingMode)
+        {
+            // Pre-recording: adjust timestamps relative to buffer start
+            TimeSpan baseTimestamp = _isBufferA ? _bufferAFirstTimestamp : _bufferBFirstTimestamp;
+            if (baseTimestamp == TimeSpan.Zero)
+            {
+                // Drop audio samples if we haven't processed any video frames yet for this buffer
+                //Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] WriteAudioSample DROP: Buffer {(_isBufferA ? "A" : "B")} not initialized yet");
+                return;
+            }
+            long baseHns = (long)(baseTimestamp.TotalSeconds * 10_000_000L);
+            hnsTime -= baseHns;
+            if (hnsTime < 0) hnsTime = 0;
+        }
+        // In normal/live mode: Use absolute timestamps (no adjustment)
+        // MediaComposition will handle timeline alignment automatically
+
+        //Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] WriteAudioSample WRITE: timestamp={timestampNs / 1_000_000.0:F1}ms, hnsTime={hnsTime / 10000.0:F1}ms, length={pcmData.Length}, PreRecMode={IsPreRecordingMode}, hasNativeEncoder={_nativeAudioEncoder != IntPtr.Zero}");
+
+        // Use native encoder with resampler (bypasses .NET MAUI COM restrictions)
+        if (_nativeAudioEncoder != IntPtr.Zero)
+        {
+            int result = AudioEncoderNative.audio_encoder_write_pcm(
+                _nativeAudioEncoder,
+                pcmData,
+                (uint)pcmData.Length,
+                hnsTime);
+
+            if (result != 0) // 0 = AUDIO_ENCODER_SUCCESS
+            {
+                string error = AudioEncoderNative.GetError(_nativeAudioEncoder);
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Native encoder write failed: {error}");
+            }
+            return;
+        }
+
+        // Fallback: Native encoder not available
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder] Native encoder not initialized, dropping audio sample");
+    }
 
     // Pre-recording circular buffer files (2-file swap pattern like iOS)
     private string _preRecBufferA;           // First buffer file
@@ -55,6 +175,9 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     private readonly object _frameLock = new();   // Protects Begin/Submit sequence
     private TimeSpan _pendingTimestamp;
 
+    // Native audio encoder (bypasses .NET MAUI COM restrictions)
+    private IntPtr _nativeAudioEncoder = IntPtr.Zero;
+
     // Preview-from-recording support
     private readonly object _previewLock = new();
     private SKImage _latestPreviewImage; // swapped out to UI on demand
@@ -62,17 +185,36 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     public event EventHandler PreviewAvailable;
 
 
-        // Media Foundation pipeline (production path)
-        private global::Windows.Win32.Media.MediaFoundation.IMFSinkWriter _sinkWriter;
-        private readonly System.Threading.SemaphoreSlim _sinkWriterSemaphore = new(1, 1);
-        private uint _streamIndex;
-        private bool _mfStarted;
+    // Media Foundation pipeline (production path)
+    private global::Windows.Win32.Media.MediaFoundation.IMFSinkWriter _sinkWriter;
+    private readonly System.Threading.SemaphoreSlim _sinkWriterSemaphore = new(1, 1);
+    private readonly System.Threading.SemaphoreSlim _audioSemaphore = new(1, 1); // Separate semaphore for audio to avoid blocking video
+    private uint _streamIndex;
+    private uint _audioStreamIndex;
+    private bool _mfStarted;
 
-        // CsWin32 may not expose MF_VERSION directly; define the known value from mfapi.h
-        private const uint MF_VERSION_CONST = 0x00020070; // (MF_SDK_VERSION<<16) | MF_API_VERSION
-        private long _rtDurationPerFrame;   // 100-ns units
-        private long _lastSampleTime100ns = -1;
+    // Audio resampler (IMFTransform) - normalizes audio format before SinkWriter
+    private IMFTransform _audioResampler;
+    private global::Windows.Win32.Media.MediaFoundation.IMFSample _audioResamplerInputSample;
 
+    // CsWin32 may not expose MF_VERSION directly; define the known value from mfapi.h
+    private const uint MF_VERSION_CONST = 0x00020070; // (MF_SDK_VERSION<<16) | MF_API_VERSION
+    private long _rtDurationPerFrame;   // 100-ns units
+    private long _lastSampleTime100ns = -1;
+
+
+    private int _audioSampleRate = 44100;
+    private int _audioChannels = 1;
+    private bool _audioInputIsFloat = false; // Tracks whether we're using Float or 16-bit PCM input
+    private bool _deviceAudioIsFloat = false; // What the device actually outputs
+
+    public void SetAudioParameters(int sampleRate, int channels, bool isFloat = false)
+    {
+        _audioSampleRate = sampleRate > 0 ? sampleRate : 44100;
+        _audioChannels = channels > 0 ? channels : 1;
+        _deviceAudioIsFloat = isFloat;
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio parameters set to: {_audioSampleRate}Hz, {_audioChannels}ch, Format={(_deviceAudioIsFloat ? "Float" : "PCM")}");
+    }
 
     public WindowsCaptureVideoEncoder(GRContext grContext = null)
     {
@@ -85,7 +227,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     public bool IsRecording => _isRecording;
 
     public event EventHandler<TimeSpan> ProgressReported;
-    
+
     // Properties for platform-specific details
     public int EncodedFrameCount { get; private set; }
     public long EncodedDataSize { get; private set; }
@@ -102,7 +244,22 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         {
             fixed (char* p = path)
             {
-                var hr = PInvoke.MFCreateSinkWriterFromURL(new PCWSTR(p), null, null, out _sinkWriter);
+                // Create attributes for Sink Writer
+                PInvoke.MFCreateAttributes(out var attributes, 1);
+
+                // Allow MFReadWrite to use whatever transforms (software or
+                // hardware) the system exposes for the selected output type.
+                // On many systems the Microsoft AAC encoder is exposed as
+                // an MFT that requires hardware transforms to be enabled;
+                // forcing this flag to 0 can cause MF_E_TOPO_CODEC_NOT_FOUND
+                // even though CodecQuery / MFTranscodeGetAudioOutputAvailableTypes
+                // report AAC support.
+                attributes.SetUINT32(MFGuids.MF_READWRITE_ENABLE_HARDWARE_TRANSFORMS, 1);
+
+                var hr = PInvoke.MFCreateSinkWriterFromURL(new PCWSTR(p), null, attributes, out _sinkWriter);
+
+                Marshal.ReleaseComObject(attributes);
+
                 if (hr.Failed)
                     throw new InvalidOperationException($"MFCreateSinkWriterFromURL failed: 0x{hr.Value:X8}");
             }
@@ -119,6 +276,11 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         _frameRate = Math.Max(1, frameRate);
         _recordAudio = recordAudio;
         _preRecordingDuration = TimeSpan.Zero;
+
+        if (_recordAudio)
+        {
+            await DetectAvailableEncoderTypes();
+        }
 
         // Prepare output directory
         var outputDir = Path.GetDirectoryName(_outputPath);
@@ -170,7 +332,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
             // Create sink writer (SAME as normal mode)
             var path = _outputFile.Path;
-            await Task.Run(() => 
+            await Task.Run(() =>
             {
                 CreateSinkWriterInternal(path);
                 ConfigureH264OutputAndRGB32Input();
@@ -195,7 +357,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
             // Create sink writer
             var path = _outputFile.Path;
-            await Task.Run(() => 
+            await Task.Run(() =>
             {
                 CreateSinkWriterInternal(path);
                 ConfigureH264OutputAndRGB32Input();
@@ -351,6 +513,16 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         _isRecording = true;
         _startTime = DateTime.Now;
 
+        // Reset first video frame tracking for audio sync
+        _hasFirstVideoFrame = false;
+        _firstVideoFrameTimestamp = TimeSpan.Zero;
+
+        // CRITICAL: Reset timestamp tracking for NEW recording (prevents duration from including pre-recording)
+        _lastSampleTime100ns = -1;
+        _encodingDurationSetFromFrames = false;
+
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] RESET: _lastSampleTime100ns = -1, _hasFirstVideoFrame = false");
+
         // Initialize statistics
         EncodedFrameCount = 0;
         EncodedDataSize = 0;
@@ -384,6 +556,16 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 _bufferBLastTimestamp = timestamp;
             }
         }
+        else
+        {
+            // Normal recording mode: track first video frame for audio sync
+            if (!_hasFirstVideoFrame)
+            {
+                _firstVideoFrameTimestamp = timestamp;
+                _hasFirstVideoFrame = true;
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] First video frame timestamp: {timestamp.TotalMilliseconds:F1}ms");
+            }
+        }
 
         if (!_isRecording)
             return;
@@ -395,33 +577,33 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         try
         {
             // PRE-RECORDING MODE: Check if we need to swap buffers
-        if (IsPreRecordingMode && _sinkWriter != null)
-        {
-            // Check if current buffer duration exceeded
-            var elapsed = DateTime.UtcNow - _currentBufferStartTime;
-            if (elapsed >= _preRecordDuration)
+            if (IsPreRecordingMode && _sinkWriter != null)
             {
-                await SwapPreRecordingBuffer();
+                // Check if current buffer duration exceeded
+                var elapsed = DateTime.UtcNow - _currentBufferStartTime;
+                if (elapsed >= _preRecordDuration)
+                {
+                    await SwapPreRecordingBuffer();
 
-                // CRITICAL: The current frame belongs to the NEW buffer now.
-                // We must initialize the timestamp trackers for the new buffer with this frame's timestamp
-                // so that the base timestamp calculation below works correctly (resulting in 0 for the first frame).
-                if (_isBufferA)
-                {
-                    _bufferAFirstTimestamp = timestamp;
-                    _bufferALastTimestamp = timestamp;
+                    // CRITICAL: The current frame belongs to the NEW buffer now.
+                    // We must initialize the timestamp trackers for the new buffer with this frame's timestamp
+                    // so that the base timestamp calculation below works correctly (resulting in 0 for the first frame).
+                    if (_isBufferA)
+                    {
+                        _bufferAFirstTimestamp = timestamp;
+                        _bufferALastTimestamp = timestamp;
+                    }
+                    else
+                    {
+                        _bufferBFirstTimestamp = timestamp;
+                        _bufferBLastTimestamp = timestamp;
+                    }
                 }
-                else
-                {
-                    _bufferBFirstTimestamp = timestamp;
-                    _bufferBLastTimestamp = timestamp;
-                }
+
+                // Fall through to normal frame writing (same RGB32 encoding path!)
             }
 
-            // Fall through to normal frame writing (same RGB32 encoding path!)
-        }
-
-        // NORMAL RECORDING MODE (and pre-recording): Write directly to IMFSinkWriter
+            // NORMAL RECORDING MODE (and pre-recording): Write directly to IMFSinkWriter
             if (_sinkWriter == null || !_isRecording)
             {
                 return;
@@ -504,16 +686,20 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                             // Calculate sample time
                             long sampleTime = (long)(pendingTimestamp.TotalSeconds * 10_000_000L);
 
-                            // In pre-recording mode, normalize timestamps relative to the start of the current buffer
+                            // Adjust timestamps in pre-recording mode only
                             if (isPreRecordingMode)
                             {
                                 TimeSpan baseTimestamp = isBufferA ? bufferAFirstTimestamp : bufferBFirstTimestamp;
                                 sampleTime -= (long)(baseTimestamp.TotalSeconds * 10_000_000L);
                             }
+                            // In normal/live mode: Use absolute timestamps (no adjustment)
+                            // MediaComposition will handle timeline alignment automatically
+                            
                             if (sampleTime <= _lastSampleTime100ns)
                             {
                                 sampleTime = _lastSampleTime100ns + rtDurationPerFrame;
                             }
+                            
                             sample.SetSampleTime(sampleTime);
                             sample.SetSampleDuration(rtDurationPerFrame);
 
@@ -558,6 +744,112 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
     }
 
+    public async Task AddAudioSamplesAsync(byte[] pcmData, long timestampNs)
+    {
+        if (!_isRecording || !_recordAudio || _sinkWriter == null)
+            return;
+
+        // Use separate audio semaphore to avoid blocking video writes
+        await _audioSemaphore.WaitAsync();
+        try
+        {
+            if (_sinkWriter == null) return;
+
+            var dataSize = (uint)pcmData.Length;
+            var hr = PInvoke.MFCreateMemoryBuffer(dataSize, out var mediaBuffer);
+            if (hr.Failed) return;
+
+            try
+            {
+                unsafe
+                {
+                    byte* dst;
+                    uint maxLen, curLen;
+                    mediaBuffer.Lock(&dst, &maxLen, &curLen);
+                    Marshal.Copy(pcmData, 0, (IntPtr)dst, (int)dataSize);
+                    mediaBuffer.SetCurrentLength(dataSize);
+                    mediaBuffer.Unlock();
+                }
+
+                hr = PInvoke.MFCreateSample(out var sample);
+                if (hr.Failed) return;
+
+                try
+                {
+                    sample.AddBuffer(mediaBuffer);
+
+                    long hnsTime = timestampNs / 100;
+                    if (IsPreRecordingMode)
+                    {
+                        TimeSpan baseTimestamp = _isBufferA ? _bufferAFirstTimestamp : _bufferBFirstTimestamp;
+                        if (baseTimestamp == TimeSpan.Zero)
+                        {
+                            // Drop audio samples if we haven't processed any video frames yet for this buffer
+                            // preventing out-of-sync timestamps
+                            return;
+                        }
+
+                        long baseHns = baseTimestamp.Ticks;
+                        hnsTime -= baseHns;
+                        if (hnsTime < 0) hnsTime = 0;
+                    }
+                    else
+                    {
+                        // Normal recording mode: drop audio samples before first video frame
+                        // This prevents audio/video sync issues (audio crack) at the start
+                        if (!_hasFirstVideoFrame)
+                            return; // No video frame yet, drop audio
+
+                        // Adjust audio timestamp relative to first video frame
+                        long baseHns = _firstVideoFrameTimestamp.Ticks;
+                        hnsTime -= baseHns;
+                        if (hnsTime < 0) hnsTime = 0;
+                    }
+
+                    sample.SetSampleTime(hnsTime);
+
+                    // Duration = samples per channel / sampleRate
+                    // pcmData is 16-bit PCM, interleaved channels.
+                    int bytesPerSamplePerChannel = 2;
+                    int channels = Math.Max(1, _audioChannels);
+                    double samplesPerChannel = pcmData.Length / (double)(bytesPerSamplePerChannel * channels);
+                    int sampleRate = Math.Max(1, _audioSampleRate);
+                    long durationHns = (long)((samplesPerChannel / sampleRate) * 10_000_000.0);
+                    sample.SetSampleDuration(durationHns);
+
+                    _sinkWriter.WriteSample(_audioStreamIndex, sample);
+                }
+                finally
+                {
+                    Marshal.ReleaseComObject(sample);
+                }
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(mediaBuffer);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder] AddAudioSamplesAsync error: {ex}");
+        }
+        finally
+        {
+            _audioSemaphore.Release();
+        }
+    }
+
+    public TimeSpan LiveRecordingDuration
+    {
+        get
+        {
+            if (_isRecording)
+            {
+                return DateTime.Now - _startTime;
+            }
+            return TimeSpan.Zero;
+        }
+    }
 
     public async Task AbortAsync()
     {
@@ -571,6 +863,18 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         await _sinkWriterSemaphore.WaitAsync();
         try
         {
+            // Finalize native audio encoder first (drain resampler buffer)
+            if (_nativeAudioEncoder != IntPtr.Zero)
+            {
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Finalizing native audio encoder (draining resampler)...");
+                int result = AudioEncoderNative.audio_encoder_finalize(_nativeAudioEncoder);
+                if (result != 0)
+                {
+                    string error = AudioEncoderNative.GetError(_nativeAudioEncoder);
+                    Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio encoder finalize failed: {error}");
+                }
+            }
+
             if (_sinkWriter != null)
             {
                 try
@@ -656,6 +960,18 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             await _sinkWriterSemaphore.WaitAsync();
             try
             {
+                // Finalize native audio encoder first (drain resampler buffer)
+                if (_nativeAudioEncoder != IntPtr.Zero)
+                {
+                    Debug.WriteLine($"[WindowsCaptureVideoEncoder] Finalizing native audio encoder (draining resampler)...");
+                    int result = AudioEncoderNative.audio_encoder_finalize(_nativeAudioEncoder);
+                    if (result != 0)
+                    {
+                        string error = AudioEncoderNative.GetError(_nativeAudioEncoder);
+                        Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio encoder finalize failed: {error}");
+                    }
+                }
+
                 if (_sinkWriter != null)
                 {
                     try
@@ -740,7 +1056,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 try
                 {
                     var singleDuration = await GetVideoDuration(singleBuffer);
-                
+
                     if (singleDuration > _preRecordDuration)
                     {
                         // Single buffer exceeds limit - trim to last N seconds
@@ -852,11 +1168,33 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
 
         // Finalize Media Foundation (if not already done)
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder] StopAsync: About to finalize (wasPreRecordingMode={wasPreRecordingMode})");
         try
         {
             await _sinkWriterSemaphore.WaitAsync();
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder] StopAsync: Semaphore acquired, _sinkWriter={(_sinkWriter != null ? "EXISTS" : "NULL")}, _nativeAudioEncoder={_nativeAudioEncoder}");
             try
             {
+                // Finalize native audio encoder first (drain resampler buffer)
+                if (_nativeAudioEncoder != IntPtr.Zero)
+                {
+                    Debug.WriteLine($"[WindowsCaptureVideoEncoder] Finalizing native audio encoder (draining resampler)...");
+                    int result = AudioEncoderNative.audio_encoder_finalize(_nativeAudioEncoder);
+                    if (result != 0)
+                    {
+                        string error = AudioEncoderNative.GetError(_nativeAudioEncoder);
+                        Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio encoder finalize failed: {error}");
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio encoder finalize returned success");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine($"[WindowsCaptureVideoEncoder] No native audio encoder to finalize");
+                }
+
                 if (_sinkWriter != null)
                 {
                     try
@@ -974,11 +1312,35 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         Debug.WriteLine($"  Current buffer: {(_isBufferA ? "A" : "B")}");
         Debug.WriteLine($"  Duration: {(DateTime.UtcNow - _currentBufferStartTime).TotalSeconds:F2}s");
 
+        // CRITICAL: Pause audio writes to prevent samples arriving during finalization
+        _pauseAudioWrites = true;
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio writes PAUSED for buffer swap");
+        
+        // Wait for any in-flight audio samples to complete (50ms should be plenty)
+        await Task.Delay(50);
+
         // Finalize current buffer
         if (_sinkWriter != null)
         {
             try
             {
+                // CRITICAL: Finalize native audio encoder FIRST (drain resampler buffer)
+                if (_nativeAudioEncoder != IntPtr.Zero)
+                {
+                    Debug.WriteLine($"[WindowsCaptureVideoEncoder] Finalizing native audio encoder before buffer swap...");
+                    int result = AudioEncoderNative.audio_encoder_finalize(_nativeAudioEncoder);
+                    if (result != 0)
+                    {
+                        string error = AudioEncoderNative.GetError(_nativeAudioEncoder);
+                        Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio encoder finalize failed: {error}");
+                    }
+                    
+                    // Destroy the encoder (it references the old SinkWriter)
+                    AudioEncoderNative.audio_encoder_destroy(_nativeAudioEncoder);
+                    _nativeAudioEncoder = IntPtr.Zero;
+                    Debug.WriteLine($"[WindowsCaptureVideoEncoder] Native audio encoder destroyed");
+                }
+                
                 await Task.Run(() => _sinkWriter.Finalize());
             }
             catch (Exception ex)
@@ -1031,7 +1393,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         _outputFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
         var path = _outputFile.Path;
-        await Task.Run(() => 
+        await Task.Run(() =>
         {
             CreateSinkWriterInternal(path);
             ConfigureH264OutputAndRGB32Input();
@@ -1040,6 +1402,10 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
         // Reset last sample time for the new writer to ensure timestamps start from 0
         _lastSampleTime100ns = -1;
+
+        // Resume audio writes now that new encoder is ready
+        _pauseAudioWrites = false;
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio writes RESUMED");
 
         Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Swapped to buffer {(_isBufferA ? "A" : "B")}: {nextBuffer}");
     }
@@ -1172,10 +1538,18 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
             // Create composition and add clips
             var composition = new global::Windows.Media.Editing.MediaComposition();
-            composition.Clips.Add(await global::Windows.Media.Editing.MediaClip.CreateFromFileAsync(file1));
-            composition.Clips.Add(await global::Windows.Media.Editing.MediaClip.CreateFromFileAsync(file2));
+            var clip1 = await global::Windows.Media.Editing.MediaClip.CreateFromFileAsync(file1);
+            var clip2 = await global::Windows.Media.Editing.MediaClip.CreateFromFileAsync(file2);
+            
+            // Debug: Log clip durations
+            Debug.WriteLine($"[MediaComposition] Clip 1 (pre-rec) duration: {clip1.OriginalDuration.TotalSeconds:F3}s");
+            Debug.WriteLine($"[MediaComposition] Clip 2 (live) duration: {clip2.OriginalDuration.TotalSeconds:F3}s");
+            
+            composition.Clips.Add(clip1);
+            composition.Clips.Add(clip2);
 
             Debug.WriteLine($"[MediaComposition] Added {composition.Clips.Count} clips to composition");
+            Debug.WriteLine($"[MediaComposition] Total composition duration: {composition.Duration.TotalSeconds:F3}s");
 
             // Create encoding profile matching the source dimensions and framerate
             var profile = global::Windows.Media.MediaProperties.MediaEncodingProfile.CreateMp4(
@@ -1293,7 +1667,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         // Create encoding profile matching the source dimensions and framerate
         var profile = global::Windows.Media.MediaProperties.MediaEncodingProfile.CreateMp4(
             global::Windows.Media.MediaProperties.VideoEncodingQuality.HD1080p);
-        
+
         // Override with actual settings to avoid unnecessary re-encoding/scaling
         profile.Video.Width = (uint)_width;
         profile.Video.Height = (uint)_height;
@@ -1701,7 +2075,25 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         public static readonly System.Guid MFVideoFormat_RGB32 = new System.Guid("00000016-0000-0010-8000-00aa00389b71");
 
         public static readonly System.Guid MFT_CATEGORY_VIDEO_ENCODER = new System.Guid("f79eac7d-e545-4387-bdee-d647d7bde42a");
+        public static readonly System.Guid MFT_CATEGORY_AUDIO_EFFECT = new System.Guid("11064c48-3648-4ed0-932e-05ce8ac811b7");
         public static readonly System.Guid MFSampleExtension_CleanPoint = new System.Guid("9cdf01d8-a0f0-43ba-b077-eaa06cbd728a");
+
+        // Audio GUIDs
+        public static readonly System.Guid MFMediaType_Audio = new System.Guid("73646961-0000-0010-8000-00aa00389b71");
+        public static readonly System.Guid MFAudioFormat_AAC = new System.Guid("00001610-0000-0010-8000-00aa00389b71");
+        public static readonly System.Guid MFAudioFormat_PCM = new System.Guid("00000001-0000-0010-8000-00aa00389b71");
+        public static readonly System.Guid MFAudioFormat_Float = new System.Guid("00000003-0000-0010-8000-00aa00389b71"); // IEEE Float
+
+        public static readonly System.Guid MF_MT_AUDIO_SAMPLES_PER_SECOND = new System.Guid("5faeeae7-0290-4c31-9e8a-c534f68d9dba");
+        public static readonly System.Guid MF_MT_AUDIO_NUM_CHANNELS = new System.Guid("37e48bf5-645e-4c5b-89de-ada9e29b696a");
+        public static readonly System.Guid MF_MT_AUDIO_BITS_PER_SAMPLE = new System.Guid("f2deb57f-330f-481f-986a-4301d512cf9f");
+        public static readonly System.Guid MF_MT_AUDIO_BLOCK_ALIGNMENT = new System.Guid("322de230-9eeb-43bd-ab7a-ff412251541d");
+        public static readonly System.Guid MF_MT_AUDIO_AVG_BYTES_PER_SECOND = new System.Guid("1aab75c8-29bb-443f-95bb-584637e66c9f");
+
+        public static readonly System.Guid MF_MT_AAC_PAYLOAD_TYPE = new System.Guid("bfbabe79-7434-4d1c-94f0-72a3b9e17188");
+        public static readonly System.Guid MF_MT_AAC_AUDIO_PROFILE_LEVEL_INDICATION = new System.Guid("7632f0e6-5038-4b86-8469-7963eb172ca6");
+
+        public static readonly System.Guid MF_READWRITE_ENABLE_HARDWARE_TRANSFORMS = new System.Guid("a634a91c-822b-41b9-a494-4ae46436892d");
     }
 
 
@@ -1715,6 +2107,247 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     {
         ulong val = ((ulong)num << 32) | den;
         mt.SetUINT64(key, val);
+    }
+
+    [DllImport("mf.dll", ExactSpelling = true, PreserveSig = true)]
+    private static extern int MFTranscodeGetAudioOutputAvailableTypes(
+        [In] ref Guid guidSubType,
+        [In] uint dwMFTFlags,
+        [In, MarshalAs(UnmanagedType.Interface)] object pCodecConfig,
+        [Out, MarshalAs(UnmanagedType.Interface)] out object ppAvailableTypes);
+
+    // COM interop for manual MFT encoder
+    [DllImport("ole32.dll", ExactSpelling = true, PreserveSig = true)]
+    private static extern int CoCreateInstance(
+        [In] ref Guid rclsid,
+        IntPtr pUnkOuter,
+        uint dwClsContext,
+        [In] ref Guid riid,
+        out IntPtr ppv);
+
+    [ComImport, Guid("BF94C121-5B05-4E6F-8000-BA598F1B6A4A"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    private interface IMFTransform
+    {
+        void GetStreamLimits(out uint pdwInputMinimum, out uint pdwInputMaximum, out uint pdwOutputMinimum, out uint pdwOutputMaximum);
+        void GetStreamCount(out uint pcInputStreams, out uint pcOutputStreams);
+        void GetStreamIDs(uint dwInputIDArraySize, [Out, MarshalAs(UnmanagedType.LPArray)] uint[] pdwInputIDs, uint dwOutputIDArraySize, [Out, MarshalAs(UnmanagedType.LPArray)] uint[] pdwOutputIDs);
+        void GetInputStreamInfo(uint dwInputStreamID, out MFT_INPUT_STREAM_INFO pStreamInfo);
+        void GetOutputStreamInfo(uint dwOutputStreamID, out MFT_OUTPUT_STREAM_INFO pStreamInfo);
+        void GetAttributes([MarshalAs(UnmanagedType.Interface)] out object ppAttributes);
+        void GetInputStreamAttributes(uint dwInputStreamID, [MarshalAs(UnmanagedType.Interface)] out object ppAttributes);
+        void GetOutputStreamAttributes(uint dwOutputStreamID, [MarshalAs(UnmanagedType.Interface)] out object ppAttributes);
+        void DeleteInputStream(uint dwStreamID);
+        void AddInputStreams(uint cStreams, [In, MarshalAs(UnmanagedType.LPArray)] uint[] adwStreamIDs);
+        void GetInputAvailableType(uint dwInputStreamID, uint dwTypeIndex, [MarshalAs(UnmanagedType.Interface)] out global::Windows.Win32.Media.MediaFoundation.IMFMediaType ppType);
+        void GetOutputAvailableType(uint dwOutputStreamID, uint dwTypeIndex, [MarshalAs(UnmanagedType.Interface)] out global::Windows.Win32.Media.MediaFoundation.IMFMediaType ppType);
+        void SetInputType(uint dwInputStreamID, [In, MarshalAs(UnmanagedType.Interface)] global::Windows.Win32.Media.MediaFoundation.IMFMediaType pType, uint dwFlags);
+        void SetOutputType(uint dwOutputStreamID, [In, MarshalAs(UnmanagedType.Interface)] global::Windows.Win32.Media.MediaFoundation.IMFMediaType pType, uint dwFlags);
+        void GetInputCurrentType(uint dwInputStreamID, [MarshalAs(UnmanagedType.Interface)] out global::Windows.Win32.Media.MediaFoundation.IMFMediaType ppType);
+        void GetOutputCurrentType(uint dwOutputStreamID, [MarshalAs(UnmanagedType.Interface)] out global::Windows.Win32.Media.MediaFoundation.IMFMediaType ppType);
+        void GetInputStatus(uint dwInputStreamID, out uint pdwFlags);
+        void GetOutputStatus(out uint pdwFlags);
+        void SetOutputBounds(long hnsLowerBound, long hnsUpperBound);
+        void ProcessEvent(uint dwInputStreamID, [In, MarshalAs(UnmanagedType.Interface)] object pEvent);
+        void ProcessMessage(uint eMessage, UIntPtr ulParam);
+        void ProcessInput(uint dwInputStreamID, IntPtr pSample, uint dwFlags);
+        void ProcessOutput(uint dwFlags, uint cOutputBufferCount, IntPtr pOutputSamples, out uint pdwStatus);
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct MFT_INPUT_STREAM_INFO
+    {
+        public long hnsMaxLatency;
+        public uint dwFlags;
+        public uint cbSize;
+        public uint cbMaxLookahead;
+        public uint cbAlignment;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct MFT_OUTPUT_STREAM_INFO
+    {
+        public uint dwFlags;
+        public uint cbSize;
+        public uint cbAlignment;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct MFT_OUTPUT_DATA_BUFFER
+    {
+        public uint dwStreamID;
+        public IntPtr pSample;
+        public uint dwStatus;
+        public IntPtr pEvents;
+    }
+
+    private const uint MFT_MESSAGE_NOTIFY_END_OF_STREAM = 0x00000008;
+    private const uint MFT_MESSAGE_COMMAND_DRAIN = 0x00000009;
+    private const int MF_E_TRANSFORM_NEED_MORE_INPUT = unchecked((int)0xC00D6D72);
+
+    // MFTEnumEx for encoder discovery
+    [DllImport("mfplat.dll", ExactSpelling = true, PreserveSig = true)]
+    private static extern int MFTEnumEx(
+        Guid guidCategory,
+        uint Flags,
+        ref MFT_REGISTER_TYPE_INFO pInputType,
+        ref MFT_REGISTER_TYPE_INFO pOutputType,
+        ref IntPtr pppMFTActivate,
+        ref uint pnumMFTActivate);
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct MFT_REGISTER_TYPE_INFO
+    {
+        public Guid guidMajorType;
+        public Guid guidSubtype;
+    }
+
+    private const uint MFT_ENUM_FLAG_SYNCMFT = 0x00000001;
+    private const uint MFT_ENUM_FLAG_ASYNCMFT = 0x00000002;
+    private const uint MFT_ENUM_FLAG_HARDWARE = 0x00000004;
+    private const uint MFT_ENUM_FLAG_SORTANDFILTER = 0x00000040;
+    private const uint MFT_ENUM_FLAG_ALL = 0x0000003F;
+
+    [ComImport]
+    [Guid("7FEE9E9A-4A89-47a6-899C-B6A53A70FB67")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    private interface IMFActivate
+    {
+        // IMFAttributes methods (IMFActivate inherits from IMFAttributes)
+        void GetItem(ref Guid guidKey, IntPtr pValue);
+        void GetItemType(ref Guid guidKey, out ushort pType);
+        void CompareItem(ref Guid guidKey, IntPtr Value, out int pbResult);
+        void Compare(IntPtr pTheirs, int MatchType, out int pbResult);
+        void GetUINT32(ref Guid guidKey, out uint punValue);
+        void GetUINT64(ref Guid guidKey, out ulong punValue);
+        void GetDouble(ref Guid guidKey, out double pfValue);
+        void GetGUID(ref Guid guidKey, out Guid pguidValue);
+        void GetStringLength(ref Guid guidKey, out uint pcchLength);
+        void GetString(ref Guid guidKey, IntPtr pwszValue, uint cchBufSize, out uint pcchLength);
+        void GetAllocatedString(ref Guid guidKey, out IntPtr ppwszValue, out uint pcchLength);
+        void GetBlobSize(ref Guid guidKey, out uint pcbBlobSize);
+        void GetBlob(ref Guid guidKey, IntPtr pBuf, uint cbBufSize, out uint pcbBlobSize);
+        void GetAllocatedBlob(ref Guid guidKey, out IntPtr ppBuf, out uint pcbSize);
+        void GetUnknown(ref Guid guidKey, ref Guid riid, out IntPtr ppv);
+        void SetItem(ref Guid guidKey, IntPtr Value);
+        void DeleteItem(ref Guid guidKey);
+        void DeleteAllItems();
+        void SetUINT32(ref Guid guidKey, uint unValue);
+        void SetUINT64(ref Guid guidKey, ulong unValue);
+        void SetDouble(ref Guid guidKey, double fValue);
+        void SetGUID(ref Guid guidKey, ref Guid guidValue);
+        void SetString(ref Guid guidKey, [MarshalAs(UnmanagedType.LPWStr)] string wszValue);
+        void SetBlob(ref Guid guidKey, IntPtr pBuf, uint cbBufSize);
+        void SetUnknown(ref Guid guidKey, [MarshalAs(UnmanagedType.IUnknown)] object pUnknown);
+        void LockStore();
+        void UnlockStore();
+        void GetCount(out uint pcItems);
+        void GetItemByIndex(uint unIndex, out Guid pguidKey, IntPtr pValue);
+        void CopyAllItems(IntPtr pDest);
+        
+        // IMFActivate methods
+        void ActivateObject(ref Guid riid, out IntPtr ppv);
+        void ShutdownObject();
+        void DetachObject();
+    }
+
+    [ComImport]
+    [Guid("5BC8A76B-869A-46A3-9B03-FA218A66AEBE")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    private interface IMFCollectionLoc
+    {
+        void GetElementCount(out uint pcElements);
+        void GetElement(uint dwElementIndex, [MarshalAs(UnmanagedType.IUnknown)] out object ppUnkElement);
+        void AddElement([MarshalAs(UnmanagedType.IUnknown)] object pUnkElement);
+        void RemoveElement(uint dwElementIndex, [MarshalAs(UnmanagedType.IUnknown)] out object ppUnkElement);
+        void InsertElementAt(uint dwIndex, [MarshalAs(UnmanagedType.IUnknown)] object pUnkElement);
+        void RemoveAllElements();
+    }
+
+    private const uint MFT_ENUM_FLAG_FIELDOFUSE = 0x00000008;
+    private const uint MFT_ENUM_FLAG_LOCALMFT = 0x00000010;
+    private const uint MFT_ENUM_FLAG_TRANSCODE_ONLY = 0x00000020;
+
+    private unsafe global::Windows.Win32.Media.MediaFoundation.IMFMediaType GetSupportedAacMediaType(uint preferredRate, uint preferredChannels)
+    {
+        object collectionObj = null;
+        var aacGuid = MFGuids.MFAudioFormat_AAC;
+
+        // Use strict flags to ensure we get valid transcode types
+        uint flags = MFT_ENUM_FLAG_ALL | MFT_ENUM_FLAG_SORTANDFILTER;
+
+        var hr = MFTranscodeGetAudioOutputAvailableTypes(ref aacGuid, flags, null, out collectionObj);
+
+        if (hr < 0 || collectionObj == null)
+        {
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder] MFTranscodeGetAudioOutputAvailableTypes failed (0x{hr:X})");
+            return null;
+        }
+
+        var collection = collectionObj as IMFCollectionLoc;
+        if (collection == null) return null;
+
+        try
+        {
+            collection.GetElementCount(out uint count);
+
+            // We only accept an AAC type that EXACTLY matches the
+            // requested sample rate and channel count. Returning a
+            // "close" type can cause the sink writer to fail later
+            // with MF_E_TOPO_CODEC_NOT_FOUND when we set the PCM
+            // input media type (the TODO at the audio SetInputMediaType
+            // call).
+
+            for (uint i = 0; i < count; i++)
+            {
+                object item;
+                collection.GetElement(i, out item);
+                var candidate = item as global::Windows.Win32.Media.MediaFoundation.IMFMediaType;
+
+                if (candidate == null)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    candidate.GetGUID(MFGuids.MF_MT_SUBTYPE, out var subtype);
+                    if (subtype != MFGuids.MFAudioFormat_AAC)
+                    {
+                        Marshal.ReleaseComObject(candidate);
+                        continue;
+                    }
+
+                    candidate.GetUINT32(MFGuids.MF_MT_AUDIO_SAMPLES_PER_SECOND, out uint rate);
+                    candidate.GetUINT32(MFGuids.MF_MT_AUDIO_NUM_CHANNELS, out uint channels);
+
+                    if (rate == preferredRate && channels == preferredChannels)
+                    {
+                        // Found an exact match; keep this one and
+                        // let the caller configure the PCM input
+                        // with the same rate/channels.
+                        return candidate;
+                    }
+                }
+                catch
+                {
+                    // If anything goes wrong while inspecting this
+                    // candidate, just release it and move on.
+                }
+
+                Marshal.ReleaseComObject(candidate);
+            }
+
+            // No exact match was found for the requested
+            // sample rate / channels.
+            return null;
+        }
+        finally
+        {
+            if (collection != null && Marshal.IsComObject(collection))
+            {
+                Marshal.ReleaseComObject(collection);
+            }
+        }
     }
 
     /// <summary>
@@ -1774,8 +2407,268 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             Marshal.ReleaseComObject(inType);
         }
 
+        if (_recordAudio)
+        {
+            // Use native encoder for direct PCM→AAC transcoding via SinkWriter
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder] Configuring native audio encoder...");
+            
+            try
+            {
+                // Step 1: Add AAC output stream
+                var aacType = GetSupportedAacMediaType((uint)_audioSampleRate, (uint)_audioChannels);
+                _sinkWriter.AddStream(aacType, out _audioStreamIndex);
+                Marshal.ReleaseComObject(aacType);
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] AAC output stream added (Stream #{_audioStreamIndex})");
+                
+                // Step 2: DO NOT call SetInputMediaType - it fails in MAUI environment with 0xC00D5212
+                // writing PCM samples directly to SinkWriter works without SetInputMediaType
+                // SinkWriter will infer the format from the sample attributes (timestamp, duration, buffer size)
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Skipping SetInputMediaType");
+                
+                // Step 3: Create native encoder (will write PCM directly to SinkWriter)
+                if (!CreateAudioResampler())
+                {
+                    Debug.WriteLine($"[WindowsCaptureVideoEncoder] Failed to create native encoder. Disabling audio.");
+                    _recordAudio = false;
+                }
+                else
+                {
+                    Debug.WriteLine($"[WindowsCaptureVideoEncoder] Native audio encoder ready: PCM16 → SinkWriter → AAC");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio configuration failed: {ex.Message}");
+                _recordAudio = false;
+            }
+        }
+
         Debug.WriteLine($"[WindowsCaptureVideoEncoder] Configured H.264 output + RGB32 input");
     }
+
+    /// <summary>
+    /// Creates and configures the manual AAC encoder MFT.
+    /// Returns true if successful, false otherwise.
+    /// </summary>
+    /// <summary>
+    /// Creates and configures the native audio resampler.
+    /// Normalizes device audio format to PCM16 for SinkWriter AAC encoding.
+    /// Uses native C++ DLL to access CLSID_CResamplerMediaObject (inaccessible from .NET MAUI).
+    /// </summary>
+    private bool CreateAudioResampler()
+    {
+        try
+        {
+            // Get SinkWriter COM pointer to pass to native encoder
+            IntPtr sinkWriterPtr = Marshal.GetIUnknownForObject(_sinkWriter);
+            
+            // Create native encoder with resampler
+            // AudioGraphCapture already converts to PCM16, so inputIsFloat = 0
+            _nativeAudioEncoder = AudioEncoderNative.audio_encoder_create(
+                sinkWriterPtr,
+                _audioStreamIndex,
+                _audioSampleRate,
+                _audioChannels,
+                inputIsFloat: 0);
+
+            Marshal.Release(sinkWriterPtr);
+
+            if (_nativeAudioEncoder == IntPtr.Zero)
+            {
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Native encoder create returned NULL");
+                return false;
+            }
+
+            // Check if encoder initialized successfully
+            string error = AudioEncoderNative.GetError(_nativeAudioEncoder);
+            if (error.Contains("failed") || error.Contains("0x"))
+            {
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Native encoder error: {error}");
+                AudioEncoderNative.audio_encoder_destroy(_nativeAudioEncoder);
+                _nativeAudioEncoder = IntPtr.Zero;
+                return false;
+            }
+
+            _audioInputIsFloat = false;
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder] Native audio encoder created successfully");
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder] Using native resampler for PCM16→AAC transcoding");
+            return true;
+        }
+        catch (DllNotFoundException ex)
+        {
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder] AudioEncoderNative.dll not found: {ex.Message}");
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio encoding will be disabled");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder] Native encoder creation failed: {ex.Message}");
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Tries to set the audio input type to Float or PCM for automatic transcoding.
+    /// Returns true if successful.
+    /// </summary>
+    private bool TrySetAudioInputType(bool useFloat)
+    {
+        var hr = PInvoke.MFCreateMediaType(out var inAudioType);
+        if (hr.Failed) return false;
+
+        try
+        {
+            inAudioType.SetGUID(MFGuids.MF_MT_MAJOR_TYPE, MFGuids.MFMediaType_Audio);
+            inAudioType.SetUINT32(MFGuids.MF_MT_AUDIO_SAMPLES_PER_SECOND, (uint)_audioSampleRate);
+            inAudioType.SetUINT32(MFGuids.MF_MT_AUDIO_NUM_CHANNELS, (uint)_audioChannels);
+
+            if (useFloat)
+            {
+                inAudioType.SetGUID(MFGuids.MF_MT_SUBTYPE, MFGuids.MFAudioFormat_Float);
+                inAudioType.SetUINT32(MFGuids.MF_MT_AUDIO_BITS_PER_SAMPLE, 32);
+                uint blockAlign = (uint)(_audioChannels * 4); // 32 bits = 4 bytes
+                inAudioType.SetUINT32(MFGuids.MF_MT_AUDIO_BLOCK_ALIGNMENT, blockAlign);
+                inAudioType.SetUINT32(MFGuids.MF_MT_AUDIO_AVG_BYTES_PER_SECOND, (uint)(_audioSampleRate * blockAlign));
+            }
+            else
+            {
+                inAudioType.SetGUID(MFGuids.MF_MT_SUBTYPE, MFGuids.MFAudioFormat_PCM);
+                inAudioType.SetUINT32(MFGuids.MF_MT_AUDIO_BITS_PER_SAMPLE, 16);
+                uint blockAlign = (uint)(_audioChannels * 2); // 16 bits = 2 bytes
+                inAudioType.SetUINT32(MFGuids.MF_MT_AUDIO_BLOCK_ALIGNMENT, blockAlign);
+                inAudioType.SetUINT32(MFGuids.MF_MT_AUDIO_AVG_BYTES_PER_SECOND, (uint)(_audioSampleRate * blockAlign));
+                inAudioType.SetUINT32(MFGuids.MF_MT_ALL_SAMPLES_INDEPENDENT, 1u); // PCM samples are independent
+            }
+
+            try
+            {
+                _sinkWriter.SetInputMediaType(_audioStreamIndex, inAudioType, null);
+                _audioInputIsFloat = useFloat;
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Configured AAC output + {(useFloat ? "Float" : "16-bit PCM")} input (Stream #{_audioStreamIndex})");
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder]   Format: {_audioSampleRate}Hz, {_audioChannels}ch, {(useFloat ? "Float32" : "PCM16")}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] {(useFloat ? "Float" : "16-bit PCM")} input failed: {ex.Message}");
+                return false;
+            }
+        }
+        finally
+        {
+            Marshal.ReleaseComObject(inAudioType);
+        }
+    }
+
+    private string _preferredAudioCodecName;
+
+    /// <summary>
+    /// Sets the preferred audio codec name to use. 
+    /// If null or empty, or not found, it falls back to AAC auto-detection.
+    /// </summary>
+    public void SetAudioCodec(string codecName)
+    {
+        _preferredAudioCodecName = codecName;
+    }
+
+    private async Task DetectAvailableEncoderTypes()
+    {
+        Debug.WriteLine("---- Querying WinRT Codecs (Discovery) ----");
+        try
+        {
+            _selectedAudioCodecGuid = Guid.Empty;
+
+            var query = new global::Windows.Media.Core.CodecQuery();
+            var codecs = await query.FindAllAsync(global::Windows.Media.Core.CodecKind.Audio, global::Windows.Media.Core.CodecCategory.Encoder, null);
+
+            Debug.WriteLine($"Found {codecs.Count} Audio Encoders via WinRT. Scanning...");
+
+            // If a specific codec name was requested, try to find it first
+            if (!string.IsNullOrEmpty(_preferredAudioCodecName))
+            {
+                Debug.WriteLine($"Searching for preferred codec: '{_preferredAudioCodecName}'");
+                foreach (var codec in codecs)
+                {
+                    if (codec.DisplayName.Equals(_preferredAudioCodecName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Take the first subtype that looks like a valid GUID
+                        foreach (var subtype in codec.Subtypes)
+                        {
+                            if (Guid.TryParse(subtype, out var guid))
+                            {
+                                _selectedAudioCodecGuid = guid;
+                                Debug.WriteLine($"[SELECTED] Found Preferred Encoder: '{codec.DisplayName}' with Subtype {subtype}");
+                                return;
+                            }
+                        }
+                    }
+                }
+                Debug.WriteLine($"[WARNING] Preferred codec '{_preferredAudioCodecName}' not found or had no valid subtypes. Falling back to AAC search.");
+            }
+
+            // Standard AAC GUID
+            var targetAac = new Guid("00001610-0000-0010-8000-00aa00389b71");
+            bool foundExactMatch = false;
+
+            // pass 1: look for exact standard GUID
+            foreach (var codec in codecs)
+            {
+                foreach (var subtype in codec.Subtypes)
+                {
+                    if (Guid.TryParse(subtype, out var guid))
+                    {
+                        if (guid == targetAac)
+                        {
+                            _selectedAudioCodecGuid = guid;
+                            Debug.WriteLine($"[SELECTED] Found Standard AAC Encoder: '{codec.DisplayName}' with Subtype {subtype}");
+                            foundExactMatch = true;
+                            break;
+                        }
+                    }
+                }
+                if (foundExactMatch) break;
+            }
+
+            // pass 2: if not found, trust the DisplayName (fallback)
+            if (!foundExactMatch)
+            {
+                Debug.WriteLine("[INFO] Standard AAC GUID not found. Scanning by name...");
+                foreach (var codec in codecs)
+                {
+                    if (codec.DisplayName.Contains("AAC", StringComparison.OrdinalIgnoreCase))
+                    {
+                        foreach (var subtype in codec.Subtypes)
+                        {
+                            if (Guid.TryParse(subtype, out var guid))
+                            {
+                                _selectedAudioCodecGuid = guid;
+                                Debug.WriteLine($"[SELECTED] Found Encoder by Name: '{codec.DisplayName}' with Subtype {subtype}");
+                                foundExactMatch = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (foundExactMatch) break;
+                }
+            }
+
+            if (!foundExactMatch && _selectedAudioCodecGuid == Guid.Empty)
+            {
+                Debug.WriteLine("[WARNING] No AAC encoder found via WinRT!");
+            }
+            else
+            {
+                // print others for debug
+                Debug.WriteLine("[INFO] Ignoring other encoders...");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error querying WinRT codecs: {ex}");
+        }
+    }
+
+
 
     /// <summary>
     /// Waits for an MP4 file to be fully flushed and readable by IMFSourceReader.
@@ -1870,6 +2763,42 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         _isRecording = false;
         _progressTimer?.Dispose();
         _sinkWriterSemaphore?.Dispose();
+        _audioSemaphore?.Dispose();
+
+        // Clean up audio resampler
+        if (_audioResampler != null)
+        {
+            try
+            {
+                Marshal.ReleaseComObject(_audioResampler);
+            }
+            catch { }
+            _audioResampler = null;
+        }
+
+        // Clean up native audio encoder
+        if (_nativeAudioEncoder != IntPtr.Zero)
+        {
+            try
+            {
+                AudioEncoderNative.audio_encoder_destroy(_nativeAudioEncoder);
+                _nativeAudioEncoder = IntPtr.Zero;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[WindowsCaptureVideoEncoder] Failed to destroy native encoder: {ex.Message}");
+            }
+        }
+
+        if (_audioResamplerInputSample != null)
+        {
+            try
+            {
+                Marshal.ReleaseComObject(_audioResamplerInputSample);
+            }
+            catch { }
+            _audioResamplerInputSample = null;
+        }
 
         // Clean up pre-recording temp files
         CleanupPreRecTempFiles();

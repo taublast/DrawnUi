@@ -5,14 +5,16 @@ using DrawnUi.Views;
 
 namespace CameraTests.Views;
 
-public class CameraTestPage : BasePageReloadable, IDisposable
+public partial class CameraTestPage : BasePageReloadable, IDisposable
 {
-    private SkiaCamera CameraControl;
+    private AppCamera CameraControl;
     private SkiaButton _takePictureButton;
     private SkiaButton _flashButton;
     private SkiaLabel _statusLabel;
     private SkiaButton _videoRecordButton;
     private SkiaButton _cameraSelectButton;
+    private SkiaButton _audioSelectButton;
+    private SkiaButton _audioCodecButton;
     private SkiaLayer _previewOverlay;
     private SkiaImage _previewImage;
     private SkiaButton _preRecordingToggleButton;
@@ -62,8 +64,6 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             CameraControl = null;
             this.Content = null;
             Canvas?.Dispose();
-            _paint?.Dispose();
-            _paint = null;
         }
 
         base.Dispose(isDisposing);
@@ -103,7 +103,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             {
 
                 // Camera preview
-                new SkiaCamera()
+                new AppCamera()
                     {
                         HorizontalOptions = LayoutOptions.Fill,
                         VerticalOptions = LayoutOptions.Fill,
@@ -207,6 +207,36 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     .Assign(out _cameraSelectButton)
                                     .OnTapped(async me => { await SelectCamera(); }),
 
+                                // Audio selection button
+                                new SkiaButton("🎤 Audio: Default")
+                                    {
+                                        BackgroundColor = Colors.DarkGoldenrod,
+                                        TextColor = Colors.White,
+                                        CornerRadius = 8,
+                                        UseCache = SkiaCacheType.Image
+                                    }
+                                    .Assign(out _audioSelectButton)
+                                    .OnTapped(async me => { await SelectAudioSource(); })
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                    {
+                                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                                    }),
+
+                                // Audio Codec selection button
+                                new SkiaButton("🎵 Codec: Default")
+                                    {
+                                        BackgroundColor = Colors.DarkSlateGray,
+                                        TextColor = Colors.White,
+                                        CornerRadius = 8,
+                                        UseCache = SkiaCacheType.Image
+                                    }
+                                    .Assign(out _audioCodecButton)
+                                    .OnTapped(async me => { await SelectAudioCodec(); })
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                    {
+                                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                                    }),
+
                                 // Take Picture button (only visible in Still mode)
                                 new SkiaButton("Take Picture")
                                     {
@@ -255,7 +285,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     {
                                         if (CameraControl.IsRecordingVideo)
                                         {
-                                            me.Text = "🛑 Stop (00:00)";
+                                            me.Text = "🛑 Stop";
                                             me.BackgroundColor = Colors.Red;
                                         }
                                         else if (CameraControl.IsPreRecording)
@@ -273,7 +303,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     {
                                         if (CameraControl.IsRecordingVideo)
                                         {
-                                            me.Text = "🛑 Stop (00:00)";
+                                            me.Text = "🛑";
                                             me.BackgroundColor = Colors.Red;
                                         }
                                         else if (CameraControl.IsPreRecording)
@@ -356,7 +386,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     }),
 
                                 // Capture Flow toggle button (only visible in Video mode)
-                                new SkiaButton("Capture Flow: ON")
+                                new SkiaButton("Processing: ON")
                                     {
                                         BackgroundColor = Colors.Green,
                                         TextColor = Colors.White,
@@ -365,9 +395,13 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     }
                                     .OnTapped(me =>
                                     {
-                                        CameraControl.UseCaptureVideoFlow = !CameraControl.UseCaptureVideoFlow;
-                                        me.Text = CameraControl.UseCaptureVideoFlow ? "Capture Flow: ON" : "Capture Flow: OFF";
-                                        me.BackgroundColor = CameraControl.UseCaptureVideoFlow ? Colors.Green : Colors.DarkGray;
+                                        CameraControl.UseRealtimeVideoProcessing = !CameraControl.UseRealtimeVideoProcessing;
+
+                                    })
+                                    .ObserveProperty(()=>CameraControl, nameof(CameraControl.UseRealtimeVideoProcessing), me =>
+                                    {
+                                        me.Text = CameraControl.UseRealtimeVideoProcessing ? "Processing: ON" : "Processing: OFF";
+                                        me.BackgroundColor = CameraControl.UseRealtimeVideoProcessing ? Colors.Green : Colors.DarkGray;
                                     })
                                     .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                                     {
@@ -385,17 +419,18 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     .OnTapped(me =>
                                     {
                                         CameraControl.RecordAudio = !CameraControl.RecordAudio;
-                                        me.Text = CameraControl.RecordAudio ? "Audio: ON" : "Audio: OFF";
-                                        me.BackgroundColor = CameraControl.RecordAudio ? Colors.Green : Colors.DarkGray;
                                     })
                                     .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                                     {
                                         me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
                                     })
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.RecordAudio), me =>
+                                    {
+                                        me.Text = CameraControl.RecordAudio ? "Audio: ON" : "Audio: OFF";
+                                        me.BackgroundColor = CameraControl.RecordAudio ? Colors.Green : Colors.DarkGray;
+                                    })
                             }
                         },
-
-
 
                     }
                 }.WithRow(1),
@@ -468,45 +503,26 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         };
 
         // Configure camera for capture video flow testing
-        CameraControl.RecordAudio = false; // Test with audio recording
-        CameraControl.UseCaptureVideoFlow = true; // Enable capture video flow
-        CameraControl.VideoQuality = VideoQuality.High;
+        CameraControl.UseRealtimeVideoProcessing = false; // Enable capture video flow
+        CameraControl.VideoQuality = VideoQuality.Standard;
+        CameraControl.RecordAudio = true;
 
         CameraControl.FrameProcessor = (frame) =>
         {
-            // Simple text overlay for testing
-            if (_paint == null)
+            CameraControl.DrawOverlay(frame);
+        };
+
+        CameraControl.PreviewProcessor = (frame) =>
+        {
+            //if (CameraControl.IsRecordingVideo || CameraControl.IsPreRecording)
             {
-                _paint = new SKPaint
-                {
-                    TextSize = 48,
-                    IsAntialias = true,
-                };
+                CameraControl.DrawOverlay(frame);
             }
-
-            _paint.Color = CameraControl.IsPreRecording ? SKColors.White : SKColors.Red;
-            _paint.Style = SKPaintStyle.Fill;
-
-            // text at top left
-            var text = CameraControl.IsPreRecording ? "PRE-RECORDED" : "LIVE";
-            frame.Canvas.DrawText(text, 50, 100, _paint);
-
-            // Draw timestamp at top left (below LIVE)
-            frame.Canvas.DrawText($"{frame.Time:mm\\:ss}", 50, 160, _paint);
-
-            // Draw a simple border around the frame
-            // Use orange during pre-recording, red during file recording
-            _paint.Style = SKPaintStyle.Stroke;
-            _paint.StrokeWidth = 4;
-
-            frame.Canvas.DrawRect(10, 10, frame.Width - 20, frame.Height - 20, _paint);
         };
 
         // Setup camera event handlers
         SetupCameraEvents();
     }
-
-    private SKPaint _paint;
 
     private SkiaLayer CreatePreviewOverlay()
     {
@@ -706,34 +722,31 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         ShowAlert("Camera Error", e);
     }
 
-    private void OnVideoRecordingSuccess(object sender, CapturedVideo capturedVideo)
+    private async void OnVideoRecordingSuccess(object sender, CapturedVideo capturedVideo)
     {
-        MainThread.BeginInvokeOnMainThread(async () =>
+        try
         {
-            try
-            {
-                Debug.WriteLine($"✅ Video recorded at: {capturedVideo.FilePath}");
+            Debug.WriteLine($"✅ Video recorded at: {capturedVideo.FilePath}");
 
-                // Use SkiaCamera's built-in MoveVideoToGalleryAsync method (consistent with SaveToGalleryAsync for photos)
-                var publicPath = await CameraControl.MoveVideoToGalleryAsync(capturedVideo, "FastRepro");
+            // Use SkiaCamera's built-in MoveVideoToGalleryAsync method (consistent with SaveToGalleryAsync for photos)
+            var publicPath = await CameraControl.MoveVideoToGalleryAsync(capturedVideo, "FastRepro");
 
-                if (!string.IsNullOrEmpty(publicPath))
-                {
-                    Debug.WriteLine($"✅ Video moved to gallery: {publicPath}");
-                    ShowAlert("Success", "Video saved to gallery!");
-                }
-                else
-                {
-                    Debug.WriteLine($"❌ Video not saved, path null");
-                    ShowAlert("Error", "Failed to save video to gallery");
-                }
-            }
-            catch (Exception ex)
+            if (!string.IsNullOrEmpty(publicPath))
             {
-                ShowAlert("Error", $"Video save error: {ex.Message}");
-                Debug.WriteLine($"❌ Video save error: {ex}");
+                Debug.WriteLine($"✅ Video moved to gallery: {publicPath}");
+                ShowAlert("Success", "Video saved to gallery!");
             }
-        });
+            else
+            {
+                Debug.WriteLine($"❌ Video not saved, path null");
+                ShowAlert("Error", "Failed to save video to gallery");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowAlert("Error", $"Video save error: {ex.Message}");
+            Debug.WriteLine($"❌ Video save error: {ex}");
+        }
     }
 
     private void OnVideoRecordingProgress(object sender, TimeSpan duration)
@@ -969,6 +982,143 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                 ShowAlert("Error", $"Error getting cameras: {ex.Message}");
             }
         });
+    }
+
+    private async Task SelectAudioSource()
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            try
+            {
+                var inputDevices = await CameraControl.GetAvailableAudioDevicesAsync();
+
+                if (inputDevices?.Count > 0)
+                {
+                    // Prefix the list with "System Default" option
+                    var options = new string[inputDevices.Count + 1];
+                    options[0] = "System Default";
+                    for (int i = 0; i < inputDevices.Count; i++)
+                    {
+                        options[i + 1] = inputDevices[i];
+                    }
+
+                    var result = await DisplayActionSheet("Select Audio Source", "Cancel", null, options);
+
+                    if (!string.IsNullOrEmpty(result) && result != "Cancel")
+                    {
+                        if (result == "System Default")
+                        {
+                            CameraControl.AudioDeviceIndex = -1;
+                            _audioSelectButton.Text = "🎤 Audio: Default";
+                        }
+                        else
+                        {
+                            // Find the index in our original list
+                            // Careful: option list was shifted by 1
+                            int selectedIndex = -1;
+                            for (int i = 0; i < inputDevices.Count; i++)
+                            {
+                                if (inputDevices[i] == result)
+                                {
+                                    selectedIndex = i;
+                                    break;
+                                }
+                            }
+
+                            if (selectedIndex >= 0)
+                            {
+                                CameraControl.AudioDeviceIndex = selectedIndex;
+                                _audioSelectButton.Text = $"🎤 {result}";
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    ShowAlert("No Input Devices", "No audio input devices found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAlert("Error", $"Error getting audio devices: {ex.Message}");
+            }
+        });
+    }
+
+    private async Task SelectAudioCodec()
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            try
+            {
+                var codecs = await CameraControl.GetAvailableAudioCodecsAsync();
+
+                if (codecs?.Count > 0)
+                {
+                    // Prefix the list with "System Default" option
+                    var options = new string[codecs.Count + 1];
+                    options[0] = "System Default";
+                    for (int i = 0; i < codecs.Count; i++)
+                    {
+                        options[i + 1] = codecs[i];
+                    }
+
+                    var result = await DisplayActionSheet("Select Audio Codec", "Cancel", null, options);
+
+                    if (!string.IsNullOrEmpty(result) && result != "Cancel")
+                    {
+                        if (result == "System Default")
+                        {
+                            CameraControl.AudioCodecIndex = -1;
+                            _audioCodecButton.Text = "🎵 Codec: Default";
+                        }
+                        else
+                        {
+                            // Find the index in our original list
+                            // Careful: option list was shifted by 1
+                            int selectedIndex = -1;
+                            for (int i = 0; i < codecs.Count; i++)
+                            {
+                                if (codecs[i] == result)
+                                {
+                                    selectedIndex = i;
+                                    break;
+                                }
+                            }
+
+                            if (selectedIndex >= 0)
+                            {
+                                CameraControl.AudioCodecIndex = selectedIndex;
+                                _audioCodecButton.Text = $"🎵 {CodecsHelper.GetShortName(result)}";
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    ShowAlert("No Audio Codecs", "No audio codecs available.");
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowAlert("Error", $"Error getting audio codecs: {ex.Message}");
+            }
+        });
+    }
+
+    public static class CodecsHelper
+    {
+        public static string GetShortName(string fullName)
+        {
+            if (string.IsNullOrEmpty(fullName)) return "";
+            if (fullName.Contains("AAC", StringComparison.OrdinalIgnoreCase)) return "AAC";
+            if (fullName.Contains("MP3", StringComparison.OrdinalIgnoreCase)) return "MP3";
+            if (fullName.Contains("FLAC", StringComparison.OrdinalIgnoreCase)) return "FLAC";
+            if (fullName.Contains("PCM", StringComparison.OrdinalIgnoreCase)) return "PCM";
+            if (fullName.Contains("WMA", StringComparison.OrdinalIgnoreCase)) return "WMA";
+            if (fullName.Contains("LPCM", StringComparison.OrdinalIgnoreCase)) return "LPCM";
+            return fullName.Length > 10 ? fullName.Substring(0, 10) + ".." : fullName;
+        }
     }
 
     protected override void OnDisappearing()

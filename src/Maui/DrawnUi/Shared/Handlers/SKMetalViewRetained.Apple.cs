@@ -59,6 +59,11 @@ namespace DrawnUi.Views
         /// </summary>
         public GRContext GRContext => _context;
 
+        /// <summary>
+        /// So we can access queue and device for some neat usage
+        /// </summary>
+        public GRMtlBackendContext MetalBackend => _backendContext;
+
         // created in code
         public SKMetalViewRetained()
             : this(CGRect.Empty)
@@ -130,18 +135,21 @@ namespace DrawnUi.Views
             FramebufferOnly = false;
 
             Device = _device;
+            Queue = _device.CreateCommandQueue();
+
             _backendContext = new GRMtlBackendContext
             {
-                Device = _device,
-                Queue = _device.CreateCommandQueue()
+                Device = Device,
+                Queue = Queue
             };
 
-            // Hook up the drawing
             Delegate = this;
 
             //fix GC crash
             _queuePin = GCHandle.Alloc(_backendContext.Queue, GCHandleType.Pinned);
         }
+
+        public IMTLCommandQueue Queue { get; protected set; }
 
         //public override void LayoutSubviews()
         //{

@@ -651,7 +651,11 @@ namespace DrawnUi.Draw
                     this.Opacity = startOpacity + (end - startOpacity) * value;
                     //Debug.WriteLine($"[ANIM] Opacity: {this.Opacity}");
                 },
-                () => { this.Opacity = end; },
+                () =>
+                {
+                    this.Opacity = end;
+                    //Debug.WriteLine($"[ANIM] Opacity END: {this.Opacity}");
+                },
                 ms,
                 easing,
                 _fadeCancelTokenSource);
@@ -2000,6 +2004,8 @@ namespace DrawnUi.Draw
         /// <param name="newvalue"></param>
         public virtual void OnParentVisibilityChanged(bool newvalue)
         {
+            hiddenParent = !newvalue;
+
             if (!newvalue)
             {
                 StopPostAnimators();
@@ -3128,15 +3134,15 @@ namespace DrawnUi.Draw
                     {
                         skia.IsAlive = ObjectAliveType.BeingDisposed;
                     }
-
+                    
                     Tasks.StartDelayed(DisposalDelay, () =>
                     {
                         try
                         {
                             disposable?.Dispose();
-                            if (disposable is ISkiaDisposable skia)
+                            if (disposable is ISkiaDisposable s)
                             {
-                                skia.IsAlive = ObjectAliveType.Disposed;
+                                s.IsAlive = ObjectAliveType.Disposed;
                             }
                         }
                         catch (Exception e)
@@ -3144,6 +3150,7 @@ namespace DrawnUi.Draw
                             Super.Log($"DisposeObject EXCEPTION from {caller} {e}");
                         }
                     });
+                    
                 }
             }
         }
@@ -3182,18 +3189,18 @@ namespace DrawnUi.Draw
         /// <param name="heightRequest"></param>
         /// <param name="scale"></param>
         /// <returns></returns>
-        public ScaledSize DefineAvailableSize(SKRect destination,
+        public virtual ScaledSize DefineAvailableSize(SKRect destination,
             float widthRequest, float heightRequest, float scale, bool useModifiers = true)
         {
             var rectWidth = destination.Width;
             var wants = widthRequest * scale;
             if (wants >= 0 && wants < rectWidth)
-                rectWidth = (int)wants;
+                rectWidth = wants;
 
             var rectHeight = destination.Height;
             wants = heightRequest * scale;
             if (wants >= 0 && wants < rectHeight)
-                rectHeight = (int)wants;
+                rectHeight =wants;
 
             if (useModifiers)
             {
@@ -3208,7 +3215,7 @@ namespace DrawnUi.Draw
                 }
             }
 
-            return ScaledSize.FromPixels(rectWidth, rectHeight, scale);
+            return ScaledSize.FromPixels((int)Math.Ceiling(rectWidth), (int)Math.Ceiling(rectHeight), scale);
         }
 
         /// <summary>
@@ -3456,7 +3463,7 @@ namespace DrawnUi.Draw
 
             layout.Offset(offsetX, offsetY);
 
-            return layout;
+            return RoundToPixels(layout);
         }
 
         private ScaledSize _contentSize = new();
@@ -3487,7 +3494,7 @@ namespace DrawnUi.Draw
 
             newDestination.Offset(destination.Left, destination.Top);
 
-            Destination = newDestination;
+            Destination = RoundToPixels(newDestination);
             DrawingRect = GetDrawingRectWithMargins(newDestination, scale);
 
             IsLayoutDirty = false;
@@ -4539,6 +4546,11 @@ namespace DrawnUi.Draw
             if (IsDisposed || IsDisposing)
                 return ScaledSize.Default;
 
+            if (hiddenParent || !IsVisible)
+            {
+                return MeasuredSize;
+            }
+
             if (IsMeasuring) //basically we need this for cache double buffering to avoid conflicts with background thread
             {
                 NeedRemeasuring = true;
@@ -4896,7 +4908,7 @@ namespace DrawnUi.Draw
                 }
             }
 
-            return rectForChild;
+            return RoundToPixels(rectForChild);
         }
 
         protected object lockMeasured = new();
@@ -5158,8 +5170,7 @@ namespace DrawnUi.Draw
 
             StopPostAnimators();
 
-            //for the double buffering case it's safer to delay
-            Tasks.StartDelayed(DisposalDelay, () =>
+            DisposeObject(new DisposableAction(() =>
             {
                 try
                 {
@@ -5225,7 +5236,26 @@ namespace DrawnUi.Draw
                 {
                     Super.Log(e);
                 }
-            });
+            }));
+ 
+        }
+
+        public class DisposableAction : IDisposable
+        {
+            private readonly Action _action;
+            private bool _isDisposed;
+            public DisposableAction(Action action)
+            {
+                _action = action ?? throw new ArgumentNullException(nameof(action));
+            }
+            public void Dispose()
+            {
+                if (!_isDisposed)
+                {
+                    _action();
+                    _isDisposed = true;
+                }
+            }
         }
 
         protected virtual void OnLifecycleStateChanged(ControlLifecycleState state)
@@ -5365,7 +5395,8 @@ namespace DrawnUi.Draw
 
             if (NeedToMeasureSelf())
             {
-                MeasureSelf(destination, widthRequest, heightRequest, scale);
+                //MeasureSelf(destination, widthRequest, heightRequest, scale);
+                MeasureSelf(destination, (float)WidthRequest, (float)HeightRequest, scale);
             }
             else
             {
@@ -5374,6 +5405,8 @@ namespace DrawnUi.Draw
 
             return true;
         }
+
+        private bool hiddenParent;
 
         /// <summary>
         /// Self measuring, for top controls and those invalidated-redrawn when parents didn't re-measure them
@@ -6228,7 +6261,7 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
-        /// Use to render Absolute layout. Base method is not supporting templates, override it to implemen your logic.
+        /// Use to render Absolute layout. Base method is not supporting templates, override it to implement your logic.
         /// Returns number of drawn children.
         /// </summary>
         /// <param name="skiaControls"></param>
@@ -6370,6 +6403,18 @@ namespace DrawnUi.Draw
                     OnPropertyChanged();
                     SuperViewChanged();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Manually sets Superview to this control and its children
+        /// </summary>
+        public void SetSuperview(DrawnView view)
+        {
+            Superview = view;
+            foreach (var child in GetUnorderedSubviews())
+            {
+                child.SetSuperview(view);
             }
         }
 
@@ -6934,6 +6979,7 @@ namespace DrawnUi.Draw
                     DestroyRenderingObject();
                 }
                 NeedMeasure = true;
+                WasMeasured = false;
             }
             else
             {
@@ -7813,23 +7859,33 @@ namespace DrawnUi.Draw
         private bool _needUpdateFrontCache;
         private SKRect _drawingRect;
 
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        //public static bool CompareRects(SKRect a, SKRect b, float precision)
-        //{
-        //    return
-        //        Math.Abs(a.Left - b.Left) <= precision
-        //                 && Math.Abs(a.Top - b.Top) <= precision
-        //                             && Math.Abs(a.Right - b.Right) <= precision
-        //                             && Math.Abs(a.Bottom - b.Bottom) <= precision;
-        //}
+        /// <summary>
+        /// Rounds SKRect coordinates to nearest pixel values
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SKRect RoundToPixels(SKRect rect)
+        {
+            return new SKRect(
+                (float)Math.Round(rect.Left),
+                (float)Math.Round(rect.Top),
+                (float)Math.Round(rect.Right),
+                (float)Math.Round(rect.Bottom)
+            );
+        }
 
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        //public static bool CompareRectsSize(SKRect a, SKRect b, float precision)
-        //{
-        //    return
-        //        Math.Abs(a.Width - b.Width) <= precision
-        //        && Math.Abs(a.Height - b.Height) <= precision;
-        //}
+        /// <summary>
+        /// Rounds SKRect coordinates to nearest pixel values
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SKRect RoundToPixels(float left, float top, float right, float bottom)
+        {
+            return new SKRect(
+                (float)Math.Round(left),
+                (float)Math.Round(top),
+                (float)Math.Round(right),
+                (float)Math.Round(bottom)
+            );
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool CompareFloats(float a, float b, float precision = float.Epsilon)

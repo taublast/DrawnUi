@@ -42,6 +42,11 @@ public interface ICaptureVideoEncoder : IDisposable
     bool IsRecording { get; }
 
     /// <summary>
+    /// Gets the duration of the current live recording session (excluding pre-recording buffer).
+    /// </summary>
+    TimeSpan LiveRecordingDuration { get; }
+
+    /// <summary>
     /// Sets whether the encoder is in pre-recording mode (buffering to memory only).
     /// When true, encoded frames should be buffered instead of written to file.
     /// </summary>
@@ -77,6 +82,21 @@ public interface ICaptureVideoEncoder : IDisposable
     /// Progress reporting event (optional).
     /// </summary>
     event EventHandler<TimeSpan> ProgressReported;
+
+    /// <summary>
+    /// Sets the circular audio buffer to use for pre-recording.
+    /// </summary>
+    void SetAudioBuffer(CircularAudioBuffer buffer);
+
+    /// <summary>
+    /// Writes an audio sample to the encoder (or buffer if pre-recording).
+    /// </summary>
+    void WriteAudio(AudioSample sample);
+
+    /// <summary>
+    /// Whether this encoder supports audio recording.
+    /// </summary>
+    bool SupportsAudio { get; }
 
     Task AbortAsync();
 }

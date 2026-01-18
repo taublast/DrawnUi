@@ -46,7 +46,7 @@ public partial class DrawnView
     private DateTime _visibilityChangedTime;
     private readonly TimeSpan _visibilityCheckDelay = TimeSpan.FromSeconds(0.1);
 
- 
+
 
     /// <summary>
     /// Check if element is visible through entire parent chain
@@ -166,6 +166,8 @@ public partial class DrawnView
             {
                 IsHiddenInViewTree = hide;
             }
+
+            UpdateBackend();
         }
     }
 
@@ -178,12 +180,28 @@ public partial class DrawnView
             nativeView.ClipsToBounds = true;
         }
 
+        UpdateBackend();
+
         Update();
     }
 
+    void UpdateBackend()
+    {
+        if (((View)CanvasView)?.Handler is SKGLViewHandlerRetained handler && handler.PlatformView is SKMetalViewRetained platformView)
+        {
+            MetalBackend = platformView.MetalBackend;
+        }
+        else
+        {
+            MetalBackend = null;
+        }
+    }
+
+    public GRMtlBackendContext MetalBackend { get; protected set; }
+
     protected virtual void PlatformHardwareAccelerationChanged()
     {
-
+        UpdateBackend();
     }
 
     public virtual void SetupRenderingLoop()
@@ -205,7 +223,7 @@ public partial class DrawnView
             {
                 CanvasView.Update();
             }
- 
+
         }
     }
 
@@ -221,7 +239,7 @@ public partial class DrawnView
             IsDirty &&
             CanvasView != null && this.Handler != null && this.Handler.PlatformView != null
                 && !CanvasView.IsDrawing
-               && !(UpdateLocks>0 && StopDrawingWhenUpdateIsLocked)
+               && !(UpdateLocks > 0 && StopDrawingWhenUpdateIsLocked)
                && IsVisible && Super.EnableRendering;
     }
 
@@ -229,5 +247,18 @@ public partial class DrawnView
     {
         Super.OnFrame -= OnFrame;
     }
+
+    protected virtual void InitFrameworkPlatform(bool subscribe)
+    {
+        if (subscribe)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
+
 }
 

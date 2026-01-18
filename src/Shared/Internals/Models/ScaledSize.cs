@@ -153,6 +153,18 @@ public class ScaledSize
         if (nHeight < 0)
             nHeight = -1;
 
+#if disabledDEBUG
+        if (Math.Round(width) != width || Math.Round(height) != height)
+        {
+            Debug.WriteLine($"[Warning] Width or height in PIXELS has values after decimal point.");
+            width = (float)Math.Round(width);
+            height = (float)Math.Round(height);
+        }
+#else
+        width = (float)Math.Round(width);
+        height = (float)Math.Round(height);
+#endif
+
         return new ScaledSize()
         {
             Scale = scale,

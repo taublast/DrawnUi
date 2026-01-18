@@ -836,6 +836,7 @@ namespace DrawnUi.Views
 
             WillDispose();
             OnDispose();
+            //GC.SuppressFinalize(this);
         }
 
         public event EventHandler ViewDisposing;
@@ -1588,6 +1589,16 @@ namespace DrawnUi.Views
 
         protected SurfaceCacheManager SurfaceCacheManager { get; set; }
 
+        public GRContext GetGRContext()
+        {
+            if (CanvasView is SkiaViewAccelerated accelerated
+                && accelerated.GRContext != null)
+            {
+                return accelerated.GRContext;
+            }
+            return null;
+        }
+
         public SKSurface CreateSurface(int width, int height, bool isGpu)
         {
             SKSurface surface = null;
@@ -1628,9 +1639,12 @@ namespace DrawnUi.Views
         public void DisposeObject(IDisposable resource, [CallerMemberName] string caller = null)
         {
             if (this.IsDisposed)
-                return;
+            {
+                //resource?.Dispose();
 
-            //resource?.Dispose();
+                return;
+            }
+
 
             DisposeManager.EnqueueDisposable(resource, FrameNumber);
         }
@@ -2658,7 +2672,7 @@ namespace DrawnUi.Views
                                 try
                                 {
                                     //avoid blocking ui thread
-                                    //await Task.Delay(1);
+                                    //await Task.Yield();
 
                                     CanvasView
                                         ?.Update(); //very rarely could throw on windows here if maui destroys view when navigating, so we secured with try-catch

@@ -21,6 +21,182 @@ namespace DrawnUi.Camera;
 
 #region Direct3D Interop Interfaces
 
+[StructLayout(LayoutKind.Sequential)]
+struct D3D11_MAPPED_SUBRESOURCE
+{
+    public IntPtr pData;
+    public uint RowPitch;
+    public uint DepthPitch;
+}
+
+[ComImport]
+[Guid("6f15aaf2-d208-4e89-9ab4-489535d34f9c")]
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+interface ID3D11Texture2D : ID3D11Resource
+{
+    // ID3D11Resource methods
+    new void GetDevice(out ID3D11Device ppDevice);
+    new void GetPrivateData(ref Guid guid, ref uint pDataSize, IntPtr pData);
+    new void SetPrivateData(ref Guid guid, uint DataSize, IntPtr pData);
+    new void SetPrivateDataInterface(ref Guid guid, [MarshalAs(UnmanagedType.IUnknown)] object pData);
+    new void GetType(out int pResourceDimension);
+    new void SetEvictionPriority(uint EvictionPriority);
+    new uint GetEvictionPriority();
+
+    // ID3D11Texture2D methods
+    void GetDesc(out D3D11_TEXTURE2D_DESC pDesc);
+}
+
+[ComImport]
+[Guid("dc8e63f3-d12b-4952-b47b-5e45026a862d")]
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+interface ID3D11Resource : ID3D11DeviceChild
+{
+    new void GetDevice(out ID3D11Device ppDevice);
+    new void GetPrivateData(ref Guid guid, ref uint pDataSize, IntPtr pData);
+    new void SetPrivateData(ref Guid guid, uint DataSize, IntPtr pData);
+    new void SetPrivateDataInterface(ref Guid guid, [MarshalAs(UnmanagedType.IUnknown)] object pData);
+    void GetType(out int pResourceDimension);
+    void SetEvictionPriority(uint EvictionPriority);
+    uint GetEvictionPriority();
+}
+
+[ComImport]
+[Guid("1841e5c8-16b0-489b-bcc8-44cfb0d5deae")]
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+interface ID3D11DeviceChild
+{
+    void GetDevice(out ID3D11Device ppDevice);
+    void GetPrivateData(ref Guid guid, ref uint pDataSize, IntPtr pData);
+    void SetPrivateData(ref Guid guid, uint DataSize, IntPtr pData);
+    void SetPrivateDataInterface(ref Guid guid, [MarshalAs(UnmanagedType.IUnknown)] object pData);
+}
+
+[ComImport]
+[Guid("db6f6ddb-ac77-4e88-8253-819df9bbf140")]
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+interface ID3D11Device
+{
+    void CreateBuffer(IntPtr pDesc, IntPtr pInitialData, out IntPtr ppBuffer);
+    void CreateTexture1D(IntPtr pDesc, IntPtr pInitialData, out IntPtr ppTexture1D);
+    void CreateTexture2D(ref D3D11_TEXTURE2D_DESC pDesc, IntPtr pInitialData, out ID3D11Texture2D ppTexture2D);
+    void CreateTexture3D(IntPtr pDesc, IntPtr pInitialData, out IntPtr ppTexture3D);
+    void CreateShaderResourceView(ID3D11Resource pResource, IntPtr pDesc, out IntPtr ppSRView);
+    void CreateUnorderedAccessView(ID3D11Resource pResource, IntPtr pDesc, out IntPtr ppUAView);
+    void CreateRenderTargetView(ID3D11Resource pResource, IntPtr pDesc, out IntPtr ppRTView);
+    void CreateDepthStencilView(ID3D11Resource pResource, IntPtr pDesc, out IntPtr ppDSView);
+    void CreateInputLayout(IntPtr pInputElementDescs, uint NumElements, IntPtr pShaderBytecodeWithInputSignature, IntPtr BytecodeLength, out IntPtr ppInputLayout);
+    void CreateVertexShader(IntPtr pShaderBytecode, IntPtr BytecodeLength, IntPtr pClassLinkage, out IntPtr ppVertexShader);
+    void CreateGeometryShader(IntPtr pShaderBytecode, IntPtr BytecodeLength, IntPtr pClassLinkage, out IntPtr ppGeometryShader);
+    void CreateGeometryShaderWithStreamOutput(IntPtr pShaderBytecode, IntPtr BytecodeLength, IntPtr pSODeclaration, uint NumEntries, IntPtr pBufferStrides, uint NumStrides, uint RasterizedStream, IntPtr pClassLinkage, out IntPtr ppGeometryShader);
+    void CreatePixelShader(IntPtr pShaderBytecode, IntPtr BytecodeLength, IntPtr pClassLinkage, out IntPtr ppPixelShader);
+    void CreateHullShader(IntPtr pShaderBytecode, IntPtr BytecodeLength, IntPtr pClassLinkage, out IntPtr ppHullShader);
+    void CreateDomainShader(IntPtr pShaderBytecode, IntPtr BytecodeLength, IntPtr pClassLinkage, out IntPtr ppDomainShader);
+    void CreateComputeShader(IntPtr pShaderBytecode, IntPtr BytecodeLength, IntPtr pClassLinkage, out IntPtr ppComputeShader);
+    void CreateClassLinkage(out IntPtr ppLinkage);
+    void CreateBlendState(IntPtr pBlendStateDesc, out IntPtr ppBlendState);
+    void CreateDepthStencilState(IntPtr pDepthStencilStateDesc, out IntPtr ppDepthStencilState);
+    void CreateRasterizerState(IntPtr pRasterizerDesc, out IntPtr ppRasterizerState);
+    void CreateSamplerState(IntPtr pSamplerDesc, out IntPtr ppSamplerState);
+    void CreateQuery(IntPtr pQueryDesc, out IntPtr ppQuery);
+    void CreatePredicate(IntPtr pPredicateDesc, out IntPtr ppPredicate);
+    void CreateCounter(IntPtr pCounterDesc, out IntPtr ppCounter);
+    void CreateDeferredContext(uint ContextFlags, out ID3D11DeviceContext ppDeferredContext);
+    void OpenSharedResource(IntPtr hResource, ref Guid ReturnedInterface, out IntPtr ppResource);
+    void CheckFormatSupport(uint Format, out uint pFormatSupport);
+    void CheckMultisampleQualityLevels(uint Format, uint SampleCount, out uint pNumQualityLevels);
+    void CheckCounterInfo(out IntPtr pCounterInfo);
+    void CheckCounter(IntPtr pDesc, out int pType, out int pActiveCounters, out IntPtr szName, out uint pNameLength, out IntPtr szUnits, out uint pUnitsLength, out IntPtr szDescription, out uint pDescriptionLength);
+    void CheckFeatureSupport(int Feature, IntPtr pFeatureSupportData, uint FeatureSupportDataSize);
+    void GetPrivateData(ref Guid guid, ref uint pDataSize, IntPtr pData);
+    void SetPrivateData(ref Guid guid, uint DataSize, IntPtr pData);
+    void SetPrivateDataInterface(ref Guid guid, [MarshalAs(UnmanagedType.IUnknown)] object pData);
+    void GetFeatureLevel(out int pFeatureLevel);
+    void GetCreationFlags(out uint pFlags);
+    void GetDeviceRemovedReason(out int pReason);
+    void GetImmediateContext(out ID3D11DeviceContext ppImmediateContext);
+    void SetExceptionMode(uint RaiseFlags);
+    void GetExceptionMode(out uint pRaiseFlags);
+}
+
+[ComImport]
+[Guid("c0bfa96c-e089-44fb-8eaf-26f8796190da")]
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+interface ID3D11DeviceContext : ID3D11DeviceChild
+{
+    // ID3D11DeviceChild methods
+    new void GetDevice(out ID3D11Device ppDevice);
+    new void GetPrivateData(ref Guid guid, ref uint pDataSize, IntPtr pData);
+    new void SetPrivateData(ref Guid guid, uint DataSize, IntPtr pData);
+    new void SetPrivateDataInterface(ref Guid guid, [MarshalAs(UnmanagedType.IUnknown)] object pData);
+
+    // ID3D11DeviceContext methods
+    void VSSetConstantBuffers(uint StartSlot, uint NumBuffers, IntPtr ppConstantBuffers);
+    void PSSetShaderResources(uint StartSlot, uint NumViews, IntPtr ppShaderResourceViews);
+    void PSSetShader(IntPtr pPixelShader, IntPtr ppClassInstances, uint NumClassInstances);
+    void PSSetSamplers(uint StartSlot, uint NumSamplers, IntPtr ppSamplers);
+    void VSSetShader(IntPtr pVertexShader, IntPtr ppClassInstances, uint NumClassInstances);
+    void DrawIndexed(uint IndexCount, uint StartIndexLocation, int BaseVertexLocation);
+    void Draw(uint VertexCount, uint StartVertexLocation);
+    void Map(ID3D11Resource pResource, uint Subresource, uint MapType, uint MapFlags, out D3D11_MAPPED_SUBRESOURCE pMappedResource);
+    void Unmap(ID3D11Resource pResource, uint Subresource);
+    void PSSetConstantBuffers(uint StartSlot, uint NumBuffers, IntPtr ppConstantBuffers);
+    void IASetInputLayout(IntPtr pInputLayout);
+    void IASetVertexBuffers(uint StartSlot, uint NumBuffers, IntPtr ppVertexBuffers, IntPtr pStrides, IntPtr pOffsets);
+    void IASetIndexBuffer(IntPtr pIndexBuffer, uint Format, uint Offset);
+    void DrawIndexedInstanced(uint IndexCountPerInstance, uint InstanceCount, uint StartIndexLocation, int BaseVertexLocation, uint StartInstanceLocation);
+    void DrawInstanced(uint VertexCountPerInstance, uint InstanceCount, uint StartVertexLocation, uint StartInstanceLocation);
+    void GSSetConstantBuffers(uint StartSlot, uint NumBuffers, IntPtr ppConstantBuffers);
+    void GSSetShader(IntPtr pShader, IntPtr ppClassInstances, uint NumClassInstances);
+    void IASetPrimitiveTopology(uint Topology);
+    void VSSetShaderResources(uint StartSlot, uint NumViews, IntPtr ppShaderResourceViews);
+    void VSSetSamplers(uint StartSlot, uint NumSamplers, IntPtr ppSamplers);
+    void Begin(IntPtr pAsync);
+    void End(IntPtr pAsync);
+    void GetData(IntPtr pAsync, IntPtr pData, uint DataSize, uint GetDataFlags);
+    void SetPredication(IntPtr pPredicate, int PredicateValue);
+    void GSSetShaderResources(uint StartSlot, uint NumViews, IntPtr ppShaderResourceViews);
+    void GSSetSamplers(uint StartSlot, uint NumSamplers, IntPtr ppSamplers);
+    void OMSetRenderTargets(uint NumViews, IntPtr ppRenderTargetViews, IntPtr pDepthStencilView);
+    void OMSetRenderTargetsAndUnorderedAccessViews(uint NumRTVs, IntPtr ppRenderTargetViews, IntPtr pDepthStencilView, uint UAVStartSlot, uint NumUAVs, IntPtr ppUnorderedAccessViews, IntPtr pUAVInitialCounts);
+    void OMSetBlendState(IntPtr pBlendState, float[] BlendFactor, uint SampleMask);
+    void OMSetDepthStencilState(IntPtr pDepthStencilState, uint StencilRef);
+    void SOSetTargets(uint NumBuffers, IntPtr ppSOTargets, IntPtr pOffsets);
+    void DrawAuto();
+    void DrawIndexedInstancedIndirect(IntPtr pBufferForArgs, uint AlignedByteOffsetForArgs);
+    void DrawInstancedIndirect(IntPtr pBufferForArgs, uint AlignedByteOffsetForArgs);
+    void Dispatch(uint ThreadGroupCountX, uint ThreadGroupCountY, uint ThreadGroupCountZ);
+    void DispatchIndirect(IntPtr pBufferForArgs, uint AlignedByteOffsetForArgs);
+    void RSSetState(IntPtr pRasterizerState);
+    void RSSetViewports(uint NumViewports, IntPtr pViewports);
+    void RSSetScissorRects(uint NumRects, IntPtr pRects);
+    void CopySubresourceRegion(ID3D11Resource pDstResource, uint DstSubresource, uint DstX, uint DstY, uint DstZ, ID3D11Resource pSrcResource, uint SrcSubresource, IntPtr pSrcBox);
+    void CopyResource(ID3D11Resource pDstResource, ID3D11Resource pSrcResource);
+    // Truncated for brevity, but needed
+    void UpdateSubresource(ID3D11Resource pDstResource, uint DstSubresource, IntPtr pDstBox, IntPtr pSrcData, uint SrcRowPitch, uint SrcDepthPitch);
+}
+
+[StructLayout(LayoutKind.Sequential)]
+struct D3D11_TEXTURE2D_DESC
+{
+    public uint Width;
+    public uint Height;
+    public uint MipLevels;
+    public uint ArraySize;
+    public uint Format;
+    public DXGI_SAMPLE_DESC SampleDesc;
+    public uint Usage;
+    public uint BindFlags;
+    public uint CPUAccessFlags;
+    public uint MiscFlags;
+}
+
+// Enums
+enum D3D11_USAGE : uint { DEFAULT = 0, IMMUTABLE = 1, DYNAMIC = 2, STAGING = 3 }
+enum D3D11_BIND_FLAG : uint { VERTEX_BUFFER = 1, INDEX_BUFFER = 2, CONSTANT_BUFFER = 4, SHADER_RESOURCE = 8, STREAM_OUTPUT = 16, RENDER_TARGET = 32, DEPTH_STENCIL = 64, UNORDERED_ACCESS = 128, DECODER = 512, VIDEO_ENCODER = 1024 }
+enum D3D11_CPU_ACCESS_FLAG : uint { WRITE = 65536, READ = 131072 }
+enum D3D11_MAP : uint { READ = 1, WRITE = 2, READ_WRITE = 3, WRITE_DISCARD = 4, WRITE_NO_OVERWRITE = 5 }
+
 [ComImport]
 [Guid("035f3ab4-482e-4e50-b960-13b05d3696c9")]
 [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
@@ -91,6 +267,9 @@ struct DXGI_MAPPED_RECT
     public IntPtr pBits;
 }
 
+/// <summary>
+/// COM interface for accessing memory buffer bytes (same as in NativeCamera.Windows.cs)
+/// </summary>
 [ComImport]
 [Guid("5B0D3235-4DBA-4D44-865E-8F1D0E4FD04D")]
 [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
@@ -102,8 +281,12 @@ unsafe interface IMemoryBufferByteAccess
 #endregion
 
 
-public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyChanged
+public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyChanged, IAudioCapture
 {
+    // Global lock to prevent overlapping camera sessions on Windows
+    private static readonly SemaphoreSlim _cameraLock = new(1, 1);
+    private bool _hasLock = false;
+
     protected readonly SkiaCamera FormsControl;
     private MediaCapture _mediaCapture;
     private MediaFrameReader _frameReader;
@@ -128,6 +311,11 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     private readonly SemaphoreSlim _frameSemaphore = new(1, 1);
     private volatile bool _isProcessingFrame = false;
 
+    // Raw frame arrival diagnostics (counts ALL frames before filtering)
+    private long _rawFrameCount = 0;
+    private long _rawFrameLastReportTime = 0;
+    private double _rawFrameFps = 0;
+
     // Pre-recording buffer fields
     private bool _enablePreRecording;
     private TimeSpan _preRecordDuration = TimeSpan.FromSeconds(5);
@@ -151,9 +339,9 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         }
     }
 
-        // Reused buffers for managed fallback conversion (apply capture-path trick: single reusable buffers)
-        private InMemoryRandomAccessStream _scratchPreviewStream;
-        private byte[] _scratchPreviewBytes;
+    // Reused buffers for managed fallback conversion (apply capture-path trick: single reusable buffers)
+    private InMemoryRandomAccessStream _scratchPreviewStream;
+    private byte[] _scratchPreviewBytes;
 
     public NativeCamera(SkiaCamera formsControl)
     {
@@ -195,6 +383,11 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     public Action<CapturedImage> PreviewCaptureSuccess { get; set; }
     public Action<CapturedImage> StillImageCaptureSuccess { get; set; }
     public Action<Exception> StillImageCaptureFailed { get; set; }
+
+    /// <summary>
+    /// Raw camera frame delivery rate (all frames before any filtering/processing)
+    /// </summary>
+    public double RawCameraFps => _rawFrameFps;
 
     /// <summary>
     /// Gets or sets whether pre-recording is enabled.
@@ -306,19 +499,87 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
         Debug.WriteLine("[NativeCameraWindows] Initializing MediaCapture...");
         _mediaCapture = new MediaCapture();
+
+        var captureMode = StreamingCaptureMode.Video;
+        string preferredAudioDeviceId = null;
+
+        if (FormsControl != null && FormsControl.RecordAudio)
+        {
+            // Try to find an audio device
+            var audioDevices = await DeviceInformation.FindAllAsync(DeviceClass.AudioCapture);
+            if (audioDevices.Count > 0)
+            {
+                captureMode = StreamingCaptureMode.AudioAndVideo;
+
+                // Select audio device based on AudioDeviceIndex
+                DeviceInformation selectedAudio = null;
+
+                if (FormsControl != null && FormsControl.AudioDeviceIndex >= 0 && FormsControl.AudioDeviceIndex < audioDevices.Count)
+                {
+                    selectedAudio = audioDevices[FormsControl.AudioDeviceIndex];
+                    Debug.WriteLine($"[NativeCameraWindows] Selected Audio Device by Index {FormsControl.AudioDeviceIndex}: {selectedAudio.Name}");
+                }
+                else
+                {
+                    // Fallback to default
+                    selectedAudio = audioDevices.FirstOrDefault(x => x.IsDefault) ?? audioDevices.First();
+                    Debug.WriteLine($"[NativeCameraWindows] Selected Default Audio Device: {selectedAudio.Name} (IsDefault={selectedAudio.IsDefault})");
+                }
+
+                preferredAudioDeviceId = selectedAudio.Id;
+
+                Debug.WriteLine($"[NativeCameraWindows] Selected Audio Device ID: {preferredAudioDeviceId}");
+
+                // List simple debug info
+                Debug.WriteLine($"[NativeCameraWindows] Available Audio Devices: {audioDevices.Count}");
+                for (int i = 0; i < audioDevices.Count; i++)
+                {
+                    var ad = audioDevices[i];
+                    Debug.WriteLine($"   [{i}] {ad.Name} [ID: {ad.Id}] IsDefault: {ad.IsDefault}");
+                }
+            }
+            else
+            {
+                Debug.WriteLine("[NativeCameraWindows] RecordAudio is requested, but NO AudioCapture devices found! Fallback to Video only.");
+                captureMode = StreamingCaptureMode.Video;
+            }
+        }
+
         var settings = new MediaCaptureInitializationSettings
         {
             VideoDeviceId = _cameraDevice.Id,
-            StreamingCaptureMode = StreamingCaptureMode.Video,
+            StreamingCaptureMode = captureMode,
             PhotoCaptureSource = PhotoCaptureSource.VideoPreview
         };
 
+        if (!string.IsNullOrEmpty(preferredAudioDeviceId))
+        {
+            settings.AudioDeviceId = preferredAudioDeviceId;
+        }
+
         Debug.WriteLine($"[NativeCameraWindows] *** INITIALIZING MEDIACAPTURE WITH VideoDeviceId: {_cameraDevice.Id} ({_cameraDevice.Name}) ***");
 
+        try
+        {
+            await _mediaCapture.InitializeAsync(settings);
+        }
+        catch (Exception ex)
+        {
+            if (captureMode == StreamingCaptureMode.AudioAndVideo)
+            {
+                Debug.WriteLine($"[NativeCameraWindows] Failed to initialize with Audio: {ex.Message}. Retrying Video only...");
+                settings.StreamingCaptureMode = StreamingCaptureMode.Video;
+                await _mediaCapture.InitializeAsync(settings);
+            }
+            else
+            {
+                throw;
+            }
+        }
 
-
-        await _mediaCapture.InitializeAsync(settings);
         Debug.WriteLine("[NativeCameraWindows] MediaCapture initialized successfully");
+
+        LogSupportedMediaProperties();
 
         _flashSupported = _mediaCapture.VideoDeviceController.FlashControl.Supported;
         Debug.WriteLine($"[NativeCameraWindows] Flash supported: {_flashSupported}");
@@ -639,48 +900,90 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     }
 
     /// <summary>
-    /// Create optimized SKImage directly from Direct3D surface
+    /// Create optimized SKImage directly from Direct3D surface using Staging texture if needed.
+    /// This avoids the overhead of SoftwareBitmap wrapper.
     /// </summary>
     private SKImage ConvertDirect3DToOptimizedSKImage(Windows.Graphics.DirectX.Direct3D11.IDirect3DSurface d3dSurface)
     {
+        ID3D11Texture2D texture = null;
+        ID3D11Device device = null;
+        ID3D11DeviceContext context = null;
+        ID3D11Texture2D stagingTexture = null;
+
         try
         {
-            var grContext = GetExistingGRContext();
-            if (grContext == null)
+            // Get DXGI Interface Access
+            var access = d3dSurface as IDirect3DDxgiInterfaceAccess;
+            if (access == null) return null;
+
+            var textureGuid = typeof(ID3D11Texture2D).GUID;
+            var texturePtr = access.GetInterface(ref textureGuid);
+            if (texturePtr == IntPtr.Zero) return null;
+
+            texture = Marshal.GetObjectForIUnknown(texturePtr) as ID3D11Texture2D;
+            if (texture == null) return null;
+
+            texture.GetDesc(out D3D11_TEXTURE2D_DESC desc);
+            texture.GetDevice(out device);
+            device.GetImmediateContext(out context);
+
+            D3D11_MAPPED_SUBRESOURCE mapped;
+            bool useStaging = true;
+
+            // Checks if we can map directly (optimization)
+            if (desc.Usage == (uint)D3D11_USAGE.STAGING && (desc.CPUAccessFlags & (uint)D3D11_CPU_ACCESS_FLAG.READ) != 0)
             {
-                Debug.WriteLine("[NativeCameraWindows] No GRContext available, falling back to software processing");
-                return null;
+                useStaging = false;
             }
 
-            var dxgiSurface = GetDXGISurfaceFromD3DSurface(d3dSurface);
-            if (dxgiSurface == null)
+            ID3D11Resource resourceToMap = null;
+
+            if (useStaging)
             {
-                Debug.WriteLine("[NativeCameraWindows] Failed to extract DXGI surface");
-                return null;
+                // Create Staging
+                var stagingDesc = desc;
+                stagingDesc.Usage = (uint)D3D11_USAGE.STAGING;
+                stagingDesc.BindFlags = 0;
+                stagingDesc.CPUAccessFlags = (uint)D3D11_CPU_ACCESS_FLAG.READ;
+                stagingDesc.MiscFlags = 0; // Clear any shared flags
+
+                device.CreateTexture2D(ref stagingDesc, IntPtr.Zero, out stagingTexture);
+
+                context.CopyResource((ID3D11Resource)stagingTexture, (ID3D11Resource)texture);
+                resourceToMap = (ID3D11Resource)stagingTexture;
+            }
+            else
+            {
+                resourceToMap = (ID3D11Resource)texture;
             }
 
-            dxgiSurface.GetDesc(out DXGI_SURFACE_DESC desc);
-            Debug.WriteLine($"[NativeCameraWindows] Creating GPU SKImage: {desc.Width}x{desc.Height}, Format: {desc.Format}");
-
-            var imageInfo = new SKImageInfo((int)desc.Width, (int)desc.Height, SKColorType.Bgra8888, SKAlphaType.Premul);
-
-            dxgiSurface.Map(out DXGI_MAPPED_RECT mappedRect, 0);
+            context.Map(resourceToMap, 0, (uint)D3D11_MAP.READ, 0, out mapped);
 
             try
             {
-                var skImage = SKImage.FromPixels(imageInfo, mappedRect.pBits, mappedRect.Pitch);
-                Debug.WriteLine($"[NativeCameraWindows] Successfully created SKImage from D3D surface: {skImage?.Width}x{skImage?.Height}");
+                // Create SKImage from mapped memory
+                // We use SKImage.FromPixels which copies the data unless we use a ReleaseProc, but we need to Unmap immediately so copy is safer/easier.
+                // This is still faster than SoftwareBitmap intermediate.
+                var info = new SKImageInfo((int)desc.Width, (int)desc.Height, SKColorType.Bgra8888, SKAlphaType.Premul);
+                var skImage = SKImage.FromPixels(info, mapped.pData, (int)mapped.RowPitch);
                 return skImage;
             }
             finally
             {
-                dxgiSurface.Unmap();
+                context.Unmap(resourceToMap, 0);
             }
         }
         catch (Exception e)
         {
-            Debug.WriteLine($"[NativeCameraWindows] ConvertDirect3DToGPUSKImage error: {e}");
+            Debug.WriteLine($"[NativeCameraWindows] ConvertDirect3DToOptimizedSKImage error: {e}");
             return null;
+        }
+        finally
+        {
+            if (stagingTexture != null) Marshal.ReleaseComObject(stagingTexture);
+            if (context != null) Marshal.ReleaseComObject(context);
+            if (device != null) Marshal.ReleaseComObject(device);
+            if (texture != null) Marshal.ReleaseComObject(texture);
         }
     }
 
@@ -704,27 +1007,36 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         CapturedImage capturedImage = null;
         try
         {
-            // Use GPU-assisted conversion from Direct3D surface to SoftwareBitmap
-            var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(d3dSurface);
-            if (softwareBitmap != null)
-            {
-                var skImage = await ConvertToSKImageDirectAsync(softwareBitmap);
-                if (skImage != null)
-                {
-                    var meta = FormsControl.CameraDevice.Meta;
-                    var rotation = FormsControl.DeviceRotation;
-                    Metadata.ApplyRotation(meta, rotation);
+            // PRIORITY 1: Try highly optimized Staging Texture Map (1 copy)
+            // This bypasses the SoftwareBitmap wrapper overhead and double buffering
+            var skImage = ConvertDirect3DToOptimizedSKImage(d3dSurface);
 
-                    capturedImage = new CapturedImage()
-                    {
-                        Facing = FormsControl.Facing,
-                        Time = DateTime.UtcNow,
-                        Image = skImage, // Transfer ownership to CapturedImage - renderer will dispose
-                        Meta = meta,
-                        Rotation = rotation
-                    };
+            if (skImage == null)
+            {
+                // PRIORITY 2: Fallback to SoftwareBitmap (2 copies)
+                // GPU Copy (Surface->SoftBitmap) -> CPU Copy (SoftBitmap->Skia)
+                var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(d3dSurface);
+                if (softwareBitmap != null)
+                {
+                    skImage = await ConvertToSKImageDirectAsync(softwareBitmap);
+                    softwareBitmap.Dispose();
                 }
-                softwareBitmap.Dispose();
+            }
+
+            if (skImage != null)
+            {
+                var meta = FormsControl.CameraDevice.Meta;
+                var rotation = FormsControl.DeviceRotation;
+                Metadata.ApplyRotation(meta, rotation);
+
+                capturedImage = new CapturedImage()
+                {
+                    Facing = FormsControl.Facing,
+                    Time = DateTime.UtcNow,
+                    Image = skImage, // Transfer ownership to CapturedImage - renderer will dispose
+                    Meta = meta,
+                    Rotation = rotation
+                };
             }
         }
         catch (Exception e)
@@ -745,6 +1057,9 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 // Update camera metadata with current exposure settings
                 UpdateCameraMetadata();
 
+                // Invoke capture callback for encoder (same pattern as Android)
+                PreviewCaptureSuccess?.Invoke(capturedImage);
+
                 //PREVIEW FRAME READY
                 FormsControl.UpdatePreview();
             }
@@ -757,6 +1072,26 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     /// </summary>
     private void OnFrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
     {
+        // Count ALL incoming frames for raw FPS calculation (before any filtering)
+        _rawFrameCount++;
+        var now = System.Diagnostics.Stopwatch.GetTimestamp();
+        if (_rawFrameLastReportTime == 0)
+        {
+            _rawFrameLastReportTime = now;
+        }
+        else
+        {
+            var elapsedTicks = now - _rawFrameLastReportTime;
+            var elapsedSeconds = (double)elapsedTicks / System.Diagnostics.Stopwatch.Frequency;
+            if (elapsedSeconds >= 1.0) // Report every second
+            {
+                _rawFrameFps = _rawFrameCount / elapsedSeconds;
+                //Debug.WriteLine($"[NativeCameraWindows] RAW camera FPS: {_rawFrameFps:F1} (frames: {_rawFrameCount} in {elapsedSeconds:F2}s)");
+                _rawFrameCount = 0;
+                _rawFrameLastReportTime = now;
+            }
+        }
+
         // Skip if already processing a frame to prevent backlog
         if (_isProcessingFrame)
             return;
@@ -769,6 +1104,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 var videoFrame = frame.VideoMediaFrame;
 
                 // PRIORITY 1: Use GPU-assisted Direct3D processing
+                // This is the fastest path for Preview, bypassing SoftwareBitmap overhead
                 if (videoFrame.Direct3DSurface != null)
                 {
                     //Debug.WriteLine("[NativeCameraWindows] Frame arrived with Direct3D surface, using GPU-assisted processing...");
@@ -837,6 +1173,9 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
                 // Update camera metadata with current exposure settings
                 UpdateCameraMetadata();
+
+                // Invoke capture callback for encoder (same pattern as Android)
+                PreviewCaptureSuccess?.Invoke(capturedImage);
 
                 //PREVIEW FRAME READY
                 FormsControl.UpdatePreview();
@@ -1020,55 +1359,90 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
     public async void Start()
     {
-        Setup();
-
-        if (State == CameraProcessorState.Enabled && _frameReader != null)
+        // Acquire global lock to ensure previous camera is fully stopped
+        if (!_hasLock)
         {
-            //Debug.WriteLine("[NativeCameraWindows] Camera already started");
-            return;
+            if (await _cameraLock.WaitAsync(5000))
+            {
+                _hasLock = true;
+            }
+            else
+            {
+                Debug.WriteLine("[NativeCameraWindows] FAILED to acquire camera lock - potential resource conflict");
+                return; // Abort start if lock cannot be acquired
+            }
         }
 
-        await StartFrameReaderAsync();
-
-        // Apply current flash modes after camera starts
-        if (State == CameraProcessorState.Enabled)
+        try
         {
-            ApplyFlashMode();
+            Setup();
+
+            if (State == CameraProcessorState.Enabled && _frameReader != null)
+            {
+                //Debug.WriteLine("[NativeCameraWindows] Camera already started");
+                return;
+            }
+
+            await StartFrameReaderAsync();
+
+            // Apply current flash modes after camera starts
+            if (State == CameraProcessorState.Enabled)
+            {
+                ApplyFlashMode();
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] Start error: {e}");
+            // Release lock if start failed
+            if (_hasLock)
+            {
+                _cameraLock.Release();
+                _hasLock = false;
+            }
         }
     }
 
     public async void Stop(bool force = false)
     {
-        if (State == CameraProcessorState.None && !force)
+        // Only return early if we definitely don't need to do anything AND we don't hold the lock
+        if (!_hasLock && State == CameraProcessorState.None && !force)
             return;
 
-        if (State != CameraProcessorState.Enabled && !force)
+        if (!_hasLock && State != CameraProcessorState.Enabled && !force)
             return; //avoid spam
 
         try
         {
-            //Debug.WriteLine("[NativeCameraWindows] Stopping frame reader...");
-            if (_frameReader != null)
+            try
             {
-                await _frameReader.StopAsync();
-                //Debug.WriteLine("[NativeCameraWindows] Frame reader stopped");
+                //Debug.WriteLine("[NativeCameraWindows] Stopping frame reader...");
+                if (_frameReader != null)
+                {
+                    await _frameReader.StopAsync();
+                    //Debug.WriteLine("[NativeCameraWindows] Frame reader stopped");
+                }
+
+                State = CameraProcessorState.None;
+
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    DeviceDisplay.Current.KeepScreenOn = false;
+                });
             }
-
-
-
-
-
-            State = CameraProcessorState.None;
-
-            MainThread.BeginInvokeOnMainThread(() =>
+            catch (Exception e)
             {
-                DeviceDisplay.Current.KeepScreenOn = false;
-            });
+                Debug.WriteLine($"[NativeCameraWindows] Stop error: {e}");
+                State = CameraProcessorState.Error;
+            }
         }
-        catch (Exception e)
+        finally
         {
-            Debug.WriteLine($"[NativeCameraWindows] Stop error: {e}");
-            State = CameraProcessorState.Error;
+            if (_hasLock)
+            {
+                _cameraLock.Release();
+                _hasLock = false;
+            }
         }
     }
 
@@ -1753,7 +2127,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 var fps = (int)(profile.Video.FrameRate.Numerator / Math.Max(1, profile.Video.FrameRate.Denominator));
                 var bitrate = (int)profile.Video.Bitrate;
 
-                Debug.WriteLine($"[NativeCameraWindows] GetCurrentVideoFormat: Extracted from encoding profile -> {w}x{h}@{fps}fps, {bitrate / 1_000_000}Mbps");
+                //Debug.WriteLine($"[NativeCameraWindows] GetCurrentVideoFormat: Extracted from encoding profile -> {w}x{h}@{fps}fps, {bitrate / 1_000_000}Mbps");
 
                 return new VideoFormat
                 {
@@ -1870,16 +2244,24 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             // Target resolutions for each quality level
             var targetResolution = quality switch
             {
-                VideoQuality.Low => (width: 1280, height: 720),      // 720p
-                VideoQuality.Standard => (width: 1920, height: 1080), // 1080p
+                VideoQuality.Low => (width: 640, height: 480),        // 480p
+                VideoQuality.Standard => (width: 1280, height: 720),  // 720p
                 VideoQuality.High => (width: 1920, height: 1080),     // 1080p
                 VideoQuality.Ultra => (width: 3840, height: 2160),    // 4K
                 _ => (width: 1920, height: 1080)
             };
 
+            // Target FPS
+            int targetFps = 30;
+            if (quality == VideoQuality.High || quality == VideoQuality.Ultra)
+            {
+                targetFps = 60;
+            }
+
             // Find closest match from available formats
             var bestFormat = availableFormats
                 .OrderBy(f => Math.Abs((f.Width * f.Height) - (targetResolution.width * targetResolution.height)))
+                .ThenBy(f => Math.Abs(f.FrameRate - targetFps))
                 .ThenByDescending(f => f.FrameRate)
                 .FirstOrDefault();
 
@@ -1900,7 +2282,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 // Fallback to hardcoded preset if no formats available
                 profile = quality switch
                 {
-                    VideoQuality.Low => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD720p),
+                    VideoQuality.Low => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.Vga),
+                    VideoQuality.Standard => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD720p),
                     VideoQuality.Ultra => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.Uhd2160p),
                     _ => MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p)
                 };
@@ -1913,11 +2296,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         if (!FormsControl.RecordAudio)
         {
             profile.Audio = null;
-            Debug.WriteLine("[NativeCamera.Windows] Audio disabled for video recording");
-        }
-        else
-        {
-            Debug.WriteLine("[NativeCamera.Windows] Audio enabled for video recording");
+            //Debug.WriteLine("[NativeCamera.Windows] Audio disabled for video recording");
         }
 
         return profile;
@@ -2032,9 +2411,9 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         }
     }
 
-/// <summary>
-/// Stops video recording
-/// </summary>
+    /// <summary>
+    /// Stops video recording
+    /// </summary>
     public async Task StopVideoRecording()
     {
         if (!_isRecordingVideo || _mediaCapture == null || _currentVideoFile == null)
@@ -2102,8 +2481,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             _currentVideoFile = null;
         }
     }    /// <summary>
-    /// Initialize the pre-recording buffer
-    /// </summary>
+         /// Initialize the pre-recording buffer
+         /// </summary>
     private void InitializePreRecordingBuffer()
     {
         lock (_preRecordingLock)
@@ -2283,6 +2662,338 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     /// Event fired when video recording progress updates
     /// </summary>
     public Action<TimeSpan> VideoRecordingProgress { get; set; }
+
+    /// <summary>
+    /// Sets whether audio should be recorded with video.
+    /// Windows handles this via separate audio capture flow.
+    /// </summary>
+    public void SetRecordAudio(bool recordAudio)
+    {
+        // Windows native recording uses separate audio capture via IAudioCapture interface
+        // This method is here for interface compliance - actual audio is handled by SkiaCamera
+        System.Diagnostics.Debug.WriteLine($"[NativeCamera.Windows] SetRecordAudio: {recordAudio}");
+    }
+
+    #endregion
+
+    #region Audio
+
+    private MediaFrameReader _audioFrameReader;
+    private MediaFrameSource _audioFrameSource;
+    private bool _isCapturingAudio;
+
+    public bool IsCapturing => _isCapturingAudio;
+    public int SampleRate { get; private set; }
+    public int Channels { get; private set; }
+    public AudioBitDepth AudioBitDepth { get; private set; }
+
+    /// <summary>
+    /// Gets the actual Audio Sample Rate from the source.
+    /// </summary>
+    public int ActualAudioSampleRate
+    {
+        get
+        {
+            // Debug Log once
+            if (!_debugAudioFormatsLogged)
+            {
+                _debugAudioFormatsLogged = true;
+                //LogSupportedMediaProperties();
+            }
+
+            if (_audioFrameSource?.CurrentFormat?.AudioEncodingProperties != null)
+                return (int)_audioFrameSource.CurrentFormat.AudioEncodingProperties.SampleRate;
+
+            // Fallback: Ask MediaCapture AudioDeviceController?
+            try
+            {
+                var props = _mediaCapture?.AudioDeviceController?.GetMediaStreamProperties(MediaStreamType.Audio) as AudioEncodingProperties;
+                if (props != null)
+                    return (int)props.SampleRate;
+            }
+            catch { }
+
+            return SampleRate > 0 ? SampleRate : 44100;
+        }
+    }
+
+    private bool _debugAudioFormatsLogged = false;
+    public void LogSupportedMediaProperties()
+    {
+        try
+        {
+            Debug.WriteLine("---- MediaCapture Supported Properties ----");
+
+            // 1. Video
+            /*
+            if (_mediaCapture?.VideoDeviceController != null)
+            {
+               try 
+               {
+                   var videoProperties = _mediaCapture.VideoDeviceController
+                       .GetAvailableMediaStreamProperties(MediaStreamType.VideoRecord)
+                       .Select(p => p as VideoEncodingProperties)
+                       .Where(p => p != null);
+
+                   Debug.WriteLine($"-- Video Capture Formats ({videoProperties.Count()}) --");
+                   foreach (var prop in videoProperties)
+                   {
+                       Debug.WriteLine($"Video: {prop.Width}x{prop.Height} @ {prop.FrameRate.Numerator}/{prop.FrameRate.Denominator}fps [{prop.Subtype}] Bitrate:{prop.Bitrate}");
+                   }
+               }
+               catch(Exception ex)
+               {
+                   Debug.WriteLine($"[LogSupportedMediaProperties] Video List Error: {ex.Message}");
+               }
+            }
+            */
+            // 2. Audio
+            if (_mediaCapture?.AudioDeviceController != null)
+            {
+                var audioProperties = _mediaCapture.AudioDeviceController
+                      .GetAvailableMediaStreamProperties(MediaStreamType.Audio)
+                      .Select(p => p as AudioEncodingProperties)
+                      .Where(p => p != null);
+
+                Debug.WriteLine($"-- Audio Microphone Formats ({audioProperties.Count()}) --");
+                foreach (var prop in audioProperties)
+                {
+                    Debug.WriteLine($"Audio: {prop.SampleRate}Hz {prop.ChannelCount}ch {prop.Bitrate}bps [{prop.Subtype}]");
+                }
+            }
+            else
+            {
+                Debug.WriteLine("[LogSupportedMediaProperties] AudioDeviceController is null.");
+            }
+            Debug.WriteLine("--------------------------------------------");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[LogSupportedMediaProperties] Error: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Gets the actual Audio Channels from the source.
+    /// </summary>
+    public int ActualAudioChannels
+    {
+        get
+        {
+            if (_audioFrameSource?.CurrentFormat?.AudioEncodingProperties != null)
+                return (int)_audioFrameSource.CurrentFormat.AudioEncodingProperties.ChannelCount;
+
+            try
+            {
+                var props = _mediaCapture?.AudioDeviceController?.GetMediaStreamProperties(MediaStreamType.Audio) as AudioEncodingProperties;
+                if (props != null)
+                    return (int)props.ChannelCount;
+            }
+            catch { }
+
+            return Channels > 0 ? Channels : 1;
+        }
+    }
+
+    /// <summary>
+    /// Returns true if the audio device outputs IEEE Float format (instead of PCM).
+    /// </summary>
+    public bool ActualAudioIsFloat
+    {
+        get
+        {
+            if (_audioFrameSource?.CurrentFormat?.AudioEncodingProperties != null)
+            {
+                var subtype = _audioFrameSource.CurrentFormat.AudioEncodingProperties.Subtype;
+                return string.Equals(subtype, "Float", StringComparison.OrdinalIgnoreCase);
+            }
+
+            try
+            {
+                var props = _mediaCapture?.AudioDeviceController?.GetMediaStreamProperties(MediaStreamType.Audio) as AudioEncodingProperties;
+                if (props != null)
+                {
+                    return string.Equals(props.Subtype, "Float", StringComparison.OrdinalIgnoreCase);
+                }
+            }
+            catch { }
+
+            return false; // Default to PCM
+        }
+    }
+
+    public event EventHandler<AudioSample> SampleAvailable;
+
+    /// <summary>
+    /// Get list of available audio input devices (Windows uses AudioDeviceIndex set during initialization)
+    /// </summary>
+    public async Task<List<DrawnUi.Camera.AudioDeviceInfo>> GetAvailableDevicesAsync()
+    {
+        var devices = new List<DrawnUi.Camera.AudioDeviceInfo>();
+        try
+        {
+            var audioDevices = await DeviceInformation.FindAllAsync(DeviceClass.AudioCapture);
+            for (int i = 0; i < audioDevices.Count; i++)
+            {
+                var device = audioDevices[i];
+                devices.Add(new DrawnUi.Camera.AudioDeviceInfo
+                {
+                    Index = i,
+                    Id = device.Id,
+                    Name = device.Name,
+                    IsDefault = device.IsDefault
+                });
+                Debug.WriteLine($"[NativeCameraWindows] Available audio device [{i}]: {device.Name} (ID: {device.Id})");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] Error getting audio devices: {ex.Message}");
+        }
+        return devices;
+    }
+
+    public async Task<bool> StartAsync(int sampleRate = 44100, int channels = 1, AudioBitDepth bitDepth = AudioBitDepth.Pcm16Bit, int deviceIndex = -1)
+    {
+        // Note: On Windows, device selection is handled during MediaCapture initialization via FormsControl.AudioDeviceIndex
+        // The deviceIndex parameter here is ignored since the audio device was selected at startup
+        if (_mediaCapture == null)
+            return false;
+
+        try
+        {
+            if (_isCapturingAudio)
+                return true;
+
+            SampleRate = sampleRate;
+            Channels = channels;
+            AudioBitDepth = bitDepth;
+
+            await SetupAudioReader();
+
+            if (_audioFrameReader != null)
+            {
+                var status = await _audioFrameReader.StartAsync();
+                _isCapturingAudio = status == MediaFrameReaderStartStatus.Success;
+                Debug.WriteLine($"[NativeCameraWindows] Audio Reader Start Status: {status}");
+                return _isCapturingAudio;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] StartAsync (Audio) error: {ex}");
+        }
+        return false;
+    }
+
+    public async Task StopAsync()
+    {
+        if (_audioFrameReader != null)
+        {
+            await _audioFrameReader.StopAsync();
+            _isCapturingAudio = false;
+        }
+    }
+
+    private async Task SetupAudioReader()
+    {
+        if (_audioFrameReader != null)
+            return;
+
+        try
+        {
+            // Debug: Log available formats using user's suggested logic
+            try
+            {
+                var audioProperties = _mediaCapture.VideoDeviceController
+                    .GetAvailableMediaStreamProperties(MediaStreamType.Audio)
+                    .Select(p => p as AudioEncodingProperties)
+                    .Where(p => p != null);
+
+                Debug.WriteLine("---- Available Audio Device Formats ----");
+                foreach (var prop in audioProperties)
+                {
+                    Debug.WriteLine($"Audio: Channels: {prop.ChannelCount}, SampleRate: {prop.SampleRate}, " +
+                                      $"Bitrate: {prop.Bitrate}, Subtype: {prop.Subtype}");
+                }
+                Debug.WriteLine("----------------------------------------");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[NativeCameraWindows] Warning: Failed to list audio properties: {ex.Message}");
+            }
+
+            // Find Audio Source
+            var audioSource = _mediaCapture.FrameSources.Values.FirstOrDefault(x => x.Info.SourceKind == MediaFrameSourceKind.Audio);
+
+            if (audioSource != null)
+            {
+                _audioFrameSource = audioSource;
+                Debug.WriteLine($"[NativeCameraWindows] Found Audio Source: {_audioFrameSource.Info.Id}");
+
+                // Create Reader
+                _audioFrameReader = await _mediaCapture.CreateFrameReaderAsync(_audioFrameSource);
+                _audioFrameReader.FrameArrived += OnAudioFrameArrived;
+                Debug.WriteLine($"[NativeCameraWindows] Created Audio Frame Reader");
+            }
+            else
+            {
+                Debug.WriteLine($"[NativeCameraWindows] No Audio Frame Source found. (FrameSources count: {_mediaCapture.FrameSources.Count})");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] SetupAudioReader error: {ex}");
+        }
+    }
+
+    private void OnAudioFrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
+    {
+        using (var frame = sender.TryAcquireLatestFrame())
+        {
+            if (frame != null && frame.AudioMediaFrame != null)
+            {
+                ProcessAudioFrame(frame.AudioMediaFrame);
+            }
+        }
+    }
+
+    private unsafe void ProcessAudioFrame(AudioMediaFrame audioFrame)
+    {
+        try
+        {
+            using (var buffer = audioFrame.GetAudioFrame().LockBuffer(global::Windows.Media.AudioBufferAccessMode.Read))
+            using (var reference = buffer.CreateReference())
+            {
+                byte* dataInBytes;
+                uint capacity;
+                ((IMemoryBufferByteAccess)reference).GetBuffer(out dataInBytes, out capacity);
+
+                if (capacity > 0)
+                {
+                    // TODO: Resampling/Format conversion if needed.
+
+                    byte[] processedData = new byte[capacity];
+                    Marshal.Copy((IntPtr)dataInBytes, processedData, 0, (int)capacity);
+
+                    var sample = new AudioSample
+                    {
+                        Data = processedData,
+                        TimestampNs = DateTime.UtcNow.Ticks * 100, // Or use frame.SystemRelativeTime
+                        SampleRate = (int)audioFrame.AudioEncodingProperties.SampleRate,
+                        Channels = (int)audioFrame.AudioEncodingProperties.ChannelCount,
+                        BitDepth = this.AudioBitDepth
+                    };
+
+                    SampleAvailable?.Invoke(this, sample);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Debug.WriteLine($"ProcessAudioFrame error: {ex}");
+        }
+    }
 
     #endregion
 

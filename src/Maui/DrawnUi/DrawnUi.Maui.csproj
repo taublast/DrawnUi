@@ -77,6 +77,8 @@
             <PackagePath>\</PackagePath>
             <Pack>True</Pack>
         </None>
+        <None Include="..\..\Directory.Build.targets" Link="Directory.Build.targets" />
+        <None Include="..\Directory.Build.props" Link="Directory.Build.props" />
     </ItemGroup>
 
     <ItemGroup>
@@ -149,8 +151,8 @@
     <ItemGroup Condition="$(TargetFramework.Contains('android')) == true">
         <!--fix android bad alignement-->
         <PackageReference Include="HarfBuzzSharp" Version="8.3.1.1" />
-        <!--native interop todo expose source  todo check no more needed? -->
-       <PackageReference Include="AppoMobi.Maui.Native" Version="1.0.1.0-pre" />
+        <!--native interop todo expose native source ? -->
+       <PackageReference Include="AppoMobi.Maui.Native.Android" Version="2.0.3.0-pre" />
     </ItemGroup>
 
     <ItemGroup>
@@ -196,6 +198,7 @@
             <Link>Platforms/iOS/%(RecursiveDir)%(Filename)%(Extension)</Link>
         </Compile>
     </ItemGroup>
+
 
     <Import Project="..\..\Shared\Shared.projitems" Label="Shared" />
 

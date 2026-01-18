@@ -1,7 +1,16 @@
 ﻿global using DrawnUi.Draw;
 global using SkiaSharp;
-using SKCanvas = SkiaSharp.SKCanvas;
 using System.Diagnostics;
+using AppoMobi.Specials;
+
+#if IOS || MACCATALYST
+using Foundation;
+using Photos;
+using AVFoundation;
+using AVKit;
+#endif
+
+using SKCanvas = SkiaSharp.SKCanvas;
 
 namespace DrawnUi.Camera;
 
@@ -745,7 +754,8 @@ public partial class SkiaCamera : SkiaControl
             {
                 return new BrightnessResult
                 {
-                    Success = false, ErrorMessage = "Could not capture frame for fallback analysis"
+                    Success = false,
+                    ErrorMessage = "Could not capture frame for fallback analysis"
                 };
             }
 
@@ -777,7 +787,8 @@ public partial class SkiaCamera : SkiaControl
 
                     return new BrightnessResult
                     {
-                        Success = true, Brightness = Math.Min(brightness, 200000)
+                        Success = true,
+                        Brightness = Math.Min(brightness, 200000)
                     }; // Cap at reasonable maximum
                 }
                 else
@@ -890,7 +901,7 @@ public partial class SkiaCamera : SkiaControl
         var context = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity ?? Android.App.Application.Context;
         var resolver = context.ContentResolver;
 
-        var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
+        var albumName = album;// string.IsNullOrEmpty(album) ? DefaultAlbum : album;
 
         // Use the existing filename from the path (may have been renamed by caller)
         var fileName = Path.GetFileName(privateVideoPath);
@@ -931,7 +942,7 @@ public partial class SkiaCamera : SkiaControl
     {
         var context = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity ?? Android.App.Application.Context;
         var dcimDir = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDcim);
-        var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
+        var albumName = album;//string.IsNullOrEmpty(album) ? DefaultAlbum : album;
         var appDir = new Java.IO.File(dcimDir, albumName);
 
         if (!appDir.Exists())
@@ -982,6 +993,50 @@ public partial class SkiaCamera : SkiaControl
 #endif
 
 #if IOS || MACCATALYST
+
+    private async Task<Photos.PHAssetCollection> FindOrCreateAlbumAsync(string albumName)
+    {
+        try
+        {
+            // 1. Find existing
+            var fetchOptions = new Photos.PHFetchOptions();
+            fetchOptions.Predicate = Foundation.NSPredicate.FromFormat($"title = '{albumName}'");
+            var collection = Photos.PHAssetCollection.FetchAssetCollections(Photos.PHAssetCollectionType.Album, Photos.PHAssetCollectionSubtype.Any, fetchOptions);
+
+            if (collection.Count > 0)
+            {
+                return collection.FirstObject as Photos.PHAssetCollection;
+            }
+
+            // 2. Create new
+            var tcs = new TaskCompletionSource<bool>();
+            string albumLocalId = null;
+
+            Photos.PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
+            {
+                var request = Photos.PHAssetCollectionChangeRequest.CreateAssetCollection(albumName);
+                albumLocalId = request.PlaceholderForCreatedAssetCollection.LocalIdentifier;
+            }, (success, error) =>
+            {
+                if (!success) Debug.WriteLine($"[SkiaCamera] Error creating album: {error}");
+                tcs.TrySetResult(success);
+            });
+
+            if (await tcs.Task)
+            {
+                var fetchOptions2 = new Photos.PHFetchOptions();
+                fetchOptions2.Predicate = Foundation.NSPredicate.FromFormat($"localIdentifier = '{albumLocalId}'");
+                var collection2 = Photos.PHAssetCollection.FetchAssetCollections(Photos.PHAssetCollectionType.Album, Photos.PHAssetCollectionSubtype.Any, fetchOptions2);
+                return collection2.FirstObject as Photos.PHAssetCollection;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] FindOrCreateAlbumAsync error: {ex}");
+        }
+        return null;
+    }
+
     /// <summary>
     /// iOS/macOS implementation to move video from temp to Photos library
     /// </summary>
@@ -989,62 +1044,74 @@ public partial class SkiaCamera : SkiaControl
     {
         try
         {
-            // Validate file exists and has content
             if (!File.Exists(privateVideoPath))
             {
-                Debug.WriteLine($"[SkiaCamera] iOS Photos save error: file does not exist at {privateVideoPath}");
+                Debug.WriteLine($"File does not exist: {privateVideoPath}");
                 return null;
             }
 
             var fileInfo = new FileInfo(privateVideoPath);
             if (fileInfo.Length == 0)
             {
-                Debug.WriteLine($"[SkiaCamera] iOS Photos save error: file is empty at {privateVideoPath}");
+                Debug.WriteLine($"File is empty: {privateVideoPath}");
                 return null;
             }
 
-            Debug.WriteLine($"[SkiaCamera] Saving video to Photos: {privateVideoPath} ({fileInfo.Length} bytes)");
+            await Task.Delay(100); // just in case
 
-            // Small delay to ensure file is fully flushed to disk
-            await Task.Delay(100);
-
-            // Request Photos AddOnly authorization (iOS 14+); falls back to Authorized for earlier
-            var authStatus = await Photos.PHPhotoLibrary.RequestAuthorizationAsync(Photos.PHAccessLevel.AddOnly);
-            if (authStatus != Photos.PHAuthorizationStatus.Authorized)
+            var authStatus = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.ReadWrite);
+            if (authStatus != PHAuthorizationStatus.Authorized)
             {
-                Debug.WriteLine("[SkiaCamera] iOS Photos save error: not authorized (AddOnly)");
+                Debug.WriteLine("Photos permission not granted");
                 return null;
             }
 
-            // Use Photos framework to add video to Photos library
-            var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
-            var tempUrl = Foundation.NSUrl.FromFilename(privateVideoPath);
-            var tcs = new TaskCompletionSource<string>();
-
-            Photos.PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
+            PHAssetCollection albumCollection = null;
+            if (!string.IsNullOrEmpty(album))
             {
-                // Create video asset in Photos library
-                var request = Photos.PHAssetChangeRequest.FromVideo(tempUrl);
-                // TODO: Add to specific album if required (create/find PHAssetCollection, then add)
+                albumCollection = await FindOrCreateAlbumAsync(album);
+            }
+
+            var tempUrl = NSUrl.FromFilename(privateVideoPath);
+            var tcs = new TaskCompletionSource<string>(); // will return localIdentifier
+
+            PHObjectPlaceholder placeholder = null;
+
+            PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
+            {
+                var request = PHAssetChangeRequest.FromVideo(tempUrl);
+
+                // Important: capture the placeholder immediately
+                placeholder = request.PlaceholderForCreatedAsset;
+
+                if (albumCollection != null)
+                {
+                    var albumRequest = PHAssetCollectionChangeRequest.ChangeRequest(albumCollection);
+                    albumRequest?.AddAssets(new PHObject[] { placeholder });
+                }
             },
             (success, error) =>
             {
-                if (success)
+                if (success && placeholder != null)
                 {
+                    string localId = placeholder.LocalIdentifier;
+
                     if (deleteOriginal)
                     {
-                        try { File.Delete(privateVideoPath); } catch { }
-                        Debug.WriteLine("[SkiaCamera] iOS: MOVED video to Photos library");
+                        //delay to make sure ios gallery picks all up
+                        Tasks.StartDelayed(TimeSpan.FromSeconds(2), () =>
+                        {
+                            try { File.Delete(privateVideoPath); }
+                            catch (Exception ex) { Debug.WriteLine($"Delete failed: {ex.Message}"); }
+                        });
                     }
-                    else
-                    {
-                        Debug.WriteLine("[SkiaCamera] iOS: COPIED video to Photos library");
-                    }
-                    tcs.SetResult("Photos Library");
+
+                    Debug.WriteLine($"Video saved successfully. LocalIdentifier: {localId}");
+                    tcs.SetResult(localId);
                 }
                 else
                 {
-                    Debug.WriteLine($"[SkiaCamera] iOS Photos save error: {error?.LocalizedDescription}");
+                    Debug.WriteLine($"Photos save failed: {error?.LocalizedDescription}");
                     tcs.SetResult(null);
                 }
             });
@@ -1053,10 +1120,64 @@ public partial class SkiaCamera : SkiaControl
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[SkiaCamera] Apple video move error: {ex.Message}");
+            Debug.WriteLine($"Exception: {ex.Message}");
             return null;
         }
     }
+
+    /// <summary>
+    /// Invoke from Main thread only
+    /// </summary>
+    /// <param name="localIdentifier"></param>
+    /// <returns></returns>
+    public static async Task PlayVideoFromPhotosAsync(string localIdentifier)
+    {
+        if (string.IsNullOrEmpty(localIdentifier))
+            return;
+
+        // 1. Fetch the PHAsset
+        var fetchResult = PHAsset.FetchAssetsUsingLocalIdentifiers(new[] { localIdentifier }, null);
+
+        if (fetchResult.Count == 0)
+        {
+            Debug.WriteLine("Video no longer exists in Photos library");
+            // → maybe user deleted it manually
+            return;
+        }
+
+        var asset = fetchResult[0] as PHAsset;
+
+        // Option A – Most elegant: play directly using AVPlayer (recommended)
+        var playerVC = new AVPlayerViewController();
+
+        PHImageManager.DefaultManager.RequestAVAsset(asset, null, (avAsset, audioMix, info) =>
+        {
+            if (avAsset != null)
+            {
+                var player = AVPlayer.FromPlayerItem(new AVPlayerItem(avAsset));
+                playerVC.Player = player;
+
+                player.Play();
+                // Very important: run on main thread!
+                //InvokeOnMainThread(() =>
+                //{
+                //    PresentViewController(playerVC, true, () =>
+                //    {
+                //        player.Play();
+                //    });
+                //});
+            }
+            else
+            {
+                Debug.WriteLine("Could not get AVAsset");
+            }
+        });
+
+        // Option B – If you really need a temporary file (less recommended)
+        // PHImageManager.DefaultManager.RequestExportSessionForVideo(...)
+        // then export to temp folder and play with normal video player
+    }
+
 #endif
 
 #if WINDOWS
@@ -1067,7 +1188,7 @@ public partial class SkiaCamera : SkiaControl
     {
         try
         {
-            var albumName = string.IsNullOrEmpty(album) ? "SkiaCamera" : album;
+            var albumName = album;//string.IsNullOrEmpty(album) ? DefaultAlbum : album;
 
             // Try Pictures/Camera Roll first, then fallback to Videos
             var paths = new[]
@@ -1087,18 +1208,24 @@ public partial class SkiaCamera : SkiaControl
                         Directory.CreateDirectory(targetPath);
 
                     var publicVideoPath = Path.Combine(targetPath, fileName);
-                    
-                    if (deleteOriginal)
+
+                    if (publicVideoPath != privateVideoPath)
                     {
-                        File.Move(privateVideoPath, publicVideoPath);
-                        Debug.WriteLine($"[SkiaCamera] Windows: MOVED video to {publicVideoPath}");
+                        if (File.Exists(publicVideoPath))
+                            File.Delete(publicVideoPath);
+
+                        if (deleteOriginal)
+                        {
+                            File.Move(privateVideoPath, publicVideoPath);
+                            Debug.WriteLine($"[SkiaCamera] Windows: MOVED video to {publicVideoPath}");
+                        }
+                        else
+                        {
+                            File.Copy(privateVideoPath, publicVideoPath, true);
+                            Debug.WriteLine($"[SkiaCamera] Windows: COPIED video to {publicVideoPath}");
+                        }
                     }
-                    else
-                    {
-                        File.Copy(privateVideoPath, publicVideoPath, true);
-                        Debug.WriteLine($"[SkiaCamera] Windows: COPIED video to {publicVideoPath}");
-                    }
-                    
+
                     return publicVideoPath;
                 }
                 catch (Exception ex)

@@ -693,8 +693,8 @@ public partial class SkiaScroll
 
         if (!offsetOk) //detected that scroll will end past the bounds
         {
-            var contentRect = new SKRect(0, 0, ptsContentWidth, ptsContentHeight);
-            var closestPoint = GetClosestSidePoint(destinationPoint, contentRect, Viewport.Units.Size);
+            var clamped = ClampOffset((float)destinationPoint.X, (float)destinationPoint.Y, ContentOffsetBounds, true);
+            var closestPoint = new SKPoint(clamped.X, clamped.Y);
 
             if (animator == _animatorFlingX)
             {
