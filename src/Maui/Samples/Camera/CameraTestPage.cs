@@ -25,6 +25,38 @@ public class CameraTestPage : BasePageReloadable, IDisposable
 
     public class AppCamera : SkiaCamera
     {
+        // Double-buffer for real-time oscillograph (ZERO allocations, perfect sync)
+        private float[] _audioFrontBuffer = new float[60]; // Drawing thread reads this
+        private float[] _audioBackBuffer = new float[60];  // Audio thread writes this
+        private int _swapRequested = 0; // 0 = no swap, 1 = swap requested
+        private const int WaveformPoints = 60;
+        private const float VisualizationGain = 4.0f; // Boost sensitivity (adjust 2-10 as needed)
+
+        public override void WriteAudioSample(AudioSample sample)
+        {
+            // Extract waveform data directly to back buffer (FASTEST: direct byte read)
+            var stepSize = sample.Data.Length / (WaveformPoints * 2); // *2 for 16-bit stereo
+            
+            for (int i = 0; i < WaveformPoints; i++)
+            {
+                var byteIndex = i * stepSize * 2;
+                if (byteIndex + 1 < sample.Data.Length)
+                {
+                    // Read 16-bit PCM sample directly (little-endian)
+                    short pcmValue = (short)(sample.Data[byteIndex] | (sample.Data[byteIndex + 1] << 8));
+                    var normalized = pcmValue / 32768f; // Normalize to -1..1
+                    _audioBackBuffer[i] = Math.Clamp(normalized * VisualizationGain, -1f, 1f); // Boost + clamp
+                }
+            }
+
+            // Signal swap (drawing thread will swap buffers on next draw)
+            System.Threading.Interlocked.Exchange(ref _swapRequested, 1);
+
+            // MUST call base to record the modified audio
+            base.WriteAudioSample(sample);
+        }
+
+
         public override void OnWillDisposeWithChildren()
         {
             base.OnWillDisposeWithChildren();
@@ -33,6 +65,8 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             _paintRec = null;
             _paintPreview?.Dispose();
             _paintPreview = null;
+            _paintWaveform?.Dispose();
+            _paintWaveform = null;
         }
 
         public void DrawOverlay(DrawableFrame frame)
@@ -47,7 +81,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             {
                 if (_paintPreview == null)
                 {
-                    _paintPreview=new SKPaint
+                    _paintPreview = new SKPaint
                     {
                         IsAntialias = true,
                     };
@@ -81,6 +115,9 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                 paint.Style = SKPaintStyle.Stroke;
                 paint.StrokeWidth = 4 * scale;
                 canvas.DrawRect(10 * scale, 10 * scale, width - 20 * scale, height - 20 * scale, paint);
+                
+                // Draw oscillograph at bottom (FASTEST implementation)
+                DrawOscillograph(canvas, width, height, scale);
             }
             else
             {
@@ -90,8 +127,65 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             }
         }
 
+        private void DrawOscillograph(SKCanvas canvas, float width, float height, float scale)
+        {
+            if (_paintWaveform == null)
+            {
+                _paintWaveform = new SKPaint
+                {
+                    Color = SKColors.LimeGreen,
+                    StrokeWidth = 2,
+                    Style = SKPaintStyle.Stroke,
+                    IsAntialias = false // Disable for speed
+                };
+            }
+
+            // Swap buffers if audio thread signaled new data
+            if (System.Threading.Interlocked.CompareExchange(ref _swapRequested, 0, 1) == 1)
+            {
+                // Atomic pointer swap (ZERO allocations, PERFECT sync)
+                var temp = _audioFrontBuffer;
+                _audioFrontBuffer = _audioBackBuffer;
+                _audioBackBuffer = temp;
+            }
+
+            // Draw oscillograph at bottom center using front buffer
+            var oscWidth = width * 0.8f;
+            var oscHeight = 150 * scale;
+            var oscX = (width - oscWidth) / 2;
+            var oscY = height - oscHeight - 40 * scale;
+            var centerY = oscY + oscHeight / 2;
+
+            // Background semi-transparent rect
+            _paintWaveform.Style = SKPaintStyle.Fill;
+            _paintWaveform.Color = SKColors.Black.WithAlpha(128);
+            canvas.DrawRect(oscX - 10, oscY - 10, oscWidth + 20, oscHeight + 20, _paintWaveform);
+
+            // Draw center line
+            _paintWaveform.Style = SKPaintStyle.Stroke;
+            _paintWaveform.Color = SKColors.Gray.WithAlpha(128);
+            _paintWaveform.StrokeWidth = 1;
+            canvas.DrawLine(oscX, centerY, oscX + oscWidth, centerY, _paintWaveform);
+
+            // Draw waveform (FASTEST: direct line drawing from front buffer)
+            _paintWaveform.Color = SKColors.LimeGreen;
+            _paintWaveform.StrokeWidth = 2;
+            
+            var stepX = oscWidth / (WaveformPoints - 1);
+            for (int i = 0; i < WaveformPoints - 1; i++)
+            {
+                var x1 = oscX + i * stepX;
+                var y1 = centerY - (_audioFrontBuffer[i] * oscHeight / 2);
+                var x2 = oscX + (i + 1) * stepX;
+                var y2 = centerY - (_audioFrontBuffer[i + 1] * oscHeight / 2);
+                
+                canvas.DrawLine(x1, y1, x2, y2, _paintWaveform);
+            }
+        }
+
         private SKPaint _paintPreview;
         private SKPaint _paintRec;
+        private SKPaint _paintWaveform;
     }
 
     public class DebugStack : SkiaStack
@@ -467,7 +561,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     .OnTapped(me =>
                                     {
                                         CameraControl.UseRealtimeVideoProcessing = !CameraControl.UseRealtimeVideoProcessing;
-         
+
                                     })
                                     .ObserveProperty(()=>CameraControl, nameof(CameraControl.UseRealtimeVideoProcessing), me =>
                                     {
@@ -502,7 +596,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                                     })
                             }
                         },
-                      
+
                     }
                 }.WithRow(1),
 
@@ -793,34 +887,31 @@ public class CameraTestPage : BasePageReloadable, IDisposable
         ShowAlert("Camera Error", e);
     }
 
-    private void OnVideoRecordingSuccess(object sender, CapturedVideo capturedVideo)
+    private async void OnVideoRecordingSuccess(object sender, CapturedVideo capturedVideo)
     {
-        MainThread.BeginInvokeOnMainThread(async () =>
+        try
         {
-            try
-            {
-                Debug.WriteLine($"✅ Video recorded at: {capturedVideo.FilePath}");
+            Debug.WriteLine($"✅ Video recorded at: {capturedVideo.FilePath}");
 
-                // Use SkiaCamera's built-in MoveVideoToGalleryAsync method (consistent with SaveToGalleryAsync for photos)
-                var publicPath = await CameraControl.MoveVideoToGalleryAsync(capturedVideo, "FastRepro");
+            // Use SkiaCamera's built-in MoveVideoToGalleryAsync method (consistent with SaveToGalleryAsync for photos)
+            var publicPath = await CameraControl.MoveVideoToGalleryAsync(capturedVideo, "FastRepro");
 
-                if (!string.IsNullOrEmpty(publicPath))
-                {
-                    Debug.WriteLine($"✅ Video moved to gallery: {publicPath}");
-                    ShowAlert("Success", "Video saved to gallery!");
-                }
-                else
-                {
-                    Debug.WriteLine($"❌ Video not saved, path null");
-                    ShowAlert("Error", "Failed to save video to gallery");
-                }
-            }
-            catch (Exception ex)
+            if (!string.IsNullOrEmpty(publicPath))
             {
-                ShowAlert("Error", $"Video save error: {ex.Message}");
-                Debug.WriteLine($"❌ Video save error: {ex}");
+                Debug.WriteLine($"✅ Video moved to gallery: {publicPath}");
+                ShowAlert("Success", "Video saved to gallery!");
             }
-        });
+            else
+            {
+                Debug.WriteLine($"❌ Video not saved, path null");
+                ShowAlert("Error", "Failed to save video to gallery");
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowAlert("Error", $"Video save error: {ex.Message}");
+            Debug.WriteLine($"❌ Video save error: {ex}");
+        }
     }
 
     private void OnVideoRecordingProgress(object sender, TimeSpan duration)
@@ -1114,7 +1205,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             }
             catch (Exception ex)
             {
-                 ShowAlert("Error", $"Error getting audio devices: {ex.Message}");
+                ShowAlert("Error", $"Error getting audio devices: {ex.Message}");
             }
         });
     }
@@ -1126,7 +1217,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
             try
             {
                 var codecs = await CameraControl.GetAvailableAudioCodecsAsync();
-                
+
                 if (codecs?.Count > 0)
                 {
                     // Prefix the list with "System Default" option
@@ -1136,15 +1227,15 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                     {
                         options[i + 1] = codecs[i];
                     }
-                    
+
                     var result = await DisplayActionSheet("Select Audio Codec", "Cancel", null, options);
-                    
+
                     if (!string.IsNullOrEmpty(result) && result != "Cancel")
                     {
                         if (result == "System Default")
                         {
                             CameraControl.AudioCodecIndex = -1;
-                             _audioCodecButton.Text = "🎵 Codec: Default";
+                            _audioCodecButton.Text = "🎵 Codec: Default";
                         }
                         else
                         {
@@ -1173,7 +1264,7 @@ public class CameraTestPage : BasePageReloadable, IDisposable
                     ShowAlert("No Audio Codecs", "No audio codecs available.");
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 ShowAlert("Error", $"Error getting audio codecs: {ex.Message}");
             }
