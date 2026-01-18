@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Platforms>x64</Platforms>
+    <OutputType>Library</OutputType>
+    <IsPackable>true</IsPackable>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+    
+    <!-- Package Metadata -->
+    <PackageId>DrawnUi.Native.Windows</PackageId>
+    <Version>1.0.0</Version>
+    <Title>DrawnUI Native Helpers for Windows</Title>
+    <Description>DrawnUI native helpers for Windows platform</Description>
+    <Authors>Nick Kovalsky aka AppoMobi and contributors</Authors>
+    <Copyright>(c) AppoMobi and contributors 2023 - present day</Copyright>
+    <PackageProjectUrl>https://github.com/taublast/DrawnUi</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/taublast/DrawnUi</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Include native DLL in NuGet package -->
+    <None Include="bin\x64\Debug\AudioEncoderNative.dll" Pack="true" PackagePath="runtimes\win-x64\native\" Condition="'$(Configuration)' == 'Debug'" />
+    <None Include="bin\x64\Release\AudioEncoderNative.dll" Pack="true" PackagePath="runtimes\win-x64\native\" Condition="'$(Configuration)' == 'Release'" />
+    
+    <!-- Include README -->
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    
+    <!-- Include MSBuild targets for auto-copy -->
+    <None Include="build\DrawnUi.Native.Windows.targets" Pack="true" PackagePath="build\" />
+  </ItemGroup>
+
+</Project>

@@ -386,7 +386,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                                     }),
 
                                 // Capture Flow toggle button (only visible in Video mode)
-                                new SkiaButton("Capture Flow: ON")
+                                new SkiaButton("Processing: ON")
                                     {
                                         BackgroundColor = Colors.Green,
                                         TextColor = Colors.White,
@@ -400,7 +400,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                                     })
                                     .ObserveProperty(()=>CameraControl, nameof(CameraControl.UseRealtimeVideoProcessing), me =>
                                     {
-                                        me.Text = CameraControl.UseRealtimeVideoProcessing ? "Capture Flow: ON" : "Capture Flow: OFF";
+                                        me.Text = CameraControl.UseRealtimeVideoProcessing ? "Processing: ON" : "Processing: OFF";
                                         me.BackgroundColor = CameraControl.UseRealtimeVideoProcessing ? Colors.Green : Colors.DarkGray;
                                     })
                                     .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>

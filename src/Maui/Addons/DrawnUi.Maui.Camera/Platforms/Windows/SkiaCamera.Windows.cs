@@ -591,6 +591,12 @@ public partial class SkiaCamera : SkiaControl
                 {
                     _audioCapture.SampleAvailable -= OnAudioSampleAvailable;
                     await _audioCapture.StopAsync();
+                    
+                    // Dispose AudioGraphCapture instance
+                    if (_audioCapture is AudioGraphCapture graphCapture)
+                    {
+                        graphCapture.Dispose();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -816,48 +822,63 @@ public partial class SkiaCamera : SkiaControl
         _diagBitrate = (long)Math.Max(1, width * height) * Math.Max(1, fps) * 4 / 10;
         SetSourceFrameDimensions(width, height);
 
-        // Configure audio requirements BEFORE initialization if needed
-        if (RecordAudio && NativeControl is NativeCamera windowsCamera)
+        // CRITICAL: Initialize AudioGraph FIRST to get actual audio format for encoder configuration
+        if (RecordAudio)
         {
-            // Pass the actual captured format to the encoder
-            if (_captureVideoEncoder is WindowsCaptureVideoEncoder winEncoder)
+            // Use AudioGraph for real-time mode (frame-by-frame control)
+            _audioCapture = new AudioGraphCapture();
+            _audioCapture.SampleAvailable += OnAudioSampleAvailable;
+            bool audioStarted = await _audioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
+            
+            if (audioStarted)
             {
-                winEncoder.SetAudioParameters(
-                    windowsCamera.ActualAudioSampleRate,
-                    windowsCamera.ActualAudioChannels,
-                    windowsCamera.ActualAudioIsFloat
-                );
-
-                // Apply codec selection if set
-                if (AudioCodecIndex >= 0)
+                Debug.WriteLine($"[StartRealtimeVideoProcessing] AudioGraph capture started successfully");
+                Debug.WriteLine($"[StartRealtimeVideoProcessing] AudioGraph actual format: {_audioCapture.SampleRate}Hz, {_audioCapture.Channels}ch");
+                
+                // Configure encoder with AudioGraph's ACTUAL audio parameters
+                if (_captureVideoEncoder is WindowsCaptureVideoEncoder winEncoder)
                 {
-                    var codecs = await GetAvailableAudioCodecsAsync();
-                    if (AudioCodecIndex < codecs.Count)
+                    // AudioGraphCapture always converts to PCM16, so isFloat=false
+                    winEncoder.SetAudioParameters(
+                        _audioCapture.SampleRate,
+                        _audioCapture.Channels,
+                        isFloat: false  // AudioGraphCapture converts float32 to PCM16
+                    );
+
+                    // Apply codec selection if set
+                    if (AudioCodecIndex >= 0)
                     {
-                        var codecName = codecs[AudioCodecIndex];
-                        winEncoder.SetAudioCodec(codecName);
-                        Debug.WriteLine($"[SkiaCameraWindows] Selected Audio Codec: {codecName}");
+                        var codecs = await GetAvailableAudioCodecsAsync();
+                        if (AudioCodecIndex < codecs.Count)
+                        {
+                            var codecName = codecs[AudioCodecIndex];
+                            winEncoder.SetAudioCodec(codecName);
+                            Debug.WriteLine($"[SkiaCameraWindows] Selected Audio Codec: {codecName}");
+                        }
                     }
                 }
             }
+            else
+            {
+                Debug.WriteLine($"[StartRealtimeVideoProcessing] AudioGraph capture failed to start - proceeding without audio");
+                _audioCapture.SampleAvailable -= OnAudioSampleAvailable;
+                _audioCapture.Dispose();
+                _audioCapture = null;
+            }
         }
 
-        await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio);
+        await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio && _audioCapture != null);
 
-        // Setup Audio ONLY if encoding was successfully initialized
-        // This prevents audio capture from running when encoder failed to configure audio
+        // Check if audio encoding was successfully initialized
         bool audioEncodingEnabled = (_captureVideoEncoder is WindowsCaptureVideoEncoder winEnc) && winEnc.IsAudioEncodingEnabled;
 
-        if (RecordAudio && audioEncodingEnabled && NativeControl is IAudioCapture audioCapture)
+        if (RecordAudio && !audioEncodingEnabled && _audioCapture != null)
         {
-            _audioCapture = audioCapture;
-            _audioCapture.SampleAvailable += OnAudioSampleAvailable;
-            bool audioStarted = await _audioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
-            Debug.WriteLine($"[StartRealtimeVideoProcessing] Audio capture started: {audioStarted}");
-        }
-        else if (RecordAudio && !audioEncodingEnabled)
-        {
-            Debug.WriteLine($"[StartRealtimeVideoProcessing] Audio encoding failed to initialize - skipping audio capture to avoid performance impact");
+            Debug.WriteLine($"[StartRealtimeVideoProcessing] Audio encoding failed to initialize - cleaning up audio capture");
+            _audioCapture.SampleAvailable -= OnAudioSampleAvailable;
+            await _audioCapture.StopAsync();
+            _audioCapture.Dispose();
+            _audioCapture = null;
         }
 
         // CRITICAL: In pre-recording mode, do NOT call StartAsync during initialization
@@ -1151,7 +1172,7 @@ public partial class SkiaCamera : SkiaControl
 
     private void OnAudioSampleAvailable(object sender, AudioSample sample)
     {
-        _captureVideoEncoder?.WriteAudio(sample);
+        WriteAudioSample(sample);
     }
 
 

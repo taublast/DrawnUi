@@ -267,6 +267,9 @@ struct DXGI_MAPPED_RECT
     public IntPtr pBits;
 }
 
+/// <summary>
+/// COM interface for accessing memory buffer bytes (same as in NativeCamera.Windows.cs)
+/// </summary>
 [ComImport]
 [Guid("5B0D3235-4DBA-4D44-865E-8F1D0E4FD04D")]
 [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
