@@ -26,6 +26,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     // Track first video frame for normal recording mode (audio sync)
     private bool _hasFirstVideoFrame = false;
     private TimeSpan _firstVideoFrameTimestamp = TimeSpan.Zero;
+    private volatile bool _pauseAudioWrites = false; // Pause audio during buffer swap
 
     private static int _instanceCounter = 0;
     private readonly int _instanceId;
@@ -91,25 +92,48 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     /// </summary>
     private unsafe void WriteAudioSampleSync(byte[] pcmData, long timestampNs)
     {
+        // Drop audio samples if we're pausing for buffer swap
+        if (_pauseAudioWrites)
+        {
+            return;
+        }
+
         if (_sinkWriter == null || pcmData == null || pcmData.Length == 0)
         {
-            //Debug.WriteLine($"[WriteAudioSampleSync] SKIP: _sinkWriter={(_sinkWriter != null ? "OK" : "NULL")}, pcmData={pcmData?.Length ?? 0}");
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] WriteAudioSample SKIP: _sinkWriter={(_sinkWriter != null ? "OK" : "NULL")}, pcmData={pcmData?.Length ?? 0}, PreRecMode={IsPreRecordingMode}");
             return;
         }
 
         // Normal recording mode: drop audio samples before first video frame
         if (!_hasFirstVideoFrame && !IsPreRecordingMode)
         {
-            //Debug.WriteLine($"[WriteAudioSampleSync] DROP: Waiting for first video frame (timestamp={timestampNs / 1_000_000.0:F1}ms)");
+            //Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] WriteAudioSample DROP: Waiting for first video frame (timestamp={timestampNs / 1_000_000.0:F1}ms), PreRecMode={IsPreRecordingMode}");
             return; // No video frame yet, drop audio
         }
 
         // Convert nanoseconds to 100-nanosecond units (HNS)
-        // CRITICAL: Use absolute timestamps from AudioGraph - do NOT adjust relative to video
-        // The native encoder and SinkWriter expect monotonically increasing timestamps
         long hnsTime = timestampNs / 100;
 
-        //Debug.WriteLine($"[WriteAudioSampleSync] WRITE: timestamp={timestampNs / 1_000_000.0:F1}ms, hnsTime={hnsTime}, length={pcmData.Length}");
+        // CRITICAL: Adjust timestamps in pre-recording mode only
+        // In live mode, use absolute timestamps for proper MediaComposition muxing
+        if (IsPreRecordingMode)
+        {
+            // Pre-recording: adjust timestamps relative to buffer start
+            TimeSpan baseTimestamp = _isBufferA ? _bufferAFirstTimestamp : _bufferBFirstTimestamp;
+            if (baseTimestamp == TimeSpan.Zero)
+            {
+                // Drop audio samples if we haven't processed any video frames yet for this buffer
+                //Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] WriteAudioSample DROP: Buffer {(_isBufferA ? "A" : "B")} not initialized yet");
+                return;
+            }
+            long baseHns = (long)(baseTimestamp.TotalSeconds * 10_000_000L);
+            hnsTime -= baseHns;
+            if (hnsTime < 0) hnsTime = 0;
+        }
+        // In normal/live mode: Use absolute timestamps (no adjustment)
+        // MediaComposition will handle timeline alignment automatically
+
+        //Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] WriteAudioSample WRITE: timestamp={timestampNs / 1_000_000.0:F1}ms, hnsTime={hnsTime / 10000.0:F1}ms, length={pcmData.Length}, PreRecMode={IsPreRecordingMode}, hasNativeEncoder={_nativeAudioEncoder != IntPtr.Zero}");
 
         // Use native encoder with resampler (bypasses .NET MAUI COM restrictions)
         if (_nativeAudioEncoder != IntPtr.Zero)
@@ -493,6 +517,12 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         _hasFirstVideoFrame = false;
         _firstVideoFrameTimestamp = TimeSpan.Zero;
 
+        // CRITICAL: Reset timestamp tracking for NEW recording (prevents duration from including pre-recording)
+        _lastSampleTime100ns = -1;
+        _encodingDurationSetFromFrames = false;
+
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] RESET: _lastSampleTime100ns = -1, _hasFirstVideoFrame = false");
+
         // Initialize statistics
         EncodedFrameCount = 0;
         EncodedDataSize = 0;
@@ -656,16 +686,20 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                             // Calculate sample time
                             long sampleTime = (long)(pendingTimestamp.TotalSeconds * 10_000_000L);
 
-                            // In pre-recording mode, normalize timestamps relative to the start of the current buffer
+                            // Adjust timestamps in pre-recording mode only
                             if (isPreRecordingMode)
                             {
                                 TimeSpan baseTimestamp = isBufferA ? bufferAFirstTimestamp : bufferBFirstTimestamp;
                                 sampleTime -= (long)(baseTimestamp.TotalSeconds * 10_000_000L);
                             }
+                            // In normal/live mode: Use absolute timestamps (no adjustment)
+                            // MediaComposition will handle timeline alignment automatically
+                            
                             if (sampleTime <= _lastSampleTime100ns)
                             {
                                 sampleTime = _lastSampleTime100ns + rtDurationPerFrame;
                             }
+                            
                             sample.SetSampleTime(sampleTime);
                             sample.SetSampleDuration(rtDurationPerFrame);
 
@@ -1278,11 +1312,35 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         Debug.WriteLine($"  Current buffer: {(_isBufferA ? "A" : "B")}");
         Debug.WriteLine($"  Duration: {(DateTime.UtcNow - _currentBufferStartTime).TotalSeconds:F2}s");
 
+        // CRITICAL: Pause audio writes to prevent samples arriving during finalization
+        _pauseAudioWrites = true;
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio writes PAUSED for buffer swap");
+        
+        // Wait for any in-flight audio samples to complete (50ms should be plenty)
+        await Task.Delay(50);
+
         // Finalize current buffer
         if (_sinkWriter != null)
         {
             try
             {
+                // CRITICAL: Finalize native audio encoder FIRST (drain resampler buffer)
+                if (_nativeAudioEncoder != IntPtr.Zero)
+                {
+                    Debug.WriteLine($"[WindowsCaptureVideoEncoder] Finalizing native audio encoder before buffer swap...");
+                    int result = AudioEncoderNative.audio_encoder_finalize(_nativeAudioEncoder);
+                    if (result != 0)
+                    {
+                        string error = AudioEncoderNative.GetError(_nativeAudioEncoder);
+                        Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio encoder finalize failed: {error}");
+                    }
+                    
+                    // Destroy the encoder (it references the old SinkWriter)
+                    AudioEncoderNative.audio_encoder_destroy(_nativeAudioEncoder);
+                    _nativeAudioEncoder = IntPtr.Zero;
+                    Debug.WriteLine($"[WindowsCaptureVideoEncoder] Native audio encoder destroyed");
+                }
+                
                 await Task.Run(() => _sinkWriter.Finalize());
             }
             catch (Exception ex)
@@ -1344,6 +1402,10 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
         // Reset last sample time for the new writer to ensure timestamps start from 0
         _lastSampleTime100ns = -1;
+
+        // Resume audio writes now that new encoder is ready
+        _pauseAudioWrites = false;
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio writes RESUMED");
 
         Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Swapped to buffer {(_isBufferA ? "A" : "B")}: {nextBuffer}");
     }
@@ -1476,10 +1538,18 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
             // Create composition and add clips
             var composition = new global::Windows.Media.Editing.MediaComposition();
-            composition.Clips.Add(await global::Windows.Media.Editing.MediaClip.CreateFromFileAsync(file1));
-            composition.Clips.Add(await global::Windows.Media.Editing.MediaClip.CreateFromFileAsync(file2));
+            var clip1 = await global::Windows.Media.Editing.MediaClip.CreateFromFileAsync(file1);
+            var clip2 = await global::Windows.Media.Editing.MediaClip.CreateFromFileAsync(file2);
+            
+            // Debug: Log clip durations
+            Debug.WriteLine($"[MediaComposition] Clip 1 (pre-rec) duration: {clip1.OriginalDuration.TotalSeconds:F3}s");
+            Debug.WriteLine($"[MediaComposition] Clip 2 (live) duration: {clip2.OriginalDuration.TotalSeconds:F3}s");
+            
+            composition.Clips.Add(clip1);
+            composition.Clips.Add(clip2);
 
             Debug.WriteLine($"[MediaComposition] Added {composition.Clips.Count} clips to composition");
+            Debug.WriteLine($"[MediaComposition] Total composition duration: {composition.Duration.TotalSeconds:F3}s");
 
             // Create encoding profile matching the source dimensions and framerate
             var profile = global::Windows.Media.MediaProperties.MediaEncodingProfile.CreateMp4(

@@ -1074,18 +1074,30 @@ public partial class SkiaCamera : SkiaControl
                     Debug.WriteLine("[StartVideoRecording] Old encoder captured for transition");
                 }
 
+                // CRITICAL: Stop and dispose old audio capture before creating new encoder
+                // StartRealtimeVideoProcessing() will create a BRAND NEW AudioGraphCapture instance
+                if (_audioCapture != null)
+                {
+                    Debug.WriteLine("[StartVideoRecording] Stopping old audio capture for encoder swap");
+                    _audioCapture.SampleAvailable -= OnAudioSampleAvailable;
+                    await _audioCapture.StopAsync();
+                    _audioCapture.Dispose();
+                    _audioCapture = null;
+                    Debug.WriteLine("[StartVideoRecording] Old audio capture disposed");
+                }
+
                 // Update state flags BEFORE creating new encoder
                 IsPreRecording = false;
                 IsRecordingVideo = true;
                 RecordingLockedRotation = DeviceRotation;
-                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}�");
+                Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
                 if (UseRealtimeVideoProcessing && FrameProcessor != null)
                 {
                     // Create new encoder - this ATOMICALLY swaps _captureVideoEncoder to the new instance
-                    // Any frames arriving now will go to the new encoder (no gap!)
+                    // StartRealtimeVideoProcessing() will create NEW AudioGraphCapture and subscribe to it
                     await StartRealtimeVideoProcessing();
-                    Debug.WriteLine("[StartVideoRecording] New encoder created and active - frames now routing to encoder #2");
+                    Debug.WriteLine("[StartVideoRecording] New encoder created with fresh audio capture");
 
                     // NOTE: Pre-recording offset will be set AFTER stopping old encoder and getting correct duration
                 }
