@@ -596,7 +596,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         allocated.Update();
 
         // During capture video flow recording, avoid any UI preview work
-        bool inCaptureRecording = FormsControl.UseCaptureVideoFlow && FormsControl.IsRecordingVideo;
+        bool inCaptureRecording = FormsControl.UseRealtimeVideoProcessing && FormsControl.IsRecordingVideo;
 
         // Convert to SKImage
         var sk = allocated.Bitmap.ToSKImage();

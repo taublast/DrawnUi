@@ -259,8 +259,8 @@ public partial class SkiaCamera : SkiaControl
         set { SetValue(RecordAudioProperty, value); }
     }
 
-    public static readonly BindableProperty UseCaptureVideoFlowProperty = BindableProperty.Create(
-        nameof(UseCaptureVideoFlow),
+    public static readonly BindableProperty UseRealtimeVideoProcessingProperty = BindableProperty.Create(
+        nameof(UseRealtimeVideoProcessing),
         typeof(bool),
         typeof(SkiaCamera),
         false);
@@ -270,10 +270,10 @@ public partial class SkiaCamera : SkiaControl
     /// When true, individual camera frames are captured and processed through FrameProcessor callback before encoding.
     /// Default is false (use native video recording).
     /// </summary>
-    public bool UseCaptureVideoFlow
+    public bool UseRealtimeVideoProcessing
     {
-        get { return (bool)GetValue(UseCaptureVideoFlowProperty); }
-        set { SetValue(UseCaptureVideoFlowProperty, value); }
+        get { return (bool)GetValue(UseRealtimeVideoProcessingProperty); }
+        set { SetValue(UseRealtimeVideoProcessingProperty, value); }
     }
 
     public static readonly BindableProperty EnablePreRecordingProperty = BindableProperty.Create(
@@ -344,7 +344,7 @@ public partial class SkiaCamera : SkiaControl
 
     /// <summary>
     /// Callback for processing individual frames during capture video flow.
-    /// Only used when UseCaptureVideoFlow is true.
+    /// Only used when UseRealtimeVideoProcessing is true.
     /// Parameters: SKCanvas (for drawing), SKImageInfo (frame info), TimeSpan (recording timestamp)
     /// </summary>
 
@@ -368,7 +368,7 @@ public partial class SkiaCamera : SkiaControl
 
     /// <summary>
     /// Controls whether preview shows processed frames from the video flow encoder (TRUE) or raw camera frames (FALSE).
-    /// Only applies when UseCaptureVideoFlow is TRUE. Default is TRUE to show processed preview with overlays.
+    /// Only applies when UseRealtimeVideoProcessing is TRUE. Default is TRUE to show processed preview with overlays.
     /// Set to FALSE to show raw camera preview while still recording processed video with overlays.
     /// </summary>
     public bool PreviewVideoFlow
@@ -1254,12 +1254,12 @@ public partial class SkiaCamera : SkiaControl
                 {
                     if (abort)
                     {
-                        await AbortCaptureVideoFlowInternal();
+                        await AbortRealtimeVideoProcessingInternal();
                     }
                     else
                     {
                         // Internal method will handle busy state too but we lock externally as well
-                        await StopCaptureVideoFlowInternal();
+                        await StopRealtimeVideoProcessingInternal();
                     }
 
                     ClearPreRecordingBuffer();

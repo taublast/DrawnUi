@@ -561,11 +561,11 @@ public partial class SkiaCamera
         }
     }
 
-    private async Task StopCaptureVideoFlowInternal()
+    private async Task StopRealtimeVideoProcessingInternal()
     {
         if (_captureVideoEncoder.LiveRecordingDuration < TimeSpan.FromSeconds(1))
         {
-            await AbortCaptureVideoFlowInternal();
+            await AbortRealtimeVideoProcessingInternal();
             return;
         }
 
@@ -635,8 +635,8 @@ public partial class SkiaCamera
  
             // ANDROID: Single-file approach - no muxing needed!
             // Encoder already wrote buffer + live frames to ONE file
-            Debug.WriteLine($"[StopCaptureVideoFlow] Android single-file approach - no muxing needed");
-            Debug.WriteLine($"[StopCaptureVideoFlow] Video file: {capturedVideo?.FilePath}");
+            Debug.WriteLine($"[StopRealtimeVideoProcessing] Android single-file approach - no muxing needed");
+            Debug.WriteLine($"[StopRealtimeVideoProcessing] Video file: {capturedVideo?.FilePath}");
 
             // Clean up pre-recording file if it exists (shouldn't exist with new approach)
             if (!string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath))
@@ -644,7 +644,7 @@ public partial class SkiaCamera
                 try
                 {
                     File.Delete(_preRecordingFilePath);
-                    Debug.WriteLine($"[StopCaptureVideoFlow] Deleted old pre-recording temp file");
+                    Debug.WriteLine($"[StopRealtimeVideoProcessing] Deleted old pre-recording temp file");
                 }
                 catch { }
             }
@@ -680,7 +680,7 @@ public partial class SkiaCamera
         }
     }
 
-    private async Task AbortCaptureVideoFlowInternal() //OK
+    private async Task AbortRealtimeVideoProcessingInternal() //OK
     {
         ICaptureVideoEncoder encoder = null;
 
@@ -749,7 +749,7 @@ public partial class SkiaCamera
                 try
                 {
                     File.Delete(_preRecordingFilePath);
-                    Debug.WriteLine($"[StopCaptureVideoFlow] Deleted old pre-recording temp file");
+                    Debug.WriteLine($"[StopRealtimeVideoProcessing] Deleted old pre-recording temp file");
                 }
                 catch { }
             }
@@ -775,7 +775,7 @@ public partial class SkiaCamera
         }
     }
 
-    private async Task StartCaptureVideoFlow() //OK
+    private async Task StartRealtimeVideoProcessing() //OK
     {
         if (IsBusy)
             return;
@@ -792,13 +792,13 @@ public partial class SkiaCamera
         if (IsPreRecording && _sharedPreRecordingBuffer != null)
         {
             newEncoder.SharedPreRecordingBuffer = _sharedPreRecordingBuffer;
-            Debug.WriteLine($"[StartCaptureVideoFlow] Passing pre-allocated shared buffer to encoder");
+            Debug.WriteLine($"[StartRealtimeVideoProcessing] Passing pre-allocated shared buffer to encoder");
         }
 
-        Debug.WriteLine($"[StartCaptureVideoFlow] Android encoder initialized with IsPreRecordingMode={IsPreRecording}");
+        Debug.WriteLine($"[StartRealtimeVideoProcessing] Android encoder initialized with IsPreRecordingMode={IsPreRecording}");
 
         // Control preview source: processed frames from encoder (PreviewVideoFlow=true) or raw camera (PreviewVideoFlow=false)
-        // Only applies when UseCaptureVideoFlow is TRUE (enforced by caller)
+        // Only applies when UseRealtimeVideoProcessing is TRUE (enforced by caller)
         UseRecordingFramesForPreview = false;//PreviewVideoFlow;
 
         // Invalidate preview when the encoder publishes a new composed frame (Android mirror)
@@ -827,11 +827,11 @@ public partial class SkiaCamera
 
         if (IsPreRecording)
         {
-            Debug.WriteLine($"[StartCaptureVideoFlow] Android pre-recording (buffer to memory, final output: {outputPath})");
+            Debug.WriteLine($"[StartRealtimeVideoProcessing] Android pre-recording (buffer to memory, final output: {outputPath})");
         }
         else
         {
-            Debug.WriteLine($"[StartCaptureVideoFlow] Android recording to file: {outputPath}");
+            Debug.WriteLine($"[StartRealtimeVideoProcessing] Android recording to file: {outputPath}");
         }
 
         // Use camera-reported format if available; else fall back to preview size or 1280x720
@@ -870,7 +870,7 @@ public partial class SkiaCamera
             audioEnabled = await EnsureMicrophonePermissionAsync();
             if (!audioEnabled)
             {
-                Debug.WriteLine("[StartCaptureVideoFlow] Microphone permission denied; recording will continue without audio.");
+                Debug.WriteLine("[StartRealtimeVideoProcessing] Microphone permission denied; recording will continue without audio.");
             }
         }
 
@@ -888,16 +888,16 @@ public partial class SkiaCamera
                 useGpuCameraPath = androidEncoder.InitializeGpuCameraPath(isFrontCamera, rawWidth, rawHeight);
                 if (useGpuCameraPath)
                 {
-                    Debug.WriteLine($"[StartCaptureVideoFlow] GPU camera path ENABLED (camera={rawWidth}x{rawHeight})");
+                    Debug.WriteLine($"[StartRealtimeVideoProcessing] GPU camera path ENABLED (camera={rawWidth}x{rawHeight})");
                 }
                 else
                 {
-                    Debug.WriteLine($"[StartCaptureVideoFlow] GPU camera path failed, using legacy SKBitmap path");
+                    Debug.WriteLine($"[StartRealtimeVideoProcessing] GPU camera path failed, using legacy SKBitmap path");
                 }
             }
             else
             {
-                Debug.WriteLine($"[StartCaptureVideoFlow] GPU camera path not supported, using legacy SKBitmap path");
+                Debug.WriteLine($"[StartRealtimeVideoProcessing] GPU camera path not supported, using legacy SKBitmap path");
             }
         }
         else
@@ -934,11 +934,11 @@ public partial class SkiaCamera
                 }
 
                 await _audioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
-                Debug.WriteLine("[StartCaptureVideoFlow] Audio capture started");
+                Debug.WriteLine("[StartRealtimeVideoProcessing] Audio capture started");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[StartCaptureVideoFlow] Failed to start audio: {ex.Message}");
+                Debug.WriteLine($"[StartRealtimeVideoProcessing] Failed to start audio: {ex.Message}");
             }
         }
         else
@@ -956,11 +956,11 @@ public partial class SkiaCamera
         if (!IsPreRecording)
         {
             await _captureVideoEncoder.StartAsync();
-            Debug.WriteLine($"[StartCaptureVideoFlow] StartAsync called for live/normal recording");
+            Debug.WriteLine($"[StartRealtimeVideoProcessing] StartAsync called for live/normal recording");
         }
         else
         {
-            Debug.WriteLine($"[StartCaptureVideoFlow] Skipping StartAsync - pre-recording mode will buffer frames in memory");
+            Debug.WriteLine($"[StartRealtimeVideoProcessing] Skipping StartAsync - pre-recording mode will buffer frames in memory");
         }
 
         // Drop the first camera frame to avoid occasional corrupted first frame from the camera/RenderScript pipeline
@@ -985,7 +985,7 @@ public partial class SkiaCamera
             // GPU CAMERA PATH: Use SurfaceTexture for zero-copy frame capture
             if (useGpuCameraPath && _captureVideoEncoder is AndroidCaptureVideoEncoder gpuEncoder && gpuEncoder.GpuFrameProvider != null)
             {
-                Debug.WriteLine($"[StartCaptureVideoFlow] Setting up GPU camera session");
+                Debug.WriteLine($"[StartRealtimeVideoProcessing] Setting up GPU camera session");
 
                 // Get the GPU surface and create camera session
                 var gpuSurface = gpuEncoder.GpuFrameProvider.GetCameraOutputSurface();
@@ -1037,11 +1037,11 @@ public partial class SkiaCamera
                         CalculateRecordingFps();
                     };
 
-                    Debug.WriteLine($"[StartCaptureVideoFlow] GPU camera session created");
+                    Debug.WriteLine($"[StartRealtimeVideoProcessing] GPU camera session created");
                 }
                 else
                 {
-                    Debug.WriteLine($"[StartCaptureVideoFlow] GPU surface is null, falling back to legacy path");
+                    Debug.WriteLine($"[StartRealtimeVideoProcessing] GPU surface is null, falling back to legacy path");
                     useGpuCameraPath = false;
                 }
             }
@@ -1170,7 +1170,7 @@ public partial class SkiaCamera
     /// <summary>
     /// Start video recording. Run this in background thread!
     /// Locks the device rotation for the entire recording session.
-    /// Uses either native video recording or capture video flow depending on UseCaptureVideoFlow setting.
+    /// Uses either native video recording or capture video flow depending on UseRealtimeVideoProcessing setting.
     /// 
     /// State machine logic:
     /// - If EnablePreRecording && !IsPreRecording: Start memory-only recording (pre-recording phase)
@@ -1202,9 +1202,9 @@ public partial class SkiaCamera
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
                 // Start recording in memory-only mode
-                if (UseCaptureVideoFlow && FrameProcessor != null)
+                if (UseRealtimeVideoProcessing && FrameProcessor != null)
                 {
-                    await StartCaptureVideoFlow();
+                    await StartRealtimeVideoProcessing();
                 }
                 else
                 {
@@ -1258,9 +1258,9 @@ public partial class SkiaCamera
                 RecordingLockedRotation = DeviceRotation;
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
-                if (UseCaptureVideoFlow && FrameProcessor != null)
+                if (UseRealtimeVideoProcessing && FrameProcessor != null)
                 {
-                    await StartCaptureVideoFlow();
+                    await StartRealtimeVideoProcessing();
                 }
                 else
                 {

@@ -561,11 +561,11 @@ public partial class SkiaCamera : SkiaControl
         return lastTimestamp;
     }
 
-    private async Task StopCaptureVideoFlowInternal()
+    private async Task StopRealtimeVideoProcessingInternal()
     {
         if (_captureVideoEncoder.LiveRecordingDuration < TimeSpan.FromSeconds(1))
         {
-            await AbortCaptureVideoFlowInternal();
+            await AbortRealtimeVideoProcessingInternal();
             return;
         }
 
@@ -594,7 +594,7 @@ public partial class SkiaCamera : SkiaControl
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"[StopCaptureVideoFlow] Audio stop error: {ex.Message}");
+                    Debug.WriteLine($"[StopRealtimeVideoProcessing] Audio stop error: {ex.Message}");
                 }
                 _audioCapture = null;
             }
@@ -632,7 +632,7 @@ public partial class SkiaCamera : SkiaControl
             // iOS/Windows: Mux two files together (legacy approach)
             if (capturedVideo != null && !string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath))
             {
-                Debug.WriteLine($"[StopCaptureVideoFlow] Muxing pre-recorded file with live recording");
+                Debug.WriteLine($"[StopRealtimeVideoProcessing] Muxing pre-recorded file with live recording");
                 try
                 {
                     // Save original live recording path before overwriting capturedVideo
@@ -655,12 +655,12 @@ public partial class SkiaCamera : SkiaControl
                         // Delete temp live recording file (NOT the muxed file!)
                         try { File.Delete(originalLiveRecordingPath); } catch { }
 
-                        Debug.WriteLine($"[StopCaptureVideoFlow] Muxing successful: {finalOutputPath}");
+                        Debug.WriteLine($"[StopRealtimeVideoProcessing] Muxing successful: {finalOutputPath}");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"[StopCaptureVideoFlow] Muxing failed: {ex.Message}. Using live recording only.");
+                    Debug.WriteLine($"[StopRealtimeVideoProcessing] Muxing failed: {ex.Message}. Using live recording only.");
                 }
                 finally
                 {
@@ -700,7 +700,7 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-    private async Task AbortCaptureVideoFlowInternal()
+    private async Task AbortRealtimeVideoProcessingInternal()
     {
         ICaptureVideoEncoder encoder = null;
 
@@ -763,7 +763,7 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-    private async Task StartCaptureVideoFlow()
+    private async Task StartRealtimeVideoProcessing()
     {
         // Create platform-specific encoder with existing GRContext (GPU path)
         // BUGFIX: Passing GRContext from the UI thread causes freeze/deadlock during window resize because the context 
@@ -776,7 +776,7 @@ public partial class SkiaCamera : SkiaControl
         // Set parent reference and pre-recording mode
         _captureVideoEncoder.ParentCamera = this;
         _captureVideoEncoder.IsPreRecordingMode = IsPreRecording;
-        Debug.WriteLine($"[StartCaptureVideoFlow] Encoder initialized with IsPreRecordingMode={IsPreRecording}");
+        Debug.WriteLine($"[StartRealtimeVideoProcessing] Encoder initialized with IsPreRecordingMode={IsPreRecording}");
 
         // Generate output path
         // If pre-recording, use temp file for streaming encoded frames
@@ -787,16 +787,16 @@ public partial class SkiaCamera : SkiaControl
             outputPath = _preRecordingFilePath;
             if (string.IsNullOrEmpty(outputPath))
             {
-                Debug.WriteLine("[StartCaptureVideoFlow] ERROR: Pre-recording file path not initialized");
+                Debug.WriteLine("[StartRealtimeVideoProcessing] ERROR: Pre-recording file path not initialized");
                 return;
             }
-            Debug.WriteLine($"[StartCaptureVideoFlow] Pre-recording to file: {outputPath}");
+            Debug.WriteLine($"[StartRealtimeVideoProcessing] Pre-recording to file: {outputPath}");
         }
         else
         {
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             outputPath = Path.Combine(documentsPath, $"CaptureVideo_{DateTime.Now:yyyyMMdd_HHmmss}.mp4");
-            Debug.WriteLine($"[StartCaptureVideoFlow] Recording to file: {outputPath}");
+            Debug.WriteLine($"[StartRealtimeVideoProcessing] Recording to file: {outputPath}");
         }
 
         // CRITICAL: Set start time BEFORE initializing encoder to avoid losing initial frames!
@@ -853,11 +853,11 @@ public partial class SkiaCamera : SkiaControl
             _audioCapture = audioCapture;
             _audioCapture.SampleAvailable += OnAudioSampleAvailable;
             bool audioStarted = await _audioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
-            Debug.WriteLine($"[StartCaptureVideoFlow] Audio capture started: {audioStarted}");
+            Debug.WriteLine($"[StartRealtimeVideoProcessing] Audio capture started: {audioStarted}");
         }
         else if (RecordAudio && !audioEncodingEnabled)
         {
-            Debug.WriteLine($"[StartCaptureVideoFlow] Audio encoding failed to initialize - skipping audio capture to avoid performance impact");
+            Debug.WriteLine($"[StartRealtimeVideoProcessing] Audio encoding failed to initialize - skipping audio capture to avoid performance impact");
         }
 
         // CRITICAL: In pre-recording mode, do NOT call StartAsync during initialization
@@ -866,11 +866,11 @@ public partial class SkiaCamera : SkiaControl
         if (!IsPreRecording)
         {
             await _captureVideoEncoder.StartAsync();
-            Debug.WriteLine($"[StartCaptureVideoFlow] StartAsync called for live/normal recording");
+            Debug.WriteLine($"[StartRealtimeVideoProcessing] StartAsync called for live/normal recording");
         }
         else
         {
-            Debug.WriteLine($"[StartCaptureVideoFlow] Skipping StartAsync - pre-recording mode will buffer frames in memory");
+            Debug.WriteLine($"[StartRealtimeVideoProcessing] Skipping StartAsync - pre-recording mode will buffer frames in memory");
         }
 
         // Reset diagnostics
@@ -995,7 +995,7 @@ public partial class SkiaCamera : SkiaControl
     /// <summary>
     /// Start video recording. Run this in background thread!
     /// Locks the device rotation for the entire recording session.
-    /// Uses either native video recording or capture video flow depending on UseCaptureVideoFlow setting.
+    /// Uses either native video recording or capture video flow depending on UseRealtimeVideoProcessing setting.
     /// 
     /// State machine logic:
     /// - If EnablePreRecording && !IsPreRecording: Start memory-only recording (pre-recording phase)
@@ -1024,9 +1024,9 @@ public partial class SkiaCamera : SkiaControl
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}�");
 
                 // Start recording in memory-only mode
-                if (UseCaptureVideoFlow && FrameProcessor != null)
+                if (UseRealtimeVideoProcessing && FrameProcessor != null)
                 {
-                    await StartCaptureVideoFlow();
+                    await StartRealtimeVideoProcessing();
                 }
                 else
                 {
@@ -1059,11 +1059,11 @@ public partial class SkiaCamera : SkiaControl
                 RecordingLockedRotation = DeviceRotation;
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}�");
 
-                if (UseCaptureVideoFlow && FrameProcessor != null)
+                if (UseRealtimeVideoProcessing && FrameProcessor != null)
                 {
                     // Create new encoder - this ATOMICALLY swaps _captureVideoEncoder to the new instance
                     // Any frames arriving now will go to the new encoder (no gap!)
-                    await StartCaptureVideoFlow();
+                    await StartRealtimeVideoProcessing();
                     Debug.WriteLine("[StartVideoRecording] New encoder created and active - frames now routing to encoder #2");
 
                     // NOTE: Pre-recording offset will be set AFTER stopping old encoder and getting correct duration
@@ -1128,9 +1128,9 @@ public partial class SkiaCamera : SkiaControl
                 RecordingLockedRotation = DeviceRotation;
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}�");
 
-                if (UseCaptureVideoFlow && FrameProcessor != null)
+                if (UseRealtimeVideoProcessing && FrameProcessor != null)
                 {
-                    await StartCaptureVideoFlow();
+                    await StartRealtimeVideoProcessing();
                 }
                 else
                 {

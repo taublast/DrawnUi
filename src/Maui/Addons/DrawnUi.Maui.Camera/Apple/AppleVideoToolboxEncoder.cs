@@ -466,7 +466,7 @@ namespace DrawnUi.Camera
 
             // ARCHITECTURAL FIX: Encoder handles VIDEO ONLY
             // Audio is now managed at SkiaCamera level with a session-wide linear buffer
-            // Audio will be muxed into final output file at StopCaptureVideoFlow time
+            // Audio will be muxed into final output file at StopRealtimeVideoProcessing time
             // Keeping _recordAudio flag for reference but not creating audio input
             if (_recordAudio)
             {

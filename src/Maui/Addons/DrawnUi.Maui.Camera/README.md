@@ -1097,7 +1097,7 @@ public SkiaImageEffect Effect { get; set; }       // Real-time simple color filt
 public bool IsRecordingVideo { get; }             // Recording state (read-only)
 public VideoQuality VideoQuality { get; set; }   // Video quality preset
 public int VideoFormatIndex { get; set; }         // Manual format index
-public bool UseCaptureVideoFlow { get; set; }     // Enable frame-by-frame capture mode
+public bool UseRealtimeVideoProcessing { get; set; }     // Enable frame-by-frame capture mode
 public Action<DrawableFrame> FrameProcessor { get; set; } // Frame processing callback
 
 // Pre-Recording
@@ -1509,7 +1509,7 @@ camera.RecordAudio = true;   // Record videos with audio
 
 #### Capture Video Flow (Advanced)
 
-SkiaCamera provides a **frame-by-frame video recording system** with real-time processing capabilities through `UseCaptureVideoFlow`. This allows you to process each camera frame before encoding, enabling watermarks, overlays, filters, and custom effects applied directly to the video output.
+SkiaCamera provides a **frame-by-frame video recording system** with real-time processing capabilities through `UseRealtimeVideoProcessing`. This allows you to process each camera frame before encoding, enabling watermarks, overlays, filters, and custom effects applied directly to the video output.
 
 **Key Features:**
 - **Real-time frame processing** with GPU acceleration
@@ -1525,7 +1525,7 @@ SkiaCamera provides a **frame-by-frame video recording system** with real-time p
 var camera = new SkiaCamera
 {
     // Enable capture video flow
-    UseCaptureVideoFlow = true,
+    UseRealtimeVideoProcessing = true,
 
     // Standard video properties work the same
     VideoQuality = VideoQuality.High,
@@ -1572,7 +1572,7 @@ The `FrameProcessor` callback receives a `DrawableFrame` object with:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `UseCaptureVideoFlow` | `bool` | `false` | Enable frame-by-frame capture mode |
+| `UseRealtimeVideoProcessing` | `bool` | `false` | Enable frame-by-frame capture mode |
 | `FrameProcessor` | `Action<DrawableFrame>` | `null` | Callback for processing each frame |
 | `RecordAudio` | `bool` | `false` | Include audio in recording |
 | `VideoQuality` | `VideoQuality` | `Standard` | Video quality preset |
@@ -1646,7 +1646,7 @@ camera.FrameProcessor = (frame) =>
 
 **Important Notes:**
 
-- When `UseCaptureVideoFlow = true`, the frame processor MUST be set for recording to work
+- When `UseRealtimeVideoProcessing = true`, the frame processor MUST be set for recording to work
 - Frame processing happens in real-time at the target video FPS (typically 30fps)
 - Keep `FrameProcessor` code efficient to avoid frame drops
 - The same `StartVideoRecording()` / `StopVideoRecording()` API works for both modes
