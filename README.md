@@ -37,11 +37,11 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 
 ## 🆕 What's new for 1.7.7.2
 
-* Optimized resources disposal
+* Optimized disposal of resources
 * `SkiaScroll` clamp and panning fixes
 * `SkiaGrid` remeasured on children fix, other layouts small fixes
 * `Super.ThermalStateChanged` event handler on iOS to track overheating
-* `SkiaCamera` recording audio along with video, preview performane improvements and more
+* `SkiaCamera` recording audio, preview performane improvements and more
 
 ## 💡 Hint of the Day
 
