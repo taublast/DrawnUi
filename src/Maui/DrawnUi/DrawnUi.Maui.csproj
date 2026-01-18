@@ -77,6 +77,8 @@
             <PackagePath>\</PackagePath>
             <Pack>True</Pack>
         </None>
+        <None Include="..\..\Directory.Build.targets" Link="Directory.Build.targets" />
+        <None Include="..\Directory.Build.props" Link="Directory.Build.props" />
     </ItemGroup>
 
     <ItemGroup>
@@ -196,6 +198,7 @@
             <Link>Platforms/iOS/%(RecursiveDir)%(Filename)%(Extension)</Link>
         </Compile>
     </ItemGroup>
+
 
     <Import Project="..\..\Shared\Shared.projitems" Label="Shared" />
 
