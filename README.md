@@ -41,7 +41,7 @@ We are still .NET9, for iOS 26 you might need to set inside PLIST for your iOS a
 
 ---
 
-## 🆕 What's new for 1.7.7.2
+## 🆕 What's new for 1.7.7.3
 
 * Optimized disposal of resources
 * `SkiaScroll` clamp and panning fixes
