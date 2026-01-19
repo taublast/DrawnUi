@@ -18,6 +18,12 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 * Design in XAML or [code-behind](https://drawnui.net/articles/first-app-code.html)
 * Free to use under the MIT license, nuget package available.
 
+We are still .NET9, for iOS 26 you might need to set inside PLIST for your iOS app:
+```xml
+<key>UIDesignRequiresCompatibility</key>
+<true/>
+```
+
 ## Features
 
 * __Use virtual controls to draw your UI__
