@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/WindowParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WindowParameters
     path: ../src/Shared/Internals/Models/WindowParameters.cs
@@ -52,7 +52,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/WindowParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
     path: ../src/Shared/Internals/Models/WindowParameters.cs
@@ -81,7 +81,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/WindowParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Height
     path: ../src/Shared/Internals/Models/WindowParameters.cs
@@ -110,7 +110,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/WindowParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsFixedSize
     path: ../src/Shared/Internals/Models/WindowParameters.cs

@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/PointIsInsideResult.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PointIsInsideResult
     path: ../src/Shared/Internals/Models/PointIsInsideResult.cs
@@ -57,7 +57,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/PointIsInsideResult.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsInside
     path: ../src/Shared/Internals/Models/PointIsInsideResult.cs
@@ -86,7 +86,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/PointIsInsideResult.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Point
     path: ../src/Shared/Internals/Models/PointIsInsideResult.cs
@@ -115,7 +115,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/PointIsInsideResult.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Area
     path: ../src/Shared/Internals/Models/PointIsInsideResult.cs

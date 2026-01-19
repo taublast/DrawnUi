@@ -66,7 +66,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextSpan
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -174,7 +174,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextProperty
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -201,7 +201,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Text
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -230,7 +230,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Default
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -259,7 +259,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DebugString
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -288,7 +288,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderingScale
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -317,7 +317,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Glyphs
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -348,7 +348,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Shape
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -379,7 +379,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextFiltered
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -408,7 +408,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CheckGlyphsCanBeRendered
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -436,7 +436,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupPaint
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -474,7 +474,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HasSetFont
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -503,7 +503,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HasSetSize
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -532,7 +532,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HasSetColor
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -561,7 +561,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -590,7 +590,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TypeFace
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -619,7 +619,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedShape
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -648,7 +648,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HasDecorations
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -677,7 +677,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Underline
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -706,7 +706,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UnderlineWidth
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -737,7 +737,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Strikeout
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -766,7 +766,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrikeoutWidth
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -797,7 +797,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrikeoutColor
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -826,7 +826,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HasTapHandler
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -857,7 +857,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ForceCaptureInput
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -888,7 +888,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HitIsInside
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -924,7 +924,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FireTap
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -950,7 +950,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -980,7 +980,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawingOffset
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1011,7 +1011,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Tag
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1040,7 +1040,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Rects
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1069,7 +1069,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandTapped
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1098,7 +1098,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Tapped
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1125,7 +1125,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ParentControl
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1154,7 +1154,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPropertyChanged
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1190,7 +1190,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1219,7 +1219,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: _fontAutoSet
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1246,7 +1246,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateFont
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1272,7 +1272,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontFamily
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1301,7 +1301,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineSpacing
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1330,7 +1330,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineHeight
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1359,7 +1359,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontWeight
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1388,7 +1388,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextColorProperty
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1415,7 +1415,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextColor
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1444,7 +1444,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BackgroundColor
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1473,7 +1473,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ParagraphColor
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1502,7 +1502,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontSizeProperty
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1529,7 +1529,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontSize
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1558,7 +1558,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsItalic
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1587,7 +1587,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsBold
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1616,7 +1616,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoFindFont
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
@@ -1647,7 +1647,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontDetectedWith
     path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs

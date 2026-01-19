@@ -38,7 +38,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CachedObject
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -78,7 +78,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TranslateInputCoords
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -109,7 +109,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculatePositionOffset
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -140,7 +140,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Test
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -171,7 +171,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -209,7 +209,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LastDrawnAt
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -236,7 +236,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -280,7 +280,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -318,7 +318,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -356,7 +356,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Id
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -383,7 +383,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SurfaceIsRecycled
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -414,7 +414,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Picture
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -443,7 +443,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Image
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -472,7 +472,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Bounds
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -501,7 +501,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RecordingArea
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -530,7 +530,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Type
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -559,7 +559,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -589,7 +589,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -618,7 +618,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Tag
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -647,7 +647,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PreserveSourceFromDispose
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -676,7 +676,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetBitmap
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -704,7 +704,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Surface
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -733,7 +733,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Children
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs
@@ -762,7 +762,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaRenderObject.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAlive
     path: ../src/Shared/Internals/Models/SkiaRenderObject.cs

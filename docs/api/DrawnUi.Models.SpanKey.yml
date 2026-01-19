@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SpanKey.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpanKey
     path: ../src/Shared/Internals/Models/SpanKey.cs
@@ -58,7 +58,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SpanKey.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/SpanKey.cs
@@ -94,7 +94,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SpanKey.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Shared/Internals/Models/SpanKey.cs
@@ -123,7 +123,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SpanKey.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Length
     path: ../src/Shared/Internals/Models/SpanKey.cs
@@ -152,7 +152,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SpanKey.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsColumn
     path: ../src/Shared/Internals/Models/SpanKey.cs

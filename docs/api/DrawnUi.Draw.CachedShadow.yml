@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/CachedShadow.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CachedShadow
     path: ../src/Shared/Internals/Models/CachedShadow.cs
@@ -58,7 +58,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/CachedShadow.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Shadow
     path: ../src/Shared/Internals/Models/CachedShadow.cs
@@ -87,7 +87,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/CachedShadow.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Filter
     path: ../src/Shared/Internals/Models/CachedShadow.cs
@@ -116,7 +116,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/CachedShadow.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Scale
     path: ../src/Shared/Internals/Models/CachedShadow.cs
@@ -145,7 +145,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/CachedShadow.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Shared/Internals/Models/CachedShadow.cs

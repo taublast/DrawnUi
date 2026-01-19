@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GestureEventProcessingInfo
     path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
@@ -55,7 +55,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MappedLocation
     path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
@@ -86,7 +86,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ChildOffset
     path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
@@ -120,7 +120,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ChildOffsetDirect
     path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
@@ -154,7 +154,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AlreadyConsumed
     path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
@@ -188,7 +188,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
@@ -226,7 +226,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Empty
     path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs

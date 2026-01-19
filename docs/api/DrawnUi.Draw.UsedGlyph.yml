@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UsedGlyph
     path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
@@ -57,7 +57,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Id
     path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
@@ -86,7 +86,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
     path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
@@ -115,7 +115,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Symbol
     path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
@@ -144,7 +144,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAvailable
     path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
@@ -173,7 +173,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartIndex
     path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
@@ -204,7 +204,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Length
     path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
@@ -235,7 +235,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsNumber
     path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
@@ -263,7 +263,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetGlyphText
     path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs

@@ -24,7 +24,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ShapeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShapeType
     path: ../src/Shared/Internals/Enums/ShapeType.cs
@@ -51,7 +51,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ShapeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Rectangle
     path: ../src/Shared/Internals/Enums/ShapeType.cs
@@ -79,7 +79,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ShapeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Circle
     path: ../src/Shared/Internals/Enums/ShapeType.cs
@@ -105,7 +105,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ShapeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Ellipse
     path: ../src/Shared/Internals/Enums/ShapeType.cs
@@ -131,7 +131,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ShapeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Arc
     path: ../src/Shared/Internals/Enums/ShapeType.cs
@@ -157,7 +157,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ShapeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Squricle
     path: ../src/Shared/Internals/Enums/ShapeType.cs
@@ -185,7 +185,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ShapeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Path
     path: ../src/Shared/Internals/Enums/ShapeType.cs
@@ -213,7 +213,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ShapeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Polygon
     path: ../src/Shared/Internals/Enums/ShapeType.cs
@@ -241,7 +241,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ShapeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Line
     path: ../src/Shared/Internals/Enums/ShapeType.cs
@@ -269,7 +269,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ShapeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Custom
     path: ../src/Shared/Internals/Enums/ShapeType.cs

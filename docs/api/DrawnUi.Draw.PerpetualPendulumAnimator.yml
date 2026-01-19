@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PerpetualPendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PerpetualPendulumAnimator
     path: ../src/Shared/Features/Animators/PerpetualPendulumAnimator.cs
@@ -115,7 +115,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PerpetualPendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animators/PerpetualPendulumAnimator.cs
@@ -149,7 +149,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PerpetualPendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreatePendulum
     path: ../src/Shared/Features/Animators/PerpetualPendulumAnimator.cs

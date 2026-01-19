@@ -150,7 +150,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaImage
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -582,6 +582,7 @@ items:
   - DrawnUi.Draw.SkiaControl.PostArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureChild(DrawnUi.Draw.SkiaControl,System.Double,System.Double,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  - DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   - DrawnUi.Draw.SkiaControl.ApplyBindingContext
   - DrawnUi.Draw.SkiaControl.ApplyingBindingContext
@@ -698,6 +699,7 @@ items:
   - DrawnUi.Draw.SkiaControl.Invalidated
   - DrawnUi.Draw.SkiaControl.NeedUpdate
   - DrawnUi.Draw.SkiaControl.Superview
+  - DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
   - DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   - DrawnUi.Draw.SkiaControl.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
   - DrawnUi.Draw.SkiaControl.IsParentIndependent
@@ -788,6 +790,8 @@ items:
   - DrawnUi.Draw.SkiaControl._arrangedViewportHeightLimit
   - DrawnUi.Draw.SkiaControl._arrangedViewportWidthLimit
   - DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareDoubles(System.Double,System.Double,System.Double)
   - DrawnUi.Draw.SkiaControl.CompareRects(SkiaSharp.SKRect,SkiaSharp.SKRect,System.Single)
@@ -1052,7 +1056,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1081,7 +1085,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1113,7 +1117,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CachedImage
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1145,7 +1149,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnScaleChanged
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1173,7 +1177,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HasUnstableSize
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1204,7 +1208,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetImage
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1238,7 +1242,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetRenderedSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1269,7 +1273,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CancelLoading
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1296,7 +1300,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadedSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1325,7 +1329,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LogEnabled
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1352,7 +1356,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UseAssemblyProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1379,7 +1383,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UseAssembly
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1408,7 +1412,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AspectProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1435,7 +1439,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Aspect
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1466,7 +1470,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalAlignmentProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1493,7 +1497,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalAlignment
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1522,7 +1526,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalAlignmentProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1549,7 +1553,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalAlignment
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1578,7 +1582,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SourceProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1605,7 +1609,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1646,7 +1650,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ImageBitmapProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1673,7 +1677,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ImageBitmap
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1704,7 +1708,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadSourceOnFirstDrawProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1731,7 +1735,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadSourceOnFirstDraw
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1771,7 +1775,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RescalingQualityProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1798,7 +1802,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RescalingQuality
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1829,7 +1833,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CacheRescaledSourceProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1856,7 +1860,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CacheRescaledSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1887,7 +1891,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RescaleSourceProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1914,7 +1918,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RescaleSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1945,7 +1949,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PreviewBase64Property
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -1972,7 +1976,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PreviewBase64
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2003,7 +2007,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnWillDisposeWithChildren
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2035,7 +2039,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2067,7 +2071,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2096,7 +2100,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2128,7 +2132,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetFromBase64
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2160,7 +2164,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyNewSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2189,7 +2193,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetBitmapInternal
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2231,7 +2235,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetImageInternal
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2267,7 +2271,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLoading
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2296,7 +2300,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2325,7 +2329,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StopLoading
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2351,7 +2355,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReloadSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2377,7 +2381,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Cleared
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2404,7 +2408,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadImageManagedAsync
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2439,7 +2443,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetImageSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2468,7 +2472,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LastSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2499,7 +2503,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ImageSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2528,7 +2532,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddEffectProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2555,7 +2559,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddEffect
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2584,7 +2588,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorTintProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2611,7 +2615,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorTint
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2640,7 +2644,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomXProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2667,7 +2671,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomX
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2696,7 +2700,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomYProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2723,7 +2727,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomY
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2752,7 +2756,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DarkenProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2779,7 +2783,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Darken
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2808,7 +2812,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LightenProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2835,7 +2839,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Lighten
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2864,7 +2868,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ContrastProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2891,7 +2895,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Contrast
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2920,7 +2924,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BrightnessProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2947,7 +2951,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Brightness
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -2976,7 +2980,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GammaProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3003,7 +3007,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Gamma
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3032,7 +3036,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BlurProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3059,7 +3063,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Blur
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3088,7 +3092,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SaturationProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3115,7 +3119,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Saturation
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3144,7 +3148,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InflateAmountProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3171,7 +3175,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InflateAmount
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3200,7 +3204,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UseGradientProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3227,7 +3231,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UseGradient
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3256,7 +3260,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EraseChangedContentProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3283,7 +3287,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EraseChangedContent
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3314,7 +3318,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartColorProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3341,7 +3345,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartColor
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3370,7 +3374,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EndColorProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3397,7 +3401,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EndColor
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3426,7 +3430,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EffectBlendModeProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3453,7 +3457,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EffectBlendMode
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3482,7 +3486,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalOffsetProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3509,7 +3513,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalOffset
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3538,7 +3542,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalOffsetProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3565,7 +3569,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalOffset
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3594,7 +3598,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawWhenEmptyProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3621,7 +3625,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawWhenEmpty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3650,7 +3654,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpriteHeightProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3677,7 +3681,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpriteHeight
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3706,7 +3710,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpriteWidthProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3733,7 +3737,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpriteWidth
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3762,7 +3766,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpriteIndexProperty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3789,7 +3793,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpriteIndex
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3818,7 +3822,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanDraw
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3849,7 +3853,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClearBitmap
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3875,7 +3879,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnError
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3907,7 +3911,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnSuccess
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3939,7 +3943,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SubscribeToCanReload
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3965,7 +3969,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HasError
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -3994,7 +3998,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Error
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4021,7 +4025,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Success
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4048,7 +4052,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ImagePaint
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4077,7 +4081,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintImageFilter
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4106,7 +4110,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintColorFilter
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4135,7 +4139,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedInvalidateImageFilter
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4164,7 +4168,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateImageFilter
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4190,7 +4194,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedInvalidateColorFilter
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4219,7 +4223,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateColorFilter
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4245,7 +4249,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4283,7 +4287,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClipSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4310,7 +4314,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadSourceIfNeeded
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4336,7 +4340,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Invalidate
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4365,7 +4369,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SwapSources
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4402,7 +4406,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4433,7 +4437,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutChanged
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4462,7 +4466,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4491,7 +4495,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AspectScale
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4520,7 +4524,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ScaledSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4549,7 +4553,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetSamplingOptions
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4590,7 +4594,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawSourceBitmap
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4627,7 +4631,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawSourceImage
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4664,7 +4668,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawSource
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4705,7 +4709,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DisplayRect
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4734,7 +4738,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DisplayRectChanged
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4761,7 +4765,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextureScale
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4790,7 +4794,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SourceImageSize
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4819,7 +4823,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetAspectScale
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4859,7 +4863,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetMeasuredAsEmpty
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4895,7 +4899,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AvoidRemeasuring
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4928,7 +4932,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnMeasuring
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -4970,7 +4974,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SourceWidth
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -5001,7 +5005,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SourceHeight
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -5032,7 +5036,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateDisplayRect
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -13464,6 +13468,73 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  name: MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  nameWithType: SkiaControl.MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  fullName: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>, SkiaSharp.SKRect, float)
+  nameWithType.vb: SkiaControl.MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl), SkiaSharp.SKRect, Single)
+  name.vb: MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   commentId: M:DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   parent: DrawnUi.Draw.SkiaControl
@@ -16115,6 +16186,31 @@ references:
   name: Superview
   nameWithType: SkiaControl.Superview
   fullName: DrawnUi.Draw.SkiaControl.Superview
+- uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  name: SetSuperview(DrawnView)
+  nameWithType: SkiaControl.SetSuperview(DrawnView)
+  fullName: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   commentId: F:DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   parent: DrawnUi.Draw.SkiaControl
@@ -18311,6 +18407,101 @@ references:
   name: _lastMeasuredForScale
   nameWithType: SkiaControl._lastMeasuredForScale
   fullName: DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  name: RoundToPixels(SKRect)
+  nameWithType: SkiaControl.RoundToPixels(SKRect)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  name: RoundToPixels(float, float, float, float)
+  nameWithType: SkiaControl.RoundToPixels(float, float, float, float)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(float, float, float, float)
+  nameWithType.vb: SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  name.vb: RoundToPixels(Single, Single, Single, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   parent: DrawnUi.Draw.SkiaControl

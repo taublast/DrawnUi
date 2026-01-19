@@ -22,7 +22,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DragForce
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
@@ -59,7 +59,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: setFrictionScalar
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
@@ -91,7 +91,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: getFrictionScalar
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
@@ -119,7 +119,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetInitialVelocity
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
@@ -163,7 +163,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: updateValueAndVelocity
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
@@ -203,7 +203,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: getAcceleration
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
@@ -239,7 +239,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: isAtEquilibrium
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
@@ -275,7 +275,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: setValueThreshold
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs

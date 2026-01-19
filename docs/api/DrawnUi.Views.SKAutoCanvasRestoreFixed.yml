@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SKAutoCanvasRestoreFixed
     path: ../src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
@@ -58,7 +58,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
@@ -90,7 +90,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
@@ -124,7 +124,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
@@ -154,7 +154,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Restore
     path: ../src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs

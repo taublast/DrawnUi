@@ -25,7 +25,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TransformAspect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TransformAspect
     path: ../src/Shared/Internals/Enums/TransformAspect.cs
@@ -52,7 +52,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TransformAspect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: None
     path: ../src/Shared/Internals/Enums/TransformAspect.cs
@@ -78,7 +78,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TransformAspect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Fill
     path: ../src/Shared/Internals/Enums/TransformAspect.cs
@@ -106,7 +106,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TransformAspect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Fit
     path: ../src/Shared/Internals/Enums/TransformAspect.cs
@@ -134,7 +134,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TransformAspect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AspectFit
     path: ../src/Shared/Internals/Enums/TransformAspect.cs
@@ -162,7 +162,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TransformAspect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AspectFill
     path: ../src/Shared/Internals/Enums/TransformAspect.cs
@@ -190,7 +190,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TransformAspect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AspectFitFill
     path: ../src/Shared/Internals/Enums/TransformAspect.cs
@@ -218,7 +218,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TransformAspect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FitFill
     path: ../src/Shared/Internals/Enums/TransformAspect.cs
@@ -246,7 +246,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TransformAspect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Cover
     path: ../src/Shared/Internals/Enums/TransformAspect.cs
@@ -274,7 +274,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TransformAspect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AspectCover
     path: ../src/Shared/Internals/Enums/TransformAspect.cs
@@ -305,7 +305,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TransformAspect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Tile
     path: ../src/Shared/Internals/Enums/TransformAspect.cs

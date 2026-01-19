@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplySpan
     path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
@@ -55,7 +55,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DebugString
     path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
@@ -84,7 +84,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Create
     path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
@@ -122,7 +122,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Span
     path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
@@ -151,7 +151,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
@@ -180,7 +180,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: End
     path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
@@ -209,7 +209,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Empty
     path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs

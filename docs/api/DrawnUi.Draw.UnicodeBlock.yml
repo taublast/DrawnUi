@@ -25,7 +25,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UnicodeBlock
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
@@ -57,7 +57,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Latin
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
@@ -85,7 +85,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Cyrillic
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
@@ -113,7 +113,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Arabic
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
@@ -141,7 +141,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CJK
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
@@ -169,7 +169,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Hangul
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
@@ -197,7 +197,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Japanese
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
@@ -225,7 +225,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Currency
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
@@ -253,7 +253,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Emoji
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
@@ -281,7 +281,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Math
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
@@ -309,7 +309,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Unknown
     path: ../src/Maui/DrawnUi/Features/Fonts/SkiaFontManager.cs

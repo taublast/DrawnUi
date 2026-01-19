@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BackgroundMeasurementStartingPosition
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -62,7 +62,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LastRow
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -91,7 +91,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LastCol
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -120,7 +120,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ExpectedStartX
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -149,7 +149,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ExpectedStartY
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -178,7 +178,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LayoutType
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs

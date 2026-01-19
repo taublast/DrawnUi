@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Parameters/ITimingVectorParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ITimingVectorParameters
     path: ../src/Shared/Features/Animations/Parameters/ITimingVectorParameters.cs
@@ -44,7 +44,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Parameters/ITimingVectorParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DurationSecs
     path: ../src/Shared/Features/Animations/Parameters/ITimingVectorParameters.cs
@@ -73,7 +73,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Parameters/ITimingVectorParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ValueAt
     path: ../src/Shared/Features/Animations/Parameters/ITimingVectorParameters.cs

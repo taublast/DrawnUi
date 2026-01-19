@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SelectionPosition.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SidePosition
     path: ../src/Shared/Internals/Enums/SelectionPosition.cs
@@ -46,7 +46,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SelectionPosition.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Top
     path: ../src/Shared/Internals/Enums/SelectionPosition.cs
@@ -72,7 +72,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SelectionPosition.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Right
     path: ../src/Shared/Internals/Enums/SelectionPosition.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SelectionPosition.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Bottom
     path: ../src/Shared/Internals/Enums/SelectionPosition.cs
@@ -124,7 +124,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SelectionPosition.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Left
     path: ../src/Shared/Internals/Enums/SelectionPosition.cs

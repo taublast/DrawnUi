@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpanMeasurement
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
@@ -60,7 +60,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureTextWidthWithAdvanceSpan
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSpaceSpan
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
@@ -136,7 +136,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LastNonSpaceIndexSpan
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
@@ -172,7 +172,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsGlyphAlwaysAvailableSpan
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
@@ -208,7 +208,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpanToStringForCache
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
@@ -247,7 +247,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasurePartialTextWidthSpan
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
@@ -294,7 +294,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AppendSpan
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
@@ -330,7 +330,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AppendChar
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs

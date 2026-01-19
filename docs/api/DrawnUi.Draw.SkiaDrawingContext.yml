@@ -28,7 +28,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaDrawingContext
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -67,7 +67,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Canvas
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -96,7 +96,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Surface
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -125,7 +125,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -154,7 +154,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Height
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -183,7 +183,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameTimeNanos
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -212,7 +212,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Superview
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -241,7 +241,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVirtual
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -272,7 +272,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRecycled
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -303,7 +303,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clone
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -331,7 +331,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateForRecordingImage
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -364,7 +364,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateForRecordingOperations
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -397,7 +397,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DeviceDensity
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -426,7 +426,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Services
     path: ../src/Shared/Internals/Models/DrawingContext.cs

@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/ToDo/ViscousFluidInterpolator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ViscousFluidInterpolator
     path: ../src/Shared/Features/Animations/ToDo/ViscousFluidInterpolator.cs
@@ -57,7 +57,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/ToDo/ViscousFluidInterpolator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetInterpolation
     path: ../src/Shared/Features/Animations/ToDo/ViscousFluidInterpolator.cs

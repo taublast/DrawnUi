@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IRefreshIndicator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IRefreshIndicator
     path: ../src/Shared/Internals/Interfaces/IRefreshIndicator.cs
@@ -90,7 +90,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IRefreshIndicator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetDragRatio
     path: ../src/Shared/Internals/Interfaces/IRefreshIndicator.cs

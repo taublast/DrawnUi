@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/BindToParentContextExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BindToParentContextExtension
     path: ../src/Maui/DrawnUi/Internals/Xaml/BindToParentContextExtension.cs
@@ -73,7 +73,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/BindToParentContextExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Path
     path: ../src/Maui/DrawnUi/Internals/Xaml/BindToParentContextExtension.cs
@@ -102,7 +102,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/BindToParentContextExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
     path: ../src/Maui/DrawnUi/Internals/Xaml/BindToParentContextExtension.cs
@@ -131,7 +131,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/BindToParentContextExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Mode
     path: ../src/Maui/DrawnUi/Internals/Xaml/BindToParentContextExtension.cs
@@ -160,7 +160,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/BindToParentContextExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ProvideValue
     path: ../src/Maui/DrawnUi/Internals/Xaml/BindToParentContextExtension.cs

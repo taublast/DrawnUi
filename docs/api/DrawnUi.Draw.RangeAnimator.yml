@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RangeAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RangeAnimator
     path: ../src/Shared/Features/Animators/RangeAnimator.cs
@@ -111,7 +111,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RangeAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: _callback
     path: ../src/Shared/Features/Animators/RangeAnimator.cs
@@ -138,7 +138,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RangeAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animators/RangeAnimator.cs
@@ -170,7 +170,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RangeAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Shared/Features/Animators/RangeAnimator.cs
@@ -212,7 +212,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RangeAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Distance
     path: ../src/Shared/Features/Animators/RangeAnimator.cs
@@ -241,7 +241,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RangeAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateValue
     path: ../src/Shared/Features/Animators/RangeAnimator.cs
@@ -285,7 +285,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RangeAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TransformReportedValue
     path: ../src/Shared/Features/Animators/RangeAnimator.cs

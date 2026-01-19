@@ -37,7 +37,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VisualLayer
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -74,7 +74,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsFrozen
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -105,7 +105,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Control
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -136,7 +136,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Children
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -167,7 +167,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Cache
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -198,7 +198,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Cached
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -229,7 +229,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Destination
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -260,7 +260,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Origin
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -291,7 +291,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Transforms
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -322,7 +322,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TransformsTotal
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -353,7 +353,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OpacityTotal
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -384,7 +384,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RotationTotal
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -415,7 +415,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ScaleTotal
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -446,7 +446,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TranslationTotal
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -477,7 +477,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HitBox
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -508,7 +508,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HitBoxWithTransforms
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -539,7 +539,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Render
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -568,7 +568,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DecomposeMatrix
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -606,7 +606,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AttachFromCache
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -638,7 +638,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -682,7 +682,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -711,7 +711,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateEmpty
     path: ../src/Shared/Draw/Base/VisualLayer.cs
@@ -739,7 +739,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/VisualLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TransformRect
     path: ../src/Shared/Draw/Base/VisualLayer.cs

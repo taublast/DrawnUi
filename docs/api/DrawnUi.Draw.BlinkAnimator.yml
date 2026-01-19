@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/BlinkAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BlinkAnimator
     path: ../src/Shared/Features/Animators/BlinkAnimator.cs
@@ -112,7 +112,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/BlinkAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animators/BlinkAnimator.cs
@@ -144,7 +144,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/BlinkAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnProgressChanged
     path: ../src/Shared/Features/Animators/BlinkAnimator.cs
@@ -178,7 +178,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/BlinkAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CurrentColor
     path: ../src/Shared/Features/Animators/BlinkAnimator.cs
@@ -207,7 +207,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/BlinkAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Color1
     path: ../src/Shared/Features/Animators/BlinkAnimator.cs
@@ -236,7 +236,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/BlinkAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Color2
     path: ../src/Shared/Features/Animators/BlinkAnimator.cs
@@ -265,7 +265,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/BlinkAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorsRatio
     path: ../src/Shared/Features/Animators/BlinkAnimator.cs

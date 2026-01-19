@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/LayoutType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LayoutType
     path: ../src/Shared/Internals/Enums/LayoutType.cs
@@ -47,7 +47,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/LayoutType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Absolute
     path: ../src/Shared/Internals/Enums/LayoutType.cs
@@ -75,7 +75,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/LayoutType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Column
     path: ../src/Shared/Internals/Enums/LayoutType.cs
@@ -103,7 +103,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/LayoutType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Row
     path: ../src/Shared/Internals/Enums/LayoutType.cs
@@ -131,7 +131,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/LayoutType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Wrap
     path: ../src/Shared/Internals/Enums/LayoutType.cs
@@ -159,7 +159,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/LayoutType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Grid
     path: ../src/Shared/Internals/Enums/LayoutType.cs

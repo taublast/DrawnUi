@@ -32,7 +32,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Plane
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -68,7 +68,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToString
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -100,7 +100,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OffsetY
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -127,7 +127,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OffsetX
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -154,7 +154,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BackgroundColor
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -183,7 +183,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderObject
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -212,7 +212,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Destination
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -241,7 +241,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LastDrawnAt
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -270,7 +270,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CachedObject
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -299,7 +299,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Surface
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -328,7 +328,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsReady
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -357,7 +357,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Id
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -386,7 +386,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderTree
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -420,7 +420,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderTreeCaptureOffset
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -454,7 +454,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderTreeCapturePlaneOffsetY
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -488,7 +488,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CaptureRenderTree
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -529,7 +529,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Reset
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs
@@ -560,7 +560,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/Plane.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Invalidate
     path: ../src/Maui/DrawnUi/Draw/Scroll/Plane.cs

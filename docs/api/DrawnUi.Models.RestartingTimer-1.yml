@@ -25,7 +25,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RestartingTimer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RestartingTimer
     path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
@@ -67,7 +67,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RestartingTimer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRunning
     path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RestartingTimer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Context
     path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
@@ -129,7 +129,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RestartingTimer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Kick
     path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
@@ -160,7 +160,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RestartingTimer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
@@ -194,7 +194,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RestartingTimer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
@@ -228,7 +228,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RestartingTimer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Restart
     path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
@@ -259,7 +259,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RestartingTimer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
@@ -290,7 +290,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RestartingTimer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
     path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
@@ -318,7 +318,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RestartingTimer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: disposed
     path: ../src/Shared/Internals/Helpers/RestartingTimer.cs
@@ -347,7 +347,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RestartingTimer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Shared/Internals/Helpers/RestartingTimer.cs

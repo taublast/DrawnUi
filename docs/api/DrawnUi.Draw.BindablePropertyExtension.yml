@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BindablePropertyExtension
     path: ../src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs
@@ -58,7 +58,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Name
     path: ../src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs
@@ -87,7 +87,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Type
     path: ../src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs
@@ -116,7 +116,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ProvideValue
     path: ../src/Maui/DrawnUi/Internals/Xaml/BindablePropertyExtension.cs

@@ -32,7 +32,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ControlInStack
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -69,7 +69,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ControlIndex
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -129,7 +129,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Measured
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -160,7 +160,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Layout
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -189,7 +189,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Area
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -220,7 +220,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Destination
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -251,7 +251,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OffsetOthers
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -280,7 +280,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WasLastDrawn
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -311,7 +311,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: View
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -342,7 +342,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Drawn
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -373,7 +373,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Offset
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -404,7 +404,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WasMeasured
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -433,7 +433,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVisible
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -462,7 +462,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZIndex
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -491,7 +491,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Column
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -520,7 +520,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Row
     path: ../src/Shared/Internals/Models/ControlInStack.cs
@@ -549,7 +549,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ControlInStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsCollapsed
     path: ../src/Shared/Internals/Models/ControlInStack.cs

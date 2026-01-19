@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaTabsSelector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TabEntry
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaTabsSelector.cs
@@ -54,7 +54,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaTabsSelector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VIew
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaTabsSelector.cs
@@ -83,7 +83,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaTabsSelector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSelected
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaTabsSelector.cs

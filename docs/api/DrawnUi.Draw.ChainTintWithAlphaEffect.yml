@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ChainTintWithAlphaEffect
     path: ../src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
@@ -101,7 +101,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorProperty
     path: ../src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
@@ -128,7 +128,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Color
     path: ../src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
@@ -157,7 +157,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AlphaProperty
     path: ../src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
@@ -184,7 +184,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Alpha
     path: ../src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
@@ -213,7 +213,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EffectBlendModeProperty
     path: ../src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
@@ -240,7 +240,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EffectBlendMode
     path: ../src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
@@ -269,7 +269,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
@@ -311,7 +311,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
     path: ../src/Maui/DrawnUi/Features/Effects/ChainTintWithAlphaEffect.cs

@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpringTimingVectorParameters
     path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
@@ -63,7 +63,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Spring
     path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
@@ -92,7 +92,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Displacement
     path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
@@ -121,7 +121,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InitialVelocity
     path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
@@ -150,7 +150,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Threshold
     path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
@@ -179,7 +179,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
@@ -217,7 +217,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DurationSecs
     path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
@@ -249,7 +249,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ValueAt
     path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
@@ -286,7 +286,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AmplitudeAt
     path: ../src/Shared/Features/Animations/Parameters/SpringTimingVectorParameters.cs

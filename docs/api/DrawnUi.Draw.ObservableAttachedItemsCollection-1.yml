@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/ObservableAttachedItemsCollection.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ObservableAttachedItemsCollection
     path: ../src/Shared/Draw/Base/ObservableAttachedItemsCollection.cs
@@ -97,7 +97,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/ObservableAttachedItemsCollection.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClearItems
     path: ../src/Shared/Draw/Base/ObservableAttachedItemsCollection.cs

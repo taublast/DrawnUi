@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FileDescriptor
     path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
@@ -57,7 +57,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Filename
     path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
@@ -86,7 +86,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Path
     path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
@@ -115,7 +115,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FullFilename
     path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
@@ -144,7 +144,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Handler
     path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
@@ -173,7 +173,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs

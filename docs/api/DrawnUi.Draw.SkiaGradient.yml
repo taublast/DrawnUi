@@ -43,7 +43,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaGradient
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -107,7 +107,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Parent
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -136,7 +136,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clone
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -169,7 +169,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromBrush
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -200,7 +200,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LinearGradientAngleToPoints
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -234,7 +234,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AngleProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -261,7 +261,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Angle
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -290,7 +290,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TypeProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -317,7 +317,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Type
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -346,7 +346,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BlendModeProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -373,7 +373,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BlendMode
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -402,7 +402,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TileModeProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -429,7 +429,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TileMode
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -458,7 +458,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LightProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -485,7 +485,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Light
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -514,7 +514,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OpacityProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -541,7 +541,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Opacity
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -570,7 +570,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartXRatioProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -597,7 +597,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartXRatio
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -626,7 +626,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartYRatioProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -653,7 +653,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartYRatio
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -682,7 +682,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EndXRatioProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -709,7 +709,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EndXRatio
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -738,7 +738,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EndYRatioProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -765,7 +765,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EndYRatio
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -794,7 +794,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorsProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -821,7 +821,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Colors
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -850,7 +850,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorPositionsProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
@@ -877,7 +877,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorPositions
     path: ../src/Shared/Internals/Models/SkiaGradient.cs

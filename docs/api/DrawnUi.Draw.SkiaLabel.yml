@@ -160,7 +160,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaLabel
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
@@ -626,6 +626,7 @@ items:
   - DrawnUi.Draw.SkiaControl.PostArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureChild(DrawnUi.Draw.SkiaControl,System.Double,System.Double,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  - DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   - DrawnUi.Draw.SkiaControl.ApplyingBindingContext
   - DrawnUi.Draw.SkiaControl.BindingContextWasSet
@@ -744,6 +745,7 @@ items:
   - DrawnUi.Draw.SkiaControl.Invalidated
   - DrawnUi.Draw.SkiaControl.NeedUpdate
   - DrawnUi.Draw.SkiaControl.Superview
+  - DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
   - DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   - DrawnUi.Draw.SkiaControl.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
   - DrawnUi.Draw.SkiaControl.IsParentIndependent
@@ -832,6 +834,8 @@ items:
   - DrawnUi.Draw.SkiaControl._arrangedViewportHeightLimit
   - DrawnUi.Draw.SkiaControl._arrangedViewportWidthLimit
   - DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareDoubles(System.Double,System.Double,System.Double)
   - DrawnUi.Draw.SkiaControl.CompareRects(SkiaSharp.SKRect,SkiaSharp.SKRect,System.Single)
@@ -1106,7 +1110,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1135,7 +1139,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Font
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1168,7 +1172,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DebugColor
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1195,7 +1199,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DebugSpans
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1222,7 +1226,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1251,7 +1255,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1283,7 +1287,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Invalidate
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1312,7 +1316,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateMargins
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1341,7 +1345,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutReady
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1370,7 +1374,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnScaleChanged
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1398,7 +1402,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanDraw
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1431,7 +1435,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyBindingContext
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1460,7 +1464,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPropertyChanged
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1496,7 +1500,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToString
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1528,7 +1532,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Spans
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1595,7 +1599,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: _spans
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1622,7 +1626,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpansCollectionChanged
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1649,7 +1653,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnWillDisposeWithChildren
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1681,7 +1685,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1719,7 +1723,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupDefaultPaint
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1751,7 +1755,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawCharacter
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1819,7 +1823,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawLines
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1857,7 +1861,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawText
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1912,7 +1916,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawText
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1958,7 +1962,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpanPostDraw
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -1996,7 +2000,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawSpanDecorations
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2036,7 +2040,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupBackgroundPaint
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2075,7 +2079,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnMeasuring
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2120,7 +2124,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LastNonSpaceIndexOptimized
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2156,7 +2160,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureLineGlyphs
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2196,7 +2200,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DecomposeText
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2246,7 +2250,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MergeSpansForLines
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2279,7 +2283,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CutLineToFit
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2317,7 +2321,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureTextWidthWithAdvance
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2353,7 +2357,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureTextWidthWithAdvance
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2389,7 +2393,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureText
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2430,7 +2434,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LastNonSpaceIndex
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2464,7 +2468,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AreAllGlyphsAvailable
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2500,7 +2504,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetResultSize
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2531,7 +2535,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetShapedText
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2573,7 +2577,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetGlyphs
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2609,7 +2613,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsGlyphAlwaysAvailable
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2643,7 +2647,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UnicodeNeedsShaping
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2677,7 +2681,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedsRTL
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2711,7 +2715,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpaceBetweenParagraphs
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2745,7 +2749,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetSpaceBetweenLines
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2779,7 +2783,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ResetTextCalculations
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2805,7 +2809,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnFontUpdated
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2833,7 +2837,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GliphsInvalidated
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2860,7 +2864,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LockSetup
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2887,7 +2891,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: _fontFamily
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2914,7 +2918,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateFont
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2940,7 +2944,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReplaceFont
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -2966,7 +2970,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedUpdateFont
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3002,7 +3006,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintDefault
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3029,7 +3033,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintStroke
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3056,7 +3060,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintShadow
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3083,7 +3087,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintDeco
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3110,7 +3114,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupShaper
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3139,7 +3143,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Shaper
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3166,7 +3170,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: charMonoWidthPixels
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3193,7 +3197,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderLimit
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3220,7 +3224,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: fontUnderline
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3247,7 +3251,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Trail
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3274,7 +3278,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontAttributesProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3301,7 +3305,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontAttributes
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3342,7 +3346,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawWhenEmptyProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3369,7 +3373,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawWhenEmpty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3398,7 +3402,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeepSpacesOnLineBreaksProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3425,7 +3429,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeepSpacesOnLineBreaks
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3454,7 +3458,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontWeightProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3481,7 +3485,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontWeight
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3554,7 +3558,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoFontProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3581,7 +3585,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoFont
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3612,7 +3616,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TypeFaceProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3639,7 +3643,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TypeFace
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3668,7 +3672,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalTextAlignmentProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3695,7 +3699,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalTextAlignment
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3747,7 +3751,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalTextAlignmentProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3774,7 +3778,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalTextAlignment
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3820,7 +3824,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineHeightProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3847,7 +3851,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineHeight
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3881,7 +3885,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SensorRotationProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3908,7 +3912,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SensorRotation
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3937,7 +3941,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontFamilyProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -3964,7 +3968,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontFamily
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4019,7 +4023,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxLinesProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4046,7 +4050,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxLines
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4100,7 +4104,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoSizeProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4127,7 +4131,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoSize
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4190,7 +4194,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoSizeTextProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4217,7 +4221,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoSizeText
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4248,7 +4252,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineSpacingProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4275,7 +4279,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineSpacing
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4304,7 +4308,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ParagraphSpacingProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4331,7 +4335,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ParagraphSpacing
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4362,7 +4366,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CharacterSpacingProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4389,7 +4393,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CharacterSpacing
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4422,7 +4426,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineBreakModeProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4449,7 +4453,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineBreakMode
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4504,7 +4508,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FormattedTextProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4531,7 +4535,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FormattedText
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4560,7 +4564,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FormatProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4587,7 +4591,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Format
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4616,7 +4620,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextWasChanged
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4652,7 +4656,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Text
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4703,7 +4707,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4730,7 +4734,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextTransformProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4757,7 +4761,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextTransform
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4786,7 +4790,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnTextChanged
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4812,7 +4816,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateText
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4838,7 +4842,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedSetText
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4867,7 +4871,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetTextInternal
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4895,7 +4899,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextInternal
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4924,7 +4928,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FallbackCharacterProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4951,7 +4955,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FallbackCharacter
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -4982,7 +4986,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MonoForDigitsProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5009,7 +5013,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MonoForDigits
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5040,7 +5044,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineHeightUniformProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5067,7 +5071,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineHeightUniform
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5098,7 +5102,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextColorProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5125,7 +5129,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextColor
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5172,7 +5176,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeColorProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5199,7 +5203,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeColor
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5246,7 +5250,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeWidthProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5273,7 +5277,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeWidth
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5302,7 +5306,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DropShadowColorProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5329,7 +5333,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DropShadowColor
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5358,7 +5362,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DropShadowSizeProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5385,7 +5389,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DropShadowSize
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5414,7 +5418,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DropShadowOffsetYProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5441,7 +5445,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DropShadowOffsetY
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5470,7 +5474,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DropShadowOffsetXProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5497,7 +5501,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DropShadowOffsetX
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5528,7 +5532,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontSizeProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5555,7 +5559,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontSize
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5618,7 +5622,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GradientByLinesProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5645,7 +5649,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GradientByLines
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5674,7 +5678,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeGradientProperty
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5701,7 +5705,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeGradient
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5730,7 +5734,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnSpanTapped
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5765,7 +5769,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnFocusChanged
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5808,7 +5812,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessGestures
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -5843,7 +5847,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontMetrics
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
@@ -5872,7 +5876,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontRegistrar
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Maui.cs
@@ -14217,6 +14221,73 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  name: MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  nameWithType: SkiaControl.MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  fullName: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>, SkiaSharp.SKRect, float)
+  nameWithType.vb: SkiaControl.MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl), SkiaSharp.SKRect, Single)
+  name.vb: MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   commentId: M:DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   parent: DrawnUi.Draw.SkiaControl
@@ -16930,6 +17001,31 @@ references:
   name: Superview
   nameWithType: SkiaControl.Superview
   fullName: DrawnUi.Draw.SkiaControl.Superview
+- uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  name: SetSuperview(DrawnView)
+  nameWithType: SkiaControl.SetSuperview(DrawnView)
+  fullName: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   commentId: F:DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   parent: DrawnUi.Draw.SkiaControl
@@ -19067,6 +19163,101 @@ references:
   name: _lastMeasuredForScale
   nameWithType: SkiaControl._lastMeasuredForScale
   fullName: DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  name: RoundToPixels(SKRect)
+  nameWithType: SkiaControl.RoundToPixels(SKRect)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  name: RoundToPixels(float, float, float, float)
+  nameWithType: SkiaControl.RoundToPixels(float, float, float, float)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(float, float, float, float)
+  nameWithType.vb: SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  name.vb: RoundToPixels(Single, Single, Single, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   parent: DrawnUi.Draw.SkiaControl

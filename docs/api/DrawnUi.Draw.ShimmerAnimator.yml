@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShimmerAnimator
     path: ../src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
@@ -119,7 +119,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
@@ -151,7 +151,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: count
     path: ../src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
@@ -178,7 +178,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Color
     path: ../src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
@@ -207,7 +207,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShimmerWidth
     path: ../src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
@@ -236,7 +236,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShimmerAngle
     path: ../src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
@@ -265,7 +265,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
@@ -294,7 +294,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
@@ -321,7 +321,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnRendering
     path: ../src/Shared/Features/Animations/HoverEffects/ShimmerAnimator.cs

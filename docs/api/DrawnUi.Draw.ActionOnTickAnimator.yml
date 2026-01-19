@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/ExecuteOnTick.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ActionOnTickAnimator
     path: ../src/Shared/Features/Animations/ExecuteOnTick.cs
@@ -83,7 +83,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/ExecuteOnTick.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TickFrame
     path: ../src/Shared/Features/Animations/ExecuteOnTick.cs
@@ -122,7 +122,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/ExecuteOnTick.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animations/ExecuteOnTick.cs

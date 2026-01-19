@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkPatch3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkPatch3D
     path: ../src/Shared/Internals/Helpers/3D/SkPatch3D.cs
@@ -58,7 +58,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkPatch3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: fU
     path: ../src/Shared/Internals/Helpers/3D/SkPatch3D.cs
@@ -85,7 +85,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkPatch3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: fV
     path: ../src/Shared/Internals/Helpers/3D/SkPatch3D.cs
@@ -112,7 +112,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkPatch3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: fOrigin
     path: ../src/Shared/Internals/Helpers/3D/SkPatch3D.cs
@@ -139,7 +139,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkPatch3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Helpers/3D/SkPatch3D.cs
@@ -168,7 +168,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkPatch3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DotWith
     path: ../src/Shared/Internals/Helpers/3D/SkPatch3D.cs
@@ -206,7 +206,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkPatch3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Transform
     path: ../src/Shared/Internals/Helpers/3D/SkPatch3D.cs

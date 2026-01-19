@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StackLayoutStructure
     path: ../src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
@@ -62,7 +62,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: _layout
     path: ../src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
@@ -89,7 +89,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ChildrenCount
     path: ../src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
@@ -116,7 +116,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
@@ -148,7 +148,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EnumerateViewsForMeasurement
     path: ../src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
@@ -176,7 +176,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Build
     path: ../src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
@@ -214,7 +214,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureCell
     path: ../src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
@@ -254,7 +254,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetSpacingForIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
@@ -290,7 +290,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateWrapper
     path: ../src/Maui/DrawnUi/Draw/Layout/StackLayoutStructure.cs

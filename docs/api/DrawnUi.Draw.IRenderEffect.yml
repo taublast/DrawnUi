@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/IRenderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IRenderEffect
     path: ../src/Maui/DrawnUi/Features/Effects/IRenderEffect.cs
@@ -49,7 +49,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/IRenderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Features/Effects/IRenderEffect.cs

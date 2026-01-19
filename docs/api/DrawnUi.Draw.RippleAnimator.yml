@@ -28,7 +28,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RippleAnimator
     path: ../src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
@@ -123,7 +123,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
@@ -155,7 +155,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: count
     path: ../src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
@@ -182,7 +182,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Color
     path: ../src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
@@ -211,7 +211,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DiameterDefault
     path: ../src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
@@ -238,7 +238,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OpacityDefault
     path: ../src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
@@ -265,7 +265,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: X
     path: ../src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
@@ -296,7 +296,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Y
     path: ../src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
@@ -327,7 +327,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Diameter
     path: ../src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
@@ -356,7 +356,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Opacity
     path: ../src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
@@ -385,7 +385,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
@@ -414,7 +414,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
@@ -441,7 +441,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnRendering
     path: ../src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
@@ -480,7 +480,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TransformReportedValue
     path: ../src/Shared/Features/Animations/HoverEffects/RippleAnimator.cs

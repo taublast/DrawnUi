@@ -22,7 +22,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RenderingAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderingAnimator
     path: ../src/Shared/Features/Animators/RenderingAnimator.cs
@@ -119,7 +119,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RenderingAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
     path: ../src/Shared/Features/Animators/RenderingAnimator.cs
@@ -149,7 +149,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RenderingAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Render
     path: ../src/Shared/Features/Animators/RenderingAnimator.cs
@@ -189,7 +189,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RenderingAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnRendering
     path: ../src/Shared/Features/Animators/RenderingAnimator.cs
@@ -227,7 +227,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RenderingAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animators/RenderingAnimator.cs
@@ -259,7 +259,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RenderingAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetSelfDrawingLocation
     path: ../src/Shared/Features/Animators/RenderingAnimator.cs
@@ -290,7 +290,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RenderingAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawWithClipping
     path: ../src/Shared/Features/Animators/RenderingAnimator.cs
@@ -325,7 +325,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RenderingAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyControlClipping
     path: ../src/Shared/Features/Animators/RenderingAnimator.cs

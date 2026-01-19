@@ -42,7 +42,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShaderDoubleTexturesEffect
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -156,7 +156,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ParentReady
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -184,7 +184,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShouldDisposePreviousTexture
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -218,7 +218,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -247,7 +247,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TilingSecondaryTexture
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -274,7 +274,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateTexturesUniforms
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -312,7 +312,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetPrimaryTextureImage
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -347,7 +347,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ControlFromProperty
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -374,7 +374,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ControlFrom
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -403,7 +403,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PrimarySourceProperty
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -430,7 +430,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PrimarySource
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -459,7 +459,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ResizePrimaryLoadedBitmap
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -485,7 +485,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ResizedPrimaryImage
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -516,7 +516,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadedPrimaryBitmap
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -545,7 +545,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadPrimarySource
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -583,7 +583,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetSecondaryTexture
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -611,7 +611,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SecondaryTexture
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -640,7 +640,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CompileSecondaryTexture
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -669,7 +669,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadedSecondaryBitmap
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -696,7 +696,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SecondarySourceProperty
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -723,7 +723,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SecondarySource
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -752,7 +752,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ResizeSecondaryLoadedBitmapAndCompileTexture
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -778,7 +778,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadSecondarySource
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -816,7 +816,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AssignedControlTo
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -843,7 +843,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ImportCacheTo
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -869,7 +869,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyControlTo
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -898,7 +898,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ControlToProperty
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
@@ -925,7 +925,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ControlTo
     path: ../src/Maui/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs

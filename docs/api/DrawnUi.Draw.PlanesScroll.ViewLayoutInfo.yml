@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/PlanesScroll.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ViewLayoutInfo
     path: ../src/Maui/DrawnUi/Draw/Scroll/PlanesScroll.cs
@@ -53,7 +53,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/PlanesScroll.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Index
     path: ../src/Maui/DrawnUi/Draw/Scroll/PlanesScroll.cs
@@ -82,7 +82,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/PlanesScroll.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawingRect
     path: ../src/Maui/DrawnUi/Draw/Scroll/PlanesScroll.cs

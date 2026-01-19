@@ -31,7 +31,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RadioButtons
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -73,7 +73,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: All
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -104,7 +104,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Changed
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -133,7 +133,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetSelected
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -168,7 +168,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetSelected
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -206,7 +206,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetSelectedIndex
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -241,7 +241,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetSelectedIndex
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -279,7 +279,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Select
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -317,7 +317,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GroupsByName
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -346,7 +346,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GroupsByParent
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -375,7 +375,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -406,7 +406,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddToGroup
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -444,7 +444,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddToGroup
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -479,7 +479,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RemoveFromGroup
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -517,7 +517,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RemoveFromGroup
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -552,7 +552,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RemoveFromGroups
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
@@ -584,7 +584,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReportValueChange
     path: ../src/Maui/DrawnUi/Controls/RadioButtons/RadioButtons.cs

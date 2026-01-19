@@ -16,11 +16,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DisposableManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IDisposeManager
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 5
+    startLine: 6
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -43,11 +43,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DisposableManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeObject
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 7
+    startLine: 8
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views

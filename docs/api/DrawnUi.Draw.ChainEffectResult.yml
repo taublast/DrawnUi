@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ChainEffectResult
     path: ../src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs
@@ -52,7 +52,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawnControl
     path: ../src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs
@@ -83,7 +83,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Create
     path: ../src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs
@@ -117,7 +117,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Default
     path: ../src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs

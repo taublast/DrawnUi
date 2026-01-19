@@ -40,7 +40,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimatorBase
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -83,7 +83,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsPostAnimator
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -112,7 +112,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsHiddenInViewTree
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -145,7 +145,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -177,7 +177,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Radians
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -211,7 +211,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: runDelayMs
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -238,7 +238,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Register
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -266,7 +266,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Unregister
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -292,7 +292,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Cancel
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -318,7 +318,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -353,7 +353,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TickFrame
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -393,7 +393,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Pause
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -423,7 +423,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Resume
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -453,7 +453,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsPaused
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -486,7 +486,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -515,7 +515,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnStop
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -544,7 +544,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnStart
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -573,7 +573,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Parent
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -605,7 +605,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDeactivated
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -638,7 +638,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LastFrameTimeNanos
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -667,7 +667,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartFrameTimeNanos
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -696,7 +696,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Uid
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -728,7 +728,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -758,7 +758,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnRunningStateChanged
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -790,7 +790,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRunning
     path: ../src/Shared/Features/Animators/AnimatorBase.cs
@@ -822,7 +822,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/AnimatorBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WasStarted
     path: ../src/Shared/Features/Animators/AnimatorBase.cs

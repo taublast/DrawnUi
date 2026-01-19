@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/MeasuringStrategy.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuringStrategy
     path: ../src/Shared/Internals/Enums/MeasuringStrategy.cs
@@ -45,7 +45,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/MeasuringStrategy.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureAll
     path: ../src/Shared/Internals/Enums/MeasuringStrategy.cs
@@ -73,7 +73,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/MeasuringStrategy.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureFirst
     path: ../src/Shared/Internals/Enums/MeasuringStrategy.cs
@@ -101,7 +101,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/MeasuringStrategy.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureVisible
     path: ../src/Shared/Internals/Enums/MeasuringStrategy.cs

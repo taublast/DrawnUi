@@ -22,7 +22,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MauiEditor
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
@@ -323,7 +323,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeededHeight
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
@@ -355,7 +355,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Measure
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
@@ -413,7 +413,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ArrangeOverride
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
@@ -450,7 +450,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxLinesProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
@@ -477,7 +477,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxLines
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
@@ -508,7 +508,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReturnTypeProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
@@ -535,7 +535,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReturnType
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs

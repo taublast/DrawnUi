@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ChainAdjustLightnessEffect
     path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ValueProperty
     path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
@@ -125,7 +125,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value
     path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
@@ -154,7 +154,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
@@ -196,7 +196,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateLightnessFilter
     path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
@@ -234,7 +234,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
     path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs

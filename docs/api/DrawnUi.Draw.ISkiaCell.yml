@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaCell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaCell
     path: ../src/Shared/Internals/Interfaces/ISkiaCell.cs
@@ -43,7 +43,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaCell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnScrolled
     path: ../src/Shared/Internals/Interfaces/ISkiaCell.cs

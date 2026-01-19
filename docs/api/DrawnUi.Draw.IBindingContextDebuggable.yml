@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IBindingContextDebuggable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IBindingContextDebuggable
     path: ../src/Shared/Internals/Interfaces/IBindingContextDebuggable.cs
@@ -43,7 +43,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IBindingContextDebuggable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDebuggable
     path: ../src/Shared/Internals/Interfaces/IBindingContextDebuggable.cs

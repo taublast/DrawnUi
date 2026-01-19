@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/VirtualizationType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VirtualisationType
     path: ../src/Shared/Internals/Enums/VirtualizationType.cs
@@ -46,7 +46,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/VirtualizationType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Disabled
     path: ../src/Shared/Internals/Enums/VirtualizationType.cs
@@ -74,7 +74,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/VirtualizationType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Enabled
     path: ../src/Shared/Internals/Enums/VirtualizationType.cs
@@ -102,7 +102,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/VirtualizationType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Smart
     path: ../src/Shared/Internals/Enums/VirtualizationType.cs
@@ -130,7 +130,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/VirtualizationType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Managed
     path: ../src/Shared/Internals/Enums/VirtualizationType.cs

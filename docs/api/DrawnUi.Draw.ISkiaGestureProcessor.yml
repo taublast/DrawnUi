@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaGestureProcessor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaGestureProcessor
     path: ../src/Shared/Internals/Interfaces/ISkiaGestureProcessor.cs
@@ -43,7 +43,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaGestureProcessor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessGestures
     path: ../src/Shared/Internals/Interfaces/ISkiaGestureProcessor.cs

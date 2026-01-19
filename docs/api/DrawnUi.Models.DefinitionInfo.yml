@@ -22,7 +22,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DefinitionInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DefinitionInfo
     path: ../src/Shared/Internals/Models/DefinitionInfo.cs
@@ -59,7 +59,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DefinitionInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Size
     path: ../src/Shared/Internals/Models/DefinitionInfo.cs
@@ -88,7 +88,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DefinitionInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Shared/Internals/Models/DefinitionInfo.cs
@@ -120,7 +120,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DefinitionInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAuto
     path: ../src/Shared/Internals/Models/DefinitionInfo.cs
@@ -149,7 +149,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DefinitionInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsStar
     path: ../src/Shared/Internals/Models/DefinitionInfo.cs
@@ -178,7 +178,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DefinitionInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAbsolute
     path: ../src/Shared/Internals/Models/DefinitionInfo.cs
@@ -207,7 +207,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DefinitionInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GridLength
     path: ../src/Shared/Internals/Models/DefinitionInfo.cs
@@ -236,7 +236,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DefinitionInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/DefinitionInfo.cs

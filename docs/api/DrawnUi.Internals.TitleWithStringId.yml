@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/TitleWithStringId.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TitleWithStringId
     path: ../src/Shared/Internals/Models/TitleWithStringId.cs
@@ -60,7 +60,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/TitleWithStringId.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Id
     path: ../src/Shared/Internals/Models/TitleWithStringId.cs
@@ -92,7 +92,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/TitleWithStringId.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Title
     path: ../src/Shared/Internals/Models/TitleWithStringId.cs

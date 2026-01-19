@@ -22,7 +22,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ObjectPools
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
@@ -59,7 +59,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetLineGlyphList
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
@@ -87,7 +87,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReturnLineGlyphList
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
@@ -119,7 +119,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTextLineList
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
@@ -147,7 +147,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReturnTextLineList
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
@@ -179,7 +179,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetStringBuilder
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
@@ -207,7 +207,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReturnStringBuilder
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
@@ -236,7 +236,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetPoolSizes
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs

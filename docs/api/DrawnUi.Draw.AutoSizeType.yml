@@ -22,7 +22,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/AutoSizeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoSizeType
     path: ../src/Shared/Internals/Enums/AutoSizeType.cs
@@ -49,7 +49,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/AutoSizeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: None
     path: ../src/Shared/Internals/Enums/AutoSizeType.cs
@@ -75,7 +75,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/AutoSizeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FitFillHorizontal
     path: ../src/Shared/Internals/Enums/AutoSizeType.cs
@@ -103,7 +103,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/AutoSizeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FitFillVertical
     path: ../src/Shared/Internals/Enums/AutoSizeType.cs
@@ -131,7 +131,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/AutoSizeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FitHorizontal
     path: ../src/Shared/Internals/Enums/AutoSizeType.cs
@@ -159,7 +159,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/AutoSizeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FillHorizontal
     path: ../src/Shared/Internals/Enums/AutoSizeType.cs
@@ -187,7 +187,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/AutoSizeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FitVertical
     path: ../src/Shared/Internals/Enums/AutoSizeType.cs
@@ -215,7 +215,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/AutoSizeType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FillVertical
     path: ../src/Shared/Internals/Enums/AutoSizeType.cs

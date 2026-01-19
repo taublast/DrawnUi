@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpanCollection
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -94,7 +94,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InsertItem
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -133,7 +133,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetItem
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
@@ -172,7 +172,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClearItems
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs

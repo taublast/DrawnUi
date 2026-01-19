@@ -57,7 +57,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimatedFramesRenderer
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -495,6 +495,7 @@ items:
   - DrawnUi.Draw.SkiaControl.PostArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureChild(DrawnUi.Draw.SkiaControl,System.Double,System.Double,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  - DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   - DrawnUi.Draw.SkiaControl.ApplyBindingContext
   - DrawnUi.Draw.SkiaControl.ApplyingBindingContext
@@ -615,6 +616,7 @@ items:
   - DrawnUi.Draw.SkiaControl.Invalidated
   - DrawnUi.Draw.SkiaControl.NeedUpdate
   - DrawnUi.Draw.SkiaControl.Superview
+  - DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
   - DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   - DrawnUi.Draw.SkiaControl.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
   - DrawnUi.Draw.SkiaControl.IsParentIndependent
@@ -705,6 +707,8 @@ items:
   - DrawnUi.Draw.SkiaControl._arrangedViewportHeightLimit
   - DrawnUi.Draw.SkiaControl._arrangedViewportWidthLimit
   - DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareDoubles(System.Double,System.Double,System.Double)
   - DrawnUi.Draw.SkiaControl.CompareRects(SkiaSharp.SKRect,SkiaSharp.SKRect,System.Single)
@@ -968,7 +972,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -997,7 +1001,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WasPlayingBeforeVisibilityChanged
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1024,7 +1028,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WasStarted
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1051,7 +1055,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Animator
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1080,7 +1084,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayWhenAvailable
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1109,7 +1113,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanPlay
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1138,7 +1142,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsPlaying
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1167,7 +1171,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsStandalone
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1196,7 +1200,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayWhenAvailableIfNeeded
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1222,7 +1226,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnVisibilityChanged
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1258,7 +1262,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetSourceType
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1292,7 +1296,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1330,7 +1334,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1359,7 +1363,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutChanged
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1388,7 +1392,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayIfNeeded
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1414,7 +1418,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetAnimatorParent
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1442,7 +1446,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InitializeAnimator
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1468,7 +1472,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorInitializing
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1494,7 +1498,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorUpdated
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1529,7 +1533,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CheckCanStartAnimator
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1557,7 +1561,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorStarting
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1583,7 +1587,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorSeeking
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1615,7 +1619,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Seek
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1647,7 +1651,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1679,7 +1683,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1705,7 +1709,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFrameAt
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1742,7 +1746,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnFinished
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1768,7 +1772,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnStarted
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1794,7 +1798,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1823,7 +1827,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplySpeed
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1849,7 +1853,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyDefaultFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1875,7 +1879,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnWillDisposeWithChildren
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1907,7 +1911,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Finished
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1936,7 +1940,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Started
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1963,7 +1967,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultFrameProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -1990,7 +1994,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -2021,7 +2025,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpeedRatioProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -2048,7 +2052,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpeedRatio
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -2077,7 +2081,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RepeatProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -2104,7 +2108,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Repeat
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -2135,7 +2139,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoPlayProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -2162,7 +2166,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoPlay
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/AnimatedFramesRenderer.cs
@@ -10602,6 +10606,73 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  name: MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  nameWithType: SkiaControl.MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  fullName: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>, SkiaSharp.SKRect, float)
+  nameWithType.vb: SkiaControl.MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl), SkiaSharp.SKRect, Single)
+  name.vb: MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   commentId: M:DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   parent: DrawnUi.Draw.SkiaControl
@@ -13389,6 +13460,31 @@ references:
   name: Superview
   nameWithType: SkiaControl.Superview
   fullName: DrawnUi.Draw.SkiaControl.Superview
+- uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  name: SetSuperview(DrawnView)
+  nameWithType: SkiaControl.SetSuperview(DrawnView)
+  fullName: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   commentId: F:DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   parent: DrawnUi.Draw.SkiaControl
@@ -15585,6 +15681,101 @@ references:
   name: _lastMeasuredForScale
   nameWithType: SkiaControl._lastMeasuredForScale
   fullName: DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  name: RoundToPixels(SKRect)
+  nameWithType: SkiaControl.RoundToPixels(SKRect)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  name: RoundToPixels(float, float, float, float)
+  nameWithType: SkiaControl.RoundToPixels(float, float, float, float)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(float, float, float, float)
+  nameWithType.vb: SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  name.vb: RoundToPixels(Single, Single, Single, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   parent: DrawnUi.Draw.SkiaControl

@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RubberBandUtils.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RubberBandUtils
     path: ../src/Shared/Internals/Helpers/RubberBandUtils.cs
@@ -54,7 +54,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RubberBandUtils.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClampOnTrack
     path: ../src/Shared/Internals/Helpers/RubberBandUtils.cs
@@ -100,7 +100,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RubberBandUtils.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clamp
     path: ../src/Shared/Internals/Helpers/RubberBandUtils.cs
@@ -140,7 +140,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RubberBandUtils.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RubberBandClamp
     path: ../src/Shared/Internals/Helpers/RubberBandUtils.cs
@@ -180,7 +180,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/RubberBandUtils.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RubberBandClamp
     path: ../src/Shared/Internals/Helpers/RubberBandUtils.cs

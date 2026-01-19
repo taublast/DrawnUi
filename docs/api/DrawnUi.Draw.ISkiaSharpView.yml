@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaSharpView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaSharpView
     path: ../src/Shared/Internals/Interfaces/ISkiaSharpView.cs
@@ -45,7 +45,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaSharpView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Shared/Internals/Interfaces/ISkiaSharpView.cs
@@ -81,7 +81,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaSharpView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SignalFrame
     path: ../src/Shared/Internals/Interfaces/ISkiaSharpView.cs
@@ -113,7 +113,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaSharpView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanvasSize
     path: ../src/Shared/Internals/Interfaces/ISkiaSharpView.cs

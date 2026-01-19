@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ButtonStyleType
     path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
@@ -47,7 +47,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Contained
     path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
@@ -75,7 +75,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Outlined
     path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
@@ -103,7 +103,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Text
     path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs

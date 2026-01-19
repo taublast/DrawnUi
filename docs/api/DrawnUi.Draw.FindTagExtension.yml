@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/FindTagExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FindTagExtension
     path: ../src/Maui/DrawnUi/Internals/Xaml/FindTagExtension.cs
@@ -68,7 +68,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/FindTagExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Tag
     path: ../src/Maui/DrawnUi/Internals/Xaml/FindTagExtension.cs
@@ -97,7 +97,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/FindTagExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ProvideValue
     path: ../src/Maui/DrawnUi/Internals/Xaml/FindTagExtension.cs

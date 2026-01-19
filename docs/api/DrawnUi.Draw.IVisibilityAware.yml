@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IVisibilityAware.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IVisibilityAware
     path: ../src/Shared/Internals/Interfaces/IVisibilityAware.cs
@@ -46,7 +46,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IVisibilityAware.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAppearing
     path: ../src/Shared/Internals/Interfaces/IVisibilityAware.cs
@@ -74,7 +74,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IVisibilityAware.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAppeared
     path: ../src/Shared/Internals/Interfaces/IVisibilityAware.cs
@@ -102,7 +102,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IVisibilityAware.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisappeared
     path: ../src/Shared/Internals/Interfaces/IVisibilityAware.cs
@@ -128,7 +128,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IVisibilityAware.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisappearing
     path: ../src/Shared/Internals/Interfaces/IVisibilityAware.cs

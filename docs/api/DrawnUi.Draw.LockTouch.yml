@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/LockTouch.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LockTouch
     path: ../src/Shared/Internals/Enums/LockTouch.cs
@@ -47,7 +47,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/LockTouch.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Disabled
     path: ../src/Shared/Internals/Enums/LockTouch.cs
@@ -73,7 +73,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/LockTouch.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Enabled
     path: ../src/Shared/Internals/Enums/LockTouch.cs
@@ -101,7 +101,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/LockTouch.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PassNone
     path: ../src/Shared/Internals/Enums/LockTouch.cs
@@ -129,7 +129,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/LockTouch.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PassTap
     path: ../src/Shared/Internals/Enums/LockTouch.cs
@@ -157,7 +157,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/LockTouch.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PassTapAndLongPress
     path: ../src/Shared/Internals/Enums/LockTouch.cs

@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/IHasBanner.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IHasBanner
     path: ../src/Maui/DrawnUi/Features/Images/IHasBanner.cs
@@ -44,7 +44,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/IHasBanner.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Banner
     path: ../src/Maui/DrawnUi/Features/Images/IHasBanner.cs
@@ -75,7 +75,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/IHasBanner.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BannerPreloadOrdered
     path: ../src/Maui/DrawnUi/Features/Images/IHasBanner.cs

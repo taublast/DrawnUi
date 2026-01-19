@@ -47,7 +47,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaImageManager
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -86,7 +86,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PreloadImage
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -122,7 +122,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PreloadImage
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -158,7 +158,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PreloadImages
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -194,7 +194,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PreloadBanners
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -232,7 +232,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadLocalAsync
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -261,7 +261,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReuseBitmaps
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -290,7 +290,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CacheLongevitySecs
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -319,7 +319,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NativeFilePrefix
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -348,7 +348,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanReload
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -375,7 +375,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LogEnabled
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -402,7 +402,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TraceLog
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -434,7 +434,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Instance
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -463,7 +463,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UseCache
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -492,7 +492,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -521,7 +521,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLoadingLocked
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -550,7 +550,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CancelAll
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -576,7 +576,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadImageAsync
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -614,7 +614,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadImageManagedAsync
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -654,7 +654,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadImageOnPlatformAsync
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -687,7 +687,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -716,7 +716,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateInCache
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -752,7 +752,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddToCache
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -795,7 +795,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFromCache
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -833,7 +833,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFromCacheInternal
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -871,7 +871,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Preload
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -904,7 +904,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetUriFromImageSource
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -935,7 +935,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -965,7 +965,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsOffline
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -994,7 +994,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadFromFile
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -1030,7 +1030,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EnableHttpRetry
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -1064,7 +1064,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HttpRetryMaxAttempts
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
@@ -1096,7 +1096,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadImageFromInternetAsync
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs

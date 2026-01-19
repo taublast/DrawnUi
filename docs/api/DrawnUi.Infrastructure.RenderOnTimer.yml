@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/RenderOnTimer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderOnTimer
     path: ../src/Shared/Internals/Models/RenderOnTimer.cs
@@ -54,7 +54,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/RenderOnTimer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsActive
     path: ../src/Shared/Internals/Models/RenderOnTimer.cs
@@ -83,7 +83,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/RenderOnTimer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Shared/Internals/Models/RenderOnTimer.cs

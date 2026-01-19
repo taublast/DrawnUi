@@ -27,7 +27,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineGlyph
     path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
@@ -61,7 +61,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromGlyph
     path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
@@ -99,7 +99,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
     path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
@@ -128,7 +128,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartIndex
     path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
@@ -159,7 +159,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Length
     path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
@@ -190,7 +190,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsNumber
     path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
@@ -218,7 +218,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetGlyphText
     path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
@@ -246,7 +246,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Id
     path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
@@ -275,7 +275,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Symbol
     path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
@@ -304,7 +304,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Position
     path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
@@ -333,7 +333,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
     path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
@@ -364,7 +364,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Move
     path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
@@ -400,7 +400,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAvailable
     path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs

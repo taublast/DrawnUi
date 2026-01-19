@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainSaturationEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ChainSaturationEffect
     path: ../src/Maui/DrawnUi/Features/Effects/ChainSaturationEffect.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainSaturationEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ValueProperty
     path: ../src/Maui/DrawnUi/Features/Effects/ChainSaturationEffect.cs
@@ -125,7 +125,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainSaturationEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value
     path: ../src/Maui/DrawnUi/Features/Effects/ChainSaturationEffect.cs
@@ -154,7 +154,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainSaturationEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Features/Effects/ChainSaturationEffect.cs
@@ -196,7 +196,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainSaturationEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateSaturationFilter
     path: ../src/Maui/DrawnUi/Features/Effects/ChainSaturationEffect.cs
@@ -230,7 +230,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainSaturationEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
     path: ../src/Maui/DrawnUi/Features/Effects/ChainSaturationEffect.cs

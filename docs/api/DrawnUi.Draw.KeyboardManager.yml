@@ -22,7 +22,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyboardManager
     path: ../src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs
@@ -59,7 +59,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyDown
     path: ../src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs
@@ -86,7 +86,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyUp
     path: ../src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs
@@ -113,7 +113,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyboardPressed
     path: ../src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs
@@ -142,7 +142,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyboardReleased
     path: ../src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs
@@ -171,7 +171,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsShiftPressed
     path: ../src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs
@@ -200,7 +200,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAltPressed
     path: ../src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs
@@ -229,7 +229,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsControlPressed
     path: ../src/Maui/DrawnUi/Features/Keyboard/KeyboardManager.cs

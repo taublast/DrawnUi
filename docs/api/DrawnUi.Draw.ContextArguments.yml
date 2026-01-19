@@ -24,7 +24,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ContextArguments
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -51,7 +51,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -77,7 +77,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Scale
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -103,7 +103,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Rect
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -129,7 +129,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Viewport
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -155,7 +155,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Plane
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -181,7 +181,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PlaneViewport
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -207,7 +207,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShapePaint
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -233,7 +233,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Offset
     path: ../src/Shared/Internals/Models/DrawingContext.cs
@@ -259,7 +259,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Custom
     path: ../src/Shared/Internals/Models/DrawingContext.cs

@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MauiEntry
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEntry.cs
@@ -329,7 +329,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEntry.cs
@@ -358,7 +358,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxLinesProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEntry.cs
@@ -385,7 +385,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxLines
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEntry.cs
@@ -416,7 +416,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnCompleted
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEntry.cs
@@ -445,7 +445,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Completed
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEntry.cs
@@ -475,7 +475,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHandlerChanging
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEntry.cs

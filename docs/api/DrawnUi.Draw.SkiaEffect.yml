@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaEffect
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
@@ -95,7 +95,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Parent
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
@@ -126,7 +126,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
@@ -152,7 +152,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Attach
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
@@ -181,7 +181,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dettach
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
@@ -207,7 +207,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
@@ -237,7 +237,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
@@ -267,7 +267,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedUpdate
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
@@ -303,7 +303,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs

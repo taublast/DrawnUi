@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SpringWithVelocityVectorAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpringWithVelocityVectorAnimator
     path: ../src/Shared/Features/Animators/SpringWithVelocityVectorAnimator.cs
@@ -111,7 +111,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SpringWithVelocityVectorAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Initialize
     path: ../src/Shared/Features/Animators/SpringWithVelocityVectorAnimator.cs
@@ -151,7 +151,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SpringWithVelocityVectorAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Parameters
     path: ../src/Shared/Features/Animators/SpringWithVelocityVectorAnimator.cs
@@ -180,7 +180,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SpringWithVelocityVectorAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateValue
     path: ../src/Shared/Features/Animators/SpringWithVelocityVectorAnimator.cs
@@ -224,7 +224,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SpringWithVelocityVectorAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animators/SpringWithVelocityVectorAnimator.cs

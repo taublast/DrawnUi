@@ -27,7 +27,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Looper.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Looper
     path: ../src/Shared/Internals/Helpers/Looper.cs
@@ -66,7 +66,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Looper.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Helpers/Looper.cs
@@ -95,7 +95,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Looper.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Helpers/Looper.cs
@@ -127,7 +127,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Looper.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Cancel
     path: ../src/Shared/Internals/Helpers/Looper.cs
@@ -156,7 +156,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Looper.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Shared/Internals/Helpers/Looper.cs
@@ -190,7 +190,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Looper.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartOnMainThread
     path: ../src/Shared/Internals/Helpers/Looper.cs
@@ -224,7 +224,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Looper.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetTargetFps
     path: ../src/Shared/Internals/Helpers/Looper.cs
@@ -256,7 +256,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Looper.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
     path: ../src/Shared/Internals/Helpers/Looper.cs
@@ -282,7 +282,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Looper.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Shared/Internals/Helpers/Looper.cs
@@ -312,7 +312,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Looper.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRunning
     path: ../src/Shared/Internals/Helpers/Looper.cs
@@ -341,7 +341,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Looper.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartLegacyLooperAsync
     path: ../src/Shared/Internals/Helpers/Looper.cs
@@ -372,7 +372,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Looper.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartLooperAsync
     path: ../src/Shared/Internals/Helpers/Looper.cs
@@ -403,7 +403,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Looper.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnFrame
     path: ../src/Shared/Internals/Helpers/Looper.cs

@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/FileSystem/StorageType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StorageType
     path: ../src/Maui/DrawnUi/Features/FileSystem/StorageType.cs
@@ -45,7 +45,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/FileSystem/StorageType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Cache
     path: ../src/Maui/DrawnUi/Features/FileSystem/StorageType.cs
@@ -71,7 +71,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/FileSystem/StorageType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Internal
     path: ../src/Maui/DrawnUi/Features/FileSystem/StorageType.cs
@@ -97,7 +97,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/FileSystem/StorageType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Public
     path: ../src/Maui/DrawnUi/Features/FileSystem/StorageType.cs

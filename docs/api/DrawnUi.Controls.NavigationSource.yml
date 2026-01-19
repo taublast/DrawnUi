@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/NavigationSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NavigationSource
     path: ../src/Maui/DrawnUi/Controls/Navigation/NavigationSource.cs
@@ -45,7 +45,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/NavigationSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Unknown
     path: ../src/Maui/DrawnUi/Controls/Navigation/NavigationSource.cs
@@ -71,7 +71,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/NavigationSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Push
     path: ../src/Maui/DrawnUi/Controls/Navigation/NavigationSource.cs
@@ -97,7 +97,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/NavigationSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Pop
     path: ../src/Maui/DrawnUi/Controls/Navigation/NavigationSource.cs

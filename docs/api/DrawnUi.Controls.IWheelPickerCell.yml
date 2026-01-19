@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PickerWheel/IWheelPickerCell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IWheelPickerCell
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/IWheelPickerCell.cs
@@ -43,7 +43,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PickerWheel/IWheelPickerCell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateContext
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/IWheelPickerCell.cs

@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/BasePageReloadable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BasePageReloadable
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
@@ -323,7 +323,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/BasePageReloadable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
@@ -352,7 +352,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/BasePageReloadable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHandlerChanged
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
@@ -382,7 +382,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/BasePageReloadable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CountReloads
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
@@ -411,7 +411,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/BasePageReloadable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReloadUi
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
@@ -446,7 +446,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/BasePageReloadable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Build
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
@@ -474,7 +474,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/BasePageReloadable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
@@ -504,7 +504,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/BasePageReloadable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
@@ -533,7 +533,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/BasePageReloadable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs

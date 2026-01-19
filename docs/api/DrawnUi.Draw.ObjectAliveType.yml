@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ObjectAliveType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ObjectAliveType
     path: ../src/Shared/Internals/Enums/ObjectAliveType.cs
@@ -46,7 +46,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ObjectAliveType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Alive
     path: ../src/Shared/Internals/Enums/ObjectAliveType.cs
@@ -72,7 +72,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ObjectAliveType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToBeKilled
     path: ../src/Shared/Internals/Enums/ObjectAliveType.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ObjectAliveType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BeingDisposed
     path: ../src/Shared/Internals/Enums/ObjectAliveType.cs
@@ -124,7 +124,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ObjectAliveType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Disposed
     path: ../src/Shared/Internals/Enums/ObjectAliveType.cs

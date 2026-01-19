@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SourceType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SourceType
     path: ../src/Shared/Internals/Enums/SourceType.cs
@@ -47,7 +47,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SourceType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Unknown
     path: ../src/Shared/Internals/Enums/SourceType.cs
@@ -73,7 +73,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SourceType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Url
     path: ../src/Shared/Internals/Enums/SourceType.cs
@@ -99,7 +99,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SourceType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LocalFile
     path: ../src/Shared/Internals/Enums/SourceType.cs
@@ -125,7 +125,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SourceType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PackageFile
     path: ../src/Shared/Internals/Enums/SourceType.cs
@@ -151,7 +151,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SourceType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NativeStream
     path: ../src/Shared/Internals/Enums/SourceType.cs

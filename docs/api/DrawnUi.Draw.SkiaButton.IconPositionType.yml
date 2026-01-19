@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IconPositionType
     path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
@@ -46,7 +46,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Left
     path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
@@ -74,7 +74,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Right
     path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs

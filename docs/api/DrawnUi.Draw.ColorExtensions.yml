@@ -24,7 +24,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorExtensions
     path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
@@ -60,7 +60,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorFromHex
     path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
@@ -95,7 +95,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetHexAlpha
     path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
@@ -132,7 +132,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MakeDarker
     path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
@@ -169,7 +169,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MakeLighter
     path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
@@ -206,7 +206,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToHex
     path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
@@ -238,7 +238,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToColorFromHex
     path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
@@ -274,7 +274,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetHexString
     path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
@@ -306,7 +306,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetHexDesc
     path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
@@ -337,7 +337,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorLookup
     path: ../src/Maui/DrawnUi/Internals/Extensions/ColorExtensions.cs

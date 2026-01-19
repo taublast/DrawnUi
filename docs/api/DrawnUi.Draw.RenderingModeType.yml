@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/HardwareAccelerationMode.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderingModeType
     path: ../src/Shared/Internals/Enums/HardwareAccelerationMode.cs
@@ -45,7 +45,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/HardwareAccelerationMode.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Default
     path: ../src/Shared/Internals/Enums/HardwareAccelerationMode.cs
@@ -73,7 +73,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/HardwareAccelerationMode.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Accelerated
     path: ../src/Shared/Internals/Enums/HardwareAccelerationMode.cs
@@ -101,7 +101,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/HardwareAccelerationMode.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AcceleratedRetained
     path: ../src/Shared/Internals/Enums/HardwareAccelerationMode.cs

@@ -24,7 +24,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/FontWeight.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontWeight
     path: ../src/Shared/Internals/Enums/FontWeight.cs
@@ -51,7 +51,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/FontWeight.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Thin
     path: ../src/Shared/Internals/Enums/FontWeight.cs
@@ -79,7 +79,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/FontWeight.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ExtraLight
     path: ../src/Shared/Internals/Enums/FontWeight.cs
@@ -107,7 +107,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/FontWeight.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Light
     path: ../src/Shared/Internals/Enums/FontWeight.cs
@@ -135,7 +135,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/FontWeight.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Regular
     path: ../src/Shared/Internals/Enums/FontWeight.cs
@@ -163,7 +163,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/FontWeight.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Medium
     path: ../src/Shared/Internals/Enums/FontWeight.cs
@@ -191,7 +191,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/FontWeight.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SemiBold
     path: ../src/Shared/Internals/Enums/FontWeight.cs
@@ -219,7 +219,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/FontWeight.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Bold
     path: ../src/Shared/Internals/Enums/FontWeight.cs
@@ -247,7 +247,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/FontWeight.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ExtraBold
     path: ../src/Shared/Internals/Enums/FontWeight.cs
@@ -275,7 +275,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/FontWeight.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Black
     path: ../src/Shared/Internals/Enums/FontWeight.cs

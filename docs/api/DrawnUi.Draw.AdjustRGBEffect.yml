@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AdjustRGBEffect
     path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
@@ -101,7 +101,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RedProperty
     path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
@@ -128,7 +128,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GreenProperty
     path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
@@ -155,7 +155,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BlueProperty
     path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
@@ -182,7 +182,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Red
     path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
@@ -211,7 +211,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Green
     path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
@@ -240,7 +240,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Blue
     path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
@@ -269,7 +269,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateFilter
     path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
@@ -302,7 +302,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
     path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs

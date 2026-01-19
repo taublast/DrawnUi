@@ -106,7 +106,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FluentExtensions
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -144,7 +144,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AssignNative
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -183,7 +183,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithRow
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -228,7 +228,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithColumn
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -273,7 +273,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithRowSpan
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -318,7 +318,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithColumnSpan
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -363,7 +363,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithColumnDefinitions
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -409,7 +409,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithPoints
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -455,7 +455,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithRowDefinitions
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -501,7 +501,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetGrid
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -549,7 +549,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetGrid
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -603,7 +603,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BindProperty
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -653,7 +653,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BindProperty
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -707,7 +707,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BindProperty
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -766,7 +766,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithTop
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -803,7 +803,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithBottom
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -840,7 +840,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithLeft
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -877,7 +877,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithRight
     path: ../src/Maui/DrawnUi/Internals/Extensions/FluentExtensions.Maui.cs
@@ -914,7 +914,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Assign
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -959,7 +959,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AssignParent
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1004,7 +1004,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Adapt
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1049,7 +1049,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithGestures
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1099,7 +1099,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Initialize
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1149,7 +1149,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WhenPaint
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1197,7 +1197,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WhenBindingContextSet
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1248,7 +1248,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WhenItemsSourceChangesApplied
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1296,7 +1296,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ObserveSelf
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1339,7 +1339,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Observe
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1395,7 +1395,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ObservePropertiesOn
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1463,7 +1463,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ObservePropertyOn
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1529,7 +1529,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ObserveOn
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1597,7 +1597,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ObserveProperty
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1653,7 +1653,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ObserveProperty
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1709,7 +1709,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ObserveProperties
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1766,7 +1766,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ObserveProperties
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1822,7 +1822,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Observe
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1875,7 +1875,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Observe
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1931,7 +1931,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Observe
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -1987,7 +1987,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ObserveBindingContext
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2051,7 +2051,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ObserveBindingContextOn
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2112,7 +2112,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnToggled
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2157,7 +2157,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnTapped
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2202,7 +2202,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnTapped
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2241,7 +2241,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLongPressing
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2280,7 +2280,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithChildren
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2325,7 +2325,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithContent
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2370,7 +2370,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithParent
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2415,7 +2415,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CenterX
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2457,7 +2457,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CenterY
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2499,7 +2499,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Fill
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2541,7 +2541,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FillX
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2583,7 +2583,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EndX
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2620,7 +2620,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EndY
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2657,7 +2657,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartX
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2694,7 +2694,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartY
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2731,7 +2731,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FillY
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2773,7 +2773,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Center
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2815,7 +2815,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithMargin
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2860,7 +2860,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithMargin
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2908,7 +2908,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithMargin
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -2962,7 +2962,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithPadding
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3007,7 +3007,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithPadding
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3055,7 +3055,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithPadding
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3109,7 +3109,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithTag
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3154,7 +3154,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithCache
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3199,7 +3199,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithBackgroundColor
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3244,7 +3244,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithHorizontalOptions
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3289,7 +3289,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithVerticalOptions
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3334,7 +3334,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithHeight
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3379,7 +3379,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithWidth
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3424,7 +3424,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithMargin
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3469,7 +3469,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithVisibility
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3508,7 +3508,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithShapeType
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3553,7 +3553,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Shape
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3598,7 +3598,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithAspect
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3643,7 +3643,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithFontSize
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3688,7 +3688,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithTextColor
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3733,7 +3733,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithHorizontalTextAlignment
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3778,7 +3778,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnTextChanged
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3820,7 +3820,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnTextChanged
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3862,7 +3862,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnTextChanged
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3904,7 +3904,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithText
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3945,7 +3945,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithItemsSource
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -3986,7 +3986,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithEnabled
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -4027,7 +4027,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithOpacity
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -4068,7 +4068,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithRotation
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -4109,7 +4109,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithScale
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -4150,7 +4150,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithScale
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -4193,7 +4193,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithType
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -4234,7 +4234,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithSpacing
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -4275,7 +4275,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithColumnSpacing
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
@@ -4316,7 +4316,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/FluentExtensions.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithRowSpacing
     path: ../src/Shared/Internals/Extensions/FluentExtensions.Shared.cs

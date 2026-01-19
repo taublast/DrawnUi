@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Models/ImageSourceResourceStream.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ImageSourceResourceStream
     path: ../src/Maui/DrawnUi/Internals/Models/ImageSourceResourceStream.cs
@@ -139,7 +139,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Models/ImageSourceResourceStream.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Resource
     path: ../src/Maui/DrawnUi/Internals/Models/ImageSourceResourceStream.cs
@@ -168,7 +168,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Models/ImageSourceResourceStream.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Url
     path: ../src/Maui/DrawnUi/Internals/Models/ImageSourceResourceStream.cs

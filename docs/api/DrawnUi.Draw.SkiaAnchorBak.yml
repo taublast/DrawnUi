@@ -24,7 +24,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaAnchorBak
     path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
@@ -51,7 +51,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TopLeft
     path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
@@ -77,7 +77,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TopRight
     path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
@@ -103,7 +103,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TopMiddle
     path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
@@ -129,7 +129,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BottomLeft
     path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
@@ -155,7 +155,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BottomRight
     path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
@@ -181,7 +181,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BottomMiddle
     path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
@@ -207,7 +207,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LeftMiddle
     path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
@@ -233,7 +233,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RightMiddle
     path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs
@@ -259,7 +259,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaAnchorBak.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Middle
     path: ../src/Shared/Internals/Enums/SkiaAnchorBak.cs

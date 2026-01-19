@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/ControlTappedEventArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ControlTappedEventArgs
     path: ../src/Shared/Draw/Base/ControlTappedEventArgs.cs
@@ -58,7 +58,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/ControlTappedEventArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Control
     path: ../src/Shared/Draw/Base/ControlTappedEventArgs.cs
@@ -87,7 +87,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/ControlTappedEventArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Parameters
     path: ../src/Shared/Draw/Base/ControlTappedEventArgs.cs
@@ -116,7 +116,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/ControlTappedEventArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessingInfo
     path: ../src/Shared/Draw/Base/ControlTappedEventArgs.cs
@@ -145,7 +145,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/ControlTappedEventArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Draw/Base/ControlTappedEventArgs.cs

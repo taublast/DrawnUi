@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaVectorAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaVectorAnimator
     path: ../src/Shared/Features/Animators/SkiaVectorAnimator.cs
@@ -112,7 +112,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaVectorAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnVectorUpdated
     path: ../src/Shared/Features/Animators/SkiaVectorAnimator.cs
@@ -141,7 +141,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaVectorAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Vector
     path: ../src/Shared/Features/Animators/SkiaVectorAnimator.cs
@@ -170,7 +170,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaVectorAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TransformReportedValue
     path: ../src/Shared/Features/Animators/SkiaVectorAnimator.cs
@@ -209,7 +209,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaVectorAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animators/SkiaVectorAnimator.cs

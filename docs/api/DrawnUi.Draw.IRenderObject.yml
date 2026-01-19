@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IRenderObject
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -43,7 +43,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UseRenderingObject
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs

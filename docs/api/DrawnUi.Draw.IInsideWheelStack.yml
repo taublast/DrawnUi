@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IInsideWheelStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IInsideWheelStack
     path: ../src/Shared/Internals/Interfaces/IInsideWheelStack.cs
@@ -43,7 +43,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IInsideWheelStack.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPositionChanged
     path: ../src/Shared/Internals/Interfaces/IInsideWheelStack.cs

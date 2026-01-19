@@ -25,7 +25,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaGridLayout
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
@@ -129,7 +129,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultColumnDefinition
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
@@ -158,7 +158,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultRowDefinition
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
@@ -187,7 +187,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RowDefinitions
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
@@ -218,7 +218,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColumnDefinitions
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
@@ -249,7 +249,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RowSpacing
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
@@ -280,7 +280,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColumnSpacing
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
@@ -311,7 +311,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetRow
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
@@ -346,7 +346,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetRowSpan
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
@@ -381,7 +381,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetColumn
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
@@ -416,7 +416,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetColumnSpan
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs

@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimateExtensions
     path: ../src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
@@ -56,7 +56,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Translate
     path: ../src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
@@ -99,7 +99,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FadeIn
     path: ../src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
@@ -140,7 +140,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FadeOut
     path: ../src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
@@ -181,7 +181,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimateWith
     path: ../src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
@@ -223,7 +223,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Extensions/AnimateExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WhenCompleted
     path: ../src/Shared/Features/Animations/Extensions/AnimateExtensions.cs

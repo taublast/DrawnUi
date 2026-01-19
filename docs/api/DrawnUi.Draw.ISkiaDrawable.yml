@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaDrawable
     path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
@@ -55,7 +55,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDraw
     path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
@@ -86,7 +86,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Surface
     path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
@@ -115,7 +115,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsHardwareAccelerated
     path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
@@ -144,7 +144,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FPS
     path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
@@ -173,7 +173,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDrawing
     path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
@@ -202,7 +202,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HasDrawn
     path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
@@ -231,7 +231,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameTime
     path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs
@@ -260,7 +260,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaDrawable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Uid
     path: ../src/Shared/Internals/Interfaces/ISkiaDrawable.cs

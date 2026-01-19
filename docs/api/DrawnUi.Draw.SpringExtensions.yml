@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Extensions/SpringExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpringExtensions
     path: ../src/Shared/Features/Animations/Extensions/SpringExtensions.cs
@@ -54,7 +54,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Extensions/SpringExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Damping
     path: ../src/Shared/Features/Animations/Extensions/SpringExtensions.cs
@@ -86,7 +86,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Extensions/SpringExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Beta
     path: ../src/Shared/Features/Animations/Extensions/SpringExtensions.cs
@@ -118,7 +118,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Extensions/SpringExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DampedNaturalFrequency
     path: ../src/Shared/Features/Animations/Extensions/SpringExtensions.cs

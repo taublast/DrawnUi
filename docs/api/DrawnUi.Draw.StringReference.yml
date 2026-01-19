@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/StringReference.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StringReference
     path: ../src/Maui/DrawnUi/Draw/Text/StringReference.cs
@@ -53,7 +53,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/StringReference.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Spans
     path: ../src/Maui/DrawnUi/Draw/Text/StringReference.cs
@@ -82,7 +82,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/StringReference.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
     path: ../src/Maui/DrawnUi/Draw/Text/StringReference.cs
@@ -111,7 +111,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/StringReference.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartIndex
     path: ../src/Maui/DrawnUi/Draw/Text/StringReference.cs
@@ -142,7 +142,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/StringReference.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Length
     path: ../src/Maui/DrawnUi/Draw/Text/StringReference.cs

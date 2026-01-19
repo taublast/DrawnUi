@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/MeasureRequest.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureRequest
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
@@ -57,7 +57,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/MeasureRequest.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Empty
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
@@ -84,7 +84,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/MeasureRequest.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
@@ -120,7 +120,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/MeasureRequest.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
@@ -158,7 +158,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/MeasureRequest.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSame
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
@@ -187,7 +187,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/MeasureRequest.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Destination
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
@@ -216,7 +216,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/MeasureRequest.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WidthRequest
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
@@ -245,7 +245,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/MeasureRequest.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HeightRequest
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
@@ -274,7 +274,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/MeasureRequest.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Scale
     path: ../src/Shared/Internals/Models/MeasureRequest.cs

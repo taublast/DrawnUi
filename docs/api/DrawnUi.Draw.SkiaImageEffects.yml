@@ -30,7 +30,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaImageEffects
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs
@@ -65,7 +65,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Tint
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs
@@ -103,7 +103,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TintSL
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs
@@ -143,7 +143,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HSL
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs
@@ -183,7 +183,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Darken
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs
@@ -217,7 +217,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Lighten
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs
@@ -251,7 +251,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Grayscale
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs
@@ -282,7 +282,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Grayscale2
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs
@@ -313,7 +313,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Pastel
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs
@@ -341,7 +341,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Sepia
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs
@@ -372,7 +372,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvertColors
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs
@@ -403,7 +403,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Contrast
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs
@@ -441,7 +441,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Saturation
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs
@@ -479,7 +479,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Brightness
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs
@@ -517,7 +517,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Lightness
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs
@@ -555,7 +555,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SkiaImageEffects.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Gamma
     path: ../src/Shared/Internals/Enums/SkiaImageEffects.cs

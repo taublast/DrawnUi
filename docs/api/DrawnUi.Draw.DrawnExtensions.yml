@@ -25,7 +25,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawnExtensions
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
@@ -60,7 +60,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartupSettings
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
@@ -90,7 +90,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UseDrawnUi
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
@@ -124,7 +124,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddFont
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
@@ -165,7 +165,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddFont
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
@@ -206,7 +206,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimateRangeAsync
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
@@ -253,7 +253,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BackgroundColorToAsync
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
@@ -296,7 +296,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextColorToAsync
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
@@ -339,7 +339,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetVelocityRatioForChild
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
@@ -373,7 +373,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSameAs
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
@@ -410,7 +410,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSameAs
     path: ../src/Maui/DrawnUi/Internals/Extensions/DrawnExtensions.cs

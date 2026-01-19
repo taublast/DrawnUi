@@ -18,11 +18,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FocusedItemChangedArgs
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2491
+    startLine: 2505
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -57,11 +57,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2493
+    startLine: 2507
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -91,11 +91,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsFocused
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2499
+    startLine: 2513
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -120,11 +120,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Item
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2500
+    startLine: 2514
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views

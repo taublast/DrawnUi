@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NavigationStackEntry
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
@@ -58,7 +58,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
@@ -94,7 +94,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: View
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
@@ -123,7 +123,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Animated
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
@@ -152,7 +152,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Preserve
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs

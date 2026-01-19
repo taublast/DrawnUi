@@ -25,7 +25,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VisualTransform
     path: ../src/Shared/Internals/Models/VisualTransform.cs
@@ -64,7 +64,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/VisualTransform.cs
@@ -93,7 +93,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Frame
     path: ../src/Shared/Internals/Models/VisualTransform.cs
@@ -122,7 +122,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVisible
     path: ../src/Shared/Internals/Models/VisualTransform.cs
@@ -151,7 +151,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Opacity
     path: ../src/Shared/Internals/Models/VisualTransform.cs
@@ -180,7 +180,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Rotation
     path: ../src/Shared/Internals/Models/VisualTransform.cs
@@ -209,7 +209,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Translation
     path: ../src/Shared/Internals/Models/VisualTransform.cs
@@ -240,7 +240,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Scale
     path: ../src/Shared/Internals/Models/VisualTransform.cs
@@ -271,7 +271,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Logs
     path: ../src/Shared/Internals/Models/VisualTransform.cs
@@ -300,7 +300,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderedNodes
     path: ../src/Shared/Internals/Models/VisualTransform.cs
@@ -329,7 +329,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToNative
     path: ../src/Shared/Internals/Models/VisualTransform.cs

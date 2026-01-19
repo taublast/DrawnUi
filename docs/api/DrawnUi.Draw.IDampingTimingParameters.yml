@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Interfaces/IDampingTimingParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IDampingTimingParameters
     path: ../src/Shared/Features/Animations/Interfaces/IDampingTimingParameters.cs
@@ -46,7 +46,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/Interfaces/IDampingTimingParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AmplitudeAt
     path: ../src/Shared/Features/Animations/Interfaces/IDampingTimingParameters.cs

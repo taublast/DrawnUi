@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/RecyclingTemplate.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RecyclingTemplate
     path: ../src/Shared/Internals/Enums/RecyclingTemplate.cs
@@ -44,7 +44,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/RecyclingTemplate.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Enabled
     path: ../src/Shared/Internals/Enums/RecyclingTemplate.cs
@@ -70,7 +70,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/RecyclingTemplate.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Disabled
     path: ../src/Shared/Internals/Enums/RecyclingTemplate.cs

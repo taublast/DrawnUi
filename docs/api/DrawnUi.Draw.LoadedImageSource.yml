@@ -30,7 +30,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadedImageSource
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
@@ -69,7 +69,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clone
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
@@ -97,7 +97,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Id
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
@@ -126,7 +126,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ProtectFromDispose
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
@@ -157,7 +157,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ProtectBitmapFromDispose
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
@@ -188,7 +188,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
@@ -218,7 +218,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
@@ -250,7 +250,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
@@ -282,7 +282,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
@@ -314,7 +314,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
@@ -343,7 +343,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
@@ -372,7 +372,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Height
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
@@ -401,7 +401,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
@@ -430,7 +430,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Bitmap
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
@@ -459,7 +459,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Image
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
@@ -488,7 +488,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetBitmap
     path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs

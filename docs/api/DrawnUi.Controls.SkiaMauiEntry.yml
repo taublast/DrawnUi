@@ -12,6 +12,7 @@ items:
   - DrawnUi.Controls.SkiaMauiEntry.ActionSearch
   - DrawnUi.Controls.SkiaMauiEntry.ActionSend
   - DrawnUi.Controls.SkiaMauiEntry.AdaptControlSize
+  - DrawnUi.Controls.SkiaMauiEntry.CheckChildAdded
   - DrawnUi.Controls.SkiaMauiEntry.CommandOnFocusChanged
   - DrawnUi.Controls.SkiaMauiEntry.CommandOnFocusChangedProperty
   - DrawnUi.Controls.SkiaMauiEntry.CommandOnSubmit
@@ -19,6 +20,7 @@ items:
   - DrawnUi.Controls.SkiaMauiEntry.CommandOnTextChanged
   - DrawnUi.Controls.SkiaMauiEntry.CommandOnTextChangedProperty
   - DrawnUi.Controls.SkiaMauiEntry.Control
+  - DrawnUi.Controls.SkiaMauiEntry.CreatePlaceholderLabel
   - DrawnUi.Controls.SkiaMauiEntry.FocusChanged
   - DrawnUi.Controls.SkiaMauiEntry.FocusNative
   - DrawnUi.Controls.SkiaMauiEntry.FontFamily
@@ -40,11 +42,21 @@ items:
   - DrawnUi.Controls.SkiaMauiEntry.OnDisposing
   - DrawnUi.Controls.SkiaMauiEntry.OnFocusChanged(System.Boolean)
   - DrawnUi.Controls.SkiaMauiEntry.OnLayoutChanged
-  - DrawnUi.Controls.SkiaMauiEntry.OnMeasuring(System.Single,System.Single,System.Single)
-  - DrawnUi.Controls.SkiaMauiEntry.Placeholder
-  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderColor
-  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderColorProperty
-  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderProperty
+  - DrawnUi.Controls.SkiaMauiEntry.OnLayoutReady
+  - DrawnUi.Controls.SkiaMauiEntry.Paint(DrawnUi.Draw.DrawingContext)
+  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontFamily
+  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontFamilyProperty
+  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontSize
+  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontSizeProperty
+  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderHorizontalAlignment
+  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderHorizontalAlignmentProperty
+  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderLabel
+  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderText
+  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextColor
+  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextColorProperty
+  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextProperty
+  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderVerticalAlignment
+  - DrawnUi.Controls.SkiaMauiEntry.PlaceholderVerticalAlignmentProperty
   - DrawnUi.Controls.SkiaMauiEntry.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Controls.SkiaMauiEntry.ReturnType
   - DrawnUi.Controls.SkiaMauiEntry.ReturnTypeProperty
@@ -59,6 +71,8 @@ items:
   - DrawnUi.Controls.SkiaMauiEntry.TextSubmitted
   - DrawnUi.Controls.SkiaMauiEntry.UnfocusNative
   - DrawnUi.Controls.SkiaMauiEntry.UpdateControl
+  - DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderLabel
+  - DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderVisibility
   - DrawnUi.Controls.SkiaMauiEntry.WhenFocusChanged(System.Boolean)
   - DrawnUi.Controls.SkiaMauiEntry.WillClipBounds
   langs:
@@ -71,7 +85,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaMauiEntry
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
@@ -123,7 +137,6 @@ items:
   - DrawnUi.Draw.ISkiaGestureListener
   inheritedMembers:
   - DrawnUi.Draw.SkiaMauiElement.OnBindingContextChanged
-  - DrawnUi.Draw.SkiaMauiElement.NeedMeasure
   - DrawnUi.Draw.SkiaMauiElement.MeasureAbsolute(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaMauiElement.MeasureAndArrangeMauiElement(System.Double,System.Double)
   - DrawnUi.Draw.SkiaMauiElement.ContentSizeUnits
@@ -534,7 +547,6 @@ items:
   - DrawnUi.Draw.SkiaControl.ArrangedDestination
   - DrawnUi.Draw.SkiaControl.LayoutIsReady
   - DrawnUi.Draw.SkiaControl.Disposing
-  - DrawnUi.Draw.SkiaControl.OnLayoutReady
   - DrawnUi.Draw.SkiaControl.IsLayoutReady
   - DrawnUi.Draw.SkiaControl.LayoutReady
   - DrawnUi.Draw.SkiaControl.CheckIsGhost
@@ -545,6 +557,7 @@ items:
   - DrawnUi.Draw.SkiaControl.PostArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureChild(DrawnUi.Draw.SkiaControl,System.Double,System.Double,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  - DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   - DrawnUi.Draw.SkiaControl.ApplyBindingContext
   - DrawnUi.Draw.SkiaControl.ApplyingBindingContext
@@ -553,6 +566,7 @@ items:
   - DrawnUi.Draw.SkiaControl.MeasureInternal(DrawnUi.Draw.MeasureRequest)
   - DrawnUi.Draw.SkiaControl.Measure(System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.UpdateSizeRequest
+  - DrawnUi.Draw.SkiaControl.OnMeasuring(System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
   - DrawnUi.Draw.SkiaControl.InitializeDefaultContent(System.Boolean)
   - DrawnUi.Draw.SkiaControl.SetMeasuredAsEmpty(System.Single)
@@ -639,12 +653,12 @@ items:
   - DrawnUi.Draw.SkiaControl.IsSimpleRectangle(SkiaSharp.SKPath)
   - DrawnUi.Draw.SkiaControl.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
   - DrawnUi.Draw.SkiaControl.ShouldClipAntialiased
+  - DrawnUi.Draw.SkiaControl.NeedMeasure
   - DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
   - DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
   - DrawnUi.Draw.SkiaControl.NeedRemeasuring
   - DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   - DrawnUi.Draw.SkiaControl.PaintWithEffects(DrawnUi.Draw.DrawingContext)
-  - DrawnUi.Draw.SkiaControl.Paint(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaControl.WasFirstTimeDrawn
   - DrawnUi.Draw.SkiaControl.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)
   - DrawnUi.Draw.SkiaControl.DebugRenderingColor
@@ -660,6 +674,7 @@ items:
   - DrawnUi.Draw.SkiaControl.Invalidated
   - DrawnUi.Draw.SkiaControl.NeedUpdate
   - DrawnUi.Draw.SkiaControl.Superview
+  - DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
   - DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   - DrawnUi.Draw.SkiaControl.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
   - DrawnUi.Draw.SkiaControl.IsParentIndependent
@@ -747,6 +762,8 @@ items:
   - DrawnUi.Draw.SkiaControl._arrangedViewportHeightLimit
   - DrawnUi.Draw.SkiaControl._arrangedViewportWidthLimit
   - DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareDoubles(System.Double,System.Double,System.Double)
   - DrawnUi.Draw.SkiaControl.CompareRects(SkiaSharp.SKRect,SkiaSharp.SKRect,System.Single)
@@ -1009,7 +1026,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
@@ -1024,6 +1041,44 @@ items:
   nameWithType.vb: SkiaMauiEntry.New()
   fullName.vb: DrawnUi.Controls.SkiaMauiEntry.New()
   name.vb: New()
+- uid: DrawnUi.Controls.SkiaMauiEntry.Paint(DrawnUi.Draw.DrawingContext)
+  commentId: M:DrawnUi.Controls.SkiaMauiEntry.Paint(DrawnUi.Draw.DrawingContext)
+  id: Paint(DrawnUi.Draw.DrawingContext)
+  parent: DrawnUi.Controls.SkiaMauiEntry
+  langs:
+  - csharp
+  - vb
+  name: Paint(DrawingContext)
+  nameWithType: SkiaMauiEntry.Paint(DrawingContext)
+  fullName: DrawnUi.Controls.SkiaMauiEntry.Paint(DrawnUi.Draw.DrawingContext)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Paint
+    path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+    startLine: 17
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: >-
+    This is the main drawing routine you should override to draw something.
+
+    Base one paints background color inside DrawingRect that was defined by Arrange inside base.Draw.
+
+    Pass arguments if you want to use some time-frozen data for painting at any time from any thread..
+  example: []
+  syntax:
+    content: protected override void Paint(DrawingContext ctx)
+    parameters:
+    - id: ctx
+      type: DrawnUi.Draw.DrawingContext
+      description: ''
+    content.vb: Protected Overrides Sub Paint(ctx As DrawingContext)
+  overridden: DrawnUi.Draw.SkiaControl.Paint(DrawnUi.Draw.DrawingContext)
+  overload: DrawnUi.Controls.SkiaMauiEntry.Paint*
 - uid: DrawnUi.Controls.SkiaMauiEntry.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   commentId: M:DrawnUi.Controls.SkiaMauiEntry.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   id: ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
@@ -1038,11 +1093,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessGestures
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 17
+    startLine: 27
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1073,11 +1128,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ActionGo
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 40
+    startLine: 50
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1100,11 +1155,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ActionNext
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 41
+    startLine: 51
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1127,11 +1182,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ActionSend
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 42
+    startLine: 52
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1154,11 +1209,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ActionSearch
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 43
+    startLine: 53
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1181,11 +1236,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ActionDone
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 44
+    startLine: 54
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1208,11 +1263,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextChanged
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 50
+    startLine: 60
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1235,11 +1290,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FocusChanged
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 51
+    startLine: 61
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1262,11 +1317,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextSubmitted
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 52
+    startLine: 62
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1289,11 +1344,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WillClipBounds
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 56
+    startLine: 66
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1321,11 +1376,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOrCreateControl
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 58
+    startLine: 68
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1349,11 +1404,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Control
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 86
+    startLine: 96
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1364,6 +1419,33 @@ items:
       type: DrawnUi.Controls.MauiEntry
     content.vb: Public Property Control As MauiEntry
   overload: DrawnUi.Controls.SkiaMauiEntry.Control*
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderLabel
+  commentId: F:DrawnUi.Controls.SkiaMauiEntry.PlaceholderLabel
+  id: PlaceholderLabel
+  parent: DrawnUi.Controls.SkiaMauiEntry
+  langs:
+  - csharp
+  - vb
+  name: PlaceholderLabel
+  nameWithType: SkiaMauiEntry.PlaceholderLabel
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderLabel
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PlaceholderLabel
+    path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+    startLine: 97
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: protected SkiaLabel PlaceholderLabel
+    return:
+      type: DrawnUi.Draw.SkiaLabel
+    content.vb: Protected PlaceholderLabel As SkiaLabel
 - uid: DrawnUi.Controls.SkiaMauiEntry.IsSpellCheckEnabled
   commentId: P:DrawnUi.Controls.SkiaMauiEntry.IsSpellCheckEnabled
   id: IsSpellCheckEnabled
@@ -1378,11 +1460,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSpellCheckEnabled
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 89
+    startLine: 100
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1407,11 +1489,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FocusNative
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 91
+    startLine: 102
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1433,11 +1515,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UnfocusNative
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 99
+    startLine: 110
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1459,11 +1541,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetFocus
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 104
+    startLine: 115
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1491,11 +1573,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AdaptControlSize
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 121
+    startLine: 132
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1503,6 +1585,34 @@ items:
     content: protected virtual void AdaptControlSize()
     content.vb: Protected Overridable Sub AdaptControlSize()
   overload: DrawnUi.Controls.SkiaMauiEntry.AdaptControlSize*
+- uid: DrawnUi.Controls.SkiaMauiEntry.CreatePlaceholderLabel
+  commentId: M:DrawnUi.Controls.SkiaMauiEntry.CreatePlaceholderLabel
+  id: CreatePlaceholderLabel
+  parent: DrawnUi.Controls.SkiaMauiEntry
+  langs:
+  - csharp
+  - vb
+  name: CreatePlaceholderLabel()
+  nameWithType: SkiaMauiEntry.CreatePlaceholderLabel()
+  fullName: DrawnUi.Controls.SkiaMauiEntry.CreatePlaceholderLabel()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CreatePlaceholderLabel
+    path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+    startLine: 142
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: protected virtual SkiaLabel CreatePlaceholderLabel()
+    return:
+      type: DrawnUi.Draw.SkiaLabel
+    content.vb: Protected Overridable Function CreatePlaceholderLabel() As SkiaLabel
+  overload: DrawnUi.Controls.SkiaMauiEntry.CreatePlaceholderLabel*
 - uid: DrawnUi.Controls.SkiaMauiEntry.MapProps(DrawnUi.Controls.MauiEntry)
   commentId: M:DrawnUi.Controls.SkiaMauiEntry.MapProps(DrawnUi.Controls.MauiEntry)
   id: MapProps(DrawnUi.Controls.MauiEntry)
@@ -1517,11 +1627,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MapProps
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 133
+    startLine: 163
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1546,11 +1656,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateControl
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 154
+    startLine: 184
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1558,6 +1668,58 @@ items:
     content: public virtual void UpdateControl()
     content.vb: Public Overridable Sub UpdateControl()
   overload: DrawnUi.Controls.SkiaMauiEntry.UpdateControl*
+- uid: DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderLabel
+  commentId: M:DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderLabel
+  id: UpdatePlaceholderLabel
+  parent: DrawnUi.Controls.SkiaMauiEntry
+  langs:
+  - csharp
+  - vb
+  name: UpdatePlaceholderLabel()
+  nameWithType: SkiaMauiEntry.UpdatePlaceholderLabel()
+  fullName: DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderLabel()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UpdatePlaceholderLabel
+    path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+    startLine: 201
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: protected virtual void UpdatePlaceholderLabel()
+    content.vb: Protected Overridable Sub UpdatePlaceholderLabel()
+  overload: DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderLabel*
+- uid: DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderVisibility
+  commentId: M:DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderVisibility
+  id: UpdatePlaceholderVisibility
+  parent: DrawnUi.Controls.SkiaMauiEntry
+  langs:
+  - csharp
+  - vb
+  name: UpdatePlaceholderVisibility()
+  nameWithType: SkiaMauiEntry.UpdatePlaceholderVisibility()
+  fullName: DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderVisibility()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UpdatePlaceholderVisibility
+    path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+    startLine: 219
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: protected virtual void UpdatePlaceholderVisibility()
+    content.vb: Protected Overridable Sub UpdatePlaceholderVisibility()
+  overload: DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderVisibility*
 - uid: DrawnUi.Controls.SkiaMauiEntry.OnLayoutChanged
   commentId: M:DrawnUi.Controls.SkiaMauiEntry.OnLayoutChanged
   id: OnLayoutChanged
@@ -1572,11 +1734,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutChanged
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 171
+    startLine: 227
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1601,11 +1763,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SubscribeToControl
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 178
+    startLine: 234
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1633,11 +1795,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnFocusChanged
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 261
+    startLine: 317
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1672,11 +1834,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 283
+    startLine: 339
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1687,51 +1849,63 @@ items:
     content.vb: Public Overrides Sub OnDisposing()
   overridden: DrawnUi.Draw.SkiaMauiElement.OnDisposing
   overload: DrawnUi.Controls.SkiaMauiEntry.OnDisposing*
-- uid: DrawnUi.Controls.SkiaMauiEntry.OnMeasuring(System.Single,System.Single,System.Single)
-  commentId: M:DrawnUi.Controls.SkiaMauiEntry.OnMeasuring(System.Single,System.Single,System.Single)
-  id: OnMeasuring(System.Single,System.Single,System.Single)
+- uid: DrawnUi.Controls.SkiaMauiEntry.CheckChildAdded
+  commentId: M:DrawnUi.Controls.SkiaMauiEntry.CheckChildAdded
+  id: CheckChildAdded
   parent: DrawnUi.Controls.SkiaMauiEntry
   langs:
   - csharp
   - vb
-  name: OnMeasuring(float, float, float)
-  nameWithType: SkiaMauiEntry.OnMeasuring(float, float, float)
-  fullName: DrawnUi.Controls.SkiaMauiEntry.OnMeasuring(float, float, float)
+  name: CheckChildAdded()
+  nameWithType: SkiaMauiEntry.CheckChildAdded()
+  fullName: DrawnUi.Controls.SkiaMauiEntry.CheckChildAdded()
   type: Method
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
-    id: OnMeasuring
+    id: CheckChildAdded
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 299
+    startLine: 361
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
-  summary: Input in POINTS
   example: []
   syntax:
-    content: public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
-    parameters:
-    - id: widthConstraint
-      type: System.Single
-      description: ''
-    - id: heightConstraint
-      type: System.Single
-      description: ''
-    - id: scale
-      type: System.Single
-      description: ''
-    return:
-      type: DrawnUi.Draw.ScaledSize
-      description: ''
-    content.vb: Public Overrides Function OnMeasuring(widthConstraint As Single, heightConstraint As Single, scale As Single) As ScaledSize
-  overridden: DrawnUi.Draw.SkiaControl.OnMeasuring(System.Single,System.Single,System.Single)
-  overload: DrawnUi.Controls.SkiaMauiEntry.OnMeasuring*
-  nameWithType.vb: SkiaMauiEntry.OnMeasuring(Single, Single, Single)
-  fullName.vb: DrawnUi.Controls.SkiaMauiEntry.OnMeasuring(Single, Single, Single)
-  name.vb: OnMeasuring(Single, Single, Single)
+    content: protected override void CheckChildAdded()
+    content.vb: Protected Overrides Sub CheckChildAdded()
+  overridden: DrawnUi.Draw.SkiaMauiElement.CheckChildAdded
+  overload: DrawnUi.Controls.SkiaMauiEntry.CheckChildAdded*
+- uid: DrawnUi.Controls.SkiaMauiEntry.OnLayoutReady
+  commentId: M:DrawnUi.Controls.SkiaMauiEntry.OnLayoutReady
+  id: OnLayoutReady
+  parent: DrawnUi.Controls.SkiaMauiEntry
+  langs:
+  - csharp
+  - vb
+  name: OnLayoutReady()
+  nameWithType: SkiaMauiEntry.OnLayoutReady()
+  fullName: DrawnUi.Controls.SkiaMauiEntry.OnLayoutReady()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnLayoutReady
+    path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+    startLine: 366
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Layout was changed with dimensions above zero. Rather a helper method, can you more generic OnLayoutChanged().
+  example: []
+  syntax:
+    content: protected override void OnLayoutReady()
+    content.vb: Protected Overrides Sub OnLayoutReady()
+  overridden: DrawnUi.Draw.SkiaControl.OnLayoutReady
+  overload: DrawnUi.Controls.SkiaMauiEntry.OnLayoutReady*
 - uid: DrawnUi.Controls.SkiaMauiEntry.WhenFocusChanged(System.Boolean)
   commentId: M:DrawnUi.Controls.SkiaMauiEntry.WhenFocusChanged(System.Boolean)
   id: WhenFocusChanged(System.Boolean)
@@ -1746,11 +1920,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WhenFocusChanged
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 306
+    startLine: 383
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1778,11 +1952,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetFocusInternal
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 311
+    startLine: 388
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1810,11 +1984,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxLinesProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 349
+    startLine: 434
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1837,11 +2011,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxLines
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 355
+    startLine: 440
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1868,11 +2042,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OldText
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 361
+    startLine: 446
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1897,11 +2071,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontFamilyProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 374
+    startLine: 460
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1924,11 +2098,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontFamily
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 377
+    startLine: 463
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1953,11 +2127,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextColorProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 383
+    startLine: 469
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1980,11 +2154,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextColor
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 388
+    startLine: 474
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1995,62 +2169,62 @@ items:
       type: Microsoft.Maui.Graphics.Color
     content.vb: Public Property TextColor As Color
   overload: DrawnUi.Controls.SkiaMauiEntry.TextColor*
-- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderColorProperty
-  commentId: F:DrawnUi.Controls.SkiaMauiEntry.PlaceholderColorProperty
-  id: PlaceholderColorProperty
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextColorProperty
+  commentId: F:DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextColorProperty
+  id: PlaceholderTextColorProperty
   parent: DrawnUi.Controls.SkiaMauiEntry
   langs:
   - csharp
   - vb
-  name: PlaceholderColorProperty
-  nameWithType: SkiaMauiEntry.PlaceholderColorProperty
-  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderColorProperty
+  name: PlaceholderTextColorProperty
+  nameWithType: SkiaMauiEntry.PlaceholderTextColorProperty
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextColorProperty
   type: Field
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
-    id: PlaceholderColorProperty
+    id: PlaceholderTextColorProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 394
+    startLine: 480
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
   syntax:
-    content: public static readonly BindableProperty PlaceholderColorProperty
+    content: public static readonly BindableProperty PlaceholderTextColorProperty
     return:
       type: Microsoft.Maui.Controls.BindableProperty
-    content.vb: Public Shared ReadOnly PlaceholderColorProperty As BindableProperty
-- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderColor
-  commentId: P:DrawnUi.Controls.SkiaMauiEntry.PlaceholderColor
-  id: PlaceholderColor
+    content.vb: Public Shared ReadOnly PlaceholderTextColorProperty As BindableProperty
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextColor
+  commentId: P:DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextColor
+  id: PlaceholderTextColor
   parent: DrawnUi.Controls.SkiaMauiEntry
   langs:
   - csharp
   - vb
-  name: PlaceholderColor
-  nameWithType: SkiaMauiEntry.PlaceholderColor
-  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderColor
+  name: PlaceholderTextColor
+  nameWithType: SkiaMauiEntry.PlaceholderTextColor
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextColor
   type: Property
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
-    id: PlaceholderColor
+    id: PlaceholderTextColor
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 398
+    startLine: 484
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
   syntax:
-    content: public Color PlaceholderColor { get; set; }
+    content: public Color PlaceholderTextColor { get; set; }
     parameters: []
     return:
       type: Microsoft.Maui.Graphics.Color
-    content.vb: Public Property PlaceholderColor As Color
-  overload: DrawnUi.Controls.SkiaMauiEntry.PlaceholderColor*
+    content.vb: Public Property PlaceholderTextColor As Color
+  overload: DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextColor*
 - uid: DrawnUi.Controls.SkiaMauiEntry.FontWeightProperty
   commentId: F:DrawnUi.Controls.SkiaMauiEntry.FontWeightProperty
   id: FontWeightProperty
@@ -2065,11 +2239,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontWeightProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 404
+    startLine: 490
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2092,11 +2266,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontWeight
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 411
+    startLine: 497
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2121,11 +2295,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontSizeProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 417
+    startLine: 503
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2148,11 +2322,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontSize
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 421
+    startLine: 507
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2177,11 +2351,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 427
+    startLine: 513
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2204,11 +2378,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Text
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 435
+    startLine: 521
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2219,62 +2393,286 @@ items:
       type: System.String
     content.vb: Public Property Text As String
   overload: DrawnUi.Controls.SkiaMauiEntry.Text*
-- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderProperty
-  commentId: F:DrawnUi.Controls.SkiaMauiEntry.PlaceholderProperty
-  id: PlaceholderProperty
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextProperty
+  commentId: F:DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextProperty
+  id: PlaceholderTextProperty
   parent: DrawnUi.Controls.SkiaMauiEntry
   langs:
   - csharp
   - vb
-  name: PlaceholderProperty
-  nameWithType: SkiaMauiEntry.PlaceholderProperty
-  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderProperty
+  name: PlaceholderTextProperty
+  nameWithType: SkiaMauiEntry.PlaceholderTextProperty
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextProperty
   type: Field
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
-    id: PlaceholderProperty
+    id: PlaceholderTextProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 441
+    startLine: 527
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
   syntax:
-    content: public static readonly BindableProperty PlaceholderProperty
+    content: public static readonly BindableProperty PlaceholderTextProperty
     return:
       type: Microsoft.Maui.Controls.BindableProperty
-    content.vb: Public Shared ReadOnly PlaceholderProperty As BindableProperty
-- uid: DrawnUi.Controls.SkiaMauiEntry.Placeholder
-  commentId: P:DrawnUi.Controls.SkiaMauiEntry.Placeholder
-  id: Placeholder
+    content.vb: Public Shared ReadOnly PlaceholderTextProperty As BindableProperty
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderText
+  commentId: P:DrawnUi.Controls.SkiaMauiEntry.PlaceholderText
+  id: PlaceholderText
   parent: DrawnUi.Controls.SkiaMauiEntry
   langs:
   - csharp
   - vb
-  name: Placeholder
-  nameWithType: SkiaMauiEntry.Placeholder
-  fullName: DrawnUi.Controls.SkiaMauiEntry.Placeholder
+  name: PlaceholderText
+  nameWithType: SkiaMauiEntry.PlaceholderText
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderText
   type: Property
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
-    id: Placeholder
+    id: PlaceholderText
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 448
+    startLine: 534
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
   syntax:
-    content: public string Placeholder { get; set; }
+    content: public string PlaceholderText { get; set; }
     parameters: []
     return:
       type: System.String
-    content.vb: Public Property Placeholder As String
-  overload: DrawnUi.Controls.SkiaMauiEntry.Placeholder*
+    content.vb: Public Property PlaceholderText As String
+  overload: DrawnUi.Controls.SkiaMauiEntry.PlaceholderText*
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontFamilyProperty
+  commentId: F:DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontFamilyProperty
+  id: PlaceholderFontFamilyProperty
+  parent: DrawnUi.Controls.SkiaMauiEntry
+  langs:
+  - csharp
+  - vb
+  name: PlaceholderFontFamilyProperty
+  nameWithType: SkiaMauiEntry.PlaceholderFontFamilyProperty
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontFamilyProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PlaceholderFontFamilyProperty
+    path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+    startLine: 540
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public static readonly BindableProperty PlaceholderFontFamilyProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly PlaceholderFontFamilyProperty As BindableProperty
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontFamily
+  commentId: P:DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontFamily
+  id: PlaceholderFontFamily
+  parent: DrawnUi.Controls.SkiaMauiEntry
+  langs:
+  - csharp
+  - vb
+  name: PlaceholderFontFamily
+  nameWithType: SkiaMauiEntry.PlaceholderFontFamily
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontFamily
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PlaceholderFontFamily
+    path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+    startLine: 543
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public string PlaceholderFontFamily { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property PlaceholderFontFamily As String
+  overload: DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontFamily*
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontSizeProperty
+  commentId: F:DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontSizeProperty
+  id: PlaceholderFontSizeProperty
+  parent: DrawnUi.Controls.SkiaMauiEntry
+  langs:
+  - csharp
+  - vb
+  name: PlaceholderFontSizeProperty
+  nameWithType: SkiaMauiEntry.PlaceholderFontSizeProperty
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontSizeProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PlaceholderFontSizeProperty
+    path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+    startLine: 549
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public static readonly BindableProperty PlaceholderFontSizeProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly PlaceholderFontSizeProperty As BindableProperty
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontSize
+  commentId: P:DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontSize
+  id: PlaceholderFontSize
+  parent: DrawnUi.Controls.SkiaMauiEntry
+  langs:
+  - csharp
+  - vb
+  name: PlaceholderFontSize
+  nameWithType: SkiaMauiEntry.PlaceholderFontSize
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontSize
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PlaceholderFontSize
+    path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+    startLine: 556
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public double PlaceholderFontSize { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Property PlaceholderFontSize As Double
+  overload: DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontSize*
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderHorizontalAlignmentProperty
+  commentId: F:DrawnUi.Controls.SkiaMauiEntry.PlaceholderHorizontalAlignmentProperty
+  id: PlaceholderHorizontalAlignmentProperty
+  parent: DrawnUi.Controls.SkiaMauiEntry
+  langs:
+  - csharp
+  - vb
+  name: PlaceholderHorizontalAlignmentProperty
+  nameWithType: SkiaMauiEntry.PlaceholderHorizontalAlignmentProperty
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderHorizontalAlignmentProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PlaceholderHorizontalAlignmentProperty
+    path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+    startLine: 562
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public static readonly BindableProperty PlaceholderHorizontalAlignmentProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly PlaceholderHorizontalAlignmentProperty As BindableProperty
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderHorizontalAlignment
+  commentId: P:DrawnUi.Controls.SkiaMauiEntry.PlaceholderHorizontalAlignment
+  id: PlaceholderHorizontalAlignment
+  parent: DrawnUi.Controls.SkiaMauiEntry
+  langs:
+  - csharp
+  - vb
+  name: PlaceholderHorizontalAlignment
+  nameWithType: SkiaMauiEntry.PlaceholderHorizontalAlignment
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderHorizontalAlignment
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PlaceholderHorizontalAlignment
+    path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+    startLine: 569
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public DrawTextAlignment PlaceholderHorizontalAlignment { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.DrawTextAlignment
+    content.vb: Public Property PlaceholderHorizontalAlignment As DrawTextAlignment
+  overload: DrawnUi.Controls.SkiaMauiEntry.PlaceholderHorizontalAlignment*
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderVerticalAlignmentProperty
+  commentId: F:DrawnUi.Controls.SkiaMauiEntry.PlaceholderVerticalAlignmentProperty
+  id: PlaceholderVerticalAlignmentProperty
+  parent: DrawnUi.Controls.SkiaMauiEntry
+  langs:
+  - csharp
+  - vb
+  name: PlaceholderVerticalAlignmentProperty
+  nameWithType: SkiaMauiEntry.PlaceholderVerticalAlignmentProperty
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderVerticalAlignmentProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PlaceholderVerticalAlignmentProperty
+    path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+    startLine: 575
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public static readonly BindableProperty PlaceholderVerticalAlignmentProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly PlaceholderVerticalAlignmentProperty As BindableProperty
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderVerticalAlignment
+  commentId: P:DrawnUi.Controls.SkiaMauiEntry.PlaceholderVerticalAlignment
+  id: PlaceholderVerticalAlignment
+  parent: DrawnUi.Controls.SkiaMauiEntry
+  langs:
+  - csharp
+  - vb
+  name: PlaceholderVerticalAlignment
+  nameWithType: SkiaMauiEntry.PlaceholderVerticalAlignment
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderVerticalAlignment
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PlaceholderVerticalAlignment
+    path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
+    startLine: 582
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public TextAlignment PlaceholderVerticalAlignment { get; set; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.TextAlignment
+    content.vb: Public Property PlaceholderVerticalAlignment As TextAlignment
+  overload: DrawnUi.Controls.SkiaMauiEntry.PlaceholderVerticalAlignment*
 - uid: DrawnUi.Controls.SkiaMauiEntry.ReturnTypeProperty
   commentId: F:DrawnUi.Controls.SkiaMauiEntry.ReturnTypeProperty
   id: ReturnTypeProperty
@@ -2289,11 +2687,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReturnTypeProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 454
+    startLine: 588
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2316,11 +2714,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReturnType
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 461
+    startLine: 595
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2345,11 +2743,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyboardTypeProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 467
+    startLine: 601
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2372,11 +2770,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyboardType
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 474
+    startLine: 608
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2413,11 +2811,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandOnSubmitProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 481
+    startLine: 615
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2440,11 +2838,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandOnSubmit
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 487
+    startLine: 621
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2469,11 +2867,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandOnFocusChangedProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 493
+    startLine: 627
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2496,11 +2894,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandOnFocusChanged
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 499
+    startLine: 633
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2525,11 +2923,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandOnTextChangedProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 505
+    startLine: 639
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2552,11 +2950,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandOnTextChanged
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 511
+    startLine: 645
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2581,11 +2979,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsFocusedProperty
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 517
+    startLine: 651
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2608,11 +3006,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsFocused
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEntry.cs
-    startLine: 533
+    startLine: 667
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2996,13 +3394,6 @@ references:
     href: DrawnUi.Draw.SkiaMauiElement.html#DrawnUi_Draw_SkiaMauiElement_OnBindingContextChanged
   - name: (
   - name: )
-- uid: DrawnUi.Draw.SkiaMauiElement.NeedMeasure
-  commentId: P:DrawnUi.Draw.SkiaMauiElement.NeedMeasure
-  parent: DrawnUi.Draw.SkiaMauiElement
-  href: DrawnUi.Draw.SkiaMauiElement.html#DrawnUi_Draw_SkiaMauiElement_NeedMeasure
-  name: NeedMeasure
-  nameWithType: SkiaMauiElement.NeedMeasure
-  fullName: DrawnUi.Draw.SkiaMauiElement.NeedMeasure
 - uid: DrawnUi.Draw.SkiaMauiElement.MeasureAbsolute(SkiaSharp.SKRect,System.Single)
   commentId: M:DrawnUi.Draw.SkiaMauiElement.MeasureAbsolute(SkiaSharp.SKRect,System.Single)
   parent: DrawnUi.Draw.SkiaMauiElement
@@ -11162,25 +11553,6 @@ references:
   name: Disposing
   nameWithType: SkiaControl.Disposing
   fullName: DrawnUi.Draw.SkiaControl.Disposing
-- uid: DrawnUi.Draw.SkiaControl.OnLayoutReady
-  commentId: M:DrawnUi.Draw.SkiaControl.OnLayoutReady
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutReady
-  name: OnLayoutReady()
-  nameWithType: SkiaControl.OnLayoutReady()
-  fullName: DrawnUi.Draw.SkiaControl.OnLayoutReady()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.OnLayoutReady
-    name: OnLayoutReady
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutReady
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.OnLayoutReady
-    name: OnLayoutReady
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutReady
-  - name: (
-  - name: )
 - uid: DrawnUi.Draw.SkiaControl.IsLayoutReady
   commentId: P:DrawnUi.Draw.SkiaControl.IsLayoutReady
   parent: DrawnUi.Draw.SkiaControl
@@ -11672,6 +12044,73 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  name: MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  nameWithType: SkiaControl.MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  fullName: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>, SkiaSharp.SKRect, float)
+  nameWithType.vb: SkiaControl.MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl), SkiaSharp.SKRect, Single)
+  name.vb: MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   commentId: M:DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   parent: DrawnUi.Draw.SkiaControl
@@ -11841,6 +12280,61 @@ references:
     name: UpdateSizeRequest
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UpdateSizeRequest
   - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.OnMeasuring(System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.OnMeasuring(System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnMeasuring_System_Single_System_Single_System_Single_
+  name: OnMeasuring(float, float, float)
+  nameWithType: SkiaControl.OnMeasuring(float, float, float)
+  fullName: DrawnUi.Draw.SkiaControl.OnMeasuring(float, float, float)
+  nameWithType.vb: SkiaControl.OnMeasuring(Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.OnMeasuring(Single, Single, Single)
+  name.vb: OnMeasuring(Single, Single, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnMeasuring(System.Single,System.Single,System.Single)
+    name: OnMeasuring
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnMeasuring_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnMeasuring(System.Single,System.Single,System.Single)
+    name: OnMeasuring
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnMeasuring_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
   commentId: M:DrawnUi.Draw.SkiaControl.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)
@@ -13887,6 +14381,13 @@ references:
   name: ShouldClipAntialiased
   nameWithType: SkiaControl.ShouldClipAntialiased
   fullName: DrawnUi.Draw.SkiaControl.ShouldClipAntialiased
+- uid: DrawnUi.Draw.SkiaControl.NeedMeasure
+  commentId: P:DrawnUi.Draw.SkiaControl.NeedMeasure
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_NeedMeasure
+  name: NeedMeasure
+  nameWithType: SkiaControl.NeedMeasure
+  fullName: DrawnUi.Draw.SkiaControl.NeedMeasure
 - uid: DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
   commentId: M:DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
   parent: DrawnUi.Draw.SkiaControl
@@ -14023,31 +14524,6 @@ references:
   - uid: DrawnUi.Draw.SkiaControl.PaintWithEffects(DrawnUi.Draw.DrawingContext)
     name: PaintWithEffects
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PaintWithEffects_DrawnUi_Draw_DrawingContext_
-  - name: (
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
-  - name: )
-- uid: DrawnUi.Draw.SkiaControl.Paint(DrawnUi.Draw.DrawingContext)
-  commentId: M:DrawnUi.Draw.SkiaControl.Paint(DrawnUi.Draw.DrawingContext)
-  parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Paint_DrawnUi_Draw_DrawingContext_
-  name: Paint(DrawingContext)
-  nameWithType: SkiaControl.Paint(DrawingContext)
-  fullName: DrawnUi.Draw.SkiaControl.Paint(DrawnUi.Draw.DrawingContext)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.Paint(DrawnUi.Draw.DrawingContext)
-    name: Paint
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Paint_DrawnUi_Draw_DrawingContext_
-  - name: (
-  - uid: DrawnUi.Draw.DrawingContext
-    name: DrawingContext
-    href: DrawnUi.Draw.DrawingContext.html
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.Paint(DrawnUi.Draw.DrawingContext)
-    name: Paint
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Paint_DrawnUi_Draw_DrawingContext_
   - name: (
   - uid: DrawnUi.Draw.DrawingContext
     name: DrawingContext
@@ -14316,6 +14792,31 @@ references:
   name: Superview
   nameWithType: SkiaControl.Superview
   fullName: DrawnUi.Draw.SkiaControl.Superview
+- uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  name: SetSuperview(DrawnView)
+  nameWithType: SkiaControl.SetSuperview(DrawnView)
+  fullName: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   commentId: F:DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   parent: DrawnUi.Draw.SkiaControl
@@ -16425,6 +16926,101 @@ references:
   name: _lastMeasuredForScale
   nameWithType: SkiaControl._lastMeasuredForScale
   fullName: DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  name: RoundToPixels(SKRect)
+  nameWithType: SkiaControl.RoundToPixels(SKRect)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  name: RoundToPixels(float, float, float, float)
+  nameWithType: SkiaControl.RoundToPixels(float, float, float, float)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(float, float, float, float)
+  nameWithType.vb: SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  name.vb: RoundToPixels(Single, Single, Single, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   parent: DrawnUi.Draw.SkiaControl
@@ -29661,6 +30257,44 @@ references:
   nameWithType.vb: SkiaMauiEntry.New
   fullName.vb: DrawnUi.Controls.SkiaMauiEntry.New
   name.vb: New
+- uid: DrawnUi.Draw.SkiaControl.Paint(DrawnUi.Draw.DrawingContext)
+  commentId: M:DrawnUi.Draw.SkiaControl.Paint(DrawnUi.Draw.DrawingContext)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Paint_DrawnUi_Draw_DrawingContext_
+  name: Paint(DrawingContext)
+  nameWithType: SkiaControl.Paint(DrawingContext)
+  fullName: DrawnUi.Draw.SkiaControl.Paint(DrawnUi.Draw.DrawingContext)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.Paint(DrawnUi.Draw.DrawingContext)
+    name: Paint
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Paint_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.Paint(DrawnUi.Draw.DrawingContext)
+    name: Paint
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Paint_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
+- uid: DrawnUi.Controls.SkiaMauiEntry.Paint*
+  commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.Paint
+  href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_Paint_DrawnUi_Draw_DrawingContext_
+  name: Paint
+  nameWithType: SkiaMauiEntry.Paint
+  fullName: DrawnUi.Controls.SkiaMauiEntry.Paint
+- uid: DrawnUi.Draw.DrawingContext
+  commentId: T:DrawnUi.Draw.DrawingContext
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.DrawingContext.html
+  name: DrawingContext
+  nameWithType: DrawingContext
+  fullName: DrawnUi.Draw.DrawingContext
 - uid: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   commentId: M:DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   parent: DrawnUi.Draw.SkiaControl
@@ -29875,6 +30509,13 @@ references:
   name: MauiEntry
   nameWithType: MauiEntry
   fullName: DrawnUi.Controls.MauiEntry
+- uid: DrawnUi.Draw.SkiaLabel
+  commentId: T:DrawnUi.Draw.SkiaLabel
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaLabel.html
+  name: SkiaLabel
+  nameWithType: SkiaLabel
+  fullName: DrawnUi.Draw.SkiaLabel
 - uid: DrawnUi.Controls.SkiaMauiEntry.IsSpellCheckEnabled*
   commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.IsSpellCheckEnabled
   href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_IsSpellCheckEnabled
@@ -29905,6 +30546,12 @@ references:
   name: AdaptControlSize
   nameWithType: SkiaMauiEntry.AdaptControlSize
   fullName: DrawnUi.Controls.SkiaMauiEntry.AdaptControlSize
+- uid: DrawnUi.Controls.SkiaMauiEntry.CreatePlaceholderLabel*
+  commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.CreatePlaceholderLabel
+  href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_CreatePlaceholderLabel
+  name: CreatePlaceholderLabel
+  nameWithType: SkiaMauiEntry.CreatePlaceholderLabel
+  fullName: DrawnUi.Controls.SkiaMauiEntry.CreatePlaceholderLabel
 - uid: DrawnUi.Controls.SkiaMauiEntry.MapProps*
   commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.MapProps
   href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_MapProps_DrawnUi_Controls_MauiEntry_
@@ -29917,6 +30564,18 @@ references:
   name: UpdateControl
   nameWithType: SkiaMauiEntry.UpdateControl
   fullName: DrawnUi.Controls.SkiaMauiEntry.UpdateControl
+- uid: DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderLabel*
+  commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderLabel
+  href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_UpdatePlaceholderLabel
+  name: UpdatePlaceholderLabel
+  nameWithType: SkiaMauiEntry.UpdatePlaceholderLabel
+  fullName: DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderLabel
+- uid: DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderVisibility*
+  commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderVisibility
+  href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_UpdatePlaceholderVisibility
+  name: UpdatePlaceholderVisibility
+  nameWithType: SkiaMauiEntry.UpdatePlaceholderVisibility
+  fullName: DrawnUi.Controls.SkiaMauiEntry.UpdatePlaceholderVisibility
 - uid: DrawnUi.Draw.SkiaMauiElement.OnLayoutChanged
   commentId: M:DrawnUi.Draw.SkiaMauiElement.OnLayoutChanged
   parent: DrawnUi.Draw.SkiaMauiElement
@@ -30010,85 +30669,56 @@ references:
   name: OnDisposing
   nameWithType: SkiaMauiEntry.OnDisposing
   fullName: DrawnUi.Controls.SkiaMauiEntry.OnDisposing
-- uid: DrawnUi.Draw.SkiaControl.OnMeasuring(System.Single,System.Single,System.Single)
-  commentId: M:DrawnUi.Draw.SkiaControl.OnMeasuring(System.Single,System.Single,System.Single)
-  parent: DrawnUi.Draw.SkiaControl
-  isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnMeasuring_System_Single_System_Single_System_Single_
-  name: OnMeasuring(float, float, float)
-  nameWithType: SkiaControl.OnMeasuring(float, float, float)
-  fullName: DrawnUi.Draw.SkiaControl.OnMeasuring(float, float, float)
-  nameWithType.vb: SkiaControl.OnMeasuring(Single, Single, Single)
-  fullName.vb: DrawnUi.Draw.SkiaControl.OnMeasuring(Single, Single, Single)
-  name.vb: OnMeasuring(Single, Single, Single)
+- uid: DrawnUi.Draw.SkiaMauiElement.CheckChildAdded
+  commentId: M:DrawnUi.Draw.SkiaMauiElement.CheckChildAdded
+  parent: DrawnUi.Draw.SkiaMauiElement
+  href: DrawnUi.Draw.SkiaMauiElement.html#DrawnUi_Draw_SkiaMauiElement_CheckChildAdded
+  name: CheckChildAdded()
+  nameWithType: SkiaMauiElement.CheckChildAdded()
+  fullName: DrawnUi.Draw.SkiaMauiElement.CheckChildAdded()
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.OnMeasuring(System.Single,System.Single,System.Single)
-    name: OnMeasuring
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnMeasuring_System_Single_System_Single_System_Single_
+  - uid: DrawnUi.Draw.SkiaMauiElement.CheckChildAdded
+    name: CheckChildAdded
+    href: DrawnUi.Draw.SkiaMauiElement.html#DrawnUi_Draw_SkiaMauiElement_CheckChildAdded
   - name: (
-  - uid: System.Single
-    name: float
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: ','
-  - name: " "
-  - uid: System.Single
-    name: float
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: ','
-  - name: " "
-  - uid: System.Single
-    name: float
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.OnMeasuring(System.Single,System.Single,System.Single)
-    name: OnMeasuring
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnMeasuring_System_Single_System_Single_System_Single_
+  - uid: DrawnUi.Draw.SkiaMauiElement.CheckChildAdded
+    name: CheckChildAdded
+    href: DrawnUi.Draw.SkiaMauiElement.html#DrawnUi_Draw_SkiaMauiElement_CheckChildAdded
   - name: (
-  - uid: System.Single
-    name: Single
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: ','
-  - name: " "
-  - uid: System.Single
-    name: Single
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: ','
-  - name: " "
-  - uid: System.Single
-    name: Single
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
-- uid: DrawnUi.Controls.SkiaMauiEntry.OnMeasuring*
-  commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.OnMeasuring
-  href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_OnMeasuring_System_Single_System_Single_System_Single_
-  name: OnMeasuring
-  nameWithType: SkiaMauiEntry.OnMeasuring
-  fullName: DrawnUi.Controls.SkiaMauiEntry.OnMeasuring
-- uid: System.Single
-  commentId: T:System.Single
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.single
-  name: float
-  nameWithType: float
-  fullName: float
-  nameWithType.vb: Single
-  fullName.vb: Single
-  name.vb: Single
-- uid: DrawnUi.Draw.ScaledSize
-  commentId: T:DrawnUi.Draw.ScaledSize
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.ScaledSize.html
-  name: ScaledSize
-  nameWithType: ScaledSize
-  fullName: DrawnUi.Draw.ScaledSize
+- uid: DrawnUi.Controls.SkiaMauiEntry.CheckChildAdded*
+  commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.CheckChildAdded
+  href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_CheckChildAdded
+  name: CheckChildAdded
+  nameWithType: SkiaMauiEntry.CheckChildAdded
+  fullName: DrawnUi.Controls.SkiaMauiEntry.CheckChildAdded
+- uid: DrawnUi.Draw.SkiaControl.OnLayoutReady
+  commentId: M:DrawnUi.Draw.SkiaControl.OnLayoutReady
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutReady
+  name: OnLayoutReady()
+  nameWithType: SkiaControl.OnLayoutReady()
+  fullName: DrawnUi.Draw.SkiaControl.OnLayoutReady()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.OnLayoutReady
+    name: OnLayoutReady
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutReady
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.OnLayoutReady
+    name: OnLayoutReady
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnLayoutReady
+  - name: (
+  - name: )
+- uid: DrawnUi.Controls.SkiaMauiEntry.OnLayoutReady*
+  commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.OnLayoutReady
+  href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_OnLayoutReady
+  name: OnLayoutReady
+  nameWithType: SkiaMauiEntry.OnLayoutReady
+  fullName: DrawnUi.Controls.SkiaMauiEntry.OnLayoutReady
 - uid: DrawnUi.Controls.SkiaMauiEntry.WhenFocusChanged*
   commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.WhenFocusChanged
   href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_WhenFocusChanged_System_Boolean_
@@ -30189,12 +30819,12 @@ references:
     name: Graphics
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
-- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderColor*
-  commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.PlaceholderColor
-  href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_PlaceholderColor
-  name: PlaceholderColor
-  nameWithType: SkiaMauiEntry.PlaceholderColor
-  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderColor
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextColor*
+  commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextColor
+  href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_PlaceholderTextColor
+  name: PlaceholderTextColor
+  nameWithType: SkiaMauiEntry.PlaceholderTextColor
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderTextColor
 - uid: DrawnUi.Controls.SkiaMauiEntry.FontWeight*
   commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.FontWeight
   href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_FontWeight
@@ -30224,12 +30854,51 @@ references:
   name: Text
   nameWithType: SkiaMauiEntry.Text
   fullName: DrawnUi.Controls.SkiaMauiEntry.Text
-- uid: DrawnUi.Controls.SkiaMauiEntry.Placeholder*
-  commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.Placeholder
-  href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_Placeholder
-  name: Placeholder
-  nameWithType: SkiaMauiEntry.Placeholder
-  fullName: DrawnUi.Controls.SkiaMauiEntry.Placeholder
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderText*
+  commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.PlaceholderText
+  href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_PlaceholderText
+  name: PlaceholderText
+  nameWithType: SkiaMauiEntry.PlaceholderText
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderText
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontFamily*
+  commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontFamily
+  href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_PlaceholderFontFamily
+  name: PlaceholderFontFamily
+  nameWithType: SkiaMauiEntry.PlaceholderFontFamily
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontFamily
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontSize*
+  commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontSize
+  href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_PlaceholderFontSize
+  name: PlaceholderFontSize
+  nameWithType: SkiaMauiEntry.PlaceholderFontSize
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderFontSize
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderHorizontalAlignment*
+  commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.PlaceholderHorizontalAlignment
+  href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_PlaceholderHorizontalAlignment
+  name: PlaceholderHorizontalAlignment
+  nameWithType: SkiaMauiEntry.PlaceholderHorizontalAlignment
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderHorizontalAlignment
+- uid: DrawnUi.Draw.DrawTextAlignment
+  commentId: T:DrawnUi.Draw.DrawTextAlignment
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.DrawTextAlignment.html
+  name: DrawTextAlignment
+  nameWithType: DrawTextAlignment
+  fullName: DrawnUi.Draw.DrawTextAlignment
+- uid: DrawnUi.Controls.SkiaMauiEntry.PlaceholderVerticalAlignment*
+  commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.PlaceholderVerticalAlignment
+  href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_PlaceholderVerticalAlignment
+  name: PlaceholderVerticalAlignment
+  nameWithType: SkiaMauiEntry.PlaceholderVerticalAlignment
+  fullName: DrawnUi.Controls.SkiaMauiEntry.PlaceholderVerticalAlignment
+- uid: Microsoft.Maui.TextAlignment
+  commentId: T:Microsoft.Maui.TextAlignment
+  parent: Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.textalignment
+  name: TextAlignment
+  nameWithType: TextAlignment
+  fullName: Microsoft.Maui.TextAlignment
 - uid: DrawnUi.Controls.SkiaMauiEntry.ReturnType*
   commentId: Overload:DrawnUi.Controls.SkiaMauiEntry.ReturnType
   href: DrawnUi.Controls.SkiaMauiEntry.html#DrawnUi_Controls_SkiaMauiEntry_ReturnType

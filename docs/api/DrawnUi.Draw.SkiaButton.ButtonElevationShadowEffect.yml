@@ -15,7 +15,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ButtonElevationShadowEffect
     path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs

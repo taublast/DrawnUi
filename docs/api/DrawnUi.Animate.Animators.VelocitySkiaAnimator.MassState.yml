@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MassState
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
@@ -54,7 +54,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: mValue
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
@@ -83,7 +83,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: mVelocity
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs

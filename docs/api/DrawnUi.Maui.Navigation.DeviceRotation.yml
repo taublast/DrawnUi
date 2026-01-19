@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/DeviceRotation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DeviceRotation
     path: ../src/Maui/DrawnUi/Features/Navigation/DeviceRotation.cs
@@ -44,7 +44,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/DeviceRotation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Portrait
     path: ../src/Maui/DrawnUi/Features/Navigation/DeviceRotation.cs
@@ -70,7 +70,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/DeviceRotation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Landscape
     path: ../src/Maui/DrawnUi/Features/Navigation/DeviceRotation.cs

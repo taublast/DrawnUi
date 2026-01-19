@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaGesturesInfo
     path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
@@ -56,7 +56,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Args
     path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
@@ -85,7 +85,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Info
     path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
@@ -114,7 +114,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Consumed
     path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
@@ -143,7 +143,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Create
     path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs

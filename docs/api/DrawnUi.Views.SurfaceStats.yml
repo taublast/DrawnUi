@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SurfaceStats
     path: ../src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
@@ -54,7 +54,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RequestCount
     path: ../src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
@@ -83,7 +83,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LastRequested
     path: ../src/Maui/DrawnUi/Views/SurfaceCacheManager.cs

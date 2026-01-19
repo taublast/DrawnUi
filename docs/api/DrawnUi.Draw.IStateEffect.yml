@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/IStateEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IStateEffect
     path: ../src/Maui/DrawnUi/Features/Effects/IStateEffect.cs
@@ -49,7 +49,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/IStateEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateState
     path: ../src/Maui/DrawnUi/Features/Effects/IStateEffect.cs
