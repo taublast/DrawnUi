@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ClosedRange.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClosedRange
     path: ../src/Shared/Internals/Models/ClosedRange.cs
@@ -58,7 +58,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ClosedRange.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LowerBound
     path: ../src/Shared/Internals/Models/ClosedRange.cs
@@ -89,7 +89,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ClosedRange.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpperBound
     path: ../src/Shared/Internals/Models/ClosedRange.cs
@@ -120,7 +120,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ClosedRange.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/ClosedRange.cs
@@ -154,7 +154,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ClosedRange.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Contains
     path: ../src/Shared/Internals/Models/ClosedRange.cs

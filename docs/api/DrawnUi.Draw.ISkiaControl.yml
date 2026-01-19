@@ -33,7 +33,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaControl
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -107,7 +107,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VisualLayer
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -136,7 +136,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Parent
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -165,7 +165,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Margin
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -194,7 +194,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Padding
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -223,7 +223,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetParent
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -252,7 +252,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsGhost
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -283,7 +283,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clipping
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -312,7 +312,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZIndex
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -341,7 +341,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OptionalOnBeforeDrawing
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -367,7 +367,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnBeforeMeasure
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -393,7 +393,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Arrange
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -431,7 +431,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Render
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -460,7 +460,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderedAtDestination
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -489,7 +489,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetChildren
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -521,7 +521,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Measure
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -567,7 +567,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalOptions
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -596,7 +596,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalOptions
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs
@@ -625,7 +625,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaControl.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanDraw
     path: ../src/Shared/Internals/Interfaces/ISkiaControl.cs

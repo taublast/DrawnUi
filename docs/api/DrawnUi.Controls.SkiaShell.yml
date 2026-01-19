@@ -156,7 +156,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.PopupWrapper.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaShell
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.PopupWrapper.cs
@@ -457,7 +457,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -491,7 +491,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -517,7 +517,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHandlerChanged
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -547,7 +547,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FrozenLayers
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -576,7 +576,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Toasts
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -605,7 +605,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Popups
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -634,7 +634,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NavigationStackScreens
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -663,7 +663,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NavigationStackModals
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -692,7 +692,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnModalStackChanged
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -724,7 +724,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnToastsStackChanged
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -756,7 +756,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPopupsStackChanged
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -788,7 +788,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPagesStackChanged
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -820,7 +820,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ModalStackChanged
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -847,7 +847,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToastsStackChanged
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -874,7 +874,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PopupsStackChanged
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -901,7 +901,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PagesStackChanged
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -928,7 +928,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Navigated
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -955,7 +955,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Navigating
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -982,7 +982,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RouteChanged
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1009,7 +1009,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnNavigated
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1038,7 +1038,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnNavigating
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1067,7 +1067,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NotifyAndCheckCanNavigate
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1105,7 +1105,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnCurrentRouteChanged
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1131,7 +1131,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToastBackgroundColor
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1158,7 +1158,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToastTextColor
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1185,7 +1185,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToastTextFont
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1212,7 +1212,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToastTextFontWeight
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1239,7 +1239,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToastTextSize
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1266,7 +1266,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToastTextMargins
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1293,7 +1293,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PopupBackgroundColor
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1322,7 +1322,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PopupsBackgroundBlur
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1351,7 +1351,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PopupsAnimationSpeed
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1378,7 +1378,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PopupsCancelAnimationsAfterMs
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1405,7 +1405,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LogEnabled
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1432,7 +1432,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZIndexModals
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1459,7 +1459,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZIndexPopups
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1486,7 +1486,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZIndexToasts
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1513,7 +1513,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1542,7 +1542,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShellLayout
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1571,7 +1571,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NavigationLayout
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1602,7 +1602,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RootLayout
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1633,7 +1633,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTopPopup
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1661,7 +1661,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTopModal
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1689,7 +1689,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTopmostViewInternal
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1729,7 +1729,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTopmostView
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1769,7 +1769,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RemoveAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1807,7 +1807,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PresentAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1845,7 +1845,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PushModalRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1883,7 +1883,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PushRegisteredPageAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1921,7 +1921,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PushAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -1964,7 +1964,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PushAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2006,7 +2006,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnShellGoBack
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2035,7 +2035,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GoBack
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2069,7 +2069,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GoBackDefault
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2103,7 +2103,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GoBackInRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2141,7 +2141,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PopAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2179,7 +2179,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WrapScreenshot
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2225,7 +2225,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateModalDrawer
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2265,7 +2265,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PushModalAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2315,7 +2315,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetCurrentRouteNodes
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2347,7 +2347,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddToCurrentRouteNodes
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2381,7 +2381,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RemoveFromCurrentRouteNodes
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2412,7 +2412,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CurrentRouteAuto
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2441,7 +2441,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PushModalAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2483,7 +2483,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PopModalAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2517,7 +2517,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PopModalAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2553,7 +2553,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PopModalAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2589,7 +2589,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PopTabToRoot
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2617,7 +2617,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanFreezeLayout
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2648,7 +2648,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanUnfreezeLayout
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2679,7 +2679,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LockLayers
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2706,7 +2706,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LockNavigation
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2733,7 +2733,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupFrozenLayersVisibility
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2762,7 +2762,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FreezingModals
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2791,7 +2791,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetFrozenLayerVisibility
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2831,7 +2831,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UnfreezeRootLayout
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2872,7 +2872,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FreezeRootLayout
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2914,7 +2914,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FreezeRootLayout
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2956,7 +2956,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FreezeRootLayoutInternal
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -2994,7 +2994,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupModalsVisibility
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3025,7 +3025,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: _topmost
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3052,7 +3052,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: _lockLayers
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3079,7 +3079,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayersChanged
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3115,7 +3115,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupAppeared
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3144,7 +3144,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupDisappeared
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3173,7 +3173,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CloseAllPopups
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3201,7 +3201,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClosePopupAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3239,7 +3239,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClosePopupAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3275,7 +3275,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OpenPopupAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3325,7 +3325,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CloseAllToasts
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3353,7 +3353,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShowToast
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3387,7 +3387,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UnlockNavigation
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3419,7 +3419,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AwaitNavigationLock
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3453,7 +3453,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UnlockLayers
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3485,7 +3485,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AwaitLayersLock
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3519,7 +3519,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShowToast
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3553,7 +3553,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HasTopmostModalBindingContext
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3586,7 +3586,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyShellPropertiesToCanvas
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3612,7 +3612,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Canvas
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3641,7 +3641,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReplaceShellLayout
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3670,7 +3670,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReplaceRootLayout
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3699,7 +3699,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ImportRootLayout
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3731,7 +3731,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ImportNavigationLayout
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3763,7 +3763,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Reset
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3789,7 +3789,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Initialized
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3818,7 +3818,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Initialize
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3850,7 +3850,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnStarted
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3876,7 +3876,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RegisterActionRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3910,7 +3910,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ExecuteActionRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3944,7 +3944,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RegisterRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -3978,7 +3978,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOrCreateContent
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4012,7 +4012,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4046,7 +4046,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RouteProperty
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4073,7 +4073,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FormatRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4107,7 +4107,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FormatRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4141,7 +4141,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RegisterRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4175,7 +4175,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PopToRootAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4203,7 +4203,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ModalStack
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4232,7 +4232,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NavigationStack
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4261,7 +4261,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OrderedRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4290,7 +4290,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GoToAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4321,7 +4321,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: _rootRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4348,7 +4348,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Services
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4375,7 +4375,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BuildRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4411,7 +4411,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupRoot
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4443,7 +4443,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetRoot
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4491,7 +4491,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetArguments
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4525,7 +4525,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ParseState
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4556,7 +4556,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ParseRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4590,7 +4590,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOrCreateContentSetArguments
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4628,7 +4628,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CurrentRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4657,7 +4657,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GoToAsync
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4704,7 +4704,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateLayout
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4730,7 +4730,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutInvalidated
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4756,7 +4756,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BottomInsets
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4785,7 +4785,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TopInsets
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4814,7 +4814,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StatusBarHeight
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4843,7 +4843,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnRotation
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4870,7 +4870,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TabReselected
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4897,7 +4897,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MenuItems
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -4926,7 +4926,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Buffer
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs

@@ -76,7 +76,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Super
     path: ../src/Shared/Super.cs
@@ -113,7 +113,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Super.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HotReload
     path: ../src/Maui/DrawnUi/Super.Maui.cs
@@ -142,7 +142,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Super.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorAccent
     path: ../src/Maui/DrawnUi/Super.Maui.cs
@@ -171,7 +171,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Super.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorPrimary
     path: ../src/Maui/DrawnUi/Super.Maui.cs
@@ -200,7 +200,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Super.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: App
     path: ../src/Maui/DrawnUi/Super.Maui.cs
@@ -229,7 +229,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Super.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DisplayException
     path: ../src/Maui/DrawnUi/Super.Maui.cs
@@ -264,7 +264,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Super.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Log
     path: ../src/Maui/DrawnUi/Super.Maui.cs
@@ -302,7 +302,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Super.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Log
     path: ../src/Maui/DrawnUi/Super.Maui.cs
@@ -340,7 +340,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Super.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Services
     path: ../src/Maui/DrawnUi/Super.Maui.cs
@@ -369,7 +369,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Super.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AppContext
     path: ../src/Maui/DrawnUi/Super.Maui.cs
@@ -398,7 +398,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Super.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ResizeWindow
     path: ../src/Maui/DrawnUi/Super.Maui.cs
@@ -442,7 +442,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UseFrozenVisualLayers
     path: ../src/Shared/Super.cs
@@ -469,7 +469,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateHttpClient
     path: ../src/Shared/Super.cs
@@ -502,7 +502,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SendTapsOnMainThread
     path: ../src/Shared/Super.cs
@@ -531,7 +531,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Multithreaded
     path: ../src/Shared/Super.cs
@@ -563,7 +563,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PreloadRegisteredFonts
     path: ../src/Shared/Super.cs
@@ -590,7 +590,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OffscreenRenderingAtCanvasLevel
     path: ../src/Shared/Super.cs
@@ -624,7 +624,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupFrameLooper
     path: ../src/Shared/Super.cs
@@ -650,7 +650,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanUseHardwareAcceleration
     path: ../src/Shared/Super.cs
@@ -679,7 +679,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Log
     path: ../src/Shared/Super.cs
@@ -717,7 +717,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetLocale
     path: ../src/Shared/Super.cs
@@ -749,7 +749,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Initialized
     path: ../src/Shared/Super.cs
@@ -778,7 +778,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InitShared
     path: ../src/Shared/Super.cs
@@ -804,7 +804,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EnableRendering
     path: ../src/Shared/Super.cs
@@ -833,7 +833,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRtl
     path: ../src/Shared/Super.cs
@@ -864,7 +864,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontSubPixelRendering
     path: ../src/Shared/Super.cs
@@ -895,7 +895,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InsetsChanged
     path: ../src/Shared/Super.cs
@@ -924,7 +924,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Screen
     path: ../src/Shared/Super.cs
@@ -953,7 +953,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CapMicroSecs
     path: ../src/Shared/Super.cs
@@ -982,7 +982,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCurrentTimeMs
     path: ../src/Shared/Super.cs
@@ -1010,7 +1010,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCurrentTimeNanos
     path: ../src/Shared/Super.cs
@@ -1038,7 +1038,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NavBarHeight
     path: ../src/Shared/Super.cs
@@ -1069,7 +1069,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StatusBarHeight
     path: ../src/Shared/Super.cs
@@ -1100,7 +1100,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NavigationBarHeight
     path: ../src/Shared/Super.cs
@@ -1131,7 +1131,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BottomTabsHeight
     path: ../src/Shared/Super.cs
@@ -1162,7 +1162,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxFrameLengthMs
     path: ../src/Shared/Super.cs
@@ -1191,7 +1191,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnNativeAppCreated
     path: ../src/Shared/Super.cs
@@ -1220,7 +1220,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnNativeAppPaused
     path: ../src/Shared/Super.cs
@@ -1247,7 +1247,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnNativeAppResumed
     path: ../src/Shared/Super.cs
@@ -1274,7 +1274,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnNativeAppDestroyed
     path: ../src/Shared/Super.cs
@@ -1301,7 +1301,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InitialWindowSize
     path: ../src/Shared/Super.cs
@@ -1328,7 +1328,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnCreated
     path: ../src/Shared/Super.cs
@@ -1354,7 +1354,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnWentBackground
     path: ../src/Shared/Super.cs
@@ -1380,7 +1380,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnWentForeground
     path: ../src/Shared/Super.cs
@@ -1406,7 +1406,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnMauiAppCreated
     path: ../src/Shared/Super.cs
@@ -1435,7 +1435,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedGlobalRefresh
     path: ../src/Shared/Super.cs
@@ -1464,7 +1464,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedGlobalUpdate
     path: ../src/Shared/Super.cs
@@ -1492,7 +1492,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InBackground
     path: ../src/Shared/Super.cs
@@ -1521,7 +1521,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StopRenderingInBackground
     path: ../src/Shared/Super.cs
@@ -1550,7 +1550,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RunOnMainThreadAndWait
     path: ../src/Shared/Super.cs
@@ -1581,7 +1581,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RunOnMainThreadAndWaitAsync
     path: ../src/Shared/Super.cs
@@ -1617,7 +1617,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CacheEnabled
     path: ../src/Shared/Super.cs
@@ -1646,7 +1646,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GpuCacheEnabled
     path: ../src/Shared/Super.cs
@@ -1675,7 +1675,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UserAgent
     path: ../src/Shared/Super.cs
@@ -1704,7 +1704,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaGeneration
     path: ../src/Shared/Super.cs
@@ -1731,7 +1731,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EnqueueBackgroundTask
     path: ../src/Shared/Super.cs
@@ -1763,7 +1763,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessBackgroundQueue
     path: ../src/Shared/Super.cs
@@ -1791,7 +1791,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RotationChanged
     path: ../src/Shared/Super.cs
@@ -1818,7 +1818,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DeviceRotation
     path: ../src/Shared/Super.cs
@@ -1849,7 +1849,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OrientationChanged
     path: ../src/Shared/Super.cs
@@ -1876,7 +1876,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DeviceOrientation
     path: ../src/Shared/Super.cs
@@ -1905,7 +1905,7 @@ items:
   source:
     remote:
       path: src/Shared/Super.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DeviceRotationSnap
     path: ../src/Shared/Super.cs

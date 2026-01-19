@@ -15,7 +15,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DrawingContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderDrawingContext
     path: ../src/Shared/Internals/Models/DrawingContext.cs

@@ -197,6 +197,7 @@ items:
   - DrawnUi.Draw.SkiaCheckbox
   - DrawnUi.Draw.SkiaControl
   - DrawnUi.Draw.SkiaControl.CacheValidityType
+  - DrawnUi.Draw.SkiaControl.DisposableAction
   - DrawnUi.Draw.SkiaControl.ParentMeasureRequest
   - DrawnUi.Draw.SkiaControlWithRect
   - DrawnUi.Draw.SkiaControlsObservable
@@ -293,6 +294,7 @@ items:
   - DrawnUi.Draw.ThemeBindingManager
   - DrawnUi.Draw.ThemeBindings
   - DrawnUi.Draw.ThemeChangedEventArgs
+  - DrawnUi.Draw.ThermalState
   - DrawnUi.Draw.TintEffect
   - DrawnUi.Draw.TintWithAlphaEffect
   - DrawnUi.Draw.ToggleAnimator
@@ -574,6 +576,28 @@ references:
   - uid: DrawnUi.Draw.SkiaControl.ParentMeasureRequest
     name: ParentMeasureRequest
     href: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.html
+- uid: DrawnUi.Draw.SkiaControl.DisposableAction
+  commentId: T:DrawnUi.Draw.SkiaControl.DisposableAction
+  href: DrawnUi.Draw.SkiaControl.html
+  name: SkiaControl.DisposableAction
+  nameWithType: SkiaControl.DisposableAction
+  fullName: DrawnUi.Draw.SkiaControl.DisposableAction
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaControl.DisposableAction
+    name: DisposableAction
+    href: DrawnUi.Draw.SkiaControl.DisposableAction.html
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaControl.DisposableAction
+    name: DisposableAction
+    href: DrawnUi.Draw.SkiaControl.DisposableAction.html
 - uid: DrawnUi.Draw.SkiaCursor
   commentId: T:DrawnUi.Draw.SkiaCursor
   parent: DrawnUi.Draw
@@ -1862,6 +1886,13 @@ references:
   name: SkiaCacheType
   nameWithType: SkiaCacheType
   fullName: DrawnUi.Draw.SkiaCacheType
+- uid: DrawnUi.Draw.ThermalState
+  commentId: T:DrawnUi.Draw.ThermalState
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ThermalState.html
+  name: ThermalState
+  nameWithType: ThermalState
+  fullName: DrawnUi.Draw.ThermalState
 - uid: DrawnUi.Draw.CachedObject
   commentId: T:DrawnUi.Draw.CachedObject
   parent: DrawnUi.Draw

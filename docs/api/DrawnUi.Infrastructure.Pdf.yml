@@ -22,7 +22,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Pdf
     path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
@@ -57,7 +57,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetPaperSizePixels
     path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetPaperSizePixels
     path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
@@ -139,7 +139,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetPaperSizePixelsFromMillimeters
     path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
@@ -180,7 +180,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SplitToPages
     path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
@@ -218,7 +218,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SplitStackToPages
     path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
@@ -270,7 +270,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetPaperSizePixels
     path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
@@ -311,7 +311,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetPaperSizeInInches
     path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs

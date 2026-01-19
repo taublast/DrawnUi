@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SnapToChildrenType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SnapToChildrenType
     path: ../src/Shared/Internals/Enums/SnapToChildrenType.cs
@@ -45,7 +45,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SnapToChildrenType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Disabled
     path: ../src/Shared/Internals/Enums/SnapToChildrenType.cs
@@ -71,7 +71,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SnapToChildrenType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Side
     path: ../src/Shared/Internals/Enums/SnapToChildrenType.cs
@@ -97,7 +97,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SnapToChildrenType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Center
     path: ../src/Shared/Internals/Enums/SnapToChildrenType.cs

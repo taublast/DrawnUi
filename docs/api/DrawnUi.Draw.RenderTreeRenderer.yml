@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderTreeRenderer
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -54,7 +54,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -83,7 +83,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Helper3d
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs

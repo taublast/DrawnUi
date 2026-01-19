@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Shapes/SkiaHoverMask.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaHoverMask
     path: ../src/Maui/DrawnUi/Controls/Shapes/SkiaHoverMask.cs
@@ -91,8 +91,6 @@ items:
   - DrawnUi.Draw.SkiaShape.StrokeWidth
   - DrawnUi.Draw.SkiaShape.StrokeCapProperty
   - DrawnUi.Draw.SkiaShape.StrokeCap
-  - DrawnUi.Draw.SkiaShape.LayoutChildrenProperty
-  - DrawnUi.Draw.SkiaShape.LayoutChildren
   - DrawnUi.Draw.SkiaShape.StrokeBlendModeProperty
   - DrawnUi.Draw.SkiaShape.StrokeBlendMode
   - DrawnUi.Draw.SkiaShape.GetDashArray(System.Double[],System.Single)
@@ -151,8 +149,10 @@ items:
   - DrawnUi.Draw.SkiaLayout.MeasureStackLegacy(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaLayout.MeasureStackNonTemplated(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaLayout.MeasureStackTemplated(SkiaSharp.SKRect,System.Single)
+  - DrawnUi.Draw.SkiaLayout.MeasureStack(SkiaSharp.SKRect,System.Single,DrawnUi.Draw.LayoutStructure,System.Boolean,DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl[])
   - DrawnUi.Draw.SkiaLayout.OnBeforeDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
   - DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
+  - DrawnUi.Draw.SkiaLayout.GetStackChildDrawRect(System.Int32,System.Single,System.Single,DrawnUi.Draw.ControlInStack)
   - DrawnUi.Draw.SkiaLayout.DrawStack(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)
   - DrawnUi.Draw.SkiaLayout.PreArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaLayout.IsGestureForChild(DrawnUi.Draw.SkiaControlWithRect,SkiaSharp.SKPoint)
@@ -259,6 +259,7 @@ items:
   - DrawnUi.Draw.SkiaLayout.OnLoaded
   - DrawnUi.Draw.SkiaLayout.GetVisibleChildIndexAt(SkiaSharp.SKPoint)
   - DrawnUi.Draw.SkiaLayout.GetChildIndexAt(SkiaSharp.SKPoint)
+  - DrawnUi.Draw.SkiaLayout.GetOrderedSubviews(System.Boolean)
   - DrawnUi.Draw.SkiaLayout.MeasureGrid(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaLayout.DrawChildrenGrid(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaLayout.BuildGridLayout(SkiaSharp.SKSize)
@@ -690,6 +691,7 @@ items:
   - DrawnUi.Draw.SkiaControl.Layout(DrawnUi.Draw.DrawingContext,System.Int32,System.Int32,System.Int32,System.Int32)
   - DrawnUi.Draw.SkiaControl.PostArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureChild(DrawnUi.Draw.SkiaControl,System.Double,System.Double,System.Single)
+  - DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   - DrawnUi.Draw.SkiaControl.ApplyingBindingContext
   - DrawnUi.Draw.SkiaControl.BindingContextWasSet
@@ -795,6 +797,7 @@ items:
   - DrawnUi.Draw.SkiaControl.Invalidated
   - DrawnUi.Draw.SkiaControl.NeedUpdate
   - DrawnUi.Draw.SkiaControl.Superview
+  - DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
   - DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   - DrawnUi.Draw.SkiaControl.IsParentIndependent
   - DrawnUi.Draw.SkiaControl.WillNotUpdateParent
@@ -843,7 +846,6 @@ items:
   - DrawnUi.Draw.SkiaControl.LastGradient
   - DrawnUi.Draw.SkiaControl.LastShadow
   - DrawnUi.Draw.SkiaControl.SetupShadow(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaShadow,System.Single)
-  - DrawnUi.Draw.SkiaControl.GetOrderedSubviews(System.Boolean)
   - DrawnUi.Draw.SkiaControl.GetUnorderedSubviews(System.Boolean)
   - DrawnUi.Draw.SkiaControl.Views
   - DrawnUi.Draw.SkiaControl.DisposeChildren
@@ -881,6 +883,8 @@ items:
   - DrawnUi.Draw.SkiaControl._arrangedViewportHeightLimit
   - DrawnUi.Draw.SkiaControl._arrangedViewportWidthLimit
   - DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareDoubles(System.Double,System.Double,System.Double)
   - DrawnUi.Draw.SkiaControl.CompareRects(SkiaSharp.SKRect,SkiaSharp.SKRect,System.Single)
@@ -1158,7 +1162,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Shapes/SkiaHoverMask.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Maui/DrawnUi/Controls/Shapes/SkiaHoverMask.cs
@@ -1799,20 +1803,6 @@ references:
   name: StrokeCap
   nameWithType: SkiaShape.StrokeCap
   fullName: DrawnUi.Draw.SkiaShape.StrokeCap
-- uid: DrawnUi.Draw.SkiaShape.LayoutChildrenProperty
-  commentId: F:DrawnUi.Draw.SkiaShape.LayoutChildrenProperty
-  parent: DrawnUi.Draw.SkiaShape
-  href: DrawnUi.Draw.SkiaShape.html#DrawnUi_Draw_SkiaShape_LayoutChildrenProperty
-  name: LayoutChildrenProperty
-  nameWithType: SkiaShape.LayoutChildrenProperty
-  fullName: DrawnUi.Draw.SkiaShape.LayoutChildrenProperty
-- uid: DrawnUi.Draw.SkiaShape.LayoutChildren
-  commentId: P:DrawnUi.Draw.SkiaShape.LayoutChildren
-  parent: DrawnUi.Draw.SkiaShape
-  href: DrawnUi.Draw.SkiaShape.html#DrawnUi_Draw_SkiaShape_LayoutChildren
-  name: LayoutChildren
-  nameWithType: SkiaShape.LayoutChildren
-  fullName: DrawnUi.Draw.SkiaShape.LayoutChildren
 - uid: DrawnUi.Draw.SkiaShape.StrokeBlendModeProperty
   commentId: F:DrawnUi.Draw.SkiaShape.StrokeBlendModeProperty
   parent: DrawnUi.Draw.SkiaShape
@@ -3330,6 +3320,95 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
+- uid: DrawnUi.Draw.SkiaLayout.MeasureStack(SkiaSharp.SKRect,System.Single,DrawnUi.Draw.LayoutStructure,System.Boolean,DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl[])
+  commentId: M:DrawnUi.Draw.SkiaLayout.MeasureStack(SkiaSharp.SKRect,System.Single,DrawnUi.Draw.LayoutStructure,System.Boolean,DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl[])
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStack_SkiaSharp_SKRect_System_Single_DrawnUi_Draw_LayoutStructure_System_Boolean_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaControl___
+  name: MeasureStack(SKRect, float, LayoutStructure, bool, SkiaControl, SkiaControl[])
+  nameWithType: SkiaLayout.MeasureStack(SKRect, float, LayoutStructure, bool, SkiaControl, SkiaControl[])
+  fullName: DrawnUi.Draw.SkiaLayout.MeasureStack(SkiaSharp.SKRect, float, DrawnUi.Draw.LayoutStructure, bool, DrawnUi.Draw.SkiaControl, DrawnUi.Draw.SkiaControl[])
+  nameWithType.vb: SkiaLayout.MeasureStack(SKRect, Single, LayoutStructure, Boolean, SkiaControl, SkiaControl())
+  fullName.vb: DrawnUi.Draw.SkiaLayout.MeasureStack(SkiaSharp.SKRect, Single, DrawnUi.Draw.LayoutStructure, Boolean, DrawnUi.Draw.SkiaControl, DrawnUi.Draw.SkiaControl())
+  name.vb: MeasureStack(SKRect, Single, LayoutStructure, Boolean, SkiaControl, SkiaControl())
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.MeasureStack(SkiaSharp.SKRect,System.Single,DrawnUi.Draw.LayoutStructure,System.Boolean,DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl[])
+    name: MeasureStack
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStack_SkiaSharp_SKRect_System_Single_DrawnUi_Draw_LayoutStructure_System_Boolean_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaControl___
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.LayoutStructure
+    name: LayoutStructure
+    href: DrawnUi.Draw.LayoutStructure.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.MeasureStack(SkiaSharp.SKRect,System.Single,DrawnUi.Draw.LayoutStructure,System.Boolean,DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl[])
+    name: MeasureStack
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStack_SkiaSharp_SKRect_System_Single_DrawnUi_Draw_LayoutStructure_System_Boolean_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaControl___
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.LayoutStructure
+    name: LayoutStructure
+    href: DrawnUi.Draw.LayoutStructure.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: (
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.SkiaLayout.OnBeforeDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
   commentId: M:DrawnUi.Draw.SkiaLayout.OnBeforeDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
   parent: DrawnUi.Draw.SkiaLayout
@@ -3455,6 +3534,71 @@ references:
     name: ControlInStack
     href: DrawnUi.Draw.ControlInStack.html
   - name: )
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.GetStackChildDrawRect(System.Int32,System.Single,System.Single,DrawnUi.Draw.ControlInStack)
+  commentId: M:DrawnUi.Draw.SkiaLayout.GetStackChildDrawRect(System.Int32,System.Single,System.Single,DrawnUi.Draw.ControlInStack)
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_GetStackChildDrawRect_System_Int32_System_Single_System_Single_DrawnUi_Draw_ControlInStack_
+  name: GetStackChildDrawRect(int, float, float, ControlInStack)
+  nameWithType: SkiaLayout.GetStackChildDrawRect(int, float, float, ControlInStack)
+  fullName: DrawnUi.Draw.SkiaLayout.GetStackChildDrawRect(int, float, float, DrawnUi.Draw.ControlInStack)
+  nameWithType.vb: SkiaLayout.GetStackChildDrawRect(Integer, Single, Single, ControlInStack)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.GetStackChildDrawRect(Integer, Single, Single, DrawnUi.Draw.ControlInStack)
+  name.vb: GetStackChildDrawRect(Integer, Single, Single, ControlInStack)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.GetStackChildDrawRect(System.Int32,System.Single,System.Single,DrawnUi.Draw.ControlInStack)
+    name: GetStackChildDrawRect
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_GetStackChildDrawRect_System_Int32_System_Single_System_Single_DrawnUi_Draw_ControlInStack_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ControlInStack
+    name: ControlInStack
+    href: DrawnUi.Draw.ControlInStack.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.GetStackChildDrawRect(System.Int32,System.Single,System.Single,DrawnUi.Draw.ControlInStack)
+    name: GetStackChildDrawRect
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_GetStackChildDrawRect_System_Int32_System_Single_System_Single_DrawnUi_Draw_ControlInStack_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ControlInStack
+    name: ControlInStack
+    href: DrawnUi.Draw.ControlInStack.html
   - name: )
 - uid: DrawnUi.Draw.SkiaLayout.DrawStack(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)
   commentId: M:DrawnUi.Draw.SkiaLayout.DrawStack(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)
@@ -5460,6 +5604,37 @@ references:
     name: SKPoint
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.GetOrderedSubviews(System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaLayout.GetOrderedSubviews(System.Boolean)
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_GetOrderedSubviews_System_Boolean_
+  name: GetOrderedSubviews(bool)
+  nameWithType: SkiaLayout.GetOrderedSubviews(bool)
+  fullName: DrawnUi.Draw.SkiaLayout.GetOrderedSubviews(bool)
+  nameWithType.vb: SkiaLayout.GetOrderedSubviews(Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.GetOrderedSubviews(Boolean)
+  name.vb: GetOrderedSubviews(Boolean)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.GetOrderedSubviews(System.Boolean)
+    name: GetOrderedSubviews
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_GetOrderedSubviews_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.GetOrderedSubviews(System.Boolean)
+    name: GetOrderedSubviews
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_GetOrderedSubviews_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
 - uid: DrawnUi.Draw.SkiaLayout.MeasureGrid(SkiaSharp.SKRect,System.Single)
   commentId: M:DrawnUi.Draw.SkiaLayout.MeasureGrid(SkiaSharp.SKRect,System.Single)
@@ -14435,6 +14610,73 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  name: MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  nameWithType: SkiaControl.MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  fullName: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>, SkiaSharp.SKRect, float)
+  nameWithType.vb: SkiaControl.MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl), SkiaSharp.SKRect, Single)
+  name.vb: MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   commentId: M:DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   parent: DrawnUi.Draw.SkiaControl
@@ -16692,6 +16934,31 @@ references:
   name: Superview
   nameWithType: SkiaControl.Superview
   fullName: DrawnUi.Draw.SkiaControl.Superview
+- uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  name: SetSuperview(DrawnView)
+  nameWithType: SkiaControl.SetSuperview(DrawnView)
+  fullName: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   commentId: F:DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   parent: DrawnUi.Draw.SkiaControl
@@ -18009,37 +18276,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
-- uid: DrawnUi.Draw.SkiaControl.GetOrderedSubviews(System.Boolean)
-  commentId: M:DrawnUi.Draw.SkiaControl.GetOrderedSubviews(System.Boolean)
-  parent: DrawnUi.Draw.SkiaControl
-  isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetOrderedSubviews_System_Boolean_
-  name: GetOrderedSubviews(bool)
-  nameWithType: SkiaControl.GetOrderedSubviews(bool)
-  fullName: DrawnUi.Draw.SkiaControl.GetOrderedSubviews(bool)
-  nameWithType.vb: SkiaControl.GetOrderedSubviews(Boolean)
-  fullName.vb: DrawnUi.Draw.SkiaControl.GetOrderedSubviews(Boolean)
-  name.vb: GetOrderedSubviews(Boolean)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.GetOrderedSubviews(System.Boolean)
-    name: GetOrderedSubviews
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetOrderedSubviews_System_Boolean_
-  - name: (
-  - uid: System.Boolean
-    name: bool
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.boolean
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.GetOrderedSubviews(System.Boolean)
-    name: GetOrderedSubviews
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetOrderedSubviews_System_Boolean_
-  - name: (
-  - uid: System.Boolean
-    name: Boolean
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.boolean
-  - name: )
 - uid: DrawnUi.Draw.SkiaControl.GetUnorderedSubviews(System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.GetUnorderedSubviews(System.Boolean)
   parent: DrawnUi.Draw.SkiaControl
@@ -18769,6 +19005,101 @@ references:
   name: _lastMeasuredForScale
   nameWithType: SkiaControl._lastMeasuredForScale
   fullName: DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  name: RoundToPixels(SKRect)
+  nameWithType: SkiaControl.RoundToPixels(SKRect)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  name: RoundToPixels(float, float, float, float)
+  nameWithType: SkiaControl.RoundToPixels(float, float, float, float)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(float, float, float, float)
+  nameWithType.vb: SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  name.vb: RoundToPixels(Single, Single, Single, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   parent: DrawnUi.Draw.SkiaControl

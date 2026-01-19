@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IAnimatorsManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IAnimatorsManager
     path: ../src/Shared/Internals/Interfaces/IAnimatorsManager.cs
@@ -46,7 +46,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IAnimatorsManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddAnimator
     path: ../src/Shared/Internals/Interfaces/IAnimatorsManager.cs
@@ -75,7 +75,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IAnimatorsManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RemoveAnimator
     path: ../src/Shared/Internals/Interfaces/IAnimatorsManager.cs

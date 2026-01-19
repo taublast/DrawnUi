@@ -16,6 +16,7 @@ items:
   - DrawnUi.Draw.SkiaLabelFps.OnBindingContextChanged
   - DrawnUi.Draw.SkiaLabelFps.OnParentChanged(DrawnUi.Draw.IDrawnBase,DrawnUi.Draw.IDrawnBase)
   - DrawnUi.Draw.SkiaLabelFps.OnPropertyChanged(System.String)
+  - DrawnUi.Draw.SkiaLabelFps.OnWillDisposeWithChildren
   - DrawnUi.Draw.SkiaLabelFps.Pause
   - DrawnUi.Draw.SkiaLabelFps.Resume
   - DrawnUi.Draw.SkiaLabelFps.Start(System.Double)
@@ -32,7 +33,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaLabelFps
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -95,7 +96,6 @@ items:
   - DrawnUi.Draw.SkiaLabel.Spans
   - DrawnUi.Draw.SkiaLabel._spans
   - DrawnUi.Draw.SkiaLabel.SpansCollectionChanged
-  - DrawnUi.Draw.SkiaLabel.OnWillDisposeWithChildren
   - DrawnUi.Draw.SkiaLabel.Paint(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaLabel.SetupDefaultPaint(System.Single)
   - DrawnUi.Draw.SkiaLabel.DrawCharacter(SkiaSharp.SKCanvas,System.Int32,System.Int32,System.ReadOnlySpan{System.Char},System.Single,System.Single,SkiaSharp.SKPaint,SkiaSharp.SKPaint,SkiaSharp.SKPaint,SkiaSharp.SKRect,System.Single)
@@ -605,6 +605,7 @@ items:
   - DrawnUi.Draw.SkiaControl.PostArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureChild(DrawnUi.Draw.SkiaControl,System.Double,System.Double,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  - DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   - DrawnUi.Draw.SkiaControl.ApplyingBindingContext
   - DrawnUi.Draw.SkiaControl.BindingContextWasSet
@@ -721,6 +722,7 @@ items:
   - DrawnUi.Draw.SkiaControl.Invalidated
   - DrawnUi.Draw.SkiaControl.NeedUpdate
   - DrawnUi.Draw.SkiaControl.Superview
+  - DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
   - DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   - DrawnUi.Draw.SkiaControl.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
   - DrawnUi.Draw.SkiaControl.IsParentIndependent
@@ -808,6 +810,8 @@ items:
   - DrawnUi.Draw.SkiaControl._arrangedViewportHeightLimit
   - DrawnUi.Draw.SkiaControl._arrangedViewportWidthLimit
   - DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareDoubles(System.Double,System.Double,System.Double)
   - DrawnUi.Draw.SkiaControl.CompareRects(SkiaSharp.SKRect,SkiaSharp.SKRect,System.Single)
@@ -1076,7 +1080,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -1105,7 +1109,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDeactivated
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -1138,7 +1142,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsPaused
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -1171,7 +1175,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsHiddenInViewTree
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -1204,7 +1208,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Pause
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -1234,7 +1238,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Resume
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -1264,7 +1268,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnParentChanged
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -1297,7 +1301,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnBindingContextChanged
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -1326,7 +1330,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPropertyChanged
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -1362,7 +1366,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ForceRefreshProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -1389,7 +1393,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ForceRefresh
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -1418,7 +1422,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -1449,7 +1453,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TickFrame
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -1489,7 +1493,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRunning
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -1521,7 +1525,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WasStarted
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
@@ -1539,6 +1543,38 @@ items:
   overload: DrawnUi.Draw.SkiaLabelFps.WasStarted*
   implements:
   - DrawnUi.Draw.ISkiaAnimator.WasStarted
+- uid: DrawnUi.Draw.SkiaLabelFps.OnWillDisposeWithChildren
+  commentId: M:DrawnUi.Draw.SkiaLabelFps.OnWillDisposeWithChildren
+  id: OnWillDisposeWithChildren
+  parent: DrawnUi.Draw.SkiaLabelFps
+  langs:
+  - csharp
+  - vb
+  name: OnWillDisposeWithChildren()
+  nameWithType: SkiaLabelFps.OnWillDisposeWithChildren()
+  fullName: DrawnUi.Draw.SkiaLabelFps.OnWillDisposeWithChildren()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnWillDisposeWithChildren
+    path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
+    startLine: 108
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    The OnDisposing might come with a delay to avoid disposing resources at use.
+
+    This method will be called without delay when Dispose() is invoked. Disposed will set to True and for Views their OnWillDisposeWithChildren will be called.
+  example: []
+  syntax:
+    content: public override void OnWillDisposeWithChildren()
+    content.vb: Public Overrides Sub OnWillDisposeWithChildren()
+  overridden: DrawnUi.Draw.SkiaLabel.OnWillDisposeWithChildren
+  overload: DrawnUi.Draw.SkiaLabelFps.OnWillDisposeWithChildren*
 - uid: DrawnUi.Draw.SkiaLabelFps.Stop
   commentId: M:DrawnUi.Draw.SkiaLabelFps.Stop
   id: Stop
@@ -1553,11 +1589,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-    startLine: 109
+    startLine: 115
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1582,11 +1618,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaLabelFps.cs
-    startLine: 115
+    startLine: 121
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2162,25 +2198,6 @@ references:
   name: SpansCollectionChanged
   nameWithType: SkiaLabel.SpansCollectionChanged
   fullName: DrawnUi.Draw.SkiaLabel.SpansCollectionChanged
-- uid: DrawnUi.Draw.SkiaLabel.OnWillDisposeWithChildren
-  commentId: M:DrawnUi.Draw.SkiaLabel.OnWillDisposeWithChildren
-  parent: DrawnUi.Draw.SkiaLabel
-  href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_OnWillDisposeWithChildren
-  name: OnWillDisposeWithChildren()
-  nameWithType: SkiaLabel.OnWillDisposeWithChildren()
-  fullName: DrawnUi.Draw.SkiaLabel.OnWillDisposeWithChildren()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaLabel.OnWillDisposeWithChildren
-    name: OnWillDisposeWithChildren
-    href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_OnWillDisposeWithChildren
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaLabel.OnWillDisposeWithChildren
-    name: OnWillDisposeWithChildren
-    href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_OnWillDisposeWithChildren
-  - name: (
-  - name: )
 - uid: DrawnUi.Draw.SkiaLabel.Paint(DrawnUi.Draw.DrawingContext)
   commentId: M:DrawnUi.Draw.SkiaLabel.Paint(DrawnUi.Draw.DrawingContext)
   parent: DrawnUi.Draw.SkiaLabel
@@ -12740,6 +12757,73 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  name: MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  nameWithType: SkiaControl.MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  fullName: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>, SkiaSharp.SKRect, float)
+  nameWithType.vb: SkiaControl.MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl), SkiaSharp.SKRect, Single)
+  name.vb: MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   commentId: M:DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   parent: DrawnUi.Draw.SkiaControl
@@ -15409,6 +15493,31 @@ references:
   name: Superview
   nameWithType: SkiaControl.Superview
   fullName: DrawnUi.Draw.SkiaControl.Superview
+- uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  name: SetSuperview(DrawnView)
+  nameWithType: SkiaControl.SetSuperview(DrawnView)
+  fullName: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   commentId: F:DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   parent: DrawnUi.Draw.SkiaControl
@@ -17511,6 +17620,101 @@ references:
   name: _lastMeasuredForScale
   nameWithType: SkiaControl._lastMeasuredForScale
   fullName: DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  name: RoundToPixels(SKRect)
+  nameWithType: SkiaControl.RoundToPixels(SKRect)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  name: RoundToPixels(float, float, float, float)
+  nameWithType: SkiaControl.RoundToPixels(float, float, float, float)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(float, float, float, float)
+  nameWithType.vb: SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  name.vb: RoundToPixels(Single, Single, Single, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   parent: DrawnUi.Draw.SkiaControl
@@ -31593,6 +31797,31 @@ references:
   name: WasStarted
   nameWithType: ISkiaAnimator.WasStarted
   fullName: DrawnUi.Draw.ISkiaAnimator.WasStarted
+- uid: DrawnUi.Draw.SkiaLabel.OnWillDisposeWithChildren
+  commentId: M:DrawnUi.Draw.SkiaLabel.OnWillDisposeWithChildren
+  parent: DrawnUi.Draw.SkiaLabel
+  href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_OnWillDisposeWithChildren
+  name: OnWillDisposeWithChildren()
+  nameWithType: SkiaLabel.OnWillDisposeWithChildren()
+  fullName: DrawnUi.Draw.SkiaLabel.OnWillDisposeWithChildren()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLabel.OnWillDisposeWithChildren
+    name: OnWillDisposeWithChildren
+    href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_OnWillDisposeWithChildren
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLabel.OnWillDisposeWithChildren
+    name: OnWillDisposeWithChildren
+    href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_OnWillDisposeWithChildren
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaLabelFps.OnWillDisposeWithChildren*
+  commentId: Overload:DrawnUi.Draw.SkiaLabelFps.OnWillDisposeWithChildren
+  href: DrawnUi.Draw.SkiaLabelFps.html#DrawnUi_Draw_SkiaLabelFps_OnWillDisposeWithChildren
+  name: OnWillDisposeWithChildren
+  nameWithType: SkiaLabelFps.OnWillDisposeWithChildren
+  fullName: DrawnUi.Draw.SkiaLabelFps.OnWillDisposeWithChildren
 - uid: DrawnUi.Draw.SkiaLabelFps.Stop*
   commentId: Overload:DrawnUi.Draw.SkiaLabelFps.Stop
   href: DrawnUi.Draw.SkiaLabelFps.html#DrawnUi_Draw_SkiaLabelFps_Stop

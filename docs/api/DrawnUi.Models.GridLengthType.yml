@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/GridLengthType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GridLengthType
     path: ../src/Shared/Internals/Enums/GridLengthType.cs
@@ -56,7 +56,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/GridLengthType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: None
     path: ../src/Shared/Internals/Enums/GridLengthType.cs
@@ -82,7 +82,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/GridLengthType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Absolute
     path: ../src/Shared/Internals/Enums/GridLengthType.cs
@@ -108,7 +108,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/GridLengthType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Auto
     path: ../src/Shared/Internals/Enums/GridLengthType.cs
@@ -134,7 +134,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/GridLengthType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Star
     path: ../src/Shared/Internals/Enums/GridLengthType.cs

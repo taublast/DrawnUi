@@ -56,7 +56,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaShaderEffect
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -135,7 +135,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintWithShader
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -162,7 +162,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UseContextProperty
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -189,7 +189,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UseContext
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -220,7 +220,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoCreateInputTextureProperty
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -247,7 +247,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoCreateInputTexture
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -281,7 +281,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateSnapshot
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -316,7 +316,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetPrimaryTextureImage
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -349,7 +349,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Render
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -382,7 +382,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShouldDisposePreviousTexture
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -415,7 +415,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateShader
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -450,7 +450,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CompiledShader
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -477,7 +477,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -510,7 +510,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TimeSeconds
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -541,7 +541,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MouseCurrent
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -572,7 +572,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MouseInitial
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -603,7 +603,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateUniforms
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -636,7 +636,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateTexturesUniforms
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -673,7 +673,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: _template
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -700,7 +700,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: _templatePlacehodler
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -727,7 +727,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CompileShader
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -755,7 +755,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnCompilationError
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -782,7 +782,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SendError
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -814,7 +814,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NormalizeShaderCode
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -848,7 +848,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CompileShader
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -884,7 +884,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadedCode
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -913,7 +913,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyShaderSource
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -939,7 +939,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedChangeSource
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -975,7 +975,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShaderCodeProperty
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -1002,7 +1002,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShaderCode
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -1031,7 +1031,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShaderSourceProperty
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -1058,7 +1058,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShaderSource
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -1087,7 +1087,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShaderTemplateProperty
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -1114,7 +1114,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShaderTemplate
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -1143,7 +1143,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FilterModeProperty
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -1170,7 +1170,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MipmapModeProperty
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -1197,7 +1197,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FilterMode
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -1226,7 +1226,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MipmapMode
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -1255,7 +1255,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TileModeProperty
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -1282,7 +1282,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TileMode
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -1313,7 +1313,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
@@ -1344,7 +1344,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Features/Effects/SkiaShaderEffect.cs

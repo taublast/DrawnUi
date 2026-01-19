@@ -40,7 +40,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Pendulum
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -79,7 +79,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: wireVector
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -106,7 +106,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: accelerationVector
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -133,7 +133,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: velocityVector
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -160,7 +160,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: angularAcceleration
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -187,7 +187,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AngularVelocity
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -216,7 +216,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RodLength
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -245,7 +245,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AirResistance
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -274,7 +274,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Gravity
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -303,7 +303,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: angle
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -330,7 +330,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -359,7 +359,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -391,7 +391,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Reset
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -417,7 +417,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetAmplitude
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -449,7 +449,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: getInitialAngle
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -477,7 +477,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: setInitialAngle
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -509,7 +509,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: getInitialVelocity
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -537,7 +537,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: setInitialVelocity
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -569,7 +569,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: getAngle
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -597,7 +597,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: getAirResistence
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -625,7 +625,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: setAirResistance
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -657,7 +657,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: getWireVector
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -685,7 +685,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: getAccelerationVector
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -713,7 +713,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: getVelocityVector
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -741,7 +741,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: getAngularAcceleration
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -769,7 +769,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: getAngularVelocity
     path: ../src/Shared/Internals/Helpers/Pendulum.cs

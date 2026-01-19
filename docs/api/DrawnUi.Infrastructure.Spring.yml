@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Spring.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Spring
     path: ../src/Shared/Internals/Models/Spring.cs
@@ -58,7 +58,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Spring.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Mass
     path: ../src/Shared/Internals/Models/Spring.cs
@@ -87,7 +87,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Spring.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Stiffness
     path: ../src/Shared/Internals/Models/Spring.cs
@@ -116,7 +116,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Spring.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DampingRatio
     path: ../src/Shared/Internals/Models/Spring.cs
@@ -145,7 +145,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Spring.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/Spring.cs
@@ -181,7 +181,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Spring.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Damped
     path: ../src/Shared/Internals/Models/Spring.cs
@@ -210,7 +210,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Spring.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Default
     path: ../src/Shared/Internals/Models/Spring.cs

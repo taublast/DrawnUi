@@ -26,7 +26,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaBevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaBevel
     path: ../src/Shared/Internals/Models/SkiaBevel.cs
@@ -91,7 +91,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaBevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Parent
     path: ../src/Shared/Internals/Models/SkiaBevel.cs
@@ -120,7 +120,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaBevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Attach
     path: ../src/Shared/Internals/Models/SkiaBevel.cs
@@ -149,7 +149,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaBevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dettach
     path: ../src/Shared/Internals/Models/SkiaBevel.cs
@@ -175,7 +175,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaBevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DepthProperty
     path: ../src/Shared/Internals/Models/SkiaBevel.cs
@@ -204,7 +204,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaBevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Depth
     path: ../src/Shared/Internals/Models/SkiaBevel.cs
@@ -233,7 +233,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaBevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LightColorProperty
     path: ../src/Shared/Internals/Models/SkiaBevel.cs
@@ -262,7 +262,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaBevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LightColor
     path: ../src/Shared/Internals/Models/SkiaBevel.cs
@@ -291,7 +291,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaBevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShadowColorProperty
     path: ../src/Shared/Internals/Models/SkiaBevel.cs
@@ -320,7 +320,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaBevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShadowColor
     path: ../src/Shared/Internals/Models/SkiaBevel.cs
@@ -349,7 +349,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaBevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OpacityProperty
     path: ../src/Shared/Internals/Models/SkiaBevel.cs
@@ -378,7 +378,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaBevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Opacity
     path: ../src/Shared/Internals/Models/SkiaBevel.cs

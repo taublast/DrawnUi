@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WheelCellInfo
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
@@ -60,7 +60,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: View
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
@@ -89,7 +89,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Index
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
@@ -118,7 +118,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WasMeasured
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
@@ -147,7 +147,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Destination
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
@@ -176,7 +176,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Offset
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
@@ -205,7 +205,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Transform
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
@@ -234,7 +234,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSelected
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
@@ -263,7 +263,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Opacity
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/WheelCellInfo.cs

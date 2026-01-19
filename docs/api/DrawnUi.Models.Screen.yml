@@ -24,7 +24,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Screen.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Screen
     path: ../src/Shared/Internals/Helpers/Screen.cs
@@ -87,7 +87,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Helpers/Screen.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DisplayInfo
     path: ../src/Maui/DrawnUi/Internals/Helpers/Screen.Maui.cs
@@ -116,7 +116,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Helpers/Screen.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeepScreenOn
     path: ../src/Maui/DrawnUi/Internals/Helpers/Screen.Maui.cs
@@ -145,7 +145,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Screen.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BottomInset
     path: ../src/Shared/Internals/Helpers/Screen.cs
@@ -174,7 +174,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Screen.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TopInset
     path: ../src/Shared/Internals/Helpers/Screen.cs
@@ -203,7 +203,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Screen.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LeftInset
     path: ../src/Shared/Internals/Helpers/Screen.cs
@@ -232,7 +232,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Screen.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RightInset
     path: ../src/Shared/Internals/Helpers/Screen.cs
@@ -261,7 +261,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Screen.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Density
     path: ../src/Shared/Internals/Helpers/Screen.cs
@@ -290,7 +290,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Screen.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WidthDip
     path: ../src/Shared/Internals/Helpers/Screen.cs
@@ -319,7 +319,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Screen.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HeightDip
     path: ../src/Shared/Internals/Helpers/Screen.cs

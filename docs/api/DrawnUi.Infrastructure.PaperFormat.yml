@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PaperFormat
     path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
@@ -50,7 +50,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Custom
     path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
@@ -76,7 +76,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: A4
     path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
@@ -102,7 +102,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: A5
     path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
@@ -128,7 +128,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: A6
     path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
@@ -154,7 +154,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Letter
     path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
@@ -180,7 +180,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Legal
     path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs

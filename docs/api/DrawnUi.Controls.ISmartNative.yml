@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ISmartNative
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
@@ -43,7 +43,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeededHeight
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEditor.cs

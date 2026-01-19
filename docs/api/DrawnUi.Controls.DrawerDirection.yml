@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawerDirection
     path: ../src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
@@ -46,7 +46,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromBottom
     path: ../src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
@@ -72,7 +72,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromTop
     path: ../src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromLeft
     path: ../src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
@@ -124,7 +124,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromRight
     path: ../src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs

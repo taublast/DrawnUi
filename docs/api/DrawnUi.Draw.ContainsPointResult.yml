@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ContainsPointResult.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ContainsPointResult
     path: ../src/Shared/Internals/Models/ContainsPointResult.cs
@@ -59,7 +59,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ContainsPointResult.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Index
     path: ../src/Shared/Internals/Models/ContainsPointResult.cs
@@ -88,7 +88,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ContainsPointResult.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Unmodified
     path: ../src/Shared/Internals/Models/ContainsPointResult.cs
@@ -117,7 +117,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ContainsPointResult.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NotFound
     path: ../src/Shared/Internals/Models/ContainsPointResult.cs

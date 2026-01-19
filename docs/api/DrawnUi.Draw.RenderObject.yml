@@ -24,7 +24,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderObject
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -63,7 +63,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -89,7 +89,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShouldClipAntialiased
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -118,7 +118,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClippingPath
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -147,7 +147,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Cache
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -176,7 +176,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDistorted
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -205,7 +205,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WillClipBounds
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -234,7 +234,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EffectPostRenderer
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -263,7 +263,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DelegateDrawCache
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -292,7 +292,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawRenderObject
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs

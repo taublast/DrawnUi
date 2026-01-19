@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollToPointOrder
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
@@ -57,7 +57,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsValid
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
@@ -86,7 +86,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NotValid
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
@@ -115,7 +115,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToPoint
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
@@ -151,7 +151,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToCoords
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
@@ -189,7 +189,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToCoords
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
@@ -227,7 +227,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Animated
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
@@ -256,7 +256,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Location
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
@@ -285,7 +285,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxTimeSecs
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs

@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SpaceDistribution.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpaceDistribution
     path: ../src/Shared/Internals/Enums/SpaceDistribution.cs
@@ -45,7 +45,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SpaceDistribution.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: None
     path: ../src/Shared/Internals/Enums/SpaceDistribution.cs
@@ -71,7 +71,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SpaceDistribution.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Auto
     path: ../src/Shared/Internals/Enums/SpaceDistribution.cs
@@ -99,7 +99,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/SpaceDistribution.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Full
     path: ../src/Shared/Internals/Enums/SpaceDistribution.cs

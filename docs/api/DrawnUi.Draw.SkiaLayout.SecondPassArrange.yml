@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SecondPassArrange
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
@@ -60,7 +60,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Cell
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
@@ -127,7 +127,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Child
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
@@ -156,7 +156,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Scale
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ColumnRow.cs

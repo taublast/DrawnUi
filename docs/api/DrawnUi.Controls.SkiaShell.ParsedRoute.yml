@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ParsedRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -57,7 +57,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Original
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -86,7 +86,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Parts
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
@@ -115,7 +115,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Arguments
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs

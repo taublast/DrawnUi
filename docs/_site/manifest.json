@@ -27,6 +27,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "Performance_Analysis_Android_Windows.md",
+      "output": {
+        ".html": {
+          "relative_path": "Performance_Analysis_Android_Windows.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "README.md",
       "output": {
         ".html": {
@@ -3593,6 +3603,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SkiaControl.DisposableAction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SkiaControl.DisposableAction.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SkiaControl.DisposableAction",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Draw.SkiaControl.ParentMeasureRequest.yml",
       "output": {
         ".html": {
@@ -4948,6 +4972,20 @@
       "IsMRef": true,
       "Title": "DrawnUi.Draw.ThemeChangedEventArgs",
       "Summary": "<p sourcefile=\"api/DrawnUi.Draw.ThemeChangedEventArgs.yml\" sourcestartlinenumber=\"1\">Theme changed event arguments</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.ThermalState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.ThermalState.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.ThermalState",
+      "Summary": null
     },
     {
       "type": "ManagedReference",

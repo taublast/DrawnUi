@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/StringToDoubleArrayTypeConverter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StringToDoubleArrayTypeConverter
     path: ../src/Maui/DrawnUi/Internals/Xaml/StringToDoubleArrayTypeConverter.cs
@@ -91,7 +91,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/StringToDoubleArrayTypeConverter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanConvertFrom
     path: ../src/Maui/DrawnUi/Internals/Xaml/StringToDoubleArrayTypeConverter.cs
@@ -130,7 +130,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/StringToDoubleArrayTypeConverter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ConvertFrom
     path: ../src/Maui/DrawnUi/Internals/Xaml/StringToDoubleArrayTypeConverter.cs

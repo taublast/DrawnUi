@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PingPongAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PingPongAnimator
     path: ../src/Shared/Features/Animators/PingPongAnimator.cs
@@ -110,7 +110,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PingPongAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animators/PingPongAnimator.cs
@@ -142,7 +142,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PingPongAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FinishedRunning
     path: ../src/Shared/Features/Animators/PingPongAnimator.cs

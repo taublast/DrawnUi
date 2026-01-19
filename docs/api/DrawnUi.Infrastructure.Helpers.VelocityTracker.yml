@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/VelocityTracker.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VelocityTracker
     path: ../src/Shared/Internals/Helpers/VelocityTracker.cs
@@ -56,7 +56,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/VelocityTracker.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Helpers/VelocityTracker.cs
@@ -85,7 +85,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/VelocityTracker.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddMovement
     path: ../src/Shared/Internals/Helpers/VelocityTracker.cs
@@ -119,7 +119,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/VelocityTracker.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
     path: ../src/Shared/Internals/Helpers/VelocityTracker.cs
@@ -145,7 +145,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/VelocityTracker.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ComputeCurrentVelocity
     path: ../src/Shared/Internals/Helpers/VelocityTracker.cs

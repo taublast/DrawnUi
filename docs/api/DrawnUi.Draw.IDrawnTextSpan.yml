@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/IDrawnTextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IDrawnTextSpan
     path: ../src/Maui/DrawnUi/Draw/Text/IDrawnTextSpan.cs
@@ -45,7 +45,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/IDrawnTextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Render
     path: ../src/Maui/DrawnUi/Draw/Text/IDrawnTextSpan.cs
@@ -74,7 +74,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/IDrawnTextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Measure
     path: ../src/Maui/DrawnUi/Draw/Text/IDrawnTextSpan.cs
@@ -112,7 +112,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/IDrawnTextSpan.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalAlignement
     path: ../src/Maui/DrawnUi/Draw/Text/IDrawnTextSpan.cs

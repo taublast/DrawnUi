@@ -24,7 +24,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkCamera3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkCamera3D
     path: ../src/Shared/Internals/Helpers/3D/SkCamera3D.cs
@@ -61,7 +61,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkCamera3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Helpers/3D/SkCamera3D.cs
@@ -90,7 +90,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkCamera3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: fLocation
     path: ../src/Shared/Internals/Helpers/3D/SkCamera3D.cs
@@ -117,7 +117,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkCamera3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: fAxis
     path: ../src/Shared/Internals/Helpers/3D/SkCamera3D.cs
@@ -144,7 +144,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkCamera3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: fZenith
     path: ../src/Shared/Internals/Helpers/3D/SkCamera3D.cs
@@ -171,7 +171,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkCamera3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: fObserver
     path: ../src/Shared/Internals/Helpers/3D/SkCamera3D.cs
@@ -198,7 +198,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkCamera3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DoUpdate
     path: ../src/Shared/Internals/Helpers/3D/SkCamera3D.cs
@@ -224,7 +224,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkCamera3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Shared/Internals/Helpers/3D/SkCamera3D.cs
@@ -250,7 +250,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkCamera3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Reset
     path: ../src/Shared/Internals/Helpers/3D/SkCamera3D.cs
@@ -276,7 +276,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/SkCamera3D.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PatchToMatrix
     path: ../src/Shared/Internals/Helpers/3D/SkCamera3D.cs

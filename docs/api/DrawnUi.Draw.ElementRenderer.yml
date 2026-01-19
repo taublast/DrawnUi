@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ElementRenderer
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -57,7 +57,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -89,7 +89,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -115,7 +115,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Element
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -144,7 +144,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintWithOpacity
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -175,7 +175,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateRenderObject
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs

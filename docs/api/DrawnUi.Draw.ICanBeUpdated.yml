@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ICanBeUpdated.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ICanBeUpdated
     path: ../src/Shared/Internals/Interfaces/ICanBeUpdated.cs
@@ -43,7 +43,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ICanBeUpdated.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Shared/Internals/Interfaces/ICanBeUpdated.cs

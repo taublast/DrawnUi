@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaTouchResultContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaTouchResultContext
     path: ../src/Shared/Internals/Models/SkiaTouchResultContext.cs
@@ -53,7 +53,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaTouchResultContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Context
     path: ../src/Shared/Internals/Models/SkiaTouchResultContext.cs
@@ -82,7 +82,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaTouchResultContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Control
     path: ../src/Shared/Internals/Models/SkiaTouchResultContext.cs
@@ -111,7 +111,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaTouchResultContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TouchArgs
     path: ../src/Shared/Internals/Models/SkiaTouchResultContext.cs
@@ -140,7 +140,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/SkiaTouchResultContext.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TouchAction
     path: ../src/Shared/Internals/Models/SkiaTouchResultContext.cs

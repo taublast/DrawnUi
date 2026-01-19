@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuredListCells
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -71,7 +71,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs

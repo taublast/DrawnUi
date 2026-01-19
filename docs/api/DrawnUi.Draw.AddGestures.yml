@@ -49,7 +49,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddGestures
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -86,7 +86,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandDelayMs
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -113,7 +113,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AttachedListeners
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -140,7 +140,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ManageRegistration
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -169,7 +169,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsActive
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -200,7 +200,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandTappedProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -227,7 +227,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCommandTapped
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -258,7 +258,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetCommandTapped
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -289,7 +289,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandTappedParameterProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -316,7 +316,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCommandTappedParameter
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -347,7 +347,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetCommandTappedParameter
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -381,7 +381,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandLongPressingProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -408,7 +408,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCommandLongPressing
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -439,7 +439,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetCommandLongPressing
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -470,7 +470,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandLongPressingParameterProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -497,7 +497,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCommandLongPressingParameter
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -528,7 +528,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetCommandLongPressingParameter
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -562,7 +562,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TransformViewProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -589,7 +589,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTransformView
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -620,7 +620,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetTransformView
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -654,7 +654,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimationTappedProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -681,7 +681,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetAnimationTapped
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -712,7 +712,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetAnimationTapped
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -743,7 +743,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandPressedProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -770,7 +770,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCommandPressed
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -801,7 +801,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetCommandPressed
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -832,7 +832,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimationPressedProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -859,7 +859,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetAnimationPressed
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -890,7 +890,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetAnimationPressed
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -921,7 +921,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TouchEffectColorProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -948,7 +948,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTouchEffectColor
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -979,7 +979,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetTouchEffectColor
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -1010,7 +1010,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LockPanningProperty
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -1037,7 +1037,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetLockPanning
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
@@ -1068,7 +1068,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/AddGestures.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetLockPanning
     path: ../src/Maui/DrawnUi/Features/Gestures/AddGestures.cs

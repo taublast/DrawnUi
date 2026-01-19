@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VelocityAccumulator
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
@@ -55,7 +55,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
@@ -81,7 +81,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CaptureVelocity
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
@@ -110,7 +110,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateFinalVelocity
     path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs

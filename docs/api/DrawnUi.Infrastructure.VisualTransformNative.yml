@@ -25,7 +25,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransformNative.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VisualTransformNative
     path: ../src/Shared/Internals/Models/VisualTransformNative.cs
@@ -57,7 +57,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransformNative.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVisible
     path: ../src/Shared/Internals/Models/VisualTransformNative.cs
@@ -86,7 +86,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransformNative.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Rect
     path: ../src/Shared/Internals/Models/VisualTransformNative.cs
@@ -117,7 +117,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransformNative.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Translation
     path: ../src/Shared/Internals/Models/VisualTransformNative.cs
@@ -146,7 +146,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransformNative.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Opacity
     path: ../src/Shared/Internals/Models/VisualTransformNative.cs
@@ -175,7 +175,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransformNative.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Rotation
     path: ../src/Shared/Internals/Models/VisualTransformNative.cs
@@ -204,7 +204,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransformNative.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Scale
     path: ../src/Shared/Internals/Models/VisualTransformNative.cs
@@ -233,7 +233,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransformNative.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: op_Equality
     path: ../src/Shared/Internals/Models/VisualTransformNative.cs
@@ -269,7 +269,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransformNative.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: op_Inequality
     path: ../src/Shared/Internals/Models/VisualTransformNative.cs
@@ -305,7 +305,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransformNative.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Equals
     path: ../src/Shared/Internals/Models/VisualTransformNative.cs
@@ -344,7 +344,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/VisualTransformNative.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetHashCode
     path: ../src/Shared/Internals/Models/VisualTransformNative.cs

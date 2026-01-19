@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDefinesViewport.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IDefinesViewport
     path: ../src/Shared/Internals/Interfaces/IDefinesViewport.cs
@@ -47,7 +47,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDefinesViewport.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Viewport
     path: ../src/Shared/Internals/Interfaces/IDefinesViewport.cs
@@ -76,7 +76,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDefinesViewport.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateVisibleIndex
     path: ../src/Shared/Internals/Interfaces/IDefinesViewport.cs
@@ -102,7 +102,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDefinesViewport.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TrackIndexPosition
     path: ../src/Shared/Internals/Interfaces/IDefinesViewport.cs
@@ -131,7 +131,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDefinesViewport.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollTo
     path: ../src/Shared/Internals/Interfaces/IDefinesViewport.cs
@@ -169,7 +169,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDefinesViewport.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateByChild
     path: ../src/Shared/Internals/Interfaces/IDefinesViewport.cs

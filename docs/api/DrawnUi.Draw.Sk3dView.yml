@@ -32,7 +32,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Sk3dView
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -71,7 +71,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -100,7 +100,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Invalidated
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -127,7 +127,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CameraDistance
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -156,7 +156,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Save
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -184,7 +184,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Restore
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -212,7 +212,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyToCanvas
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -243,7 +243,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Reset
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -271,7 +271,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnReset
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -297,7 +297,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnRestore
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -323,7 +323,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RotateXDegrees
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -357,7 +357,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RotateYDegrees
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -391,7 +391,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RotateZDegrees
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -425,7 +425,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TranslateX
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -459,7 +459,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TranslateY
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -493,7 +493,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TranslateZ
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -527,7 +527,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Translate
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs
@@ -565,7 +565,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/3D/Sk3dView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Matrix
     path: ../src/Shared/Internals/Helpers/3D/Sk3dView.cs

@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/ImagesExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ImagesExtensions
     path: ../src/Maui/DrawnUi/Features/Images/ImagesExtensions.cs
@@ -52,7 +52,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/ImagesExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HttpClientKey
     path: ../src/Maui/DrawnUi/Features/Images/ImagesExtensions.cs
@@ -82,7 +82,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Images/ImagesExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateHttpClient
     path: ../src/Maui/DrawnUi/Features/Images/ImagesExtensions.cs

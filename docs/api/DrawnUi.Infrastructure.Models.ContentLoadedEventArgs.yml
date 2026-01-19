@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ContentLoadedEventArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ContentLoadedEventArgs
     path: ../src/Shared/Internals/Models/ContentLoadedEventArgs.cs
@@ -58,7 +58,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ContentLoadedEventArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/ContentLoadedEventArgs.cs
@@ -90,7 +90,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ContentLoadedEventArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Content
     path: ../src/Shared/Internals/Models/ContentLoadedEventArgs.cs

@@ -57,7 +57,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IDrawnBase
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -89,7 +89,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawingRect
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -118,7 +118,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Tag
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -147,7 +147,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVisible
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -176,7 +176,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -205,7 +205,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposing
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -234,7 +234,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVisibleInViewTree
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -262,7 +262,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOnScreenVisibleArea
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -304,7 +304,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Invalidate
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -332,7 +332,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateParents
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -360,7 +360,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClipSmart
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -398,7 +398,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateClip
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -446,7 +446,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RegisterAnimator
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -477,7 +477,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UnregisterAnimator
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -506,7 +506,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UnregisterAllAnimatorsByType
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -537,7 +537,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RegisterGestureListener
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -566,7 +566,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UnregisterGestureListener
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -595,7 +595,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PostAnimators
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -626,7 +626,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Views
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -657,7 +657,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddSubView
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -689,7 +689,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RemoveSubView
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -724,7 +724,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuredSize
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -753,7 +753,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Destination
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -782,7 +782,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HeightRequest
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -811,7 +811,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WidthRequest
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -840,7 +840,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Height
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -869,7 +869,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -898,7 +898,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TranslationX
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -927,7 +927,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TranslationY
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -956,7 +956,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InputTransparent
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -985,7 +985,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsClippedToBounds
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -1014,7 +1014,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClipEffects
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -1043,7 +1043,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateLocks
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -1072,7 +1072,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateByChild
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -1104,7 +1104,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateByChild
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -1136,7 +1136,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShouldInvalidateByChildren
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -1165,7 +1165,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderingScale
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -1194,7 +1194,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: X
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -1223,7 +1223,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Y
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -1252,7 +1252,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateViewport
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -1278,7 +1278,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Repaint
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -1304,7 +1304,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateViewsList
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs
@@ -1330,7 +1330,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/IDrawnBase.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeObject
     path: ../src/Shared/Internals/Interfaces/IDrawnBase.cs

@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NavigationLayer
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
@@ -65,7 +65,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
@@ -102,7 +102,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NavigationStack
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
@@ -131,7 +131,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: _shell
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
@@ -160,7 +160,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Open
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
@@ -196,7 +196,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnOpened
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
@@ -227,7 +227,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Close
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
@@ -263,7 +263,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Close
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
@@ -297,7 +297,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CloseAll
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.NavigationLayer.cs

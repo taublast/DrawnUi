@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/StaticResourcesExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StaticResourcesExtensions
     path: ../src/Maui/DrawnUi/Internals/Extensions/StaticResourcesExtensions.cs
@@ -56,7 +56,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/StaticResourcesExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetSetterValue
     path: ../src/Maui/DrawnUi/Internals/Extensions/StaticResourcesExtensions.cs
@@ -95,7 +95,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/StaticResourcesExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Get
     path: ../src/Maui/DrawnUi/Internals/Extensions/StaticResourcesExtensions.cs
@@ -136,7 +136,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/StaticResourcesExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FindParent
     path: ../src/Maui/DrawnUi/Internals/Extensions/StaticResourcesExtensions.cs
@@ -173,7 +173,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/StaticResourcesExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FindParentByType
     path: ../src/Maui/DrawnUi/Internals/Extensions/StaticResourcesExtensions.cs
@@ -210,7 +210,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/StaticResourcesExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetAllWithMyselfParents
     path: ../src/Maui/DrawnUi/Internals/Extensions/StaticResourcesExtensions.cs

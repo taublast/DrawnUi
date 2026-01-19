@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextLine
     path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
@@ -60,7 +60,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Bounds
     path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
@@ -91,7 +91,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value
     path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
@@ -120,7 +120,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsNewParagraph
     path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
@@ -149,7 +149,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLastInParagraph
     path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
@@ -178,7 +178,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
     path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
@@ -207,7 +207,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Height
     path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
@@ -236,7 +236,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Spans
     path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
@@ -265,7 +265,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs

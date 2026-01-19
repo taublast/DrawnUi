@@ -64,6 +64,7 @@ items:
   - DrawnUi.Views.DrawnView.GetBackInvalidations
   - DrawnUi.Views.DrawnView.GetDensity
   - DrawnUi.Views.DrawnView.GetFrontInvalidations
+  - DrawnUi.Views.DrawnView.GetGRContext
   - DrawnUi.Views.DrawnView.GetIsVisibleWithParent(Microsoft.Maui.Controls.VisualElement)
   - DrawnUi.Views.DrawnView.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
   - DrawnUi.Views.DrawnView.GetOrderedSubviews
@@ -213,7 +214,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawnView
     path: ../src/Maui/DrawnUi/Views/DrawnView.Maui.cs
@@ -507,7 +508,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DumpLayersTree
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -545,7 +546,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Diagnostics
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -572,7 +573,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -602,7 +603,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsUsingHardwareAcceleration
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -631,7 +632,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedRedraw
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -660,7 +661,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDirty
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -689,7 +690,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVisibleInViewTree
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -720,7 +721,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TakeScreenShot
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -752,7 +753,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateByChild
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -785,7 +786,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateByChild
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -818,7 +819,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOnScreenVisibleArea
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -862,7 +863,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHandlerChanging
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -896,7 +897,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHandlerChanged
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -926,7 +927,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HandlerWasSet
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -953,7 +954,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TakeScreenShotInternal
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -982,7 +983,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PostponeExecutionBeforeDraw
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1019,7 +1020,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PostponeExecutionAfterDraw
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1051,7 +1052,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ExecuteBeforeDraw
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1080,7 +1081,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ExecuteAfterDraw
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1109,7 +1110,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CallbackScreenshot
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1136,7 +1137,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderingSubscribers
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1165,7 +1166,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SubscribeToRenderingFinished
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1197,7 +1198,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UsubscribeFromRenderingFinished
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1226,7 +1227,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RegisterGestureListener
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1258,7 +1259,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UnregisterGestureListener
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1290,7 +1291,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LockIterateListeners
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1317,7 +1318,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GestureListeners
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1348,7 +1349,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawingRect
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1380,7 +1381,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddAnimator
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1412,7 +1413,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RemoveAnimator
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1444,7 +1445,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RegisterAnimator
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1482,7 +1483,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UnregisterAnimator
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1514,7 +1515,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UnregisterAllAnimatorsByType
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1548,7 +1549,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UnregisterAllAnimatorsByParent
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1579,7 +1580,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetViewTreeVisibilityByParent
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1620,7 +1621,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetPauseStateOfAllAnimatorsByParent
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1656,7 +1657,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ExecutePostAnimators
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1687,7 +1688,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PostAnimators
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1720,7 +1721,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimatingControls
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1754,7 +1755,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameTimeInterpolator
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1781,7 +1782,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LastFrameTimeNanos
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1808,7 +1809,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: mLastFrameTime
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1837,7 +1838,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ExecuteAnimators
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1871,7 +1872,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnCanvasViewChanged
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1897,7 +1898,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanvasView
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1926,7 +1927,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetDeviceOrientation
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1955,7 +1956,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OrientationChanged
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -1982,7 +1983,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OrientationProperty
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2009,7 +2010,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Orientation
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2038,7 +2039,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HasHandler
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2067,7 +2068,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DisconnectedHandler
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2093,7 +2094,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedGlobalRefreshCount
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2122,7 +2123,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateGlobal
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2148,7 +2149,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedMeasureDrawn
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2179,7 +2180,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnCanRenderChanged
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2214,7 +2215,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ConnectedHandler
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2240,7 +2241,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FixDensity
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2266,7 +2267,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StopDrawingWhenUpdateIsLocked
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2297,7 +2298,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TimeDrawingStarted
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2326,7 +2327,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TimeDrawingComplete
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2355,7 +2356,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateViewport
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2384,7 +2385,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Repaint
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2413,7 +2414,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ResetUpdate
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2439,7 +2440,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidatedCanvas
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2470,7 +2471,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRendering
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2499,7 +2500,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Delayed
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2528,7 +2529,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetDensity
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2556,7 +2557,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateSkiaView
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2584,7 +2585,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDestroyingVew
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2610,7 +2611,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DestroySkiaView
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2636,7 +2637,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposing
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2668,7 +2669,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Finalize
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2697,7 +2698,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -2727,11 +2728,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ViewDisposing
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 840
+    startLine: 841
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2754,11 +2755,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WillDispose
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 842
+    startLine: 843
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2780,11 +2781,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDispose
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 850
+    startLine: 851
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2806,11 +2807,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Invalidate
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 902
+    startLine: 903
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2836,11 +2837,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateParents
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 908
+    startLine: 909
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2866,11 +2867,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnSuperviewShouldRenderChanged
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 913
+    startLine: 914
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2898,11 +2899,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateChildren
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 924
+    startLine: 925
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2926,11 +2927,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PrintDebug
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 937
+    startLine: 938
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2958,11 +2959,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedAutoSize
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 947
+    startLine: 948
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2987,11 +2988,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedAutoHeight
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 952
+    startLine: 953
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3016,11 +3017,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedAutoWidth
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 957
+    startLine: 958
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3045,11 +3046,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShouldInvalidateByChildren
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 962
+    startLine: 963
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3077,11 +3078,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateLocksProperty
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 967
+    startLine: 968
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3104,11 +3105,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateLocks
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 973
+    startLine: 974
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3136,11 +3137,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPropertyChanged
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 979
+    startLine: 980
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3172,11 +3173,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Uid
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1003
+    startLine: 1004
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3201,11 +3202,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LinearGradientAngleToPoints
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1005
+    startLine: 1006
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3235,11 +3236,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsGhost
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1074
+    startLine: 1075
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3264,11 +3265,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1093
+    startLine: 1094
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3293,11 +3294,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clipping
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1098
+    startLine: 1099
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3322,11 +3323,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateClip
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1100
+    startLine: 1101
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3372,11 +3373,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Tag
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1116
+    startLine: 1117
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3404,11 +3405,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRootView
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1118
+    startLine: 1119
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3442,11 +3443,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateLayout
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1135
+    startLine: 1136
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3488,11 +3489,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Arrange
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1251
+    startLine: 1252
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3532,11 +3533,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuredSize
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1256
+    startLine: 1257
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3564,11 +3565,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Measure
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1258
+    startLine: 1259
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3600,11 +3601,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedMeasure
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1286
+    startLine: 1287
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3631,11 +3632,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetMeasured
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1292
+    startLine: 1293
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3669,11 +3670,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnMeasured
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1331
+    startLine: 1332
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3695,11 +3696,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Measured
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1336
+    startLine: 1337
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3722,11 +3723,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1343
+    startLine: 1344
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3754,11 +3755,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawingThreadId
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1361
+    startLine: 1362
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3785,11 +3786,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WasRendered
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1363
+    startLine: 1364
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3814,11 +3815,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WasDrawn
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1368
+    startLine: 1369
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3843,11 +3844,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WillDraw
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1373
+    startLine: 1374
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3872,11 +3873,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WillFirstTimeDraw
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1378
+    startLine: 1379
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3901,11 +3902,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LastDrawnRect
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1380
+    startLine: 1381
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3928,11 +3929,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanRender
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1440
+    startLine: 1441
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3959,11 +3960,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnStartRendering
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1454
+    startLine: 1455
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -3990,11 +3991,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnFinalizeRendering
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1476
+    startLine: 1477
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4016,11 +4017,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1506
+    startLine: 1507
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4042,11 +4043,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AvailableDestination
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1524
+    startLine: 1525
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4071,11 +4072,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOrderedSubviews
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1535
+    startLine: 1536
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4102,11 +4103,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateViewsList
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1548
+    startLine: 1549
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4132,11 +4133,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: _fps
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1557
+    startLine: 1558
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4159,11 +4160,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameTime
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1562
+    startLine: 1563
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4190,11 +4191,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanvasFps
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1567
+    startLine: 1568
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4221,11 +4222,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FPS
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1580
+    startLine: 1581
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4252,11 +4253,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LockDraw
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1584
+    startLine: 1585
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4279,11 +4280,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameNumber
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1586
+    startLine: 1587
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4308,11 +4309,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SurfaceCacheManager
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1588
+    startLine: 1589
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4323,6 +4324,34 @@ items:
       type: DrawnUi.Views.SurfaceCacheManager
     content.vb: Protected Property SurfaceCacheManager As SurfaceCacheManager
   overload: DrawnUi.Views.DrawnView.SurfaceCacheManager*
+- uid: DrawnUi.Views.DrawnView.GetGRContext
+  commentId: M:DrawnUi.Views.DrawnView.GetGRContext
+  id: GetGRContext
+  parent: DrawnUi.Views.DrawnView
+  langs:
+  - csharp
+  - vb
+  name: GetGRContext()
+  nameWithType: DrawnView.GetGRContext()
+  fullName: DrawnUi.Views.DrawnView.GetGRContext()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Views/DrawnView.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetGRContext
+    path: ../src/Maui/DrawnUi/Views/DrawnView.cs
+    startLine: 1591
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Views
+  syntax:
+    content: public GRContext GetGRContext()
+    return:
+      type: SkiaSharp.GRContext
+    content.vb: Public Function GetGRContext() As GRContext
+  overload: DrawnUi.Views.DrawnView.GetGRContext*
 - uid: DrawnUi.Views.DrawnView.CreateSurface(System.Int32,System.Int32,System.Boolean)
   commentId: M:DrawnUi.Views.DrawnView.CreateSurface(System.Int32,System.Int32,System.Boolean)
   id: CreateSurface(System.Int32,System.Int32,System.Boolean)
@@ -4337,11 +4366,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateSurface
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1590
+    startLine: 1601
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4375,11 +4404,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReturnSurface
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1617
+    startLine: 1628
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4407,11 +4436,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeObject
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1627
+    startLine: 1638
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4445,11 +4474,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeManager
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1637
+    startLine: 1651
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4474,11 +4503,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PostponeInvalidation
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1658
+    startLine: 1672
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4505,11 +4534,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidationActionsA
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1669
+    startLine: 1683
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4532,11 +4561,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidationActionsB
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1670
+    startLine: 1684
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4559,11 +4588,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFrontInvalidations
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1672
+    startLine: 1686
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4587,11 +4616,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetBackInvalidations
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1680
+    startLine: 1694
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4615,11 +4644,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SwapInvalidations
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1688
+    startLine: 1702
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4641,11 +4670,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawingThreads
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1699
+    startLine: 1713
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4672,11 +4701,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DirtyChildrenTracker
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1701
+    startLine: 1715
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4699,11 +4728,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetChildAsDirty
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1703
+    startLine: 1717
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4728,11 +4757,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CommitInvalidations
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1713
+    startLine: 1727
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4754,11 +4783,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LockStartOffscreenQueue
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1727
+    startLine: 1741
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4781,11 +4810,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: semaphoreOffscreenProcess
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1735
+    startLine: 1749
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4808,11 +4837,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KickOffscreenCacheRendering
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1742
+    startLine: 1756
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4836,11 +4865,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PushToOffscreenRendering
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1757
+    startLine: 1771
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4869,11 +4898,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessOffscreenCacheRenderingAsync
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1763
+    startLine: 1777
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4897,11 +4926,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1832
+    startLine: 1846
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4926,11 +4955,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderingScaleProperty
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2018
+    startLine: 2032
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4953,11 +4982,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDensityChanged
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2032
+    startLine: 2046
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -4979,11 +5008,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderingScale
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2038
+    startLine: 2052
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5011,11 +5040,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderingModeProperty
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2074
+    startLine: 2088
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5038,11 +5067,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderingMode
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2084
+    startLine: 2098
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5069,11 +5098,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanRenderOffScreenProperty
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2090
+    startLine: 2104
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5096,11 +5125,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanRenderOffScreen
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2099
+    startLine: 2113
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5127,11 +5156,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanDraw
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2109
+    startLine: 2123
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5159,11 +5188,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsHiddenInViewTree
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2122
+    startLine: 2136
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5193,11 +5222,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedCheckParentVisibility
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2145
+    startLine: 2159
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5222,11 +5251,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StreamFromString
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2162
+    startLine: 2176
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5256,11 +5285,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintSystem
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2167
+    startLine: 2181
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5285,11 +5314,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Destination
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2168
+    startLine: 2182
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5317,11 +5346,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintTintBackground
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2170
+    startLine: 2184
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5346,11 +5375,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RedrawCanvas
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2185
+    startLine: 2199
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5382,11 +5411,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnBindingContextChanged
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2196
+    startLine: 2210
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5412,11 +5441,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Views
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2208
+    startLine: 2222
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5445,11 +5474,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClearChildren
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2210
+    startLine: 2224
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5471,11 +5500,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetChildren
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2222
+    startLine: 2236
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5503,11 +5532,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddSubView
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2231
+    startLine: 2245
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5536,11 +5565,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReportHotreloadChildAdded
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2241
+    startLine: 2255
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5565,11 +5594,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RemoveSubView
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2250
+    startLine: 2264
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5601,11 +5630,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReportHotreloadChildRemoved
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2262
+    startLine: 2276
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5630,11 +5659,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnChildAdded
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2271
+    startLine: 2285
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5659,11 +5688,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnChildRemoved
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2276
+    startLine: 2290
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5688,11 +5717,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ChildrenProperty
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2287
+    startLine: 2301
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5715,11 +5744,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Children
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2300
+    startLine: 2314
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5744,11 +5773,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddOrRemoveView
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2308
+    startLine: 2322
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5778,11 +5807,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateModeProperty
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2389
+    startLine: 2403
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5805,11 +5834,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateMode
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2404
+    startLine: 2418
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5834,11 +5863,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClipEffectsProperty
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2410
+    startLine: 2424
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5861,11 +5890,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClipEffects
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2416
+    startLine: 2430
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5893,11 +5922,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value1Property
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2422
+    startLine: 2436
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5920,11 +5949,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value1
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2429
+    startLine: 2443
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5949,11 +5978,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value2Property
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2435
+    startLine: 2449
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -5976,11 +6005,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value2
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2442
+    startLine: 2456
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6005,11 +6034,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value3Property
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2448
+    startLine: 2462
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6032,11 +6061,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value3
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2455
+    startLine: 2469
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6061,11 +6090,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value4Property
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2461
+    startLine: 2475
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6088,11 +6117,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value4
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2468
+    startLine: 2482
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6117,11 +6146,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FocusLocked
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2476
+    startLine: 2490
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6146,11 +6175,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FocusedItemChanged
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2489
+    startLine: 2503
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6173,11 +6202,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReportFocus
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2507
+    startLine: 2521
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6206,11 +6235,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ResetFocusWithDelay
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2558
+    startLine: 2572
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6238,11 +6267,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FocusedChild
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2597
+    startLine: 2611
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6269,11 +6298,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateCanvas
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2610
+    startLine: 2624
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6309,11 +6338,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnParentSet
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2689
+    startLine: 2703
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6342,11 +6371,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetIsVisibleWithParent
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2714
+    startLine: 2728
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6373,11 +6402,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CheckElementVisibility
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2755
+    startLine: 2769
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6402,11 +6431,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnSizeChanged
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2760
+    startLine: 2774
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6428,11 +6457,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClipSmart
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 2765
+    startLine: 2779
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -6468,7 +6497,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHotReload
     path: ../src/Maui/DrawnUi/Views/DrawnView.Maui.cs
@@ -6494,7 +6523,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InitFramework
     path: ../src/Maui/DrawnUi/Views/DrawnView.Maui.cs
@@ -13890,6 +13919,20 @@ references:
   name: SurfaceCacheManager
   nameWithType: SurfaceCacheManager
   fullName: DrawnUi.Views.SurfaceCacheManager
+- uid: DrawnUi.Views.DrawnView.GetGRContext*
+  commentId: Overload:DrawnUi.Views.DrawnView.GetGRContext
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_GetGRContext
+  name: GetGRContext
+  nameWithType: DrawnView.GetGRContext
+  fullName: DrawnUi.Views.DrawnView.GetGRContext
+- uid: SkiaSharp.GRContext
+  commentId: T:SkiaSharp.GRContext
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.grcontext
+  name: GRContext
+  nameWithType: GRContext
+  fullName: SkiaSharp.GRContext
 - uid: DrawnUi.Views.DrawnView.CreateSurface*
   commentId: Overload:DrawnUi.Views.DrawnView.CreateSurface
   href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CreateSurface_System_Int32_System_Int32_System_Boolean_

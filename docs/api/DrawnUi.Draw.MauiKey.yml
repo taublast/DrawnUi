@@ -126,7 +126,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MauiKey
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -155,7 +155,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Unknown
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -181,7 +181,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Backspace
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -207,7 +207,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Tab
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -233,7 +233,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Enter
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -259,7 +259,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShiftLeft
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -285,7 +285,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShiftRight
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -311,7 +311,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ControlLeft
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -337,7 +337,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ControlRight
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -363,7 +363,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AltLeft
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -389,7 +389,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AltRight
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -415,7 +415,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Pause
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -441,7 +441,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CapsLock
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -467,7 +467,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Escape
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -493,7 +493,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Space
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -519,7 +519,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PageUp
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -545,7 +545,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PageDown
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -571,7 +571,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: End
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -597,7 +597,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Home
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -623,7 +623,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IntBackslash
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -649,7 +649,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ArrowLeft
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -675,7 +675,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ArrowUp
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -701,7 +701,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ArrowRight
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -727,7 +727,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ArrowDown
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -753,7 +753,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PrintScreen
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -779,7 +779,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Insert
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -805,7 +805,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Delete
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -831,7 +831,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Digit0
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -857,7 +857,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Digit1
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -883,7 +883,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Digit2
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -909,7 +909,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Digit3
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -935,7 +935,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Digit4
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -961,7 +961,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Digit5
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -987,7 +987,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Digit6
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1013,7 +1013,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Digit7
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1039,7 +1039,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Digit8
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1065,7 +1065,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Digit9
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1091,7 +1091,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyA
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1117,7 +1117,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyB
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1143,7 +1143,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyC
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1169,7 +1169,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyD
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1195,7 +1195,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyE
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1221,7 +1221,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyF
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1247,7 +1247,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyG
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1273,7 +1273,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyH
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1299,7 +1299,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyI
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1325,7 +1325,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyJ
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1351,7 +1351,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyK
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1377,7 +1377,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyL
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1403,7 +1403,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyM
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1429,7 +1429,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyN
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1455,7 +1455,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyO
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1481,7 +1481,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyP
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1507,7 +1507,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyQ
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1533,7 +1533,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyR
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1559,7 +1559,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyS
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1585,7 +1585,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyT
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1611,7 +1611,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyU
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1637,7 +1637,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyV
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1663,7 +1663,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyW
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1689,7 +1689,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyX
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1715,7 +1715,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyY
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1741,7 +1741,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyZ
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1767,7 +1767,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MetaLeft
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1793,7 +1793,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MetaRight
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1819,7 +1819,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ContextMenu
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1845,7 +1845,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Numpad0
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1871,7 +1871,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Numpad1
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1897,7 +1897,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Numpad2
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1923,7 +1923,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Numpad3
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1949,7 +1949,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Numpad4
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -1975,7 +1975,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Numpad5
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2001,7 +2001,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Numpad6
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2027,7 +2027,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Numpad7
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2053,7 +2053,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Numpad8
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2079,7 +2079,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Numpad9
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2105,7 +2105,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NumpadMultiply
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2131,7 +2131,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NumpadAdd
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2157,7 +2157,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NumpadSubtract
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2183,7 +2183,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NumpadDecimal
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2209,7 +2209,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NumpadDivide
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2235,7 +2235,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: F1
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2261,7 +2261,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: F2
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2287,7 +2287,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: F3
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2313,7 +2313,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: F4
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2339,7 +2339,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: F5
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2365,7 +2365,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: F6
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2391,7 +2391,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: F7
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2417,7 +2417,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: F8
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2443,7 +2443,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: F9
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2469,7 +2469,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: F10
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2495,7 +2495,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: F11
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2521,7 +2521,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: F12
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2547,7 +2547,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NumLock
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2573,7 +2573,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollLock
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2599,7 +2599,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AudioVolumeMute
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2625,7 +2625,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AudioVolumeDown
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2651,7 +2651,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AudioVolumeUp
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2677,7 +2677,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LaunchMediaPlayer
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2703,7 +2703,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LaunchApplication1
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2729,7 +2729,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LaunchApplication2
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2755,7 +2755,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Semicolon
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2781,7 +2781,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Equal
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2807,7 +2807,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Comma
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2833,7 +2833,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Minus
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2859,7 +2859,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Period
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2885,7 +2885,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Slash
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2911,7 +2911,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Backquote
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2937,7 +2937,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BracketLeft
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2963,7 +2963,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Backslash
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -2989,7 +2989,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BracketRight
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -3015,7 +3015,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Quote
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs

@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PerpetualPendulum
     path: ../src/Shared/Internals/Helpers/Pendulum.cs
@@ -77,7 +77,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/Pendulum.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Shared/Internals/Helpers/Pendulum.cs

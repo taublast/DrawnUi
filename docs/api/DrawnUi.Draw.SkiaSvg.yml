@@ -80,7 +80,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaSvg
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -518,6 +518,7 @@ items:
   - DrawnUi.Draw.SkiaControl.PostArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureChild(DrawnUi.Draw.SkiaControl,System.Double,System.Double,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  - DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   - DrawnUi.Draw.SkiaControl.ApplyBindingContext
   - DrawnUi.Draw.SkiaControl.ApplyingBindingContext
@@ -638,6 +639,7 @@ items:
   - DrawnUi.Draw.SkiaControl.Invalidated
   - DrawnUi.Draw.SkiaControl.NeedUpdate
   - DrawnUi.Draw.SkiaControl.Superview
+  - DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
   - DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   - DrawnUi.Draw.SkiaControl.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)
   - DrawnUi.Draw.SkiaControl.IsParentIndependent
@@ -729,6 +731,8 @@ items:
   - DrawnUi.Draw.SkiaControl._arrangedViewportHeightLimit
   - DrawnUi.Draw.SkiaControl._arrangedViewportWidthLimit
   - DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareDoubles(System.Double,System.Double,System.Double)
   - DrawnUi.Draw.SkiaControl.CompareRects(SkiaSharp.SKRect,SkiaSharp.SKRect,System.Single)
@@ -998,7 +1002,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TintColorProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1025,7 +1029,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TintColor
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1054,7 +1058,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShadowColorProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1081,7 +1085,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShadowColor
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1110,7 +1114,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShadowXProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1137,7 +1141,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShadowX
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1166,7 +1170,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShadowYProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1193,7 +1197,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShadowY
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1222,7 +1226,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShadowBlurProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1249,7 +1253,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShadowBlur
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1278,7 +1282,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1307,7 +1311,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedUpdateIcon
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1343,7 +1347,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AspectProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1370,7 +1374,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Aspect
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1399,7 +1403,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontAwesomePrimaryColorProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1426,7 +1430,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontAwesomePrimaryColor
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1455,7 +1459,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontAwesomeSecondaryColorProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1482,7 +1486,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontAwesomeSecondaryColor
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1511,7 +1515,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GradientBlendModeProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1538,7 +1542,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GradientBlendMode
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1569,7 +1573,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SvgHorizontalOptionsProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1596,7 +1600,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SvgHorizontalOptions
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1625,7 +1629,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SvgVerticalOptionsProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1652,7 +1656,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SvgVerticalOptions
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1681,7 +1685,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SvgStringProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1708,7 +1712,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SvgString
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1737,7 +1741,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomXProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1764,7 +1768,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomX
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1793,7 +1797,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomYProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1820,7 +1824,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomY
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1849,7 +1853,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InflateAmountProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1876,7 +1880,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InflateAmount
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1905,7 +1909,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalAlignmentProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1932,7 +1936,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalAlignment
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1961,7 +1965,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalAlignmentProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -1988,7 +1992,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalAlignment
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2017,7 +2021,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalOffsetProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2044,7 +2048,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalOffset
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2073,7 +2077,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalOffsetProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2100,7 +2104,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalOffset
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2129,7 +2133,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HasContentProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2156,7 +2160,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HasContent
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2185,7 +2189,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IconFilePathProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2212,7 +2216,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IconFilePath
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2241,7 +2245,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadedString
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2270,7 +2274,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderingPaint
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2299,7 +2303,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2328,7 +2332,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Svg
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2359,7 +2363,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2385,7 +2389,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateIcon
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2411,7 +2415,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPropertyChanged
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2447,7 +2451,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateImageFromString
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2479,7 +2483,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SourceProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2506,7 +2510,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2535,7 +2539,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadSource
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2573,7 +2577,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Success
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2602,7 +2606,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Error
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2631,7 +2635,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateImageFromFile
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2657,7 +2661,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateDisplayRect
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2699,7 +2703,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawPicture
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2740,7 +2744,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomProperty
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2767,7 +2771,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Zoom
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2796,7 +2800,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadSvgFromBytes
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2834,7 +2838,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateSvg
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -2872,7 +2876,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Maui/DrawnUi/Draw/Svg/SkiaSvg.cs
@@ -11321,6 +11325,73 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  name: MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  nameWithType: SkiaControl.MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  fullName: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>, SkiaSharp.SKRect, float)
+  nameWithType.vb: SkiaControl.MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl), SkiaSharp.SKRect, Single)
+  name.vb: MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   commentId: M:DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   parent: DrawnUi.Draw.SkiaControl
@@ -14108,6 +14179,31 @@ references:
   name: Superview
   nameWithType: SkiaControl.Superview
   fullName: DrawnUi.Draw.SkiaControl.Superview
+- uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  name: SetSuperview(DrawnView)
+  nameWithType: SkiaControl.SetSuperview(DrawnView)
+  fullName: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   commentId: F:DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   parent: DrawnUi.Draw.SkiaControl
@@ -16323,6 +16419,101 @@ references:
   name: _lastMeasuredForScale
   nameWithType: SkiaControl._lastMeasuredForScale
   fullName: DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  name: RoundToPixels(SKRect)
+  nameWithType: SkiaControl.RoundToPixels(SKRect)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  name: RoundToPixels(float, float, float, float)
+  nameWithType: SkiaControl.RoundToPixels(float, float, float, float)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(float, float, float, float)
+  nameWithType.vb: SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  name.vb: RoundToPixels(Single, Single, Single, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   parent: DrawnUi.Draw.SkiaControl

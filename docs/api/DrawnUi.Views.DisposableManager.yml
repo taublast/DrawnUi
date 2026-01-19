@@ -6,9 +6,11 @@ items:
   parent: DrawnUi.Views
   children:
   - DrawnUi.Views.DisposableManager.#ctor(System.Int32)
+  - DrawnUi.Views.DisposableManager.Count
   - DrawnUi.Views.DisposableManager.Dispose
   - DrawnUi.Views.DisposableManager.DisposeDisposables(System.Int64)
   - DrawnUi.Views.DisposableManager.EnqueueDisposable(System.IDisposable,System.Int64)
+  - DrawnUi.Views.DisposableManager.IsDisposed
   - DrawnUi.Views.DisposableManager.PendingDisposalCount
   langs:
   - csharp
@@ -20,11 +22,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DisposableManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposableManager
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 10
+    startLine: 11
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -59,11 +61,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DisposableManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 44
+    startLine: 45
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -94,11 +96,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DisposableManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EnqueueDisposable
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 58
+    startLine: 59
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -118,6 +120,35 @@ items:
   nameWithType.vb: DisposableManager.EnqueueDisposable(IDisposable, Long)
   fullName.vb: DrawnUi.Views.DisposableManager.EnqueueDisposable(System.IDisposable, Long)
   name.vb: EnqueueDisposable(IDisposable, Long)
+- uid: DrawnUi.Views.DisposableManager.Count
+  commentId: P:DrawnUi.Views.DisposableManager.Count
+  id: Count
+  parent: DrawnUi.Views.DisposableManager
+  langs:
+  - csharp
+  - vb
+  name: Count
+  nameWithType: DisposableManager.Count
+  fullName: DrawnUi.Views.DisposableManager.Count
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Views/DisposableManager.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Count
+    path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
+    startLine: 68
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Views
+  syntax:
+    content: public int Count { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Count As Integer
+  overload: DrawnUi.Views.DisposableManager.Count*
 - uid: DrawnUi.Views.DisposableManager.DisposeDisposables(System.Int64)
   commentId: M:DrawnUi.Views.DisposableManager.DisposeDisposables(System.Int64)
   id: DisposeDisposables(System.Int64)
@@ -132,11 +163,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DisposableManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeDisposables
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 72
+    startLine: 75
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -170,11 +201,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DisposableManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 108
+    startLine: 111
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -200,11 +231,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DisposableManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PendingDisposalCount
     path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
-    startLine: 148
+    startLine: 146
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -217,6 +248,35 @@ items:
       type: System.Int32
     content.vb: Public ReadOnly Property PendingDisposalCount As Integer
   overload: DrawnUi.Views.DisposableManager.PendingDisposalCount*
+- uid: DrawnUi.Views.DisposableManager.IsDisposed
+  commentId: P:DrawnUi.Views.DisposableManager.IsDisposed
+  id: IsDisposed
+  parent: DrawnUi.Views.DisposableManager
+  langs:
+  - csharp
+  - vb
+  name: IsDisposed
+  nameWithType: DisposableManager.IsDisposed
+  fullName: DrawnUi.Views.DisposableManager.IsDisposed
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Views/DisposableManager.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsDisposed
+    path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
+    startLine: 148
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Views
+  syntax:
+    content: public bool IsDisposed { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsDisposed As Boolean
+  overload: DrawnUi.Views.DisposableManager.IsDisposed*
 references:
 - uid: DrawnUi.Views
   commentId: N:DrawnUi.Views
@@ -612,6 +672,12 @@ references:
   nameWithType.vb: Long
   fullName.vb: Long
   name.vb: Long
+- uid: DrawnUi.Views.DisposableManager.Count*
+  commentId: Overload:DrawnUi.Views.DisposableManager.Count
+  href: DrawnUi.Views.DisposableManager.html#DrawnUi_Views_DisposableManager_Count
+  name: Count
+  nameWithType: DisposableManager.Count
+  fullName: DrawnUi.Views.DisposableManager.Count
 - uid: DrawnUi.Views.DisposableManager.DisposeDisposables*
   commentId: Overload:DrawnUi.Views.DisposableManager.DisposeDisposables
   href: DrawnUi.Views.DisposableManager.html#DrawnUi_Views_DisposableManager_DisposeDisposables_System_Int64_
@@ -652,3 +718,20 @@ references:
   name: PendingDisposalCount
   nameWithType: DisposableManager.PendingDisposalCount
   fullName: DrawnUi.Views.DisposableManager.PendingDisposalCount
+- uid: DrawnUi.Views.DisposableManager.IsDisposed*
+  commentId: Overload:DrawnUi.Views.DisposableManager.IsDisposed
+  href: DrawnUi.Views.DisposableManager.html#DrawnUi_Views_DisposableManager_IsDisposed
+  name: IsDisposed
+  nameWithType: DisposableManager.IsDisposed
+  fullName: DrawnUi.Views.DisposableManager.IsDisposed
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

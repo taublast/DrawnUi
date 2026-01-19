@@ -22,7 +22,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaControlWithRect
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -63,7 +63,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -113,7 +113,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Control
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -144,7 +144,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Rect
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -175,7 +175,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HitRect
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -206,7 +206,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Index
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -237,7 +237,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FreezeIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
@@ -268,7 +268,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FreezeBindingContext
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs

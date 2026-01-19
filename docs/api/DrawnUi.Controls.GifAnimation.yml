@@ -28,7 +28,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GifAnimation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
@@ -67,7 +67,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LockFrames
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
@@ -94,7 +94,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Frames
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
@@ -123,7 +123,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Frame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
@@ -154,7 +154,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SeekFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
@@ -189,7 +189,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFrameNumber
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
@@ -223,7 +223,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
@@ -252,7 +252,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Height
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
@@ -281,7 +281,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DurationMs
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
@@ -310,7 +310,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TotalFrames
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
@@ -339,7 +339,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FramesPositionsMs
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
@@ -368,7 +368,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
@@ -397,7 +397,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
@@ -427,7 +427,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadFromStream
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs

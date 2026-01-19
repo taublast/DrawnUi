@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SurfaceKey
     path: ../src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
@@ -55,7 +55,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
     path: ../src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
@@ -82,7 +82,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Height
     path: ../src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
@@ -109,7 +109,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
@@ -143,7 +143,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Equals
     path: ../src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
@@ -180,7 +180,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Equals
     path: ../src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
@@ -219,7 +219,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/SurfaceCacheManager.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetHashCode
     path: ../src/Maui/DrawnUi/Views/SurfaceCacheManager.cs

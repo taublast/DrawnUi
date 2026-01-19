@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaLayout.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaLayout
     path: ../src/Shared/Internals/Interfaces/ISkiaLayout.cs
@@ -119,7 +119,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaLayout.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedAutoSize
     path: ../src/Shared/Internals/Interfaces/ISkiaLayout.cs
@@ -148,7 +148,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaLayout.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedAutoHeight
     path: ../src/Shared/Internals/Interfaces/ISkiaLayout.cs
@@ -177,7 +177,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaLayout.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedAutoWidth
     path: ../src/Shared/Internals/Interfaces/ISkiaLayout.cs

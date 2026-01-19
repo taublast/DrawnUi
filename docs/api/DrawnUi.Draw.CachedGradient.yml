@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/CachedGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CachedGradient
     path: ../src/Shared/Internals/Models/CachedGradient.cs
@@ -60,7 +60,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/CachedGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Gradient
     path: ../src/Shared/Internals/Models/CachedGradient.cs
@@ -89,7 +89,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/CachedGradient.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Shared/Internals/Models/CachedGradient.cs

@@ -15,7 +15,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/EditText/MauiEntryHandler.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MauiEntryHandler
     path: ../src/Maui/DrawnUi/Controls/EditText/MauiEntryHandler.cs

@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RangeVectorAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RangeVectorAnimator
     path: ../src/Shared/Features/Animators/RangeVectorAnimator.cs
@@ -111,7 +111,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RangeVectorAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Initialize
     path: ../src/Shared/Features/Animators/RangeVectorAnimator.cs
@@ -149,7 +149,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RangeVectorAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Parameters
     path: ../src/Shared/Features/Animators/RangeVectorAnimator.cs
@@ -178,7 +178,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RangeVectorAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateValue
     path: ../src/Shared/Features/Animators/RangeVectorAnimator.cs
@@ -222,7 +222,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/RangeVectorAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animators/RangeVectorAnimator.cs

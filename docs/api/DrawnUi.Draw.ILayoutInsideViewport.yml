@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ILayoutInsideViewport.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ILayoutInsideViewport
     path: ../src/Shared/Internals/Interfaces/ILayoutInsideViewport.cs
@@ -53,7 +53,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ILayoutInsideViewport.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetVisibleChildIndexAt
     path: ../src/Shared/Internals/Interfaces/ILayoutInsideViewport.cs
@@ -88,7 +88,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ILayoutInsideViewport.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetChildIndexAt
     path: ../src/Shared/Internals/Interfaces/ILayoutInsideViewport.cs

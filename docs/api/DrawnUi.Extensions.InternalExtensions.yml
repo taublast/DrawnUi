@@ -34,7 +34,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/InternalExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InternalExtensions
     path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
@@ -70,7 +70,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FindMauiContext
     path: ../src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
@@ -107,7 +107,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetParentsPath
     path: ../src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
@@ -139,7 +139,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromPlatform
     path: ../src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
@@ -174,7 +174,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromPlatform
     path: ../src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
@@ -213,7 +213,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromPlatform
     path: ../src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
@@ -252,7 +252,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToSKRect
     path: ../src/Maui/DrawnUi/Internals/Extensions/InternalExtensions.Maui.cs
@@ -289,7 +289,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/InternalExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToDegrees
     path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
@@ -328,7 +328,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/InternalExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IntersectsWith
     path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
@@ -364,7 +364,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/InternalExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ContainsInclusive
     path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
@@ -403,7 +403,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/InternalExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ContainsInclusive
     path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
@@ -444,7 +444,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/InternalExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetItemAtIndex
     path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
@@ -483,7 +483,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/InternalExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeControlAndChildren
     path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
@@ -513,7 +513,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/InternalExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithCancellation
     path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
@@ -547,7 +547,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/InternalExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WithCancellation
     path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
@@ -586,7 +586,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/InternalExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clone
     path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
@@ -618,7 +618,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/InternalExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsEven
     path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
@@ -653,7 +653,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/InternalExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clamp
     path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
@@ -692,7 +692,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/InternalExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clamp
     path: ../src/Shared/Internals/Extensions/InternalExtensions.cs
@@ -731,7 +731,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/InternalExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clamp
     path: ../src/Shared/Internals/Extensions/InternalExtensions.cs

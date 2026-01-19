@@ -15,7 +15,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaControlsObservable.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaControlsObservable
     path: ../src/Maui/DrawnUi/Draw/SkiaControlsObservable.cs

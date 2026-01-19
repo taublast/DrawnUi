@@ -18,11 +18,11 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/SkiaControl.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ParentMeasureRequest
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4457
+    startLine: 4483
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -52,11 +52,11 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/SkiaControl.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Parent
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4459
+    startLine: 4485
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -81,11 +81,11 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/SkiaControl.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WidthRequest
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4460
+    startLine: 4486
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -110,11 +110,11 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/SkiaControl.Shared.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HeightRequest
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4461
+    startLine: 4487
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

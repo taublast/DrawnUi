@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/CachedShader.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CachedShader
     path: ../src/Shared/Internals/Models/CachedShader.cs
@@ -60,7 +60,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/CachedShader.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Destination
     path: ../src/Shared/Internals/Models/CachedShader.cs
@@ -89,7 +89,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/CachedShader.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Shader
     path: ../src/Shared/Internals/Models/CachedShader.cs
@@ -118,7 +118,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/CachedShader.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Shared/Internals/Models/CachedShader.cs
@@ -148,7 +148,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/CachedShader.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Shared/Internals/Models/CachedShader.cs

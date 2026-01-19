@@ -775,6 +775,9 @@ items:
   - uid: DrawnUi.Draw.SkiaControl.CacheValidityType
     name: SkiaControl.CacheValidityType
     type: Enum
+  - uid: DrawnUi.Draw.SkiaControl.DisposableAction
+    name: SkiaControl.DisposableAction
+    type: Class
   - uid: DrawnUi.Draw.SkiaControl.ParentMeasureRequest
     name: SkiaControl.ParentMeasureRequest
     type: Struct
@@ -1063,6 +1066,9 @@ items:
   - uid: DrawnUi.Draw.ThemeChangedEventArgs
     name: ThemeChangedEventArgs
     type: Class
+  - uid: DrawnUi.Draw.ThermalState
+    name: ThermalState
+    type: Enum
   - uid: DrawnUi.Draw.TintEffect
     name: TintEffect
     type: Class

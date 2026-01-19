@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/ProgressAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ProgressAnimator
     path: ../src/Shared/Features/Animators/ProgressAnimator.cs
@@ -111,7 +111,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/ProgressAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animators/ProgressAnimator.cs
@@ -143,7 +143,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/ProgressAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnProgressChanged
     path: ../src/Shared/Features/Animators/ProgressAnimator.cs
@@ -175,7 +175,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/ProgressAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TransformReportedValue
     path: ../src/Shared/Features/Animators/ProgressAnimator.cs

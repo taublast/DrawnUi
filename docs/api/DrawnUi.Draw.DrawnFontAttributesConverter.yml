@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/DrawnFontAttributesConverter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawnFontAttributesConverter
     path: ../src/Maui/DrawnUi/Internals/Xaml/DrawnFontAttributesConverter.cs
@@ -93,7 +93,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/DrawnFontAttributesConverter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanConvertFrom
     path: ../src/Maui/DrawnUi/Internals/Xaml/DrawnFontAttributesConverter.cs
@@ -132,7 +132,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/DrawnFontAttributesConverter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CanConvertTo
     path: ../src/Maui/DrawnUi/Internals/Xaml/DrawnFontAttributesConverter.cs
@@ -171,7 +171,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/DrawnFontAttributesConverter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ConvertFrom
     path: ../src/Maui/DrawnUi/Internals/Xaml/DrawnFontAttributesConverter.cs
@@ -220,7 +220,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/DrawnFontAttributesConverter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ConvertTo
     path: ../src/Maui/DrawnUi/Internals/Xaml/DrawnFontAttributesConverter.cs

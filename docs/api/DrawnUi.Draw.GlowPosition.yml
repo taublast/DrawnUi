@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/EdgeGlowAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GlowPosition
     path: ../src/Shared/Features/Animators/EdgeGlowAnimator.cs
@@ -44,7 +44,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/EdgeGlowAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Top
     path: ../src/Shared/Features/Animators/EdgeGlowAnimator.cs
@@ -70,7 +70,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/EdgeGlowAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Bottom
     path: ../src/Shared/Features/Animators/EdgeGlowAnimator.cs

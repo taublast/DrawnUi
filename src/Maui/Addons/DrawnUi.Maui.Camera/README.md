@@ -13,6 +13,11 @@ For the still image capture you can select camera, format, flash.
 For video capture, it's same but separate methods/properties for video.   
 On top of that the video capture has an optional pre-recording feature. What is it for? Imagine you want to trigger recording a video on some conditions. Like a rabbit appeared within camera range, some tech conditions are met etc. But when you then watch the video it would start at the exact moment the recording was triggered, while the pre-recording feature can for example record 5 seconds preceding that event, making the video wich recording was triggered by tech conditions to look natural.
 
+We are still .NET9, for iOS 26 you might need to set inside PLIST for your iOS app:
+```xml
+<key>UIDesignRequiresCompatibility</key>
+<true/>
+```
 
 ## Features:
 

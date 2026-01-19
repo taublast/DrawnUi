@@ -34,7 +34,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaGridStructure
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -71,7 +71,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HeightConstraint
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -100,7 +100,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WidthConstraint
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -129,7 +129,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Rows
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -158,7 +158,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Columns
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -187,7 +187,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Padding
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -214,7 +214,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RowSpacing
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -241,7 +241,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColumnSpacing
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -268,7 +268,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RowDefinitions
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -295,7 +295,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColumnDefinitions
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -322,7 +322,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -358,7 +358,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCellBoundsFor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -396,7 +396,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GridHeight
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -424,7 +424,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GridWidth
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -452,7 +452,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuredGridHeight
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -480,7 +480,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuredGridWidth
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -508,7 +508,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LeftEdgeOfColumn
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -542,7 +542,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TopEdgeOfRow
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -576,7 +576,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DecompressStarsInternal
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
@@ -605,7 +605,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DecompressStars
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs

@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/FrameworkImageSourceConverter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameworkImageSourceConverter
     path: ../src/Maui/DrawnUi/Internals/Xaml/FrameworkImageSourceConverter.cs
@@ -94,7 +94,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/FrameworkImageSourceConverter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromStream
     path: ../src/Maui/DrawnUi/Internals/Xaml/FrameworkImageSourceConverter.cs
@@ -132,7 +132,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/FrameworkImageSourceConverter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StreamFromResourceUrl
     path: ../src/Maui/DrawnUi/Internals/Xaml/FrameworkImageSourceConverter.cs
@@ -168,7 +168,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/FrameworkImageSourceConverter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromInvariantString
     path: ../src/Maui/DrawnUi/Internals/Xaml/FrameworkImageSourceConverter.cs
@@ -202,7 +202,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/FrameworkImageSourceConverter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ConvertFrom
     path: ../src/Maui/DrawnUi/Internals/Xaml/FrameworkImageSourceConverter.cs
@@ -251,7 +251,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/FrameworkImageSourceConverter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ConvertTo
     path: ../src/Maui/DrawnUi/Internals/Xaml/FrameworkImageSourceConverter.cs
@@ -306,7 +306,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Xaml/FrameworkImageSourceConverter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ConvertToString
     path: ../src/Maui/DrawnUi/Internals/Xaml/FrameworkImageSourceConverter.cs

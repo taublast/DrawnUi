@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LayoutStructure
     path: ../src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
@@ -74,7 +74,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
@@ -103,7 +103,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clone
     path: ../src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
@@ -136,7 +136,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetForIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
@@ -170,7 +170,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
@@ -202,7 +202,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Append
     path: ../src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs

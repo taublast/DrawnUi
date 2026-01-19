@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ChainAdjustContrastEffect
     path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ValueProperty
     path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
@@ -125,7 +125,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value
     path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
@@ -154,7 +154,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
@@ -196,7 +196,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateContrastFilter
     path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
@@ -230,7 +230,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
     path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs

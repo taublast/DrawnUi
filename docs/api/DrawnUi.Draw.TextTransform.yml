@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TextTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextTransform
     path: ../src/Shared/Internals/Enums/TextTransform.cs
@@ -47,7 +47,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TextTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: None
     path: ../src/Shared/Internals/Enums/TextTransform.cs
@@ -73,7 +73,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TextTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Lowercase
     path: ../src/Shared/Internals/Enums/TextTransform.cs
@@ -99,7 +99,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TextTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Uppercase
     path: ../src/Shared/Internals/Enums/TextTransform.cs
@@ -125,7 +125,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TextTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Titlecase
     path: ../src/Shared/Internals/Enums/TextTransform.cs
@@ -153,7 +153,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/TextTransform.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Phrasecase
     path: ../src/Shared/Internals/Enums/TextTransform.cs

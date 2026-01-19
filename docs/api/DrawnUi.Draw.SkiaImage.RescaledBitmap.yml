@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RescaledBitmap
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -60,7 +60,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Bitmap
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -89,7 +89,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: _image
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -116,7 +116,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Image
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -145,7 +145,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Quality
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -174,7 +174,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
@@ -203,7 +203,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Images/SkiaImage.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Images/SkiaImage.cs

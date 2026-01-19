@@ -45,7 +45,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MenuPageItem
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -108,7 +108,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VOptions
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -137,7 +137,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Separator
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -166,7 +166,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Counter
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -195,7 +195,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShowCounter
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -224,7 +224,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsOption
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -253,7 +253,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCounter
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -282,7 +282,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTitle
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -311,7 +311,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Title
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -340,7 +340,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IconSource
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -369,7 +369,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BackColor
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -398,7 +398,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IconString
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -427,7 +427,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnSelected
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -456,7 +456,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TargetType
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -485,7 +485,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TypeParameter
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -514,7 +514,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ContentType
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -543,7 +543,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Tab
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -572,7 +572,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedTransition
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -601,7 +601,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Selected
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -630,7 +630,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PseudoTab
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -659,7 +659,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDetail
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -688,7 +688,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Modal
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -717,7 +717,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Visible
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -746,7 +746,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MyId
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -775,7 +775,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Url
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -804,7 +804,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Key
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -833,7 +833,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Module
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -864,7 +864,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AuthorizedOnly
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -893,7 +893,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UserRoles
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -922,7 +922,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UnauthorizedOnly
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
@@ -951,7 +951,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Features/Navigation/MenuPageItem.cs

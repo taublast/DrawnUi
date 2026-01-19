@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/ThemeBindingExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MauiThemeProvider
     path: ../src/Maui/DrawnUi/Internals/Extensions/ThemeBindingExtension.cs
@@ -59,7 +59,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/ThemeBindingExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CurrentTheme
     path: ../src/Maui/DrawnUi/Internals/Extensions/ThemeBindingExtension.cs
@@ -91,7 +91,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/ThemeBindingExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ThemeChanged
     path: ../src/Maui/DrawnUi/Internals/Extensions/ThemeBindingExtension.cs
@@ -121,7 +121,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Internals/Extensions/ThemeBindingExtension.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Internals/Extensions/ThemeBindingExtension.cs

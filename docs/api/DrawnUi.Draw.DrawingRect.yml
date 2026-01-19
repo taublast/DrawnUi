@@ -41,7 +41,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawingRect
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -76,7 +76,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -105,7 +105,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -143,7 +143,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Offset
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -177,7 +177,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Set
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -215,7 +215,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -249,7 +249,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -281,7 +281,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Left
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -310,7 +310,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Top
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -339,7 +339,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Right
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -368,7 +368,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Bottom
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -397,7 +397,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -426,7 +426,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Height
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -455,7 +455,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MidY
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -484,7 +484,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MidX
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -513,7 +513,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IntersectsWith
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -544,7 +544,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IntersectsWith
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -575,7 +575,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IntersectsWith
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -615,7 +615,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Contains
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -651,7 +651,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Contains
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -682,7 +682,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToSkia
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -710,7 +710,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToRect
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -738,7 +738,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Empty
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -767,7 +767,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clone
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -795,7 +795,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Compare
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -826,7 +826,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Equals
     path: ../src/Shared/Internals/Models/Rectangle.cs
@@ -865,7 +865,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Rectangle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetHashCode
     path: ../src/Shared/Internals/Models/Rectangle.cs

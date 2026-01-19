@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/PointExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FloatingPointExtensions
     path: ../src/Shared/Internals/Extensions/PointExtensions.cs
@@ -55,7 +55,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/PointExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Project
     path: ../src/Shared/Internals/Extensions/PointExtensions.cs
@@ -92,7 +92,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/PointExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLess
     path: ../src/Shared/Internals/Extensions/PointExtensions.cs
@@ -131,7 +131,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/PointExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsGreater
     path: ../src/Shared/Internals/Extensions/PointExtensions.cs
@@ -170,7 +170,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Extensions/PointExtensions.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsEqual
     path: ../src/Shared/Internals/Extensions/PointExtensions.cs

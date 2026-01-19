@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PresetType
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
@@ -46,7 +46,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Default
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
@@ -72,7 +72,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Scale
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Rotation
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs
@@ -124,7 +124,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/VelocitySkiaAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Alpha
     path: ../src/Shared/Features/Animators/VelocitySkiaAnimator.cs

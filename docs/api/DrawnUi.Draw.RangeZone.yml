@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/RangeZone.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RangeZone
     path: ../src/Shared/Internals/Enums/RangeZone.cs
@@ -45,7 +45,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/RangeZone.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Unknown
     path: ../src/Shared/Internals/Enums/RangeZone.cs
@@ -71,7 +71,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/RangeZone.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Shared/Internals/Enums/RangeZone.cs
@@ -97,7 +97,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/RangeZone.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: End
     path: ../src/Shared/Internals/Enums/RangeZone.cs

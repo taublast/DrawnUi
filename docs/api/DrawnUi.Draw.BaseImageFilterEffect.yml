@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/BaseImageFilterEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BaseImageFilterEffect
     path: ../src/Maui/DrawnUi/Features/Effects/BaseImageFilterEffect.cs
@@ -97,7 +97,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/BaseImageFilterEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Filter
     path: ../src/Maui/DrawnUi/Features/Effects/BaseImageFilterEffect.cs
@@ -129,7 +129,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/BaseImageFilterEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateFilter
     path: ../src/Maui/DrawnUi/Features/Effects/BaseImageFilterEffect.cs
@@ -163,7 +163,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/BaseImageFilterEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Maui/DrawnUi/Features/Effects/BaseImageFilterEffect.cs
@@ -194,7 +194,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/BaseImageFilterEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Features/Effects/BaseImageFilterEffect.cs

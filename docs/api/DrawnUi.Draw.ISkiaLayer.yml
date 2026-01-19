@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaLayer
     path: ../src/Shared/Internals/Interfaces/ISkiaLayer.cs
@@ -110,7 +110,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LayerPaintArgs
     path: ../src/Shared/Internals/Interfaces/ISkiaLayer.cs
@@ -141,7 +141,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HasValidSnapshot
     path: ../src/Shared/Internals/Interfaces/ISkiaLayer.cs
@@ -172,7 +172,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Interfaces/ISkiaLayer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawLayerImage
     path: ../src/Shared/Internals/Interfaces/ISkiaLayer.cs

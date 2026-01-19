@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/RotationEventArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RotationEventArgs
     path: ../src/Maui/DrawnUi/Features/Navigation/RotationEventArgs.cs
@@ -55,7 +55,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Navigation/RotationEventArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Orientation
     path: ../src/Maui/DrawnUi/Features/Navigation/RotationEventArgs.cs

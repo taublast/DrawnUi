@@ -27,7 +27,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PendulumAnimator
     path: ../src/Shared/Features/Animators/PendulumAnimator.cs
@@ -116,7 +116,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreatePendulum
     path: ../src/Shared/Features/Animators/PendulumAnimator.cs
@@ -144,7 +144,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Shared/Features/Animators/PendulumAnimator.cs
@@ -178,7 +178,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsOneDirectional
     path: ../src/Shared/Features/Animators/PendulumAnimator.cs
@@ -209,7 +209,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AirResistance
     path: ../src/Shared/Features/Animators/PendulumAnimator.cs
@@ -238,7 +238,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InitialVelocity
     path: ../src/Shared/Features/Animators/PendulumAnimator.cs
@@ -269,7 +269,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InitialAngle
     path: ../src/Shared/Features/Animators/PendulumAnimator.cs
@@ -298,7 +298,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetAmplitude
     path: ../src/Shared/Features/Animators/PendulumAnimator.cs
@@ -332,7 +332,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Amplitude
     path: ../src/Shared/Features/Animators/PendulumAnimator.cs
@@ -361,7 +361,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Gravity
     path: ../src/Shared/Features/Animators/PendulumAnimator.cs
@@ -390,7 +390,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TickFrame
     path: ../src/Shared/Features/Animators/PendulumAnimator.cs
@@ -429,7 +429,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
     path: ../src/Shared/Features/Animators/PendulumAnimator.cs
@@ -457,7 +457,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/PendulumAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animators/PendulumAnimator.cs

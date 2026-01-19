@@ -22,7 +22,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ScaledPoint.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ScaledPoint
     path: ../src/Shared/Internals/Models/ScaledPoint.cs
@@ -56,7 +56,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ScaledPoint.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/ScaledPoint.cs
@@ -85,7 +85,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ScaledPoint.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Scale
     path: ../src/Shared/Internals/Models/ScaledPoint.cs
@@ -114,7 +114,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ScaledPoint.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Units
     path: ../src/Shared/Internals/Models/ScaledPoint.cs
@@ -143,7 +143,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ScaledPoint.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Pixels
     path: ../src/Shared/Internals/Models/ScaledPoint.cs
@@ -172,7 +172,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ScaledPoint.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromUnits
     path: ../src/Shared/Internals/Models/ScaledPoint.cs
@@ -212,7 +212,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ScaledPoint.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromPixels
     path: ../src/Shared/Internals/Models/ScaledPoint.cs
@@ -248,7 +248,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/ScaledPoint.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromPixels
     path: ../src/Shared/Internals/Models/ScaledPoint.cs

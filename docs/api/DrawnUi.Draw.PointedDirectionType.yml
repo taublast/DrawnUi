@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/PointedDirectionType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PointedDirectionType
     path: ../src/Shared/Internals/Enums/PointedDirectionType.cs
@@ -46,7 +46,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/PointedDirectionType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LeftToRight
     path: ../src/Shared/Internals/Enums/PointedDirectionType.cs
@@ -72,7 +72,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/PointedDirectionType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RightToLeft
     path: ../src/Shared/Internals/Enums/PointedDirectionType.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/PointedDirectionType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TopToBottom
     path: ../src/Shared/Internals/Enums/PointedDirectionType.cs
@@ -124,7 +124,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/PointedDirectionType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BottomToTop
     path: ../src/Shared/Internals/Enums/PointedDirectionType.cs

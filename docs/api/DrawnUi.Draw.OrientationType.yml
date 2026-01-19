@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/OrientationType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OrientationType
     path: ../src/Shared/Internals/Enums/OrientationType.cs
@@ -44,7 +44,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/OrientationType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Horizontal
     path: ../src/Shared/Internals/Enums/OrientationType.cs
@@ -70,7 +70,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/OrientationType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Vertical
     path: ../src/Shared/Internals/Enums/OrientationType.cs

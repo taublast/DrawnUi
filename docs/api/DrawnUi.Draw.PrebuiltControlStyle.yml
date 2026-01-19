@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PrebuiltControlStyle
     path: ../src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
@@ -47,7 +47,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Unset
     path: ../src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
@@ -73,7 +73,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Platform
     path: ../src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
@@ -101,7 +101,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Cupertino
     path: ../src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
@@ -129,7 +129,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Material
     path: ../src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
@@ -157,7 +157,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Windows
     path: ../src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs

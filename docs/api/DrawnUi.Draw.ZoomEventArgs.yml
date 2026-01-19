@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomEventArgs
     path: ../src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
@@ -58,7 +58,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
@@ -87,7 +87,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
@@ -121,7 +121,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Center
     path: ../src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
@@ -150,7 +150,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value
     path: ../src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs

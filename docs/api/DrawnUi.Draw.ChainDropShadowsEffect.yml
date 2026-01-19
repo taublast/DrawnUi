@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ChainDropShadowsEffect
     path: ../src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
@@ -109,7 +109,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShadowsProperty
     path: ../src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
@@ -136,7 +136,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Shadows
     path: ../src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
@@ -165,7 +165,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnBindingContextChanged
     path: ../src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
@@ -194,7 +194,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
@@ -236,7 +236,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
     path: ../src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs

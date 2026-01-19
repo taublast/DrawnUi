@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/SkiaControl.Cache.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CacheValidityType
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
@@ -46,7 +46,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/SkiaControl.Cache.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Valid
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
@@ -72,7 +72,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/SkiaControl.Cache.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Missing
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/SkiaControl.Cache.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SizeMismatch
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs
@@ -124,7 +124,7 @@ items:
   source:
     remote:
       path: src/Shared/Draw/Base/SkiaControl.Cache.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GraphicContextMismatch
     path: ../src/Shared/Draw/Base/SkiaControl.Cache.cs

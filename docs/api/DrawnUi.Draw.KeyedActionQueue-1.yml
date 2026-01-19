@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/KeyedActionQueue.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: KeyedActionQueue
     path: ../src/Shared/Internals/Helpers/KeyedActionQueue.cs
@@ -65,7 +65,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/KeyedActionQueue.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Helpers/KeyedActionQueue.cs
@@ -99,7 +99,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/KeyedActionQueue.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Enqueue
     path: ../src/Shared/Internals/Helpers/KeyedActionQueue.cs
@@ -134,7 +134,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/KeyedActionQueue.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dequeue
     path: ../src/Shared/Internals/Helpers/KeyedActionQueue.cs
@@ -166,7 +166,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/KeyedActionQueue.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Count
     path: ../src/Shared/Internals/Helpers/KeyedActionQueue.cs
@@ -199,7 +199,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/KeyedActionQueue.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
     path: ../src/Shared/Internals/Helpers/KeyedActionQueue.cs
@@ -229,7 +229,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/KeyedActionQueue.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ContainsKey
     path: ../src/Shared/Internals/Helpers/KeyedActionQueue.cs
@@ -264,7 +264,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/KeyedActionQueue.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TryRemove
     path: ../src/Shared/Internals/Helpers/KeyedActionQueue.cs
@@ -299,7 +299,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/KeyedActionQueue.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ExecuteAll
     path: ../src/Shared/Internals/Helpers/KeyedActionQueue.cs

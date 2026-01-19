@@ -18,11 +18,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShapePaintArguments
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 350
+    startLine: 321
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -52,11 +52,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeAwareSize
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 352
+    startLine: 323
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -81,11 +81,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeAwareChildrenSize
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 353
+    startLine: 324
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -110,11 +110,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeAwareClipSize
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 354
+    startLine: 325
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

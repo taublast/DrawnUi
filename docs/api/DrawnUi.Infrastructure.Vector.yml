@@ -34,7 +34,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Vector
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -71,7 +71,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Radians
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -105,7 +105,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -134,7 +134,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -172,7 +172,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -206,7 +206,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: setComponents
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -240,7 +240,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CrossProduct
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -273,7 +273,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Cross
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -304,7 +304,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: getXComp
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -332,7 +332,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: setXComp
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -364,7 +364,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: getYComp
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -392,7 +392,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: setYComp
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -424,7 +424,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: add
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -455,7 +455,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: mAdd
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -484,7 +484,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: setAngle
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -516,7 +516,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: setMagnitude
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -548,7 +548,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: getMagnitude
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -576,7 +576,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: mScale
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -608,7 +608,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: scale
     path: ../src/Shared/Internals/Models/Vector.cs
@@ -642,7 +642,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/Vector.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: getAngle
     path: ../src/Shared/Internals/Models/Vector.cs

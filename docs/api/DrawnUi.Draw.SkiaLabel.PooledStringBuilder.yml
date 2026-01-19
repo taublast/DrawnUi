@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PooledStringBuilder
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
@@ -57,7 +57,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StringBuilder
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
@@ -86,7 +86,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
@@ -118,7 +118,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Get
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
@@ -146,7 +146,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs

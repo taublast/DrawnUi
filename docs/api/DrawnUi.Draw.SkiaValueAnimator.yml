@@ -45,7 +45,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaValueAnimator
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -114,7 +114,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -143,7 +143,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -171,7 +171,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RunAsync
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -204,7 +204,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnRunningStateChanged
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -238,7 +238,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Seek
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -270,7 +270,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CycleFInished
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -301,7 +301,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Finished
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -332,7 +332,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FinishedRunning
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -360,7 +360,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameTimeInterpolator
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -387,7 +387,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UseInterpolator
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -416,7 +416,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TickFrame
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -455,7 +455,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Repeat
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -486,7 +486,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: mValue
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -515,7 +515,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: mStartValueIsSet
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -544,7 +544,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: mMaxValue
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -573,7 +573,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: mMinValue
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -602,7 +602,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Easing
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -631,7 +631,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Speed
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -660,7 +660,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TransformReportedValue
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -698,7 +698,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Debug
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -725,7 +725,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetNanoseconds
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -753,7 +753,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateValue
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -796,7 +796,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ElapsedMs
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -825,7 +825,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Progress
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -856,7 +856,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnUpdated
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -885,7 +885,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClampOnStart
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -911,7 +911,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -945,7 +945,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetValue
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -979,7 +979,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetSpeed
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs
@@ -1013,7 +1013,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/SkiaValueAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animators/SkiaValueAnimator.cs

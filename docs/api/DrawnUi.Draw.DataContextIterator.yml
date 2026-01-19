@@ -20,11 +20,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DataContextIterator
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1459
+    startLine: 1469
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -61,11 +61,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1490
+    startLine: 1500
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -95,11 +95,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Current
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1505
+    startLine: 1515
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -129,11 +129,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MoveNext
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1509
+    startLine: 1519
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -166,11 +166,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Reset
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1549
+    startLine: 1559
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -203,11 +203,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ViewsAdapter.cs
-    startLine: 1566
+    startLine: 1576
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

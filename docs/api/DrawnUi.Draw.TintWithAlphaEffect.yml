@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TintWithAlphaEffect
     path: ../src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
@@ -101,7 +101,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorTintProperty
     path: ../src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
@@ -128,7 +128,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorTint
     path: ../src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
@@ -157,7 +157,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AlphaProperty
     path: ../src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
@@ -184,7 +184,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Alpha
     path: ../src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
@@ -213,7 +213,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EffectBlendModeProperty
     path: ../src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
@@ -240,7 +240,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EffectBlendMode
     path: ../src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
@@ -269,7 +269,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateFilter
     path: ../src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
@@ -302,7 +302,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
     path: ../src/Maui/DrawnUi/Features/Effects/TintWithAlphaEffect.cs

@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextMetrics
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
@@ -58,7 +58,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineSpacing
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
@@ -87,7 +87,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineHeightPixels
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
@@ -116,7 +116,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ParagraphSpacing
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
@@ -145,7 +145,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpaceBetweenParagraphs
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
@@ -174,7 +174,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineHeightWithSpacing
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
@@ -203,7 +203,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SpaceBetweenLines
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs

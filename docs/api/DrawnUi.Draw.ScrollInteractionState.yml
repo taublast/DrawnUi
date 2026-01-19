@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ScrollInteractionState.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollInteractionState
     path: ../src/Shared/Internals/Enums/ScrollInteractionState.cs
@@ -46,7 +46,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ScrollInteractionState.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: None
     path: ../src/Shared/Internals/Enums/ScrollInteractionState.cs
@@ -72,7 +72,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ScrollInteractionState.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dragging
     path: ../src/Shared/Internals/Enums/ScrollInteractionState.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ScrollInteractionState.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Scrolling
     path: ../src/Shared/Internals/Enums/ScrollInteractionState.cs
@@ -124,7 +124,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/ScrollInteractionState.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Zooming
     path: ../src/Shared/Internals/Enums/ScrollInteractionState.cs

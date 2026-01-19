@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/BaseRenderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BaseChainedEffect
     path: ../src/Maui/DrawnUi/Features/Effects/BaseRenderEffect.cs
@@ -103,7 +103,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/BaseRenderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Maui/DrawnUi/Features/Effects/BaseRenderEffect.cs
@@ -132,7 +132,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/BaseRenderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Features/Effects/BaseRenderEffect.cs
@@ -175,7 +175,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/BaseRenderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Maui/DrawnUi/Features/Effects/BaseRenderEffect.cs
@@ -206,7 +206,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Effects/BaseRenderEffect.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Features/Effects/BaseRenderEffect.cs

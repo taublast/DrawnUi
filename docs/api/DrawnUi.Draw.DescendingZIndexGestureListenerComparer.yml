@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DescendingZIndexGestureListenerComparer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DescendingZIndexGestureListenerComparer
     path: ../src/Shared/Internals/Models/DescendingZIndexGestureListenerComparer.cs
@@ -55,7 +55,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/DescendingZIndexGestureListenerComparer.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Compare
     path: ../src/Shared/Internals/Models/DescendingZIndexGestureListenerComparer.cs

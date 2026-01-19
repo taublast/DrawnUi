@@ -18,7 +18,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/DrawImageAlignment.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawImageAlignment
     path: ../src/Shared/Internals/Enums/DrawImageAlignment.cs
@@ -45,7 +45,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/DrawImageAlignment.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Shared/Internals/Enums/DrawImageAlignment.cs
@@ -71,7 +71,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/DrawImageAlignment.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Center
     path: ../src/Shared/Internals/Enums/DrawImageAlignment.cs
@@ -97,7 +97,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/DrawImageAlignment.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: End
     path: ../src/Shared/Internals/Enums/DrawImageAlignment.cs

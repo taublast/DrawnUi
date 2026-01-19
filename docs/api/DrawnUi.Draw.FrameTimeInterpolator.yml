@@ -24,7 +24,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/FrameTimeInterpolator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FrameTimeInterpolator
     path: ../src/Shared/Features/Animations/FrameTimeInterpolator.cs
@@ -63,7 +63,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/FrameTimeInterpolator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TargetFps
     path: ../src/Shared/Features/Animations/FrameTimeInterpolator.cs
@@ -94,7 +94,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/FrameTimeInterpolator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FpsBuffer
     path: ../src/Shared/Features/Animations/FrameTimeInterpolator.cs
@@ -125,7 +125,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/FrameTimeInterpolator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LastFrameStep
     path: ../src/Shared/Features/Animations/FrameTimeInterpolator.cs
@@ -154,7 +154,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/FrameTimeInterpolator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSkippingFrames
     path: ../src/Shared/Features/Animations/FrameTimeInterpolator.cs
@@ -183,7 +183,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/FrameTimeInterpolator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShouldReduceQuality
     path: ../src/Shared/Features/Animations/FrameTimeInterpolator.cs
@@ -212,7 +212,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/FrameTimeInterpolator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetDeltaTimeFromDelta
     path: ../src/Shared/Features/Animations/FrameTimeInterpolator.cs
@@ -253,7 +253,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/FrameTimeInterpolator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetDeltaTime
     path: ../src/Shared/Features/Animations/FrameTimeInterpolator.cs
@@ -294,7 +294,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/FrameTimeInterpolator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Reset
     path: ../src/Shared/Features/Animations/FrameTimeInterpolator.cs
@@ -322,7 +322,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/FrameTimeInterpolator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Instance
     path: ../src/Shared/Features/Animations/FrameTimeInterpolator.cs

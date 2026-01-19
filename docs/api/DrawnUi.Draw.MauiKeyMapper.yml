@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MauiKeyMapper
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -52,7 +52,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MapToJava
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
@@ -86,7 +86,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MapToCode
     path: ../src/Maui/DrawnUi/Features/Keyboard/MauiKeys.cs

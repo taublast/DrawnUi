@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/IntersectionUtils.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IntersectionUtils
     path: ../src/Shared/Internals/Helpers/IntersectionUtils.cs
@@ -55,7 +55,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/IntersectionUtils.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IntersectWith
     path: ../src/Shared/Internals/Helpers/IntersectionUtils.cs
@@ -89,7 +89,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/IntersectionUtils.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clamped
     path: ../src/Shared/Internals/Helpers/IntersectionUtils.cs
@@ -122,7 +122,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/IntersectionUtils.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetIntersection
     path: ../src/Shared/Internals/Helpers/IntersectionUtils.cs
@@ -155,7 +155,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Helpers/IntersectionUtils.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetIntersection
     path: ../src/Shared/Internals/Helpers/IntersectionUtils.cs

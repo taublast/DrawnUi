@@ -28,7 +28,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StructureChange
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -65,7 +65,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -99,7 +99,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Stamp
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -128,7 +128,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Type
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -157,7 +157,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OffsetOthers
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -186,7 +186,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -215,7 +215,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Count
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -244,7 +244,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Items
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -273,7 +273,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TargetIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -302,7 +302,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuredItems
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -331,7 +331,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: InsertAtIndex
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -360,7 +360,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsInsertOperation
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -389,7 +389,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsVisible
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
@@ -418,7 +418,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartingPosition
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs

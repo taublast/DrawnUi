@@ -20,7 +20,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EmojiData
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
@@ -55,7 +55,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsEmojiModifierSequence
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
@@ -96,7 +96,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsModifier
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
@@ -132,7 +132,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsZeroWidthJoiner
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
@@ -168,7 +168,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EmojiModifiers
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
@@ -195,7 +195,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsEmoji
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs

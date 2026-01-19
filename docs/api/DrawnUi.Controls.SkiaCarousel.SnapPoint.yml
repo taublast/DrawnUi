@@ -17,7 +17,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SnapPoint
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
@@ -54,7 +54,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Id
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
@@ -83,7 +83,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Location
     path: ../src/Maui/DrawnUi/Controls/Carousel/SkiaCarousel.cs

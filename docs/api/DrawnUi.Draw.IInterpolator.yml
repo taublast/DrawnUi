@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/ToDo/IInterpolator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IInterpolator
     path: ../src/Shared/Features/Animations/ToDo/IInterpolator.cs
@@ -43,7 +43,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animations/ToDo/IInterpolator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetInterpolation
     path: ../src/Shared/Features/Animations/ToDo/IInterpolator.cs

@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/DoubleViewTransitionType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DoubleViewTransitionType
     path: ../src/Shared/Internals/Enums/DoubleViewTransitionType.cs
@@ -46,7 +46,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/DoubleViewTransitionType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SelectLeftTab
     path: ../src/Shared/Internals/Enums/DoubleViewTransitionType.cs
@@ -72,7 +72,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/DoubleViewTransitionType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SelectRightTab
     path: ../src/Shared/Internals/Enums/DoubleViewTransitionType.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/DoubleViewTransitionType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Push
     path: ../src/Shared/Internals/Enums/DoubleViewTransitionType.cs
@@ -124,7 +124,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/DoubleViewTransitionType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Pop
     path: ../src/Shared/Internals/Enums/DoubleViewTransitionType.cs

@@ -38,8 +38,6 @@ items:
   - DrawnUi.Draw.SkiaShape.GetInflationForStroke(System.Single)
   - DrawnUi.Draw.SkiaShape.GetSmallUnderStroke(System.Single)
   - DrawnUi.Draw.SkiaShape.GetStrokePixels(System.Single)
-  - DrawnUi.Draw.SkiaShape.LayoutChildren
-  - DrawnUi.Draw.SkiaShape.LayoutChildrenProperty
   - DrawnUi.Draw.SkiaShape.MapStrokeCapToStrokeJoin(SkiaSharp.SKStrokeCap)
   - DrawnUi.Draw.SkiaShape.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaShape.MeasuredStrokeAwareChildrenSize
@@ -86,7 +84,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaShape
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.Maui.cs
@@ -175,8 +173,10 @@ items:
   - DrawnUi.Draw.SkiaLayout.MeasureStackLegacy(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaLayout.MeasureStackNonTemplated(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaLayout.MeasureStackTemplated(SkiaSharp.SKRect,System.Single)
+  - DrawnUi.Draw.SkiaLayout.MeasureStack(SkiaSharp.SKRect,System.Single,DrawnUi.Draw.LayoutStructure,System.Boolean,DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl[])
   - DrawnUi.Draw.SkiaLayout.OnBeforeDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
   - DrawnUi.Draw.SkiaLayout.OnAfterDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
+  - DrawnUi.Draw.SkiaLayout.GetStackChildDrawRect(System.Int32,System.Single,System.Single,DrawnUi.Draw.ControlInStack)
   - DrawnUi.Draw.SkiaLayout.DrawStack(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)
   - DrawnUi.Draw.SkiaLayout.PreArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaLayout.IsGestureForChild(DrawnUi.Draw.SkiaControlWithRect,SkiaSharp.SKPoint)
@@ -283,6 +283,7 @@ items:
   - DrawnUi.Draw.SkiaLayout.OnLoaded
   - DrawnUi.Draw.SkiaLayout.GetVisibleChildIndexAt(SkiaSharp.SKPoint)
   - DrawnUi.Draw.SkiaLayout.GetChildIndexAt(SkiaSharp.SKPoint)
+  - DrawnUi.Draw.SkiaLayout.GetOrderedSubviews(System.Boolean)
   - DrawnUi.Draw.SkiaLayout.MeasureGrid(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaLayout.DrawChildrenGrid(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaLayout.BuildGridLayout(SkiaSharp.SKSize)
@@ -714,6 +715,7 @@ items:
   - DrawnUi.Draw.SkiaControl.Layout(DrawnUi.Draw.DrawingContext,System.Int32,System.Int32,System.Int32,System.Int32)
   - DrawnUi.Draw.SkiaControl.PostArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureChild(DrawnUi.Draw.SkiaControl,System.Double,System.Double,System.Single)
+  - DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   - DrawnUi.Draw.SkiaControl.ApplyingBindingContext
   - DrawnUi.Draw.SkiaControl.BindingContextWasSet
@@ -819,6 +821,7 @@ items:
   - DrawnUi.Draw.SkiaControl.Invalidated
   - DrawnUi.Draw.SkiaControl.NeedUpdate
   - DrawnUi.Draw.SkiaControl.Superview
+  - DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
   - DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   - DrawnUi.Draw.SkiaControl.IsParentIndependent
   - DrawnUi.Draw.SkiaControl.WillNotUpdateParent
@@ -867,7 +870,6 @@ items:
   - DrawnUi.Draw.SkiaControl.LastGradient
   - DrawnUi.Draw.SkiaControl.LastShadow
   - DrawnUi.Draw.SkiaControl.SetupShadow(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaShadow,System.Single)
-  - DrawnUi.Draw.SkiaControl.GetOrderedSubviews(System.Boolean)
   - DrawnUi.Draw.SkiaControl.GetUnorderedSubviews(System.Boolean)
   - DrawnUi.Draw.SkiaControl.Views
   - DrawnUi.Draw.SkiaControl.DisposeChildren
@@ -905,6 +907,8 @@ items:
   - DrawnUi.Draw.SkiaControl._arrangedViewportHeightLimit
   - DrawnUi.Draw.SkiaControl._arrangedViewportWidthLimit
   - DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.CompareDoubles(System.Double,System.Double,System.Double)
   - DrawnUi.Draw.SkiaControl.CompareRects(SkiaSharp.SKRect,SkiaSharp.SKRect,System.Single)
@@ -1182,7 +1186,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.Bevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BevelTypeProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.Bevel.cs
@@ -1209,7 +1213,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.Bevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BevelType
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.Bevel.cs
@@ -1249,7 +1253,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.Bevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BevelProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.Bevel.cs
@@ -1276,7 +1280,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.Bevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Bevel
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.Bevel.cs
@@ -1323,7 +1327,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.Bevel.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintBevelEffect
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.Bevel.cs
@@ -1363,7 +1367,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyBindingContext
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1392,7 +1396,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuredStrokeAwareChildrenSize
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1423,7 +1427,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuredStrokeAwareClipSize
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1454,7 +1458,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuredStrokeAwareSize
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1485,7 +1489,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PathDataProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1512,7 +1516,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PathData
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1569,7 +1573,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TypeProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1596,7 +1600,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Type
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1648,7 +1652,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeGradientProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1675,7 +1679,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeGradient
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1724,7 +1728,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClipBackgroundColorProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1751,7 +1755,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ClipBackgroundColor
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1798,7 +1802,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeWidthProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1825,7 +1829,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeWidth
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1874,7 +1878,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeCapProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1901,7 +1905,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeCap
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
@@ -1938,84 +1942,6 @@ items:
       type: SkiaSharp.SKStrokeCap
     content.vb: Public Property StrokeCap As SKStrokeCap
   overload: DrawnUi.Draw.SkiaShape.StrokeCap*
-- uid: DrawnUi.Draw.SkiaShape.LayoutChildrenProperty
-  commentId: F:DrawnUi.Draw.SkiaShape.LayoutChildrenProperty
-  id: LayoutChildrenProperty
-  parent: DrawnUi.Draw.SkiaShape
-  langs:
-  - csharp
-  - vb
-  name: LayoutChildrenProperty
-  nameWithType: SkiaShape.LayoutChildrenProperty
-  fullName: DrawnUi.Draw.SkiaShape.LayoutChildrenProperty
-  type: Field
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
-      repo: https://github.com/taublast/DrawnUi.git
-    id: LayoutChildrenProperty
-    path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 269
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public static readonly BindableProperty LayoutChildrenProperty
-    return:
-      type: Microsoft.Maui.Controls.BindableProperty
-    content.vb: Public Shared ReadOnly LayoutChildrenProperty As BindableProperty
-- uid: DrawnUi.Draw.SkiaShape.LayoutChildren
-  commentId: P:DrawnUi.Draw.SkiaShape.LayoutChildren
-  id: LayoutChildren
-  parent: DrawnUi.Draw.SkiaShape
-  langs:
-  - csharp
-  - vb
-  name: LayoutChildren
-  nameWithType: SkiaShape.LayoutChildren
-  fullName: DrawnUi.Draw.SkiaShape.LayoutChildren
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
-      repo: https://github.com/taublast/DrawnUi.git
-    id: LayoutChildren
-    path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 292
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: Gets or sets how child elements are arranged within the shape.
-  remarks: >-
-    Available layout types:
-
-    - Absolute (default): Position children using explicit coordinates and size
-
-    - Column: Stack children vertically from top to bottom
-
-    - Row: Stack children horizontally from left to right
-
-    - Grid: Arrange children in rows and columns
-
-
-    The SkiaShape can work as a container with specific layout behavior while
-
-    still clipping its content to the shape's boundaries. This allows for creating
-
-    complex UI components with custom shapes and internal layouts.
-
-
-    Child elements are always clipped to the shape's boundaries regardless of layout type.
-  example: []
-  syntax:
-    content: public LayoutType LayoutChildren { get; set; }
-    parameters: []
-    return:
-      type: DrawnUi.Draw.LayoutType
-    content.vb: Public Property LayoutChildren As LayoutType
-  overload: DrawnUi.Draw.SkiaShape.LayoutChildren*
 - uid: DrawnUi.Draw.SkiaShape.StrokeBlendModeProperty
   commentId: F:DrawnUi.Draw.SkiaShape.StrokeBlendModeProperty
   id: StrokeBlendModeProperty
@@ -2030,11 +1956,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeBlendModeProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 298
+    startLine: 269
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2057,11 +1983,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeBlendMode
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 323
+    startLine: 294
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2114,11 +2040,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetDashArray
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 333
+    startLine: 304
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2150,11 +2076,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupType
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 361
+    startLine: 332
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2176,11 +2102,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WillStroke
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 385
+    startLine: 356
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2205,11 +2131,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetHalfStroke
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 390
+    startLine: 361
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2239,11 +2165,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetSmallUnderStroke
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 399
+    startLine: 370
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2273,11 +2199,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetStrokePixels
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 408
+    startLine: 379
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2307,11 +2233,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetInflationForStroke
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 417
+    startLine: 388
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2341,11 +2267,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateContentSizeForStroke
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 427
+    startLine: 398
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2377,11 +2303,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateClipSizeForStroke
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 440
+    startLine: 411
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2413,11 +2339,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateShapeSizeForStroke
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 457
+    startLine: 428
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2449,11 +2375,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateSizeForStroke
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 489
+    startLine: 460
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2483,11 +2409,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateSizeForStrokeFromContent
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 525
+    startLine: 496
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2519,11 +2445,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Arrange
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 552
+    startLine: 523
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2564,11 +2490,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetContentSizeForAutosizeInPixels
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 560
+    startLine: 531
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2596,11 +2522,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureContent
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 576
+    startLine: 547
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2641,11 +2567,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawPathResized
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 586
+    startLine: 557
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2670,11 +2596,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawPathAligned
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 587
+    startLine: 558
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2699,11 +2625,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BorderWithPixels
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 590
+    startLine: 561
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2728,11 +2654,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderingPaint
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 595
+    startLine: 566
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2757,11 +2683,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawPath
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 608
+    startLine: 579
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2799,11 +2725,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawPathShape
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 610
+    startLine: 581
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2828,11 +2754,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawRoundedRect
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 622
+    startLine: 593
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2868,11 +2794,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 626
+    startLine: 597
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2897,11 +2823,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateClip
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 641
+    startLine: 612
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2943,11 +2869,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCorrectedBackgroundRadii
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 777
+    startLine: 748
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2987,11 +2913,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintBackground
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 805
+    startLine: 776
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3027,11 +2953,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MapStrokeCapToStrokeJoin
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 890
+    startLine: 861
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3058,11 +2984,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintWithShadows
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 904
+    startLine: 875
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3091,11 +3017,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AddPaintArguments
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 909
+    startLine: 880
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3124,11 +3050,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 920
+    startLine: 891
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3162,11 +3088,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ShadowsProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1293
+    startLine: 1264
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3189,11 +3115,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Shadows
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1309
+    startLine: 1280
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3218,11 +3144,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PointsProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1340
+    startLine: 1311
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3245,11 +3171,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Points
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1354
+    startLine: 1325
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3286,11 +3212,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PolygonStar
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1361
+    startLine: 1332
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3315,11 +3241,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SmoothPointsProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1426
+    startLine: 1397
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3342,11 +3268,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SmoothPoints
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1456
+    startLine: 1427
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3394,11 +3320,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateStarPoints
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1603
+    startLine: 1574
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3430,11 +3356,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateStarPointsCrossed
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1651
+    startLine: 1622
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3464,11 +3390,11 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCompensatedStrokeWidth
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1709
+    startLine: 1680
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3505,7 +3431,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CornerRadiusProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.Maui.cs
@@ -3532,7 +3458,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CornerRadius
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.Maui.cs
@@ -3588,7 +3514,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokePathProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.Maui.cs
@@ -3615,7 +3541,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokePath
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.Maui.cs
@@ -3674,7 +3600,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeColorProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.Maui.cs
@@ -3701,7 +3627,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Draw/SkiaShape.Maui.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StrokeColor
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.Maui.cs
@@ -4496,6 +4422,95 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
+- uid: DrawnUi.Draw.SkiaLayout.MeasureStack(SkiaSharp.SKRect,System.Single,DrawnUi.Draw.LayoutStructure,System.Boolean,DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl[])
+  commentId: M:DrawnUi.Draw.SkiaLayout.MeasureStack(SkiaSharp.SKRect,System.Single,DrawnUi.Draw.LayoutStructure,System.Boolean,DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl[])
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStack_SkiaSharp_SKRect_System_Single_DrawnUi_Draw_LayoutStructure_System_Boolean_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaControl___
+  name: MeasureStack(SKRect, float, LayoutStructure, bool, SkiaControl, SkiaControl[])
+  nameWithType: SkiaLayout.MeasureStack(SKRect, float, LayoutStructure, bool, SkiaControl, SkiaControl[])
+  fullName: DrawnUi.Draw.SkiaLayout.MeasureStack(SkiaSharp.SKRect, float, DrawnUi.Draw.LayoutStructure, bool, DrawnUi.Draw.SkiaControl, DrawnUi.Draw.SkiaControl[])
+  nameWithType.vb: SkiaLayout.MeasureStack(SKRect, Single, LayoutStructure, Boolean, SkiaControl, SkiaControl())
+  fullName.vb: DrawnUi.Draw.SkiaLayout.MeasureStack(SkiaSharp.SKRect, Single, DrawnUi.Draw.LayoutStructure, Boolean, DrawnUi.Draw.SkiaControl, DrawnUi.Draw.SkiaControl())
+  name.vb: MeasureStack(SKRect, Single, LayoutStructure, Boolean, SkiaControl, SkiaControl())
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.MeasureStack(SkiaSharp.SKRect,System.Single,DrawnUi.Draw.LayoutStructure,System.Boolean,DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl[])
+    name: MeasureStack
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStack_SkiaSharp_SKRect_System_Single_DrawnUi_Draw_LayoutStructure_System_Boolean_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaControl___
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.LayoutStructure
+    name: LayoutStructure
+    href: DrawnUi.Draw.LayoutStructure.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.MeasureStack(SkiaSharp.SKRect,System.Single,DrawnUi.Draw.LayoutStructure,System.Boolean,DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl[])
+    name: MeasureStack
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_MeasureStack_SkiaSharp_SKRect_System_Single_DrawnUi_Draw_LayoutStructure_System_Boolean_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaControl___
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.LayoutStructure
+    name: LayoutStructure
+    href: DrawnUi.Draw.LayoutStructure.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: (
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.SkiaLayout.OnBeforeDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
   commentId: M:DrawnUi.Draw.SkiaLayout.OnBeforeDrawingVisibleChildren(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure,System.Collections.Generic.List{DrawnUi.Draw.ControlInStack})
   parent: DrawnUi.Draw.SkiaLayout
@@ -4621,6 +4636,71 @@ references:
     name: ControlInStack
     href: DrawnUi.Draw.ControlInStack.html
   - name: )
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.GetStackChildDrawRect(System.Int32,System.Single,System.Single,DrawnUi.Draw.ControlInStack)
+  commentId: M:DrawnUi.Draw.SkiaLayout.GetStackChildDrawRect(System.Int32,System.Single,System.Single,DrawnUi.Draw.ControlInStack)
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_GetStackChildDrawRect_System_Int32_System_Single_System_Single_DrawnUi_Draw_ControlInStack_
+  name: GetStackChildDrawRect(int, float, float, ControlInStack)
+  nameWithType: SkiaLayout.GetStackChildDrawRect(int, float, float, ControlInStack)
+  fullName: DrawnUi.Draw.SkiaLayout.GetStackChildDrawRect(int, float, float, DrawnUi.Draw.ControlInStack)
+  nameWithType.vb: SkiaLayout.GetStackChildDrawRect(Integer, Single, Single, ControlInStack)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.GetStackChildDrawRect(Integer, Single, Single, DrawnUi.Draw.ControlInStack)
+  name.vb: GetStackChildDrawRect(Integer, Single, Single, ControlInStack)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.GetStackChildDrawRect(System.Int32,System.Single,System.Single,DrawnUi.Draw.ControlInStack)
+    name: GetStackChildDrawRect
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_GetStackChildDrawRect_System_Int32_System_Single_System_Single_DrawnUi_Draw_ControlInStack_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ControlInStack
+    name: ControlInStack
+    href: DrawnUi.Draw.ControlInStack.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.GetStackChildDrawRect(System.Int32,System.Single,System.Single,DrawnUi.Draw.ControlInStack)
+    name: GetStackChildDrawRect
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_GetStackChildDrawRect_System_Int32_System_Single_System_Single_DrawnUi_Draw_ControlInStack_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ControlInStack
+    name: ControlInStack
+    href: DrawnUi.Draw.ControlInStack.html
   - name: )
 - uid: DrawnUi.Draw.SkiaLayout.DrawStack(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)
   commentId: M:DrawnUi.Draw.SkiaLayout.DrawStack(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.LayoutStructure)
@@ -6626,6 +6706,37 @@ references:
     name: SKPoint
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  - name: )
+- uid: DrawnUi.Draw.SkiaLayout.GetOrderedSubviews(System.Boolean)
+  commentId: M:DrawnUi.Draw.SkiaLayout.GetOrderedSubviews(System.Boolean)
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_GetOrderedSubviews_System_Boolean_
+  name: GetOrderedSubviews(bool)
+  nameWithType: SkiaLayout.GetOrderedSubviews(bool)
+  fullName: DrawnUi.Draw.SkiaLayout.GetOrderedSubviews(bool)
+  nameWithType.vb: SkiaLayout.GetOrderedSubviews(Boolean)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.GetOrderedSubviews(Boolean)
+  name.vb: GetOrderedSubviews(Boolean)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.GetOrderedSubviews(System.Boolean)
+    name: GetOrderedSubviews
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_GetOrderedSubviews_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.GetOrderedSubviews(System.Boolean)
+    name: GetOrderedSubviews
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_GetOrderedSubviews_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
 - uid: DrawnUi.Draw.SkiaLayout.MeasureGrid(SkiaSharp.SKRect,System.Single)
   commentId: M:DrawnUi.Draw.SkiaLayout.MeasureGrid(SkiaSharp.SKRect,System.Single)
@@ -15601,6 +15712,73 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  name: MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  nameWithType: SkiaControl.MeasureContentCore(IEnumerable<SkiaControl>, SKRect, float)
+  fullName: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable<DrawnUi.Draw.SkiaControl>, SkiaSharp.SKRect, float)
+  nameWithType.vb: SkiaControl.MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable(Of DrawnUi.Draw.SkiaControl), SkiaSharp.SKRect, Single)
+  name.vb: MeasureContentCore(IEnumerable(Of SkiaControl), SKRect, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
+    name: MeasureContentCore
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureContentCore_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__SkiaSharp_SKRect_System_Single_
+  - name: (
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   commentId: M:DrawnUi.Draw.SkiaControl.SetInheritedBindingContext(System.Object)
   parent: DrawnUi.Draw.SkiaControl
@@ -17858,6 +18036,31 @@ references:
   name: Superview
   nameWithType: SkiaControl.Superview
   fullName: DrawnUi.Draw.SkiaControl.Superview
+- uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  name: SetSuperview(DrawnView)
+  nameWithType: SkiaControl.SetSuperview(DrawnView)
+  fullName: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SetSuperview(DrawnUi.Views.DrawnView)
+    name: SetSuperview
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetSuperview_DrawnUi_Views_DrawnView_
+  - name: (
+  - uid: DrawnUi.Views.DrawnView
+    name: DrawnView
+    href: DrawnUi.Views.DrawnView.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   commentId: F:DrawnUi.Draw.SkiaControl.DelegateGetOnScreenVisibleArea
   parent: DrawnUi.Draw.SkiaControl
@@ -19175,37 +19378,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
-- uid: DrawnUi.Draw.SkiaControl.GetOrderedSubviews(System.Boolean)
-  commentId: M:DrawnUi.Draw.SkiaControl.GetOrderedSubviews(System.Boolean)
-  parent: DrawnUi.Draw.SkiaControl
-  isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetOrderedSubviews_System_Boolean_
-  name: GetOrderedSubviews(bool)
-  nameWithType: SkiaControl.GetOrderedSubviews(bool)
-  fullName: DrawnUi.Draw.SkiaControl.GetOrderedSubviews(bool)
-  nameWithType.vb: SkiaControl.GetOrderedSubviews(Boolean)
-  fullName.vb: DrawnUi.Draw.SkiaControl.GetOrderedSubviews(Boolean)
-  name.vb: GetOrderedSubviews(Boolean)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.GetOrderedSubviews(System.Boolean)
-    name: GetOrderedSubviews
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetOrderedSubviews_System_Boolean_
-  - name: (
-  - uid: System.Boolean
-    name: bool
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.boolean
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.GetOrderedSubviews(System.Boolean)
-    name: GetOrderedSubviews
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetOrderedSubviews_System_Boolean_
-  - name: (
-  - uid: System.Boolean
-    name: Boolean
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.boolean
-  - name: )
 - uid: DrawnUi.Draw.SkiaControl.GetUnorderedSubviews(System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.GetUnorderedSubviews(System.Boolean)
   parent: DrawnUi.Draw.SkiaControl
@@ -19935,6 +20107,101 @@ references:
   name: _lastMeasuredForScale
   nameWithType: SkiaControl._lastMeasuredForScale
   fullName: DrawnUi.Draw.SkiaControl._lastMeasuredForScale
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  name: RoundToPixels(SKRect)
+  nameWithType: SkiaControl.RoundToPixels(SKRect)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(SkiaSharp.SKRect)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  name: RoundToPixels(float, float, float, float)
+  nameWithType: SkiaControl.RoundToPixels(float, float, float, float)
+  fullName: DrawnUi.Draw.SkiaControl.RoundToPixels(float, float, float, float)
+  nameWithType.vb: SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.RoundToPixels(Single, Single, Single, Single)
+  name.vb: RoundToPixels(Single, Single, Single, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.RoundToPixels(System.Single,System.Single,System.Single,System.Single)
+    name: RoundToPixels
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RoundToPixels_System_Single_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.CompareFloats(System.Single,System.Single,System.Single)
   parent: DrawnUi.Draw.SkiaControl
@@ -34791,19 +35058,6 @@ references:
   name: SKStrokeCap
   nameWithType: SKStrokeCap
   fullName: SkiaSharp.SKStrokeCap
-- uid: DrawnUi.Draw.SkiaShape.LayoutChildren*
-  commentId: Overload:DrawnUi.Draw.SkiaShape.LayoutChildren
-  href: DrawnUi.Draw.SkiaShape.html#DrawnUi_Draw_SkiaShape_LayoutChildren
-  name: LayoutChildren
-  nameWithType: SkiaShape.LayoutChildren
-  fullName: DrawnUi.Draw.SkiaShape.LayoutChildren
-- uid: DrawnUi.Draw.LayoutType
-  commentId: T:DrawnUi.Draw.LayoutType
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.LayoutType.html
-  name: LayoutType
-  nameWithType: LayoutType
-  fullName: DrawnUi.Draw.LayoutType
 - uid: DrawnUi.Draw.SkiaShape.StrokeBlendMode*
   commentId: Overload:DrawnUi.Draw.SkiaShape.StrokeBlendMode
   href: DrawnUi.Draw.SkiaShape.html#DrawnUi_Draw_SkiaShape_StrokeBlendMode

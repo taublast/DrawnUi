@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Shaders/SKSL.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkSl
     path: ../src/Maui/DrawnUi/Features/Shaders/SKSL.cs
@@ -56,7 +56,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Shaders/SKSL.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadFromResourcesAsync
     path: ../src/Maui/DrawnUi/Features/Shaders/SKSL.cs
@@ -90,7 +90,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Shaders/SKSL.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadFromResources
     path: ../src/Maui/DrawnUi/Features/Shaders/SKSL.cs
@@ -124,7 +124,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Shaders/SKSL.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CompiledCache
     path: ../src/Maui/DrawnUi/Features/Shaders/SKSL.cs
@@ -151,7 +151,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Shaders/SKSL.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Compile
     path: ../src/Maui/DrawnUi/Features/Shaders/SKSL.cs
@@ -189,7 +189,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Shaders/SKSL.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Compile
     path: ../src/Maui/DrawnUi/Features/Shaders/SKSL.cs
@@ -237,7 +237,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Features/Shaders/SKSL.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateShader
     path: ../src/Maui/DrawnUi/Features/Shaders/SKSL.cs

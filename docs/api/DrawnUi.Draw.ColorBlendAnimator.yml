@@ -23,7 +23,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/ColorBlendAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorBlendAnimator
     path: ../src/Shared/Features/Animators/ColorBlendAnimator.cs
@@ -114,7 +114,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/ColorBlendAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Features/Animators/ColorBlendAnimator.cs
@@ -146,7 +146,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/ColorBlendAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnProgressChanged
     path: ../src/Shared/Features/Animators/ColorBlendAnimator.cs
@@ -180,7 +180,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/ColorBlendAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Color
     path: ../src/Shared/Features/Animators/ColorBlendAnimator.cs
@@ -209,7 +209,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/ColorBlendAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Color1
     path: ../src/Shared/Features/Animators/ColorBlendAnimator.cs
@@ -238,7 +238,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/ColorBlendAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Color2
     path: ../src/Shared/Features/Animators/ColorBlendAnimator.cs
@@ -267,7 +267,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/ColorBlendAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnColorChanged
     path: ../src/Shared/Features/Animators/ColorBlendAnimator.cs
@@ -296,7 +296,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/ColorBlendAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetColor
     path: ../src/Shared/Features/Animators/ColorBlendAnimator.cs
@@ -334,7 +334,7 @@ items:
   source:
     remote:
       path: src/Shared/Features/Animators/ColorBlendAnimator.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AnimateAsync
     path: ../src/Shared/Features/Animators/ColorBlendAnimator.cs

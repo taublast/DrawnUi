@@ -19,7 +19,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/MeasuringConstraints.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuringConstraints
     path: ../src/Shared/Internals/Models/MeasuringConstraints.cs
@@ -53,7 +53,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/MeasuringConstraints.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Margins
     path: ../src/Shared/Internals/Models/MeasuringConstraints.cs
@@ -82,7 +82,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/MeasuringConstraints.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TotalMargins
     path: ../src/Shared/Internals/Models/MeasuringConstraints.cs
@@ -113,7 +113,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/MeasuringConstraints.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Request
     path: ../src/Shared/Internals/Models/MeasuringConstraints.cs
@@ -142,7 +142,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Models/MeasuringConstraints.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Content
     path: ../src/Shared/Internals/Models/MeasuringConstraints.cs

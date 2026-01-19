@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/GradientType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GradientType
     path: ../src/Shared/Internals/Enums/GradientType.cs
@@ -48,7 +48,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/GradientType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: None
     path: ../src/Shared/Internals/Enums/GradientType.cs
@@ -74,7 +74,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/GradientType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Linear
     path: ../src/Shared/Internals/Enums/GradientType.cs
@@ -100,7 +100,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/GradientType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Circular
     path: ../src/Shared/Internals/Enums/GradientType.cs
@@ -126,7 +126,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/GradientType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Oval
     path: ../src/Shared/Internals/Enums/GradientType.cs
@@ -152,7 +152,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/GradientType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Sweep
     path: ../src/Shared/Internals/Enums/GradientType.cs
@@ -178,7 +178,7 @@ items:
   source:
     remote:
       path: src/Shared/Internals/Enums/GradientType.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Conical
     path: ../src/Shared/Internals/Enums/GradientType.cs

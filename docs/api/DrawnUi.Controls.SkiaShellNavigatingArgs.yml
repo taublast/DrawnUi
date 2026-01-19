@@ -21,7 +21,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaShellNavigatingArgs
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
@@ -60,7 +60,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
@@ -98,7 +98,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Cancel
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
@@ -129,7 +129,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Route
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
@@ -160,7 +160,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: View
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
@@ -191,7 +191,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Previous
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
@@ -222,7 +222,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs

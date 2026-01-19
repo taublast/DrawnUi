@@ -16,7 +16,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DiagnosticData
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
@@ -53,7 +53,7 @@ items:
   source:
     remote:
       path: src/Maui/DrawnUi/Views/DrawnView.cs
-      branch: 2-A
+      branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LayersSaved
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
