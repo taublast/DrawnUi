@@ -1059,10 +1059,11 @@ public partial class SkiaCamera : SkiaControl
 
             await Task.Delay(100); // just in case
 
-            var authStatus = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.ReadWrite);
-            if (authStatus != PHAuthorizationStatus.Authorized)
+            // Request AddOnly access for saving videos (sufficient for saving, no read needed)
+            var authStatus = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.AddOnly);
+            if (authStatus != PHAuthorizationStatus.Authorized && authStatus != PHAuthorizationStatus.Limited)
             {
-                Debug.WriteLine("Photos permission not granted");
+                Debug.WriteLine($"Photos permission not granted. Status: {authStatus}");
                 return null;
             }
 
