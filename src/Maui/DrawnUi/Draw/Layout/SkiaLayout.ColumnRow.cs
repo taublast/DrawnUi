@@ -1370,13 +1370,13 @@ else
                     stackY += maxRowHeight;
                 }
 
-                // Inline ApplyFillConstraints
-                if (HorizontalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Width >= 0)
+                // apply fill constraints
+                if (float.IsFinite(rectForChildrenPixels.Width) && HorizontalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Width >= 0)
                     stackWidth = rectForChildrenPixels.Width;
-                if (VerticalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Height >= 0)
+
+                if (float.IsFinite(rectForChildrenPixels.Height) && VerticalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Height >= 0)
                     stackHeight = rectForChildrenPixels.Height;
 
-                // Only process second pass if needed
                 if (needSecondPass)
                 {
                     ProcessSecondPass(rectForChildrenPixels, stackWidth, stackHeight);
