@@ -1973,17 +1973,14 @@ namespace DrawnUi.Camera
                 // and to avoid 'Writer DEADLOCK' caused by large gaps (e.g. Video@0, Audio@1.3s).
                 // This assumes the buffer content is roughly synced by wall-clock or that strict sync isn't critical for pre-recording.
 
-                // OPTIMIZATION: Cyclic Buffer Pool (Ring Buffer)
-                // We use a larger pool to mimic "allocation per frame" without the overhead.
-                // A size of 30 ensures that a buffer is not reused for ~1 second (at 30fps),
-                // giving AVAssetWriter ample time to finish encoding it before we overwrite.
-                const int BufferPoolSize = 30;
-                IntPtr[] frameBuffers = new IntPtr[BufferPoolSize];
-                int[] bufferSizes = new int[BufferPoolSize];
-                
                 try
                 {
                     int loopGuard = 0;
+
+                    // Optimization: Reuse arrays to avoid GC pressure at 120fps
+                    var reusableSampleSizes = new nuint[1];
+                    var reusableTiming = new CMSampleTimingInfo[1];
+
                 while (hasMoreVideo || aIndex < aCount)
                 {
                     loopGuard++;
@@ -2031,32 +2028,66 @@ namespace DrawnUi.Camera
                             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame 1 Data: {data[0]:X2} {data[1]:X2} {data[2]:X2} {data[3]:X2}");
                         }
 
-                        // SAFE EXECUTION: CYCLIC POOL (30 FRAMES)
-                        // We rotate through 30 distinct buffers. buffer[i] is only reused after 29 other frames.
-                        // This prevents overwrite corruption without the cost of Alloc/Free per frame.
-                        int bufferIndex = frameIndex % BufferPoolSize;
+                        // SAFE EXECUTION: CORE MEDIA ALLOCATION (Race-Free)
+                        // Instead of a ring buffer (which risks overwrite if writer lags > buffer size),
+                        // we let CoreMedia allocate a new native memory block for each frame.
+                        // This guarantees that AVAssetWriter owns its own data.
+                        // Safe CoreMedia Allocation
                         
-                        if (data.Length > bufferSizes[bufferIndex])
+                        CMBlockBuffer blockBuffer = CMBlockBuffer.CreateEmpty(0, 0, out var emptyErr);
+                        
+                        if (emptyErr != CMBlockBufferError.None || blockBuffer == null)
                         {
-                            if (frameBuffers[bufferIndex] != IntPtr.Zero)
-                                Marshal.FreeHGlobal(frameBuffers[bufferIndex]);
-                                
-                            bufferSizes[bufferIndex] = (int)(data.Length * 1.5); // Grow significantly to avoid repeated reallocs
-                            frameBuffers[bufferIndex] = Marshal.AllocHGlobal(bufferSizes[bufferIndex]);
+                             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] CreateEmpty failed: {emptyErr}");
+                             hasMoreVideo = videoEnumerator.MoveNext();
+                             continue;
+                        }
+
+                        // Allocate memory within the block buffer (Native allocation)
+                        // Use IntPtr.Zero to tell CoreMedia to allocate the memory
+                        var allocErr = blockBuffer.AppendMemoryBlock(
+                            IntPtr.Zero, 
+                            (nuint)data.Length, 
+                            null, 
+                            0, 
+                            (nuint)data.Length, 
+                            0);
+
+                        if (allocErr != CMBlockBufferError.None)
+                        {
+                             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] AppendMemoryBlock failed: {allocErr}");
+                             blockBuffer.Dispose();
+                             hasMoreVideo = videoEnumerator.MoveNext();
+                             continue;
                         }
                         
-                        // Copy managed byte[] to our unmanaged buffer slot
-                        Marshal.Copy(data, 0, frameBuffers[bufferIndex], data.Length);
+                         // Ensure memory is accessible
+                        var assureErr = blockBuffer.AssureBlockMemory();
+                         if (assureErr != CMBlockBufferError.None)
+                        {
+                             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] AssureBlockMemory failed: {assureErr}");
+                             blockBuffer.Dispose();
+                             hasMoreVideo = videoEnumerator.MoveNext();
+                             continue;
+                        }
 
-                        // We still use Flag 4 (AlwaysCopyData) as "Best Effort" safety
-                        var blockBuffer = CMBlockBuffer.FromMemoryBlock(
-                            frameBuffers[bufferIndex],
-                            (nuint)data.Length,
-                            null,
-                            0,
-                            (nuint)data.Length,
-                            (CMBlockBufferFlags)4 | CMBlockBufferFlags.AssureMemoryNow,
-                            out var blockError);
+                        // Copy data from managed array to native buffer
+                        nuint lengthAtOffset;
+                        nuint totalLength;
+                        IntPtr dataPointer = IntPtr.Zero;
+                        
+                        var ptrErr = blockBuffer.GetDataPointer(0, out lengthAtOffset, out totalLength, ref dataPointer);
+                        
+                        if (ptrErr != CMBlockBufferError.None)
+                        {
+                             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] GetDataPointer failed: {ptrErr}");
+                             blockBuffer.Dispose();
+                             hasMoreVideo = videoEnumerator.MoveNext();
+                             continue;
+                        }
+
+                        // Copy
+                        Marshal.Copy(data, 0, dataPointer, data.Length);
 
                         // Buffer persists in 'frameBuffers' array until we wrap around (1 second later)
                         
@@ -2077,13 +2108,16 @@ namespace DrawnUi.Camera
                                 DecodeTimeStamp = CMTime.Invalid
                             };
 
-                            var sampleSizes = new nuint[] { (nuint)data.Length };
+                            // Update reusable arrays to avoid allocations
+                            reusableTiming[0] = timing;
+                            reusableSampleSizes[0] = (nuint)data.Length;
+
                             var sampleBuffer = CMSampleBuffer.CreateReady(
                                 blockBuffer,
                                 formatDesc,
                                 1,
-                                new[] { timing },
-                                sampleSizes,
+                                reusableTiming,
+                                reusableSampleSizes,
                                 out var sampleError);
 
                             if (sampleBuffer == null || sampleError != CMSampleBufferError.None)
@@ -2220,15 +2254,7 @@ namespace DrawnUi.Camera
                 } // End of Try
                 finally
                 {
-                    // Clean up buffer pool
-                    for (int i = 0; i < BufferPoolSize; i++)
-                    {
-                        if (frameBuffers[i] != IntPtr.Zero)
-                        {
-                            Marshal.FreeHGlobal(frameBuffers[i]);
-                            frameBuffers[i] = IntPtr.Zero;
-                        }
-                    }
+                   // CoreMedia buffers are self-cleaning via ref-counting
                 }
 
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Write complete: Video {appendedCount}/{frameCount}, Audio {audioWrittenCount}/{aCount} (failed: {audioFailedCount})");
