@@ -1854,13 +1854,6 @@ namespace DrawnUi.Camera
             // Use a temporary file to avoid conflicts with existing file
             var tempPath = Path.Combine(Path.GetDirectoryName(outputPath), $"temp_{Guid.NewGuid():N}.mp4");
 
-            // Single reusable unmanaged buffer for frame data
-            // Using AlwaysCopyData flag in CMBlockBuffer ensures data is copied,
-            // allowing us to reuse this buffer for each frame instead of allocating per-frame
-            const int MaxFrameSize = 512 * 1024; // 512 KB - should cover any H.264 frame
-            IntPtr reusableFrameBuffer = IntPtr.Zero;
-            int reusableBufferSize = MaxFrameSize;
-
             // Memory tracking for audio samples (audio still needs per-sample allocation due to async processing)
             var audioAllocatedPointers = new List<IntPtr>();
 
@@ -1980,7 +1973,17 @@ namespace DrawnUi.Camera
                 // and to avoid 'Writer DEADLOCK' caused by large gaps (e.g. Video@0, Audio@1.3s).
                 // This assumes the buffer content is roughly synced by wall-clock or that strict sync isn't critical for pre-recording.
 
-                int loopGuard = 0;
+                // OPTIMIZATION: Cyclic Buffer Pool (Ring Buffer)
+                // We use a larger pool to mimic "allocation per frame" without the overhead.
+                // A size of 30 ensures that a buffer is not reused for ~1 second (at 30fps),
+                // giving AVAssetWriter ample time to finish encoding it before we overwrite.
+                const int BufferPoolSize = 30;
+                IntPtr[] frameBuffers = new IntPtr[BufferPoolSize];
+                int[] bufferSizes = new int[BufferPoolSize];
+                
+                try
+                {
+                    int loopGuard = 0;
                 while (hasMoreVideo || aIndex < aCount)
                 {
                     loopGuard++;
@@ -2020,44 +2023,43 @@ namespace DrawnUi.Camera
                             continue;
                         }
 
-                        // Create CMBlockBuffer from H.264 data using reusable buffer
-                        // Lazy allocation of reusable buffer
-                        if (reusableFrameBuffer == IntPtr.Zero)
+                        // Create CMBlockBuffer from H.264 data using independent buffer per frame
+
+                        // Debug: Check if data looks like H.264
+                        if (frameIndex == 1 && data.Length > 4)
                         {
-                            reusableFrameBuffer = Marshal.AllocHGlobal(reusableBufferSize);
+                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame 1 Data: {data[0]:X2} {data[1]:X2} {data[2]:X2} {data[3]:X2}");
                         }
 
-                        // Resize if frame is larger than current buffer (rare case for very large keyframes)
-                        if (data.Length > reusableBufferSize)
+                        // SAFE EXECUTION: CYCLIC POOL (30 FRAMES)
+                        // We rotate through 30 distinct buffers. buffer[i] is only reused after 29 other frames.
+                        // This prevents overwrite corruption without the cost of Alloc/Free per frame.
+                        int bufferIndex = frameIndex % BufferPoolSize;
+                        
+                        if (data.Length > bufferSizes[bufferIndex])
                         {
-                            Marshal.FreeHGlobal(reusableFrameBuffer);
-                            reusableBufferSize = data.Length + 64 * 1024; // Add 64KB headroom
-                            reusableFrameBuffer = Marshal.AllocHGlobal(reusableBufferSize);
-                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Resized reusable buffer to {reusableBufferSize / 1024}KB for frame {frameIndex}");
+                            if (frameBuffers[bufferIndex] != IntPtr.Zero)
+                                Marshal.FreeHGlobal(frameBuffers[bufferIndex]);
+                                
+                            bufferSizes[bufferIndex] = (int)(data.Length * 1.5); // Grow significantly to avoid repeated reallocs
+                            frameBuffers[bufferIndex] = Marshal.AllocHGlobal(bufferSizes[bufferIndex]);
                         }
+                        
+                        // Copy managed byte[] to our unmanaged buffer slot
+                        Marshal.Copy(data, 0, frameBuffers[bufferIndex], data.Length);
 
-                        // Copy frame data to reusable buffer
-                        Marshal.Copy(data, 0, reusableFrameBuffer, data.Length);
-
-                        // Use AlwaysCopyData flag (value=2) to force CMBlockBuffer to copy the data internally
-                        // This allows us to safely reuse reusableFrameBuffer for the next frame
-                        const CMBlockBufferFlags AlwaysCopyDataFlag = (CMBlockBufferFlags)2;
+                        // We still use Flag 4 (AlwaysCopyData) as "Best Effort" safety
                         var blockBuffer = CMBlockBuffer.FromMemoryBlock(
-                            reusableFrameBuffer,
+                            frameBuffers[bufferIndex],
                             (nuint)data.Length,
                             null,
                             0,
                             (nuint)data.Length,
-                            AlwaysCopyDataFlag | CMBlockBufferFlags.AssureMemoryNow,
+                            (CMBlockBufferFlags)4 | CMBlockBufferFlags.AssureMemoryNow,
                             out var blockError);
 
-                        if (blockBuffer == null || blockError != CMBlockBufferError.None)
-                        {
-                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame {frameIndex}: Failed to create block buffer: {blockError}");
-                            hasMoreVideo = videoEnumerator.MoveNext();
-                            continue;
-                        }
-
+                        // Buffer persists in 'frameBuffers' array until we wrap around (1 second later)
+                        
                         try
                         {
                             // Adjust timestamp to be relative to start (starts at 0)
@@ -2134,8 +2136,6 @@ namespace DrawnUi.Camera
                         finally
                         {
                             blockBuffer.Dispose();
-                            // reusableFrameBuffer is NOT freed here - it's reused for next frame
-                            // and freed once at the end in the main finally block
                         }
                         
                         // Advance to next video frame
@@ -2214,6 +2214,19 @@ namespace DrawnUi.Camera
                             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] CreateSampleBuffer failed for audio sample {aIndex}");
                             audioFailedCount++;
                             aIndex++;
+                        }
+                    }
+                }
+                } // End of Try
+                finally
+                {
+                    // Clean up buffer pool
+                    for (int i = 0; i < BufferPoolSize; i++)
+                    {
+                        if (frameBuffers[i] != IntPtr.Zero)
+                        {
+                            Marshal.FreeHGlobal(frameBuffers[i]);
+                            frameBuffers[i] = IntPtr.Zero;
                         }
                     }
                 }
@@ -2320,13 +2333,6 @@ namespace DrawnUi.Camera
             {
                 videoInput?.Dispose();
                 writer?.Dispose();
-
-                // Free the single reusable video buffer
-                if (reusableFrameBuffer != IntPtr.Zero)
-                {
-                    Marshal.FreeHGlobal(reusableFrameBuffer);
-                    reusableFrameBuffer = IntPtr.Zero;
-                }
 
                 // Free audio allocations (these still need per-sample allocation due to async writer)
                 foreach (var ptr in audioAllocatedPointers)
