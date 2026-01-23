@@ -872,7 +872,7 @@ public partial class SkiaCamera : SkiaControl
     /// <summary>
     /// Android implementation to move video from temp to public gallery
     /// </summary>
-    private async Task<string> MoveVideoToGalleryAndroid(string privateVideoPath, string album, bool deleteOriginal)
+    protected async Task<string> MoveVideoToGalleryAndroid(string privateVideoPath, string album, bool deleteOriginal)
     {
         try
         {
@@ -994,135 +994,153 @@ public partial class SkiaCamera : SkiaControl
 
 #if IOS || MACCATALYST
 
-    private async Task<Photos.PHAssetCollection> FindOrCreateAlbumAsync(string albumName)
-    {
-        try
-        {
-            // 1. Find existing
-            var fetchOptions = new Photos.PHFetchOptions();
-            fetchOptions.Predicate = Foundation.NSPredicate.FromFormat($"title = '{albumName}'");
-            var collection = Photos.PHAssetCollection.FetchAssetCollections(Photos.PHAssetCollectionType.Album, Photos.PHAssetCollectionSubtype.Any, fetchOptions);
-
-            if (collection.Count > 0)
-            {
-                return collection.FirstObject as Photos.PHAssetCollection;
-            }
-
-            // 2. Create new
-            var tcs = new TaskCompletionSource<bool>();
-            string albumLocalId = null;
-
-            Photos.PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
-            {
-                var request = Photos.PHAssetCollectionChangeRequest.CreateAssetCollection(albumName);
-                albumLocalId = request.PlaceholderForCreatedAssetCollection.LocalIdentifier;
-            }, (success, error) =>
-            {
-                if (!success) Debug.WriteLine($"[SkiaCamera] Error creating album: {error}");
-                tcs.TrySetResult(success);
-            });
-
-            if (await tcs.Task)
-            {
-                var fetchOptions2 = new Photos.PHFetchOptions();
-                fetchOptions2.Predicate = Foundation.NSPredicate.FromFormat($"localIdentifier = '{albumLocalId}'");
-                var collection2 = Photos.PHAssetCollection.FetchAssetCollections(Photos.PHAssetCollectionType.Album, Photos.PHAssetCollectionSubtype.Any, fetchOptions2);
-                return collection2.FirstObject as Photos.PHAssetCollection;
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[SkiaCamera] FindOrCreateAlbumAsync error: {ex}");
-        }
-        return null;
-    }
-
     /// <summary>
-    /// iOS/macOS implementation to move video from temp to Photos library
+    /// iOS/macOS implementation to move video from temp to Photos library.
+    /// iOS 26 fix: uses two-step approach to avoid stale album references across PerformChanges calls.
     /// </summary>
-    private async Task<string> MoveVideoToGalleryApple(string privateVideoPath, string album, bool deleteOriginal)
+    protected async Task<string> MoveVideoToGalleryApple(string privateVideoPath, string album, bool deleteOriginal)
     {
         try
         {
             if (!File.Exists(privateVideoPath))
             {
-                Debug.WriteLine($"File does not exist: {privateVideoPath}");
+                Debug.WriteLine($"[SkiaCamera] File does not exist: {privateVideoPath}");
                 return null;
             }
 
             var fileInfo = new FileInfo(privateVideoPath);
             if (fileInfo.Length == 0)
             {
-                Debug.WriteLine($"File is empty: {privateVideoPath}");
+                Debug.WriteLine($"[SkiaCamera] File is empty: {privateVideoPath}");
                 return null;
             }
 
             await Task.Delay(100); // just in case
 
-            // Request AddOnly access for saving videos (sufficient for saving, no read needed)
-            var authStatus = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.AddOnly);
+            var authStatus = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.ReadWrite);
             if (authStatus != PHAuthorizationStatus.Authorized && authStatus != PHAuthorizationStatus.Limited)
             {
-                Debug.WriteLine($"Photos permission not granted. Status: {authStatus}");
+                Debug.WriteLine($"[SkiaCamera] Photos permission not granted. Status: {authStatus}");
                 return null;
             }
 
-            PHAssetCollection albumCollection = null;
-            if (!string.IsNullOrEmpty(album))
-            {
-                albumCollection = await FindOrCreateAlbumAsync(album);
-            }
-
             var tempUrl = NSUrl.FromFilename(privateVideoPath);
-            var tcs = new TaskCompletionSource<string>(); // will return localIdentifier
-
+            var tcs = new TaskCompletionSource<string>();
             PHObjectPlaceholder placeholder = null;
 
+            // STEP 1: Create video asset ONLY (no album operations)
             PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
             {
                 var request = PHAssetChangeRequest.FromVideo(tempUrl);
-
-                // Important: capture the placeholder immediately
                 placeholder = request.PlaceholderForCreatedAsset;
-
-                if (albumCollection != null)
-                {
-                    var albumRequest = PHAssetCollectionChangeRequest.ChangeRequest(albumCollection);
-                    albumRequest?.AddAssets(new PHObject[] { placeholder });
-                }
             },
             (success, error) =>
             {
                 if (success && placeholder != null)
                 {
                     string localId = placeholder.LocalIdentifier;
-
-                    if (deleteOriginal)
-                    {
-                        //delay to make sure ios gallery picks all up
-                        Tasks.StartDelayed(TimeSpan.FromSeconds(2), () =>
-                        {
-                            try { File.Delete(privateVideoPath); }
-                            catch (Exception ex) { Debug.WriteLine($"Delete failed: {ex.Message}"); }
-                        });
-                    }
-
-                    Debug.WriteLine($"Video saved successfully. LocalIdentifier: {localId}");
+                    Debug.WriteLine($"[SkiaCamera] Video saved successfully. LocalIdentifier: {localId}");
                     tcs.SetResult(localId);
                 }
                 else
                 {
-                    Debug.WriteLine($"Photos save failed: {error?.LocalizedDescription}");
+                    Debug.WriteLine($"[SkiaCamera] Photos save failed: {error?.LocalizedDescription}");
                     tcs.SetResult(null);
                 }
             });
 
-            return await tcs.Task;
+            var videoLocalId = await tcs.Task;
+
+            if (string.IsNullOrEmpty(videoLocalId))
+                return null;
+
+            // STEP 2: Add to album in SEPARATE operation (if album specified)
+            if (!string.IsNullOrEmpty(album))
+            {
+                await AddAssetToAlbumAsync(videoLocalId, album);
+            }
+
+            // Delete original if requested
+            if (deleteOriginal)
+            {
+                Tasks.StartDelayed(TimeSpan.FromSeconds(2), () =>
+                {
+                    try { File.Delete(privateVideoPath); }
+                    catch (Exception ex) { Debug.WriteLine($"[SkiaCamera] Delete failed: {ex.Message}"); }
+                });
+            }
+
+            return videoLocalId;
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Exception: {ex.Message}");
+            Debug.WriteLine($"[SkiaCamera] Exception: {ex.Message}");
             return null;
+        }
+    }
+
+    /// <summary>
+    /// Adds an existing asset to an album (creates album if needed).
+    /// iOS 26 fix: fetches album fresh INSIDE PerformChanges to avoid stale references.
+    /// </summary>
+    private async Task AddAssetToAlbumAsync(string assetLocalId, string albumName)
+    {
+        try
+        {
+            var tcs = new TaskCompletionSource<bool>();
+
+            PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
+            {
+                // Fetch the asset we just created
+                var assets = PHAsset.FetchAssetsUsingLocalIdentifiers(new[] { assetLocalId }, null);
+                if (assets.Count == 0)
+                {
+                    Debug.WriteLine($"[SkiaCamera] AddAssetToAlbum: Asset not found: {assetLocalId}");
+                    return;
+                }
+                var asset = assets.FirstObject as PHAsset;
+
+                // Find or create album INSIDE the same PerformChanges
+                var fetchOptions = new PHFetchOptions();
+                fetchOptions.Predicate = Foundation.NSPredicate.FromFormat($"title = '{albumName}'");
+                var albums = PHAssetCollection.FetchAssetCollections(
+                    PHAssetCollectionType.Album, PHAssetCollectionSubtype.Any, fetchOptions);
+
+                PHAssetCollectionChangeRequest albumChangeRequest;
+
+                if (albums.Count > 0)
+                {
+                    // Album exists - get fresh change request
+                    var albumCollection = albums.FirstObject as PHAssetCollection;
+                    albumChangeRequest = PHAssetCollectionChangeRequest.ChangeRequest(albumCollection);
+                }
+                else
+                {
+                    // Create new album in same transaction
+                    albumChangeRequest = PHAssetCollectionChangeRequest.CreateAssetCollection(albumName);
+                }
+
+                // Add asset to album
+                albumChangeRequest?.AddAssets(new PHObject[] { asset });
+            },
+            (success, error) =>
+            {
+                if (success)
+                {
+                    Debug.WriteLine($"[SkiaCamera] Asset added to album '{albumName}'");
+                }
+                else
+                {
+                    Debug.WriteLine($"[SkiaCamera] AddAssetToAlbum failed: {error?.LocalizedDescription}");
+                }
+                tcs.TrySetResult(success);
+            });
+
+            await tcs.Task;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] AddAssetToAlbum exception: {ex.Message}");
         }
     }
 
@@ -1185,7 +1203,7 @@ public partial class SkiaCamera : SkiaControl
     /// <summary>
     /// Windows implementation to move video from temp to Pictures/Videos folder
     /// </summary>
-    private async Task<string> MoveVideoToGalleryWindows(string privateVideoPath, string album, bool deleteOriginal)
+    protected async Task<string> MoveVideoToGalleryWindows(string privateVideoPath, string album, bool deleteOriginal)
     {
         try
         {

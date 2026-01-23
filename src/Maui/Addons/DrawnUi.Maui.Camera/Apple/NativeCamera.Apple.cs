@@ -1371,8 +1371,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             {
                 _isCapturingStill = true;
 
-                // Request AddOnly access for saving photos (iOS 14+)
-                var status = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.AddOnly);
+                var status = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.ReadWrite);
                 if (status != PHAuthorizationStatus.Authorized && status != PHAuthorizationStatus.Limited)
                 {
                     Debug.WriteLine($"[NativeCamera.Apple] Photo library access denied. Status: {status}");
@@ -1658,17 +1657,13 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     {
         try
         {
-            Console.WriteLine($"[SaveJpgStreamToGallery] Starting, filename: {filename}");
             var data = NSData.FromStream(stream);
-            Console.WriteLine($"[SaveJpgStreamToGallery] NSData created, length: {data.Length}");
 
             // Find or create album BEFORE PerformChanges to avoid nested calls/deadlock
             PHAssetCollection albumCollection = null;
             if (!string.IsNullOrEmpty(album))
             {
-                Console.WriteLine($"[SaveJpgStreamToGallery] Finding/creating album: {album}");
                 albumCollection = await FindOrCreateAlbumAsync(album);
-                Console.WriteLine($"[SaveJpgStreamToGallery] Album collection: {albumCollection?.LocalizedTitle ?? "null"}");
             }
 
             var tcs = new TaskCompletionSource<string>();
@@ -1677,19 +1672,16 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             Console.WriteLine($"[SaveJpgStreamToGallery] Calling PerformChanges...");
             PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
             {
-                Console.WriteLine($"[SaveJpgStreamToGallery] Inside change block");
                 var options = new PHAssetResourceCreationOptions
                 {
                     OriginalFilename = filename
                 };
                 var creationRequest = PHAssetCreationRequest.CreationRequestForAsset();
-                Console.WriteLine($"[SaveJpgStreamToGallery] Adding resource to request");
                 creationRequest.AddResource(PHAssetResourceType.Photo, data, options);
 
                 // Add to album if we found/created it
                 if (albumCollection != null)
                 {
-                    Console.WriteLine($"[SaveJpgStreamToGallery] Adding photo to album: {albumCollection.LocalizedTitle}");
                     var albumChangeRequest = PHAssetCollectionChangeRequest.ChangeRequest(albumCollection);
                     albumChangeRequest?.AddAssets(new PHObject[] { creationRequest.PlaceholderForCreatedAsset });
                 }
@@ -1699,15 +1691,11 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 if (placeholder != null)
                 {
                     assetId = placeholder.LocalIdentifier;
-                    Console.WriteLine($"[SaveJpgStreamToGallery] Asset identifier: {assetId}");
                 }
-                Console.WriteLine($"[SaveJpgStreamToGallery] Change block complete");
             }, (success, error) =>
             {
-                Console.WriteLine($"[SaveJpgStreamToGallery] Completion callback fired! Success: {success}");
                 if (!success)
                 {
-                    Console.WriteLine($"SaveJpgStreamToGallery error: {error}");
                     tcs.TrySetResult(null);
                 }
                 else
@@ -1717,9 +1705,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 }
             });
 
-            Console.WriteLine($"[SaveJpgStreamToGallery] Waiting for completion...");
             var result = await tcs.Task;
-            Console.WriteLine($"[SaveJpgStreamToGallery] Completed with result: {result}");
             return result;
         }
         catch (Exception e)
@@ -3623,7 +3609,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             var tcs = new TaskCompletionSource<string>();
 
             // Request photo library access
-            var authorizationStatus = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.AddOnly);
+            var authorizationStatus = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.ReadWrite);
             if (authorizationStatus != PHAuthorizationStatus.Authorized && authorizationStatus != PHAuthorizationStatus.Limited)
             {
                 Debug.WriteLine($"[NativeCamera.Apple] Photo library access denied. Status: {authorizationStatus}");
