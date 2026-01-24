@@ -41,9 +41,10 @@ We are still .NET9, for iOS 26 you might need to set inside PLIST for your iOS a
 
 ---
 
-## 🆕 What's new for 1.7.7.4
+## 🆕 What's new for 1.7.8.1
 
-* `SkiaCamera` gallery saving fix for iOS 26, still need to use `UIDesignRequiresCompatibility` as we are not .net10 yet.
+* `Column` and `Row` layouts fix for nested children placed after thoses with `Fill`.
+* `SkiaCamera` iOS 26 fixes for gallery saving and pre-recording.
 
 ## 💡 Hint of the Day
 
