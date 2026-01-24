@@ -867,6 +867,7 @@ namespace DrawnUi.Views
                     IsDisposed = true;
 
                     DisposeManager.Dispose();
+
                     SurfaceCacheManager.Dispose();
 
                     PaintSystem?.Dispose();
@@ -1640,11 +1641,20 @@ namespace DrawnUi.Views
         {
             if (this.IsDisposed)
             {
-                //resource?.Dispose();
-
+                try
+                {
+                    resource?.Dispose();
+                    if (resource is ISkiaDisposable s)
+                    {
+                        s.IsAlive = ObjectAliveType.Disposed;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Super.Log($"DisposeObject EXCEPTION from {caller} {e}");
+                }
                 return;
             }
-
 
             DisposeManager.EnqueueDisposable(resource, FrameNumber);
         }

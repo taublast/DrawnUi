@@ -41,8 +41,9 @@ We are still .NET9, for iOS 26 you might need to set inside PLIST for your iOS a
 
 ---
 
-## 🆕 What's new for 1.7.8.1
+## 🆕 What's new for 1.7.8.2
 
+* Fix memory leak upon `Canvas` disposal.
 * `Column` and `Row` layouts fix for nested children placed after thoses with `Fill`.
 * `SkiaCamera` iOS 26 fixes for gallery saving and pre-recording.
 
