@@ -35,10 +35,7 @@ namespace DrawnUi.Views
 
         public void Dispose()
         {
-            _context?.Dispose();
-            _retainedSurface?.Dispose();
-            _framebufferSurface?.Dispose();
-            _renderTarget?.Dispose();
+            _isDisposed = true;
         }
 
         /// <summary>
@@ -50,10 +47,15 @@ namespace DrawnUi.Views
             PaintSurface?.Invoke(this, e);
         }
 
-        private bool stopped;
+        private bool _isDisposed;
 
         protected override void OnRenderFrame(Windows.Foundation.Rect rect)
         {
+            if (_isDisposed)
+            {
+                return;
+            }
+
             try
             {
                 if (_context == null)
@@ -164,8 +166,6 @@ namespace DrawnUi.Views
             }
 
         }
-
-
     }
 
 }
