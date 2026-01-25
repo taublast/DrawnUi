@@ -41,10 +41,12 @@ We are still .NET9, for iOS 26 you might need to set inside PLIST for your iOS a
 
 ---
 
-## 🆕 What's new for 1.8.1.1
+## 🆕 What's new for 1.8.1.2
 
-* Fix memory leaks.
-* Layout system fixes.
+* Critical memory leaks fixes for destroying canvas case.
+* Minor layout system fixes.
+* `SkiaMap` viewport update fix.
+* `SkiaCamera` performance update, `Sandbox` project camera permissions fix.
 
 ## 💡 Hint of the Day
 
