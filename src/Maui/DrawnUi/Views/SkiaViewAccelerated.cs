@@ -70,7 +70,7 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
         _surface = null;
         Superview = null;
 
-        GC.SuppressFinalize(this);
+        //GC.SuppressFinalize(this);
     }
 
     SKSurface _surface;

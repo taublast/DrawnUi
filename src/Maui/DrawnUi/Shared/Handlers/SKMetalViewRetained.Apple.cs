@@ -167,6 +167,11 @@ namespace DrawnUi.Views
 
         void IMTKViewDelegate.DrawableSizeWillChange(MTKView view, CGSize size)
         {
+            if (stopped)
+            {
+                return;
+            }
+
             var newSize = size.ToSKSize();
 
             _canvasSize = newSize;
@@ -182,135 +187,150 @@ namespace DrawnUi.Views
 
         void IMTKViewDelegate.Draw(MTKView view)
         {
-            if (_designMode || _backendContext.Queue == null || CurrentDrawable?.Texture == null)
+            if (_designMode || _backendContext.Queue == null || CurrentDrawable?.Texture == null || stopped)
                 return;
 
             _canvasSize = DrawableSize.ToSKSize();
             if (_canvasSize.Width <= 0 || _canvasSize.Height <= 0)
                 return;
 
-            // Create context if needed
-            _context ??= GRContext.CreateMetal(_backendContext);
-
-            // Handle initial frame or ensure texture exists
-            if (_firstFrame || _retainedTexture == null)
+            try
             {
-                PrepareNewTexture();
-                PerformTextureSwap(); // Immediate swap for first frame
-                _firstFrame = false;
-            }
+                inQueue++;
 
-            // Try CPU pre-rendering if not attempted yet
-            TryCpuPreRendering();
 
-            // Get current texture (snapshot to avoid changes during rendering)
-            IMTLTexture textureToUse;
-            lock (_textureSwapLock)
-            {
-                // Check for pending texture swap
-                if (_swapPending && _pendingTexture != null)
+                // Create context if needed
+                _context ??= GRContext.CreateMetal(_backendContext);
+
+                // Handle initial frame or ensure texture exists
+                if (_firstFrame || _retainedTexture == null)
                 {
-                    PerformTextureSwap();
+                    PrepareNewTexture();
+                    PerformTextureSwap(); // Immediate swap for first frame
+                    _firstFrame = false;
                 }
 
-                textureToUse = _retainedTexture;
-                if (textureToUse == null)
-                {
-                    //prevent mid-frame jank
-                    return;
-                }
-            }
+                // Try CPU pre-rendering if not attempted yet
+                TryCpuPreRendering();
 
-            // Create Metal texture info and render target (shared by both paths)
-            var metalInfo = new GRMtlTextureInfo(textureToUse);
-            using var renderTarget = new GRBackendRenderTarget(
-                (int)_canvasSize.Width,
-                (int)_canvasSize.Height,
-                1, // Sample count must be 1 for render targets
-                metalInfo);
-
-            // FAST FIRST FRAME: Use CPU pre-rendered image if available
-            // CRITICAL: Check placement - must happen BEFORE normal rendering setup
-            if (_preRenderedImage != null)
-            {
-                try
+                // Get current texture (snapshot to avoid changes during rendering)
+                IMTLTexture textureToUse;
+                lock (_textureSwapLock)
                 {
-                    // Fast blit: Draw pre-rendered image to texture surface
-                    using (var surface = SKSurface.Create(_context, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888))
+                    // Check for pending texture swap
+                    if (_swapPending && _pendingTexture != null)
                     {
-                        surface.Canvas.DrawImage(_preRenderedImage, 0, 0);
-                        surface.Flush();
+                        PerformTextureSwap();
                     }
 
-                    _context.Flush();
-
-                    // Dispose pre-rendered image and clear reference BEFORE returning
-                    // This ensures no other frame can see or use this image
-                    _preRenderedImage.Dispose();
-                    _preRenderedImage = null;
-
-                    _needsFullRedraw = false;
-
-                    //Debug.WriteLine("[SKMetalView] First frame: Used CPU pre-rendered image (fast blit)");
-
-                    // Immediately copy to screen and return - skip normal rendering
-                    using var commandBuffer = _backendContext.Queue.CommandBuffer();
-                    if (commandBuffer == null) return;
-                    using var blitEncoder = commandBuffer.BlitCommandEncoder;
-
-                    blitEncoder.CopyFromTexture(
-                        textureToUse, 0, 0, new MTLOrigin(0, 0, 0),
-                        new MTLSize((int)_canvasSize.Width, (int)_canvasSize.Height, 1),
-                        CurrentDrawable.Texture, 0, 0, new MTLOrigin(0, 0, 0));
-
-                    blitEncoder.EndEncoding();
-                    commandBuffer.PresentDrawable(CurrentDrawable);
-                    commandBuffer.Commit();
-
-                    return; // CRITICAL: Exit here - do NOT run normal rendering path
+                    textureToUse = _retainedTexture;
+                    if (textureToUse == null)
+                    {
+                        //prevent mid-frame jank
+                        return;
+                    }
                 }
-                catch (Exception ex)
+
+                // Create Metal texture info and render target (shared by both paths)
+                var metalInfo = new GRMtlTextureInfo(textureToUse);
+                using var renderTarget = new GRBackendRenderTarget(
+                    (int)_canvasSize.Width,
+                    (int)_canvasSize.Height,
+                    1, // Sample count must be 1 for render targets
+                    metalInfo);
+
+                // FAST FIRST FRAME: Use CPU pre-rendered image if available
+                // CRITICAL: Check placement - must happen BEFORE normal rendering setup
+                if (_preRenderedImage != null)
                 {
-                    Super.Log($"[SKMetalView] Fast blit failed: {ex.Message}");
-                    // If fast path fails, dispose and fall through to normal rendering
-                    _preRenderedImage?.Dispose();
-                    _preRenderedImage = null;
+                    try
+                    {
+                        // Fast blit: Draw pre-rendered image to texture surface
+                        using (var surface = SKSurface.Create(_context, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888))
+                        {
+                            surface.Canvas.DrawImage(_preRenderedImage, 0, 0);
+                            surface.Flush();
+                        }
+
+                        _context.Flush();
+
+                        // Dispose pre-rendered image and clear reference BEFORE returning
+                        // This ensures no other frame can see or use this image
+                        _preRenderedImage.Dispose();
+                        _preRenderedImage = null;
+
+                        _needsFullRedraw = false;
+
+                        //Debug.WriteLine("[SKMetalView] First frame: Used CPU pre-rendered image (fast blit)");
+
+                        // Immediately copy to screen and return - skip normal rendering
+                        using var commandBuffer = _backendContext.Queue.CommandBuffer();
+                        if (commandBuffer == null) return;
+                        using var blitEncoder = commandBuffer.BlitCommandEncoder;
+
+                        blitEncoder.CopyFromTexture(
+                            textureToUse, 0, 0, new MTLOrigin(0, 0, 0),
+                            new MTLSize((int)_canvasSize.Width, (int)_canvasSize.Height, 1),
+                            CurrentDrawable.Texture, 0, 0, new MTLOrigin(0, 0, 0));
+
+                        blitEncoder.EndEncoding();
+                        commandBuffer.PresentDrawable(CurrentDrawable);
+                        commandBuffer.Commit();
+
+                        return; // CRITICAL: Exit here - do NOT run normal rendering path
+                    }
+                    catch (Exception ex)
+                    {
+                        Super.Log($"[SKMetalView] Fast blit failed: {ex.Message}");
+                        // If fast path fails, dispose and fall through to normal rendering
+                        _preRenderedImage?.Dispose();
+                        _preRenderedImage = null;
+                    }
                 }
+
+                // NORMAL RENDERING PATH
+                // Create surface from the render target
+                using var surfaceNormal = SKSurface.Create(_context, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
+                using var canvas = surfaceNormal.Canvas;
+
+                // Clear if needed
+                if (_needsFullRedraw)
+                {
+                    canvas.Clear(SKColors.Transparent);
+                }
+
+                // Pass surface to user for incremental updates
+                var e = new SKPaintMetalSurfaceEventArgs(surfaceNormal, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
+                OnPaintSurface(e);
+
+                surfaceNormal.Flush();
+                _context.Flush();
+
+                _needsFullRedraw = false;
+
+                // Copy retained texture to screen
+                using var commandBuffer2 = _backendContext.Queue.CommandBuffer();
+                if (commandBuffer2 == null) return;
+                using var blitEncoder2 = commandBuffer2.BlitCommandEncoder;
+
+                blitEncoder2.CopyFromTexture(
+                    textureToUse, 0, 0, new MTLOrigin(0, 0, 0),
+                    new MTLSize((int)_canvasSize.Width, (int)_canvasSize.Height, 1),
+                    CurrentDrawable.Texture, 0, 0, new MTLOrigin(0, 0, 0));
+
+                blitEncoder2.EndEncoding();
+                commandBuffer2.PresentDrawable(CurrentDrawable);
+                commandBuffer2.Commit();
             }
-
-            // NORMAL RENDERING PATH
-            // Create surface from the render target
-            using var surfaceNormal = SKSurface.Create(_context, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
-            using var canvas = surfaceNormal.Canvas;
-
-            // Clear if needed
-            if (_needsFullRedraw)
+            catch (Exception ex)
             {
-                canvas.Clear(SKColors.Transparent);
+                Super.Log($"[SKMetalView] Draw exception: {ex.Message}");
+            }
+            finally
+            {
+                inQueue--;
             }
 
-            // Pass surface to user for incremental updates
-            var e = new SKPaintMetalSurfaceEventArgs(surfaceNormal, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
-            OnPaintSurface(e);
-
-            surfaceNormal.Flush();
-            _context.Flush();
-
-            _needsFullRedraw = false;
-
-            // Copy retained texture to screen
-            using var commandBuffer2 = _backendContext.Queue.CommandBuffer();
-            if (commandBuffer2 == null) return;
-            using var blitEncoder2 = commandBuffer2.BlitCommandEncoder;
-
-            blitEncoder2.CopyFromTexture(
-                textureToUse, 0, 0, new MTLOrigin(0, 0, 0),
-                new MTLSize((int)_canvasSize.Width, (int)_canvasSize.Height, 1),
-                CurrentDrawable.Texture, 0, 0, new MTLOrigin(0, 0, 0));
-
-            blitEncoder2.EndEncoding();
-            commandBuffer2.PresentDrawable(CurrentDrawable);
-            commandBuffer2.Commit();
         }
 
         /// <summary>
@@ -318,7 +338,7 @@ namespace DrawnUi.Views
         /// </summary>
         private void PrepareNewTexture()
         {
-            if (_canvasSize.Width <= 0 || _canvasSize.Height <= 0 || _device == null)
+            if (_canvasSize.Width <= 0 || _canvasSize.Height <= 0 || _device == null || stopped)
                 return;
 
             var descriptor = new MTLTextureDescriptor
@@ -349,7 +369,7 @@ namespace DrawnUi.Views
         private void PerformTextureSwap()
         {
             // This should only be called from within a lock(_textureSwapLock) block
-            if (_pendingTexture != null)
+            if (_pendingTexture != null && !stopped)
             {
                 _retainedTexture?.Dispose();
                 _retainedTexture = _pendingTexture;
@@ -366,7 +386,7 @@ namespace DrawnUi.Views
         private void TryCpuPreRendering()
         {
             // Skip if already attempted
-            if (_preRenderingAttempted || !Super.IsPrerenderingEnabled)
+            if (_preRenderingAttempted || !Super.IsPrerenderingEnabled || stopped)
                 return;
 
             // Skip if dimensions not available yet
@@ -420,6 +440,7 @@ namespace DrawnUi.Views
                 _preRenderedImage?.Dispose();
                 _preRenderedImage = null;
             }
+ 
         }
 
         public event EventHandler<SKPaintMetalSurfaceEventArgs> PaintSurface;
@@ -429,6 +450,10 @@ namespace DrawnUi.Views
         /// </summary>
         protected virtual void OnPaintSurface(SKPaintMetalSurfaceEventArgs e)
         {
+            if (stopped)
+            {
+                return;
+            }
             PaintSurface?.Invoke(this, e);
         }
 
@@ -437,37 +462,55 @@ namespace DrawnUi.Views
         /// </summary>
         public void InvalidateSurface()
         {
+            if (stopped)
+            {
+                return;
+            }
             SetNeedsDisplay();
         }
 
+        bool stopped=false;
+
+        int inQueue=0;
+
         protected override void Dispose(bool disposing)
         {
+            stopped = true;
+
             if (disposing)
             {
-                // Safety: Dispose pre-rendered image if never used
-                _preRenderedImage?.Dispose();
-                _preRenderedImage = null;
-
-                lock (_textureSwapLock)
+                Tasks.StartDelayed(TimeSpan.FromMilliseconds(50), async () =>
                 {
-                    if (_queuePin.IsAllocated)
+                    while (inQueue > 0)
                     {
-                        _queuePin.Free();
+                        await Task.Delay(16);
                     }
 
-                    _retainedTexture?.Dispose();
-                    _pendingTexture?.Dispose();
-                    _retainedTexture = null;
-                    _pendingTexture = null;
-                    _swapPending = false;
-                }
-                _context?.Dispose();
-                _context = null;
+                    _preRenderedImage?.Dispose();
+                    _preRenderedImage = null;
+
+                    lock (_textureSwapLock)
+                    {
+                        if (_queuePin.IsAllocated)
+                        {
+                            _queuePin.Free();
+                        }
+
+                        _retainedTexture?.Dispose();
+                        _pendingTexture?.Dispose();
+                        _retainedTexture = null;
+                        _pendingTexture = null;
+                        _swapPending = false;
+                    }
+                    _context?.Dispose();
+                    _context = null;
+
+                    base.Dispose(disposing);
+
+                    Debug.WriteLine($"[SKMetalView] Disposed!");
+                });
+
             }
-
-            base.Dispose(disposing);
-
-            Debug.WriteLine($"[SKMetalView] Disposed!");
         }
     }
 }

@@ -5293,7 +5293,7 @@ namespace DrawnUi.Draw
             if (_isDisposed)
                 return;
             Dispose(true);
-            GC.SuppressFinalize(this);
+            //GC.SuppressFinalize(this);
         }
 
         protected SKPaint PaintErase = new() { Color = SKColors.Transparent, BlendMode = SKBlendMode.Src };
