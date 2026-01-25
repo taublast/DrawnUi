@@ -366,7 +366,7 @@ namespace DrawnUi.Views
         private void TryCpuPreRendering()
         {
             // Skip if already attempted
-            if (_preRenderingAttempted)
+            if (_preRenderingAttempted || !Super.IsPrerenderingEnabled)
                 return;
 
             // Skip if dimensions not available yet
@@ -464,7 +464,10 @@ namespace DrawnUi.Views
                 _context?.Dispose();
                 _context = null;
             }
+
             base.Dispose(disposing);
+
+            Debug.WriteLine($"[SKMetalView] Disposed!");
         }
     }
 }

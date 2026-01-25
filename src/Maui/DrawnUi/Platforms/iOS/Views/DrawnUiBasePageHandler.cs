@@ -97,6 +97,8 @@ public class DrawnUiBasePageHandler : PageHandler
         base.DisconnectHandler(platformView);
 
         UnregisterForKeyboardNotifications();
+
+        platformView?.Dispose();
     }
 
     NSObject _keyboardShowObserver;

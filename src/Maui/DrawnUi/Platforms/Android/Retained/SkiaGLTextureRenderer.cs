@@ -120,6 +120,10 @@ public abstract partial class SkiaGLTextureRenderer : Java.Lang.Object, SkiaGLTe
 
     private void FreeContext()
     {
+        // Dispose pre-rendered image if never used (safety for base class usage)
+        PreRenderedImage?.Dispose();
+        PreRenderedImage = null;
+
         Surface?.Dispose();
         Surface = null;
         renderTarget?.Dispose();

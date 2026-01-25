@@ -65,14 +65,7 @@ public class Canvas : DrawnView, IGestureListener
             if (oldContent != null)
             {
                 RemoveSubView(oldContent);
-                try
-                {
-                    oldContent.Dispose();
-                }
-                catch (Exception e)
-                {
-                    Super.Log(e);
-                }
+                DisposeObject(oldContent);
             }
 
             if (view != null)
@@ -508,6 +501,8 @@ public class Canvas : DrawnView, IGestureListener
     public override void OnDisposing()
     {
         base.OnDisposing();
+
+        SetContent(null);
 
         DebugPointer?.Dispose();
         DebugPointer = null;

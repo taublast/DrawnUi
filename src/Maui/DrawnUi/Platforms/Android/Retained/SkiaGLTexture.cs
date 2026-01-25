@@ -21,6 +21,14 @@ namespace DrawnUi
             Initialize();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            renderer?.Dispose();
+            renderer = null;
+        }
+
         private void Initialize()
         {
             SetEGLContextClientVersion(2);

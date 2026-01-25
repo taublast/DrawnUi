@@ -866,6 +866,12 @@ namespace DrawnUi.Views
 
                     IsDisposed = true;
 
+                    GestureListeners.Clear();
+
+                    ClearChildren();
+
+                    Content = null;
+
                     DisposeManager.Dispose();
 
                     SurfaceCacheManager.Dispose();
@@ -873,12 +879,6 @@ namespace DrawnUi.Views
                     PaintSystem?.Dispose();
 
                     DestroySkiaView();
-
-                    GestureListeners.Clear();
-
-                    ClearChildren();
-
-                    Content = null;
 
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
@@ -2237,7 +2237,7 @@ namespace DrawnUi.Views
             foreach (var child in Views.ToList())
             {
                 RemoveSubView(child);
-                child.Dispose();
+                DisposeObject(child);
             }
 
             Views.Clear();
