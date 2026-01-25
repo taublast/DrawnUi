@@ -45,7 +45,7 @@ We are still .NET9, for iOS 26 you might need to set inside PLIST for your iOS a
 
 * Critical memory leaks fixes for destroying canvas case.
 * Minor layout system fixes.
-* `SkiaMap` viewport update fix.
+* `SkiaMapsUi` viewport update fix.
 * `SkiaCamera` performance update, `Sandbox` project camera permissions fix.
 
 ## 💡 Hint of the Day
