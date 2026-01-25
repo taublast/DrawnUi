@@ -6826,10 +6826,10 @@ namespace DrawnUi.Draw
         {
             if (NeedMeasure && RenderCount == UpdatedInvalidation)
             {
-                //if (UsingCacheType == SkiaCacheType.ImageDoubleBuffered)
-                //{
-                //    Update();
-                //}
+                if (UsingCacheType == SkiaCacheType.ImageDoubleBuffered)
+                {
+                    Update();
+                }
                 if (UsingCacheType == SkiaCacheType.ImageComposite)
                 {
                     DestroyRenderingObject();
