@@ -493,6 +493,11 @@ namespace DrawnUi.Views
                     {
                         if (_queuePin.IsAllocated)
                         {
+                            var queue = _queuePin.Target;
+                            if (queue != null)
+                            {
+                                GC.SuppressFinalize(queue); //avoid crash 
+                            }
                             _queuePin.Free();
                         }
 

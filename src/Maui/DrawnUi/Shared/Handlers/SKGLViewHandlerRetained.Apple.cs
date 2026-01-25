@@ -136,15 +136,25 @@ namespace DrawnUi.Views
             private SKSizeI lastCanvasSize;
             private GRContext? lastGRContext;
 
-            protected override void OnConnect(ISKGLView virtualView, SKMetalViewRetained platformView) =>
+            protected override void OnConnect(ISKGLView virtualView, SKMetalViewRetained platformView)
+            {
+                stopped=false;
                 platformView.PaintSurface += OnPaintSurface;
+            }
 
-            protected override void OnDisconnect(SKMetalViewRetained platformView) =>
+            protected override void OnDisconnect(SKMetalViewRetained platformView)
+            {
+                stopped=true;
                 platformView.PaintSurface -= OnPaintSurface;
+                lastGRContext = null;  
+                lastCanvasSize = default;
+            }
+
+            bool stopped;
 
             private void OnPaintSurface(object? sender, SkiaSharp.Views.iOS.SKPaintMetalSurfaceEventArgs e)
             {
-                if (VirtualView is not { } view)
+                if (VirtualView is not { } view || stopped)
                     return;
 
                 var newCanvasSize = e.Info.Size;
