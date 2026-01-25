@@ -41,7 +41,7 @@ We are still .NET9, for iOS 26 you might need to set inside PLIST for your iOS a
 
 ---
 
-## 🆕 What's new for 1.8.1.2
+## 🆕 What's new for 1.8.4.1
 
 * Critical memory leaks fixes for destroying canvas case.
 * Minor layout system fixes.
