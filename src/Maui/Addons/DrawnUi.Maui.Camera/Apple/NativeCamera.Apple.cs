@@ -1371,15 +1371,12 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             {
                 _isCapturingStill = true;
 
-                var status = PHPhotoLibrary.AuthorizationStatus;
-                if (status != PHAuthorizationStatus.Authorized)
+                var status = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.ReadWrite);
+                if (status != PHAuthorizationStatus.Authorized && status != PHAuthorizationStatus.Limited)
                 {
-                    status = await PHPhotoLibrary.RequestAuthorizationAsync();
-                    if (status != PHAuthorizationStatus.Authorized)
-                    {
-                        StillImageCaptureFailed?.Invoke(new UnauthorizedAccessException("Photo library access denied"));
-                        return;
-                    }
+                    Debug.WriteLine($"[NativeCamera.Apple] Photo library access denied. Status: {status}");
+                    StillImageCaptureFailed?.Invoke(new UnauthorizedAccessException($"Photo library access denied. Status: {status}"));
+                    return;
                 }
 
                 // Set flash mode for capture
@@ -1662,8 +1659,17 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         {
             var data = NSData.FromStream(stream);
 
-            bool complete = false;
-            string resultUrl = null;
+            // Find or create album BEFORE PerformChanges to avoid nested calls/deadlock
+            PHAssetCollection albumCollection = null;
+            if (!string.IsNullOrEmpty(album))
+            {
+                albumCollection = await FindOrCreateAlbumAsync(album);
+            }
+
+            var tcs = new TaskCompletionSource<string>();
+            string assetId = null;
+            
+            Console.WriteLine($"[SaveJpgStreamToGallery] Calling PerformChanges...");
             PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
             {
                 var options = new PHAssetResourceCreationOptions
@@ -1673,48 +1679,105 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 var creationRequest = PHAssetCreationRequest.CreationRequestForAsset();
                 creationRequest.AddResource(PHAssetResourceType.Photo, data, options);
 
-                // Add to specific album if provided
-                if (!string.IsNullOrEmpty(album))
+                // Add to album if we found/created it
+                if (albumCollection != null)
                 {
-                    // Find or create album and add asset to it
-                    var albumCollection = FindOrCreateAlbum(album);
-                    if (albumCollection != null)
-                    {
-                        var albumChangeRequest = PHAssetCollectionChangeRequest.ChangeRequest(albumCollection);
-                        albumChangeRequest?.AddAssets(new PHObject[] { creationRequest.PlaceholderForCreatedAsset });
-                    }
+                    var albumChangeRequest = PHAssetCollectionChangeRequest.ChangeRequest(albumCollection);
+                    albumChangeRequest?.AddAssets(new PHObject[] { creationRequest.PlaceholderForCreatedAsset });
                 }
 
                 // Get the placeholder for the asset being created
                 var placeholder = creationRequest.PlaceholderForCreatedAsset;
                 if (placeholder != null)
                 {
-                    // Generate assets-library URL using the local identifier
-                    var assetIdentifier = placeholder.LocalIdentifier;
-                    resultUrl = $"assets-library://asset/asset.JPG?id={assetIdentifier}";
+                    assetId = placeholder.LocalIdentifier;
                 }
             }, (success, error) =>
             {
                 if (!success)
                 {
-                    Console.WriteLine($"SaveJpgStreamToGallery error: {error}");
-                    resultUrl = null;
+                    tcs.TrySetResult(null);
                 }
-                complete = true;
+                else
+                {
+                    var resultUrl = !string.IsNullOrEmpty(assetId) ? $"assets-library://asset/asset.JPG?id={assetId}" : "success";
+                    tcs.TrySetResult(resultUrl);
+                }
             });
 
-            while (!complete)
-            {
-                await Task.Delay(10);
-            }
-
-            return resultUrl;
+            var result = await tcs.Task;
+            return result;
         }
         catch (Exception e)
         {
             Console.WriteLine($"SaveJpgStreamToGallery error: {e}");
             return null;
         }
+    }
+
+    /// <summary>
+    /// Finds existing album or creates new one (async version to avoid deadlock)
+    /// </summary>
+    /// <param name="albumName">Album name</param>
+    /// <returns>PHAssetCollection for the album</returns>
+    private async Task<PHAssetCollection> FindOrCreateAlbumAsync(string albumName)
+    {
+        try
+        {
+            // First try to find existing album
+            var fetchOptions = new PHFetchOptions();
+            fetchOptions.Predicate = NSPredicate.FromFormat($"title = '{albumName}'");
+            var existingAlbums = PHAssetCollection.FetchAssetCollections(PHAssetCollectionType.Album, PHAssetCollectionSubtype.Any, fetchOptions);
+
+            if (existingAlbums.Count > 0)
+            {
+                Console.WriteLine($"[FindOrCreateAlbumAsync] Found existing album: {albumName}");
+                return existingAlbums.FirstObject as PHAssetCollection;
+            }
+
+            // Create new album if not found
+            Console.WriteLine($"[FindOrCreateAlbumAsync] Creating new album: {albumName}");
+            var tcs = new TaskCompletionSource<string>();
+            string albumIdentifier = null;
+
+            PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
+            {
+                var createRequest = PHAssetCollectionChangeRequest.CreateAssetCollection(albumName);
+                albumIdentifier = createRequest.PlaceholderForCreatedAssetCollection.LocalIdentifier;
+                Console.WriteLine($"[FindOrCreateAlbumAsync] Album created with identifier: {albumIdentifier}");
+            }, (success, error) =>
+            {
+                if (!success)
+                {
+                    Console.WriteLine($"[FindOrCreateAlbumAsync] Failed to create album '{albumName}': {error}");
+                    tcs.TrySetResult(null);
+                }
+                else
+                {
+                    tcs.TrySetResult(albumIdentifier);
+                }
+            });
+
+            // Wait for creation to complete
+            var resultId = await tcs.Task;
+
+            if (!string.IsNullOrEmpty(resultId))
+            {
+                // Fetch the created album
+                var newFetchOptions = new PHFetchOptions();
+                newFetchOptions.Predicate = NSPredicate.FromFormat($"title = '{albumName}'");
+                var newAlbums = PHAssetCollection.FetchAssetCollections(PHAssetCollectionType.Album, PHAssetCollectionSubtype.Any, newFetchOptions);
+                var album = newAlbums.FirstObject as PHAssetCollection;
+                Console.WriteLine($"[FindOrCreateAlbumAsync] Album created successfully: {album?.LocalizedTitle}");
+                return album;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FindOrCreateAlbumAsync] Error finding/creating album '{albumName}': {ex}");
+        }
+
+        return null;
     }
 
     /// <summary>
@@ -3546,10 +3609,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             var tcs = new TaskCompletionSource<string>();
 
             // Request photo library access
-            var authorizationStatus = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.AddOnly);
-            if (authorizationStatus != PHAuthorizationStatus.Authorized)
+            var authorizationStatus = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.ReadWrite);
+            if (authorizationStatus != PHAuthorizationStatus.Authorized && authorizationStatus != PHAuthorizationStatus.Limited)
             {
-                Debug.WriteLine("[NativeCamera.Apple] Photo library access denied");
+                Debug.WriteLine($"[NativeCamera.Apple] Photo library access denied. Status: {authorizationStatus}");
                 return null;
             }
 

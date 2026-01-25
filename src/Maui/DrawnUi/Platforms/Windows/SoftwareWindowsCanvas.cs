@@ -18,8 +18,15 @@ using Visibility = Microsoft.UI.Xaml.Visibility;
 
 namespace DrawnUi.Controls
 {
-    public partial class SoftwareWindowsCanvas : Canvas
+    public partial class SoftwareWindowsCanvas : Canvas, IDisposable
     {
+        public void Dispose()
+        {
+            Loaded -= OnLoaded;
+            Unloaded -= OnUnloaded;
+            SizeChanged -= OnSizeChanged;
+            FreeBitmap();
+        }
 
         private const float DpiBase = 96.0f;
 
@@ -292,5 +299,7 @@ namespace DrawnUi.Controls
             bitmap = null;
             _pixels = IntPtr.Zero;
         }
+
+
     }
 }

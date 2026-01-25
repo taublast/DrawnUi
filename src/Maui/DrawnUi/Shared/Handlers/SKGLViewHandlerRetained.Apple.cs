@@ -53,6 +53,8 @@ namespace DrawnUi.Views
             paintSurfaceProxy = null;
 
             base.DisconnectHandler(platformView);
+
+            platformView?.Dispose();  //MAUI is not disposing PlatformView in base, avoid the leak
         }
 
         // Mapper actions / properties
@@ -165,7 +167,6 @@ namespace DrawnUi.Views
             }
         }
 
-
-
+ 
     }
 }

@@ -64,6 +64,8 @@ public partial class WinCanvasHandler : ViewHandler<ISKCanvasView, SoftwareWindo
         platformView.PaintSurface -= OnPaintSurface;
 
         base.DisconnectHandler(platformView);
+
+        platformView?.Dispose();  //MAUI is not disposing PlatformView in base, avoid the leak
     }
 
     // Mapper actions / properties

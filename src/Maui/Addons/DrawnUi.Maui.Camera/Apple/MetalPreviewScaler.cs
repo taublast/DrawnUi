@@ -230,6 +230,7 @@ namespace DrawnUi.Camera
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"[MetalPreviewScaler] Scale error: {ex.Message}");
+                _gpuSemaphore.Release();
                 return false;
             }
         }

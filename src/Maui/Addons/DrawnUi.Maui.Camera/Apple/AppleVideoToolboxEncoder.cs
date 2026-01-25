@@ -1854,13 +1854,6 @@ namespace DrawnUi.Camera
             // Use a temporary file to avoid conflicts with existing file
             var tempPath = Path.Combine(Path.GetDirectoryName(outputPath), $"temp_{Guid.NewGuid():N}.mp4");
 
-            // Single reusable unmanaged buffer for frame data
-            // Using AlwaysCopyData flag in CMBlockBuffer ensures data is copied,
-            // allowing us to reuse this buffer for each frame instead of allocating per-frame
-            const int MaxFrameSize = 512 * 1024; // 512 KB - should cover any H.264 frame
-            IntPtr reusableFrameBuffer = IntPtr.Zero;
-            int reusableBufferSize = MaxFrameSize;
-
             // Memory tracking for audio samples (audio still needs per-sample allocation due to async processing)
             var audioAllocatedPointers = new List<IntPtr>();
 
@@ -1980,7 +1973,14 @@ namespace DrawnUi.Camera
                 // and to avoid 'Writer DEADLOCK' caused by large gaps (e.g. Video@0, Audio@1.3s).
                 // This assumes the buffer content is roughly synced by wall-clock or that strict sync isn't critical for pre-recording.
 
-                int loopGuard = 0;
+                try
+                {
+                    int loopGuard = 0;
+
+                    // Optimization: Reuse arrays to avoid GC pressure at 120fps
+                    var reusableSampleSizes = new nuint[1];
+                    var reusableTiming = new CMSampleTimingInfo[1];
+
                 while (hasMoreVideo || aIndex < aCount)
                 {
                     loopGuard++;
@@ -2020,44 +2020,77 @@ namespace DrawnUi.Camera
                             continue;
                         }
 
-                        // Create CMBlockBuffer from H.264 data using reusable buffer
-                        // Lazy allocation of reusable buffer
-                        if (reusableFrameBuffer == IntPtr.Zero)
+                        // Create CMBlockBuffer from H.264 data using independent buffer per frame
+
+                        // Debug: Check if data looks like H.264
+                        if (frameIndex == 1 && data.Length > 4)
                         {
-                            reusableFrameBuffer = Marshal.AllocHGlobal(reusableBufferSize);
+                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame 1 Data: {data[0]:X2} {data[1]:X2} {data[2]:X2} {data[3]:X2}");
                         }
 
-                        // Resize if frame is larger than current buffer (rare case for very large keyframes)
-                        if (data.Length > reusableBufferSize)
+                        // SAFE EXECUTION: CORE MEDIA ALLOCATION (Race-Free)
+                        // Instead of a ring buffer (which risks overwrite if writer lags > buffer size),
+                        // we let CoreMedia allocate a new native memory block for each frame.
+                        // This guarantees that AVAssetWriter owns its own data.
+                        // Safe CoreMedia Allocation
+                        
+                        CMBlockBuffer blockBuffer = CMBlockBuffer.CreateEmpty(0, 0, out var emptyErr);
+                        
+                        if (emptyErr != CMBlockBufferError.None || blockBuffer == null)
                         {
-                            Marshal.FreeHGlobal(reusableFrameBuffer);
-                            reusableBufferSize = data.Length + 64 * 1024; // Add 64KB headroom
-                            reusableFrameBuffer = Marshal.AllocHGlobal(reusableBufferSize);
-                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Resized reusable buffer to {reusableBufferSize / 1024}KB for frame {frameIndex}");
+                             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] CreateEmpty failed: {emptyErr}");
+                             hasMoreVideo = videoEnumerator.MoveNext();
+                             continue;
                         }
 
-                        // Copy frame data to reusable buffer
-                        Marshal.Copy(data, 0, reusableFrameBuffer, data.Length);
+                        // Allocate memory within the block buffer (Native allocation)
+                        // Use IntPtr.Zero to tell CoreMedia to allocate the memory
+                        var allocErr = blockBuffer.AppendMemoryBlock(
+                            IntPtr.Zero, 
+                            (nuint)data.Length, 
+                            null, 
+                            0, 
+                            (nuint)data.Length, 
+                            0);
 
-                        // Use AlwaysCopyData flag (value=2) to force CMBlockBuffer to copy the data internally
-                        // This allows us to safely reuse reusableFrameBuffer for the next frame
-                        const CMBlockBufferFlags AlwaysCopyDataFlag = (CMBlockBufferFlags)2;
-                        var blockBuffer = CMBlockBuffer.FromMemoryBlock(
-                            reusableFrameBuffer,
-                            (nuint)data.Length,
-                            null,
-                            0,
-                            (nuint)data.Length,
-                            AlwaysCopyDataFlag | CMBlockBufferFlags.AssureMemoryNow,
-                            out var blockError);
-
-                        if (blockBuffer == null || blockError != CMBlockBufferError.None)
+                        if (allocErr != CMBlockBufferError.None)
                         {
-                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Frame {frameIndex}: Failed to create block buffer: {blockError}");
-                            hasMoreVideo = videoEnumerator.MoveNext();
-                            continue;
+                             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] AppendMemoryBlock failed: {allocErr}");
+                             blockBuffer.Dispose();
+                             hasMoreVideo = videoEnumerator.MoveNext();
+                             continue;
+                        }
+                        
+                         // Ensure memory is accessible
+                        var assureErr = blockBuffer.AssureBlockMemory();
+                         if (assureErr != CMBlockBufferError.None)
+                        {
+                             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] AssureBlockMemory failed: {assureErr}");
+                             blockBuffer.Dispose();
+                             hasMoreVideo = videoEnumerator.MoveNext();
+                             continue;
                         }
 
+                        // Copy data from managed array to native buffer
+                        nuint lengthAtOffset;
+                        nuint totalLength;
+                        IntPtr dataPointer = IntPtr.Zero;
+                        
+                        var ptrErr = blockBuffer.GetDataPointer(0, out lengthAtOffset, out totalLength, ref dataPointer);
+                        
+                        if (ptrErr != CMBlockBufferError.None)
+                        {
+                             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] GetDataPointer failed: {ptrErr}");
+                             blockBuffer.Dispose();
+                             hasMoreVideo = videoEnumerator.MoveNext();
+                             continue;
+                        }
+
+                        // Copy
+                        Marshal.Copy(data, 0, dataPointer, data.Length);
+
+                        // Buffer persists in 'frameBuffers' array until we wrap around (1 second later)
+                        
                         try
                         {
                             // Adjust timestamp to be relative to start (starts at 0)
@@ -2075,13 +2108,16 @@ namespace DrawnUi.Camera
                                 DecodeTimeStamp = CMTime.Invalid
                             };
 
-                            var sampleSizes = new nuint[] { (nuint)data.Length };
+                            // Update reusable arrays to avoid allocations
+                            reusableTiming[0] = timing;
+                            reusableSampleSizes[0] = (nuint)data.Length;
+
                             var sampleBuffer = CMSampleBuffer.CreateReady(
                                 blockBuffer,
                                 formatDesc,
                                 1,
-                                new[] { timing },
-                                sampleSizes,
+                                reusableTiming,
+                                reusableSampleSizes,
                                 out var sampleError);
 
                             if (sampleBuffer == null || sampleError != CMSampleBufferError.None)
@@ -2134,8 +2170,6 @@ namespace DrawnUi.Camera
                         finally
                         {
                             blockBuffer.Dispose();
-                            // reusableFrameBuffer is NOT freed here - it's reused for next frame
-                            // and freed once at the end in the main finally block
                         }
                         
                         // Advance to next video frame
@@ -2216,6 +2250,11 @@ namespace DrawnUi.Camera
                             aIndex++;
                         }
                     }
+                }
+                } // End of Try
+                finally
+                {
+                   // CoreMedia buffers are self-cleaning via ref-counting
                 }
 
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Write complete: Video {appendedCount}/{frameCount}, Audio {audioWrittenCount}/{aCount} (failed: {audioFailedCount})");
@@ -2320,13 +2359,6 @@ namespace DrawnUi.Camera
             {
                 videoInput?.Dispose();
                 writer?.Dispose();
-
-                // Free the single reusable video buffer
-                if (reusableFrameBuffer != IntPtr.Zero)
-                {
-                    Marshal.FreeHGlobal(reusableFrameBuffer);
-                    reusableFrameBuffer = IntPtr.Zero;
-                }
 
                 // Free audio allocations (these still need per-sample allocation due to async writer)
                 foreach (var ptr in audioAllocatedPointers)

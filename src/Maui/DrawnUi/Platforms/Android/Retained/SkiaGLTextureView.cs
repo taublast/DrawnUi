@@ -7,6 +7,7 @@ using Android.Opengl;
 using Android.Runtime;
 using Android.Util;
 using Android.Views;
+using DrawnUi.Draw;
 using Javax.Microedition.Khronos.Egl;
 using Application = Android.App.Application;
 using EGLConfig = Android.Opengl.EGLConfig;
@@ -65,6 +66,10 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
             // This handles cases where view is disposed before TryCpuPreRendering completed
             _preRenderedImage?.Dispose();
             _preRenderedImage = null;
+
+            // Dispose renderer to clean up any transferred PreRenderedImage and GPU resources
+            (renderer as IDisposable)?.Dispose();
+            renderer = null;
 
             if (glThread != null)
             {
@@ -125,8 +130,8 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
     /// </summary>
     private void TryCpuPreRendering()
     {
-        // Skip if already attempted or no renderer
-        if (_preRenderingAttempted || renderer == null)
+        // Skip if disabled globally or already attempted or no renderer
+        if (!Super.IsPrerenderingEnabled || _preRenderingAttempted || renderer == null)
             return;
 
         // Skip if dimensions not available yet

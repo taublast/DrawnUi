@@ -22,10 +22,8 @@ public class BasePageReloadable : DrawnUiBasePage, IDisposable
 
         if (Handler != null)
         {
-            if (!wasBuilt)
-            {
-                Build();
-            }
+            Build();
+
             if (Debugger.IsAttached)
             {
                 Super.HotReload += ReloadUi;
@@ -64,7 +62,7 @@ public class BasePageReloadable : DrawnUiBasePage, IDisposable
 
     public void Dispose()
     {
-	    Dispose(true);
+        Dispose(true);
 	    GC.SuppressFinalize(this);
 	}
 
@@ -72,7 +70,9 @@ public class BasePageReloadable : DrawnUiBasePage, IDisposable
 
     protected virtual void Dispose(bool isDisposing)
     {
-	    if (!IsDisposed && isDisposing)
+        Super.HotReload -= ReloadUi;
+
+        if (!IsDisposed && isDisposing)
 	    {
 		    IsDisposed = true;
 

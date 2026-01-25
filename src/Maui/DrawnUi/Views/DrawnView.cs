@@ -866,18 +866,19 @@ namespace DrawnUi.Views
 
                     IsDisposed = true;
 
-                    DisposeManager.Dispose();
-                    SurfaceCacheManager.Dispose();
-
-                    PaintSystem?.Dispose();
-
-                    DestroySkiaView();
-
                     GestureListeners.Clear();
 
                     ClearChildren();
 
                     Content = null;
+
+                    DisposeManager.Dispose();
+
+                    SurfaceCacheManager.Dispose();
+
+                    PaintSystem?.Dispose();
+
+                    DestroySkiaView();
 
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
@@ -1640,11 +1641,20 @@ namespace DrawnUi.Views
         {
             if (this.IsDisposed)
             {
-                //resource?.Dispose();
-
+                try
+                {
+                    resource?.Dispose();
+                    if (resource is ISkiaDisposable s)
+                    {
+                        s.IsAlive = ObjectAliveType.Disposed;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Super.Log($"DisposeObject EXCEPTION from {caller} {e}");
+                }
                 return;
             }
-
 
             DisposeManager.EnqueueDisposable(resource, FrameNumber);
         }
@@ -2227,7 +2237,7 @@ namespace DrawnUi.Views
             foreach (var child in Views.ToList())
             {
                 RemoveSubView(child);
-                child.Dispose();
+                DisposeObject(child);
             }
 
             Views.Clear();

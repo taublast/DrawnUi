@@ -34,6 +34,8 @@ namespace DrawnUi.Views
             platformView.PaintSurface -= OnPaintSurface;
 
             base.DisconnectHandler(platformView);
+
+            platformView?.Dispose();
         }
 
         // Mapper actions / properties

@@ -62,26 +62,25 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
             {
                 // Camera preview
                 new SkiaCamera()
+                {
+                    RecordAudio = true,
+                    UseRealtimeVideoProcessing = false, // Enable capture video flow for overlay recording
+                    VideoQuality = VideoQuality.Standard, //change this or select manually in menu
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Fill,
+                    BackgroundColor = Colors.Black,
+                    CaptureMode = CaptureModeType.Video,
+                    Aspect = TransformAspect.AspectFit
+                }
+                .Assign(out CameraControl)
+                .ObserveSelf((me, prop) =>
+                {
+                    if (prop == nameof(BindingContext) || prop == nameof(me.State) ||
+                        prop == nameof(me.Facing) || prop == nameof(me.CameraIndex))
                     {
-                        VideoDiagnosticsOn = true,
-                        RecordAudio = false,
-                       UseCaptureVideoFlow = true, // Enable capture video flow for overlay recording
-                        VideoQuality = VideoQuality.Standard, //change this or select manually in menu
-                        HorizontalOptions = LayoutOptions.Fill,
-                        VerticalOptions = LayoutOptions.Fill,
-                        BackgroundColor = Colors.Black,
-                        CaptureMode = CaptureModeType.Video,
-                        Aspect = TransformAspect.AspectFit
+                        UpdateStatusText();
                     }
-                    .Assign(out CameraControl)
-                    .ObserveSelf((me, prop) =>
-                    {
-                        if (prop == nameof(BindingContext) || prop == nameof(me.State) ||
-                            prop == nameof(me.Facing) || prop == nameof(me.CameraIndex))
-                        {
-                            UpdateStatusText();
-                        }
-                    }),
+                }),
                 new SkiaStack()
                 {
                     VerticalOptions = LayoutOptions.End,
@@ -249,7 +248,9 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
 
         Canvas = new Canvas
         {
-            RenderingMode = RenderingModeType.Accelerated, Gestures = GesturesMode.Enabled, Content = rootLayer,
+            RenderingMode = RenderingModeType.Accelerated,
+            Gestures = GesturesMode.Enabled,
+            Content = rootLayer,
         };
 
         Canvas.WillFirstTimeDraw += (sender, context) => { CameraControl.IsOn = true; };
@@ -275,7 +276,10 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
             // Draw a simple border around the frame
             using var borderPaint = new SKPaint
             {
-                Color = SKColors.Red, Style = SKPaintStyle.Stroke, StrokeWidth = 4, IsAntialias = true
+                Color = SKColors.Red,
+                Style = SKPaintStyle.Stroke,
+                StrokeWidth = 4,
+                IsAntialias = true
             };
             frame.Canvas.DrawRect(10, 10, frame.Width - 20, frame.Height - 20, borderPaint);
         };

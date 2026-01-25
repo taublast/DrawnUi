@@ -14,7 +14,7 @@
     <draw:Canvas
         BackgroundColor="Gainsboro"
         Gestures="Enabled"
-        RenderingMode = "Accelerated"
+        RenderingMode="Accelerated"
         Tag="MainPage">
 
         <draw:Canvas.Resources>
@@ -33,7 +33,7 @@
                 <Style x:Key="SkiaStyleControlContainer" TargetType="draw:SkiaLayout">
                     <Setter Property="HeightRequest" Value="44" />
                     <Setter Property="HorizontalOptions" Value="Fill" />
-                    <Setter Property="UseCache" Value="ImageDoubleBuffered" />
+                    <Setter Property="UseCache" Value="Operations" />
                 </Style>
 
             </ResourceDictionary>
@@ -93,8 +93,8 @@
 
             <!--  DRAWER  -->
             <draw:SkiaDrawer
-                BlockGesturesBelow="True"
                 x:Name="Drawer"
+                BlockGesturesBelow="True"
                 Direction="FromBottom"
                 HeaderSize="{Binding DrawerHeaderSize}"
                 HeightRequest="500"
@@ -131,7 +131,7 @@
 
                     </draw:SkiaShape>
 
-                    <!--  CONTENT  cache ImageComposite-->
+                    <!--  CONTENT  cache ImageComposite  -->
                     <draw:SkiaLayout
                         Padding="24,16"
                         AddMarginTop="{Binding DrawerHeaderSize}"

@@ -54,6 +54,13 @@ public partial class Super
     public static bool CanUseHardwareAcceleration = true;
 
     /// <summary>
+    /// When using accelerated rendering, enables CPU pre-rendering to show content immediately while GPU initializes.
+    /// Set to false to skip software pre-render (saves memory but may show blank frame during GPU init).
+    /// Default is true.
+    /// </summary>
+    public static bool IsPrerenderingEnabled = true;
+
+    /// <summary>
     /// Logs an exception at Error level. If a startup logger is configured, delegates to it; otherwise falls back to Trace/Console.
     /// </summary>
     /// <param name="e">The exception to log.</param>

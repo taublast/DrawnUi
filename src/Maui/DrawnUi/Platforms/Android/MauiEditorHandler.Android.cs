@@ -162,6 +162,8 @@ public partial class MauiEditorHandler : EditorHandler
 
         base.DisconnectHandler(platformView);
         //platformView.EditorAction -= OnEditorAction;
+
+        platformView?.Dispose();
     }
 
     private MauiEditor Control;

@@ -11,7 +11,7 @@ namespace DrawnUi.Views
     /// <summary>
     /// SwapChain panel with retained surface rendering for improved performance
     /// </summary>
-    public class SKSwapChainPanelRetained : AngleSwapChainPanel //AngleAcceleratedView
+    public class SKSwapChainPanelRetained : AngleSwapChainPanel, IDisposable //AngleAcceleratedView
     {
         public Guid Uid = Guid.NewGuid();
 
@@ -33,6 +33,11 @@ namespace DrawnUi.Views
 
         public event EventHandler<SkiaSharp.Views.Windows.SKPaintGLSurfaceEventArgs> PaintSurface;
 
+        public void Dispose()
+        {
+            _isDisposed = true;
+        }
+
         /// <summary>
         /// Raises the PaintSurface event
         /// </summary>
@@ -42,10 +47,15 @@ namespace DrawnUi.Views
             PaintSurface?.Invoke(this, e);
         }
 
-        private bool stopped;
+        private bool _isDisposed;
 
         protected override void OnRenderFrame(Windows.Foundation.Rect rect)
         {
+            if (_isDisposed)
+            {
+                return;
+            }
+
             try
             {
                 if (_context == null)

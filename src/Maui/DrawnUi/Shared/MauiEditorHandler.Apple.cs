@@ -24,7 +24,9 @@ public partial class MauiEditorHandler : EditorHandler
     {
         base.DisconnectHandler(platformView);
 
+        platformView?.Dispose();  //MAUI is not disposing PlatformView in base, avoid the leak
         _control = null;
+
     }
 
     public override void PlatformArrange(Rect frame)

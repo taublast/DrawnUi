@@ -41,13 +41,12 @@ We are still .NET9, for iOS 26 you might need to set inside PLIST for your iOS a
 
 ---
 
-## 🆕 What's new for 1.7.7.3
+## 🆕 What's new for 1.8.1.2
 
-* Optimized disposal of resources
-* `SkiaScroll` clamp and panning fixes
-* `SkiaGrid` remeasured on children fix, other layouts small fixes
-* `Super.ThermalStateChanged` event handler on iOS to track overheating
-* `SkiaCamera` recording audio, preview performane improvements and more
+* Critical memory leaks fixes for destroying canvas case.
+* Minor layout system fixes.
+* `SkiaMap` viewport update fix.
+* `SkiaCamera` performance update, `Sandbox` project camera permissions fix.
 
 ## 💡 Hint of the Day
 

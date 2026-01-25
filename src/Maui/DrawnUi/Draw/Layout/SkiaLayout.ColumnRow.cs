@@ -1298,7 +1298,13 @@ else
                             // - For Column (perpendicular): fill-X children should NOT contribute to width
                             if (isTemplated || !child.NeedFillX || !isColumn)
                             {
-                                maxWidth += measured.Pixels.Width + GetSpacingForIndex(column, scale);
+                                var widthToUse = measured.Pixels.Width;
+                                // For Fill-X children in Row layout (stacking direction), use allocated space if larger
+                                if (hasFillHandling && child.NeedFillX && !isColumn && spacePerFillChild > widthToUse)
+                                {
+                                    widthToUse = spacePerFillChild;
+                                }
+                                maxWidth += widthToUse + GetSpacingForIndex(column, scale);
                             }
 
                             // Height calculation:
@@ -1306,8 +1312,14 @@ else
                             // - For Row (perpendicular): fill-Y children should NOT contribute to height
                             if (isTemplated || !child.NeedFillY || isColumn)
                             {
-                                if (measured.Pixels.Height > maxRowHeight)
-                                    maxRowHeight = measured.Pixels.Height;
+                                var heightToUse = measured.Pixels.Height;
+                                // For Fill-Y children in Column layout (stacking direction), use allocated space if larger
+                                if (hasFillHandling && child.NeedFillY && isColumn && spacePerFillChild > heightToUse)
+                                {
+                                    heightToUse = spacePerFillChild;
+                                }
+                                if (heightToUse > maxRowHeight)
+                                    maxRowHeight = heightToUse;
                             }
 
                             // Subpixel snapping correction
@@ -1370,13 +1382,13 @@ else
                     stackY += maxRowHeight;
                 }
 
-                // Inline ApplyFillConstraints
-                if (HorizontalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Width >= 0)
+                // apply fill constraints
+                if (float.IsFinite(rectForChildrenPixels.Width) && HorizontalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Width >= 0)
                     stackWidth = rectForChildrenPixels.Width;
-                if (VerticalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Height >= 0)
+
+                if (float.IsFinite(rectForChildrenPixels.Height) && VerticalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Height >= 0)
                     stackHeight = rectForChildrenPixels.Height;
 
-                // Only process second pass if needed
                 if (needSecondPass)
                 {
                     ProcessSecondPass(rectForChildrenPixels, stackWidth, stackHeight);

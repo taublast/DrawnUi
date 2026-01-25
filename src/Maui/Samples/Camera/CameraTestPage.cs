@@ -94,12 +94,25 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
     private void CreateContent()
     {
-        var mainStack = new DebugGrid
+        bool isSimulator = false;
+        SkiaLayout mainStack = null;
+
+#if IOS || MACCATALYST
+        isSimulator = DeviceInfo.DeviceType == DeviceType.Virtual;
+        if (isSimulator)
         {
-            RowSpacing = 16,
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Fill,
-            Children =
+            mainStack = CreateSimulatorTestUI();
+        }
+#endif
+
+        if (mainStack == null)
+        {
+            mainStack = new DebugGrid
+            {
+                RowSpacing = 16,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
+                Children =
             {
 
                 // Camera preview
@@ -452,7 +465,9 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                         me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
                     }).WithRow(0),
             }
-        }.WithRowDefinitions("*, Auto");
+            }.WithRowDefinitions("*, Auto");
+        }
+
 
         // Create preview overlay (initially hidden)
         _previewOverlay = CreatePreviewOverlay();
@@ -489,10 +504,13 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
         Canvas.WillFirstTimeDraw += (sender, context) =>
         {
-            Tasks.StartDelayed(TimeSpan.FromMilliseconds(500), () =>
+            if (CameraControl != null)
             {
-                CameraControl.IsOn = true;
-            });
+                Tasks.StartDelayed(TimeSpan.FromMilliseconds(500), () =>
+                {
+                    CameraControl.IsOn = true;
+                });
+            }
         };
 
         Content = new Grid() //due to maui layout specifics we are forced to use a Grid as root wrapper
@@ -502,26 +520,30 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
             Children = { Canvas }
         };
 
-        // Configure camera for capture video flow testing
-        CameraControl.UseRealtimeVideoProcessing = false; // Enable capture video flow
-        CameraControl.VideoQuality = VideoQuality.Standard;
-        CameraControl.RecordAudio = true;
-
-        CameraControl.FrameProcessor = (frame) =>
+        if (CameraControl != null)
         {
-            CameraControl.DrawOverlay(frame);
-        };
+            // Configure camera for capture video flow testing
+            CameraControl.UseRealtimeVideoProcessing = false; // Enable capture video flow
+            CameraControl.VideoQuality = VideoQuality.Standard;
+            CameraControl.RecordAudio = true;
 
-        CameraControl.PreviewProcessor = (frame) =>
-        {
-            //if (CameraControl.IsRecordingVideo || CameraControl.IsPreRecording)
+            CameraControl.FrameProcessor = (frame) =>
             {
                 CameraControl.DrawOverlay(frame);
-            }
-        };
+            };
 
-        // Setup camera event handlers
-        SetupCameraEvents();
+            CameraControl.PreviewProcessor = (frame) =>
+            {
+                //if (CameraControl.IsRecordingVideo || CameraControl.IsPreRecording)
+                {
+                    CameraControl.DrawOverlay(frame);
+                }
+            };
+
+            // Setup camera event handlers
+            SetupCameraEvents();
+        }
+     
     }
 
     private SkiaLayer CreatePreviewOverlay()
@@ -1190,4 +1212,5 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         }
     }
     // Removed old manual video gallery implementation - now using SkiaCamera's built-in MoveVideoToGalleryAsync method
+
 }
