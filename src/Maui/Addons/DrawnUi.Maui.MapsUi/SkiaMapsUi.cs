@@ -375,7 +375,7 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
         base.OnLayoutChanged();
 
         ClearTouchState();
-        SetViewportSize();
+        UpdateViewportSize();
     }
 
     protected override void OnLayoutReady()
@@ -395,12 +395,12 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
     /// <summary>
     /// Pixels
     /// </summary>
-    private double ViewportWidth => Width;
+    private double ViewportWidth => DrawingRect.Width / RenderingScale;
 
     /// <summary>
     /// Pixels
     /// </summary>
-    private double ViewportHeight => Height;
+    private double ViewportHeight => DrawingRect.Height / RenderingScale;
 
     #region GESTURES
 
@@ -1027,6 +1027,10 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
         localMap.AbortFetch();
     }
 
+    /// <summary>
+    /// Redraw Map
+    /// </summary>
+    /// <param name="changeType"></param>
     public void Refresh(ChangeType changeType = ChangeType.Discrete)
     {
         Map.Refresh(changeType);
@@ -1145,9 +1149,8 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
         if (map is null)
             return; // Although the Map property can not null the map argument can null during initializing and binding.
 
-        map.Navigator.SetSize(ViewportWidth, ViewportHeight);
         SubscribeToMapEvents(map);
-        Refresh();
+        UpdateViewportSize();
     }
 
     /// <inheritdoc />
@@ -1207,7 +1210,7 @@ public partial class SkiaMapsUi : SkiaLayout, IMapControl, ISkiaGestureListener
         return new MapInfoEventArgs(mapInfo, tapType, false);
     }
 
-    private void SetViewportSize()
+    public virtual void UpdateViewportSize()
     {
         var hadSize = Map.Navigator.Viewport.HasSize();
         Map.Navigator.SetSize(ViewportWidth, ViewportHeight);
