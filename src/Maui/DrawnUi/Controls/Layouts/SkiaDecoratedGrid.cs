@@ -132,15 +132,14 @@ public partial class SkiaDecoratedGrid : SkiaLayout
                 {
                     var offset = GridStructure.LeftEdgeOfColumn(col) - ColumnSpacing;
 
-                    ContainerLines.AddSubView(new SkiaShape()
+                    ContainerLines.AddSubView(new SkiaControl()
                     {
                         Tag = "vline",
+                        UseCache = SkiaCacheType.Operations,
                         HorizontalOptions = LayoutOptions.Start,
                         VerticalOptions = LayoutOptions.Fill,
                         FillGradient = VerticalLine,
-                        BackgroundColor = Colors.Black,
                         WidthRequest = ColumnSpacing,
-                        StrokeWidth = 0,
                         TranslationX = (float)offset
                     });
 
