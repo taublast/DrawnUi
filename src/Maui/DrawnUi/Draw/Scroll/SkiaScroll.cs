@@ -285,7 +285,7 @@ namespace DrawnUi.Draw
                 {
                     try
                     {
-                        scroll.SetIsRefreshing((bool)changed);
+                        scroll.SetIsRefreshing((bool)changed, false);
                     }
                     catch (Exception e)
                     {
@@ -2463,7 +2463,7 @@ namespace DrawnUi.Draw
 
         bool wasRefreshing;
 
-        public void SetIsRefreshing(bool state)
+        public void SetIsRefreshing(bool state, bool initial)
         {
             Debug.WriteLine($"[SCROLL] IsRefreshing {state}");
             //lock scrolling at top
@@ -2478,7 +2478,7 @@ namespace DrawnUi.Draw
             }
             else
             {
-                if (ViewportOffsetX == 0 && ViewportOffsetY == 0)
+                if ( initial || (ViewportOffsetX == 0 && ViewportOffsetY == 0))
                 {
                     HideRefreshIndicator();
                 }
@@ -2964,7 +2964,7 @@ namespace DrawnUi.Draw
         {
             base.OnLayoutReady();
 
-            SetIsRefreshing(IsRefreshing);
+            SetIsRefreshing(IsRefreshing, true);
 
             _autoCacheContent = false;
         }
