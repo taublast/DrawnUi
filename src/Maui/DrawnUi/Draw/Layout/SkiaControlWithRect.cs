@@ -54,7 +54,7 @@
             {
                 IsDistorted = Element.IsDistorted,
                 WillClipBounds = Element.WillClipBounds,
-                EffectPostRenderer = Element.EffectPostRenderer,
+                EffectPostRenderers = Element.EffectPostRenderers,
                 ShouldClipAntialiased = Element.ShouldClipAntialiased
             };
 
@@ -86,19 +86,16 @@
                 {
                     DrawWithClipAndTransforms(ctx, renderMe, ctx.Destination, true, true, (ctx) =>
                     {
+                        ctx.PaintWithOpacity.Color = SKColors.White;
+                        ctx.PaintWithOpacity.IsAntialias = true;
+                        ctx.PaintWithOpacity.IsDither = renderMe.IsDistorted;
+                        ctx.PaintWithOpacity.FilterQuality = SKFilterQuality.Medium;
 
-                        if (renderMe.EffectPostRenderer != null)
-                        {
-                            renderMe.EffectPostRenderer.Render(ctx);
-                        }
-                        else
-                        {
-                            ctx.PaintWithOpacity.Color = SKColors.White;
-                            ctx.PaintWithOpacity.IsAntialias = true;
-                            ctx.PaintWithOpacity.IsDither = renderMe.IsDistorted;
-                            ctx.PaintWithOpacity.FilterQuality = SKFilterQuality.Medium;
+                        renderMe.Cache.Draw(ctx.Canvas, ctx.Destination, ctx.PaintWithOpacity);
 
-                            renderMe.Cache.Draw(ctx.Canvas, ctx.Destination, ctx.PaintWithOpacity);
+                        foreach (var postRenderer in renderMe.EffectPostRenderers)
+                        {
+                            postRenderer.Render(ctx);
                         }
                     });
                 }
@@ -147,7 +144,7 @@
         public CachedObject Cache { get; set; }
         public bool IsDistorted { get; set; }
         public bool WillClipBounds { get; set; }
-        public IPostRendererEffect EffectPostRenderer { get; set; }
+        public List<IPostRendererEffect> EffectPostRenderers { get; set; }
 
         public Action<DrawingContext, CachedObject> DelegateDrawCache { get; set; }
 

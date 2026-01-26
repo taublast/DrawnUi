@@ -5230,7 +5230,7 @@ namespace DrawnUi.Draw
                     EffectRenderers = null;
                     EffectsState = null;
                     EffectsGestureProcessors = null;
-                    EffectPostRenderer = null;
+                    EffectPostRenderers = null;
                 }
                 catch (Exception e)
                 {
@@ -6238,24 +6238,22 @@ namespace DrawnUi.Draw
         {
             DrawWithClipAndTransforms(context, context.Destination, true, true, (ctx) =>
             {
-                if (EffectPostRenderer != null)
+                if (_paintWithOpacity == null)
                 {
-                    EffectPostRenderer
-                        .Render(context); //post renderer will use this render object for rendering itsself
+                    _paintWithOpacity = new SKPaint();
                 }
-                else
+
+                _paintWithOpacity.Color = SKColors.White;
+                _paintWithOpacity.IsAntialias = true;
+                _paintWithOpacity.IsDither = IsDistorted;
+                _paintWithOpacity.FilterQuality = SKFilterQuality.Medium;
+
+                cache.Draw(ctx.Context.Canvas, context.Destination, _paintWithOpacity);
+
+                // Apply chained post renderers - each snapshots from canvas, enabling shader-after-shader
+                foreach (var postRenderer in EffectPostRenderers)
                 {
-                    if (_paintWithOpacity == null)
-                    {
-                        _paintWithOpacity = new SKPaint();
-                    }
-
-                    _paintWithOpacity.Color = SKColors.White;
-                    _paintWithOpacity.IsAntialias = true;
-                    _paintWithOpacity.IsDither = IsDistorted;
-                    _paintWithOpacity.FilterQuality = SKFilterQuality.Medium;
-
-                    cache.Draw(ctx.Context.Canvas, context.Destination, _paintWithOpacity);
+                    postRenderer.Render(context);
                 }
             });
         }

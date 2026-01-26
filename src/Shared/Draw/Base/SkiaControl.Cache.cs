@@ -1018,9 +1018,9 @@ public partial class SkiaControl
         {
             PaintWithEffects(ctx);
 
-            if (EffectPostRenderer != null)
+            foreach (var postRenderer in EffectPostRenderers)
             {
-                EffectPostRenderer.Render(ctx.WithDestination(destination));
+                postRenderer.Render(ctx.WithDestination(destination));
             }
         });
     }
