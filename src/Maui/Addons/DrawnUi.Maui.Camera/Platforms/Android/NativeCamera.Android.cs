@@ -2488,9 +2488,22 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         }
 
         // Configure MediaRecorder
+        // Audio source setup can fail if microphone is in use by another app (e.g., phone call)
         if (includeAudio)
         {
-            _mediaRecorder.SetAudioSource(AudioSource.Mic);
+            try
+            {
+                _mediaRecorder.SetAudioSource(AudioSource.Mic);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[NativeCameraAndroid] Failed to set audio source: {ex.Message}");
+                Debug.WriteLine("[NativeCameraAndroid] Microphone may be in use by another app (phone call?). Recording video without audio.");
+                includeAudio = false;
+                // Need to recreate MediaRecorder since SetAudioSource may have corrupted its state
+                _mediaRecorder?.Release();
+                _mediaRecorder = new MediaRecorder();
+            }
         }
         _mediaRecorder.SetVideoSource(VideoSource.Surface);
 
