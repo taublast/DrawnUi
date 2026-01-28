@@ -746,13 +746,10 @@ public partial class SkiaScroll
     /// <param name="animate"></param>
     protected void ScrollToOffset(Vector2 targetOffset, float maxTimeSecs)
     {
+        StopScrolling();
+
         if (maxTimeSecs > 0 && Height > 0)
         {
-            //_animatorFling.Stop();
-            //var from = new Vector2((float)ViewportOffsetX, (float)ViewportOffsetY);
-            //FlingToAuto(from, targetOffset, maxTimeSecs).ConfigureAwait(false);
-
-            StopScrolling();
             ScrollToX(targetOffset.X, true);
             ScrollToY(targetOffset.Y, true);
         }
@@ -761,7 +758,6 @@ public partial class SkiaScroll
             ViewportOffsetX = targetOffset.X;
             ViewportOffsetY = targetOffset.Y;
             IsSnapping = false;
-
             this.UpdateVisibleIndex();
         }
     }
@@ -801,9 +797,7 @@ public partial class SkiaScroll
     {
         if (OrderedScrollTo.IsValid)
         {
-            ScrollToOffset(new Vector2(OrderedScrollTo.Location.X,
-                    OrderedScrollTo.Location.Y),
-                OrderedScrollTo.MaxTimeSecs);
+            ScrollToOffset(new Vector2(OrderedScrollTo.Location.X, OrderedScrollTo.Location.Y), OrderedScrollTo.MaxTimeSecs);
             OrderedScrollTo = ScrollToPointOrder.NotValid;
             return true;
         }
