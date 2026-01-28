@@ -827,7 +827,7 @@ public class Canvas : DrawnView, IGestureListener
             return;
         }
 
-#if true //todo move all this fun to gestures lib now:
+#if ANDROID //todo move all this fun to gestures lib now:
         // on some devices like galaxy the screen is too sensitive for panning
         // so it send micro-panning gestures when the finger just went down to screen
         // like not moving yet so we filter micro-pan
