@@ -125,6 +125,10 @@
         <!--<PackageReference Include="DrawnUi.Maui" Version="1.6.2.5" />-->
 	</ItemGroup>
 
+    <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+      <PackageReference Include="System.Speech" Version="9.0.0" />
+    </ItemGroup>
+
     <ItemGroup>
         <ProjectReference Include="..\..\Addons\DrawnUi.Maui.Camera\DrawnUi.Maui.Camera.csproj" />
 	</ItemGroup>

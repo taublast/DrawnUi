@@ -9,6 +9,8 @@
 	</array>
   <key>NSCameraUsageDescription</key>
   <string>Allow access to the camera</string>
+  <key>NSSpeechRecognitionUsageDescription</key>
+  <string>Recognize speech demo!</string>
   <key>NSMicrophoneUsageDescription</key>
   <string>Allow access to the microphone</string>
   <key>NSPhotoLibraryAddUsageDescription</key>
