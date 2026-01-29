@@ -829,12 +829,20 @@ public partial class SkiaCamera : SkiaControl
             _audioCapture = new AudioGraphCapture();
             _audioCapture.SampleAvailable += OnAudioSampleAvailable;
             bool audioStarted = await _audioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
-            
+
+            // CRITICAL: Calculate audio timestamp offset immediately after audio capture starts
+            // Audio timestamps are relative to when AudioGraphCapture started, but video timestamps
+            // are relative to _captureVideoStartTime which was set BEFORE audio initialization.
+            // This offset corrects for the delay so audio and video timestamps align.
+            var audioStartTime = DateTime.Now;
+            var audioTimestampOffset = audioStartTime - _captureVideoStartTime;
+
             if (audioStarted)
             {
                 Debug.WriteLine($"[StartRealtimeVideoProcessing] AudioGraph capture started successfully");
                 Debug.WriteLine($"[StartRealtimeVideoProcessing] AudioGraph actual format: {_audioCapture.SampleRate}Hz, {_audioCapture.Channels}ch");
-                
+                Debug.WriteLine($"[StartRealtimeVideoProcessing] Audio timestamp offset: {audioTimestampOffset.TotalMilliseconds:F1}ms");
+
                 // Configure encoder with AudioGraph's ACTUAL audio parameters
                 if (_captureVideoEncoder is WindowsCaptureVideoEncoder winEncoder)
                 {
@@ -844,6 +852,10 @@ public partial class SkiaCamera : SkiaControl
                         _audioCapture.Channels,
                         isFloat: false  // AudioGraphCapture converts float32 to PCM16
                     );
+
+                    // Set the audio timestamp offset to align audio with video time base
+                    long offsetNs = (long)(audioTimestampOffset.TotalSeconds * 1_000_000_000);
+                    winEncoder.SetAudioTimestampOffset(offsetNs);
 
                     // Apply codec selection if set
                     if (AudioCodecIndex >= 0)
