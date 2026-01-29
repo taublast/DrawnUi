@@ -38,6 +38,26 @@ public partial class SkiaCamera : SkiaControl
     public event EventHandler<bool> IsPreRecordingVideoChanged;
     public event EventHandler<bool> IsRecordingVideoChanged;
 
+    /// <summary>
+    /// Fired when audio sample is captured - both during preview and recording.
+    /// Active when RecordAudio=true and camera is running.
+    /// Parameters: (byte[] data, int sampleRate, int bitsPerSample, int channels)
+    /// </summary>
+    public event Action<byte[], int, int, int> AudioSampleReceived;
+
+    /// <summary>
+    /// Raises the AudioSampleReceived event. Called from WriteAudioSample (recording)
+    /// and from preview audio capture. Lightweight - just fires the event.
+    /// </summary>
+    protected virtual void OnAudioSampleReceived(AudioSample sample)
+    {
+        AudioSampleReceived?.Invoke(
+            sample.Data,
+            sample.SampleRate,
+            sample.BytesPerSample * 8,
+            sample.Channels);
+    }
+
     protected virtual void SetIsRecordingVideo(bool isRecording)
     {
         if (IsRecordingVideo != isRecording)
@@ -956,6 +976,17 @@ public partial class SkiaCamera : SkiaControl
             if (control.State == CameraState.On)
             {
                 control.UpdatePreviewScaleFromFormat();
+
+                // Start preview audio capture if RecordAudio is enabled and not recording
+                if (control.RecordAudio && !control.IsRecordingVideo && !control.IsPreRecording)
+                {
+                    control.StartPreviewAudioCapture();
+                }
+            }
+            else
+            {
+                // Camera is no longer On - stop preview audio
+                control.StopPreviewAudioCapture();
             }
         }
     }
@@ -2368,7 +2399,20 @@ public partial class SkiaCamera : SkiaControl
     public INativeCamera NativeControl;
 
     private IAudioCapture _audioCapture;
+    private IAudioCapture _previewAudioCapture; // Separate instance for preview-only audio (not recording)
     private CircularAudioBuffer _audioBuffer;
+
+    /// <summary>
+    /// Starts preview audio capture. Called when RecordAudio=true and camera starts (not recording).
+    /// Implemented per platform.
+    /// </summary>
+    partial void StartPreviewAudioCapture();
+
+    /// <summary>
+    /// Stops preview audio capture. Called when recording starts or camera stops.
+    /// Implemented per platform.
+    /// </summary>
+    partial void StopPreviewAudioCapture();
     private long _captureEpochNs;
 
     private ICaptureVideoEncoder _captureVideoEncoder;

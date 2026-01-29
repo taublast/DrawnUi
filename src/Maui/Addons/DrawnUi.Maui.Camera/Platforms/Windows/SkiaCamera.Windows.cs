@@ -686,6 +686,12 @@ public partial class SkiaCamera : SkiaControl
             // Update state and notify success
             IsRecordingVideo = false;
             IsBusy = false; // Release busy state after successful muxing
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
         }
         catch (Exception ex)
         {
@@ -696,6 +702,13 @@ public partial class SkiaCamera : SkiaControl
 
             IsRecordingVideo = false;
             IsBusy = false; // Release busy state on error
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
+
             VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
@@ -750,6 +763,12 @@ public partial class SkiaCamera : SkiaControl
             await encoder?.AbortAsync();
 
             IsRecordingVideo = false;
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
         }
         catch (Exception ex)
         {
@@ -759,6 +778,13 @@ public partial class SkiaCamera : SkiaControl
             _captureVideoEncoder = null;
 
             IsRecordingVideo = false;
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
+
             //VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
@@ -771,6 +797,9 @@ public partial class SkiaCamera : SkiaControl
 
     private async Task StartRealtimeVideoProcessing()
     {
+        // Stop preview audio - recording will take over with its own audio capture
+        StopPreviewAudioCapture();
+
         // Create platform-specific encoder with existing GRContext (GPU path)
         // BUGFIX: Passing GRContext from the UI thread causes freeze/deadlock during window resize because the context 
         // is destroyed/recreated while the background encoder task is trying to use it. 
@@ -1203,6 +1232,67 @@ public partial class SkiaCamera : SkiaControl
     public virtual void WriteAudioSample(AudioSample sample)
     {
         _captureVideoEncoder?.WriteAudio(sample);
+        OnAudioSampleReceived(sample);
     }
+
+    #region Preview Audio Capture
+
+    private void OnPreviewAudioSampleAvailable(object sender, AudioSample sample)
+    {
+        // Lightweight - just fire the event, no recording logic
+        OnAudioSampleReceived(sample);
+    }
+
+    partial void StartPreviewAudioCapture()
+    {
+        if (_previewAudioCapture != null || !RecordAudio)
+            return;
+
+        Task.Run(async () =>
+        {
+            try
+            {
+                _previewAudioCapture = new AudioGraphCapture();
+                _previewAudioCapture.SampleAvailable += OnPreviewAudioSampleAvailable;
+                var started = await _previewAudioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
+                if (started)
+                {
+                    Debug.WriteLine($"[SkiaCamera.Windows] Preview audio capture started: {_previewAudioCapture.SampleRate}Hz, {_previewAudioCapture.Channels}ch");
+                }
+                else
+                {
+                    Debug.WriteLine("[SkiaCamera.Windows] Preview audio capture failed to start");
+                    _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
+                    _previewAudioCapture.Dispose();
+                    _previewAudioCapture = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera.Windows] Preview audio capture error: {ex.Message}");
+            }
+        });
+    }
+
+    partial void StopPreviewAudioCapture()
+    {
+        if (_previewAudioCapture == null)
+            return;
+
+        try
+        {
+            _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
+            _ = _previewAudioCapture.StopAsync();
+            _previewAudioCapture.Dispose();
+            _previewAudioCapture = null;
+            Debug.WriteLine("[SkiaCamera.Windows] Preview audio capture stopped");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera.Windows] Error stopping preview audio: {ex.Message}");
+        }
+    }
+
+    #endregion
 }
 
