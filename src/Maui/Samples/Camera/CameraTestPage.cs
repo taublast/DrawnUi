@@ -682,7 +682,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         CameraControl.VideoRecordingSuccess += OnVideoRecordingSuccess;
         CameraControl.VideoRecordingProgress += OnVideoRecordingProgress;
 
-        CameraControl.AudioSampleReceived += OnAudioCaptured;
+        CameraControl.AudioSampleAvailable += OnAudioCaptured;
 
         // Monitor recording state changes to start/stop speech recognition
         CameraControl.PropertyChanged += (s, e) =>

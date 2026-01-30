@@ -3,8 +3,9 @@ using Android.Content;
 using Android.Hardware.Camera2;
 using Android.Media;
 using Android.Telecom;
-using Microsoft.Maui.Controls.PlatformConfiguration;
 using DrawnUi.Camera.Platforms.Android;
+using Microsoft.Maui.Controls.PlatformConfiguration;
+using static AndroidX.Media3.ExoPlayer.Upstream.Experimental.SlidingWeightedAverageBandwidthStatistic;
 
 
 namespace DrawnUi.Camera;
@@ -554,9 +555,11 @@ public partial class SkiaCamera
         }
     }
 
-    private void OnAudioSampleAvailable(object sender, AudioSample e)
+    private void OnAudioSampleAvailable(object sender, AudioSample sample)
     {
-        WriteAudioSample(e);
+        var useSample = OnAudioSampleAvailable(sample);
+
+        WriteAudioSample(useSample);
     }
 
     public virtual void WriteAudioSample(AudioSample e)
@@ -565,7 +568,6 @@ public partial class SkiaCamera
         {
             droidEnc.WriteAudio(e);
         }
-        OnAudioSampleReceived(e);
     }
 
     private async Task StopRealtimeVideoProcessingInternal()
@@ -1389,8 +1391,7 @@ public partial class SkiaCamera
 
     private void OnPreviewAudioSampleAvailable(object sender, AudioSample sample)
     {
-        // Lightweight - just fire the event, no recording logic
-        OnAudioSampleReceived(sample);
+        OnAudioSampleAvailable(sample);
     }
 
     partial void StartPreviewAudioCapture()

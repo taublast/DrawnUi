@@ -74,13 +74,12 @@ namespace CameraTests.Views
 
             public string RecognizedText { get; set; }
 
-            protected override void OnAudioSampleReceived(AudioSample sample)
+            protected override AudioSample OnAudioSampleAvailable(AudioSample sample)
             {
-                base.OnAudioSampleReceived(sample);
-
                 _audioVisualizer?.AddSample(sample);
-            }
 
+                return base.OnAudioSampleAvailable(sample);
+            }
 
             public override void OnWillDisposeWithChildren()
             {

@@ -44,19 +44,21 @@ public partial class SkiaCamera : SkiaControl
     /// Active when RecordAudio=true and camera is running.
     /// Parameters: (byte[] data, int sampleRate, int bitsPerSample, int channels)
     /// </summary>
-    public event Action<byte[], int, int, int> AudioSampleReceived;
+    public event Action<byte[], int, int, int> AudioSampleAvailable;
 
     /// <summary>
     /// Raises the AudioSampleReceived event. Called from WriteAudioSample (recording)
     /// and from preview audio capture. Lightweight - just fires the event.
     /// </summary>
-    protected virtual void OnAudioSampleReceived(AudioSample sample)
+    protected virtual AudioSample OnAudioSampleAvailable(AudioSample sample)
     {
-        AudioSampleReceived?.Invoke(
+        AudioSampleAvailable?.Invoke(
             sample.Data,
             sample.SampleRate,
             sample.BytesPerSample * 8,
             sample.Channels);
+
+        return sample;
     }
 
     protected virtual void SetIsRecordingVideo(bool isRecording)
@@ -2623,8 +2625,9 @@ public partial class SkiaCamera : SkiaControl
     /// </summary>
     private void OnAudioOnlySampleAvailable(object sender, AudioSample sample)
     {
-        _audioOnlyEncoder?.WriteAudio(sample);
-        OnAudioSampleReceived(sample);
+        var useSample = OnAudioSampleAvailable(sample);
+
+        _audioOnlyEncoder?.WriteAudio(useSample);
     }
 
     /// <summary>

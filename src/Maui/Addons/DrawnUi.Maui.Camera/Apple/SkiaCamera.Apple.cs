@@ -2,16 +2,17 @@
 
 using System.Diagnostics;
 using AVFoundation;
-using DrawnUi.Maui.Navigation;
-using Foundation;
-using Photos;
-using UIKit;
-using Metal; // Added for Zero-Copy path
-using SkiaSharp.Views.Maui.Controls; // For SKGLView
-using Foundation;
-using Photos;
 using AVFoundation;
 using AVKit;
+using DrawnUi.Maui.Navigation;
+using Foundation;
+using Foundation;
+using HealthKit;
+using Metal; // Added for Zero-Copy path
+using Photos;
+using Photos;
+using SkiaSharp.Views.Maui.Controls; // For SKGLView
+using UIKit;
 
 namespace DrawnUi.Camera;
 
@@ -309,9 +310,11 @@ public partial class SkiaCamera
         return new AudioCaptureApple();
     }
 
-    private void OnAudioSampleAvailable(object sender, AudioSample e)
+    private void OnAudioSampleAvailable(object sender, AudioSample sample)
     {
-        WriteAudioSample(e);
+        var useSample = OnAudioSampleAvailable(sample);
+
+        WriteAudioSample(useSample);
     }
 
     public virtual void WriteAudioSample(AudioSample sample)
@@ -329,7 +332,6 @@ public partial class SkiaCamera
             // Live recording: Stream directly to file (OOM-safe)
             WriteSampleToLiveAudioWriter(sample);
         }
-        OnAudioSampleReceived(sample);
     }
 
     private async Task<ICaptureVideoEncoder> StartRealtimeVideoProcessing(bool preserveCurrentEncoder = false)
@@ -3113,7 +3115,7 @@ public partial class SkiaCamera
     private void OnPreviewAudioSampleAvailable(object sender, AudioSample sample)
     {
         // Lightweight - just fire the event, no recording logic
-        OnAudioSampleReceived(sample);
+        OnAudioSampleAvailable(sample);
     }
 
     partial void StartPreviewAudioCapture()

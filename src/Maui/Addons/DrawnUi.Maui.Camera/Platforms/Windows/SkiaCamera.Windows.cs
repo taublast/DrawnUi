@@ -1234,14 +1234,14 @@ public partial class SkiaCamera : SkiaControl
 
     private void OnAudioSampleAvailable(object sender, AudioSample sample)
     {
-        WriteAudioSample(sample);
-    }
+        var useSample = OnAudioSampleAvailable(sample);
 
+        WriteAudioSample(useSample);
+    }
 
     public virtual void WriteAudioSample(AudioSample sample)
     {
         _captureVideoEncoder?.WriteAudio(sample);
-        OnAudioSampleReceived(sample);
     }
 
     #region Preview Audio Capture
@@ -1249,7 +1249,7 @@ public partial class SkiaCamera : SkiaControl
     private void OnPreviewAudioSampleAvailable(object sender, AudioSample sample)
     {
         // Lightweight - just fire the event, no recording logic
-        OnAudioSampleReceived(sample);
+        OnAudioSampleAvailable(sample);
     }
 
     partial void StartPreviewAudioCapture()
