@@ -542,6 +542,17 @@ public class Canvas : DrawnView, IGestureListener
     private bool _hadHover;
     private bool _checkHover;
 
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    void AddHadInput(ISkiaGestureListener consumed, SkiaGesturesParameters args)
+    {
+        //if (args.Type == TouchActionResult.Tapped)
+        //{
+        //    var stop = true;
+        //}
+        HadInput.TryAdd(consumed.Uid, consumed);
+    }
+
     protected virtual void ProcessGestures(SkiaGesturesParameters args)
     {
         lock (LockIterateListeners)
@@ -587,7 +598,7 @@ public class Canvas : DrawnView, IGestureListener
                             if (args.Type != TouchActionResult.Up)
                             {
                                 secondPass = false;
-                                HadInput.TryAdd(consumed.Uid, consumed);
+                                AddHadInput(consumed, args);
                                 //Debug.WriteLine($"[Canvas] +HadInput: {consumed} for {args.Type}");
                                 break;
                             }
@@ -641,7 +652,7 @@ public class Canvas : DrawnView, IGestureListener
                         {
                             if (args.Type != TouchActionResult.Up)
                             {
-                                HadInput.TryAdd(listener.Uid, consumed);
+                                AddHadInput(consumed, args);
                                 //Debug.WriteLine($"[Canvas] +HadInput: {listener} for {args.Type}");
                             }
 
