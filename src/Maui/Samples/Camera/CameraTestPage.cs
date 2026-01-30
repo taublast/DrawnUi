@@ -561,7 +561,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         if (CameraControl != null)
         {
             // Configure camera for capture video flow testing
-            CameraControl.UseRealtimeVideoProcessing = false; // Enable capture video flow
+            CameraControl.UseRealtimeVideoProcessing = true;  
             CameraControl.VideoQuality = VideoQuality.Standard;
             CameraControl.RecordAudio = true;
 
