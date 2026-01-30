@@ -2488,10 +2488,8 @@ else
                                         }
                                         else
                                         {
-
-                                            //todo need arrange in deep for gestures to work....
-
-                                            child.Arrange(destinationRect, child.SizeRequest.Width,
+                                            // Use ArrangeCache to update cache's LastDestination for gesture coordinate translation
+                                            child.ArrangeCache(destinationRect, child.SizeRequest.Width,
                                                 child.SizeRequest.Height,
                                                 ctx.Scale);
 

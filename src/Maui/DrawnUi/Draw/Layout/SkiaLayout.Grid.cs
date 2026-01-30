@@ -176,7 +176,8 @@ public partial class SkiaLayout
                     }
                     else
                     {
-                        child.Arrange(cellRect, child.SizeRequest.Width, child.SizeRequest.Height, scale);
+                        // Use ArrangeCache to update cache's LastDestination for gesture coordinate translation
+                        child.ArrangeCache(cellRect, child.SizeRequest.Width, child.SizeRequest.Height, scale);
                     }
                 }
                 else

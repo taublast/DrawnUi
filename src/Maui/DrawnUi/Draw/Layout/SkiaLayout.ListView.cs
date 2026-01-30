@@ -2252,9 +2252,8 @@ public partial class SkiaLayout
                                 }
                                 else
                                 {
-                                    //skip drawing but need arrange :(
-                                    //todo set virtual offset between drawnrect and the new
-                                    child.Arrange(destinationRect, child.SizeRequest.Width, child.SizeRequest.Height,
+                                    // Use ArrangeCache to update cache's LastDestination for gesture coordinate translation
+                                    child.ArrangeCache(destinationRect, child.SizeRequest.Width, child.SizeRequest.Height,
                                         ctx.Scale);
                                 }
                             }

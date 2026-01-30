@@ -4020,6 +4020,24 @@ namespace DrawnUi.Draw
             PostArrange(destination, width, height, scale);
         }
 
+        /// <summary>
+        /// Arranges the control and updates its cache's LastDestination property.
+        /// Used by ImageComposite composition mode when skipping drawing of non-dirty children
+        /// but still needing to update their position for gesture coordinate translation.
+        /// </summary>
+        public virtual void ArrangeCache(SKRect destination, float widthRequest, float heightRequest, float scale)
+        {
+            Arrange(destination, widthRequest, heightRequest, scale);
+
+            // Update cache's LastDestination for gesture coordinate translation
+            // even though we're not actually drawing
+            var cache = RenderObject ?? RenderObjectPrevious;
+            if (cache != null)
+            {
+                cache.LastDestination = DrawingRect;
+            }
+        }
+
         protected virtual void PostArrange(SKRect destination, float widthRequest, float heightRequest, float scale)
         {
             //create area to arrange inside
