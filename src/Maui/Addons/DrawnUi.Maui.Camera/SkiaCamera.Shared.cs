@@ -47,8 +47,7 @@ public partial class SkiaCamera : SkiaControl
     public event Action<byte[], int, int, int> AudioSampleAvailable;
 
     /// <summary>
-    /// Raises the AudioSampleReceived event. Called from WriteAudioSample (recording)
-    /// and from preview audio capture. Lightweight - just fires the event.
+    /// Audio is available, use by writer etc, you can use to change the audio, apply gain etc.. Raises the AudioSampleAvailable event!
     /// </summary>
     protected virtual AudioSample OnAudioSampleAvailable(AudioSample sample)
     {
