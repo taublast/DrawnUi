@@ -40,11 +40,12 @@ namespace DrawnUi.Camera
         public void WriteAudio(AudioSample sample)
         {
             if (!_isRecording && !IsPreRecordingMode) return;
-            
-            // In pre-recording mode, buffer PCM
-            if (IsPreRecordingMode && _audioBuffer != null)
+
+            // In pre-recording mode, encode audio continuously and buffer encoded AAC
+            // This eliminates the lag spike at transition (no need to encode 5s of PCM synchronously)
+            if (IsPreRecordingMode && _encodedAudioBuffer != null)
             {
-                _audioBuffer.Write(sample);
+                Task.Run(() => FeedAudioEncoderPreRecording(sample));
             }
             // In live recording, feed encoder directly
             else if (_isRecording)
@@ -68,6 +69,7 @@ namespace DrawnUi.Camera
         private int _audioTrackIndex = -1;
         private MediaFormat _audioFormat;
         private CircularAudioBuffer _audioBuffer;
+        private CircularEncodedAudioBuffer _encodedAudioBuffer;  // Pre-encoded AAC for lag-free transition
         private readonly SemaphoreSlim _audioSemaphore = new(1, 1);
         private readonly SemaphoreSlim _videoSemaphore = new(1, 1);
         private long _audioPresentationTimeUs = 0;
@@ -371,6 +373,14 @@ namespace DrawnUi.Camera
                     _preRecordingBuffer = new PrerecordingEncodedBuffer(preRecordDuration);
                 }
 
+                // Initialize encoded audio buffer for continuous encoding during pre-recording
+                // Audio will be encoded with timestamps normalized to video timeline (same as original transition code)
+                if (_recordAudio)
+                {
+                    _encodedAudioBuffer = new CircularEncodedAudioBuffer(ParentCamera.PreRecordDuration);
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Initialized encoded audio buffer for lag-free transition");
+                }
+
                 // CRITICAL: Start recording immediately to buffer frames (mirrors iOS)
                 _isRecording = true;
                 _startTime = DateTime.Now;
@@ -604,30 +614,60 @@ namespace DrawnUi.Camera
                             }
                         }
 
-                        // Flush pre-recorded audio
-                        if (_recordAudio && _audioBuffer != null)
+                        // Flush pre-recorded audio (FAST PATH: write already-encoded AAC frames)
+                        // Timestamps were normalized BEFORE encoding, so write directly - no transformation needed!
+                        if (_recordAudio && _audioTrackIndex >= 0 && _encodedAudioBuffer != null && _encodedAudioBuffer.FrameCount > 0)
                         {
                             try
                             {
-                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Processing pre-recorded audio...");
+                                var encodedFrames = _encodedAudioBuffer.GetAllFrames();
+                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Writing {encodedFrames.Count} pre-encoded audio frames (FAST - no re-encoding!)");
+
+                                foreach (var (aacData, timestampUs, size) in encodedFrames)
+                                {
+                                    if (aacData == null || size == 0) continue;
+
+                                    // Write directly - timestamps already normalized to video timeline during encoding!
+                                    var audioBuffer = ByteBuffer.Wrap(aacData);
+                                    var audioInfo = new MediaCodec.BufferInfo();
+                                    audioInfo.Set(0, size, timestampUs, 0);
+
+                                    lock (_warmupLock)
+                                    {
+                                        _muxer.WriteSampleData(_audioTrackIndex, audioBuffer, audioInfo);
+                                    }
+                                }
+
+                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Pre-encoded audio written (no lag!)");
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Error writing encoded audio: {ex.Message}");
+                            }
+                        }
+                        // Fallback: if encoded buffer empty/failed, use original PCM encoding (slow but works)
+                        else if (_recordAudio && _audioTrackIndex >= 0 && _audioBuffer != null)
+                        {
+                            try
+                            {
+                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Fallback: encoding PCM audio (may cause lag)...");
                                 var firstVideoActionTimestampNs = (long)(firstBufferedFrameTimestamp.Ticks * 100);
                                 var audioSamples = _audioBuffer.DrainFrom(firstVideoActionTimestampNs);
-                                
-                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Draining {audioSamples.Length} audio samples...");
-                                foreach(var sample in audioSamples)
+
+                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Encoding {audioSamples.Length} audio samples...");
+                                foreach (var sample in audioSamples)
                                 {
-                                    // Renormalize timestamp to match video start
                                     long nTs = sample.TimestampNs - firstVideoActionTimestampNs;
-                                    if (nTs < 0) nTs = 0; 
+                                    if (nTs < 0) nTs = 0;
 
                                     var nSample = sample;
                                     nSample.TimestampNs = nTs;
                                     FeedAudioEncoder(nSample);
                                 }
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
-                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Error draining audio buffer: {ex}");
+                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Error encoding audio: {ex}");
                             }
                         }
 
@@ -640,7 +680,16 @@ namespace DrawnUi.Camera
                         {
                             _audioPresentationTimeUs = _audioPtsOffsetUs;
                         }
-                        
+
+                        // CRITICAL FIX: Don't add preRecordingDuration to live VIDEO frames!
+                        // The encoder's normalized PTS already reflects elapsed time since pre-recording started.
+                        // Pre-recorded frames: 0 to ~5s (written above, uses stored timestamps)
+                        // Live frames without fix: normalizedPts(~5s) + offset(~5s) = ~10s (WRONG - creates gap!)
+                        // Live frames with fix: normalizedPts(~5s) + 0 = ~5s (CORRECT - continues from pre-recorded)
+                        // Audio offset is already captured in _audioPtsOffsetUs above, so audio is unaffected.
+                        _preRecordingDuration = TimeSpan.Zero;
+                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Cleared preRecordingDuration for live video (audio offset preserved: {_audioPtsOffsetUs}us)");
+
                         // NOTE: Do NOT reset _audioPtsBaseNs or _firstVideoFrameTimestampNs here!
                         // Both audio and video are continuous from prerecording to live
                         // Only reset these on full recording start (normal mode)
@@ -661,8 +710,9 @@ namespace DrawnUi.Camera
                     _muxer.SetOrientationHint(_deviceRotation);
                 }
 
-                // Step 4: Clear buffer (keep for reuse), switch to live recording mode
+                // Step 4: Clear buffers (keep for reuse), switch to live recording mode
                 _preRecordingBuffer?.Clear();
+                _encodedAudioBuffer?.Clear();
 
                 // CRITICAL: Disable pre-recording mode so live frames go to muxer, not buffer!
                 IsPreRecordingMode = false;
@@ -2074,43 +2124,41 @@ namespace DrawnUi.Camera
         private void FeedAudioEncoder(AudioSample sample)
         {
             if (_audioCodec == null) return;
-            
+
             // Calculate PTS and check if sample should be dropped
             var pts = CalculateAudioPts(sample.TimestampNs);
             if (pts < 0)
             {
                 return; // Skip audio samples before first video frame
             }
-            
-            try 
+
+            try
             {
                 // Lock audio semaphore
                 _audioSemaphore.Wait();
-                
+
                 int index = _audioCodec.DequeueInputBuffer(1000); // 1ms wait
                 if (index >= 0)
                 {
                     var buffer = _audioCodec.GetInputBuffer(index);
                     buffer.Clear();
-                    
+
                     var data = sample.Data;
                     if (data.Length > buffer.Remaining())
                     {
                         // Truncate if too large (shouldn't happen if sized correctly)
-                        // data = data.Take(buffer.Remaining()).ToArray(); // Need using System.Linq
-                        // Better use Array.Copy for perf and no linq allocations
                         var newData = new byte[buffer.Remaining()];
                         Array.Copy(data, newData, newData.Length);
                         data = newData;
                     }
-                    
+
                     buffer.Put(data);
-                    
+
                     long ptsUs = pts; // Already calculated and validated at method start
 
                     _audioCodec.QueueInputBuffer(index, 0, data.Length, ptsUs, 0);
                 }
-                
+
                 DrainAudioEncoder();
             }
             catch(Exception ex)
@@ -2120,6 +2168,121 @@ namespace DrawnUi.Camera
             finally
             {
                 _audioSemaphore.Release();
+            }
+        }
+
+        /// <summary>
+        /// Encodes audio during pre-recording with timestamps normalized to video timeline.
+        /// CRITICAL: Uses same normalization as original transition code (relative to first VIDEO frame).
+        /// This ensures A/V sync is maintained when writing encoded frames at transition.
+        /// </summary>
+        private void FeedAudioEncoderPreRecording(AudioSample sample)
+        {
+            if (_audioCodec == null || _encodedAudioBuffer == null) return;
+
+            // CRITICAL: Wait for first video frame (same guard as original transition code)
+            // This ensures audio timestamps are relative to video start
+            if (_firstVideoFrameTimestampNs < 0) return;
+
+            // CRITICAL: Normalize timestamp relative to first VIDEO frame
+            // This is EXACTLY what the original code does at transition!
+            // Original: nTs = sample.TimestampNs - firstVideoActionTimestampNs
+            long normalizedTsNs = sample.TimestampNs - _firstVideoFrameTimestampNs;
+            if (normalizedTsNs < 0) normalizedTsNs = 0;
+            long normalizedTsUs = normalizedTsNs / 1000;
+
+            try
+            {
+                _audioSemaphore.Wait();
+
+                int index = _audioCodec.DequeueInputBuffer(1000);
+                if (index >= 0)
+                {
+                    var buffer = _audioCodec.GetInputBuffer(index);
+                    buffer.Clear();
+
+                    var data = sample.Data;
+                    if (data.Length > buffer.Remaining())
+                    {
+                        var newData = new byte[buffer.Remaining()];
+                        Array.Copy(data, newData, newData.Length);
+                        data = newData;
+                    }
+
+                    buffer.Put(data);
+
+                    // Feed with NORMALIZED timestamp (relative to first video frame)
+                    _audioCodec.QueueInputBuffer(index, 0, data.Length, normalizedTsUs, 0);
+                }
+
+                // Drain encoded output to buffer (not muxer - muxer not started yet)
+                DrainAudioEncoderToBuffer();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] FeedAudioPreRec error: {ex.Message}");
+            }
+            finally
+            {
+                _audioSemaphore.Release();
+            }
+        }
+
+        /// <summary>
+        /// Drains audio encoder during pre-recording, storing encoded AAC in buffer.
+        /// Timestamps are already normalized (done before encoding) - store as-is.
+        /// </summary>
+        private void DrainAudioEncoderToBuffer()
+        {
+            if (_audioCodec == null || _encodedAudioBuffer == null) return;
+
+            var info = new MediaCodec.BufferInfo();
+            while (true)
+            {
+                int status = _audioCodec.DequeueOutputBuffer(info, 0);
+                if (status == (int)MediaCodecInfoState.TryAgainLater)
+                {
+                    break;
+                }
+                else if (status == (int)MediaCodecInfoState.OutputFormatChanged)
+                {
+                    _audioFormat = _audioCodec.OutputFormat;
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Audio Format Changed (PreRec): {_audioFormat}");
+                }
+                else if (status >= 0)
+                {
+                    var encodedData = _audioCodec.GetOutputBuffer(status);
+                    if (encodedData == null)
+                    {
+                        _audioCodec.ReleaseOutputBuffer(status, false);
+                        continue;
+                    }
+
+                    if ((info.Flags & MediaCodecBufferFlags.CodecConfig) != 0)
+                    {
+                        info.Size = 0; // Skip codec config
+                    }
+
+                    if (info.Size > 0)
+                    {
+                        // Copy encoded AAC data
+                        byte[] aacData = new byte[info.Size];
+                        encodedData.Position(info.Offset);
+                        encodedData.Get(aacData, 0, info.Size);
+
+                        // Store with timestamp (already normalized to video timeline)
+                        _encodedAudioBuffer.AppendEncodedFrame(aacData, info.Size, info.PresentationTimeUs);
+                    }
+
+                    _audioCodec.ReleaseOutputBuffer(status, false);
+
+                    if ((info.Flags & MediaCodecBufferFlags.EndOfStream) != 0)
+                        break;
+                }
+                else
+                {
+                    break;
+                }
             }
         }
 
