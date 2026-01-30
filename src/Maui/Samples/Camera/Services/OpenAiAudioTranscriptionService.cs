@@ -8,16 +8,16 @@ namespace CameraTests.Services
     /// </summary>
     public class OpenAiAudioTranscriptionService : IAudioTranscriptionProvider
     {
-        // Paste your OpenAI API key here
-        private const string ApiKey = "";
+        private string ApiKey = "";
 
         private const string WhisperEndpoint = "https://api.openai.com/v1/audio/transcriptions";
         private const string Model = "whisper-1";
 
         private readonly HttpClient _httpClient;
 
-        public OpenAiAudioTranscriptionService()
+        public OpenAiAudioTranscriptionService(string apiKey)
         {
+            ApiKey = apiKey;
             _httpClient = new HttpClient();
             _httpClient.Timeout = TimeSpan.FromSeconds(30);
         }

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using AppoMobi;
 
 namespace CameraTests.Services
 {
@@ -42,7 +43,7 @@ namespace CameraTests.Services
 
         public AudioTranscriptionService(IAudioTranscriptionProvider transcriptionProvider = null)
         {
-            _transcriptionProvider = transcriptionProvider ?? new OpenAiAudioTranscriptionService();
+            _transcriptionProvider = transcriptionProvider ?? new OpenAiAudioTranscriptionService(Secrets.OpenAiKey);
         }
 
         public void SetAudioFormat(int sampleRate, int bitsPerSample, int channels)

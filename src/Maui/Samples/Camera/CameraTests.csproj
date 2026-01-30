@@ -111,6 +111,11 @@
 	</ItemGroup>
 
 
+  <ItemGroup>
+    <Compile Include="..\..\..\..\..\Secrets.Ai.cs" Link="Secrets.Ai.cs" />
+  </ItemGroup>
+
+
 	<ItemGroup>
         <!--https://github.com/BretJohnson/hot-preview-->
         <!--<PackageReference Include="HotPreview.App.Maui" Version="0.12.6" />-->
