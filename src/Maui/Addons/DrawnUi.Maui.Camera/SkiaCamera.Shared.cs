@@ -37,6 +37,7 @@ public partial class SkiaCamera : SkiaControl
 
     public event EventHandler<bool> IsPreRecordingVideoChanged;
     public event EventHandler<bool> IsRecordingVideoChanged;
+    public event EventHandler<bool> IsRecordingAudioOnlyChanged;
 
     /// <summary>
     /// Fired when audio sample is captured - both during preview and recording.
@@ -76,6 +77,15 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
+    protected virtual void SetIsRecordingAudioOnly(bool isRecording)
+    {
+        if (IsRecordingAudioOnly != isRecording)
+        {
+            IsRecordingAudioOnly = isRecording;
+            IsRecordingAudioOnlyChanged?.Invoke(this, isRecording);
+        }
+    }
+
     #region VIDEO RECORDING PROPERTIES
 
     public static readonly BindableProperty IsRecordingVideoProperty = BindableProperty.Create(
@@ -110,6 +120,23 @@ public partial class SkiaCamera : SkiaControl
     {
         get { return (bool)GetValue(IsPreRecordingProperty); }
         private set { SetValue(IsPreRecordingProperty, value); }
+    }
+
+    public static readonly BindableProperty IsRecordingAudioOnlyProperty = BindableProperty.Create(
+        nameof(IsRecordingAudioOnly),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false,
+        BindingMode.OneWayToSource);
+
+    /// <summary>
+    /// Whether audio-only recording is currently active (read-only).
+    /// True when RecordVideo=false and audio recording is in progress.
+    /// </summary>
+    public bool IsRecordingAudioOnly
+    {
+        get { return (bool)GetValue(IsRecordingAudioOnlyProperty); }
+        private set { SetValue(IsRecordingAudioOnlyProperty, value); }
     }
 
     public static readonly BindableProperty VideoQualityProperty = BindableProperty.Create(
@@ -277,6 +304,23 @@ public partial class SkiaCamera : SkiaControl
     {
         get { return (bool)GetValue(RecordAudioProperty); }
         set { SetValue(RecordAudioProperty, value); }
+    }
+
+    public static readonly BindableProperty RecordVideoProperty = BindableProperty.Create(
+        nameof(RecordVideo),
+        typeof(bool),
+        typeof(SkiaCamera),
+        true); // Default: record video
+
+    /// <summary>
+    /// Whether to record video frames. Default is true.
+    /// When false, only audio will be recorded (output: M4A file).
+    /// RecordAudio must be true when RecordVideo is false.
+    /// </summary>
+    public bool RecordVideo
+    {
+        get { return (bool)GetValue(RecordVideoProperty); }
+        set { SetValue(RecordVideoProperty, value); }
     }
 
     public static readonly BindableProperty UseRealtimeVideoProcessingProperty = BindableProperty.Create(
@@ -1246,6 +1290,21 @@ public partial class SkiaCamera : SkiaControl
             return;
         }
 
+        // Handle audio-only recording stop
+        if (IsRecordingAudioOnly)
+        {
+            IsBusy = true;
+            try
+            {
+                await StopAudioOnlyRecording(abort);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+            return;
+        }
+
         if (!IsRecordingVideo && !IsPreRecording)
             return;
 
@@ -1324,6 +1383,134 @@ public partial class SkiaCamera : SkiaControl
             }
         }
     }
+
+    #region AUDIO-ONLY RECORDING
+
+    /// <summary>
+    /// Starts audio-only recording (no video). Called internally when RecordVideo=false.
+    /// Output format: M4A (AAC audio in MP4 container).
+    /// </summary>
+    protected async Task StartAudioOnlyRecording()
+    {
+        if (IsRecordingAudioOnly)
+            return;
+
+        Debug.WriteLine("[StartAudioOnlyRecording] Starting audio-only recording...");
+
+        try
+        {
+            // Generate output path
+            var filename = $"audio_{DateTime.Now:yyyyMMdd_HHmmss}.m4a";
+            var outputPath = Path.Combine(FileSystem.CacheDirectory, filename);
+
+            // Create platform-specific encoder
+            CreateAudioOnlyEncoder(out var encoder);
+            if (encoder == null)
+                throw new InvalidOperationException("Failed to create audio encoder for this platform");
+
+            _audioOnlyEncoder = encoder;
+
+            // Initialize encoder with audio settings
+            int sampleRate = AudioSampleRate > 0 ? AudioSampleRate : 44100;
+            int channels = AudioChannels > 0 ? AudioChannels : 1;
+            var bitDepth = AudioBitDepth.Pcm16Bit;
+
+            await _audioOnlyEncoder.InitializeAsync(outputPath, sampleRate, channels, bitDepth);
+            await _audioOnlyEncoder.StartAsync();
+
+            // Start audio capture using the platform's audio capture infrastructure
+            // Reuse existing _audioCapture creation pattern from each platform
+            await StartAudioOnlyCapture(sampleRate, channels);
+
+            SetIsRecordingAudioOnly(true);
+
+            Debug.WriteLine($"[StartAudioOnlyRecording] Recording to: {outputPath}");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[StartAudioOnlyRecording] Error: {ex.Message}");
+            _audioOnlyEncoder?.Dispose();
+            _audioOnlyEncoder = null;
+            AudioRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Stops audio-only recording and returns the captured audio.
+    /// </summary>
+    protected async Task<CapturedAudio> StopAudioOnlyRecording(bool abort = false)
+    {
+        if (!IsRecordingAudioOnly || _audioOnlyEncoder == null)
+            return null;
+
+        Debug.WriteLine("[StopAudioOnlyRecording] Stopping audio-only recording...");
+
+        try
+        {
+            // Stop audio capture first
+            await StopAudioOnlyCapture();
+
+            CapturedAudio result = null;
+            if (abort)
+            {
+                await _audioOnlyEncoder.AbortAsync();
+            }
+            else
+            {
+                result = await _audioOnlyEncoder.StopAsync();
+            }
+
+            _audioOnlyEncoder.Dispose();
+            _audioOnlyEncoder = null;
+
+            SetIsRecordingAudioOnly(false);
+
+            if (result != null && !abort)
+            {
+                OnAudioRecordingSuccess(result);
+            }
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[StopAudioOnlyRecording] Error: {ex.Message}");
+            _audioOnlyEncoder?.Dispose();
+            _audioOnlyEncoder = null;
+            SetIsRecordingAudioOnly(false);
+            AudioRecordingFailed?.Invoke(this, ex);
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Starts audio capture for audio-only recording.
+    /// Implemented per platform.
+    /// </summary>
+    private partial void StartAudioOnlyCapture(int sampleRate, int channels, out Task task);
+
+    private async Task StartAudioOnlyCapture(int sampleRate, int channels)
+    {
+        Task task = Task.CompletedTask;
+        StartAudioOnlyCapture(sampleRate, channels, out task);
+        await task;
+    }
+
+    /// <summary>
+    /// Stops audio capture for audio-only recording.
+    /// Implemented per platform.
+    /// </summary>
+    private partial void StopAudioOnlyCapture(out Task task);
+
+    private async Task StopAudioOnlyCapture()
+    {
+        Task task = Task.CompletedTask;
+        StopAudioOnlyCapture(out task);
+        await task;
+    }
+
+    #endregion
 
     private void Super_OnNativeAppPaused(object sender, EventArgs e)
     {
@@ -1779,6 +1966,16 @@ public partial class SkiaCamera : SkiaControl
     /// Fired when video recording progress updates
     /// </summary>
     public event EventHandler<TimeSpan> VideoRecordingProgress;
+
+    /// <summary>
+    /// Fired when audio-only recording completes successfully (when RecordVideo=false)
+    /// </summary>
+    public event EventHandler<CapturedAudio> AudioRecordingSuccess;
+
+    /// <summary>
+    /// Fired when audio-only recording fails (when RecordVideo=false)
+    /// </summary>
+    public event EventHandler<Exception> AudioRecordingFailed;
 
     public event EventHandler<CameraState> StateChanged;
 
@@ -2401,6 +2598,7 @@ public partial class SkiaCamera : SkiaControl
     private IAudioCapture _audioCapture;
     private IAudioCapture _previewAudioCapture; // Separate instance for preview-only audio (not recording)
     private CircularAudioBuffer _audioBuffer;
+    private IAudioOnlyEncoder _audioOnlyEncoder; // For audio-only recording when RecordVideo=false
 
     /// <summary>
     /// Starts preview audio capture. Called when RecordAudio=true and camera starts (not recording).
@@ -2413,6 +2611,31 @@ public partial class SkiaCamera : SkiaControl
     /// Implemented per platform.
     /// </summary>
     partial void StopPreviewAudioCapture();
+
+    /// <summary>
+    /// Creates a platform-specific audio-only encoder.
+    /// Implemented per platform.
+    /// </summary>
+    private partial void CreateAudioOnlyEncoder(out IAudioOnlyEncoder encoder);
+
+    /// <summary>
+    /// Called when audio sample is available during audio-only recording.
+    /// </summary>
+    private void OnAudioOnlySampleAvailable(object sender, AudioSample sample)
+    {
+        _audioOnlyEncoder?.WriteAudio(sample);
+        OnAudioSampleReceived(sample);
+    }
+
+    /// <summary>
+    /// Helper to raise AudioRecordingSuccess event.
+    /// </summary>
+    internal void OnAudioRecordingSuccess(CapturedAudio capturedAudio)
+    {
+        Debug.WriteLine($"[OnAudioRecordingSuccess] Audio file: {capturedAudio?.FilePath}, Duration: {capturedAudio?.Duration}");
+        AudioRecordingSuccess?.Invoke(this, capturedAudio);
+    }
+
     private long _captureEpochNs;
 
     private ICaptureVideoEncoder _captureVideoEncoder;

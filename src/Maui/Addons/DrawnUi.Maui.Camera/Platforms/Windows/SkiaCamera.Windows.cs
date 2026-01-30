@@ -1070,6 +1070,15 @@ public partial class SkiaCamera : SkiaControl
         if (IsBusy)
             return;
 
+        // Handle audio-only recording (RecordVideo=false)
+        if (!RecordVideo)
+        {
+            if (!RecordAudio)
+                throw new InvalidOperationException("RecordAudio must be true when RecordVideo is false");
+            await StartAudioOnlyRecording();
+            return;
+        }
+
         Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
 
         try
@@ -1291,6 +1300,83 @@ public partial class SkiaCamera : SkiaControl
         {
             Debug.WriteLine($"[SkiaCamera.Windows] Error stopping preview audio: {ex.Message}");
         }
+    }
+
+    #endregion
+
+    #region AUDIO-ONLY RECORDING
+
+    private IAudioCapture _audioOnlyCapture;
+
+    private partial void CreateAudioOnlyEncoder(out IAudioOnlyEncoder encoder)
+    {
+        encoder = new AudioOnlyEncoderWindows();
+    }
+
+    private partial void StartAudioOnlyCapture(int sampleRate, int channels, out Task task)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        task = tcs.Task;
+
+        Task.Run(async () =>
+        {
+            try
+            {
+                // Stop preview audio capture first
+                StopPreviewAudioCapture();
+
+                _audioOnlyCapture = new AudioGraphCapture();
+                _audioOnlyCapture.SampleAvailable += OnAudioOnlySampleAvailable;
+                var started = await _audioOnlyCapture.StartAsync(sampleRate, channels, AudioBitDepth, AudioDeviceIndex);
+                if (started)
+                {
+                    Debug.WriteLine($"[SkiaCamera.Windows] Audio-only capture started: {_audioOnlyCapture.SampleRate}Hz, {_audioOnlyCapture.Channels}ch");
+                }
+                else
+                {
+                    Debug.WriteLine("[SkiaCamera.Windows] Audio-only capture failed to start");
+                    _audioOnlyCapture.SampleAvailable -= OnAudioOnlySampleAvailable;
+                    _audioOnlyCapture.Dispose();
+                    _audioOnlyCapture = null;
+                }
+                tcs.TrySetResult(started);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera.Windows] Audio-only capture error: {ex.Message}");
+                tcs.TrySetException(ex);
+            }
+        });
+    }
+
+    private partial void StopAudioOnlyCapture(out Task task)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        task = tcs.Task;
+
+        if (_audioOnlyCapture == null)
+        {
+            tcs.TrySetResult(true);
+            return;
+        }
+
+        Task.Run(async () =>
+        {
+            try
+            {
+                _audioOnlyCapture.SampleAvailable -= OnAudioOnlySampleAvailable;
+                await _audioOnlyCapture.StopAsync();
+                _audioOnlyCapture.Dispose();
+                _audioOnlyCapture = null;
+                Debug.WriteLine("[SkiaCamera.Windows] Audio-only capture stopped");
+                tcs.TrySetResult(true);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera.Windows] Error stopping audio-only capture: {ex.Message}");
+                tcs.TrySetException(ex);
+            }
+        });
     }
 
     #endregion
