@@ -256,7 +256,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                                     }),
 
                                 // Audio Visualizer switch
-                                new SkiaButton("📊 Vis: VU Meter")
+                                new SkiaButton("Vis: VU Meter")
                                     {
                                         BackgroundColor = Colors.DarkOliveGreen,
                                         TextColor = Colors.White,
@@ -266,7 +266,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                                     .OnTapped(me => { CameraControl.SwitchVisualizer(); })
                                     .ObserveProperty(CameraControl, nameof(CameraControl.VisualizerName), me =>
                                     {
-                                        me.Text = $"📊 Vis: {CameraControl.VisualizerName}";
+                                        me.Text = $"Vis: {CameraControl.VisualizerName}";
                                     })
                                     .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                                     {
