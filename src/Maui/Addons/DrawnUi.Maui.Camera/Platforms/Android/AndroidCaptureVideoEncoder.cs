@@ -32,9 +32,31 @@ namespace DrawnUi.Camera
     {
         public bool SupportsAudio => true;
 
+        private string _preferredAudioCodecName;
+        private string _selectedAudioMimeType = MediaFormat.MimetypeAudioAac; // Default to AAC
+
         public void SetAudioBuffer(CircularAudioBuffer buffer)
         {
             _audioBuffer = buffer;
+        }
+
+        /// <summary>
+        /// Sets the preferred audio codec name to use.
+        /// Android primarily supports AAC, but this allows future codec expansion.
+        /// </summary>
+        public void SetAudioCodec(string codecName)
+        {
+            _preferredAudioCodecName = codecName;
+            // For now, Android only supports AAC variants
+            // Future: parse codecName to determine appropriate MIME type
+            if (!string.IsNullOrEmpty(codecName))
+            {
+                if (codecName.Contains("AAC") || codecName.Contains("aac"))
+                {
+                    _selectedAudioMimeType = MediaFormat.MimetypeAudioAac;
+                }
+                // Add other codec support here as needed
+            }
         }
 
         public void WriteAudio(AudioSample sample)
@@ -325,21 +347,28 @@ namespace DrawnUi.Camera
             {
                 try
                 {
-                    // Basic AAC Setup
+                    // Audio Setup - respect codec selection
                     // TODO: Get actual sample rate/channels from SkiaCamera properties if available
                     int aSampleRate = 44100;
                     int aChannels = 1;
 
-                    MediaFormat aFormat = MediaFormat.CreateAudioFormat(MediaFormat.MimetypeAudioAac, aSampleRate, aChannels);
-                    aFormat.SetInteger(MediaFormat.KeyAacProfile, (int)MediaCodecProfileType.Aacobjectlc);
+                    MediaFormat aFormat = MediaFormat.CreateAudioFormat(_selectedAudioMimeType, aSampleRate, aChannels);
+                    
+                    // Configure based on codec type
+                    if (_selectedAudioMimeType == MediaFormat.MimetypeAudioAac)
+                    {
+                        aFormat.SetInteger(MediaFormat.KeyAacProfile, (int)MediaCodecProfileType.Aacobjectlc);
+                    }
+                    // Add other codec configurations here as needed
+                    
                     aFormat.SetInteger(MediaFormat.KeyBitRate, 128000);
                     aFormat.SetInteger(MediaFormat.KeyMaxInputSize, 16384 * 2);
 
-                    _audioCodec = MediaCodec.CreateEncoderByType(MediaFormat.MimetypeAudioAac);
+                    _audioCodec = MediaCodec.CreateEncoderByType(_selectedAudioMimeType);
                     _audioCodec.Configure(aFormat, null, null, MediaCodecConfigFlags.Encode);
                     _audioCodec.Start();
 
-                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Audio Codec initialized (AAC {aSampleRate}Hz)");
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Audio Codec initialized ({_selectedAudioMimeType} {aSampleRate}Hz)");
                 }
                 catch (Exception ex)
                 {
@@ -2286,14 +2315,20 @@ namespace DrawnUi.Camera
                 try
                 {
                     // Create temporary audio encoder for background encoding
-                    using var tempAudioCodec = MediaCodec.CreateEncoderByType("audio/mp4a-latm");
+                    using var tempAudioCodec = MediaCodec.CreateEncoderByType(_selectedAudioMimeType);
 
                     var audioFormat = new MediaFormat();
-                    audioFormat.SetString(MediaFormat.KeyMime, "audio/mp4a-latm");
+                    audioFormat.SetString(MediaFormat.KeyMime, _selectedAudioMimeType);
                     audioFormat.SetInteger(MediaFormat.KeySampleRate, 44100);
                     audioFormat.SetInteger(MediaFormat.KeyChannelCount, 1);
                     audioFormat.SetInteger(MediaFormat.KeyBitRate, 128000);
-                    audioFormat.SetInteger(MediaFormat.KeyAacProfile, (int)MediaCodecProfileType.Aacobjectlc);
+                    
+                    // Configure based on codec type
+                    if (_selectedAudioMimeType == MediaFormat.MimetypeAudioAac)
+                    {
+                        audioFormat.SetInteger(MediaFormat.KeyAacProfile, (int)MediaCodecProfileType.Aacobjectlc);
+                    }
+                    // Add other codec configurations here as needed
 
                     tempAudioCodec.Configure(audioFormat, null, null, MediaCodecConfigFlags.Encode);
                     tempAudioCodec.Start();

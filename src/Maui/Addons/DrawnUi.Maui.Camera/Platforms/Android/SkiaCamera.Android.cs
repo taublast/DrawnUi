@@ -917,6 +917,18 @@ public partial class SkiaCamera
         {
             await androidEncoder.InitializeAsync(outputPath, width, height, fps, audioEnabled, RecordingLockedRotation);
 
+            // Apply codec selection if set
+            if (AudioCodecIndex >= 0)
+            {
+                var codecs = await GetAvailableAudioCodecsAsync();
+                if (AudioCodecIndex < codecs.Count)
+                {
+                    var codecName = codecs[AudioCodecIndex];
+                    androidEncoder.SetAudioCodec(codecName);
+                    Debug.WriteLine($"[SkiaCameraAndroid] Selected Audio Codec: {codecName}");
+                }
+            }
+
             // Try to initialize GPU camera path for zero-copy frame capture
             if (GpuCameraFrameProvider.IsSupported())
             {
