@@ -130,6 +130,9 @@ namespace DrawnUi.Camera
         private DateTime _lastKeyframeRequest = DateTime.MinValue;
         private readonly TimeSpan _keyframeRequestInterval = TimeSpan.FromMilliseconds(900); // Slightly less than 1s I-frame interval
 
+        // When transitioning from pre-recording to live, ensure the first written live frame is a keyframe (IDR)
+        private volatile bool _waitForFirstLiveKeyframe;
+
         // Preview-from-recording support
         private readonly object _previewLock = new();
         private SKImage _latestPreviewImage;
@@ -657,6 +660,12 @@ namespace DrawnUi.Camera
 
                 // Step 4: Clear buffer (keep for reuse), switch to live recording mode
                 _preRecordingBuffer?.Clear();
+
+                // Ensure seam starts on an IDR: drop live P-frames until the first keyframe arrives.
+                // This makes the transition robust if a few frames get lost during the mode switch.
+                _waitForFirstLiveKeyframe = true;
+                RequestKeyFrame();
+                _lastKeyframeRequest = DateTime.Now;
 
                 // CRITICAL: Disable pre-recording mode so live frames go to muxer, not buffer!
                 IsPreRecordingMode = false;
@@ -1809,6 +1818,21 @@ namespace DrawnUi.Camera
 
                                 if (_muxerStarted)
                                 {
+                                    if (_waitForFirstLiveKeyframe)
+                                    {
+                                        bool isKeyFrame = (bufferInfo.Flags & MediaCodecBufferFlags.KeyFrame) != 0;
+                                        if (!isKeyFrame)
+                                        {
+                                            // Skip writing live frames until we see an IDR.
+                                            // Buffer release happens after this block.
+                                            continue;
+                                        }
+
+                                        _waitForFirstLiveKeyframe = false;
+                                        _firstEncodedFrameOffset = TimeSpan.MinValue;
+                                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] ✓ First live keyframe received; resuming muxer writes");
+                                    }
+
                                     long pts = bufferInfo.PresentationTimeUs;
 
                                     // CRITICAL: Always normalize timestamps (both normal recording AND pre-rec+live)
