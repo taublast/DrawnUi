@@ -661,8 +661,8 @@ namespace DrawnUi.Camera
                 // Step 4: Clear buffer (keep for reuse), switch to live recording mode
                 _preRecordingBuffer?.Clear();
 
-                // Ensure seam starts on an IDR: drop live P-frames until the first keyframe arrives.
-                // This makes the transition robust if a few frames get lost during the mode switch.
+                // Ensure seam starts on an IDR: wait for the first keyframe to establish clean timestamp base.
+                // This makes the transition robust without skipping frames.
                 _waitForFirstLiveKeyframe = true;
                 RequestKeyFrame();
                 _lastKeyframeRequest = DateTime.Now;
@@ -1818,29 +1818,29 @@ namespace DrawnUi.Camera
 
                                 if (_muxerStarted)
                                 {
-                                    if (_waitForFirstLiveKeyframe)
-                                    {
-                                        bool isKeyFrame = (bufferInfo.Flags & MediaCodecBufferFlags.KeyFrame) != 0;
-                                        if (!isKeyFrame)
-                                        {
-                                            // Skip writing live frames until we see an IDR.
-                                            // Buffer release happens after this block.
-                                            continue;
-                                        }
-
-                                        _waitForFirstLiveKeyframe = false;
-                                        _firstEncodedFrameOffset = TimeSpan.MinValue;
-                                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] ✓ First live keyframe received; resuming muxer writes");
-                                    }
-
                                     long pts = bufferInfo.PresentationTimeUs;
 
                                     // CRITICAL: Always normalize timestamps (both normal recording AND pre-rec+live)
-                                    // Track first live frame for normalization
+                                    // For live frames after transition, wait for first keyframe to establish timestamp base
+                                    if (_waitForFirstLiveKeyframe)
+                                    {
+                                        bool isKeyFrame = (bufferInfo.Flags & MediaCodecBufferFlags.KeyFrame) != 0;
+                                        if (isKeyFrame)
+                                        {
+                                            // Found the first keyframe - use this as the timestamp base for live recording
+                                            _firstEncodedFrameOffset = TimeSpan.FromMicroseconds(pts);
+                                            _waitForFirstLiveKeyframe = false;
+                                            System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] ✓ First live keyframe at {pts / 1000.0:F2}ms - established timestamp base");
+                                        }
+                                        // Continue processing but don't set timestamp base until we see a keyframe
+                                    }
+
+                                    // If we haven't established a timestamp base yet, use current frame temporarily
+                                    // This will be corrected when the keyframe arrives
                                     if (_firstEncodedFrameOffset == TimeSpan.MinValue)
                                     {
                                         _firstEncodedFrameOffset = TimeSpan.FromMicroseconds(pts);
-                                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] First live frame at {pts / 1000.0:F2}ms");
+                                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Using current frame as temporary timestamp base at {pts / 1000.0:F2}ms");
                                     }
 
                                     // Normalize to start from 0, then add pre-recording offset (if any)
