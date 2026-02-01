@@ -1205,6 +1205,10 @@ else
             // Cache layout type check
             var isColumn = Type == LayoutType.Column;
 
+            // Track minimum dimensions from Fill children in perpendicular direction
+            var minStackWidthFromFill = 0.0f;
+            var minStackHeightFromFill = 0.0f;
+
             // Subpixel accumulation
             double stackY = rectForChildrenPixels.Top;
 
@@ -1292,6 +1296,25 @@ else
 
                         if (!measured.IsEmpty)
                         {
+                            // Track minimum dimensions from Fill children in perpendicular direction
+                            if (!isTemplated)
+                            {
+                                // Column layout: check Fill-X children for MinimumWidthRequest
+                                if (isColumn && child.NeedFillX && child.MinimumWidthRequest >= 0)
+                                {
+                                    var minWidth = (float)Math.Round((child.MinimumWidthRequest + child.Margins.HorizontalThickness) * scale);
+                                    if (minWidth > minStackWidthFromFill)
+                                        minStackWidthFromFill = minWidth;
+                                }
+                                // Row layout: check Fill-Y children for MinimumHeightRequest
+                                else if (!isColumn && child.NeedFillY && child.MinimumHeightRequest >= 0)
+                                {
+                                    var minHeight = (float)Math.Round((child.MinimumHeightRequest + child.Margins.VerticalThickness) * scale);
+                                    if (minHeight > minStackHeightFromFill)
+                                        minStackHeightFromFill = minHeight;
+                                }
+                            }
+
                             // Inline UpdateRowDimensions
                             // Width calculation:
                             // - For Row (stacking horizontally): fill-X children already handled by second pass (keep original logic)
@@ -1379,12 +1402,18 @@ else
                         stackWidth = maxWidth;
                     stackHeight += maxRowHeight + GetSpacingForIndex(row, scale);
 
-                    stackY += maxRowHeight;
-                }
+                        stackY += maxRowHeight;
+                    }
 
-                // apply fill constraints
-                if (float.IsFinite(rectForChildrenPixels.Width) && HorizontalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Width >= 0)
-                    stackWidth = rectForChildrenPixels.Width;
+                    // Apply minimum dimensions from Fill children in perpendicular direction
+                    if (minStackWidthFromFill > stackWidth)
+                        stackWidth = minStackWidthFromFill;
+                    if (minStackHeightFromFill > stackHeight)
+                        stackHeight = minStackHeightFromFill;
+
+                    // apply fill constraints
+                    if (float.IsFinite(rectForChildrenPixels.Width) && HorizontalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Width >= 0)
+                        stackWidth = rectForChildrenPixels.Width;
 
                 if (float.IsFinite(rectForChildrenPixels.Height) && VerticalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Height >= 0)
                     stackHeight = rectForChildrenPixels.Height;
