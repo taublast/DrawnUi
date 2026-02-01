@@ -1211,8 +1211,25 @@ public partial class SkiaCamera
                 if (liveTracks != null && liveTracks.Length > 0)
                 {
                     liveTrack = liveTracks[0];
-                    var liveRange =
-                        new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = liveAsset.Duration };
+                    // Variant 2 (sync-sample-aware splice): start the live segment at its first sync sample
+                    // to avoid decode artifacts when the seam lands on a non-sync sample.
+                    // This is codec-agnostic (H.264/HEVC) because it relies on sync-sample metadata.
+                    var liveSyncStart = FindFirstSyncSampleTime(liveAsset, liveTrack);
+                    var liveStartSeconds = Math.Max(0, liveSyncStart.Seconds);
+                    var totalLiveSeconds = Math.Max(0, liveAsset.Duration.Seconds);
+                    var liveDurationSeconds = Math.Max(0, totalLiveSeconds - liveStartSeconds);
+
+                    if (liveStartSeconds > 0.0 && liveDurationSeconds > 0.0)
+                    {
+                        System.Diagnostics.Debug.WriteLine(
+                            $"[MuxVideosApple] Variant2: Trimming live video start to first sync sample at {liveStartSeconds:F3}s (duration {liveDurationSeconds:F3}s)");
+                    }
+
+                    var liveRange = new CoreMedia.CMTimeRange
+                    {
+                        Start = CoreMedia.CMTime.FromSeconds(liveStartSeconds, 600),
+                        Duration = CoreMedia.CMTime.FromSeconds(liveDurationSeconds, 600)
+                    };
                     videoTrack.InsertTimeRange(liveRange, liveTrack, currentTime, out var error);
                     if (error != null)
                         throw new InvalidOperationException(
@@ -1273,9 +1290,24 @@ public partial class SkiaCamera
                         {
                             var liveVideoDuration = liveAsset.Duration;
                             var audioDuration = liveAudioAsset.Duration;
-                            // Don't exceed live video duration
-                            var insertDuration = audioDuration.Seconds <= liveVideoDuration.Seconds ? audioDuration : liveVideoDuration;
-                            var audioRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = insertDuration };
+                            // Variant 2: If we trimmed the live video start to a sync sample, trim live audio by the same amount
+                            // so A/V remains aligned in the final composition.
+                            double liveStartSeconds = 0;
+                            if (liveTrack != null)
+                            {
+                                var liveSyncStart = FindFirstSyncSampleTime(liveAsset, liveTrack);
+                                liveStartSeconds = Math.Max(0, liveSyncStart.Seconds);
+                            }
+
+                            var trimmedVideoSeconds = Math.Max(0, liveVideoDuration.Seconds - liveStartSeconds);
+                            var trimmedAudioSeconds = Math.Max(0, audioDuration.Seconds - liveStartSeconds);
+                            var insertSeconds = Math.Min(trimmedAudioSeconds, trimmedVideoSeconds);
+
+                            var audioRange = new CoreMedia.CMTimeRange
+                            {
+                                Start = CoreMedia.CMTime.FromSeconds(liveStartSeconds, 600),
+                                Duration = CoreMedia.CMTime.FromSeconds(insertSeconds, 600)
+                            };
 
                             // Insert at the end of pre-rec video
                             audioTrack.InsertTimeRange(audioRange, liveAudioTracks[0], preRecVideoDuration, out var audioError);
@@ -1286,7 +1318,7 @@ public partial class SkiaCamera
                             }
                             else
                             {
-                                System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Added live audio at {preRecVideoDuration.Seconds:F2}s ({insertDuration.Seconds:F2}s)");
+                                System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Added live audio at {preRecVideoDuration.Seconds:F2}s ({insertSeconds:F2}s)");
                                 hasAnyAudio = true;
                             }
                         }
@@ -1335,7 +1367,19 @@ public partial class SkiaCamera
                             if (hasLiveAudio)
                             {
                                 var liveAudioTrack = liveAudioTracks[0];
-                                var liveAudioRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = liveAsset.Duration };
+                                // Variant 2: Keep embedded live audio aligned with trimmed live video start.
+                                double liveStartSeconds = 0;
+                                if (liveTrack != null)
+                                {
+                                    var liveSyncStart = FindFirstSyncSampleTime(liveAsset, liveTrack);
+                                    liveStartSeconds = Math.Max(0, liveSyncStart.Seconds);
+                                }
+                                var liveDurationSeconds = Math.Max(0, liveAsset.Duration.Seconds - liveStartSeconds);
+                                var liveAudioRange = new CoreMedia.CMTimeRange
+                                {
+                                    Start = CoreMedia.CMTime.FromSeconds(liveStartSeconds, 600),
+                                    Duration = CoreMedia.CMTime.FromSeconds(liveDurationSeconds, 600)
+                                };
                                 audioTrack.InsertTimeRange(liveAudioRange, liveAudioTrack, audioCurrentTime, out var audioError);
                                 if (audioError != null)
                                 {
@@ -1407,7 +1451,7 @@ public partial class SkiaCamera
                     {
                         OutputUrl = outputUrl,
                         OutputFileType = AVFoundation.AVFileTypes.Mpeg4.GetConstant(),
-                        ShouldOptimizeForNetworkUse = false
+                        ShouldOptimizeForNetworkUse = true
                         // No VideoComposition - passthrough preserves original encoding
                     };
 
@@ -1448,6 +1492,117 @@ public partial class SkiaCamera
             System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Error: {ex.Message}");
             throw;
         }
+    }
+
+    /// <summary>
+    /// Finds the first sync sample (keyframe) presentation timestamp in a compressed track.
+    /// Returns CMTime.Zero if not found quickly or if reader setup fails.
+    ///
+    /// This is used by Variant 2 muxing: start the inserted live segment on a sync sample
+    /// so decoding does not start mid-GOP (which can cause “old frames” near the splice).
+    /// </summary>
+    private static CoreMedia.CMTime FindFirstSyncSampleTime(AVFoundation.AVAsset asset, AVFoundation.AVAssetTrack videoTrack, double maxSearchSeconds = 2.0)
+    {
+        if (asset == null || videoTrack == null || maxSearchSeconds <= 0)
+            return CoreMedia.CMTime.Zero;
+
+        try
+        {
+            using var reader = new AVFoundation.AVAssetReader(asset, out var error);
+            if (reader == null || error != null)
+            {
+                System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Variant2: AVAssetReader creation failed: {error?.LocalizedDescription}");
+                return CoreMedia.CMTime.Zero;
+            }
+
+            // Null output settings => compressed samples (no decode) when supported.
+            // Cast null to NSDictionary to disambiguate overloads on some targets (e.g., MacCatalyst).
+            using var output = new AVFoundation.AVAssetReaderTrackOutput(videoTrack, (Foundation.NSDictionary)null);
+
+            try
+            {
+                output.AlwaysCopiesSampleData = false;
+            }
+            catch
+            {
+                // Some OS/bindings may not expose this; safe to ignore.
+            }
+
+            if (!reader.CanAddOutput(output))
+                return CoreMedia.CMTime.Zero;
+
+            reader.AddOutput(output);
+
+            if (!reader.StartReading())
+                return CoreMedia.CMTime.Zero;
+
+            while (true)
+            {
+                using var sample = output.CopyNextSampleBuffer();
+                if (sample == null)
+                    break;
+
+                var pts = sample.PresentationTimeStamp;
+                if (pts.Seconds > maxSearchSeconds)
+                    break;
+
+                if (IsSyncSample(sample))
+                    return pts;
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Variant2: Error scanning sync samples: {ex.Message}");
+        }
+
+        return CoreMedia.CMTime.Zero;
+    }
+
+    private static bool IsSyncSample(CoreMedia.CMSampleBuffer sample)
+    {
+        try
+        {
+            // kCMSampleAttachmentKey_NotSync is CFString("NotSync")
+            // If NotSync is true => NOT a sync sample.
+            // If attachments are missing => treat as sync.
+            var attachments = GetSampleAttachmentsArray(sample, createIfNecessary: false);
+            if (attachments == null || attachments.Count == 0)
+                return true;
+
+            var dict = attachments.GetItem<Foundation.NSDictionary>(0);
+            if (dict == null)
+                return true;
+
+            var notSyncKey = new Foundation.NSString("NotSync");
+            if (!dict.ContainsKey(notSyncKey))
+                return true;
+
+            var value = dict[notSyncKey];
+            if (value is Foundation.NSNumber n)
+                return !n.BoolValue;
+
+            return true;
+        }
+        catch
+        {
+            return true;
+        }
+    }
+
+    [System.Runtime.InteropServices.DllImport("/System/Library/Frameworks/CoreMedia.framework/CoreMedia")]
+    private static extern IntPtr CMSampleBufferGetSampleAttachmentsArray(IntPtr sampleBuffer, bool createIfNecessary);
+
+    private static Foundation.NSArray GetSampleAttachmentsArray(CoreMedia.CMSampleBuffer sample, bool createIfNecessary)
+    {
+        if (sample == null)
+            return null;
+
+        var ptr = CMSampleBufferGetSampleAttachmentsArray(sample.Handle, createIfNecessary);
+        if (ptr == IntPtr.Zero)
+            return null;
+
+        // Returned array is owned by the sample buffer; do not dispose.
+        return ObjCRuntime.Runtime.GetNSObject<Foundation.NSArray>(ptr);
     }
 
     /// <summary>
