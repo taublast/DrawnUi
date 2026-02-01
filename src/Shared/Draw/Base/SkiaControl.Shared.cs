@@ -4873,18 +4873,9 @@ namespace DrawnUi.Draw
                 return MeasureContent(children, rectForChildrenPixels, scale);
             }
 
-            //empty container
-            var width = 0f;
-            var height = 0f;
-            if (HorizontalOptions.Alignment == LayoutAlignment.Fill)
-            {
-                width = rectForChildrenPixels.Width;
-            }
-
-            if (VerticalOptions.Alignment == LayoutAlignment.Fill)
-            {
-                height = rectForChildrenPixels.Height;
-            }
+            //empty container take available space
+            var width = rectForChildrenPixels.Width;
+            var height = rectForChildrenPixels.Height;
 
             return ScaledSize.FromPixels(width, height, scale);
         }
@@ -7916,13 +7907,33 @@ namespace DrawnUi.Draw
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float GetWidthRequestPixelsWIthMargins(float scale)
         {
-            return (float)Math.Round((this.WidthRequest + this.Margins.HorizontalThickness) * scale);
+            float ret = (float)this.WidthRequest * scale;
+            if (WidthRequest >= 0)
+            {
+                ret += (float)Margins.HorizontalThickness * scale;
+            }
+            ret = (float)Math.Round(ret);
+            if (WidthRequest > 0 && ret == 0)
+            {
+                ret = 1;
+            }
+            return ret;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float GetHeightRequestPixelsWIthMargins(float scale)
         {
-            return (float)Math.Round((this.HeightRequest + this.Margins.VerticalThickness) * scale);
+            float ret = (float)this.HeightRequest * scale;
+            if (HeightRequest >= 0)
+            {
+                ret += (float)Margins.VerticalThickness * scale;
+            }
+            ret = (float)Math.Round(ret);
+            if (HeightRequest > 0 && ret == 0)
+            {
+                ret = 1;
+            }
+            return ret;
         }
 
 
