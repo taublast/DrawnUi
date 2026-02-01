@@ -5463,7 +5463,7 @@ namespace DrawnUi.Draw
             if (NeedToMeasureSelf())
             {
                 //MeasureSelf(destination, widthRequest, heightRequest, scale);
-                MeasureSelf(destination, (float)WidthRequest, (float)HeightRequest, scale);
+                MeasureSelf(destination, GetWidthRequestPixelsWIthMargins(scale), GetHeightRequestPixelsWIthMargins(scale), scale);
             }
             else
             {
@@ -7913,6 +7913,19 @@ namespace DrawnUi.Draw
 
         #region HELPERS
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public float GetWidthRequestPixelsWIthMargins(float scale)
+        {
+            return (float)Math.Round((this.WidthRequest + this.Margins.HorizontalThickness) * scale);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public float GetHeightRequestPixelsWIthMargins(float scale)
+        {
+            return (float)Math.Round((this.HeightRequest + this.Margins.VerticalThickness) * scale);
+        }
+
+
         public static Random Random = new Random();
         protected SKRect LastArrangedInside;
         protected double _arrangedViewportHeightLimit;
@@ -8200,5 +8213,6 @@ namespace DrawnUi.Draw
 
             return snappedTranslation;
         }
+
     }
 }

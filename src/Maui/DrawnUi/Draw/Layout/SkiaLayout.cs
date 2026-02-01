@@ -23,7 +23,7 @@ namespace DrawnUi.Draw
 
             if (NeedMeasure)
             {
-                MeasureSelf(destination, (float)WidthRequest, (float)HeightRequest, scale);
+                MeasureSelf(destination, GetWidthRequestPixelsWIthMargins(scale), GetHeightRequestPixelsWIthMargins(scale), scale);
             }
             else
             {

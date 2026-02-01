@@ -1618,12 +1618,12 @@ else
         {
             if (Type == LayoutType.Column && child.HeightRequest >= 0)
             {
-                return (float)Math.Round((child.HeightRequest + child.Margins.VerticalThickness) * scale);
+                return child.GetHeightRequestPixelsWIthMargins(scale);
             }
 
             if (Type == LayoutType.Row && child.WidthRequest >= 0)
             {
-                return (float)Math.Round((child.WidthRequest + child.Margins.HorizontalThickness) * scale);
+                return child.GetWidthRequestPixelsWIthMargins(scale);
             }
 
             var tempRect = Type == LayoutType.Column
