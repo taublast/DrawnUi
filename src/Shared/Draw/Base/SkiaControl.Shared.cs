@@ -4409,6 +4409,55 @@ namespace DrawnUi.Draw
                 }
             }
 
+            // Apply minimum dimensions from Fill children
+            var minWidthFromFill = 0.0f;
+            var minHeightFromFill = 0.0f;
+
+            // Check all Fill children (both full and partial)
+            if (fullFill != null)
+            {
+                foreach (var child in fullFill)
+                {
+                    if (child.MinimumWidthRequest >= 0)
+                    {
+                        var minWidth = (float)Math.Round((child.MinimumWidthRequest + child.Margins.HorizontalThickness) * scale);
+                        if (minWidth > minWidthFromFill)
+                            minWidthFromFill = minWidth;
+                    }
+                    if (child.MinimumHeightRequest >= 0)
+                    {
+                        var minHeight = (float)Math.Round((child.MinimumHeightRequest + child.Margins.VerticalThickness) * scale);
+                        if (minHeight > minHeightFromFill)
+                            minHeightFromFill = minHeight;
+                    }
+                }
+            }
+
+            if (partialFill != null)
+            {
+                foreach (var (child, _) in partialFill)
+                {
+                    if (child.NeedFillHorizontally && child.MinimumWidthRequest >= 0)
+                    {
+                        var minWidth = (float)Math.Round((child.MinimumWidthRequest + child.Margins.HorizontalThickness) * scale);
+                        if (minWidth > minWidthFromFill)
+                            minWidthFromFill = minWidth;
+                    }
+                    if (child.NeedFillVertically && child.MinimumHeightRequest >= 0)
+                    {
+                        var minHeight = (float)Math.Round((child.MinimumHeightRequest + child.Margins.VerticalThickness) * scale);
+                        if (minHeight > minHeightFromFill)
+                            minHeightFromFill = minHeight;
+                    }
+                }
+            }
+
+            // Apply tracked minimums before Fill constraints
+            if (minWidthFromFill > maxWidth)
+                maxWidth = minWidthFromFill;
+            if (minHeightFromFill > maxHeight)
+                maxHeight = minHeightFromFill;
+
             if (NeedFillHorizontally && float.IsFinite(rectForChildrenPixels.Width))
             {
                 maxWidth = rectForChildrenPixels.Width;
