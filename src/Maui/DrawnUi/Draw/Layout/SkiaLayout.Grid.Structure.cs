@@ -369,6 +369,9 @@ public partial class SkiaLayout
 
             ResolveSpans();
 
+            // Apply minimum dimensions from Fill children
+            ApplyMinimumDimensionsFromFillChildren();
+
             // Compress the star values to their minimums for measurement 
             CompressStarMeasurements();
         }
@@ -482,6 +485,55 @@ public partial class SkiaLayout
                 else
                 {
                     ResolveSpan(Rows, span.Start, span.Length, RowSpacing, span.Requested);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Apply minimum dimensions from children with Fill alignment
+        /// </summary>
+        void ApplyMinimumDimensionsFromFillChildren()
+        {
+            foreach (var cell in _cells)
+            {
+                var child = _childrenToLayOut[cell.ViewIndex];
+                if (!child.IsVisible)
+                    continue;
+
+                var skiaChild = child as SkiaControl;
+                if (skiaChild == null)
+                    continue;
+
+                var scale = (float)child.RenderingScale;
+
+                // Check horizontal Fill children for MinimumWidthRequest
+                if (skiaChild.NeedFillX && skiaChild.MinimumWidthRequest >= 0)
+                {
+                    var minWidth = (skiaChild.MinimumWidthRequest + skiaChild.Margins.HorizontalThickness);
+
+                    // Apply to all spanned columns
+                    for (int c = cell.Column; c < cell.Column + cell.ColumnSpan; c++)
+                    {
+                        if (Columns[c].Size < minWidth / cell.ColumnSpan)
+                        {
+                            Columns[c].Size = minWidth / cell.ColumnSpan;
+                        }
+                    }
+                }
+
+                // Check vertical Fill children for MinimumHeightRequest
+                if (skiaChild.NeedFillY && skiaChild.MinimumHeightRequest >= 0)
+                {
+                    var minHeight = (skiaChild.MinimumHeightRequest + skiaChild.Margins.VerticalThickness);
+
+                    // Apply to all spanned rows
+                    for (int r = cell.Row; r < cell.Row + cell.RowSpan; r++)
+                    {
+                        if (Rows[r].Size < minHeight / cell.RowSpan)
+                        {
+                            Rows[r].Size = minHeight / cell.RowSpan;
+                        }
+                    }
                 }
             }
         }
