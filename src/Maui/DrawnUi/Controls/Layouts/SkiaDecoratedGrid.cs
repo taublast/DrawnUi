@@ -11,7 +11,6 @@ public partial class SkiaDecoratedGrid : SkiaLayout
 
     public static SkiaGradient HorizontalGradient = new SkiaGradient
     {
-
         Colors = new List<Color>
         {
             Color.FromArgb("#00E8E3D7"),
@@ -78,7 +77,6 @@ public partial class SkiaDecoratedGrid : SkiaLayout
         if (bindable is SkiaDecoratedGrid control)
         {
             control.UpdateLines();
-
         }
     }
 
@@ -121,7 +119,7 @@ public partial class SkiaDecoratedGrid : SkiaLayout
             NeedMeasure = false
         };
 
-        kill?.Dispose();
+        DisposeObject(kill);
 
         if (VerticalLine != null)
         {
