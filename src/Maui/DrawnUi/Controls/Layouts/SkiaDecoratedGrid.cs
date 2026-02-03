@@ -100,7 +100,9 @@ public partial class SkiaDecoratedGrid : SkiaLayout
 
     public virtual void CreateLines()
     {
-        if (this.GridStructure == null)
+        // Use GridStructureMeasured if available (current frame), otherwise fall back to GridStructure (previous frame)
+        var structure = GridStructureMeasured ?? GridStructure;
+        if (structure == null)
         {
             return;
         }
@@ -124,11 +126,12 @@ public partial class SkiaDecoratedGrid : SkiaLayout
         if (VerticalLine != null)
         {
             var col = 0;
-            foreach (var definition in GridStructure.Columns)
+            //Debug.WriteLine($"[GRID] Vertical lines for {structure.Columns.Count()} columns");
+            foreach (var definition in structure.Columns)
             {
                 if (col > 0)
                 {
-                    var offset = GridStructure.LeftEdgeOfColumn(col) - ColumnSpacing;
+                    var offset = structure.LeftEdgeOfColumn(col) - ColumnSpacing;
 
                     ContainerLines.AddSubView(new SkiaControl()
                     {
@@ -151,11 +154,11 @@ public partial class SkiaDecoratedGrid : SkiaLayout
         if (HorizontalLine != null)
         {
             var row = 0;
-            foreach (var definition in GridStructure.Rows.ToList())
+            foreach (var definition in structure.Rows.ToList())
             {
                 if (row > 0)
                 {
-                    var offset = GridStructure.TopEdgeOfRow(row) - RowSpacing;
+                    var offset = structure.TopEdgeOfRow(row) - RowSpacing;
 
                     ContainerLines.AddSubView(new SkiaShape()
                     {
