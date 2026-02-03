@@ -131,22 +131,49 @@ public partial class SkiaLayout
         DefinitionInfo[] InitializeColumns()
         {
             int count = ColumnDefinitions.Count;
+            int split = _parentGrid.Split;
+
+            // When Split > 1 and no explicit ColumnDefinitions, create Split number of equal columns
+            if (count == 0 && split > 1)
+            {
+                var definitions = new DefinitionInfo[split];
+                // Use star sizing for equal column distribution
+                var starLength = new GridLength(1, GridUnitType.Star);
+                for (int n = 0; n < split; n++)
+                {
+                    definitions[n] = new DefinitionInfo(starLength);
+                }
+                return definitions;
+            }
 
             if (count == 0)
             {
-                // Since no columns are specified, we'll create an implied column 0 
+                // Since no columns are specified, we'll create an implied column 0
                 return Implied(false);
             }
 
-            var definitions = new DefinitionInfo[count];
+            // Determine final column count - ensure we have at least Split columns if Split > 1
+            int finalCount = split > 1 ? Math.Max(count, split) : count;
+            var definitions2 = new DefinitionInfo[finalCount];
 
+            // Copy explicit definitions
             for (int n = 0; n < count; n++)
             {
                 var definition = ColumnDefinitions[n];
-                definitions[n] = new DefinitionInfo(definition.Width);
+                definitions2[n] = new DefinitionInfo(definition.Width);
             }
 
-            return definitions;
+            // If Split requires more columns than defined, add star-sized columns
+            if (finalCount > count)
+            {
+                var starLength = new GridLength(1, GridUnitType.Star);
+                for (int n = count; n < finalCount; n++)
+                {
+                    definitions2[n] = new DefinitionInfo(starLength);
+                }
+            }
+
+            return definitions2;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
