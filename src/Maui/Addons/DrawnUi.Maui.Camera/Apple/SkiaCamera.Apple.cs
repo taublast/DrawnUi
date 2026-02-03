@@ -33,6 +33,7 @@ public partial class SkiaCamera
     private long _liveAudioFirstTimestampNs = -1;
     private readonly object _liveAudioWriterLock = new object();
     private List<IntPtr> _liveAudioMemoryToFree;  // Memory to free after writer finishes
+    private bool _liveAudioWriterPreAllocated;  // True if writer is created but not yet started
 
     /// <summary>
     /// iOS/MacCatalyst implementation: Pre-allocates the circular buffer for pre-recording.
@@ -51,6 +52,122 @@ public partial class SkiaCamera
         else
         {
             Debug.WriteLine("[SkiaCamera.Apple] Shared pre-recording buffer already allocated, reusing");
+        }
+    }
+
+    /// <summary>
+    /// Pre-allocates the AVAssetWriter and AVAssetWriterInput for live audio recording.
+    /// Called during pre-recording start to avoid lag spike when transitioning to live recording.
+    /// The writer is created but NOT started - StartWriting() is called later in ActivateLiveAudioWriter().
+    /// </summary>
+    private void EnsureLiveAudioWriterPreAllocated(int sampleRate, int channels)
+    {
+        lock (_liveAudioWriterLock)
+        {
+            // Already pre-allocated or actively writing
+            if (_liveAudioWriter != null)
+            {
+                Debug.WriteLine("[EnsureLiveAudioWriterPreAllocated] Writer already exists, skipping");
+                return;
+            }
+
+            try
+            {
+                // Create temp file path
+                var tempDir = Path.GetTempPath();
+                _liveAudioFilePath = Path.Combine(tempDir, $"live_audio_{Guid.NewGuid():N}.m4a");
+
+                // Delete existing file
+                if (File.Exists(_liveAudioFilePath))
+                {
+                    File.Delete(_liveAudioFilePath);
+                }
+
+                var url = NSUrl.FromFilename(_liveAudioFilePath);
+                _liveAudioWriter = new AVAssetWriter(url, "com.apple.m4a-audio", out var writerError);
+
+                if (_liveAudioWriter == null || writerError != null)
+                {
+                    Debug.WriteLine($"[EnsureLiveAudioWriterPreAllocated] AVAssetWriter creation failed: {writerError?.LocalizedDescription}");
+                    return;
+                }
+
+                // Configure audio output (AAC)
+                var audioSettings = new NSDictionary(
+                    AVAudioSettings.AVFormatIDKey, NSNumber.FromInt32((int)AudioToolbox.AudioFormatType.MPEG4AAC),
+                    AVAudioSettings.AVSampleRateKey, NSNumber.FromDouble(sampleRate),
+                    AVAudioSettings.AVNumberOfChannelsKey, NSNumber.FromInt32(channels),
+                    AVAudioSettings.AVEncoderBitRateKey, NSNumber.FromInt32(128000)
+                );
+
+                _liveAudioInput = new AVAssetWriterInput(AVMediaTypes.Audio.GetConstant(), new AVFoundation.AudioSettings(audioSettings));
+                _liveAudioInput.ExpectsMediaDataInRealTime = true;
+
+                if (!_liveAudioWriter.CanAddInput(_liveAudioInput))
+                {
+                    Debug.WriteLine("[EnsureLiveAudioWriterPreAllocated] Cannot add audio input to writer");
+                    CleanupLiveAudioWriter();
+                    return;
+                }
+                _liveAudioWriter.AddInput(_liveAudioInput);
+
+                // Mark as pre-allocated but NOT started
+                _liveAudioWriterPreAllocated = true;
+                _liveAudioFirstTimestampNs = -1;
+                _liveAudioMemoryToFree = new List<IntPtr>();
+
+                Debug.WriteLine($"[EnsureLiveAudioWriterPreAllocated] Pre-allocated writer for: {_liveAudioFilePath}");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[EnsureLiveAudioWriterPreAllocated] Exception: {ex.Message}");
+                CleanupLiveAudioWriter();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Activates a pre-allocated live audio writer by calling StartWriting().
+    /// Called during pre-recording → live transition.
+    /// </summary>
+    private bool ActivateLiveAudioWriter()
+    {
+        lock (_liveAudioWriterLock)
+        {
+            if (_liveAudioWriter == null || _liveAudioInput == null)
+            {
+                Debug.WriteLine("[ActivateLiveAudioWriter] No pre-allocated writer available");
+                return false;
+            }
+
+            if (!_liveAudioWriterPreAllocated)
+            {
+                // Already activated (actively writing)
+                Debug.WriteLine("[ActivateLiveAudioWriter] Writer already active");
+                return true;
+            }
+
+            try
+            {
+                // Start writing
+                if (!_liveAudioWriter.StartWriting())
+                {
+                    Debug.WriteLine($"[ActivateLiveAudioWriter] StartWriting failed: {_liveAudioWriter.Error?.LocalizedDescription}");
+                    CleanupLiveAudioWriter();
+                    return false;
+                }
+                _liveAudioWriter.StartSessionAtSourceTime(CoreMedia.CMTime.Zero);
+
+                _liveAudioWriterPreAllocated = false;  // Now actively writing
+                Debug.WriteLine($"[ActivateLiveAudioWriter] Activated writer, now streaming to: {_liveAudioFilePath}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[ActivateLiveAudioWriter] Exception: {ex.Message}");
+                CleanupLiveAudioWriter();
+                return false;
+            }
         }
     }
 
@@ -372,6 +489,10 @@ public partial class SkiaCamera
                         _audioBuffer = new CircularAudioBuffer(PreRecordDuration);
                         Debug.WriteLine($"[StartRealtimeVideoProcessing] Created CIRCULAR audio buffer ({PreRecordDuration.TotalSeconds:F1}s)");
                     }
+
+                    // Pre-allocate live audio writer to avoid lag spike at pre-rec → live transition
+                    // Creates AVAssetWriter/Input but doesn't start writing yet
+                    EnsureLiveAudioWriterPreAllocated(AudioSampleRate, AudioChannels);
                 }
                 else if (IsRecordingVideo && _liveAudioWriter == null)
                 {
@@ -2235,12 +2356,17 @@ public partial class SkiaCamera
                     _preRecordedAudioSamples = allAudioSamples;
 
                     // OOM-SAFE: Start streaming audio to file instead of linear buffer
+                    // Try to activate pre-allocated writer first (avoids lag spike), fall back to creating new one
                     var firstSample = _preRecordedAudioSamples?.FirstOrDefault();
                     int sampleRate = firstSample?.SampleRate ?? AudioSampleRate;
                     int channels = firstSample?.Channels ?? AudioChannels;
-                    if (StartLiveAudioWriter(sampleRate, channels))
+                    if (ActivateLiveAudioWriter())
                     {
-                        Debug.WriteLine("[StartVideoRecording] Started STREAMING audio writer for live phase (OOM-safe)");
+                        Debug.WriteLine("[StartVideoRecording] Activated PRE-ALLOCATED audio writer for live phase (no lag spike)");
+                    }
+                    else if (StartLiveAudioWriter(sampleRate, channels))
+                    {
+                        Debug.WriteLine("[StartVideoRecording] Started NEW audio writer for live phase (fallback)");
                     }
                     else
                     {
@@ -2633,11 +2759,39 @@ public partial class SkiaCamera
     /// <summary>
     /// Starts streaming audio to file for OOM-safe live recording.
     /// Audio samples are written directly to disk instead of being buffered in memory.
+    /// If writer was pre-allocated, this just activates it. Otherwise creates a new one.
     /// </summary>
     private bool StartLiveAudioWriter(int sampleRate, int channels)
     {
         lock (_liveAudioWriterLock)
         {
+            // If pre-allocated, just activate it
+            if (_liveAudioWriter != null && _liveAudioWriterPreAllocated)
+            {
+                Debug.WriteLine("[StartLiveAudioWriter] Found pre-allocated writer, activating...");
+                // Release lock temporarily to call ActivateLiveAudioWriter which also takes the lock
+                // Actually, we're already in the lock, so just inline the activation logic
+                try
+                {
+                    if (!_liveAudioWriter.StartWriting())
+                    {
+                        Debug.WriteLine($"[StartLiveAudioWriter] StartWriting failed on pre-allocated: {_liveAudioWriter.Error?.LocalizedDescription}");
+                        CleanupLiveAudioWriter();
+                        return false;
+                    }
+                    _liveAudioWriter.StartSessionAtSourceTime(CoreMedia.CMTime.Zero);
+                    _liveAudioWriterPreAllocated = false;
+                    Debug.WriteLine($"[StartLiveAudioWriter] Activated pre-allocated writer: {_liveAudioFilePath}");
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[StartLiveAudioWriter] Exception activating pre-allocated: {ex.Message}");
+                    CleanupLiveAudioWriter();
+                    return false;
+                }
+            }
+
             if (_liveAudioWriter != null)
             {
                 Debug.WriteLine("[StartLiveAudioWriter] Writer already active");
@@ -2693,6 +2847,7 @@ public partial class SkiaCamera
                 }
                 _liveAudioWriter.StartSessionAtSourceTime(CoreMedia.CMTime.Zero);
 
+                _liveAudioWriterPreAllocated = false;  // Actively writing, not just pre-allocated
                 _liveAudioFirstTimestampNs = -1;  // Will be set on first sample
                 _liveAudioMemoryToFree = new List<IntPtr>();
 
@@ -2898,6 +3053,7 @@ public partial class SkiaCamera
         _liveAudioWriter = null;
         _liveAudioFilePath = null;
         _liveAudioFirstTimestampNs = -1;
+        _liveAudioWriterPreAllocated = false;
 
         // Free any tracked memory
         if (_liveAudioMemoryToFree != null)
