@@ -26,6 +26,19 @@ public partial class SkiaCamera
     // Allocated once when EnablePreRecording=true, reused across recording sessions
     private PrerecordingEncodedBufferApple _sharedPreRecordingBuffer;
 
+    // Second pre-allocated buffer used to avoid Reset()/drain races when an old encoder
+    // is being flushed in the background (overlap mode).
+    private PrerecordingEncodedBufferApple _sharedPreRecordingBuffer2;
+
+    // When overlap mode flushes the old pre-recording encoder in the background, that encoder
+    // may still be enumerating its buffer. Mark it as busy so we don't hand it to a new session.
+    private PrerecordingEncodedBufferApple _sharedPreRecordingBufferInFlush;
+
+    // Track which shared buffer was last handed to a pre-recording encoder.
+    private PrerecordingEncodedBufferApple _lastSharedPreRecordingBufferUsed;
+
+    private readonly object _sharedPreRecordingBufferLock = new object();
+
     // Streaming audio writer for OOM-safe live recording (audio goes to file, not memory)
     private AVAssetWriter _liveAudioWriter;
     private AVAssetWriterInput _liveAudioInput;
@@ -42,16 +55,55 @@ public partial class SkiaCamera
     /// </summary>
     partial void EnsurePreRecordingBufferPreAllocated()
     {
-        if (_sharedPreRecordingBuffer == null)
+        // Default to 12 Mbps if we don't have encoder bitrate yet
+        long estimatedBitrate = 12_000_000;
+
+        lock (_sharedPreRecordingBufferLock)
         {
-            // Default to 12 Mbps if we don't have encoder bitrate yet
-            long estimatedBitrate = 12_000_000;
-            _sharedPreRecordingBuffer = new PrerecordingEncodedBufferApple(PreRecordDuration, estimatedBitrate);
-            Debug.WriteLine($"[SkiaCamera.Apple] Pre-allocated shared pre-recording buffer: {PreRecordDuration.TotalSeconds}s @ ~{estimatedBitrate / 1_000_000}Mbps");
+            if (_sharedPreRecordingBuffer == null)
+            {
+                _sharedPreRecordingBuffer = new PrerecordingEncodedBufferApple(PreRecordDuration, estimatedBitrate);
+                Debug.WriteLine($"[SkiaCamera.Apple] Pre-allocated shared pre-recording buffer A: {PreRecordDuration.TotalSeconds}s @ ~{estimatedBitrate / 1_000_000}Mbps");
+            }
+            else
+            {
+                Debug.WriteLine("[SkiaCamera.Apple] Shared pre-recording buffer A already allocated, reusing");
+            }
         }
-        else
+    }
+
+    private void EnsureSecondSharedPreRecordingBufferAllocated_NoLock(long estimatedBitrate)
+    {
+        if (_sharedPreRecordingBuffer2 != null)
+            return;
+
+        _sharedPreRecordingBuffer2 = new PrerecordingEncodedBufferApple(PreRecordDuration, estimatedBitrate);
+        Debug.WriteLine($"[SkiaCamera.Apple] Lazily allocated shared pre-recording buffer B: {PreRecordDuration.TotalSeconds}s @ ~{estimatedBitrate / 1_000_000}Mbps");
+    }
+
+    private PrerecordingEncodedBufferApple GetSharedPreRecordingBufferForNewSession()
+    {
+        lock (_sharedPreRecordingBufferLock)
         {
-            Debug.WriteLine("[SkiaCamera.Apple] Shared pre-recording buffer already allocated, reusing");
+            // Prefer buffer A unless it's currently being flushed.
+            if (_sharedPreRecordingBuffer != null && !ReferenceEquals(_sharedPreRecordingBuffer, _sharedPreRecordingBufferInFlush))
+                return _sharedPreRecordingBuffer;
+
+            // If buffer A is busy and buffer B hasn't been allocated yet, allocate it now.
+            // This avoids overlap flush/reset races while keeping baseline memory lower.
+            if (_sharedPreRecordingBuffer != null && ReferenceEquals(_sharedPreRecordingBuffer, _sharedPreRecordingBufferInFlush) && _sharedPreRecordingBuffer2 == null)
+            {
+                // Default to 12 Mbps if we don't have encoder bitrate yet
+                long estimatedBitrate = 12_000_000;
+                EnsureSecondSharedPreRecordingBufferAllocated_NoLock(estimatedBitrate);
+            }
+
+            if (_sharedPreRecordingBuffer2 != null && !ReferenceEquals(_sharedPreRecordingBuffer2, _sharedPreRecordingBufferInFlush))
+                return _sharedPreRecordingBuffer2;
+
+            // Should not happen (only one background flush task is expected), but return something
+            // deterministic rather than null.
+            return _sharedPreRecordingBuffer ?? _sharedPreRecordingBuffer2;
         }
     }
 
@@ -531,11 +583,20 @@ public partial class SkiaCamera
         appleEncoder.ParentCamera = this;
         appleEncoder.IsPreRecordingMode = IsPreRecording;
 
-        // Pass pre-allocated buffer if available (avoids lag spike on record start)
-        if (IsPreRecording && _sharedPreRecordingBuffer != null)
+        // Pass pre-allocated buffer if available (avoids lag spike on record start).
+        // In overlap mode, pick the buffer that's not currently being flushed in the background.
+        if (IsPreRecording)
         {
-            appleEncoder.SharedPreRecordingBuffer = _sharedPreRecordingBuffer;
-            Debug.WriteLine($"[StartRealtimeVideoProcessing] Using pre-allocated shared buffer (no allocation lag)");
+            var sharedBuffer = GetSharedPreRecordingBufferForNewSession();
+            if (sharedBuffer != null)
+            {
+                appleEncoder.SharedPreRecordingBuffer = sharedBuffer;
+                lock (_sharedPreRecordingBufferLock)
+                {
+                    _lastSharedPreRecordingBufferUsed = sharedBuffer;
+                }
+                Debug.WriteLine("[StartRealtimeVideoProcessing] Using pre-allocated shared buffer (race-free overlap)");
+            }
         }
 
         Debug.WriteLine($"[StartRealtimeVideoProcessing] iOS encoder initialized with IsPreRecordingMode={IsPreRecording}");
@@ -1972,6 +2033,11 @@ public partial class SkiaCamera
                 await _preRecFlushTask;
                 _preRecFlushTask = null;
                 Debug.WriteLine("[StopRealtimeVideoProcessing] Pre-recording flush completed.");
+
+                lock (_sharedPreRecordingBufferLock)
+                {
+                    _sharedPreRecordingBufferInFlush = null;
+                }
             }
 
             // OPTIMIZED: Skip audio concatenation - pass both files directly to MuxVideosInternal
@@ -2415,6 +2481,20 @@ public partial class SkiaCamera
                 {
                     Debug.WriteLine("[StartVideoRecording] Spawning background task to stop/flush old encoder");
 
+                    // Old encoder will drain its pre-recording buffer asynchronously; prevent reusing/resetting
+                    // the same shared buffer for a new pre-recording session until that drain completes.
+                    lock (_sharedPreRecordingBufferLock)
+                    {
+                        if (oldEncoderToStop is AppleVideoToolboxEncoder oldAppleEnc && oldAppleEnc.SharedPreRecordingBuffer != null)
+                        {
+                            _sharedPreRecordingBufferInFlush = oldAppleEnc.SharedPreRecordingBuffer;
+                        }
+                        else
+                        {
+                            _sharedPreRecordingBufferInFlush = _lastSharedPreRecordingBufferUsed;
+                        }
+                    }
+
                     _preRecFlushTask = Task.Run(async () =>
                     {
                         try
@@ -2480,6 +2560,13 @@ public partial class SkiaCamera
                         catch (Exception ex)
                         {
                             Debug.WriteLine($"[StartVideoRecording] BkTask Error: {ex}");
+                        }
+                        finally
+                        {
+                            lock (_sharedPreRecordingBufferLock)
+                            {
+                                _sharedPreRecordingBufferInFlush = null;
+                            }
                         }
                     });
                 }
