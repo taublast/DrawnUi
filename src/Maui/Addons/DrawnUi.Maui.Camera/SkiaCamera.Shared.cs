@@ -1278,7 +1278,16 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
-    /// Stop video recording and finalize the video file.
+    /// Alias for StopVideoRecording(true)
+    /// </summary>
+    /// <returns></returns>
+    public async Task Abort()
+    {
+        await StopVideoRecording(true);
+    }
+
+    /// <summary>
+    /// Stop video recording and finalizes the video file or Aborts if passed parameter is `true`.
     /// Resets the locked rotation and restores normal preview behavior.
     /// The video file path will be provided through the VideoRecordingSuccess event.
     /// </summary>
