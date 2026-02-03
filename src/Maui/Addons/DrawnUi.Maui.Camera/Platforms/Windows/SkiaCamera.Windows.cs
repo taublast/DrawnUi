@@ -1264,21 +1264,24 @@ public partial class SkiaCamera : SkiaControl
                 _previewAudioCapture = new AudioGraphCapture();
                 _previewAudioCapture.SampleAvailable += OnPreviewAudioSampleAvailable;
                 var started = await _previewAudioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
-                if (started)
-                {
-                    Debug.WriteLine($"[SkiaCamera.Windows] Preview audio capture started: {_previewAudioCapture.SampleRate}Hz, {_previewAudioCapture.Channels}ch");
-                }
-                else
+                if (!started)
                 {
                     Debug.WriteLine("[SkiaCamera.Windows] Preview audio capture failed to start");
                     _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
-                    _previewAudioCapture.Dispose();
+                    DisposeObject(_previewAudioCapture);
                     _previewAudioCapture = null;
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"[SkiaCamera.Windows] Preview audio capture error: {ex.Message}");
+                if (_previewAudioCapture != null)
+                {
+                    _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
+                    DisposeObject(_previewAudioCapture);
+                    _previewAudioCapture = null;
+                }
+                _ = Abort();
             }
         });
     }
