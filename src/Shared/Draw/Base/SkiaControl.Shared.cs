@@ -395,7 +395,7 @@ namespace DrawnUi.Draw
             get
             {
                 return
-                    $"{GetType().Name} Tag {Tag}, IsVisible {IsVisible}, Children {Views.Count}, {Width:0.0}x{Height:0.0}dp, DrawingRect: {DrawingRect}";
+                    $"{GetType().Name} Tag {Tag}, IsVisible {IsVisible}, at {DrawingRect}, move {UseTranslationX}, {UseTranslationY}, Children {Views.Count}";
             }
         }
 
@@ -4875,7 +4875,7 @@ namespace DrawnUi.Draw
         /// <param name="rectForChildrenPixels"></param>
         /// <param name="scale"></param>
         /// <returns></returns>
-        protected ScaledSize MeasureAbsoluteBase(SKRect rectForChildrenPixels, float scale)
+        protected virtual ScaledSize MeasureAbsoluteBase(SKRect rectForChildrenPixels, float scale)
         {
             if (Views.Count > 0)
             {
@@ -4886,6 +4886,18 @@ namespace DrawnUi.Draw
             //empty container take available space
             var width = rectForChildrenPixels.Width;
             var height = rectForChildrenPixels.Height;
+
+            if (NeedAutoWidth)
+            {
+                //todo might apply maximum size request too..
+                width = (float)(this.MinimumWidthRequest * scale);
+            }
+
+            if (NeedAutoHeight)
+            {
+                //todo might apply maximum size request too..
+                height = (float)(this.MinimumHeightRequest * scale);
+            }
 
             return ScaledSize.FromPixels(width, height, scale);
         }
