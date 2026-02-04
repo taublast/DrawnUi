@@ -2,12 +2,8 @@ using System.Runtime.InteropServices;
 
 namespace DrawnUi.Controls;
 
-public partial class SkiaDecoratedGrid : SkiaLayout
+public partial class SkiaDecoratedGrid : SkiaGrid
 {
-    public SkiaDecoratedGrid()
-    {
-        this.Type = LayoutType.Grid;
-    }
 
     public static SkiaGradient HorizontalGradient = new SkiaGradient
     {
@@ -67,7 +63,7 @@ public partial class SkiaDecoratedGrid : SkiaLayout
 
     public override void Invalidate()
     {
-        ContainerLines?.Dispose();
+        DisposeObject(ContainerLines);
         ContainerLines = null;
         base.Invalidate();
     }
@@ -196,6 +192,11 @@ public partial class SkiaDecoratedGrid : SkiaLayout
     protected override void Draw(DrawingContext context)
     {
         base.Draw(context);
+
+        if (ContainerLines == null)
+        {
+            CreateLines();
+        }
 
         if (ContainerLines != null)
         {
