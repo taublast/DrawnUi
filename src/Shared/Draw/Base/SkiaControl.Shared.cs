@@ -4298,13 +4298,13 @@ namespace DrawnUi.Draw
                 hadFixedSize = true;
                 var measured = MeasureChild(child, rectForChildrenPixels.Width, rectForChildrenPixels.Height, scale);
 
-                // Only record dimensions that are NOT Fill
-                if (!hasHorizontalFill && measured.Pixels.Width > maxChildWidth)
+                // Only record dimensions that are NOT Fill if not only child
+                if ((!hasHorizontalFill || children.Count() == 1) && measured.Pixels.Width > maxChildWidth)
                 {
                     maxChildWidth = measured.Pixels.Width;
                 }
 
-                if (!hasVerticalFill && measured.Pixels.Height > maxChildHeight)
+                if ((!hasVerticalFill || children.Count() == 1) && measured.Pixels.Height > maxChildHeight)
                 {
                     maxChildHeight = measured.Pixels.Height;
                 }
@@ -4324,139 +4324,145 @@ namespace DrawnUi.Draw
                 heightCut |= measured.HeightCut;
             }
 
-            //PASS 2 for those with full Fill (both dimensions) - only if needed
-            if (fullFill != null)
+            if (children.Count() > 1)
             {
-                foreach (var child in fullFill)
+                //PASS 2 for those with full Fill (both dimensions) - only if needed
+                if (fullFill != null)
                 {
-                    ScaledSize measured;
-                    if (!hadFixedSize)
+                    foreach (var child in fullFill)
                     {
-                        measured = MeasureChild(child, rectForChildrenPixels.Width, rectForChildrenPixels.Height,
-                            scale);
-                        // Don't process fill children sizes - they adapt to parent, not define it
-                    }
-                    else
-                    {
-                        var provideWidth = rectForChildrenPixels.Width;
-                        if (NeedAutoWidth && maxWidth >= 0)
+                        ScaledSize measured;
+                        if (!hadFixedSize)
                         {
-                            provideWidth = maxWidth;
+                            measured = MeasureChild(child, rectForChildrenPixels.Width, rectForChildrenPixels.Height,
+                                scale);
+                            // Don't process fill children sizes - they adapt to parent, not define it
+                        }
+                        else
+                        {
+                            var provideWidth = rectForChildrenPixels.Width;
+                            if (NeedAutoWidth && maxWidth >= 0)
+                            {
+                                provideWidth = maxWidth;
+                            }
+
+                            var provideHeight = rectForChildrenPixels.Height;
+                            if (NeedAutoHeight && maxHeight >= 0)
+                            {
+                                provideHeight = maxHeight;
+                            }
+
+                            measured = MeasureChild(child, provideWidth, provideHeight, scale);
+                            // Don't call PostProcessMeasuredChild for fill children
                         }
 
-                        var provideHeight = rectForChildrenPixels.Height;
-                        if (NeedAutoHeight && maxHeight >= 0)
+                        widthCut |= measured.WidthCut;
+                        heightCut |= measured.HeightCut;
+                    }
+                }
+
+                //PASS 3 for those with partial Fill (only one dimension) - only if needed
+                if (partialFill != null)
+                {
+                    foreach (var (child, originalMeasured) in partialFill)
+                    {
+                        var hasHorizontalFill = child.NeedFillHorizontally;
+                        var hasVerticalFill = child.NeedFillVertically;
+
+                        bool remeasureX = false, remeasureY = false;
+                        if (hasHorizontalFill)
                         {
-                            provideHeight = maxHeight;
+                            remeasureX = child.MeasuredSize.Pixels.Width != rectForChildrenPixels.Width;
                         }
 
-                        measured = MeasureChild(child, provideWidth, provideHeight, scale);
-                        // Don't call PostProcessMeasuredChild for fill children
+                        if (hasVerticalFill)
+                        {
+                            remeasureY = child.MeasuredSize.Pixels.Height != rectForChildrenPixels.Height;
+                        }
+
+                        if (!remeasureX && !remeasureY)
+                        {
+                            continue;
+                        }
+
+                        var provideWidth = hasHorizontalFill
+                            ? (NeedAutoWidth && maxWidth >= 0 ? maxWidth : rectForChildrenPixels.Width)
+                            : rectForChildrenPixels.Width;
+
+                        var provideHeight = hasVerticalFill
+                            ? (NeedAutoHeight && maxHeight >= 0 ? maxHeight : rectForChildrenPixels.Height)
+                            : rectForChildrenPixels.Height;
+
+                        var measured = MeasureChild(child, provideWidth, provideHeight, scale);
+
+                        // Only record dimensions that are NOT Fill
+                        if (!hasHorizontalFill && measured.Pixels.Width > maxChildWidth)
+                        {
+                            maxChildWidth = measured.Pixels.Width;
+                        }
+
+                        if (!hasVerticalFill && measured.Pixels.Height > maxChildHeight)
+                        {
+                            maxChildHeight = measured.Pixels.Height;
+                        }
+
+                        widthCut |= measured.WidthCut;
+                        heightCut |= measured.HeightCut;
                     }
-
-                    widthCut |= measured.WidthCut;
-                    heightCut |= measured.HeightCut;
                 }
-            }
 
-            //PASS 3 for those with partial Fill (only one dimension) - only if needed
-            if (partialFill != null)
-            {
-                foreach (var (child, originalMeasured) in partialFill)
+                // Apply minimum dimensions from Fill children
+                var minWidthFromFill = 0.0f;
+                var minHeightFromFill = 0.0f;
+
+                // Check all Fill children (both full and partial)
+                if (fullFill != null)
                 {
-                    var hasHorizontalFill = child.NeedFillHorizontally;
-                    var hasVerticalFill = child.NeedFillVertically;
-
-                    bool remeasureX = false, remeasureY = false;
-                    if (hasHorizontalFill)
+                    foreach (var child in fullFill)
                     {
-                        remeasureX = child.MeasuredSize.Pixels.Width != rectForChildrenPixels.Width;
+                        if (child.MinimumWidthRequest >= 0)
+                        {
+                            var minWidth = (float)Math.Round((child.MinimumWidthRequest + child.Margins.HorizontalThickness) * scale);
+                            if (minWidth > minWidthFromFill)
+                                minWidthFromFill = minWidth;
+                        }
+                        if (child.MinimumHeightRequest >= 0)
+                        {
+                            var minHeight = (float)Math.Round((child.MinimumHeightRequest + child.Margins.VerticalThickness) * scale);
+                            if (minHeight > minHeightFromFill)
+                                minHeightFromFill = minHeight;
+                        }
                     }
-
-                    if (hasVerticalFill)
-                    {
-                        remeasureY = child.MeasuredSize.Pixels.Height != rectForChildrenPixels.Height;
-                    }
-
-                    if (!remeasureX && !remeasureY)
-                    {
-                        continue;
-                    }
-
-                    var provideWidth = hasHorizontalFill
-                        ? (NeedAutoWidth && maxWidth >= 0 ? maxWidth : rectForChildrenPixels.Width)
-                        : rectForChildrenPixels.Width;
-
-                    var provideHeight = hasVerticalFill
-                        ? (NeedAutoHeight && maxHeight >= 0 ? maxHeight : rectForChildrenPixels.Height)
-                        : rectForChildrenPixels.Height;
-
-                    var measured = MeasureChild(child, provideWidth, provideHeight, scale);
-
-                    // Only record dimensions that are NOT Fill
-                    if (!hasHorizontalFill && measured.Pixels.Width > maxChildWidth)
-                    {
-                        maxChildWidth = measured.Pixels.Width;
-                    }
-
-                    if (!hasVerticalFill && measured.Pixels.Height > maxChildHeight)
-                    {
-                        maxChildHeight = measured.Pixels.Height;
-                    }
-
-                    widthCut |= measured.WidthCut;
-                    heightCut |= measured.HeightCut;
                 }
-            }
 
-            // Apply minimum dimensions from Fill children
-            var minWidthFromFill = 0.0f;
-            var minHeightFromFill = 0.0f;
-
-            // Check all Fill children (both full and partial)
-            if (fullFill != null)
-            {
-                foreach (var child in fullFill)
+                if (partialFill != null)
                 {
-                    if (child.MinimumWidthRequest >= 0)
+                    foreach (var (child, _) in partialFill)
                     {
-                        var minWidth = (float)Math.Round((child.MinimumWidthRequest + child.Margins.HorizontalThickness) * scale);
-                        if (minWidth > minWidthFromFill)
-                            minWidthFromFill = minWidth;
-                    }
-                    if (child.MinimumHeightRequest >= 0)
-                    {
-                        var minHeight = (float)Math.Round((child.MinimumHeightRequest + child.Margins.VerticalThickness) * scale);
-                        if (minHeight > minHeightFromFill)
-                            minHeightFromFill = minHeight;
-                    }
-                }
-            }
-
-            if (partialFill != null)
-            {
-                foreach (var (child, _) in partialFill)
-                {
-                    if (child.NeedFillHorizontally && child.MinimumWidthRequest >= 0)
-                    {
-                        var minWidth = (float)Math.Round((child.MinimumWidthRequest + child.Margins.HorizontalThickness) * scale);
-                        if (minWidth > minWidthFromFill)
-                            minWidthFromFill = minWidth;
-                    }
-                    if (child.NeedFillVertically && child.MinimumHeightRequest >= 0)
-                    {
-                        var minHeight = (float)Math.Round((child.MinimumHeightRequest + child.Margins.VerticalThickness) * scale);
-                        if (minHeight > minHeightFromFill)
-                            minHeightFromFill = minHeight;
+                        if (child.NeedFillHorizontally && child.MinimumWidthRequest >= 0)
+                        {
+                            var minWidth = (float)Math.Round((child.MinimumWidthRequest + child.Margins.HorizontalThickness) * scale);
+                            if (minWidth > minWidthFromFill)
+                                minWidthFromFill = minWidth;
+                        }
+                        if (child.NeedFillVertically && child.MinimumHeightRequest >= 0)
+                        {
+                            var minHeight = (float)Math.Round((child.MinimumHeightRequest + child.Margins.VerticalThickness) * scale);
+                            if (minHeight > minHeightFromFill)
+                                minHeightFromFill = minHeight;
+                        }
                     }
                 }
+
+                // Apply tracked minimums before Fill constraints
+                if (minWidthFromFill > maxWidth)
+                    maxWidth = minWidthFromFill;
+                if (minHeightFromFill > maxHeight)
+                    maxHeight = minHeightFromFill;
             }
 
-            // Apply tracked minimums before Fill constraints
-            if (minWidthFromFill > maxWidth)
-                maxWidth = minWidthFromFill;
-            if (minHeightFromFill > maxHeight)
-                maxHeight = minHeightFromFill;
+
+
 
             if (NeedFillHorizontally && float.IsFinite(rectForChildrenPixels.Width))
             {
