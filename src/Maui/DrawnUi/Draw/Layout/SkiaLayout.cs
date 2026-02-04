@@ -1535,8 +1535,7 @@ namespace DrawnUi.Draw
                         ResetScroll();
                         Invalidate();
                     }
-                    else if ((MeasuredSize.Pixels.Height == 0 || MeasuredSize.Pixels.Width == 0 ||
-                              MeasureItemsStrategy != MeasuringStrategy.MeasureVisible) && NeedAutoSize)
+                    else if (NeedAutoSize || MeasuredSize.Pixels.Height == 0 || MeasuredSize.Pixels.Width == 0 || MeasureItemsStrategy != MeasuringStrategy.MeasureVisible)
                     {
                         Invalidate();
                     }
