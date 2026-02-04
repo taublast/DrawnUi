@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\ControlLifecycleState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\SkiaCacheType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\ThermalState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Models\RangeF.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Models\SkiaRenderObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\AutoSizeType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\DeviceOrientation.cs" />
