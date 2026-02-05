@@ -1600,6 +1600,10 @@ public partial class SkiaCamera : SkiaControl
             {
                 control.StartWithPermissionsInternal();
             }
+            else
+            {
+                Debug.WriteLine("CAMERA TURNED OFF");
+            }
         }
     }
 
@@ -1614,46 +1618,40 @@ public partial class SkiaCamera : SkiaControl
     /// </summary>
     public virtual void StartWithPermissionsInternal()
     {
-        if (lockStartup)
+        lock (this)
         {
-            Debug.WriteLine("[SkiaCamera] Startup locked.");
-            return;
-        }
 
-        lockStartup = true;
+            Super.OnNativeAppResumed -= Super_OnNativeAppResumed;
+            Super.OnNativeAppPaused -= Super_OnNativeAppPaused;
+            Super.OnNativeAppResumed += Super_OnNativeAppResumed;
+            Super.OnNativeAppPaused += Super_OnNativeAppPaused;
 
-        ClearInternalCache();
+            ClearInternalCache();
 
-        try
-        {
-            Debug.WriteLine("[SkiaCamera] Requesting permissions...");
-            CheckPermissions((presented) =>
-                {
-                    Debug.WriteLine("[SkiaCamera] Starting..");
-                    PermissionsWarning = false;
-                    PermissionsError = false;
-                    StartInternal();
-                },
-                (presented) =>
-                {
-                    Super.Log("[SkiaCamera] Permissions denied");
-                    IsOn = false;
-                    PermissionsWarning = true;
-                    PermissionsError = true;
-                });
-        }
-        catch (Exception e)
-        {
-            Trace.WriteLine(e);
-        }
-        finally
-        {
-            Tasks.StartDelayed(TimeSpan.FromSeconds(1), () =>
+            try
             {
-                Debug.WriteLine("[SkiaCamera] Startup UNlocked.");
-                lockStartup = false;
-            });
+                Debug.WriteLine("[SkiaCamera] Requesting permissions...");
+                CheckPermissions((presented) =>
+                    {
+                        Debug.WriteLine("[SkiaCamera] Starting..");
+                        PermissionsWarning = false;
+                        PermissionsError = false;
+                        StartInternal();
+                    },
+                    (presented) =>
+                    {
+                        Super.Log("[SkiaCamera] Permissions denied");
+                        IsOn = false;
+                        PermissionsWarning = true;
+                        PermissionsError = true;
+                    });
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e);
+            }
         }
+
     }
 
 
@@ -1665,13 +1663,15 @@ public partial class SkiaCamera : SkiaControl
         if (IsDisposing || IsDisposed)
             return;
 
+#if ONPLATFORM
+        DisableOtherCameras();
+
         if (NativeControl == null)
         {
-#if ONPLATFORM
             CreateNative();
             OnNativeControlCreated();
-#endif
         }
+#endif
 
         if (Display != null)
         {
@@ -1679,6 +1679,25 @@ public partial class SkiaCamera : SkiaControl
         }
 
         NativeControl?.Start();
+    }
+
+    public void DisableOtherCameras(bool all = false)
+    {
+        foreach (var renderer in Instances)
+        {
+            System.Diagnostics.Debug.WriteLine($"[CAMERA] DisableOtherCameras..");
+            bool disable = false;
+            if (all || renderer != this)
+            {
+                disable = true;
+            }
+
+            if (disable)
+            {
+                renderer.StopInternal(true);
+                System.Diagnostics.Debug.WriteLine($"[CAMERA] Stopped {renderer.Uid} {renderer.Tag}");
+            }
+        }
     }
 
     /// <summary>
@@ -1910,8 +1929,6 @@ public partial class SkiaCamera : SkiaControl
     public SkiaCamera()
     {
         Instances.Add(this);
-        Super.OnNativeAppResumed += Super_OnNativeAppResumed;
-        Super.OnNativeAppPaused += Super_OnNativeAppPaused;
     }
 
     /// <summary>
@@ -2330,8 +2347,6 @@ public partial class SkiaCamera : SkiaControl
     }
 
     #endregion
-
-    bool lockStartup;
 
     /// <summary>
     /// Starts the camera by setting IsOn to true.

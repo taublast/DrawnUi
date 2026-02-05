@@ -246,24 +246,7 @@ public partial class SkiaCamera
         return formats;
     }
 
-    public void DisableOtherCameras(bool all = false)
-    {
-        foreach (var renderer in Instances)
-        {
-            System.Diagnostics.Debug.WriteLine($"[CAMERA] DisableOtherCameras..");
-            bool disable = false;
-            if (all || renderer != this)
-            {
-                disable = true;
-            }
 
-            if (disable)
-            {
-                renderer.StopInternal(true);
-                System.Diagnostics.Debug.WriteLine($"[CAMERA] Stopped {renderer.Uid} {renderer.Tag}");
-            }
-        }
-    }
 
 
     /// <summary>
