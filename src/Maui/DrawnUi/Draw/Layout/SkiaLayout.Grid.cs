@@ -22,26 +22,36 @@ public partial class SkiaLayout
                     var list = new List<SkiaControl>();
                     if (ChildrenFactory.TemplatesAvailable)
                     {
-                        var row = 0;
-                        var col = 0;
                         int split = Split;
                         if (split < 1) split = 1;
 
-                        for (int index = 0; index < ChildrenFactory.GetChildrenCount(); index++)
+                        int totalItems = ChildrenFactory.GetChildrenCount();
+                        bool useColumnMajor = Invert && split > 1;
+                        int rowsPerColumn = useColumnMajor
+                            ? (int)Math.Ceiling((double)totalItems / split)
+                            : 0;
+
+                        for (int index = 0; index < totalItems; index++)
                         {
                             var child = ChildrenFactory.GetViewForIndex(index, null, 0, true);
+                            if (child == null) break;
 
-                            if (child == null)
+                            int row, col;
+                            if (useColumnMajor)
                             {
-                                break; //unexpected but..
+                                // Column-major: fill top-to-bottom, then left-to-right
+                                col = index / rowsPerColumn;
+                                row = index % rowsPerColumn;
                             }
-
-                            row = index / split;
-                            col = index % split;
+                            else
+                            {
+                                // Row-major: fill left-to-right, then top-to-bottom
+                                row = index / split;
+                                col = index % split;
+                            }
 
                             Grid.SetRow(child, row);
                             Grid.SetColumn(child, col);
-
                             list.Add(child);
                         }
                     }

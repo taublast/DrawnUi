@@ -915,18 +915,6 @@ public class SkiaSlider : SkiaLayout
         typeof(SkiaSlider),
         true);
 
-    public bool Invert
-    {
-        get { return (bool)GetValue(InvertProperty); }
-        set { SetValue(InvertProperty, value); }
-    }
-
-    public static readonly BindableProperty InvertProperty = BindableProperty.Create(
-        nameof(Invert),
-        typeof(bool),
-        typeof(SkiaSlider),
-        false);
-
     /// <summary>
     /// Will ignore gestures of the wrong direction, like if this Orientation is Horizontal will ignore gestures with vertical direction velocity
     /// </summary>

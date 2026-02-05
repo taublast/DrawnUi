@@ -134,6 +134,21 @@ namespace DrawnUi.Draw
             set { SetValue(RecyclingTemplateProperty, value); }
         }
 
+        /// <summary>
+        /// Layouts can use this property for custom logic appropriate to layout type.
+        /// </summary>
+        public bool Invert
+        {
+            get { return (bool)GetValue(InvertProperty); }
+            set { SetValue(InvertProperty, value); }
+        }
+
+        public static readonly BindableProperty InvertProperty = BindableProperty.Create(
+            nameof(Invert),
+            typeof(bool),
+            typeof(SkiaLayout),
+            false, propertyChanged: NeedInvalidateMeasure);
+
         //protected override void AdaptCachedLayout(SKRect destination, float scale)
         //{
         //    base.AdaptCachedLayout(destination, scale);

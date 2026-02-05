@@ -106,15 +106,6 @@ public abstract class SkiaRangeBase : SkiaLayout
 
     protected volatile bool lockInternal;
 
-    public static readonly BindableProperty InvertProperty =
-        BindableProperty.Create(nameof(Invert), typeof(bool), typeof(SkiaRangeBase), false);
-
-    public bool Invert
-    {
-        get { return (bool)GetValue(InvertProperty); }
-        set { SetValue(InvertProperty, value); }
-    }
-
     #endregion
 
     #region VALUE CONVERSION
