@@ -1749,6 +1749,10 @@ public class SkiaCarousel : SnappingLayout
     public bool IsUserFocused { get; protected set; }
     public bool IsUserPanning { get; protected set; }
 
+    // When finger-down interrupts an in-flight transition but the user doesn't actually start panning the carousel
+    // (e.g., they swipe vertically inside the current slide), we still need to snap back on Up.
+    private bool _snapIfNoPanOnUp;
+
     protected Vector2 _panningOffset;
     protected Vector2 _panningStartOffset;
     private SKRect _lastViewport;
@@ -1786,7 +1790,9 @@ public class SkiaCarousel : SnappingLayout
                 consumed = null;
             }
 
-            if (consumed != null)
+            // For Up: even if a child consumed the gesture, we may still need to perform a snap side-effect
+            // if Down interrupted an in-flight transition and we never started a horizontal pan.
+            if (consumed != null && !(args.Type == TouchActionResult.Up && _snapIfNoPanOnUp))
             {
                 return consumed;
             }
@@ -1802,9 +1808,16 @@ public class SkiaCarousel : SnappingLayout
             IsUserFocused = true;
             IsUserPanning = false;
 
+            // Remember if we interrupted a snap/transition; if user doesn't pan horizontally after this,
+            // we will re-snap on Up.
+            _snapIfNoPanOnUp = _isSnapping != null || InTransition;
+
             AnimatorRange.Stop();
             VectorAnimatorSpring?.Stop();
             VelocityAccumulator.Clear();
+
+            // If Stop() doesn't trigger Finished handlers, make sure we don't stay stuck in "transition".
+            _isSnapping = null;
 
             FixPosition();
 
@@ -1847,6 +1860,7 @@ public class SkiaCarousel : SnappingLayout
                 }
 
                 IsUserPanning = true;
+                _snapIfNoPanOnUp = false;
 
                 var x = _panningOffset.X + args.Event.Distance.Delta.X / RenderingScale;
                 var y = _panningOffset.Y + args.Event.Distance.Delta.Y / RenderingScale;
@@ -1898,6 +1912,18 @@ public class SkiaCarousel : SnappingLayout
 
                     IsUserPanning = false;
                     IsUserFocused = false;
+                    _snapIfNoPanOnUp = false;
+                }
+                else if (_snapIfNoPanOnUp)
+                {
+                    // We interrupted an in-flight snap (on Down) but never actually started a carousel pan.
+                    // Ensure we still snap to the nearest anchor. Do not consume Up so inner controls keep it.
+                    CurrentSnap = CurrentPosition;
+                    ScrollToNearestAnchor(CurrentSnap, Vector2.Zero);
+
+                    IsUserFocused = false;
+                    IsUserPanning = false;
+                    _snapIfNoPanOnUp = false;
                 }
 
                 break;
