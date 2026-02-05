@@ -66,11 +66,14 @@ public partial class SpaceShooter : MauiGame
     /// </summary>
     public static SpaceShooter Instance { get; set; }
 
-    protected override void OnBindingContextChanged()
+    public override void SetInheritedBindingContext(object context)
     {
-        base.OnBindingContextChanged();
+        if (BindingContext != null)
+        {
+            return;
+        }
 
-        BindingContext = this; //insist in case parent view might set its own
+        base.SetInheritedBindingContext(context);
     }
 
     protected override void OnLayoutReady()
