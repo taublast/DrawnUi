@@ -260,13 +260,13 @@ public partial class SkiaScroll
         ISkiaGestureListener PassToChildren()
         {
             passedToChildren = true;
-            
+
             // Use plane-aware gesture processing for 3-plane virtualization
             if (UseVirtual && PlaneCurrent != null)
             {
                 return ProcessGesturesForPlanes(args, apply);
             }
-            
+
             return base.ProcessGestures(args, apply);
         }
 
@@ -459,30 +459,32 @@ public partial class SkiaScroll
                             }
                         }
 
-                        //accumulate velocity for different gestures before drawing
-                        _pannedVelocity = _pannedVelocity + new Vector2(VelocityX, VelocityY);
-
-                        //if (Orientation == ScrollOrientation.Vertical)
-                        //{
-                        //    ViewportOffsetY = clamped.Y;
-                        //}
-                        //else
-                        //if (Orientation == ScrollOrientation.Horizontal)
-                        //{
-                        //    ViewportOffsetX = clamped.X;
-                        //}
-                        //else
-                        //{
-                        //    ViewportOffsetY = clamped.Y;
-                        //    ViewportOffsetX = clamped.X;
-                        //}
-
-                        _pannedOffset = clamped; //will be applied once when drawing by ApplyPannedOffsetWithVelocity
-                        IsUserPanning = true;
-
                         consumed = this;
+                        IsUserPanning = true;
+                        _pannedOffset = clamped; //will be applied once when drawing by ApplyPannedOffsetWithVelocity
 
-                        Repaint();
+                        if (!devUseVelocityPanning)
+                        {
+                            if (Orientation == ScrollOrientation.Vertical)
+                            {
+                                ViewportOffsetY = clamped.Y;
+                            }
+                            else
+                            if (Orientation == ScrollOrientation.Horizontal)
+                            {
+                                ViewportOffsetX = clamped.X;
+                            }
+                            else
+                            {
+                                ViewportOffsetY = clamped.Y;
+                                ViewportOffsetX = clamped.X;
+                            }
+                        }
+                        else
+                        {
+                            _pannedVelocity = _pannedVelocity + new Vector2(VelocityX, VelocityY);
+                            Repaint();
+                        }
                     }
 
                     break;
@@ -740,7 +742,7 @@ public partial class SkiaScroll
                 }
             }
         }
-        
+
         return null;
     }
 

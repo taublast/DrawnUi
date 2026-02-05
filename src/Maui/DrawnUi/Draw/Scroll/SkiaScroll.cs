@@ -2533,6 +2533,8 @@ namespace DrawnUi.Draw
             }
         }
 
+        private bool devUseVelocityPanning = false;
+
         protected override void Draw(DrawingContext context)
         {
             if (_animatorFlingY == null)
@@ -2571,7 +2573,10 @@ namespace DrawnUi.Draw
 
             if (!CheckIsGhost())
             {
-                ApplyPannedOffsetWithVelocity(context.Context);
+                if (devUseVelocityPanning)
+                {
+                    ApplyPannedOffsetWithVelocity(context.Context);
+                }
 
                 var posX = (float)(ViewportOffsetX * zoomedScale);
                 var posY = (float)(ViewportOffsetY * zoomedScale);
