@@ -463,14 +463,14 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     if (videoDevice.IsExposureModeSupported(AVCaptureExposureMode.ContinuousAutoExposure))
                     {
                         videoDevice.ExposureMode = AVCaptureExposureMode.ContinuousAutoExposure;
-                        System.Diagnostics.Debug.WriteLine($"[CAMERA SETUP] Set initial exposure mode to ContinuousAutoExposure");
+                        System.Diagnostics.Debug.WriteLine($"[SkiaCamera SETUP] Set initial exposure mode to ContinuousAutoExposure");
                     }
 
                     // Reset exposure bias to neutral
                     if (videoDevice.MinExposureTargetBias != videoDevice.MaxExposureTargetBias)
                     {
                         videoDevice.SetExposureTargetBias(0, null);
-                        System.Diagnostics.Debug.WriteLine($"[CAMERA SETUP] Reset exposure bias to 0");
+                        System.Diagnostics.Debug.WriteLine($"[SkiaCamera] Reset exposure bias to 0");
                     }
 
                     videoDevice.UnlockForConfiguration();
