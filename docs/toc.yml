@@ -5,6 +5,8 @@
   items:
     - name: Installation and Setup
       href: articles/getting-started.md
+    - name: Drawn Layouts
+      href: articles/layouts.md      
     - name: Porting Native to Drawn
       href: articles/porting-maui.md
 
