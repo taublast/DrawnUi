@@ -653,6 +653,8 @@ namespace DrawnUi.Draw
                 _vectorAnimatorBounceY.Stop();
             }
 
+            IsSnapping = false;
+
             VelocityTrackerPan.Clear();
             VelocityTrackerScale.Clear();
 
@@ -686,12 +688,12 @@ namespace DrawnUi.Draw
             UpdateLoadingLock(shouldLock);
         }
 
-        float _minVelocitySnap = 15f;
+        protected float _minVelocitySnap = 15f;
 
         /// <summary>
         /// POINTS per sec
         /// </summary>
-        private float snapMinimumVelocity = 3f;
+        protected float snapMinimumVelocity = 3f;
 
         //public virtual bool ScrollStoppedForSnap()
         //{
@@ -2569,7 +2571,8 @@ namespace DrawnUi.Draw
 
             if (!CheckIsGhost())
             {
-                //ApplyPannedOffsetWithVelocity(context.Context);
+                ApplyPannedOffsetWithVelocity(context.Context);
+
                 var posX = (float)(ViewportOffsetX * zoomedScale);
                 var posY = (float)(ViewportOffsetY * zoomedScale);
 

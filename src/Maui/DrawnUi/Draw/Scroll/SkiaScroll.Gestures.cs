@@ -400,7 +400,7 @@ public partial class SkiaScroll
                         }
                     }
 
-                    if (lockHeader && !CanScrollUsingHeader)
+                    if (lockHeader && !CanScrollUsingHeader || !HadDown)
                     {
                         canPan = false;
                     }
@@ -459,31 +459,30 @@ public partial class SkiaScroll
                             }
                         }
 
-                        if (Orientation == ScrollOrientation.Vertical)
-                        {
-                            ViewportOffsetY = clamped.Y;
-                        }
-                        else
-                        if (Orientation == ScrollOrientation.Horizontal)
-                        {
-                            ViewportOffsetX = clamped.X;
-                        }
-                        else
-                        {
-                            ViewportOffsetY = clamped.Y;
-                            ViewportOffsetX = clamped.X;
-                        }
-
-                        IsUserPanning = true;
-                        //_lastVelocity = new Vector2(VelocityX, VelocityY);
-
                         //accumulate velocity for different gestures before drawing
-                        //_pannedVelocity += new Vector2(VelocityX, VelocityY);
-                        //_pannedOffset = clamped; //will be applied once when drawing by ApplyPannedOffsetWithVelocity
+                        _pannedVelocity = _pannedVelocity + new Vector2(VelocityX, VelocityY);
+
+                        //if (Orientation == ScrollOrientation.Vertical)
+                        //{
+                        //    ViewportOffsetY = clamped.Y;
+                        //}
+                        //else
+                        //if (Orientation == ScrollOrientation.Horizontal)
+                        //{
+                        //    ViewportOffsetX = clamped.X;
+                        //}
+                        //else
+                        //{
+                        //    ViewportOffsetY = clamped.Y;
+                        //    ViewportOffsetX = clamped.X;
+                        //}
+
+                        _pannedOffset = clamped; //will be applied once when drawing by ApplyPannedOffsetWithVelocity
+                        IsUserPanning = true;
 
                         consumed = this;
 
-                        //Repaint();
+                        Repaint();
                     }
 
                     break;
