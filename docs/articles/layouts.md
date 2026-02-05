@@ -211,6 +211,15 @@ Decorators can be customized through gradient properties:
 - If you cache the whole layout cells would be created just once, can be used for small-medium layouts inside scroll. 
 - When using `ItemsSource` control whether you need to recycle cells or use RecycleTemplate="Disabled".
 
+## Safe Insets
+
+If you do nothing special MAUI should handle this by itsself. On iOS the root view must be a MAUI view to respect insets, for example a `Grid`, and you can inlcude your `Canvas` inside.  
+You can explicitely enable/disable safe insets for a MAUI app by setting a startup option:
+```csharp
+// MauiProgram.cs
+builder.UseDrawnUi(new() { MobileIsFullscreen = true });
+```
+
 ## See Also
 
 - [First App Tutorial](first-app.md) - Basic layout examples
