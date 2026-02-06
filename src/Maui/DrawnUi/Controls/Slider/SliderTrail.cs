@@ -18,8 +18,6 @@ public class SliderTrail : SkiaShape
         set { SetValue(XPosProperty, value); }
     }
 
-
-
     public static readonly BindableProperty XPosEndProperty = BindableProperty.Create(nameof(XPosEnd), typeof(double), typeof(SliderTrail), 100.0); //, BindingMode.TwoWay
     public double XPosEnd
     {
