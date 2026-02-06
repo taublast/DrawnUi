@@ -157,6 +157,69 @@ public class DraggableShape : SkiaShape, ISkiaGestureListener
 | Custom control | ISkiaGestureListener | Maximum performance, full control |
 | List item interactions | AddGestures | MVVM-friendly, parameter binding |
 
+## Helper Methods for Custom Gesture Logic
+
+DrawnUI provides helper methods for advanced gesture processing in custom controls:
+
+### Canvas.GetGesturePositionInsideControl
+Converts a screen point (in pixels) to local coordinates within a specific control.
+
+```csharp
+public virtual SKPoint GetGesturePositionInsideControl(SkiaControl view, SKPoint screenPointPixels)
+```
+
+**Parameters:**
+- `view`: The target control
+- `screenPointPixels`: Touch point in screen/canvas coordinates (pixels)
+
+**Returns:** Point relative to the control's local coordinate system (DIPs)
+
+**Use case:** Convert raw touch coordinates to control-local coordinates for precise hit testing.
+
+### SkiaControl.GetGesturePositionInsideChild
+Transforms a gesture point to the local coordinate system of a direct child control, accounting for transforms and layout state.
+
+```csharp
+public virtual SKPoint GetGesturePositionInsideChild(SkiaControl child, SkiaGesturesParameters args, 
+    GestureEventProcessingInfo apply)
+```
+
+**Parameters:**
+- `child`: The child control
+- `args`: Current gesture parameters
+- `apply`: Gesture processing context with current mapped location and offsets
+
+**Returns:** Point in child's local coordinate system (DIPs)
+
+**Features:**
+- Handles render transforms automatically
+- Accounts for scroll offsets and layout positions
+- Uses render tree for accurate positioning when available
+
+**Use case:** Get precise touch coordinates relative to a child for custom layout gesture handling.
+
+### SkiaControl.CheckChildGestureHit
+Determines if a gesture hit a specific child control, respecting the control's transform and layout.
+
+```csharp
+public virtual bool CheckChildGestureHit(SkiaControl child, SkiaGesturesParameters args, 
+    GestureEventProcessingInfo apply)
+```
+
+**Parameters:**
+- `child`: The child control to test
+- `args`: Current gesture parameters
+- `apply`: Gesture processing context
+
+**Returns:** `true` if the gesture point is inside the child's hit area
+
+**Features:**
+- Considers child transforms and rotation
+- Uses render tree for accurate hitboxes when available
+- Accounts for frozen visual layers
+
+**Use case:** Implement custom hit testing logic for complex child arrangements (e.g., sliders with custom tracks).
+
 ## Advanced Gesture Patterns
 
 ### Multi-Touch and Pan Gestures with ConsumeGestures
@@ -392,6 +455,35 @@ private void OnGestures(object sender, SkiaGesturesInfo e)
 - ✅ Set `e.Consumed = true` to stop gesture bubbling
 - ✅ Check gesture processing order (highest Z-index first)
 
+## Advanced Custom Gesture Handling Example
+
+For custom controls requiring precise gesture coordinate handling:
+
+```csharp
+public class CustomSlider : SkiaLayout
+{
+    protected override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+    {
+        // Get touch position relative to track child
+        var trackLocalPoint = GetGesturePositionInsideChild(Track, args, apply);
+        
+        // Check if gesture hit the thumb
+        if (CheckChildGestureHit(Thumb, args, apply))
+        {
+            // Handle thumb dragging
+            if (args.Type == TouchActionResult.Panning)
+            {
+                var thumbLocal = GetGesturePositionInsideChild(Thumb, args, apply);
+                UpdateThumbPosition(thumbLocal);
+                return this; // Consume gesture
+            }
+        }
+        
+        return null; // Don't consume
+    }
+}
+```
+
 ## Summary
 
 DrawnUi.Maui offers multiple gesture handling approaches to fit different scenarios:
@@ -400,5 +492,6 @@ DrawnUi.Maui offers multiple gesture handling approaches to fit different scenar
 - **AddGestures** - Perfect for MVVM command binding
 - **SkiaHotspot** - Simple tap detection
 - **ISkiaGestureListener** - Maximum performance for custom controls
+- **Helper Methods** - For precise coordinate transformation in custom layouts
 
 Choose the approach that best fits your architecture and requirements. The ConsumeGestures event handler is recommended for most new development due to its flexibility and ease of use.

@@ -65,6 +65,8 @@
   items:
     - name: Layout System Architecture
       href: articles/advanced/layout-system.md
+    - name: Gesture System Architecture
+      href: articles/advanced/gesture-system-architecture.md
     - name: Gestures & Touch Input
       href: articles/advanced/gestures.md
     - name: Platform-Specific Styling
