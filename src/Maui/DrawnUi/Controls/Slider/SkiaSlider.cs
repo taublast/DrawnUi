@@ -473,7 +473,6 @@ public class SkiaSlider : SkiaLayout
         FindViews();
     }
 
-
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
         //Super.Log($"[Touch] SLIDER got {args.Type}");
@@ -562,12 +561,7 @@ public class SkiaSlider : SkiaLayout
                 bool onTrail = true;
                 if (Trail != null)
                 {
-                    var touchLocationWIthOffset = new SKPoint(apply.MappedLocation.X + thisOffset.X,
-                        apply.MappedLocation.Y + thisOffset.Y);
-
-                    onTrail = IsGestureForChild(Trail, touchLocationWIthOffset);
-
-                    //Debug.WriteLine($"Checking TRAIL [{onTrail}]: {Trail.HitBoxAuto} vs {args.Event.Location}, {touchLocationWIthOffset}");
+                    onTrail = CheckChildGestureHit(Trail, args, apply); 
                 }
 
                 if (onTrail || touchArea == RangeZone.Start || touchArea == RangeZone.End)
