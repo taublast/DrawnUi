@@ -1574,6 +1574,217 @@ namespace DrawnUi.Draw
         }
 
 
+        /// <summary>
+        /// Returns the point in the local coordinate system of the direct child (relative to its Top/Left).
+        /// Takes into account the current state of gesture processing (scroll offsets, etc), renders transforms and layout.
+        /// Returns points (DIPs).
+        /// </summary>
+        public virtual SKPoint GetGesturePositionInsideChild(SkiaControl child, SkiaGesturesParameters args,
+            GestureEventProcessingInfo apply)
+        {
+            var thisOffset = TranslateInputCoords(apply.ChildOffset);
+            var parentContentPoint = new SKPoint(apply.MappedLocation.X + thisOffset.X,
+                apply.MappedLocation.Y + thisOffset.Y);
+
+            // Handle transforms on self (container) - similar to ProcessGestures
+            if (HasTransform)
+            {
+               if (RenderTransformMatrix.TryInvert(out SKMatrix inverse))
+                {
+                   // The 'apply' passed in might already have this transformed if called from inside ProcessGestures after the transform block.
+                   // But if we want to be safe and this helper is used where 'apply' is raw for this level:
+                   // Actually, usually 'apply.MappedLocation' is already in local coordinates if passed from correct context?
+                   // No, ProcessGestures transforms it locally variable 'apply'. 
+                   // If this method is called with the SAME 'apply' as passed to ProcessGestures, we need to apply transform.
+                   // But if called with the 'apply' modified inside ProcessGestures, we don't.
+                   
+                   // Assuming this is used inside ProcessGestures with the 'apply' that is available there (which is already transformed).
+                   // The user passes 'apply'. 
+                   // So we assume 'apply.MappedLocation' is already transformed into 'this' control's local space.
+                   // So we DON'T apply HasTransform inverse here again on the parentContentPoint.
+                   // BUT we DO need it for the logic below if we were re-calculating from scratch.
+                   
+                   // Let's rely on 'apply' being the correct context for THIS control (container).
+                   parentContentPoint = new SKPoint(apply.MappedLocation.X + thisOffset.X,
+                        apply.MappedLocation.Y + thisOffset.Y);
+                }
+            }
+
+            SKPoint localPoint = new SKPoint();
+            
+            // Try to find child in RenderTree to get true layout position/transform
+            if (UsesRenderingTree && RenderTree != null && !Super.UseFrozenVisualLayers)
+            {
+                bool found = false;
+                var asSpan = CollectionsMarshal.AsSpan(RenderTree);
+                for (int i = 0; i < asSpan.Length; i++)
+                {
+                    if (asSpan[i].Control == child)
+                    {
+                        var rectChild = asSpan[i];
+                        
+                        // Logic from IsGestureForChild(SkiaControlWithRect...)
+                        if (child.HasTransform && child.RenderTransformMatrix.TryInvert(out SKMatrix inverse))
+                        {
+                            localPoint = inverse.MapPoint(parentContentPoint);
+                            // We don't subtract HitRect.Left/Top here because usually with transforms 
+                            // the HitRect is used for bounding box check, but the transform handles the origin?
+                            // No, SkiaControlWithRect logic: 
+                            // inside = child.HitRect.ContainsInclusive(localPoint.X, localPoint.Y);
+                            // This means 'localPoint' is in the coordinate space where HitRect is defined.
+                            // HitRect is typically defined in Parent space? No. 
+                            
+                            // Let's look at SkiaControlWithRect definition or usage.
+                            // When drawing with transforms:
+                            // canvas.Save();
+                            // canvas.Concat(Transform);
+                            // Child.Draw(canvas, HitRect.Left, HitRect.Top...)
+                            
+                            // So HitRect.Left/Top are offsets applied AFTER transform? Or passed to Draw?
+                            // Actually RenderTree creation:
+                            // RenderTree.Add(new SkiaControlWithRect(child, drawingRect));
+                            // drawingRect is the rect where child was drawn.
+                            
+                            // If transform is used, drawingRect might be the bounds?
+                            
+                            // If we just want (0,0) of the child...
+                            // If child has transform, the 'parentContentPoint' is in P space.
+                            // 'inverse' maps P space to C space.
+                            
+                            // So 'localPoint' IS the point inside child.
+                            // But is it relative to (0,0)?
+                            // If HitRect.Left is 10, and we touch at 12. 
+                            // If no transform: we want 2. 
+                            // If transform: the transform usually includes the translation for X/Y.
+                            
+                            // If I look at IsGestureForChild(rect):
+                            // if has transform: inside = rect.Contains(localPoint).
+                            // This implies 'localPoint' is absolute in child space, and 'rect' is absolute in child space?
+                            // No, RenderTree rect is usually "Destination Rect" in parent.
+                            
+                            // Okay, simpler approach:
+                            // If no transform, just subtract HitRect.Left/Top.
+                            // If transform, map point.
+                            
+                             localPoint = inverse.MapPoint(parentContentPoint);
+                        }
+                        else
+                        {
+                             // No transform, but maybe ApplyTransforms (translation etc)
+                             // var transformed = child.Control.ApplyTransforms(child.HitRect);
+                             // inside = transformed.Contains(point)
+                             
+                             // So local point = point - transformed.Left, point - transformed.Top
+                             var transformed = child.ApplyTransforms(rectChild.HitRect);
+                             localPoint = new SKPoint(parentContentPoint.X - transformed.Left, parentContentPoint.Y - transformed.Top);
+                        }
+
+                        found = true;
+                        break;
+                    }
+                }
+                
+                if (!found)
+                {
+                    // Fallback using current properties
+                    if (child.HasTransform && child.RenderTransformMatrix.TryInvert(out SKMatrix inverse))
+                    {
+                        localPoint = inverse.MapPoint(parentContentPoint);
+                    }
+                    else
+                    {
+                        var hitRect = child.HitBoxAuto;
+                        localPoint = new SKPoint(parentContentPoint.X - hitRect.Left, parentContentPoint.Y - hitRect.Top);
+                    }
+                }
+            }
+            else
+            {
+                // Fallback (frozen layers or no render tree)
+                // If frozen layers, we rely on args.Event.Location being screen absolute?
+                // But this method takes 'apply' which is relative to parent.
+                
+                 if (child.HasTransform && child.RenderTransformMatrix.TryInvert(out SKMatrix inverse))
+                {
+                    localPoint = inverse.MapPoint(parentContentPoint);
+                }
+                else
+                {
+                    var hitRect = child.HitBoxAuto;
+                    localPoint = new SKPoint(parentContentPoint.X - hitRect.Left, parentContentPoint.Y - hitRect.Top);
+                }
+            }
+
+            return new SKPoint(localPoint.X / RenderingScale, localPoint.Y / RenderingScale);
+        }
+
+        /// <summary>
+        /// Ckecks if direct child is hit by gesture
+        /// </summary>
+        /// <param name="child"></param>
+        /// <param name="args"></param>
+        /// <param name="apply"></param>
+        /// <returns></returns>
+        public virtual bool CheckChildGestureHit(SkiaControl child, SkiaGesturesParameters args,
+    GestureEventProcessingInfo apply)
+        {
+            bool forChild = false;
+
+            if (HasTransform)
+            {
+                // Transform the mapped location using the inverse transformation matrix
+                if (RenderTransformMatrix.TryInvert(out SKMatrix inverse))
+                {
+                    // Create a new struct with the updated MappedLocation
+                    apply = new GestureEventProcessingInfo(
+                        inverse.MapPoint(apply.MappedLocation),
+                        apply.ChildOffset,
+                        apply.ChildOffsetDirect,
+                        apply.AlreadyConsumed
+                    );
+                }
+            }
+
+            if (UsesRenderingTree && RenderTree != null)
+            {
+                if (Super.UseFrozenVisualLayers)
+                {
+                    forChild = IsGestureForChild(child, args);
+                }
+                else
+                {
+                    var thisOffset = TranslateInputCoords(apply.ChildOffset);
+
+                    var touchLocationWIthOffset = new SKPoint(apply.MappedLocation.X + thisOffset.X,
+                        apply.MappedLocation.Y + thisOffset.Y);
+
+                    // Try to find child in RenderTree to use its layout geometry like ProcessGestures does
+                    bool found = false;
+                    var asSpan = CollectionsMarshal.AsSpan(RenderTree);
+                    for (int i = 0; i < asSpan.Length; i++)
+                    {
+                        if (asSpan[i].Control == child)
+                        {
+                            forChild = IsGestureForChild(asSpan[i], touchLocationWIthOffset);
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found)
+                    {
+                        forChild = IsGestureForChild(child, touchLocationWIthOffset);
+                    }
+                }
+            }
+            else
+            {
+                var point = TranslateInputOffsetToPixels(args.Event.Location, apply.ChildOffset);
+                forChild = IsGestureForChild(child, point);
+            }
+
+            return forChild;
+        }
         public virtual ISkiaGestureListener ProcessGestures(
             SkiaGesturesParameters args,
             GestureEventProcessingInfo apply)

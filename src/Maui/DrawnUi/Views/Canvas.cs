@@ -1370,4 +1370,142 @@ public class Canvas : DrawnView, IGestureListener
     }
 
     #endregion
+
+    /// <summary>
+    /// Returns the point in the local coordinate system of the view (relative to its Top/Left).
+    /// This works for any view on the canvas, even if it is not a direct child of this control.
+    /// It recursively traverses the visual tree to find the view and calculates the coordinates
+    /// taking into account all transforms and scroll offsets along the path.
+    /// Returns points (DIPs).
+    /// </summary>
+    /// <param name="view"></param>
+    /// <param name="screenPointPixels"></param>
+    /// <returns></returns>
+    public virtual SKPoint GetGesturePositionInsideControl(SkiaControl view, SKPoint screenPointPixels)
+    {
+        SKPoint localPoint = SKPoint.Empty;
+
+        if (view != null && Content is SkiaControl content)
+        {
+
+            // 1. Transform from Canvas space to Content space
+            // Assuming Canvas Content is at (0,0) with no transform for now, or we check generic Content props
+            if (content.HasTransform && content.RenderTransformMatrix.TryInvert(out SKMatrix inverse))
+            {
+                localPoint = inverse.MapPoint(screenPointPixels);
+            }
+            else
+            {
+                // Simple translation subtraction if Content is offset
+                // Using X/Y might be absolute, so we be careful. 
+                // Content.X is absolute. Canvas starts at 0,0. So X is the offset.
+                localPoint = new SKPoint(
+                    screenPointPixels.X - (float)Content.X * RenderingScale,
+                    screenPointPixels.Y - (float)Content.Y * RenderingScale);
+            }
+
+            if (Content == view)
+            {
+                return new SKPoint(localPoint.X / RenderingScale, localPoint.Y / RenderingScale);
+            }
+
+            var found = FindViewCoordinatesRecursive(content, view, localPoint);
+            if (found.HasValue)
+            {
+                return found.Value;
+            }
+        }
+
+        return localPoint;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="current"></param>
+    /// <param name="target"></param>
+    /// <param name="pointInCurrent"></param>
+    /// <returns></returns>
+    protected virtual SKPoint? FindViewCoordinatesRecursive(SkiaControl current, SkiaControl target, SKPoint pointInCurrent)
+    {
+        // Apply "TranslateInputCoords" (scrolling) of 'current' container from cache
+        var thisOffset = current.TranslateInputCoords(SKPoint.Empty);
+        var contentPoint = new SKPoint(pointInCurrent.X + thisOffset.X, pointInCurrent.Y + thisOffset.Y);
+
+        // Use RenderTree if available as it contains the most accurate layout/hit-test information
+        if (current.RenderTree != null)
+        {
+            var asSpan = CollectionsMarshal.AsSpan(current.RenderTree);
+            for (int i = 0; i < asSpan.Length; i++)
+            {
+                var node = asSpan[i];
+                var child = node.Control;
+
+                if (child == null) continue;
+
+                SKPoint childPoint;
+
+                // Logic must match IsGestureForChild / CheckChildHit
+                if (child.HasTransform && child.RenderTransformMatrix.TryInvert(out SKMatrix inverse))
+                {
+                    childPoint = inverse.MapPoint(contentPoint);
+                }
+                else
+                {
+                    // Standard layout offset using the RenderTree HitRect
+                    childPoint = new SKPoint(
+                        contentPoint.X - node.HitRect.Left,
+                        contentPoint.Y - node.HitRect.Top);
+                }
+
+                if (child == target)
+                {
+                    return new SKPoint(childPoint.X / child.RenderingScale, childPoint.Y / child.RenderingScale);
+                }
+
+                // Recurse
+                var result = FindViewCoordinatesRecursive(child, target, childPoint);
+                if (result.HasValue) return result.Value;
+            }
+        }
+        // Fallback for controls that don't use RenderTree but have Children (e.g. simple containers?)
+        // Note: Most interactive layouts should use RenderTree.
+        else if (current.Children?.Count > 0)
+        {
+            foreach (var child in current.Children)
+            {
+                // Fallback logic for transforms/positions without RenderTree context
+                // We have to rely on child properties which might be less accurate for hit-testing 
+                // if complex custom layouting is used without RenderTree.
+                SKPoint childPoint;
+
+                if (child.HasTransform && child.RenderTransformMatrix.TryInvert(out SKMatrix inverse))
+                {
+                    childPoint = inverse.MapPoint(contentPoint);
+                }
+                else
+                {
+                    // Determine relative offset from parent
+                    // If child.X/Y are absolute, and current.X/Y are absolute:
+                    // offset = child.X - current.X
+                    var offsetX = (child.X - current.X) * current.RenderingScale;
+                    var offsetY = (child.Y - current.Y) * current.RenderingScale;
+
+                    childPoint = new SKPoint(
+                        contentPoint.X - (float)offsetX,
+                        contentPoint.Y - (float)offsetY);
+                }
+
+                if (child == target)
+                {
+                    return new SKPoint(childPoint.X / child.RenderingScale, childPoint.Y / child.RenderingScale);
+                }
+
+                var result = FindViewCoordinatesRecursive(child, target, childPoint);
+                if (result.HasValue) return result.Value;
+            }
+        }
+
+        return null;
+    }
 }
