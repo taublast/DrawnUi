@@ -1,7 +1,6 @@
 ﻿namespace DrawnUi.Draw;
 
-[DebuggerDisplay("Pixels {Pixels},  Units {Units}")]
-
+[DebuggerDisplay("{ToString()}")]
 public class ScaledSize
 {
     public ScaledSize()
@@ -73,6 +72,11 @@ public class ScaledSize
         {
             return Pixels.IsEmpty;
         }
+    }
+    
+    public override string ToString()
+    {
+        return $"Pixels {Pixels},  Units {Units}";
     }
 
     public static float SnapToPixel(double point, double scale)

@@ -2025,7 +2025,7 @@ public partial class SkiaLayout
 
             _backgroundMeasurementProgress = batchEnd;
 
-            // Move to next batch - CRITICAL: This was missing!
+            // Move to next batch
             currentBatchStart = batchEnd;
 
             // Small delay to prevent overwhelming the system
