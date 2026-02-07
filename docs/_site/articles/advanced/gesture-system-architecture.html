@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>DrawnUI Gesture System | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="DrawnUI Gesture System | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../../images/draw.svg">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/main/docs/articles/advanced/gesture-system-architecture.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/draw.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="drawnui-gesture-system">DrawnUI Gesture System</h1>
+
+<hr>
+<h1 id="part-1-general-overview">Part 1: General Overview</h1>
+<h2 id="why-we-need-our-own-gesture-system">Why We Need Our Own Gesture System</h2>
+<p>DrawnUI doesn't use native controls - everything is drawn on a Skia canvas.
+When you tap the screen, the platform says &quot;someone touched at (150, 300)&quot; but has no idea what's there. It's just pixels.
+We need to figure out which control should receive that tap.
+For .NET MAUI we use <code>AppoMobi.Maui.Gestures</code> package to get gestures for all platforms.</p>
+<h2 id="the-basic-flow">The Basic Flow</h2>
+<pre><code>Touch Event → Canvas → Find Control at Point → Deliver Gesture
+</code></pre>
+<ol>
+<li><strong>Canvas</strong> receives touch from the platform</li>
+<li><strong>RenderTree</strong> tells us where each control was drawn</li>
+<li><strong>Hit test</strong> checks if touch point is inside a control</li>
+<li><strong>Deliver</strong> the gesture to the winning control</li>
+</ol>
+<h2 id="rendertree-the-whats-where-map">RenderTree: The &quot;What's Where&quot; Map</h2>
+<p>Every time we draw, we record where each control ended up:</p>
+<pre><code class="lang-csharp">tree.Add(new SkiaControlWithRect(
+    control,             // the control
+    destinationRect,     // where it was drawn
+    control.DrawingRect, // its actual bounds
+    index                // z-order (front to back)
+));
+</code></pre>
+<p>This list is our map for gesture processing. We walk through it (top to bottom, front to back) looking for the control that contains the touch point.</p>
+<h2 id="hit-testing">Hit Testing</h2>
+<p>When a gesture arrives, we need to check if the touch point is inside each control. This happens in two places:</p>
+<h3 id="1-canvas-level">1. Canvas Level</h3>
+<p>Canvas iterates through registered gesture listeners and checks:</p>
+<pre><code class="lang-csharp">forChild = ((SkiaControl)listener).HitIsInside(args.Event.StartingLocation.X, args.Event.StartingLocation.Y);
+</code></pre>
+<h3 id="2-control-level">2. Control Level</h3>
+<p>Each control checks its own bounds:</p>
+<pre><code class="lang-csharp">public virtual bool HitIsInside(float x, float y)
+{
+    return HitBoxAuto.ContainsInclusive(x, y);
+}
+</code></pre>
+<p><code>HitBoxAuto</code> is typically the control's <code>DrawingRect</code> - where it actually rendered on screen.</p>
+<h3 id="how-it-works-together">How It Works Together</h3>
+<ul>
+<li>Canvas finds top-level controls that contain the point</li>
+<li>Each control's <code>ProcessGestures</code> walks its RenderTree to find children at that point</li>
+<li>First control that contains the point AND wants to handle the gesture wins</li>
+<li>Controls can pass gestures to children or consume them themselves</li>
+</ul>
+<h3 id="blockgesturesbelow">BlockGesturesBelow</h3>
+<p>Sometimes you want a control to block gestures from reaching controls underneath, even if it doesn't actively handle them. Example: a drawer panel that covers part of the screen - you don't want taps to pass through to the content behind it.</p>
+<pre><code class="lang-csharp">public bool BlockGesturesBelow { get; set; }
+</code></pre>
+<p>When <code>true</code>, the control returns itself as the &quot;consumer&quot; even when it doesn't process the gesture:</p>
+<pre><code class="lang-csharp">var consumedDefault = BlockGesturesBelow ? this : null;
+</code></pre>
+<p>This stops gesture propagation to controls below in the z-order.</p>
+<h3 id="inputtransparent">InputTransparent</h3>
+<p>The opposite of BlockGesturesBelow. When <code>true</code>, the control is completely ignored for gesture processing - touches pass right through it as if it wasn't there.</p>
+<pre><code class="lang-csharp">if (listener.InputTransparent)
+    continue; // skip this control entirely
+</code></pre>
+<p>Useful for overlay decorations, visual effects, or any control that should be visible but not interactive.</p>
+<h2 id="gesture-listeners">Gesture Listeners</h2>
+<p>Controls that want gestures implement <code>ISkiaGestureListener</code>:</p>
+<pre><code class="lang-csharp">public interface ISkiaGestureListener
+{
+    ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply);
+    bool HitIsInside(float x, float y);
+}
+</code></pre>
+<p>They register with the Canvas when visible, unregister when hidden/disposed.</p>
+<h2 id="thats-it-for-basics">That's It For Basics</h2>
+<p>Touch comes in → we check RenderTree → find control at that point → deliver gesture.</p>
+<p>Simple.</p>
+<hr>
+<h1 id="part-2-in-deep---challenges--edge-cases">Part 2: In Deep - Challenges &amp; Edge Cases</h1>
+<h2 id="the-caching-problem">The Caching Problem</h2>
+<p>DrawnUI caches controls for performance. A control renders to an off-screen bitmap, then we just draw that bitmap instead of re-rendering.</p>
+<p><strong>The catch:</strong> cache was created at position A, but might be drawn at position B.</p>
+<p>Example: A list item is cached when at Y=500. You scroll. Now it's drawn at Y=300. But its internal RenderTree still thinks children are at Y=500.</p>
+<p>Touch comes in at Y=320. We need to translate that to Y=520 to match the cache's coordinate system.</p>
+<h3 id="lastdestination">LastDestination</h3>
+<p>Each <code>CachedObject</code> tracks:</p>
+<ul>
+<li><code>Bounds</code> - where it was when cache was created</li>
+<li><code>LastDestination</code> - where it was actually drawn last time</li>
+</ul>
+<pre><code class="lang-csharp">public SKPoint TranslateInputCoords(SKRect drawingRect)
+{
+    var current = LastDestination.IsEmpty ? drawingRect : LastDestination;
+    var offsetX = current.Left - Bounds.Left;
+    var offsetY = current.Top - Bounds.Top;
+    return new SKPoint(-offsetX, -offsetY);
+}
+</code></pre>
+<h2 id="nested-caches">Nested Caches</h2>
+<p>When caches are nested (cached scroll → cached layout → button), each level needs its own coordinate translation. ProcessGestures walks down the tree, translating at each cached level.</p>
+<h2 id="parent-rendertree-parameter">Parent RenderTree Parameter</h2>
+<pre><code class="lang-csharp">ProcessGestures(args, apply, IReadOnlyList&lt;SkiaControlWithRect&gt; parentRenderTree = null)
+</code></pre>
+<p>Why? A cached control that didn't redraw has stale/empty RenderTree. But the parent knows where it drew the cached child. Parent's RenderTree fills the gap.</p>
+<h2 id="imagecomposite-special-case">ImageComposite Special Case</h2>
+<p>ImageComposite is smart caching - only redraws &quot;dirty&quot; children, composites onto previous frame.</p>
+<p><strong>Problem:</strong> Non-dirty children don't draw, so their cache's <code>LastDestination</code> never updates.</p>
+<p><strong>Solution:</strong> <code>ArrangeCache()</code> - arranges the control AND updates cache position:</p>
+<pre><code class="lang-csharp">public virtual void ArrangeCache(SKRect destination, float widthRequest, float heightRequest, float scale)
+{
+    Arrange(destination, widthRequest, heightRequest, scale);
+
+    var cache = RenderObject ?? RenderObjectPrevious;
+    if (cache != null)
+    {
+        cache.LastDestination = DrawingRect;
+    }
+}
+</code></pre>
+<p>Used in ImageComposite composition mode for non-dirty children.</p>
+<h2 id="files-involved">Files Involved</h2>
+<ul>
+<li><code>Canvas.cs</code> - receives platform touches, dispatches to controls</li>
+<li><code>SkiaControl.Shared.cs</code> - <code>ProcessGestures</code>, <code>HitIsInside</code>, <code>ArrangeCache</code></li>
+<li><code>SkiaLayout.*.cs</code> - builds RenderTree during drawing</li>
+<li><code>SkiaRenderObject.cs</code> - <code>CachedObject</code> with <code>LastDestination</code>, <code>TranslateInputCoords</code></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/main/docs/articles/advanced/gesture-system-architecture.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Made by <a href="https://taublast.github.io/about/">Nick Kovalsky aka AppoMobi (@taublast)</a><script>(function(){try{const fix=function(){const brand=document.querySelector('a.navbar-brand');if(brand){brand.setAttribute('href','/');}document.querySelectorAll('a[href]').forEach(function(a){var href=a.getAttribute('href');if(!href||href.startsWith('http'))return;if(href==='index.html'||href==='/index.html'||href==='../index.html'){a.setAttribute('href','/');return;}if(href.endsWith('/articles/index.html')||href==='articles/index.html'||href==='../articles/index.html'){a.setAttribute('href','/articles/');return;}var m=href.match(/^(?:\.?\.?\/)?articles\/.*\/index\.html(.*)$/);if(m){var p=href.replace(/\/index\.html(.*)$/,'/');if(!p.startsWith('/')){p='/' + p.replace(/^\/?/,'');}a.setAttribute('href',p);}});};if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fix);}else{fix();}}catch(e){})();</script>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

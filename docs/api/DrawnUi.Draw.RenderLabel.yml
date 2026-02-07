@@ -23,7 +23,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderLabel
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-    startLine: 162
+    startLine: 159
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -40,7 +40,7 @@ items:
   - DrawnUi.Draw.RenderObject.Cache
   - DrawnUi.Draw.RenderObject.IsDistorted
   - DrawnUi.Draw.RenderObject.WillClipBounds
-  - DrawnUi.Draw.RenderObject.EffectPostRenderer
+  - DrawnUi.Draw.RenderObject.EffectPostRenderers
   - DrawnUi.Draw.RenderObject.DelegateDrawCache
   - DrawnUi.Draw.RenderObject.DrawRenderObject(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.CachedObject)
   - System.Object.Equals(System.Object)
@@ -70,7 +70,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Text
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-    startLine: 164
+    startLine: 161
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -99,7 +99,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Rect
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-    startLine: 165
+    startLine: 162
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -128,7 +128,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-    startLine: 166
+    startLine: 163
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -157,7 +157,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-    startLine: 168
+    startLine: 165
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -260,13 +260,13 @@ references:
   name: WillClipBounds
   nameWithType: RenderObject.WillClipBounds
   fullName: DrawnUi.Draw.RenderObject.WillClipBounds
-- uid: DrawnUi.Draw.RenderObject.EffectPostRenderer
-  commentId: P:DrawnUi.Draw.RenderObject.EffectPostRenderer
+- uid: DrawnUi.Draw.RenderObject.EffectPostRenderers
+  commentId: P:DrawnUi.Draw.RenderObject.EffectPostRenderers
   parent: DrawnUi.Draw.RenderObject
-  href: DrawnUi.Draw.RenderObject.html#DrawnUi_Draw_RenderObject_EffectPostRenderer
-  name: EffectPostRenderer
-  nameWithType: RenderObject.EffectPostRenderer
-  fullName: DrawnUi.Draw.RenderObject.EffectPostRenderer
+  href: DrawnUi.Draw.RenderObject.html#DrawnUi_Draw_RenderObject_EffectPostRenderers
+  name: EffectPostRenderers
+  nameWithType: RenderObject.EffectPostRenderers
+  fullName: DrawnUi.Draw.RenderObject.EffectPostRenderers
 - uid: DrawnUi.Draw.RenderObject.DelegateDrawCache
   commentId: P:DrawnUi.Draw.RenderObject.DelegateDrawCache
   parent: DrawnUi.Draw.RenderObject

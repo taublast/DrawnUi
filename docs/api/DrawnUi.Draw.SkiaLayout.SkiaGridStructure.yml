@@ -362,7 +362,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCellBoundsFor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-    startLine: 260
+    startLine: 287
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -400,7 +400,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GridHeight
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-    startLine: 297
+    startLine: 324
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -428,7 +428,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GridWidth
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-    startLine: 302
+    startLine: 329
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -456,7 +456,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuredGridHeight
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-    startLine: 307
+    startLine: 334
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -484,7 +484,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasuredGridWidth
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-    startLine: 324
+    startLine: 351
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -512,7 +512,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LeftEdgeOfColumn
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-    startLine: 541
+    startLine: 620
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -546,7 +546,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TopEdgeOfRow
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-    startLine: 554
+    startLine: 633
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -580,7 +580,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DecompressStarsInternal
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-    startLine: 764
+    startLine: 843
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -609,7 +609,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DecompressStars
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-    startLine: 793
+    startLine: 872
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

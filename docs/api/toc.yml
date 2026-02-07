@@ -84,6 +84,9 @@ items:
   - uid: DrawnUi.Controls.SkiaCarousel.SnapPoint
     name: SkiaCarousel.SnapPoint
     type: Class
+  - uid: DrawnUi.Controls.SkiaDecoratedColumn
+    name: SkiaDecoratedColumn
+    type: Class
   - uid: DrawnUi.Controls.SkiaDecoratedGrid
     name: SkiaDecoratedGrid
     type: Class

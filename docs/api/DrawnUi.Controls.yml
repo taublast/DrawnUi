@@ -23,6 +23,7 @@ items:
   - DrawnUi.Controls.ScrollPickerWheel
   - DrawnUi.Controls.SkiaCarousel
   - DrawnUi.Controls.SkiaCarousel.SnapPoint
+  - DrawnUi.Controls.SkiaDecoratedColumn
   - DrawnUi.Controls.SkiaDecoratedGrid
   - DrawnUi.Controls.SkiaDrawer
   - DrawnUi.Controls.SkiaDrawnCell
@@ -185,6 +186,12 @@ references:
   name: GridLayout
   nameWithType: GridLayout
   fullName: DrawnUi.Controls.GridLayout
+- uid: DrawnUi.Controls.SkiaDecoratedColumn
+  commentId: T:DrawnUi.Controls.SkiaDecoratedColumn
+  href: DrawnUi.Controls.SkiaDecoratedColumn.html
+  name: SkiaDecoratedColumn
+  nameWithType: SkiaDecoratedColumn
+  fullName: DrawnUi.Controls.SkiaDecoratedColumn
 - uid: DrawnUi.Controls.SkiaDecoratedGrid
   commentId: T:DrawnUi.Controls.SkiaDecoratedGrid
   href: DrawnUi.Controls.SkiaDecoratedGrid.html

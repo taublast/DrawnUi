@@ -29,11 +29,13 @@ items:
   - DrawnUi.Views.Canvas.Draw(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Views.Canvas.DumpDebug
   - DrawnUi.Views.Canvas.EnableUpdates
+  - DrawnUi.Views.Canvas.FindViewCoordinatesRecursive(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl,SkiaSharp.SKPoint)
   - DrawnUi.Views.Canvas.FirstPanThreshold
   - DrawnUi.Views.Canvas.Gestures
   - DrawnUi.Views.Canvas.GesturesDebugColor
   - DrawnUi.Views.Canvas.GesturesDebugColorProperty
   - DrawnUi.Views.Canvas.GesturesProperty
+  - DrawnUi.Views.Canvas.GetGesturePositionInsideControl(DrawnUi.Draw.SkiaControl,SkiaSharp.SKPoint)
   - DrawnUi.Views.Canvas.GetMeasuringRectForChildren(System.Single,System.Single,System.Single)
   - DrawnUi.Views.Canvas.HadInput
   - DrawnUi.Views.Canvas.HasHover
@@ -49,6 +51,7 @@ items:
   - DrawnUi.Views.Canvas.OnDestroyingVew
   - DrawnUi.Views.Canvas.OnDisposing
   - DrawnUi.Views.Canvas.OnGestureEvent(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)
+  - DrawnUi.Views.Canvas.OnGestureEventOld(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)
   - DrawnUi.Views.Canvas.OnGesturesAttachChanged
   - DrawnUi.Views.Canvas.OnHandlerChanged
   - DrawnUi.Views.Canvas.OnHandlerChanging(Microsoft.Maui.Controls.HandlerChangingEventArgs)
@@ -80,7 +83,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Canvas
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 13
+    startLine: 12
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -561,7 +564,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LayoutVisibilityChanged
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 28
+    startLine: 27
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -587,7 +590,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetChildren
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 33
+    startLine: 32
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -621,7 +624,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DumpDebug
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 39
+    startLine: 38
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -647,7 +650,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnChildAdded
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 45
+    startLine: 44
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -678,7 +681,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetContent
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 59
+    startLine: 58
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -709,7 +712,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnSizeChanged
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 90
+    startLine: 82
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -737,7 +740,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateMeasure
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 97
+    startLine: 89
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -766,7 +769,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdaptSizeToContentIfNeeded
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 106
+    startLine: 98
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -804,7 +807,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ArrangeOverride
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 136
+    startLine: 128
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -843,7 +846,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureOverride
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 151
+    startLine: 143
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -885,7 +888,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Invalidate
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 214
+    startLine: 206
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -914,7 +917,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdaptWidthContraintToRequest
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 233
+    startLine: 225
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -948,7 +951,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdaptHeightContraintToRequest
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 241
+    startLine: 233
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -982,7 +985,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Measure
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 249
+    startLine: 241
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1020,7 +1023,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetMeasuringRectForChildren
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 319
+    startLine: 311
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1064,7 +1067,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdaptWidthContraintToContentRequest
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 334
+    startLine: 326
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1102,7 +1105,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdaptHeightContraintToContentRequest
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 347
+    startLine: 339
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1140,7 +1143,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdaptSizeRequestToContent
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 366
+    startLine: 358
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1181,7 +1184,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ContentSize
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 384
+    startLine: 376
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1210,7 +1213,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureChild
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 405
+    startLine: 397
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1257,7 +1260,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHandlerChanged
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 418
+    startLine: 410
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1287,7 +1290,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnHandlerChanging
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 432
+    startLine: 424
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1321,7 +1324,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DetachGestures
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 449
+    startLine: 441
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1347,7 +1350,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDestroyingVew
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 456
+    startLine: 448
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1375,7 +1378,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnGesturesAttachChanged
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 463
+    startLine: 455
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1401,7 +1404,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AttachedTouchEffect
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 490
+    startLine: 482
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1430,7 +1433,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateDebugPointer
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 492
+    startLine: 484
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1458,7 +1461,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DebugPointer
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 505
+    startLine: 497
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1487,7 +1490,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 507
+    startLine: 499
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1515,7 +1518,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Context
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 515
+    startLine: 509
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1542,18 +1545,18 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReceivedInput
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 525
+    startLine: 514
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
   summary: Got input during current pass
   example: []
   syntax:
-    content: public ConcurrentBag<ISkiaGestureListener> ReceivedInput { get; }
+    content: public HashSet<ISkiaGestureListener> ReceivedInput { get; }
     parameters: []
     return:
-      type: System.Collections.Concurrent.ConcurrentBag{DrawnUi.Draw.ISkiaGestureListener}
-    content.vb: Public ReadOnly Property ReceivedInput As ConcurrentBag(Of ISkiaGestureListener)
+      type: System.Collections.Generic.HashSet{DrawnUi.Draw.ISkiaGestureListener}
+    content.vb: Public ReadOnly Property ReceivedInput As HashSet(Of ISkiaGestureListener)
   overload: DrawnUi.Views.Canvas.ReceivedInput*
 - uid: DrawnUi.Views.Canvas.HadInput
   commentId: P:DrawnUi.Views.Canvas.HadInput
@@ -1573,7 +1576,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HadInput
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 530
+    startLine: 519
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1604,7 +1607,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSavedGesture
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 537
+    startLine: 526
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1668,7 +1671,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HasHover
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 744
+    startLine: 728
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1699,7 +1702,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SignalInput
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 774
+    startLine: 758
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1734,7 +1737,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Tapped
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 790
+    startLine: 773
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1761,7 +1764,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FirstPanThreshold
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 795
+    startLine: 778
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1790,7 +1793,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnGestureEvent
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 820
+    startLine: 803
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1812,6 +1815,44 @@ items:
   overload: DrawnUi.Views.Canvas.OnGestureEvent*
   implements:
   - AppoMobi.Maui.Gestures.IGestureListener.OnGestureEvent(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)
+- uid: DrawnUi.Views.Canvas.OnGestureEventOld(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)
+  commentId: M:DrawnUi.Views.Canvas.OnGestureEventOld(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)
+  id: OnGestureEventOld(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)
+  parent: DrawnUi.Views.Canvas
+  langs:
+  - csharp
+  - vb
+  name: OnGestureEventOld(TouchActionType, TouchActionEventArgs, TouchActionResult)
+  nameWithType: Canvas.OnGestureEventOld(TouchActionType, TouchActionEventArgs, TouchActionResult)
+  fullName: DrawnUi.Views.Canvas.OnGestureEventOld(AppoMobi.Maui.Gestures.TouchActionType, AppoMobi.Maui.Gestures.TouchActionEventArgs, AppoMobi.Maui.Gestures.TouchActionResult)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Views/Canvas.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnGestureEventOld
+    path: ../src/Maui/DrawnUi/Views/Canvas.cs
+    startLine: 958
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Views
+  summary: IGestureListener implementation
+  example: []
+  syntax:
+    content: public virtual void OnGestureEventOld(TouchActionType type, TouchActionEventArgs args1, TouchActionResult touchAction)
+    parameters:
+    - id: type
+      type: AppoMobi.Maui.Gestures.TouchActionType
+      description: ''
+    - id: args1
+      type: AppoMobi.Maui.Gestures.TouchActionEventArgs
+      description: ''
+    - id: touchAction
+      type: AppoMobi.Maui.Gestures.TouchActionResult
+      description: ''
+    content.vb: Public Overridable Sub OnGestureEventOld(type As TouchActionType, args1 As TouchActionEventArgs, touchAction As TouchActionResult)
+  overload: DrawnUi.Views.Canvas.OnGestureEventOld*
 - uid: DrawnUi.Views.Canvas.BreakLine
   commentId: M:DrawnUi.Views.Canvas.BreakLine
   id: BreakLine
@@ -1830,7 +1871,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BreakLine
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 981
+    startLine: 1112
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1856,7 +1897,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LineBreaks
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 986
+    startLine: 1117
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1883,7 +1924,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 989
+    startLine: 1120
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1912,7 +1953,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 993
+    startLine: 1124
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1938,7 +1979,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayRippleAnimation
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 998
+    startLine: 1129
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1976,7 +2017,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayShimmerAnimation
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1004
+    startLine: 1135
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2016,7 +2057,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TimeLastGC
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1017
+    startLine: 1148
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2045,7 +2086,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DelayNanosBetweenGC
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1018
+    startLine: 1149
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2074,7 +2115,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CollectGarbage
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1020
+    startLine: 1151
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2106,7 +2147,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPropertyChanged
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1037
+    startLine: 1168
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2142,7 +2183,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GesturesDebugColorProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1050
+    startLine: 1181
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2169,7 +2210,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GesturesDebugColor
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1056
+    startLine: 1187
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2198,7 +2239,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReserveSpaceAroundProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1062
+    startLine: 1193
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2225,7 +2266,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReserveSpaceAround
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1068
+    startLine: 1199
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2254,7 +2295,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GesturesProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1082
+    startLine: 1213
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2281,7 +2322,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Gestures
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1088
+    startLine: 1219
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2310,7 +2351,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ContentProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1096
+    startLine: 1227
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2337,7 +2378,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Content
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1112
+    startLine: 1243
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2366,7 +2407,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnParentChanged
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1122
+    startLine: 1253
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2396,7 +2437,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EnableUpdates
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1132
+    startLine: 1263
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2424,7 +2465,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisableUpdates
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1142
+    startLine: 1273
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2452,7 +2493,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1147
+    startLine: 1278
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2465,6 +2506,94 @@ items:
     content.vb: Protected Overrides Sub Draw(context As DrawingContext)
   overridden: DrawnUi.Views.DrawnView.Draw(DrawnUi.Draw.DrawingContext)
   overload: DrawnUi.Views.Canvas.Draw*
+- uid: DrawnUi.Views.Canvas.GetGesturePositionInsideControl(DrawnUi.Draw.SkiaControl,SkiaSharp.SKPoint)
+  commentId: M:DrawnUi.Views.Canvas.GetGesturePositionInsideControl(DrawnUi.Draw.SkiaControl,SkiaSharp.SKPoint)
+  id: GetGesturePositionInsideControl(DrawnUi.Draw.SkiaControl,SkiaSharp.SKPoint)
+  parent: DrawnUi.Views.Canvas
+  langs:
+  - csharp
+  - vb
+  name: GetGesturePositionInsideControl(SkiaControl, SKPoint)
+  nameWithType: Canvas.GetGesturePositionInsideControl(SkiaControl, SKPoint)
+  fullName: DrawnUi.Views.Canvas.GetGesturePositionInsideControl(DrawnUi.Draw.SkiaControl, SkiaSharp.SKPoint)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Views/Canvas.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetGesturePositionInsideControl
+    path: ../src/Maui/DrawnUi/Views/Canvas.cs
+    startLine: 1383
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Views
+  summary: >-
+    Returns the point in the local coordinate system of the view (relative to its Top/Left).
+
+    This works for any view on the canvas, even if it is not a direct child of this control.
+
+    It recursively traverses the visual tree to find the view and calculates the coordinates
+
+    taking into account all transforms and scroll offsets along the path.
+
+    Returns points (DIPs).
+  example: []
+  syntax:
+    content: public virtual SKPoint GetGesturePositionInsideControl(SkiaControl view, SKPoint screenPointPixels)
+    parameters:
+    - id: view
+      type: DrawnUi.Draw.SkiaControl
+      description: ''
+    - id: screenPointPixels
+      type: SkiaSharp.SKPoint
+      description: ''
+    return:
+      type: SkiaSharp.SKPoint
+      description: ''
+    content.vb: Public Overridable Function GetGesturePositionInsideControl(view As SkiaControl, screenPointPixels As SKPoint) As SKPoint
+  overload: DrawnUi.Views.Canvas.GetGesturePositionInsideControl*
+- uid: DrawnUi.Views.Canvas.FindViewCoordinatesRecursive(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl,SkiaSharp.SKPoint)
+  commentId: M:DrawnUi.Views.Canvas.FindViewCoordinatesRecursive(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl,SkiaSharp.SKPoint)
+  id: FindViewCoordinatesRecursive(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl,SkiaSharp.SKPoint)
+  parent: DrawnUi.Views.Canvas
+  langs:
+  - csharp
+  - vb
+  name: FindViewCoordinatesRecursive(SkiaControl, SkiaControl, SKPoint)
+  nameWithType: Canvas.FindViewCoordinatesRecursive(SkiaControl, SkiaControl, SKPoint)
+  fullName: DrawnUi.Views.Canvas.FindViewCoordinatesRecursive(DrawnUi.Draw.SkiaControl, DrawnUi.Draw.SkiaControl, SkiaSharp.SKPoint)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Views/Canvas.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FindViewCoordinatesRecursive
+    path: ../src/Maui/DrawnUi/Views/Canvas.cs
+    startLine: 1428
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Views
+  summary: ''
+  example: []
+  syntax:
+    content: protected virtual SKPoint? FindViewCoordinatesRecursive(SkiaControl current, SkiaControl target, SKPoint pointInCurrent)
+    parameters:
+    - id: current
+      type: DrawnUi.Draw.SkiaControl
+      description: ''
+    - id: target
+      type: DrawnUi.Draw.SkiaControl
+      description: ''
+    - id: pointInCurrent
+      type: SkiaSharp.SKPoint
+      description: ''
+    return:
+      type: System.Nullable{SkiaSharp.SKPoint}
+      description: ''
+    content.vb: Protected Overridable Function FindViewCoordinatesRecursive(current As SkiaControl, target As SkiaControl, pointInCurrent As SKPoint) As SKPoint?
+  overload: DrawnUi.Views.Canvas.FindViewCoordinatesRecursive*
 references:
 - uid: DrawnUi.Views
   commentId: N:DrawnUi.Views
@@ -11170,32 +11299,32 @@ references:
   name: ReceivedInput
   nameWithType: Canvas.ReceivedInput
   fullName: DrawnUi.Views.Canvas.ReceivedInput
-- uid: System.Collections.Concurrent.ConcurrentBag{DrawnUi.Draw.ISkiaGestureListener}
-  commentId: T:System.Collections.Concurrent.ConcurrentBag{DrawnUi.Draw.ISkiaGestureListener}
-  parent: System.Collections.Concurrent
-  definition: System.Collections.Concurrent.ConcurrentBag`1
-  href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentbag-1
-  name: ConcurrentBag<ISkiaGestureListener>
-  nameWithType: ConcurrentBag<ISkiaGestureListener>
-  fullName: System.Collections.Concurrent.ConcurrentBag<DrawnUi.Draw.ISkiaGestureListener>
-  nameWithType.vb: ConcurrentBag(Of ISkiaGestureListener)
-  fullName.vb: System.Collections.Concurrent.ConcurrentBag(Of DrawnUi.Draw.ISkiaGestureListener)
-  name.vb: ConcurrentBag(Of ISkiaGestureListener)
+- uid: System.Collections.Generic.HashSet{DrawnUi.Draw.ISkiaGestureListener}
+  commentId: T:System.Collections.Generic.HashSet{DrawnUi.Draw.ISkiaGestureListener}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.HashSet`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.hashset-1
+  name: HashSet<ISkiaGestureListener>
+  nameWithType: HashSet<ISkiaGestureListener>
+  fullName: System.Collections.Generic.HashSet<DrawnUi.Draw.ISkiaGestureListener>
+  nameWithType.vb: HashSet(Of ISkiaGestureListener)
+  fullName.vb: System.Collections.Generic.HashSet(Of DrawnUi.Draw.ISkiaGestureListener)
+  name.vb: HashSet(Of ISkiaGestureListener)
   spec.csharp:
-  - uid: System.Collections.Concurrent.ConcurrentBag`1
-    name: ConcurrentBag
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
     isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentbag-1
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.hashset-1
   - name: <
   - uid: DrawnUi.Draw.ISkiaGestureListener
     name: ISkiaGestureListener
     href: DrawnUi.Draw.ISkiaGestureListener.html
   - name: '>'
   spec.vb:
-  - uid: System.Collections.Concurrent.ConcurrentBag`1
-    name: ConcurrentBag
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
     isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentbag-1
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.hashset-1
   - name: (
   - name: Of
   - name: " "
@@ -11203,71 +11332,34 @@ references:
     name: ISkiaGestureListener
     href: DrawnUi.Draw.ISkiaGestureListener.html
   - name: )
-- uid: System.Collections.Concurrent.ConcurrentBag`1
-  commentId: T:System.Collections.Concurrent.ConcurrentBag`1
+- uid: System.Collections.Generic.HashSet`1
+  commentId: T:System.Collections.Generic.HashSet`1
   isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentbag-1
-  name: ConcurrentBag<T>
-  nameWithType: ConcurrentBag<T>
-  fullName: System.Collections.Concurrent.ConcurrentBag<T>
-  nameWithType.vb: ConcurrentBag(Of T)
-  fullName.vb: System.Collections.Concurrent.ConcurrentBag(Of T)
-  name.vb: ConcurrentBag(Of T)
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.hashset-1
+  name: HashSet<T>
+  nameWithType: HashSet<T>
+  fullName: System.Collections.Generic.HashSet<T>
+  nameWithType.vb: HashSet(Of T)
+  fullName.vb: System.Collections.Generic.HashSet(Of T)
+  name.vb: HashSet(Of T)
   spec.csharp:
-  - uid: System.Collections.Concurrent.ConcurrentBag`1
-    name: ConcurrentBag
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
     isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentbag-1
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.hashset-1
   - name: <
   - name: T
   - name: '>'
   spec.vb:
-  - uid: System.Collections.Concurrent.ConcurrentBag`1
-    name: ConcurrentBag
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
     isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent.concurrentbag-1
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.hashset-1
   - name: (
   - name: Of
   - name: " "
   - name: T
   - name: )
-- uid: System.Collections.Concurrent
-  commentId: N:System.Collections.Concurrent
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system
-  name: System.Collections.Concurrent
-  nameWithType: System.Collections.Concurrent
-  fullName: System.Collections.Concurrent
-  spec.csharp:
-  - uid: System
-    name: System
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system
-  - name: .
-  - uid: System.Collections
-    name: Collections
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections
-  - name: .
-  - uid: System.Collections.Concurrent
-    name: Concurrent
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent
-  spec.vb:
-  - uid: System
-    name: System
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system
-  - name: .
-  - uid: System.Collections
-    name: Collections
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections
-  - name: .
-  - uid: System.Collections.Concurrent
-    name: Concurrent
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent
 - uid: DrawnUi.Views.Canvas.HadInput*
   commentId: Overload:DrawnUi.Views.Canvas.HadInput
   href: DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_HadInput
@@ -11471,6 +11563,12 @@ references:
   name: TouchActionEventArgs
   nameWithType: TouchActionEventArgs
   fullName: AppoMobi.Maui.Gestures.TouchActionEventArgs
+- uid: DrawnUi.Views.Canvas.OnGestureEventOld*
+  commentId: Overload:DrawnUi.Views.Canvas.OnGestureEventOld
+  href: DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_OnGestureEventOld_AppoMobi_Maui_Gestures_TouchActionType_AppoMobi_Maui_Gestures_TouchActionEventArgs_AppoMobi_Maui_Gestures_TouchActionResult_
+  name: OnGestureEventOld
+  nameWithType: Canvas.OnGestureEventOld
+  fullName: DrawnUi.Views.Canvas.OnGestureEventOld
 - uid: DrawnUi.Views.Canvas.BreakLine*
   commentId: Overload:DrawnUi.Views.Canvas.BreakLine
   href: DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_BreakLine
@@ -11788,3 +11886,71 @@ references:
   name: Draw
   nameWithType: Canvas.Draw
   fullName: DrawnUi.Views.Canvas.Draw
+- uid: DrawnUi.Views.Canvas.GetGesturePositionInsideControl*
+  commentId: Overload:DrawnUi.Views.Canvas.GetGesturePositionInsideControl
+  href: DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_GetGesturePositionInsideControl_DrawnUi_Draw_SkiaControl_SkiaSharp_SKPoint_
+  name: GetGesturePositionInsideControl
+  nameWithType: Canvas.GetGesturePositionInsideControl
+  fullName: DrawnUi.Views.Canvas.GetGesturePositionInsideControl
+- uid: SkiaSharp.SKPoint
+  commentId: T:SkiaSharp.SKPoint
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  name: SKPoint
+  nameWithType: SKPoint
+  fullName: SkiaSharp.SKPoint
+- uid: DrawnUi.Views.Canvas.FindViewCoordinatesRecursive*
+  commentId: Overload:DrawnUi.Views.Canvas.FindViewCoordinatesRecursive
+  href: DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_FindViewCoordinatesRecursive_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaControl_SkiaSharp_SKPoint_
+  name: FindViewCoordinatesRecursive
+  nameWithType: Canvas.FindViewCoordinatesRecursive
+  fullName: DrawnUi.Views.Canvas.FindViewCoordinatesRecursive
+- uid: System.Nullable{SkiaSharp.SKPoint}
+  commentId: T:System.Nullable{SkiaSharp.SKPoint}
+  parent: System
+  definition: System.Nullable`1
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  name: SKPoint?
+  nameWithType: SKPoint?
+  fullName: SkiaSharp.SKPoint?
+  spec.csharp:
+  - uid: SkiaSharp.SKPoint
+    name: SKPoint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  - name: '?'
+  spec.vb:
+  - uid: SkiaSharp.SKPoint
+    name: SKPoint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.nullable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )

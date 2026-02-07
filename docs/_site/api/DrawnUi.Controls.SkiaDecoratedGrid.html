@@ -101,7 +101,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SkiaDecoratedGrid : SkiaLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class SkiaDecoratedGrid : SkiaGrid, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList&lt;IView&gt;, ICollection&lt;IView&gt;, IEnumerable&lt;IView&gt;, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable</code></pre>
   </div>
 
 
@@ -118,6 +118,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.visualelement">VisualElement</a></div>
       <div><a class="xref" href="DrawnUi.Draw.SkiaControl.html">SkiaControl</a></div>
       <div><a class="xref" href="DrawnUi.Draw.SkiaLayout.html">SkiaLayout</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.SkiaGrid.html">SkiaGrid</a></div>
       <div><span class="xref">SkiaDecoratedGrid</span></div>
     </dd>
   </dl>
@@ -232,6 +233,12 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_RecyclingTemplate">SkiaLayout.RecyclingTemplate</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_Invert">SkiaLayout.Invert</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_InvertProperty">SkiaLayout.InvertProperty</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TemplatedHeaderProperty">SkiaLayout.TemplatedHeaderProperty</a>
@@ -939,7 +946,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_EffectColorFilter">SkiaControl.EffectColorFilter</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_EffectPostRenderer">SkiaControl.EffectPostRenderer</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_EffectPostRenderers">SkiaControl.EffectPostRenderers</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VisualEffectsProperty">SkiaControl.VisualEffectsProperty</a>
@@ -1285,6 +1292,12 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildTapped_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_">SkiaControl.OnChildTapped(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetGesturePositionInsideChild_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_">SkiaControl.GetGesturePositionInsideChild(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckChildGestureHit_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_">SkiaControl.CheckChildGestureHit(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_">SkiaControl.ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)</a>
@@ -1819,6 +1832,9 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Arrange_SkiaSharp_SKRect_System_Single_System_Single_System_Single_">SkiaControl.Arrange(SKRect, float, float, float)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ArrangeCache_SkiaSharp_SKRect_System_Single_System_Single_System_Single_">SkiaControl.ArrangeCache(SKRect, float, float, float)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_MeasureChild_DrawnUi_Draw_SkiaControl_System_Double_System_Double_System_Single_">SkiaControl.MeasureChild(SkiaControl, double, double, float)</a>
@@ -2398,6 +2414,12 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RescaleAspect_System_Single_System_Single_SkiaSharp_SKRect_DrawnUi_Draw_TransformAspect_">SkiaControl.RescaleAspect(float, float, SKRect, TransformAspect)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetWidthRequestPixelsWIthMargins_System_Single_">SkiaControl.GetWidthRequestPixelsWIthMargins(float)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetHeightRequestPixelsWIthMargins_System_Single_">SkiaControl.GetHeightRequestPixelsWIthMargins(float)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Random">SkiaControl.Random</a>
@@ -3071,6 +3093,9 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
       <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithChildren__1___0_DrawnUi_Draw_SkiaControl___">FluentExtensions.WithChildren&lt;T&gt;(T, params SkiaControl[])</a>
   </div>
   <div>
+      <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithColumnSpacing__1___0_System_Double_">FluentExtensions.WithColumnSpacing&lt;T&gt;(T, double)</a>
+  </div>
+  <div>
       <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithColumnSpan__1___0_System_Int32_">FluentExtensions.WithColumnSpan&lt;T&gt;(T, int)</a>
   </div>
   <div>
@@ -3120,6 +3145,9 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
   </div>
   <div>
       <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithRotation__1___0_System_Double_">FluentExtensions.WithRotation&lt;T&gt;(T, double)</a>
+  </div>
+  <div>
+      <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithRowSpacing__1___0_System_Double_">FluentExtensions.WithRowSpacing&lt;T&gt;(T, double)</a>
   </div>
   <div>
       <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithRowSpan__1___0_System_Int32_">FluentExtensions.WithRowSpan&lt;T&gt;(T, int)</a>
@@ -3208,36 +3236,6 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
 
 
 
-  <h2 class="section" id="constructors">Constructors
-</h2>
-
-
-  <a id="DrawnUi_Controls_SkiaDecoratedGrid__ctor_" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.#ctor*"></a>
-
-  <h3 id="DrawnUi_Controls_SkiaDecoratedGrid__ctor" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.#ctor">
-  SkiaDecoratedGrid()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L7"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SkiaDecoratedGrid()</code></pre>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
   <h2 class="section" id="fields">Fields
 </h2>
 
@@ -3245,7 +3243,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
 
   <h3 id="DrawnUi_Controls_SkiaDecoratedGrid_HorizontalGradient" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.HorizontalGradient">
   HorizontalGradient
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L12"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L8"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3275,7 +3273,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
 
   <h3 id="DrawnUi_Controls_SkiaDecoratedGrid_HorizontalLineProperty" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.HorizontalLineProperty">
   HorizontalLineProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3305,7 +3303,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
 
   <h3 id="DrawnUi_Controls_SkiaDecoratedGrid_VerticalGradient" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.VerticalGradient">
   VerticalGradient
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L25"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3335,7 +3333,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
 
   <h3 id="DrawnUi_Controls_SkiaDecoratedGrid_VerticalLineProperty" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.VerticalLineProperty">
   VerticalLineProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L54"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3370,7 +3368,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
 
   <h3 id="DrawnUi_Controls_SkiaDecoratedGrid_ContainerLines" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.ContainerLines">
   ContainerLines
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L79"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3401,7 +3399,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
 
   <h3 id="DrawnUi_Controls_SkiaDecoratedGrid_HorizontalLine" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.HorizontalLine">
   HorizontalLine
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L47"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3432,7 +3430,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
 
   <h3 id="DrawnUi_Controls_SkiaDecoratedGrid_VerticalLine" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.VerticalLine">
   VerticalLine
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L58"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3467,7 +3465,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
 
   <h3 id="DrawnUi_Controls_SkiaDecoratedGrid_CreateLines" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.CreateLines">
   CreateLines()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L103"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L97"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3493,7 +3491,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
 
   <h3 id="DrawnUi_Controls_SkiaDecoratedGrid_Draw_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.Draw(DrawnUi.Draw.DrawingContext)">
   Draw(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L196"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L192"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3524,7 +3522,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
 
   <h3 id="DrawnUi_Controls_SkiaDecoratedGrid_Invalidate" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.Invalidate">
   Invalidate()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L69"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L64"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base calls InvalidateInternal and InvalidateParent</p>
@@ -3551,7 +3549,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
 
   <h3 id="DrawnUi_Controls_SkiaDecoratedGrid_OnDisposing" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.OnDisposing">
   OnDisposing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L93"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L87"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base performs some cleanup actions with Superview</p>
@@ -3578,7 +3576,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
 
   <h3 id="DrawnUi_Controls_SkiaDecoratedGrid_OnLayoutChanged" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.OnLayoutChanged">
   OnLayoutChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L179"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L175"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>DrawingRect size changed</p>
@@ -3605,7 +3603,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
 
   <h3 id="DrawnUi_Controls_SkiaDecoratedGrid_PostArrange_SkiaSharp_SKRect_System_Single_System_Single_System_Single_" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.PostArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)">
   PostArrange(SKRect, float, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L186"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L182"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3642,7 +3640,7 @@ Class SkiaDecoratedGrid  <a class="header-action link-secondary" title="View sou
 
   <h3 id="DrawnUi_Controls_SkiaDecoratedGrid_UpdateLines" data-uid="DrawnUi.Controls.SkiaDecoratedGrid.UpdateLines">
   UpdateLines()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs/#L81"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

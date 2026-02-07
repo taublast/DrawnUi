@@ -30,6 +30,7 @@ items:
   - DrawnUi.Draw.Super.InitialWindowSize
   - DrawnUi.Draw.Super.Initialized
   - DrawnUi.Draw.Super.InsetsChanged
+  - DrawnUi.Draw.Super.IsPrerenderingEnabled
   - DrawnUi.Draw.Super.IsRtl
   - DrawnUi.Draw.Super.Log(Microsoft.Extensions.Logging.LogLevel,System.String,System.String)
   - DrawnUi.Draw.Super.Log(System.Exception,System.String)
@@ -665,6 +666,40 @@ items:
     return:
       type: System.Boolean
     content.vb: Public Shared CanUseHardwareAcceleration As Boolean
+- uid: DrawnUi.Draw.Super.IsPrerenderingEnabled
+  commentId: F:DrawnUi.Draw.Super.IsPrerenderingEnabled
+  id: IsPrerenderingEnabled
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: IsPrerenderingEnabled
+  nameWithType: Super.IsPrerenderingEnabled
+  fullName: DrawnUi.Draw.Super.IsPrerenderingEnabled
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsPrerenderingEnabled
+    path: ../src/Shared/Super.cs
+    startLine: 60
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    When using accelerated rendering, enables CPU pre-rendering to show content immediately while GPU initializes.
+
+    Set to false to skip software pre-render (saves memory but may show blank frame during GPU init).
+
+    Default is true.
+  example: []
+  syntax:
+    content: public static bool IsPrerenderingEnabled
+    return:
+      type: System.Boolean
+    content.vb: Public Shared IsPrerenderingEnabled As Boolean
 - uid: DrawnUi.Draw.Super.Log(System.Exception,System.String)
   commentId: M:DrawnUi.Draw.Super.Log(System.Exception,System.String)
   id: Log(System.Exception,System.String)
@@ -683,7 +718,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Log
     path: ../src/Shared/Super.cs
-    startLine: 60
+    startLine: 67
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -721,7 +756,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetLocale
     path: ../src/Shared/Super.cs
-    startLine: 82
+    startLine: 89
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -753,7 +788,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Initialized
     path: ../src/Shared/Super.cs
-    startLine: 90
+    startLine: 97
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -782,7 +817,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InitShared
     path: ../src/Shared/Super.cs
-    startLine: 100
+    startLine: 107
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -808,7 +843,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EnableRendering
     path: ../src/Shared/Super.cs
-    startLine: 110
+    startLine: 117
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -837,7 +872,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsRtl
     path: ../src/Shared/Super.cs
-    startLine: 125
+    startLine: 132
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -868,7 +903,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FontSubPixelRendering
     path: ../src/Shared/Super.cs
-    startLine: 142
+    startLine: 149
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -899,7 +934,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InsetsChanged
     path: ../src/Shared/Super.cs
-    startLine: 161
+    startLine: 168
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -928,7 +963,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Screen
     path: ../src/Shared/Super.cs
-    startLine: 167
+    startLine: 174
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -957,7 +992,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CapMicroSecs
     path: ../src/Shared/Super.cs
-    startLine: 180
+    startLine: 187
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -986,7 +1021,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCurrentTimeMs
     path: ../src/Shared/Super.cs
-    startLine: 182
+    startLine: 189
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1014,7 +1049,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCurrentTimeNanos
     path: ../src/Shared/Super.cs
-    startLine: 189
+    startLine: 196
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1042,7 +1077,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NavBarHeight
     path: ../src/Shared/Super.cs
-    startLine: 199
+    startLine: 206
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1073,7 +1108,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StatusBarHeight
     path: ../src/Shared/Super.cs
-    startLine: 204
+    startLine: 211
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1104,7 +1139,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NavigationBarHeight
     path: ../src/Shared/Super.cs
-    startLine: 209
+    startLine: 216
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1135,7 +1170,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BottomTabsHeight
     path: ../src/Shared/Super.cs
-    startLine: 214
+    startLine: 221
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1166,7 +1201,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxFrameLengthMs
     path: ../src/Shared/Super.cs
-    startLine: 218
+    startLine: 225
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1195,7 +1230,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnNativeAppCreated
     path: ../src/Shared/Super.cs
-    startLine: 223
+    startLine: 230
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1224,7 +1259,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnNativeAppPaused
     path: ../src/Shared/Super.cs
-    startLine: 225
+    startLine: 232
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1251,7 +1286,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnNativeAppResumed
     path: ../src/Shared/Super.cs
-    startLine: 227
+    startLine: 234
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1278,7 +1313,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnNativeAppDestroyed
     path: ../src/Shared/Super.cs
-    startLine: 229
+    startLine: 236
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1305,7 +1340,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InitialWindowSize
     path: ../src/Shared/Super.cs
-    startLine: 231
+    startLine: 238
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1332,7 +1367,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnCreated
     path: ../src/Shared/Super.cs
-    startLine: 237
+    startLine: 244
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1358,7 +1393,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnWentBackground
     path: ../src/Shared/Super.cs
-    startLine: 244
+    startLine: 251
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1384,7 +1419,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnWentForeground
     path: ../src/Shared/Super.cs
-    startLine: 250
+    startLine: 257
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1410,7 +1445,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnMauiAppCreated
     path: ../src/Shared/Super.cs
-    startLine: 260
+    startLine: 267
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1439,7 +1474,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedGlobalRefresh
     path: ../src/Shared/Super.cs
-    startLine: 266
+    startLine: 273
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1468,7 +1503,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedGlobalUpdate
     path: ../src/Shared/Super.cs
-    startLine: 272
+    startLine: 279
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1496,7 +1531,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InBackground
     path: ../src/Shared/Super.cs
-    startLine: 283
+    startLine: 290
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1525,7 +1560,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StopRenderingInBackground
     path: ../src/Shared/Super.cs
-    startLine: 323
+    startLine: 330
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1554,7 +1589,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RunOnMainThreadAndWait
     path: ../src/Shared/Super.cs
-    startLine: 346
+    startLine: 353
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1585,7 +1620,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RunOnMainThreadAndWaitAsync
     path: ../src/Shared/Super.cs
-    startLine: 370
+    startLine: 377
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1621,7 +1656,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CacheEnabled
     path: ../src/Shared/Super.cs
-    startLine: 408
+    startLine: 415
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1650,7 +1685,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GpuCacheEnabled
     path: ../src/Shared/Super.cs
-    startLine: 410
+    startLine: 417
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1679,7 +1714,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UserAgent
     path: ../src/Shared/Super.cs
-    startLine: 412
+    startLine: 419
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1708,7 +1743,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaGeneration
     path: ../src/Shared/Super.cs
-    startLine: 414
+    startLine: 421
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1735,7 +1770,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EnqueueBackgroundTask
     path: ../src/Shared/Super.cs
-    startLine: 421
+    startLine: 428
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1767,7 +1802,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessBackgroundQueue
     path: ../src/Shared/Super.cs
-    startLine: 426
+    startLine: 433
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1795,7 +1830,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RotationChanged
     path: ../src/Shared/Super.cs
-    startLine: 446
+    startLine: 453
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1822,7 +1857,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DeviceRotation
     path: ../src/Shared/Super.cs
-    startLine: 451
+    startLine: 458
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1853,7 +1888,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OrientationChanged
     path: ../src/Shared/Super.cs
-    startLine: 464
+    startLine: 471
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1880,7 +1915,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DeviceOrientation
     path: ../src/Shared/Super.cs
-    startLine: 466
+    startLine: 473
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1909,7 +1944,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DeviceRotationSnap
     path: ../src/Shared/Super.cs
-    startLine: 480
+    startLine: 487
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

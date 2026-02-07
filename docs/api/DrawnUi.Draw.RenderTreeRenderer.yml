@@ -21,7 +21,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderTreeRenderer
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-    startLine: 123
+    startLine: 120
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -58,7 +58,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-    startLine: 125
+    startLine: 122
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -87,7 +87,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Helper3d
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaControlWithRect.cs
-    startLine: 130
+    startLine: 127
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

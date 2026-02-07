@@ -32,8 +32,6 @@ items:
   - DrawnUi.Draw.SkiaSlider.FindViews
   - DrawnUi.Draw.SkiaSlider.IgnoreWrongDirection
   - DrawnUi.Draw.SkiaSlider.IgnoreWrongDirectionProperty
-  - DrawnUi.Draw.SkiaSlider.Invert
-  - DrawnUi.Draw.SkiaSlider.InvertProperty
   - DrawnUi.Draw.SkiaSlider.IsPressed
   - DrawnUi.Draw.SkiaSlider.IsUserPanning
   - DrawnUi.Draw.SkiaSlider.Max
@@ -164,6 +162,8 @@ items:
   - DrawnUi.Draw.SkiaLayout.SetMeasured(System.Single,System.Single,System.Boolean,System.Boolean,System.Single)
   - DrawnUi.Draw.SkiaLayout.RecyclingTemplateProperty
   - DrawnUi.Draw.SkiaLayout.RecyclingTemplate
+  - DrawnUi.Draw.SkiaLayout.Invert
+  - DrawnUi.Draw.SkiaLayout.InvertProperty
   - DrawnUi.Draw.SkiaLayout.TemplatedHeaderProperty
   - DrawnUi.Draw.SkiaLayout.TemplatedHeader
   - DrawnUi.Draw.SkiaLayout.TemplatedFooterProperty
@@ -400,7 +400,7 @@ items:
   - DrawnUi.Draw.SkiaControl.EffectRenderers
   - DrawnUi.Draw.SkiaControl.EffectImageFilter
   - DrawnUi.Draw.SkiaControl.EffectColorFilter
-  - DrawnUi.Draw.SkiaControl.EffectPostRenderer
+  - DrawnUi.Draw.SkiaControl.EffectPostRenderers
   - DrawnUi.Draw.SkiaControl.VisualEffectsProperty
   - DrawnUi.Draw.SkiaControl.VisualEffects
   - DrawnUi.Draw.SkiaControl.DisableEffectsProperty
@@ -515,6 +515,8 @@ items:
   - DrawnUi.Draw.SkiaControl.Tapped
   - DrawnUi.Draw.SkiaControl.ConsumeGestures
   - DrawnUi.Draw.SkiaControl.OnChildTapped(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelow
   - DrawnUi.Draw.SkiaControl.UpdateLocks
@@ -692,6 +694,7 @@ items:
   - DrawnUi.Draw.SkiaControl.Layout(DrawnUi.Draw.DrawingContext,System.Single,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.Layout(DrawnUi.Draw.DrawingContext,System.Int32,System.Int32,System.Int32,System.Int32)
   - DrawnUi.Draw.SkiaControl.Arrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.PostArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureChild(DrawnUi.Draw.SkiaControl,System.Double,System.Double,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
@@ -886,6 +889,8 @@ items:
   - DrawnUi.Draw.SkiaControl.HasItemTemplate
   - DrawnUi.Draw.SkiaControl.GesturesEffect
   - DrawnUi.Draw.SkiaControl.RescaleAspect(System.Single,System.Single,SkiaSharp.SKRect,DrawnUi.Draw.TransformAspect)
+  - DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(System.Single)
+  - DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(System.Single)
   - DrawnUi.Draw.SkiaControl.Random
   - DrawnUi.Draw.SkiaControl.LastArrangedInside
   - DrawnUi.Draw.SkiaControl._arrangedViewportHeightLimit
@@ -1877,7 +1882,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessGestures
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 476
+    startLine: 475
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1912,7 +1917,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ClickOnTrailEnabledProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 702
+    startLine: 696
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1939,7 +1944,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ClickOnTrailEnabled
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 706
+    startLine: 700
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1968,7 +1973,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EnableRangeProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 712
+    startLine: 706
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1995,7 +2000,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EnableRange
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 715
+    startLine: 709
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2024,7 +2029,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RespondsToGesturesProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 721
+    startLine: 715
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2051,7 +2056,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RespondsToGestures
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 730
+    startLine: 724
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2082,7 +2087,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SliderHeightProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 736
+    startLine: 730
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2109,7 +2114,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SliderHeight
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 739
+    startLine: 733
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2138,7 +2143,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MinProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 745
+    startLine: 739
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2165,7 +2170,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Min
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 748
+    startLine: 742
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2194,7 +2199,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 754
+    startLine: 748
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2221,7 +2226,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Max
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 757
+    startLine: 751
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2250,7 +2255,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StartProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 763
+    startLine: 757
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2277,7 +2282,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 771
+    startLine: 765
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2308,7 +2313,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EndProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 803
+    startLine: 797
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2335,7 +2340,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: End
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 815
+    startLine: 809
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2366,7 +2371,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StartThumbXProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 829
+    startLine: 823
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2393,7 +2398,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StartThumbX
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 832
+    startLine: 826
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2422,7 +2427,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EndThumbXProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 838
+    startLine: 832
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2449,7 +2454,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EndThumbX
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 841
+    startLine: 835
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2478,7 +2483,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StepProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 847
+    startLine: 841
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2505,7 +2510,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Step
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 850
+    startLine: 844
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2534,7 +2539,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RangeMinProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 856
+    startLine: 850
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2561,7 +2566,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RangeMin
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 859
+    startLine: 853
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2590,7 +2595,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ValueStringFormatProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 865
+    startLine: 859
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2617,7 +2622,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ValueStringFormat
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 869
+    startLine: 863
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2646,7 +2651,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MinMaxStringFormatProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 875
+    startLine: 869
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2673,7 +2678,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MinMaxStringFormat
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 879
+    startLine: 873
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2702,7 +2707,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AvailableWidthAdjustmentProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 885
+    startLine: 879
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2729,7 +2734,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AvailableWidthAdjustment
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 891
+    startLine: 885
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2760,7 +2765,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OrientationProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 897
+    startLine: 891
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2787,7 +2792,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Orientation
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 905
+    startLine: 899
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2818,7 +2823,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IgnoreWrongDirectionProperty
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 911
+    startLine: 905
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2827,62 +2832,6 @@ items:
     return:
       type: Microsoft.Maui.Controls.BindableProperty
     content.vb: Public Shared ReadOnly IgnoreWrongDirectionProperty As BindableProperty
-- uid: DrawnUi.Draw.SkiaSlider.Invert
-  commentId: P:DrawnUi.Draw.SkiaSlider.Invert
-  id: Invert
-  parent: DrawnUi.Draw.SkiaSlider
-  langs:
-  - csharp
-  - vb
-  name: Invert
-  nameWithType: SkiaSlider.Invert
-  fullName: DrawnUi.Draw.SkiaSlider.Invert
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: Invert
-    path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 917
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public bool Invert { get; set; }
-    parameters: []
-    return:
-      type: System.Boolean
-    content.vb: Public Property Invert As Boolean
-  overload: DrawnUi.Draw.SkiaSlider.Invert*
-- uid: DrawnUi.Draw.SkiaSlider.InvertProperty
-  commentId: F:DrawnUi.Draw.SkiaSlider.InvertProperty
-  id: InvertProperty
-  parent: DrawnUi.Draw.SkiaSlider
-  langs:
-  - csharp
-  - vb
-  name: InvertProperty
-  nameWithType: SkiaSlider.InvertProperty
-  fullName: DrawnUi.Draw.SkiaSlider.InvertProperty
-  type: Field
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: InvertProperty
-    path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 923
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public static readonly BindableProperty InvertProperty
-    return:
-      type: Microsoft.Maui.Controls.BindableProperty
-    content.vb: Public Shared ReadOnly InvertProperty As BindableProperty
 - uid: DrawnUi.Draw.SkiaSlider.IgnoreWrongDirection
   commentId: P:DrawnUi.Draw.SkiaSlider.IgnoreWrongDirection
   id: IgnoreWrongDirection
@@ -2901,7 +2850,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IgnoreWrongDirection
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 932
+    startLine: 914
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2932,7 +2881,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPropertyChanged
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 942
+    startLine: 924
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2968,7 +2917,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnEndChanged
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 1005
+    startLine: 987
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2994,7 +2943,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnStartChanged
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 1010
+    startLine: 992
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3020,7 +2969,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 1015
+    startLine: 997
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3049,7 +2998,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StartChanged
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 1023
+    startLine: 1005
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3076,7 +3025,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EndChanged
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 1024
+    startLine: 1006
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3103,7 +3052,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AdjustToStepValue
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 1026
+    startLine: 1008
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3141,7 +3090,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RecalculateValues
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 1035
+    startLine: 1017
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3167,7 +3116,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MoveEndThumbHere
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 1051
+    startLine: 1033
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3199,7 +3148,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MoveStartThumbHere
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 1065
+    startLine: 1047
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3231,7 +3180,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsPressed
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 1164
+    startLine: 1146
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3260,7 +3209,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ConvertOffsetsToValues
     path: ../src/Maui/DrawnUi/Controls/Slider/SkiaSlider.cs
-    startLine: 1269
+    startLine: 1251
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4591,6 +4540,20 @@ references:
   name: RecyclingTemplate
   nameWithType: SkiaLayout.RecyclingTemplate
   fullName: DrawnUi.Draw.SkiaLayout.RecyclingTemplate
+- uid: DrawnUi.Draw.SkiaLayout.Invert
+  commentId: P:DrawnUi.Draw.SkiaLayout.Invert
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_Invert
+  name: Invert
+  nameWithType: SkiaLayout.Invert
+  fullName: DrawnUi.Draw.SkiaLayout.Invert
+- uid: DrawnUi.Draw.SkiaLayout.InvertProperty
+  commentId: F:DrawnUi.Draw.SkiaLayout.InvertProperty
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_InvertProperty
+  name: InvertProperty
+  nameWithType: SkiaLayout.InvertProperty
+  fullName: DrawnUi.Draw.SkiaLayout.InvertProperty
 - uid: DrawnUi.Draw.SkiaLayout.TemplatedHeaderProperty
   commentId: F:DrawnUi.Draw.SkiaLayout.TemplatedHeaderProperty
   parent: DrawnUi.Draw.SkiaLayout
@@ -9402,13 +9365,13 @@ references:
   name: EffectColorFilter
   nameWithType: SkiaControl.EffectColorFilter
   fullName: DrawnUi.Draw.SkiaControl.EffectColorFilter
-- uid: DrawnUi.Draw.SkiaControl.EffectPostRenderer
-  commentId: F:DrawnUi.Draw.SkiaControl.EffectPostRenderer
+- uid: DrawnUi.Draw.SkiaControl.EffectPostRenderers
+  commentId: F:DrawnUi.Draw.SkiaControl.EffectPostRenderers
   parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_EffectPostRenderer
-  name: EffectPostRenderer
-  nameWithType: SkiaControl.EffectPostRenderer
-  fullName: DrawnUi.Draw.SkiaControl.EffectPostRenderer
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_EffectPostRenderers
+  name: EffectPostRenderers
+  nameWithType: SkiaControl.EffectPostRenderers
+  fullName: DrawnUi.Draw.SkiaControl.EffectPostRenderers
 - uid: DrawnUi.Draw.SkiaControl.VisualEffectsProperty
   commentId: F:DrawnUi.Draw.SkiaControl.VisualEffectsProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -12454,6 +12417,96 @@ references:
     name: GestureEventProcessingInfo
     href: DrawnUi.Draw.GestureEventProcessingInfo.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetGesturePositionInsideChild_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  name: GetGesturePositionInsideChild(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)
+  nameWithType: SkiaControl.GetGesturePositionInsideChild(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: GetGesturePositionInsideChild
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetGesturePositionInsideChild_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: GetGesturePositionInsideChild
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetGesturePositionInsideChild_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckChildGestureHit_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  name: CheckChildGestureHit(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)
+  nameWithType: SkiaControl.CheckChildGestureHit(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: CheckChildGestureHit
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckChildGestureHit_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: CheckChildGestureHit
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckChildGestureHit_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   commentId: F:DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -15188,6 +15241,73 @@ references:
   - uid: DrawnUi.Draw.SkiaControl.Arrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
     name: Arrange
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Arrange_SkiaSharp_SKRect_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ArrangeCache_SkiaSharp_SKRect_System_Single_System_Single_System_Single_
+  name: ArrangeCache(SKRect, float, float, float)
+  nameWithType: SkiaControl.ArrangeCache(SKRect, float, float, float)
+  fullName: DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect, float, float, float)
+  nameWithType.vb: SkiaControl.ArrangeCache(SKRect, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect, Single, Single, Single)
+  name.vb: ArrangeCache(SKRect, Single, Single, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+    name: ArrangeCache
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ArrangeCache_SkiaSharp_SKRect_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+    name: ArrangeCache
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ArrangeCache_SkiaSharp_SKRect_System_Single_System_Single_System_Single_
   - name: (
   - uid: SkiaSharp.SKRect
     name: SKRect
@@ -19907,6 +20027,68 @@ references:
   - uid: DrawnUi.Draw.TransformAspect
     name: TransformAspect
     href: DrawnUi.Draw.TransformAspect.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetWidthRequestPixelsWIthMargins_System_Single_
+  name: GetWidthRequestPixelsWIthMargins(float)
+  nameWithType: SkiaControl.GetWidthRequestPixelsWIthMargins(float)
+  fullName: DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(float)
+  nameWithType.vb: SkiaControl.GetWidthRequestPixelsWIthMargins(Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(Single)
+  name.vb: GetWidthRequestPixelsWIthMargins(Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(System.Single)
+    name: GetWidthRequestPixelsWIthMargins
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetWidthRequestPixelsWIthMargins_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(System.Single)
+    name: GetWidthRequestPixelsWIthMargins
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetWidthRequestPixelsWIthMargins_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetHeightRequestPixelsWIthMargins_System_Single_
+  name: GetHeightRequestPixelsWIthMargins(float)
+  nameWithType: SkiaControl.GetHeightRequestPixelsWIthMargins(float)
+  fullName: DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(float)
+  nameWithType.vb: SkiaControl.GetHeightRequestPixelsWIthMargins(Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(Single)
+  name.vb: GetHeightRequestPixelsWIthMargins(Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(System.Single)
+    name: GetHeightRequestPixelsWIthMargins
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetHeightRequestPixelsWIthMargins_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(System.Single)
+    name: GetHeightRequestPixelsWIthMargins
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetHeightRequestPixelsWIthMargins_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.Random
   commentId: F:DrawnUi.Draw.SkiaControl.Random
@@ -34810,12 +34992,6 @@ references:
   name: OrientationType
   nameWithType: OrientationType
   fullName: DrawnUi.Draw.OrientationType
-- uid: DrawnUi.Draw.SkiaSlider.Invert*
-  commentId: Overload:DrawnUi.Draw.SkiaSlider.Invert
-  href: DrawnUi.Draw.SkiaSlider.html#DrawnUi_Draw_SkiaSlider_Invert
-  name: Invert
-  nameWithType: SkiaSlider.Invert
-  fullName: DrawnUi.Draw.SkiaSlider.Invert
 - uid: DrawnUi.Draw.SkiaSlider.IgnoreWrongDirection*
   commentId: Overload:DrawnUi.Draw.SkiaSlider.IgnoreWrongDirection
   href: DrawnUi.Draw.SkiaSlider.html#DrawnUi_Draw_SkiaSlider_IgnoreWrongDirection

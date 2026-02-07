@@ -386,7 +386,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CountReloads
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
-    startLine: 41
+    startLine: 39
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -415,7 +415,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReloadUi
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
-    startLine: 47
+    startLine: 45
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -450,7 +450,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Build
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
-    startLine: 59
+    startLine: 57
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -478,7 +478,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
-    startLine: 64
+    startLine: 62
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -508,7 +508,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
-    startLine: 70
+    startLine: 68
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -537,7 +537,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Views/BasePageReloadable.cs
-    startLine: 72
+    startLine: 70
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views

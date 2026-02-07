@@ -5,7 +5,6 @@ items:
   id: SkiaDecoratedGrid
   parent: DrawnUi.Controls
   children:
-  - DrawnUi.Controls.SkiaDecoratedGrid.#ctor
   - DrawnUi.Controls.SkiaDecoratedGrid.ContainerLines
   - DrawnUi.Controls.SkiaDecoratedGrid.CreateLines
   - DrawnUi.Controls.SkiaDecoratedGrid.Draw(DrawnUi.Draw.DrawingContext)
@@ -39,8 +38,8 @@ items:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
   syntax:
-    content: 'public class SkiaDecoratedGrid : SkiaLayout, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList<IView>, ICollection<IView>, IEnumerable<IView>, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable'
-    content.vb: Public Class SkiaDecoratedGrid Inherits SkiaLayout Implements INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList(Of IView), ICollection(Of IView), IEnumerable(Of IView), IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable
+    content: 'public class SkiaDecoratedGrid : SkiaGrid, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList<IView>, ICollection<IView>, IEnumerable<IView>, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable'
+    content.vb: Public Class SkiaDecoratedGrid Inherits SkiaGrid Implements INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList(Of IView), ICollection(Of IView), IEnumerable(Of IView), IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaDisposable, ISkiaGridLayout, ISkiaLayout, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ILayoutInsideViewport, IInsideViewport, IVisibilityAware, IDisposable
   inheritance:
   - System.Object
   - Microsoft.Maui.Controls.BindableObject
@@ -50,6 +49,7 @@ items:
   - Microsoft.Maui.Controls.VisualElement
   - DrawnUi.Draw.SkiaControl
   - DrawnUi.Draw.SkiaLayout
+  - DrawnUi.Draw.SkiaGrid
   implements:
   - System.ComponentModel.INotifyPropertyChanged
   - Microsoft.Maui.Controls.IEffectControlProvider
@@ -105,6 +105,8 @@ items:
   - DrawnUi.Draw.SkiaLayout.SetMeasured(System.Single,System.Single,System.Boolean,System.Boolean,System.Single)
   - DrawnUi.Draw.SkiaLayout.RecyclingTemplateProperty
   - DrawnUi.Draw.SkiaLayout.RecyclingTemplate
+  - DrawnUi.Draw.SkiaLayout.Invert
+  - DrawnUi.Draw.SkiaLayout.InvertProperty
   - DrawnUi.Draw.SkiaLayout.TemplatedHeaderProperty
   - DrawnUi.Draw.SkiaLayout.TemplatedHeader
   - DrawnUi.Draw.SkiaLayout.TemplatedFooterProperty
@@ -340,7 +342,7 @@ items:
   - DrawnUi.Draw.SkiaControl.EffectRenderers
   - DrawnUi.Draw.SkiaControl.EffectImageFilter
   - DrawnUi.Draw.SkiaControl.EffectColorFilter
-  - DrawnUi.Draw.SkiaControl.EffectPostRenderer
+  - DrawnUi.Draw.SkiaControl.EffectPostRenderers
   - DrawnUi.Draw.SkiaControl.VisualEffectsProperty
   - DrawnUi.Draw.SkiaControl.VisualEffects
   - DrawnUi.Draw.SkiaControl.DisableEffectsProperty
@@ -456,6 +458,8 @@ items:
   - DrawnUi.Draw.SkiaControl.Tapped
   - DrawnUi.Draw.SkiaControl.ConsumeGestures
   - DrawnUi.Draw.SkiaControl.OnChildTapped(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelow
@@ -634,6 +638,7 @@ items:
   - DrawnUi.Draw.SkiaControl.Layout(DrawnUi.Draw.DrawingContext,System.Single,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.Layout(DrawnUi.Draw.DrawingContext,System.Int32,System.Int32,System.Int32,System.Int32)
   - DrawnUi.Draw.SkiaControl.Arrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureChild(DrawnUi.Draw.SkiaControl,System.Double,System.Double,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureContentCore(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
@@ -827,6 +832,8 @@ items:
   - DrawnUi.Draw.SkiaControl.HasItemTemplate
   - DrawnUi.Draw.SkiaControl.GesturesEffect
   - DrawnUi.Draw.SkiaControl.RescaleAspect(System.Single,System.Single,SkiaSharp.SKRect,DrawnUi.Draw.TransformAspect)
+  - DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(System.Single)
+  - DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(System.Single)
   - DrawnUi.Draw.SkiaControl.Random
   - DrawnUi.Draw.SkiaControl.LastArrangedInside
   - DrawnUi.Draw.SkiaControl._arrangedViewportHeightLimit
@@ -1050,6 +1057,7 @@ items:
   - DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithBackgroundColor``1(Microsoft.Maui.Graphics.Color)
   - DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithCache``1(DrawnUi.Draw.SkiaCacheType)
   - DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithChildren``1(DrawnUi.Draw.SkiaControl[])
+  - DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithColumnSpacing``1(System.Double)
   - DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithColumnSpan``1(System.Int32)
   - DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithColumn``1(System.Int32)
   - DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithEnabled``1(System.Boolean)
@@ -1067,6 +1075,7 @@ items:
   - DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithPadding``1(System.Double,System.Double,System.Double,System.Double)
   - DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithParent``1(DrawnUi.Draw.IDrawnBase)
   - DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithRotation``1(System.Double)
+  - DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithRowSpacing``1(System.Double)
   - DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithRowSpan``1(System.Int32)
   - DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithRow``1(System.Int32)
   - DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithScale``1(System.Double)
@@ -1094,35 +1103,6 @@ items:
   - Microsoft.Maui.Controls.VisualElement.DrawnUi.Draw.StaticResourcesExtensions.GetAllWithMyselfParents
   - Microsoft.Maui.IView.DrawnUi.Extensions.InternalExtensions.DisposeControlAndChildren
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
-- uid: DrawnUi.Controls.SkiaDecoratedGrid.#ctor
-  commentId: M:DrawnUi.Controls.SkiaDecoratedGrid.#ctor
-  id: '#ctor'
-  parent: DrawnUi.Controls.SkiaDecoratedGrid
-  langs:
-  - csharp
-  - vb
-  name: SkiaDecoratedGrid()
-  nameWithType: SkiaDecoratedGrid.SkiaDecoratedGrid()
-  fullName: DrawnUi.Controls.SkiaDecoratedGrid.SkiaDecoratedGrid()
-  type: Constructor
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: .ctor
-    path: ../src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-    startLine: 6
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Controls
-  syntax:
-    content: public SkiaDecoratedGrid()
-    content.vb: Public Sub New()
-  overload: DrawnUi.Controls.SkiaDecoratedGrid.#ctor*
-  nameWithType.vb: SkiaDecoratedGrid.New()
-  fullName.vb: DrawnUi.Controls.SkiaDecoratedGrid.New()
-  name.vb: New()
 - uid: DrawnUi.Controls.SkiaDecoratedGrid.HorizontalGradient
   commentId: F:DrawnUi.Controls.SkiaDecoratedGrid.HorizontalGradient
   id: HorizontalGradient
@@ -1141,7 +1121,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalGradient
     path: ../src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-    startLine: 11
+    startLine: 7
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1168,7 +1148,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalGradient
     path: ../src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-    startLine: 29
+    startLine: 24
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1195,7 +1175,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalLineProperty
     path: ../src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-    startLine: 46
+    startLine: 41
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1222,7 +1202,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalLine
     path: ../src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-    startLine: 51
+    startLine: 46
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1251,7 +1231,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalLineProperty
     path: ../src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-    startLine: 58
+    startLine: 53
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1278,7 +1258,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: VerticalLine
     path: ../src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-    startLine: 62
+    startLine: 57
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1307,7 +1287,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Invalidate
     path: ../src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-    startLine: 68
+    startLine: 63
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1336,7 +1316,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ContainerLines
     path: ../src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-    startLine: 84
+    startLine: 78
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1365,7 +1345,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateLines
     path: ../src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-    startLine: 86
+    startLine: 80
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1391,7 +1371,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-    startLine: 92
+    startLine: 86
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1420,7 +1400,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateLines
     path: ../src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-    startLine: 102
+    startLine: 96
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1446,7 +1426,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutChanged
     path: ../src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-    startLine: 178
+    startLine: 174
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1475,7 +1455,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PostArrange
     path: ../src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-    startLine: 185
+    startLine: 181
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1515,7 +1495,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Controls/Layouts/SkiaDecoratedGrid.cs
-    startLine: 195
+    startLine: 191
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1616,6 +1596,13 @@ references:
   name: SkiaLayout
   nameWithType: SkiaLayout
   fullName: DrawnUi.Draw.SkiaLayout
+- uid: DrawnUi.Draw.SkiaGrid
+  commentId: T:DrawnUi.Draw.SkiaGrid
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaGrid.html
+  name: SkiaGrid
+  nameWithType: SkiaGrid
+  fullName: DrawnUi.Draw.SkiaGrid
 - uid: System.ComponentModel.INotifyPropertyChanged
   commentId: T:System.ComponentModel.INotifyPropertyChanged
   parent: System.ComponentModel
@@ -2851,6 +2838,20 @@ references:
   name: RecyclingTemplate
   nameWithType: SkiaLayout.RecyclingTemplate
   fullName: DrawnUi.Draw.SkiaLayout.RecyclingTemplate
+- uid: DrawnUi.Draw.SkiaLayout.Invert
+  commentId: P:DrawnUi.Draw.SkiaLayout.Invert
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_Invert
+  name: Invert
+  nameWithType: SkiaLayout.Invert
+  fullName: DrawnUi.Draw.SkiaLayout.Invert
+- uid: DrawnUi.Draw.SkiaLayout.InvertProperty
+  commentId: F:DrawnUi.Draw.SkiaLayout.InvertProperty
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_InvertProperty
+  name: InvertProperty
+  nameWithType: SkiaLayout.InvertProperty
+  fullName: DrawnUi.Draw.SkiaLayout.InvertProperty
 - uid: DrawnUi.Draw.SkiaLayout.TemplatedHeaderProperty
   commentId: F:DrawnUi.Draw.SkiaLayout.TemplatedHeaderProperty
   parent: DrawnUi.Draw.SkiaLayout
@@ -7649,13 +7650,13 @@ references:
   name: EffectColorFilter
   nameWithType: SkiaControl.EffectColorFilter
   fullName: DrawnUi.Draw.SkiaControl.EffectColorFilter
-- uid: DrawnUi.Draw.SkiaControl.EffectPostRenderer
-  commentId: F:DrawnUi.Draw.SkiaControl.EffectPostRenderer
+- uid: DrawnUi.Draw.SkiaControl.EffectPostRenderers
+  commentId: F:DrawnUi.Draw.SkiaControl.EffectPostRenderers
   parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_EffectPostRenderer
-  name: EffectPostRenderer
-  nameWithType: SkiaControl.EffectPostRenderer
-  fullName: DrawnUi.Draw.SkiaControl.EffectPostRenderer
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_EffectPostRenderers
+  name: EffectPostRenderers
+  nameWithType: SkiaControl.EffectPostRenderers
+  fullName: DrawnUi.Draw.SkiaControl.EffectPostRenderers
 - uid: DrawnUi.Draw.SkiaControl.VisualEffectsProperty
   commentId: F:DrawnUi.Draw.SkiaControl.VisualEffectsProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -10720,6 +10721,96 @@ references:
     name: GestureEventProcessingInfo
     href: DrawnUi.Draw.GestureEventProcessingInfo.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetGesturePositionInsideChild_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  name: GetGesturePositionInsideChild(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)
+  nameWithType: SkiaControl.GetGesturePositionInsideChild(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: GetGesturePositionInsideChild
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetGesturePositionInsideChild_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: GetGesturePositionInsideChild
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetGesturePositionInsideChild_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckChildGestureHit_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  name: CheckChildGestureHit(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)
+  nameWithType: SkiaControl.CheckChildGestureHit(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: CheckChildGestureHit
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckChildGestureHit_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: CheckChildGestureHit
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckChildGestureHit_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   commentId: M:DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   parent: DrawnUi.Draw.SkiaControl
@@ -13489,6 +13580,73 @@ references:
   - uid: DrawnUi.Draw.SkiaControl.Arrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
     name: Arrange
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Arrange_SkiaSharp_SKRect_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ArrangeCache_SkiaSharp_SKRect_System_Single_System_Single_System_Single_
+  name: ArrangeCache(SKRect, float, float, float)
+  nameWithType: SkiaControl.ArrangeCache(SKRect, float, float, float)
+  fullName: DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect, float, float, float)
+  nameWithType.vb: SkiaControl.ArrangeCache(SKRect, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect, Single, Single, Single)
+  name.vb: ArrangeCache(SKRect, Single, Single, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+    name: ArrangeCache
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ArrangeCache_SkiaSharp_SKRect_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+    name: ArrangeCache
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ArrangeCache_SkiaSharp_SKRect_System_Single_System_Single_System_Single_
   - name: (
   - uid: SkiaSharp.SKRect
     name: SKRect
@@ -18141,6 +18299,68 @@ references:
   - uid: DrawnUi.Draw.TransformAspect
     name: TransformAspect
     href: DrawnUi.Draw.TransformAspect.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetWidthRequestPixelsWIthMargins_System_Single_
+  name: GetWidthRequestPixelsWIthMargins(float)
+  nameWithType: SkiaControl.GetWidthRequestPixelsWIthMargins(float)
+  fullName: DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(float)
+  nameWithType.vb: SkiaControl.GetWidthRequestPixelsWIthMargins(Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(Single)
+  name.vb: GetWidthRequestPixelsWIthMargins(Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(System.Single)
+    name: GetWidthRequestPixelsWIthMargins
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetWidthRequestPixelsWIthMargins_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(System.Single)
+    name: GetWidthRequestPixelsWIthMargins
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetWidthRequestPixelsWIthMargins_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetHeightRequestPixelsWIthMargins_System_Single_
+  name: GetHeightRequestPixelsWIthMargins(float)
+  nameWithType: SkiaControl.GetHeightRequestPixelsWIthMargins(float)
+  fullName: DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(float)
+  nameWithType.vb: SkiaControl.GetHeightRequestPixelsWIthMargins(Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(Single)
+  name.vb: GetHeightRequestPixelsWIthMargins(Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(System.Single)
+    name: GetHeightRequestPixelsWIthMargins
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetHeightRequestPixelsWIthMargins_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(System.Single)
+    name: GetHeightRequestPixelsWIthMargins
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetHeightRequestPixelsWIthMargins_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.Random
   commentId: F:DrawnUi.Draw.SkiaControl.Random
@@ -24832,6 +25052,59 @@ references:
   - name: (
   - name: )
   - name: )
+- uid: DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithColumnSpacing``1(System.Double)
+  commentId: M:DrawnUi.Draw.FluentExtensions.WithColumnSpacing``1(``0,System.Double)
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.WithColumnSpacing``1(``0,System.Double)
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithColumnSpacing__1___0_System_Double_
+  name: WithColumnSpacing<SkiaDecoratedGrid>(SkiaDecoratedGrid, double)
+  nameWithType: FluentExtensions.WithColumnSpacing<SkiaDecoratedGrid>(SkiaDecoratedGrid, double)
+  fullName: DrawnUi.Draw.FluentExtensions.WithColumnSpacing<DrawnUi.Controls.SkiaDecoratedGrid>(DrawnUi.Controls.SkiaDecoratedGrid, double)
+  nameWithType.vb: FluentExtensions.WithColumnSpacing(Of SkiaDecoratedGrid)(SkiaDecoratedGrid, Double)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WithColumnSpacing(Of DrawnUi.Controls.SkiaDecoratedGrid)(DrawnUi.Controls.SkiaDecoratedGrid, Double)
+  name.vb: WithColumnSpacing(Of SkiaDecoratedGrid)(SkiaDecoratedGrid, Double)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WithColumnSpacing``1(DrawnUi.Controls.SkiaDecoratedGrid,System.Double)
+    name: WithColumnSpacing
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithColumnSpacing__1___0_System_Double_
+  - name: <
+  - uid: DrawnUi.Controls.SkiaDecoratedGrid
+    name: SkiaDecoratedGrid
+    href: DrawnUi.Controls.SkiaDecoratedGrid.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Controls.SkiaDecoratedGrid
+    name: SkiaDecoratedGrid
+    href: DrawnUi.Controls.SkiaDecoratedGrid.html
+  - name: ','
+  - name: " "
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WithColumnSpacing``1(DrawnUi.Controls.SkiaDecoratedGrid,System.Double)
+    name: WithColumnSpacing
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithColumnSpacing__1___0_System_Double_
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaDecoratedGrid
+    name: SkiaDecoratedGrid
+    href: DrawnUi.Controls.SkiaDecoratedGrid.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Controls.SkiaDecoratedGrid
+    name: SkiaDecoratedGrid
+    href: DrawnUi.Controls.SkiaDecoratedGrid.html
+  - name: ','
+  - name: " "
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
 - uid: DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithColumnSpan``1(System.Int32)
   commentId: M:DrawnUi.Draw.FluentExtensions.WithColumnSpan``1(``0,System.Int32)
   parent: DrawnUi.Draw.FluentExtensions
@@ -25851,6 +26124,59 @@ references:
   - uid: DrawnUi.Draw.FluentExtensions.WithRotation``1(DrawnUi.Controls.SkiaDecoratedGrid,System.Double)
     name: WithRotation
     href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithRotation__1___0_System_Double_
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaDecoratedGrid
+    name: SkiaDecoratedGrid
+    href: DrawnUi.Controls.SkiaDecoratedGrid.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Controls.SkiaDecoratedGrid
+    name: SkiaDecoratedGrid
+    href: DrawnUi.Controls.SkiaDecoratedGrid.html
+  - name: ','
+  - name: " "
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+- uid: DrawnUi.Controls.SkiaDecoratedGrid.DrawnUi.Draw.FluentExtensions.WithRowSpacing``1(System.Double)
+  commentId: M:DrawnUi.Draw.FluentExtensions.WithRowSpacing``1(``0,System.Double)
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.WithRowSpacing``1(``0,System.Double)
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithRowSpacing__1___0_System_Double_
+  name: WithRowSpacing<SkiaDecoratedGrid>(SkiaDecoratedGrid, double)
+  nameWithType: FluentExtensions.WithRowSpacing<SkiaDecoratedGrid>(SkiaDecoratedGrid, double)
+  fullName: DrawnUi.Draw.FluentExtensions.WithRowSpacing<DrawnUi.Controls.SkiaDecoratedGrid>(DrawnUi.Controls.SkiaDecoratedGrid, double)
+  nameWithType.vb: FluentExtensions.WithRowSpacing(Of SkiaDecoratedGrid)(SkiaDecoratedGrid, Double)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WithRowSpacing(Of DrawnUi.Controls.SkiaDecoratedGrid)(DrawnUi.Controls.SkiaDecoratedGrid, Double)
+  name.vb: WithRowSpacing(Of SkiaDecoratedGrid)(SkiaDecoratedGrid, Double)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WithRowSpacing``1(DrawnUi.Controls.SkiaDecoratedGrid,System.Double)
+    name: WithRowSpacing
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithRowSpacing__1___0_System_Double_
+  - name: <
+  - uid: DrawnUi.Controls.SkiaDecoratedGrid
+    name: SkiaDecoratedGrid
+    href: DrawnUi.Controls.SkiaDecoratedGrid.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Controls.SkiaDecoratedGrid
+    name: SkiaDecoratedGrid
+    href: DrawnUi.Controls.SkiaDecoratedGrid.html
+  - name: ','
+  - name: " "
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WithRowSpacing``1(DrawnUi.Controls.SkiaDecoratedGrid,System.Double)
+    name: WithRowSpacing
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithRowSpacing__1___0_System_Double_
   - name: (
   - name: Of
   - name: " "
@@ -30384,6 +30710,50 @@ references:
   - name: (
   - name: )
   - name: )
+- uid: DrawnUi.Draw.FluentExtensions.WithColumnSpacing``1(``0,System.Double)
+  commentId: M:DrawnUi.Draw.FluentExtensions.WithColumnSpacing``1(``0,System.Double)
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithColumnSpacing__1___0_System_Double_
+  name: WithColumnSpacing<T>(T, double)
+  nameWithType: FluentExtensions.WithColumnSpacing<T>(T, double)
+  fullName: DrawnUi.Draw.FluentExtensions.WithColumnSpacing<T>(T, double)
+  nameWithType.vb: FluentExtensions.WithColumnSpacing(Of T)(T, Double)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WithColumnSpacing(Of T)(T, Double)
+  name.vb: WithColumnSpacing(Of T)(T, Double)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WithColumnSpacing``1(``0,System.Double)
+    name: WithColumnSpacing
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithColumnSpacing__1___0_System_Double_
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WithColumnSpacing``1(``0,System.Double)
+    name: WithColumnSpacing
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithColumnSpacing__1___0_System_Double_
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
 - uid: DrawnUi.Draw.FluentExtensions.WithColumnSpan``1(``0,System.Int32)
   commentId: M:DrawnUi.Draw.FluentExtensions.WithColumnSpan``1(``0,System.Int32)
   isExternal: true
@@ -31249,6 +31619,50 @@ references:
   - uid: DrawnUi.Draw.FluentExtensions.WithRotation``1(``0,System.Double)
     name: WithRotation
     href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithRotation__1___0_System_Double_
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions.WithRowSpacing``1(``0,System.Double)
+  commentId: M:DrawnUi.Draw.FluentExtensions.WithRowSpacing``1(``0,System.Double)
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithRowSpacing__1___0_System_Double_
+  name: WithRowSpacing<T>(T, double)
+  nameWithType: FluentExtensions.WithRowSpacing<T>(T, double)
+  fullName: DrawnUi.Draw.FluentExtensions.WithRowSpacing<T>(T, double)
+  nameWithType.vb: FluentExtensions.WithRowSpacing(Of T)(T, Double)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.WithRowSpacing(Of T)(T, Double)
+  name.vb: WithRowSpacing(Of T)(T, Double)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.WithRowSpacing``1(``0,System.Double)
+    name: WithRowSpacing
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithRowSpacing__1___0_System_Double_
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.WithRowSpacing``1(``0,System.Double)
+    name: WithRowSpacing
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_WithRowSpacing__1___0_System_Double_
   - name: (
   - name: Of
   - name: " "
@@ -32655,15 +33069,6 @@ references:
   - uid: DrawnUi.Extensions
     name: Extensions
     href: DrawnUi.Extensions.html
-- uid: DrawnUi.Controls.SkiaDecoratedGrid.#ctor*
-  commentId: Overload:DrawnUi.Controls.SkiaDecoratedGrid.#ctor
-  href: DrawnUi.Controls.SkiaDecoratedGrid.html#DrawnUi_Controls_SkiaDecoratedGrid__ctor
-  name: SkiaDecoratedGrid
-  nameWithType: SkiaDecoratedGrid.SkiaDecoratedGrid
-  fullName: DrawnUi.Controls.SkiaDecoratedGrid.SkiaDecoratedGrid
-  nameWithType.vb: SkiaDecoratedGrid.New
-  fullName.vb: DrawnUi.Controls.SkiaDecoratedGrid.New
-  name.vb: New
 - uid: DrawnUi.Draw.SkiaGradient
   commentId: T:DrawnUi.Draw.SkiaGradient
   parent: DrawnUi.Draw

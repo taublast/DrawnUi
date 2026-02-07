@@ -383,6 +383,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Controls.SkiaDecoratedColumn.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Controls.SkiaDecoratedColumn.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Controls.SkiaDecoratedColumn",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Controls.SkiaDecoratedColumn.yml\" sourcestartlinenumber=\"1\">A decorated Column layout that draws separator lines between rows and columns.\nUnlike SkiaDecoratedGrid, this is row-aware - vertical separators are only drawn\nwhere a specific row has multiple columns (supports DynamicColumns behavior).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Controls.SkiaDecoratedGrid.yml",
       "output": {
         ".html": {
@@ -6544,6 +6558,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/advanced/gesture-system-architecture.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/advanced/gesture-system-architecture.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/advanced/gestures.md",
       "output": {
         ".html": {
@@ -6858,6 +6882,16 @@
       "output": {
         ".html": {
           "relative_path": "articles/interactive-cards.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/layouts.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/layouts.html"
         }
       },
       "version": ""

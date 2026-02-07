@@ -242,6 +242,12 @@ Provides common functionality for value ranges, track management, and platform s
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_RecyclingTemplate">SkiaLayout.RecyclingTemplate</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_Invert">SkiaLayout.Invert</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_InvertProperty">SkiaLayout.InvertProperty</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_TemplatedHeaderProperty">SkiaLayout.TemplatedHeaderProperty</a>
     </div>
     <div>
@@ -947,7 +953,7 @@ Provides common functionality for value ranges, track management, and platform s
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_EffectColorFilter">SkiaControl.EffectColorFilter</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_EffectPostRenderer">SkiaControl.EffectPostRenderer</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_EffectPostRenderers">SkiaControl.EffectPostRenderers</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_VisualEffectsProperty">SkiaControl.VisualEffectsProperty</a>
@@ -1293,6 +1299,12 @@ Provides common functionality for value ranges, track management, and platform s
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnChildTapped_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_">SkiaControl.OnChildTapped(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetGesturePositionInsideChild_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_">SkiaControl.GetGesturePositionInsideChild(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckChildGestureHit_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_">SkiaControl.CheckChildGestureHit(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ProcessGestures_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_">SkiaControl.ProcessGestures(SkiaGesturesParameters, GestureEventProcessingInfo)</a>
@@ -1827,6 +1839,9 @@ Provides common functionality for value ranges, track management, and platform s
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Arrange_SkiaSharp_SKRect_System_Single_System_Single_System_Single_">SkiaControl.Arrange(SKRect, float, float, float)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ArrangeCache_SkiaSharp_SKRect_System_Single_System_Single_System_Single_">SkiaControl.ArrangeCache(SKRect, float, float, float)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_PostArrange_SkiaSharp_SKRect_System_Single_System_Single_System_Single_">SkiaControl.PostArrange(SKRect, float, float, float)</a>
@@ -2409,6 +2424,12 @@ Provides common functionality for value ranges, track management, and platform s
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RescaleAspect_System_Single_System_Single_SkiaSharp_SKRect_DrawnUi_Draw_TransformAspect_">SkiaControl.RescaleAspect(float, float, SKRect, TransformAspect)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetWidthRequestPixelsWIthMargins_System_Single_">SkiaControl.GetWidthRequestPixelsWIthMargins(float)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetHeightRequestPixelsWIthMargins_System_Single_">SkiaControl.GetHeightRequestPixelsWIthMargins(float)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Random">SkiaControl.Random</a>
@@ -3224,36 +3245,6 @@ Provides common functionality for value ranges, track management, and platform s
 
 
 
-  <h3 id="DrawnUi_Draw_SkiaRangeBase_InvertProperty" data-uid="DrawnUi.Draw.SkiaRangeBase.InvertProperty">
-  InvertProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L109"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly BindableProperty InvertProperty</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty">BindableProperty</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
   <h3 id="DrawnUi_Draw_SkiaRangeBase_MaxProperty" data-uid="DrawnUi.Draw.SkiaRangeBase.MaxProperty">
   MaxProperty
   <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L40"><i class="bi bi-code-slash"></i></a>
@@ -3557,37 +3548,6 @@ Provides common functionality for value ranges, track management, and platform s
 </h2>
 
 
-  <a id="DrawnUi_Draw_SkiaRangeBase_Invert_" data-uid="DrawnUi.Draw.SkiaRangeBase.Invert*"></a>
-
-  <h3 id="DrawnUi_Draw_SkiaRangeBase_Invert" data-uid="DrawnUi.Draw.SkiaRangeBase.Invert">
-  Invert
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L112"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool Invert { get; set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
   <a id="DrawnUi_Draw_SkiaRangeBase_Max_" data-uid="DrawnUi.Draw.SkiaRangeBase.Max*"></a>
 
   <h3 id="DrawnUi_Draw_SkiaRangeBase_Max" data-uid="DrawnUi.Draw.SkiaRangeBase.Max">
@@ -3817,7 +3777,7 @@ Provides common functionality for value ranges, track management, and platform s
 
   <h3 id="DrawnUi_Draw_SkiaRangeBase_AdjustToStepValue_System_Double_System_Double_System_Double_" data-uid="DrawnUi.Draw.SkiaRangeBase.AdjustToStepValue(System.Double,System.Double,System.Double)">
   AdjustToStepValue(double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L122"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L113"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3857,7 +3817,7 @@ Provides common functionality for value ranges, track management, and platform s
 
   <h3 id="DrawnUi_Draw_SkiaRangeBase_FindViews" data-uid="DrawnUi.Draw.SkiaRangeBase.FindViews">
   FindViews()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L226"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L217"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Override to find and assign Track and ProgressTrail references</p>
@@ -3884,7 +3844,7 @@ Provides common functionality for value ranges, track management, and platform s
 
   <h3 id="DrawnUi_Draw_SkiaRangeBase_OnChildrenChanged" data-uid="DrawnUi.Draw.SkiaRangeBase.OnChildrenChanged">
   OnChildrenChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L237"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L228"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Happens when child was added or removed, will call Invalidate() in base</p>
@@ -3911,7 +3871,7 @@ Provides common functionality for value ranges, track management, and platform s
 
   <h3 id="DrawnUi_Draw_SkiaRangeBase_OnDisposing" data-uid="DrawnUi.Draw.SkiaRangeBase.OnDisposing">
   OnDisposing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L174"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L165"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base performs some cleanup actions with Superview</p>
@@ -3938,7 +3898,7 @@ Provides common functionality for value ranges, track management, and platform s
 
   <h3 id="DrawnUi_Draw_SkiaRangeBase_OnLayoutChanged" data-uid="DrawnUi.Draw.SkiaRangeBase.OnLayoutChanged">
   OnLayoutChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L243"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L234"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>DrawingRect size changed</p>
@@ -3965,7 +3925,7 @@ Provides common functionality for value ranges, track management, and platform s
 
   <h3 id="DrawnUi_Draw_SkiaRangeBase_OnPropertyChanged_System_String_" data-uid="DrawnUi.Draw.SkiaRangeBase.OnPropertyChanged(System.String)">
   OnPropertyChanged(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L205"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L196"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Method that is called when a bound property is changed.</p>
@@ -3998,7 +3958,7 @@ Provides common functionality for value ranges, track management, and platform s
 
   <h3 id="DrawnUi_Draw_SkiaRangeBase_OnValueChanged" data-uid="DrawnUi.Draw.SkiaRangeBase.OnValueChanged">
   OnValueChanged()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L169"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L160"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4024,7 +3984,7 @@ Provides common functionality for value ranges, track management, and platform s
 
   <h3 id="DrawnUi_Draw_SkiaRangeBase_PositionFromValue_System_Double_System_Double_" data-uid="DrawnUi.Draw.SkiaRangeBase.PositionFromValue(System.Double,System.Double)">
   PositionFromValue(double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L146"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L137"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4062,7 +4022,7 @@ Provides common functionality for value ranges, track management, and platform s
 
   <h3 id="DrawnUi_Draw_SkiaRangeBase_UpdateVisualState" data-uid="DrawnUi.Draw.SkiaRangeBase.UpdateVisualState">
   UpdateVisualState()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L231"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L222"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Override to update the visual appearance based on current properties</p>
@@ -4089,7 +4049,7 @@ Provides common functionality for value ranges, track management, and platform s
 
   <h3 id="DrawnUi_Draw_SkiaRangeBase_ValueFromPosition_System_Double_System_Double_" data-uid="DrawnUi.Draw.SkiaRangeBase.ValueFromPosition(System.Double,System.Double)">
   ValueFromPosition(double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L131"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L122"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4130,7 +4090,7 @@ Provides common functionality for value ranges, track management, and platform s
 
   <h3 id="DrawnUi_Draw_SkiaRangeBase_ValueChanged" data-uid="DrawnUi.Draw.SkiaRangeBase.ValueChanged">
   ValueChanged
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L167"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Controls/Progress/SkiaRangeBase.cs/#L158"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

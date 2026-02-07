@@ -258,6 +258,57 @@
 </tr>
 </tbody>
 </table>
+<h2 id="helper-methods-for-custom-gesture-logic">Helper Methods for Custom Gesture Logic</h2>
+<p>DrawnUI provides helper methods for advanced gesture processing in custom controls:</p>
+<h3 id="canvasgetgesturepositioninsidecontrol">Canvas.GetGesturePositionInsideControl</h3>
+<p>Converts a screen point (in pixels) to local coordinates within a specific control.</p>
+<pre><code class="lang-csharp">public virtual SKPoint GetGesturePositionInsideControl(SkiaControl view, SKPoint screenPointPixels)
+</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>view</code>: The target control</li>
+<li><code>screenPointPixels</code>: Touch point in screen/canvas coordinates (pixels)</li>
+</ul>
+<p><strong>Returns:</strong> Point relative to the control's local coordinate system (DIPs)</p>
+<p><strong>Use case:</strong> Convert raw touch coordinates to control-local coordinates for precise hit testing.</p>
+<h3 id="skiacontrolgetgesturepositioninsidechild">SkiaControl.GetGesturePositionInsideChild</h3>
+<p>Transforms a gesture point to the local coordinate system of a direct child control, accounting for transforms and layout state.</p>
+<pre><code class="lang-csharp">public virtual SKPoint GetGesturePositionInsideChild(SkiaControl child, SkiaGesturesParameters args, 
+    GestureEventProcessingInfo apply)
+</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>child</code>: The child control</li>
+<li><code>args</code>: Current gesture parameters</li>
+<li><code>apply</code>: Gesture processing context with current mapped location and offsets</li>
+</ul>
+<p><strong>Returns:</strong> Point in child's local coordinate system (DIPs)</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Handles render transforms automatically</li>
+<li>Accounts for scroll offsets and layout positions</li>
+<li>Uses render tree for accurate positioning when available</li>
+</ul>
+<p><strong>Use case:</strong> Get precise touch coordinates relative to a child for custom layout gesture handling.</p>
+<h3 id="skiacontrolcheckchildgesturehit">SkiaControl.CheckChildGestureHit</h3>
+<p>Determines if a gesture hit a specific child control, respecting the control's transform and layout.</p>
+<pre><code class="lang-csharp">public virtual bool CheckChildGestureHit(SkiaControl child, SkiaGesturesParameters args, 
+    GestureEventProcessingInfo apply)
+</code></pre>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>child</code>: The child control to test</li>
+<li><code>args</code>: Current gesture parameters</li>
+<li><code>apply</code>: Gesture processing context</li>
+</ul>
+<p><strong>Returns:</strong> <code>true</code> if the gesture point is inside the child's hit area</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Considers child transforms and rotation</li>
+<li>Uses render tree for accurate hitboxes when available</li>
+<li>Accounts for frozen visual layers</li>
+</ul>
+<p><strong>Use case:</strong> Implement custom hit testing logic for complex child arrangements (e.g., sliders with custom tracks).</p>
 <h2 id="advanced-gesture-patterns">Advanced Gesture Patterns</h2>
 <h3 id="multi-touch-and-pan-gestures-with-consumegestures">Multi-Touch and Pan Gestures with ConsumeGestures</h3>
 <pre><code class="lang-xml">&lt;draw:SkiaShape 
@@ -460,6 +511,31 @@ public ICommand ShowContextMenuCommand =&gt; new Command&lt;ItemModel&gt;(item =
 <li>✅ Set <code>e.Consumed = true</code> to stop gesture bubbling</li>
 <li>✅ Check gesture processing order (highest Z-index first)</li>
 </ul>
+<h2 id="advanced-custom-gesture-handling-example">Advanced Custom Gesture Handling Example</h2>
+<p>For custom controls requiring precise gesture coordinate handling:</p>
+<pre><code class="lang-csharp">public class CustomSlider : SkiaLayout
+{
+    protected override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+    {
+        // Get touch position relative to track child
+        var trackLocalPoint = GetGesturePositionInsideChild(Track, args, apply);
+        
+        // Check if gesture hit the thumb
+        if (CheckChildGestureHit(Thumb, args, apply))
+        {
+            // Handle thumb dragging
+            if (args.Type == TouchActionResult.Panning)
+            {
+                var thumbLocal = GetGesturePositionInsideChild(Thumb, args, apply);
+                UpdateThumbPosition(thumbLocal);
+                return this; // Consume gesture
+            }
+        }
+        
+        return null; // Don't consume
+    }
+}
+</code></pre>
 <h2 id="summary">Summary</h2>
 <p>DrawnUi.Maui offers multiple gesture handling approaches to fit different scenarios:</p>
 <ul>
@@ -467,6 +543,7 @@ public ICommand ShowContextMenuCommand =&gt; new Command&lt;ItemModel&gt;(item =
 <li><strong>AddGestures</strong> - Perfect for MVVM command binding</li>
 <li><strong>SkiaHotspot</strong> - Simple tap detection</li>
 <li><strong>ISkiaGestureListener</strong> - Maximum performance for custom controls</li>
+<li><strong>Helper Methods</strong> - For precise coordinate transformation in custom layouts</li>
 </ul>
 <p>Choose the approach that best fits your architecture and requirements. The ConsumeGestures event handler is recommended for most new development due to its flexibility and ease of use.</p>
 
