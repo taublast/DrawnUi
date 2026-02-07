@@ -1,9 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using DrawnUi.Extensions;
-using DrawnUi.Infrastructure.Helpers;
+﻿using DrawnUi.Infrastructure.Helpers;
 
 namespace DrawnUi.Draw
 {
@@ -2570,6 +2565,7 @@ namespace DrawnUi.Draw
             //we exit with DrawingRect assigned to new destination
 
             var zoomedScale = (float)(context.Scale * ViewportZoom);
+            var scale = context.Scale;
 
             if (!CheckIsGhost())
             {
@@ -2593,6 +2589,7 @@ namespace DrawnUi.Draw
 
                 if (needAdjustPos)
                 {
+                    //Debug.WriteLine($"[SCROLL] needAdjustPos Y {posY/scale}, {_lastContentBounds.Height} => {ContentOffsetBounds.Height})");
                     if (ResetScrollPositionOnContentSizeChanged)
                     {
                         ViewportOffsetX = 0;
@@ -2603,9 +2600,9 @@ namespace DrawnUi.Draw
                     else
                     {
                         //do not allow empty space when content became smaller than viewport
-                        var overscroll = CalculateOverscrollDistance(posX, posY);
-                        posX -= overscroll.X;
-                        posY -= overscroll.Y;
+                        var overscrollPoints = CalculateOverscrollDistance(posX/scale, posY/scale);
+                        posX -= overscrollPoints.X * scale;
+                        posY -= overscrollPoints.Y * scale;
                     }
                 }
 
@@ -2627,6 +2624,15 @@ namespace DrawnUi.Draw
         }
 
 
+        /// <summary>
+        /// Pass position in PIXELS
+        /// </summary>
+        /// <param name="destination"></param>
+        /// <param name="posX"></param>
+        /// <param name="posY"></param>
+        /// <param name="zoomedScale"></param>
+        /// <param name="scale"></param>
+        /// <param name="forceSyncOffsets"></param>
         protected virtual void SetScrollOffset(SKRect destination, float posX, float posY, float zoomedScale,
             float scale, bool forceSyncOffsets)
         {
