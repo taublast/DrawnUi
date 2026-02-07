@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <views:BasePageCodeBehind
     x:Class="Sandbox.Views.MainPageButtons"
@@ -11,50 +11,48 @@
     Title="SkiaButton Demo">
 
     <draw:Canvas
-        Gestures="Enabled"
-        RenderingMode="Accelerated"
         BackgroundColor="#f5f5f5"
+        Gestures="Enabled"
         HorizontalOptions="Fill"
+        RenderingMode="Accelerated"
         VerticalOptions="Fill">
 
-        <draw:SkiaLayout
-            HorizontalOptions="Fill"
-            VerticalOptions="Fill">
+        <draw:SkiaLayout HorizontalOptions="Fill" VerticalOptions="Fill">
 
-            <draw:SkiaScroll
-                HorizontalOptions="Fill"
-                VerticalOptions="Fill">
+            <draw:SkiaScroll HorizontalOptions="Fill" VerticalOptions="Fill">
 
                 <draw:SkiaLayout
-                    UseCache="Operations"
-                    Type="Column"
-                    Spacing="24"
                     Padding="20"
-                    HorizontalOptions="Fill">
+                    HorizontalOptions="Fill"
+                    Spacing="24"
+                    Type="Column"
+                    UseCache="Operations">
 
                     <!--  TITLE  -->
                     <draw:SkiaLabel
-                        FontSize="32"
                         FontAttributes="Bold"
+                        FontSize="32"
+                        HorizontalOptions="Center"
                         Text="SkiaButton"
-                        TextColor="#2c3e50"
-                        HorizontalOptions="Center" />
+                        TextColor="#2c3e50" />
 
-                    <draw:SkiaLayout HorizontalOptions="Fill" Type="Wrap" 
-                                     UseCache="ImageComposite"
-                                      Tag="Cached">
+                    <draw:SkiaLayout
+                        HorizontalOptions="Fill"
+                        Tag="Cached"
+                        Type="Wrap"
+                        UseCache="ImageComposite">
 
-                        <!--  SECTION: CONTROL STYLES -->
+                        <!--  SECTION: CONTROL STYLES  -->
                         <draw:SkiaLayout
-                            Tag="Control Styles"
-                            UseCache="Operations"
-                            Type="Column"
                             MinimumWidthRequest="200"
-                            Spacing="12">
+                            Spacing="12"
+                            Tag="Control Styles"
+                            Type="Column"
+                            UseCache="Operations">
 
                             <draw:SkiaLabel
-                                FontSize="20"
                                 FontAttributes="Bold"
+                                FontSize="20"
                                 Text="Platform Styles"
                                 TextColor="#34495e" />
 
@@ -65,28 +63,25 @@
 
                             <!--  Default Style  -->
                             <draw:SkiaShape
-                                Type="Rectangle"
-                                CornerRadius="12"
+                                Padding="16"
                                 BackgroundColor="White"
-                                Padding="16">
+                                CornerRadius="12"
+                                Type="Rectangle">
 
-                                <draw:SkiaLayout
-                                    Type="Column"
-                                    Spacing="8">
+                                <draw:SkiaLayout Spacing="8" Type="Column">
 
                                     <draw:SkiaLabel
-                                        FontSize="16"
                                         FontAttributes="Bold"
+                                        FontSize="16"
                                         Text="Default (Platform Auto)"
                                         TextColor="#2c3e50" />
 
                                     <draw:SkiaButton
-                                        Text="Default Button"
                                         HorizontalOptions="Start"
-                                        Tapped="OnButtonClicked" />
+                                        Tapped="OnButtonClicked"
+                                        Text="Default Button" />
 
-                                    <draw:SkiaLabel
-                                        FontSize="12">
+                                    <draw:SkiaLabel FontSize="12">
                                         <draw:TextSpan Text="• ControlStyle is Default" />
                                     </draw:SkiaLabel>
 
@@ -96,29 +91,26 @@
 
                             <!--  Material Style  -->
                             <draw:SkiaShape
-                                Type="Rectangle"
-                                CornerRadius="12"
+                                Padding="16"
                                 BackgroundColor="White"
-                                Padding="16">
+                                CornerRadius="12"
+                                Type="Rectangle">
 
-                                <draw:SkiaLayout
-                                    Type="Column"
-                                    Spacing="8">
+                                <draw:SkiaLayout Spacing="8" Type="Column">
 
                                     <draw:SkiaLabel
-                                        FontSize="16"
                                         FontAttributes="Bold"
+                                        FontSize="16"
                                         Text="Material Design (Android)"
                                         TextColor="#2c3e50" />
 
                                     <draw:SkiaButton
                                         ControlStyle="Material"
-                                        Text="Material Button"
                                         HorizontalOptions="Start"
-                                        Tapped="OnButtonClicked" />
+                                        Tapped="OnButtonClicked"
+                                        Text="Material Button" />
 
-                                    <draw:SkiaLabel
-                                        FontSize="12">
+                                    <draw:SkiaLabel FontSize="12">
                                         <draw:TextSpan Text="• Uppercase text" />
                                         <draw:TextSpan Text="&#10;" />
                                         <draw:TextSpan Text="• Corner radius: 4" />
@@ -132,30 +124,26 @@
 
                             <!--  Cupertino Style  -->
                             <draw:SkiaShape
-                                Type="Rectangle"
-                                CornerRadius="12"
+                                Padding="16"
                                 BackgroundColor="White"
-                                Padding="16">
+                                CornerRadius="12"
+                                Type="Rectangle">
 
-                                <draw:SkiaLayout
-                                    Type="Column"
-                                    Spacing="8">
+                                <draw:SkiaLayout Spacing="8" Type="Column">
 
                                     <draw:SkiaLabel
-                                        FontSize="16"
                                         FontAttributes="Bold"
+                                        FontSize="16"
                                         Text="Cupertino (iOS)"
                                         TextColor="#2c3e50" />
 
                                     <draw:SkiaButton
                                         ControlStyle="Cupertino"
-                                        Text="Cupertino Button"
                                         HorizontalOptions="Start"
-                                        Tapped="OnButtonClicked" />
+                                        Tapped="OnButtonClicked"
+                                        Text="Cupertino Button" />
 
-                                    <draw:SkiaLabel
-                                        FontSize="12"
-                                        TextColor="#95a5a6">
+                                    <draw:SkiaLabel FontSize="12" TextColor="#95a5a6">
                                         <draw:TextSpan Text="• Semibold font" />
                                         <draw:TextSpan Text="&#10;" />
                                         <draw:TextSpan Text="• Corner radius: 8" />
@@ -169,29 +157,25 @@
 
                             <!--  Windows Style  -->
                             <draw:SkiaShape
-                                Type="Rectangle"
-                                CornerRadius="12"
+                                Padding="16"
                                 BackgroundColor="White"
-                                Padding="16">
+                                CornerRadius="12"
+                                Type="Rectangle">
 
-                                <draw:SkiaLayout
-                                    Type="Column"
-                                    Spacing="8">
+                                <draw:SkiaLayout Spacing="8" Type="Column">
 
                                     <draw:SkiaLabel
-                                        FontSize="16"
                                         FontAttributes="Bold"
+                                        FontSize="16"
                                         Text="Windows (WinUI)"
                                         TextColor="#2c3e50" />
 
                                     <draw:SkiaButton
                                         ControlStyle="Windows"
-                                        Text="Windows Button"
-                                        Tapped="OnButtonClicked" />
+                                        Tapped="OnButtonClicked"
+                                        Text="Windows Button" />
 
-                                    <draw:SkiaLabel
-                                        FontSize="12"
-                                        TextColor="#95a5a6">
+                                    <draw:SkiaLabel FontSize="12" TextColor="#95a5a6">
                                         <draw:TextSpan Text="• Medium font weight" />
                                         <draw:TextSpan Text="&#10;" />
                                         <draw:TextSpan Text="• Corner radius: 4" />
@@ -207,15 +191,15 @@
 
                         <!--  SECTION: Button Style Variants  -->
                         <draw:SkiaLayout
-                            UseCache="Operations"
-                            Tag="Button Variants"
                             MinimumWidthRequest="200"
+                            Spacing="12"
+                            Tag="Button Variants"
                             Type="Column"
-                            Spacing="12">
+                            UseCache="Operations">
 
                             <draw:SkiaLabel
-                                FontSize="20"
                                 FontAttributes="Bold"
+                                FontSize="20"
                                 Text="Button Style Variants"
                                 TextColor="#34495e" />
 
@@ -225,36 +209,34 @@
                                 TextColor="#7f8c8d" />
 
                             <draw:SkiaShape
-                                Type="Rectangle"
-                                CornerRadius="12"
+                                Padding="16"
                                 BackgroundColor="White"
-                                Padding="16">
+                                CornerRadius="12"
+                                Type="Rectangle">
 
-                                <draw:SkiaLayout
-                                    Type="Column"
-                                    Spacing="8">
+                                <draw:SkiaLayout Spacing="8" Type="Column">
 
                                     <draw:SkiaButton
-                                        ButtonStyle="Contained"
-                                        Text="Contained Button"
                                         BackgroundColor="#27ae60"
-                                        WidthRequest="200"
-                                        Tapped="OnButtonClicked" />
+                                        ButtonStyle="Contained"
+                                        Tapped="OnButtonClicked"
+                                        Text="Contained Button"
+                                        WidthRequest="200" />
 
                                     <draw:SkiaButton
+                                        BackgroundColor="#3498db"
                                         ButtonStyle="Outlined"
+                                        Tapped="OnButtonClicked"
                                         Text="Outlined Button"
                                         TextColor="#3498db"
-                                        BackgroundColor="#3498db"
-                                        WidthRequest="200"
-                                        Tapped="OnButtonClicked" />
+                                        WidthRequest="200" />
 
                                     <draw:SkiaButton
                                         ButtonStyle="Text"
+                                        Tapped="OnButtonClicked"
                                         Text="Text Button"
                                         TextColor="#3498db"
-                                        WidthRequest="200"
-                                        Tapped="OnButtonClicked" />
+                                        WidthRequest="200" />
 
                                 </draw:SkiaLayout>
 
@@ -264,15 +246,15 @@
 
                         <!--  SECTION: TOUCH EFFECTS  -->
                         <draw:SkiaLayout
-                            Tag="Touch Effects"
-                            UseCache="Operations"
                             MinimumWidthRequest="200"
+                            Spacing="12"
+                            Tag="Touch Effects"
                             Type="Column"
-                            Spacing="12">
+                            UseCache="Operations">
 
                             <draw:SkiaLabel
-                                FontSize="20"
                                 FontAttributes="Bold"
+                                FontSize="20"
                                 Text="Touch Effects"
                                 TextColor="#34495e" />
 
@@ -282,38 +264,36 @@
                                 TextColor="#7f8c8d" />
 
                             <draw:SkiaShape
-                                Type="Rectangle"
-                                CornerRadius="12"
+                                Padding="16"
                                 BackgroundColor="White"
-                                Padding="16">
+                                CornerRadius="12"
+                                Type="Rectangle">
 
-                                <draw:SkiaLayout
-                                    Type="Column"
-                                    Spacing="8">
+                                <draw:SkiaLayout Spacing="8" Type="Column">
 
                                     <draw:SkiaButton
                                         ApplyEffect="Ripple"
-                                        Text="Ripple Effect"
                                         BackgroundColor="#9b59b6"
+                                        Tapped="OnButtonClicked"
+                                        Text="Ripple Effect"
                                         TouchEffectColor="#ffffff"
-                                        WidthRequest="200"
-                                        Tapped="OnButtonClicked" />
+                                        WidthRequest="200" />
 
                                     <draw:SkiaButton
                                         ApplyEffect="Shimmer"
-                                        Text="Shimmer Effect"
                                         BackgroundColor="#e67e22"
                                         ShimmerEffectColor="#ffffff"
                                         ShimmerEffectSpeed="400"
-                                        WidthRequest="200"
-                                        Tapped="OnButtonClicked" />
+                                        Tapped="OnButtonClicked"
+                                        Text="Shimmer Effect"
+                                        WidthRequest="200" />
 
                                     <draw:SkiaButton
                                         ApplyEffect="None"
-                                        Text="No Effect"
                                         BackgroundColor="#95a5a6"
-                                        WidthRequest="200"
-                                        Tapped="OnButtonClicked" />
+                                        Tapped="OnButtonClicked"
+                                        Text="No Effect"
+                                        WidthRequest="200" />
 
                                 </draw:SkiaLayout>
 
@@ -323,15 +303,15 @@
 
                         <!--  SECTION: ELEVATION  -->
                         <draw:SkiaLayout
-                            Tag="Elevation"
-                            UseCache="Operations"
                             MinimumWidthRequest="200"
+                            Spacing="12"
+                            Tag="Elevation"
                             Type="Column"
-                            Spacing="12">
+                            UseCache="Operations">
 
                             <draw:SkiaLabel
-                                FontSize="20"
                                 FontAttributes="Bold"
+                                FontSize="20"
                                 Text="Elevation (Shadows)"
                                 TextColor="#34495e" />
 
@@ -341,28 +321,26 @@
                                 TextColor="#7f8c8d" />
 
                             <draw:SkiaShape
-                                Type="Rectangle"
-                                CornerRadius="12"
+                                Padding="16"
                                 BackgroundColor="White"
-                                Padding="16">
+                                CornerRadius="12"
+                                Type="Rectangle">
 
-                                <draw:SkiaLayout
-                                    Type="Column"
-                                    Spacing="16">
+                                <draw:SkiaLayout Spacing="16" Type="Column">
 
                                     <draw:SkiaButton
-                                        ElevationEnabled="True"
-                                        Text="With Elevation"
                                         BackgroundColor="#1abc9c"
-                                        WidthRequest="200"
-                                        Tapped="OnButtonClicked" />
+                                        ElevationEnabled="True"
+                                        Tapped="OnButtonClicked"
+                                        Text="With Elevation"
+                                        WidthRequest="200" />
 
                                     <draw:SkiaButton
-                                        ElevationEnabled="False"
-                                        Text="Without Elevation"
                                         BackgroundColor="#16a085"
-                                        WidthRequest="200"
-                                        Tapped="OnButtonClicked" />
+                                        ElevationEnabled="False"
+                                        Tapped="OnButtonClicked"
+                                        Text="Without Elevation"
+                                        WidthRequest="200" />
 
                                 </draw:SkiaLayout>
 
@@ -372,15 +350,15 @@
 
                         <!--  SECTION: CUSTOM BUTTON  -->
                         <draw:SkiaLayout
-                            UseCache="Operations"
-                            Tag="Custom Button"
                             MinimumWidthRequest="200"
+                            Spacing="12"
+                            Tag="Custom Button"
                             Type="Column"
-                            Spacing="12">
+                            UseCache="Operations">
 
                             <draw:SkiaLabel
-                                FontSize="20"
                                 FontAttributes="Bold"
+                                FontSize="20"
                                 Text="Custom Button"
                                 TextColor="#34495e" />
 
@@ -390,36 +368,34 @@
                                 TextColor="#7f8c8d" />
 
                             <draw:SkiaShape
-                                Type="Rectangle"
-                                CornerRadius="12"
+                                Padding="16"
                                 BackgroundColor="White"
-                                Padding="16">
+                                CornerRadius="12"
+                                Type="Rectangle">
 
-                                <draw:SkiaLayout
-                                    Type="Column"
-                                    Spacing="8">
+                                <draw:SkiaLayout Spacing="8" Type="Column">
 
                                     <!--  Custom Gradient Button  -->
                                     <draw:SkiaButton
-                                        UseCache="OperationsFull"
                                         x:Name="CustomButton"
-                                        Text="Custom Gradient"
                                         ApplyEffect="Ripple"
-                                        TouchEffectColor="#ffffff"
                                         HeightRequest="56"
-                                        WidthRequest="250"
                                         HorizontalOptions="Center"
-                                        Tapped="OnButtonClicked">
+                                        Tapped="OnButtonClicked"
+                                        Text="Custom Gradient"
+                                        TouchEffectColor="#ffffff"
+                                        UseCache="OperationsFull"
+                                        WidthRequest="250">
 
                                         <draw:SkiaShape
-                                            Tag="BtnShape"
-                                            Type="Rectangle"
                                             CornerRadius="28"
                                             HorizontalOptions="Fill"
+                                            Tag="BtnShape"
+                                            Type="Rectangle"
                                             VerticalOptions="Fill">
 
                                             <draw:SkiaControl.FillGradient>
-                                                <draw:SkiaGradient Type="Linear" Angle="45">
+                                                <draw:SkiaGradient Angle="45" Type="Linear">
                                                     <draw:SkiaGradient.Colors>
                                                         <Color>#667eea</Color>
                                                         <Color>#764ba2</Color>
@@ -428,39 +404,41 @@
                                             </draw:SkiaControl.FillGradient>
 
                                             <draw:SkiaShape.VisualEffects>
-                                                <draw:DropShadowEffect Color="#667eea" Blur="8" X="0" Y="4" />
+                                                <draw:DropShadowEffect
+                                                    Blur="8"
+                                                    X="0"
+                                                    Y="4"
+                                                    Color="#667eea" />
                                             </draw:SkiaShape.VisualEffects>
 
                                         </draw:SkiaShape>
 
                                         <draw:SkiaLayout
-                                            UseCache="Image"
-                                            Tag="BtnWrapper"
                                             HorizontalOptions="Center"
+                                            Tag="BtnWrapper"
+                                            UseCache="Image"
                                             VerticalOptions="Center">
 
                                             <draw:SkiaSvg
-                                                Source="Svg/dotnet_bot.svg"
-                                                WidthRequest="24"
                                                 HeightRequest="24"
                                                 LockRatio="1"
-                                                VerticalOptions="Center" />
+                                                Source="Svg/dotnet_bot.svg"
+                                                VerticalOptions="Center"
+                                                WidthRequest="24" />
 
                                             <draw:SkiaRichLabel
-                                                Tag="BtnText"
                                                 Margin="34,0,0,0"
-                                                VerticalOptions="Center"
-                                                FontSize="18"
                                                 FontAttributes="Bold"
-                                                TextColor="White" />
+                                                FontSize="18"
+                                                Tag="BtnText"
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
 
                                         </draw:SkiaLayout>
 
                                     </draw:SkiaButton>
 
-                                    <draw:SkiaLabel
-                                        FontSize="12"
-                                        TextColor="#95a5a6">
+                                    <draw:SkiaLabel FontSize="12" TextColor="#95a5a6">
                                         <draw:TextSpan Text="• Custom gradient background" />
                                         <draw:TextSpan Text="&#10;" />
                                         <draw:TextSpan Text="• SVG icon integration" />
@@ -478,70 +456,68 @@
 
                         <!--  SECTION: SIZES AND STATES  -->
                         <draw:SkiaLayout
-                            Tag="Sizes"
-                            UseCache="Operations"
                             MinimumWidthRequest="200"
+                            Spacing="12"
+                            Tag="Sizes"
                             Type="Column"
-                            Spacing="12">
+                            UseCache="Operations">
 
                             <draw:SkiaLabel
-                                FontSize="20"
                                 FontAttributes="Bold"
+                                FontSize="20"
                                 Text="Sizes and States"
                                 TextColor="#34495e" />
 
                             <draw:SkiaShape
-                                Type="Rectangle"
-                                CornerRadius="12"
+                                Padding="16"
                                 BackgroundColor="White"
-                                Padding="16">
+                                CornerRadius="12"
+                                Type="Rectangle">
 
-                                <draw:SkiaLayout
-                                    Type="Column"
-                                    Spacing="8">
+                                <draw:SkiaLayout Spacing="8" Type="Column">
 
                                     <draw:SkiaLabel
+                                        Margin="0,0,0,8"
                                         FontSize="14"
                                         Text="Different sizes"
-                                        TextColor="#7f8c8d"
-                                        Margin="0,0,0,8" />
+                                        TextColor="#7f8c8d" />
 
                                     <draw:SkiaButton
-                                        Text="Small"
+                                        Padding="12,6"
                                         BackgroundColor="#3498db"
                                         FontSize="12"
-                                        Padding="12,6"
-                                        WidthRequest="100"
-                                        Tapped="OnButtonClicked" />
+                                        Tapped="OnButtonClicked"
+                                        Text="Small"
+                                        WidthRequest="100" />
 
                                     <draw:SkiaButton
-                                        Text="Medium"
+                                        Padding="16,10"
                                         BackgroundColor="#3498db"
                                         FontSize="14"
-                                        Padding="16,10"
-                                        WidthRequest="140"
-                                        Tapped="OnButtonClicked" />
+                                        Tapped="OnButtonClicked"
+                                        Text="Medium"
+                                        WidthRequest="140" />
 
                                     <draw:SkiaButton
-                                        Text="Large"
+                                        Padding="24,14"
                                         BackgroundColor="Orange"
                                         FontSize="18"
-                                        Padding="24,14"
-                                        WidthRequest="180"
-                                        Tapped="OnButtonClicked" />
+                                        Tapped="OnButtonClicked"
+                                        Text="Large"
+                                        WidthRequest="180" />
 
                                     <draw:SkiaLabel
+                                        Margin="0,16,0,8"
                                         FontSize="14"
                                         Text="Disabled state"
-                                        TextColor="#7f8c8d"
-                                        Margin="0,16,0,8" />
+                                        TextColor="#7f8c8d" />
 
                                     <draw:SkiaButton
-                                        Text="Disabled Button"
                                         BackgroundColor="#bdc3c7"
                                         IsDisabled="True"
-                                        WidthRequest="180"
-                                        Tapped="OnButtonClicked" />
+                                        Tapped="OnButtonClicked"
+                                        Text="Disabled Button"
+                                        WidthRequest="180" />
 
                                 </draw:SkiaLayout>
 
@@ -551,15 +527,15 @@
 
                         <!--  SECTION: PADDING  -->
                         <draw:SkiaLayout
-                            UseCache="Operations"
-                            Tag="Padding"
                             MinimumWidthRequest="200"
+                            Spacing="12"
+                            Tag="Padding"
                             Type="Column"
-                            Spacing="12">
+                            UseCache="Operations">
 
                             <draw:SkiaLabel
-                                FontSize="20"
                                 FontAttributes="Bold"
+                                FontSize="20"
                                 Text="Padding Property"
                                 TextColor="#34495e" />
 
@@ -569,46 +545,42 @@
                                 TextColor="#7f8c8d" />
 
                             <draw:SkiaShape
-                                Type="Rectangle"
-                                CornerRadius="12"
+                                Padding="16"
                                 BackgroundColor="White"
-                                Padding="16">
+                                CornerRadius="12"
+                                Type="Rectangle">
 
-                                <draw:SkiaLayout
-                                    Type="Column"
-                                    Spacing="8">
+                                <draw:SkiaLayout Spacing="8" Type="Column">
 
                                     <draw:SkiaButton
-                                        Text="No Padding"
-                                        BackgroundColor="#9b59b6"
                                         Padding="0"
+                                        BackgroundColor="#9b59b6"
                                         MinimumWidthRequest="200"
-                                        Tapped="OnButtonClicked" />
+                                        Tapped="OnButtonClicked"
+                                        Text="No Padding" />
 
                                     <draw:SkiaButton
-                                        Text="Padding=16"
-                                        BackgroundColor="#9b59b6"
                                         Padding="16"
+                                        BackgroundColor="#9b59b6"
                                         MinimumWidthRequest="200"
-                                        Tapped="OnButtonClicked" />
+                                        Tapped="OnButtonClicked"
+                                        Text="Padding=16" />
 
                                     <draw:SkiaButton
-                                        Text="Padding=20"
-                                        BackgroundColor="#9b59b6"
                                         Padding="20"
+                                        BackgroundColor="#9b59b6"
                                         MinimumWidthRequest="200"
-                                        Tapped="OnButtonClicked" />
+                                        Tapped="OnButtonClicked"
+                                        Text="Padding=20" />
 
                                     <draw:SkiaButton
-                                        Text="Padding=24"
-                                        BackgroundColor="#9b59b6"
                                         Padding="24"
+                                        BackgroundColor="#9b59b6"
                                         MinimumWidthRequest="200"
-                                        Tapped="OnButtonClicked" />
+                                        Tapped="OnButtonClicked"
+                                        Text="Padding=24" />
 
-                                    <draw:SkiaLabel
-                                        FontSize="12"
-                                        TextColor="#95a5a6">
+                                    <draw:SkiaLabel FontSize="12" TextColor="#95a5a6">
                                         <draw:TextSpan Text="• Single value: uniform padding" />
                                         <draw:TextSpan Text="&#10;" />
                                         <draw:TextSpan Text="• Two values: horizontal,vertical" />
@@ -624,42 +596,40 @@
 
                         <!--  SECTION: HOVER EFFECTS  -->
                         <draw:SkiaLayout
-                            UseCache="Operations"
-                            Tag="Hover"
                             MinimumWidthRequest="200"
+                            Spacing="12"
+                            Tag="Hover"
                             Type="Column"
-                            Spacing="12">
+                            UseCache="Operations">
 
                             <draw:SkiaLabel
-                                UseCache="Operations"
-                                FontSize="20"
                                 FontAttributes="Bold"
+                                FontSize="20"
                                 Text="Hover Effects"
-                                TextColor="#34495e" />
+                                TextColor="#34495e"
+                                UseCache="Operations" />
 
                             <draw:SkiaLabel
-                                UseCache="Operations"
                                 FontSize="14"
                                 Text="Mouse hover state with DataTriggers"
-                                TextColor="#7f8c8d" />
+                                TextColor="#7f8c8d"
+                                UseCache="Operations" />
 
                             <draw:SkiaShape
-                                UseCache="Operations"
-                                Type="Rectangle"
-                                CornerRadius="12"
+                                Padding="16"
                                 BackgroundColor="White"
-                                Padding="16">
+                                CornerRadius="12"
+                                Type="Rectangle"
+                                UseCache="Operations">
 
-                                <draw:SkiaLayout
-                                    Type="Column"
-                                    Spacing="8">
+                                <draw:SkiaLayout Spacing="8" Type="Column">
 
                                     <draw:SkiaButton
-                                        UseCache="Image"
-                                        Text="Hover to Change Color"
                                         BackgroundColor="#3498db"
-                                        WidthRequest="200"
-                                        Tapped="OnButtonClicked">
+                                        Tapped="OnButtonClicked"
+                                        Text="Hover to Change Color"
+                                        UseCache="Image"
+                                        WidthRequest="200">
                                         <draw:SkiaControl.Triggers>
                                             <DataTrigger
                                                 x:DataType="draw:SkiaButton"
@@ -672,11 +642,11 @@
                                     </draw:SkiaButton>
 
                                     <draw:SkiaButton
-                                        UseCache="Image"
-                                        Text="Hover to Scale"
                                         BackgroundColor="#e74c3c"
-                                        WidthRequest="200"
-                                        Tapped="OnButtonClicked">
+                                        Tapped="OnButtonClicked"
+                                        Text="Hover to Scale"
+                                        UseCache="Image"
+                                        WidthRequest="200">
                                         <draw:SkiaControl.Triggers>
                                             <DataTrigger
                                                 x:DataType="draw:SkiaButton"
@@ -698,11 +668,11 @@
                                     </draw:SkiaButton>
 
                                     <draw:SkiaButton
-                                        UseCache="OperationsFull"
-                                        Text="Hover to Glow"
                                         BackgroundColor="#f39c12"
-                                        WidthRequest="200"
-                                        Tapped="OnButtonClicked">
+                                        Tapped="OnButtonClicked"
+                                        Text="Hover to Glow"
+                                        UseCache="OperationsFull"
+                                        WidthRequest="200">
                                         <draw:SkiaControl.Triggers>
                                             <DataTrigger
                                                 x:DataType="draw:SkiaButton"
@@ -710,8 +680,7 @@
                                                 TargetType="draw:SkiaButton"
                                                 Value="True">
                                                 <Setter Property="VisualEffects">
-                                                    <generic:List x:TypeArguments="draw:SkiaEffect"
-                                                                  xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections">
+                                                    <generic:List xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections" x:TypeArguments="draw:SkiaEffect">
                                                         <draw:DropShadowEffect
                                                             Blur="20"
                                                             X="0"
@@ -726,8 +695,7 @@
                                                 TargetType="draw:SkiaButton"
                                                 Value="False">
                                                 <Setter Property="VisualEffects">
-                                                    <generic:List x:TypeArguments="draw:SkiaEffect"
-                                                                  xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections">
+                                                    <generic:List xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections" x:TypeArguments="draw:SkiaEffect">
                                                         <draw:DropShadowEffect
                                                             Blur="4"
                                                             X="0"
@@ -739,9 +707,7 @@
                                         </draw:SkiaControl.Triggers>
                                     </draw:SkiaButton>
 
-                                    <draw:SkiaLabel
-                                        FontSize="12"
-                                        TextColor="#95a5a6">
+                                    <draw:SkiaLabel FontSize="12" TextColor="#95a5a6">
                                         <draw:TextSpan Text="• IsHovered property with DataTriggers" />
                                         <draw:TextSpan Text="&#10;" />
                                         <draw:TextSpan Text="• Change colors, scale, effects" />
@@ -757,34 +723,34 @@
 
                         <!--  TAP COUNTER  -->
                         <draw:SkiaShape
-                            UseCache="Operations"
-                            Tag="Counter"
-                            WidthRequest="200"
-                            HeightRequest="100"
-                            Type="Rectangle"
-                            CornerRadius="12"
-                            BackgroundColor="#ecf0f1"
+                            Margin="0,20,0,0"
                             Padding="20"
-                            Margin="0,20,0,0">
+                            BackgroundColor="#ecf0f1"
+                            CornerRadius="12"
+                            HeightRequest="100"
+                            Tag="Counter"
+                            Type="Rectangle"
+                            UseCache="Operations"
+                            WidthRequest="200">
 
                             <draw:SkiaLayout
-                                Type="Column"
+                                HorizontalOptions="Center"
                                 Spacing="8"
-                                HorizontalOptions="Center">
+                                Type="Column">
 
                                 <draw:SkiaLabel
-                                    FontSize="16"
                                     FontAttributes="Bold"
+                                    FontSize="16"
+                                    HorizontalOptions="Center"
                                     Text="Button Interactions"
-                                    TextColor="#34495e"
-                                    HorizontalOptions="Center" />
+                                    TextColor="#34495e" />
 
                                 <draw:SkiaLabel
                                     x:Name="TapCountLabel"
                                     FontSize="14"
+                                    HorizontalOptions="Center"
                                     Text="Tap any button to increment counter"
-                                    TextColor="#7f8c8d"
-                                    HorizontalOptions="Center" />
+                                    TextColor="#7f8c8d" />
 
                             </draw:SkiaLayout>
 
