@@ -3404,14 +3404,21 @@ namespace DrawnUi.Draw
             float widthRequest, float heightRequest, float scale, bool useModifiers = true)
         {
             var rectWidth = destination.Width;
-            var wants = widthRequest * scale;
-            if (wants >= 0 && wants < rectWidth)
-                rectWidth = wants;
+
+            if (float.IsFinite(widthRequest) && widthRequest >= 0)
+            {
+                var wants = widthRequest * scale;
+                if (wants >= 0 && wants < rectWidth)
+                    rectWidth = wants;
+            }
 
             var rectHeight = destination.Height;
-            wants = heightRequest * scale;
-            if (wants >= 0 && wants < rectHeight)
-                rectHeight =wants;
+            if (float.IsFinite(heightRequest) && heightRequest >= 0)
+            {
+                var wants = heightRequest * scale;
+                if (wants >= 0 && wants < rectHeight)
+                    rectHeight = wants;
+            }
 
             if (useModifiers)
             {
@@ -3426,7 +3433,25 @@ namespace DrawnUi.Draw
                 }
             }
 
-            return ScaledSize.FromPixels((int)Math.Ceiling(rectWidth), (int)Math.Ceiling(rectHeight), scale);
+            if (!float.IsFinite(rectWidth))
+            {
+                rectWidth = float.MaxValue;
+            }
+            else
+            {
+                rectWidth = (int)Math.Ceiling(rectWidth);
+            }
+
+            if (!float.IsFinite(rectHeight))
+            {
+                rectHeight = float.MaxValue;
+            }
+            else
+            {
+                rectHeight = (int)Math.Ceiling(rectHeight);
+            }
+
+            return ScaledSize.FromPixels(rectWidth, rectHeight, scale);
         }
 
         /// <summary>
@@ -8140,9 +8165,10 @@ namespace DrawnUi.Draw
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float GetWidthRequestPixelsWIthMargins(float scale)
         {
-            float ret = (float)this.WidthRequest * scale;
+            float ret = (float)this.WidthRequest;
             if (WidthRequest >= 0)
             {
+                ret *= scale;
                 ret += (float)Margins.HorizontalThickness * scale;
             }
             ret = (float)Math.Round(ret);
@@ -8156,9 +8182,10 @@ namespace DrawnUi.Draw
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float GetHeightRequestPixelsWIthMargins(float scale)
         {
-            float ret = (float)this.HeightRequest * scale;
+            float ret = (float)this.HeightRequest;
             if (HeightRequest >= 0)
             {
+                ret *= scale;
                 ret += (float)Margins.VerticalThickness * scale;
             }
             ret = (float)Math.Round(ret);
