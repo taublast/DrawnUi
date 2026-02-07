@@ -6568,16 +6568,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "articles/advanced/gestures.md",
-      "output": {
-        ".html": {
-          "relative_path": "articles/advanced/gestures.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "articles/advanced/gradients.md",
       "output": {
         ".html": {
@@ -6842,6 +6832,16 @@
       "output": {
         ".html": {
           "relative_path": "articles/fluent-extensions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/gestures.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/gestures.html"
         }
       },
       "version": ""

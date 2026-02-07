@@ -24,9 +24,9 @@ It's sometime better for performance to use this type instead of a grid, for exa
 
 **Usage:**
 ```xml
-<draw:SkiaLayout Type="Absolute">
-    <draw:SkiaLabel Text="Top Left" HorizontalOptions="Start" VerticalOptions="Start" />
-    <draw:SkiaLabel Text="Center" HorizontalOptions="Center" VerticalOptions="Center" />
+<draw:SkiaLayout HorizonatalOptions="Fill" HeightRequest="50">
+    <draw:SkiaLabel Text="Top Left" />
+    <draw:SkiaLabel Text="Center Bottom" HorizontalOptions="Center" VerticalOptions="End"/>
 </draw:SkiaLayout>
 ```
 

@@ -525,7 +525,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLoadingLocked
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 259
+    startLine: 271
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -554,7 +554,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CancelAll
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 272
+    startLine: 284
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -580,7 +580,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadImageAsync
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 336
+    startLine: 348
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -618,7 +618,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadImageManagedAsync
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 347
+    startLine: 359
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -658,7 +658,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadImageOnPlatformAsync
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 456
+    startLine: 468
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -691,7 +691,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 610
+    startLine: 622
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -720,7 +720,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateInCache
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 687
+    startLine: 699
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -756,7 +756,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddToCache
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 702
+    startLine: 714
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -799,7 +799,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFromCache
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 716
+    startLine: 728
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -837,7 +837,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFromCacheInternal
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 729
+    startLine: 741
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -875,7 +875,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Preload
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 739
+    startLine: 751
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -908,7 +908,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetUriFromImageSource
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 779
+    startLine: 791
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -939,7 +939,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 800
+    startLine: 812
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -969,7 +969,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsOffline
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 809
+    startLine: 821
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -998,7 +998,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadFromFile
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 823
+    startLine: 835
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1034,7 +1034,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EnableHttpRetry
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 896
+    startLine: 908
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1068,7 +1068,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HttpRetryMaxAttempts
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 903
+    startLine: 915
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1100,7 +1100,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadImageFromInternetAsync
     path: ../src/Maui/DrawnUi/Features/Images/SkiaImageManager.cs
-    startLine: 905
+    startLine: 917
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

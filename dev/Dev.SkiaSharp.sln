@@ -48,7 +48,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "advanced", "advanced", "{FE2FAC39-CCC4-4F0C-9554-73700F12B8ED}"
 	ProjectSection(SolutionItems) = preProject
 		..\docs\articles\advanced\game-ui.md = ..\docs\articles\advanced\game-ui.md
-		..\docs\articles\advanced\gestures.md = ..\docs\articles\advanced\gestures.md
+		..\docs\articles\gestures.md = ..\docs\articles\gestures.md
 		..\docs\articles\advanced\gradients.md = ..\docs\articles\advanced\gradients.md
 		..\docs\articles\advanced\index.md = ..\docs\articles\advanced\index.md
 		..\docs\articles\advanced\layout-system.md = ..\docs\articles\advanced\layout-system.md

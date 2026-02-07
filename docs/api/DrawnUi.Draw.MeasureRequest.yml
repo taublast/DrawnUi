@@ -12,6 +12,7 @@ items:
   - DrawnUi.Draw.MeasureRequest.HeightRequest
   - DrawnUi.Draw.MeasureRequest.IsSame
   - DrawnUi.Draw.MeasureRequest.Scale
+  - DrawnUi.Draw.MeasureRequest.ToString
   - DrawnUi.Draw.MeasureRequest.WidthRequest
   langs:
   - csharp
@@ -37,12 +38,43 @@ items:
   inheritedMembers:
   - System.ValueType.Equals(System.Object)
   - System.ValueType.GetHashCode
-  - System.ValueType.ToString
   - System.Object.Equals(System.Object,System.Object)
   - System.Object.GetType
   - System.Object.ReferenceEquals(System.Object,System.Object)
   extensionMethods:
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.MeasureRequest.ToString
+  commentId: M:DrawnUi.Draw.MeasureRequest.ToString
+  id: ToString
+  parent: DrawnUi.Draw.MeasureRequest
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: MeasureRequest.ToString()
+  fullName: DrawnUi.Draw.MeasureRequest.ToString()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Internals/Models/MeasureRequest.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ToString
+    path: ../src/Shared/Internals/Models/MeasureRequest.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Returns the fully qualified type name of this instance.
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+      description: The fully qualified type name.
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: DrawnUi.Draw.MeasureRequest.ToString*
 - uid: DrawnUi.Draw.MeasureRequest.Empty
   commentId: F:DrawnUi.Draw.MeasureRequest.Empty
   id: Empty
@@ -61,7 +93,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Empty
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
-    startLine: 4
+    startLine: 10
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -88,7 +120,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
-    startLine: 6
+    startLine: 12
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -124,7 +156,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
-    startLine: 13
+    startLine: 19
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -162,7 +194,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSame
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
-    startLine: 21
+    startLine: 27
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -191,7 +223,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Destination
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
-    startLine: 22
+    startLine: 28
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -220,7 +252,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: WidthRequest
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
-    startLine: 23
+    startLine: 29
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -249,7 +281,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HeightRequest
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
-    startLine: 24
+    startLine: 30
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -278,7 +310,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Scale
     path: ../src/Shared/Internals/Models/MeasureRequest.cs
-    startLine: 25
+    startLine: 31
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -365,28 +397,6 @@ references:
     name: GetHashCode
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
-  - name: (
-  - name: )
-- uid: System.ValueType.ToString
-  commentId: M:System.ValueType.ToString
-  parent: System.ValueType
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
-  name: ToString()
-  nameWithType: ValueType.ToString()
-  fullName: System.ValueType.ToString()
-  spec.csharp:
-  - uid: System.ValueType.ToString
-    name: ToString
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: System.ValueType.ToString
-    name: ToString
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
   - name: (
   - name: )
 - uid: System.Object.Equals(System.Object,System.Object)
@@ -619,6 +629,45 @@ references:
   - uid: DrawnUi.Extensions
     name: Extensions
     href: DrawnUi.Extensions.html
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.MeasureRequest.ToString*
+  commentId: Overload:DrawnUi.Draw.MeasureRequest.ToString
+  href: DrawnUi.Draw.MeasureRequest.html#DrawnUi_Draw_MeasureRequest_ToString
+  name: ToString
+  nameWithType: MeasureRequest.ToString
+  fullName: DrawnUi.Draw.MeasureRequest.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
 - uid: DrawnUi.Draw.MeasureRequest
   commentId: T:DrawnUi.Draw.MeasureRequest
   parent: DrawnUi.Draw

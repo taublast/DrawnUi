@@ -11,7 +11,7 @@
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
       <meta name="docfx:navrel" content="../toc.html">
-      <meta name="docfx:tocrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
       
       <meta name="docfx:rel" content="../">
       
@@ -104,9 +104,9 @@
 <p>This is the default type for <code>SkiaLayout</code>. Children are positionned inside like they would inside a single column/row grid: one over anouther inside available size.<br>
 It's sometime better for performance to use this type instead of a grid, for example if you have a 2 columns scenario &quot;icon of known size + text&quot; you can use a simple (absolute) layout, put an icon inside, and put a <code>SkiaLabel</code> with the left margin of the icon size+spacing, avoiding redundant calculations.</p>
 <p><strong>Usage:</strong></p>
-<pre><code class="lang-xml">&lt;draw:SkiaLayout Type=&quot;Absolute&quot;&gt;
-    &lt;draw:SkiaLabel Text=&quot;Top Left&quot; HorizontalOptions=&quot;Start&quot; VerticalOptions=&quot;Start&quot; /&gt;
-    &lt;draw:SkiaLabel Text=&quot;Center&quot; HorizontalOptions=&quot;Center&quot; VerticalOptions=&quot;Center&quot; /&gt;
+<pre><code class="lang-xml">&lt;draw:SkiaLayout HorizonatalOptions=&quot;Fill&quot; HeightRequest=&quot;50&quot;&gt;
+    &lt;draw:SkiaLabel Text=&quot;Top Left&quot; /&gt;
+    &lt;draw:SkiaLabel Text=&quot;Center Bottom&quot; HorizontalOptions=&quot;Center&quot; VerticalOptions=&quot;End&quot;/&gt;
 &lt;/draw:SkiaLayout&gt;
 </code></pre>
 <p><strong>Convenience Class:</strong> <code>SkiaLayer</code> (inherits from <code>SkiaLayout</code>, described as &quot;Absolute layout like MAUI Grid with just one column and row&quot;)</p>

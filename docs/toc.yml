@@ -5,10 +5,12 @@
   items:
     - name: Installation and Setup
       href: articles/getting-started.md
+    - name: Startup Settings
+      href: startup-settings.md
     - name: Drawn Layouts
       href: articles/layouts.md
-    - name: Gestures & Touch Input
-      href: articles/advanced/gestures.md
+    - name: Handling Gestures
+      href: gestures.md
     - name: Porting Native to Drawn
       href: articles/porting-maui.md
 

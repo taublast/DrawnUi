@@ -7,6 +7,10 @@
       href: getting-started.md
     - name: Startup Settings
       href: startup-settings.md
+    - name: Drawn Layouts
+      href: layouts.md
+    - name: Handling Gestures
+      href: gestures.md
     - name: Porting Native to Drawn
       href: porting-maui.md
 
@@ -65,8 +69,6 @@
   items:
     - name: Layout System Architecture
       href: advanced/layout-system.md
-    - name: Gestures & Touch Input
-      href: advanced/gestures.md
     - name: Platform-Specific Styling
       href: advanced/platform-styling.md
     - name: Gradients

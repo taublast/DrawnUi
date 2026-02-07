@@ -18,6 +18,7 @@ items:
   - DrawnUi.Draw.ScaledSize.Pixels
   - DrawnUi.Draw.ScaledSize.Scale
   - DrawnUi.Draw.ScaledSize.SnapToPixel(System.Double,System.Double)
+  - DrawnUi.Draw.ScaledSize.ToString
   - DrawnUi.Draw.ScaledSize.Units
   - DrawnUi.Draw.ScaledSize.WidthCut
   - DrawnUi.Draw.ScaledSize.WithCut(System.Boolean,System.Boolean)
@@ -52,7 +53,6 @@ items:
   - System.Object.GetType
   - System.Object.MemberwiseClone
   - System.Object.ReferenceEquals(System.Object,System.Object)
-  - System.Object.ToString
   extensionMethods:
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
 - uid: DrawnUi.Draw.ScaledSize.#ctor
@@ -73,7 +73,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 6
+    startLine: 5
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -102,7 +102,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: WithCut
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 15
+    startLine: 14
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -138,7 +138,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Default
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 27
+    startLine: 26
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -167,7 +167,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _scale
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 29
+    startLine: 28
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -194,7 +194,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Scale
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 30
+    startLine: 29
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -223,7 +223,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Units
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 42
+    startLine: 41
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -252,7 +252,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Pixels
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 43
+    startLine: 42
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -281,7 +281,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: WidthCut
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 44
+    startLine: 43
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -310,7 +310,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HeightCut
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 45
+    startLine: 44
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -339,7 +339,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Clone
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 47
+    startLine: 46
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -367,7 +367,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateEmpty
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 59
+    startLine: 58
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -401,7 +401,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsEmpty
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 69
+    startLine: 68
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -412,6 +412,38 @@ items:
       type: System.Boolean
     content.vb: Public ReadOnly Property IsEmpty As Boolean
   overload: DrawnUi.Draw.ScaledSize.IsEmpty*
+- uid: DrawnUi.Draw.ScaledSize.ToString
+  commentId: M:DrawnUi.Draw.ScaledSize.ToString
+  id: ToString
+  parent: DrawnUi.Draw.ScaledSize
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: ScaledSize.ToString()
+  fullName: DrawnUi.Draw.ScaledSize.ToString()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Internals/Models/ScaledSize.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ToString
+    path: ../src/Shared/Internals/Models/ScaledSize.cs
+    startLine: 76
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Returns a string that represents the current object.
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+      description: A string that represents the current object.
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.Object.ToString
+  overload: DrawnUi.Draw.ScaledSize.ToString*
 - uid: DrawnUi.Draw.ScaledSize.SnapToPixel(System.Double,System.Double)
   commentId: M:DrawnUi.Draw.ScaledSize.SnapToPixel(System.Double,System.Double)
   id: SnapToPixel(System.Double,System.Double)
@@ -430,7 +462,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SnapToPixel
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 77
+    startLine: 81
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -466,7 +498,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FromUnits
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 83
+    startLine: 87
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -504,7 +536,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FromPixels
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 115
+    startLine: 119
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -540,7 +572,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FromPixels
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 120
+    startLine: 124
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -578,7 +610,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FromPixels
     path: ../src/Shared/Internals/Models/ScaledSize.cs
-    startLine: 125
+    startLine: 129
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -831,30 +863,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.object
   - name: )
-- uid: System.Object.ToString
-  commentId: M:System.Object.ToString
-  parent: System.Object
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
-  name: ToString()
-  nameWithType: object.ToString()
-  fullName: object.ToString()
-  nameWithType.vb: Object.ToString()
-  fullName.vb: Object.ToString()
-  spec.csharp:
-  - uid: System.Object.ToString
-    name: ToString
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: System.Object.ToString
-    name: ToString
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
-  - name: (
-  - name: )
 - uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
   commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
   parent: DrawnUi.Extensions.InternalExtensions
@@ -1065,6 +1073,47 @@ references:
   name: IsEmpty
   nameWithType: ScaledSize.IsEmpty
   fullName: DrawnUi.Draw.ScaledSize.IsEmpty
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ScaledSize.ToString*
+  commentId: Overload:DrawnUi.Draw.ScaledSize.ToString
+  href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize_ToString
+  name: ToString
+  nameWithType: ScaledSize.ToString
+  fullName: DrawnUi.Draw.ScaledSize.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
 - uid: DrawnUi.Draw.ScaledSize.SnapToPixel*
   commentId: Overload:DrawnUi.Draw.ScaledSize.SnapToPixel
   href: DrawnUi.Draw.ScaledSize.html#DrawnUi_Draw_ScaledSize_SnapToPixel_System_Double_System_Double_
