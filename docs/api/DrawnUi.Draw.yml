@@ -1893,6 +1893,13 @@ references:
   name: ThermalState
   nameWithType: ThermalState
   fullName: DrawnUi.Draw.ThermalState
+- uid: DrawnUi.Draw.RangeF
+  commentId: T:DrawnUi.Draw.RangeF
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.RangeF.html
+  name: RangeF
+  nameWithType: RangeF
+  fullName: DrawnUi.Draw.RangeF
 - uid: DrawnUi.Draw.CachedObject
   commentId: T:DrawnUi.Draw.CachedObject
   parent: DrawnUi.Draw
@@ -2444,13 +2451,6 @@ references:
   name: ScaledRect
   nameWithType: ScaledRect
   fullName: DrawnUi.Draw.ScaledRect
-- uid: DrawnUi.Draw.RangeF
-  commentId: T:DrawnUi.Draw.RangeF
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.RangeF.html
-  name: RangeF
-  nameWithType: RangeF
-  fullName: DrawnUi.Draw.RangeF
 - uid: DrawnUi.Draw.ScaledSize
   commentId: T:DrawnUi.Draw.ScaledSize
   parent: DrawnUi.Draw
@@ -2817,12 +2817,14 @@ references:
   fullName: DrawnUi.Draw.SkiaRow
 - uid: DrawnUi.Draw.SkiaGrid
   commentId: T:DrawnUi.Draw.SkiaGrid
+  parent: DrawnUi.Draw
   href: DrawnUi.Draw.SkiaGrid.html
   name: SkiaGrid
   nameWithType: SkiaGrid
   fullName: DrawnUi.Draw.SkiaGrid
 - uid: DrawnUi.Draw.SkiaStack
   commentId: T:DrawnUi.Draw.SkiaStack
+  parent: DrawnUi.Draw
   href: DrawnUi.Draw.SkiaStack.html
   name: SkiaStack
   nameWithType: SkiaStack

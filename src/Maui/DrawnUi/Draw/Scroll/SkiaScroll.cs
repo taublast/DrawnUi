@@ -1,9 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using DrawnUi.Extensions;
-using DrawnUi.Infrastructure.Helpers;
+﻿using DrawnUi.Infrastructure.Helpers;
 
 namespace DrawnUi.Draw
 {
@@ -285,7 +280,7 @@ namespace DrawnUi.Draw
                 {
                     try
                     {
-                        scroll.SetIsRefreshing((bool)changed);
+                        scroll.SetIsRefreshing((bool)changed, false);
                     }
                     catch (Exception e)
                     {
@@ -653,6 +648,8 @@ namespace DrawnUi.Draw
                 _vectorAnimatorBounceY.Stop();
             }
 
+            IsSnapping = false;
+
             VelocityTrackerPan.Clear();
             VelocityTrackerScale.Clear();
 
@@ -686,12 +683,12 @@ namespace DrawnUi.Draw
             UpdateLoadingLock(shouldLock);
         }
 
-        float _minVelocitySnap = 15f;
+        protected float _minVelocitySnap = 15f;
 
         /// <summary>
         /// POINTS per sec
         /// </summary>
-        private float snapMinimumVelocity = 3f;
+        protected float snapMinimumVelocity = 3f;
 
         //public virtual bool ScrollStoppedForSnap()
         //{
@@ -2463,7 +2460,7 @@ namespace DrawnUi.Draw
 
         bool wasRefreshing;
 
-        public void SetIsRefreshing(bool state)
+        public void SetIsRefreshing(bool state, bool initial)
         {
             Debug.WriteLine($"[SCROLL] IsRefreshing {state}");
             //lock scrolling at top
@@ -2478,7 +2475,7 @@ namespace DrawnUi.Draw
             }
             else
             {
-                if (ViewportOffsetX == 0 && ViewportOffsetY == 0)
+                if ( initial || (ViewportOffsetX == 0 && ViewportOffsetY == 0))
                 {
                     HideRefreshIndicator();
                 }
@@ -2531,6 +2528,8 @@ namespace DrawnUi.Draw
             }
         }
 
+        private bool devUseVelocityPanning = false;
+
         protected override void Draw(DrawingContext context)
         {
             if (_animatorFlingY == null)
@@ -2566,10 +2565,15 @@ namespace DrawnUi.Draw
             //we exit with DrawingRect assigned to new destination
 
             var zoomedScale = (float)(context.Scale * ViewportZoom);
+            var scale = context.Scale;
 
             if (!CheckIsGhost())
             {
-                //ApplyPannedOffsetWithVelocity(context.Context);
+                if (devUseVelocityPanning)
+                {
+                    ApplyPannedOffsetWithVelocity(context.Context);
+                }
+
                 var posX = (float)(ViewportOffsetX * zoomedScale);
                 var posY = (float)(ViewportOffsetY * zoomedScale);
 
@@ -2585,6 +2589,7 @@ namespace DrawnUi.Draw
 
                 if (needAdjustPos)
                 {
+                    //Debug.WriteLine($"[SCROLL] needAdjustPos Y {posY/scale}, {_lastContentBounds.Height} => {ContentOffsetBounds.Height})");
                     if (ResetScrollPositionOnContentSizeChanged)
                     {
                         ViewportOffsetX = 0;
@@ -2595,9 +2600,9 @@ namespace DrawnUi.Draw
                     else
                     {
                         //do not allow empty space when content became smaller than viewport
-                        var overscroll = CalculateOverscrollDistance(posX, posY);
-                        posX -= overscroll.X;
-                        posY -= overscroll.Y;
+                        var overscrollPoints = CalculateOverscrollDistance(posX/scale, posY/scale);
+                        posX -= overscrollPoints.X * scale;
+                        posY -= overscrollPoints.Y * scale;
                     }
                 }
 
@@ -2619,6 +2624,15 @@ namespace DrawnUi.Draw
         }
 
 
+        /// <summary>
+        /// Pass position in PIXELS
+        /// </summary>
+        /// <param name="destination"></param>
+        /// <param name="posX"></param>
+        /// <param name="posY"></param>
+        /// <param name="zoomedScale"></param>
+        /// <param name="scale"></param>
+        /// <param name="forceSyncOffsets"></param>
         protected virtual void SetScrollOffset(SKRect destination, float posX, float posY, float zoomedScale,
             float scale, bool forceSyncOffsets)
         {
@@ -2964,7 +2978,7 @@ namespace DrawnUi.Draw
         {
             base.OnLayoutReady();
 
-            SetIsRefreshing(IsRefreshing);
+            SetIsRefreshing(IsRefreshing, true);
 
             _autoCacheContent = false;
         }

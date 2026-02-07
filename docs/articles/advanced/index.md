@@ -15,7 +15,7 @@ This section covers advanced features and concepts for DrawnUi development.
 
 ## Interaction
 
-- [Gestures & Touch Input](gestures.md) - Handling complex touch interactions
+- [Handling Gestures](gestures.md) - Handling complex touch interactions
 
 ## Specialized Use Cases
 

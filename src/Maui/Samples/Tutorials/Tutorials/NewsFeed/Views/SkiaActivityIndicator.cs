@@ -15,6 +15,8 @@ public class SkiaActivityIndicator : LottieRefreshIndicator
 
             SetDefaultMinimumContentSize(MySize, MySize);
 
+            HeightRequest = MySize;
+
             Loader = new()
             {
                 Tag = "Loader", 
@@ -23,7 +25,7 @@ public class SkiaActivityIndicator : LottieRefreshIndicator
                 ColorTint = App.Current.Resources.Get<Color>("ColorPrimary"),
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill,
-                LockRatio = 1,
+                LockRatio = -1,
                 Source = "Lottie/iosloader.json"
             };
 

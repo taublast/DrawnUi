@@ -15,6 +15,7 @@ items:
   - DrawnUi.Draw.ISkiaGridLayout.GetRowSpan(Microsoft.Maui.Controls.BindableObject)
   - DrawnUi.Draw.ISkiaGridLayout.RowDefinitions
   - DrawnUi.Draw.ISkiaGridLayout.RowSpacing
+  - DrawnUi.Draw.ISkiaGridLayout.Split
   langs:
   - csharp
   - vb
@@ -115,6 +116,35 @@ items:
   extensionMethods:
   - DrawnUi.Draw.IDrawnBase.DrawnUi.Draw.DrawnExtensions.GetVelocityRatioForChild(DrawnUi.Draw.ISkiaControl)
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.ISkiaGridLayout.Split
+  commentId: P:DrawnUi.Draw.ISkiaGridLayout.Split
+  id: Split
+  parent: DrawnUi.Draw.ISkiaGridLayout
+  langs:
+  - csharp
+  - vb
+  name: Split
+  nameWithType: ISkiaGridLayout.Split
+  fullName: DrawnUi.Draw.ISkiaGridLayout.Split
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Split
+    path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: int Split { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: ReadOnly Property Split As Integer
+  overload: DrawnUi.Draw.ISkiaGridLayout.Split*
 - uid: DrawnUi.Draw.ISkiaGridLayout.DefaultColumnDefinition
   commentId: P:DrawnUi.Draw.ISkiaGridLayout.DefaultColumnDefinition
   id: DefaultColumnDefinition
@@ -133,7 +163,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultColumnDefinition
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-    startLine: 5
+    startLine: 6
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -162,7 +192,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultRowDefinition
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-    startLine: 7
+    startLine: 8
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -191,7 +221,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RowDefinitions
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-    startLine: 12
+    startLine: 13
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -222,7 +252,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColumnDefinitions
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-    startLine: 17
+    startLine: 18
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -253,7 +283,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RowSpacing
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-    startLine: 22
+    startLine: 23
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -284,7 +314,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColumnSpacing
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-    startLine: 27
+    startLine: 28
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -315,7 +345,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetRow
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-    startLine: 34
+    startLine: 35
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -350,7 +380,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetRowSpan
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-    startLine: 41
+    startLine: 42
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -385,7 +415,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetColumn
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-    startLine: 48
+    startLine: 49
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -420,7 +450,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetColumnSpan
     path: ../src/Shared/Internals/Interfaces/ISkiaGridLayout.cs
-    startLine: 55
+    startLine: 56
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1992,6 +2022,23 @@ references:
   - uid: DrawnUi.Extensions
     name: Extensions
     href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.ISkiaGridLayout.Split*
+  commentId: Overload:DrawnUi.Draw.ISkiaGridLayout.Split
+  href: DrawnUi.Draw.ISkiaGridLayout.html#DrawnUi_Draw_ISkiaGridLayout_Split
+  name: Split
+  nameWithType: ISkiaGridLayout.Split
+  fullName: DrawnUi.Draw.ISkiaGridLayout.Split
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
 - uid: DrawnUi.Draw.ISkiaGridLayout.DefaultColumnDefinition*
   commentId: Overload:DrawnUi.Draw.ISkiaGridLayout.DefaultColumnDefinition
   href: DrawnUi.Draw.ISkiaGridLayout.html#DrawnUi_Draw_ISkiaGridLayout_DefaultColumnDefinition
@@ -2241,17 +2288,6 @@ references:
   name: BindableObject
   nameWithType: BindableObject
   fullName: Microsoft.Maui.Controls.BindableObject
-- uid: System.Int32
-  commentId: T:System.Int32
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.int32
-  name: int
-  nameWithType: int
-  fullName: int
-  nameWithType.vb: Integer
-  fullName.vb: Integer
-  name.vb: Integer
 - uid: DrawnUi.Draw.ISkiaGridLayout.GetRowSpan*
   commentId: Overload:DrawnUi.Draw.ISkiaGridLayout.GetRowSpan
   href: DrawnUi.Draw.ISkiaGridLayout.html#DrawnUi_Draw_ISkiaGridLayout_GetRowSpan_Microsoft_Maui_Controls_BindableObject_

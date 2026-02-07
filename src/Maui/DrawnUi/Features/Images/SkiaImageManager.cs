@@ -64,7 +64,7 @@ public partial class SkiaImageManager : IDisposable
         {
             localCancel?.Dispose();
         }
-     }
+    }
 
     public virtual async Task PreloadImages(IList<string> list, CancellationTokenSource cancel = default)
     {
@@ -246,13 +246,25 @@ public partial class SkiaImageManager : IDisposable
         });
     }
 
-#if ANDROID
-    //since we dont use http factory on android..
-    //Android HTTP Connection Pool: Default limit is ~5 connections per host
-    private SemaphoreSlim semaphoreLoad = new(5, 5);
-#else
-    private SemaphoreSlim semaphoreLoad = new(10, 10);
+    private SemaphoreSlim semaphoreLoad = CreateSemaphoreForLocalFiles();
+
+    static SemaphoreSlim CreateSemaphoreForLocalFiles()
+    {
+#if IOS
+        if (DeviceInfo.DeviceType == DeviceType.Virtual)
+        {
+            return new SemaphoreSlim(5, 5);
+        }
 #endif
+
+#if ANDROID
+        //since we dont use http factory on android..
+        //Android HTTP Connection Pool: Default limit is ~5 connections per host
+        return new(5, 5);
+#else
+        return new(10, 10);
+#endif
+    }
 
     private readonly object lockObject = new object();
 
@@ -359,20 +371,20 @@ public partial class SkiaImageManager : IDisposable
                 uri = sourceUri.Uri.ToString();
             }
             else
-            if (source is FileImageSource sourceFile)
-            {
-                uri = sourceFile.File;
-            }
-            else
-            if (source is ImageSourceResourceStream stream)
-            {
-                uri = stream.Url;
-            }
+                if (source is FileImageSource sourceFile)
+                {
+                    uri = sourceFile.File;
+                }
+                else
+                    if (source is ImageSourceResourceStream stream)
+                    {
+                        uri = stream.Url;
+                    }
 
             // 1 Try to get from cache
             var cacheKey = uri;
 
-            if (_cachingProvider!=null &&!string.IsNullOrEmpty(cacheKey))
+            if (_cachingProvider != null && !string.IsNullOrEmpty(cacheKey))
             {
                 var cachedBitmap = _cachingProvider.Get<SKBitmap>(cacheKey);
                 if (cachedBitmap.HasValue)
@@ -495,20 +507,20 @@ public partial class SkiaImageManager : IDisposable
                         _trackLoadingBitmapsUris.TryRemove(uri, out _);
                     }
                     else
-                    if (queueItem.Source is FileImageSource sourceFile)
-                    {
-                        string uri = sourceFile.File;
-
-                        // Add the loaded bitmap to the cache
-                        if (_cachingProvider != null)
+                        if (queueItem.Source is FileImageSource sourceFile)
                         {
-                            _cachingProvider.Set(uri, bitmap, TimeSpan.FromSeconds(CacheLongevitySecs));
-                        }
+                            string uri = sourceFile.File;
 
-                        TraceLog($"ImageLoadManager: Loaded bitmap for FileImageSource {uri}");
-                        // Remove the Task from the loadingBitmaps dictionary now that we're done loading this image
-                        _trackLoadingBitmapsUris.TryRemove(uri, out _);
-                    }
+                            // Add the loaded bitmap to the cache
+                            if (_cachingProvider != null)
+                            {
+                                _cachingProvider.Set(uri, bitmap, TimeSpan.FromSeconds(CacheLongevitySecs));
+                            }
+
+                            TraceLog($"ImageLoadManager: Loaded bitmap for FileImageSource {uri}");
+                            // Remove the Task from the loadingBitmaps dictionary now that we're done loading this image
+                            _trackLoadingBitmapsUris.TryRemove(uri, out _);
+                        }
 
                     if (ReuseBitmaps)
                     {
@@ -602,10 +614,10 @@ public partial class SkiaImageManager : IDisposable
             _trackLoadingBitmapsUris.TryRemove(sourceUri.Uri.ToString(), out _);
         }
         else
-        if (queueItem.Source is FileImageSource sourceFile)
-        {
-            _trackLoadingBitmapsUris.TryRemove(sourceFile.File, out _);
-        }
+            if (queueItem.Source is FileImageSource sourceFile)
+            {
+                _trackLoadingBitmapsUris.TryRemove(sourceFile.File, out _);
+            }
     }
 
     public bool IsDisposed { get; protected set; }
@@ -702,7 +714,7 @@ public partial class SkiaImageManager : IDisposable
     /// <returns></returns>
     public bool AddToCache(string uri, SKBitmap bitmap, int cacheLongevitySecs)
     {
-        if (_cachingProvider==null || _cachingProvider.Exists(uri))
+        if (_cachingProvider == null || _cachingProvider.Exists(uri))
             return false;
 
         _cachingProvider.Set(uri, bitmap, TimeSpan.FromSeconds(cacheLongevitySecs));
@@ -755,7 +767,7 @@ public partial class SkiaImageManager : IDisposable
         var cacheKey = uri;
 
         // Check if the image is already cached or being loaded
-        if (_cachingProvider!=null && _cachingProvider.Get<SKBitmap>(cacheKey).HasValue || _trackLoadingBitmapsUris.ContainsKey(uri))
+        if (_cachingProvider != null && _cachingProvider.Get<SKBitmap>(cacheKey).HasValue || _trackLoadingBitmapsUris.ContainsKey(uri))
         {
             TraceLog($"Preload: Image already cached or being loaded for Uri {uri}");
             return;

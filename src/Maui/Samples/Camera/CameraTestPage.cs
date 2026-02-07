@@ -2,6 +2,7 @@ using System.Diagnostics;
 using AppoMobi.Specials;
 using DrawnUi.Camera;
 using DrawnUi.Views;
+using CameraTests.Services;
 
 namespace CameraTests.Views;
 
@@ -12,6 +13,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     private SkiaButton _flashButton;
     private SkiaLabel _statusLabel;
     private SkiaButton _videoRecordButton;
+    private SkiaButton _speechButton;
+    private AudioTranscriptionService _audioTranscriptionService;
     private SkiaButton _cameraSelectButton;
     private SkiaButton _audioSelectButton;
     private SkiaButton _audioCodecButton;
@@ -90,6 +93,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     public CameraTestPage()
     {
         Title = "SkiaCamera Test";
+        _audioTranscriptionService = new AudioTranscriptionService();
+        _audioTranscriptionService.TranscriptionReceived += OnTranscriptionReceived;
     }
 
     private void CreateContent()
@@ -245,6 +250,24 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                                     }
                                     .Assign(out _audioCodecButton)
                                     .OnTapped(async me => { await SelectAudioCodec(); })
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                    {
+                                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                                    }),
+
+                                // Audio Visualizer switch
+                                new SkiaButton("Vis: VU Meter")
+                                    {
+                                        BackgroundColor = Colors.DarkOliveGreen,
+                                        TextColor = Colors.White,
+                                        CornerRadius = 8,
+                                        UseCache = SkiaCacheType.Image
+                                    }
+                                    .OnTapped(me => { CameraControl.SwitchVisualizer(); })
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.VisualizerName), me =>
+                                    {
+                                        me.Text = $"Vis: {CameraControl.VisualizerName}";
+                                    })
                                     .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                                     {
                                         me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
@@ -441,6 +464,20 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                                     {
                                         me.Text = CameraControl.RecordAudio ? "Audio: ON" : "Audio: OFF";
                                         me.BackgroundColor = CameraControl.RecordAudio ? Colors.Green : Colors.DarkGray;
+                                    }),
+
+                                // Speech Recognition toggle
+                                new SkiaButton("Speech: OFF")
+                                    {
+                                        BackgroundColor = Colors.DarkSlateGray,
+                                        TextColor = Colors.White,
+                                        CornerRadius = 8,
+                                        UseCache = SkiaCacheType.Image
+                                    }
+                                    .Assign(out _speechButton)
+                                    .OnTapped(me =>
+                                    {
+                                        ToggleSpeech();
                                     })
                             }
                         },
@@ -509,6 +546,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                 Tasks.StartDelayed(TimeSpan.FromMilliseconds(500), () =>
                 {
                     CameraControl.IsOn = true;
+                    // Speech recognition will auto-start/stop based on recording state
                 });
             }
         };
@@ -523,7 +561,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         if (CameraControl != null)
         {
             // Configure camera for capture video flow testing
-            CameraControl.UseRealtimeVideoProcessing = false; // Enable capture video flow
+            CameraControl.UseRealtimeVideoProcessing = true;  
             CameraControl.VideoQuality = VideoQuality.Standard;
             CameraControl.RecordAudio = true;
 
@@ -643,6 +681,96 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         CameraControl.OnError += OnCameraError;
         CameraControl.VideoRecordingSuccess += OnVideoRecordingSuccess;
         CameraControl.VideoRecordingProgress += OnVideoRecordingProgress;
+
+        CameraControl.AudioSampleAvailable += OnAudioCaptured;
+
+        // Monitor recording state changes to start/stop speech recognition
+        CameraControl.PropertyChanged += (s, e) =>
+        {
+            if (e.PropertyName == nameof(CameraControl.IsRecordingVideo) ||
+                e.PropertyName == nameof(CameraControl.IsPreRecording))
+            {
+                OnRecordingStateChanged();
+            }
+        };
+    }
+
+    private bool _speechFormatInitialized;
+    private bool _speechListening;
+    private bool _speechEnabled;
+    private string _accumulatedTranscription = string.Empty;
+    private const int MaxDisplayChars = 150;
+
+    private void OnTranscriptionReceived(string text)
+    {
+        if (CameraControl != null && !string.IsNullOrWhiteSpace(text))
+        {
+            // Append to accumulated text with space separator
+            if (_accumulatedTranscription.Length > 0)
+                _accumulatedTranscription += " ";
+            _accumulatedTranscription += text.Trim();
+
+            // Display last N characters
+            var display = _accumulatedTranscription.Length > MaxDisplayChars
+                ? "..." + _accumulatedTranscription.Substring(_accumulatedTranscription.Length - MaxDisplayChars)
+                : _accumulatedTranscription;
+
+            CameraControl.RecognizedText = display;
+        }
+    }
+
+    private void OnAudioCaptured(byte[] data, int rate, int bits, int channels)
+    {
+        if (_audioTranscriptionService != null && _speechEnabled)
+        {
+            // Initialize audio format once
+            if (!_speechFormatInitialized)
+            {
+                _audioTranscriptionService.SetAudioFormat(rate, bits, channels);
+                _speechFormatInitialized = true;
+            }
+
+            // Only feed audio when actually recording (live or pre-recording)
+            if (CameraControl != null && (CameraControl.IsRecordingVideo || CameraControl.IsPreRecording))
+            {
+                _audioTranscriptionService.FeedAudio(data);
+            }
+        }
+    }
+
+    private void OnRecordingStateChanged()
+    {
+        if (CameraControl == null || !_speechEnabled) return;
+
+        bool isRecording = CameraControl.IsRecordingVideo || CameraControl.IsPreRecording;
+
+        if (isRecording && !_speechListening)
+        {
+            _speechListening = true;
+            StartTranscription();
+        }
+        else if (!isRecording && _speechListening)
+        {
+            _speechListening = false;
+            StopTranscription();
+        }
+    }
+
+    private void StartTranscription()
+    {
+        _audioTranscriptionService?.Start();
+    }
+
+    private void StopTranscription()
+    {
+        _audioTranscriptionService?.Stop();
+
+        // Clear accumulated and displayed text when stopping
+        _accumulatedTranscription = string.Empty;
+        if (CameraControl != null)
+        {
+            CameraControl.RecognizedText = string.Empty;
+        }
     }
 
     private void UpdateStatusText()
@@ -1211,6 +1339,34 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
             _preRecordingDurationButton.Text = $"Duration: {CameraControl.PreRecordDuration.TotalSeconds:F0}s";
         }
     }
+
+    private void ToggleSpeech()
+    {
+        _speechEnabled = !_speechEnabled;
+
+        if (_speechButton != null)
+        {
+            _speechButton.Text = _speechEnabled ? "Speech: ON" : "Speech: OFF";
+            _speechButton.BackgroundColor = _speechEnabled ? Colors.Green : Colors.DarkSlateGray;
+        }
+
+        // If toggling on while recording, start immediately
+        if (_speechEnabled && CameraControl != null && (CameraControl.IsRecordingVideo || CameraControl.IsPreRecording))
+        {
+            if (!_speechListening)
+            {
+                _speechListening = true;
+                StartTranscription();
+            }
+        }
+        // If toggling off, stop listening
+        else if (!_speechEnabled && _speechListening)
+        {
+            _speechListening = false;
+            StopTranscription();
+        }
+    }
+
     // Removed old manual video gallery implementation - now using SkiaCamera's built-in MoveVideoToGalleryAsync method
 
 }

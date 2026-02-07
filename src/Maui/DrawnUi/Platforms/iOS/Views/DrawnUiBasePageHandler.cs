@@ -55,11 +55,16 @@ public class DrawnUiBasePageHandler : PageHandler
             {
                 if (DrawnExtensions.StartupSettings != null && DrawnExtensions.StartupSettings.MobileIsFullscreen.HasValue && DrawnExtensions.StartupSettings.MobileIsFullscreen.Value)
                     return false;
+
                 return base.AutomaticallyAdjustsScrollViewInsets;
             }
             set
             {
-
+                if (DrawnExtensions.StartupSettings == null ||
+                    !DrawnExtensions.StartupSettings.MobileIsFullscreen.HasValue)
+                {
+                    base.AutomaticallyAdjustsScrollViewInsets = value;
+                }
             }
         }
 
@@ -74,7 +79,11 @@ public class DrawnUiBasePageHandler : PageHandler
             }
             set
             {
-
+                if (DrawnExtensions.StartupSettings == null ||
+                    !DrawnExtensions.StartupSettings.MobileIsFullscreen.HasValue)
+                {
+                    base.AdditionalSafeAreaInsets = value;
+                }
             }
         }
 

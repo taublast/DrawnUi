@@ -1,13 +1,16 @@
-﻿namespace DrawnUi.Draw;
+﻿using Newtonsoft.Json.Linq;
+
+namespace DrawnUi.Draw;
 
 public class CachedObject : ISkiaDisposable
 {
     public SKPoint TranslateInputCoords(SKRect drawingRect)
     {
-        //return new(0, 0);
+        // Use LastDestination (actual screen position where cache was drawn) if available
+        var current = LastDestination.IsEmpty ? drawingRect : LastDestination;
 
-        var offsetCacheX = drawingRect.Left - Bounds.Left;
-        var offsetCacheY = drawingRect.Top - Bounds.Top;
+        var offsetCacheX = current.Left - Bounds.Left;
+        var offsetCacheY = current.Top - Bounds.Top;
 
         return new SKPoint(-offsetCacheX, -offsetCacheY);
     }
@@ -37,6 +40,8 @@ public class CachedObject : ISkiaDisposable
     /// <param name="paint"></param>
     public void Draw(SKCanvas canvas, SKRect destination, SKPaint paint)
     {
+        LastDestination = destination;
+
         try
         {
             if (Picture != null)
@@ -70,7 +75,15 @@ public class CachedObject : ISkiaDisposable
         }
     }
 
+    /// <summary>
+    /// Stores the canvas-relative draw position(x, y), not the actual destination rect, these are relative offsets for the drawing operation, not absolute screen position.
+    /// </summary>
     public SKRect LastDrawnAt;
+
+    /// <summary>
+    /// Actual destination rect where cache was drawn (for gesture coordinate translation)
+    /// </summary>
+    public SKRect LastDestination;
 
     /// <summary>
     /// Will draw at exact x,y coordinated without any adjustments

@@ -23,7 +23,7 @@ namespace DrawnUi.Draw
 
             if (NeedMeasure)
             {
-                MeasureSelf(destination, (float)WidthRequest, (float)HeightRequest, scale);
+                MeasureSelf(destination, GetWidthRequestPixelsWIthMargins(scale), GetHeightRequestPixelsWIthMargins(scale), scale);
             }
             else
             {
@@ -133,6 +133,21 @@ namespace DrawnUi.Draw
             get { return (RecyclingTemplate)GetValue(RecyclingTemplateProperty); }
             set { SetValue(RecyclingTemplateProperty, value); }
         }
+
+        /// <summary>
+        /// Layouts can use this property for custom logic appropriate to layout type.
+        /// </summary>
+        public bool Invert
+        {
+            get { return (bool)GetValue(InvertProperty); }
+            set { SetValue(InvertProperty, value); }
+        }
+
+        public static readonly BindableProperty InvertProperty = BindableProperty.Create(
+            nameof(Invert),
+            typeof(bool),
+            typeof(SkiaLayout),
+            false, propertyChanged: NeedInvalidateMeasure);
 
         //protected override void AdaptCachedLayout(SKRect destination, float scale)
         //{
@@ -1535,8 +1550,7 @@ namespace DrawnUi.Draw
                         ResetScroll();
                         Invalidate();
                     }
-                    else if ((MeasuredSize.Pixels.Height == 0 || MeasuredSize.Pixels.Width == 0 ||
-                              MeasureItemsStrategy != MeasuringStrategy.MeasureVisible) && NeedAutoSize)
+                    else if (NeedAutoSize || MeasuredSize.Pixels.Height == 0 || MeasuredSize.Pixels.Width == 0 || MeasureItemsStrategy != MeasuringStrategy.MeasureVisible)
                     {
                         Invalidate();
                     }

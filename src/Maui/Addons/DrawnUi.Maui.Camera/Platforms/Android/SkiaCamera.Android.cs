@@ -3,7 +3,9 @@ using Android.Content;
 using Android.Hardware.Camera2;
 using Android.Media;
 using Android.Telecom;
+using DrawnUi.Camera.Platforms.Android;
 using Microsoft.Maui.Controls.PlatformConfiguration;
+using static AndroidX.Media3.ExoPlayer.Upstream.Experimental.SlidingWeightedAverageBandwidthStatistic;
 
 
 namespace DrawnUi.Camera;
@@ -244,24 +246,7 @@ public partial class SkiaCamera
         return formats;
     }
 
-    public void DisableOtherCameras(bool all = false)
-    {
-        foreach (var renderer in Instances)
-        {
-            System.Diagnostics.Debug.WriteLine($"[CAMERA] DisableOtherCameras..");
-            bool disable = false;
-            if (all || renderer != this)
-            {
-                disable = true;
-            }
 
-            if (disable)
-            {
-                renderer.StopInternal(true);
-                System.Diagnostics.Debug.WriteLine($"[CAMERA] Stopped {renderer.Uid} {renderer.Tag}");
-            }
-        }
-    }
 
 
     /// <summary>
@@ -553,9 +538,11 @@ public partial class SkiaCamera
         }
     }
 
-    private void OnAudioSampleAvailable(object sender, AudioSample e)
+    private void OnAudioSampleAvailable(object sender, AudioSample sample)
     {
-        WriteAudioSample(e);
+        var useSample = OnAudioSampleAvailable(sample);
+
+        WriteAudioSample(useSample);
     }
 
     public virtual void WriteAudioSample(AudioSample e)
@@ -665,6 +652,12 @@ public partial class SkiaCamera
             SetIsRecordingVideo(false);
 
             IsBusy = false; // Release busy state after successful processing
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
         }
         catch (Exception ex)
         {
@@ -675,6 +668,13 @@ public partial class SkiaCamera
 
             SetIsRecordingVideo(false);
             IsBusy = false; // Release busy state on error
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
+
             VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
@@ -761,6 +761,12 @@ public partial class SkiaCamera
             ClearPreRecordingBuffer();
 
             SetIsRecordingVideo(false);
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
         }
         catch (Exception ex)
         {
@@ -770,6 +776,13 @@ public partial class SkiaCamera
             _captureVideoEncoder = null;
 
             SetIsRecordingVideo(false);
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
+
             //VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
@@ -784,6 +797,9 @@ public partial class SkiaCamera
     {
         if (IsBusy)
             return;
+
+        // Stop preview audio - recording will take over with its own audio capture
+        StopPreviewAudioCapture();
 
         // Create Android encoder (GPU path via MediaCodec Surface + EGL + Skia GL)
         var newEncoder = new AndroidCaptureVideoEncoder();
@@ -883,6 +899,18 @@ public partial class SkiaCamera
         if (_captureVideoEncoder is DrawnUi.Camera.AndroidCaptureVideoEncoder androidEncoder)
         {
             await androidEncoder.InitializeAsync(outputPath, width, height, fps, audioEnabled, RecordingLockedRotation);
+
+            // Apply codec selection if set
+            if (AudioCodecIndex >= 0)
+            {
+                var codecs = await GetAvailableAudioCodecsAsync();
+                if (AudioCodecIndex < codecs.Count)
+                {
+                    var codecName = codecs[AudioCodecIndex];
+                    androidEncoder.SetAudioCodec(codecName);
+                    Debug.WriteLine($"[SkiaCameraAndroid] Selected Audio Codec: {codecName}");
+                }
+            }
 
             // Try to initialize GPU camera path for zero-copy frame capture
             if (GpuCameraFrameProvider.IsSupported())
@@ -1191,6 +1219,15 @@ public partial class SkiaCamera
             return;
         }
 
+        // Handle audio-only recording (RecordVideo=false)
+        if (!RecordVideo)
+        {
+            if (!RecordAudio)
+                throw new InvalidOperationException("RecordAudio must be true when RecordVideo is false");
+            await StartAudioOnlyRecording();
+            return;
+        }
+
         Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
 
         try
@@ -1344,4 +1381,140 @@ public partial class SkiaCamera
             return codecs.Distinct().ToList();
         });
     }
+
+    #region Preview Audio Capture
+
+    private void OnPreviewAudioSampleAvailable(object sender, AudioSample sample)
+    {
+        OnAudioSampleAvailable(sample);
+    }
+
+    partial void StartPreviewAudioCapture()
+    {
+        if (_previewAudioCapture != null || !RecordAudio)
+            return;
+
+        Task.Run(async () =>
+        {
+            try
+            {
+                _previewAudioCapture = new AudioCaptureAndroid();
+                _previewAudioCapture.SampleAvailable += OnPreviewAudioSampleAvailable;
+                var started = await _previewAudioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
+                if (started)
+                {
+                    Debug.WriteLine($"[SkiaCamera.Android] Preview audio capture started: {_previewAudioCapture.SampleRate}Hz, {_previewAudioCapture.Channels}ch");
+                }
+                else
+                {
+                    Debug.WriteLine("[SkiaCamera.Android] Preview audio capture failed to start");
+                    _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
+                    _previewAudioCapture.Dispose();
+                    _previewAudioCapture = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera.Android] Preview audio capture error: {ex.Message}");
+            }
+        });
+    }
+
+    partial void StopPreviewAudioCapture()
+    {
+        if (_previewAudioCapture == null)
+            return;
+
+        try
+        {
+            _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
+            _ = _previewAudioCapture.StopAsync();
+            _previewAudioCapture.Dispose();
+            _previewAudioCapture = null;
+            Debug.WriteLine("[SkiaCamera.Android] Preview audio capture stopped");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera.Android] Error stopping preview audio: {ex.Message}");
+        }
+    }
+
+    #endregion
+
+    #region AUDIO-ONLY RECORDING
+
+    private IAudioCapture _audioOnlyCapture;
+
+    private partial void CreateAudioOnlyEncoder(out IAudioOnlyEncoder encoder)
+    {
+        encoder = new AudioOnlyEncoderAndroid();
+    }
+
+    private partial void StartAudioOnlyCapture(int sampleRate, int channels, out Task task)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        task = tcs.Task;
+
+        Task.Run(async () =>
+        {
+            try
+            {
+                // Stop preview audio capture first
+                StopPreviewAudioCapture();
+
+                _audioOnlyCapture = new AudioCaptureAndroid();
+                _audioOnlyCapture.SampleAvailable += OnAudioOnlySampleAvailable;
+                var started = await _audioOnlyCapture.StartAsync(sampleRate, channels, AudioBitDepth, AudioDeviceIndex);
+                if (started)
+                {
+                    Debug.WriteLine($"[SkiaCamera.Android] Audio-only capture started: {_audioOnlyCapture.SampleRate}Hz, {_audioOnlyCapture.Channels}ch");
+                }
+                else
+                {
+                    Debug.WriteLine("[SkiaCamera.Android] Audio-only capture failed to start");
+                    _audioOnlyCapture.SampleAvailable -= OnAudioOnlySampleAvailable;
+                    _audioOnlyCapture.Dispose();
+                    _audioOnlyCapture = null;
+                }
+                tcs.TrySetResult(started);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera.Android] Audio-only capture error: {ex.Message}");
+                tcs.TrySetException(ex);
+            }
+        });
+    }
+
+    private partial void StopAudioOnlyCapture(out Task task)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        task = tcs.Task;
+
+        if (_audioOnlyCapture == null)
+        {
+            tcs.TrySetResult(true);
+            return;
+        }
+
+        Task.Run(async () =>
+        {
+            try
+            {
+                _audioOnlyCapture.SampleAvailable -= OnAudioOnlySampleAvailable;
+                await _audioOnlyCapture.StopAsync();
+                _audioOnlyCapture.Dispose();
+                _audioOnlyCapture = null;
+                Debug.WriteLine("[SkiaCamera.Android] Audio-only capture stopped");
+                tcs.TrySetResult(true);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera.Android] Error stopping audio-only capture: {ex.Message}");
+                tcs.TrySetException(ex);
+            }
+        });
+    }
+
+    #endregion
 }

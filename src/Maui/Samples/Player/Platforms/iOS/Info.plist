@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>UIDesignRequiresCompatibility</key>
+  <true/>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+		<integer>2</integer>
+	</array>
+  <key>NSCameraUsageDescription</key>
+  <string>Allow access to the camcorder for the camera</string>
+  <key>NSSpeechRecognitionUsageDescription</key>
+  <string>Recognize speech demo!</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>Allow microphone access for the camera</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>Allow access to the library to save photos</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>Allow access to the library to save photos</string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>To be able to geotag photos</string>
+  <key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
+	<key>XSAppIconAssets</key>
+	<string>Assets.xcassets/appicon.appiconset</string>
+</dict>
+</plist>

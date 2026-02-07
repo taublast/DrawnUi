@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Handling Gestures in DrawnUI | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Handling Gestures in DrawnUI | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../images/draw.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/main/docs/articles/gestures.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/draw.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="handling-gestures-in-drawnui">Handling Gestures in DrawnUI</h1>
+
+<p>DrawnUI provides multiple ways to handle touch gestures. This guide shows real-world patterns used in the tutorials and sandbox apps.</p>
+<h2 id="quick-start-the-consumegestures-pattern">Quick Start: The ConsumeGestures Pattern</h2>
+<p>The simplest and most common pattern for handling gestures:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaShape 
+    x:Name=&quot;MyCard&quot;
+    Type=&quot;Rectangle&quot;
+    CornerRadius=&quot;20&quot;
+    ConsumeGestures=&quot;OnCardTapped&quot;&gt;
+    
+    &lt;!-- Your content here --&gt;
+&lt;/draw:SkiaShape&gt;
+</code></pre>
+<pre><code class="lang-csharp">private void OnCardTapped(object sender, SkiaGesturesInfo e)
+{
+    if (e.Args.Type == TouchActionResult.Tapped)
+    {
+        e.Consumed = true; // Consume the gesture
+        
+        // Animations run async to avoid blocking
+        Task.Run(async () =&gt;
+        {
+            var control = (SkiaControl)sender;
+            await control.ScaleTo(1.1, 100);
+            await control.ScaleTo(1.0, 100);
+        });
+    }
+}
+</code></pre>
+<p><strong>Key points:</strong></p>
+<ul>
+<li><code>ConsumeGestures</code> attribute specifies the handler method</li>
+<li>Check <code>e.Args.Type</code> for gesture type: <code>Tapped</code>, <code>Panning</code>, <code>Up</code>, etc.</li>
+<li>Set <code>e.Consumed = true</code> to prevent gesture propagation</li>
+<li><strong>Always</strong> use <code>Task.Run</code> for async animations - don't await in the handler</li>
+<li>Handler <strong>must be synchronous</strong> to consume properly</li>
+</ul>
+<h2 id="real-world-example-interactive-card">Real-World Example: Interactive Card</h2>
+<p>From the Tutorials app:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaShape
+    x:Name=&quot;Card1&quot;
+    Type=&quot;Rectangle&quot;
+    CornerRadius=&quot;20&quot;
+    WidthRequest=&quot;300&quot;
+    HeightRequest=&quot;180&quot;
+    ConsumeGestures=&quot;OnCardGestures&quot;&gt;
+    
+    &lt;draw:SkiaControl.FillGradient&gt;
+        &lt;draw:SkiaGradient Type=&quot;Linear&quot; Angle=&quot;45&quot;&gt;
+            &lt;draw:SkiaGradient.Colors&gt;
+                &lt;Color&gt;#667eea&lt;/Color&gt;
+                &lt;Color&gt;#764ba2&lt;/Color&gt;
+            &lt;/draw:SkiaGradient.Colors&gt;
+        &lt;/draw:SkiaGradient&gt;
+    &lt;/draw:SkiaControl.FillGradient&gt;
+    
+    &lt;draw:SkiaLayout Type=&quot;Column&quot; Margin=&quot;24&quot; Spacing=&quot;12&quot;&gt;
+        &lt;draw:SkiaRichLabel
+            Text=&quot;🎨 Gradient Card&quot;
+            FontSize=&quot;20&quot;
+            FontAttributes=&quot;Bold&quot;
+            TextColor=&quot;White&quot; /&gt;
+        &lt;draw:SkiaLabel
+            Text=&quot;Tap to animate!&quot;
+            FontSize=&quot;12&quot;
+            TextColor=&quot;#ccccff&quot; /&gt;
+    &lt;/draw:SkiaLayout&gt;
+&lt;/draw:SkiaShape&gt;
+</code></pre>
+<pre><code class="lang-csharp">private void OnCardGestures(object sender, SkiaGesturesInfo e)
+{
+    if (sender is SkiaControl control)
+    {
+        if (e.Args.Type == TouchActionResult.Tapped)
+        {
+            e.Consumed = true;
+            
+            Task.Run(async () =&gt;
+            {
+                // Brighten gradient colors on tap
+                if (control is SkiaShape shape &amp;&amp; shape.FillGradient is SkiaGradient gradient)
+                {
+                    var original = gradient.Colors[0];
+                    var lighter = Color.FromRgba(
+                        Math.Min(1, original.Red * 1.5),
+                        Math.Min(1, original.Green * 1.5),
+                        Math.Min(1, original.Blue * 1.5),
+                        original.Alpha);
+                    
+                    gradient.Colors = new List&lt;Color&gt; { lighter, lighter };
+                    await Task.Delay(200);
+                    gradient.Colors = new List&lt;Color&gt; { original, original };
+                }
+            });
+        }
+    }
+}
+</code></pre>
+<h2 id="gesture-types">Gesture Types</h2>
+<p>The <code>e.Args.Type</code> field tells you what happened:</p>
+<ul>
+<li><strong><code>Tapped</code></strong>: Single tap/click</li>
+<li><strong><code>DoubleTapped</code></strong>: Double tap</li>
+<li><strong><code>LongPressing</code></strong>: Long press detected</li>
+<li><strong><code>Panning</code></strong>: Dragging/swiping</li>
+<li><strong><code>Up</code></strong>: Touch released (end of interaction)</li>
+<li><strong><code>Holding</code></strong>: Touch held down</li>
+</ul>
+<p>Example with multiple gesture types:</p>
+<pre><code class="lang-csharp">private void OnGestures(object sender, SkiaGesturesInfo e)
+{
+    var control = (SkiaControl)sender;
+    
+    switch (e.Args.Type)
+    {
+        case TouchActionResult.Tapped:
+            e.Consumed = true;
+            Task.Run(async () =&gt; await control.AnimateScaleTo(1.1, 100));
+            break;
+            
+        case TouchActionResult.LongPressing:
+            e.Consumed = true;
+            // Show context menu
+            break;
+            
+        case TouchActionResult.Panning:
+            e.Consumed = true;
+            // Drag the control
+            control.TranslationX += e.Args.Event.Distance.Delta.X / control.RenderingScale;
+            control.TranslationY += e.Args.Event.Distance.Delta.Y / control.RenderingScale;
+            break;
+            
+        case TouchActionResult.Up:
+            e.Consumed = true;
+            // End gesture - snap back to position
+            Task.Run(async () =&gt; await control.TranslateToAsync(0, 0, 200));
+            break;
+    }
+}
+</code></pre>
+<h2 id="button-taps-using-skiabutton">Button Taps: Using SkiaButton</h2>
+<p>For buttons, you can use the built-in <code>Tapped</code> event:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaButton 
+    Text=&quot;Click Me&quot;
+    Tapped=&quot;OnButtonTapped&quot; /&gt;
+</code></pre>
+<pre><code class="lang-csharp">private void OnButtonTapped(object sender, ControlTappedEventArgs e)
+{
+    // Handle button click
+    DisplayAlert(&quot;Tapped&quot;, &quot;Button was tapped!&quot;, &quot;OK&quot;);
+}
+</code></pre>
+<p>Or use MVVM binding with <code>AddGestures</code>:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaButton 
+    Text=&quot;Click Me&quot;
+    draw:AddGestures.CommandTapped=&quot;{Binding MyCommand}&quot; /&gt;
+</code></pre>
+<h2 id="drag-and-pan-operations">Drag and Pan Operations</h2>
+<p>For dragging/panning touch:</p>
+<pre><code class="lang-csharp">private void OnPan(object sender, SkiaGesturesInfo e)
+{
+    var control = (SkiaControl)sender;
+    
+    if (e.Args.Type == TouchActionResult.Panning)
+    {
+        e.Consumed = true;
+        
+        // Update position in real-time
+        var deltaX = e.Args.Event.Distance.Delta.X / control.RenderingScale;
+        var deltaY = e.Args.Event.Distance.Delta.Y / control.RenderingScale;
+        
+        control.TranslationX += deltaX;
+        control.TranslationY += deltaY;
+    }
+    else if (e.Args.Type == TouchActionResult.Up)
+    {
+        e.Consumed = true;
+        
+        // Animate back to rest position
+        Task.Run(async () =&gt;
+        {
+            await control.TranslateToAsync(0, 0, 300, Easing.SpringOut);
+        });
+    }
+}
+</code></pre>
+<h2 id="mvvm-pattern-with-commands">MVVM Pattern with Commands</h2>
+<p>For MVVM applications:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaShape 
+    Type=&quot;Rectangle&quot;
+    draw:AddGestures.CommandTapped=&quot;{Binding SelectItemCommand}&quot;
+    draw:AddGestures.CommandTappedParameter=&quot;{Binding .}&quot;
+    draw:AddGestures.AnimationTapped=&quot;Scale&quot;&gt;
+    
+    &lt;draw:SkiaLabel Text=&quot;{Binding Name}&quot; /&gt;
+&lt;/draw:SkiaShape&gt;
+</code></pre>
+<pre><code class="lang-csharp">// In your ViewModel
+public Command&lt;ItemModel&gt; SelectItemCommand { get; }
+
+public MyViewModel()
+{
+    SelectItemCommand = new Command&lt;ItemModel&gt;(item =&gt;
+    {
+        SelectedItem = item;
+        // Navigate or perform action
+    });
+}
+</code></pre>
+<p><strong>Built-in animations for <code>AnimationTapped</code>:</strong></p>
+<ul>
+<li><code>&quot;Scale&quot;</code> - Scale up then down</li>
+<li><code>&quot;Ripple&quot;</code> - Ripple effect</li>
+<li><code>&quot;Fade&quot;</code> - Fade in/out</li>
+</ul>
+<h2 id="gesture-locking-and-propagation">Gesture Locking and Propagation</h2>
+<p>Use <code>LockChildrenGestures</code> to control which gestures reach nested controls:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaLayout Type=&quot;Column&quot; LockChildrenGestures=&quot;PassTap&quot;&gt;
+    &lt;!-- Only tap gestures reach children, pan/swipe don't --&gt;
+    &lt;draw:SkiaShape Type=&quot;Rectangle&quot; ConsumeGestures=&quot;OnTap&quot; /&gt;
+&lt;/draw:SkiaLayout&gt;
+</code></pre>
+<p>Options:</p>
+<ul>
+<li><code>Enabled</code>: Children can't receive gestures</li>
+<li><code>Disabled</code>: All gestures pass through (default)</li>
+<li><code>PassTap</code>: Only tap/click events reach children</li>
+<li><code>PassTapAndLongPress</code>: Tap and long-press pass through</li>
+</ul>
+<h2 id="common-patterns">Common Patterns</h2>
+<h3 id="tap-feedback-scale-animation">Tap Feedback (Scale Animation)</h3>
+<pre><code class="lang-csharp">private void OnTap(object sender, SkiaGesturesInfo e)
+{
+    if (e.Args.Type == TouchActionResult.Tapped)
+    {
+        e.Consumed = true;
+        
+        Task.Run(async () =&gt;
+        {
+            var control = (SkiaControl)sender;
+            await control.ScaleTo(0.95, 100);
+            await control.ScaleTo(1.0, 100);
+        });
+    }
+}
+</code></pre>
+<h3 id="swipe-detection">Swipe Detection</h3>
+<pre><code class="lang-csharp">private void OnSwipe(object sender, SkiaGesturesInfo e)
+{
+    if (e.Args.Type == TouchActionResult.Up)
+    {
+        e.Consumed = true;
+        
+        // Check swipe distance and direction
+        var totalDistance = e.Args.Event.Distance.Total;
+        
+        if (Math.Abs(totalDistance.X) &gt; 100 &amp;&amp; Math.Abs(totalDistance.X) &gt; Math.Abs(totalDistance.Y))
+        {
+            // Horizontal swipe
+            if (totalDistance.X &gt; 0)
+            {
+                // Swiped right
+            }
+            else
+            {
+                // Swiped left
+            }
+        }
+    }
+}
+</code></pre>
+<h3 id="long-press-menu">Long Press Menu</h3>
+<pre><code class="lang-csharp">private void OnLongPress(object sender, SkiaGesturesInfo e)
+{
+    if (e.Args.Type == TouchActionResult.LongPressing)
+    {
+        e.Consumed = true;
+        
+        // Show context menu at gesture location
+        var position = new Point(e.Args.Event.Location.X, e.Args.Event.Location.Y);
+        ShowContextMenu(position);
+    }
+}
+</code></pre>
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ol>
+<li><strong>Use <code>ConsumeGestures</code> for most UI interactions</strong> - It's simple, clean, and no subclassing required</li>
+<li><strong>Keep handlers synchronous</strong> - Always use <code>Task.Run()</code> for async work like animations</li>
+<li><strong>Check gesture type with <code>e.Args.Type</code></strong> - This tells you what action occurred (Tapped, Panning, Up, etc.)</li>
+<li><strong>Set <code>e.Consumed = true</code></strong> - This prevents the gesture from bubbling to parent controls</li>
+<li><strong>Access gesture data from <code>e.Args.Event</code></strong> - Location, distance, pinch scale all available here</li>
+<li><strong>Use <code>AddGestures</code> for MVVM</strong> - When you need command binding instead of code-behind</li>
+<li><strong>Use <code>LockChildrenGestures</code> to manage propagation</strong> - Control which gestures reach nested controls</li>
+</ol>
+<p>For additional gesture utilities, see the helper methods in <a href="../../src/Maui/DrawnUi/Views/Canvas.cs#L1">Canvas.cs</a> and <a href="../../src/Shared/Draw/Base/SkiaControl.Shared.cs#L1">SkiaControl.Shared.cs</a> for <code>GetGesturePositionInsideControl()</code>, <code>GetGesturePositionInsideChild()</code>, and <code>CheckChildGestureHit()</code>.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/main/docs/articles/gestures.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Made by <a href="https://taublast.github.io/about/">Nick Kovalsky aka AppoMobi (@taublast)</a><script>(function(){try{const fix=function(){const brand=document.querySelector('a.navbar-brand');if(brand){brand.setAttribute('href','/');}document.querySelectorAll('a[href]').forEach(function(a){var href=a.getAttribute('href');if(!href||href.startsWith('http'))return;if(href==='index.html'||href==='/index.html'||href==='../index.html'){a.setAttribute('href','/');return;}if(href.endsWith('/articles/index.html')||href==='articles/index.html'||href==='../articles/index.html'){a.setAttribute('href','/articles/');return;}var m=href.match(/^(?:\.?\.?\/)?articles\/.*\/index\.html(.*)$/);if(m){var p=href.replace(/\/index\.html(.*)$/,'/');if(!p.startsWith('/')){p='/' + p.replace(/^\/?/,'');}a.setAttribute('href',p);}});};if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fix);}else{fix();}}catch(e){})();</script>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

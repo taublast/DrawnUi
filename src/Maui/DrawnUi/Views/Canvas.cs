@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Internals;
 using Size = Microsoft.Maui.Graphics.Size;
@@ -511,14 +510,9 @@ public class Canvas : DrawnView, IGestureListener
     protected DrawingContext Context;
 
     /// <summary>
-    /// Fixing error in gestures nuget TODO fix there
-    /// </summary>
-    private PointF _panningStartedAt;
-
-    /// <summary>
     /// Got input during current pass
     /// </summary>
-    public ConcurrentBag<ISkiaGestureListener> ReceivedInput { get; } = new();
+    public HashSet<ISkiaGestureListener> ReceivedInput { get; } = new();
 
     /// <summary>
     /// Have consumed input in previous or current pass. To notify them about UP (release) even if they don't get it via touch.
@@ -542,10 +536,22 @@ public class Canvas : DrawnView, IGestureListener
     private bool _hadHover;
     private bool _checkHover;
 
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    void AddHadInput(ISkiaGestureListener consumed, SkiaGesturesParameters args)
+    {
+        //if (args.Type == TouchActionResult.Tapped)
+        //{
+        //    var stop = true;
+        //}
+        HadInput.TryAdd(consumed.Uid, consumed);
+    }
+
     protected virtual void ProcessGestures(SkiaGesturesParameters args)
     {
         lock (LockIterateListeners)
         {
+            //clear HadInput on new gesture sequence start
             if (args.Type == TouchActionResult.Down && HadInput.Count > 0)
             {
                 HadInput.Clear();
@@ -555,42 +561,39 @@ public class Canvas : DrawnView, IGestureListener
             _hadHover = false;
 
             ISkiaGestureListener consumed = null;
-            ISkiaGestureListener wasConsumed = null;
+            ISkiaGestureListener alreadyConsumed = null;
 
             IsHiddenInViewTree = false; //if we get a gesture, we are visible by design
             bool manageChildFocus = false;
 
-            var adjust = new GestureEventProcessingInfo(args.Event.Location.ToSKPoint(), SKPoint.Empty, SKPoint.Empty,
-                wasConsumed);
+            var touchLocation = args.Event.Location.ToSKPoint();
 
             //first process those who already had input
             bool secondPass = true;
-            if (HadInput.Count > 0)
+            if (HadInput.Count > 0 && IsSavedGesture(args.Type))
             {
-                if (IsSavedGesture(args.Type))
+                var adjust = new GestureEventProcessingInfo(touchLocation, SKPoint.Empty, SKPoint.Empty, null);
+
+                foreach (var hadInput in HadInput.Values)
                 {
-                    foreach (var hadInput in HadInput.Values.ToList())
+                    if (!hadInput.CanDraw || hadInput.InputTransparent ||
+                        hadInput.GestureListenerRegistrationTime == null)
                     {
-                        if (!hadInput.CanDraw || hadInput.InputTransparent ||
-                            hadInput.GestureListenerRegistrationTime == null)
+                        continue;
+                    }
+
+                    consumed = hadInput.OnSkiaGestureEvent(args, adjust);
+
+                    if (consumed != null)
+                    {
+                        if (alreadyConsumed == null)
+                            alreadyConsumed = consumed;
+
+                        if (args.Type != TouchActionResult.Up)
                         {
-                            continue;
-                        }
-
-                        consumed = hadInput.OnSkiaGestureEvent(args, adjust);
-
-                        if (consumed != null)
-                        {
-                            if (wasConsumed == null)
-                                wasConsumed = consumed;
-
-                            if (args.Type != TouchActionResult.Up)
-                            {
-                                secondPass = false;
-                                HadInput.TryAdd(consumed.Uid, consumed);
-                                //Debug.WriteLine($"[Canvas] +HadInput: {consumed} for {args.Type}");
-                                break;
-                            }
+                            secondPass = false;
+                            AddHadInput(consumed, args);
+                            break;
                         }
                     }
                 }
@@ -599,7 +602,9 @@ public class Canvas : DrawnView, IGestureListener
             //USUAL PROCESSING
             if (secondPass)
             {
-                //var listeners = CollectionsMarshal.AsSpan(GestureListeners.GetListeners());
+                //create adjust with alreadyConsumed info from first pass (relevant for Up events)
+                var adjust = new GestureEventProcessingInfo(touchLocation, SKPoint.Empty, SKPoint.Empty, alreadyConsumed);
+
                 foreach (var listener in GestureListeners.GetListeners())
                 {
                     if (listener == null || !listener.CanDraw || listener.InputTransparent)
@@ -607,11 +612,9 @@ public class Canvas : DrawnView, IGestureListener
                         continue;
                     }
 
-                    if (HadInput.Values.Contains(listener) && IsSavedGesture(args.Type))
+                    //skip listeners already processed in first pass
+                    if (HadInput.ContainsKey(listener.Uid) && IsSavedGesture(args.Type))
                     {
-                        if (args.Type != TouchActionResult.Up)
-                            break;
-
                         continue;
                     }
 
@@ -625,7 +628,6 @@ public class Canvas : DrawnView, IGestureListener
 
                     if (forChild)
                     {
-                        //Debug.WriteLine($"[Passed] to {listener}");
                         if (manageChildFocus && listener == FocusedChild)
                         {
                             manageChildFocus = false;
@@ -641,8 +643,7 @@ public class Canvas : DrawnView, IGestureListener
                         {
                             if (args.Type != TouchActionResult.Up)
                             {
-                                HadInput.TryAdd(listener.Uid, consumed);
-                                //Debug.WriteLine($"[Canvas] +HadInput: {listener} for {args.Type}");
+                                AddHadInput(consumed, args);
                             }
 
                             break;
@@ -680,31 +681,22 @@ public class Canvas : DrawnView, IGestureListener
                 }
             }
 
-            if (args.Type == TouchActionResult.Up)
+            //clear HadInput on gesture sequence end
+            if (args.Type == TouchActionResult.Up && HadInput.Count > 0)
             {
-                //if (consumed != null)
-                //{
-                //    Debug.WriteLine(
-                //        $"[Touch] {args.Type} ({args.Event.NumberOfTouches}) consumed by {consumed} {consumed.Tag}");
-                //}
-
-                if (HadInput.Count > 0)
-                {
-                    HadInput.Clear();
-                }
+                HadInput.Clear();
             }
 
+            //manage focus changes
             if (args.Type == TouchActionResult.Up || FocusedChild != null)
             {
-                if (manageChildFocus || FocusedChild != null
-                    && consumed != FocusedChild && !FocusedChild.LockFocus)
+                if (manageChildFocus || (FocusedChild != null && consumed != FocusedChild && !FocusedChild.LockFocus))
                 {
                     System.Diagnostics.Debug.WriteLine(
                         $"[Canvas] set FocusedChild to '{consumed}' we had '{FocusedChild}' and consumed was '{consumed}'");
                     FocusedChild = consumed;
                 }
             }
-
 
             if (ReceivedInput.Count > 0)
             {
@@ -724,12 +716,9 @@ public class Canvas : DrawnView, IGestureListener
                 }
             }
 
-            if (_checkHover)
+            if (_checkHover && !_hadHover)
             {
-                if (!_hadHover)
-                {
-                    this.HasHover = null;
-                }
+                this.HasHover = null;
             }
         }
     }
@@ -780,7 +769,6 @@ public class Canvas : DrawnView, IGestureListener
         return true;
     }
 
-    private SKPoint _panningOffset;
     private SKPoint _PressedPosition;
 
     public event EventHandler Tapped;
@@ -870,15 +858,7 @@ public class Canvas : DrawnView, IGestureListener
                 //filter first panning movement on super sensitive screens
                 if (Math.Abs(args1.Distance.Total.X) < threshold && Math.Abs(args1.Distance.Total.Y) < threshold)
                 {
-                    _panningOffset = SKPoint.Empty;
-                    //Debug.WriteLine($"[Canvas] Blocked micro-pan");
                     return;
-                }
-
-                //Debug.WriteLine($"[Canvas] pan {args1.Distance.Total.X / RenderingScale:0.0} {args1.Distance.Total.Y / RenderingScale:0.0} pts");
-                if (_panningOffset == SKPoint.Empty)
-                {
-                    _panningOffset = args1.Distance.Total.ToSKPoint();
                 }
 
                 _isPanning = true;
@@ -969,6 +949,162 @@ public class Canvas : DrawnView, IGestureListener
 
         Repaint();
     }
+
+    /// <summary>
+    /// IGestureListener implementation
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="args1"></param>
+    /// <param name="touchAction"></param>
+    public virtual void OnGestureEventOld(TouchActionType type, TouchActionEventArgs args1, TouchActionResult touchAction)
+    {
+        //Debug.WriteLine($"[Canvas] {touchAction} {args1.Location}");
+
+        if (!CanDraw)
+        {
+            // if we got a gesture looks like we went back to visibility again
+            // but do NOT process gestures received when we are not rendering this view
+            // could break any presumed logic
+            NeedCheckParentVisibility = true;
+            Repaint();
+            return;
+        }
+
+#if ANDROID //todo move all this fun to gestures lib now:
+        // on some devices like galaxy the screen is too sensitive for panning
+        // so it send micro-panning gestures when the finger just went down to screen
+        // like not moving yet so we filter micro-pan
+        // at the same time those screens detect pan instead of tap inside getsure lib
+        // so this is a specific android workaround, to be moved to gestures lib
+        if (touchAction == TouchActionResult.Tapped)
+        {
+            _hadTap = true;
+        }
+        else if (touchAction == TouchActionResult.LongPressing)
+        {
+            _hadLong = true;
+            _longPressedPointers.Add(args1.Id); // mark this pointer as long-pressed
+        }
+        else if (touchAction == TouchActionResult.Down)
+        {
+            _hadLong = false;
+            _hadTap = false;
+            _blockedPanning = false;
+        }
+        else if (touchAction == TouchActionResult.Up)
+        {
+            _longPressedPointers.Remove(args1.Id); // clear long-press state
+        }
+        else if (touchAction == TouchActionResult.Panning)
+        {
+            //filter micro-gestures
+            if ((Math.Abs(args1.Distance.Delta.X) < 1 && Math.Abs(args1.Distance.Delta.Y) < 1)
+                || (Math.Abs(args1.Distance.Velocity.X / RenderingScale) < 1 &&
+                    Math.Abs(args1.Distance.Velocity.Y / RenderingScale) < 1))
+            {
+                _blockedPanning = true;
+                return;
+            }
+
+            var threshold = FirstPanThreshold * RenderingScale;
+
+            if (!_isPanning)
+            {
+                //filter first panning movement on super sensitive screens
+                if (Math.Abs(args1.Distance.Total.X) < threshold && Math.Abs(args1.Distance.Total.Y) < threshold)
+                {
+                    return;
+                }
+
+                _isPanning = true;
+            }
+        }
+#endif
+
+        if (touchAction == TouchActionResult.Tapped)
+        {
+            Tapped?.Invoke(this, EventArgs.Empty);
+        }
+
+        if (touchAction == TouchActionResult.Down)
+        {
+            _isPanning = false;
+            if (AttachedTouchEffect != null)
+            {
+                AttachedTouchEffect.WIllLock = ShareLockState.Initial;
+            }
+        }
+
+        var args = SkiaGesturesParameters.Create(touchAction, args1);
+
+        if (GesturesDebugColor.Alpha > 0)
+        {
+            if (DebugPointer == null)
+            {
+                DebugPointer = CreateDebugPointer();
+            }
+
+            if (args.Type == TouchActionResult.Down)
+            {
+                _debugIsPressed = true;
+                _debugIsDown = true;
+                DebugPointer.IsVisible = true;
+            }
+            else
+            {
+                _debugIsDown = false;
+                if (args.Type == TouchActionResult.Up)
+                {
+                    _debugIsPressed = false;
+                    _PressedPosition = SKPoint.Empty;
+                }
+            }
+
+            if (_debugIsPressed)
+            {
+                //pixels already
+                _PressedPosition = new(args.Event.Location.X, args.Event.Location.Y);
+            }
+        }
+
+        //this is intended to not lose gestures when fps drops and avoid crashes in double-buffering
+        PostponeExecutionBeforeDraw(() =>
+        {
+            try
+            {
+                ProcessGestures(args);
+            }
+            catch (Exception e)
+            {
+                Super.Log(e);
+            }
+        }, LongKeyGenerator.Next());
+
+        //filter micro-pan
+        bool fixMicroPan = _blockedPanning && !_hadTap && !_isPanning && !_hadLong;
+
+        // allow taps from other fingers if some pointer is in long-press state
+        bool hadPalm = touchAction == TouchActionResult.Up && _longPressedPointers.Any(id => id != args1.Id);
+
+        if (fixMicroPan || hadPalm)
+        {
+            PostponeExecutionBeforeDraw(() =>
+            {
+                try
+                {
+                    var tapped = SkiaGesturesParameters.Create(TouchActionResult.Tapped, args1);
+                    ProcessGestures(tapped);
+                }
+                catch (Exception e)
+                {
+                    Super.Log(e);
+                }
+            }, LongKeyGenerator.Next());
+        }
+
+        Repaint();
+    }
+
 
     #endregion
 
@@ -1234,4 +1370,142 @@ public class Canvas : DrawnView, IGestureListener
     }
 
     #endregion
+
+    /// <summary>
+    /// Returns the point in the local coordinate system of the view (relative to its Top/Left).
+    /// This works for any view on the canvas, even if it is not a direct child of this control.
+    /// It recursively traverses the visual tree to find the view and calculates the coordinates
+    /// taking into account all transforms and scroll offsets along the path.
+    /// Returns points (DIPs).
+    /// </summary>
+    /// <param name="view"></param>
+    /// <param name="screenPointPixels"></param>
+    /// <returns></returns>
+    public virtual SKPoint GetGesturePositionInsideControl(SkiaControl view, SKPoint screenPointPixels)
+    {
+        SKPoint localPoint = SKPoint.Empty;
+
+        if (view != null && Content is SkiaControl content)
+        {
+
+            // 1. Transform from Canvas space to Content space
+            // Assuming Canvas Content is at (0,0) with no transform for now, or we check generic Content props
+            if (content.HasTransform && content.RenderTransformMatrix.TryInvert(out SKMatrix inverse))
+            {
+                localPoint = inverse.MapPoint(screenPointPixels);
+            }
+            else
+            {
+                // Simple translation subtraction if Content is offset
+                // Using X/Y might be absolute, so we be careful. 
+                // Content.X is absolute. Canvas starts at 0,0. So X is the offset.
+                localPoint = new SKPoint(
+                    screenPointPixels.X - (float)Content.X * RenderingScale,
+                    screenPointPixels.Y - (float)Content.Y * RenderingScale);
+            }
+
+            if (Content == view)
+            {
+                return new SKPoint(localPoint.X / RenderingScale, localPoint.Y / RenderingScale);
+            }
+
+            var found = FindViewCoordinatesRecursive(content, view, localPoint);
+            if (found.HasValue)
+            {
+                return found.Value;
+            }
+        }
+
+        return localPoint;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="current"></param>
+    /// <param name="target"></param>
+    /// <param name="pointInCurrent"></param>
+    /// <returns></returns>
+    protected virtual SKPoint? FindViewCoordinatesRecursive(SkiaControl current, SkiaControl target, SKPoint pointInCurrent)
+    {
+        // Apply "TranslateInputCoords" (scrolling) of 'current' container from cache
+        var thisOffset = current.TranslateInputCoords(SKPoint.Empty);
+        var contentPoint = new SKPoint(pointInCurrent.X + thisOffset.X, pointInCurrent.Y + thisOffset.Y);
+
+        // Use RenderTree if available as it contains the most accurate layout/hit-test information
+        if (current.RenderTree != null)
+        {
+            var asSpan = CollectionsMarshal.AsSpan(current.RenderTree);
+            for (int i = 0; i < asSpan.Length; i++)
+            {
+                var node = asSpan[i];
+                var child = node.Control;
+
+                if (child == null) continue;
+
+                SKPoint childPoint;
+
+                // Logic must match IsGestureForChild / CheckChildHit
+                if (child.HasTransform && child.RenderTransformMatrix.TryInvert(out SKMatrix inverse))
+                {
+                    childPoint = inverse.MapPoint(contentPoint);
+                }
+                else
+                {
+                    // Standard layout offset using the RenderTree HitRect
+                    childPoint = new SKPoint(
+                        contentPoint.X - node.HitRect.Left,
+                        contentPoint.Y - node.HitRect.Top);
+                }
+
+                if (child == target)
+                {
+                    return new SKPoint(childPoint.X / child.RenderingScale, childPoint.Y / child.RenderingScale);
+                }
+
+                // Recurse
+                var result = FindViewCoordinatesRecursive(child, target, childPoint);
+                if (result.HasValue) return result.Value;
+            }
+        }
+        // Fallback for controls that don't use RenderTree but have Children (e.g. simple containers?)
+        // Note: Most interactive layouts should use RenderTree.
+        else if (current.Children?.Count > 0)
+        {
+            foreach (var child in current.Children)
+            {
+                // Fallback logic for transforms/positions without RenderTree context
+                // We have to rely on child properties which might be less accurate for hit-testing 
+                // if complex custom layouting is used without RenderTree.
+                SKPoint childPoint;
+
+                if (child.HasTransform && child.RenderTransformMatrix.TryInvert(out SKMatrix inverse))
+                {
+                    childPoint = inverse.MapPoint(contentPoint);
+                }
+                else
+                {
+                    // Determine relative offset from parent
+                    // If child.X/Y are absolute, and current.X/Y are absolute:
+                    // offset = child.X - current.X
+                    var offsetX = (child.X - current.X) * current.RenderingScale;
+                    var offsetY = (child.Y - current.Y) * current.RenderingScale;
+
+                    childPoint = new SKPoint(
+                        contentPoint.X - (float)offsetX,
+                        contentPoint.Y - (float)offsetY);
+                }
+
+                if (child == target)
+                {
+                    return new SKPoint(childPoint.X / child.RenderingScale, childPoint.Y / child.RenderingScale);
+                }
+
+                var result = FindViewCoordinatesRecursive(child, target, childPoint);
+                if (result.HasValue) return result.Value;
+            }
+        }
+
+        return null;
+    }
 }

@@ -686,6 +686,12 @@ public partial class SkiaCamera : SkiaControl
             // Update state and notify success
             IsRecordingVideo = false;
             IsBusy = false; // Release busy state after successful muxing
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
         }
         catch (Exception ex)
         {
@@ -696,6 +702,13 @@ public partial class SkiaCamera : SkiaControl
 
             IsRecordingVideo = false;
             IsBusy = false; // Release busy state on error
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
+
             VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
@@ -750,6 +763,12 @@ public partial class SkiaCamera : SkiaControl
             await encoder?.AbortAsync();
 
             IsRecordingVideo = false;
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
         }
         catch (Exception ex)
         {
@@ -759,6 +778,13 @@ public partial class SkiaCamera : SkiaControl
             _captureVideoEncoder = null;
 
             IsRecordingVideo = false;
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
+
             //VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
@@ -771,6 +797,9 @@ public partial class SkiaCamera : SkiaControl
 
     private async Task StartRealtimeVideoProcessing()
     {
+        // Stop preview audio - recording will take over with its own audio capture
+        StopPreviewAudioCapture();
+
         // Create platform-specific encoder with existing GRContext (GPU path)
         // BUGFIX: Passing GRContext from the UI thread causes freeze/deadlock during window resize because the context 
         // is destroyed/recreated while the background encoder task is trying to use it. 
@@ -829,12 +858,20 @@ public partial class SkiaCamera : SkiaControl
             _audioCapture = new AudioGraphCapture();
             _audioCapture.SampleAvailable += OnAudioSampleAvailable;
             bool audioStarted = await _audioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
-            
+
+            // CRITICAL: Calculate audio timestamp offset immediately after audio capture starts
+            // Audio timestamps are relative to when AudioGraphCapture started, but video timestamps
+            // are relative to _captureVideoStartTime which was set BEFORE audio initialization.
+            // This offset corrects for the delay so audio and video timestamps align.
+            var audioStartTime = DateTime.Now;
+            var audioTimestampOffset = audioStartTime - _captureVideoStartTime;
+
             if (audioStarted)
             {
                 Debug.WriteLine($"[StartRealtimeVideoProcessing] AudioGraph capture started successfully");
                 Debug.WriteLine($"[StartRealtimeVideoProcessing] AudioGraph actual format: {_audioCapture.SampleRate}Hz, {_audioCapture.Channels}ch");
-                
+                Debug.WriteLine($"[StartRealtimeVideoProcessing] Audio timestamp offset: {audioTimestampOffset.TotalMilliseconds:F1}ms");
+
                 // Configure encoder with AudioGraph's ACTUAL audio parameters
                 if (_captureVideoEncoder is WindowsCaptureVideoEncoder winEncoder)
                 {
@@ -844,6 +881,10 @@ public partial class SkiaCamera : SkiaControl
                         _audioCapture.Channels,
                         isFloat: false  // AudioGraphCapture converts float32 to PCM16
                     );
+
+                    // Set the audio timestamp offset to align audio with video time base
+                    long offsetNs = (long)(audioTimestampOffset.TotalSeconds * 1_000_000_000);
+                    winEncoder.SetAudioTimestampOffset(offsetNs);
 
                     // Apply codec selection if set
                     if (AudioCodecIndex >= 0)
@@ -1029,6 +1070,15 @@ public partial class SkiaCamera : SkiaControl
         if (IsBusy)
             return;
 
+        // Handle audio-only recording (RecordVideo=false)
+        if (!RecordVideo)
+        {
+            if (!RecordAudio)
+                throw new InvalidOperationException("RecordAudio must be true when RecordVideo is false");
+            await StartAudioOnlyRecording();
+            return;
+        }
+
         Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
 
         try
@@ -1184,13 +1234,154 @@ public partial class SkiaCamera : SkiaControl
 
     private void OnAudioSampleAvailable(object sender, AudioSample sample)
     {
-        WriteAudioSample(sample);
-    }
+        var useSample = OnAudioSampleAvailable(sample);
 
+        WriteAudioSample(useSample);
+    }
 
     public virtual void WriteAudioSample(AudioSample sample)
     {
         _captureVideoEncoder?.WriteAudio(sample);
     }
+
+    #region Preview Audio Capture
+
+    private void OnPreviewAudioSampleAvailable(object sender, AudioSample sample)
+    {
+        // Lightweight - just fire the event, no recording logic
+        OnAudioSampleAvailable(sample);
+    }
+
+    partial void StartPreviewAudioCapture()
+    {
+        if (_previewAudioCapture != null || !RecordAudio)
+            return;
+
+        Task.Run(async () =>
+        {
+            try
+            {
+                _previewAudioCapture = new AudioGraphCapture();
+                _previewAudioCapture.SampleAvailable += OnPreviewAudioSampleAvailable;
+                var started = await _previewAudioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
+                if (!started)
+                {
+                    Debug.WriteLine("[SkiaCamera.Windows] Preview audio capture failed to start");
+                    _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
+                    DisposeObject(_previewAudioCapture);
+                    _previewAudioCapture = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera.Windows] Preview audio capture error: {ex.Message}");
+                if (_previewAudioCapture != null)
+                {
+                    _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
+                    DisposeObject(_previewAudioCapture);
+                    _previewAudioCapture = null;
+                }
+                _ = Abort();
+            }
+        });
+    }
+
+    partial void StopPreviewAudioCapture()
+    {
+        if (_previewAudioCapture == null)
+            return;
+
+        try
+        {
+            _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
+            _ = _previewAudioCapture.StopAsync();
+            _previewAudioCapture.Dispose();
+            _previewAudioCapture = null;
+            Debug.WriteLine("[SkiaCamera.Windows] Preview audio capture stopped");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera.Windows] Error stopping preview audio: {ex.Message}");
+        }
+    }
+
+    #endregion
+
+    #region AUDIO-ONLY RECORDING
+
+    private IAudioCapture _audioOnlyCapture;
+
+    private partial void CreateAudioOnlyEncoder(out IAudioOnlyEncoder encoder)
+    {
+        encoder = new AudioOnlyEncoderWindows();
+    }
+
+    private partial void StartAudioOnlyCapture(int sampleRate, int channels, out Task task)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        task = tcs.Task;
+
+        Task.Run(async () =>
+        {
+            try
+            {
+                // Stop preview audio capture first
+                StopPreviewAudioCapture();
+
+                _audioOnlyCapture = new AudioGraphCapture();
+                _audioOnlyCapture.SampleAvailable += OnAudioOnlySampleAvailable;
+                var started = await _audioOnlyCapture.StartAsync(sampleRate, channels, AudioBitDepth, AudioDeviceIndex);
+                if (started)
+                {
+                    Debug.WriteLine($"[SkiaCamera.Windows] Audio-only capture started: {_audioOnlyCapture.SampleRate}Hz, {_audioOnlyCapture.Channels}ch");
+                }
+                else
+                {
+                    Debug.WriteLine("[SkiaCamera.Windows] Audio-only capture failed to start");
+                    _audioOnlyCapture.SampleAvailable -= OnAudioOnlySampleAvailable;
+                    _audioOnlyCapture.Dispose();
+                    _audioOnlyCapture = null;
+                }
+                tcs.TrySetResult(started);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera.Windows] Audio-only capture error: {ex.Message}");
+                tcs.TrySetException(ex);
+            }
+        });
+    }
+
+    private partial void StopAudioOnlyCapture(out Task task)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        task = tcs.Task;
+
+        if (_audioOnlyCapture == null)
+        {
+            tcs.TrySetResult(true);
+            return;
+        }
+
+        Task.Run(async () =>
+        {
+            try
+            {
+                _audioOnlyCapture.SampleAvailable -= OnAudioOnlySampleAvailable;
+                await _audioOnlyCapture.StopAsync();
+                _audioOnlyCapture.Dispose();
+                _audioOnlyCapture = null;
+                Debug.WriteLine("[SkiaCamera.Windows] Audio-only capture stopped");
+                tcs.TrySetResult(true);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera.Windows] Error stopping audio-only capture: {ex.Message}");
+                tcs.TrySetException(ex);
+            }
+        });
+    }
+
+    #endregion
 }
 

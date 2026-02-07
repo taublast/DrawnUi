@@ -1,7 +1,13 @@
 ﻿namespace DrawnUi.Draw;
 
+[DebuggerDisplay("{ToString()}")]
 public struct MeasureRequest
 {
+    public override string ToString()
+    {
+        return $"{WidthRequest},{HeightRequest} at {Destination} scale {Scale} same {IsSame}";
+    }
+
     public static MeasureRequest Empty = new MeasureRequest();
 
     public MeasureRequest(float width, float height, float scale)

@@ -142,6 +142,8 @@ items:
   - DrawnUi.Draw.SkiaLayout.SetMeasured(System.Single,System.Single,System.Boolean,System.Boolean,System.Single)
   - DrawnUi.Draw.SkiaLayout.RecyclingTemplateProperty
   - DrawnUi.Draw.SkiaLayout.RecyclingTemplate
+  - DrawnUi.Draw.SkiaLayout.Invert
+  - DrawnUi.Draw.SkiaLayout.InvertProperty
   - DrawnUi.Draw.SkiaLayout.TemplatedHeaderProperty
   - DrawnUi.Draw.SkiaLayout.TemplatedHeader
   - DrawnUi.Draw.SkiaLayout.TemplatedFooterProperty
@@ -378,7 +380,7 @@ items:
   - DrawnUi.Draw.SkiaControl.EffectRenderers
   - DrawnUi.Draw.SkiaControl.EffectImageFilter
   - DrawnUi.Draw.SkiaControl.EffectColorFilter
-  - DrawnUi.Draw.SkiaControl.EffectPostRenderer
+  - DrawnUi.Draw.SkiaControl.EffectPostRenderers
   - DrawnUi.Draw.SkiaControl.VisualEffectsProperty
   - DrawnUi.Draw.SkiaControl.VisualEffects
   - DrawnUi.Draw.SkiaControl.DisableEffectsProperty
@@ -494,6 +496,8 @@ items:
   - DrawnUi.Draw.SkiaControl.Tapped
   - DrawnUi.Draw.SkiaControl.ConsumeGestures
   - DrawnUi.Draw.SkiaControl.OnChildTapped(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelow
   - DrawnUi.Draw.SkiaControl.UpdateLocks
@@ -671,6 +675,7 @@ items:
   - DrawnUi.Draw.SkiaControl.Layout(DrawnUi.Draw.DrawingContext,System.Single,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.Layout(DrawnUi.Draw.DrawingContext,System.Int32,System.Int32,System.Int32,System.Int32)
   - DrawnUi.Draw.SkiaControl.Arrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  - DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.PostArrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureChild(DrawnUi.Draw.SkiaControl,System.Double,System.Double,System.Single)
   - DrawnUi.Draw.SkiaControl.MeasureContent(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl},SkiaSharp.SKRect,System.Single)
@@ -863,6 +868,8 @@ items:
   - DrawnUi.Draw.SkiaControl.HasItemTemplate
   - DrawnUi.Draw.SkiaControl.GesturesEffect
   - DrawnUi.Draw.SkiaControl.RescaleAspect(System.Single,System.Single,SkiaSharp.SKRect,DrawnUi.Draw.TransformAspect)
+  - DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(System.Single)
+  - DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(System.Single)
   - DrawnUi.Draw.SkiaControl.Random
   - DrawnUi.Draw.SkiaControl.LastArrangedInside
   - DrawnUi.Draw.SkiaControl._arrangedViewportHeightLimit
@@ -3693,6 +3700,20 @@ references:
   name: RecyclingTemplate
   nameWithType: SkiaLayout.RecyclingTemplate
   fullName: DrawnUi.Draw.SkiaLayout.RecyclingTemplate
+- uid: DrawnUi.Draw.SkiaLayout.Invert
+  commentId: P:DrawnUi.Draw.SkiaLayout.Invert
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_Invert
+  name: Invert
+  nameWithType: SkiaLayout.Invert
+  fullName: DrawnUi.Draw.SkiaLayout.Invert
+- uid: DrawnUi.Draw.SkiaLayout.InvertProperty
+  commentId: F:DrawnUi.Draw.SkiaLayout.InvertProperty
+  parent: DrawnUi.Draw.SkiaLayout
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_InvertProperty
+  name: InvertProperty
+  nameWithType: SkiaLayout.InvertProperty
+  fullName: DrawnUi.Draw.SkiaLayout.InvertProperty
 - uid: DrawnUi.Draw.SkiaLayout.TemplatedHeaderProperty
   commentId: F:DrawnUi.Draw.SkiaLayout.TemplatedHeaderProperty
   parent: DrawnUi.Draw.SkiaLayout
@@ -8492,13 +8513,13 @@ references:
   name: EffectColorFilter
   nameWithType: SkiaControl.EffectColorFilter
   fullName: DrawnUi.Draw.SkiaControl.EffectColorFilter
-- uid: DrawnUi.Draw.SkiaControl.EffectPostRenderer
-  commentId: F:DrawnUi.Draw.SkiaControl.EffectPostRenderer
+- uid: DrawnUi.Draw.SkiaControl.EffectPostRenderers
+  commentId: F:DrawnUi.Draw.SkiaControl.EffectPostRenderers
   parent: DrawnUi.Draw.SkiaControl
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_EffectPostRenderer
-  name: EffectPostRenderer
-  nameWithType: SkiaControl.EffectPostRenderer
-  fullName: DrawnUi.Draw.SkiaControl.EffectPostRenderer
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_EffectPostRenderers
+  name: EffectPostRenderers
+  nameWithType: SkiaControl.EffectPostRenderers
+  fullName: DrawnUi.Draw.SkiaControl.EffectPostRenderers
 - uid: DrawnUi.Draw.SkiaControl.VisualEffectsProperty
   commentId: F:DrawnUi.Draw.SkiaControl.VisualEffectsProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -11563,6 +11584,96 @@ references:
     name: GestureEventProcessingInfo
     href: DrawnUi.Draw.GestureEventProcessingInfo.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetGesturePositionInsideChild_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  name: GetGesturePositionInsideChild(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)
+  nameWithType: SkiaControl.GetGesturePositionInsideChild(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: GetGesturePositionInsideChild
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetGesturePositionInsideChild_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: GetGesturePositionInsideChild
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetGesturePositionInsideChild_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckChildGestureHit_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  name: CheckChildGestureHit(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)
+  nameWithType: SkiaControl.CheckChildGestureHit(SkiaControl, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: CheckChildGestureHit
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckChildGestureHit_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: CheckChildGestureHit
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckChildGestureHit_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   commentId: F:DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -14297,6 +14408,73 @@ references:
   - uid: DrawnUi.Draw.SkiaControl.Arrange(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
     name: Arrange
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_Arrange_SkiaSharp_SKRect_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ArrangeCache_SkiaSharp_SKRect_System_Single_System_Single_System_Single_
+  name: ArrangeCache(SKRect, float, float, float)
+  nameWithType: SkiaControl.ArrangeCache(SKRect, float, float, float)
+  fullName: DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect, float, float, float)
+  nameWithType.vb: SkiaControl.ArrangeCache(SKRect, Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect, Single, Single, Single)
+  name.vb: ArrangeCache(SKRect, Single, Single, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+    name: ArrangeCache
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ArrangeCache_SkiaSharp_SKRect_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.ArrangeCache(SkiaSharp.SKRect,System.Single,System.Single,System.Single)
+    name: ArrangeCache
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ArrangeCache_SkiaSharp_SKRect_System_Single_System_Single_System_Single_
   - name: (
   - uid: SkiaSharp.SKRect
     name: SKRect
@@ -18990,6 +19168,68 @@ references:
   - uid: DrawnUi.Draw.TransformAspect
     name: TransformAspect
     href: DrawnUi.Draw.TransformAspect.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetWidthRequestPixelsWIthMargins_System_Single_
+  name: GetWidthRequestPixelsWIthMargins(float)
+  nameWithType: SkiaControl.GetWidthRequestPixelsWIthMargins(float)
+  fullName: DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(float)
+  nameWithType.vb: SkiaControl.GetWidthRequestPixelsWIthMargins(Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(Single)
+  name.vb: GetWidthRequestPixelsWIthMargins(Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(System.Single)
+    name: GetWidthRequestPixelsWIthMargins
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetWidthRequestPixelsWIthMargins_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.GetWidthRequestPixelsWIthMargins(System.Single)
+    name: GetWidthRequestPixelsWIthMargins
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetWidthRequestPixelsWIthMargins_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetHeightRequestPixelsWIthMargins_System_Single_
+  name: GetHeightRequestPixelsWIthMargins(float)
+  nameWithType: SkiaControl.GetHeightRequestPixelsWIthMargins(float)
+  fullName: DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(float)
+  nameWithType.vb: SkiaControl.GetHeightRequestPixelsWIthMargins(Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(Single)
+  name.vb: GetHeightRequestPixelsWIthMargins(Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(System.Single)
+    name: GetHeightRequestPixelsWIthMargins
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetHeightRequestPixelsWIthMargins_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.GetHeightRequestPixelsWIthMargins(System.Single)
+    name: GetHeightRequestPixelsWIthMargins
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetHeightRequestPixelsWIthMargins_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.Random
   commentId: F:DrawnUi.Draw.SkiaControl.Random

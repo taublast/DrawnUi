@@ -76,6 +76,10 @@ namespace DrawnUi.Camera
         private bool _isDisposed;
         private volatile bool _frozen;      // Stop accepting new frames (for safe processing)
 
+        // Drain coordination: prevents Reset()/Dispose() from invalidating buffers mid-enumeration
+        private int _activeFrameEnumerations;
+        private bool _disposePending;
+
         /// <summary>
         /// Initializes the two-buffer system with pre-allocated buffers.
         /// </summary>
@@ -180,11 +184,15 @@ namespace DrawnUi.Camera
         /// <param name="timestamp">Frame presentation time (for duration calculation)</param>
         public void AppendEncodedFrame(byte[] nalUnits, int size, TimeSpan timestamp, bool isKeyFrame = false)
         {
-            if (_isDisposed || nalUnits == null || size == 0)
+            if (_isDisposed || _frozen || nalUnits == null || size == 0)
                 return;
 
             lock (_swapLock)
             {
+                // Re-check under lock to close Freeze() race window
+                if (_isDisposed || _frozen)
+                    return;
+
                 // Get current buffer and state
                 byte[] currentBuffer = _currentBuffer == 0 ? _bufferA : _bufferB;
                 ref BufferState currentState = ref _currentBuffer == 0 ? ref _stateA : ref _stateB;
@@ -311,6 +319,14 @@ namespace DrawnUi.Camera
 
             lock (_swapLock)
             {
+                // Re-check under lock to close Freeze() race window
+                if (_isDisposed || _frozen)
+                {
+                    if (_frozen)
+                        System.Diagnostics.Debug.WriteLine("[PreRecording] REJECTED (in-lock): Buffer is frozen for processing!");
+                    return;
+                }
+
                 // Get current buffer and state
                 byte[] currentBuffer = _currentBuffer == 0 ? _bufferA : _bufferB;
                 ref BufferState currentState = ref _currentBuffer == 0 ? ref _stateA : ref _stateB;
@@ -448,6 +464,14 @@ namespace DrawnUi.Camera
 
             lock (_swapLock)
             {
+                // Re-check under lock to close Freeze() race window
+                if (_isDisposed || _frozen)
+                {
+                    if (_frozen)
+                        System.Diagnostics.Debug.WriteLine("[PreRecording] REJECTED (in-lock): Buffer is frozen for processing!");
+                    return;
+                }
+
                 // Get current buffer and state
                 byte[] currentBuffer = _currentBuffer == 0 ? _bufferA : _bufferB;
                 ref BufferState currentState = ref _currentBuffer == 0 ? ref _stateA : ref _stateB;
@@ -660,8 +684,21 @@ namespace DrawnUi.Camera
         /// </summary>
         public void Freeze()
         {
-            _frozen = true;
-            System.Diagnostics.Debug.WriteLine("[PreRecording] Buffer FROZEN - no new frames accepted");
+            bool didFreeze = false;
+            lock (_swapLock)
+            {
+                if (_isDisposed)
+                    return;
+
+                if (!_frozen)
+                {
+                    _frozen = true;
+                    didFreeze = true;
+                }
+            }
+
+            if (didFreeze)
+                System.Diagnostics.Debug.WriteLine("[PreRecording] Buffer FROZEN - no new frames accepted");
         }
 
         /// <summary>
@@ -671,22 +708,55 @@ namespace DrawnUi.Camera
         public IEnumerable<(byte[] Data, CMTime PresentationTime, CMTime Duration)> GetFramesEnumerable()
         {
             List<EncodedFrame> framesCopy;
+            byte[] bufferA;
+            byte[] bufferB;
             lock (_swapLock)
             {
+                if (_isDisposed)
+                    throw new ObjectDisposedException(nameof(PrerecordingEncodedBufferApple));
+
+                if (!_frozen)
+                    throw new InvalidOperationException("Must call Freeze() before GetFramesEnumerable()");
+
                 // Copy frame metadata list (cheap - just references)
                 framesCopy = new List<EncodedFrame>(_frames);
+
+                // Capture backing buffers under lock so enumeration can't see nulls
+                bufferA = _bufferA;
+                bufferB = _bufferB;
+
+                _activeFrameEnumerations++;
             }
 
-            // Now enumerate outside lock, reading data on-demand
-            foreach (var frame in framesCopy)
+            try
             {
-                byte[] data = new byte[frame.Length];
-                byte[] sourceBuffer = frame.SourceBufferIndex == 0 ? _bufferA : _bufferB;
-                
-                // Copy frame data from circular buffer on-demand
-                Buffer.BlockCopy(sourceBuffer, frame.Offset, data, 0, frame.Length);
-                
-                yield return (data, frame.PresentationTime, frame.Duration);
+                // Now enumerate outside lock, reading data on-demand
+                foreach (var frame in framesCopy)
+                {
+                    byte[] data = new byte[frame.Length];
+                    byte[] sourceBuffer = frame.SourceBufferIndex == 0 ? bufferA : bufferB;
+
+                    if (sourceBuffer == null)
+                        throw new ObjectDisposedException(nameof(PrerecordingEncodedBufferApple));
+
+                    // Copy frame data from circular buffer on-demand
+                    Buffer.BlockCopy(sourceBuffer, frame.Offset, data, 0, frame.Length);
+
+                    yield return (data, frame.PresentationTime, frame.Duration);
+                }
+            }
+            finally
+            {
+                lock (_swapLock)
+                {
+                    _activeFrameEnumerations = Math.Max(0, _activeFrameEnumerations - 1);
+                    if (_activeFrameEnumerations == 0 && _disposePending)
+                    {
+                        _bufferA = null;
+                        _bufferB = null;
+                        _disposePending = false;
+                    }
+                }
             }
         }
 
@@ -841,6 +911,9 @@ namespace DrawnUi.Camera
         {
             lock (_swapLock)
             {
+                if (_activeFrameEnumerations > 0)
+                    throw new InvalidOperationException("Cannot Clear() while frames are being enumerated");
+
                 _stateA = new BufferState { BytesUsed = 0, FrameCount = 0, StartTime = DateTime.UtcNow };
                 _stateB = new BufferState { BytesUsed = 0, FrameCount = 0, StartTime = DateTime.MinValue };
                 _currentBuffer = 0;
@@ -857,6 +930,9 @@ namespace DrawnUi.Camera
         {
             lock (_swapLock)
             {
+                if (_activeFrameEnumerations > 0)
+                    throw new InvalidOperationException("Cannot Reset() while frames are being enumerated. Finish draining buffered frames first.");
+
                 _frozen = false;
                 _stateA = new BufferState { BytesUsed = 0, FrameCount = 0, StartTime = DateTime.UtcNow };
                 _stateB = new BufferState { BytesUsed = 0, FrameCount = 0, StartTime = DateTime.MinValue };
@@ -1018,10 +1094,19 @@ namespace DrawnUi.Camera
                     // ZERO-COPY: Just clear references, no individual frame data to null
                     _frames.Clear();
 
-                    // Clear buffer references
-                    _bufferA = null;
-                    _bufferB = null;
-                    _isDisposed = true;
+                    // If enumeration is in-flight, defer nulling buffers to avoid tearing/crashes.
+                    if (_activeFrameEnumerations > 0)
+                    {
+                        _disposePending = true;
+                        _isDisposed = true;
+                    }
+                    else
+                    {
+                        // Clear buffer references
+                        _bufferA = null;
+                        _bufferB = null;
+                        _isDisposed = true;
+                    }
 
                     System.Diagnostics.Debug.WriteLine("[PrerecordingEncodedBufferApple] Disposed - buffer cleared");
                 }

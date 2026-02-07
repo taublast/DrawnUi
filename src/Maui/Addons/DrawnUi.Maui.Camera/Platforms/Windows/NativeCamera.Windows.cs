@@ -308,7 +308,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     public int PreviewWidth { get; private set; }
     public int PreviewHeight { get; private set; }
 
-    private readonly SemaphoreSlim _frameSemaphore = new(1, 1);
+    private SemaphoreSlim _frameSemaphore = new(1, 1);
     private volatile bool _isProcessingFrame = false;
 
     // Raw frame arrival diagnostics (counts ALL frames before filtering)
@@ -1051,19 +1051,19 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             {
                 _preview?.Dispose(); // Only dispose old preview, not the new SKImage
                 _preview = capturedImage;
-            }
-            if (capturedImage != null)
-            {
-                // Update camera metadata with current exposure settings
-                UpdateCameraMetadata();
+                if (capturedImage != null)
+                {
+                    // Update camera metadata with current exposure settings
+                    UpdateCameraMetadata();
 
-                // Invoke capture callback for encoder (same pattern as Android)
-                PreviewCaptureSuccess?.Invoke(capturedImage);
+                    // Invoke capture callback for encoder (same pattern as Android)
+                    PreviewCaptureSuccess?.Invoke(capturedImage);
 
-                //PREVIEW FRAME READY
-                FormsControl.UpdatePreview();
+                    //PREVIEW FRAME READY
+                    FormsControl.UpdatePreview();
+                }
+                _frameSemaphore?.Release();
             }
-            _frameSemaphore.Release();
         }
     }
 
@@ -1188,7 +1188,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         finally
         {
             _isProcessingFrame = false;
-            _frameSemaphore.Release();
+            _frameSemaphore?.Release();
         }
     }
 
@@ -3016,13 +3016,14 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 _isRecordingVideo = false;
             }
 
-            _progressTimer?.Dispose();
-            _frameReader?.Dispose();
-            _mediaCapture?.Dispose();
-            _frameSemaphore?.Dispose();
-
             lock (_lockPreview)
             {
+                _progressTimer?.Dispose();
+                _frameReader?.Dispose();
+                _mediaCapture?.Dispose();
+                _frameSemaphore?.Dispose();
+                _frameSemaphore = null;
+
                 _preview?.Dispose();
                 _preview = null;
             }

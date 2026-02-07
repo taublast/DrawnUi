@@ -712,7 +712,7 @@ namespace DrawnUi.Controls
 
         protected override bool CheckNeedToSnap()
         {
-            if (IsAlreadyAtSnapPosition())
+            if (HadDown || IsUserPanning || IsScrolling || IsAlreadyAtSnapPosition())
             {
                 return false;
             }

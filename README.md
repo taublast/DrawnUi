@@ -18,11 +18,6 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 * Design in XAML or [code-behind](https://drawnui.net/articles/first-app-code.html)
 * Free to use under the MIT license, nuget package available.
 
-We are still .NET9, for iOS 26 you might need to set inside PLIST for your iOS app:
-```xml
-<key>UIDesignRequiresCompatibility</key>
-<true/>
-```
 
 ## Features
 
@@ -41,12 +36,20 @@ We are still .NET9, for iOS 26 you might need to set inside PLIST for your iOS a
 
 ---
 
-## 🆕 What's new for 1.8.4.1
+## 🆕 What's new for 1.9.0.1
 
-* Critical memory leaks fixes for destroying canvas case.
-* Minor layout system fixes.
-* `SkiaMapsUi` viewport update fix.
-* `SkiaCamera` performance update, `Sandbox` project camera permissions fix.
+* Fix iOS simulator incorrect layouts bug, due `(int)Math.Ceiling(float.PositiveInfinity)` returning a *negative* value on simulator runtime, other runtimes return positive value as expected. 
+* Fix `SkiaSlider` tap on Thumb not triggered if deep cached until redrawn.
+* Fix gesture mapping coordinates inside many cached levels.
+* Added some new helper functions to track gestures, more [in gestures doc](..todo).
+* Fix `SkiaLabel` text offset when stroke is enabled.
+* Fix `SkiaCarousel` sometimes not snapping after different gestures.
+* `SkiaScroll` scrolling smoothness improved, and some other fixes.
+* Added `SkiaDecoratedStack` to draw decorated lines between lines/columns.
+* Added new props for grid and stack layout, more [in layouts doc](..todo).
+* `SkiaCamera` audio recording improved, added callbacks to process audio samples in realtime and other improvements. More info about new camera video/audio realtime features to come soon.
+* Can now chain many shaders via VisualEffects.
+* Other fixes and improvements.
 
 ## 💡 Hint of the Day
 

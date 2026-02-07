@@ -2,16 +2,11 @@ using System.Runtime.InteropServices;
 
 namespace DrawnUi.Controls;
 
-public partial class SkiaDecoratedGrid : SkiaLayout
+public partial class SkiaDecoratedGrid : SkiaGrid
 {
-    public SkiaDecoratedGrid()
-    {
-        this.Type = LayoutType.Grid;
-    }
 
     public static SkiaGradient HorizontalGradient = new SkiaGradient
     {
-
         Colors = new List<Color>
         {
             Color.FromArgb("#00E8E3D7"),
@@ -68,7 +63,7 @@ public partial class SkiaDecoratedGrid : SkiaLayout
 
     public override void Invalidate()
     {
-        ContainerLines?.Dispose();
+        DisposeObject(ContainerLines);
         ContainerLines = null;
         base.Invalidate();
     }
@@ -78,7 +73,6 @@ public partial class SkiaDecoratedGrid : SkiaLayout
         if (bindable is SkiaDecoratedGrid control)
         {
             control.UpdateLines();
-
         }
     }
 
@@ -102,7 +96,9 @@ public partial class SkiaDecoratedGrid : SkiaLayout
 
     public virtual void CreateLines()
     {
-        if (this.GridStructure == null)
+        // Use GridStructureMeasured if available (current frame), otherwise fall back to GridStructure (previous frame)
+        var structure = GridStructureMeasured ?? GridStructure;
+        if (structure == null)
         {
             return;
         }
@@ -121,26 +117,26 @@ public partial class SkiaDecoratedGrid : SkiaLayout
             NeedMeasure = false
         };
 
-        kill?.Dispose();
+        DisposeObject(kill);
 
         if (VerticalLine != null)
         {
             var col = 0;
-            foreach (var definition in GridStructure.Columns)
+            //Debug.WriteLine($"[GRID] Vertical lines for {structure.Columns.Count()} columns");
+            foreach (var definition in structure.Columns)
             {
                 if (col > 0)
                 {
-                    var offset = GridStructure.LeftEdgeOfColumn(col) - ColumnSpacing;
+                    var offset = structure.LeftEdgeOfColumn(col) - ColumnSpacing;
 
-                    ContainerLines.AddSubView(new SkiaShape()
+                    ContainerLines.AddSubView(new SkiaControl()
                     {
                         Tag = "vline",
+                        UseCache = SkiaCacheType.Operations,
                         HorizontalOptions = LayoutOptions.Start,
                         VerticalOptions = LayoutOptions.Fill,
                         FillGradient = VerticalLine,
-                        BackgroundColor = Colors.Black,
                         WidthRequest = ColumnSpacing,
-                        StrokeWidth = 0,
                         TranslationX = (float)offset
                     });
 
@@ -154,11 +150,11 @@ public partial class SkiaDecoratedGrid : SkiaLayout
         if (HorizontalLine != null)
         {
             var row = 0;
-            foreach (var definition in GridStructure.Rows.ToList())
+            foreach (var definition in structure.Rows.ToList())
             {
                 if (row > 0)
                 {
-                    var offset = GridStructure.TopEdgeOfRow(row) - RowSpacing;
+                    var offset = structure.TopEdgeOfRow(row) - RowSpacing;
 
                     ContainerLines.AddSubView(new SkiaShape()
                     {
@@ -196,6 +192,11 @@ public partial class SkiaDecoratedGrid : SkiaLayout
     protected override void Draw(DrawingContext context)
     {
         base.Draw(context);
+
+        if (ContainerLines == null)
+        {
+            CreateLines();
+        }
 
         if (ContainerLines != null)
         {

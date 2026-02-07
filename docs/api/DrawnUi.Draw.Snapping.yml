@@ -21,7 +21,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Snapping
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8092
+    startLine: 8441
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -56,7 +56,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SnapPointsToPixel
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8101
+    startLine: 8450
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -100,7 +100,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SnapPixelsToPixel
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8123
+    startLine: 8472
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

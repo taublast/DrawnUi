@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Layouts in DrawnUI | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Layouts in DrawnUI | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../images/draw.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/main/docs/articles/layouts.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/draw.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="layouts-in-drawnui">Layouts in DrawnUI</h1>
+
+<p>DrawnUI provides powerful layout controls based on the <code>SkiaLayout</code> class for organizing and positioning UI elements efficiently. The core <code>SkiaLayout</code> supports various layout types through its <code>Type</code> property, and there are specialized derived classes for convenience.</p>
+<p>DrawnUI layouts use familiar layout properties similar to WPF and MAUI, such as <code>HorizontalOptions</code>, <code>VerticalOptions</code>, <code>WidthRequest</code>, <code>HeightRequest</code>, and <code>Margin</code> for positioning and sizing controls within layouts.</p>
+<p>Layouts can auto-size to content or take explicit size according to properties.</p>
+<h2 id="layout-aliases">Layout Aliases</h2>
+<p>For convenience, DrawnUI provides alias classes that inherit from <code>SkiaLayout</code> with pre-configured <code>Type</code> values, contrary to base controls they usually come with <code>HorizonalOptions=&quot;Fill&quot;</code>:</p>
+<ul>
+<li><code>SkiaStack</code>: Alias for <code>SkiaLayout</code> with <code>Type=&quot;Column&quot;</code> (vertical stack)</li>
+<li><code>SkiaRow</code>: Alias for <code>SkiaLayout</code> with <code>Type=&quot;Row&quot;</code> (horizontal stack)</li>
+<li><code>SkiaWrap</code>: Alias for <code>SkiaLayout</code> with <code>Type=&quot;Wrap&quot;</code> (responsive wrapping)</li>
+<li><code>SkiaLayer</code>: Alias for <code>SkiaLayout</code> with <code>Type=&quot;Absolute&quot;</code> (absolute positioning)</li>
+<li><code>SkiaGrid</code>: Alias for <code>SkiaLayout</code> with <code>Type=&quot;Grid&quot;</code> (grid layout)</li>
+</ul>
+<h2 id="layout-types">Layout Types</h2>
+<h3 id="absolute-layout">Absolute Layout</h3>
+<p>This is the default type for <code>SkiaLayout</code>. Children are positionned inside like they would inside a single column/row grid: one over anouther inside available size.<br>
+It's sometime better for performance to use this type instead of a grid, for example if you have a 2 columns scenario &quot;icon of known size + text&quot; you can use a simple (absolute) layout, put an icon inside, and put a <code>SkiaLabel</code> with the left margin of the icon size+spacing, avoiding redundant calculations.</p>
+<p><strong>Usage:</strong></p>
+<pre><code class="lang-xml">&lt;draw:SkiaLayout HorizonatalOptions=&quot;Fill&quot; HeightRequest=&quot;50&quot;&gt;
+    &lt;draw:SkiaLabel Text=&quot;Top Left&quot; /&gt;
+    &lt;draw:SkiaLabel Text=&quot;Center Bottom&quot; HorizontalOptions=&quot;Center&quot; VerticalOptions=&quot;End&quot;/&gt;
+&lt;/draw:SkiaLayout&gt;
+</code></pre>
+<p><strong>Convenience Class:</strong> <code>SkiaLayer</code> (inherits from <code>SkiaLayout</code>, described as &quot;Absolute layout like MAUI Grid with just one column and row&quot;)</p>
+<h3 id="column-layout">Column Layout</h3>
+<p>Vertical stack layout that arranges children from top to bottom. When using <code>ItemsSource</code> supports <code>Split</code> property for an explicit number of columns.</p>
+<p><strong>Usage:</strong></p>
+<pre><code class="lang-xml">&lt;draw:SkiaLayout Type=&quot;Column&quot; Spacing=&quot;10&quot; Padding=&quot;20&quot;&gt;
+    &lt;draw:SkiaLabel Text=&quot;Item 1&quot; /&gt;
+    &lt;draw:SkiaLabel Text=&quot;Item 2&quot; /&gt;
+    &lt;draw:SkiaLabel Text=&quot;Item 3&quot; /&gt;
+&lt;/draw:SkiaLayout&gt;
+</code></pre>
+<p><strong>Convenience Class:</strong> <code>SkiaStack</code> (inherits from <code>SkiaLayout</code> with <code>Type=&quot;Column&quot;</code> and horizontal fill by default)</p>
+<p><strong>Additional Properties:</strong></p>
+<ul>
+<li><code>Split</code>: Number of columns to split items into (for data-bound content). Items are arranged left to right, top to bottom.</li>
+<li><code>UseDynamicColumns</code>: For <code>SkiaStack</code> with <code>ItemsSource</code>, allows dynamic column count to avoid empty cells. When enabled, the last row can have fewer columns that expand to fill available width.</li>
+</ul>
+<h3 id="row-layout">Row Layout</h3>
+<p>Horizontal stack layout that arranges children from left to right.</p>
+<p><strong>Usage:</strong></p>
+<pre><code class="lang-xml">&lt;draw:SkiaLayout Type=&quot;Row&quot; Spacing=&quot;15&quot; Padding=&quot;10&quot;&gt;
+    &lt;draw:SkiaButton Text=&quot;Button 1&quot; /&gt;
+    &lt;draw:SkiaButton Text=&quot;Button 2&quot; /&gt;
+&lt;/draw:SkiaLayout&gt;
+</code></pre>
+<p><strong>Convenience Class:</strong> <code>SkiaRow</code> (inherits from <code>SkiaLayout</code> with <code>Type=&quot;Row&quot;</code>)</p>
+<h3 id="wrap-layout">Wrap Layout</h3>
+<p>Responsive layout that wraps children to new lines when they exceed available width. Useful for a wrap and forget scenario to to take all available space. Supports <code>Split</code> property for an explicit number of columns.</p>
+<p><strong>Usage:</strong></p>
+<pre><code class="lang-xml">&lt;draw:SkiaLayout Type=&quot;Wrap&quot; Spacing=&quot;10&quot; Padding=&quot;20&quot;&gt;
+    &lt;!-- Children will wrap to next line when needed --&gt;
+&lt;/draw:SkiaLayout&gt;
+</code></pre>
+<p><strong>Convenience Class:</strong> <code>SkiaWrap</code> (inherits from <code>SkiaLayout</code> with <code>Type=&quot;Wrap&quot;</code> and horizontal fill by default)</p>
+<p><strong>Additional Properties:</strong></p>
+<ul>
+<li><code>Split</code>: Number of columns to split items into (for data-bound content). Items are arranged left to right, top to bottom.</li>
+</ul>
+<h3 id="grid-layout">Grid Layout</h3>
+<p>Two-dimensional grid layout with rows and columns. When using <code>ItemsSource</code> supports <code>Split</code> property for an explicit number of columns.</p>
+<p><strong>Usage:</strong></p>
+<pre><code class="lang-xml">&lt;draw:SkiaLayout Type=&quot;Grid&quot;&gt;
+    &lt;!-- Define grid structure --&gt;
+    &lt;draw:SkiaLayout.ColumnDefinitions&gt;
+        &lt;draw:ColumnDefinition Width=&quot;*&quot; /&gt;
+        &lt;draw:ColumnDefinition Width=&quot;2*&quot; /&gt;
+    &lt;/draw:SkiaLayout.ColumnDefinitions&gt;
+    &lt;draw:SkiaLayout.RowDefinitions&gt;
+        &lt;draw:RowDefinition Height=&quot;Auto&quot; /&gt;
+        &lt;draw:RowDefinition Height=&quot;*&quot; /&gt;
+    &lt;/draw:SkiaLayout.RowDefinitions&gt;
+    
+    &lt;!-- Position children in grid --&gt;
+    &lt;draw:SkiaLabel Text=&quot;Cell 1&quot; draw:SkiaLayout.Column=&quot;0&quot; draw:SkiaLayout.Row=&quot;0&quot; /&gt;
+    &lt;draw:SkiaLabel Text=&quot;Cell 2&quot; draw:SkiaLayout.Column=&quot;1&quot; draw:SkiaLayout.Row=&quot;0&quot; /&gt;
+&lt;/draw:SkiaLayout&gt;
+</code></pre>
+<p><strong>Convenience Class:</strong> <code>GridLayout</code> (helper class for <code>SkiaLayout</code> with <code>Type=&quot;Grid&quot;</code>) or <code>SkiaGrid</code> (MAUI Grid alternative)</p>
+<p><strong>Data-Bound Grid with Split:</strong>
+When using <code>ItemsSource</code>, the <code>Split</code> property creates a grid automatically:</p>
+<ul>
+<li><code>Split</code>: Number of columns to create</li>
+<li><code>Invert</code>: Controls fill direction
+<ul>
+<li><code>Invert=&quot;false&quot;</code> (default): Items fill left to right, top to bottom (A B, C D)</li>
+<li><code>Invert=&quot;true&quot;</code>: Items fill top to bottom, left to right (A C, B D)</li>
+</ul>
+</li>
+</ul>
+<h2 id="key-properties">Key Properties</h2>
+<p>All layouts inherit from <code>SkiaLayout</code> and support these common properties:</p>
+<ul>
+<li><code>Spacing</code>: Space between child elements</li>
+<li><code>Padding</code>: Internal padding around the layout</li>
+<li><code>HorizontalOptions</code>/<code>VerticalOptions</code>: Layout alignment options</li>
+<li><code>UseCache</code>: Performance caching strategy (<code>Operations</code>, <code>Image</code>, <code>ImageComposite</code>)</li>
+<li><code>BackgroundColor</code>: Layout background</li>
+<li><code>CornerRadius</code>: Rounded corners</li>
+<li><code>Gestures</code>: Enable/disable touch gestures</li>
+<li><code>Split</code>: Number of columns for multi-column layouts (Column, Wrap, and Grid with ItemsSource)</li>
+</ul>
+<h2 id="data-binding-and-templating">Data Binding and Templating</h2>
+<p>All DrawnUI layout controls support two ways of defining content:</p>
+<h3 id="static-children">Static Children</h3>
+<p>Add child controls directly in XAML or code:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaStack Spacing=&quot;10&quot;&gt;
+    &lt;draw:SkiaLabel Text=&quot;Item 1&quot; /&gt;
+    &lt;draw:SkiaLabel Text=&quot;Item 2&quot; /&gt;
+&lt;/draw:SkiaStack&gt;
+</code></pre>
+<h3 id="data-bound-content">Data-Bound Content</h3>
+<p>Use <code>ItemsSource</code> with <code>ItemTemplate</code> or <code>ItemTemplateType</code> for dynamic content. The layout will automatically create subviews for each item in the data source:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaStack ItemsSource=&quot;{Binding MyItems}&quot; Spacing=&quot;10&quot;&gt;
+    &lt;draw:SkiaStack.ItemTemplate&gt;
+        &lt;DataTemplate&gt;
+            &lt;draw:SkiaLabel Text=&quot;{Binding Name}&quot; /&gt;
+        &lt;/DataTemplate&gt;
+    &lt;/draw:SkiaStack.ItemTemplate&gt;
+&lt;/draw:SkiaStack&gt;
+</code></pre>
+<p><strong>Multi-Column Layouts with Split:</strong>
+For Column, Wrap, and Grid layouts with <code>ItemsSource</code>, use the <code>Split</code> property to create multiple columns:</p>
+<pre><code class="lang-xml">&lt;draw:SkiaLayout Type=&quot;Column&quot; ItemsSource=&quot;{Binding MyItems}&quot; Split=&quot;2&quot; Spacing=&quot;10&quot;&gt;
+    &lt;draw:SkiaLayout.ItemTemplate&gt;
+        &lt;DataTemplate&gt;
+            &lt;draw:SkiaLabel Text=&quot;{Binding Name}&quot; /&gt;
+        &lt;/DataTemplate&gt;
+    &lt;/draw:SkiaLayout.ItemTemplate&gt;
+&lt;/draw:SkiaLayout&gt;
+</code></pre>
+<p>For Grid layouts with <code>ItemsSource</code> and <code>Split</code>, use <code>Invert</code> to control fill direction:</p>
+<ul>
+<li><code>Invert=&quot;false&quot;</code> (default): Left to right, top to bottom</li>
+<li><code>Invert=&quot;true&quot;</code>: Top to bottom, left to right</li>
+</ul>
+<p><strong>Key Properties:</strong></p>
+<ul>
+<li><code>ItemsSource</code>: The data collection to bind to</li>
+<li><code>ItemTemplate</code>: DataTemplate defining how each item should be rendered</li>
+<li><code>ItemTemplateType</code>: Alternative to ItemTemplate using a type reference</li>
+<li><code>RecycleTemplate</code>: Controls view recycling behavior</li>
+<li><code>Split</code>: Number of columns for multi-column data-bound layouts</li>
+<li><code>Invert</code>: Controls fill direction for Grid layouts with ItemsSource</li>
+</ul>
+<p><strong>RecycleTemplate Behavior:</strong></p>
+<ul>
+<li><code>RecycleTemplate=&quot;true&quot;</code> (default): Reuses views for performance with large lists</li>
+<li><code>RecycleTemplate=&quot;false&quot;</code>: Creates a new view for each item, equivalent to .NET MAUI's <code>BindableLayout</code></li>
+</ul>
+<h2 id="grid-specific-properties">Grid-Specific Properties</h2>
+<p>For grid layouts (<code>Type=&quot;Grid&quot;</code>):</p>
+<ul>
+<li><code>ColumnDefinitions</code>: Define column widths</li>
+<li><code>RowDefinitions</code>: Define row heights</li>
+<li><code>ColumnSpacing</code>: Space between columns</li>
+<li><code>RowSpacing</code>: Space between rows</li>
+<li><code>Split</code>: Number of columns for auto-generated grids (when using <code>ItemsSource</code>)</li>
+<li><code>Invert</code>: Controls fill direction for auto-generated grids (<code>false</code> = left-to-right, <code>true</code> = top-to-bottom)</li>
+</ul>
+<p>Child positioning in grids:</p>
+<ul>
+<li><code>SkiaLayout.Column</code>: Column index (0-based)</li>
+<li><code>SkiaLayout.Row</code>: Row index (0-based)</li>
+<li><code>SkiaLayout.ColumnSpan</code>: Number of columns to span</li>
+<li><code>SkiaLayout.RowSpan</code>: Number of rows to span</li>
+</ul>
+<h3 id="decorated-layouts">Decorated Layouts</h3>
+<p>Specialized layout classes that add visual separators:</p>
+<ul>
+<li><code>SkiaDecoratedGrid</code>: Extends <code>SkiaGrid</code> with separator lines between columns and rows</li>
+</ul>
+<p><strong>Customization Properties:</strong>
+Decorators can be customized through gradient properties:</p>
+<ul>
+<li><code>HorizontalLine</code>: SkiaGradient for horizontal separator lines</li>
+<li><code>VerticalLine</code>: SkiaGradient for vertical separator lines</li>
+</ul>
+<h2 id="performance-considerations">Performance Considerations</h2>
+<ul>
+<li>Use appropriate <code>UseCache</code> values based on content complexity</li>
+<li>If you cache the whole layout cells would be created just once, can be used for small-medium layouts inside scroll.</li>
+<li>When using <code>ItemsSource</code> control whether you need to recycle cells or use RecycleTemplate=&quot;Disabled&quot;.</li>
+</ul>
+<h2 id="safe-insets">Safe Insets</h2>
+<p>If you do nothing special MAUI should handle this by itsself. On iOS the root view must be a MAUI view to respect insets, for example a <code>Grid</code>, and you can inlcude your <code>Canvas</code> inside.<br>
+You can explicitely enable/disable safe insets for a MAUI app by setting a startup option:</p>
+<pre><code class="lang-csharp">// MauiProgram.cs
+builder.UseDrawnUi(new() { MobileIsFullscreen = true });
+</code></pre>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="first-app.html">First App Tutorial</a> - Basic layout examples</li>
+<li><a href="fluent-extensions.html">Fluent Extensions</a> - Code-based layout creation</li>
+<li><a href="../api/DrawnUi.Draw.SkiaLayout.html">API Reference</a> - Complete SkiaLayout API</li>
+<li><a href="../api/DrawnUi.Draw.LayoutType.html">API Reference</a> - LayoutType enum values</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/main/docs/articles/layouts.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Made by <a href="https://taublast.github.io/about/">Nick Kovalsky aka AppoMobi (@taublast)</a><script>(function(){try{const fix=function(){const brand=document.querySelector('a.navbar-brand');if(brand){brand.setAttribute('href','/');}document.querySelectorAll('a[href]').forEach(function(a){var href=a.getAttribute('href');if(!href||href.startsWith('http'))return;if(href==='index.html'||href==='/index.html'||href==='../index.html'){a.setAttribute('href','/');return;}if(href.endsWith('/articles/index.html')||href==='articles/index.html'||href==='../articles/index.html'){a.setAttribute('href','/articles/');return;}var m=href.match(/^(?:\.?\.?\/)?articles\/.*\/index\.html(.*)$/);if(m){var p=href.replace(/\/index\.html(.*)$/,'/');if(!p.startsWith('/')){p='/' + p.replace(/^\/?/,'');}a.setAttribute('href',p);}});};if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fix);}else{fix();}}catch(e){})();</script>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

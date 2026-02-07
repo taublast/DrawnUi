@@ -111,11 +111,16 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             return; // No video frame yet, drop audio
         }
 
-        // Convert nanoseconds to 100-nanosecond units (HNS)
-        long hnsTime = timestampNs / 100;
+        // CRITICAL: First apply audio timestamp offset to convert from audio time base to video time base
+        // Audio timestamps are relative to when AudioGraphCapture started, but video timestamps are
+        // relative to _captureVideoStartTime which is set BEFORE audio capture starts.
+        // The offset corrects for this delay so audio and video are in the same time base.
+        long adjustedTimestampNs = timestampNs + _audioTimestampOffsetNs;
 
-        // CRITICAL: Adjust timestamps in pre-recording mode only
-        // In live mode, use absolute timestamps for proper MediaComposition muxing
+        // Convert nanoseconds to 100-nanosecond units (HNS)
+        long hnsTime = adjustedTimestampNs / 100;
+
+        // In pre-recording mode, further adjust timestamps relative to buffer start
         if (IsPreRecordingMode)
         {
             // Pre-recording: adjust timestamps relative to buffer start
@@ -130,8 +135,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
             hnsTime -= baseHns;
             if (hnsTime < 0) hnsTime = 0;
         }
-        // In normal/live mode: Use absolute timestamps (no adjustment)
-        // MediaComposition will handle timeline alignment automatically
+        // In normal/live mode: hnsTime is already in video time base (after offset correction above)
 
         //Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] WriteAudioSample WRITE: timestamp={timestampNs / 1_000_000.0:F1}ms, hnsTime={hnsTime / 10000.0:F1}ms, length={pcmData.Length}, PreRecMode={IsPreRecordingMode}, hasNativeEncoder={_nativeAudioEncoder != IntPtr.Zero}");
 
@@ -177,6 +181,22 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
     // Native audio encoder (bypasses .NET MAUI COM restrictions)
     private IntPtr _nativeAudioEncoder = IntPtr.Zero;
+
+    // Audio timestamp offset: difference between video start time and audio capture start time
+    // This corrects for the delay between _captureVideoStartTime and when AudioGraphCapture actually started
+    private long _audioTimestampOffsetNs = 0;
+
+    /// <summary>
+    /// Sets the audio timestamp offset in nanoseconds.
+    /// This is the time difference between when video recording started (_captureVideoStartTime)
+    /// and when audio capture actually started. Audio timestamps need to be adjusted by this
+    /// amount to align with video timestamps.
+    /// </summary>
+    public void SetAudioTimestampOffset(long offsetNs)
+    {
+        _audioTimestampOffsetNs = offsetNs;
+        Debug.WriteLine($"[WindowsCaptureVideoEncoder] Audio timestamp offset set to {offsetNs / 1_000_000.0:F1}ms");
+    }
 
     // Preview-from-recording support
     private readonly object _previewLock = new();

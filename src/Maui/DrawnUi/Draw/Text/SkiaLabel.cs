@@ -480,6 +480,9 @@ namespace DrawnUi.Draw
                     Spans[i].Rects.Clear();
                 }
 
+                // Calculate stroke offset to position text within measured bounds
+                float strokeOffset = paintStroke != null ? (float)(StrokeWidth * 2 * scale) : 0f;
+
                 float baselineY = 0;
                 float moveToBaseline = 0f;
                 float useLineHeight = 0f;
@@ -509,7 +512,7 @@ namespace DrawnUi.Draw
                         if (!LineHeightUniform)
                         {
                             useLineHeight = line.Height;
-                            moveToBaseline = useLineHeight - FontMetrics.Descent;
+                            moveToBaseline = useLineHeight - FontMetrics.Descent - strokeOffset;
                             if (lineNb == 0)
                             {
                                 baselineY += PositionBaseline(rectDraw.Top + moveToBaseline);
@@ -525,7 +528,7 @@ namespace DrawnUi.Draw
 
                             var add = useLineHeight - useLineHeight / LineHeight;
                             var move = useLineHeight - add / 2.0;
-                            moveToBaseline = (float)(move - FontMetrics.Descent);
+                            moveToBaseline = (float)(move - FontMetrics.Descent - strokeOffset);
                             baselineY = PositionBaseline(moveToBaseline + rectDraw.Top);
                             baseLineCalculated = true;
                         }
@@ -538,7 +541,7 @@ namespace DrawnUi.Draw
                         baselineY += (float)SpaceBetweenParagraphs;
                     }
 
-                    float alignedLineDrawingStartX = rectDraw.Left;
+                    float alignedLineDrawingStartX = rectDraw.Left + strokeOffset;
                     if (lineNb == 1)
                     {
                         alignedLineDrawingStartX += startOffset.X;
@@ -2148,7 +2151,8 @@ namespace DrawnUi.Draw
                 float additionalWidth = (float)(StrokeWidth * 2 * RenderingScale);
                 bounds.Right += additionalWidth;
                 bounds.Left -= additionalWidth;
-                bounds.Bottom += additionalWidth * 2;
+                bounds.Top -= additionalWidth;
+                bounds.Bottom += additionalWidth;
             }
 
             if (DropShadowSize > 0 && DropShadowColor != TransparentColor)

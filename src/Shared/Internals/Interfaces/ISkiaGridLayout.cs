@@ -2,6 +2,7 @@
 
 public interface ISkiaGridLayout : ISkiaLayout
 {
+    public int Split { get; }
 
     ColumnDefinition DefaultColumnDefinition { get; }
 

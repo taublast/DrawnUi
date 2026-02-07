@@ -1,22 +1,6 @@
 ﻿namespace DrawnUi.Draw;
 
-public struct RangeF
-{
-    public float Start { get; set; }
-    public float End { get; set; }
-
-    public RangeF(float start, float end)
-    {
-        Start = start;
-        End = end;
-    }
-
-    public float Length => Math.Abs(End - Start);
-
-    public float Delta => End - Start;
-}
-
-
+[DebuggerDisplay("{ToString()}")]
 public class ScaledSize
 {
     public ScaledSize()
@@ -88,6 +72,11 @@ public class ScaledSize
         {
             return Pixels.IsEmpty;
         }
+    }
+    
+    public override string ToString()
+    {
+        return $"Pixels {Pixels},  Units {Units}";
     }
 
     public static float SnapToPixel(double point, double scale)

@@ -57,7 +57,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "advanced", "advanced", "{FE
 	ProjectSection(SolutionItems) = preProject
 		..\docs\articles\fluent-extensions.md = ..\docs\articles\fluent-extensions.md
 		..\docs\articles\advanced\game-ui.md = ..\docs\articles\advanced\game-ui.md
-		..\docs\articles\advanced\gestures.md = ..\docs\articles\advanced\gestures.md
+		..\docs\articles\gestures.md = ..\docs\articles\gestures.md
 		..\docs\articles\advanced\gradients.md = ..\docs\articles\advanced\gradients.md
 		..\docs\articles\advanced\ImageComposite.md = ..\docs\articles\advanced\ImageComposite.md
 		..\docs\articles\advanced\index.md = ..\docs\articles\advanced\index.md
@@ -102,6 +102,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraTests", "..\src\Maui\Samples\Camera\CameraTests.csproj", "{3AFBEF09-A490-2713-E71D-E104B75DD3A8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioTest", "..\..\..\..\AudioTest\AudioTest.csproj", "{C01C8F4E-D4ED-0F22-91BD-9A970DB09902}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayerTests", "..\src\Maui\Samples\Player\PlayerTests.csproj", "{26C49F18-5374-562A-366B-CB7B22C61A68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -213,12 +215,18 @@ Global
 		{7CC499BF-8572-E3E8-2BC1-61316345D0B9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3AFBEF09-A490-2713-E71D-E104B75DD3A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3AFBEF09-A490-2713-E71D-E104B75DD3A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AFBEF09-A490-2713-E71D-E104B75DD3A8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{3AFBEF09-A490-2713-E71D-E104B75DD3A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AFBEF09-A490-2713-E71D-E104B75DD3A8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C01C8F4E-D4ED-0F22-91BD-9A970DB09902}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{C01C8F4E-D4ED-0F22-91BD-9A970DB09902}.Debug|Any CPU.Build.0 = Debug|x64
 		{C01C8F4E-D4ED-0F22-91BD-9A970DB09902}.Release|Any CPU.ActiveCfg = Release|x64
 		{C01C8F4E-D4ED-0F22-91BD-9A970DB09902}.Release|Any CPU.Build.0 = Release|x64
+		{26C49F18-5374-562A-366B-CB7B22C61A68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26C49F18-5374-562A-366B-CB7B22C61A68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26C49F18-5374-562A-366B-CB7B22C61A68}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{26C49F18-5374-562A-366B-CB7B22C61A68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26C49F18-5374-562A-366B-CB7B22C61A68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -247,6 +255,7 @@ Global
 		{7CC499BF-8572-E3E8-2BC1-61316345D0B9} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 		{3AFBEF09-A490-2713-E71D-E104B75DD3A8} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 		{C01C8F4E-D4ED-0F22-91BD-9A970DB09902} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
+		{26C49F18-5374-562A-366B-CB7B22C61A68} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {329E3D0C-A3F7-4A3E-B61C-6B2D1BD7F708}

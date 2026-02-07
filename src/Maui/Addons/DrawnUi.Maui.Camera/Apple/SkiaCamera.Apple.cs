@@ -2,16 +2,17 @@
 
 using System.Diagnostics;
 using AVFoundation;
-using DrawnUi.Maui.Navigation;
-using Foundation;
-using Photos;
-using UIKit;
-using Metal; // Added for Zero-Copy path
-using SkiaSharp.Views.Maui.Controls; // For SKGLView
-using Foundation;
-using Photos;
 using AVFoundation;
 using AVKit;
+using DrawnUi.Maui.Navigation;
+using Foundation;
+using Foundation;
+using HealthKit;
+using Metal; // Added for Zero-Copy path
+using Photos;
+using Photos;
+using SkiaSharp.Views.Maui.Controls; // For SKGLView
+using UIKit;
 
 namespace DrawnUi.Camera;
 
@@ -25,6 +26,19 @@ public partial class SkiaCamera
     // Allocated once when EnablePreRecording=true, reused across recording sessions
     private PrerecordingEncodedBufferApple _sharedPreRecordingBuffer;
 
+    // Second pre-allocated buffer used to avoid Reset()/drain races when an old encoder
+    // is being flushed in the background (overlap mode).
+    private PrerecordingEncodedBufferApple _sharedPreRecordingBuffer2;
+
+    // When overlap mode flushes the old pre-recording encoder in the background, that encoder
+    // may still be enumerating its buffer. Mark it as busy so we don't hand it to a new session.
+    private PrerecordingEncodedBufferApple _sharedPreRecordingBufferInFlush;
+
+    // Track which shared buffer was last handed to a pre-recording encoder.
+    private PrerecordingEncodedBufferApple _lastSharedPreRecordingBufferUsed;
+
+    private readonly object _sharedPreRecordingBufferLock = new object();
+
     // Streaming audio writer for OOM-safe live recording (audio goes to file, not memory)
     private AVAssetWriter _liveAudioWriter;
     private AVAssetWriterInput _liveAudioInput;
@@ -32,6 +46,7 @@ public partial class SkiaCamera
     private long _liveAudioFirstTimestampNs = -1;
     private readonly object _liveAudioWriterLock = new object();
     private List<IntPtr> _liveAudioMemoryToFree;  // Memory to free after writer finishes
+    private bool _liveAudioWriterPreAllocated;  // True if writer is created but not yet started
 
     /// <summary>
     /// iOS/MacCatalyst implementation: Pre-allocates the circular buffer for pre-recording.
@@ -40,16 +55,171 @@ public partial class SkiaCamera
     /// </summary>
     partial void EnsurePreRecordingBufferPreAllocated()
     {
-        if (_sharedPreRecordingBuffer == null)
+        // Default to 12 Mbps if we don't have encoder bitrate yet
+        long estimatedBitrate = 12_000_000;
+
+        lock (_sharedPreRecordingBufferLock)
         {
-            // Default to 12 Mbps if we don't have encoder bitrate yet
-            long estimatedBitrate = 12_000_000;
-            _sharedPreRecordingBuffer = new PrerecordingEncodedBufferApple(PreRecordDuration, estimatedBitrate);
-            Debug.WriteLine($"[SkiaCamera.Apple] Pre-allocated shared pre-recording buffer: {PreRecordDuration.TotalSeconds}s @ ~{estimatedBitrate / 1_000_000}Mbps");
+            if (_sharedPreRecordingBuffer == null)
+            {
+                _sharedPreRecordingBuffer = new PrerecordingEncodedBufferApple(PreRecordDuration, estimatedBitrate);
+                Debug.WriteLine($"[SkiaCamera.Apple] Pre-allocated shared pre-recording buffer A: {PreRecordDuration.TotalSeconds}s @ ~{estimatedBitrate / 1_000_000}Mbps");
+            }
+            else
+            {
+                Debug.WriteLine("[SkiaCamera.Apple] Shared pre-recording buffer A already allocated, reusing");
+            }
         }
-        else
+    }
+
+    private void EnsureSecondSharedPreRecordingBufferAllocated_NoLock(long estimatedBitrate)
+    {
+        if (_sharedPreRecordingBuffer2 != null)
+            return;
+
+        _sharedPreRecordingBuffer2 = new PrerecordingEncodedBufferApple(PreRecordDuration, estimatedBitrate);
+        Debug.WriteLine($"[SkiaCamera.Apple] Lazily allocated shared pre-recording buffer B: {PreRecordDuration.TotalSeconds}s @ ~{estimatedBitrate / 1_000_000}Mbps");
+    }
+
+    private PrerecordingEncodedBufferApple GetSharedPreRecordingBufferForNewSession()
+    {
+        lock (_sharedPreRecordingBufferLock)
         {
-            Debug.WriteLine("[SkiaCamera.Apple] Shared pre-recording buffer already allocated, reusing");
+            // Prefer buffer A unless it's currently being flushed.
+            if (_sharedPreRecordingBuffer != null && !ReferenceEquals(_sharedPreRecordingBuffer, _sharedPreRecordingBufferInFlush))
+                return _sharedPreRecordingBuffer;
+
+            // If buffer A is busy and buffer B hasn't been allocated yet, allocate it now.
+            // This avoids overlap flush/reset races while keeping baseline memory lower.
+            if (_sharedPreRecordingBuffer != null && ReferenceEquals(_sharedPreRecordingBuffer, _sharedPreRecordingBufferInFlush) && _sharedPreRecordingBuffer2 == null)
+            {
+                // Default to 12 Mbps if we don't have encoder bitrate yet
+                long estimatedBitrate = 12_000_000;
+                EnsureSecondSharedPreRecordingBufferAllocated_NoLock(estimatedBitrate);
+            }
+
+            if (_sharedPreRecordingBuffer2 != null && !ReferenceEquals(_sharedPreRecordingBuffer2, _sharedPreRecordingBufferInFlush))
+                return _sharedPreRecordingBuffer2;
+
+            // Should not happen (only one background flush task is expected), but return something
+            // deterministic rather than null.
+            return _sharedPreRecordingBuffer ?? _sharedPreRecordingBuffer2;
+        }
+    }
+
+    /// <summary>
+    /// Pre-allocates the AVAssetWriter and AVAssetWriterInput for live audio recording.
+    /// Called during pre-recording start to avoid lag spike when transitioning to live recording.
+    /// The writer is created but NOT started - StartWriting() is called later in ActivateLiveAudioWriter().
+    /// </summary>
+    private void EnsureLiveAudioWriterPreAllocated(int sampleRate, int channels)
+    {
+        lock (_liveAudioWriterLock)
+        {
+            // Already pre-allocated or actively writing
+            if (_liveAudioWriter != null)
+            {
+                Debug.WriteLine("[EnsureLiveAudioWriterPreAllocated] Writer already exists, skipping");
+                return;
+            }
+
+            try
+            {
+                // Create temp file path
+                var tempDir = Path.GetTempPath();
+                _liveAudioFilePath = Path.Combine(tempDir, $"live_audio_{Guid.NewGuid():N}.m4a");
+
+                // Delete existing file
+                if (File.Exists(_liveAudioFilePath))
+                {
+                    File.Delete(_liveAudioFilePath);
+                }
+
+                var url = NSUrl.FromFilename(_liveAudioFilePath);
+                _liveAudioWriter = new AVAssetWriter(url, "com.apple.m4a-audio", out var writerError);
+
+                if (_liveAudioWriter == null || writerError != null)
+                {
+                    Debug.WriteLine($"[EnsureLiveAudioWriterPreAllocated] AVAssetWriter creation failed: {writerError?.LocalizedDescription}");
+                    return;
+                }
+
+                // Configure audio output (AAC)
+                var audioSettings = new NSDictionary(
+                    AVAudioSettings.AVFormatIDKey, NSNumber.FromInt32((int)AudioToolbox.AudioFormatType.MPEG4AAC),
+                    AVAudioSettings.AVSampleRateKey, NSNumber.FromDouble(sampleRate),
+                    AVAudioSettings.AVNumberOfChannelsKey, NSNumber.FromInt32(channels),
+                    AVAudioSettings.AVEncoderBitRateKey, NSNumber.FromInt32(128000)
+                );
+
+                _liveAudioInput = new AVAssetWriterInput(AVMediaTypes.Audio.GetConstant(), new AVFoundation.AudioSettings(audioSettings));
+                _liveAudioInput.ExpectsMediaDataInRealTime = true;
+
+                if (!_liveAudioWriter.CanAddInput(_liveAudioInput))
+                {
+                    Debug.WriteLine("[EnsureLiveAudioWriterPreAllocated] Cannot add audio input to writer");
+                    CleanupLiveAudioWriter();
+                    return;
+                }
+                _liveAudioWriter.AddInput(_liveAudioInput);
+
+                // Mark as pre-allocated but NOT started
+                _liveAudioWriterPreAllocated = true;
+                _liveAudioFirstTimestampNs = -1;
+                _liveAudioMemoryToFree = new List<IntPtr>();
+
+                Debug.WriteLine($"[EnsureLiveAudioWriterPreAllocated] Pre-allocated writer for: {_liveAudioFilePath}");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[EnsureLiveAudioWriterPreAllocated] Exception: {ex.Message}");
+                CleanupLiveAudioWriter();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Activates a pre-allocated live audio writer by calling StartWriting().
+    /// Called during pre-recording → live transition.
+    /// </summary>
+    private bool ActivateLiveAudioWriter()
+    {
+        lock (_liveAudioWriterLock)
+        {
+            if (_liveAudioWriter == null || _liveAudioInput == null)
+            {
+                Debug.WriteLine("[ActivateLiveAudioWriter] No pre-allocated writer available");
+                return false;
+            }
+
+            if (!_liveAudioWriterPreAllocated)
+            {
+                // Already activated (actively writing)
+                Debug.WriteLine("[ActivateLiveAudioWriter] Writer already active");
+                return true;
+            }
+
+            try
+            {
+                // Start writing
+                if (!_liveAudioWriter.StartWriting())
+                {
+                    Debug.WriteLine($"[ActivateLiveAudioWriter] StartWriting failed: {_liveAudioWriter.Error?.LocalizedDescription}");
+                    CleanupLiveAudioWriter();
+                    return false;
+                }
+                _liveAudioWriter.StartSessionAtSourceTime(CoreMedia.CMTime.Zero);
+
+                _liveAudioWriterPreAllocated = false;  // Now actively writing
+                Debug.WriteLine($"[ActivateLiveAudioWriter] Activated writer, now streaming to: {_liveAudioFilePath}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[ActivateLiveAudioWriter] Exception: {ex.Message}");
+                CleanupLiveAudioWriter();
+                return false;
+            }
         }
     }
 
@@ -309,9 +479,11 @@ public partial class SkiaCamera
         return new AudioCaptureApple();
     }
 
-    private void OnAudioSampleAvailable(object sender, AudioSample e)
+    private void OnAudioSampleAvailable(object sender, AudioSample sample)
     {
-        WriteAudioSample(e);
+        var useSample = OnAudioSampleAvailable(sample);
+
+        WriteAudioSample(useSample);
     }
 
     public virtual void WriteAudioSample(AudioSample sample)
@@ -333,6 +505,9 @@ public partial class SkiaCamera
 
     private async Task<ICaptureVideoEncoder> StartRealtimeVideoProcessing(bool preserveCurrentEncoder = false)
     {
+        // Stop preview audio - recording will take over with its own audio capture
+        StopPreviewAudioCapture();
+
         // 1. Create Apple encoder using VideoToolbox for hardware H.264 encoding
         // Note: We create and configure the NEW encoder first, before touching the old one
         // This allows for seamless transition/overlap
@@ -366,6 +541,10 @@ public partial class SkiaCamera
                         _audioBuffer = new CircularAudioBuffer(PreRecordDuration);
                         Debug.WriteLine($"[StartRealtimeVideoProcessing] Created CIRCULAR audio buffer ({PreRecordDuration.TotalSeconds:F1}s)");
                     }
+
+                    // Pre-allocate live audio writer to avoid lag spike at pre-rec → live transition
+                    // Creates AVAssetWriter/Input but doesn't start writing yet
+                    EnsureLiveAudioWriterPreAllocated(AudioSampleRate, AudioChannels);
                 }
                 else if (IsRecordingVideo && _liveAudioWriter == null)
                 {
@@ -404,11 +583,20 @@ public partial class SkiaCamera
         appleEncoder.ParentCamera = this;
         appleEncoder.IsPreRecordingMode = IsPreRecording;
 
-        // Pass pre-allocated buffer if available (avoids lag spike on record start)
-        if (IsPreRecording && _sharedPreRecordingBuffer != null)
+        // Pass pre-allocated buffer if available (avoids lag spike on record start).
+        // In overlap mode, pick the buffer that's not currently being flushed in the background.
+        if (IsPreRecording)
         {
-            appleEncoder.SharedPreRecordingBuffer = _sharedPreRecordingBuffer;
-            Debug.WriteLine($"[StartRealtimeVideoProcessing] Using pre-allocated shared buffer (no allocation lag)");
+            var sharedBuffer = GetSharedPreRecordingBufferForNewSession();
+            if (sharedBuffer != null)
+            {
+                appleEncoder.SharedPreRecordingBuffer = sharedBuffer;
+                lock (_sharedPreRecordingBufferLock)
+                {
+                    _lastSharedPreRecordingBufferUsed = sharedBuffer;
+                }
+                Debug.WriteLine("[StartRealtimeVideoProcessing] Using pre-allocated shared buffer (race-free overlap)");
+            }
         }
 
         Debug.WriteLine($"[StartRealtimeVideoProcessing] iOS encoder initialized with IsPreRecordingMode={IsPreRecording}");
@@ -1205,8 +1393,25 @@ public partial class SkiaCamera
                 if (liveTracks != null && liveTracks.Length > 0)
                 {
                     liveTrack = liveTracks[0];
-                    var liveRange =
-                        new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = liveAsset.Duration };
+                    // Variant 2 (sync-sample-aware splice): start the live segment at its first sync sample
+                    // to avoid decode artifacts when the seam lands on a non-sync sample.
+                    // This is codec-agnostic (H.264/HEVC) because it relies on sync-sample metadata.
+                    var liveSyncStart = FindFirstSyncSampleTime(liveAsset, liveTrack);
+                    var liveStartSeconds = Math.Max(0, liveSyncStart.Seconds);
+                    var totalLiveSeconds = Math.Max(0, liveAsset.Duration.Seconds);
+                    var liveDurationSeconds = Math.Max(0, totalLiveSeconds - liveStartSeconds);
+
+                    if (liveStartSeconds > 0.0 && liveDurationSeconds > 0.0)
+                    {
+                        System.Diagnostics.Debug.WriteLine(
+                            $"[MuxVideosApple] Variant2: Trimming live video start to first sync sample at {liveStartSeconds:F3}s (duration {liveDurationSeconds:F3}s)");
+                    }
+
+                    var liveRange = new CoreMedia.CMTimeRange
+                    {
+                        Start = CoreMedia.CMTime.FromSeconds(liveStartSeconds, 600),
+                        Duration = CoreMedia.CMTime.FromSeconds(liveDurationSeconds, 600)
+                    };
                     videoTrack.InsertTimeRange(liveRange, liveTrack, currentTime, out var error);
                     if (error != null)
                         throw new InvalidOperationException(
@@ -1267,9 +1472,24 @@ public partial class SkiaCamera
                         {
                             var liveVideoDuration = liveAsset.Duration;
                             var audioDuration = liveAudioAsset.Duration;
-                            // Don't exceed live video duration
-                            var insertDuration = audioDuration.Seconds <= liveVideoDuration.Seconds ? audioDuration : liveVideoDuration;
-                            var audioRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = insertDuration };
+                            // Variant 2: If we trimmed the live video start to a sync sample, trim live audio by the same amount
+                            // so A/V remains aligned in the final composition.
+                            double liveStartSeconds = 0;
+                            if (liveTrack != null)
+                            {
+                                var liveSyncStart = FindFirstSyncSampleTime(liveAsset, liveTrack);
+                                liveStartSeconds = Math.Max(0, liveSyncStart.Seconds);
+                            }
+
+                            var trimmedVideoSeconds = Math.Max(0, liveVideoDuration.Seconds - liveStartSeconds);
+                            var trimmedAudioSeconds = Math.Max(0, audioDuration.Seconds - liveStartSeconds);
+                            var insertSeconds = Math.Min(trimmedAudioSeconds, trimmedVideoSeconds);
+
+                            var audioRange = new CoreMedia.CMTimeRange
+                            {
+                                Start = CoreMedia.CMTime.FromSeconds(liveStartSeconds, 600),
+                                Duration = CoreMedia.CMTime.FromSeconds(insertSeconds, 600)
+                            };
 
                             // Insert at the end of pre-rec video
                             audioTrack.InsertTimeRange(audioRange, liveAudioTracks[0], preRecVideoDuration, out var audioError);
@@ -1280,7 +1500,7 @@ public partial class SkiaCamera
                             }
                             else
                             {
-                                System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Added live audio at {preRecVideoDuration.Seconds:F2}s ({insertDuration.Seconds:F2}s)");
+                                System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Added live audio at {preRecVideoDuration.Seconds:F2}s ({insertSeconds:F2}s)");
                                 hasAnyAudio = true;
                             }
                         }
@@ -1329,7 +1549,19 @@ public partial class SkiaCamera
                             if (hasLiveAudio)
                             {
                                 var liveAudioTrack = liveAudioTracks[0];
-                                var liveAudioRange = new CoreMedia.CMTimeRange { Start = CoreMedia.CMTime.Zero, Duration = liveAsset.Duration };
+                                // Variant 2: Keep embedded live audio aligned with trimmed live video start.
+                                double liveStartSeconds = 0;
+                                if (liveTrack != null)
+                                {
+                                    var liveSyncStart = FindFirstSyncSampleTime(liveAsset, liveTrack);
+                                    liveStartSeconds = Math.Max(0, liveSyncStart.Seconds);
+                                }
+                                var liveDurationSeconds = Math.Max(0, liveAsset.Duration.Seconds - liveStartSeconds);
+                                var liveAudioRange = new CoreMedia.CMTimeRange
+                                {
+                                    Start = CoreMedia.CMTime.FromSeconds(liveStartSeconds, 600),
+                                    Duration = CoreMedia.CMTime.FromSeconds(liveDurationSeconds, 600)
+                                };
                                 audioTrack.InsertTimeRange(liveAudioRange, liveAudioTrack, audioCurrentTime, out var audioError);
                                 if (audioError != null)
                                 {
@@ -1401,7 +1633,7 @@ public partial class SkiaCamera
                     {
                         OutputUrl = outputUrl,
                         OutputFileType = AVFoundation.AVFileTypes.Mpeg4.GetConstant(),
-                        ShouldOptimizeForNetworkUse = false
+                        ShouldOptimizeForNetworkUse = true
                         // No VideoComposition - passthrough preserves original encoding
                     };
 
@@ -1442,6 +1674,117 @@ public partial class SkiaCamera
             System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Error: {ex.Message}");
             throw;
         }
+    }
+
+    /// <summary>
+    /// Finds the first sync sample (keyframe) presentation timestamp in a compressed track.
+    /// Returns CMTime.Zero if not found quickly or if reader setup fails.
+    ///
+    /// This is used by Variant 2 muxing: start the inserted live segment on a sync sample
+    /// so decoding does not start mid-GOP (which can cause “old frames” near the splice).
+    /// </summary>
+    private static CoreMedia.CMTime FindFirstSyncSampleTime(AVFoundation.AVAsset asset, AVFoundation.AVAssetTrack videoTrack, double maxSearchSeconds = 2.0)
+    {
+        if (asset == null || videoTrack == null || maxSearchSeconds <= 0)
+            return CoreMedia.CMTime.Zero;
+
+        try
+        {
+            using var reader = new AVFoundation.AVAssetReader(asset, out var error);
+            if (reader == null || error != null)
+            {
+                System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Variant2: AVAssetReader creation failed: {error?.LocalizedDescription}");
+                return CoreMedia.CMTime.Zero;
+            }
+
+            // Null output settings => compressed samples (no decode) when supported.
+            // Cast null to NSDictionary to disambiguate overloads on some targets (e.g., MacCatalyst).
+            using var output = new AVFoundation.AVAssetReaderTrackOutput(videoTrack, (Foundation.NSDictionary)null);
+
+            try
+            {
+                output.AlwaysCopiesSampleData = false;
+            }
+            catch
+            {
+                // Some OS/bindings may not expose this; safe to ignore.
+            }
+
+            if (!reader.CanAddOutput(output))
+                return CoreMedia.CMTime.Zero;
+
+            reader.AddOutput(output);
+
+            if (!reader.StartReading())
+                return CoreMedia.CMTime.Zero;
+
+            while (true)
+            {
+                using var sample = output.CopyNextSampleBuffer();
+                if (sample == null)
+                    break;
+
+                var pts = sample.PresentationTimeStamp;
+                if (pts.Seconds > maxSearchSeconds)
+                    break;
+
+                if (IsSyncSample(sample))
+                    return pts;
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[MuxVideosApple] Variant2: Error scanning sync samples: {ex.Message}");
+        }
+
+        return CoreMedia.CMTime.Zero;
+    }
+
+    private static bool IsSyncSample(CoreMedia.CMSampleBuffer sample)
+    {
+        try
+        {
+            // kCMSampleAttachmentKey_NotSync is CFString("NotSync")
+            // If NotSync is true => NOT a sync sample.
+            // If attachments are missing => treat as sync.
+            var attachments = GetSampleAttachmentsArray(sample, createIfNecessary: false);
+            if (attachments == null || attachments.Count == 0)
+                return true;
+
+            var dict = attachments.GetItem<Foundation.NSDictionary>(0);
+            if (dict == null)
+                return true;
+
+            var notSyncKey = new Foundation.NSString("NotSync");
+            if (!dict.ContainsKey(notSyncKey))
+                return true;
+
+            var value = dict[notSyncKey];
+            if (value is Foundation.NSNumber n)
+                return !n.BoolValue;
+
+            return true;
+        }
+        catch
+        {
+            return true;
+        }
+    }
+
+    [System.Runtime.InteropServices.DllImport("/System/Library/Frameworks/CoreMedia.framework/CoreMedia")]
+    private static extern IntPtr CMSampleBufferGetSampleAttachmentsArray(IntPtr sampleBuffer, bool createIfNecessary);
+
+    private static Foundation.NSArray GetSampleAttachmentsArray(CoreMedia.CMSampleBuffer sample, bool createIfNecessary)
+    {
+        if (sample == null)
+            return null;
+
+        var ptr = CMSampleBufferGetSampleAttachmentsArray(sample.Handle, createIfNecessary);
+        if (ptr == IntPtr.Zero)
+            return null;
+
+        // Returned array is owned by the sample buffer; do not dispose.
+        return ObjCRuntime.Runtime.GetNSObject<Foundation.NSArray>(ptr);
     }
 
     /// <summary>
@@ -1690,6 +2033,11 @@ public partial class SkiaCamera
                 await _preRecFlushTask;
                 _preRecFlushTask = null;
                 Debug.WriteLine("[StopRealtimeVideoProcessing] Pre-recording flush completed.");
+
+                lock (_sharedPreRecordingBufferLock)
+                {
+                    _sharedPreRecordingBufferInFlush = null;
+                }
             }
 
             // OPTIMIZED: Skip audio concatenation - pass both files directly to MuxVideosInternal
@@ -1812,6 +2160,12 @@ public partial class SkiaCamera
             }
 
             IsBusy = false; // Release busy state after successful muxing
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
         }
         catch (Exception ex)
         {
@@ -1847,6 +2201,13 @@ public partial class SkiaCamera
 
             SetIsRecordingVideo(false);
             IsBusy = false; // Release busy state on error
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
+
             VideoRecordingFailed?.Invoke(this, ex);
             throw;
         }
@@ -1929,6 +2290,12 @@ public partial class SkiaCamera
             SetIsPreRecording(false);
 
             Debug.WriteLine($"[AbortRealtimeVideoProcessing] Capture video flow aborted successfully");
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
         }
         catch (Exception ex)
         {
@@ -1944,6 +2311,12 @@ public partial class SkiaCamera
 
             SetIsRecordingVideo(false);
             SetIsPreRecording(false);
+
+            // Restart preview audio if still enabled
+            if (RecordAudio && State == CameraState.On)
+            {
+                StartPreviewAudioCapture();
+            }
 
             // Don't throw - we want abort to always succeed in stopping the recording
         }
@@ -1982,6 +2355,15 @@ public partial class SkiaCamera
         if (IsBusy)
         {
             Debug.WriteLine($"[StartVideoRecording] IsBusy cannot start");
+            return;
+        }
+
+        // Handle audio-only recording (RecordVideo=false)
+        if (!RecordVideo)
+        {
+            if (!RecordAudio)
+                throw new InvalidOperationException("RecordAudio must be true when RecordVideo is false");
+            await StartAudioOnlyRecording();
             return;
         }
 
@@ -2040,12 +2422,17 @@ public partial class SkiaCamera
                     _preRecordedAudioSamples = allAudioSamples;
 
                     // OOM-SAFE: Start streaming audio to file instead of linear buffer
+                    // Try to activate pre-allocated writer first (avoids lag spike), fall back to creating new one
                     var firstSample = _preRecordedAudioSamples?.FirstOrDefault();
                     int sampleRate = firstSample?.SampleRate ?? AudioSampleRate;
                     int channels = firstSample?.Channels ?? AudioChannels;
-                    if (StartLiveAudioWriter(sampleRate, channels))
+                    if (ActivateLiveAudioWriter())
                     {
-                        Debug.WriteLine("[StartVideoRecording] Started STREAMING audio writer for live phase (OOM-safe)");
+                        Debug.WriteLine("[StartVideoRecording] Activated PRE-ALLOCATED audio writer for live phase (no lag spike)");
+                    }
+                    else if (StartLiveAudioWriter(sampleRate, channels))
+                    {
+                        Debug.WriteLine("[StartVideoRecording] Started NEW audio writer for live phase (fallback)");
                     }
                     else
                     {
@@ -2093,6 +2480,20 @@ public partial class SkiaCamera
                 if (oldEncoderToStop != null)
                 {
                     Debug.WriteLine("[StartVideoRecording] Spawning background task to stop/flush old encoder");
+
+                    // Old encoder will drain its pre-recording buffer asynchronously; prevent reusing/resetting
+                    // the same shared buffer for a new pre-recording session until that drain completes.
+                    lock (_sharedPreRecordingBufferLock)
+                    {
+                        if (oldEncoderToStop is AppleVideoToolboxEncoder oldAppleEnc && oldAppleEnc.SharedPreRecordingBuffer != null)
+                        {
+                            _sharedPreRecordingBufferInFlush = oldAppleEnc.SharedPreRecordingBuffer;
+                        }
+                        else
+                        {
+                            _sharedPreRecordingBufferInFlush = _lastSharedPreRecordingBufferUsed;
+                        }
+                    }
 
                     _preRecFlushTask = Task.Run(async () =>
                     {
@@ -2159,6 +2560,13 @@ public partial class SkiaCamera
                         catch (Exception ex)
                         {
                             Debug.WriteLine($"[StartVideoRecording] BkTask Error: {ex}");
+                        }
+                        finally
+                        {
+                            lock (_sharedPreRecordingBufferLock)
+                            {
+                                _sharedPreRecordingBufferInFlush = null;
+                            }
                         }
                     });
                 }
@@ -2438,11 +2846,39 @@ public partial class SkiaCamera
     /// <summary>
     /// Starts streaming audio to file for OOM-safe live recording.
     /// Audio samples are written directly to disk instead of being buffered in memory.
+    /// If writer was pre-allocated, this just activates it. Otherwise creates a new one.
     /// </summary>
     private bool StartLiveAudioWriter(int sampleRate, int channels)
     {
         lock (_liveAudioWriterLock)
         {
+            // If pre-allocated, just activate it
+            if (_liveAudioWriter != null && _liveAudioWriterPreAllocated)
+            {
+                Debug.WriteLine("[StartLiveAudioWriter] Found pre-allocated writer, activating...");
+                // Release lock temporarily to call ActivateLiveAudioWriter which also takes the lock
+                // Actually, we're already in the lock, so just inline the activation logic
+                try
+                {
+                    if (!_liveAudioWriter.StartWriting())
+                    {
+                        Debug.WriteLine($"[StartLiveAudioWriter] StartWriting failed on pre-allocated: {_liveAudioWriter.Error?.LocalizedDescription}");
+                        CleanupLiveAudioWriter();
+                        return false;
+                    }
+                    _liveAudioWriter.StartSessionAtSourceTime(CoreMedia.CMTime.Zero);
+                    _liveAudioWriterPreAllocated = false;
+                    Debug.WriteLine($"[StartLiveAudioWriter] Activated pre-allocated writer: {_liveAudioFilePath}");
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[StartLiveAudioWriter] Exception activating pre-allocated: {ex.Message}");
+                    CleanupLiveAudioWriter();
+                    return false;
+                }
+            }
+
             if (_liveAudioWriter != null)
             {
                 Debug.WriteLine("[StartLiveAudioWriter] Writer already active");
@@ -2498,6 +2934,7 @@ public partial class SkiaCamera
                 }
                 _liveAudioWriter.StartSessionAtSourceTime(CoreMedia.CMTime.Zero);
 
+                _liveAudioWriterPreAllocated = false;  // Actively writing, not just pre-allocated
                 _liveAudioFirstTimestampNs = -1;  // Will be set on first sample
                 _liveAudioMemoryToFree = new List<IntPtr>();
 
@@ -2703,6 +3140,7 @@ public partial class SkiaCamera
         _liveAudioWriter = null;
         _liveAudioFilePath = null;
         _liveAudioFirstTimestampNs = -1;
+        _liveAudioWriterPreAllocated = false;
 
         // Free any tracked memory
         if (_liveAudioMemoryToFree != null)
@@ -3069,6 +3507,143 @@ public partial class SkiaCamera
             return null;
         }
     }
+
+    #region Preview Audio Capture
+
+    private void OnPreviewAudioSampleAvailable(object sender, AudioSample sample)
+    {
+        // Lightweight - just fire the event, no recording logic
+        OnAudioSampleAvailable(sample);
+    }
+
+    partial void StartPreviewAudioCapture()
+    {
+        if (_previewAudioCapture != null || !RecordAudio)
+            return;
+
+        Task.Run(async () =>
+        {
+            try
+            {
+                _previewAudioCapture = new AudioCaptureApple();
+                _previewAudioCapture.SampleAvailable += OnPreviewAudioSampleAvailable;
+                var started = await _previewAudioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
+                if (started)
+                {
+                    Debug.WriteLine($"[SkiaCamera.Apple] Preview audio capture started: {_previewAudioCapture.SampleRate}Hz, {_previewAudioCapture.Channels}ch");
+                }
+                else
+                {
+                    Debug.WriteLine("[SkiaCamera.Apple] Preview audio capture failed to start");
+                    _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
+                    _previewAudioCapture.Dispose();
+                    _previewAudioCapture = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera.Apple] Preview audio capture error: {ex.Message}");
+            }
+        });
+    }
+
+    partial void StopPreviewAudioCapture()
+    {
+        if (_previewAudioCapture == null)
+            return;
+
+        try
+        {
+            _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
+            _ = _previewAudioCapture.StopAsync();
+            _previewAudioCapture.Dispose();
+            _previewAudioCapture = null;
+            Debug.WriteLine("[SkiaCamera.Apple] Preview audio capture stopped");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera.Apple] Error stopping preview audio: {ex.Message}");
+        }
+    }
+
+    #endregion
+
+    #region AUDIO-ONLY RECORDING
+
+    private IAudioCapture _audioOnlyCapture;
+
+    private partial void CreateAudioOnlyEncoder(out IAudioOnlyEncoder encoder)
+    {
+        encoder = new AudioOnlyEncoderApple();
+    }
+
+    private partial void StartAudioOnlyCapture(int sampleRate, int channels, out Task task)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        task = tcs.Task;
+
+        Task.Run(async () =>
+        {
+            try
+            {
+                // Stop preview audio capture first
+                StopPreviewAudioCapture();
+
+                _audioOnlyCapture = new AudioCaptureApple();
+                _audioOnlyCapture.SampleAvailable += OnAudioOnlySampleAvailable;
+                var started = await _audioOnlyCapture.StartAsync(sampleRate, channels, AudioBitDepth, AudioDeviceIndex);
+                if (started)
+                {
+                    Debug.WriteLine($"[SkiaCamera.Apple] Audio-only capture started: {_audioOnlyCapture.SampleRate}Hz, {_audioOnlyCapture.Channels}ch");
+                }
+                else
+                {
+                    Debug.WriteLine("[SkiaCamera.Apple] Audio-only capture failed to start");
+                    _audioOnlyCapture.SampleAvailable -= OnAudioOnlySampleAvailable;
+                    _audioOnlyCapture.Dispose();
+                    _audioOnlyCapture = null;
+                }
+                tcs.TrySetResult(started);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera.Apple] Audio-only capture error: {ex.Message}");
+                tcs.TrySetException(ex);
+            }
+        });
+    }
+
+    private partial void StopAudioOnlyCapture(out Task task)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        task = tcs.Task;
+
+        if (_audioOnlyCapture == null)
+        {
+            tcs.TrySetResult(true);
+            return;
+        }
+
+        Task.Run(async () =>
+        {
+            try
+            {
+                _audioOnlyCapture.SampleAvailable -= OnAudioOnlySampleAvailable;
+                await _audioOnlyCapture.StopAsync();
+                _audioOnlyCapture.Dispose();
+                _audioOnlyCapture = null;
+                Debug.WriteLine("[SkiaCamera.Apple] Audio-only capture stopped");
+                tcs.TrySetResult(true);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera.Apple] Error stopping audio-only capture: {ex.Message}");
+                tcs.TrySetException(ex);
+            }
+        });
+    }
+
+    #endregion
 
     //end of class declaration
 }

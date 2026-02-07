@@ -6,37 +6,80 @@ namespace CameraTests.Views
     {
         public class AppCamera : SkiaCamera
         {
-            // Double-buffer for real-time oscillograph (ZERO allocations, perfect sync)
-            private float[] _audioFrontBuffer = new float[60]; // Drawing thread reads this
-            private float[] _audioBackBuffer = new float[60];  // Audio thread writes this
-            private int _swapRequested = 0; // 0 = no swap, 1 = swap requested
-            private const int WaveformPoints = 60;
-            private const float VisualizationGain = 4.0f; // Boost sensitivity (adjust 2-10 as needed)
+            // Audio visualizer (switch between AudioOscillograph and AudioLevels)
+            private IAudioVisualizer _audioVisualizer = new AudioLevelsVU();
+            private int _visualizerIndex = 0;
 
-            public override void WriteAudioSample(AudioSample sample)
+            public static readonly BindableProperty VisualizerNameProperty = BindableProperty.Create(
+                nameof(VisualizerName),
+                typeof(string),
+                typeof(AppCamera),
+                "VU Meter");
+
+            public string VisualizerName
             {
-                // Extract waveform data directly to back buffer (FASTEST: direct byte read)
-                var stepSize = sample.Data.Length / (WaveformPoints * 2); // *2 for 16-bit stereo
-            
-                for (int i = 0; i < WaveformPoints; i++)
-                {
-                    var byteIndex = i * stepSize * 2;
-                    if (byteIndex + 1 < sample.Data.Length)
-                    {
-                        // Read 16-bit PCM sample directly (little-endian)
-                        short pcmValue = (short)(sample.Data[byteIndex] | (sample.Data[byteIndex + 1] << 8));
-                        var normalized = pcmValue / 32768f; // Normalize to -1..1
-                        _audioBackBuffer[i] = Math.Clamp(normalized * VisualizationGain, -1f, 1f); // Boost + clamp
-                    }
-                }
-
-                // Signal swap (drawing thread will swap buffers on next draw)
-                System.Threading.Interlocked.Exchange(ref _swapRequested, 1);
-
-                // MUST call base to record the modified audio
-                base.WriteAudioSample(sample);
+                get => (string)GetValue(VisualizerNameProperty);
+                set => SetValue(VisualizerNameProperty, value);
             }
 
+            public void SwitchVisualizer()
+            {
+                _visualizerIndex++;
+                if (_visualizerIndex > 6) _visualizerIndex = 0;
+
+                var old = _audioVisualizer;
+                bool useGain = true; 
+
+                switch (_visualizerIndex)
+                {
+                    case 0:
+                        _audioVisualizer = new AudioLevelsVU();
+                        VisualizerName = "VU Meter";
+                        break;
+                    case 1:
+                        _audioVisualizer = new AudioLevelsPeak();
+                        VisualizerName = "Peak Monitor";
+                        break;
+                    case 2:
+                        _audioVisualizer = new AudioLevels();
+                        VisualizerName = "Spectrum";
+                        break;
+                    case 3:
+                        _audioVisualizer = new AudioOscillograph();
+                        useGain = true;
+                        VisualizerName = "Oscillograph";
+                        break;
+                    case 4:
+                        _audioVisualizer = new AudioRadialGauge();
+                        VisualizerName = "Gauge";
+                        break;
+                    case 5:
+                        _audioVisualizer = new AudioInstrumentTuner();
+                        useGain = true;
+                        VisualizerName = "Tuner";
+                        break;
+                    case 6:
+                        _audioVisualizer = null;
+                        VisualizerName = "None";
+                        break;
+                }
+
+                if (_audioVisualizer != null)
+                {
+                    _audioVisualizer.UseGain = useGain;
+                }
+
+                (old as IDisposable)?.Dispose();
+            }
+
+            public string RecognizedText { get; set; }
+
+            protected override AudioSample OnAudioSampleAvailable(AudioSample sample)
+            {
+                _audioVisualizer?.AddSample(sample);
+
+                return base.OnAudioSampleAvailable(sample);
+            }
 
             public override void OnWillDisposeWithChildren()
             {
@@ -46,8 +89,9 @@ namespace CameraTests.Views
                 _paintRec = null;
                 _paintPreview?.Dispose();
                 _paintPreview = null;
-                _paintWaveform?.Dispose();
-                _paintWaveform = null;
+                
+                (_audioVisualizer as IDisposable)?.Dispose();
+                _audioVisualizer = null;
             }
 
             public void DrawOverlay(DrawableFrame frame)
@@ -96,11 +140,6 @@ namespace CameraTests.Views
                     paint.Style = SKPaintStyle.Stroke;
                     paint.StrokeWidth = 4 * scale;
                     canvas.DrawRect(10 * scale, 10 * scale, width - 20 * scale, height - 20 * scale, paint);
-
-                    if (UseRealtimeVideoProcessing)
-                    {
-                        DrawOscillograph(canvas, width, height, scale);
-                    }
                 }
                 else
                 {
@@ -108,74 +147,17 @@ namespace CameraTests.Views
                     var text = $"PREVIEW {this.CaptureMode}";
                     canvas.DrawText(text, 50 * scale, 100 * scale, paint);
                 }
-            }
 
-            /// <summary>
-            /// Draw oscillograph at bottom (FASTEST implementation)
-            /// </summary>
-            /// <param name="canvas"></param>
-            /// <param name="width"></param>
-            /// <param name="height"></param>
-            /// <param name="scale"></param>
-            private void DrawOscillograph(SKCanvas canvas, float width, float height, float scale)
-            {
-                if (_paintWaveform == null)
+                if (UseRealtimeVideoProcessing && RecordAudio)
                 {
-                    _paintWaveform = new SKPaint
-                    {
-                        Color = SKColors.LimeGreen,
-                        StrokeWidth = 2,
-                        Style = SKPaintStyle.Stroke,
-                        IsAntialias = false // Disable for speed
-                    };
-                }
-
-                // Swap buffers if audio thread signaled new data
-                if (System.Threading.Interlocked.CompareExchange(ref _swapRequested, 0, 1) == 1)
-                {
-                    // Atomic pointer swap (ZERO allocations, PERFECT sync)
-                    var temp = _audioFrontBuffer;
-                    _audioFrontBuffer = _audioBackBuffer;
-                    _audioBackBuffer = temp;
-                }
-
-                // Draw oscillograph at bottom center using front buffer
-                var oscWidth = width * 0.8f;
-                var oscHeight = 150 * scale;
-                var oscX = (width - oscWidth) / 2;
-                var oscY = height - oscHeight - 40 * scale;
-                var centerY = oscY + oscHeight / 2;
-
-                // Background semi-transparent rect
-                _paintWaveform.Style = SKPaintStyle.Fill;
-                _paintWaveform.Color = SKColors.Black.WithAlpha(128);
-                canvas.DrawRect(oscX - 10, oscY - 10, oscWidth + 20, oscHeight + 20, _paintWaveform);
-
-                // Draw center line
-                _paintWaveform.Style = SKPaintStyle.Stroke;
-                _paintWaveform.Color = SKColors.Gray.WithAlpha(128);
-                _paintWaveform.StrokeWidth = 1;
-                canvas.DrawLine(oscX, centerY, oscX + oscWidth, centerY, _paintWaveform);
-
-                // Draw waveform (FASTEST: direct line drawing from front buffer)
-                _paintWaveform.Color = SKColors.LimeGreen;
-                _paintWaveform.StrokeWidth = 2;
-            
-                var stepX = oscWidth / (WaveformPoints - 1);
-                for (int i = 0; i < WaveformPoints - 1; i++)
-                {
-                    var x1 = oscX + i * stepX;
-                    var y1 = centerY - (_audioFrontBuffer[i] * oscHeight / 2);
-                    var x2 = oscX + (i + 1) * stepX;
-                    var y2 = centerY - (_audioFrontBuffer[i + 1] * oscHeight / 2);
-                
-                    canvas.DrawLine(x1, y1, x2, y2, _paintWaveform);
+                    _audioVisualizer?.Render(canvas, width, height, scale, RecognizedText);
                 }
             }
 
             private SKPaint _paintPreview;
             private SKPaint _paintRec;
-            private SKPaint _paintWaveform;
         }
+
+      
     }
 }

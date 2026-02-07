@@ -18,113 +18,118 @@
         </Style>
     </ContentPage.Resources>
 
-    <draw:Canvas
-        BackgroundColor="#f5f5f5"
-        Gestures="Enabled"
-        HorizontalOptions="Fill"
-        RenderingMode="Default"
-        VerticalOptions="Fill">
+    <!--  we use Grid wrapper because on iOS this is required by MAUI to apply safe insets  -->
+    <Grid>
 
-        <draw:SkiaScroll
-            AutoCache="True"
+        <draw:Canvas
+            BackgroundColor="#f5f5f5"
+            Gestures="Enabled"
             HorizontalOptions="Fill"
+            RenderingMode="Default"
             VerticalOptions="Fill">
 
-            <draw:SkiaStack Padding="20" Spacing="20">
+            <draw:SkiaScroll
+                AutoCache="True"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill">
 
-                <!--  Header  -->
-                <draw:SkiaLayout
-                    HorizontalOptions="Center"
-                    Spacing="8"
-                    Type="Column"
-                    UseCache="Operations">
-                    <draw:SkiaLabel
-                        FontAttributes="Bold"
-                        FontSize="32"
+                <draw:SkiaStack Padding="20" Spacing="20">
+
+                    <!--  Header  -->
+                    <draw:SkiaLayout
                         HorizontalOptions="Center"
-                        Text="DrawnUI Tutorials"
-                        TextColor="#2c3e50" />
-                    <draw:SkiaLabel
-                        FontSize="16"
+                        Spacing="8"
+                        Type="Column"
+                        UseCache="Operations">
+                        <draw:SkiaLabel
+                            FontAttributes="Bold"
+                            FontSize="32"
+                            HorizontalOptions="Center"
+                            Text="DrawnUI Tutorials"
+                            TextColor="#2c3e50" />
+                        <draw:SkiaLabel
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            Text="Learn DrawnUI step by step"
+                            TextColor="#7f8c8d" />
+                    </draw:SkiaLayout>
+
+                    <!--  Tutorial Cards  -->
+                    <draw:SkiaWrap
                         HorizontalOptions="Center"
-                        Text="Learn DrawnUI step by step"
-                        TextColor="#7f8c8d" />
-                </draw:SkiaLayout>
+                        Spacing="16"
+                        Split="0">
 
-                <!--  Tutorial Cards  -->
-                <draw:SkiaWrap
-                    HorizontalOptions="Center"
-                    Spacing="16"
-                    Split="0">
+                        <!--  First App Tutorial  -->
+                        <draw:SkiaButton
+                            BackgroundColor="#2ecc71"
+                            Style="{x:StaticResource ButtonStyle}"
+                            Tapped="OnFirstAppClicked"
+                            Text="First App (XAML)" />
 
-                    <!--  First App Tutorial  -->
-                    <draw:SkiaButton
-                        BackgroundColor="#2ecc71"
-                        Style="{x:StaticResource ButtonStyle}"
-                        Tapped="OnFirstAppClicked"
-                        Text="First App (XAML)" />
+                        <!--  First App Code  -->
+                        <draw:SkiaButton
+                            BackgroundColor="#9b59b6"
+                            Style="{x:StaticResource ButtonStyle}"
+                            Tapped="OnFirstAppCodeClicked"
+                            Text="First App (Code)" />
 
-                    <!--  First App Code  -->
-                    <draw:SkiaButton
-                        BackgroundColor="#9b59b6"
-                        Style="{x:StaticResource ButtonStyle}"
-                        Tapped="OnFirstAppCodeClicked"
-                        Text="First App (Code)" />
+                        <!--  Button Tutorial  -->
+                        <draw:SkiaButton
+                            BackgroundColor="#f39c12"
+                            Style="{x:StaticResource ButtonStyle}"
+                            Tapped="OnButtonClicked"
+                            Text="Custom Button" />
 
-                    <!--  Button Tutorial  -->
-                    <draw:SkiaButton
-                        BackgroundColor="#f39c12"
-                        Style="{x:StaticResource ButtonStyle}"
-                        Tapped="OnButtonClicked"
-                        Text="Custom Button" />
+                        <!--  Interactive Cards Tutorial  -->
+                        <draw:SkiaButton
+                            BackgroundColor="#3498db"
+                            Style="{x:StaticResource ButtonStyle}"
+                            Tapped="OnCardsClicked"
+                            Text="Interactive Cards"
+                            TextColor="White" />
 
-                    <!--  Interactive Cards Tutorial  -->
-                    <draw:SkiaButton
-                        BackgroundColor="#3498db"
-                        Style="{x:StaticResource ButtonStyle}"
-                        Tapped="OnCardsClicked"
-                        Text="Interactive Cards"
-                        TextColor="White" />
+                        <!--  News Feed Tutorial  -->
+                        <draw:SkiaButton
+                            BackgroundColor="#e74c3c"
+                            Style="{x:StaticResource ButtonStyle}"
+                            Tapped="OnNewsFeedClicked"
+                            Text="News Feed Scroller" />
 
-                    <!--  News Feed Tutorial  -->
-                    <draw:SkiaButton
-                        BackgroundColor="#e74c3c"
-                        Style="{x:StaticResource ButtonStyle}"
-                        Tapped="OnNewsFeedClicked"
-                        Text="News Feed Scroller" />
+                    </draw:SkiaWrap>
 
-                </draw:SkiaWrap>
+                    <draw:SkiaLabel
+                        Margin="0,16,0,0"
+                        FontFamily="FontText"
+                        FontSize="15"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        LineHeightUniform="False"
+                        Tapped="LinkTutorialsTapped"
+                        TextColor="#3333FF"
+                        UseCache="Image">
+                        <draw:SkiaLabel.Spans>
 
-                <draw:SkiaLabel
-                    Margin="0,16,0,0"
-                    FontFamily="FontText"
-                    FontSize="15"
-                    HorizontalOptions="Center"
-                    HorizontalTextAlignment="Center"
-                    LineHeightUniform="False"
-                    Tapped="LinkTutorialsTapped"
-                    TextColor="#3333FF"
-                    UseCache="Image">
-                    <draw:SkiaLabel.Spans>
+                            <draw:TextSpan Text="Read tutorials at drawnui.net" />
 
-                        <draw:TextSpan Text="Read tutorials at drawnui.net" />
+                            <draw:TextSpan Text=" " />
 
-                        <draw:TextSpan Text=" " />
+                            <draw:SvgSpan
+                                Width="17"
+                                Height="17"
+                                Source="Svg/linkout.svg"
+                                TintColor="#3333FF"
+                                VerticalAlignement="Center" />
 
-                        <draw:SvgSpan
-                            Width="17"
-                            Height="17"
-                            Source="Svg/linkout.svg"
-                            TintColor="#3333FF"
-                            VerticalAlignement="Center" />
+                        </draw:SkiaLabel.Spans>
 
-                    </draw:SkiaLabel.Spans>
+                    </draw:SkiaLabel>
 
-                </draw:SkiaLabel>
+                </draw:SkiaStack>
 
-            </draw:SkiaStack>
+            </draw:SkiaScroll>
+        </draw:Canvas>
 
-        </draw:SkiaScroll>
-    </draw:Canvas>
+    </Grid>
 
 </ContentPage>

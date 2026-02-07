@@ -88,7 +88,7 @@ namespace DrawnUi.Draw
                 EffectImageFilter = VisualEffects.OfType<IImageEffect>().FirstOrDefault();
                 EffectRenderers = VisualEffects.OfType<IRenderEffect>().ToList();
                 EffectsState = VisualEffects.OfType<IStateEffect>().ToList();
-                EffectPostRenderer = VisualEffects.OfType<IPostRendererEffect>().FirstOrDefault();
+                EffectPostRenderers = VisualEffects.OfType<IPostRendererEffect>().ToList();
             }
 
             Update();
@@ -99,7 +99,7 @@ namespace DrawnUi.Draw
         protected List<IRenderEffect> EffectRenderers = new();
         protected IImageEffect EffectImageFilter;
         protected IColorEffect EffectColorFilter;
-        public IPostRendererEffect EffectPostRenderer;
+        public List<IPostRendererEffect> EffectPostRenderers = new();
 
         public static readonly BindableProperty VisualEffectsProperty = BindableProperty.Create(
             nameof(VisualEffects),

@@ -8,6 +8,7 @@ items:
   - DrawnUi.Infrastructure.MeasuringConstraints.Content
   - DrawnUi.Infrastructure.MeasuringConstraints.Margins
   - DrawnUi.Infrastructure.MeasuringConstraints.Request
+  - DrawnUi.Infrastructure.MeasuringConstraints.ToString
   - DrawnUi.Infrastructure.MeasuringConstraints.TotalMargins
   langs:
   - csharp
@@ -33,12 +34,43 @@ items:
   inheritedMembers:
   - System.ValueType.Equals(System.Object)
   - System.ValueType.GetHashCode
-  - System.ValueType.ToString
   - System.Object.Equals(System.Object,System.Object)
   - System.Object.GetType
   - System.Object.ReferenceEquals(System.Object,System.Object)
   extensionMethods:
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Infrastructure.MeasuringConstraints.ToString
+  commentId: M:DrawnUi.Infrastructure.MeasuringConstraints.ToString
+  id: ToString
+  parent: DrawnUi.Infrastructure.MeasuringConstraints
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: MeasuringConstraints.ToString()
+  fullName: DrawnUi.Infrastructure.MeasuringConstraints.ToString()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Internals/Models/MeasuringConstraints.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ToString
+    path: ../src/Shared/Internals/Models/MeasuringConstraints.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Returns the fully qualified type name of this instance.
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+      description: The fully qualified type name.
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: DrawnUi.Infrastructure.MeasuringConstraints.ToString*
 - uid: DrawnUi.Infrastructure.MeasuringConstraints.Margins
   commentId: P:DrawnUi.Infrastructure.MeasuringConstraints.Margins
   id: Margins
@@ -57,7 +89,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Margins
     path: ../src/Shared/Internals/Models/MeasuringConstraints.cs
-    startLine: 4
+    startLine: 9
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure
@@ -86,7 +118,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TotalMargins
     path: ../src/Shared/Internals/Models/MeasuringConstraints.cs
-    startLine: 9
+    startLine: 14
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure
@@ -117,7 +149,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Request
     path: ../src/Shared/Internals/Models/MeasuringConstraints.cs
-    startLine: 11
+    startLine: 16
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure
@@ -146,7 +178,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Content
     path: ../src/Shared/Internals/Models/MeasuringConstraints.cs
-    startLine: 12
+    startLine: 17
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure
@@ -233,28 +265,6 @@ references:
     name: GetHashCode
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode
-  - name: (
-  - name: )
-- uid: System.ValueType.ToString
-  commentId: M:System.ValueType.ToString
-  parent: System.ValueType
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
-  name: ToString()
-  nameWithType: ValueType.ToString()
-  fullName: System.ValueType.ToString()
-  spec.csharp:
-  - uid: System.ValueType.ToString
-    name: ToString
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: System.ValueType.ToString
-    name: ToString
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
   - name: (
   - name: )
 - uid: System.Object.Equals(System.Object,System.Object)
@@ -487,6 +497,45 @@ references:
   - uid: DrawnUi.Extensions
     name: Extensions
     href: DrawnUi.Extensions.html
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.valuetype.tostring
+  - name: (
+  - name: )
+- uid: DrawnUi.Infrastructure.MeasuringConstraints.ToString*
+  commentId: Overload:DrawnUi.Infrastructure.MeasuringConstraints.ToString
+  href: DrawnUi.Infrastructure.MeasuringConstraints.html#DrawnUi_Infrastructure_MeasuringConstraints_ToString
+  name: ToString
+  nameWithType: MeasuringConstraints.ToString
+  fullName: DrawnUi.Infrastructure.MeasuringConstraints.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
 - uid: DrawnUi.Infrastructure.MeasuringConstraints.Margins*
   commentId: Overload:DrawnUi.Infrastructure.MeasuringConstraints.Margins
   href: DrawnUi.Infrastructure.MeasuringConstraints.html#DrawnUi_Infrastructure_MeasuringConstraints_Margins
