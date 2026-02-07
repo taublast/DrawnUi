@@ -26,6 +26,7 @@
                 VerticalOptions="Fill">
 
                 <draw:SkiaLayout
+                    UseCache="Operations"
                     Type="Column"
                     Spacing="24"
                     Padding="20"
@@ -39,7 +40,9 @@
                         TextColor="#2c3e50"
                         HorizontalOptions="Center" />
 
-                    <draw:SkiaLayout HorizontalOptions="Fill" Type="Wrap" UseCache="ImageComposite" Tag="Cached">
+                    <draw:SkiaLayout HorizontalOptions="Fill" Type="Wrap" 
+                                     UseCache="ImageComposite"
+                                      Tag="Cached">
 
                         <!--  SECTION: CONTROL STYLES -->
                         <draw:SkiaLayout
