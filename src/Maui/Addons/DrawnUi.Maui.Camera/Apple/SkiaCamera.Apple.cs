@@ -308,16 +308,9 @@ public partial class SkiaCamera
                         }
                     }
 
-                    if (imageToDraw == null)
-                    {
-                        var raw = nativeCam.GetRawFullImage();
-                        if (raw.Image != null)
-                        {
-                            imageToDraw = raw.Image;
-                            imageRotation = raw.Rotation;
-                            imageFlip = raw.Flip;
-                        }
-                    }
+                    // No fallback to GetRawFullImage - it reads _latestRecordingFrame which was
+                    // populated earlier and can be older than what zero-copy previously encoded,
+                    // causing out-of-order frames in the video. Better to drop a frame than glitch.
                 }
 
                 // Fallback to standard preview image (slower, already rotated)
