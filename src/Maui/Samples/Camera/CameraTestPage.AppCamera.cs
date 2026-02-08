@@ -7,14 +7,14 @@ namespace CameraTests.Views
         public class AppCamera : SkiaCamera
         {
             // Audio visualizer (switch between AudioOscillograph and AudioLevels)
-            private IAudioVisualizer _audioVisualizer = new AudioLevelsVU();
+            private IAudioVisualizer _audioVisualizer = null;
             private int _visualizerIndex = 0;
 
             public static readonly BindableProperty VisualizerNameProperty = BindableProperty.Create(
                 nameof(VisualizerName),
                 typeof(string),
                 typeof(AppCamera),
-                "VU Meter");
+                "None");
 
             public string VisualizerName
             {
@@ -22,28 +22,40 @@ namespace CameraTests.Views
                 set => SetValue(VisualizerNameProperty, value);
             }
 
-            public void SwitchVisualizer()
+            public void SwitchVisualizer(int index = -1)
             {
-                _visualizerIndex++;
-                if (_visualizerIndex > 6) _visualizerIndex = 0;
+                if (index >= 0)
+                {
+                    _visualizerIndex = index;
+                }
+                else
+                {
+                    _visualizerIndex++;
+                }
+                if (_visualizerIndex > 8) _visualizerIndex = 0;
 
                 var old = _audioVisualizer;
-                bool useGain = true; 
+                bool useGain = true;
 
                 switch (_visualizerIndex)
                 {
                     case 0:
+                        _audioVisualizer = new AudioSoundBars();
+                        useGain = true;
+                        VisualizerName = "Sound Bars";
+                        break;
+                    case 1:
                         _audioVisualizer = new AudioLevelsVU();
                         VisualizerName = "VU Meter";
                         break;
-                    case 1:
+                    case 2:
                         _audioVisualizer = new AudioLevelsPeak();
                         VisualizerName = "Peak Monitor";
                         break;
-                    case 2:
-                        _audioVisualizer = new AudioLevels();
-                        VisualizerName = "Spectrum";
-                        break;
+                    //case 2:
+                    //    _audioVisualizer = new AudioLevels();
+                    //    VisualizerName = "Spectrum";
+                    //    break;
                     case 3:
                         _audioVisualizer = new AudioOscillograph();
                         useGain = true;
@@ -59,6 +71,10 @@ namespace CameraTests.Views
                         VisualizerName = "Tuner";
                         break;
                     case 6:
+                        _audioVisualizer = new AudioWaveformBars();
+                        VisualizerName = "Waveform Bars";
+                        break;
+                    case 8:
                         _audioVisualizer = null;
                         VisualizerName = "None";
                         break;
@@ -89,7 +105,7 @@ namespace CameraTests.Views
                 _paintRec = null;
                 _paintPreview?.Dispose();
                 _paintPreview = null;
-                
+
                 (_audioVisualizer as IDisposable)?.Dispose();
                 _audioVisualizer = null;
             }
@@ -158,6 +174,6 @@ namespace CameraTests.Views
             private SKPaint _paintRec;
         }
 
-      
+
     }
 }
