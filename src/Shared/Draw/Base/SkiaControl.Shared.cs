@@ -3316,7 +3316,7 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
-        /// Dispose with needed delay. 
+        /// Dispose after some number of frames/with needed delay to avoid crashing if still used by GPU thread
         /// </summary>
         /// <param name="disposable"></param>
         public virtual void DisposeObject(IDisposable disposable, [CallerMemberName] string caller = null)
