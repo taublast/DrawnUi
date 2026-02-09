@@ -1320,7 +1320,6 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         if (_frameReader == null)
         {
             //Debug.WriteLine("[NativeCameraWindows] Frame reader is null, cannot start");
-            State = CameraProcessorState.Error;
             return;
         }
 
