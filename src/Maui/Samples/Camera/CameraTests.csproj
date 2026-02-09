@@ -8,7 +8,7 @@
         <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
         <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
         
-        <ApplicationId>com.drawnioui.repro</ApplicationId>
+        <ApplicationId>com.drawnui.camtests</ApplicationId>
         <ApplicationIdGuid>330e66b0-efc2-4fde-9ac8-074d5c3299b3</ApplicationIdGuid>
         <ApplicationTitle>CameraTests DrawnUI</ApplicationTitle>
         <OutputType>Exe</OutputType>
