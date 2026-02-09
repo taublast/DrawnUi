@@ -25,6 +25,8 @@
 docfx_project/log.txt
 log.txt
 
+src/Native/* linguist-vendored
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
