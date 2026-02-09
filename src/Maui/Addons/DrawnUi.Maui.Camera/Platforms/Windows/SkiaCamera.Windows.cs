@@ -811,6 +811,10 @@ public partial class SkiaCamera : SkiaControl
         // Set parent reference and pre-recording mode
         _captureVideoEncoder.ParentCamera = this;
         _captureVideoEncoder.IsPreRecordingMode = IsPreRecording;
+        if (_captureVideoEncoder is WindowsCaptureVideoEncoder winEncoderInit)
+        {
+            winEncoderInit.AudioOnly = !EnableVideoRecording;
+        }
         Debug.WriteLine($"[StartRealtimeVideoProcessing] Encoder initialized with IsPreRecordingMode={IsPreRecording}");
 
         // Generate output path
@@ -1070,12 +1074,17 @@ public partial class SkiaCamera : SkiaControl
         if (IsBusy)
             return;
 
-        // Handle audio-only recording (EnableVideoRecording=false)
+        // Handle audio-only recording (EnableVideoRecording=false):
+        // Use the normal video encoder path - it handles audio via AudioEncoderNative.dll.
+        // Video H.264 stream is configured but no frames are fed; the resulting MP4 contains audio only.
         if (!EnableVideoRecording)
         {
             if (!EnableAudioRecording)
                 throw new InvalidOperationException("EnableAudioRecording must be true when EnableVideoRecording is false");
-            await StartAudioOnlyRecording();
+
+            Debug.WriteLine("[StartVideoRecording] Audio-only mode: using video encoder without video frames");
+            IsRecordingVideo = true;
+            await StartRealtimeVideoProcessing();
             return;
         }
 
@@ -1314,7 +1323,8 @@ public partial class SkiaCamera : SkiaControl
 
     private partial void CreateAudioOnlyEncoder(out IAudioOnlyEncoder encoder)
     {
-        encoder = new AudioOnlyEncoderWindows();
+        // Windows uses the video encoder path for audio-only recording (no dedicated encoder needed)
+        encoder = null;
     }
 
     private partial void StartAudioOnlyCapture(int sampleRate, int channels, out Task task)
