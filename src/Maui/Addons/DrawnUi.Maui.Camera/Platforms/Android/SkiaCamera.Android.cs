@@ -654,7 +654,7 @@ public partial class SkiaCamera
             IsBusy = false; // Release busy state after successful processing
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (EnableAudioRecording && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
@@ -670,7 +670,7 @@ public partial class SkiaCamera
             IsBusy = false; // Release busy state on error
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (EnableAudioRecording && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
@@ -763,7 +763,7 @@ public partial class SkiaCamera
             SetIsRecordingVideo(false);
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (EnableAudioRecording && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
@@ -778,7 +778,7 @@ public partial class SkiaCamera
             SetIsRecordingVideo(false);
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (EnableAudioRecording && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
@@ -885,7 +885,7 @@ public partial class SkiaCamera
         SetSourceFrameDimensions(width, height);
 
         // Pass locked rotation to encoder for proper video orientation metadata (Android-specific)
-        var audioEnabled = RecordAudio;
+        var audioEnabled = EnableAudioRecording;
         if (audioEnabled)
         {
             audioEnabled = await EnsureMicrophonePermissionAsync();
@@ -1219,11 +1219,11 @@ public partial class SkiaCamera
             return;
         }
 
-        // Handle audio-only recording (RecordVideo=false)
-        if (!RecordVideo)
+        // Handle audio-only recording (EnableVideoRecording=false)
+        if (!EnableVideoRecording)
         {
-            if (!RecordAudio)
-                throw new InvalidOperationException("RecordAudio must be true when RecordVideo is false");
+            if (!EnableAudioRecording)
+                throw new InvalidOperationException("EnableAudioRecording must be true when EnableVideoRecording is false");
             await StartAudioOnlyRecording();
             return;
         }
@@ -1391,7 +1391,8 @@ public partial class SkiaCamera
 
     partial void StartPreviewAudioCapture()
     {
-        if (_previewAudioCapture != null || !RecordAudio)
+        // Start audio capture if either recording audio or audio monitoring is enabled
+        if (_previewAudioCapture != null || (!EnableAudioRecording && !EnableAudioMonitoring))
             return;
 
         Task.Run(async () =>

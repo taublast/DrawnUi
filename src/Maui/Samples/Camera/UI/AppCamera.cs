@@ -6,8 +6,9 @@ namespace CameraTests.Views
     {
         public AppCamera()
         {
-            //this.UseRealtimeVideoProcessing
-            //this.RecordVideo = false;
+            //audio mode
+            this.EnableVideoRecording = false;
+            this.EnableVideoPreview = false;
         }
 
         // Audio visualizer (switch between AudioOscillograph and AudioLevels)
@@ -166,7 +167,7 @@ namespace CameraTests.Views
                 canvas.DrawText(text, 50 * scale, 100 * scale, paint);
             }
 
-            if (UseRealtimeVideoProcessing && RecordAudio)
+            if (UseRealtimeVideoProcessing && EnableAudioRecording)
             {
                 _audioVisualizer?.Render(canvas, width, height, scale);
             }

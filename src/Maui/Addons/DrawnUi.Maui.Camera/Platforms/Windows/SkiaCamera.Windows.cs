@@ -688,7 +688,7 @@ public partial class SkiaCamera : SkiaControl
             IsBusy = false; // Release busy state after successful muxing
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (EnableAudioRecording && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
@@ -704,7 +704,7 @@ public partial class SkiaCamera : SkiaControl
             IsBusy = false; // Release busy state on error
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (EnableAudioRecording && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
@@ -765,7 +765,7 @@ public partial class SkiaCamera : SkiaControl
             IsRecordingVideo = false;
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (EnableAudioRecording && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
@@ -780,7 +780,7 @@ public partial class SkiaCamera : SkiaControl
             IsRecordingVideo = false;
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (EnableAudioRecording && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
@@ -852,7 +852,7 @@ public partial class SkiaCamera : SkiaControl
         SetSourceFrameDimensions(width, height);
 
         // CRITICAL: Initialize AudioGraph FIRST to get actual audio format for encoder configuration
-        if (RecordAudio)
+        if (EnableAudioRecording)
         {
             // Use AudioGraph for real-time mode (frame-by-frame control)
             _audioCapture = new AudioGraphCapture();
@@ -908,12 +908,12 @@ public partial class SkiaCamera : SkiaControl
             }
         }
 
-        await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio && _audioCapture != null);
+        await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, EnableAudioRecording && _audioCapture != null);
 
         // Check if audio encoding was successfully initialized
         bool audioEncodingEnabled = (_captureVideoEncoder is WindowsCaptureVideoEncoder winEnc) && winEnc.IsAudioEncodingEnabled;
 
-        if (RecordAudio && !audioEncodingEnabled && _audioCapture != null)
+        if (EnableAudioRecording && !audioEncodingEnabled && _audioCapture != null)
         {
             Debug.WriteLine($"[StartRealtimeVideoProcessing] Audio encoding failed to initialize - cleaning up audio capture");
             _audioCapture.SampleAvailable -= OnAudioSampleAvailable;
@@ -1070,11 +1070,11 @@ public partial class SkiaCamera : SkiaControl
         if (IsBusy)
             return;
 
-        // Handle audio-only recording (RecordVideo=false)
-        if (!RecordVideo)
+        // Handle audio-only recording (EnableVideoRecording=false)
+        if (!EnableVideoRecording)
         {
-            if (!RecordAudio)
-                throw new InvalidOperationException("RecordAudio must be true when RecordVideo is false");
+            if (!EnableAudioRecording)
+                throw new InvalidOperationException("EnableAudioRecording must be true when EnableVideoRecording is false");
             await StartAudioOnlyRecording();
             return;
         }
@@ -1254,7 +1254,8 @@ public partial class SkiaCamera : SkiaControl
 
     partial void StartPreviewAudioCapture()
     {
-        if (_previewAudioCapture != null || !RecordAudio)
+        // Start audio capture if either recording audio or audio monitoring is enabled
+        if (_previewAudioCapture != null || (!EnableAudioRecording && !EnableAudioMonitoring))
             return;
 
         Task.Run(async () =>

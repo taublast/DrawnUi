@@ -5,7 +5,7 @@ namespace DrawnUi.Camera
 {
     /// <summary>
     /// Interface for audio-only recording encoders.
-    /// Used when RecordVideo=false to create M4A files containing only audio.
+    /// Used when EnableVideoRecording=false to create M4A files containing only audio.
     /// </summary>
     public interface IAudioOnlyEncoder : IDisposable
     {

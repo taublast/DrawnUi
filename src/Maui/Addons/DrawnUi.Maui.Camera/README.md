@@ -1117,7 +1117,7 @@ public double ZoomLimitMin { get; set; }          // Minimum zoom
 public double ZoomLimitMax { get; set; }          // Maximum zoom
 
 // Audio Recording
-public bool RecordAudio { get; set; }             // Include audio in video recordings (default: false)
+public bool EnableAudioRecording { get; set; }             // Include audio in video recordings (default: false)
 ```
 
 ### Core Methods
@@ -1483,34 +1483,100 @@ if (!string.IsNullOrEmpty(result) && result != "Cancel")
 
 #### Video Recording with Audio Control
 
-SkiaCamera provides **granular audio control** for video recordings:
+SkiaCamera provides **granular control over video preview, recording, and audio** through four independent properties:
 
 ```csharp
-// Control audio recording
-camera.RecordAudio = false;  // Record silent videos (default)
-camera.RecordAudio = true;   // Record videos with audio
-
-// Audio control is cross-platform and applies to all video recordings
+// Core control properties
+camera.EnableVideoPreview = true;        // Initialize camera hardware, show video preview (default: true)
+camera.EnableVideoRecording = true;               // Record video frames to output file (default: true)
+camera.EnableAudioRecording = true;               // Capture audio to output file (default: false)
+camera.EnableAudioMonitoring = false;    // Enable live audio preview/feedback (default: false)
 ```
 
-**Audio Recording Property:**
+**Control Properties:**
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `RecordAudio` | `bool` | `false` | Whether to include audio in video recordings |
+| `EnableVideoPreview` | `bool` | `true` | Display video preview UI (camera initializes if EnableVideoRecording=true regardless) |
+| `EnableVideoRecording` | `bool` | `true` | Capture and encode video frames to file |
+| `EnableAudioRecording` | `bool` | `false` | Capture and encode audio to file |
+| `EnableAudioMonitoring` | `bool` | `false` | Enable live audio preview/feedback (e.g., for audio level meters) |
+
+**Usage Scenarios:**
+
+| Scenario | EnableVideoPreview | EnableVideoRecording | EnableAudioMonitoring | EnableAudioRecording | Output | Notes |
+|----------|-------------------|-------------|----------------------|-------------|--------|-------|
+| **Full video recording** | ✅ true | ✅ true | ✅ true | ✅ true | MP4/MOV with A/V | Standard video recording with preview and audio monitoring |
+| **Headless video recording** | ❌ false | ✅ true | 🤷 optional | ✅ true | MP4/MOV with A/V | Record video without showing preview UI (camera still running) |
+| **Video with silent monitoring** | ✅ true | ✅ true | ✅ true | ❌ false | MP4/MOV video only | Monitor audio levels without recording |
+| **Silent video recording** | ✅ true | ✅ true | ❌ false | ❌ false | MP4/MOV video only | No audio capture or monitoring |
+| **Preview only (no recording)** | ✅ true | ❌ false | ❌ false | ❌ false | None | Live camera preview, no recording |
+| **Pure audio-only recorder** | ❌ false | ❌ false | 🤷 optional | ✅ true | M4A audio only | Audio recording without camera hardware |
+| **Audio monitor (no recording)** | ❌ false | ❌ false | ✅ true | ❌ false | None | Audio level monitoring only |
+
+**Key Features:**
+- **Headless video recording** possible: set `EnableVideoPreview=false` to record video without showing UI
+- **Audio monitoring** decoupled from recording (useful for audio level meters, live feedback)
+- **Pure audio-only mode** when both `EnableVideoPreview=false` AND `EnableVideoRecording=false` (no camera hardware initialized)
+- **Backward compatible**: default values match previous behavior
+- Each property has a single, clear responsibility
 
 **XAML Binding:**
-```xml
+```csharp
 <camera:SkiaCamera
     x:Name="CameraControl"
-    RecordAudio="{Binding RecordWithAudio}"
+    EnableVideoPreview="true"
+    EnableVideoRecording="true"
+    EnableAudioRecording="{Binding RecordWithAudio}"
+    EnableAudioMonitoring="{Binding ShowAudioLevels}"
     VideoQuality="High" />
 ```
+
+**Common Use Cases:**
+
+```csharp
+// 1. Standard video recording with audio
+camera.EnableVideoPreview = true;
+camera.EnableVideoRecording = true;
+camera.EnableAudioRecording = true;
+await camera.StartVideoRecording();
+
+// 2. Audio-only recording (no camera initialization)
+camera.EnableVideoPreview = false;  // Don't show preview
+camera.EnableVideoRecording = false;         // Don't initialize camera
+camera.EnableAudioRecording = true;
+await camera.StartVideoRecording();  // Records M4A audio file
+
+// 3. Headless video recording (no preview UI, but camera running)
+camera.EnableVideoPreview = false;  // Hide preview UI
+camera.EnableVideoRecording = true;          // Camera still initializes and records
+camera.EnableAudioRecording = true;
+await camera.StartVideoRecording();  // Records video without showing preview
+
+// 4. Video recording with audio level monitoring (but no audio in output)
+camera.EnableVideoPreview = true;
+camera.EnableVideoRecording = true;
+camera.EnableAudioRecording = false;           // Don't record audio to file
+camera.EnableAudioMonitoring = true;  // But show audio levels in UI
+await camera.StartVideoRecording();
+
+// 5. Silent video recording
+camera.EnableVideoPreview = true;
+camera.EnableVideoRecording = true;
+camera.EnableAudioRecording = false;
+camera.EnableAudioMonitoring = false;
+await camera.StartVideoRecording();
+```
+
+**Validation Rules:**
+- ⚠️ `EnableVideoRecording=false` AND `EnableAudioRecording=false`: Throws `InvalidOperationException` (nothing to record)
+- ⚠️ Pure audio-only mode (no camera): Requires `EnableVideoPreview=false` AND `EnableVideoRecording=false`
+- Audio monitoring can be enabled independently in any mode
 
 **Platform Implementation:**
 - **Android**: Conditional MediaRecorder audio source and encoder setup
 - **iOS/macOS**: Conditional AVCaptureDeviceInput for audio with proper cleanup
-- **Windows**: MediaEncodingProfile audio removal when disabled
+- **Windows**: MediaEncodingProfile audio removal when disabled, AudioGraph for monitoring
 
 #### Capture Video Flow (Advanced)
 
@@ -1534,7 +1600,7 @@ var camera = new SkiaCamera
 
     // Standard video properties work the same
     VideoQuality = VideoQuality.High,
-    RecordAudio = true,
+    EnableAudioRecording = true,
 
     // Frame processor callback for custom rendering
     FrameProcessor = (frame) =>
@@ -1579,7 +1645,7 @@ The `FrameProcessor` callback receives a `DrawableFrame` object with:
 |----------|------|---------|-------------|
 | `UseRealtimeVideoProcessing` | `bool` | `false` | Enable frame-by-frame capture mode |
 | `FrameProcessor` | `Action<DrawableFrame>` | `null` | Callback for processing each frame |
-| `RecordAudio` | `bool` | `false` | Include audio in recording |
+| `EnableAudioRecording` | `bool` | `false` | Include audio in recording |
 | `VideoQuality` | `VideoQuality` | `Standard` | Video quality preset |
 | `VideoFormatIndex` | `int` | `0` | Manual format selection (when VideoQuality = Manual) |
 
@@ -1679,7 +1745,7 @@ public class MyCamera : SkiaCamera
     {
         // REQUIRED: Enable realtime video processing
         UseRealtimeVideoProcessing = true;
-        RecordAudio = true;
+        EnableAudioRecording = true;
         
         FrameProcessor = (frame) =>
         {
@@ -1730,7 +1796,7 @@ public class CameraWithOscillograph : SkiaCamera
     {
         // REQUIRED: Enable realtime processing for audio/video sync
         UseRealtimeVideoProcessing = true;
-        RecordAudio = true;
+        EnableAudioRecording = true;
         
         // Video frame processor - draw oscillograph overlay
         FrameProcessor = (frame) =>
@@ -1823,7 +1889,7 @@ public class CameraWithOscillograph : SkiaCamera
 - Processing happens **before encoding** - your changes affect the final video
 - Works in both **live recording and pre-recording modes**
 - Thread-safe access required when sharing audio data with other threads
-- `RecordAudio = true` must be set to receive audio samples
+- `EnableAudioRecording = true` must be set to receive audio samples
 
 #### Video Recording UI Integration
 
@@ -1856,10 +1922,10 @@ var audioButton = new SkiaButton("🔇 Silent")
 }
 .Assign(out _audioToggleButton)
 .OnTapped(me => { ToggleAudioRecording(); })
-.ObserveProperty(CameraControl, nameof(CameraControl.RecordAudio), me =>
+.ObserveProperty(CameraControl, nameof(CameraControl.EnableAudioRecording), me =>
 {
-    me.Text = CameraControl.RecordAudio ? "🎤 Audio" : "🔇 Silent";
-    me.BackgroundColor = CameraControl.RecordAudio ? Colors.Green : Colors.Gray;
+    me.Text = CameraControl.EnableAudioRecording ? "🎤 Audio" : "🔇 Silent";
+    me.BackgroundColor = CameraControl.EnableAudioRecording ? Colors.Green : Colors.Gray;
 });
 
 private void ToggleAudioRecording()
@@ -1867,7 +1933,7 @@ private void ToggleAudioRecording()
     // Only allow changing audio setting when not recording
     if (!CameraControl.IsRecordingVideo)
     {
-        CameraControl.RecordAudio = !CameraControl.RecordAudio;
+        CameraControl.EnableAudioRecording = !CameraControl.EnableAudioRecording;
     }
 }
 

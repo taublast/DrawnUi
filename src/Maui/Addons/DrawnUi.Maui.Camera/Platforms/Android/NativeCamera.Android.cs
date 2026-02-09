@@ -2477,7 +2477,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         var moviesDir = activity.GetExternalFilesDir(Android.OS.Environment.DirectoryMovies);
         _currentVideoFile = System.IO.Path.Combine(moviesDir.AbsolutePath, fileName);
 
-        bool includeAudio = FormsControl?.RecordAudio == true;
+        bool includeAudio = FormsControl?.EnableAudioRecording == true;
         if (includeAudio)
         {
             includeAudio = await FormsControl.EnsureMicrophonePermissionAsync();

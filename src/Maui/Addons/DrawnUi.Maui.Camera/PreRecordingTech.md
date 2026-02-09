@@ -703,7 +703,7 @@ camera.EnablePreRecording = true;
 camera.PreRecordDuration = TimeSpan.FromSeconds(5);
 
 // Enable audio recording
-camera.RecordAudio = true;
+camera.EnableAudioRecording = true;
 
 // Auto-enable for first StartVideoRecording() call
 // Second call starts live recording

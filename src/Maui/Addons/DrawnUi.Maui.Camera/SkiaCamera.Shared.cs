@@ -41,7 +41,7 @@ public partial class SkiaCamera : SkiaControl
 
     /// <summary>
     /// Fired when audio sample is captured - both during preview and recording.
-    /// Active when RecordAudio=true and camera is running.
+    /// Active when EnableAudioRecording=true and camera is running.
     /// Parameters: (byte[] data, int sampleRate, int bitsPerSample, int channels)
     /// </summary>
     public event Action<byte[], int, int, int> AudioSampleAvailable;
@@ -132,7 +132,7 @@ public partial class SkiaCamera : SkiaControl
 
     /// <summary>
     /// Whether audio-only recording is currently active (read-only).
-    /// True when RecordVideo=false and audio recording is in progress.
+    /// True when EnableVideoRecording=false and audio recording is in progress.
     /// </summary>
     public bool IsRecordingAudioOnly
     {
@@ -257,12 +257,6 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-    public static readonly BindableProperty RecordAudioProperty = BindableProperty.Create(
-        nameof(RecordAudio),
-        typeof(bool),
-        typeof(SkiaCamera),
-        false);
-
     public static readonly BindableProperty AudioDeviceIndexProperty = BindableProperty.Create(
         nameof(AudioDeviceIndex),
         typeof(int),
@@ -297,18 +291,24 @@ public partial class SkiaCamera : SkiaControl
         set { SetValue(AudioCodecIndexProperty, value); }
     }
 
+    public static readonly BindableProperty EnableAudioRecordingProperty = BindableProperty.Create(
+        nameof(EnableAudioRecording),
+        typeof(bool),
+        typeof(SkiaCamera),
+        true);
+
     /// <summary>
-    /// Whether to record audio with video. Default is false (silent video).
+    /// Whether to record audio with video. Default is true.
     /// Must be set before starting video recording.
     /// </summary>
-    public bool RecordAudio
+    public bool EnableAudioRecording
     {
-        get { return (bool)GetValue(RecordAudioProperty); }
-        set { SetValue(RecordAudioProperty, value); }
+        get { return (bool)GetValue(EnableAudioRecordingProperty); }
+        set { SetValue(EnableAudioRecordingProperty, value); }
     }
 
-    public static readonly BindableProperty RecordVideoProperty = BindableProperty.Create(
-        nameof(RecordVideo),
+    public static readonly BindableProperty EnableVideoRecordingProperty = BindableProperty.Create(
+        nameof(EnableVideoRecording),
         typeof(bool),
         typeof(SkiaCamera),
         true); // Default: record video
@@ -316,12 +316,48 @@ public partial class SkiaCamera : SkiaControl
     /// <summary>
     /// Whether to record video frames. Default is true.
     /// When false, only audio will be recorded (output: M4A file).
-    /// RecordAudio must be true when RecordVideo is false.
+    /// EnableAudioRecording must be true when EnableVideoRecording is false.
     /// </summary>
-    public bool RecordVideo
+    public bool EnableVideoRecording
     {
-        get { return (bool)GetValue(RecordVideoProperty); }
-        set { SetValue(RecordVideoProperty, value); }
+        get { return (bool)GetValue(EnableVideoRecordingProperty); }
+        set { SetValue(EnableVideoRecordingProperty, value); }
+    }
+
+    public static readonly BindableProperty EnableVideoPreviewProperty = BindableProperty.Create(
+        nameof(EnableVideoPreview),
+        typeof(bool),
+        typeof(SkiaCamera),
+        true,
+        propertyChanged: NeedRestart);
+
+    /// <summary>
+    /// Whether to display video preview UI. Default is true.
+    /// When false, hides the preview display but camera still initializes if EnableVideoRecording=true.
+    /// Set both EnableVideoPreview=false AND EnableVideoRecording=false for pure audio-only mode (no camera hardware).
+    /// </summary>
+    public bool EnableVideoPreview
+    {
+        get { return (bool)GetValue(EnableVideoPreviewProperty); }
+        set { SetValue(EnableVideoPreviewProperty, value); }
+    }
+
+    public static readonly BindableProperty EnableAudioMonitoringProperty = BindableProperty.Create(
+        nameof(EnableAudioMonitoring),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false,
+        propertyChanged: NeedRestart);
+
+    /// <summary>
+    /// Whether to enable live audio preview/monitoring. Default is false.
+    /// When true, provides live audio feedback (useful for audio level meters, live monitoring).
+    /// Independent from EnableAudioRecording - you can monitor audio without recording it.
+    /// </summary>
+    public bool EnableAudioMonitoring
+    {
+        get { return (bool)GetValue(EnableAudioMonitoringProperty); }
+        set { SetValue(EnableAudioMonitoringProperty, value); }
     }
 
     public static readonly BindableProperty UseRealtimeVideoProcessingProperty = BindableProperty.Create(
@@ -1022,8 +1058,8 @@ public partial class SkiaCamera : SkiaControl
             {
                 control.UpdatePreviewScaleFromFormat();
 
-                // Start preview audio capture if RecordAudio is enabled and not recording
-                if (control.RecordAudio && !control.IsRecordingVideo && !control.IsPreRecording)
+                // Start preview audio capture if EnableAudioRecording is enabled and not recording
+                if (control.EnableAudioRecording && !control.IsRecordingVideo && !control.IsPreRecording)
                 {
                     control.StartPreviewAudioCapture();
                 }
@@ -1397,7 +1433,7 @@ public partial class SkiaCamera : SkiaControl
     #region AUDIO-ONLY RECORDING
 
     /// <summary>
-    /// Starts audio-only recording (no video). Called internally when RecordVideo=false.
+    /// Starts audio-only recording (no video). Called internally when EnableVideoRecording=false.
     /// Output format: M4A (AAC audio in MP4 container).
     /// </summary>
     protected async Task StartAudioOnlyRecording()
@@ -1666,19 +1702,34 @@ public partial class SkiaCamera : SkiaControl
 #if ONPLATFORM
         DisableOtherCameras();
 
-        if (NativeControl == null)
+        // Initialize camera hardware if needed for video recording OR preview
+        // Pure audio-only mode: EnableVideoPreview=false AND EnableVideoRecording=false
+        bool needsCamera = EnableVideoPreview || EnableVideoRecording;
+        
+        if (needsCamera)
         {
-            CreateNative();
-            OnNativeControlCreated();
+            if (NativeControl == null)
+            {
+                CreateNative();
+                OnNativeControlCreated();
+            }
+
+            // Control preview visibility separately from camera initialization
+            if (Display != null)
+            {
+                Display.IsVisible = EnableVideoPreview;
+            }
+
+            NativeControl?.Start();
+        }
+        else
+        {
+            // Pure audio-only mode: no video recording, no preview
+            Debug.WriteLine("[SkiaCamera] Starting in pure audio-only mode (no camera hardware)");
+            StartPreviewAudioCapture();
+            State = CameraState.On;
         }
 #endif
-
-        if (Display != null)
-        {
-            Display.IsVisible = true;
-        }
-
-        NativeControl?.Start();
     }
 
     public void DisableOtherCameras(bool all = false)
@@ -1995,12 +2046,12 @@ public partial class SkiaCamera : SkiaControl
     public event EventHandler<TimeSpan> VideoRecordingProgress;
 
     /// <summary>
-    /// Fired when audio-only recording completes successfully (when RecordVideo=false)
+    /// Fired when audio-only recording completes successfully (when EnableVideoRecording=false)
     /// </summary>
     public event EventHandler<CapturedAudio> AudioRecordingSuccess;
 
     /// <summary>
-    /// Fired when audio-only recording fails (when RecordVideo=false)
+    /// Fired when audio-only recording fails (when EnableVideoRecording=false)
     /// </summary>
     public event EventHandler<Exception> AudioRecordingFailed;
 
@@ -2430,7 +2481,7 @@ public partial class SkiaCamera : SkiaControl
 #if ONPLATFORM
 
         // Tell native camera whether to record audio
-        NativeControl.SetRecordAudio(RecordAudio);
+        NativeControl.SetRecordAudio(EnableAudioRecording);
 
         // Set up video recording callbacks to handle state synchronization
         NativeControl.VideoRecordingFailed = ex =>
@@ -2623,10 +2674,10 @@ public partial class SkiaCamera : SkiaControl
     private IAudioCapture _audioCapture;
     private IAudioCapture _previewAudioCapture; // Separate instance for preview-only audio (not recording)
     private CircularAudioBuffer _audioBuffer;
-    private IAudioOnlyEncoder _audioOnlyEncoder; // For audio-only recording when RecordVideo=false
+    private IAudioOnlyEncoder _audioOnlyEncoder; // For audio-only recording when EnableVideoRecording=false
 
     /// <summary>
-    /// Starts preview audio capture. Called when RecordAudio=true and camera starts (not recording).
+    /// Starts preview audio capture. Called when EnableAudioRecording=true and camera starts (not recording).
     /// Implemented per platform.
     /// </summary>
     partial void StartPreviewAudioCapture();
@@ -3153,7 +3204,7 @@ public partial class SkiaCamera : SkiaControl
                     {
 #if IOS || MACCATALYST
                         okay1 = await RequestGalleryPermissions();
-                        if (okay1 && this.CaptureMode == CaptureModeType.Video && this.RecordAudio)
+                        if (okay1 && this.CaptureMode == CaptureModeType.Video && this.EnableAudioRecording)
                         {
                             var s = AVCaptureDevice.GetAuthorizationStatus(AVAuthorizationMediaType.Audio);
                             if (s == AVAuthorizationStatus.NotDetermined)
@@ -3186,7 +3237,7 @@ public partial class SkiaCamera : SkiaControl
                             okay1 = writeStatus == PermissionStatus.Granted;
                         }
 
-                        if (okay1 && this.CaptureMode == CaptureModeType.Video && this.RecordAudio)
+                        if (okay1 && this.CaptureMode == CaptureModeType.Video && this.EnableAudioRecording)
                         {
                             status = await Permissions.CheckStatusAsync<Permissions.Microphone>();
                             if (status != PermissionStatus.Granted)
@@ -3384,6 +3435,13 @@ public partial class SkiaCamera : SkiaControl
         //_ = StopVideoRecording(true);
 
         NativeControl?.Stop(force);
+        
+        // Stop audio capture if running in pure audio-only mode (no camera hardware)
+        if (!EnableVideoPreview && !EnableVideoRecording)
+        {
+            StopPreviewAudioCapture();
+        }
+        
         State = CameraState.Off;
     }
 

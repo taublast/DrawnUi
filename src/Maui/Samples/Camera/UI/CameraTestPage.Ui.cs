@@ -413,16 +413,16 @@ namespace CameraTests.Views
                                     }
                                     .OnTapped(me =>
                                     {
-                                        CameraControl.RecordAudio = !CameraControl.RecordAudio;
+                                        CameraControl.EnableAudioRecording = !CameraControl.EnableAudioRecording;
                                     })
                                     .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                                     {
                                         me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
                                     })
-                                    .ObserveProperty(CameraControl, nameof(CameraControl.RecordAudio), me =>
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.EnableAudioRecording), me =>
                                     {
-                                        me.Text = CameraControl.RecordAudio ? "Audio: ON" : "Audio: OFF";
-                                        me.BackgroundColor = CameraControl.RecordAudio ? Colors.Green : Colors.DarkGray;
+                                        me.Text = CameraControl.EnableAudioRecording ? "Audio: ON" : "Audio: OFF";
+                                        me.BackgroundColor = CameraControl.EnableAudioRecording ? Colors.Green : Colors.DarkGray;
                                     }),
 
                                 // Speech Recognition toggle
@@ -526,7 +526,7 @@ namespace CameraTests.Views
                 // Configure camera for capture video flow testing
                 CameraControl.UseRealtimeVideoProcessing = true;
                 CameraControl.VideoQuality = VideoQuality.Standard;
-                CameraControl.RecordAudio = true;
+                CameraControl.EnableAudioRecording = true;
 
                 CameraControl.FrameProcessor = (frame) =>
                 {

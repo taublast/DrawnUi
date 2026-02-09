@@ -509,7 +509,7 @@ public partial class SkiaCamera
         ICaptureVideoEncoder oldEncoderToReturn = null;
         
         // Configuration phase - working with local 'appleEncoder' variable
-        if (RecordAudio)
+        if (EnableAudioRecording)
         {
             try
             {
@@ -659,7 +659,7 @@ public partial class SkiaCamera
 
         // Pass locked rotation to encoder for proper video orientation metadata (iOS-specific)
         // Initialize the NEW encoder
-        await appleEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio, RecordingLockedRotation);
+        await appleEncoder.InitializeAsync(outputPath, width, height, fps, EnableAudioRecording, RecordingLockedRotation);
 
         // ✅ CRITICAL: If transitioning from pre-recording to live, set the duration offset BEFORE StartAsync
         // BUT ONLY if pre-recording file actually exists and has content (otherwise standalone live recording will be corrupted!)
@@ -1274,7 +1274,7 @@ public partial class SkiaCamera
             status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
         }
 
-        if (status == PermissionStatus.Granted && this.CaptureMode == CaptureModeType.Video && this.RecordAudio)
+        if (status == PermissionStatus.Granted && this.CaptureMode == CaptureModeType.Video && this.EnableAudioRecording)
         {
             var s = AVCaptureDevice.GetAuthorizationStatus(AVAuthorizationMediaType.Audio);
             if (s == AVAuthorizationStatus.NotDetermined)
@@ -1961,7 +1961,7 @@ public partial class SkiaCamera
             var stopwatchTotal = System.Diagnostics.Stopwatch.StartNew();
             var stopwatchStep = new System.Diagnostics.Stopwatch();
 
-            if (RecordAudio)
+            if (EnableAudioRecording)
             {
                 // Stop the streaming audio writer and get its file path (instant - already on disk)
                 stopwatchStep.Restart();
@@ -2155,7 +2155,7 @@ public partial class SkiaCamera
             IsBusy = false; // Release busy state after successful muxing
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (EnableAudioRecording && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
@@ -2196,7 +2196,7 @@ public partial class SkiaCamera
             IsBusy = false; // Release busy state on error
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (EnableAudioRecording && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
@@ -2285,7 +2285,7 @@ public partial class SkiaCamera
             Debug.WriteLine($"[AbortRealtimeVideoProcessing] Capture video flow aborted successfully");
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (EnableAudioRecording && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
@@ -2306,7 +2306,7 @@ public partial class SkiaCamera
             SetIsPreRecording(false);
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (EnableAudioRecording && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
@@ -2351,11 +2351,11 @@ public partial class SkiaCamera
             return;
         }
 
-        // Handle audio-only recording (RecordVideo=false)
-        if (!RecordVideo)
+        // Handle audio-only recording (EnableVideoRecording=false)
+        if (!EnableVideoRecording)
         {
-            if (!RecordAudio)
-                throw new InvalidOperationException("RecordAudio must be true when RecordVideo is false");
+            if (!EnableAudioRecording)
+                throw new InvalidOperationException("EnableAudioRecording must be true when EnableVideoRecording is false");
             await StartAudioOnlyRecording();
             return;
         }
@@ -2406,7 +2406,7 @@ public partial class SkiaCamera
                 // 2. Process Audio (Save buffer, start writer)
                 // SAVE PRE-REC AUDIO before transition - DON'T TRIM YET
                 // Audio will be trimmed in background task AFTER video is finalized (for correct sync)
-                if (_audioBuffer != null && RecordAudio)
+                if (_audioBuffer != null && EnableAudioRecording)
                 {
                     var allAudioSamples = _audioBuffer.GetAllSamples();
                     Debug.WriteLine($"[StartVideoRecording] Saving ALL {allAudioSamples?.Length ?? 0} audio samples (will trim after video is finalized)");
@@ -3511,7 +3511,8 @@ public partial class SkiaCamera
 
     partial void StartPreviewAudioCapture()
     {
-        if (_previewAudioCapture != null || !RecordAudio)
+        // Start audio capture if either recording audio or audio monitoring is enabled
+        if (_previewAudioCapture != null || (!EnableAudioRecording && !EnableAudioMonitoring))
             return;
 
         Task.Run(async () =>

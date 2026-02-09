@@ -503,7 +503,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         var captureMode = StreamingCaptureMode.Video;
         string preferredAudioDeviceId = null;
 
-        if (FormsControl != null && FormsControl.RecordAudio)
+        if (FormsControl != null && FormsControl.EnableAudioRecording)
         {
             // Try to find an audio device
             var audioDevices = await DeviceInformation.FindAllAsync(DeviceClass.AudioCapture);
@@ -540,7 +540,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             }
             else
             {
-                Debug.WriteLine("[NativeCameraWindows] RecordAudio is requested, but NO AudioCapture devices found! Fallback to Video only.");
+                Debug.WriteLine("[NativeCameraWindows] EnableAudioRecording is requested, but NO AudioCapture devices found! Fallback to Video only.");
                 captureMode = StreamingCaptureMode.Video;
             }
         }
@@ -2293,7 +2293,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         }
 
         // Remove audio if not recording audio
-        if (!FormsControl.RecordAudio)
+        if (!FormsControl.EnableAudioRecording)
         {
             profile.Audio = null;
             //Debug.WriteLine("[NativeCamera.Windows] Audio disabled for video recording");
@@ -2327,7 +2327,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             }
 
             // Handle audio setting for manual profile too
-            if (!FormsControl.RecordAudio)
+            if (!FormsControl.EnableAudioRecording)
             {
                 profile.Audio = null;
             }
@@ -2338,7 +2338,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         {
             // Fallback to standard quality
             var fallbackProfile = MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p);
-            if (!FormsControl.RecordAudio)
+            if (!FormsControl.EnableAudioRecording)
             {
                 fallbackProfile.Audio = null;
             }
