@@ -7,8 +7,8 @@ namespace CameraTests.Views
         public AppCamera()
         {
             //audio mode
-            this.EnableVideoRecording = false;
-            this.EnableVideoPreview = false;
+            //this.EnableVideoRecording = false;
+            //this.EnableVideoPreview = false;
         }
 
         // Audio visualizer (switch between AudioOscillograph and AudioLevels)

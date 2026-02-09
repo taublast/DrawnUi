@@ -3,6 +3,7 @@ using AppoMobi.Specials;
 using CameraTests.Services;
 using CameraTests.Visualizers;
 using DrawnUi.Camera;
+using DrawnUi.Controls;
 using DrawnUi.Views;
 
 namespace CameraTests.Views;
@@ -23,10 +24,9 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     private SkiaImage _previewImage;
     private SkiaButton _preRecordingToggleButton;
     private SkiaButton _preRecordingDurationButton;
-    private SkiaLabel _preRecordingStatusLabel;
-    private SkiaButton _modeSwitchButton;
     private SkiaLabel _captionsLabel;
     private RealtimeCaptionsEngine _captionsEngine;
+    private SkiaDrawer _settingsDrawer;
     AudioVisualizer _audioVisualizer;
     Canvas Canvas;
 
@@ -201,23 +201,25 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     {
         if (_statusLabel != null && CameraControl != null)
         {
-            var statusText = $"Camera Status: {CameraControl.State}";
+            // Compact status for mobile overlay
+            var statusText = $"{CameraControl.State}";
+
             if (CameraControl.Facing == CameraPosition.Manual)
             {
-                statusText += $" | Index: {CameraControl.CameraIndex} | Facing: {CameraControl.Facing}";
+                statusText += $" • Cam{CameraControl.CameraIndex}";
             }
-            else
+            else if (CameraControl.Facing != CameraPosition.Default)
             {
-                statusText += $" | Facing: {CameraControl.Facing}";
+                statusText += $" • {CameraControl.Facing}";
             }
 
             _statusLabel.Text = statusText;
             _statusLabel.TextColor = CameraControl.State switch
             {
-                CameraState.On => Colors.Green,
-                CameraState.Off => Colors.Gray,
-                CameraState.Error => Colors.Red,
-                _ => Colors.Gray
+                CameraState.On => Color.FromArgb("#10B981"),
+                CameraState.Off => Color.FromArgb("#9CA3AF"),
+                CameraState.Error => Color.FromArgb("#DC2626"),
+                _ => Color.FromArgb("#9CA3AF")
             };
         }
     }
@@ -707,8 +709,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
         if (_preRecordingToggleButton != null)
         {
-            _preRecordingToggleButton.Text = CameraControl.EnablePreRecording ? "Pre-Record: ON" : "Pre-Record: OFF";
-            _preRecordingToggleButton.BackgroundColor = CameraControl.EnablePreRecording ? Colors.Green : Colors.DarkGray;
+            _preRecordingToggleButton.Text = CameraControl.EnablePreRecording ? "⏱️ Pre-Record: ON" : "⏱️ Pre-Record: OFF";
+            _preRecordingToggleButton.BackgroundColor = CameraControl.EnablePreRecording ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
         }
 
         UpdatePreRecordingStatus();
@@ -748,19 +750,9 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
     private void UpdatePreRecordingStatus()
     {
-        if (_preRecordingStatusLabel != null)
-        {
-            var statusText = CameraControl.EnablePreRecording
-                ? $"Pre-Recording: Enabled ({CameraControl.PreRecordDuration.TotalSeconds:F0}s)"
-                : "Pre-Recording: Disabled";
-
-            _preRecordingStatusLabel.Text = statusText;
-            _preRecordingStatusLabel.TextColor = CameraControl.EnablePreRecording ? Colors.LimeGreen : Colors.Orange;
-        }
-
         if (_preRecordingDurationButton != null)
         {
-            _preRecordingDurationButton.Text = $"Duration: {CameraControl.PreRecordDuration.TotalSeconds:F0}s";
+            _preRecordingDurationButton.Text = $"⏰ {CameraControl.PreRecordDuration.TotalSeconds:F0}s";
         }
     }
 
@@ -770,8 +762,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
         if (_speechButton != null)
         {
-            _speechButton.Text = _speechEnabled ? "Speech: ON" : "Speech: OFF";
-            _speechButton.BackgroundColor = _speechEnabled ? Colors.Green : Colors.DarkSlateGray;
+            _speechButton.Text = _speechEnabled ? "🎙️ Speech: ON" : "🎙️ Speech: OFF";
+            _speechButton.BackgroundColor = _speechEnabled ? Color.FromArgb("#10B981") : Color.FromArgb("#475569");
         }
 
         if (_speechEnabled)
@@ -781,6 +773,14 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         else
         {
             StopTranscription();
+        }
+    }
+
+    private void ToggleSettingsDrawer()
+    {
+        if (_settingsDrawer != null)
+        {
+            _settingsDrawer.IsOpen = !_settingsDrawer.IsOpen;
         }
     }
 

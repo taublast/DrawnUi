@@ -63,7 +63,6 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
                 // Camera preview
                 new SkiaCamera()
                 {
-                    RecordAudio = true,
                     UseRealtimeVideoProcessing = false, // Enable capture video flow for overlay recording
                     VideoQuality = VideoQuality.Standard, //change this or select manually in menu
                     HorizontalOptions = LayoutOptions.Fill,
@@ -191,9 +190,9 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
                                     }
                                     .Assign(out _videoRecordButton)
                                     .OnTapped(async me => { await ToggleVideoRecording(); })
-                                    .ObserveProperty(CameraControl, nameof(CameraControl.IsRecordingVideo), me =>
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording), me =>
                                     {
-                                        if (CameraControl.IsRecordingVideo)
+                                        if (CameraControl.IsRecording)
                                         {
                                             me.Text = "🛑 Stop (00:00)";
                                             me.BackgroundColor = Colors.Red;
@@ -511,7 +510,7 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
 
     private void OnVideoRecordingProgress(object sender, TimeSpan duration)
     {
-        if (_videoRecordButton != null && CameraControl.IsRecordingVideo)
+        if (_videoRecordButton != null && CameraControl.IsRecording)
         {
             // Update button text with timer in MM:SS format
             _videoRecordButton.Text = $"🛑 Stop ({duration:mm\\:ss})";
@@ -575,7 +574,7 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
 
             try
             {
-                if (CameraControl.IsRecordingVideo)
+                if (CameraControl.IsRecording)
                 {
                     await CameraControl.StopVideoRecording();
                 }
