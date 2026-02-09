@@ -42,5 +42,10 @@ namespace CameraTests.Services
         /// Fired when a complete transcription segment is finalized.
         /// </summary>
         event Action<string> TranscriptionCompleted;
+
+        /// <summary>
+        /// Fired when the service is sending audio data to the API. Parameter is true when starting to send, false when done.
+        /// </summary>
+        event Action<bool> SendingData;
     }
 }

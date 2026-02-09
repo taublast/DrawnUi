@@ -111,7 +111,10 @@ namespace CameraTests.Services
             {
                 var processed = _preprocessor.Process(pcmData);
                 if (processed == null)
+                {
+                    //can be empty if silence gating is enabled and audio is below threshold
                     return;
+                }
 
                 var base64Audio = Convert.ToBase64String(processed);
                 var message = JsonSerializer.Serialize(new
@@ -203,6 +206,15 @@ namespace CameraTests.Services
             await _webSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, ct);
         }
 
+        private bool IsSendingData;
+        public event Action<bool> SendingData;
+
+        protected void NotifyIsSendingData(bool state)
+        {
+            IsSendingData = state;
+            SendingData?.Invoke(state);
+        }
+
         private async Task SendLoopAsync(CancellationToken ct)
         {
             try
@@ -218,12 +230,19 @@ namespace CameraTests.Services
 
                         try
                         {
-                            await _webSocket.SendAsync(new ArraySegment<byte>(data), WebSocketMessageType.Text, true, ct);
+                            NotifyIsSendingData(true);
+
+                            await _webSocket.SendAsync(new ArraySegment<byte>(data), WebSocketMessageType.Text, true,
+                                ct);
                         }
                         catch (Exception ex)
                         {
                             Debug.WriteLine($"[RealtimeTranscription] Send error: {ex.Message}");
                             return;
+                        }
+                        finally
+                        {
+                            NotifyIsSendingData(false);
                         }
                     }
                 }

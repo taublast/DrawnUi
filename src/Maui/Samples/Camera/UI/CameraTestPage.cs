@@ -40,6 +40,15 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
             CameraControl = null;
             this.Content = null;
             Canvas?.Dispose();
+
+            if (_realtimeTranscriptionService != null)
+            {
+                _realtimeTranscriptionService.TranscriptionDelta -= OnTranscriptionDelta;
+                _realtimeTranscriptionService.TranscriptionCompleted -= OnTranscriptionCompleted;
+                _realtimeTranscriptionService.SendingData -= OnTranscriptionWorking;
+                _realtimeTranscriptionService.Dispose();
+                _realtimeTranscriptionService = null;
+            }
         }
 
         base.Dispose(isDisposing);
@@ -66,9 +75,9 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         {
             _realtimeTranscriptionService.TranscriptionDelta += OnTranscriptionDelta;
             _realtimeTranscriptionService.TranscriptionCompleted += OnTranscriptionCompleted;
+            _realtimeTranscriptionService.SendingData += OnTranscriptionWorking;
         }
     }
-
 
     private void SetupCameraEvents()
     {
@@ -95,6 +104,25 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     private int _lastAudioBits;
     private int _lastAudioChannels;
     private bool _speechEnabled;
+
+    bool _isTranscribing;
+    public bool IsTranscribing
+    {
+    	get => _isTranscribing;
+    	set
+    	{
+    		if (_isTranscribing != value)
+    		{
+           		_isTranscribing = value;
+    			OnPropertyChanged();	
+    		}
+    	}
+    }
+
+    private void OnTranscriptionWorking(bool state)
+    {
+        IsTranscribing = state;
+    }
 
     private void OnTranscriptionDelta(string delta)
     {
