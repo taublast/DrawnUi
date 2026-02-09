@@ -25,6 +25,7 @@ public class AudioOnlyEncoderAndroid : IAudioOnlyEncoder
     private int _channels;
     private readonly object _writeLock = new();
     private long _totalSamplesWritten;
+    private long _firstTimestampNs = -1;
     private MediaCodec.BufferInfo _bufferInfo;
 
     public bool IsRecording => _isRecording;
@@ -116,7 +117,10 @@ public class AudioOnlyEncoderAndroid : IAudioOnlyEncoder
                 inputBuffer.Clear();
                 inputBuffer.Put(sample.Data);
 
-                long presentationTimeUs = sample.TimestampNs / 1000; // ns to us
+                // Make timestamps relative to first sample (absolute timestamps cause bogus duration)
+                if (_firstTimestampNs < 0)
+                    _firstTimestampNs = sample.TimestampNs;
+                long presentationTimeUs = (sample.TimestampNs - _firstTimestampNs) / 1000; // ns to us
                 _audioEncoder.QueueInputBuffer(inputBufferIndex, 0, sample.Data.Length, presentationTimeUs, MediaCodecBufferFlags.None);
 
                 // Drain encoded output

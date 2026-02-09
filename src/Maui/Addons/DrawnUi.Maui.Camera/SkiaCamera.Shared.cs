@@ -1469,6 +1469,7 @@ public partial class SkiaCamera : SkiaControl
             await StartAudioOnlyCapture(sampleRate, channels);
 
             SetIsRecordingAudioOnly(true);
+            SetIsRecordingVideo(true); // UI buttons typically bind to IsRecordingVideo
 
             Debug.WriteLine($"[StartAudioOnlyRecording] Recording to: {outputPath}");
         }
@@ -1511,6 +1512,7 @@ public partial class SkiaCamera : SkiaControl
             _audioOnlyEncoder = null;
 
             SetIsRecordingAudioOnly(false);
+            SetIsRecordingVideo(false);
 
             if (result != null && !abort)
             {
@@ -1525,6 +1527,7 @@ public partial class SkiaCamera : SkiaControl
             _audioOnlyEncoder?.Dispose();
             _audioOnlyEncoder = null;
             SetIsRecordingAudioOnly(false);
+            SetIsRecordingVideo(false);
             AudioRecordingFailed?.Invoke(this, ex);
             throw;
         }
@@ -2711,6 +2714,18 @@ public partial class SkiaCamera : SkiaControl
     {
         Debug.WriteLine($"[OnAudioRecordingSuccess] Audio file: {capturedAudio?.FilePath}, Duration: {capturedAudio?.Duration}");
         AudioRecordingSuccess?.Invoke(this, capturedAudio);
+
+        // Also fire VideoRecordingSuccess so existing UI code (gallery saving etc.) works
+        if (capturedAudio != null)
+        {
+            OnVideoRecordingSuccess(new CapturedVideo
+            {
+                FilePath = capturedAudio.FilePath,
+                Duration = capturedAudio.Duration,
+                FileSizeBytes = capturedAudio.FileSizeBytes,
+                Time = capturedAudio.Time
+            });
+        }
     }
 
     private long _captureEpochNs;

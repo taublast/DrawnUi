@@ -905,16 +905,34 @@ public partial class SkiaCamera : SkiaControl
 
         // Use the existing filename from the path (may have been renamed by caller)
         var fileName = Path.GetFileName(privateVideoPath);
-        
-        var contentValues = new Android.Content.ContentValues();
-        contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.DisplayName, fileName);
-        contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.MimeType, "video/mp4");
-        contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.RelativePath, 
-            Android.OS.Environment.DirectoryDcim + $"/{albumName}");
-        contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.DateAdded, 
-            Java.Lang.JavaSystem.CurrentTimeMillis() / 1000);
+        var ext = Path.GetExtension(privateVideoPath)?.ToLowerInvariant();
+        var isAudio = ext == ".m4a" || ext == ".aac" || ext == ".mp3" || ext == ".wav";
 
-        var uri = resolver.Insert(Android.Provider.MediaStore.Video.Media.ExternalContentUri, contentValues);
+        var contentValues = new Android.Content.ContentValues();
+
+        if (isAudio)
+        {
+            contentValues.Put(Android.Provider.MediaStore.Audio.Media.InterfaceConsts.DisplayName, fileName);
+            contentValues.Put(Android.Provider.MediaStore.Audio.Media.InterfaceConsts.MimeType, "audio/mp4");
+            contentValues.Put(Android.Provider.MediaStore.Audio.Media.InterfaceConsts.RelativePath,
+                Android.OS.Environment.DirectoryMusic + $"/{albumName}");
+            contentValues.Put(Android.Provider.MediaStore.Audio.Media.InterfaceConsts.DateAdded,
+                Java.Lang.JavaSystem.CurrentTimeMillis() / 1000);
+        }
+        else
+        {
+            contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.DisplayName, fileName);
+            contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.MimeType, "video/mp4");
+            contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.RelativePath,
+                Android.OS.Environment.DirectoryDcim + $"/{albumName}");
+            contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.DateAdded,
+                Java.Lang.JavaSystem.CurrentTimeMillis() / 1000);
+        }
+
+        var externalUri = isAudio
+            ? Android.Provider.MediaStore.Audio.Media.ExternalContentUri
+            : Android.Provider.MediaStore.Video.Media.ExternalContentUri;
+        var uri = resolver.Insert(externalUri, contentValues);
 
         if (uri != null)
         {
