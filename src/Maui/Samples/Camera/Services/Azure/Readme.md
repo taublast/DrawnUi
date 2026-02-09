@@ -9,4 +9,4 @@
 - TranscriptionCompleted -> Recognized event (final results)
   
   Azure Speech SDK natively supports 16kHz/44.1kHz/48kHz, so the Azure implementation
-  could skip the AudioPreprocessor resampling entirely and just feed raw PCM directly.
+  could skip the AudioSampleConverter resampling entirely and just feed raw PCM directly.

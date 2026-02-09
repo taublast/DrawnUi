@@ -4,6 +4,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 using AppoMobi;
+using DrawnUi.Camera;
 
 namespace CameraTests.Services
 {
@@ -17,7 +18,7 @@ namespace CameraTests.Services
         private const int TargetSampleRate = 24000;
 
         private readonly string _apiKey;
-        private readonly AudioPreprocessor _preprocessor;
+        private readonly AudioSampleConverter _preprocessor;
         private ClientWebSocket _webSocket;
         private CancellationTokenSource _cts;
         private bool _isRunning;
@@ -38,7 +39,7 @@ namespace CameraTests.Services
         public OpenAiRealtimeTranscriptionService(string apiKey = null)
         {
             _apiKey = apiKey ?? Secrets.OpenAiKey;
-            _preprocessor = new AudioPreprocessor(TargetSampleRate);
+            _preprocessor = new AudioSampleConverter(TargetSampleRate);
         }
 
         public void SetAudioFormat(int sampleRate, int bitsPerSample, int channels)

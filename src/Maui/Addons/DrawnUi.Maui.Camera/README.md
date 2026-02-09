@@ -2164,6 +2164,52 @@ public partial class VideoRecordingPage : ContentPage
 }
 ```
 
+## AudioSampleConverter
+
+A lightweight audio preprocessing utility for raw PCM16 audio. Handles stereo-to-mono downmix, sample rate conversion, and optional silence gating — useful when feeding microphone audio to speech-to-text APIs (OpenAI Realtime, Whisper, Azure Speech, etc.).
+
+**Smart passthrough** — each processing step is skipped when not needed:
+- Mono input (1 channel): no downmix, zero-copy passthrough.
+- Source rate == target rate: no resampling, zero-copy passthrough.
+- `silenceRmsThreshold == 0`: silence gating disabled entirely, no RMS calculation.
+- When all conditions match: `Process()` returns the original input array with zero allocations.
+
+**Stateful resampling** — maintains interpolation continuity across calls for glitch-free audio.
+
+### Usage
+
+```csharp
+using DrawnUi.Camera;
+
+// Create: target 24kHz output (for OpenAI Realtime API), default silence gate
+var preprocessor = new AudioSampleConverter(targetSampleRate: 24000);
+
+// Or 16kHz for Whisper, with silence gating disabled:
+var preprocessor = new AudioSampleConverter(targetSampleRate: 16000, silenceRmsThreshold: 0);
+
+// Set source format from your audio device (call again if device changes):
+preprocessor.SetFormat(sampleRate: 48000, channels: 2);
+
+// Process each audio chunk from the microphone callback:
+byte[] result = preprocessor.Process(rawPcm16Data);
+if (result != null)
+{
+    // result is mono PCM16 at target sample rate — send to API, save to file, etc.
+}
+// result == null means prolonged silence or invalid input, skip sending.
+
+// Reset state when starting a new session:
+preprocessor.Reset();
+```
+
+### Constructor Parameters
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `targetSampleRate` | *(required)* | Output sample rate in Hz (e.g. 24000 for OpenAI, 16000 for Whisper) |
+| `silenceRmsThreshold` | 0.003 | RMS level (0..1) below which audio is silence. Set to 0 to disable. |
+| `silentChunksBeforeMute` | 100 | Consecutive silent chunks before suppressing output (~1s at 48kHz/480 samples) |
+
 ### 🚧 ToDo
 - [ ] **Manual camera controls** (focus, exposure, ISO, white balance) - partially implemented, need to expose more controls  
 - [ ] **Camera capability detection** (zoom ranges, supported formats) - need to combine available cameras list with camera units list and expose

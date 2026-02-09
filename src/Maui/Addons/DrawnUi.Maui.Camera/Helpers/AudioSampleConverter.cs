@@ -1,10 +1,40 @@
-namespace CameraTests.Services
+namespace DrawnUi.Camera
 {
     /// <summary>
-    /// Preprocesses raw PCM16 audio: stereo→mono downmix, resampling to target rate,
-    /// and silence gating. Stateful — maintains resampling continuity across calls.
+    /// Preprocesses raw PCM16 audio: stereo-to-mono downmix, resampling to a target sample rate,
+    /// and optional silence gating. Stateful — maintains resampling continuity across calls.
+    ///
+    /// Each processing step is skipped automatically when not needed:
+    /// - Mono input (1 channel): no downmix, input array passed through as-is.
+    /// - Source rate == target rate: no resampling, zero-copy passthrough.
+    /// - silenceRmsThreshold == 0: no RMS calculation, silence gating disabled entirely.
+    /// - When all conditions match (mono, same rate, no silence gate): Process() returns
+    ///   the original input array with zero allocations.
+    ///
+    /// Usage:
+    /// <code>
+    /// // Create: target 24kHz output, silence gate at 0.003 RMS, mute after 100 silent chunks
+    /// var preprocessor = new AudioSampleConverter(targetSampleRate: 24000);
+    ///
+    /// // Or disable silence gating:
+    /// var preprocessor = new AudioSampleConverter(targetSampleRate: 16000, silenceRmsThreshold: 0);
+    ///
+    /// // Set source format (call again if audio device changes):
+    /// preprocessor.SetFormat(sampleRate: 48000, channels: 2);
+    ///
+    /// // Process audio chunks (call per audio callback):
+    /// byte[] result = preprocessor.Process(rawPcm16Data);
+    /// if (result != null)
+    /// {
+    ///     // result is mono PCM16 at target sample rate — send to API, file, etc.
+    /// }
+    /// // result == null means prolonged silence, skip sending.
+    ///
+    /// // Reset resampling state when starting a new session:
+    /// preprocessor.Reset();
+    /// </code>
     /// </summary>
-    public class AudioPreprocessor
+    public class AudioSampleConverter
     {
         private readonly int _targetSampleRate;
         private readonly float _silenceRmsThreshold;
@@ -20,13 +50,24 @@ namespace CameraTests.Services
         // Silence gate state
         private int _consecutiveSilentChunks;
 
-        public AudioPreprocessor(int targetSampleRate, float silenceRmsThreshold = 0.003f, int silentChunksBeforeMute = 100)
+        /// <summary>
+        /// Creates a new audio preprocessor.
+        /// </summary>
+        /// <param name="targetSampleRate">Desired output sample rate in Hz (e.g. 24000 for OpenAI, 16000 for Whisper).</param>
+        /// <param name="silenceRmsThreshold">RMS level (0..1) below which audio is considered silence. Set to 0 to disable silence gating.</param>
+        /// <param name="silentChunksBeforeMute">Number of consecutive silent chunks before audio is suppressed. At 480 samples/48kHz, 100 chunks is roughly 1 second.</param>
+        public AudioSampleConverter(int targetSampleRate, float silenceRmsThreshold = 0.003f, int silentChunksBeforeMute = 100)
         {
             _targetSampleRate = targetSampleRate;
             _silenceRmsThreshold = silenceRmsThreshold;
             _silentChunksBeforeMute = silentChunksBeforeMute;
         }
 
+        /// <summary>
+        /// Set the source audio format. Call before Process(), and again if the audio device changes.
+        /// </summary>
+        /// <param name="sampleRate">Source sample rate in Hz (e.g. 44100, 48000).</param>
+        /// <param name="channels">Number of channels (1=mono, 2=stereo).</param>
         public void SetFormat(int sampleRate, int channels)
         {
             _sourceSampleRate = sampleRate;
@@ -34,6 +75,9 @@ namespace CameraTests.Services
             _formatInitialized = true;
         }
 
+        /// <summary>
+        /// Resets resampling and silence gate state. Call when starting a new recording/streaming session.
+        /// </summary>
         public void Reset()
         {
             _resamplePosition = 0;
@@ -41,47 +85,40 @@ namespace CameraTests.Services
         }
 
         /// <summary>
-        /// Process raw PCM16 audio: downmix to mono, apply silence gate, resample to target rate.
-        /// Returns null if audio should be skipped (prolonged silence).
+        /// Process a chunk of raw PCM16 audio. Applies downmix, silence gate, and resampling as needed.
+        /// Each step is skipped when input already matches the target (zero-copy passthrough).
         /// </summary>
+        /// <param name="pcmData">Raw PCM16 audio bytes (little-endian, interleaved channels).</param>
+        /// <returns>Processed mono PCM16 audio at target sample rate, or null if the chunk should be skipped (silence or invalid input).</returns>
         public byte[] Process(byte[] pcmData)
         {
             if (!_formatInitialized || pcmData == null || pcmData.Length == 0)
                 return null;
 
-            // Downmix to mono if multi-channel
-            byte[] monoData;
-            if (_sourceChannels > 1)
+            // Downmix to mono if multi-channel, otherwise zero-copy passthrough
+            byte[] monoData = _sourceChannels > 1
+                ? DownmixToMono(pcmData, _sourceChannels)
+                : pcmData;
+
+            // Silence gate (skipped entirely when threshold is 0)
+            if (_silenceRmsThreshold > 0)
             {
-                monoData = DownmixToMono(pcmData, _sourceChannels);
-            }
-            else
-            {
-                monoData = pcmData;
+                if (CalculateRms(monoData) < _silenceRmsThreshold)
+                {
+                    _consecutiveSilentChunks++;
+                    if (_consecutiveSilentChunks > _silentChunksBeforeMute)
+                        return null;
+                }
+                else
+                {
+                    _consecutiveSilentChunks = 0;
+                }
             }
 
-            // Silence gate: skip only after prolonged continuous silence
-            if (CalculateRms(monoData) < _silenceRmsThreshold)
-            {
-                _consecutiveSilentChunks++;
-                if (_consecutiveSilentChunks > _silentChunksBeforeMute)
-                    return null;
-            }
-            else
-            {
-                _consecutiveSilentChunks = 0;
-            }
-
-            // Resample if needed
-            byte[] result;
-            if (_sourceSampleRate != _targetSampleRate)
-            {
-                result = Resample(monoData, _sourceSampleRate, _targetSampleRate);
-            }
-            else
-            {
-                result = monoData;
-            }
+            // Resample if rates differ, otherwise zero-copy passthrough
+            byte[] result = _sourceSampleRate != _targetSampleRate
+                ? Resample(monoData, _sourceSampleRate, _targetSampleRate)
+                : monoData;
 
             return result.Length > 0 ? result : null;
         }
