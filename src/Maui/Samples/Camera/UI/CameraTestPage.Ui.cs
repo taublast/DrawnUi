@@ -3,12 +3,14 @@ using CameraTests.Services;
 using DrawnUi.Camera;
 using DrawnUi.Controls;
 using DrawnUi.Views;
+using SkiaSharp;
 
 namespace CameraTests.Views
 {
     public partial class CameraTestPage
     {
-        private SkiaButton _modeSwitchButton;
+        private SkiaLabel _modeSwitchButton;
+        private SkiaShape _captureButtonOuter;
 
         private void CreateContent()
         {
@@ -136,135 +138,231 @@ namespace CameraTests.Views
                 //    me.IsVisible = this.IsTranscribing;
                 //}),
 
-                // OVERLAY CONTROLS - Essential buttons on top of camera
-                new SkiaRow()
+                // OVERLAY CONTROLS - Native camera style
+                new SkiaLayout()
                 {
-                    Spacing = 12,
-                    Margin = new Thickness(16, 0, 16, 100),
-                    VerticalOptions = LayoutOptions.End,
-                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Fill,
+                    HorizontalOptions = LayoutOptions.Fill,
                     Children =
                     {
-                        // Power toggle button
-                        new SkiaButton("⚡")
+                        // Mode Label (PHOTO / VIDEO) - tap to switch
+                        new SkiaShape()
                         {
-                            BackgroundColor = Color.FromArgb("#33000000"),
-                            TextColor = Colors.White,
-                            CornerRadius = 32,
-                            UseCache = SkiaCacheType.Image,
-                            WidthRequest = 64,
-                            HeightRequest = 64,
-                            FontSize = 28,
-                            StrokeWidth = 2
+                            Type = ShapeType.Rectangle,
+                            CornerRadius = 12,
+                            BackgroundColor = Color.FromArgb("#66000000"),
+                            Padding = new Thickness(10, 6),
+                            Margin = new Thickness(0, 0, 0, 122),
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.End,
+                            Children =
+                            {
+                                new SkiaLabel()
+                                {
+                                    Text = "PHOTO",
+                                    TextColor = Colors.White,
+                                    FontSize = 12,
+                                    UseCache = SkiaCacheType.Operations,
+                                    VerticalOptions = LayoutOptions.Center,
+                                    HorizontalOptions = LayoutOptions.Center,
+                                }
+                                .Assign(out _modeSwitchButton)
+                            }
                         }
-                        .OnTapped(me => { CameraControl.IsOn = !CameraControl.IsOn; })
-                        .ObserveProperty(CameraControl, nameof(CameraControl.State), me =>
-                        {
-                            me.BackgroundColor = CameraControl.State == CameraState.On 
-                                ? Color.FromArgb("#BB10B981") 
-                                : Color.FromArgb("#BBDC2626");
-                            me.StrokeColor = CameraControl.State == CameraState.On ? Colors.LightGreen : Colors.LightPink;
-                        }),
-
-                        // Mode switch button
-                        new SkiaButton("📸")
-                        {
-                            BackgroundColor = Color.FromArgb("#BB0891B2"),
-                            TextColor = Colors.White,
-                            CornerRadius = 32,
-                            UseCache = SkiaCacheType.Image,
-                            WidthRequest = 64,
-                            HeightRequest = 64,
-                            FontSize = 28
-                        }
-                        .Assign(out _modeSwitchButton)
                         .OnTapped(me => { ToggleCaptureMode(); })
                         .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                         {
-                            me.Text = CameraControl.CaptureMode == CaptureModeType.Still ? "📸" : "🎥";
-                            me.BackgroundColor = CameraControl.CaptureMode == CaptureModeType.Still
-                                ? Color.FromArgb("#BB0891B2")
-                                : Color.FromArgb("#BB7C3AED");
-                        }),
-
-                        // Main Capture/Record button (large center button)  
-                        new SkiaButton("📷")
-                        {
-                            BackgroundColor = Color.FromArgb("#DD2563EB"),
-                            TextColor = Colors.White,
-                            CornerRadius = 45,
-                            UseCache = SkiaCacheType.Image,
-                            WidthRequest = 90,
-                            HeightRequest = 90,
-                            FontSize = 38,
-                            StrokeWidth = 4,
-                            StrokeColor = Colors.White
-                        }
-                        .Assign(out _takePictureButton)
-                        .OnTapped(async me =>
-                        {
-                            if (CameraControl.CaptureMode == CaptureModeType.Still)
-                            {
-                                await TakePictureAsync();
-                            }
-                            else
-                            {
-                                ToggleVideoRecording();
-                            }
-                        })
-                        .ObserveProperty(CameraControl, nameof(CameraControl.State), me =>
-                        {
-                            me.IsEnabled = CameraControl.State == CameraState.On;
-                            me.Opacity = me.IsEnabled ? 1.0 : 0.5;
-                        })
-                        .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
-                        {
-                            me.Text = CameraControl.CaptureMode == CaptureModeType.Still ? "📷" : "⏺️";
+                            _modeSwitchButton.Text = CameraControl.CaptureMode == CaptureModeType.Still ? "PHOTO" : "VIDEO";
                         })
                         .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording), me =>
                         {
-                            if (CameraControl.CaptureMode == CaptureModeType.Video)
+                            // Hide during recording to prevent mode changes
+                            me.IsVisible = !CameraControl.IsRecording;
+                        }),
+
+                        // Bottom Control Bar
+                        new SkiaShape()
+                        {
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.End,
+                            Margin = new Thickness(0, 0, 0, 44),
+                            Padding = new Thickness(8, 0),
+                            HeightRequest = 70,
+                            StrokeColor = Colors.Black,
+                            StrokeWidth = -1,
+                            BackgroundColor = Color.FromArgb("#66000000"),
+                            CornerRadius = 32,
+                            Children =
                             {
-                                me.Text = CameraControl.IsRecording ? "⏹️" : "⏺️";
-                                me.BackgroundColor = CameraControl.IsRecording 
-                                    ? Color.FromArgb("#DDDC2626") 
-                                    : Color.FromArgb("#DD9333EA");
+                                new SkiaRow()
+                                {
+                                    UseCache = SkiaCacheType.GPU,
+                                    Padding = new Thickness(1),
+                                    Spacing = 10,
+                                    HorizontalOptions = LayoutOptions.Center,
+                                    VerticalOptions = LayoutOptions.Center,
+                                    Children =
+                                    {
+
+                                        // Preview thumbnail (last captured)
+                                        new SkiaShape()
+                                        {
+                                            VerticalOptions = LayoutOptions.Center,
+                                            StrokeColor = Color.FromArgb("#66CECECE"),
+                                            StrokeWidth = 1,
+                                            Type = ShapeType.Circle,
+                                            HeightRequest = 46,
+                                            LockRatio = 1,
+                                            BackgroundColor = Color.FromArgb("#66000000"),
+                                            IsClippedToBounds = true,
+                                            UseCache = SkiaCacheType.Image,
+                                            Children =
+                                            {
+                                                new SkiaImage()
+                                                {
+                                                    RescalingQuality = SKFilterQuality.None,
+                                                    Aspect = TransformAspect.AspectCover,
+                                                    HorizontalOptions = LayoutOptions.Fill,
+                                                    VerticalOptions = LayoutOptions.Fill,
+                                                }
+                                                .Assign(out _previewThumbnail)
+                                            }
+                                        }
+                                        .OnTapped(me => { ShowLastCapturedPreview(); }),
+
+                                        // Settings button
+                                        new SkiaShape()
+                                        {
+                                            VerticalOptions = LayoutOptions.Center,
+                                            StrokeColor = Color.FromArgb("#66CECECE"),
+                                            StrokeWidth = 1,
+                                            UseCache = SkiaCacheType.Image,
+                                            Type = ShapeType.Circle,
+                                            HeightRequest = 46,
+                                            LockRatio = 1,
+                                            BackgroundColor = Colors.Black,
+                                            Children =
+                                            {
+                                                new SkiaRichLabel("⚙️")
+                                                {
+                                                    FontSize = 20,
+                                                    VerticalOptions = LayoutOptions.Center,
+                                                    HorizontalOptions = LayoutOptions.Center,
+                                                }
+                                            }
+                                        }
+                                        .OnTapped(me => { ToggleSettingsDrawer(); }),
+
+                                        // Flash button
+                                        new SkiaShape()
+                                        {
+                                            VerticalOptions = LayoutOptions.Center,
+                                            StrokeColor = Color.FromArgb("#66CECECE"),
+                                            StrokeWidth = 1,
+                                            UseCache = SkiaCacheType.Image,
+                                            Type = ShapeType.Circle,
+                                            HeightRequest = 46,
+                                            LockRatio = 1,
+                                            BackgroundColor = Colors.Black,
+                                            Children =
+                                            {
+                                                new SkiaRichLabel("⚡")
+                                                {
+                                                    FontSize = 20,
+                                                    VerticalOptions = LayoutOptions.Center,
+                                                    HorizontalOptions = LayoutOptions.Center,
+                                                }
+                                                .Assign(out _flashButton)
+                                            }
+                                        }
+                                        .OnTapped(me => { ToggleFlash(); })
+                                        .ObserveProperty(CameraControl, nameof(CameraControl.FlashMode), me =>
+                                        {
+                                            _flashButton.Text = CameraControl.FlashMode == FlashMode.Off ? "⚡" :
+                                                               CameraControl.FlashMode == FlashMode.On ? "💡" : "✨";
+                                        }),
+
+                                        // Flip Camera button
+                                        new SkiaShape()
+                                        {
+                                            VerticalOptions = LayoutOptions.Center,
+                                            StrokeColor = Color.FromArgb("#66CECECE"),
+                                            StrokeWidth = 1,
+                                            UseCache = SkiaCacheType.Image,
+                                            Type = ShapeType.Circle,
+                                            HeightRequest = 46,
+                                            LockRatio = 1,
+                                            BackgroundColor = Colors.Black,
+                                            Children =
+                                            {
+                                                new SkiaRichLabel("🔄")
+                                                {
+                                                    FontSize = 20,
+                                                    VerticalOptions = LayoutOptions.Center,
+                                                    HorizontalOptions = LayoutOptions.Center,
+                                                }
+                                            }
+                                        }
+                                        .Assign(out _cameraSelectButton)
+                                        .OnTapped(async me => { await SelectCamera(); }),
+
+                                        // MORPHING CAPTURE BUTTON
+                                        new SkiaShape()
+                                        {
+                                            VerticalOptions = LayoutOptions.Center,
+                                            UseCache = SkiaCacheType.Image,
+                                            Type = ShapeType.Circle,
+                                            HeightRequest = 58,
+                                            LockRatio = 1,
+                                            StrokeWidth = 4,
+                                            StrokeColor = Color.FromArgb("#D9D9D9"),
+                                            BackgroundColor = Colors.Transparent,
+                                            Padding = new Thickness(4),
+                                            Children =
+                                            {
+                                                new SkiaShape()
+                                                {
+                                                    Type = ShapeType.Circle,
+                                                    BackgroundColor = Color.FromArgb("#CECECE"),
+                                                    WidthRequest = 60,
+                                                    CornerRadius = 30,
+                                                    HorizontalOptions = LayoutOptions.Center,
+                                                    VerticalOptions = LayoutOptions.Center,
+                                                    LockRatio = 1,
+                                                }
+                                                .Assign(out _takePictureButton)
+                                            }
+                                        }
+                                        .Assign(out _captureButtonOuter)
+                                        .OnTapped(async me =>
+                                        {
+                                            // Tap feedback animation
+                                            await me.ScaleToAsync(1.1, 1.1, 100);
+                                            await me.ScaleToAsync(1.0, 1.0, 100);
+
+                                            if (CameraControl.CaptureMode == CaptureModeType.Still)
+                                            {
+                                                await TakePictureAsync();
+                                            }
+                                            else
+                                            {
+                                                ToggleVideoRecording();
+                                            }
+                                        })
+                                        .ObserveProperty(CameraControl, nameof(CameraControl.State), me =>
+                                        {
+                                            me.IsEnabled = CameraControl.State == CameraState.On;
+                                            me.Opacity = me.IsEnabled ? 1.0 : 0.5;
+                                        })
+                                        .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording), me =>
+                                        {
+                                            UpdateCaptureButtonShape(CameraControl.IsRecording);
+                                        }),
+
+                                    }
+                                }
                             }
-                        }),
-
-                        // Flash button
-                        new SkiaButton("💡")
-                        {
-                            BackgroundColor = Color.FromArgb("#BBF59E0B"),
-                            TextColor = Colors.White,
-                            CornerRadius = 32,
-                            UseCache = SkiaCacheType.Image,
-                            WidthRequest = 64,
-                            HeightRequest = 64,
-                            FontSize = 28
                         }
-                        .Assign(out _flashButton)
-                        .OnTapped(me => { ToggleFlash(); })
-                        .ObserveProperty(CameraControl, nameof(CameraControl.FlashMode), me =>
-                        {
-                            me.BackgroundColor = CameraControl.FlashMode != FlashMode.Off
-                                ? Color.FromArgb("#BBFBBF24")
-                                : Color.FromArgb("#BB78716C");
-                        }),
-
-                        // Camera selection button  
-                        new SkiaButton("🔄")
-                        {
-                            BackgroundColor = Color.FromArgb("#BB0D9488"),
-                            TextColor = Colors.White,
-                            CornerRadius = 32,
-                            UseCache = SkiaCacheType.Image,
-                            WidthRequest = 64,
-                            HeightRequest = 64,
-                            FontSize = 28
-                        }
-                        .Assign(out _cameraSelectButton)
-                        .OnTapped(async me => { await SelectCamera(); }),
                     }
                 },
 
@@ -295,7 +393,7 @@ namespace CameraTests.Views
                 // Settings Drawer (slides up from bottom)
                 new SkiaDrawer()
                 {
-                    Margin = new Thickness(20, 0, 20, 0),
+                    Margin = new Thickness(8, 8, 8, 0),
                     HeaderSize = 40,
                     Direction = DrawerDirection.FromBottom,
                     VerticalOptions = LayoutOptions.End,
@@ -330,6 +428,11 @@ namespace CameraTests.Views
                                         Orientation = ScrollOrientation.Vertical,
                                         HorizontalOptions = LayoutOptions.Fill,
                                         VerticalOptions = LayoutOptions.Fill,
+                                        Footer = new SkiaLayout()
+                                        {
+                                            HorizontalOptions = LayoutOptions.Fill,
+                                            HeightRequest = 40 //drawer header
+                                        },
                                         Content = CreateDrawerContent()
                                     },
                                 }

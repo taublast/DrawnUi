@@ -11,17 +11,18 @@ namespace CameraTests.Views;
 public partial class CameraTestPage : BasePageReloadable, IDisposable
 {
     private AppCamera CameraControl;
-    private SkiaButton _takePictureButton;
-    private SkiaButton _flashButton;
+    private SkiaShape _takePictureButton;
+    private SkiaLabel _flashButton;
     private SkiaLabel _statusLabel;
     private SkiaButton _videoRecordButton;
     private SkiaButton _speechButton;
     private IRealtimeTranscriptionService _realtimeTranscriptionService;
-    private SkiaButton _cameraSelectButton;
+    private SkiaShape _cameraSelectButton;
     private SkiaButton _audioSelectButton;
     private SkiaButton _audioCodecButton;
     private SkiaLayer _previewOverlay;
     private SkiaImage _previewImage;
+    private SkiaImage _previewThumbnail;
     private SkiaButton _preRecordingToggleButton;
     private SkiaButton _preRecordingDurationButton;
     private SkiaLabel _captionsLabel;
@@ -224,6 +225,66 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         }
     }
 
+    private bool _btnStateIsRecording;
+    private const int _morphSpeed = 250;
+
+    private void UpdateCaptureButtonShape(bool isRecording)
+    {
+        if (_takePictureButton == null)
+            return;
+
+        if (isRecording == _btnStateIsRecording)
+            return;
+
+        _btnStateIsRecording = isRecording;
+        
+        bool animated = _takePictureButton.DrawingRect != SkiaSharp.SKRect.Empty;
+        
+        if (animated)
+        {
+            if (isRecording)
+            {
+                // Animate to square (recording)
+                _ = _takePictureButton.AnimateRangeAsync(value =>
+                {
+                    _takePictureButton.CornerRadius = 30 - (30 - 4) * value; // 30 to 4
+                    _takePictureButton.WidthRequest = 60 - (60 - 42) * value; // 60 to 42
+                }, 0, 1, (uint)_morphSpeed, Easing.SinOut, default, true);
+                
+                // Change color to red
+                _takePictureButton.BackgroundColor = Color.FromArgb("#EB5248");
+            }
+            else
+            {
+                // Animate to circle (idle)
+                _ = _takePictureButton.AnimateRangeAsync(value =>
+                {
+                    _takePictureButton.CornerRadius = 4 + (30 - 4) * value; // 4 to 30
+                    _takePictureButton.WidthRequest = 42 + (60 - 42) * value; // 42 to 60
+                }, 0, 1, (uint)_morphSpeed, Easing.SinIn, default, true);
+                
+                // Change color back to light gray
+                _takePictureButton.BackgroundColor = Color.FromArgb("#CECECE");
+            }
+        }
+        else
+        {
+            // Set immediately without animation
+            if (isRecording)
+            {
+                _takePictureButton.CornerRadius = 4;
+                _takePictureButton.WidthRequest = 42;
+                _takePictureButton.BackgroundColor = Color.FromArgb("#EB5248");
+            }
+            else
+            {
+                _takePictureButton.CornerRadius = 30;
+                _takePictureButton.WidthRequest = 60;
+                _takePictureButton.BackgroundColor = Color.FromArgb("#CECECE");
+            }
+        }
+    }
+
     private async Task TakePictureAsync()
     {
         if (CameraControl.State != CameraState.On)
@@ -232,14 +293,14 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         try
         {
             _takePictureButton.IsEnabled = false;
-            _takePictureButton.Text = "Taking...";
+            _takePictureButton.Opacity = 0.5;
 
             await Task.Run(async () => { await CameraControl.TakePicture(); });
         }
         finally
         {
             _takePictureButton.IsEnabled = true;
-            _takePictureButton.Text = "Take Picture";
+            _takePictureButton.Opacity = 1.0;
         }
     }
 
@@ -277,6 +338,12 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
             {
                 // Store the captured image for potential saving later
                 _currentCapturedImage = e;
+
+                // Update preview thumbnail in bottom control bar
+                if (_previewThumbnail != null)
+                {
+                    _previewThumbnail.SetImageInternal(e.Image, false);
+                }
 
                 // Show the image in preview overlay
                 ShowPreviewOverlay(e.Image);
@@ -355,6 +422,15 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
         // Clear the current captured image
         _currentCapturedImage = null;
+    }
+
+    private void ShowLastCapturedPreview()
+    {
+        if (_currentCapturedImage != null)
+        {
+            // If we have a captured image, show it in the preview overlay
+            ShowPreviewOverlay(_currentCapturedImage.Image);
+        }
     }
 
     private async Task SaveCurrentImageToGallery()
@@ -541,7 +617,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                             CameraControl.CameraIndex = selectedCamera.Index;
 
                             // Update button text
-                            _cameraSelectButton.Text = $"📷 {selectedCamera.Position}";
+                            //_cameraSelectButton.Text = $"📷 {selectedCamera.Position}";
 
                             Debug.WriteLine(
                                 $"Selected: {selectedCamera.Name} ({selectedCamera.Position})\nIndex: {selectedCamera.Index}");
