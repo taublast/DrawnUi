@@ -13,7 +13,7 @@ namespace CameraTests
     public interface IAudioVisualizer: IDisposable
     {
         void AddSample(AudioSample sample);
-        void Render(SKCanvas canvas, float width, float height, float scale, string recognizedText = null);
+        void Render(SKCanvas canvas, float width, float height, float scale);
         bool UseGain { get; set; }
         int Skin { get; set; }
     }

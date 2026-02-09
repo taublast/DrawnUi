@@ -37,7 +37,7 @@ namespace CameraTests
             System.Threading.Interlocked.Exchange(ref _swapRequested, 1);
         }
 
-        public void Render(SKCanvas canvas, float width, float height, float scale, string recognizedText = null)
+        public void Render(SKCanvas canvas, float width, float height, float scale)
         {
             if (_paintWaveform == null)
             {
@@ -73,12 +73,6 @@ namespace CameraTests
             var oscX = (width - oscWidth) / 2;
             var oscY = height - oscHeight - 40 * scale;
             var centerY = oscY + oscHeight / 2;
-
-            if (!string.IsNullOrEmpty(recognizedText))
-            {
-                _paintText.TextSize = 32 * scale;
-                canvas.DrawText(recognizedText, oscX + oscWidth / 2, oscY - 20 * scale, _paintText);
-            }
 
             // Background
             _paintWaveform.Style = SKPaintStyle.Fill;

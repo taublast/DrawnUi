@@ -225,7 +225,7 @@ namespace CameraTests
             }
         }
 
-        public void Render(SKCanvas canvas, float width, float height, float scale, string recognizedText = null)
+        public void Render(SKCanvas canvas, float width, float height, float scale)
         {
             if (_paintTextLarge == null)
             {

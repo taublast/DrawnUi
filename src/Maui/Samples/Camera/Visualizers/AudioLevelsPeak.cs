@@ -93,7 +93,7 @@ namespace CameraTests
             System.Threading.Interlocked.Exchange(ref _swapRequested, 1);
         }
 
-        public void Render(SKCanvas canvas, float width, float height, float scale, string recognizedText = null)
+        public void Render(SKCanvas canvas, float width, float height, float scale)
         {
             if (_paintBar == null)
             {
@@ -124,11 +124,11 @@ namespace CameraTests
             var startX = (width - barAreaWidth) / 2;
             var bottomY = height - 40 * scale;
 
-            if (!string.IsNullOrEmpty(recognizedText))
-            {
-                _paintText.TextSize = 32 * scale;
-                canvas.DrawText(recognizedText, width / 2, bottomY - maxBarHeight - 30 * scale, _paintText);
-            }
+            //if (!string.IsNullOrEmpty(recognizedText))
+            //{
+            //    _paintText.TextSize = 32 * scale;
+            //    canvas.DrawText(recognizedText, width / 2, bottomY - maxBarHeight - 30 * scale, _paintText);
+            //}
 
             // Background dimmer
             using (var paintBg = new SKPaint { Color = SKColors.Black.WithAlpha(128), Style = SKPaintStyle.Fill })

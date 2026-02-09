@@ -56,7 +56,7 @@ namespace CameraTests
             System.Threading.Interlocked.Exchange(ref _swapRequested, 1);
         }
 
-        public void Render(SKCanvas canvas, float width, float height, float scale, string recognizedText = null)
+        public void Render(SKCanvas canvas, float width, float height, float scale)
         {
             if (_paintArc == null)
             {
@@ -95,12 +95,6 @@ namespace CameraTests
             var cx = width / 2;
             var cy = height - 60 * scale;
             var radius = 100 * scale;
-
-            // Draw Text
-            if (!string.IsNullOrEmpty(recognizedText))
-            {
-                canvas.DrawText(recognizedText, cx, cy - radius - 60 * scale, _paintText);
-            }
 
             var rect = new SKRect(cx - radius, cy - radius, cx + radius, cy + radius);
 

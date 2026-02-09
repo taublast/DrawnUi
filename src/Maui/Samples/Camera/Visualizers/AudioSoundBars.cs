@@ -176,7 +176,7 @@ namespace CameraTests
             System.Threading.Interlocked.Exchange(ref _swapRequested, 1);
         }
 
-        public void Render(SKCanvas canvas, float width, float height, float scale, string recognizedText = null)
+        public void Render(SKCanvas canvas, float width, float height, float scale)
         {
             if (_paintBar == null)
             {
@@ -227,12 +227,6 @@ namespace CameraTests
             var startX = (width - areaWidth) / 2;
             var bottomY = height - 40 * scale;
             var topY = bottomY - maxBarHeight;
-
-            if (!string.IsNullOrEmpty(recognizedText))
-            {
-                _paintText.TextSize = 32 * scale;
-                canvas.DrawText(recognizedText, width / 2, topY - 20 * scale, _paintText);
-            }
 
             // Background
             canvas.DrawRoundRect(
