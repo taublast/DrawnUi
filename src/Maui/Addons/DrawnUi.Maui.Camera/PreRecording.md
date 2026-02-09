@@ -1,35 +1,7 @@
 # Pre-Recording Feature
 
-The pre-recording feature, also known as "look-back" recording, allows you to capture video footage starting from a few seconds *before* the record button is pressed. This is incredibly useful for capturing spontaneous moments without missing the beginning of the action.
-
-## Current Implementation Status (2025-01)
-
-✅ **Windows Implementation Complete:**
-- Circular buffer architecture implemented using file-based buffers (`bufferA.mp4`, `bufferB.mp4`)
-- Seamless muxing of pre-recorded buffers with live recording
-- Trimming logic ensures exact duration compliance
-- Timestamp normalization fixes applied
-
-✅ **Android Implementation Complete:**
-- Single-file approach (no muxing needed)
-- Zero frame loss transition from pre-recording to live recording
-
-✅ **iOS/MacCatalyst Implementation Complete:**
-- AppleVideoToolboxEncoder with hardware H.264 encoding via VTCompressionSession
-- In-memory circular buffer (`PrerecordingEncodedBufferApple`) for encoded frames
-- AVAssetWriter-based muxing for seamless video output
-- Audio recording with synchronized circular buffer
-- Passthrough muxing (no re-encoding) for optimal performance
-- Proper resource disposal to prevent memory leaks
-
-**Recent Updates:**
-- Added safety mechanism: Changing `EnablePreRecording` or `PreRecordDuration` while recording is active will automatically abort the recording to prevent instability.
-- Fixed memory leaks in AVFoundation resource disposal (AVAsset, AVMutableComposition, AVAssetExportSession)
-- Fixed PrerecordingEncodedBufferApple frame Data cleanup in Dispose() and pruning operations
-- Added event handler unsubscription for PreviewAvailable to prevent memory leaks
-- Changed AddAudioToVideoAsync to use Passthrough preset (no re-encoding, faster muxing)
-
----
+The pre-recording feature, also known as "look-back" recording, allows you to capture video footage starting from a few seconds *before* the record button is pressed. 
+This is incredibly useful for capturing spontaneous moments without missing the beginning of the action.
 
 ## How it Works (Architecture)
 
@@ -37,27 +9,8 @@ The pre-recording feature, also known as "look-back" recording, allows you to ca
 
 When pre-recording is enabled, the camera maintains a **circular buffer of encoded H.264 frames** in memory:
 
-1. **Pre-Recording Phase:** Frames are hardware-encoded and stored in `PrerecordingEncodedBufferApple`
-2. **Live Recording Phase:** User presses record → live frames write to `recording.mp4` while circular buffer is frozen
-3. **Muxing Phase:** Circular buffer frames + live recording → combined output via AVAssetWriter
-4. **Audio Sync:** CircularAudioBuffer maintains synchronized audio data
-
-### Windows/Android: File-Based Approach
-
-When pre-recording is enabled, the camera maintains a **separate pre-recording encoder** that continuously captures frames to temporary files. When recording stops, files are muxed together.
-
-### Key Design Principles
-
-**iOS/MacCatalyst - Memory Buffering:**
-- Stores only H.264 encoded frames (not raw pixels)
-- ~20-40KB per frame at 1080p (vs ~8MB raw)
-- 5 seconds at 30fps ≈ 3-6MB total
-- Instant muxing via AVAssetWriter (no file I/O during buffer phase)
-
-**Windows - Zero Memory Buffering:**
-- Streams all video directly to disk files (H.264 encoded)
-- Uses only 1-2MB working buffer in memory for encoder operations
-- Pre-recorded file typically 2-5MB for 5 seconds at 30fps
+1. **Pre-Recording Phase:** Frames are hardware-encoded and stored in memory inside a circular buffer to always hold the last N seconds of footage (configurable via `PreRecordDuration`)
+2. **Live Recording Phase:** User presses record → live frames start recording, last N seconds from the circular buffer will be muxxed with live footage.
 
 ## How to Use
 
