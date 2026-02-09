@@ -9,60 +9,41 @@ namespace CameraTests.Services
 {
     /// <summary>
     /// OpenAI Realtime API transcription service using WebSocket.
-    /// Streams PCM audio to OpenAI and receives real-time transcription deltas.
-    /// Handles stereo→mono downmix and resampling to required 24kHz.
+    /// Implements IRealtimeTranscriptionService for pluggable use.
     /// </summary>
-    public class OpenAiRealtimeTranscriptionService : IDisposable
+    public class OpenAiRealtimeTranscriptionService : IRealtimeTranscriptionService
     {
         private const string WebSocketUrl = "wss://api.openai.com/v1/realtime?intent=transcription";
         private const int TargetSampleRate = 24000;
 
         private readonly string _apiKey;
+        private readonly AudioPreprocessor _preprocessor;
         private ClientWebSocket _webSocket;
         private CancellationTokenSource _cts;
         private bool _isRunning;
         private bool _sessionConfigured;
 
-        // Source audio format
-        private int _sourceSampleRate;
-        private int _sourceChannels = 1;
-        private bool _formatInitialized;
-
         // Send queue for serialized WebSocket writes
         private readonly ConcurrentQueue<byte[]> _sendQueue = new();
         private readonly SemaphoreSlim _sendSignal = new(0);
 
-        // Silence gate: skip sending only after prolonged continuous silence
-        private const float SilenceRmsThreshold = 0.003f;
-        private int _consecutiveSilentChunks;
-        private const int SilentChunksBeforeMute = 100; // ~1s at 480-sample chunks/48kHz
-
-        // Resampling state for continuity across chunks
-        private double _resamplePosition;
+        private int _feedCount;
 
         public string Language { get; set; }
         public string Model { get; set; } = "gpt-4o-mini-transcribe";
 
-        /// <summary>
-        /// Fired when a transcription delta (partial text) is received.
-        /// </summary>
         public event Action<string> TranscriptionDelta;
-
-        /// <summary>
-        /// Fired when a complete transcription segment is received.
-        /// </summary>
         public event Action<string> TranscriptionCompleted;
 
         public OpenAiRealtimeTranscriptionService(string apiKey = null)
         {
             _apiKey = apiKey ?? Secrets.OpenAiKey;
+            _preprocessor = new AudioPreprocessor(TargetSampleRate);
         }
 
         public void SetAudioFormat(int sampleRate, int bitsPerSample, int channels)
         {
-            _sourceSampleRate = sampleRate;
-            _sourceChannels = channels;
-            _formatInitialized = true;
+            _preprocessor.SetFormat(sampleRate, channels);
             Debug.WriteLine($"[RealtimeTranscription] Audio format: {sampleRate}Hz, {bitsPerSample}bit, {channels}ch");
         }
 
@@ -71,11 +52,9 @@ namespace CameraTests.Services
             if (_isRunning) return;
             _isRunning = true;
             _sessionConfigured = false;
-            _resamplePosition = 0;
-            _consecutiveSilentChunks = 0;
             _feedCount = 0;
+            _preprocessor.Reset();
 
-            // Drain any stale send queue
             while (_sendQueue.TryDequeue(out _)) { }
 
             _cts = new CancellationTokenSource();
@@ -97,7 +76,7 @@ namespace CameraTests.Services
             _isRunning = false;
 
             _cts?.Cancel();
-            _sendSignal.Release(); // Unblock send loop
+            _sendSignal.Release();
 
             Task.Run(async () =>
             {
@@ -122,74 +101,31 @@ namespace CameraTests.Services
             _cts = null;
         }
 
-        private int _feedCount;
-
         public void FeedAudio(byte[] pcmData)
         {
-            if (!_isRunning || !_formatInitialized || !_sessionConfigured ||
-                pcmData == null || pcmData.Length == 0)
-                return;
-
-            if (_webSocket?.State != WebSocketState.Open)
+            if (!_isRunning || !_sessionConfigured || _webSocket?.State != WebSocketState.Open)
                 return;
 
             try
             {
-                // Downmix to mono if stereo
-                byte[] monoData;
-                if (_sourceChannels > 1)
-                {
-                    monoData = DownmixToMono(pcmData, _sourceChannels);
-                }
-                else
-                {
-                    monoData = pcmData;
-                }
-
-                // Skip only prolonged silence — server VAD needs to see transitions
-                if (CalculateRms(monoData) < SilenceRmsThreshold)
-                {
-                    _consecutiveSilentChunks++;
-                    if (_consecutiveSilentChunks > SilentChunksBeforeMute)
-                        return; // Prolonged silence, stop sending
-                    // Otherwise fall through — server needs to see the quiet audio
-                }
-                else
-                {
-                    _consecutiveSilentChunks = 0;
-                }
-
-                // Resample to 24kHz if needed
-                byte[] audioToSend;
-                if (_sourceSampleRate != TargetSampleRate)
-                {
-                    audioToSend = Resample(monoData, _sourceSampleRate, TargetSampleRate);
-                }
-                else
-                {
-                    audioToSend = monoData;
-                }
-
-                if (audioToSend.Length == 0)
+                var processed = _preprocessor.Process(pcmData);
+                if (processed == null)
                     return;
 
-                var base64Audio = Convert.ToBase64String(audioToSend);
+                var base64Audio = Convert.ToBase64String(processed);
                 var message = JsonSerializer.Serialize(new
                 {
                     type = "input_audio_buffer.append",
                     audio = base64Audio
                 });
 
-                var bytes = Encoding.UTF8.GetBytes(message);
-
-                // Enqueue for serialized sending
-                _sendQueue.Enqueue(bytes);
+                _sendQueue.Enqueue(Encoding.UTF8.GetBytes(message));
                 _sendSignal.Release();
 
                 _feedCount++;
                 if (_feedCount % 100 == 0)
                 {
-                    Debug.WriteLine($"[RealtimeTranscription] Fed {_feedCount} chunks, last mono={monoData.Length}b → resampled={audioToSend.Length}b");
+                    Debug.WriteLine($"[RealtimeTranscription] Fed {_feedCount} chunks, last={processed.Length}b");
                 }
             }
             catch (Exception ex)
@@ -208,14 +144,10 @@ namespace CameraTests.Services
             await _webSocket.ConnectAsync(new Uri(WebSocketUrl), ct);
             Debug.WriteLine("[RealtimeTranscription] Connected");
 
-            // Start receive loop
             Task.Run(() => ReceiveLoopAsync(ct), ct);
-
-            // Start serialized send loop
             Task.Run(() => SendLoopAsync(ct), ct);
 
-            // Send session configuration
-            await SendDirectAsync(BuildSessionConfigJson(), ct);
+            await SendJsonAsync(BuildSessionConfigJson(), ct);
         }
 
         private string BuildSessionConfigJson()
@@ -246,14 +178,28 @@ namespace CameraTests.Services
             return json;
         }
 
-        private async Task SendDirectAsync(string json, CancellationToken ct)
+        private object BuildTranscriptionConfig()
+        {
+            if (!string.IsNullOrEmpty(Language))
+            {
+                return new
+                {
+                    model = Model,
+                    language = Language,
+                    prompt = "Transcribe the speech accurately."
+                };
+            }
+            return new
+            {
+                model = Model,
+                prompt = "Transcribe the speech accurately."
+            };
+        }
+
+        private async Task SendJsonAsync(string json, CancellationToken ct)
         {
             var bytes = Encoding.UTF8.GetBytes(json);
-            await _webSocket.SendAsync(
-                new ArraySegment<byte>(bytes),
-                WebSocketMessageType.Text,
-                true,
-                ct);
+            await _webSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, ct);
         }
 
         private async Task SendLoopAsync(CancellationToken ct)
@@ -271,11 +217,7 @@ namespace CameraTests.Services
 
                         try
                         {
-                            await _webSocket.SendAsync(
-                                new ArraySegment<byte>(data),
-                                WebSocketMessageType.Text,
-                                true,
-                                ct);
+                            await _webSocket.SendAsync(new ArraySegment<byte>(data), WebSocketMessageType.Text, true, ct);
                         }
                         catch (Exception ex)
                         {
@@ -286,24 +228,6 @@ namespace CameraTests.Services
                 }
             }
             catch (OperationCanceledException) { }
-        }
-
-        private object BuildTranscriptionConfig()
-        {
-            if (!string.IsNullOrEmpty(Language))
-            {
-                return new
-                {
-                    model = Model,
-                    language = Language,
-                    prompt = "Transcribe the speech accurately."
-                };
-            }
-            return new
-            {
-                model = Model,
-                prompt = "Transcribe the speech accurately."
-            };
         }
 
         private async Task ReceiveLoopAsync(CancellationToken ct)
@@ -416,106 +340,6 @@ namespace CameraTests.Services
             {
                 Debug.WriteLine($"[RealtimeTranscription] Parse error: {ex.Message}");
             }
-        }
-
-        /// <summary>
-        /// Fast RMS calculation on PCM16 mono data. Returns normalized 0..1 value.
-        /// </summary>
-        private static float CalculateRms(byte[] monoData)
-        {
-            if (monoData.Length < 2) return 0;
-
-            long sum = 0;
-            int sampleCount = monoData.Length / 2;
-            for (int i = 0; i < monoData.Length - 1; i += 2)
-            {
-                short s = (short)(monoData[i] | (monoData[i + 1] << 8));
-                sum += s * s;
-            }
-            return (float)Math.Sqrt((double)sum / sampleCount) / 32768f;
-        }
-
-        /// <summary>
-        /// Downmixes multi-channel PCM16 to mono by averaging all channels per frame.
-        /// </summary>
-        private static byte[] DownmixToMono(byte[] input, int channels)
-        {
-            int bytesPerSample = 2; // 16-bit
-            int frameSize = channels * bytesPerSample;
-            int frameCount = input.Length / frameSize;
-            var output = new byte[frameCount * bytesPerSample];
-
-            for (int f = 0; f < frameCount; f++)
-            {
-                int sum = 0;
-                int offset = f * frameSize;
-                for (int ch = 0; ch < channels; ch++)
-                {
-                    int idx = offset + ch * bytesPerSample;
-                    short sample = (short)(input[idx] | (input[idx + 1] << 8));
-                    sum += sample;
-                }
-                short mono = (short)(sum / channels);
-                int outIdx = f * bytesPerSample;
-                output[outIdx] = (byte)(mono & 0xFF);
-                output[outIdx + 1] = (byte)((mono >> 8) & 0xFF);
-            }
-
-            return output;
-        }
-
-        /// <summary>
-        /// Resamples PCM16 mono audio from source rate to target rate using linear interpolation.
-        /// Maintains continuity across calls via _resamplePosition.
-        /// </summary>
-        private byte[] Resample(byte[] input, int sourceRate, int targetRate)
-        {
-            int bytesPerSample = 2; // 16-bit
-            int sourceSampleCount = input.Length / bytesPerSample;
-            if (sourceSampleCount == 0) return Array.Empty<byte>();
-
-            double ratio = (double)sourceRate / targetRate;
-            int targetSampleCount = (int)Math.Ceiling(sourceSampleCount / ratio);
-
-            var output = new byte[targetSampleCount * bytesPerSample];
-            int outputIndex = 0;
-
-            for (int i = 0; i < targetSampleCount; i++)
-            {
-                double srcPos = _resamplePosition + i * ratio;
-                int srcIndex = (int)srcPos;
-                double frac = srcPos - srcIndex;
-
-                short sample;
-                if (srcIndex + 1 < sourceSampleCount)
-                {
-                    short s0 = (short)(input[srcIndex * 2] | (input[srcIndex * 2 + 1] << 8));
-                    short s1 = (short)(input[(srcIndex + 1) * 2] | (input[(srcIndex + 1) * 2 + 1] << 8));
-                    sample = (short)(s0 + (s1 - s0) * frac);
-                }
-                else if (srcIndex < sourceSampleCount)
-                {
-                    sample = (short)(input[srcIndex * 2] | (input[srcIndex * 2 + 1] << 8));
-                }
-                else
-                {
-                    break;
-                }
-
-                output[outputIndex++] = (byte)(sample & 0xFF);
-                output[outputIndex++] = (byte)((sample >> 8) & 0xFF);
-            }
-
-            // Track position for next call continuity
-            _resamplePosition = (_resamplePosition + targetSampleCount * ratio) - sourceSampleCount;
-            if (_resamplePosition < 0) _resamplePosition = 0;
-
-            if (outputIndex < output.Length)
-            {
-                Array.Resize(ref output, outputIndex);
-            }
-
-            return output;
         }
 
         public void Dispose()

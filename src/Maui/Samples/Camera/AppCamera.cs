@@ -86,20 +86,6 @@ namespace CameraTests.Views
             (old as IDisposable)?.Dispose();
         }
 
-        string _recognizedText;
-        public string RecognizedText
-        {
-        	get => _recognizedText;
-        	set
-        	{
-        		if (_recognizedText != value)
-        		{
-               		_recognizedText = value;
-        			OnPropertyChanged();	
-        		}
-        	}
-        }
-
         protected override AudioSample OnAudioSampleAvailable(AudioSample sample)
         {
             _audioVisualizer?.AddSample(sample);

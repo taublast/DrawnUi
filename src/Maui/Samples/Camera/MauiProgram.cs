@@ -1,5 +1,6 @@
 ﻿global using DrawnUi.Draw;
 global using SkiaSharp;
+using CameraTests.Services;
 using Microsoft.Extensions.Logging;
 
 namespace CameraTests
@@ -65,6 +66,8 @@ namespace CameraTests
                 //    Width = 750,
                 //}
             });
+
+            builder.Services.AddSingleton<IRealtimeTranscriptionService, OpenAiRealtimeTranscriptionService>();
 
 #if DEBUG
             builder.Logging.AddDebug();

@@ -15,7 +15,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     private SkiaLabel _statusLabel;
     private SkiaButton _videoRecordButton;
     private SkiaButton _speechButton;
-    private OpenAiRealtimeTranscriptionService _realtimeTranscriptionService;
+    private IRealtimeTranscriptionService _realtimeTranscriptionService;
     private SkiaButton _cameraSelectButton;
     private SkiaButton _audioSelectButton;
     private SkiaButton _audioCodecButton;
@@ -59,12 +59,16 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         CreateContent();
     }
 
-    public CameraTestPage()
+    public CameraTestPage(IRealtimeTranscriptionService realtimeTranscriptionService)
     {
         Title = "SkiaCamera Test";
-        _realtimeTranscriptionService = new OpenAiRealtimeTranscriptionService();
-        _realtimeTranscriptionService.TranscriptionDelta += OnTranscriptionDelta;
-        _realtimeTranscriptionService.TranscriptionCompleted += OnTranscriptionCompleted;
+
+        _realtimeTranscriptionService = realtimeTranscriptionService;
+        if (_realtimeTranscriptionService != null)
+        {
+            _realtimeTranscriptionService.TranscriptionDelta += OnTranscriptionDelta;
+            _realtimeTranscriptionService.TranscriptionCompleted += OnTranscriptionCompleted;
+        }
     }
 
     private void CreateContent()
@@ -112,16 +116,6 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                         }
                     }),
 
-                /*
-                new AudioVisualizer()
-                {
-                    WidthRequest = 300,
-                    HeightRequest = 100,
-                    VerticalOptions = LayoutOptions.End,
-                    BackgroundColor = Colors.Black
-                }.Assign(out _audioVisualizer),
-                */
-
                 new SkiaLabel()
                 {
                     Margin = 20,
@@ -132,9 +126,9 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                     VerticalOptions = LayoutOptions.End,
                     HorizontalOptions = LayoutOptions.Center
                 }
-                .ObserveProperty(CameraControl, nameof(CameraControl.RecognizedText), me =>
+                .ObserveProperty(this, nameof(RecognizedText), me =>
                 {
-                    me.Text = CameraControl.RecognizedText;
+                    me.Text = RecognizedText;
                 }),
 
                 //ROW 1
@@ -746,7 +740,21 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
         Debug.WriteLine($"Recognized: {display}");
 
-        CameraControl.RecognizedText = display;
+        RecognizedText = display;
+    }
+
+    string _recognizedText;
+    public string RecognizedText
+    {
+        get => _recognizedText;
+        set
+        {
+            if (_recognizedText != value)
+            {
+                _recognizedText = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     private void OnAudioCaptured(byte[] data, int rate, int bits, int channels)
@@ -785,7 +793,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         _currentDelta = string.Empty;
         if (CameraControl != null)
         {
-            CameraControl.RecognizedText = string.Empty;
+            RecognizedText = string.Empty;
         }
     }
 
