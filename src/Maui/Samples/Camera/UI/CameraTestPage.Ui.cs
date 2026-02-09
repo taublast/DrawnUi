@@ -61,6 +61,21 @@ namespace CameraTests.Views
                 }
                 .Assign(out _captionsLabel),
 
+                new SkiaShape()
+                {
+                    Type=ShapeType.Circle,
+                    LockRatio = 1,
+                    WidthRequest = 32,
+                    Margin = 24,
+                    BackgroundColor = Color.FromArgb("#883300FF"),
+                    HorizontalOptions = LayoutOptions.End,
+                    VerticalOptions = LayoutOptions.End,
+                }
+                .ObserveProperty(this, nameof(IsTranscribing), me =>
+                {
+                    me.IsVisible = this.IsTranscribing;
+                }),
+
                 //ROW 1
 
                 new SkiaStack()

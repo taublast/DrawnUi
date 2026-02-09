@@ -108,20 +108,46 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     bool _isTranscribing;
     public bool IsTranscribing
     {
-    	get => _isTranscribing;
-    	set
-    	{
-    		if (_isTranscribing != value)
-    		{
-           		_isTranscribing = value;
-    			OnPropertyChanged();	
-    		}
-    	}
+        get => _isTranscribing;
+        set
+        {
+            if (_isTranscribing != value)
+            {
+                _isTranscribing = value;
+                OnPropertyChanged();
+            }
+        }
     }
+
+
+
+    private System.Timers.Timer? _delayHideTimer;
 
     private void OnTranscriptionWorking(bool state)
     {
-        IsTranscribing = state;
+        if (state)
+        {
+            _delayHideTimer?.Stop();
+            IsTranscribing = true;
+        }
+        else
+        {
+            if (_delayHideTimer == null)
+            {
+                _delayHideTimer = new System.Timers.Timer(500);
+                _delayHideTimer.AutoReset = false;
+                _delayHideTimer.Elapsed += (s, e) =>
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        IsTranscribing = false;
+                    });
+                };
+            }
+
+            _delayHideTimer.Stop();    // reset if already counting
+            _delayHideTimer.Start();
+        }
     }
 
     private void OnTranscriptionDelta(string delta)
