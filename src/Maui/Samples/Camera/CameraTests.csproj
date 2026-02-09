@@ -80,12 +80,6 @@
 
     <None Remove="Resources\Raw\Images\8.jpg" />
 
-    <None Remove="Resources\Raw\Lottie\cross.json" />
-
-    <None Remove="Resources\Raw\Lottie\Loader.json" />
-
-    <None Remove="Resources\Raw\Lottie\robot.json" />
-
     <None Remove="Resources\Raw\Shaders\invert.sksl" />
 
     <None Remove="Resources\Raw\Shaders\transdoorway.sksl" />

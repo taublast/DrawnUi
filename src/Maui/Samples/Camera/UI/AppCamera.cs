@@ -4,6 +4,12 @@ namespace CameraTests.Views
 {
     public partial class AppCamera : SkiaCamera
     {
+        public AppCamera()
+        {
+            //this.UseRealtimeVideoProcessing
+            //this.RecordVideo = false;
+        }
+
         // Audio visualizer (switch between AudioOscillograph and AudioLevels)
         private IAudioVisualizer _audioVisualizer = null;
         private int _visualizerIndex = 0;

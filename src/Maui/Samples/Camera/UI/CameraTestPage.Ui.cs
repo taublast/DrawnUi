@@ -1,6 +1,7 @@
 using AppoMobi.Specials;
 using CameraTests.Services;
 using DrawnUi.Camera;
+using DrawnUi.Controls;
 using DrawnUi.Views;
 
 namespace CameraTests.Views
@@ -61,13 +62,15 @@ namespace CameraTests.Views
                 }
                 .Assign(out _captionsLabel),
 
-                new SkiaShape()
+                new SkiaLottie()
                 {
-                    Type=ShapeType.Circle,
-                    LockRatio = 1,
-                    WidthRequest = 32,
                     Margin = 24,
-                    BackgroundColor = Color.FromArgb("#883300FF"),
+                    Source = @"Lottie\ai.json", //https://lottiefiles.com/free-animation/ai-animation-flow-1-qOIKTITppT
+                    AutoPlay = true,
+                    Repeat = -1,
+                    LockRatio = 1,
+                    SpeedRatio = 2,
+                    WidthRequest = 32,
                     HorizontalOptions = LayoutOptions.End,
                     VerticalOptions = LayoutOptions.End,
                 }
@@ -75,6 +78,20 @@ namespace CameraTests.Views
                 {
                     me.IsVisible = this.IsTranscribing;
                 }),
+                //new SkiaShape()
+                //{
+                //    Type=ShapeType.Circle,
+                //    LockRatio = 1,
+                //    WidthRequest = 32,
+                //    Margin = 24,
+                //    BackgroundColor = Color.FromArgb("#883300FF"),
+                //    HorizontalOptions = LayoutOptions.End,
+                //    VerticalOptions = LayoutOptions.End,
+                //}
+                //.ObserveProperty(this, nameof(IsTranscribing), me =>
+                //{
+                //    me.IsVisible = this.IsTranscribing;
+                //}),
 
                 //ROW 1
 
