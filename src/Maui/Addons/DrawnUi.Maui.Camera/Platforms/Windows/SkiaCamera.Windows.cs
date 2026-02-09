@@ -684,7 +684,7 @@ public partial class SkiaCamera : SkiaControl
             }
 
             // Update state and notify success
-            IsRecordingVideo = false;
+            IsRecording = false;
             IsBusy = false; // Release busy state after successful muxing
 
             // Restart preview audio if still enabled
@@ -700,7 +700,7 @@ public partial class SkiaCamera : SkiaControl
             _frameCaptureTimer = null;
             _captureVideoEncoder = null;
 
-            IsRecordingVideo = false;
+            IsRecording = false;
             IsBusy = false; // Release busy state on error
 
             // Restart preview audio if still enabled
@@ -762,7 +762,7 @@ public partial class SkiaCamera : SkiaControl
             // Stop encoder
             await encoder?.AbortAsync();
 
-            IsRecordingVideo = false;
+            IsRecording = false;
 
             // Restart preview audio if still enabled
             if (EnableAudioRecording && State == CameraState.On)
@@ -777,7 +777,7 @@ public partial class SkiaCamera : SkiaControl
             _frameCaptureTimer = null;
             _captureVideoEncoder = null;
 
-            IsRecordingVideo = false;
+            IsRecording = false;
 
             // Restart preview audio if still enabled
             if (EnableAudioRecording && State == CameraState.On)
@@ -956,7 +956,7 @@ public partial class SkiaCamera : SkiaControl
         // Set up progress reporting
         _captureVideoEncoder.ProgressReported += (sender, duration) =>
         {
-            MainThread.BeginInvokeOnMainThread(() => OnVideoRecordingProgress(duration));
+            OnVideoRecordingProgress(duration);
         };
 
         // Use PreviewCaptureSuccess callback like Android - encoder gets frames without stealing from preview
@@ -966,7 +966,7 @@ public partial class SkiaCamera : SkiaControl
             {
                 CalculateCameraInputFps();
 
-                if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not WindowsCaptureVideoEncoder winEnc)
+                if ((!IsPreRecording && !IsRecording) || _captureVideoEncoder is not WindowsCaptureVideoEncoder winEnc)
                     return;
 
                 if (System.Threading.Interlocked.CompareExchange(ref _frameInFlight, 1, 0) != 0)
@@ -1065,7 +1065,7 @@ public partial class SkiaCamera : SkiaControl
     /// 
     /// State machine logic:
     /// - If EnablePreRecording && !IsPreRecording: Start memory-only recording (pre-recording phase)
-    /// - If IsPreRecording && !IsRecordingVideo: Prepend buffer and start file recording (normal phase)
+    /// - If IsPreRecording && !IsRecording: Prepend buffer and start file recording (normal phase)
     /// - Otherwise: Start normal file recording
     /// </summary>
     /// <returns>Async task</returns>
@@ -1083,17 +1083,17 @@ public partial class SkiaCamera : SkiaControl
                 throw new InvalidOperationException("EnableAudioRecording must be true when EnableVideoRecording is false");
 
             Debug.WriteLine("[StartVideoRecording] Audio-only mode: using video encoder without video frames");
-            IsRecordingVideo = true;
+            IsRecording = true;
             await StartRealtimeVideoProcessing();
             return;
         }
 
-        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
+        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecording={IsRecording}");
 
         try
         {
             // State 1 -> State 2: If pre-recording enabled and not yet in pre-recording phase, start memory-only recording
-            if (EnablePreRecording && !IsPreRecording && !IsRecordingVideo)
+            if (EnablePreRecording && !IsPreRecording && !IsRecording)
             {
                 Debug.WriteLine("[StartVideoRecording] Transitioning to IsPreRecording (memory-only recording)");
                 IsPreRecording = true;
@@ -1114,9 +1114,9 @@ public partial class SkiaCamera : SkiaControl
                 }
             }
             // State 2 -> State 3: If in pre-recording phase, transition to file recording with muxing
-            else if (IsPreRecording && !IsRecordingVideo)
+            else if (IsPreRecording && !IsRecording)
             {
-                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecordingVideo (file recording with mux)");
+                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecording (file recording with mux)");
 
                 // CRITICAL ANDROID FIX: Single-file approach - reuse existing encoder!
                 // Encoder was already initialized and warmed up during pre-recording phase
@@ -1147,7 +1147,7 @@ public partial class SkiaCamera : SkiaControl
 
                 // Update state flags BEFORE creating new encoder
                 IsPreRecording = false;
-                IsRecordingVideo = true;
+                IsRecording = true;
                 RecordingLockedRotation = DeviceRotation;
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
@@ -1211,10 +1211,10 @@ public partial class SkiaCamera : SkiaControl
 
             }
             // Normal recording (no pre-recording)
-            else if (!IsRecordingVideo)
+            else if (!IsRecording)
             {
                 Debug.WriteLine("[StartVideoRecording] Starting normal recording (no pre-recording)");
-                IsRecordingVideo = true;
+                IsRecording = true;
 
                 // Lock the current device rotation for the entire recording session
                 RecordingLockedRotation = DeviceRotation;
@@ -1232,7 +1232,7 @@ public partial class SkiaCamera : SkiaControl
         }
         catch (Exception ex)
         {
-            IsRecordingVideo = false;
+            IsRecording = false;
             IsPreRecording = false;
             RecordingLockedRotation = -1; // Reset on error
             ClearPreRecordingBuffer();

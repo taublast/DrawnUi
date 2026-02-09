@@ -276,9 +276,9 @@ namespace CameraTests.Views
                                     }
                                     .Assign(out _videoRecordButton)
                                     .OnTapped(async me => { ToggleVideoRecording(); })
-                                    .ObserveProperty(CameraControl, nameof(CameraControl.IsRecordingVideo), me =>
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording), me =>
                                     {
-                                        if (CameraControl.IsRecordingVideo)
+                                        if (CameraControl.IsRecording)
                                         {
                                             me.Text = "🛑 Stop";
                                             me.BackgroundColor = Colors.Red;
@@ -296,7 +296,7 @@ namespace CameraTests.Views
                                     })
                                     .ObserveProperty(CameraControl, nameof(CameraControl.IsPreRecording), me =>
                                     {
-                                        if (CameraControl.IsRecordingVideo)
+                                        if (CameraControl.IsRecording)
                                         {
                                             me.Text = "🛑";
                                             me.BackgroundColor = Colors.Red;
@@ -327,13 +327,13 @@ namespace CameraTests.Views
                                         IsVisible = false
                                     }
                                     .OnTapped(async me => { await AbortVideoRecording(); })
-                                    .ObserveProperty(CameraControl, nameof(CameraControl.IsRecordingVideo), me =>
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording), me =>
                                     {
-                                        me.IsVisible = CameraControl.IsRecordingVideo && CameraControl.CaptureMode == CaptureModeType.Video;
+                                        me.IsVisible = CameraControl.IsRecording && CameraControl.CaptureMode == CaptureModeType.Video;
                                     })
                                     .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                                     {
-                                        me.IsVisible = CameraControl.IsRecordingVideo && CameraControl.CaptureMode == CaptureModeType.Video;
+                                        me.IsVisible = CameraControl.IsRecording && CameraControl.CaptureMode == CaptureModeType.Video;
                                     }),
 
                                 // Video Formats button (only visible in Video mode)
@@ -535,7 +535,7 @@ namespace CameraTests.Views
 
                 CameraControl.PreviewProcessor = (frame) =>
                 {
-                    //if (CameraControl.IsRecordingVideo || CameraControl.IsPreRecording)
+                    //if (CameraControl.IsRecording || CameraControl.IsPreRecording)
                     {
                         CameraControl.DrawOverlay(frame);
                     }

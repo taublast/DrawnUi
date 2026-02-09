@@ -241,7 +241,7 @@ public partial class SkiaCamera
     {
         // CRITICAL: Do synchronous checks BEFORE creating any Task to avoid async state machine
         // and Task allocation overhead when frames are dropped (fixes memory/GC pressure)
-        if (!(IsRecordingVideo || IsPreRecording) || _captureVideoEncoder == null)
+        if (!(IsRecording || IsPreRecording) || _captureVideoEncoder == null)
             return;
 
         // Make sure we never queue more than one frame — drop if previous is still processing
@@ -260,7 +260,7 @@ public partial class SkiaCamera
         try
         {
             // Double-check encoder still exists (race condition protection)
-            if (_captureVideoEncoder == null || (!IsRecordingVideo && !IsPreRecording))
+            if (_captureVideoEncoder == null || (!IsRecording && !IsPreRecording))
                 return;
 
             var elapsed = DateTime.Now - _captureVideoStartTime;
@@ -484,12 +484,12 @@ public partial class SkiaCamera
         // OOM-SAFE AUDIO HANDLING:
         // - Pre-recording phase: Write to circular buffer (bounded memory, ~5 sec max)
         // - Live recording phase: Stream directly to file (zero memory growth)
-        if (IsPreRecording && !IsRecordingVideo)
+        if (IsPreRecording && !IsRecording)
         {
             // Pre-recording: Circular buffer keeps last N seconds (bounded memory)
             _audioBuffer?.Write(sample);
         }
-        else if (IsRecordingVideo && _liveAudioWriter != null)
+        else if (IsRecording && _liveAudioWriter != null)
         {
             // Live recording: Stream directly to file (OOM-safe)
             WriteSampleToLiveAudioWriter(sample);
@@ -526,7 +526,7 @@ public partial class SkiaCamera
                 // - Pre-recording phase: CIRCULAR buffer (bounded memory, keeps last N seconds)
                 // - Live recording phase: STREAMING to file (zero memory growth)
                 // Buffer/writer is switched at pre-rec → live transition (see StartVideoRecording)
-                if (EnablePreRecording && !IsRecordingVideo)
+                if (EnablePreRecording && !IsRecording)
                 {
                     // Pre-recording phase: Circular buffer matching video duration
                     if (_audioBuffer == null)
@@ -539,7 +539,7 @@ public partial class SkiaCamera
                     // Creates AVAssetWriter/Input but doesn't start writing yet
                     EnsureLiveAudioWriterPreAllocated(AudioSampleRate, AudioChannels);
                 }
-                else if (IsRecordingVideo && _liveAudioWriter == null)
+                else if (IsRecording && _liveAudioWriter == null)
                 {
                     // Live-only (no pre-recording): Start streaming writer immediately
                     if (StartLiveAudioWriter(AudioSampleRate, AudioChannels))
@@ -2339,7 +2339,7 @@ public partial class SkiaCamera
     /// 
     /// State machine logic:
     /// - If EnablePreRecording && !IsPreRecording: Start memory-only recording (pre-recording phase)
-    /// - If IsPreRecording && !IsRecordingVideo: Prepend buffer and start file recording (normal phase)
+    /// - If IsPreRecording && !IsRecording: Prepend buffer and start file recording (normal phase)
     /// - Otherwise: Start normal file recording
     /// </summary>
     /// <returns>Async task</returns>
@@ -2360,12 +2360,12 @@ public partial class SkiaCamera
             return;
         }
 
-        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
+        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecording={IsRecording}");
 
         try
         {
             // State 1 -> State 2: If pre-recording enabled and not yet in pre-recording phase, start memory-only recording
-            if (EnablePreRecording && !IsPreRecording && !IsRecordingVideo)
+            if (EnablePreRecording && !IsPreRecording && !IsRecording)
             {
                 Debug.WriteLine("[StartVideoRecording] Transitioning to IsPreRecording (memory-only recording)");
                 SetIsPreRecording(true);
@@ -2386,9 +2386,9 @@ public partial class SkiaCamera
                 }
             }
             // State 2 -> State 3: If in pre-recording phase, transition to file recording with muxing
-            else if (IsPreRecording && !IsRecordingVideo)
+            else if (IsPreRecording && !IsRecording)
             {
-                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecordingVideo (file recording with mux) [OVERLAP MODE]");
+                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecording (file recording with mux) [OVERLAP MODE]");
 
                 // 1. GLOBAL TIMELINE: Capture current duration but DON'T stop pre-rec
                 // Pre-rec continues running until the swap - ZERO frames lost
@@ -2565,7 +2565,7 @@ public partial class SkiaCamera
                 }
             }
             // Normal recording (no pre-recording)
-            else if (!IsRecordingVideo)
+            else if (!IsRecording)
             {
                 Debug.WriteLine("[StartVideoRecording] Starting normal recording (no pre-recording)");
                 SetIsRecordingVideo(true);

@@ -1040,7 +1040,7 @@ public partial class SkiaCamera
                         // Track camera input FPS (count every frame camera delivers)
                         CalculateCameraInputFps();
 
-                        if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
+                        if ((!IsPreRecording && !IsRecording) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
                         {
                             return;
                         }
@@ -1091,7 +1091,7 @@ public partial class SkiaCamera
 
                         // CRITICAL: Process frames during BOTH pre-recording AND live recording
                         // If encoder is null/disposed during transition, this check will catch it and return gracefully
-                        if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
+                        if ((!IsPreRecording && !IsRecording) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
                             return;
 
                         // Warmup: drop the first frame to avoid occasional corrupted first frame artifacts
@@ -1195,7 +1195,7 @@ public partial class SkiaCamera
         // Progress reporting
         _captureVideoEncoder.ProgressReported += (sender, duration) =>
         {
-            MainThread.BeginInvokeOnMainThread(() => OnVideoRecordingProgress(duration));
+            OnVideoRecordingProgress(duration);
         };
 
     }
@@ -1207,7 +1207,7 @@ public partial class SkiaCamera
     /// 
     /// State machine logic:
     /// - If EnablePreRecording && !IsPreRecording: Start memory-only recording (pre-recording phase)
-    /// - If IsPreRecording && !IsRecordingVideo: Prepend buffer and start file recording (normal phase)
+    /// - If IsPreRecording && !IsRecording: Prepend buffer and start file recording (normal phase)
     /// - Otherwise: Start normal file recording
     /// </summary>
     /// <returns>Async task</returns>
@@ -1228,12 +1228,12 @@ public partial class SkiaCamera
             return;
         }
 
-        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
+        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecording={IsRecording}");
 
         try
         {
             // State 1 -> State 2: If pre-recording enabled and not yet in pre-recording phase, start memory-only recording
-            if (EnablePreRecording && !IsPreRecording && !IsRecordingVideo)
+            if (EnablePreRecording && !IsPreRecording && !IsRecording)
             {
                 Debug.WriteLine("[StartVideoRecording] Transitioning to IsPreRecording (memory-only recording)");
                 SetIsPreRecording(true);
@@ -1254,9 +1254,9 @@ public partial class SkiaCamera
                 }
             }
             // State 2 -> State 3: If in pre-recording phase, transition to file recording with muxing
-            else if (IsPreRecording && !IsRecordingVideo)
+            else if (IsPreRecording && !IsRecording)
             {
-                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecordingVideo (file recording with mux)");
+                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecording (file recording with mux)");
 
                 // CRITICAL ANDROID FIX: Single-file approach - reuse existing encoder!
                 // Encoder was already initialized and warmed up during pre-recording phase
@@ -1291,7 +1291,7 @@ public partial class SkiaCamera
  
             }
             // Normal recording (no pre-recording)
-            else if (!IsRecordingVideo)
+            else if (!IsRecording)
             {
                 Debug.WriteLine("[StartVideoRecording] Starting normal recording (no pre-recording)");
                 SetIsRecordingVideo(true);

@@ -1099,7 +1099,7 @@ public bool IsAutoFlashSupported { get; }               // Auto flash support
 public SkiaImageEffect Effect { get; set; }       // Real-time simple color filters
 
 // Video Recording
-public bool IsRecordingVideo { get; }             // Recording state (read-only)
+public bool IsRecording { get; }             // Recording state (read-only)
 public VideoQuality VideoQuality { get; set; }   // Video quality preset
 public int VideoFormatIndex { get; set; }         // Manual format index
 public bool UseRealtimeVideoProcessing { get; set; }     // Enable frame-by-frame capture mode
@@ -1437,7 +1437,7 @@ private void OnVideoRecordingProgress(object sender, TimeSpan duration)
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `IsRecordingVideo` | `bool` | `false` | Whether video recording is active (read-only) |
+| `IsRecording` | `bool` | `false` | Whether video recording is active (read-only) |
 | `VideoQuality` | `VideoQuality` | `Standard` | Video quality preset: `Low`, `Standard`, `High`, `Ultra`, `Manual` |
 | `VideoFormatIndex` | `int` | `0` | Format index for manual recording (when `VideoQuality = Manual`) |
 | `CanRecordVideo()` | `bool` | - | Whether video recording is supported on current camera |
@@ -1932,10 +1932,10 @@ var recordButton = new SkiaButton("🎥 Record")
 }
 .Assign(out _videoRecordButton)
 .OnTapped(async me => { await ToggleVideoRecording(); })
-.ObserveProperty(CameraControl, nameof(CameraControl.IsRecordingVideo), me =>
+.ObserveProperty(CameraControl, nameof(CameraControl.IsRecording), me =>
 {
-    me.Text = CameraControl.IsRecordingVideo ? "🛑 Stop" : "🎥 Record";
-    me.BackgroundColor = CameraControl.IsRecordingVideo ? Colors.Red : Colors.Purple;
+    me.Text = CameraControl.IsRecording ? "🛑 Stop" : "🎥 Record";
+    me.BackgroundColor = CameraControl.IsRecording ? Colors.Red : Colors.Purple;
 });
 
 // Audio toggle button
@@ -1956,7 +1956,7 @@ var audioButton = new SkiaButton("🔇 Silent")
 private void ToggleAudioRecording()
 {
     // Only allow changing audio setting when not recording
-    if (!CameraControl.IsRecordingVideo)
+    if (!CameraControl.IsRecording)
     {
         CameraControl.EnableAudioRecording = !CameraControl.EnableAudioRecording;
     }
@@ -1969,7 +1969,7 @@ private async Task ToggleVideoRecording()
 
     try
     {
-        if (CameraControl.IsRecordingVideo)
+        if (CameraControl.IsRecording)
         {
             await CameraControl.StopVideoRecording();
         }
@@ -2023,7 +2023,7 @@ SkiaCamera implements **non-blocking video recording** that preserves preview pe
 - Records video using platform-native APIs
 - **Independent of preview stream** - no performance impact on live camera feed
 - Uses hardware-accelerated encoding when available
-- **Property**: `IsRecordingVideo` (read-only status)
+- **Property**: `IsRecording` (read-only status)
 - **Events**: Success/Failed/Progress for comprehensive monitoring
 
 **Platform Implementation:**
@@ -2199,7 +2199,7 @@ public partial class VideoRecordingPage : ContentPage
 
         try
         {
-            if (_camera.IsRecordingVideo)
+            if (_camera.IsRecording)
             {
                 await _camera.StopVideoRecording();
             }

@@ -62,9 +62,9 @@ public partial class SkiaCamera : SkiaControl
 
     protected virtual void SetIsRecordingVideo(bool isRecording)
     {
-        if (IsRecordingVideo != isRecording)
+        if (IsRecording != isRecording)
         {
-            IsRecordingVideo = isRecording;
+            IsRecording = isRecording;
             IsRecordingVideoChanged?.Invoke(this, isRecording);
         }
     }
@@ -87,22 +87,22 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-    #region VIDEO RECORDING PROPERTIES
+    #region VIDEO/AUDIO RECORDING PROPERTIES
 
-    public static readonly BindableProperty IsRecordingVideoProperty = BindableProperty.Create(
-        nameof(IsRecordingVideo),
+    public static readonly BindableProperty IsRecordingProperty = BindableProperty.Create(
+        nameof(IsRecording),
         typeof(bool),
         typeof(SkiaCamera),
         false,
         BindingMode.OneWayToSource);
 
     /// <summary>
-    /// Whether video recording is currently active (read-only)
+    /// Whether video/audio recording is currently active (read-only)
     /// </summary>
-    public bool IsRecordingVideo
+    public bool IsRecording
     {
-        get { return (bool)GetValue(IsRecordingVideoProperty); }
-        private set { SetValue(IsRecordingVideoProperty, value); }
+        get { return (bool)GetValue(IsRecordingProperty); }
+        private set { SetValue(IsRecordingProperty, value); }
     }
 
     public static readonly BindableProperty IsPreRecordingProperty = BindableProperty.Create(
@@ -413,7 +413,7 @@ public partial class SkiaCamera : SkiaControl
 
     private static void OnPreRecordDurationChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        if (bindable is SkiaCamera camera && (camera.IsRecordingVideo || camera.IsPreRecording))
+        if (bindable is SkiaCamera camera && (camera.IsRecording || camera.IsPreRecording))
         {
             Task.Run(async () =>
             {
@@ -431,7 +431,7 @@ public partial class SkiaCamera : SkiaControl
                 await camera.StopVideoRecording(true);
 
                 bool enabled = (bool)newValue;
-                if (enabled && !camera.IsRecordingVideo)
+                if (enabled && !camera.IsRecording)
                 {
                     camera.InitializePreRecordingBuffer();
                 }
@@ -1059,7 +1059,7 @@ public partial class SkiaCamera : SkiaControl
                 control.UpdatePreviewScaleFromFormat();
 
                 // Start preview audio capture if EnableAudioRecording is enabled and not recording
-                if (control.EnableAudioRecording && !control.IsRecordingVideo && !control.IsPreRecording)
+                if (control.EnableAudioRecording && !control.IsRecording && !control.IsPreRecording)
                 {
                     control.StartPreviewAudioCapture();
                 }
@@ -1351,14 +1351,14 @@ public partial class SkiaCamera : SkiaControl
             return;
         }
 
-        if (!IsRecordingVideo && !IsPreRecording)
+        if (!IsRecording && !IsPreRecording)
             return;
 
         IsBusy = true;
 
         try
         {
-            Debug.WriteLine($"[StopVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
+            Debug.WriteLine($"[StopVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecording={IsRecording}");
 
             SetIsRecordingVideo(false);
 
@@ -1469,13 +1469,24 @@ public partial class SkiaCamera : SkiaControl
             await StartAudioOnlyCapture(sampleRate, channels);
 
             SetIsRecordingAudioOnly(true);
-            SetIsRecordingVideo(true); // UI buttons typically bind to IsRecordingVideo
+            SetIsRecordingVideo(true); // UI buttons typically bind to IsRecording
+
+            // Start progress reporting timer
+            _audioOnlyProgressTimer = new System.Threading.Timer(_ =>
+            {
+                if (_audioOnlyEncoder?.IsRecording == true)
+                {
+                    OnVideoRecordingProgress(_audioOnlyEncoder.RecordingDuration);
+                }
+            }, null, 500, 500);
 
             Debug.WriteLine($"[StartAudioOnlyRecording] Recording to: {outputPath}");
         }
         catch (Exception ex)
         {
             Debug.WriteLine($"[StartAudioOnlyRecording] Error: {ex.Message}");
+            _audioOnlyProgressTimer?.Dispose();
+            _audioOnlyProgressTimer = null;
             _audioOnlyEncoder?.Dispose();
             _audioOnlyEncoder = null;
             AudioRecordingFailed?.Invoke(this, ex);
@@ -1492,6 +1503,10 @@ public partial class SkiaCamera : SkiaControl
             return null;
 
         Debug.WriteLine("[StopAudioOnlyRecording] Stopping audio-only recording...");
+
+        // Stop progress timer
+        _audioOnlyProgressTimer?.Dispose();
+        _audioOnlyProgressTimer = null;
 
         try
         {
@@ -2048,7 +2063,7 @@ public partial class SkiaCamera : SkiaControl
     public event EventHandler<Exception> VideoRecordingFailed;
 
     /// <summary>
-    /// Fired when video recording progress updates
+    /// Fired when video recording progress updates. This will NOT be invoked on UI thread!
     /// </summary>
     public event EventHandler<TimeSpan> VideoRecordingProgress;
 
@@ -2511,7 +2526,7 @@ public partial class SkiaCamera : SkiaControl
 
         NativeControl.VideoRecordingProgress = duration =>
         {
-            MainThread.BeginInvokeOnMainThread(() => { OnVideoRecordingProgress(duration); });
+            OnVideoRecordingProgress(duration);
         };
 
 
@@ -2682,6 +2697,7 @@ public partial class SkiaCamera : SkiaControl
     private IAudioCapture _previewAudioCapture; // Separate instance for preview-only audio (not recording)
     private CircularAudioBuffer _audioBuffer;
     private IAudioOnlyEncoder _audioOnlyEncoder; // For audio-only recording when EnableVideoRecording=false
+    private System.Threading.Timer _audioOnlyProgressTimer;
 
     /// <summary>
     /// Starts preview audio capture. Called when EnableAudioRecording=true and camera starts (not recording).
@@ -2845,7 +2861,7 @@ public partial class SkiaCamera : SkiaControl
 #if WINDOWS
         // If using capture video flow and preview-driven capture, submit frames in real-time with the preview
         // Use fire-and-forget Task instead of SafeAction to avoid cascading repaints that cause preview lag
-        if (_useWindowsPreviewDrivenCapture && (IsRecordingVideo || IsPreRecording) &&
+        if (_useWindowsPreviewDrivenCapture && (IsRecording || IsPreRecording) &&
             _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
         {
             // Ensure single-frame processing - drop if previous is still in progress
@@ -2989,7 +3005,7 @@ public partial class SkiaCamera : SkiaControl
         // When UseRecordingFramesForPreview=false, we want raw ImageReader preview (don't suppress)
 
 #if WINDOWS
-        if ((IsRecordingVideo || IsPreRecording) && UseRecordingFramesForPreview &&
+        if ((IsRecording || IsPreRecording) && UseRecordingFramesForPreview &&
             _captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
         {
             // Only show frames that were actually composed for recording.
@@ -3002,7 +3018,7 @@ public partial class SkiaCamera : SkiaControl
         }
 #elif ANDROID
         // While recording on Android, mirror the composed encoder frames into the preview (no second camera feed)
-        if ((IsRecordingVideo || IsPreRecording) && UseRecordingFramesForPreview &&
+        if ((IsRecording || IsPreRecording) && UseRecordingFramesForPreview &&
             _captureVideoEncoder is AndroidCaptureVideoEncoder droidEnc)
         {
             if (droidEnc.TryAcquirePreviewImage(out var img) && img != null)
@@ -3011,7 +3027,7 @@ public partial class SkiaCamera : SkiaControl
         }
 #elif IOS || MACCATALYST
         // While recording on Apple, mirror the composed encoder frames into the preview
-        if ((IsRecordingVideo || IsPreRecording) && UseRecordingFramesForPreview &&
+        if ((IsRecording || IsPreRecording) && UseRecordingFramesForPreview &&
             _captureVideoEncoder is DrawnUi.Camera.AppleVideoToolboxEncoder appleEnc)
         {
             if (appleEnc.TryAcquirePreviewImage(out var img) && img != null)
@@ -3087,7 +3103,7 @@ public partial class SkiaCamera : SkiaControl
             canvas.DrawImage(source, 0, 0);
 
             // Calculate elapsed time (for animation sync with recording)
-            var elapsed = (IsRecordingVideo || IsPreRecording)
+            var elapsed = (IsRecording || IsPreRecording)
                 ? DateTime.Now - _captureVideoStartTime
                 : TimeSpan.Zero;
 
@@ -3385,10 +3401,7 @@ public partial class SkiaCamera : SkiaControl
         CurrentRecordingDuration = duration;
         if (VideoRecordingProgress != null)
         {
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                VideoRecordingProgress?.Invoke(this, duration);
-            });
+            VideoRecordingProgress?.Invoke(this, duration);
         }
     }
 

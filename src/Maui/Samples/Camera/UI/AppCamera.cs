@@ -148,7 +148,7 @@ namespace CameraTests.Views
             paint.Color = IsPreRecording ? SKColors.White : SKColors.Red;
             paint.Style = SKPaintStyle.Fill;
 
-            if (IsRecordingVideo || IsPreRecording)
+            if (IsRecording || IsPreRecording)
             {
                 // text at top left
                 var text = IsPreRecording ? "PRE-RECORDED" : "LIVE";

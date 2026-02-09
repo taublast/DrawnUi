@@ -2269,7 +2269,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             try
             {
                 // RECORDING FRAME EXTRACTION (Full Resolution)
-                if (FormsControl.IsRecordingVideo || FormsControl.IsPreRecording)
+                if (FormsControl.IsRecording || FormsControl.IsPreRecording)
                 {
                     try
                     {

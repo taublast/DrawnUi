@@ -92,7 +92,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         // Monitor recording state changes to start/stop speech recognition
         CameraControl.PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName == nameof(CameraControl.IsRecordingVideo) ||
+            if (e.PropertyName == nameof(CameraControl.IsRecording) ||
                 e.PropertyName == nameof(CameraControl.IsPreRecording))
             {
                 OnRecordingStateChanged();
@@ -325,7 +325,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
     private void OnVideoRecordingProgress(object sender, TimeSpan duration)
     {
-        if (_videoRecordButton != null && CameraControl.IsRecordingVideo)
+        if (_videoRecordButton != null && CameraControl.IsRecording)
         {
             // Update button text with timer in MM:SS format
             _videoRecordButton.Text = $"🛑 Stop ({duration:mm\\:ss})";
@@ -389,7 +389,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
             try
             {
-                if (CameraControl.IsRecordingVideo)
+                if (CameraControl.IsRecording)
                 {
                     await CameraControl.StopVideoRecording();
                 }
@@ -414,7 +414,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
     private async Task AbortVideoRecording()
     {
-        if (CameraControl.State != CameraState.On || !CameraControl.IsRecordingVideo)
+        if (CameraControl.State != CameraState.On || !CameraControl.IsRecording)
             return;
 
         try
