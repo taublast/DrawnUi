@@ -263,14 +263,18 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                                         CornerRadius = 8,
                                         UseCache = SkiaCacheType.Image
                                     }
-                                    .OnTapped(me => { CameraControl.SwitchVisualizer(); })
+                                    .OnTapped(me =>
+                                    {
+                                        CameraControl.SwitchVisualizer();
+                                    })
                                     .ObserveProperty(CameraControl, nameof(CameraControl.VisualizerName), me =>
                                     {
-                                        me.Text = $"Vis: {CameraControl.VisualizerName}";
+                                        me.Text = $"{CameraControl.VisualizerName}";
                                     })
                                     .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                                     {
-                                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                                        CameraControl.SwitchVisualizer(0);
+                                        //me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
                                     }),
 
                                 // Take Picture button (only visible in Still mode)
