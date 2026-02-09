@@ -14,7 +14,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     private SkiaLabel _statusLabel;
     private SkiaButton _videoRecordButton;
     private SkiaButton _speechButton;
-    private AudioTranscriptionService _audioTranscriptionService;
+    private OpenAiRealtimeTranscriptionService _realtimeTranscriptionService;
     private SkiaButton _cameraSelectButton;
     private SkiaButton _audioSelectButton;
     private SkiaButton _audioCodecButton;
@@ -93,8 +93,9 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     public CameraTestPage()
     {
         Title = "SkiaCamera Test";
-        _audioTranscriptionService = new AudioTranscriptionService();
-        _audioTranscriptionService.TranscriptionReceived += OnTranscriptionReceived;
+        _realtimeTranscriptionService = new OpenAiRealtimeTranscriptionService();
+        _realtimeTranscriptionService.TranscriptionDelta += OnTranscriptionDelta;
+        _realtimeTranscriptionService.TranscriptionCompleted += OnTranscriptionCompleted;
     }
 
     private void CreateContent()
@@ -699,78 +700,89 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         };
     }
 
-    private bool _speechFormatInitialized;
-    private bool _speechListening;
+    private int _lastAudioRate;
+    private int _lastAudioBits;
+    private int _lastAudioChannels;
     private bool _speechEnabled;
     private string _accumulatedTranscription = string.Empty;
     private const int MaxDisplayChars = 150;
 
-    private void OnTranscriptionReceived(string text)
+    // Buffer for current in-progress delta text
+    private string _currentDelta = string.Empty;
+
+    private void OnTranscriptionDelta(string delta)
+    {
+        if (CameraControl != null && !string.IsNullOrEmpty(delta))
+        {
+            _currentDelta += delta;
+            UpdateDisplayedTranscription();
+        }
+    }
+
+    private void OnTranscriptionCompleted(string text)
     {
         if (CameraControl != null && !string.IsNullOrWhiteSpace(text))
         {
-            // Append to accumulated text with space separator
+            // Commit completed segment to accumulated text
             if (_accumulatedTranscription.Length > 0)
                 _accumulatedTranscription += " ";
             _accumulatedTranscription += text.Trim();
-
-            // Display last N characters
-            var display = _accumulatedTranscription.Length > MaxDisplayChars
-                ? "..." + _accumulatedTranscription.Substring(_accumulatedTranscription.Length - MaxDisplayChars)
-                : _accumulatedTranscription;
-
-            CameraControl.RecognizedText = display;
+            _currentDelta = string.Empty;
+            UpdateDisplayedTranscription();
         }
+    }
+
+    private void UpdateDisplayedTranscription()
+    {
+        // Show accumulated + current in-progress delta
+        var full = _accumulatedTranscription;
+        if (_currentDelta.Length > 0)
+        {
+            if (full.Length > 0) full += " ";
+            full += _currentDelta;
+        }
+
+        var display = full.Length > MaxDisplayChars
+            ? "..." + full.Substring(full.Length - MaxDisplayChars)
+            : full;
+
+        CameraControl.RecognizedText = display;
     }
 
     private void OnAudioCaptured(byte[] data, int rate, int bits, int channels)
     {
-        if (_audioTranscriptionService != null && _speechEnabled)
+        if (_realtimeTranscriptionService != null && _speechEnabled)
         {
-            // Initialize audio format once
-            if (!_speechFormatInitialized)
+            // Update audio format whenever it changes
+            if (rate != _lastAudioRate || bits != _lastAudioBits || channels != _lastAudioChannels)
             {
-                _audioTranscriptionService.SetAudioFormat(rate, bits, channels);
-                _speechFormatInitialized = true;
+                _lastAudioRate = rate;
+                _lastAudioBits = bits;
+                _lastAudioChannels = channels;
+                _realtimeTranscriptionService.SetAudioFormat(rate, bits, channels);
             }
 
-            // Only feed audio when actually recording (live or pre-recording)
-            if (CameraControl != null && (CameraControl.IsRecordingVideo || CameraControl.IsPreRecording))
-            {
-                _audioTranscriptionService.FeedAudio(data);
-            }
+            _realtimeTranscriptionService.FeedAudio(data);
         }
     }
 
     private void OnRecordingStateChanged()
     {
-        if (CameraControl == null || !_speechEnabled) return;
-
-        bool isRecording = CameraControl.IsRecordingVideo || CameraControl.IsPreRecording;
-
-        if (isRecording && !_speechListening)
-        {
-            _speechListening = true;
-            StartTranscription();
-        }
-        else if (!isRecording && _speechListening)
-        {
-            _speechListening = false;
-            StopTranscription();
-        }
+        // Recording state changes are handled independently of speech transcription
     }
 
     private void StartTranscription()
     {
-        _audioTranscriptionService?.Start();
+        _realtimeTranscriptionService?.Start();
     }
 
     private void StopTranscription()
     {
-        _audioTranscriptionService?.Stop();
+        _realtimeTranscriptionService?.Stop();
 
         // Clear accumulated and displayed text when stopping
         _accumulatedTranscription = string.Empty;
+        _currentDelta = string.Empty;
         if (CameraControl != null)
         {
             CameraControl.RecognizedText = string.Empty;
@@ -1354,19 +1366,12 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
             _speechButton.BackgroundColor = _speechEnabled ? Colors.Green : Colors.DarkSlateGray;
         }
 
-        // If toggling on while recording, start immediately
-        if (_speechEnabled && CameraControl != null && (CameraControl.IsRecordingVideo || CameraControl.IsPreRecording))
+        if (_speechEnabled)
         {
-            if (!_speechListening)
-            {
-                _speechListening = true;
-                StartTranscription();
-            }
+            StartTranscription();
         }
-        // If toggling off, stop listening
-        else if (!_speechEnabled && _speechListening)
+        else
         {
-            _speechListening = false;
             StopTranscription();
         }
     }
