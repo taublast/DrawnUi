@@ -9,5 +9,8 @@ namespace AppoMobi
     public partial class Secrets
     {
         //other parts stored away from git repository
+
+        //like
+        //public static string OpenAiKey = "...";
     }
 }
