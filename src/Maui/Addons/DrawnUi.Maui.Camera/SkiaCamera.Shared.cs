@@ -1905,10 +1905,14 @@ public partial class SkiaCamera : SkiaControl
                     return null;
                 }
 
-                // Ensure .mp4 extension
-                if (!filename.EndsWith(".mp4", StringComparison.OrdinalIgnoreCase))
+                // Ensure proper extension based on original file type
+                var originalExt = Path.GetExtension(currentPath)?.ToLowerInvariant();
+                var expectedExt = originalExt == ".m4a" || originalExt == ".aac" || originalExt == ".mp3" || originalExt == ".wav"
+                    ? originalExt
+                    : ".mp4";
+                if (!filename.EndsWith(expectedExt, StringComparison.OrdinalIgnoreCase))
                 {
-                    filename = Path.GetFileNameWithoutExtension(filename) + ".mp4";
+                    filename = Path.GetFileNameWithoutExtension(filename) + expectedExt;
                 }
 
                 // Rename file in place

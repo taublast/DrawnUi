@@ -1014,6 +1014,8 @@ public partial class SkiaCamera : SkiaControl
 
     /// <summary>
     /// iOS/macOS implementation to move video from temp to Photos library.
+    /// Audio files (.m4a etc) are saved to shared Documents folder (accessible via Files app)
+    /// since iOS Photos library does not support audio-only assets.
     /// iOS 26 fix: uses two-step approach to avoid stale album references across PerformChanges calls.
     /// </summary>
     protected async Task<string> MoveVideoToGalleryApple(string privateVideoPath, string album, bool deleteOriginal)
@@ -1031,6 +1033,15 @@ public partial class SkiaCamera : SkiaControl
             {
                 Debug.WriteLine($"[SkiaCamera] File is empty: {privateVideoPath}");
                 return null;
+            }
+
+            // Check if this is an audio file - Photos library doesn't support audio
+            var ext = Path.GetExtension(privateVideoPath)?.ToLowerInvariant();
+            var isAudio = ext == ".m4a" || ext == ".aac" || ext == ".mp3" || ext == ".wav";
+
+            if (isAudio)
+            {
+                return await SaveAudioToDocumentsApple(privateVideoPath, album, deleteOriginal);
             }
 
             await Task.Delay(100); // just in case
@@ -1093,6 +1104,47 @@ public partial class SkiaCamera : SkiaControl
         catch (Exception ex)
         {
             Debug.WriteLine($"[SkiaCamera] Exception: {ex.Message}");
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Saves audio file to the app's shared Documents directory, accessible via iOS Files app.
+    /// iOS Photos library does not support audio-only assets.
+    /// </summary>
+    private async Task<string> SaveAudioToDocumentsApple(string privateAudioPath, string album, bool deleteOriginal)
+    {
+        try
+        {
+            // Save to app's Documents folder which is accessible via Files app
+            var documentsDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var targetDir = string.IsNullOrEmpty(album) ? documentsDir : Path.Combine(documentsDir, album);
+
+            if (!Directory.Exists(targetDir))
+                Directory.CreateDirectory(targetDir);
+
+            var fileName = Path.GetFileName(privateAudioPath);
+            var targetPath = Path.Combine(targetDir, fileName);
+
+            if (File.Exists(targetPath))
+                File.Delete(targetPath);
+
+            if (deleteOriginal)
+            {
+                File.Move(privateAudioPath, targetPath);
+                Debug.WriteLine($"[SkiaCamera] Apple: MOVED audio to Documents: {targetPath}");
+            }
+            else
+            {
+                File.Copy(privateAudioPath, targetPath, true);
+                Debug.WriteLine($"[SkiaCamera] Apple: COPIED audio to Documents: {targetPath}");
+            }
+
+            return targetPath;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] Apple audio save error: {ex.Message}");
             return null;
         }
     }
