@@ -1,8 +1,9 @@
 using System.Diagnostics;
 using AppoMobi.Specials;
+using CameraTests.Services;
+using CameraTests.Visualizers;
 using DrawnUi.Camera;
 using DrawnUi.Views;
-using CameraTests.Services;
 
 namespace CameraTests.Views;
 
@@ -24,40 +25,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     private SkiaButton _preRecordingDurationButton;
     private SkiaLabel _preRecordingStatusLabel;
     private SkiaButton _modeSwitchButton;
+    AudioVisualizer _audioVisualizer;
     Canvas Canvas;
-
-    public class DebugStack : SkiaStack
-    {
-        public override void InvalidateByChild(SkiaControl child)
-        {
-            base.InvalidateByChild(child);
-        }
-
-        protected override ScaledSize MeasureStack(SKRect rectForChildrenPixels, float scale, LayoutStructure layoutStructure,
-            bool isTemplated, SkiaControl template, SkiaControl[] nonTemplated)
-        {
-            return base.MeasureStack(rectForChildrenPixels, scale, layoutStructure, isTemplated, template, nonTemplated);
-        }
-
-
-        public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
-        {
-            return base.OnMeasuring(widthConstraint, heightConstraint, scale);
-        }
-    }
-
-    public class DebugGrid : SkiaGrid
-    {
-        public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
-        {
-            return base.OnMeasuring(widthConstraint, heightConstraint, scale);
-        }
-
-        public override ScaledSize MeasureGrid(SKRect rectForChildrenPixels, float scale)
-        {
-            return base.MeasureGrid(rectForChildrenPixels, scale);
-        }
-    }
 
     protected override void Dispose(bool isDisposing)
     {
@@ -113,13 +82,15 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
         if (mainStack == null)
         {
-            mainStack = new DebugGrid
+            mainStack = new SkiaGrid
             {
                 RowSpacing = 16,
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill,
                 Children =
             {
+
+                //ROW 0
 
                 // Camera preview
                 new AppCamera()
@@ -141,13 +112,40 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                         }
                     }),
 
-                new DebugStack()
+                /*
+                new AudioVisualizer()
+                {
+                    WidthRequest = 300,
+                    HeightRequest = 100,
+                    VerticalOptions = LayoutOptions.End,
+                    BackgroundColor = Colors.Black
+                }.Assign(out _audioVisualizer),
+                */
+
+                new SkiaLabel()
+                {
+                    Margin = 20,
+                    BackgroundColor = Colors.Black,
+                    FontSize = 14,
+                    Padding = new (4,2),
+                    TextColor = Colors.White,
+                    VerticalOptions = LayoutOptions.End,
+                    HorizontalOptions = LayoutOptions.Center
+                }
+                .ObserveProperty(CameraControl, nameof(CameraControl.RecognizedText), me =>
+                {
+                    me.Text = CameraControl.RecognizedText;
+                }),
+
+                //ROW 1
+
+                new SkiaStack()
                 {
                     UseCache = SkiaCacheType.Operations,
                     Spacing = 16,
                     Children =
                     {
-                                    // Status label
+                        // Status label
                         new SkiaLabel("Camera Status: Off")
                             {
                                 FontSize = 14,
@@ -566,7 +564,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         if (CameraControl != null)
         {
             // Configure camera for capture video flow testing
-            CameraControl.UseRealtimeVideoProcessing = true;  
+            CameraControl.UseRealtimeVideoProcessing = true;
             CameraControl.VideoQuality = VideoQuality.Standard;
             CameraControl.RecordAudio = true;
 
@@ -586,7 +584,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
             // Setup camera event handlers
             SetupCameraEvents();
         }
-     
+
     }
 
     private SkiaLayer CreatePreviewOverlay()
@@ -745,6 +743,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         var display = full.Length > MaxDisplayChars
             ? "..." + full.Substring(full.Length - MaxDisplayChars)
             : full;
+
+        Debug.WriteLine($"Recognized: {display}");
 
         CameraControl.RecognizedText = display;
     }
