@@ -1,5 +1,5 @@
-using System.Diagnostics;
 using AppoMobi.Specials;
+using CameraTests.Services;
 using DrawnUi.Camera;
 using DrawnUi.Views;
 
@@ -52,20 +52,14 @@ namespace CameraTests.Views
                         }
                     }),
 
-                new SkiaLabel()
+                new SkiaRichLabel()
                 {
-                    Margin = 20,
-                    BackgroundColor = Colors.Black,
-                    FontSize = 14,
-                    Padding = new (4,2),
-                    TextColor = Colors.White,
+                    Margin = new(24, 0, 24, 24),
+                    HorizontalTextAlignment = DrawTextAlignment.Center,
                     VerticalOptions = LayoutOptions.End,
-                    HorizontalOptions = LayoutOptions.Center
+                    HorizontalOptions = LayoutOptions.Center,
                 }
-                .ObserveProperty(this, nameof(RecognizedText), me =>
-                {
-                    me.Text = RecognizedText;
-                }),
+                .Assign(out _captionsLabel),
 
                 //ROW 1
 
@@ -490,6 +484,10 @@ namespace CameraTests.Views
                 VerticalOptions = LayoutOptions.Fill,
                 Children = { Canvas }
             };
+
+            // Initialize captions engine (disposes previous on hot reload)
+            _captionsEngine?.Dispose();
+            _captionsEngine = new RealtimeCaptionsEngine(_captionsLabel, fontSize: 16f, maxLines: 3, expirySeconds: 8.0);
 
             if (CameraControl != null)
             {

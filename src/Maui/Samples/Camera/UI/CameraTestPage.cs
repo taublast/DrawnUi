@@ -25,6 +25,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     private SkiaButton _preRecordingDurationButton;
     private SkiaLabel _preRecordingStatusLabel;
     private SkiaButton _modeSwitchButton;
+    private SkiaLabel _captionsLabel;
+    private RealtimeCaptionsEngine _captionsEngine;
     AudioVisualizer _audioVisualizer;
     Canvas Canvas;
 
@@ -32,6 +34,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     {
         if (isDisposing)
         {
+            _captionsEngine?.Dispose();
+            _captionsEngine = null;
             CameraControl?.Stop();
             CameraControl = null;
             this.Content = null;
@@ -91,64 +95,18 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     private int _lastAudioBits;
     private int _lastAudioChannels;
     private bool _speechEnabled;
-    private string _accumulatedTranscription = string.Empty;
-    private const int MaxDisplayChars = 150;
-
-    // Buffer for current in-progress delta text
-    private string _currentDelta = string.Empty;
 
     private void OnTranscriptionDelta(string delta)
     {
-        if (CameraControl != null && !string.IsNullOrEmpty(delta))
-        {
-            _currentDelta += delta;
-            UpdateDisplayedTranscription();
-        }
+        _captionsEngine?.AppendDelta(delta);
     }
 
     private void OnTranscriptionCompleted(string text)
     {
-        if (CameraControl != null && !string.IsNullOrWhiteSpace(text))
+        if (!string.IsNullOrWhiteSpace(text))
         {
-            // Commit completed segment to accumulated text
-            if (_accumulatedTranscription.Length > 0)
-                _accumulatedTranscription += " ";
-            _accumulatedTranscription += text.Trim();
-            _currentDelta = string.Empty;
-            UpdateDisplayedTranscription();
-        }
-    }
-
-    private void UpdateDisplayedTranscription()
-    {
-        // Show accumulated + current in-progress delta
-        var full = _accumulatedTranscription;
-        if (_currentDelta.Length > 0)
-        {
-            if (full.Length > 0) full += " ";
-            full += _currentDelta;
-        }
-
-        var display = full.Length > MaxDisplayChars
-            ? "..." + full.Substring(full.Length - MaxDisplayChars)
-            : full;
-
-        Debug.WriteLine($"Recognized: {display}");
-
-        RecognizedText = display;
-    }
-
-    string _recognizedText;
-    public string RecognizedText
-    {
-        get => _recognizedText;
-        set
-        {
-            if (_recognizedText != value)
-            {
-                _recognizedText = value;
-                OnPropertyChanged();
-            }
+            Debug.WriteLine($"[Captions] Committed: {text}");
+            _captionsEngine?.CommitLine(text);
         }
     }
 
@@ -182,14 +140,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     private void StopTranscription()
     {
         _realtimeTranscriptionService?.Stop();
-
-        // Clear accumulated and displayed text when stopping
-        _accumulatedTranscription = string.Empty;
-        _currentDelta = string.Empty;
-        if (CameraControl != null)
-        {
-            RecognizedText = string.Empty;
-        }
+        _captionsEngine?.Clear();
     }
 
     private void UpdateStatusText()
