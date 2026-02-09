@@ -1568,6 +1568,31 @@ camera.EnableAudioMonitoring = false;
 await camera.StartVideoRecording();
 ```
 
+**Audio-only recording output:**
+
+Audio-only recordings produce `.m4a` files. The recorded file path is delivered via the `VideoRecordingSuccess` callback (same as video recordings), giving you direct access to the file for playback, upload, or any custom handling.
+
+If you use `MoveVideoToGalleryAsync` to save the audio file to a user-accessible location, the destination differs per platform:
+
+| Platform | Destination | Where the user finds it |
+|----------|-------------|------------------------|
+| **Windows** | `Videos/{album}` folder | **File Explorer** → **Videos** → album folder |
+| **Android** | `Music/{album}` via MediaStore | **Files** app or file manager → **Music** → album folder. Saved to `MediaStore.Audio`, not visible in Gallery/Photos (which only shows photos and videos) |
+| **iOS** | App's **Documents** folder | **Files** app → **On My iPhone** → app name → album folder. iOS Photos library does not support audio-only assets. Requires Info.plist keys (see below) |
+
+**iOS Info.plist requirement for audio file access:**
+
+For the app's Documents folder to be visible in the iOS Files app, add these keys to `Platforms/iOS/Info.plist` inside the `<dict>` tag:
+
+```xml
+<key>UIFileSharingEnabled</key>
+<true/>
+<key>LSSupportsOpeningDocumentsInPlace</key>
+<true/>
+```
+
+> **Note:** If you add these keys to an already-installed app, you must **delete the app** from the device and reinstall for the changes to take effect.
+
 **Validation Rules:**
 - ⚠️ `EnableVideoRecording=false` AND `EnableAudioRecording=false`: Throws `InvalidOperationException` (nothing to record)
 - ⚠️ Pure audio-only mode (no camera): Requires `EnableVideoPreview=false` AND `EnableVideoRecording=false`
