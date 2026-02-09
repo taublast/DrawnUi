@@ -20,20 +20,22 @@ namespace CameraTests.Services
         private readonly string _apiKey;
         private ClientWebSocket _webSocket;
         private CancellationTokenSource _cts;
-        private Task _receiveTask;
-        private Task _sendTask;
         private bool _isRunning;
         private bool _sessionConfigured;
 
         // Source audio format
         private int _sourceSampleRate;
-        private int _sourceBitsPerSample = 16;
         private int _sourceChannels = 1;
         private bool _formatInitialized;
 
         // Send queue for serialized WebSocket writes
         private readonly ConcurrentQueue<byte[]> _sendQueue = new();
         private readonly SemaphoreSlim _sendSignal = new(0);
+
+        // Silence gate: skip sending only after prolonged continuous silence
+        private const float SilenceRmsThreshold = 0.003f;
+        private int _consecutiveSilentChunks;
+        private const int SilentChunksBeforeMute = 100; // ~1s at 480-sample chunks/48kHz
 
         // Resampling state for continuity across chunks
         private double _resamplePosition;
@@ -59,7 +61,6 @@ namespace CameraTests.Services
         public void SetAudioFormat(int sampleRate, int bitsPerSample, int channels)
         {
             _sourceSampleRate = sampleRate;
-            _sourceBitsPerSample = bitsPerSample;
             _sourceChannels = channels;
             _formatInitialized = true;
             Debug.WriteLine($"[RealtimeTranscription] Audio format: {sampleRate}Hz, {bitsPerSample}bit, {channels}ch");
@@ -71,6 +72,8 @@ namespace CameraTests.Services
             _isRunning = true;
             _sessionConfigured = false;
             _resamplePosition = 0;
+            _consecutiveSilentChunks = 0;
+            _feedCount = 0;
 
             // Drain any stale send queue
             while (_sendQueue.TryDequeue(out _)) { }
@@ -143,6 +146,19 @@ namespace CameraTests.Services
                     monoData = pcmData;
                 }
 
+                // Skip only prolonged silence — server VAD needs to see transitions
+                if (CalculateRms(monoData) < SilenceRmsThreshold)
+                {
+                    _consecutiveSilentChunks++;
+                    if (_consecutiveSilentChunks > SilentChunksBeforeMute)
+                        return; // Prolonged silence, stop sending
+                    // Otherwise fall through — server needs to see the quiet audio
+                }
+                else
+                {
+                    _consecutiveSilentChunks = 0;
+                }
+
                 // Resample to 24kHz if needed
                 byte[] audioToSend;
                 if (_sourceSampleRate != TargetSampleRate)
@@ -193,10 +209,10 @@ namespace CameraTests.Services
             Debug.WriteLine("[RealtimeTranscription] Connected");
 
             // Start receive loop
-            _receiveTask = Task.Run(() => ReceiveLoopAsync(ct), ct);
+            Task.Run(() => ReceiveLoopAsync(ct), ct);
 
             // Start serialized send loop
-            _sendTask = Task.Run(() => SendLoopAsync(ct), ct);
+            Task.Run(() => SendLoopAsync(ct), ct);
 
             // Send session configuration
             await SendDirectAsync(BuildSessionConfigJson(), ct);
@@ -400,6 +416,23 @@ namespace CameraTests.Services
             {
                 Debug.WriteLine($"[RealtimeTranscription] Parse error: {ex.Message}");
             }
+        }
+
+        /// <summary>
+        /// Fast RMS calculation on PCM16 mono data. Returns normalized 0..1 value.
+        /// </summary>
+        private static float CalculateRms(byte[] monoData)
+        {
+            if (monoData.Length < 2) return 0;
+
+            long sum = 0;
+            int sampleCount = monoData.Length / 2;
+            for (int i = 0; i < monoData.Length - 1; i += 2)
+            {
+                short s = (short)(monoData[i] | (monoData[i + 1] << 8));
+                sum += s * s;
+            }
+            return (float)Math.Sqrt((double)sum / sampleCount) / 32768f;
         }
 
         /// <summary>
