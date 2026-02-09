@@ -6,7 +6,7 @@ namespace CameraTests
     /// Frequency band level visualizer (ULTRA LOW CPU: peak detection with simple heuristics)
     /// Uses 3-band crossover filters (Low/Mid/High) for accurate separation
     /// </summary>
-    public class AudioLevels : IAudioVisualizer, IDisposable
+    public class AudioLevels : IAudioVisualizer
     {
         private const int BandCount = 8;
         private float[] _levelsFrontBuffer = new float[BandCount];
