@@ -19,6 +19,7 @@ namespace CameraTests
 
         // Detection State
         private string _currentNote = placeholder;
+        private string _currentNoteSolf = placeholder;
         private int _currentMidiNote = 0;
         private float _currentFrequency = 0;
         private float _currentCents = 0;
@@ -34,6 +35,7 @@ namespace CameraTests
 
         // Render State
         private string _displayNote = placeholder;
+        private string _displayNoteSolf = placeholder;
         private int _displayMidiNote = 0;
         private float _displayFrequency = 0;
         private float _displayCents = 0;
@@ -46,6 +48,7 @@ namespace CameraTests
         private SKPaint _paintNeedle;
 
         private static readonly string[] NoteNames = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
+        private static readonly string[] SolfegeNames = { "Do", "Do#", "Re", "Re#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si" };
 
         public bool UseGain { get; set; } = true;
         public int Skin { get; set; } = 0;
@@ -100,10 +103,11 @@ namespace CameraTests
             for (int i = BufferSize - rmsWindow; i < BufferSize; i++) rms += frame[i] * frame[i];
             rms = (float)Math.Sqrt(rms / rmsWindow);
 
-            if (rms < 0.01f) // Silence Threshold
+                if (rms < 0.01f) // Silence Threshold
             {
                 _hasSignal = false;
                 _currentNote = placeholder;
+                    _currentNoteSolf = placeholder;
                 _currentMidiNote = 0; // Fix: Reset note on silence to prevent "ghost" note on next attack
                 _noteStabilityCounter = 0;
                 _centsBuffer.Clear();
@@ -193,7 +197,7 @@ namespace CameraTests
                 // Lower threshold for faster response (approx 20-30ms)
                 if (_noteStabilityCounter > 1)
                 {
-                    if (_currentMidiNote != detectedMidiNote)
+                        if (_currentMidiNote != detectedMidiNote)
                     {
                         _currentMidiNote = detectedMidiNote;
                         _centsBuffer.Clear();
@@ -202,6 +206,7 @@ namespace CameraTests
                     int noteIndex = _currentMidiNote % 12;
                     if (noteIndex < 0) noteIndex += 12;
                     _currentNote = NoteNames[noteIndex];
+                        _currentNoteSolf = SolfegeNames[noteIndex];
                 }
 
                 // Calculate cents relative to the STABLE note (so needle shows true drift)
@@ -233,6 +238,7 @@ namespace CameraTests
             if (System.Threading.Interlocked.CompareExchange(ref _swapRequested, 0, 1) == 1)
             {
                 _displayNote = _currentNote;
+                _displayNoteSolf = _currentNoteSolf;
                 _displayMidiNote = _currentMidiNote;
                 _displayFrequency = _currentFrequency;
 
@@ -255,6 +261,7 @@ namespace CameraTests
                 {
                     _displayColor = SKColors.DarkGray;
                     _displayNote = placeholder;
+                    _displayNoteSolf = placeholder;
                 }
             }
 
@@ -269,6 +276,11 @@ namespace CameraTests
             _paintTextLarge.MeasureText(_displayNote, ref bounds);
             // Move text UP to make room for staff
             canvas.DrawText(_displayNote, cx, cy - 80 * scale, _paintTextLarge);
+
+            // Draw Solfège (Do-Re-Mi) just below the large note
+            _paintTextSmall.TextSize = 56 * scale;
+            _paintTextSmall.Color = _displayColor;
+            canvas.DrawText(_displayNoteSolf, cx, cy - 30 * scale, _paintTextSmall);
 
             // Always Draw Staff (so user knows it's there)
             DrawMusicalStaff(canvas, cx, cy + 180 * scale, scale, _hasSignal ? _displayMidiNote : 0);
