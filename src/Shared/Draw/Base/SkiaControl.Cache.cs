@@ -721,13 +721,11 @@ public partial class SkiaControl
     {
         await semaphoreOffsecreenProcess.WaitAsync();
 
-        if (_offscreenCacheRenderingQueue.Count == 0)
-            return;
-
-        _processingOffscrenRendering = true;
-
         try
         {
+            if (_offscreenCacheRenderingQueue.Count == 0)
+                return;
+
             Action action = _offscreenCacheRenderingQueue.Pop();
             while (!IsDisposed && !IsDisposing && action != null)
             {
@@ -745,11 +743,6 @@ public partial class SkiaControl
                     Super.Log(e);
                 }
             }
-
-            //if (NeedUpdate || RenderObjectNeedsUpdate) //someone changed us while rendering inner content
-            //{
-            //    Update(); //kick
-            //}
         }
         finally
         {
