@@ -18,6 +18,7 @@ namespace DrawnUi.Camera;
 
 public partial class SkiaCamera
 {
+    private const bool ShouldOptimizeForNetworkUse = false; //might reduce heat and throttling
 
     private Task _preRecFlushTask;
     private AudioSample[] _preRecordedAudioSamples;  // Saved at pre-rec → live transition
@@ -26,18 +27,11 @@ public partial class SkiaCamera
     // Allocated once when EnablePreRecording=true, reused across recording sessions
     private PrerecordingEncodedBufferApple _sharedPreRecordingBuffer;
 
-    // Second pre-allocated buffer used to avoid Reset()/drain races when an old encoder
-    // is being flushed in the background (overlap mode).
-    private PrerecordingEncodedBufferApple _sharedPreRecordingBuffer2;
-
-    // When overlap mode flushes the old pre-recording encoder in the background, that encoder
-    // may still be enumerating its buffer. Mark it as busy so we don't hand it to a new session.
-    private PrerecordingEncodedBufferApple _sharedPreRecordingBufferInFlush;
-
-    // Track which shared buffer was last handed to a pre-recording encoder.
-    private PrerecordingEncodedBufferApple _lastSharedPreRecordingBufferUsed;
-
-    private readonly object _sharedPreRecordingBufferLock = new object();
+    // Cached zero-copy SKImage to avoid per-frame GPU allocations during recording.
+    // The image wraps the live Metal texture — Skia reads current texture data at draw time.
+    private SKImage _cachedZeroCopyImage;
+    private IntPtr _cachedZeroCopyTextureHandle;
+    private GRContext _cachedZeroCopyContext;
 
     // Streaming audio writer for OOM-safe live recording (audio goes to file, not memory)
     private AVAssetWriter _liveAudioWriter;
@@ -55,55 +49,16 @@ public partial class SkiaCamera
     /// </summary>
     partial void EnsurePreRecordingBufferPreAllocated()
     {
-        // Default to 12 Mbps if we don't have encoder bitrate yet
-        long estimatedBitrate = 12_000_000;
-
-        lock (_sharedPreRecordingBufferLock)
+        if (_sharedPreRecordingBuffer == null)
         {
-            if (_sharedPreRecordingBuffer == null)
-            {
-                _sharedPreRecordingBuffer = new PrerecordingEncodedBufferApple(PreRecordDuration, estimatedBitrate);
-                Debug.WriteLine($"[SkiaCamera.Apple] Pre-allocated shared pre-recording buffer A: {PreRecordDuration.TotalSeconds}s @ ~{estimatedBitrate / 1_000_000}Mbps");
-            }
-            else
-            {
-                Debug.WriteLine("[SkiaCamera.Apple] Shared pre-recording buffer A already allocated, reusing");
-            }
+            // Default to 12 Mbps if we don't have encoder bitrate yet
+            long estimatedBitrate = 12_000_000;
+            _sharedPreRecordingBuffer = new PrerecordingEncodedBufferApple(PreRecordDuration, estimatedBitrate);
+            Debug.WriteLine($"[SkiaCamera.Apple] Pre-allocated shared pre-recording buffer: {PreRecordDuration.TotalSeconds}s @ ~{estimatedBitrate / 1_000_000}Mbps");
         }
-    }
-
-    private void EnsureSecondSharedPreRecordingBufferAllocated_NoLock(long estimatedBitrate)
-    {
-        if (_sharedPreRecordingBuffer2 != null)
-            return;
-
-        _sharedPreRecordingBuffer2 = new PrerecordingEncodedBufferApple(PreRecordDuration, estimatedBitrate);
-        Debug.WriteLine($"[SkiaCamera.Apple] Lazily allocated shared pre-recording buffer B: {PreRecordDuration.TotalSeconds}s @ ~{estimatedBitrate / 1_000_000}Mbps");
-    }
-
-    private PrerecordingEncodedBufferApple GetSharedPreRecordingBufferForNewSession()
-    {
-        lock (_sharedPreRecordingBufferLock)
+        else
         {
-            // Prefer buffer A unless it's currently being flushed.
-            if (_sharedPreRecordingBuffer != null && !ReferenceEquals(_sharedPreRecordingBuffer, _sharedPreRecordingBufferInFlush))
-                return _sharedPreRecordingBuffer;
-
-            // If buffer A is busy and buffer B hasn't been allocated yet, allocate it now.
-            // This avoids overlap flush/reset races while keeping baseline memory lower.
-            if (_sharedPreRecordingBuffer != null && ReferenceEquals(_sharedPreRecordingBuffer, _sharedPreRecordingBufferInFlush) && _sharedPreRecordingBuffer2 == null)
-            {
-                // Default to 12 Mbps if we don't have encoder bitrate yet
-                long estimatedBitrate = 12_000_000;
-                EnsureSecondSharedPreRecordingBufferAllocated_NoLock(estimatedBitrate);
-            }
-
-            if (_sharedPreRecordingBuffer2 != null && !ReferenceEquals(_sharedPreRecordingBuffer2, _sharedPreRecordingBufferInFlush))
-                return _sharedPreRecordingBuffer2;
-
-            // Should not happen (only one background flush task is expected), but return something
-            // deterministic rather than null.
-            return _sharedPreRecordingBuffer ?? _sharedPreRecordingBuffer2;
+            Debug.WriteLine("[SkiaCamera.Apple] Shared pre-recording buffer already allocated, reusing");
         }
     }
 
@@ -285,19 +240,27 @@ public partial class SkiaCamera
                         try
                         {
                             var texture = nativeCam.PreviewTexture;
-                            var width = (int)texture.Width;
-                            var height = (int)texture.Height;
+                            var handle = texture.Handle;
 
-                            var textureInfo = new GRMtlTextureInfo(texture.Handle);
-                            using var backendTexture = new GRBackendTexture(width, height, false, textureInfo);
-
-                            // Create image (BORROWED texture, will NOT dispose underlying Metal texture)
-                            // Use encoder-specific context to ensure compatibility
-                            var image = SKImage.FromTexture(encoderContext, backendTexture, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
-
-                            if (image != null)
+                            // Cache the SKImage wrapping the Metal texture — avoids per-frame
+                            // GRMtlTextureInfo + GRBackendTexture + SKImage.FromTexture allocations.
+                            // The image wraps a live GPU texture, so each draw reads current frame data.
+                            if (_cachedZeroCopyImage == null || _cachedZeroCopyTextureHandle != handle || _cachedZeroCopyContext != encoderContext)
                             {
-                                imageToDraw = image;
+                                _cachedZeroCopyImage?.Dispose();
+                                var textureInfo = new GRMtlTextureInfo(handle);
+                                using var backendTexture = new GRBackendTexture(
+                                    (int)texture.Width, (int)texture.Height, false, textureInfo);
+                                _cachedZeroCopyImage = SKImage.FromTexture(
+                                    encoderContext, backendTexture, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
+                                _cachedZeroCopyTextureHandle = handle;
+                                _cachedZeroCopyContext = encoderContext;
+                            }
+
+                            if (_cachedZeroCopyImage != null)
+                            {
+                                imageToDraw = _cachedZeroCopyImage;
+                                shouldDisposeImage = false;
                                 imageRotation = (int)nativeCam.CurrentRotation;
                                 imageFlip = (CameraDevice?.Facing ?? Facing) == CameraPosition.Selfie;
                             }
@@ -576,26 +539,18 @@ public partial class SkiaCamera
         appleEncoder.ParentCamera = this;
         appleEncoder.IsPreRecordingMode = IsPreRecording;
 
-        // Pass pre-allocated buffer if available (avoids lag spike on record start).
-        // In overlap mode, pick the buffer that's not currently being flushed in the background.
-        if (IsPreRecording)
+        // Pass pre-allocated buffer if available (avoids lag spike on record start)
+        if (IsPreRecording && _sharedPreRecordingBuffer != null)
         {
-            var sharedBuffer = GetSharedPreRecordingBufferForNewSession();
-            if (sharedBuffer != null)
-            {
-                appleEncoder.SharedPreRecordingBuffer = sharedBuffer;
-                lock (_sharedPreRecordingBufferLock)
-                {
-                    _lastSharedPreRecordingBufferUsed = sharedBuffer;
-                }
-                Debug.WriteLine("[StartRealtimeVideoProcessing] Using pre-allocated shared buffer (race-free overlap)");
-            }
+            appleEncoder.SharedPreRecordingBuffer = _sharedPreRecordingBuffer;
+            Debug.WriteLine($"[StartRealtimeVideoProcessing] Using pre-allocated shared buffer (no allocation lag)");
         }
 
         Debug.WriteLine($"[StartRealtimeVideoProcessing] iOS encoder initialized with IsPreRecordingMode={IsPreRecording}");
 
-        // Always use raw camera frames for preview (PreviewProcessor only, not FrameProcessor)
-        UseRecordingFramesForPreview = false;
+        // Use encoder's processed frames for preview — FrameProcessor overlay is already baked in,
+        // so PreviewProcessor can be skipped, eliminating duplicate GPU overlay work.
+        UseRecordingFramesForPreview = true;
         
         if (MirrorRecordingToPreview)
         {
@@ -1626,7 +1581,7 @@ public partial class SkiaCamera
                     {
                         OutputUrl = outputUrl,
                         OutputFileType = AVFoundation.AVFileTypes.Mpeg4.GetConstant(),
-                        ShouldOptimizeForNetworkUse = true
+                        ShouldOptimizeForNetworkUse = ShouldOptimizeForNetworkUse
                         // No VideoComposition - passthrough preserves original encoding
                     };
 
@@ -1952,6 +1907,12 @@ public partial class SkiaCamera
                 retries++;
             }
 
+            // Release cached GPU resources before encoder disposal
+            _cachedZeroCopyImage?.Dispose();
+            _cachedZeroCopyImage = null;
+            _cachedZeroCopyTextureHandle = IntPtr.Zero;
+            _cachedZeroCopyContext = null;
+
             // OOM-SAFE AUDIO HANDLING:
             // 1. Stop live audio writer (instant - audio already on disk)
             // 2. Write pre-rec audio to file if present (fast - only ~5 sec max)
@@ -2026,11 +1987,6 @@ public partial class SkiaCamera
                 await _preRecFlushTask;
                 _preRecFlushTask = null;
                 Debug.WriteLine("[StopRealtimeVideoProcessing] Pre-recording flush completed.");
-
-                lock (_sharedPreRecordingBufferLock)
-                {
-                    _sharedPreRecordingBufferInFlush = null;
-                }
             }
 
             // OPTIMIZED: Skip audio concatenation - pass both files directly to MuxVideosInternal
@@ -2474,20 +2430,6 @@ public partial class SkiaCamera
                 {
                     Debug.WriteLine("[StartVideoRecording] Spawning background task to stop/flush old encoder");
 
-                    // Old encoder will drain its pre-recording buffer asynchronously; prevent reusing/resetting
-                    // the same shared buffer for a new pre-recording session until that drain completes.
-                    lock (_sharedPreRecordingBufferLock)
-                    {
-                        if (oldEncoderToStop is AppleVideoToolboxEncoder oldAppleEnc && oldAppleEnc.SharedPreRecordingBuffer != null)
-                        {
-                            _sharedPreRecordingBufferInFlush = oldAppleEnc.SharedPreRecordingBuffer;
-                        }
-                        else
-                        {
-                            _sharedPreRecordingBufferInFlush = _lastSharedPreRecordingBufferUsed;
-                        }
-                    }
-
                     _preRecFlushTask = Task.Run(async () =>
                     {
                         try
@@ -2553,13 +2495,6 @@ public partial class SkiaCamera
                         catch (Exception ex)
                         {
                             Debug.WriteLine($"[StartVideoRecording] BkTask Error: {ex}");
-                        }
-                        finally
-                        {
-                            lock (_sharedPreRecordingBufferLock)
-                            {
-                                _sharedPreRecordingBufferInFlush = null;
-                            }
                         }
                     });
                 }
@@ -3470,7 +3405,7 @@ public partial class SkiaCamera
             using var exportSession = new AVAssetExportSession(composition, AVAssetExportSessionPreset.Passthrough);
             exportSession.OutputUrl = NSUrl.FromFilename(outputPath);
             exportSession.OutputFileType = AVFileTypes.Mpeg4.GetConstant();
-            exportSession.ShouldOptimizeForNetworkUse = true;
+            exportSession.ShouldOptimizeForNetworkUse = ShouldOptimizeForNetworkUse;
 
             var tcs = new TaskCompletionSource<bool>();
             exportSession.ExportAsynchronously(() =>

@@ -2268,65 +2268,14 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
             try
             {
-                // RECORDING FRAME EXTRACTION (Full Resolution)
+                // Signal recording thread — CaptureFrameCore uses zero-copy Metal texture
+                // directly via SKImage.FromTexture, no GPU→CPU pixel copy needed here.
                 if (FormsControl.IsRecording || FormsControl.IsPreRecording)
                 {
-                    try
+                    lock (_lockRecordingSignal)
                     {
-                        int recWidth = width;
-                        int recHeight = height;
-                        int recBytesPerRow = width * 4;
-                        int recDataSize = recHeight * recBytesPerRow;
-                        byte[] recPixelData = null;
-
-                        if (_recordingPixelBufferPool.TryDequeue(out var pooledBuffer) && pooledBuffer.Length == recDataSize)
-                        {
-                            recPixelData = pooledBuffer;
-                        }
-                        else
-                        {
-                            recPixelData = new byte[recDataSize];
-                        }
-
-                        var region = new MTLRegion
-                        {
-                            Origin = new MTLOrigin(0, 0, 0),
-                            Size = new MTLSize(width, height, 1)
-                        };
-
-                        unsafe
-                        {
-                            fixed (byte* ptr = recPixelData)
-                            {
-                                texture.GetBytes((IntPtr)ptr, (nuint)recBytesPerRow, region, 0);
-                            }
-                        }
-
-                        if (!_recordingFrameDataPool.TryDequeue(out var recFrame))
-                        {
-                            recFrame = new RawFrameData();
-                        }
-                        recFrame.Width = recWidth;
-                        recFrame.Height = recHeight;
-                        recFrame.BytesPerRow = recBytesPerRow;
-                        recFrame.Time = DateTime.UtcNow;
-                        recFrame.CurrentRotation = CurrentRotation;
-                        recFrame.Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing;
-                        recFrame.Orientation = (int)CurrentRotation;
-                        recFrame.PixelData = recPixelData;
-
-                        SetRecordingFrame(recFrame);
-                        
-                        // Signal recording thread
-                        lock (_lockRecordingSignal)
-                        {
-                            _hasNewRecordingFrame = true;
-                            Monitor.Pulse(_lockRecordingSignal);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"[NativeCameraiOS] Recording frame extraction error: {ex}");
+                        _hasNewRecordingFrame = true;
+                        Monitor.Pulse(_lockRecordingSignal);
                     }
                 }
 

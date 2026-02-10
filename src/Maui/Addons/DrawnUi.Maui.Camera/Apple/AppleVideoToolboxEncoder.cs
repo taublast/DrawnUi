@@ -446,13 +446,17 @@ namespace DrawnUi.Camera
             if (_writer == null || err != null)
                 throw new InvalidOperationException($"AVAssetWriter failed: {err?.LocalizedDescription}");
 
-            // Video settings (H.264)
-            var videoSettings = new AVVideoSettingsCompressed
-            {
-                Codec = AVVideoCodec.H264,
-                Width = _width,
-                Height = _height
-            };
+            // Video settings (H.264) — match pre-recording bitrate to avoid excessive heat/throttling
+            int bitrate = _width * _height * _frameRate / 10;
+            var videoSettings = new AVVideoSettingsCompressed(new NSDictionary(
+                AVVideo.CodecKey, AVVideo.CodecH264,
+                AVVideo.WidthKey, new NSNumber(_width),
+                AVVideo.HeightKey, new NSNumber(_height),
+                AVVideo.CompressionPropertiesKey, new NSDictionary(
+                    AVVideo.AverageBitRateKey, new NSNumber(bitrate),
+                    AVVideo.ProfileLevelKey, AVVideo.ProfileLevelH264HighAutoLevel
+                )
+            ));
 
             _videoInput = new AVAssetWriterInput(AVMediaTypes.Video.GetConstant(), videoSettings);
             _videoInput.ExpectsMediaDataInRealTime = true;
@@ -734,12 +738,17 @@ namespace DrawnUi.Camera
                     System.Diagnostics.Debug.WriteLine("[AppleVideoToolboxEncoder] VIDEO ONLY mode (Live) - audio handled at SkiaCamera level");
                 }
 
-                var videoSettings = new AVVideoSettingsCompressed
-                {
-                    Codec = AVVideoCodec.H264,
-                    Width = _width,
-                    Height = _height
-                };
+                // Match pre-recording bitrate to avoid excessive heat/throttling
+                int bitrate = _width * _height * _frameRate / 10;
+                var videoSettings = new AVVideoSettingsCompressed(new NSDictionary(
+                    AVVideo.CodecKey, AVVideo.CodecH264,
+                    AVVideo.WidthKey, new NSNumber(_width),
+                    AVVideo.HeightKey, new NSNumber(_height),
+                    AVVideo.CompressionPropertiesKey, new NSDictionary(
+                        AVVideo.AverageBitRateKey, new NSNumber(bitrate),
+                        AVVideo.ProfileLevelKey, AVVideo.ProfileLevelH264HighAutoLevel
+                    )
+                ));
 
                 _videoInput = new AVAssetWriterInput(AVMediaTypes.Video.GetConstant(), videoSettings);
                 _videoInput.ExpectsMediaDataInRealTime = true;

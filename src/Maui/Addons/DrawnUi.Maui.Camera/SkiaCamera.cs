@@ -801,7 +801,7 @@ public partial class SkiaCamera : SkiaControl
         nameof(ConstantUpdate),
         typeof(bool),
         typeof(SkiaCamera),
-        true);
+        false);
 
     /// <summary>
     /// Default is true.
@@ -3081,10 +3081,10 @@ public partial class SkiaCamera : SkiaControl
                     }
                 }
 
-                // Apply PreviewProcessor if set
-                // PreviewProcessor is a separate callback from FrameProcessor - user controls what each does
+                // Apply PreviewProcessor if set — but skip when UseRecordingFramesForPreview is active
+                // because the encoder preview already has FrameProcessor overlay baked in.
                 SKImage finalImage = image;
-                if (PreviewProcessor != null)
+                if (PreviewProcessor != null && !(UseRecordingFramesForPreview && (IsRecording || IsPreRecording)))
                 {
                     var processed = ApplyPreviewProcessor(image);
                     if (processed != null)
