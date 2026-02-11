@@ -170,7 +170,7 @@ namespace DrawnUi.Camera
         private SKSurface _previewRasterSurface;  // Cached to avoid allocation every frame
         private int _previewWidth, _previewHeight;
         private int _previewFrameCounter = 0;
-        private const int PreviewFrameSkip = 2;  // Only update preview every Nth frame (2 = every other frame)
+        private int _previewFrameInterval = 1; // Computed: generate 1 out of N frames to target ~30fps preview
         public event EventHandler PreviewAvailable;
 
         // GPU camera path support (SurfaceTexture zero-copy)
@@ -307,6 +307,7 @@ namespace DrawnUi.Camera
             _width = Math.Max(16, width);
             _height = Math.Max(16, height);
             _frameRate = Math.Max(1, frameRate);
+            _previewFrameInterval = Math.Max(1, _frameRate / 30);
             _deviceRotation = deviceRotation;
             _recordAudio = recordAudio;
             _preRecordingDuration = TimeSpan.Zero;
@@ -918,44 +919,48 @@ namespace DrawnUi.Camera
             _skSurface?.Canvas?.Flush();
             _grContext?.Flush();
 
-            // Publish preview snapshot
-            SKImage keepAlive = null;
-            try
+            // Publish preview snapshot (throttled to ~30fps)
+            bool shouldGeneratePreview = (System.Threading.Interlocked.Increment(ref _previewFrameCounter) % _previewFrameInterval) == 0;
+            if (shouldGeneratePreview)
             {
-                using var gpuSnap = _skSurface?.Snapshot();
-                if (gpuSnap != null)
+                SKImage keepAlive = null;
+                try
                 {
-                    int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
-
-                    int pw = Math.Min(_width, maxPreviewWidth);
-                    int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
-
-                    // Reuse cached surface to avoid GC pressure (was allocating ~2MB per frame)
-                    if (_previewRasterSurface == null || _previewWidth != pw || _previewHeight != ph)
+                    using var gpuSnap = _skSurface?.Snapshot();
+                    if (gpuSnap != null)
                     {
-                        _previewRasterSurface?.Dispose();
-                        var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
-                        _previewRasterSurface = SKSurface.Create(pInfo);
-                        _previewWidth = pw;
-                        _previewHeight = ph;
-                    }
+                        int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
 
-                    var pCanvas = _previewRasterSurface.Canvas;
-                    pCanvas.Clear(SKColors.Transparent);
-                    pCanvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
+                        int pw = Math.Min(_width, maxPreviewWidth);
+                        int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
 
-                    keepAlive = _previewRasterSurface.Snapshot();
-                    lock (_previewLock)
-                    {
-                        _latestPreviewImage?.Dispose();
-                        _latestPreviewImage = keepAlive;
-                        keepAlive = null;
+                        // Reuse cached surface to avoid GC pressure (was allocating ~2MB per frame)
+                        if (_previewRasterSurface == null || _previewWidth != pw || _previewHeight != ph)
+                        {
+                            _previewRasterSurface?.Dispose();
+                            var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
+                            _previewRasterSurface = SKSurface.Create(pInfo);
+                            _previewWidth = pw;
+                            _previewHeight = ph;
+                        }
+
+                        var pCanvas = _previewRasterSurface.Canvas;
+                        pCanvas.Clear(SKColors.Transparent);
+                        pCanvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
+
+                        keepAlive = _previewRasterSurface.Snapshot();
+                        lock (_previewLock)
+                        {
+                            _latestPreviewImage?.Dispose();
+                            _latestPreviewImage = keepAlive;
+                            keepAlive = null;
+                        }
+                        PreviewAvailable?.Invoke(this, EventArgs.Empty);
                     }
-                    PreviewAvailable?.Invoke(this, EventArgs.Empty);
                 }
+                catch { keepAlive?.Dispose(); keepAlive = null; }
+                finally { keepAlive?.Dispose(); }
             }
-            catch { keepAlive?.Dispose(); keepAlive = null; }
-            finally { keepAlive?.Dispose(); }
 
             long ptsNanos = (long)(_pendingTimestamp.TotalMilliseconds * 1_000_000.0);
             EGLExt.EglPresentationTimeANDROID(_eglDisplay, _eglSurface, ptsNanos);
