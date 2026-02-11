@@ -3625,120 +3625,42 @@ public partial class SkiaCamera : SkiaControl
 
     private double _diagReportFps;
     private double _diagInputReportFps;
-
-#if WINDOWS || ANDROID
-
-
-
-    // Rolling average FPS calculation for encoder output (same approach as DrawnView)
-    private double _diagFpsAverage;
-    private int _diagFpsCount;
     private long _diagLastFrameTimestamp;
-
-
-    // Camera input FPS tracking (frames arriving from camera)
-    private double _diagInputFpsAverage;
-    private int _diagInputFpsCount;
     private long _diagLastInputFrameTimestamp;
 
+    private const double DiagFpsAlpha = 0.1; // EMA smoothing factor
 
-    /// <summary>
-    /// Calculates the recording FPS using rolling average over N frames.
-    /// Same approach as DrawnView uses for display FPS.
-    /// </summary>
-    /// <param name="averageAmount">Number of frames over which to average. Default is 10.</param>
-    private void CalculateRecordingFps(int averageAmount = 10)
+    private void CalculateRecordingFps()
     {
-        long currentTimestamp = Super.GetCurrentTimeNanos();
-
-        if (_diagLastFrameTimestamp == 0)
-        {
-            // First frame - just record timestamp, can't calculate FPS yet
-            _diagLastFrameTimestamp = currentTimestamp;
-            return;
-        }
-
-        // Convert nanoseconds to seconds for elapsed time calculation
-        double elapsedSeconds = (currentTimestamp - _diagLastFrameTimestamp) / 1_000_000_000.0;
-        _diagLastFrameTimestamp = currentTimestamp;
-
-        // Avoid division by zero or unrealistic values
-        if (elapsedSeconds <= 0 || elapsedSeconds > 1.0)
-            return;
-
-        double currentFps = 1.0 / elapsedSeconds;
-
-        _diagFpsAverage = ((_diagFpsAverage * _diagFpsCount) + currentFps) / (_diagFpsCount + 1);
-        _diagFpsCount++;
-
-        if (_diagFpsCount >= averageAmount)
-        {
-            _diagReportFps = _diagFpsAverage;
-            _diagFpsCount = 0;
-            _diagFpsAverage = 0.0;
-        }
+        long now = Super.GetCurrentTimeNanos();
+        if (_diagLastFrameTimestamp == 0) { _diagLastFrameTimestamp = now; return; }
+        double elapsed = (now - _diagLastFrameTimestamp) / 1_000_000_000.0;
+        _diagLastFrameTimestamp = now;
+        if (elapsed <= 0 || elapsed > 1.0) return;
+        double fps = 1.0 / elapsed;
+        _diagReportFps = _diagReportFps <= 0 ? fps : DiagFpsAlpha * fps + (1.0 - DiagFpsAlpha) * _diagReportFps;
     }
 
-    /// <summary>
-    /// Calculates the camera input FPS using rolling average over N frames.
-    /// Called when a frame arrives from the camera (before processing).
-    /// </summary>
-    /// <param name="averageAmount">Number of frames over which to average. Default is 10.</param>
-    private void CalculateCameraInputFps(int averageAmount = 10)
+    private void CalculateCameraInputFps()
     {
-        long currentTimestamp = Super.GetCurrentTimeNanos();
-
-        if (_diagLastInputFrameTimestamp == 0)
-        {
-            // First frame - just record timestamp, can't calculate FPS yet
-            _diagLastInputFrameTimestamp = currentTimestamp;
-            return;
-        }
-
-        // Convert nanoseconds to seconds for elapsed time calculation
-        double elapsedSeconds = (currentTimestamp - _diagLastInputFrameTimestamp) / 1_000_000_000.0;
-        _diagLastInputFrameTimestamp = currentTimestamp;
-
-        // Avoid division by zero or unrealistic values
-        if (elapsedSeconds <= 0 || elapsedSeconds > 1.0)
-            return;
-
-        double currentFps = 1.0 / elapsedSeconds;
-
-        _diagInputFpsAverage = ((_diagInputFpsAverage * _diagInputFpsCount) + currentFps) / (_diagInputFpsCount + 1);
-        _diagInputFpsCount++;
-
-        if (_diagInputFpsCount >= averageAmount)
-        {
-            _diagInputReportFps = _diagInputFpsAverage;
-            _diagInputFpsCount = 0;
-            _diagInputFpsAverage = 0.0;
-        }
+        long now = Super.GetCurrentTimeNanos();
+        if (_diagLastInputFrameTimestamp == 0) { _diagLastInputFrameTimestamp = now; return; }
+        double elapsed = (now - _diagLastInputFrameTimestamp) / 1_000_000_000.0;
+        _diagLastInputFrameTimestamp = now;
+        if (elapsed <= 0 || elapsed > 1.0) return;
+        double fps = 1.0 / elapsed;
+        _diagInputReportFps = _diagInputReportFps <= 0 ? fps : DiagFpsAlpha * fps + (1.0 - DiagFpsAlpha) * _diagInputReportFps;
     }
 
-    /// <summary>
-    /// Resets the FPS calculation state. Called when starting a new recording.
-    /// </summary>
     private void ResetRecordingFps()
     {
-        // Reset encoder output FPS
-        _diagFpsAverage = 0;
-        _diagFpsCount = 0;
         _diagLastFrameTimestamp = 0;
         _diagReportFps = 0;
-
-        // Reset camera input FPS
-        _diagInputFpsAverage = 0;
-        _diagInputFpsCount = 0;
         _diagLastInputFrameTimestamp = 0;
         _diagInputReportFps = 0;
     }
 
     private DateTime _captureVideoTotalStartTime;
-
-
-
-#endif
 
     /// <summary>
     /// Draws diagnostic overlay on video frames showing FPS, dropped frames, encoder settings.
@@ -3754,11 +3676,11 @@ public partial class SkiaCamera : SkiaControl
         double outputFps = 0;
         int backpressureDrops = 0;
 
-#if IOS || MACCATALYST
-        // Apple: calculate FPS from elapsed time
-        var elapsed = (DateTime.Now - _diagStartTime).TotalSeconds;
-        outputFps = elapsed > 0 ? _diagSubmittedFrames / elapsed : 0;
+        // All platforms: use rolling average FPS
+        outputFps = _diagReportFps;
+        inputFps = _diagInputReportFps;
 
+#if IOS || MACCATALYST
         // Get raw camera FPS from native control
         if (NativeControl is NativeCamera nativeCam)
         {
@@ -3770,18 +3692,11 @@ public partial class SkiaCamera : SkiaControl
         {
             backpressureDrops = appleEnc.BackpressureDroppedFrames;
         }
-#else
-        // Windows/Android: use pre-calculated rolling average
-        inputFps = _diagInputReportFps;
-        outputFps = _diagReportFps;
-
-#if WINDOWS
-        // Get raw camera FPS (Windows only)
+#elif WINDOWS
         if (NativeControl is NativeCamera winCam)
         {
             rawCamFps = winCam.RawCameraFps;
         }
-#endif
 #endif
 
         // Format diagnostic text based on platform

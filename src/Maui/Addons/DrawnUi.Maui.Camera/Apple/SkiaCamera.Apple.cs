@@ -206,7 +206,6 @@ public partial class SkiaCamera
             return;
         }
 
-        // Only now fire the async work - we've already acquired the frame slot
         _ = CaptureFrameCore();
     }
 
@@ -393,6 +392,7 @@ public partial class SkiaCamera
                     __swA.Stop();
                     _diagLastSubmitMs = __swA.Elapsed.TotalMilliseconds;
                     System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                    CalculateRecordingFps();
                 }
                 finally
                 {
@@ -702,6 +702,7 @@ public partial class SkiaCamera
             _diagDroppedFrames = 0;
             _diagSubmittedFrames = 0;
             _diagLastSubmitMs = 0;
+            ResetRecordingFps();
         }
 
         _targetFps = fps;
