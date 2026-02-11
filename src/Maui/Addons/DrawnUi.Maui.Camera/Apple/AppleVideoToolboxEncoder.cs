@@ -239,9 +239,10 @@ namespace DrawnUi.Camera
         private SKImageInfo _info;
         private readonly object _frameLock = new();
         private TimeSpan _pendingTimestamp;
+        private double _lastSubmittedTimestamp = -1;  // Guard: skip frames older than last submitted
 
         // AVAssetWriter for MP4 output (normal recording)
-        private AVAssetWriter _writer;
+        private AVAssetWriter? _writer;
         private AVAssetWriterInput _videoInput;
         private AVAssetWriterInputPixelBufferAdaptor _pixelBufferAdaptor;
         private System.Threading.Timer _progressTimer;
@@ -332,6 +333,7 @@ namespace DrawnUi.Camera
             _width = Math.Max(16, width);
             _height = Math.Max(16, height);
             _frameRate = Math.Max(1, frameRate);
+            _previewFrameInterval = Math.Max(1, _frameRate / 30);
             _recordAudio = recordAudio;
             _deviceRotation = deviceRotation;
             _preRecordingDuration = TimeSpan.Zero;
@@ -379,6 +381,7 @@ namespace DrawnUi.Camera
                 EncodedDataSize = 0;
                 EncodingDuration = TimeSpan.Zero;
                 BackpressureDroppedFrames = 0;
+                _lastSubmittedTimestamp = -1;
                 EncodingStatus = "Buffering";
 
                 System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Pre-recording mode initialized and started:");
@@ -438,6 +441,51 @@ namespace DrawnUi.Camera
             }
         }
 
+        AVVideoSettingsCompressed CreateSettingsCompressed()
+        {
+            // Bitrate scaled by resolution for real-time single-pass H.264:
+            // 720p30 ~5Mbps, 1080p30 ~10Mbps, 4K30 ~35Mbps
+            int pixels = _width * _height;
+            double bpp;
+            if (pixels <= 921_600)       // up to 720p (1280x720)
+                bpp = 0.12;
+            else if (pixels <= 2_073_600) // up to 1080p (1920x1080)
+                bpp = 0.10;
+            else                          // 4K+
+                bpp = 0.09;
+            int bitrate = (int)((long)pixels * _frameRate * bpp);
+            bitrate = Math.Min(bitrate, 35_000_000);
+
+            var videoSettings = new AVVideoSettingsCompressed(new NSMutableDictionary
+            {
+                [AVVideo.CodecKey] = AVVideo.CodecH264,
+                [AVVideo.WidthKey] = new NSNumber(_width),
+                [AVVideo.HeightKey] = new NSNumber(_height),
+
+                [AVVideo.CompressionPropertiesKey] = new NSMutableDictionary
+                {
+                    [AVVideo.ProfileLevelKey] = AVVideo.ProfileLevelH264BaselineAutoLevel,
+
+                    [AVVideo.AverageBitRateKey] = new NSNumber(bitrate),
+                    // Very important for real-time / low-latency / streaming
+                    [AVVideo.AllowFrameReorderingKey] = new NSNumber(false),
+
+                    // Helps the encoder make better real-time decisions
+                    [AVVideo.ExpectedSourceFrameRateKey] = new NSNumber(_frameRate),
+
+                    // Correct "RealTime" key usage (VideoToolbox string key)
+                    [new NSString("RealTime")] = new NSNumber(true),
+
+                    // Optional peak control 
+                    //[new NSString("DataRateLimits")] = new NSArray(
+                    //    new NSNumber((long)(bitrate * 1.4)),
+                    //    new NSNumber(1.0))
+                }
+            });
+
+            return videoSettings;
+        }
+
         private void InitializeAssetWriter()
         {
             // Create AVAssetWriter for MP4 container
@@ -446,17 +494,7 @@ namespace DrawnUi.Camera
             if (_writer == null || err != null)
                 throw new InvalidOperationException($"AVAssetWriter failed: {err?.LocalizedDescription}");
 
-            // Video settings (H.264) — match pre-recording bitrate to avoid excessive heat/throttling
-            int bitrate = _width * _height * _frameRate / 10;
-            var videoSettings = new AVVideoSettingsCompressed(new NSDictionary(
-                AVVideo.CodecKey, AVVideo.CodecH264,
-                AVVideo.WidthKey, new NSNumber(_width),
-                AVVideo.HeightKey, new NSNumber(_height),
-                AVVideo.CompressionPropertiesKey, new NSDictionary(
-                    AVVideo.AverageBitRateKey, new NSNumber(bitrate),
-                    AVVideo.ProfileLevelKey, AVVideo.ProfileLevelH264HighAutoLevel
-                )
-            ));
+            var videoSettings = CreateSettingsCompressed();
 
             _videoInput = new AVAssetWriterInput(AVMediaTypes.Video.GetConstant(), videoSettings);
             _videoInput.ExpectsMediaDataInRealTime = true;
@@ -727,28 +765,11 @@ namespace DrawnUi.Camera
 
                 // Step 3: Initialize AVAssetWriter for live recording
                 var url = NSUrl.FromFilename(_liveRecordingFilePath);
-                _writer = new AVAssetWriter(url, "public.mpeg-4", out var err);
+                _writer = new AVAssetWriter(url, "public.mpeg-4", out NSError? err);
                 if (_writer == null || err != null)
                     throw new InvalidOperationException($"AVAssetWriter failed: {err?.LocalizedDescription}");
 
-                // ARCHITECTURAL FIX: Encoder handles VIDEO ONLY (Live recording)
-                // Audio is managed at SkiaCamera level with session-wide linear buffer
-                if (_recordAudio)
-                {
-                    System.Diagnostics.Debug.WriteLine("[AppleVideoToolboxEncoder] VIDEO ONLY mode (Live) - audio handled at SkiaCamera level");
-                }
-
-                // Match pre-recording bitrate to avoid excessive heat/throttling
-                int bitrate = _width * _height * _frameRate / 10;
-                var videoSettings = new AVVideoSettingsCompressed(new NSDictionary(
-                    AVVideo.CodecKey, AVVideo.CodecH264,
-                    AVVideo.WidthKey, new NSNumber(_width),
-                    AVVideo.HeightKey, new NSNumber(_height),
-                    AVVideo.CompressionPropertiesKey, new NSDictionary(
-                        AVVideo.AverageBitRateKey, new NSNumber(bitrate),
-                        AVVideo.ProfileLevelKey, AVVideo.ProfileLevelH264HighAutoLevel
-                    )
-                ));
+                var videoSettings = CreateSettingsCompressed();
 
                 _videoInput = new AVAssetWriterInput(AVMediaTypes.Video.GetConstant(), videoSettings);
                 _videoInput.ExpectsMediaDataInRealTime = true;
@@ -780,6 +801,7 @@ namespace DrawnUi.Camera
                 EncodedDataSize = 0;
                 EncodingDuration = TimeSpan.Zero;
                 BackpressureDroppedFrames = 0;
+                _lastSubmittedTimestamp = -1;
                 EncodingStatus = "Recording Live";
 
                 _progressTimer = new System.Threading.Timer(_ =>
@@ -835,6 +857,7 @@ namespace DrawnUi.Camera
             EncodedFrameCount = 0;
             EncodedDataSize = 0;
             BackpressureDroppedFrames = 0;
+            _lastSubmittedTimestamp = -1;
             EncodingStatus = "Started";
 
             _progressTimer = new System.Threading.Timer(_ =>
@@ -1000,7 +1023,7 @@ namespace DrawnUi.Camera
         }
 
         private int _previewFrameCounter = 0;
-        private const int PREVIEW_FRAME_INTERVAL = 3; // Generate 2 out of 3 frames = 20fps from 30fps
+        private int _previewFrameInterval = 1; // Computed: generate 1 out of N frames to target ~30fps preview
 
         /// <summary>
         /// Submit the composed frame for encoding
@@ -1013,7 +1036,7 @@ namespace DrawnUi.Camera
 
             SKImage snapshot = null;
             CVPixelBuffer pixelBuffer = null;
-            bool shouldGeneratePreview = (System.Threading.Interlocked.Increment(ref _previewFrameCounter) % PREVIEW_FRAME_INTERVAL) != 0;
+            bool shouldGeneratePreview = (System.Threading.Interlocked.Increment(ref _previewFrameCounter) % _previewFrameInterval) == 0;
 
             try
             {
@@ -1027,15 +1050,14 @@ namespace DrawnUi.Camera
 
                     _surface.Canvas.Flush();
 
+                    _encodingContext?.Flush(true, true); //critical SYNC WAIT avoid saturation
+
                     if (shouldGeneratePreview)
                     {
                         // Create CPU-backed preview snapshot (downscaled to reduce memory)
                         using var gpuSnap = _surface.Snapshot();
                         if (gpuSnap != null)
                         {
-                            //int pw = Math.Min(_width, 480);
-                            //int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
-
                             int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
                             int pw = Math.Min(_width, maxPreviewWidth);
                             int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
@@ -1064,6 +1086,16 @@ namespace DrawnUi.Camera
 
 
                 }
+
+                // ============================================================================
+                // GUARD: Skip frame if older than last submitted (prevents out-of-order frames)
+                // ============================================================================
+                double currentTs = _pendingTimestamp.TotalSeconds;
+                if (currentTs <= _lastSubmittedTimestamp)
+                {
+                    return;
+                }
+                _lastSubmittedTimestamp = currentTs;
 
                 // ============================================================================
                 // ROUTE TO CORRECT ENCODER
@@ -1219,7 +1251,7 @@ namespace DrawnUi.Camera
                         return;
                 }
 
-                if (!isZeroCopy)
+                if (!isZeroCopy) //unused
                 {
                     // Copy pixels (CPU Slow Path)
                     pixelBuffer.Lock(CVPixelBufferLock.None);
