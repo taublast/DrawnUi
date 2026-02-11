@@ -1058,8 +1058,8 @@ public partial class SkiaCamera : SkiaControl
             {
                 control.UpdatePreviewScaleFromFormat();
 
-                // Start preview audio capture if EnableAudioRecording is enabled and not recording
-                if (control.EnableAudioRecording && !control.IsRecording && !control.IsPreRecording)
+                // Start preview audio capture if EnableAudioRecording or EnableAudioMonitoring is enabled and not recording
+                if ((control.EnableAudioRecording || control.EnableAudioMonitoring) && !control.IsRecording && !control.IsPreRecording)
                 {
                     control.StartPreviewAudioCapture();
                 }

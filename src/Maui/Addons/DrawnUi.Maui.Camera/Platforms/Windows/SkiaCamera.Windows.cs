@@ -688,7 +688,7 @@ public partial class SkiaCamera : SkiaControl
             IsBusy = false; // Release busy state after successful muxing
 
             // Restart preview audio if still enabled
-            if (EnableAudioRecording && State == CameraState.On)
+            if ((EnableAudioRecording || EnableAudioMonitoring) && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
@@ -704,7 +704,7 @@ public partial class SkiaCamera : SkiaControl
             IsBusy = false; // Release busy state on error
 
             // Restart preview audio if still enabled
-            if (EnableAudioRecording && State == CameraState.On)
+            if ((EnableAudioRecording || EnableAudioMonitoring) && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
@@ -765,7 +765,7 @@ public partial class SkiaCamera : SkiaControl
             IsRecording = false;
 
             // Restart preview audio if still enabled
-            if (EnableAudioRecording && State == CameraState.On)
+            if ((EnableAudioRecording || EnableAudioMonitoring) && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
@@ -780,7 +780,7 @@ public partial class SkiaCamera : SkiaControl
             IsRecording = false;
 
             // Restart preview audio if still enabled
-            if (EnableAudioRecording && State == CameraState.On)
+            if ((EnableAudioRecording || EnableAudioMonitoring) && State == CameraState.On)
             {
                 StartPreviewAudioCapture();
             }
