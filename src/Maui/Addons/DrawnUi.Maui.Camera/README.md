@@ -1,35 +1,40 @@
 ﻿# SkiaCamera
 
-Camera control drawn with SkiaSharp, part of DrawnUI for for .NET MAUI.
+Camera control drawn with SkiaSharp, for use with DrawnUI for for .NET MAUI.  
+Use this control inside a usual MAUI app by wrapping it inside a `Canvas`.
 
 **For iOS, MacCatalyst, Android and Windows**.
 
-
 ## About
 
+This is a camera control, that supports taking photos, recording video with or without sound and writing standalone audio files acting like an audio recorder.  
+The control can process audio/video feed in realtime, applying shaders, visual effects, adding overlays to show captions, audio visualizers etc; it can also adjust audio in realtime before encoding. Processed data will saved to final file. At the same time you can use it as a regular camera control, without any processing.
+ 
+* Draw camera preview and it's UI how You want it.
+* Avoid post-processing anything, WYSIWYG, change and preview data on the fly before encoding.
+* Use realtime video and audio data, ready to use for AI/ML and other calls.
+* Sample app is in the repository demonstrates most of the features, including AI calls.
 
-Camera is working in one of the two modes: Still and Video (CaptureMode property). Why? Because still and video formats are different and we must present a preview according to this format. So selecting this mode affects mainly the preview.  
-For the still image capture you can select camera, format, flash.   
-For video capture, it's same but separate methods/properties for video.   
-On top of that the video capture has an optional pre-recording feature. What is it for? Imagine you want to trigger recording a video on some conditions. Like a rabbit appeared within camera range, some tech conditions are met etc. But when you then watch the video it would start at the exact moment the recording was triggered, while the pre-recording feature can for example record 5 seconds preceding that event, making the video wich recording was triggered by tech conditions to look natural.
-
-We are still .NET9, for iOS 26 you might need to set inside PLIST for your iOS app:
-```xml
-<key>UIDesignRequiresCompatibility</key>
-<true/>
-```
+On top of that the video capture has an optional magic [pre-recording feature](PreRecording.md), also known as "look-back" recording, allows you to capture video footage starting from a few seconds *before* the live video record button was pressed. 
 
 ## Features:
 
 - **Renders on a hardware-accelerated SkiaSharp canvas** with all the power of Skia rendering.
-- **Post-process captured bitmap** with SkiaSharp and DrawnUi, apply effects, overlay watermark etc.
-- **Live preview frames in a convenient form** to integrate with AI/ML.
+- **Process in realtime video and audio data** before encoding, apply effects, adjust audio etc.
+- **Process captured bitmap** with SkiaSharp and DrawnUi, apply effects, overlay watermark etc.
+- **Monitor incoming audio** read incoming audio without even recording to analize environment, generate optional audio visualizers etc.
+- **Live preview audio and video feed** extractable to integrate with AI/ML.
 - **Manual camera selection** to access ultra-wide, telephoto etc by index or by front/back.
 - **Precise capture format control** with manual resolution selection and automatic preview aspect ratio matching.
 - **Advanced flash control** with independent preview torch and capture flash modes (Off/Auto/On).
-- **Inject custom EXIF**, save GPS locations etc!
+- **Inject custom EXIF**, save GPS locations and much more for both photos and videos!
 - **Cares about going to background** or foreground to automatically stop/resume camera.
 - **Developer-first design**, open for customization with overrides/events,
+
+## Sample Apps:
+
+- [CameraTests](https://github.com/taublast/DrawnUi/tree/main/src/Maui/Samples/Camera) - Basic usage of the control.
+- [Filters Camera](https://github.com/taublast/ShadersCamera) - Open source piblished still photo-camera with realtime preview and final photo filters, implemented with SKSL shaders.
 
 ## **Processing Architecture**
 
@@ -80,11 +85,11 @@ Put this inside the file `Platforms/iOS/Info.plist` and `Platforms/MacCatalyst/I
 	<string>Allow access to the library to save photos</string>
 ```
 
-If you want to geo-tag photos (get and save GPS location metadata) add this:
+If you want to geo-tag photos and videos (get and save GPS location metadata) add this:
 
 ```xml
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>To be able to geotag photos</string>
+	<string>To be able to geotag photos and videos</string>
 ```
 
 ### Android
@@ -98,10 +103,10 @@ Put this inside the file `Platforms/Android/AndroidManifest.xml` inside the `<ma
     <uses-permission android:name="android.permission.CAMERA" />
 ```
 
-If you want to geo-tag photos (get and save GPS location metadata) add this:
+If you want to geo-tag photos and videos (get and save GPS location metadata) add this:
 
 ```xml
-  <!--geotag photos-->
+  <!--geotag photos and videos-->
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 ```
 
@@ -154,19 +159,36 @@ Create `Platforms/Android/Resources/xml/file_paths.xml`:
 | 11 | Permission Handling | `CheckPermissions()` |
 | 12 | Complete MVVM Example | Full ViewModel + Page example |
 
-Also covered: **Video Recording** (basic, format selection, audio, pre-recording, capture video flow, real-time audio processing), **API Reference**, **Troubleshooting**.
+Also covered:
+
+| Section | Description |
+|---------|-------------|
+| **Video Recording** | Basic recording, format selection, audio control, pre-recording, capture video flow, real-time audio processing |
+| **GPS & Video Metadata** | GPS in photos (EXIF) and videos (MP4 ©xyz), video metadata injection (author, camera, date via `CapturedVideo.Meta`), `RefreshGpsLocation()`, direct file injection |
+| **AudioSampleConverter** | PCM16 audio preprocessing (downmix, resample, silence gate) for speech-to-text APIs |
+| **API Reference** | Core properties, methods, events, data classes, enums |
+| **Troubleshooting** | Common issues, debug tips, platform-specific notes |
 
 ### 1. Declaration / Setup
 
-For installation please see Installation section earlier in this document. Then you would be able to consume camera in your app:
+For installation please see Installation section earlier in this document. Then you would be able to consume camera in your app.
+
+The `Canvas` that would contain `SkiaCamera` *must* have its property `RenderingMode = RenderingModeType.Accelerated`:
 
 #### XAML
 
 ```xml
+xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
 xmlns:camera="clr-namespace:DrawnUi.Camera;assembly=DrawnUi.Maui.Camera"
 ```
 
 ```xml
+    <draw:Canvas
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill"
+        Gestures="Lock"
+        RenderingMode = "Accelerated">
+
 <camera:SkiaCamera
     x:Name="CameraControl"
     BackgroundColor="Black"
@@ -176,9 +198,14 @@ xmlns:camera="clr-namespace:DrawnUi.Camera;assembly=DrawnUi.Maui.Camera"
     VerticalOptions="Fill"
     ZoomLimitMax="10"
     ZoomLimitMin="1" />
+
+    </draw:Canvas>
 ```
 
 #### Code-Behind
+
+Example for use inside an already created `Canvas`:
+
 ```csharp
 var camera = new SkiaCamera
 {
@@ -1357,7 +1384,9 @@ public class CapturedVideo
     public VideoFormat Format { get; set; }           // Video format used
     public CameraPosition Facing { get; set; }        // Camera that recorded video
     public DateTime Time { get; set; }                // Recording timestamp
-    public Dictionary<string, object> Metadata { get; set; } // Additional metadata
+    public Metadata Meta { get; set; }                // Video metadata (GPS, author, camera, date — auto-filled on save)
+    public double? Latitude { get; set; }             // GPS latitude (set before save, or auto from InjectGpsLocation)
+    public double? Longitude { get; set; }            // GPS longitude (set before save, or auto from InjectGpsLocation)
     public long FileSizeBytes { get; set; }           // File size in bytes
 }
 ```
@@ -2257,7 +2286,9 @@ public class CapturedVideo
     public VideoFormat Format { get; set; }     // Video format used
     public CameraPosition Facing { get; set; }  // Camera that recorded video
     public DateTime Time { get; set; }          // Recording timestamp
-    public Dictionary<string, object> Metadata { get; set; } // Additional metadata
+    public Metadata Meta { get; set; }          // Video metadata (GPS, author, camera, date — auto-filled on save)
+    public double? Latitude { get; set; }       // GPS latitude (set before saving to embed location)
+    public double? Longitude { get; set; }      // GPS longitude (set before saving to embed location)
     public long FileSizeBytes { get; set; }     // File size in bytes
 }
 
@@ -2394,6 +2425,357 @@ public partial class VideoRecordingPage : ContentPage
     }
 }
 ```
+
+## GPS & Video Metadata
+
+SkiaCamera supports embedding **GPS coordinates** into both **photos** (EXIF) and **videos** (MP4/MOV `©xyz` atom), plus **rich metadata** for videos (author, camera make/model, software, date — similar to photo EXIF). Gallery apps on all platforms will display the location on a map, and metadata readers will show the embedded info.
+
+### Setup
+
+#### 1. Add platform permissions
+
+**iOS/macOS** — add to `Platforms/iOS/Info.plist` and `Platforms/MacCatalyst/Info.plist`:
+
+```xml
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>To be able to geotag photos and videos</string>
+```
+
+**Android** — add to `Platforms/Android/AndroidManifest.xml`:
+
+```xml
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+```
+
+**Windows** — add the `Location` capability in `Package.appxmanifest`:
+
+```xml
+<Capabilities>
+    <DeviceCapability Name="location" />
+</Capabilities>
+```
+
+#### 2. Enable GPS injection and fetch coordinates
+
+```csharp
+// Enable GPS injection — save methods will embed LocationLat/LocationLon into files
+camera.InjectGpsLocation = true;
+
+// Fetch GPS coordinates (call on main thread — shows permission dialog if needed)
+await camera.RefreshGpsLocation();
+```
+
+**Important:** You must call `RefreshGpsLocation()` yourself — for example when the camera starts, or when your page appears. The save methods do **not** fetch GPS automatically. They only check whether `LocationLat`/`LocationLon` are already set and `InjectGpsLocation` is `true`.
+
+### How It Works
+
+GPS injection uses a **manual fetch + automatic embed** pattern:
+
+1. **You call `RefreshGpsLocation()`** on the main thread (so the permission dialog can be shown).
+2. It requests location permissions, then fetches coordinates and stores them in `LocationLat`/`LocationLon`.
+3. When you call any save method (`SaveToGalleryAsync`, `MoveVideoToGalleryAsync`, `SaveVideoToGalleryAsync`), it checks `InjectGpsLocation` and `LocationLat`/`LocationLon` — if all set, GPS is embedded automatically.
+
+```
+[Your code] — e.g. when camera starts or page appears
+    |
+    v
+await camera.RefreshGpsLocation()
+    |
+    |-- 1. Check permission: Permissions.CheckStatusAsync<LocationWhenInUse>()
+    |       If not granted -> RequestAsync() -> shows system prompt
+    |       If denied -> returns without coordinates
+    |
+    |-- 2. GetLastKnownLocationAsync()     <-- instant, returns OS-cached location
+    |       (last GPS fix from any app)
+    |
+    |-- 3. If no cached location available:
+    |       RefreshLocation(msTimeout)     <-- fresh GPS fix, default 2s timeout
+    |       calls Geolocation.GetLocationAsync()
+    |
+    v
+LocationLat / LocationLon populated — ready for save methods
+```
+
+**Key points:**
+- **You control when permissions are requested** — call `RefreshGpsLocation()` on the main thread at a time that makes sense for your app flow.
+- `GetLastKnownLocationAsync()` is **instant** — it returns the platform's cached location from the last GPS fix by any app. In most cases this is all that's needed.
+- `RefreshLocation()` is the fallback — it requests a fresh GPS fix with `GeolocationAccuracy.Medium`. Only called if there's no cached location.
+- Once retrieved, coordinates are stored in `LocationLat`/`LocationLon` and reused for all subsequent saves without re-fetching.
+- If GPS is not supported or not enabled, save methods still work — files are saved without location.
+- You can also set `LocationLat`/`LocationLon` directly from your own GPS source (e.g., a hardware device).
+
+**Photos** use `JpegExifInjector` — a cross-platform pure C# EXIF writer that injects GPS data into the JPEG stream before saving.
+
+**Videos** use `Mp4MetadataInjector` — a cross-platform pure C# helper that writes text atoms into the MP4/MOV file's `moov > udta` box. GPS goes into `©xyz` (ISO 6709), plus `©too` (software), `©mak` (make), `©mod` (model), `©day` (date), `©ART` (artist), `©cmt` (comment). The operation is instant (modifies only the file header, no re-encoding). `Mp4LocationInjector` is still available as a backward-compatible wrapper for GPS-only injection.
+
+#### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `InjectGpsLocation` | `bool` | Enable GPS embedding into saved photos and videos |
+| `LocationLat` | `double` | Current latitude (set by `RefreshGpsLocation()` or manually) |
+| `LocationLon` | `double` | Current longitude (set by `RefreshGpsLocation()` or manually) |
+| `GpsBusy` | `bool` | Whether a GPS operation is in progress (read-only) |
+
+#### Methods
+
+| Method | Description |
+|--------|-------------|
+| `RefreshGpsLocation(int msTimeout = 2000)` | Requests location permissions and fetches GPS coordinates. **Must be called on the main thread.** Results stored in `LocationLat`/`LocationLon`. |
+| `RefreshLocation(int msTimeout)` | Low-level GPS fetch without permission handling. Requires permissions already granted. |
+
+### Photo Capture Flow
+
+```
+TakePicture()
+    |
+    v
+CaptureSuccess event fires with CapturedImage
+    |
+    v
+[Your callback] — optionally set GPS manually on captured.Meta
+    |
+    v
+SaveToGalleryAsync(capturedImage, album)
+    |
+    |-- Check InjectGpsLocation && LocationLat/Lon are set
+    |   and no GPS already set on Meta
+    |   -> apply GPS to Meta
+    |
+    |-- JpegExifInjector.InjectExifMetadata(stream, meta)  <-- GPS embedded here
+    |
+    v
+Platform saves JPEG with EXIF to gallery — gallery app shows location
+```
+
+**Example — automatic GPS with RefreshGpsLocation:**
+
+```csharp
+// When camera starts (on main thread)
+camera.InjectGpsLocation = true;
+await camera.RefreshGpsLocation();
+
+// Later, in your capture callback — GPS is embedded automatically
+camera.CaptureSuccess += async (sender, captured) =>
+{
+    var path = await camera.SaveToGalleryAsync(captured, "MyAlbum");
+};
+```
+
+**Example — manual GPS coordinates (no RefreshGpsLocation needed):**
+
+```csharp
+camera.CaptureSuccess += async (sender, captured) =>
+{
+    // Set coordinates explicitly on the metadata
+    Metadata.ApplyGpsCoordinates(captured.Meta, latitude, longitude);
+
+    // Save — EXIF with GPS is injected automatically
+    var path = await camera.SaveToGalleryAsync(captured, "MyAlbum");
+};
+```
+
+### Video Capture Flow
+
+```
+StartVideoRecording()
+    |
+    v
+[Recording in progress...]
+    |
+    v
+StopVideoRecording()
+    |
+    v
+VideoRecordingSuccess event fires with CapturedVideo
+    |
+    v
+[Your callback] — optionally customize video.Meta (GPS, author, etc.)
+    |
+    v
+MoveVideoToGalleryAsync(video, album)  or  SaveVideoToGalleryAsync(video, album)
+    |
+    |-- AutoFillVideoMetadata(video):
+    |     - Creates video.Meta if null
+    |     - Fills Software (app name + version)
+    |     - Fills Vendor (DeviceInfo.Manufacturer) and Model (DeviceInfo.Model)
+    |     - Fills DateTimeOriginal from recording start time
+    |     - Fills GPS from LocationLat/Lon (if InjectGpsLocation is true)
+    |       or from video.Latitude/Longitude (if set manually)
+    |     - Skips any field already set by user
+    |
+    |-- Mp4MetadataInjector.InjectMetadataAsync(filePath, video.Meta)
+    |   (instant, modifies file header only — writes ©xyz, ©too, ©mak, ©mod, ©day, etc.)
+    |
+    v
+Platform saves MP4/MOV to gallery — gallery app shows location + metadata
+```
+
+**Example — automatic GPS with RefreshGpsLocation:**
+
+```csharp
+// When camera starts (on main thread)
+camera.InjectGpsLocation = true;
+await camera.RefreshGpsLocation();
+
+// Later, in your video callback — GPS is embedded automatically
+camera.VideoRecordingSuccess += async (sender, video) =>
+{
+    var galleryPath = await camera.MoveVideoToGalleryAsync(video, "MyAlbum");
+};
+```
+
+**Example — manual GPS coordinates (no RefreshGpsLocation needed):**
+
+```csharp
+camera.VideoRecordingSuccess += async (sender, video) =>
+{
+    // Set coordinates explicitly
+    video.Latitude = 34.0522;
+    video.Longitude = -118.2437;
+
+    // Save — location is injected into MP4 automatically
+    var galleryPath = await camera.MoveVideoToGalleryAsync(video, "MyAlbum");
+};
+```
+
+**Example — customize video metadata:**
+
+```csharp
+camera.VideoRecordingSuccess += async (sender, video) =>
+{
+    // Pre-fill Meta to override auto-populated fields
+    video.Meta = new Metadata
+    {
+        Software = "MyApp Pro 2.0",
+        CameraOwnerName = "John Doe",
+        UserComment = "Race lap 3",
+        Vendor = "CustomCam",
+        Model = "RaceCam X1"
+    };
+
+    // GPS will still be auto-filled if InjectGpsLocation is on
+    // DateTimeOriginal will still be auto-filled from video.Time
+    var galleryPath = await camera.MoveVideoToGalleryAsync(video, "MyAlbum");
+};
+```
+
+### Saving Without Gallery (Direct File Injection)
+
+If you save files to your own app folder instead of the gallery, the automatic metadata injection in `SaveToGalleryAsync`/`MoveVideoToGalleryAsync` won't run. Use the injectors directly on any file path:
+
+**Video — inject metadata into any MP4/MOV file:**
+
+```csharp
+camera.VideoRecordingSuccess += async (sender, video) =>
+{
+    // Save to your own app folder
+    var appPath = Path.Combine(FileSystem.AppDataDirectory, "MyVideos", "recording.mp4");
+    File.Copy(video.FilePath, appPath);
+
+    // Inject full metadata (GPS, author, camera, date — modifies file header only)
+    var meta = new Metadata
+    {
+        Software = "MyApp 1.0",
+        Vendor = "Apple",
+        Model = "iPhone 15 Pro"
+    };
+    Metadata.ApplyGpsCoordinates(meta, 34.0522, -118.2437);
+    meta.DateTimeOriginal = DateTime.Now;
+    await Mp4MetadataInjector.InjectMetadataAsync(appPath, meta);
+
+    // Or inject GPS only (backward-compatible helper)
+    await Mp4LocationInjector.InjectLocationAsync(appPath, 34.0522, -118.2437);
+
+    // Or inject arbitrary atoms directly
+    await Mp4MetadataInjector.InjectAtomsAsync(appPath, new Dictionary<string, string>
+    {
+        [Mp4MetadataInjector.Atom_Artist] = "John Doe",
+        [Mp4MetadataInjector.Atom_Comment] = "Race lap 3"
+    });
+};
+```
+
+**Photo — inject GPS into any JPEG file:**
+
+```csharp
+camera.CaptureSuccess += async (sender, captured) =>
+{
+    // Set GPS on the metadata object
+    Metadata.ApplyGpsCoordinates(captured.Meta, 34.0522, -118.2437);
+
+    // Could inject other metadata..
+    captured.Meta.Model = "MyCamera";
+
+    // Get the JPEG stream with EXIF injected
+    await using var stream = camera.CreateOutputStreamRotated(captured, false);
+    using var exifStream = await JpegExifInjector.InjectExifMetadata(stream, captured.Meta);
+
+    // Save to your own app folder
+    var appPath = Path.Combine(FileSystem.AppDataDirectory, "MyPhotos", "photo.jpg");
+    await using var fileStream = File.Create(appPath);
+    await exifStream.CopyToAsync(fileStream);
+};
+```
+
+**Read/write metadata on any existing video file:**
+
+```csharp
+// Read all metadata atoms
+var atoms = Mp4MetadataInjector.ReadAtoms("/path/to/video.mp4");
+if (atoms != null)
+{
+    foreach (var (key, value) in atoms)
+        Console.WriteLine($"{key}: {value}");
+}
+
+// Read GPS location specifically
+if (Mp4MetadataInjector.ReadLocation("/path/to/video.mp4", out double lat, out double lon))
+{
+    Console.WriteLine($"Video location: {lat}, {lon}");
+}
+
+// Read atoms into a Metadata object
+var meta = new Metadata();
+if (atoms != null)
+    Mp4MetadataInjector.AtomsToMetadata(atoms, meta);
+
+// Inject or replace location
+await Mp4MetadataInjector.InjectLocationAsync("/path/to/video.mp4", 34.0522, -118.2437);
+
+// Photo: inject or merge EXIF metadata (including GPS)
+var photoMeta = new Metadata();
+Metadata.ApplyGpsCoordinates(photoMeta, 34.0522, -118.2437);
+using var jpegStream = File.OpenRead("/path/to/photo.jpg");
+using var result = await JpegExifInjector.InjectExifMetadata(jpegStream, photoMeta);
+await using var output = File.Create("/path/to/photo_with_gps.jpg");
+await result.CopyToAsync(output);
+```
+
+### Supported Video Metadata Atoms
+
+| Atom | Constant | Metadata Property | Description |
+|------|----------|------------------|-------------|
+| `©xyz` | `Atom_Location` | `GpsLatitude`/`GpsLongitude` | GPS location (ISO 6709) |
+| `©too` | `Atom_Software` | `Software` | App name/version |
+| `©mak` | `Atom_Make` | `Vendor` | Device manufacturer |
+| `©mod` | `Atom_Model` | `Model` | Device model |
+| `©day` | `Atom_Date` | `DateTimeOriginal` | Recording date/time |
+| `©ART` | `Atom_Artist` | `CameraOwnerName` | Author/artist |
+| `©cmt` | `Atom_Comment` | `UserComment` | Free-text comment |
+| `©nam` | `Atom_Title` | — | Title (raw atom only) |
+| `©des` | `Atom_Description` | — | Description (raw atom only) |
+
+### Platform Details
+
+| Feature | Android | iOS/macOS | Windows |
+|---------|---------|-----------|---------|
+| Photo GPS (EXIF) | `JpegExifInjector` + `ExifInterface` | `JpegExifInjector` + Photos framework | `JpegExifInjector` |
+| Video metadata | `Mp4MetadataInjector` | `Mp4MetadataInjector` + `CLLocation` on `PHAssetChangeRequest` | `Mp4MetadataInjector` |
+| Gallery shows location | Google Photos | Apple Photos | File properties |
+| Format | ISO BMFF udta text atoms | ISO BMFF udta text atoms | ISO BMFF udta text atoms |
+
+Video metadata injection is fully cross-platform — the same pure C# code runs on all platforms with no native dependencies. On iOS, the gallery location is additionally set via `PHAssetChangeRequest.Location` since iOS Photos ignores the `©xyz` atom during import.
 
 ## AudioSampleConverter
 

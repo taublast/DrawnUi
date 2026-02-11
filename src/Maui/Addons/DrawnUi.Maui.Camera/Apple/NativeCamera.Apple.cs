@@ -19,6 +19,7 @@ using IOSurface;
 using Metal;
 using Microsoft.Maui.Controls.Compatibility;
 using Microsoft.Maui.Media;
+using CoreLocation;
 using Photos;
 using SkiaSharp;
 using SkiaSharp.Views.iOS;
@@ -3580,7 +3581,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     /// <param name="videoFilePath">Path to video file</param>
     /// <param name="album">Optional album name</param>
     /// <returns>Gallery path if successful, null if failed</returns>
-    public async Task<string> SaveVideoToGallery(string videoFilePath, string album)
+    public async Task<string> SaveVideoToGallery(string videoFilePath, string album, Metadata meta = null)
     {
         try
         {
@@ -3590,7 +3591,17 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 return null;
             }
 
-            var videoUrl = NSUrl.FromFilename(videoFilePath);
+            // Re-export through AVAssetExportSession to inject Apple QuickTime metadata
+            string reExportedPath = null;
+            string fileToSave = videoFilePath;
+            if (meta != null)
+            {
+                reExportedPath = await SkiaCamera.ReExportWithAppleMetadataAsync(videoFilePath, meta);
+                if (reExportedPath != null)
+                    fileToSave = reExportedPath;
+            }
+
+            var videoUrl = NSUrl.FromFilename(fileToSave);
             var tcs = new TaskCompletionSource<string>();
 
             // Request photo library access
@@ -3598,12 +3609,27 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             if (authorizationStatus != PHAuthorizationStatus.Authorized && authorizationStatus != PHAuthorizationStatus.Limited)
             {
                 Debug.WriteLine($"[NativeCamera.Apple] Photo library access denied. Status: {authorizationStatus}");
+                if (reExportedPath != null) try { System.IO.File.Delete(reExportedPath); } catch { }
                 return null;
             }
 
+            // Use PHAssetCreationRequest + AddResource to preserve file-level metadata
+            // (moov > meta box with camera info). PHAssetChangeRequest.FromVideo() re-muxes
+            // the container and strips custom metadata.
             PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
             {
-                var request = PHAssetChangeRequest.FromVideo(videoUrl);
+                var request = PHAssetCreationRequest.CreationRequestForAsset();
+                var resourceOptions = new PHAssetResourceCreationOptions
+                {
+                    OriginalFilename = System.IO.Path.GetFileName(videoFilePath)
+                };
+                request.AddResource(PHAssetResourceType.Video, videoUrl, resourceOptions);
+
+                // Set GPS location on the Photos asset (iOS ignores ©xyz from file during import)
+                if (meta != null && meta.GpsLatitude.HasValue && meta.GpsLongitude.HasValue)
+                {
+                    request.Location = new CLLocation(meta.GpsLatitude.Value, meta.GpsLongitude.Value);
+                }
 
                 // Set album if specified
                 if (!string.IsNullOrEmpty(album))
@@ -3622,7 +3648,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 if (success)
                 {
                     Debug.WriteLine($"[NativeCamera.Apple] Video saved to gallery successfully");
-                    tcs.SetResult(videoFilePath); // iOS doesn't provide new path
+                    tcs.SetResult(videoFilePath);
                 }
                 else
                 {
@@ -3631,7 +3657,15 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 }
             });
 
-            return await tcs.Task;
+            var result = await tcs.Task;
+
+            // Clean up re-exported temp file
+            if (reExportedPath != null)
+            {
+                try { System.IO.File.Delete(reExportedPath); } catch { }
+            }
+
+            return result;
         }
         catch (Exception ex)
         {
@@ -3706,14 +3740,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 Format = GetCurrentVideoFormat(),
                 Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
                 Time = _recordingStartTime,
-                FileSizeBytes = fileSizeBytes,
-                Metadata = new Dictionary<string, object>
-                {
-                    { "Platform", "iOS/Mac" },
-                    { "DeviceId", _deviceInput?.Device?.UniqueID ?? "Unknown" },
-                    { "RecordingStartTime", _recordingStartTime },
-                    { "RecordingEndTime", recordingEndTime }
-                }
+                FileSizeBytes = fileSizeBytes
             };
 
             // Fire success event on main thread

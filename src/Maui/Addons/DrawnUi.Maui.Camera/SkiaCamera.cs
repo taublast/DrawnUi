@@ -1947,12 +1947,32 @@ public partial class SkiaCamera : SkiaControl
                 }
             }
 
+            // Fill GPS coordinates first (needed for iOS CLLocation)
+            FillVideoGpsCoordinates(capturedVideo);
+
+            // Auto-fill and inject video metadata (GPS, device info, date)
+            try
+            {
+                AutoFillVideoMetadata(capturedVideo);
+                var atoms = Mp4MetadataInjector.MetadataToAtoms(capturedVideo.Meta);
+                Debug.WriteLine($"[SkiaCamera] Injecting {atoms.Count} metadata atoms: {string.Join(", ", atoms.Keys)}");
+                var injected = await Mp4MetadataInjector.InjectMetadataAsync(currentPath, capturedVideo.Meta);
+                Debug.WriteLine($"[SkiaCamera] Metadata injected: {injected}");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera] Metadata injection failed (non-fatal): {ex.Message}");
+            }
+
             Debug.WriteLine($"[SkiaCamera] Moving video to gallery: {currentPath}");
 
 #if ANDROID
             return await MoveVideoToGalleryAndroid(currentPath, album, deleteOriginal);
 #elif IOS || MACCATALYST
-            return await MoveVideoToGalleryApple(currentPath, album, deleteOriginal);
+            return await MoveVideoToGalleryApple(currentPath, album, deleteOriginal,
+                capturedVideo.Latitude, capturedVideo.Longitude,
+                capturedVideo.Meta?.DateTimeOriginal ?? capturedVideo.Time,
+                capturedVideo.Meta);
 #elif WINDOWS
             return await MoveVideoToGalleryWindows(currentPath, album, deleteOriginal);
 #else
@@ -2267,6 +2287,12 @@ public partial class SkiaCamera : SkiaControl
     {
         var filename = GenerateJpgFileName();
 
+        // Apply GPS coordinates if available and injection is enabled
+        if (InjectGpsLocation && LocationLat != 0 && LocationLon != 0 && !captured.Meta.GpsLatitude.HasValue)
+        {
+            Metadata.ApplyGpsCoordinates(captured.Meta, LocationLat, LocationLon);
+        }
+
         await using var stream = CreateOutputStreamRotated(captured, false);
 
         using var exifStream = await JpegExifInjector.InjectExifMetadata(stream, captured.Meta);
@@ -2484,6 +2510,27 @@ public partial class SkiaCamera : SkiaControl
 
         try
         {
+            // Fill GPS coordinates first (needed for iOS CLLocation)
+            FillVideoGpsCoordinates(capturedVideo);
+
+            // Auto-fill and inject video metadata (GPS, device info, date)
+            try
+            {
+                AutoFillVideoMetadata(capturedVideo); //GPS set inside
+
+                var atoms = Mp4MetadataInjector.MetadataToAtoms(capturedVideo.Meta);
+                Debug.WriteLine($"[SkiaCamera] Injecting {atoms.Count} metadata atoms: {string.Join(", ", atoms.Keys)}");
+                var injected = await Mp4MetadataInjector.InjectMetadataAsync(capturedVideo.FilePath, capturedVideo.Meta);
+                Debug.WriteLine($"[SkiaCamera] Metadata injected: {injected}");
+
+                capturedVideo.Meta.GpsLongitude = capturedVideo.Longitude;
+                capturedVideo.Meta.GpsLatitude = capturedVideo.Latitude;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera] Metadata injection failed (non-fatal): {ex.Message}");
+            }
+
 #if ONPLATFORM
             var path = await NativeControl.SaveVideoToGallery(capturedVideo.FilePath, album);
             return path;
@@ -2495,6 +2542,98 @@ public partial class SkiaCamera : SkiaControl
         {
             Debug.WriteLine($"[SkiaCamera] Failed to save video to gallery: {ex.Message}");
             return null;
+        }
+    }
+
+    /// <summary>
+    /// Fills CapturedVideo.Latitude/Longitude from camera GPS if available.
+    /// Always called first so iOS CLLocation is set regardless of metadata injection.
+    /// </summary>
+    private void FillVideoGpsCoordinates(CapturedVideo capturedVideo)
+    {
+        if (!capturedVideo.Latitude.HasValue && InjectGpsLocation && LocationLat != 0 && LocationLon != 0)
+        {
+            capturedVideo.Latitude = LocationLat;
+            capturedVideo.Longitude = LocationLon;
+        }
+    }
+
+    /// <summary>
+    /// Auto-fills CapturedVideo.Meta with device info, GPS, and recording time.
+    /// If Meta is already set by the user, only fills missing fields.
+    /// Never throws — all errors are logged and swallowed.
+    /// </summary>
+    private void AutoFillVideoMetadata(CapturedVideo capturedVideo)
+    {
+        try
+        {
+            capturedVideo.Meta ??= new Metadata();
+            var meta = capturedVideo.Meta;
+
+            // Fill device info
+            try
+            {
+                if (string.IsNullOrEmpty(meta.Software))
+                    meta.Software = $"{AppInfo.Name} {AppInfo.VersionString}";
+                if (string.IsNullOrEmpty(meta.Vendor))
+                    meta.Vendor = DeviceInfo.Manufacturer;
+                if (string.IsNullOrEmpty(meta.Model))
+                    meta.Model = DeviceInfo.Model;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera] AutoFillVideoMetadata device info failed: {ex.Message}");
+            }
+
+            // Fill lens info from camera device
+            try
+            {
+                if (string.IsNullOrEmpty(meta.LensModel) && CameraDevice != null)
+                {
+                    var facing = CameraDevice.Facing == CameraPosition.Selfie ? "Front Camera" : "Back Camera";
+                    var focalStr = "";
+                    if (CameraDevice.FocalLengths?.Count > 0)
+                    {
+                        var fl = CameraDevice.FocalLengths[0];
+                        focalStr = $" {fl:G4}mm";
+                    }
+                    var apertureStr = "";
+                    if (meta.Aperture.HasValue)
+                    {
+                        apertureStr = $" f/{meta.Aperture.Value:G3}";
+                    }
+                    meta.LensModel = $"{meta.Vendor ?? DeviceInfo.Manufacturer} {meta.Model ?? DeviceInfo.Model} {facing}{focalStr}{apertureStr}".Trim();
+                    meta.LensMake = meta.Vendor ?? DeviceInfo.Manufacturer;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera] AutoFillVideoMetadata lens info failed: {ex.Message}");
+            }
+
+            // Fill recording time
+            if (!meta.DateTimeOriginal.HasValue)
+                meta.DateTimeOriginal = capturedVideo.Time != default ? capturedVideo.Time : DateTime.Now;
+
+            // Fill GPS from camera location or from CapturedVideo coordinates
+            if (!meta.GpsLatitude.HasValue)
+            {
+                if (capturedVideo.Latitude.HasValue && capturedVideo.Longitude.HasValue
+                    && (capturedVideo.Latitude.Value != 0 || capturedVideo.Longitude.Value != 0))
+                {
+                    Metadata.ApplyGpsCoordinates(meta, capturedVideo.Latitude.Value, capturedVideo.Longitude.Value);
+                }
+            }
+
+            Debug.WriteLine($"[SkiaCamera] AutoFillVideoMetadata: Software={meta.Software}, " +
+                            $"Make={meta.Vendor}, Model={meta.Model}, " +
+                            $"LensModel={meta.LensModel}, " +
+                            $"GPS={meta.GpsLatitude}/{meta.GpsLongitude}, " +
+                            $"Date={meta.DateTimeOriginal}");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] AutoFillVideoMetadata failed: {ex.Message}");
         }
     }
 
@@ -2535,53 +2674,113 @@ public partial class SkiaCamera : SkiaControl
 #endif
     }
 
-    public async Task RefreshLocation(int msTimeout)
+    /// <summary>
+    /// Call this method manually on the main thread to request location permissions and fetch GPS coordinates.
+    /// Results are stored in LocationLat/LocationLon. When InjectGpsLocation is true, save methods will
+    /// automatically inject these coordinates into photo EXIF and video MP4 metadata.
+    /// Must be called from the main thread so permission dialogs can be displayed.
+    /// </summary>
+    public async Task RefreshGpsLocation(int msTimeout = 2000)
     {
-        if (CanDetectLocation)
+        if (GpsBusy)
+            return;
+
+        try
         {
-            //my ACTUAL location
-            try
+            GpsBusy = true;
+
+            // Check and request location permission (must be on main thread)
+            var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            if (status != PermissionStatus.Granted)
             {
-                GpsBusy = true;
-
-                var request = new GeolocationRequest(GeolocationAccuracy.Medium);
-                var cancel = new CancellationTokenSource();
-                cancel.CancelAfter(msTimeout);
-                var location = await Geolocation.GetLocationAsync(request, cancel.Token);
-
-                if (location != null)
+                status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                if (status != PermissionStatus.Granted)
                 {
-                    Debug.WriteLine(
-                        $"ACTUAL Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
-
-                    this.LocationLat = location.Latitude;
-                    this.LocationLon = location.Longitude;
+                    Debug.WriteLine("[SkiaCamera] Location permission denied");
+                    return;
                 }
             }
-            catch (FeatureNotSupportedException fnsEx)
+
+            // Try cached location first (instant, no GPS fix needed)
+            try
             {
-                // Handle not supported on device exception
+                var location = await Geolocation.GetLastKnownLocationAsync();
+                if (location != null)
+                {
+                    LocationLat = location.Latitude;
+                    LocationLon = location.Longitude;
+                    Debug.WriteLine(
+                        $"[SkiaCamera] Cached location: {location.Latitude}, {location.Longitude}");
+                    return;
+                }
             }
-            catch (FeatureNotEnabledException fneEx)
+            catch (FeatureNotSupportedException)
             {
-                // Handle not enabled on device exception
+                Debug.WriteLine("[SkiaCamera] Geolocation not supported on this device");
+                return;
             }
-            catch (PermissionException pEx)
+            catch (FeatureNotEnabledException)
             {
-                // Handle permission exception
+                Debug.WriteLine("[SkiaCamera] Geolocation not enabled on device");
+                return;
             }
-            catch (Exception ex)
-            {
-                // Unable to get location
-            }
-            finally
-            {
-                GpsBusy = false;
-            }
+
+            // Fall back to fresh GPS fix if no cached location
+            await RefreshLocationInternal(msTimeout);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] RefreshGpsLocation failed: {ex.Message}");
+        }
+        finally
+        {
+            GpsBusy = false;
         }
     }
 
-    #endregion
+    protected virtual async Task RefreshLocationInternal(int msTimeout)
+    {
+        try
+        {
+            GpsBusy = true;
+
+            var request = new GeolocationRequest(GeolocationAccuracy.Medium);
+            var cancel = new CancellationTokenSource();
+            cancel.CancelAfter(msTimeout);
+            var location = await Geolocation.GetLocationAsync(request, cancel.Token);
+
+            if (location != null)
+            {
+                Debug.WriteLine(
+                    $"ACTUAL Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
+
+                this.LocationLat = location.Latitude;
+                this.LocationLon = location.Longitude;
+            }
+        }
+        catch (FeatureNotSupportedException fnsEx)
+        {
+            // Handle not supported on device exception
+        }
+        catch (FeatureNotEnabledException fneEx)
+        {
+            // Handle not enabled on device exception
+        }
+        catch (PermissionException pEx)
+        {
+            // Handle permission exception
+        }
+        catch (Exception ex)
+        {
+            // Unable to get location
+        }
+        finally
+        {
+            GpsBusy = false;
+        }
+    }
+
+    #endregion // GPS
 
     #region SHARED PROPERTIES AND FIELDS
 
@@ -3381,16 +3580,16 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-    private bool _CanDetectLocation;
+    private bool _InjectGpsLocation;
 
-    public bool CanDetectLocation
+    public bool InjectGpsLocation
     {
-        get { return _CanDetectLocation; }
+        get { return _InjectGpsLocation; }
         set
         {
-            if (_CanDetectLocation != value)
+            if (_InjectGpsLocation != value)
             {
-                _CanDetectLocation = value;
+                _InjectGpsLocation = value;
                 OnPropertyChanged();
             }
         }

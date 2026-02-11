@@ -9,6 +9,9 @@ namespace CameraTests.Views
             //audio mode
             //this.EnableVideoRecording = false;
             //this.EnableVideoPreview = false;
+
+            //GPS metadata
+            this.InjectGpsLocation = true;
         }
 
         // Audio visualizer (switch between AudioOscillograph and AudioLevels)

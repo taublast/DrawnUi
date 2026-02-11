@@ -22,7 +22,7 @@
   <key>NSPhotoLibraryUsageDescription</key>
   <string>Allow access to the library to save photos</string>
   <key>NSLocationWhenInUseUsageDescription</key>
-  <string>To be able to geotag photos</string>
+  <string>To be able to geotag photos and videos</string>
   <key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>arm64</string>

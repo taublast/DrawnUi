@@ -57,6 +57,12 @@
     <ProvisioningType>manual</ProvisioningType>
   </PropertyGroup>
 
+  
+  <PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
+    <CodesignKey>Apple Development: Created via API (R2DBJ49UL4)</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+  </PropertyGroup>
+
 
   <ItemGroup>
 

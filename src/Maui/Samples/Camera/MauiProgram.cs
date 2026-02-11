@@ -7,18 +7,8 @@ namespace CameraTests
 {
     public static class MauiProgram
     {
-        public static string RTL =
-            "مرحبًا بكم في عصر العناصر البصرية المصممة\r\nحيث الدقة تلتقي بالإبداع في كل تفصيل\r\nنقدم لكم تجربة مستخدم فريدة ومتطورة\r\nاستمتع بالسلاسة والأداء العالي في التصميمات\r\nنحن نبتكر لنجعل تجربتكم أكثر تميزًا وسهولة";
 
-        public static string Multiline =
-            "This is a single label with a multile text. The label that follows this one will have Spans defined.\r\nAnd a new line comes in. We can adjust space between paragraphs and characters. This text is aligned to Fill Words.\r\nLorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.";
-
-        public static string Testing = "1\r\n2\r\n3";
-
-        public static List<SkiaPoint> PolygonStar
-        {
-            get { return SkiaShape.CreateStarPoints(5); }
-        }
+        //LOTTIE anims for permissions are by https://lottiefiles.com/madhu
 
         public static MauiApp CreateMauiApp()
         {

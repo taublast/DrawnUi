@@ -3,6 +3,8 @@
 The pre-recording feature, also known as "look-back" recording, allows you to capture video footage starting from a few seconds *before* the record button is pressed. 
 This is incredibly useful for capturing spontaneous moments without missing the beginning of the action.
 
+This can is incredibly useful for capturing spontaneous moments without missing the beginning of the action. Imagine you want to trigger recording a video on some conditions. Like a rabbit appeared within camera range and live recording is triggered by movement/AI detection, you would have 5 seconds preceding that triggered event in the final video result, making it look natural.
+
 ## How it Works (Architecture)
 
 ### iOS/MacCatalyst: Memory-Based Circular Buffer

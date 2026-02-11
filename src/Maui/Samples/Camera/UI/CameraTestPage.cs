@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics;
 using AppoMobi.Specials;
 using CameraTests.Services;
@@ -31,14 +32,21 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     AudioVisualizer _audioVisualizer;
     Canvas Canvas;
 
+
+
     protected override void Dispose(bool isDisposing)
     {
         if (isDisposing)
         {
             _captionsEngine?.Dispose();
             _captionsEngine = null;
-            CameraControl?.Stop();
-            CameraControl = null;
+            if (CameraControl != null)
+            {
+                CameraControl?.Stop();
+                SetupCameraEvents(false);
+                CameraControl = null;
+            }
+
             this.Content = null;
             Canvas?.Dispose();
 
@@ -62,6 +70,13 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     /// </summary>
     public override void Build()
     {
+        if (CameraControl != null)
+        {
+            CameraControl?.Stop();
+            SetupCameraEvents(false);
+            CameraControl = null;
+        }
+
         Canvas?.Dispose();
 
         CreateContent();
@@ -79,26 +94,61 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
             _realtimeTranscriptionService.SendingData += OnTranscriptionWorking;
         }
     }
-
-    private void SetupCameraEvents()
+    private void SetupCameraEvents(bool subscribe)
     {
-        CameraControl.CaptureSuccess += OnCaptureSuccess;
-        CameraControl.CaptureFailed += OnCaptureFailed;
-        CameraControl.OnError += OnCameraError;
-        CameraControl.VideoRecordingSuccess += OnVideoRecordingSuccess;
-        CameraControl.VideoRecordingProgress += OnVideoRecordingProgress;
-
-        CameraControl.AudioSampleAvailable += OnAudioCaptured;
-
-        // Monitor recording state changes to start/stop speech recognition
-        CameraControl.PropertyChanged += (s, e) =>
+        if (subscribe)
         {
-            if (e.PropertyName == nameof(CameraControl.IsRecording) ||
-                e.PropertyName == nameof(CameraControl.IsPreRecording))
+            CameraControl.StateChanged += CameraControlOnStateChanged;
+            CameraControl.CaptureSuccess += OnCaptureSuccess;
+            CameraControl.CaptureFailed += OnCaptureFailed;
+            CameraControl.OnError += OnCameraError;
+            CameraControl.VideoRecordingSuccess += OnVideoRecordingSuccess;
+            CameraControl.VideoRecordingProgress += OnVideoRecordingProgress;
+
+            CameraControl.AudioSampleAvailable += OnAudioCaptured;
+
+            // Monitor recording state changes to start/stop speech recognition
+            CameraControl.PropertyChanged += CameraControlOnPropertyChanged;
+        }
+        else
+        {
+            if (CameraControl != null)
             {
-                OnRecordingStateChanged();
+                CameraControl.StateChanged -= CameraControlOnStateChanged;
+                CameraControl.CaptureSuccess -= OnCaptureSuccess;
+                CameraControl.CaptureFailed -= OnCaptureFailed;
+                CameraControl.OnError -= OnCameraError;
+                CameraControl.VideoRecordingSuccess -= OnVideoRecordingSuccess;
+                CameraControl.VideoRecordingProgress -= OnVideoRecordingProgress;
+
+                CameraControl.AudioSampleAvailable -= OnAudioCaptured;
+
+                CameraControl.PropertyChanged -= CameraControlOnPropertyChanged;
             }
-        };
+        }
+    }
+
+    private void CameraControlOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(CameraControl.IsRecording) ||
+            e.PropertyName == nameof(CameraControl.IsPreRecording))
+        {
+            OnRecordingStateChanged();
+        }
+    }
+
+    private void CameraControlOnStateChanged(object sender, CameraState e)
+    {
+        if (e == CameraState.On)
+        {
+            if (CameraControl.InjectGpsLocation)
+            {
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    _ = CameraControl.RefreshGpsLocation();
+                });
+            }
+        }
     }
 
     private int _lastAudioRate;

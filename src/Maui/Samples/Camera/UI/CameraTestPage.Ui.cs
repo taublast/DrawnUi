@@ -524,7 +524,7 @@ namespace CameraTests.Views
                 };
 
                 // Setup camera event handlers
-                SetupCameraEvents();
+                SetupCameraEvents(true);
             }
 
         }

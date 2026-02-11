@@ -1,4 +1,8 @@
-﻿using Android.Content;
+﻿using System.Buffers;
+using System.ComponentModel;
+using System.Globalization;
+using System.Runtime.CompilerServices;
+using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
 using Android.Hardware.Camera2;
@@ -11,14 +15,11 @@ using Android.Util;
 using Android.Views;
 using AppoMobi.Maui.Gestures;
 using AppoMobi.Maui.Native.Droid.Graphics;
+using AppoMobi.Specials;
 using Java.Lang;
 using Java.Util.Concurrent;
 using SkiaSharp.Views.Android;
-using System.Buffers;
-using System.ComponentModel;
-using System.Globalization;
-using System.Runtime.CompilerServices;
-using AppoMobi.Specials;
+using TerraFX.Interop.Windows;
 using Boolean = System.Boolean;
 using Debug = System.Diagnostics.Debug;
 using Exception = System.Exception;
@@ -2985,15 +2986,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 Format = GetCurrentVideoFormat(),
                 Facing = FormsControl.Facing,
                 Time = _recordingStartTime,
-                FileSizeBytes = fileSizeBytes,
-                Metadata = new Dictionary<string, object>
-                {
-                    { "Platform", "Android" },
-                    { "CameraId", CameraId },
-                    { "RecordingStartTime", _recordingStartTime },
-                    { "RecordingEndTime", recordingEndTime },
-                    { "SensorOrientation", SensorOrientation }
-                }
+                FileSizeBytes = fileSizeBytes
             };
 
             _isRecordingVideo = false;
@@ -3046,7 +3039,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// <param name="videoFilePath">Path to video file</param>
     /// <param name="album">Optional album name</param>
     /// <returns>Gallery path if successful, null if failed</returns>
-    public async Task<string> SaveVideoToGallery(string videoFilePath, string album)
+    public async Task<string> SaveVideoToGallery(string videoFilePath, string album, Metadata meta = null)
     {
         try
         {

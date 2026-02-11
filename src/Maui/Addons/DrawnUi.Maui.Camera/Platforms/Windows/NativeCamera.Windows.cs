@@ -2446,14 +2446,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 Format = GetCurrentVideoFormat(),
                 Facing = FormsControl.Facing,
                 Time = _recordingStartTime,
-                FileSizeBytes = fileSizeBytes,
-                Metadata = new Dictionary<string, object>
-                {
-                    { "Platform", "Windows" },
-                    { "CameraDevice", _cameraDevice?.Name ?? "Unknown" },
-                    { "RecordingStartTime", _recordingStartTime },
-                    { "RecordingEndTime", recordingEndTime }
-                }
+                FileSizeBytes = fileSizeBytes
             };
 
             _isRecordingVideo = false;
@@ -2640,7 +2633,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     /// <param name="videoFilePath">Path to video file</param>
     /// <param name="album">Optional album name</param>
     /// <returns>Gallery path if successful, null if failed</returns>
-    public async Task<string> SaveVideoToGallery(string videoFilePath, string album)
+    public async Task<string> SaveVideoToGallery(string videoFilePath, string album, Metadata meta = null)
     {
         // TODO: Implement Windows video save to gallery
         await Task.Delay(100); // Placeholder

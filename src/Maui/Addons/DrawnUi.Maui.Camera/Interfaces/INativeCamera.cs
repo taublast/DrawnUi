@@ -134,7 +134,7 @@ public interface INativeCamera : IDisposable
     /// <param name="videoFilePath">Path to video file</param>
     /// <param name="album">Optional album name</param>
     /// <returns>Gallery path if successful, null if failed</returns>
-    Task<string> SaveVideoToGallery(string videoFilePath, string album);
+    Task<string> SaveVideoToGallery(string videoFilePath, string album, Metadata meta = null);
 
     /// <summary>
     /// Event fired when video recording completes successfully
