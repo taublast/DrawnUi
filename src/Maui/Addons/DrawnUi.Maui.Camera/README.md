@@ -31,14 +31,19 @@ We are still .NET9, for iOS 26 you might need to set inside PLIST for your iOS a
 - **Cares about going to background** or foreground to automatically stop/resume camera.
 - **Developer-first design**, open for customization with overrides/events,
 
-## **Dual-Channel Architecture**
+## **Processing Architecture**
 
-SkiaCamera provides **two independent processing channels** to be processed:
+SkiaCamera provides **multiple independent processing channels** — each can be used separately or combined:
 
-* 📹 Live Preview
-* 📸 Captured Photo
+| Channel | Callback / Event | Mode | What It Does |
+|---------|-----------------|------|--------------|
+| 📹 **Preview Drawing** | `PreviewProcessor` | Still & Video | Draw overlays on live preview (gauges, guides, AR). Uses `DrawableFrame` with `Scale` for resolution matching |
+| 🎬 **Video Frame Drawing** | `FrameProcessor` | Video (`UseRealtimeVideoProcessing`) | Draw overlays baked into recorded video (watermarks, telemetry, timestamps) |
+| 📸 **Captured Photo** | `CaptureSuccess` event | Still | Post-process captured high-res photo (effects, watermark, save) |
+| 🤖 **Preview Analysis** | `NewPreviewSet` event | Still & Video | Read-only access to preview frames for AI/ML (face detection, QR scanning) |
+| 🎙️ **Audio Processing** | `WriteAudioSample` override | Video (`UseRealtimeVideoProcessing`) | Process raw PCM audio before encoding (volume, effects, visualization) |
 
-> **💡 Key Insight**: Preview effects ≠ Capture effects. You can show a vintage filter in preview while capturing the raw photo, or apply completely different processing to each channel.
+> **💡 Key Insight**: All channels are independent. You can show a sketch filter in preview (`PreviewProcessor`), capture the raw photo (`CaptureSuccess`), draw telemetry overlays on recorded video (`FrameProcessor`), and run face detection (`NewPreviewSet`) — all simultaneously. See **Section 10** for detailed usage.
 
 ## Installation
 
@@ -129,7 +134,37 @@ Create `Platforms/Android/Resources/xml/file_paths.xml`:
 
 ## Usage Guide
 
-### 1. XAML Declaration
+## Usage Guide Summary
+
+| # | Section | Description |
+|---|---------|-------------|
+| 1 | Declaration / Setup | XAML and code-behind setup |
+| 2 | Essential Properties | Key properties reference |
+| 3 | Camera Lifecycle Management | `IsOn`, `Start()`, global instance management |
+| 4 | Flash Control | Preview torch and capture flash modes |
+| 5 | Capture Format Selection | Quality presets, manual format, preview sync |
+| 5 | Camera Selection | Front/back/manual camera switching |
+| 5 | Camera Information Class | `CameraInfo` data class |
+| 6 | Channel 2: Captured Photo Processing | `CaptureSuccess` event, `TakePicture()` |
+| 6 | Opening Files in Gallery | `OpenFileInGallery()` |
+| 7 | Real-Time Effects & Custom Shaders | Built-in effects, SKSL shaders |
+| 8 | Zoom Control | Manual zoom, pinch-to-zoom |
+| 9 | Camera State Management | `StateChanged` event, `CameraState` |
+| 10 | **Live Processing: FrameProcessor & PreviewProcessor** | Drawing overlays on preview and recorded video, `NewPreviewSet` for AI/ML |
+| 11 | Permission Handling | `CheckPermissions()` |
+| 12 | Complete MVVM Example | Full ViewModel + Page example |
+
+Also covered: **Video Recording** (basic, format selection, audio, pre-recording, capture video flow, real-time audio processing), **API Reference**, **Troubleshooting**.
+
+### 1. Declaration / Setup
+
+For installation please see Installation section earlier in this document. Then you would be able to consume camera in your app:
+
+#### XAML
+
+```xml
+xmlns:camera="clr-namespace:DrawnUi.Camera;assembly=DrawnUi.Maui.Camera"
+```
 
 ```xml
 <camera:SkiaCamera
@@ -141,6 +176,20 @@ Create `Platforms/Android/Resources/xml/file_paths.xml`:
     VerticalOptions="Fill"
     ZoomLimitMax="10"
     ZoomLimitMin="1" />
+```
+
+#### Code-Behind
+```csharp
+var camera = new SkiaCamera
+{
+    BackgroundColor = Colors.Black,
+    PhotoQuality = CaptureQuality.Medium,
+    Facing = CameraPosition.Default,
+    HorizontalOptions = LayoutOptions.Fill,
+    VerticalOptions = LayoutOptions.Fill,
+    ZoomLimitMax = 10,
+    ZoomLimitMin = 1
+};
 ```
 
 ### 2. Essential Properties
@@ -771,46 +820,132 @@ if (camera.State == CameraState.On)
 }
 ```
 
-### 10. Channel 1: Live Preview Processing
+### 10. Live Processing: FrameProcessor & PreviewProcessor
+
+SkiaCamera provides **two drawing callbacks** for real-time overlay rendering, plus an **event** for read-only frame analysis:
+
+| Callback / Event | Type | When It Fires | Use Case |
+|------------------|------|---------------|----------|
+| `FrameProcessor` | `Action<DrawableFrame>` | Each frame being **encoded to video** | Watermarks, telemetry, overlays baked into recorded video |
+| `PreviewProcessor` | `Action<DrawableFrame>` | Each **preview** frame before display | Show overlays on live preview (e.g., gauges, guides) |
+| `NewPreviewSet` | `EventHandler<LoadedImageSource>` | Each preview frame after display | Read-only AI/ML analysis, face detection, QR scanning |
+
+> **Key Insight**: `FrameProcessor` draws on what gets **recorded**. `PreviewProcessor` draws on what the user **sees**. `NewPreviewSet` lets you **read** preview frames without drawing. All three are independent.
+
+#### FrameProcessor (Video Recording Overlay)
+
+Draws on each frame being encoded to the video file. Requires `UseRealtimeVideoProcessing = true`. Scale is always 1.0 (full recording resolution).
 
 ```csharp
-// CHANNEL 1: Real-time preview frame processing
+camera.UseRealtimeVideoProcessing = true;
+camera.FrameProcessor = (frame) =>
+{
+    // This draws on the RECORDED video
+    using var paint = new SKPaint
+    {
+        Color = SKColors.White.WithAlpha(128),
+        TextSize = 48 * frame.Scale, // Scale=1.0 for recording frames
+        IsAntialias = true
+    };
+    frame.Canvas.DrawText($"REC {frame.Time:mm\\:ss}", 50, 100, paint);
+};
+```
+
+#### PreviewProcessor (Live Preview Overlay)
+
+Draws on each preview frame before it is displayed to the user. Uses `PreviewScale` so overlay sizing matches the recording. When `UseRecordingFramesForPreview = true` (default) and recording is active, `PreviewProcessor` is **automatically skipped** because the encoder's processed frames (with `FrameProcessor` overlay already baked in) are used as preview.
+
+```csharp
+camera.PreviewProcessor = (frame) =>
+{
+    // This draws on the LIVE PREVIEW the user sees
+    // frame.Scale = PreviewScale (e.g., 0.3 if preview is smaller than recording)
+    // frame.IsPreview = true
+    using var paint = new SKPaint
+    {
+        Color = SKColors.LimeGreen,
+        TextSize = 48 * frame.Scale, // Scale down to match preview resolution
+        IsAntialias = true
+    };
+    frame.Canvas.DrawText("READY", 50 * frame.Scale, 100 * frame.Scale, paint);
+};
+```
+
+#### Using Both Together
+
+A common pattern is to write a single drawing method and use `frame.Scale` and `frame.IsPreview` to handle both callbacks:
+
+```csharp
+// Single drawing method for both recording and preview
+void DrawOverlay(DrawableFrame frame)
+{
+    var s = frame.Scale; // 1.0 for recording, PreviewScale for preview
+    using var paint = new SKPaint
+    {
+        Color = SKColors.White,
+        TextSize = 48 * s,
+        IsAntialias = true
+    };
+
+    frame.Canvas.DrawText($"{frame.Time:mm\\:ss}", 50 * s, 100 * s, paint);
+
+    if (!frame.IsPreview)
+    {
+        // Extra detail only in the recorded video (e.g., high-res watermark)
+        frame.Canvas.DrawText("WATERMARK", 50 * s, 160 * s, paint);
+    }
+}
+
+// Assign both callbacks
+camera.UseRealtimeVideoProcessing = true;
+camera.FrameProcessor = DrawOverlay;
+camera.PreviewProcessor = DrawOverlay;
+```
+
+#### DrawableFrame Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `Canvas` | `SKCanvas` | SkiaSharp canvas for drawing on the frame |
+| `Width` | `int` | Frame width in pixels |
+| `Height` | `int` | Frame height in pixels |
+| `Time` | `TimeSpan` | Elapsed time since recording started |
+| `IsPreview` | `bool` | `true` for preview frames, `false` for recording frames |
+| `Scale` | `float` | 1.0 for recording frames; `PreviewScale` for preview frames (e.g., 0.3 if preview is smaller) |
+
+#### Related Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `UseRealtimeVideoProcessing` | `bool` | `false` | Enable frame-by-frame capture mode (required for `FrameProcessor`) |
+| `FrameProcessor` | `Action<DrawableFrame>` | `null` | Callback for processing each recorded video frame |
+| `PreviewProcessor` | `Action<DrawableFrame>` | `null` | Callback for processing each preview frame before display |
+| `UseRecordingFramesForPreview` | `bool` | `true` | Use encoder output as preview during recording (skips `PreviewProcessor`) |
+| `PreviewScale` | `float` | `1.0` | Scale of preview relative to recording resolution (read-only) |
+
+#### NewPreviewSet Event (Read-Only Analysis)
+
+For AI/ML processing where you need to **read** preview frames without drawing on them, use the `NewPreviewSet` event:
+
+```csharp
 camera.NewPreviewSet += OnNewPreviewFrame;
 
 private void OnNewPreviewFrame(object sender, LoadedImageSource source)
 {
-    // This fires for EVERY preview frame (30-60 FPS)
-    // Perfect for AI/ML analysis, face detection, object recognition
+    // Fires for every preview frame (30-60 FPS)
+    // Read-only — does not affect what user sees or what gets recorded
     Task.Run(() => ProcessPreviewFrameForAI(source));
 }
 
 private void ProcessPreviewFrameForAI(LoadedImageSource source)
 {
-    // AI/ML processing on live preview
-    // - Face detection
-    // - Object recognition
-    // - QR code scanning
-    // - Real-time analytics
-
-    // Note: Optimize carefully - this runs continuously!
     var faces = DetectFaces(source.Image);
     var objects = RecognizeObjects(source.Image);
 
-    // Update UI with real-time results
     MainThread.BeginInvokeOnMainThread(() =>
     {
         UpdateOverlayWithDetections(faces, objects);
     });
-}
-
-// Apply real-time effects to preview (independent of capture)
-private void ApplyPreviewEffects()
-{
-    // These effects only affect what user sees, not captured photo
-    camera.Effect = SkiaImageEffect.Sepia;  // Preview shows sepia
-
-    // Or custom shader for preview
-    camera.SetCustomShader("Shaders/Camera/sketch.sksl");  // Preview shows sketch
 }
 ```
 
@@ -1103,7 +1238,10 @@ public bool IsRecording { get; }             // Recording state (read-only)
 public VideoQuality VideoQuality { get; set; }   // Video quality preset
 public int VideoFormatIndex { get; set; }         // Manual format index
 public bool UseRealtimeVideoProcessing { get; set; }     // Enable frame-by-frame capture mode
-public Action<DrawableFrame> FrameProcessor { get; set; } // Frame processing callback
+public Action<DrawableFrame> FrameProcessor { get; set; } // Draw on each recorded video frame
+public Action<DrawableFrame> PreviewProcessor { get; set; } // Draw on each preview frame before display
+public bool UseRecordingFramesForPreview { get; set; }   // Use encoder output as preview during recording (default: true)
+public float PreviewScale { get; }                       // Preview-to-recording scale factor (read-only)
 
 // Pre-Recording
 public bool EnablePreRecording { get; set; }      // Enable pre-recording buffer
@@ -1655,7 +1793,7 @@ await camera.StopVideoRecording();
 
 **DrawableFrame Properties:**
 
-The `FrameProcessor` callback receives a `DrawableFrame` object with:
+The `FrameProcessor` and `PreviewProcessor` callbacks receive a `DrawableFrame` object with:
 
 | Property | Type | Description |
 |----------|------|-------------|
@@ -1663,6 +1801,8 @@ The `FrameProcessor` callback receives a `DrawableFrame` object with:
 | `Width` | `int` | Frame width in pixels |
 | `Height` | `int` | Frame height in pixels |
 | `Time` | `TimeSpan` | Elapsed time since recording started |
+| `IsPreview` | `bool` | `true` for preview frames (`PreviewProcessor`), `false` for recording frames (`FrameProcessor`) |
+| `Scale` | `float` | 1.0 for recording frames; `PreviewScale` for preview frames — multiply your drawing coordinates/sizes by this |
 
 **Capture Video Flow Properties:**
 
