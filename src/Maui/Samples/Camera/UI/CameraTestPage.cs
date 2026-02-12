@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using AppoMobi.Specials;
 using CameraTests.Services;
+using CameraTests.UI;
 using CameraTests.Visualizers;
 using DrawnUi.Camera;
 using DrawnUi.Controls;
@@ -15,17 +16,17 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     private SkiaShape _takePictureButton;
     private SkiaLabel _flashButton;
     private SkiaLabel _statusLabel;
-    private SkiaButton _videoRecordButton;
-    private SkiaButton _speechButton;
+    private SettingsButton _videoRecordButton;
+    private SettingsButton _speechButton;
     private IRealtimeTranscriptionService _realtimeTranscriptionService;
     private SkiaShape _cameraSelectButton;
-    private SkiaButton _audioSelectButton;
-    private SkiaButton _audioCodecButton;
+    private SettingsButton _audioSelectButton;
+    private SettingsButton _audioCodecButton;
     private SkiaLayer _previewOverlay;
     private SkiaImage _previewImage;
     private SkiaImage _previewThumbnail;
-    private SkiaButton _preRecordingToggleButton;
-    private SkiaButton _preRecordingDurationButton;
+    private SettingsButton _preRecordingToggleButton;
+    private SettingsButton _preRecordingDurationButton;
     private SkiaLabel _captionsLabel;
     private RealtimeCaptionsEngine _captionsEngine;
     private SkiaDrawer _settingsDrawer;
@@ -452,7 +453,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         if (_videoRecordButton != null && CameraControl.IsRecording)
         {
             // Update button text with timer in MM:SS format
-            _videoRecordButton.Text = $"🛑 Stop ({duration:mm\\:ss})";
+            _videoRecordButton.AccessoryIcon = $"🛑";
+            _videoRecordButton.Text = $"Stop ({duration:mm\\:ss})";
         }
     }
 
@@ -716,7 +718,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                         if (result == "System Default")
                         {
                             CameraControl.AudioDeviceIndex = -1;
-                            _audioSelectButton.Text = "🎤 Audio: Default";
+                            _audioSelectButton.Text = "Audio: Default";
                         }
                         else
                         {
@@ -735,7 +737,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                             if (selectedIndex >= 0)
                             {
                                 CameraControl.AudioDeviceIndex = selectedIndex;
-                                _audioSelectButton.Text = $"🎤 {result}";
+                                _audioSelectButton.Text = $"{result}";
                             }
                         }
                     }
@@ -777,7 +779,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                         if (result == "System Default")
                         {
                             CameraControl.AudioCodecIndex = -1;
-                            _audioCodecButton.Text = "🎵 Codec: Default";
+                            _audioCodecButton.Text = "Codec: Default";
                         }
                         else
                         {
@@ -796,7 +798,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                             if (selectedIndex >= 0)
                             {
                                 CameraControl.AudioCodecIndex = selectedIndex;
-                                _audioCodecButton.Text = $"🎵 {CodecsHelper.GetShortName(result)}";
+                                _audioCodecButton.Text = $"{CodecsHelper.GetShortName(result)}";
                             }
                         }
                     }
@@ -840,8 +842,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
         if (_preRecordingToggleButton != null)
         {
-            _preRecordingToggleButton.Text = CameraControl.EnablePreRecording ? "⏱️ Pre-Record: ON" : "⏱️ Pre-Record: OFF";
-            _preRecordingToggleButton.BackgroundColor = CameraControl.EnablePreRecording ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
+            _preRecordingToggleButton.Text = CameraControl.EnablePreRecording ? "Pre-Record: ON" : "Pre-Record: OFF";
+            _preRecordingToggleButton.TintColor = CameraControl.EnablePreRecording ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
         }
 
         UpdatePreRecordingStatus();
@@ -883,7 +885,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     {
         if (_preRecordingDurationButton != null)
         {
-            _preRecordingDurationButton.Text = $"⏰ {CameraControl.PreRecordDuration.TotalSeconds:F0}s";
+            _preRecordingDurationButton.Text = $"{CameraControl.PreRecordDuration.TotalSeconds:F0}s";
         }
     }
 
@@ -893,8 +895,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
         if (_speechButton != null)
         {
-            _speechButton.Text = _speechEnabled ? "🎙️ Speech: ON" : "🎙️ Speech: OFF";
-            _speechButton.BackgroundColor = _speechEnabled ? Color.FromArgb("#10B981") : Color.FromArgb("#475569");
+            _speechButton.Text = _speechEnabled ? "Speech: ON" : "Speech: OFF";
+            _speechButton.TintColor = _speechEnabled ? Color.FromArgb("#10B981") : Color.FromArgb("#475569");
         }
 
         if (_speechEnabled)

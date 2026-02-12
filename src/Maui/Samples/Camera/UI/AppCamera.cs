@@ -18,7 +18,7 @@ namespace CameraTests.Views
 
         // Audio visualizer (switch between AudioOscillograph and AudioLevels)
         private IAudioVisualizer _audioVisualizer = null;
-        private int _visualizerIndex = 0;
+        private int _visualizerIndex = -1;
 
         public static readonly BindableProperty VisualizerNameProperty = BindableProperty.Create(
             nameof(VisualizerName),
@@ -34,15 +34,14 @@ namespace CameraTests.Views
 
         public void SwitchVisualizer(int index = -1)
         {
-            if (index >= 0)
+            if (_visualizerIndex > 8 || _visualizerIndex < -1)
             {
-                _visualizerIndex = index;
+                _visualizerIndex = 0;
             }
             else
             {
                 _visualizerIndex++;
             }
-            if (_visualizerIndex > 8) _visualizerIndex = 0;
 
             var old = _audioVisualizer;
             bool useGain = true;
