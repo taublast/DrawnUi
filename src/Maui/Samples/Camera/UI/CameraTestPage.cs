@@ -30,6 +30,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     private SkiaLabel _captionsLabel;
     private RealtimeCaptionsEngine _captionsEngine;
     private SkiaDrawer _settingsDrawer;
+    private SkiaViewSwitcher _settingsTabs;
+    private SkiaLabel[] _tabLabels;
     AudioVisualizer _audioVisualizer;
     Canvas Canvas;
 
@@ -906,6 +908,25 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         else
         {
             StopTranscription();
+        }
+    }
+
+    private void SelectTab(int index)
+    {
+        if (_settingsTabs != null)
+            _settingsTabs.SelectedIndex = index;
+
+        if (_tabLabels != null)
+        {
+            for (int i = 0; i < _tabLabels.Length; i++)
+            {
+                _tabLabels[i].TextColor = i == index
+                    ? Colors.White
+                    : Color.FromArgb("#888888");
+                _tabLabels[i].FontAttributes = i == index
+                    ? FontAttributes.Bold
+                    : FontAttributes.None;
+            }
         }
     }
 

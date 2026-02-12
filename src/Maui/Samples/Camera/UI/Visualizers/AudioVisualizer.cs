@@ -65,7 +65,7 @@ namespace CameraTests.Visualizers
             if (_visualizerIndex > 8) _visualizerIndex = 0;
 
             var old = Visualizer;
-            bool useGain = true;
+            bool useGain = false;
 
             switch (_visualizerIndex)
             {
@@ -112,7 +112,7 @@ namespace CameraTests.Visualizers
 
             if (Visualizer != null)
             {
-                Visualizer.UseGain = useGain;
+                Visualizer.UseGain = false;//useGain;
             }
 
             DisposeObject(old);

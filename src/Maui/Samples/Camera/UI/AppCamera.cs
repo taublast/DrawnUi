@@ -32,6 +32,23 @@ namespace CameraTests.Views
             set => SetValue(VisualizerNameProperty, value);
         }
 
+        public static readonly BindableProperty UseGainProperty = BindableProperty.Create(
+            nameof(UseGain),
+            typeof(bool),
+            typeof(AppCamera),
+            false);
+
+        public bool UseGain
+        {
+            get => (bool)GetValue(UseGainProperty);
+            set => SetValue(UseGainProperty, value);
+        }
+
+        /// <summary>
+        /// Gain multiplier applied to raw PCM when UseGain is true.
+        /// </summary>
+        public float GainFactor { get; set; } = 3.0f;
+
         public void SwitchVisualizer(int index = -1)
         {
             if (_visualizerIndex > 8 || _visualizerIndex < -1)
@@ -44,13 +61,11 @@ namespace CameraTests.Views
             }
 
             var old = _audioVisualizer;
-            bool useGain = true;
 
             switch (_visualizerIndex)
             {
                 case 0:
                     _audioVisualizer = new AudioSoundBars();
-                    useGain = true;
                     VisualizerName = "Sound Bars";
                     break;
                 case 1:
@@ -61,13 +76,8 @@ namespace CameraTests.Views
                     _audioVisualizer = new AudioLevelsPeak();
                     VisualizerName = "Peak Monitor";
                     break;
-                //case 2:
-                //    _audioVisualizer = new AudioLevels();
-                //    VisualizerName = "Spectrum";
-                //    break;
                 case 3:
                     _audioVisualizer = new AudioOscillograph();
-                    useGain = true;
                     VisualizerName = "Oscillograph";
                     break;
                 case 4:
@@ -76,7 +86,6 @@ namespace CameraTests.Views
                     break;
                 case 5:
                     _audioVisualizer = new AudioInstrumentTuner();
-                    useGain = true;
                     VisualizerName = "Tuner";
                     break;
                 case 6:
@@ -91,7 +100,8 @@ namespace CameraTests.Views
 
             if (_audioVisualizer != null)
             {
-                _audioVisualizer.UseGain = useGain;
+                // Gain is applied upstream in OnAudioSampleAvailable, visualizers get pre-amplified signal
+                _audioVisualizer.UseGain = false;
             }
 
             (old as IDisposable)?.Dispose();
@@ -99,9 +109,33 @@ namespace CameraTests.Views
 
         protected override AudioSample OnAudioSampleAvailable(AudioSample sample)
         {
+            if (UseGain && sample.Data != null && sample.Data.Length > 1)
+            {
+                AmplifyPcm16(sample.Data, GainFactor);
+            }
+
             _audioVisualizer?.AddSample(sample);
 
             return base.OnAudioSampleAvailable(sample);
+        }
+
+        /// <summary>
+        /// Amplifies PCM16 audio data in-place. Zero allocations.
+        /// </summary>
+        private static void AmplifyPcm16(byte[] data, float gain)
+        {
+            for (int i = 0; i < data.Length - 1; i += 2)
+            {
+                int sample = (short)(data[i] | (data[i + 1] << 8));
+                sample = (int)(sample * gain);
+
+                // Clamp to 16-bit range
+                if (sample > 32767) sample = 32767;
+                else if (sample < -32768) sample = -32768;
+
+                data[i] = (byte)(sample & 0xFF);
+                data[i + 1] = (byte)((sample >> 8) & 0xFF);
+            }
         }
 
         public override void OnWillDisposeWithChildren()
