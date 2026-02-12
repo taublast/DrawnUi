@@ -2788,7 +2788,7 @@ public partial class SkiaCamera : SkiaControl
     /// Enable on-screen diagnostics overlay (effective FPS, dropped frames, last submit ms)
     /// during capture video flow to validate performance.
     /// </summary>
-    public bool EnableCaptureDiagnostics { get; set; } = true;
+    public bool EnableCaptureDiagnostics { get; set; } = false;
 
     private int _targetFps = 0;
 
