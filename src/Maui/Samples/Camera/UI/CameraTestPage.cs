@@ -137,17 +137,22 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         }
     }
 
+    void RefreshGpsLocationIfNeeded()
+    {
+        if (CameraControl.InjectGpsLocation)
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                _ = CameraControl.RefreshGpsLocation();
+            });
+        }
+    }
+
     private void CameraControlOnStateChanged(object sender, CameraState e)
     {
         if (e == CameraState.On)
         {
-            if (CameraControl.InjectGpsLocation)
-            {
-                MainThread.BeginInvokeOnMainThread(() =>
-                {
-                    _ = CameraControl.RefreshGpsLocation();
-                });
-            }
+            RefreshGpsLocationIfNeeded();
         }
     }
 

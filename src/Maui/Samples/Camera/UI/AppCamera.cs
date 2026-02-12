@@ -6,12 +6,14 @@ namespace CameraTests.Views
     {
         public AppCamera()
         {
-            //audio mode
-            //this.EnableVideoRecording = false;
-            //this.EnableVideoPreview = false;
+            //set defaults for this camera
 
             //GPS metadata
             this.InjectGpsLocation = true;
+
+            //audio 
+            this.EnableAudioMonitoring = true;
+            SwitchVisualizer();
         }
 
         // Audio visualizer (switch between AudioOscillograph and AudioLevels)

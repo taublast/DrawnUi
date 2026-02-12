@@ -662,26 +662,120 @@ namespace CameraTests.Views
                             {
                                 me.IsVisible = CameraControl.IsRecording && CameraControl.CaptureMode == CaptureModeType.Video;
                             }),
+
+                            new SkiaButton("⚙️ Processing: ON")
+                                {
+                                    BackgroundColor = Color.FromArgb("#10B981"),
+                                    TextColor = Colors.White,
+                                    CornerRadius = 8,
+                                    UseCache = SkiaCacheType.Image,
+                                    Padding = new Thickness(16, 10)
+                                }
+                                .OnTapped(me =>
+                                {
+                                    CameraControl.UseRealtimeVideoProcessing = !CameraControl.UseRealtimeVideoProcessing;
+                                })
+                                .ObserveProperty(() => CameraControl, nameof(CameraControl.UseRealtimeVideoProcessing), me =>
+                                {
+                                    me.Text = CameraControl.UseRealtimeVideoProcessing ? "⚙️ Processing: ON" : "⚙️ Processing: OFF";
+                                    me.BackgroundColor = CameraControl.UseRealtimeVideoProcessing ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
+                                }),
+
                         }
                     },
 
-                    // Audio Settings (Video mode only)
+                    // Audio Settings
                     new SkiaLabel("🎤 Audio Settings")
                     {
                         FontSize = 14,
                         FontAttributes = FontAttributes.Bold,
                         TextColor = Color.FromArgb("#6B7280"),
                         Margin = new(0, 12, 0, 4)
-                    }
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
-                    {
-                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
-                    }),
+                    },
+
                     new SkiaWrap
                     {
                         Spacing = 8,
                         Children =
                         {
+
+                            new SkiaButton("🎤 Audio Device")
+                                {
+                                    BackgroundColor = Color.FromArgb("#B45309"),
+                                    TextColor = Colors.White,
+                                    CornerRadius = 8,
+                                    UseCache = SkiaCacheType.Image,
+                                    Padding = new Thickness(16, 10)
+                                }
+                                .Assign(out _audioSelectButton)
+                                .OnTapped(async me => { await SelectAudioSource(); }),
+
+                            new SkiaButton("🎧 Audio Monitor: OFF")
+                            {
+                                BackgroundColor = Color.FromArgb("#6B7280"),
+                                TextColor = Colors.White,
+                                CornerRadius = 8,
+                                UseCache = SkiaCacheType.Image,
+                                Padding = new Thickness(16, 10)
+                            }
+                            .OnTapped(me =>
+                            {
+                                CameraControl.EnableAudioMonitoring = !CameraControl.EnableAudioMonitoring;
+                            })
+                            .ObserveProperty(CameraControl, nameof(CameraControl.EnableAudioMonitoring), me =>
+                            {
+                                me.Text = CameraControl.EnableAudioMonitoring ? "🎧 Audio Monitor: ON" : "🎧 Audio Monitor: OFF";
+                                me.BackgroundColor = CameraControl.EnableAudioMonitoring ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
+                            }),
+
+                            new SkiaButton("📊 Visualizer")
+                                {
+                                    BackgroundColor = Color.FromArgb("#65A30D"),
+                                    TextColor = Colors.White,
+                                    CornerRadius = 8,
+                                    UseCache = SkiaCacheType.Image,
+                                    Padding = new Thickness(16, 10)
+                                }
+                                .OnTapped(me =>
+                                {
+                                    CameraControl.SwitchVisualizer();
+                                })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.VisualizerName), me =>
+                                {
+                                    me.Text = $"📊 {CameraControl.VisualizerName}";
+                                }),
+
+                            new SkiaButton("🎙️ Speech: OFF")
+                                {
+                                    BackgroundColor = Color.FromArgb("#475569"),
+                                    TextColor = Colors.White,
+                                    CornerRadius = 8,
+                                    UseCache = SkiaCacheType.Image,
+                                    Padding = new Thickness(16, 10)
+                                }
+                                .Assign(out _speechButton)
+                                .OnTapped(me =>
+                                {
+                                    ToggleSpeech();
+                                }),
+                        }
+                    },
+
+                    // Processing Settings (Video mode only)
+                    new SkiaLabel("⚡ Recording")
+                    {
+                        FontSize = 14,
+                        FontAttributes = FontAttributes.Bold,
+                        TextColor = Color.FromArgb("#6B7280"),
+                        Margin = new(0, 12, 0, 4)
+                    },
+
+                    new SkiaWrap
+                    {
+                        Spacing = 8,
+                        Children =
+                        {
+
                             new SkiaButton("🔇 Audio: OFF")
                             {
                                 BackgroundColor = Color.FromArgb("#6B7280"),
@@ -698,18 +792,11 @@ namespace CameraTests.Views
                             {
                                 me.Text = CameraControl.EnableAudioRecording ? "🔊 Audio: ON" : "🔇 Audio: OFF";
                                 me.BackgroundColor = CameraControl.EnableAudioRecording ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
-                            }),
-
-                            new SkiaButton("🎤 Audio Device")
+                            })
+                            .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                             {
-                                BackgroundColor = Color.FromArgb("#B45309"),
-                                TextColor = Colors.White,
-                                CornerRadius = 8,
-                                UseCache = SkiaCacheType.Image,
-                                Padding = new Thickness(16, 10)
-                            }
-                            .Assign(out _audioSelectButton)
-                            .OnTapped(async me => { await SelectAudioSource(); }),
+                                me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                            }),
 
                             new SkiaButton("🎵 Audio Codec")
                             {
@@ -720,130 +807,66 @@ namespace CameraTests.Views
                                 Padding = new Thickness(16, 10)
                             }
                             .Assign(out _audioCodecButton)
-                            .OnTapped(async me => { await SelectAudioCodec(); }),
-                        }
-                    }
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
-                    {
-                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
-                    }),
-
-                    // Processing Settings (Video mode only)
-                    new SkiaLabel("⚡ Processing")
-                    {
-                        FontSize = 14,
-                        FontAttributes = FontAttributes.Bold,
-                        TextColor = Color.FromArgb("#6B7280"),
-                        Margin = new(0, 12, 0, 4)
-                    }
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
-                    {
-                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
-                    }),
-                    new SkiaWrap
-                    {
-                        Spacing = 8,
-                        Children =
-                        {
-                            new SkiaButton("⚙️ Processing: ON")
+                            .OnTapped(async me => { await SelectAudioCodec(); })
+                            .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                             {
-                                BackgroundColor = Color.FromArgb("#10B981"),
-                                TextColor = Colors.White,
-                                CornerRadius = 8,
-                                UseCache = SkiaCacheType.Image,
-                                Padding = new Thickness(16, 10)
-                            }
-                            .OnTapped(me =>
-                            {
-                                CameraControl.UseRealtimeVideoProcessing = !CameraControl.UseRealtimeVideoProcessing;
-                            })
-                            .ObserveProperty(() => CameraControl, nameof(CameraControl.UseRealtimeVideoProcessing), me =>
-                            {
-                                me.Text = CameraControl.UseRealtimeVideoProcessing ? "⚙️ Processing: ON" : "⚙️ Processing: OFF";
-                                me.BackgroundColor = CameraControl.UseRealtimeVideoProcessing ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
+                                me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
                             }),
 
-                            new SkiaButton("📊 Visualizer")
-                            {
-                                BackgroundColor = Color.FromArgb("#65A30D"),
-                                TextColor = Colors.White,
-                                CornerRadius = 8,
-                                UseCache = SkiaCacheType.Image,
-                                Padding = new Thickness(16, 10)
-                            }
-                            .OnTapped(me =>
-                            {
-                                CameraControl.SwitchVisualizer();
-                            })
-                            .ObserveProperty(CameraControl, nameof(CameraControl.VisualizerName), me =>
-                            {
-                                me.Text = $"📊 {CameraControl.VisualizerName}";
-                            }),
-
-                            new SkiaButton("🎙️ Speech: OFF")
-                            {
-                                BackgroundColor = Color.FromArgb("#475569"),
-                                TextColor = Colors.White,
-                                CornerRadius = 8,
-                                UseCache = SkiaCacheType.Image,
-                                Padding = new Thickness(16, 10)
-                            }
-                            .Assign(out _speechButton)
-                            .OnTapped(me =>
-                            {
-                                ToggleSpeech();
-                            }),
-                        }
-                    }
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
-                    {
-                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
-                    }),
-
-                    // Prerecording Settings (Video mode only)
-                    new SkiaLabel("⏱️ Prerecording")
-                    {
-                        FontSize = 14,
-                        FontAttributes = FontAttributes.Bold,
-                        TextColor = Color.FromArgb("#6B7280"),
-                        Margin = new(0, 12, 0, 4)
-                    }
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
-                    {
-                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
-                    }),
-                    new SkiaWrap
-                    {
-                        Spacing = 8,
-                        Children =
-                        {
                             new SkiaButton("⏱️ Pre-Record: OFF")
-                            {
-                                BackgroundColor = Color.FromArgb("#6B7280"),
-                                TextColor = Colors.White,
-                                CornerRadius = 8,
-                                UseCache = SkiaCacheType.Image,
-                                Padding = new Thickness(16, 10)
-                            }
-                            .Assign(out _preRecordingToggleButton)
-                            .OnTapped(me => { TogglePreRecording(); }),
+                                {
+                                    BackgroundColor = Color.FromArgb("#6B7280"),
+                                    TextColor = Colors.White,
+                                    CornerRadius = 8,
+                                    UseCache = SkiaCacheType.Image,
+                                    Padding = new Thickness(16, 10)
+                                }
+                                .Assign(out _preRecordingToggleButton)
+                                .OnTapped(me => { TogglePreRecording(); })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                {
+                                    me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                                }),
 
                             new SkiaButton($"⏰ {CameraControl.PreRecordDuration.TotalSeconds:F0}s")
-                            {
-                                BackgroundColor = Color.FromArgb("#475569"),
-                                TextColor = Colors.White,
-                                CornerRadius = 8,
-                                UseCache = SkiaCacheType.Image,
-                                Padding = new Thickness(16, 10)
-                            }
-                            .Assign(out _preRecordingDurationButton)
-                            .OnTapped(async me => { await ShowPreRecordingDurationPicker(); }),
+                                {
+                                    BackgroundColor = Color.FromArgb("#475569"),
+                                    TextColor = Colors.White,
+                                    CornerRadius = 8,
+                                    UseCache = SkiaCacheType.Image,
+                                    Padding = new Thickness(16, 10)
+                                }
+                                .Assign(out _preRecordingDurationButton)
+                                .OnTapped(async me => { await ShowPreRecordingDurationPicker(); })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                {
+                                    me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                                }),
+
+                            new SkiaButton("📍 Geotag: OFF")
+                                {
+                                    BackgroundColor = Color.FromArgb("#6B7280"),
+                                    TextColor = Colors.White,
+                                    CornerRadius = 8,
+                                    UseCache = SkiaCacheType.Image,
+                                    Padding = new Thickness(16, 10)
+                                }
+                                .OnTapped(me =>
+                                {
+                                    CameraControl.InjectGpsLocation = !CameraControl.InjectGpsLocation;
+                                    RefreshGpsLocationIfNeeded();
+                                })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.InjectGpsLocation), me =>
+                                {
+                                    me.Text = CameraControl.InjectGpsLocation ? "📍 Geotag: ON" : "📍 Geotag: OFF";
+                                    me.BackgroundColor = CameraControl.InjectGpsLocation ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
+                                }),
+
+                       
                         }
-                    }
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
-                    {
-                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
-                    }),
+                    },
+
+                  
                 }
             };
         }
