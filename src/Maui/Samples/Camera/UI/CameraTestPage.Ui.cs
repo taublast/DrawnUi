@@ -760,25 +760,61 @@ namespace CameraTests.Views
                                 }),
                         }
                     },
+ 
 
-                    // Processing Settings (Video mode only)
-                    new SkiaLabel("⚡ Recording")
+                    // Recording Settings (Video mode only)
+                    new SkiaLabel("🎬 Saving Feed Settings")
                     {
                         FontSize = 14,
                         FontAttributes = FontAttributes.Bold,
                         TextColor = Color.FromArgb("#6B7280"),
                         Margin = new(0, 12, 0, 4)
                     },
-
                     new SkiaWrap
                     {
                         Spacing = 8,
                         Children =
                         {
+                            new SkiaButton("🔇 Audio")
+                                {
+                                    BackgroundColor = Color.FromArgb("#6B7280"),
+                                    TextColor = Colors.White,
+                                    CornerRadius = 8,
+                                    UseCache = SkiaCacheType.Image,
+                                    Padding = new Thickness(16, 10)
+                                }
+                                .OnTapped(me =>
+                                {
+                                    CameraControl.EnableAudioRecording = !CameraControl.EnableAudioRecording;
+                                })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.EnableAudioRecording), me =>
+                                {
+                                    me.Text = CameraControl.EnableAudioRecording ? "🔊 Audio: SAVE" : "🔇 Audio: SKIP";
+                                    me.BackgroundColor = CameraControl.EnableAudioRecording ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
+                                })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                {
+                                    me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                                }),
 
-                            new SkiaButton("🔇 Audio: OFF")
+                            new SkiaButton("🎵 Audio Codec")
+                                {
+                                    BackgroundColor = Color.FromArgb("#475569"),
+                                    TextColor = Colors.White,
+                                    CornerRadius = 8,
+                                    UseCache = SkiaCacheType.Image,
+                                    Padding = new Thickness(16, 10)
+                                }
+                                .Assign(out _audioCodecButton)
+                                .OnTapped(async me => { await SelectAudioCodec(); })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                {
+                                    me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                                }),
+
+                            new SkiaButton("📹 Video")
                             {
-                                BackgroundColor = Color.FromArgb("#6B7280"),
+                                BackgroundColor = Color.FromArgb("#10B981"),
                                 TextColor = Colors.White,
                                 CornerRadius = 8,
                                 UseCache = SkiaCacheType.Image,
@@ -786,28 +822,13 @@ namespace CameraTests.Views
                             }
                             .OnTapped(me =>
                             {
-                                CameraControl.EnableAudioRecording = !CameraControl.EnableAudioRecording;
+                                CameraControl.EnableVideoRecording = !CameraControl.EnableVideoRecording;
                             })
-                            .ObserveProperty(CameraControl, nameof(CameraControl.EnableAudioRecording), me =>
+                            .ObserveProperty(CameraControl, nameof(CameraControl.EnableVideoRecording), me =>
                             {
-                                me.Text = CameraControl.EnableAudioRecording ? "🔊 Audio: ON" : "🔇 Audio: OFF";
-                                me.BackgroundColor = CameraControl.EnableAudioRecording ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
+                                me.Text = CameraControl.EnableVideoRecording ? "📹 Video: SAVE" : "📹 Video: SKIP";
+                                me.BackgroundColor = CameraControl.EnableVideoRecording ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
                             })
-                            .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
-                            {
-                                me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
-                            }),
-
-                            new SkiaButton("🎵 Audio Codec")
-                            {
-                                BackgroundColor = Color.FromArgb("#475569"),
-                                TextColor = Colors.White,
-                                CornerRadius = 8,
-                                UseCache = SkiaCacheType.Image,
-                                Padding = new Thickness(16, 10)
-                            }
-                            .Assign(out _audioCodecButton)
-                            .OnTapped(async me => { await SelectAudioCodec(); })
                             .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                             {
                                 me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
@@ -861,10 +882,10 @@ namespace CameraTests.Views
                                     me.Text = CameraControl.InjectGpsLocation ? "📍 Geotag: ON" : "📍 Geotag: OFF";
                                     me.BackgroundColor = CameraControl.InjectGpsLocation ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
                                 }),
-
-                       
                         }
                     },
+
+ 
 
                   
                 }
