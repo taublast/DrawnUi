@@ -20,7 +20,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     private SettingsButton _speechButton;
     private IRealtimeTranscriptionService _realtimeTranscriptionService;
     private SkiaShape _cameraSelectButton;
-    private SettingsButton _audioSelectButton;
+ 
     private SettingsButton _audioCodecButton;
     private SkiaLayer _previewOverlay;
     private SkiaImage _previewImage;
@@ -672,14 +672,11 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                             var selectedCamera = cameras[selectedIndex];
 
                             // Set camera selection - this will automatically trigger restart if camera is running
-                            CameraControl.Facing = CameraPosition.Manual;
                             CameraControl.CameraIndex = selectedCamera.Index;
-
-                            // Update button text
-                            //_cameraSelectButton.Text = $"📷 {selectedCamera.Position}";
+                            CameraControl.Facing = CameraPosition.Manual;
 
                             Debug.WriteLine(
-                                $"Selected: {selectedCamera.Name} ({selectedCamera.Position})\nIndex: {selectedCamera.Index}");
+                                $"Selected: {selectedCamera.Name} ({selectedCamera.Position})\nId: {selectedCamera.Id} Index: {selectedCamera.Index}");
                         }
                     }
                 }
@@ -720,7 +717,6 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                         if (result == "System Default")
                         {
                             CameraControl.AudioDeviceIndex = -1;
-                            _audioSelectButton.Text = "Audio: Default";
                         }
                         else
                         {
@@ -739,7 +735,6 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                             if (selectedIndex >= 0)
                             {
                                 CameraControl.AudioDeviceIndex = selectedIndex;
-                                _audioSelectButton.Text = $"{result}";
                             }
                         }
                     }

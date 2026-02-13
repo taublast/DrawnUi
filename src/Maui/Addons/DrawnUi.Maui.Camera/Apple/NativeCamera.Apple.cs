@@ -308,42 +308,24 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                 AVCaptureDevice videoDevice = null;
 
-                // Manual camera selection
+                // Manual camera selection using same discovery session as GetAvailableCamerasPlatform
                 if (FormsControl.Facing == CameraPosition.Manual && FormsControl.CameraIndex >= 0)
                 {
-                    // First try lookup by unique device ID (most reliable)
-                    if (!string.IsNullOrEmpty(FormsControl.CameraDeviceId))
+                    var discoverySession = AVCaptureDeviceDiscoverySession.Create(
+                        SkiaCamera.GetDiscoveryDeviceTypes(),
+                        AVMediaTypes.Video,
+                        AVCaptureDevicePosition.Unspecified);
+
+                    var allDevices = discoverySession.Devices;
+                    if (FormsControl.CameraIndex < allDevices.Length)
                     {
-                        videoDevice = AVCaptureDevice.DeviceWithUniqueID(FormsControl.CameraDeviceId);
-                        if (videoDevice != null)
-                        {
-                            Console.WriteLine($"[NativeCameraApple] Selected camera by DeviceId '{FormsControl.CameraDeviceId}': {videoDevice.LocalizedName}");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"[NativeCameraApple] Camera DeviceId '{FormsControl.CameraDeviceId}' not found, falling back to index");
-                        }
+                        videoDevice = allDevices[FormsControl.CameraIndex];
+                        Console.WriteLine($"[NativeCameraApple] Selected camera by index {FormsControl.CameraIndex}: {videoDevice.LocalizedName}");
                     }
-
-                    // Fall back to index using the same discovery session as GetAvailableCamerasPlatform
-                    if (videoDevice == null)
+                    else
                     {
-                        var discoverySession = AVCaptureDeviceDiscoverySession.Create(
-                            SkiaCamera.GetDiscoveryDeviceTypes(),
-                            AVMediaTypes.Video,
-                            AVCaptureDevicePosition.Unspecified);
-
-                        var allDevices = discoverySession.Devices;
-                        if (FormsControl.CameraIndex < allDevices.Length)
-                        {
-                            videoDevice = allDevices[FormsControl.CameraIndex];
-                            Console.WriteLine($"[NativeCameraApple] Selected camera by index {FormsControl.CameraIndex}: {videoDevice.LocalizedName}");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"[NativeCameraApple] Invalid camera index {FormsControl.CameraIndex} (have {allDevices.Length} devices), falling back to default");
-                            videoDevice = allDevices.FirstOrDefault();
-                        }
+                        Console.WriteLine($"[NativeCameraApple] Invalid camera index {FormsControl.CameraIndex} (have {allDevices.Length} devices), falling back to default");
+                        videoDevice = allDevices.FirstOrDefault();
                     }
                 }
                 else
@@ -639,6 +621,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                     formats.Add(new CaptureFormat
                     {
+                        Index = i,
                         Width = (int)dims.Width,
                         Height = (int)dims.Height,
                         FormatId = $"{dims.Width}x{dims.Height}"
@@ -1220,6 +1203,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                 return new CaptureFormat
                 {
+                    Index = -1,
                     Width = (int)stillDimensions.Width,
                     Height = (int)stillDimensions.Height,
                     FormatId = $"ios_{_deviceInput.Device.UniqueID}_{stillDimensions.Width}x{stillDimensions.Height}"
@@ -2816,6 +2800,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     Debug.WriteLine($"[NativeCamera.Apple] GetCurrentVideoFormat: Returning ACTIVE format {dims.Width}x{dims.Height}@{activeFps}");
                     return new VideoFormat
                     {
+                        Index = -1,
                         Width = dims.Width,
                         Height = dims.Height,
                         FrameRate = activeFps,
@@ -2882,7 +2867,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 
                 // Return a copy with adjusted FPS
                 return new VideoFormat 
-                { 
+                {
+                    Index = -1,
                     Width = bestFormat.Width, 
                     Height = bestFormat.Height, 
                     FrameRate = reportedFps, 
@@ -3359,6 +3345,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     .ThenByDescending(f => f.FPS)
                     .ToList();
 
+                var i = 0;
                 foreach (var fmt in uniqueFormats)
                 {
                     // Estimate bitrate based on resolution and framerate
@@ -3373,6 +3360,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                     formats.Add(new VideoFormat
                     {
+                        Index = i++,
                         Width = fmt.Width,
                         Height = fmt.Height,
                         FrameRate = fmt.FPS,

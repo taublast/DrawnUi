@@ -465,33 +465,15 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         // Manual camera selection
         if (FormsControl.Facing == CameraPosition.Manual && FormsControl.CameraIndex >= 0)
         {
-            // First try lookup by unique device ID (most reliable)
-            if (!string.IsNullOrEmpty(FormsControl.CameraDeviceId))
+            if (FormsControl.CameraIndex < devices.Count)
             {
-                _cameraDevice = devices.FirstOrDefault(d => d.Id == FormsControl.CameraDeviceId);
-                if (_cameraDevice != null)
-                {
-                    Debug.WriteLine($"[NativeCameraWindows] Selected camera by DeviceId '{FormsControl.CameraDeviceId}': {_cameraDevice.Name}");
-                }
-                else
-                {
-                    Debug.WriteLine($"[NativeCameraWindows] Camera DeviceId '{FormsControl.CameraDeviceId}' not found, falling back to index");
-                }
+                _cameraDevice = devices[FormsControl.CameraIndex];
+                Debug.WriteLine($"[NativeCameraWindows] Selected camera by index {FormsControl.CameraIndex}: {_cameraDevice.Name}");
             }
-
-            // Fall back to index
-            if (_cameraDevice == null)
+            else
             {
-                if (FormsControl.CameraIndex < devices.Count)
-                {
-                    _cameraDevice = devices[FormsControl.CameraIndex];
-                    Debug.WriteLine($"[NativeCameraWindows] Selected camera by index {FormsControl.CameraIndex}: {_cameraDevice.Name}");
-                }
-                else
-                {
-                    Debug.WriteLine($"[NativeCameraWindows] Invalid camera index {FormsControl.CameraIndex} (have {devices.Count} devices), falling back to first camera");
-                    _cameraDevice = devices.FirstOrDefault();
-                }
+                Debug.WriteLine($"[NativeCameraWindows] Invalid camera index {FormsControl.CameraIndex} (have {devices.Count} devices), falling back to first camera");
+                _cameraDevice = devices.FirstOrDefault();
             }
         }
         else
@@ -1931,6 +1913,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             {
                 return new CaptureFormat
                 {
+                    Index = -1,
                     Width = (int)width,
                     Height = (int)height,
                     FormatId = $"windows_{_cameraDevice?.Id}_{width}x{height}"
@@ -2194,6 +2177,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                     .ThenByDescending(f => f.FPS)
                     .ToList();
 
+                var i = 0;
                 foreach (var fmt in uniqueFormats)
                 {
                     // Estimate bitrate based on resolution and framerate
@@ -2208,6 +2192,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
                     formats.Add(new VideoFormat
                     {
+                        Index = i++,
                         Width = fmt.Width,
                         Height = fmt.Height,
                         FrameRate = fmt.FPS,

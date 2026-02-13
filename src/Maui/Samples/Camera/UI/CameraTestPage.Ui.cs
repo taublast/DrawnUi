@@ -4,7 +4,6 @@ using CameraTests.UI;
 using DrawnUi.Camera;
 using DrawnUi.Controls;
 using DrawnUi.Views;
-using SkiaSharp;
 
 namespace CameraTests.Views
 {
@@ -370,7 +369,8 @@ namespace CameraTests.Views
                     }
                 },
 
-                // Enhanced Status Display (top-center compact)
+                // Status Display (top-center)
+                /*
                 new SkiaShape()
                 {
                     UseCache = SkiaCacheType.Operations,
@@ -394,6 +394,7 @@ namespace CameraTests.Views
                         .Assign(out _statusLabel)
                     }
                 },
+                */
 
                 // Settings Drawer (slides up from bottom)
                 new SkiaDrawer()
@@ -595,7 +596,7 @@ namespace CameraTests.Views
                     .Assign(out _tabLabels[0])
                     .OnTapped(me => SelectTab(0)),
 
-                    new SkiaLabel("🎤 Audio")
+                    new SkiaLabel("🎤 Processing")
                     {
                         FontSize = 13,
                         TextColor = Color.FromArgb("#888888"),
@@ -607,7 +608,7 @@ namespace CameraTests.Views
                     .Assign(out _tabLabels[1])
                     .OnTapped(me => SelectTab(1)),
 
-                    new SkiaLabel("🎬 Feed")
+                    new SkiaLabel("🎬 Export")
                     {
                         FontSize = 13,
                         TextColor = Color.FromArgb("#888888"),
@@ -630,43 +631,129 @@ namespace CameraTests.Views
                 VerticalOptions = LayoutOptions.Start,
                 Children =
                 {
-                    new SettingsButton("📸", "Photo Mode")
-                    {
-                        TintColor = Color.FromArgb("#0891B2"),
-                    }
-                    .OnTapped(me => { ToggleCaptureMode(); })
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
-                    {
-                        me.AccessoryIcon = CameraControl.CaptureMode == CaptureModeType.Still ? "📸" : "🎥";
-                        me.Text = CameraControl.CaptureMode == CaptureModeType.Still
-                            ? "Photo Mode"
-                            : "Video Mode";
-                        me.TintColor = CameraControl.CaptureMode == CaptureModeType.Still
-                            ? Color.FromArgb("#0891B2")
-                            : Color.FromArgb("#7C3AED");
-                    }),
+                  
+                    // Mode
+                    new SettingsButton("📸", "Mode")
+                        {
+                            TintColor = Color.FromArgb("#0891B2"),
+                        }
+                        .OnTapped(me => { ToggleCaptureMode(); })
+                        .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                        {
+                            me.AccessoryIcon = CameraControl.CaptureMode == CaptureModeType.Still ? "📸" : "🎥";
+                            me.Text = CameraControl.CaptureMode == CaptureModeType.Still
+                                ? "Mode: Photo"
+                                : "Mode: Video";
+                            me.TintColor = CameraControl.CaptureMode == CaptureModeType.Still
+                                ? Color.FromArgb("#0891B2")
+                                : Color.FromArgb("#7C3AED");
+                        }),
 
-                    new SettingsButton("🗂️", "Photo Formats")
+                    //Video Source
+                    new SettingsButton("📷", "Source")
+                    {
+                        TintColor = Color.FromArgb("#D97706"),
+                    }
+                    .ObserveProperty(CameraControl, nameof(CameraControl.CameraIndex), async (me) =>
+                    {
+                        var cameras = await CameraControl.GetAvailableCamerasAsync();
+                        var index = CameraControl.CameraIndex;
+                        if (index < 0)
+                        {
+                            index = 0;
+                        }
+                        var selectedCamera = cameras.First(c => c.Index == index);
+                        me.Text = $"{selectedCamera.Name}";
+                    })
+                    .OnTapped(async me => { await SelectCamera(); }),
+
+                    new SettingsButton("🎤", "Audio Device")
+                        {
+                            TintColor = Color.FromArgb("#B45309"),
+                        }
+                        .ObserveProperty(CameraControl, nameof(CameraControl.AudioDeviceIndex), async (me) =>
+                        {
+                            if (CameraControl.AudioDeviceIndex < 0)
+                            {
+                                me.Text = "System Default Audio";
+                            }
+                            else
+                            {
+                                var arrayDevices = await CameraControl.GetAvailableAudioDevicesAsync();
+                                if (arrayDevices.Count > 0)
+                                {
+                                    var device = arrayDevices[CameraControl.AudioDeviceIndex];
+                                    me.Text = $"{device}";
+                                }
+                                else
+                                {
+                                    me.Text = "Error";
+                                }
+                            }
+                        })
+                        .OnTapped(async me => { await SelectAudioSource(); }),
+
+
+                    //Video Formats
+                    new SettingsButton("🗂️", "Formats")
                     {
                         TintColor = Color.FromArgb("#4F46E5"),
                     }
                     .OnTapped(async me => { await ShowPhotoFormatPicker(); })
+                    .ObserveProperties(CameraControl, new []
+                    {
+                        nameof(CameraControl.PhotoFormatIndex),
+                        nameof(CameraControl.CaptureMode),
+                        nameof(CameraControl.CameraIndex),
+                    }, async (me) =>
+                    {
+                        var formats = await CameraControl.GetAvailableCaptureFormatsAsync();
+                        if (formats.Count > 0)
+                        {
+                            var index = CameraControl.PhotoFormatIndex;
+                            if (index < 0)
+                            {
+                                index = 0;
+                            }
+                            var format = formats.First(c => c.Index == index);
+                            me.Text = $"{format.Description}";
+                        }
+                    })
                     .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                     {
                         me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Still;
                     }),
 
-                    new SettingsButton("🗂️", "Video Formats")
+                    new SettingsButton("🗂️", "Formats")
                     {
                         TintColor = Color.FromArgb("#4F46E5"),
                     }
                     .OnTapped(async me => { await ShowVideoFormatPicker(); })
+                    .ObserveProperties(CameraControl, new []
+                    {
+                        nameof(CameraControl.VideoFormatIndex),
+                        nameof(CameraControl.CaptureMode),
+                        nameof(CameraControl.CameraIndex),
+                    }, async (me) =>
+                    {
+                        var formats = await CameraControl.GetAvailableVideoFormatsAsync();
+                        if (formats.Count > 0)
+                        {
+                            var index = CameraControl.VideoFormatIndex;
+                            if (index < 0)
+                            {
+                                index = 0;
+                            }
+                            var format = formats.First(c => c.Index == index);
+                            me.Text = $"{format.Description}";
+                        }
+                    })
                     .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                     {
                         me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
                     }),
 
-                    new SettingsButton("❌", "Abort Recording")
+                    new SettingsButton("❌", "Abort")
                     {
                         TintColor = Color.FromArgb("#991B1B"),
                         IsVisible = false
@@ -682,23 +769,11 @@ namespace CameraTests.Views
                         me.IsVisible = CameraControl.IsRecording && CameraControl.CaptureMode == CaptureModeType.Video;
                     }),
 
-                    new SettingsButton("⚙️", "Processing: ON")
-                    {
-                        TintColor = Color.FromArgb("#10B981"),
-                    }
-                    .OnTapped(me =>
-                    {
-                        CameraControl.UseRealtimeVideoProcessing = !CameraControl.UseRealtimeVideoProcessing;
-                    })
-                    .ObserveProperty(() => CameraControl, nameof(CameraControl.UseRealtimeVideoProcessing), me =>
-                    {
-                        me.Text = CameraControl.UseRealtimeVideoProcessing ? "Processing: ON" : "Processing: OFF";
-                        me.TintColor = CameraControl.UseRealtimeVideoProcessing ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
-                    }),
+
                 }
             };
 
-            // Tab 1: Audio Settings
+            // Tab Processing
             var audioSection = new SkiaWrap
             {
                 Spacing = 8,
@@ -707,12 +782,20 @@ namespace CameraTests.Views
                 VerticalOptions = LayoutOptions.Start,
                 Children =
                 {
-                    new SettingsButton("🎤", "Audio Device")
-                    {
-                        TintColor = Color.FromArgb("#B45309"),
-                    }
-                    .Assign(out _audioSelectButton)
-                    .OnTapped(async me => { await SelectAudioSource(); }),
+                    // Processing
+                    new SettingsButton("⚙️", "Processing: ON")
+                        {
+                            TintColor = Color.FromArgb("#10B981"),
+                        }
+                        .OnTapped(me =>
+                        {
+                            CameraControl.UseRealtimeVideoProcessing = !CameraControl.UseRealtimeVideoProcessing;
+                        })
+                        .ObserveProperty(() => CameraControl, nameof(CameraControl.UseRealtimeVideoProcessing), me =>
+                        {
+                            me.Text = CameraControl.UseRealtimeVideoProcessing ? "Processing: ON" : "Processing: OFF";
+                            me.TintColor = CameraControl.UseRealtimeVideoProcessing ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
+                        }),
 
                     new SettingsButton("🎧", "Audio Monitor: OFF")
                     {
@@ -767,7 +850,7 @@ namespace CameraTests.Views
                 }
             };
 
-            // Tab 2: Feed / Recording Settings
+            // Tab 2: Export / Recording Settings
             var feedSection = new SkiaWrap
             {
                 Spacing = 8,

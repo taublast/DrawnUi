@@ -76,6 +76,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
                     formats.Add(new CaptureFormat
                     {
+                        Index = i,
                         Width = size.Width,
                         Height = size.Height,
                         FormatId = $"android_yuv_{cameraId}_{i}"
@@ -198,6 +199,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             {
                 return new CaptureFormat
                 {
+                    Index = -1,
                     Width = CaptureWidth,
                     Height = CaptureHeight,
                     FormatId = $"android_{CameraId}_{CaptureWidth}x{CaptureHeight}"
@@ -1090,37 +1092,17 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 CameraUnit selectedCamera = null;
                 if (FormsControl.Facing == CameraPosition.Manual && FormsControl.CameraIndex >= 0)
                 {
-                    // First try lookup by unique device ID (most reliable)
-                    if (!string.IsNullOrEmpty(FormsControl.CameraDeviceId))
+                    if (FormsControl.CameraIndex < cameras.Count)
                     {
-                        selectedCamera = cameras.FirstOrDefault(c => c.Id == FormsControl.CameraDeviceId);
-                        if (selectedCamera != null)
-                        {
-                            Debug.WriteLine(
-                                $"[NativeCameraAndroid] Selected camera by DeviceId '{FormsControl.CameraDeviceId}': {selectedCamera.Id}");
-                        }
-                        else
-                        {
-                            Debug.WriteLine(
-                                $"[NativeCameraAndroid] Camera DeviceId '{FormsControl.CameraDeviceId}' not found, falling back to index");
-                        }
+                        selectedCamera = cameras[FormsControl.CameraIndex];
+                        Debug.WriteLine(
+                            $"[NativeCameraAndroid] Selected camera by index {FormsControl.CameraIndex}: {selectedCamera.Id}");
                     }
-
-                    // Fall back to index
-                    if (selectedCamera == null)
+                    else
                     {
-                        if (FormsControl.CameraIndex < cameras.Count)
-                        {
-                            selectedCamera = cameras[FormsControl.CameraIndex];
-                            Debug.WriteLine(
-                                $"[NativeCameraAndroid] Selected camera by index {FormsControl.CameraIndex}: {selectedCamera.Id}");
-                        }
-                        else
-                        {
-                            Debug.WriteLine(
-                                $"[NativeCameraAndroid] Invalid camera index {FormsControl.CameraIndex} (have {cameras.Count} cameras), falling back to first camera");
-                            selectedCamera = cameras[0];
-                        }
+                        Debug.WriteLine(
+                            $"[NativeCameraAndroid] Invalid camera index {FormsControl.CameraIndex} (have {cameras.Count} cameras), falling back to first camera");
+                        selectedCamera = cameras[0];
                     }
                 }
                 else
@@ -2464,6 +2446,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             var profile = GetVideoProfile();
             return new VideoFormat
             {
+                Index=-1,
                 Width = profile.VideoFrameWidth,
                 Height = profile.VideoFrameHeight,
                 FrameRate = profile.VideoFrameRate,
@@ -2756,6 +2739,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             (CamcorderQuality.Qcif,   "QCIF"),   // 176x144
         };
 
+        int i = 0;
         foreach (var (quality, name) in supportedQualities)
         {
             if (CamcorderProfile.HasProfile(cameraId, quality))
@@ -2763,6 +2747,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 var profile = CamcorderProfile.Get(cameraId, quality);
                 formats.Add(new VideoFormat
                 {
+                    Index = i++,
                     Width = profile.VideoFrameWidth,
                     Height = profile.VideoFrameHeight,
                     FrameRate = profile.VideoFrameRate,
@@ -2780,6 +2765,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             var profile = CamcorderProfile.Get(cameraId, CamcorderQuality.Low);
             formats.Add(new VideoFormat
             {
+                Index=i++,
                 Width = profile.VideoFrameWidth,
                 Height = profile.VideoFrameHeight,
                 FrameRate = profile.VideoFrameRate,

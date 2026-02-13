@@ -229,6 +229,7 @@ public partial class SkiaCamera : SkiaControl
 
                             formats.Add(new CaptureFormat
                             {
+                                Index = i,
                                 Width = (int)format.VideoFormat.Width,
                                 Height = (int)format.VideoFormat.Height,
                                 FormatId = $"windows_{currentDevice.Id}_{i}"

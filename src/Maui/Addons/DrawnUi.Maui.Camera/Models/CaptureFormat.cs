@@ -5,6 +5,8 @@ namespace DrawnUi.Camera;
 /// </summary>
 public class CaptureFormat
 {
+    public int Index { get; set; }
+
     /// <summary>
     /// Width in pixels
     /// </summary>
@@ -49,7 +51,9 @@ public class CaptureFormat
     /// <summary>
     /// Human-readable description
     /// </summary>
-    public string Description => $"{Width}x{Height} ({TotalPixels:N0} pixels, {AspectRatioString})";
+    public string Description => $"{Width}x{Height} ({AspectRatioString})";//$"{Width}x{Height} ({TotalPixels:N0} pixels, {AspectRatioString})"; 
+
+    public string DescriptionFull => $"{Width}x{Height} ({TotalPixels:N0} pixels, {AspectRatioString})"; 
 
     public override string ToString() => Description;
 

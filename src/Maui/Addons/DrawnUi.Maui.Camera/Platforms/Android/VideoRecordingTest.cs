@@ -64,6 +64,7 @@ public static class AndroidVideoRecordingTest
             (CamcorderQuality.Low, "Low")
         };
 
+        int i = 0;
         foreach (var (quality, name) in supportedQualities)
         {
             if (CamcorderProfile.HasProfile(cameraId, quality))
@@ -71,6 +72,7 @@ public static class AndroidVideoRecordingTest
                 var profile = CamcorderProfile.Get(cameraId, quality);
                 formats.Add(new VideoFormat
                 {
+                    Index = i++,
                     Width = profile.VideoFrameWidth,
                     Height = profile.VideoFrameHeight,
                     FrameRate = profile.VideoFrameRate,

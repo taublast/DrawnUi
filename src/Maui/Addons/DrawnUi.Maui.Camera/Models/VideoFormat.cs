@@ -5,6 +5,8 @@ namespace DrawnUi.Camera;
 /// </summary>
 public class VideoFormat
 {
+    public int Index { get; set; }
+
     /// <summary>
     /// Width in pixels
     /// </summary>
@@ -64,7 +66,9 @@ public class VideoFormat
     /// <summary>
     /// Human-readable description
     /// </summary>
-    public string Description => $"{Width}x{Height}@{FrameRate}fps ({Codec}, {BitRate / 1000000.0:F1}Mbps)";
+    public string Description => $"{Width}x{Height}@{FrameRate}fps";
+
+    public string DescriptionFull => $"{Width}x{Height}@{FrameRate}fps ({Codec}, {BitRate / 1000000.0:F1}Mbps)";
 
     public override string ToString() => Description;
 
