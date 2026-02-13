@@ -1086,30 +1086,39 @@ public partial class SkiaCamera
         NativeControl?.ApplyDeviceOrientation(DeviceRotation);
     }
 
+    /// <summary>
+    /// Returns the device types used for camera discovery on this iOS version.
+    /// Must be consistent everywhere we enumerate or look up cameras.
+    /// </summary>
+    internal static AVFoundation.AVCaptureDeviceType[] GetDiscoveryDeviceTypes()
+    {
+        var deviceTypes = new List<AVFoundation.AVCaptureDeviceType>
+        {
+            AVFoundation.AVCaptureDeviceType.BuiltInWideAngleCamera,
+            AVFoundation.AVCaptureDeviceType.BuiltInTelephotoCamera,
+            AVFoundation.AVCaptureDeviceType.BuiltInUltraWideCamera
+        };
+
+        if (UIKit.UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
+        {
+            deviceTypes.Add(AVFoundation.AVCaptureDeviceType.BuiltInDualCamera);
+            deviceTypes.Add(AVFoundation.AVCaptureDeviceType.BuiltInTripleCamera);
+            deviceTypes.Add(AVFoundation.AVCaptureDeviceType.BuiltInTrueDepthCamera);
+            deviceTypes.Add(AVFoundation.AVCaptureDeviceType.BuiltInLiDarDepthCamera);
+            deviceTypes.Add(AVFoundation.AVCaptureDeviceType.BuiltInDualWideCamera);
+        }
+
+        return deviceTypes.ToArray();
+    }
+
     protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform(bool refresh)
     {
         var cameras = new List<CameraInfo>();
 
         try
         {
-            var deviceTypes = new AVFoundation.AVCaptureDeviceType[]
-            {
-                AVFoundation.AVCaptureDeviceType.BuiltInWideAngleCamera,
-                AVFoundation.AVCaptureDeviceType.BuiltInTelephotoCamera,
-                AVFoundation.AVCaptureDeviceType.BuiltInUltraWideCamera
-            };
-
-            if (UIKit.UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
-            {
-                deviceTypes = deviceTypes.Concat(new[]
-                {
-                    AVFoundation.AVCaptureDeviceType.BuiltInDualCamera,
-                    AVFoundation.AVCaptureDeviceType.BuiltInTripleCamera
-                }).ToArray();
-            }
-
             var discoverySession = AVFoundation.AVCaptureDeviceDiscoverySession.Create(
-                deviceTypes,
+                GetDiscoveryDeviceTypes(),
                 AVFoundation.AVMediaTypes.Video,
                 AVFoundation.AVCaptureDevicePosition.Unspecified);
 
@@ -1125,13 +1134,18 @@ public partial class SkiaCamera
                     _ => CameraPosition.Default
                 };
 
+                var supportsVideo = device.SupportsAVCaptureSessionPreset(AVFoundation.AVCaptureSession.PresetHigh);
+                var supportsPhoto = device.SupportsAVCaptureSessionPreset(AVFoundation.AVCaptureSession.PresetPhoto);
+
                 cameras.Add(new CameraInfo
                 {
                     Id = device.UniqueID,
                     Name = device.LocalizedName,
                     Position = position,
                     Index = i,
-                    HasFlash = device.HasFlash
+                    HasFlash = device.HasFlash,
+                    SupportsVideo = supportsVideo,
+                    SupportsPhoto = supportsPhoto
                 });
             }
         }

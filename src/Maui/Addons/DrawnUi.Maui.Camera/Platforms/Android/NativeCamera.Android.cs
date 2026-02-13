@@ -1,6 +1,5 @@
 ﻿using System.Buffers;
 using System.ComponentModel;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 using Android.Content;
 using Android.Content.Res;
@@ -19,7 +18,6 @@ using AppoMobi.Specials;
 using Java.Lang;
 using Java.Util.Concurrent;
 using SkiaSharp.Views.Android;
-using TerraFX.Interop.Windows;
 using Boolean = System.Boolean;
 using Debug = System.Diagnostics.Debug;
 using Exception = System.Exception;
@@ -1088,21 +1086,41 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 if (!cameras.Any())
                     return;
 
-                // Select camera based on manual index or default to first
-                CameraUnit selectedCamera;
+                // Select camera based on manual device ID, index, or default to first
+                CameraUnit selectedCamera = null;
                 if (FormsControl.Facing == CameraPosition.Manual && FormsControl.CameraIndex >= 0)
                 {
-                    if (FormsControl.CameraIndex < cameras.Count)
+                    // First try lookup by unique device ID (most reliable)
+                    if (!string.IsNullOrEmpty(FormsControl.CameraDeviceId))
                     {
-                        selectedCamera = cameras[FormsControl.CameraIndex];
-                        Debug.WriteLine(
-                            $"[NativeCameraAndroid] Selected camera by index {FormsControl.CameraIndex}: {selectedCamera.Id}");
+                        selectedCamera = cameras.FirstOrDefault(c => c.Id == FormsControl.CameraDeviceId);
+                        if (selectedCamera != null)
+                        {
+                            Debug.WriteLine(
+                                $"[NativeCameraAndroid] Selected camera by DeviceId '{FormsControl.CameraDeviceId}': {selectedCamera.Id}");
+                        }
+                        else
+                        {
+                            Debug.WriteLine(
+                                $"[NativeCameraAndroid] Camera DeviceId '{FormsControl.CameraDeviceId}' not found, falling back to index");
+                        }
                     }
-                    else
+
+                    // Fall back to index
+                    if (selectedCamera == null)
                     {
-                        Debug.WriteLine(
-                            $"[NativeCameraAndroid] Invalid camera index {FormsControl.CameraIndex}, falling back to first camera");
-                        selectedCamera = cameras[0];
+                        if (FormsControl.CameraIndex < cameras.Count)
+                        {
+                            selectedCamera = cameras[FormsControl.CameraIndex];
+                            Debug.WriteLine(
+                                $"[NativeCameraAndroid] Selected camera by index {FormsControl.CameraIndex}: {selectedCamera.Id}");
+                        }
+                        else
+                        {
+                            Debug.WriteLine(
+                                $"[NativeCameraAndroid] Invalid camera index {FormsControl.CameraIndex} (have {cameras.Count} cameras), falling back to first camera");
+                            selectedCamera = cameras[0];
+                        }
                     }
                 }
                 else

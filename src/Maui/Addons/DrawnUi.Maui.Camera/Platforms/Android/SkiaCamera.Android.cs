@@ -1,12 +1,7 @@
 ﻿using System.Diagnostics;
 using Android.Content;
-using Android.Hardware.Camera2;
 using Android.Media;
-using Android.Telecom;
 using DrawnUi.Camera.Platforms.Android;
-using Microsoft.Maui.Controls.PlatformConfiguration;
-using static AndroidX.Media3.ExoPlayer.Upstream.Experimental.SlidingWeightedAverageBandwidthStatistic;
-
 
 namespace DrawnUi.Camera;
 
@@ -169,10 +164,17 @@ public partial class SkiaCamera
             var manager = (Android.Hardware.Camera2.CameraManager)context.GetSystemService(Android.Content.Context.CameraService);
             var cameraIds = manager.GetCameraIdList();
 
+            int validIndex = 0;
             for (int i = 0; i < cameraIds.Length; i++)
             {
                 var cameraId = cameraIds[i];
                 var characteristics = manager.GetCameraCharacteristics(cameraId);
+
+                // Skip cameras without stream configuration (same filter as SetupHardware)
+                var map = (Android.Hardware.Camera2.Params.StreamConfigurationMap)characteristics.Get(
+                    Android.Hardware.Camera2.CameraCharacteristics.ScalerStreamConfigurationMap);
+                if (map == null)
+                    continue;
 
                 var facing = (Java.Lang.Integer)characteristics.Get(Android.Hardware.Camera2.CameraCharacteristics.LensFacing);
                 var position = CameraPosition.Default;
@@ -189,14 +191,21 @@ public partial class SkiaCamera
 
                 var flashAvailable = (Java.Lang.Boolean)characteristics.Get(Android.Hardware.Camera2.CameraCharacteristics.FlashInfoAvailable);
 
+                // Check video/photo capability via available output sizes
+                var supportsVideo = map.GetOutputSizes(Java.Lang.Class.FromType(typeof(Android.Media.MediaRecorder)))?.Length > 0;
+                var supportsPhoto = map.GetOutputSizes((int)Android.Graphics.ImageFormatType.Jpeg)?.Length > 0;
+
                 cameras.Add(new CameraInfo
                 {
                     Id = cameraId,
-                    Name = $"Camera {i} ({position})",
+                    Name = $"Camera {cameraId} ({position})",
                     Position = position,
-                    Index = i,
-                    HasFlash = flashAvailable?.BooleanValue() ?? false
+                    Index = validIndex,
+                    HasFlash = flashAvailable?.BooleanValue() ?? false,
+                    SupportsVideo = supportsVideo,
+                    SupportsPhoto = supportsPhoto
                 });
+                validIndex++;
             }
         }
         catch (Exception ex)

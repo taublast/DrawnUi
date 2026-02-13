@@ -650,6 +650,24 @@ public partial class SkiaCamera : SkiaControl
         set => SetValue(CameraIndexProperty, value);
     }
 
+    public static readonly BindableProperty CameraDeviceIdProperty = BindableProperty.Create(
+        nameof(CameraDeviceId),
+        typeof(string),
+        typeof(SkiaCamera),
+        string.Empty,
+        propertyChanged: NeedRestart);
+
+    /// <summary>
+    /// Platform-specific unique device ID for manual camera selection.
+    /// When set and Facing is Manual, this takes priority over CameraIndex.
+    /// Use CameraInfo.Id from GetAvailableCamerasAsync to get valid values.
+    /// </summary>
+    public string CameraDeviceId
+    {
+        get => (string)GetValue(CameraDeviceIdProperty);
+        set => SetValue(CameraDeviceIdProperty, value);
+    }
+
     public static readonly BindableProperty CustomAlbumProperty = BindableProperty.Create(nameof(CustomAlbum),
         typeof(string),
         typeof(SkiaCamera),

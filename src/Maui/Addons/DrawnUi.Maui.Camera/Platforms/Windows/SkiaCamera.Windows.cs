@@ -147,7 +147,9 @@ public partial class SkiaCamera : SkiaControl
                     Name = device.Name,
                     Position = position,
                     Index = i,
-                    HasFlash = false // TODO: Detect flash support
+                    HasFlash = false, // TODO: Detect flash support
+                    SupportsVideo = true,
+                    SupportsPhoto = true
                 });
             }
         }

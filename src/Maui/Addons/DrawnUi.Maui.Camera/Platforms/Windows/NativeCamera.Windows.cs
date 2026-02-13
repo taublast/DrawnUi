@@ -465,15 +465,33 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         // Manual camera selection
         if (FormsControl.Facing == CameraPosition.Manual && FormsControl.CameraIndex >= 0)
         {
-            if (FormsControl.CameraIndex < devices.Count)
+            // First try lookup by unique device ID (most reliable)
+            if (!string.IsNullOrEmpty(FormsControl.CameraDeviceId))
             {
-                _cameraDevice = devices[FormsControl.CameraIndex];
-                Debug.WriteLine($"[NativeCameraWindows] Selected camera by index {FormsControl.CameraIndex}: {_cameraDevice.Name}");
+                _cameraDevice = devices.FirstOrDefault(d => d.Id == FormsControl.CameraDeviceId);
+                if (_cameraDevice != null)
+                {
+                    Debug.WriteLine($"[NativeCameraWindows] Selected camera by DeviceId '{FormsControl.CameraDeviceId}': {_cameraDevice.Name}");
+                }
+                else
+                {
+                    Debug.WriteLine($"[NativeCameraWindows] Camera DeviceId '{FormsControl.CameraDeviceId}' not found, falling back to index");
+                }
             }
-            else
+
+            // Fall back to index
+            if (_cameraDevice == null)
             {
-                Debug.WriteLine($"[NativeCameraWindows] Invalid camera index {FormsControl.CameraIndex}, falling back to first camera");
-                _cameraDevice = devices.FirstOrDefault();
+                if (FormsControl.CameraIndex < devices.Count)
+                {
+                    _cameraDevice = devices[FormsControl.CameraIndex];
+                    Debug.WriteLine($"[NativeCameraWindows] Selected camera by index {FormsControl.CameraIndex}: {_cameraDevice.Name}");
+                }
+                else
+                {
+                    Debug.WriteLine($"[NativeCameraWindows] Invalid camera index {FormsControl.CameraIndex} (have {devices.Count} devices), falling back to first camera");
+                    _cameraDevice = devices.FirstOrDefault();
+                }
             }
         }
         else

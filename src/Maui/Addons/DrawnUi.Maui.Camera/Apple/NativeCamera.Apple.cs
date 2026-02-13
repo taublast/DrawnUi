@@ -311,16 +311,39 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 // Manual camera selection
                 if (FormsControl.Facing == CameraPosition.Manual && FormsControl.CameraIndex >= 0)
                 {
-                    var allDevices = AVCaptureDevice.DevicesWithMediaType(AVMediaTypes.Video.GetConstant());
-                    if (FormsControl.CameraIndex < allDevices.Length)
+                    // First try lookup by unique device ID (most reliable)
+                    if (!string.IsNullOrEmpty(FormsControl.CameraDeviceId))
                     {
-                        videoDevice = allDevices[FormsControl.CameraIndex];
-                        Console.WriteLine($"[NativeCameraApple] Selected camera by index {FormsControl.CameraIndex}: {videoDevice.LocalizedName}");
+                        videoDevice = AVCaptureDevice.DeviceWithUniqueID(FormsControl.CameraDeviceId);
+                        if (videoDevice != null)
+                        {
+                            Console.WriteLine($"[NativeCameraApple] Selected camera by DeviceId '{FormsControl.CameraDeviceId}': {videoDevice.LocalizedName}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"[NativeCameraApple] Camera DeviceId '{FormsControl.CameraDeviceId}' not found, falling back to index");
+                        }
                     }
-                    else
+
+                    // Fall back to index using the same discovery session as GetAvailableCamerasPlatform
+                    if (videoDevice == null)
                     {
-                        Console.WriteLine($"[NativeCameraApple] Invalid camera index {FormsControl.CameraIndex}, falling back to default");
-                        videoDevice = allDevices.FirstOrDefault();
+                        var discoverySession = AVCaptureDeviceDiscoverySession.Create(
+                            SkiaCamera.GetDiscoveryDeviceTypes(),
+                            AVMediaTypes.Video,
+                            AVCaptureDevicePosition.Unspecified);
+
+                        var allDevices = discoverySession.Devices;
+                        if (FormsControl.CameraIndex < allDevices.Length)
+                        {
+                            videoDevice = allDevices[FormsControl.CameraIndex];
+                            Console.WriteLine($"[NativeCameraApple] Selected camera by index {FormsControl.CameraIndex}: {videoDevice.LocalizedName}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"[NativeCameraApple] Invalid camera index {FormsControl.CameraIndex} (have {allDevices.Length} devices), falling back to default");
+                            videoDevice = allDevices.FirstOrDefault();
+                        }
                     }
                 }
                 else
