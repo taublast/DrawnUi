@@ -24,6 +24,8 @@ namespace CameraTests.Visualizers
             set => SetValue(VisualizerNameProperty, value);
         }
 
+
+
         public IAudioVisualizer Visualizer { get; protected set; }
 
         public AudioVisualizer()
@@ -37,7 +39,10 @@ namespace CameraTests.Visualizers
 
             if (Visualizer != null)
             {
+                ctx.Context.Canvas.Save();
+                ctx.Context.Canvas.Translate(ctx.Destination.Left, ctx.Destination.Top);
                 Visualizer.Render(ctx.Context.Canvas, ctx.Destination.Width, ctx.Destination.Height, ctx.Scale);
+                ctx.Context.Canvas.Restore();
             }
         }
 
@@ -52,26 +57,24 @@ namespace CameraTests.Visualizers
             Visualizer = null;
         }
 
-        public void SwitchVisualizer(int index = -1)
+
+        public string SwitchVisualizer(int index = -1)
         {
-            if (index >= 0)
+            if (_visualizerIndex > 8 || _visualizerIndex < -1)
             {
-                _visualizerIndex = index;
+                _visualizerIndex = 0;
             }
             else
             {
                 _visualizerIndex++;
             }
-            if (_visualizerIndex > 8) _visualizerIndex = 0;
 
             var old = Visualizer;
-            bool useGain = false;
 
             switch (_visualizerIndex)
             {
                 case 0:
                     Visualizer = new AudioSoundBars();
-                    useGain = true;
                     VisualizerName = "Sound Bars";
                     break;
                 case 1:
@@ -82,13 +85,8 @@ namespace CameraTests.Visualizers
                     Visualizer = new AudioLevelsPeak();
                     VisualizerName = "Peak Monitor";
                     break;
-                //case 2:
-                //    Visualizer = new AudioLevels();
-                //    VisualizerName = "Spectrum";
-                //    break;
                 case 3:
                     Visualizer = new AudioOscillograph();
-                    useGain = true;
                     VisualizerName = "Oscillograph";
                     break;
                 case 4:
@@ -97,7 +95,6 @@ namespace CameraTests.Visualizers
                     break;
                 case 5:
                     Visualizer = new AudioInstrumentTuner();
-                    useGain = true;
                     VisualizerName = "Tuner";
                     break;
                 case 6:
@@ -112,10 +109,15 @@ namespace CameraTests.Visualizers
 
             if (Visualizer != null)
             {
-                Visualizer.UseGain = false;//useGain;
+                // Gain is applied upstream in OnAudioSampleAvailable, visualizers get pre-amplified signal
+                Visualizer.UseGain = false;
             }
 
             DisposeObject(old);
+
+            Update();
+
+            return VisualizerName;
         }
 
         public void AddSample(AudioSample sample)
@@ -123,7 +125,13 @@ namespace CameraTests.Visualizers
             if (Visualizer != null)
             {
                 Visualizer.AddSample(sample);
+                Update();
             }
+        }
+
+        protected override void UpdateInternal()
+        {
+            base.UpdateInternal();
         }
     }
 }

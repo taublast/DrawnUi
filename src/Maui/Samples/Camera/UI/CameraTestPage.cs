@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using System.Diagnostics;
-using AppoMobi.Specials;
 using CameraTests.Services;
 using CameraTests.UI;
 using CameraTests.Visualizers;
@@ -66,8 +65,6 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         base.Dispose(isDisposing);
     }
 
-
-
     /// <summary>
     /// This will be called by HotReload
     /// </summary>
@@ -83,6 +80,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         Canvas?.Dispose();
 
         CreateContent();
+
+        CameraControl.InitializeOverlayLayouts(new FrameOverlay(), new FrameOverlay());
     }
 
     public CameraTestPage(IRealtimeTranscriptionService realtimeTranscriptionService)
@@ -112,6 +111,9 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
             // Monitor recording state changes to start/stop speech recognition
             CameraControl.PropertyChanged += CameraControlOnPropertyChanged;
+
+            //CameraControl.OnAudioSample += HUD.AddAudioSample;
+
         }
         else
         {
@@ -127,6 +129,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                 CameraControl.AudioSampleAvailable -= OnAudioCaptured;
 
                 CameraControl.PropertyChanged -= CameraControlOnPropertyChanged;
+
+                //CameraControl.OnAudioSample -= HUD.AddAudioSample;
             }
         }
     }
@@ -906,33 +910,5 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         }
     }
 
-    private void SelectTab(int index)
-    {
-        if (_settingsTabs != null)
-            _settingsTabs.SelectedIndex = index;
-
-        if (_tabLabels != null)
-        {
-            for (int i = 0; i < _tabLabels.Length; i++)
-            {
-                _tabLabels[i].TextColor = i == index
-                    ? Colors.White
-                    : Color.FromArgb("#888888");
-                _tabLabels[i].FontAttributes = i == index
-                    ? FontAttributes.Bold
-                    : FontAttributes.None;
-            }
-        }
-    }
-
-    private void ToggleSettingsDrawer()
-    {
-        if (_settingsDrawer != null)
-        {
-            _settingsDrawer.IsOpen = !_settingsDrawer.IsOpen;
-        }
-    }
-
-    // Removed old manual video gallery implementation - now using SkiaCamera's built-in MoveVideoToGalleryAsync method
-
+ 
 }

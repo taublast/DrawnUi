@@ -40,7 +40,6 @@ namespace CameraTests.Views
                     HorizontalOptions = LayoutOptions.Fill,
                     VerticalOptions = LayoutOptions.Fill,
                     BackgroundColor = Colors.Black,
-                    CaptureMode = CaptureModeType.Still,
                     Aspect = TransformAspect.AspectFit
                 }
                 .Assign(out CameraControl)
@@ -125,20 +124,6 @@ namespace CameraTests.Views
                         me.Opacity = 1.0;
                     }
                 }),
-                //new SkiaShape()
-                //{
-                //    Type=ShapeType.Circle,
-                //    LockRatio = 1,
-                //    WidthRequest = 32,
-                //    Margin = 24,
-                //    BackgroundColor = Color.FromArgb("#883300FF"),
-                //    HorizontalOptions = LayoutOptions.End,
-                //    VerticalOptions = LayoutOptions.End,
-                //}
-                //.ObserveProperty(this, nameof(IsTranscribing), me =>
-                //{
-                //    me.IsVisible = this.IsTranscribing;
-                //}),
 
                 // OVERLAY CONTROLS - Native camera style
                 new SkiaLayout()
@@ -405,7 +390,7 @@ namespace CameraTests.Views
                     Direction = DrawerDirection.FromBottom,
                     VerticalOptions = LayoutOptions.End,
                     HorizontalOptions = LayoutOptions.Fill,
-                    MaximumHeightRequest = 230,
+                    MaximumHeightRequest = 300,
                     IsOpen = false,
                     BlockGesturesBelow = true,
                     IgnoreWrongDirection = true,
@@ -428,20 +413,7 @@ namespace CameraTests.Views
                                 Children =
                                 {
                                     CreateDrawerHeader(),
-                                    new SkiaScroll()
-                                    {
-                                        Bounces = false,
-                                        BackgroundColor = Colors.Transparent,
-                                        Margin = new Thickness(0, 40, 0, 0),
-                                        HorizontalOptions = LayoutOptions.Fill,
-                                        VerticalOptions = LayoutOptions.Fill,
-                                        Footer = new SkiaLayout()
-                                        {
-                                            HorizontalOptions = LayoutOptions.Fill,
-                                            HeightRequest = 40 //drawer header
-                                        },
-                                        Content = CreateDrawerContent()
-                                    },
+                                    CreateDrawerContent()
                                 }
                             }
                         }
@@ -449,13 +421,13 @@ namespace CameraTests.Views
                 }
                 .Assign(out _settingsDrawer),
 
-            }
+                }
                 };
             }
 
 
             // Create preview overlay (initially hidden)
-            _previewOverlay = CreatePreviewOverlay();
+            _previewOverlay = CreateTakenPhotoPreviewPopup();
 
             // Main layer that contains both the main stack and preview overlay
             var rootLayer = new SkiaLayer
@@ -516,19 +488,6 @@ namespace CameraTests.Views
                 CameraControl.UseRealtimeVideoProcessing = true;
                 CameraControl.VideoQuality = VideoQuality.Standard;
                 CameraControl.EnableAudioRecording = true;
-
-                CameraControl.FrameProcessor = (frame) =>
-                {
-                    CameraControl.DrawOverlay(frame);
-                };
-
-                CameraControl.PreviewProcessor = (frame) =>
-                {
-                    //if (CameraControl.IsRecording || CameraControl.IsPreRecording)
-                    {
-                        CameraControl.DrawOverlay(frame);
-                    }
-                };
 
                 // Setup camera event handlers
                 SetupCameraEvents(true);
@@ -623,158 +582,158 @@ namespace CameraTests.Views
             };
 
             // Tab 0: Capture Settings
-            var captureSection = new SkiaWrap
-            {
-                Spacing = 8,
-                Padding = new Thickness(16),
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Start,
-                Children =
+            var captureSection =
+
+                new SkiaScroll()
                 {
-                  
-                    // Mode
-                    new SettingsButton("📸", "Mode")
-                        {
-                            TintColor = Color.FromArgb("#0891B2"),
-                        }
-                        .OnTapped(me => { ToggleCaptureMode(); })
-                        .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
-                        {
-                            me.AccessoryIcon = CameraControl.CaptureMode == CaptureModeType.Still ? "📸" : "🎥";
-                            me.Text = CameraControl.CaptureMode == CaptureModeType.Still
-                                ? "Mode: Photo"
-                                : "Mode: Video";
-                            me.TintColor = CameraControl.CaptureMode == CaptureModeType.Still
-                                ? Color.FromArgb("#0891B2")
-                                : Color.FromArgb("#7C3AED");
-                        }),
-
-                    //Video Source
-                    new SettingsButton("📷", "Source")
+                    Bounces = false,
+                    BackgroundColor = Colors.Transparent,
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Fill,
+                    Content = new SkiaWrap
                     {
-                        TintColor = Color.FromArgb("#D97706"),
-                    }
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CameraIndex), async (me) =>
-                    {
-                        var cameras = await CameraControl.GetAvailableCamerasAsync();
-                        var index = CameraControl.CameraIndex;
-                        if (index < 0)
+                        Spacing = 8,
+                        Padding = new Thickness(16),
+                        HorizontalOptions = LayoutOptions.Fill,
+                        VerticalOptions = LayoutOptions.Start,
+                        Children =
                         {
-                            index = 0;
-                        }
-                        var selectedCamera = cameras.First(c => c.Index == index);
-                        me.Text = $"{selectedCamera.Name}";
-                    })
-                    .OnTapped(async me => { await SelectCamera(); }),
 
-                    new SettingsButton("🎤", "Audio Device")
-                        {
-                            TintColor = Color.FromArgb("#B45309"),
-                        }
-                        .ObserveProperty(CameraControl, nameof(CameraControl.AudioDeviceIndex), async (me) =>
-                        {
-                            if (CameraControl.AudioDeviceIndex < 0)
-                            {
-                                me.Text = "System Default Audio";
-                            }
-                            else
-                            {
-                                var arrayDevices = await CameraControl.GetAvailableAudioDevicesAsync();
-                                if (arrayDevices.Count > 0)
+                            // Mode
+                            new SettingsButton("📸", "Mode") { TintColor = Color.FromArgb("#0891B2"), }
+                                .OnTapped(me => { ToggleCaptureMode(); })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                                 {
-                                    var device = arrayDevices[CameraControl.AudioDeviceIndex];
-                                    me.Text = $"{device}";
-                                }
-                                else
+                                    me.AccessoryIcon = CameraControl.CaptureMode == CaptureModeType.Still ? "📸" : "🎥";
+                                    me.Text = CameraControl.CaptureMode == CaptureModeType.Still
+                                        ? "Mode: Photo"
+                                        : "Mode: Video";
+                                    me.TintColor = CameraControl.CaptureMode == CaptureModeType.Still
+                                        ? Color.FromArgb("#0891B2")
+                                        : Color.FromArgb("#7C3AED");
+                                }),
+
+                            //Video Source
+                            new SettingsButton("📷", "Source") { TintColor = Color.FromArgb("#D97706"), }
+                                .ObserveProperty(CameraControl, nameof(CameraControl.CameraIndex), async (me) =>
                                 {
-                                    me.Text = "Error";
+                                    var cameras = await CameraControl.GetAvailableCamerasAsync();
+                                    var index = CameraControl.CameraIndex;
+                                    if (index < 0)
+                                    {
+                                        index = 0;
+                                    }
+
+                                    var selectedCamera = cameras.First(c => c.Index == index);
+                                    me.Text = $"{selectedCamera.Name}";
+                                })
+                                .OnTapped(async me => { await SelectCamera(); }),
+                            new SettingsButton("🎤", "Audio Device") { TintColor = Color.FromArgb("#B45309"), }
+                                .ObserveProperty(CameraControl, nameof(CameraControl.AudioDeviceIndex), async (me) =>
+                                {
+                                    if (CameraControl.AudioDeviceIndex < 0)
+                                    {
+                                        me.Text = "System Default Audio";
+                                    }
+                                    else
+                                    {
+                                        var arrayDevices = await CameraControl.GetAvailableAudioDevicesAsync();
+                                        if (arrayDevices.Count > 0)
+                                        {
+                                            var device = arrayDevices[CameraControl.AudioDeviceIndex];
+                                            me.Text = $"{device}";
+                                        }
+                                        else
+                                        {
+                                            me.Text = "Error";
+                                        }
+                                    }
+                                })
+                                .OnTapped(async me => { await SelectAudioSource(); }),
+
+
+                            //Video Formats
+                            new SettingsButton("🗂️", "Formats") { TintColor = Color.FromArgb("#4F46E5"), }
+                                .OnTapped(async me => { await ShowPhotoFormatPicker(); })
+                                .ObserveProperties(CameraControl,
+                                    new[]
+                                    {
+                                        nameof(CameraControl.PhotoFormatIndex), nameof(CameraControl.CaptureMode),
+                                        nameof(CameraControl.CameraIndex),
+                                    }, async (me) =>
+                                    {
+                                        var formats = await CameraControl.GetAvailableCaptureFormatsAsync();
+                                        if (formats.Count > 0)
+                                        {
+                                            var index = CameraControl.PhotoFormatIndex;
+                                            if (index < 0)
+                                            {
+                                                index = 0;
+                                            }
+
+                                            var format = formats.First(c => c.Index == index);
+                                            me.Text = $"{format.Description}";
+                                        }
+                                    })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                {
+                                    me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Still;
+                                }),
+                            new SettingsButton("🗂️", "Formats") { TintColor = Color.FromArgb("#4F46E5"), }
+                                .OnTapped(async me => { await ShowVideoFormatPicker(); })
+                                .ObserveProperties(CameraControl,
+                                    new[]
+                                    {
+                                        nameof(CameraControl.VideoFormatIndex), nameof(CameraControl.CaptureMode),
+                                        nameof(CameraControl.CameraIndex),
+                                    }, async (me) =>
+                                    {
+                                        var formats = await CameraControl.GetAvailableVideoFormatsAsync();
+                                        if (formats.Count > 0)
+                                        {
+                                            var index = CameraControl.VideoFormatIndex;
+                                            if (index < 0)
+                                            {
+                                                index = 0;
+                                            }
+
+                                            var format = formats.First(c => c.Index == index);
+                                            me.Text = $"{format.Description}";
+                                        }
+                                    })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                {
+                                    me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                                }),
+                            new SettingsButton("❌", "Abort")
+                                {
+                                    TintColor = Color.FromArgb("#991B1B"), IsVisible = false
                                 }
-                            }
-                        })
-                        .OnTapped(async me => { await SelectAudioSource(); }),
-
-
-                    //Video Formats
-                    new SettingsButton("🗂️", "Formats")
-                    {
-                        TintColor = Color.FromArgb("#4F46E5"),
-                    }
-                    .OnTapped(async me => { await ShowPhotoFormatPicker(); })
-                    .ObserveProperties(CameraControl, new []
-                    {
-                        nameof(CameraControl.PhotoFormatIndex),
-                        nameof(CameraControl.CaptureMode),
-                        nameof(CameraControl.CameraIndex),
-                    }, async (me) =>
-                    {
-                        var formats = await CameraControl.GetAvailableCaptureFormatsAsync();
-                        if (formats.Count > 0)
-                        {
-                            var index = CameraControl.PhotoFormatIndex;
-                            if (index < 0)
-                            {
-                                index = 0;
-                            }
-                            var format = formats.First(c => c.Index == index);
-                            me.Text = $"{format.Description}";
+                                .Assign(out _videoRecordButton)
+                                .OnTapped(async me => { await AbortVideoRecording(); })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording), me =>
+                                {
+                                    me.IsVisible = CameraControl.IsRecording &&
+                                                   CameraControl.CaptureMode == CaptureModeType.Video;
+                                })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                {
+                                    me.IsVisible = CameraControl.IsRecording &&
+                                                   CameraControl.CaptureMode == CaptureModeType.Video;
+                                }),
                         }
-                    })
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
-                    {
-                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Still;
-                    }),
-
-                    new SettingsButton("🗂️", "Formats")
-                    {
-                        TintColor = Color.FromArgb("#4F46E5"),
                     }
-                    .OnTapped(async me => { await ShowVideoFormatPicker(); })
-                    .ObserveProperties(CameraControl, new []
-                    {
-                        nameof(CameraControl.VideoFormatIndex),
-                        nameof(CameraControl.CaptureMode),
-                        nameof(CameraControl.CameraIndex),
-                    }, async (me) =>
-                    {
-                        var formats = await CameraControl.GetAvailableVideoFormatsAsync();
-                        if (formats.Count > 0)
-                        {
-                            var index = CameraControl.VideoFormatIndex;
-                            if (index < 0)
-                            {
-                                index = 0;
-                            }
-                            var format = formats.First(c => c.Index == index);
-                            me.Text = $"{format.Description}";
-                        }
-                    })
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
-                    {
-                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
-                    }),
-
-                    new SettingsButton("❌", "Abort")
-                    {
-                        TintColor = Color.FromArgb("#991B1B"),
-                        IsVisible = false
-                    }
-                    .Assign(out _videoRecordButton)
-                    .OnTapped(async me => { await AbortVideoRecording(); })
-                    .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording), me =>
-                    {
-                        me.IsVisible = CameraControl.IsRecording && CameraControl.CaptureMode == CaptureModeType.Video;
-                    })
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
-                    {
-                        me.IsVisible = CameraControl.IsRecording && CameraControl.CaptureMode == CaptureModeType.Video;
-                    }),
-
-
-                }
-            };
+                };
 
             // Tab Processing
-            var audioSection = new SkiaWrap
+            var audioSection =
+                new SkiaScroll()
+                {
+                    Bounces = false,
+                    BackgroundColor = Colors.Transparent,
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Fill,
+                    Content = new SkiaWrap
             {
                 Spacing = 8,
                 Padding = new Thickness(16),
@@ -819,7 +778,7 @@ namespace CameraTests.Views
                     {
                         CameraControl.SwitchVisualizer();
                     })
-                    .ObserveProperty(CameraControl, nameof(CameraControl.VisualizerName), me =>
+                    .ObserveProperty(()=>CameraControl, nameof(CameraControl.VisualizerName), me =>
                     {
                         me.Text = CameraControl.VisualizerName;
                     }),
@@ -848,10 +807,18 @@ namespace CameraTests.Views
                         ToggleSpeech();
                     }),
                 }
-            };
+            }
+                };
 
             // Tab 2: Export / Recording Settings
-            var feedSection = new SkiaWrap
+            var feedSection =
+                new SkiaScroll()
+                {
+                    Bounces = false,
+                    BackgroundColor = Colors.Transparent,
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Fill,
+                    Content = new SkiaWrap
             {
                 Spacing = 8,
                 Padding = new Thickness(16),
@@ -944,18 +911,20 @@ namespace CameraTests.Views
                         me.TintColor = CameraControl.InjectGpsLocation ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
                     }),
                 }
-            };
+            }
+                };
 
             return new SkiaStack()
             {
                 Spacing = 4,
+                Margin = new Thickness(0, 40, 0, 0),
                 Children =
                 {
                     tabBar,
                     new SkiaViewSwitcher()
                     {
-                        HorizontalOptions = LayoutOptions.Fill,
                         VerticalOptions = LayoutOptions.Fill,
+                        HorizontalOptions = LayoutOptions.Fill,
                         SelectedIndex = 0,
                         Children =
                         {
@@ -969,7 +938,7 @@ namespace CameraTests.Views
             };
         }
 
-        private SkiaLayer CreatePreviewOverlay()
+        private SkiaLayer CreateTakenPhotoPreviewPopup()
         {
             return new SkiaLayer
             {
@@ -1060,7 +1029,6 @@ namespace CameraTests.Views
             };
         }
 
-
         void ShowAlert(string title, string message)
         {
             MainThread.BeginInvokeOnMainThread(async () =>
@@ -1068,5 +1036,45 @@ namespace CameraTests.Views
                 await DisplayAlert(title, message, "OK");
             });
         }
+
+        private void SelectTab(int index)
+        {
+            if (_settingsTabs != null)
+                _settingsTabs.SelectedIndex = index;
+
+            if (_tabLabels != null)
+            {
+                for (int i = 0; i < _tabLabels.Length; i++)
+                {
+                    _tabLabels[i].TextColor = i == index
+                        ? Colors.White
+                        : Color.FromArgb("#888888");
+                    _tabLabels[i].FontAttributes = i == index
+                        ? FontAttributes.Bold
+                        : FontAttributes.None;
+                }
+            }
+        }
+
+        private void ToggleSettingsDrawer()
+        {
+            if (_settingsDrawer != null)
+            {
+                _settingsDrawer.IsOpen = !_settingsDrawer.IsOpen;
+            }
+        }
+
+        private bool _isLayoutLandscape;
+        public bool IsLayoutLandscape
+        {
+            get => _isLayoutLandscape;
+            set
+            {
+                if (value == _isLayoutLandscape) return;
+                _isLayoutLandscape = value;
+                OnPropertyChanged();
+            }
+        }
+
     }
 }

@@ -40,7 +40,7 @@ namespace CameraTests
 
             builder.UseDrawnUi(new()
             {
-                UseDesktopKeyboard = true, //will not work with maui shell on apple!!
+                UseDesktopKeyboard = true, 
 
                 //portrait
                 DesktopWindow = new()
