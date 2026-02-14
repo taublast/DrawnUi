@@ -202,6 +202,8 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     private readonly object _previewLock = new();
     private SKImage _latestPreviewImage; // swapped out to UI on demand
     private SKBitmap _readbackBitmap;    // reused CPU buffer to avoid per-frame allocs
+    private SKSurface _previewSurface;   // reused downscale surface for preview
+    private SKImageInfo _previewSurfaceInfo;
     public event EventHandler PreviewAvailable;
 
 
@@ -444,6 +446,8 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
     /// <summary>
     /// Submits current GPU frame to encoder. Temporary: performs CPU readback into existing AddFrame pipeline.
+    /// Preview is downscaled from the full-res GPU surface to avoid double processing
+    /// (FrameProcessor overlay is already baked in, so PreviewProcessor can be skipped).
     /// </summary>
     public async Task SubmitFrameAsync()
     {
@@ -455,10 +459,27 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 if (!_isRecording || _gpuSurface == null)
                     return;
 
-                // Publish a GPU snapshot for preview
-                snapshot = _gpuSurface.Snapshot();
-                if (snapshot == null)
+                _gpuSurface.Canvas.Flush();
+
+                // Downscale the processed GPU frame for preview (same optimization as Apple encoder)
+                using var gpuSnap = _gpuSurface.Snapshot();
+                if (gpuSnap == null)
                     return;
+
+                int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                int pw = Math.Min(_width, maxPreviewWidth);
+                int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+
+                var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
+
+                if (_previewSurface == null || _previewSurfaceInfo.Width != pInfo.Width || _previewSurfaceInfo.Height != pInfo.Height)
+                {
+                    _previewSurface?.Dispose();
+                    _previewSurfaceInfo = pInfo;
+                    _previewSurface = SKSurface.Create(pInfo);
+                }
+                _previewSurface.Canvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
+                snapshot = _previewSurface.Snapshot();
 
                 lock (_previewLock)
                 {
@@ -961,6 +982,8 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
         _readbackBitmap?.Dispose();
         _readbackBitmap = null;
+        _previewSurface?.Dispose();
+        _previewSurface = null;
         _gpuSurface?.Dispose();
         _gpuSurface = null;
     }

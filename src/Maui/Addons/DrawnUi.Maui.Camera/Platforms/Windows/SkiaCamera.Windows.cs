@@ -953,14 +953,31 @@ public partial class SkiaCamera : SkiaControl
         // Don't use preview-driven capture - use callback like Android
         _useWindowsPreviewDrivenCapture = false;
 
-        // Control preview source: raw camera frames (preview works normally)
-        UseRecordingFramesForPreview = false;
+        // Use encoder's processed frames for preview — FrameProcessor overlay is already baked in,
+        // so PreviewProcessor can be skipped, eliminating duplicate GPU overlay work.
+        UseRecordingFramesForPreview = true;
 
         // Set up progress reporting
         _captureVideoEncoder.ProgressReported += (sender, duration) =>
         {
             OnVideoRecordingProgress(duration);
         };
+
+        // Mirror encoder preview to on-screen display (like Apple implementation)
+        if (MirrorRecordingToPreview && _captureVideoEncoder is WindowsCaptureVideoEncoder winEncPreview)
+        {
+            _encoderPreviewInvalidateHandler = (s, e) =>
+            {
+                try
+                {
+                    SafeAction(() => UpdatePreview());
+                }
+                catch
+                {
+                }
+            };
+            winEncPreview.PreviewAvailable += _encoderPreviewInvalidateHandler;
+        }
 
         // Use PreviewCaptureSuccess callback like Android - encoder gets frames without stealing from preview
         if (NativeControl is NativeCamera winCam)
