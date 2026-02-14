@@ -827,25 +827,9 @@ public partial class SkiaCamera
 
         Debug.WriteLine($"[StartRealtimeVideoProcessing] Android encoder initialized with IsPreRecordingMode={IsPreRecording}");
 
-        // Control preview source: processed frames from encoder (PreviewVideoFlow=true) or raw camera (PreviewVideoFlow=false)
-        // Only applies when UseRealtimeVideoProcessing is TRUE (enforced by caller)
-        UseRecordingFramesForPreview = false;//PreviewVideoFlow;
-
-        // Invalidate preview when the encoder publishes a new composed frame (Android mirror)
-        if (PreviewVideoFlow && _captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
-        {
-            _encoderPreviewInvalidateHandler = (s, e) =>
-            {
-                try
-                {
-                    SafeAction(() => UpdatePreview());
-                }
-                catch
-                {
-                }
-            };
-            _droidEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
-        }
+        // Preview source: GPU path sets UseRecordingFramesForPreview=true later (single-stream,
+        // preview derived from encoder via GlPreviewScaler). Legacy path stays false (ImageReader preview).
+        UseRecordingFramesForPreview = false;
 
         // CRITICAL: Always use final Movies directory path (single-file approach)
         // Buffer stays in memory, so output path doesn't matter during pre-recording phase
@@ -1079,7 +1063,26 @@ public partial class SkiaCamera
                         CalculateRecordingFps();
                     };
 
-                    Debug.WriteLine($"[StartRealtimeVideoProcessing] GPU camera session created");
+                    // GPU path: single-stream, preview derived from encoder via GlPreviewScaler.
+                    // FrameProcessor overlay is already baked in, so PreviewProcessor is skipped.
+                    UseRecordingFramesForPreview = true;
+
+                    if (MirrorRecordingToPreview && _captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
+                    {
+                        _encoderPreviewInvalidateHandler = (s, e) =>
+                        {
+                            try
+                            {
+                                SafeAction(() => UpdatePreview());
+                            }
+                            catch
+                            {
+                            }
+                        };
+                        _droidEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
+                    }
+
+                    Debug.WriteLine($"[StartRealtimeVideoProcessing] GPU camera session created (single-stream, UseRecordingFramesForPreview=true)");
                 }
                 else
                 {

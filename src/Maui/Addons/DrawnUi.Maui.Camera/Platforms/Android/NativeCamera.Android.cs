@@ -1918,24 +1918,22 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 }
             }
 
-            // GPU path: 2 streams - GPU surface for recording, ImageReader for preview
-            // Preview comes from ImageReader (lightweight), recording from GPU surface (full processing)
+            // GPU path: SINGLE STREAM — camera feeds only the encoder surface.
+            // Preview is derived from the recording stream via GlPreviewScaler (GPU downscale).
+            // This eliminates dual-stream overhead and mirrors Apple's MetalPreviewScaler pattern.
             var surfaces = new List<Surface>
             {
-                _gpuCameraSurface,           // GPU path for encoder
-                mImageReaderPreview.Surface  // ImageReader for preview display
+                _gpuCameraSurface           // GPU path for encoder (preview derived from this)
             };
 
             // Still need photo surface for photo capture during recording
             if (mImageReaderPhoto != null)
                 surfaces.Add(mImageReaderPhoto.Surface);
 
-            // Target both surfaces - camera outputs to encoder AND preview
+            // Target only GPU surface — no ImageReader preview stream
             mPreviewRequestBuilder.AddTarget(_gpuCameraSurface);
-            mPreviewRequestBuilder.AddTarget(mImageReaderPreview.Surface);
 
-
-            System.Diagnostics.Debug.WriteLine($"[NativeCamera] Creating GPU camera session with {surfaces.Count} surfaces - GPU + ImageReader preview");
+            System.Diagnostics.Debug.WriteLine($"[NativeCamera] Creating GPU camera session with {surfaces.Count} surfaces — single-stream (preview from encoder)");
 
             mCameraDevice.CreateCaptureSession(
                 surfaces,

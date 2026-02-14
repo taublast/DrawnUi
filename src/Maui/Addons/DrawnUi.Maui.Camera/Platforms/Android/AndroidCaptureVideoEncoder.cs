@@ -173,6 +173,10 @@ namespace DrawnUi.Camera
         private int _previewFrameInterval = 1; // Computed: generate 1 out of N frames to target ~30fps preview
         public event EventHandler PreviewAvailable;
 
+        // GPU preview scaler (glBlitFramebuffer-based, mirrors MetalPreviewScaler)
+        private GlPreviewScaler _glPreviewScaler;
+        private bool _glPreviewScalerInitAttempted;
+
         // GPU camera path support (SurfaceTexture zero-copy)
         private GpuCameraFrameProvider _gpuFrameProvider;
         private bool _useGpuCameraPath;
@@ -354,14 +358,14 @@ namespace DrawnUi.Camera
                     int aChannels = 1;
 
                     MediaFormat aFormat = MediaFormat.CreateAudioFormat(_selectedAudioMimeType, aSampleRate, aChannels);
-                    
+
                     // Configure based on codec type
                     if (_selectedAudioMimeType == MediaFormat.MimetypeAudioAac)
                     {
                         aFormat.SetInteger(MediaFormat.KeyAacProfile, (int)MediaCodecProfileType.Aacobjectlc);
                     }
                     // Add other codec configurations here as needed
-                    
+
                     aFormat.SetInteger(MediaFormat.KeyBitRate, 128000);
                     aFormat.SetInteger(MediaFormat.KeyMaxInputSize, 16384 * 2);
 
@@ -1240,6 +1244,56 @@ namespace DrawnUi.Camera
                 // 4. Flush and submit to encoder
                 canvas.Flush();
                 _grContext.Flush();
+
+                // GPU-native preview generation (glBlitFramebuffer, mirrors MetalPreviewScaler).
+                // Downscale on GPU first, then read back only the small buffer (~900KB vs ~8MB).
+                // Throttled to every 3rd frame to minimize overhead.
+                _previewFrameCounter++;
+
+                _previewFrameCounter = 0;
+
+                // Lazy-init scaler on first preview frame (EGL context is current here)
+                if (!_glPreviewScalerInitAttempted)
+                {
+                    _glPreviewScalerInitAttempted = true;
+                    int maxPw = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                    int pw = Math.Min(_width, maxPw);
+                    int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+                    _glPreviewScaler = new GlPreviewScaler();
+                    if (!_glPreviewScaler.Initialize(_width, _height, pw, ph))
+                    {
+                        _glPreviewScaler?.Dispose();
+                        _glPreviewScaler = null;
+                    }
+                }
+
+                if (_glPreviewScaler != null)
+                {
+                    // Inform Skia we will modify GL state (FBO bindings)
+                    _grContext.ResetContext();
+
+                    var previewImage = _glPreviewScaler.ScaleAndReadback();
+                    if (previewImage != null)
+                    {
+                        lock (_previewLock)
+                        {
+                            _latestPreviewImage?.Dispose();
+                            _latestPreviewImage = previewImage;
+                        }
+
+                        if (PreviewAvailable != null)
+                        {
+
+                            Task.Run(() =>
+                            {
+                                PreviewAvailable?.Invoke(this, EventArgs.Empty);
+                            }).ConfigureAwait(false);
+                        }
+                    }
+
+                    // Restore Skia's GL state awareness after our FBO changes
+                    _grContext.ResetContext();
+                }
 
                 // Periodic GPU resource cleanup to prevent memory accumulation during long recordings
                 _gpuFrameCounter++;
@@ -2133,6 +2187,10 @@ namespace DrawnUi.Camera
 
             _previewRasterSurface?.Dispose();
             _previewRasterSurface = null;
+
+            _glPreviewScaler?.Dispose();
+            _glPreviewScaler = null;
+            _glPreviewScalerInitAttempted = false;
         }
 
         private void FeedAudioEncoder(AudioSample sample)
@@ -2327,7 +2385,7 @@ namespace DrawnUi.Camera
                     audioFormat.SetInteger(MediaFormat.KeySampleRate, 44100);
                     audioFormat.SetInteger(MediaFormat.KeyChannelCount, 1);
                     audioFormat.SetInteger(MediaFormat.KeyBitRate, 128000);
-                    
+
                     // Configure based on codec type
                     if (_selectedAudioMimeType == MediaFormat.MimetypeAudioAac)
                     {
