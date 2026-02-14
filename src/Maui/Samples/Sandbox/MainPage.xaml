@@ -159,6 +159,7 @@
                                             TextColor="#ccffffff"
                                             TextStrokeColor="#99FF0000"
                                             WidthRequest="150">
+
                                             <draw:SkiaControl.Triggers>
                                                 <DataTrigger x:DataType="draw:SkiaButton"
                                                              Binding="{Binding Source={RelativeSource Self}, Path=IsPressed}"
@@ -178,6 +179,7 @@
                                                         </generic:List>
                                                     </Setter>
                                                 </DataTrigger>
+
                                                 <DataTrigger
                                                     x:DataType="draw:SkiaButton"
                                                     Binding="{Binding Source={RelativeSource Self}, Path=IsPressed}"
