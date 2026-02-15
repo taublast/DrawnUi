@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application
+    x:Class="MusicNotes.App"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xaml="clr-namespace:DrawnUi.Infrastructure.Xaml;assembly=DrawnUi.Maui"
+    xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles.xaml" />
+                <ResourceDictionary Source="Resources/Svg.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <xaml:NotConverter x:Key="NotConverter" />
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
