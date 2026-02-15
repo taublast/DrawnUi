@@ -8,7 +8,6 @@ namespace DrawnUi.Camera;
 
 public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvailableListener, INativeCamera
 {
-
     /// <summary>
     /// IOnImageAvailableListener - iOS-style minimal callback
     /// Heavy processing moved to background thread via ProcessFrameOnBackgroundThread
@@ -43,8 +42,26 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         FramesReader = reader;
 
         // FAST: Get latest frame (drops older frames automatically)
-        var newImage = reader.AcquireLatestImage();
-        if (newImage == null) return;
+        Android.Media.Image? newImage = reader.AcquireLatestImage();
+        if (newImage == null)
+        {
+            return;
+        }
+
+        try
+        {
+            ProcessFrameOnBackgroundThread(newImage);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[NativeCamera] Error processing frame: {ex.Message}");
+        }
+        finally
+        {
+            newImage.Close();   // Return to ImageReader pool
+        }
+
+        return;
 
         // Swap into current slot (lock held for ~10ns - just pointer swap)
         Android.Media.Image oldImage = null;
@@ -60,7 +77,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         // Signal processing thread (non-blocking)
         _frameAvailable?.Set();
 
-        // EXIT IMMEDIATELY - camera callback complete in microseconds
         // All heavy work (RenderScript, SKImage, callbacks) happens on background thread
+        // FrameProcessingLoop inside NativeCamera.Android.cs
     }
 }
