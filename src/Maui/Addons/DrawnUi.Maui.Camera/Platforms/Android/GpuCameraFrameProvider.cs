@@ -86,6 +86,15 @@ namespace DrawnUi.Camera
         }
 
         /// <summary>
+        /// Re-register the SurfaceTexture frame listener.
+        /// Call after a Camera2 session cycle to ensure callbacks resume.
+        /// </summary>
+        public void ResetFrameListener()
+        {
+            _renderer?.ResetFrameListener();
+        }
+
+        /// <summary>
         /// Stop accepting camera frames.
         /// </summary>
         public void Stop()
@@ -130,6 +139,7 @@ namespace DrawnUi.Camera
                 return false;
             }
 
+            bool signaled = false;
             lock (_frameLock)
             {
                 if (!_frameAvailable)
@@ -137,20 +147,41 @@ namespace DrawnUi.Camera
                     Monitor.Wait(_frameLock, timeout);
                 }
 
-                if (!_frameAvailable || !_running)
+                if (_frameAvailable)
                 {
-                    return false;
+                    _frameAvailable = false;
+                    timestampNs = _frameTimestampNs;
+                    signaled = true;
                 }
-
-                _frameAvailable = false;
-                timestampNs = _frameTimestampNs;
             }
 
-            // Update texture on GL thread
-            // CRITICAL: UpdateTexImage() must be called on the same thread that created the EGL context
-            _renderer.UpdateTexImage();
+            if (!_running)
+                return false;
 
-            return true;
+            // Always call UpdateTexImage on GL thread. This serves two purposes:
+            // 1. Normal path: process the frame signaled by OnFrameAvailable
+            // 2. Poll fallback: drain stale buffers that block OnFrameAvailable from firing.
+            //    After a Camera2 session cycle (recording stop/start), old unconsumed frames
+            //    can fill the SurfaceTexture's BufferQueue. Camera2 can't enqueue new frames
+            //    until old ones are consumed, so OnFrameAvailable never fires. Calling
+            //    UpdateTexImage here drains those stale buffers and unblocks the queue.
+            long prevTimestamp = _renderer.GetTimestamp();
+            _renderer.UpdateTexImage();
+            long currTimestamp = _renderer.GetTimestamp();
+
+            if (signaled)
+            {
+                return true;
+            }
+
+            // Poll path: check if UpdateTexImage consumed a frame without OnFrameAvailable
+            if (currTimestamp != prevTimestamp && currTimestamp != 0)
+            {
+                timestampNs = currTimestamp;
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>

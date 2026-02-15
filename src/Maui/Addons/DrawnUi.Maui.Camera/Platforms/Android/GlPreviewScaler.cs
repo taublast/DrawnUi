@@ -104,7 +104,7 @@ namespace DrawnUi.Camera
         /// Must be called on GL thread after canvas.Flush()+grContext.Flush(), before EglSwapBuffers.
         /// Returns null on failure.
         /// </summary>
-        public SKImage ScaleAndReadback()
+        public SKImage ScaleAndReadback(int sourceFbo = 0)
         {
             if (!_isInitialized)
                 return null;
@@ -112,7 +112,7 @@ namespace DrawnUi.Camera
             try
             {
                 // 1. Bind encoder FBO (0) as read source
-                GLES30.GlBindFramebuffer(GLES30.GlReadFramebuffer, 0);
+                GLES30.GlBindFramebuffer(GLES30.GlReadFramebuffer, sourceFbo);
 
                 // 2. Bind preview FBO as draw target
                 GLES30.GlBindFramebuffer(GLES30.GlDrawFramebuffer, _previewFbo);

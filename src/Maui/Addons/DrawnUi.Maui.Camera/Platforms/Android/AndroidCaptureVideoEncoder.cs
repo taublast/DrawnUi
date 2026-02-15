@@ -2173,7 +2173,10 @@ namespace DrawnUi.Camera
                 EGL14.EglMakeCurrent(_eglDisplay, EGL14.EglNoSurface, EGL14.EglNoSurface, EGL14.EglNoContext);
                 if (_eglSurface != EGL14.EglNoSurface) EGL14.EglDestroySurface(_eglDisplay, _eglSurface);
                 if (_eglContext != EGL14.EglNoContext) EGL14.EglDestroyContext(_eglDisplay, _eglContext);
-                EGL14.EglTerminate(_eglDisplay);
+                // NOTE: Do NOT call EglTerminate — it destroys the process-wide default display,
+                // which invalidates EGL contexts used by other components (e.g. GlPreviewRenderer).
+                // EglReleaseThread is sufficient to clean up per-thread EGL state.
+                EGL14.EglReleaseThread();
             }
             _eglDisplay = EGL14.EglNoDisplay;
             _eglSurface = EGL14.EglNoSurface;
@@ -2385,6 +2388,7 @@ namespace DrawnUi.Camera
                     audioFormat.SetInteger(MediaFormat.KeySampleRate, 44100);
                     audioFormat.SetInteger(MediaFormat.KeyChannelCount, 1);
                     audioFormat.SetInteger(MediaFormat.KeyBitRate, 128000);
+                    audioFormat.SetInteger(MediaFormat.KeyMaxInputSize, 16384 * 2);
 
                     // Configure based on codec type
                     if (_selectedAudioMimeType == MediaFormat.MimetypeAudioAac)
@@ -2402,10 +2406,18 @@ namespace DrawnUi.Camera
                     {
                         var inputBuffer = tempAudioCodec.GetInputBuffer(inputIndex);
                         inputBuffer.Clear();
-                        inputBuffer.Put(pcmSample.Data);
+
+                        var data = pcmSample.Data;
+                        if (data.Length > inputBuffer.Remaining())
+                        {
+                            var newData = new byte[inputBuffer.Remaining()];
+                            Array.Copy(data, newData, newData.Length);
+                            data = newData;
+                        }
+                        inputBuffer.Put(data);
 
                         long ptsUs = pcmSample.TimestampNs / 1000;
-                        tempAudioCodec.QueueInputBuffer(inputIndex, 0, pcmSample.Data.Length, ptsUs, 0);
+                        tempAudioCodec.QueueInputBuffer(inputIndex, 0, data.Length, ptsUs, 0);
                     }
 
                     // Get encoded AAC data

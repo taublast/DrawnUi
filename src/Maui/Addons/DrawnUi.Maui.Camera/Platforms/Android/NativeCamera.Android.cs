@@ -598,13 +598,15 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         }
 
         // RenderScript YUV→RGB conversion
-        //ProcessImage(image, allocated.Allocation);
-        //allocated.Update();
+        if (!_useGlPreview)
+        {
+            ProcessImage(image, allocated.Allocation);
+            allocated.Update();
+        }
 
         // During capture video flow recording, avoid any UI preview work
         bool inCaptureRecording = FormsControl.UseRealtimeVideoProcessing && FormsControl.IsRecording;
 
-    
         // Convert to SKImage
         var sk = allocated.Bitmap.ToSKImage();
         if (sk == null) return;
@@ -760,8 +762,13 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         _flashMode = parent.FlashMode;
         _captureFlashMode = parent.CaptureFlashMode;
 
-        rs = RenderScript.Create(Platform.AppContext);
-        Splines.Initialize(rs);
+        // Defer RenderScript init — GPU preview path (API 26+) doesn't need it.
+        // RenderScript will be lazily initialized if needed (legacy preview fallback or still capture).
+        if (!UseGpuPreview || !GpuCameraFrameProvider.IsSupported())
+        {
+            rs = RenderScript.Create(Platform.AppContext);
+            Splines.Initialize(rs);
+        }
     }
 
     //private readonly FramesQueue _stack = new();
@@ -857,6 +864,12 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     private Surface _gpuCameraSurface;
     private bool _useGpuCameraPath;
     public bool IsGpuCameraPathActive => _useGpuCameraPath && _gpuCameraSurface != null;
+
+    // GPU preview renderer (replaces ImageReader+RenderScript for preview on API 26+)
+    // Set to false to force the legacy ImageReader+RenderScript path for comparison
+    internal static bool UseGpuPreview { get; set; } = true;
+    private GlPreviewRenderer _glPreviewRenderer;
+    private bool _useGlPreview;
 
     //{@link CaptureRequest.Builder} for the camera preview
     public CaptureRequest.Builder mPreviewRequestBuilder;
@@ -1283,11 +1296,57 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
                     System.Diagnostics.Debug.WriteLine($"[PREVIEW] Selected {PreviewWidth}x{PreviewHeight} rotated={rotated} max={maxPreviewWidth}x{maxPreviewHeight} aspectTarget={aspectTarget.Width}x{aspectTarget.Height}");
 
-                    mImageReaderPreview =
-                        ImageReader.NewInstance(PreviewWidth, PreviewHeight, ImageFormatType.Yuv420888, 3);
-                    mImageReaderPreview.SetOnImageAvailableListener(this, mBackgroundHandler);
+                    // Try GPU preview path (API 26+) — uses OES shader for zero-copy YUV→RGB on GPU
+                    _useGlPreview = false;
+                    if (UseGpuPreview && GpuCameraFrameProvider.IsSupported())
+                    {
+                        try
+                        {
+                            var gpw = PreviewHeight;
+                            var gph = PreviewWidth;
+                            if (SensorOrientation == 0 || SensorOrientation == 180)
+                            {
+                                gpw = PreviewWidth;
+                                gph = PreviewHeight;
+                            }
 
-                    AllocateOutSurface();
+                            _glPreviewRenderer = new GlPreviewRenderer();
+                            if (_glPreviewRenderer.Initialize(PreviewWidth, PreviewHeight, gpw, gph,
+                                FormsControl.Facing == CameraPosition.Selfie))
+                            {
+                                _useGlPreview = true;
+                                PreviewSize = new SkiaSharp.SKSize(gpw, gph);
+                                FormsControl.SetRotatedContentSize(PreviewSize, SensorOrientation);
+
+                                // Wire preview delivery
+                                _glPreviewRenderer.PreviewFrameReady += OnGlPreviewFrameReady;
+
+                                Debug.WriteLine($"[NativeCamera] GPU preview enabled: {PreviewWidth}x{PreviewHeight} -> {gpw}x{gph}");
+                            }
+                            else
+                            {
+                                _glPreviewRenderer?.Dispose();
+                                _glPreviewRenderer = null;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"[NativeCamera] GPU preview init failed, falling back to ImageReader: {ex.Message}");
+                            _glPreviewRenderer?.Dispose();
+                            _glPreviewRenderer = null;
+                            _useGlPreview = false;
+                        }
+                    }
+
+                    // Fallback: ImageReader + RenderScript path
+                    if (!_useGlPreview)
+                    {
+                        EnsureRenderScriptInitialized();
+                        mImageReaderPreview =
+                            ImageReader.NewInstance(PreviewWidth, PreviewHeight, ImageFormatType.Yuv420888, 3);
+                        mImageReaderPreview.SetOnImageAvailableListener(this, mBackgroundHandler);
+                        AllocateOutSurface();
+                    }
 
                     CameraId = cameraUnit.Id;
 
@@ -1316,6 +1375,53 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 //ErrorDialog.NewInstance(GetString(Resource.String.camera_error)).Show(ChildFragmentManager, FRAGMENT_DIALOG);
             }
         }
+    }
+
+    bool CreatePreviewRenderer()
+    {
+        if (UseGpuPreview && GpuCameraFrameProvider.IsSupported())
+        {
+            try
+            {
+                var gpw = PreviewHeight;
+                var gph = PreviewWidth;
+                if (SensorOrientation == 0 || SensorOrientation == 180)
+                {
+                    gpw = PreviewWidth;
+                    gph = PreviewHeight;
+                }
+
+                _glPreviewRenderer = new GlPreviewRenderer();
+                if (_glPreviewRenderer.Initialize(PreviewWidth, PreviewHeight, gpw, gph,
+                        FormsControl.Facing == CameraPosition.Selfie))
+                {
+                    _useGlPreview = true;
+                    PreviewSize = new SkiaSharp.SKSize(gpw, gph);
+                    FormsControl.SetRotatedContentSize(PreviewSize, SensorOrientation);
+
+                    // Wire preview delivery
+                    _glPreviewRenderer.PreviewFrameReady += OnGlPreviewFrameReady;
+
+                    Debug.WriteLine($"[NativeCamera] GPU preview enabled: {PreviewWidth}x{PreviewHeight} -> {gpw}x{gph}");
+
+                    return true;
+                }
+                else
+                {
+                    _glPreviewRenderer?.Dispose();
+                    _glPreviewRenderer = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[NativeCamera] GPU preview init failed, falling back to ImageReader: {ex.Message}");
+                _glPreviewRenderer?.Dispose();
+                _glPreviewRenderer = null;
+                _useGlPreview = false;
+            }
+        }
+
+        return false;
     }
 
     object lockSetup = new();
@@ -1517,8 +1623,15 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 State = CameraProcessorState.Enabled;
                 Debug.WriteLine($"[CAMERA] {CameraId} Started");
 
-                // Start async frame processing thread (iOS-style)
-                StartFrameProcessingThread();
+                // Start preview: GPU path or legacy frame processing thread
+                if (_useGlPreview && _glPreviewRenderer != null)
+                {
+                    _glPreviewRenderer.Start();
+                }
+                else
+                {
+                    StartFrameProcessingThread();
+                }
 
                 return true;
             }
@@ -1571,6 +1684,15 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             mStateCallback = null;
             mCaptureCallback = null;
+
+            // Stop GPU preview renderer if active
+            if (_glPreviewRenderer != null)
+            {
+                _glPreviewRenderer.Stop();
+                _glPreviewRenderer.Dispose();
+                _glPreviewRenderer = null;
+                _useGlPreview = false;
+            }
 
             // Stop async frame processing thread before closing ImageReader
             StopFrameProcessingThread();
@@ -1862,7 +1984,18 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 }
             }
 
-            var surfaces = new List<Surface> { mImageReaderPreview.Surface };
+            // Choose preview surface: GPU renderer or ImageReader
+            Surface previewSurface;
+            if (_useGlPreview && _glPreviewRenderer != null)
+            {
+                previewSurface = _glPreviewRenderer.GetCameraOutputSurface();
+            }
+            else
+            {
+                previewSurface = mImageReaderPreview.Surface;
+            }
+
+            var surfaces = new List<Surface> { previewSurface };
             if (mImageReaderPhoto != null)
                 surfaces.Add(mImageReaderPhoto.Surface);
 
@@ -1893,11 +2026,19 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             return;
         }
 
+        // Stop GL preview renderer — encoder takes over the camera stream
+        if (_useGlPreview && _glPreviewRenderer != null)
+        {
+            _glPreviewRenderer.Stop();
+            System.Diagnostics.Debug.WriteLine("[NativeCamera] GL preview stopped for GPU camera session");
+        }
+
         try
         {
             _gpuCameraSurface = gpuSurface;
             _useGpuCameraPath = true;
 
+            // WE ARE RECORDING !!!
             mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
 
             // Let camera use default FPS range for proper auto-exposure
@@ -1957,7 +2098,10 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     }
 
     /// <summary>
-    /// Stop using GPU camera path and revert to normal preview session.
+    /// Stop using GPU camera path and immediately create a new preview Camera2 session.
+    /// Camera2 must always have a valid session with a valid surface — leaving it with a broken
+    /// session (dead encoder surface) causes the device to error out.
+    /// The GL preview thread is NOT started here — call ResumeGlPreview() after encoder is disposed.
     /// </summary>
     public void StopGpuCameraSession()
     {
@@ -1966,10 +2110,30 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         _useGpuCameraPath = false;
         _gpuCameraSurface = null;
 
-        // Recreate normal preview session
+        // Immediately create new Camera2 session so the device doesn't sit with a broken session.
+        // Frames will go to the GL preview's SurfaceTexture (buffered until GL thread starts).
         CreateCameraPreviewSession();
 
-        System.Diagnostics.Debug.WriteLine("[NativeCamera] GPU camera session stopped, reverted to normal preview");
+        if (_useGlPreview)
+        {
+            ResumeGlPreview();
+        }
+
+        System.Diagnostics.Debug.WriteLine("[NativeCamera] GPU camera session stopped, new preview session created");
+    }
+
+    /// <summary>
+    /// Start the GL preview thread to begin processing frames.
+    /// Must be called AFTER encoder is fully disposed (its TearDownEgl affects EGL state).
+    /// The Camera2 session is already targeting the GL preview surface (from StopGpuCameraSession).
+    /// </summary>
+    public void ResumeGlPreview()
+    {
+        if (_useGlPreview && _glPreviewRenderer != null)
+        {
+            _glPreviewRenderer.Start();
+            System.Diagnostics.Debug.WriteLine("[NativeCamera] GL preview thread started");
+        }
     }
 
 
@@ -2068,6 +2232,53 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     void OnPreviewCaptureSuccess(CapturedImage result)
     {
         PreviewCaptureSuccess?.Invoke(result);
+    }
+
+    /// <summary>
+    /// Called by GlPreviewRenderer when a GPU-rendered preview frame is ready.
+    /// Mirrors ProcessFrameOnBackgroundThread's delivery path.
+    /// </summary>
+    private void OnGlPreviewFrameReady(SkiaSharp.SKImage skImage, long timestampNs)
+    {
+        if (skImage == null) return;
+
+        bool inCaptureRecording = FormsControl.UseRealtimeVideoProcessing && FormsControl.IsRecording;
+
+        var meta = FormsControl.CameraDevice.Meta;
+        var rotation = FormsControl.DeviceRotation;
+        Metadata.ApplyRotation(meta, rotation);
+
+        var micros = timestampNs / 1000L;
+        var monotonicTime = new DateTime(micros * 10, DateTimeKind.Utc);
+
+        var outImage = new CapturedImage()
+        {
+            Facing = FormsControl.Facing,
+            Time = monotonicTime,
+            Image = skImage,
+            Meta = meta,
+            Rotation = rotation
+        };
+
+        if (!inCaptureRecording)
+        {
+            OnPreviewCaptureSuccess(outImage);
+        }
+
+        Preview = outImage;
+        FormsControl.UpdatePreview();
+    }
+
+    /// <summary>
+    /// Lazily initialize RenderScript (only needed for legacy preview path and still capture).
+    /// </summary>
+    private void EnsureRenderScriptInitialized()
+    {
+        if (rs == null)
+        {
+            rs = RenderScript.Create(Platform.AppContext);
+            Splines.Initialize(rs);
+        }
     }
 
     public void StopCapturingStillImage()
@@ -2255,6 +2466,9 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     {
         try
         {
+            // Still capture always needs RenderScript for YUV→RGB
+            EnsureRenderScriptInitialized();
+
             var width = image.Width;
             var height = image.Height;
 

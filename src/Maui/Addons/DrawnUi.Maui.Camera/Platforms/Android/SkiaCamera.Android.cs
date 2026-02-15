@@ -1052,7 +1052,6 @@ public partial class SkiaCamera
                             DrawDiagnostics
                         );
 
-                        // EXIT IMMEDIATELY - camera callback complete in microseconds
                     };
 
                     // Subscribe to GPU frame processed event for FPS tracking
