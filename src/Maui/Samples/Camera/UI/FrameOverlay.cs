@@ -54,9 +54,9 @@ namespace CameraTests.UI
             {
                 new AudioVisualizer()
                 {
-                    BackgroundColor = Colors.YellowGreen,
-                    WidthRequest = 200,
-                    HeightRequest = 100,
+                    Margin=16,
+                    WidthRequest = 150,
+                    HeightRequest = 80,
                     VerticalOptions = LayoutOptions.Start,
                     HorizontalOptions = LayoutOptions.End,
                 }.Assign(out Visualizer)

@@ -9,6 +9,8 @@ namespace CameraTests
     public class AudioLevelsPeak : IAudioVisualizer, IDisposable
     {
         private const int BandCount = 8;
+        // Portion of each slot reserved as empty space (0..0.9). Increase for more gap.
+        private float _barGapRatio = 0.18f;
         private float[] _levelsFrontBuffer = new float[BandCount];
         private float[] _levelsBackBuffer = new float[BandCount];
         private int _swapRequested = 0;
@@ -93,8 +95,16 @@ namespace CameraTests
             System.Threading.Interlocked.Exchange(ref _swapRequested, 1);
         }
 
-        public void Render(SKCanvas canvas, float width, float height, float scale)
+        public void Render(SKCanvas canvas, SKRect viewport, float scale)
         {
+            if (viewport.Width <= 0 || viewport.Height <= 0)
+                return;
+
+            float width = viewport.Width;
+            float height = viewport.Height;
+            float left = viewport.Left;
+            float top = viewport.Top;
+
             if (_paintBar == null)
             {
                 _paintBar = new SKPaint { Style = SKPaintStyle.Fill, IsAntialias = false };
@@ -117,12 +127,14 @@ namespace CameraTests
                 _levelsBackBuffer = temp;
             }
 
-            var barAreaWidth = width * 0.8f;
-            var maxBarHeight = 180 * scale;
-            var barWidth = (barAreaWidth / BandCount) * 0.8f;
-            var barGap = (barAreaWidth / BandCount) * 0.2f;
-            var startX = (width - barAreaWidth) / 2;
-            var bottomY = height - 40 * scale;
+            var barAreaWidth = width;
+            var maxBarHeight = height;
+            var slotWidth = barAreaWidth / BandCount;
+            var gapRatio = Math.Clamp(_barGapRatio, 0f, 0.9f);
+            var barWidth = slotWidth * (1f - gapRatio);
+            var barGap = slotWidth - barWidth;
+            var startX = left;
+            var bottomY = top + height;
 
             //if (!string.IsNullOrEmpty(recognizedText))
             //{
@@ -130,17 +142,17 @@ namespace CameraTests
             //    canvas.DrawText(recognizedText, width / 2, bottomY - maxBarHeight - 30 * scale, _paintText);
             //}
 
-            // Background dimmer
+            // Background fills viewport
             using (var paintBg = new SKPaint { Color = SKColors.Black.WithAlpha(128), Style = SKPaintStyle.Fill })
             {
-                canvas.DrawRect(startX - 10 * scale, bottomY - maxBarHeight - 10 * scale, barAreaWidth + 20 * scale, maxBarHeight + 20 * scale, paintBg);
+                canvas.DrawRect(viewport, paintBg);
             }
 
             for (int i = 0; i < BandCount; i++)
             {
                 var level = _levelsFrontBuffer[i];
                 var barHeight = level * maxBarHeight;
-                var x = startX + i * (barWidth + barGap);
+                var x = startX + i * slotWidth + barGap / 2;
                 var y = bottomY - barHeight;
 
                 float hue = (i / (float)(BandCount - 1)) * 140;
@@ -176,6 +188,7 @@ namespace CameraTests
                     canvas.DrawRect(x, y, barWidth, barHeight, _paintBar);
                 }
             }
+
         }
 
         public void Dispose()

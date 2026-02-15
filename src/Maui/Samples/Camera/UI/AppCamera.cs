@@ -222,7 +222,6 @@ namespace CameraTests.Views
 
         void OnFrameProcessing(DrawableFrame frame)
         {
-
             bool DrawOverlay(SkiaLayout layout, bool skipRendering)
             {
 
@@ -423,7 +422,7 @@ namespace CameraTests.Views
                 DrawOverlay(OverlayRecording, false);
             }
 
-            if (frame.IsPreview)
+            //if (frame.IsPreview)
             {
                 // draw frame indicator
                 if (paint.Color != SKColors.Transparent)
@@ -478,6 +477,11 @@ namespace CameraTests.Views
                 recordingLayout.Tag = "Recording";
  
                 InvalidateOverlays();
+
+                if (previewLayout is FrameOverlay overlay)
+                {
+                    VisualizerName = overlay.Visualizer.VisualizerName;
+                }
             }
         }
 

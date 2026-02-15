@@ -225,8 +225,16 @@ namespace CameraTests
             }
         }
 
-        public void Render(SKCanvas canvas, float width, float height, float scale)
+        public void Render(SKCanvas canvas, SKRect viewport, float scale)
         {
+            if (viewport.Width <= 0 || viewport.Height <= 0)
+                return;
+
+            float width = viewport.Width;
+            float height = viewport.Height;
+            float left = viewport.Left;
+            float top = viewport.Top;
+
             if (_paintTextLarge == null)
             {
                 _paintTextLarge = new SKPaint { Color = SKColors.White, IsAntialias = true, TextAlign = SKTextAlign.Center, FakeBoldText = true };
@@ -265,59 +273,70 @@ namespace CameraTests
                 }
             }
 
-            float cx = width / 2;
-            float cy = height / 2;
+            float cx = left + width / 2f;
+
+            float minDim = Math.Min(width, height);
+            float cyNote = top + height * 0.35f;
+            float cyInfo = top + height * 0.52f;
+            float cyStaff = top + height * 0.72f;
+            float cyGauge = top + height * 0.88f;
+
+            float textLarge = Math.Max(12f * scale, minDim * 0.45f);
+            float textSmall = Math.Max(10f * scale, minDim * 0.18f);
+            float textInfo = Math.Max(8f * scale, minDim * 0.10f);
 
             // Draw Note Name
-            _paintTextLarge.TextSize = 140 * scale;
+            _paintTextLarge.TextSize = textLarge;
             _paintTextLarge.Color = _displayColor;
 
             var bounds = new SKRect();
             _paintTextLarge.MeasureText(_displayNote, ref bounds);
-            // Move text UP to make room for staff
-            canvas.DrawText(_displayNote, cx, cy - 80 * scale, _paintTextLarge);
+            canvas.DrawText(_displayNote, cx, cyNote, _paintTextLarge);
 
             // Draw Solfège (Do-Re-Mi) just below the large note
-            _paintTextSmall.TextSize = 56 * scale;
+            _paintTextSmall.TextSize = textSmall;
             _paintTextSmall.Color = _displayColor;
-            canvas.DrawText(_displayNoteSolf, cx, cy - 30 * scale, _paintTextSmall);
+            canvas.DrawText(_displayNoteSolf, cx, cyNote + textSmall * 0.6f, _paintTextSmall);
 
-            // Always Draw Staff (so user knows it's there)
-            DrawMusicalStaff(canvas, cx, cy + 180 * scale, scale, _hasSignal ? _displayMidiNote : 0);
+            // Always Draw Staff
+            float staffWidth = width * 0.75f;
+            float lineSpacing = Math.Max(2f * scale, height * 0.035f);
+            DrawMusicalStaff(canvas, cx, cyStaff, lineSpacing, staffWidth, scale, _hasSignal ? _displayMidiNote : 0);
 
             // Draw Info
             if (_hasSignal)
             {
-                _paintTextSmall.TextSize = 28 * scale;
+                _paintTextSmall.TextSize = textInfo;
                 _paintTextSmall.Color = SKColors.White.WithAlpha(180);
-                canvas.DrawText($"{_displayFrequency:F1} Hz", cx, cy + 10 * scale, _paintTextSmall);
+                canvas.DrawText($"{_displayFrequency:F1} Hz", cx, cyInfo, _paintTextSmall);
 
                 // Gauge Background
-                float barWidth = 300 * scale;
-                float barY = cy + 280 * scale;
+                float barWidth = width * 0.75f;
+                float barY = cyGauge;
 
                 _paintGauge.Color = SKColors.Gray.WithAlpha(80);
                 _paintGauge.StrokeWidth = 6 * scale;
                 canvas.DrawLine(cx - barWidth / 2, barY, cx + barWidth / 2, barY, _paintGauge);
-                canvas.DrawLine(cx, barY - 15 * scale, cx, barY + 15 * scale, _paintGauge); // Center tick
+                float tick = Math.Max(2f * scale, height * 0.03f);
+                canvas.DrawLine(cx, barY - tick, cx, barY + tick, _paintGauge); // Center tick
 
                 // Gauge Needle
                 float offset = (_displayCents / 50.0f) * (barWidth / 2);
                 offset = Math.Clamp(offset, -barWidth / 2, barWidth / 2);
 
                 _paintNeedle.Color = _displayColor;
-                canvas.DrawCircle(cx + offset, barY, 12 * scale, _paintNeedle);
+                float dotRadius = Math.Max(2f * scale, height * 0.03f);
+                canvas.DrawCircle(cx + offset, barY, dotRadius, _paintNeedle);
 
                 // Cents Text
-                _paintTextSmall.TextSize = 20 * scale;
-                canvas.DrawText($"{_displayCents:+0;-0} cents", cx, barY + 40 * scale, _paintTextSmall);
+                _paintTextSmall.TextSize = Math.Max(8f * scale, minDim * 0.08f);
+                canvas.DrawText($"{_displayCents:+0;-0} cents", cx, barY + _paintTextSmall.TextSize * 1.6f, _paintTextSmall);
             }
+
         }
 
-        private void DrawMusicalStaff(SKCanvas canvas, float cx, float cy, float scale, int midiNote)
+        private void DrawMusicalStaff(SKCanvas canvas, float cx, float cy, float lineSpacing, float staffWidth, float scale, int midiNote)
         {
-            float lineSpacing = 16 * scale;
-            float staffWidth = 200 * scale;
             float startX = cx - staffWidth / 2;
             float endX = cx + staffWidth / 2;
 

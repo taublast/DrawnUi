@@ -216,7 +216,17 @@ namespace CameraTests.Views
                                                 .Assign(out _previewThumbnail)
                                             }
                                         }
-                                        .OnTapped(me => { ShowLastCapturedPreview(); }),
+                                        .OnTapped(me =>
+                                        {
+                                            if (CameraControl.IsPreRecording || CameraControl.IsRecording)
+                                            {
+                                                _ = AbortVideoRecording();
+                                            }
+                                            else
+                                            {
+                                                ShowLastCapturedPreview();
+                                            }
+                                        }),
 
                                         // Settings button
                                         new SkiaShape()
@@ -342,10 +352,10 @@ namespace CameraTests.Views
                                             me.IsEnabled = CameraControl.State == CameraState.On;
                                             me.Opacity = me.IsEnabled ? 1.0 : 0.5;
                                         })
-                                        .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording), me =>
+                                        .ObserveProperties(CameraControl, new []{nameof(CameraControl.IsRecording), nameof(CameraControl.IsPreRecording)}, me =>
                                         {
-                                            UpdateCaptureButtonShape(CameraControl.IsRecording);
-                                        }),
+                                            UpdateCaptureButtonShape();
+                                        })
 
                                     }
                                 }
@@ -384,8 +394,7 @@ namespace CameraTests.Views
                 // Settings Drawer (slides up from bottom)
                 new SkiaDrawer()
                 {
-                    UseCache = SkiaCacheType.Operations,
-                    Margin = new Thickness(8, 8, 8, 0),
+                    Margin = new Thickness(2, 0, 2, 0),
                     HeaderSize = 40,
                     Direction = DrawerDirection.FromBottom,
                     VerticalOptions = LayoutOptions.End,
@@ -536,6 +545,7 @@ namespace CameraTests.Views
 
             var tabBar = new SkiaLayout()
             {
+                UseCache = SkiaCacheType.Image,
                 Type = LayoutType.Row,
                 HorizontalOptions = LayoutOptions.Fill,
                 HeightRequest = 36,
@@ -592,6 +602,7 @@ namespace CameraTests.Views
                     VerticalOptions = LayoutOptions.Fill,
                     Content = new SkiaWrap
                     {
+                        UseCache = SkiaCacheType.Operations,
                         Spacing = 8,
                         Padding = new Thickness(16),
                         HorizontalOptions = LayoutOptions.Fill,
@@ -736,6 +747,7 @@ namespace CameraTests.Views
                     Content = new SkiaWrap
             {
                 Spacing = 8,
+                UseCache = SkiaCacheType.Operations,
                 Padding = new Thickness(16),
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Start,
@@ -821,6 +833,7 @@ namespace CameraTests.Views
                     Content = new SkiaWrap
             {
                 Spacing = 8,
+                UseCache = SkiaCacheType.Operations,
                 Padding = new Thickness(16),
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Start,
@@ -917,6 +930,7 @@ namespace CameraTests.Views
             return new SkiaStack()
             {
                 Spacing = 4,
+                UseCache = SkiaCacheType.Operations,
                 Margin = new Thickness(0, 40, 0, 0),
                 Children =
                 {
@@ -962,13 +976,14 @@ namespace CameraTests.Views
                         HorizontalOptions = LayoutOptions.End,
                         VerticalOptions = LayoutOptions.Start,
                         Margin = new Thickness(20),
-                        UseCache = SkiaCacheType.Image
+                        UseCache = SkiaCacheType.Operations
                     }
                     .OnTapped(me => { HidePreviewOverlay(); }),
 
                 // Main preview image container
                 new SkiaLayout
                 {
+                    UseCache = SkiaCacheType.Image,
                     HorizontalOptions = LayoutOptions.Center,
                     VerticalOptions = LayoutOptions.Center,
                     Padding = 20,
@@ -988,7 +1003,6 @@ namespace CameraTests.Views
                                         Aspect = TransformAspect.AspectFit,
                                         MaximumWidthRequest = 400,
                                         MaximumHeightRequest = 600,
-                                        UseCache = SkiaCacheType.Image
                                     }
                                     .Assign(out _previewImage)
                             }
@@ -999,6 +1013,7 @@ namespace CameraTests.Views
                 // Action buttons at bottom
                 new SkiaRow
                 {
+                    UseCache = SkiaCacheType.Image,
                     HorizontalOptions = LayoutOptions.Center,
                     VerticalOptions = LayoutOptions.End,
                     Margin = new Thickness(20, 20, 20, 40),

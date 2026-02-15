@@ -24,13 +24,12 @@ namespace CameraTests.Visualizers
             set => SetValue(VisualizerNameProperty, value);
         }
 
-
-
         public IAudioVisualizer Visualizer { get; protected set; }
 
         public AudioVisualizer()
         {
-            SwitchVisualizer(0);
+            UseCache = SkiaCacheType.Operations;
+            SwitchVisualizer(-2);
         }
 
         protected override void Paint(DrawingContext ctx)
@@ -39,10 +38,7 @@ namespace CameraTests.Visualizers
 
             if (Visualizer != null)
             {
-                ctx.Context.Canvas.Save();
-                ctx.Context.Canvas.Translate(ctx.Destination.Left, ctx.Destination.Top);
-                Visualizer.Render(ctx.Context.Canvas, ctx.Destination.Width, ctx.Destination.Height, ctx.Scale);
-                ctx.Context.Canvas.Restore();
+                Visualizer.Render(ctx.Context.Canvas, DrawingRect, ctx.Scale);
             }
         }
 
@@ -60,7 +56,12 @@ namespace CameraTests.Visualizers
 
         public string SwitchVisualizer(int index = -1)
         {
-            if (_visualizerIndex > 8 || _visualizerIndex < -1)
+            if (index != -1)
+            {
+                _visualizerIndex = index;
+            }
+
+            if (_visualizerIndex > 8 || _visualizerIndex < 0)
             {
                 _visualizerIndex = 0;
             }

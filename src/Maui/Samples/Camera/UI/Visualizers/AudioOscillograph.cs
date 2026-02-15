@@ -37,8 +37,18 @@ namespace CameraTests
             System.Threading.Interlocked.Exchange(ref _swapRequested, 1);
         }
 
-        public void Render(SKCanvas canvas, float width, float height, float scale)
+        public void Render(SKCanvas canvas, SKRect viewport, float scale)
         {
+            if (viewport.Width <= 0 || viewport.Height <= 0)
+                return;
+
+            //canvas.Save();
+            //canvas.Translate(viewport.Left, viewport.Top);
+            //canvas.ClipRect(new SKRect(0, 0, viewport.Width, viewport.Height));
+
+            float width = viewport.Width;
+            float height = viewport.Height;
+
             if (_paintWaveform == null)
             {
                 _paintWaveform = new SKPaint
@@ -68,16 +78,15 @@ namespace CameraTests
                 _audioBackBuffer = temp;
             }
 
-            var oscWidth = width * 0.8f;
-            var oscHeight = 150 * scale;
-            var oscX = (width - oscWidth) / 2;
-            var oscY = height - oscHeight - 40 * scale;
-            var centerY = oscY + oscHeight / 2;
+            var oscWidth = width;
+            var oscHeight = height * 0.8f;
+            var oscX = viewport.Left;
+            var centerY = viewport.Top + height / 2f;
 
             // Background
             _paintWaveform.Style = SKPaintStyle.Fill;
             _paintWaveform.Color = SKColors.Black.WithAlpha(128);
-            canvas.DrawRect(oscX - 10, oscY - 10, oscWidth + 20, oscHeight + 20, _paintWaveform);
+            canvas.DrawRect(viewport.Left, viewport.Top, width, height, _paintWaveform);
 
             // Center line
             _paintWaveform.Style = SKPaintStyle.Stroke;
@@ -99,6 +108,8 @@ namespace CameraTests
 
                 canvas.DrawLine(x1, y1, x2, y2, _paintWaveform);
             }
+
+            //canvas.Restore();
         }
 
         public void Dispose()

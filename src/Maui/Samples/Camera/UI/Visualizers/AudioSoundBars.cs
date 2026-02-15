@@ -176,8 +176,16 @@ namespace CameraTests
             System.Threading.Interlocked.Exchange(ref _swapRequested, 1);
         }
 
-        public void Render(SKCanvas canvas, float width, float height, float scale)
+        public void Render(SKCanvas canvas, SKRect viewport, float scale)
         {
+            if (viewport.Width <= 0 || viewport.Height <= 0)
+                return;
+
+            float width = viewport.Width;
+            float height = viewport.Height;
+            float left = viewport.Left;
+            float top = viewport.Top;
+
             if (_paintBar == null)
             {
                 _paintBar = new SKPaint
@@ -222,25 +230,14 @@ namespace CameraTests
                 Array.Copy(_peakHold, _peakHoldFront, BarCount);
             }
 
-            var areaWidth = width * 0.85f;
-            var maxBarHeight = 150 * scale;
-            var startX = (width - areaWidth) / 2;
-            var bottomY = height - 40 * scale;
-            var topY = bottomY - maxBarHeight;
+            // Background fills viewport
+            canvas.DrawRect(viewport, _paintBg);
 
-            // Background
-            canvas.DrawRoundRect(
-                startX - 8 * scale, topY - 8 * scale,
-                areaWidth + 16 * scale, maxBarHeight + 16 * scale,
-                6 * scale, 6 * scale,
-                _paintBg);
-
-            var totalSlot = areaWidth / BarCount;
+            var startX = left;
+            var bottomY = top + height;
+            var maxBarHeight = height;
+            var totalSlot = width / BarCount;
             var barWidth = Math.Max(1f, totalSlot * 0.55f);
-
-            // Clip all bar drawing to the background area
-            canvas.Save();
-            canvas.ClipRect(new SKRect(startX, topY, startX + areaWidth, bottomY));
 
             if (Skin == 0)
             {
@@ -298,7 +295,6 @@ namespace CameraTests
                 }
             }
 
-            canvas.Restore();
         }
 
         public void Dispose()

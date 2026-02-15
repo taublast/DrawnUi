@@ -105,8 +105,16 @@ namespace CameraTests
                 0f, 1f);
         }
 
-        public void Render(SKCanvas canvas, float width, float height, float scale)
+        public void Render(SKCanvas canvas, SKRect viewport, float scale)
         {
+            if (viewport.Width <= 0 || viewport.Height <= 0)
+                return;
+
+            float width = viewport.Width;
+            float height = viewport.Height;
+            float left = viewport.Left;
+            float top = viewport.Top;
+
             if (_paintBar == null)
             {
                 _paintBar = new SKPaint
@@ -134,12 +142,12 @@ namespace CameraTests
                 _levelsBackBuffer = temp;
             }
 
-            var barAreaWidth = width * 0.8f;
-            var maxBarHeight = 180 * scale;
-            var barWidth = (barAreaWidth / BandCount) * 0.8f; // 80% width, 20% gap
-            var barGap = (barAreaWidth / BandCount) * 0.2f;
-            var startX = (width - barAreaWidth) / 2;
-            var bottomY = height - 40 * scale;
+            var barAreaWidth = width;
+            var maxBarHeight = height;
+            var barWidth = barAreaWidth / BandCount;
+            var barGap = 0f;
+            var startX = left;
+            var bottomY = top + height;
 
             //if (!string.IsNullOrEmpty(recognizedText))
             //{
@@ -147,10 +155,10 @@ namespace CameraTests
             //    canvas.DrawText(recognizedText, width / 2, bottomY - maxBarHeight - 30 * scale, _paintText);
             //}
 
-            // Background dimmer
+            // Background fills viewport
             using (var paintBg = new SKPaint { Color = SKColors.Black.WithAlpha(128), Style = SKPaintStyle.Fill })
             {
-                canvas.DrawRect(startX - 10 * scale, bottomY - maxBarHeight - 10 * scale, barAreaWidth + 20 * scale, maxBarHeight + 20 * scale, paintBg);
+                canvas.DrawRect(viewport, paintBg);
             }
 
             for (int i = 0; i < BandCount; i++)
@@ -194,6 +202,7 @@ namespace CameraTests
                     canvas.DrawRect(x, y, barWidth, barHeight, _paintBar);
                 }
             }
+
         }
 
         public void Dispose()

@@ -82,6 +82,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         CreateContent();
 
         CameraControl.InitializeOverlayLayouts(new FrameOverlay(), new FrameOverlay());
+
     }
 
     public CameraTestPage(IRealtimeTranscriptionService realtimeTranscriptionService)
@@ -290,8 +291,9 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     private bool _btnStateIsRecording;
     private const int _morphSpeed = 250;
 
-    private void UpdateCaptureButtonShape(bool isRecording)
+    private void UpdateCaptureButtonShape()
     {
+        bool isRecording = CameraControl.IsRecording || CameraControl.IsPreRecording;
         if (_takePictureButton == null)
             return;
 
@@ -314,7 +316,14 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                 }, 0, 1, (uint)_morphSpeed, Easing.SinOut, default, true);
                 
                 // Change color to red
-                _takePictureButton.BackgroundColor = Color.FromArgb("#EB5248");
+                if (CameraControl.IsPreRecording)
+                {
+                    _takePictureButton.BackgroundColor = Colors.Orange;
+                }
+                else
+                {
+                    _takePictureButton.BackgroundColor = Colors.Red;
+                }
             }
             else
             {
@@ -336,7 +345,14 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
             {
                 _takePictureButton.CornerRadius = 4;
                 _takePictureButton.WidthRequest = 42;
-                _takePictureButton.BackgroundColor = Color.FromArgb("#EB5248");
+                if (CameraControl.IsPreRecording)
+                {
+                    _takePictureButton.BackgroundColor = Colors.Orange;
+                }
+                else
+                {
+                    _takePictureButton.BackgroundColor = Colors.Red;
+                }
             }
             else
             {
@@ -555,7 +571,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
     private async Task AbortVideoRecording()
     {
-        if (CameraControl.State != CameraState.On || !CameraControl.IsRecording)
+        if (CameraControl.State != CameraState.On || !(CameraControl.IsRecording || CameraControl.IsPreRecording))
             return;
 
         try

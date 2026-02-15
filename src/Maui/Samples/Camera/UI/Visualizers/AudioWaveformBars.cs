@@ -67,8 +67,16 @@ namespace CameraTests
             }
         }
 
-        public void Render(SKCanvas canvas, float width, float height, float scale)
+        public void Render(SKCanvas canvas, SKRect viewport, float scale)
         {
+            if (viewport.Width <= 0 || viewport.Height <= 0)
+                return;
+
+            float width = viewport.Width;
+            float height = viewport.Height;
+            float left = viewport.Left;
+            float top = viewport.Top;
+
             if (_paintBar == null)
             {
                 _paintBar = new SKPaint
@@ -105,26 +113,18 @@ namespace CameraTests
                 _barsBackBuffer = temp;
             }
 
-            var areaWidth = width * 0.85f;
-            var areaHeight = 120 * scale;
-            var startX = (width - areaWidth) / 2;
-            var centerY = height - 40 * scale - areaHeight / 2;
-
-            // Background
-            canvas.DrawRoundRect(
-                startX - 8 * scale,
-                centerY - areaHeight / 2 - 8 * scale,
-                areaWidth + 16 * scale,
-                areaHeight + 16 * scale,
-                8 * scale, 8 * scale,
-                _paintBg);
+            // Background fills viewport
+            canvas.DrawRect(viewport, _paintBg);
 
             // Bar dimensions
-            var totalBarSlot = areaWidth / BarCount;
+            var totalBarSlot = width / BarCount;
             var barWidth = Math.Max(1f, totalBarSlot * 0.6f);
             var barGap = totalBarSlot - barWidth;
-            var halfHeight = areaHeight / 2;
-            var minBarHeight = 2f * scale; // Minimum dot size for silence
+            var halfHeight = height / 2;
+            var minBarHeight = Math.Max(1f, 2f * scale); // Minimum dot size for silence
+
+            var startX = left;
+            var centerY = top + height / 2;
 
             if (Skin == 0)
             {
@@ -151,7 +151,7 @@ namespace CameraTests
             else
             {
                 // Skin 1: Single-sided bars from bottom, colored gradient
-                var bottomY = centerY + halfHeight;
+                var bottomY = top + height;
 
                 for (int i = 0; i < BarCount; i++)
                 {
@@ -160,7 +160,7 @@ namespace CameraTests
 
                     byte alpha = (byte)(100 + (155f * i / (BarCount - 1)));
 
-                    var barH = Math.Max(minBarHeight, level * areaHeight);
+                    var barH = Math.Max(minBarHeight, level * height);
 
                     // Hue shifts from purple (left/old) to cyan (right/new)
                     float hue = 220 + (140f * i / (BarCount - 1)); // 220=blue -> 360=red wrap
@@ -172,6 +172,7 @@ namespace CameraTests
                 }
             }
         }
+
 
         public void Dispose()
         {

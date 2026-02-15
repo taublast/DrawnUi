@@ -56,14 +56,21 @@ namespace CameraTests
             System.Threading.Interlocked.Exchange(ref _swapRequested, 1);
         }
 
-        public void Render(SKCanvas canvas, float width, float height, float scale)
+        public void Render(SKCanvas canvas, SKRect viewport, float scale)
         {
+            if (viewport.Width <= 0 || viewport.Height <= 0)
+                return;
+
+            float width = viewport.Width;
+            float height = viewport.Height;
+            float left = viewport.Left;
+            float top = viewport.Top;
+
             if (_paintArc == null)
             {
                 _paintArc = new SKPaint
                 {
                     Style = SKPaintStyle.Stroke,
-                    StrokeWidth = 30 * scale,
                     IsAntialias = true,
                     StrokeCap = SKStrokeCap.Round
                 };
@@ -92,9 +99,16 @@ namespace CameraTests
                 _levelFront = _levelBack;
             }
 
-            var cx = width / 2;
-            var cy = height - 60 * scale;
-            var radius = 100 * scale;
+            var minDim = Math.Min(width, height);
+            var stroke = Math.Min(30 * scale, minDim * 0.12f);
+            if (stroke < 1f) stroke = 1f;
+            _paintArc.StrokeWidth = stroke;
+
+            var radius = (minDim - stroke) / 2f;
+            if (radius < 1f) radius = 1f;
+
+            var cx = left + width / 2f;
+            var cy = top + height / 2f;
 
             var rect = new SKRect(cx - radius, cy - radius, cx + radius, cy + radius);
 
@@ -132,15 +146,18 @@ namespace CameraTests
 
             // Draw triangular needle pointing RIGHT (angle 0 relative to rotation)
             var path = new SKPath();
-            path.MoveTo(cx, cy - 10 * scale);
-            path.LineTo(cx, cy + 10 * scale);
-            path.LineTo(cx + radius - 10 * scale, cy); // Points Right (which is needleAngle direction)
+            var needleHalfThickness = Math.Max(2f * scale, radius * 0.08f);
+            var needleTipInset = Math.Max(2f * scale, radius * 0.05f);
+            path.MoveTo(cx, cy - needleHalfThickness);
+            path.LineTo(cx, cy + needleHalfThickness);
+            path.LineTo(cx + radius - needleTipInset, cy); // Points Right (which is needleAngle direction)
             path.Close();
 
             canvas.DrawPath(path, _paintNeedle);
             canvas.DrawCircle(cx, cy, 15 * scale, _paintNeedle); // Center cap
 
             canvas.Restore();
+
         }
 
         public void Dispose()
