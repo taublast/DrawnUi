@@ -235,7 +235,7 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
-    /// Gets whether video recording is supported on the current device/camera
+    /// Readonly, gets whether video recording is supported on the current device/camera
     /// </summary>
     public bool CanRecordVideo
     {
