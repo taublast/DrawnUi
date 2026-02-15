@@ -95,23 +95,27 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
     public static void FillMetadata(Metadata meta, CaptureResult result)
     {
-        // Get the camera's chosen exposure settings for "proper" exposure
-        var measuredExposureTime = (long)result.Get(CaptureResult.SensorExposureTime);
-        var measuredSensitivity = (int)result.Get(CaptureResult.SensorSensitivity);
-        var measuredAperture = (float)result.Get(CaptureResult.LensAperture);
-        var usedLens = (float)result.Get(CaptureResult.LensFocalLength);
+        // Each result.Get() returns a Java boxed primitive wrapper (Java.Lang.Long, etc.)
+        // Must dispose after extracting value to avoid GC bridge pressure
+        using var jExposure = (Java.Lang.Long)result.Get(CaptureResult.SensorExposureTime);
+        using var jSensitivity = (Java.Lang.Integer)result.Get(CaptureResult.SensorSensitivity);
+        using var jAperture = (Java.Lang.Float)result.Get(CaptureResult.LensAperture);
+        using var jFocalLength = (Java.Lang.Float)result.Get(CaptureResult.LensFocalLength);
+        using var jOrientation = (Java.Lang.Integer)result.Get(CaptureResult.JpegOrientation);
+
+        var measuredExposureTime = jExposure?.LongValue() ?? 0L;
+        var measuredSensitivity = jSensitivity?.IntValue() ?? 0;
+        var measuredAperture = jAperture?.FloatValue() ?? 0f;
+        var usedLens = jFocalLength?.FloatValue() ?? 0f;
 
         // Convert to standard units
         double shutterSpeed = measuredExposureTime / 1_000_000_000.0; // nanoseconds to seconds
-        double iso = measuredSensitivity;
-        double aperture = measuredAperture;
 
         meta.FocalLength = usedLens;
-        meta.ISO = (int)iso;
-        meta.Aperture = aperture;
+        meta.ISO = measuredSensitivity;
+        meta.Aperture = measuredAperture;
         meta.Shutter = shutterSpeed;
-
-        meta.Orientation = (int)result.Get(CaptureResult.JpegOrientation);
+        meta.Orientation = jOrientation?.IntValue() ?? 0;
     }
 
     public void SetZoom(float zoom)
@@ -560,7 +564,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             _frameAvailable?.Reset();
 
-            if (image == null) continue;
+            if (image == null)
+                continue;
 
             try
             {
@@ -572,7 +577,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             }
             finally
             {
-                image.Close();  // Return to ImageReader pool
+                image.Close();   // Return to ImageReader pool
             }
         }
     }
@@ -593,12 +598,13 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         }
 
         // RenderScript YUV→RGB conversion
-        ProcessImage(image, allocated.Allocation);
-        allocated.Update();
+        //ProcessImage(image, allocated.Allocation);
+        //allocated.Update();
 
         // During capture video flow recording, avoid any UI preview work
         bool inCaptureRecording = FormsControl.UseRealtimeVideoProcessing && FormsControl.IsRecording;
 
+    
         // Convert to SKImage
         var sk = allocated.Bitmap.ToSKImage();
         if (sk == null) return;
@@ -629,6 +635,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         Preview = outImage;
         FormsControl.UpdatePreview();
+        
     }
 
     #endregion
@@ -910,7 +917,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     public int SensorOrientation { get; set; }
 
     // A {@link CameraCaptureSession.CaptureCallback} that handles events related to JPEG capture.
-    public StillPhotoCaptureCallback mCaptureCallback;
+    public PhotoModeCaptureCallback mCaptureCallback;
 
     // Shows a {@link Toast} on the UI thread.
     public void ShowToast(string text)
@@ -1497,7 +1504,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 }
 
                 if (mCaptureCallback == null)
-                    mCaptureCallback = new StillPhotoCaptureCallback(this);
+                    mCaptureCallback = new PhotoModeCaptureCallback(this);
 
                 SetupHardware(width, height);
 
