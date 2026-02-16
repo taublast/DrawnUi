@@ -328,15 +328,17 @@ namespace MusicNotes.Audio
             {
                 long beatTs = _pendingPeakTsMs > 0 ? _pendingPeakTsMs : nowMs;
 
-                // Minimum time between beats (avoid double detection)
-                if (beatTs - _lastBeatTime > 180)
+                // Minimum time between beats - Lowered to 75ms to safely support 600 BPM (100ms interval)
+                // giving 25ms of jitter room.
+                if (beatTs - _lastBeatTime > 75)
                 {
                     // If the detected interval is wildly different from current tempo, relock quickly
                     if (_beatTimestamps.Count > 0)
                     {
                         long prev = _beatTimestamps[^1];
                         long intervalMs = beatTs - prev;
-                        if (intervalMs < 250 || intervalMs > 2000)
+                        // support up to ~750 BPM (80ms interval) down to 24 BPM (2500ms interval)
+                        if (intervalMs < 80 || intervalMs > 2500)
                         {
                             // Ignore obviously wrong intervals
                             return;
@@ -414,7 +416,7 @@ namespace MusicNotes.Audio
             _currentBPM = 60000f / medianInterval; // 60000 ms in a minute
 
             // Clamp to reasonable range
-            _currentBPM = Math.Clamp(_currentBPM, 40, 240);
+            _currentBPM = Math.Clamp(_currentBPM, 20, 666);
 
             // Smooth BPM with higher factor for stability
             if (_smoothBPM == 0)
