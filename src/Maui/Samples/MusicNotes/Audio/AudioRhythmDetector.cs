@@ -230,9 +230,10 @@ namespace MusicNotes.Audio
 
         private void DetectBeat(long nowMs)
         {
-            // Calculate energy (RMS)
+            // Calculate energy (RMS) over the entire scan interval to avoid missing beats
             float energy = 0;
-            int windowSize = 256;
+            // Use the full scan interval as window size, or at least cover the gap
+            int windowSize = ScanInterval; 
             for (int i = 0; i < windowSize; i++)
             {
                 int idx = (_writePos - windowSize + i + BufferSize) % BufferSize;
@@ -260,7 +261,8 @@ namespace MusicNotes.Audio
             }
 
             // Silence detection
-            float silenceThreshold = Math.Max(UseGain ? 0.0015f : 0.0010f, _noiseFloor * 2.5f);
+            // Use a lower threshold for detecting *signal presence* vs. noise floor to avoid dropping quiet beats
+            float silenceThreshold = Math.Max(UseGain ? 0.0010f : 0.0005f, _noiseFloor * 1.5f);
             if (energy < silenceThreshold)
             {
                 _hasSignal = false;
@@ -297,7 +299,8 @@ namespace MusicNotes.Audio
             float minPeakAbs = Math.Max(UseGain ? 0.02f : 0.015f, _noiseFloor * 6.0f);
             bool hasPeak = _pendingPeakAbs >= minPeakAbs;
 
-            if (relOnset > 0.35f && hasPeak)
+            // For sparse signals like metronome, rely more on peak detection if onset is weak
+            if ((relOnset > 0.35f || (hasPeak && relOnset > 0.15f)) && hasPeak)
             {
                 long beatTs = _pendingPeakTsMs > 0 ? _pendingPeakTsMs : nowMs;
 
