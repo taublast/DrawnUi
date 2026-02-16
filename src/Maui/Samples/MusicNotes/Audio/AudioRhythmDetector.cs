@@ -32,8 +32,8 @@ namespace MusicNotes.Audio
         private long _lastNonSilentMs = 0;
 
         // If we reset too quickly on "silence", 60 BPM metronome clicks (1000ms apart)
-        // will never accumulate 2 beats. Keep this comfortably above 1 beat at 60 BPM.
-        private const long SustainedSilenceResetMs = 2200;
+        // will never accumulate 2 beats. Keep this comfortably above 1 beat at 40 BPM (1500ms).
+        private const long SustainedSilenceResetMs = 3000;
 
         // Peak tracking for accurate beat timestamping
         private float _pendingPeakAbs = 0;
@@ -243,14 +243,18 @@ namespace MusicNotes.Audio
             energy = (float)Math.Sqrt(energy / windowSize);
 
             // Update fast/slow energy envelopes
-            if (_energyFast == 0) _energyFast = energy;
-            if (_energySlow == 0) _energySlow = energy;
+            // If just reset, initialize with the current energy to avoid 0-start ramp-up issues
+            if (_energyFast == 0 && energy > 0) _energyFast = energy;
+            if (_energySlow == 0 && energy > 0) _energySlow = energy;
 
             // Fast tracks transients, slow tracks background
             _energyFast = _energyFast * 0.80f + energy * 0.20f;
             _energySlow = _energySlow * 0.98f + energy * 0.02f;
 
             // Noise floor: slow rise, faster fall
+            // Safety clamp: ensure _noiseFloor never drops to absolute zero to prevent divide-by-zero or massive relOnset
+            if (_noiseFloor < 0.0001f) _noiseFloor = 0.0001f;
+            
             if (energy < _noiseFloor)
             {
                 _noiseFloor = _noiseFloor * 0.90f + energy * 0.10f;
@@ -282,8 +286,25 @@ namespace MusicNotes.Audio
             _hasSignal = true;
             _lastNonSilentMs = nowMs;
 
-            // Reset if we've had no beats for a while (tempo change / noise burst)
-            if (_beatTimestamps.Count > 0 && (nowMs - _lastBeatTime) > 2500)
+            // Reset if we've had no beats for a while
+            // Adaptive reset: if we had a fast tempo (e.g. 140bpm = 428ms), a 1.5s gap is a stop.
+            // If we had a slow tempo (40bpm = 1500ms), 1.5s is just the next beat.
+            long resetThreshold = 2500; // Default: comfortably above 40 BPM beat interval
+            if (_currentBPM > 0)
+            {
+                // dynamic threshold logic:
+                // Fast (140bpm = 428ms): 3 beats = 1284ms. 
+                // Slow (40bpm = 1500ms): 3 beats = 4500ms.
+                
+                long interval = (long)(60000f / _currentBPM);
+                // For fast tempos, be snappy (1.5s timeout). For slow tempos, follow the beat.
+                resetThreshold = Math.Max(interval * 2.5f > 1500 ? (long)(interval * 2.5f) : 1500, 2500);
+                
+                // Cap at 5s to avoid holding onto very stale beats forever
+                if (resetThreshold > 5000) resetThreshold = 5000;
+            }
+
+            if (_beatTimestamps.Count > 0 && (nowMs - _lastBeatTime) > resetThreshold)
             {
                 _beatTimestamps.Clear();
                 if (_smoothBPM > 0)
@@ -294,13 +315,16 @@ namespace MusicNotes.Audio
 
             // Onset detection: transient above background (works under ads/music)
             float onset = Math.Max(0, _energyFast - _energySlow);
-            float relOnset = onset / Math.Max(1e-6f, _energySlow);
+            float relOnset = onset / Math.Max(0.0001f, _energySlow);
 
             float minPeakAbs = Math.Max(UseGain ? 0.02f : 0.015f, _noiseFloor * 6.0f);
             bool hasPeak = _pendingPeakAbs >= minPeakAbs;
 
+            // Warm-up check: if we just reset (energies very low), skip detection to avoid noise locks
+            bool isWarm = _energySlow > (_noiseFloor * 1.2f);
+
             // For sparse signals like metronome, rely more on peak detection if onset is weak
-            if ((relOnset > 0.35f || (hasPeak && relOnset > 0.15f)) && hasPeak)
+            if (isWarm && (relOnset > 0.35f || (hasPeak && relOnset > 0.15f)) && hasPeak)
             {
                 long beatTs = _pendingPeakTsMs > 0 ? _pendingPeakTsMs : nowMs;
 
@@ -394,9 +418,16 @@ namespace MusicNotes.Audio
 
             // Smooth BPM with higher factor for stability
             if (_smoothBPM == 0)
+            {
+                // First measurement: trust it but be skeptical
                 _smoothBPM = _currentBPM;
+            }
             else
-                _smoothBPM = _smoothBPM * (1 - BPMSmoothFactor) + _currentBPM * BPMSmoothFactor;
+            {
+                // If we have very few samples, average more aggressively to dampen initial jitter
+                float factor = (_beatTimestamps.Count < 4) ? 0.1f : BPMSmoothFactor;
+                _smoothBPM = _smoothBPM * (1 - factor) + _currentBPM * factor;
+            }
 
             if (_smoothBPM > 0)
                 _lastKnownBPM = _smoothBPM;
