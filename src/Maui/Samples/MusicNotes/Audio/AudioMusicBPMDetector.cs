@@ -14,11 +14,11 @@ namespace MusicNotes.Audio
         private int _writePos = 0;
         private int _samplesAddedSinceLastScan = 0;
         private int _sampleRate = 44100;
-        private const int ScanInterval = 2205; // Scan every 50ms (44100/20) for accurate timing
+        private const int ScanInterval = 1024; // Reverted to 1024 (23ms) for better transient detection
 
         // Energy tracking for onset detection
         private List<float> _energyHistory = new List<float>();
-        private const int MaxEnergyHistory = 200; // 200 * 50ms = 10 seconds of history
+        private const int MaxEnergyHistory = 800; // Adjusted for 1024 sample window (was 1600)
 
         // BPM Detection
         private float _currentBPM = 0;
@@ -75,23 +75,11 @@ namespace MusicNotes.Audio
 
         private long AdvanceClock(AudioSample sample, int frames)
         {
-            long tsMs = sample.TimestampNs > 0 ? (sample.TimestampNs / 1_000_000) : 0;
-
-            if (tsMs > 0)
-            {
-                if (_lastTimestampMs == 0 || tsMs >= _lastTimestampMs)
-                {
-                    _lastTimestampMs = tsMs;
-                    _clockMs = tsMs;
-                    return _clockMs;
-                }
-            }
-
             if (frames > 0 && _sampleRate > 0)
             {
+                // Rely purely on sample rate for clock advance to ensure smooth timebase for autocorrelation
                 _clockMs += (long)Math.Round(frames * 1000.0 / _sampleRate);
             }
-
             return _clockMs;
         }
 
@@ -122,6 +110,11 @@ namespace MusicNotes.Audio
             return 0f;
         }
 
+        // Multi-band filter state
+        private float _lowPassState = 0;
+        private float _highPassState = 0;
+        private float _prevVal = 0;
+        
         public void AddSample(AudioSample sample)
         {
             if (sample.SampleRate > 0)
@@ -137,75 +130,190 @@ namespace MusicNotes.Audio
             {
                 float val = ReadMonoSample(sample, frame) * gainMultiplier;
                 val = Math.Clamp(val, -1.0f, 1.0f);
-
+                
+                // Circular buffer write
                 _sampleBuffer[_writePos] = val;
                 _writePos = (_writePos + 1) % BufferSize;
-            }
+                
+                _samplesAddedSinceLastScan++;
 
-            _samplesAddedSinceLastScan += frames;
-
-            if (_samplesAddedSinceLastScan >= ScanInterval)
-            {
-                DetectMusicBPM();
-                _samplesAddedSinceLastScan = 0;
-                System.Threading.Interlocked.Exchange(ref _swapRequested, 1);
+                if (_samplesAddedSinceLastScan >= ScanInterval)
+                {
+                    // Update linear energy history (lightweight)
+                    ComputeEnergyFrame();
+                    
+                    // Run heavy detection less frequently (every ~90ms), but use full history timeline
+                    // 1024 samples @ 44.1k = 23.2ms. 4 frames = ~92ms.
+                    if (_framesSinceLastDetect++ >= 4) 
+                    {
+                        DetectMusicBPM();
+                        _framesSinceLastDetect = 0;
+                        System.Threading.Interlocked.Exchange(ref _swapRequested, 1);
+                    }
+                    
+                    _samplesAddedSinceLastScan = 0;
+                }
             }
         }
+        
+        private int _framesSinceLastDetect = 0;
 
-        private void DetectMusicBPM()
+        private void ComputeEnergyFrame()
         {
-            // Calculate energy (RMS)
-            float energy = 0;
-            int windowSize = 1024;
+            // improved multi-band energy calculation
+            float energyLow = 0;
+            float energyMidHigh = 0;
+
+            int windowSize = ScanInterval;
+            
+            // Cutoff frequency for kick detection (approx 150Hz)
+            float alphaLow = 0.05f; 
+
+            // Read backward from writePos
             for (int i = 0; i < windowSize; i++)
             {
                 int idx = (_writePos - windowSize + i + BufferSize) % BufferSize;
                 float val = _sampleBuffer[idx];
-                energy += val * val;
+                
+                // Low-Pass Filter (Bass/Kick)
+                _lowPassState = _lowPassState + alphaLow * (val - _lowPassState);
+                energyLow += _lowPassState * _lowPassState;
+
+                // Simple High-Pass / Transient detection
+                float diff = val - _prevVal;
+                _prevVal = val;
+                energyMidHigh += diff * diff;
             }
-            energy = (float)Math.Sqrt(energy / windowSize);
+            
+            energyLow = (float)Math.Sqrt(energyLow / windowSize);
+            energyMidHigh = (float)Math.Sqrt(energyMidHigh / windowSize);
 
-            _noiseFloor = _noiseFloor * 0.995f + energy * 0.005f;
+            float energy = energyLow + energyMidHigh; 
 
-            // Silence detection
-            float silenceThreshold = Math.Max(UseGain ? 0.004f : 0.002f, _noiseFloor * 1.8f);
+            // Safety clamp
+            if (_noiseFloor < 0.0001f) _noiseFloor = 0.0001f;
+            _noiseFloor = _noiseFloor * 0.999f + energy * 0.001f;
+
+            float silenceThreshold = Math.Max(UseGain ? 0.0005f : 0.0002f, _noiseFloor * 0.8f);
+            
             if (energy < silenceThreshold)
             {
-                _hasSignal = false;
-                return;
+                energy = 0;
+                if (_hasSignal) { _hasSignal = false; }
             }
-            _hasSignal = true;
+            else
+            {
+                _hasSignal = true;
+            }
 
-            // Track energy over time
+            // Add strictly linear point to history
             _energyHistory.Add(energy);
             if (_energyHistory.Count > MaxEnergyHistory)
                 _energyHistory.RemoveAt(0);
+        }
 
-            // Need enough history for BPM detection (at least 4 seconds)
-            if (_energyHistory.Count < 80)
-                return;
+        private void DetectMusicBPM()
+        {
+            // Need enough history for BPM detection (at least 3 seconds / ~130 frames for 1024-sample window)
+            if (_energyHistory.Count < 130) return;
 
-            // Calculate energy differences (onset detection) with smoothing
+            // 2. Onset Detection Function (ODF)
             List<float> onsets = new List<float>();
-            for (int i = 3; i < _energyHistory.Count; i++)
+            int onsetCount = 0;
+            float maxOnset = 0;
+            
+            // Dynamic window for local average: 6 frames (~140ms at 1024 samples/44.1k)
+            int avgWindow = 6;
+
+            for (int i = avgWindow; i < _energyHistory.Count; i++)
             {
                 // Compare to local average to reduce noise
-                float localAvg = (_energyHistory[i - 3] + _energyHistory[i - 2] + _energyHistory[i - 1]) / 3f;
+                float sum = 0;
+                for (int w = 1; w <= avgWindow; w++) 
+                    sum += _energyHistory[i - w];
+                float localAvg = sum / avgWindow;
+
                 float diff = _energyHistory[i] - localAvg;
-                onsets.Add(Math.Max(0, diff)); // Only positive differences
+
+                // For sparse signals (metronome) where localAvg is near zero, 
+                // tiny noise fluctuations (0.0001 -> 0.0002) look like 100% increases.
+                // We enforce a minimum absolute energy jump to count as an onset.
+                if (diff < 0.002f) diff = 0; 
+
+                float val = Math.Max(0, diff);
+                onsets.Add(val);
+
+                if (val > 0.005f) // Significant onset
+                {
+                    onsetCount++;
+                    if (val > maxOnset) maxOnset = val;
+                }
+            }
+            
+            // Check for sparsity (Metronome case)
+            int sparseLag = 0;
+            // Relaxed check: if we have some significant peaks, try interval mode finding
+            // This now runs even if onsetCount is moderately high, as long as peaks are distinct
+            bool hasPeaks = (maxOnset > 0.01f); 
+            
+            if (hasPeaks)
+            {
+                // Simple Peak-to-Peak interval estimator
+                List<int> peakIndices = new List<int>();
+                
+                // Use wider local max window (+/- 2) because of higher resolution (512 samples)
+                for(int i=2; i<onsets.Count-2; i++)
+                {
+                    if (onsets[i] > (maxOnset * 0.35f) 
+                        && onsets[i] >= onsets[i-1] && onsets[i] >= onsets[i-2]
+                        && onsets[i] > onsets[i+1] && onsets[i] > onsets[i+2])
+                    {
+                        peakIndices.Add(i);
+                        // Skip a bit to avoid double counting
+                        i += 2;
+                    }
+                }
+                
+                if (peakIndices.Count >= 3)
+                {
+                    List<int> intervals = new List<int>();
+                    for(int k=0; k<peakIndices.Count-1; k++)
+                    {
+                        int delta = peakIndices[k+1] - peakIndices[k];
+                        // Ignore extremely short intervals (jitter/double triggers)
+                        // At 11ms per frame, 8 frames = 88ms ~ 680 BPM. Safe limit.
+                        if (delta > 8) intervals.Add(delta);
+                    }
+
+                    // Find most common interval (Mode) with tolerance +/- 1 frame
+                    var bestGroup = intervals
+                        .GroupBy(x => x)
+                        .OrderByDescending(g => g.Count())
+                        .FirstOrDefault();
+
+                    if (bestGroup != null && bestGroup.Count() >= 2)
+                    {
+                        sparseLag = bestGroup.Key;
+                    }
+                }
             }
 
             // Autocorrelation to find periodicity
-            int minBPM = 60;
-            int maxBPM = 200;
-            // Critical: timePerFrame is the time between energy samples
-            float timePerFrame = ScanInterval / (float)_sampleRate; // Should be 0.05 seconds (50ms)
+            // Expanded range to support 40-220 BPM (standard music range)
+            int minBPM = 40;
+            int maxBPM = 220;
+            // Critical: timePerFrame is the time between energy samples (ScanInterval)
+            // Use precise floating point time derived from sample rate
+            float timePerFrame = (float)ScanInterval / _sampleRate; // ~0.023s at 44.1k
             
-            int minLag = (int)(60f / maxBPM / timePerFrame); // For 200 BPM: 60/200/0.05 = 6 frames
-            int maxLag = (int)(60f / minBPM / timePerFrame); // For 60 BPM: 60/60/0.05 = 20 frames
+            // Calculate lag range in frames
+            // Standard lag calculation: 60 / BPM / timePerFrame
+            // We want to detect half-tempo (e.g. 100 for 200) carefully
+            int minLag = (int)(60f / maxBPM / timePerFrame); 
+            int maxLag = (int)(60f / minBPM / timePerFrame); 
             
-            minLag = Math.Max(3, minLag);
-            maxLag = Math.Min(onsets.Count / 2, maxLag);
+            // Allow checking up to half the history buffer
+            maxLag = Math.Min(_energyHistory.Count / 2, maxLag);
 
             if (minLag >= maxLag)
                 return;
@@ -213,20 +321,63 @@ namespace MusicNotes.Audio
             // Find best lag using autocorrelation
             float maxCorrelation = 0;
             int bestLag = 0;
+            Dictionary<int, float> lagCorrelations = new Dictionary<int, float>();
 
+            // Use autocorrelation over the onset curve
             for (int lag = minLag; lag <= maxLag; lag++)
             {
                 float correlation = 0;
+                float normA = 0;
+                float normB = 0;
                 int count = 0;
 
+                // Loop through history
                 for (int i = 0; i < onsets.Count - lag; i++)
                 {
-                    correlation += onsets[i] * onsets[i + lag];
+                    float valA = onsets[i];
+                    float valB = onsets[i + lag];
+                    
+                    correlation += valA * valB;
+                    normA += valA * valA;
+                    normB += valB * valB;
                     count++;
                 }
 
-                if (count > 0)
-                    correlation /= count;
+                if (count > 0 && normA > 0 && normB > 0)
+                {
+                    correlation = correlation / (float)Math.Sqrt(normA * normB);
+                }
+                
+                // Weighting to prefer standard tempos (90-140)
+                float lagTime = lag * timePerFrame;
+                float candidateBPM = 60f / lagTime;
+
+                // Priority Boost for Sparse Signals (Metronome)
+                // If the onset detector found a clear recurring interval, force the autocorrelation to respect it.
+                if (sparseLag > 0)
+                {
+                    // Check if this lag aligns with the detected sparse interval
+                    // Allow tiny jitter (1 frame)
+                    if (Math.Abs(lag - sparseLag) <= 1) correlation += 0.4f;
+                    
+                    // Also check for 2x tempo (half lag) in case sparse detector found the half-note
+                    if (Math.Abs(lag - (sparseLag / 2)) <= 1) correlation += 0.3f;
+                    
+                    // Also check for half-tempo (double lag)
+                    if (Math.Abs(lag - (sparseLag * 2)) <= 1) correlation += 0.2f;
+                }
+
+                // Log-Normal preference window (standard in MIREX)
+                // Peak at 120 BPM, sigma = ~1 octave
+                // We flatten the curve to avoid penalizing valid tempos like 150 BPM too much
+                // Was sigma 0.5f, now 1.4f (much flatter)
+                float logBPM = (float)Math.Log(candidateBPM / 120f); 
+                float tempoWeight = (float)Math.Exp(-0.5f * Math.Pow(logBPM / 1.4f, 2));
+                
+                // Don't apply weight if correlation is high enough on its own
+                if (correlation > 0.6f) tempoWeight = 1.0f; else correlation *= tempoWeight;
+
+                lagCorrelations[lag] = correlation;
 
                 if (correlation > maxCorrelation)
                 {
@@ -235,16 +386,91 @@ namespace MusicNotes.Audio
                 }
             }
 
-            if (bestLag > 0 && maxCorrelation > 0)
+            // HARMONIC CHECK: Is the best lag actually a multiple (2x, 3x) of the true beat?
+            // If we found 54 BPM (Lag ~ 48), check if 108 BPM (Lag ~ 24) or 162 BPM (Lag ~ 16) has a peak.
+            // Often the "measure" (low BPM) has the highest raw correlation, but the "beat" (high BPM) is what we want.
+
+            // Only perform harmonic promotion if we suspect a slow tempo (< 95 BPM) or if the correlation is weak (< 0.5)
+            // 75 BPM is often half-time for 150 BPM
+            if (bestLag > minLag * 1.5f) 
             {
+                // Check 2x tempo (Half the lag)
+                int lag2x = bestLag / 2;
+                
+                // Search wide window around lag2x for a local peak
+                float peak2x = 0;
+                int bestLag2x = 0;
+                
+                for (int l = lag2x - 2; l <= lag2x + 2; l++)
+                {
+                    if (lagCorrelations.TryGetValue(l, out float val) && val > peak2x)
+                    {
+                        peak2x = val;
+                        bestLag2x = l;
+                    }
+                }
+
+                // If 2x tempo (faster) has significant correlation (> 40% of best), prefer it
+                // We are biased towards ~120-150 BPM range, so we aggressively promote
+                if (peak2x > (maxCorrelation * 0.40f))
+                {
+                    bestLag = bestLag2x;
+                    maxCorrelation = peak2x;
+                }
+            }
+
+            if (bestLag > 0 && maxCorrelation > 0.15f) // Minimum correlation threshold
+            {
+                // Parabolic interpolation for sub-frame accuracy
+                float fractionalLag = bestLag;
+                if (bestLag > minLag && bestLag < maxLag)
+                {
+                     if (lagCorrelations.TryGetValue(bestLag - 1, out float yLeft) && 
+                         lagCorrelations.TryGetValue(bestLag + 1, out float yRight))
+                     {
+                         float yCenter = maxCorrelation;
+                         // Parabolic peak fit: offset = (left - right) / (2 * (left - 2*center + right))
+                         // Note: denominator is negative for a peak
+                         float denominator = (yLeft - 2 * yCenter + yRight);
+                         if (Math.Abs(denominator) > 0.0001f)
+                         {
+                             float offset = (yLeft - yRight) / (2 * denominator);
+                             fractionalLag = bestLag + offset;
+                         }
+                     }
+                }
+
                 // Convert lag to BPM
-                float periodInSeconds = bestLag * timePerFrame;
+                float periodInSeconds = fractionalLag * timePerFrame;
                 float detectedBPM = 60f / periodInSeconds;
 
                 // Clamp to reasonable range
                 detectedBPM = Math.Clamp(detectedBPM, minBPM, maxBPM);
+                
+                // --- APPLIED FIX: Instant Jump on drastic change ---
+                if (_confidence > 0.5f)
+                {
+                    // If locked, allow slow transition
+                    // But if drastic change, break lock
+                    if (Math.Abs(detectedBPM - _currentBPM) > (_currentBPM * 0.25f))
+                    {
+                         // Tempo jump detected, reduce confidence to allow retargeting
+                        _confidence *= 0.5f; 
+                    }
+                }
+                else
+                {
+                    // Low confidence: accept new BPM faster
+                     // If difference is huge, jump instantly
+                    if (_currentBPM > 0 && Math.Abs(detectedBPM - _currentBPM) > (_currentBPM * 0.35f))
+                    {
+                         _currentBPM = detectedBPM; // Instant jump
+                         _bpmHistory.Clear();       // Clear old history
+                         _confidence = 0.2f;        // Reset confidence
+                    }
+                }
 
-                _currentBPM = detectedBPM;
+                _currentBPM = _currentBPM * 0.7f + detectedBPM * 0.3f; // Smooth update
 
                 // Track BPM history for stability  
                 _bpmHistory.Add(_currentBPM);
@@ -415,12 +641,12 @@ namespace MusicNotes.Audio
             DrawWaveform(canvas, viewport, scale);
 
             // Draw status
-            if (!_hasSignal)
-            {
-                _paintTextSmall.Color = SKColors.Gray;
-                _paintTextSmall.TextSize = 18 * scale;
-                canvas.DrawText("Waiting for music...", centerX, viewport.Bottom - 20 * scale, _paintTextSmall);
-            }
+            //if (!_hasSignal)
+            //{
+            //    _paintTextSmall.Color = SKColors.Gray;
+            //    _paintTextSmall.TextSize = 18 * scale;
+            //    canvas.DrawText("Waiting for music...", centerX, viewport.Bottom - 20 * scale, _paintTextSmall);
+            //}
         }
 
         private void DrawWaveform(SKCanvas canvas, SKRect viewport, float scale)
