@@ -22,6 +22,8 @@ namespace MusicNotes
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
+                    fonts.AddFont("material.ttf", "FontIcons");
+
                     fonts.AddFont("NotoColorEmoji-Regular.ttf", "FontEmoji");
 
                     fonts.AddFont("OpenSans-Regular.ttf", "FontText");

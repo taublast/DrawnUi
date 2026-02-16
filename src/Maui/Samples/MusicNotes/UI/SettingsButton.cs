@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using AppoMobi.Maui.Gestures;
 using AppoMobi.Specials;
 
@@ -232,3 +233,4 @@ public class SettingsButton : SkiaLayout, ISkiaGestureListener
 
     #endregion
 }
+

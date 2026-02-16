@@ -11,24 +11,6 @@ namespace MusicNotes.UI;
 public partial class AudioPage : BasePageReloadable, IDisposable
 {
     public AudioRecorder Recorder;
-    private SkiaShape _takePictureButton;
-    private SkiaLabel _flashButton;
-    private SkiaLabel _statusLabel;
-    private SettingsButton _videoRecordButton;
-    private SettingsButton _speechButton;
-    
-    private SettingsButton _audioCodecButton;
-    private SkiaLayer _previewOverlay;
-    private SkiaImage _previewImage;
-    private SkiaImage _previewThumbnail;
-    private SettingsButton _preRecordingToggleButton;
-    private SettingsButton _preRecordingDurationButton;
-    private SkiaLabel _captionsLabel;
- 
-    private SkiaDrawer _settingsDrawer;
-    private SkiaViewSwitcher _settingsTabs;
-    private SkiaLabel[] _tabLabels;
- 
     Canvas Canvas;
 
     protected override void Dispose(bool isDisposing)
