@@ -59,6 +59,37 @@ namespace MusicNotes.Audio
         public bool UseGain { get; set; } = true;
         public int Skin { get; set; } = 0;
 
+        public void Reset()
+        {
+            Array.Clear(_sampleBuffer, 0, _sampleBuffer.Length);
+            _writePos = 0;
+            _samplesAddedSinceLastScan = 0;
+            _sampleRate = 44100;
+
+            _currentNote = placeholder;
+            _currentNoteSolf = placeholder;
+            _currentMidiNote = 0;
+            _currentFrequency = 0;
+            _currentCents = 0;
+            _hasSignal = false;
+
+            _potentialMidiNote = 0;
+            _noteStabilityCounter = 0;
+            _centsBuffer?.Clear();
+            _smoothCents = 0;
+
+            _staffReferenceMidi = 71;
+            _silenceFrameCount = 0;
+
+            _displayNote = placeholder;
+            _displayNoteSolf = placeholder;
+            _displayMidiNote = 0;
+            _displayFrequency = 0;
+            _displayCents = 0;
+            _displayColor = SKColors.Gray;
+            _swapRequested = 0;
+        }
+
         public void AddSample(AudioSample sample)
         {
             if (sample.SampleRate > 0)

@@ -1,13 +1,11 @@
-﻿using DrawnUi.Camera;
+﻿using AppoMobi.Maui.Gestures;
+using DrawnUi.Camera;
 using MusicNotes.UI;
 
 namespace MusicNotes.Audio
 {
     public class AudioVisualizer : SkiaLayout
     {
- 
-
-
         public IAudioVisualizer Visualizer { get; protected set; }
 
         public AudioVisualizer(IAudioVisualizer visualizer)
@@ -24,6 +22,19 @@ namespace MusicNotes.Audio
             {
                 Visualizer.Render(ctx.Context.Canvas, DrawingRect, ctx.Scale);
             }
+        }
+
+        public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+        {
+            if (args.Type == TouchActionResult.Tapped)
+            {
+                Visualizer?.Reset();
+
+                Update();
+
+                return this;
+            }
+            return base.ProcessGestures(args, apply);
         }
 
         public override void OnDisposing()
@@ -44,6 +55,15 @@ namespace MusicNotes.Audio
             if (Visualizer != null)
             {
                 Visualizer.AddSample(sample);
+                Update();
+            }
+        }
+
+        public void Reset()
+        {
+            if (Visualizer != null)
+            {
+                Visualizer.Reset();
                 Update();
             }
         }

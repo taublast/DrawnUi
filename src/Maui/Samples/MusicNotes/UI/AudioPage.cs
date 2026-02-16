@@ -4,19 +4,19 @@ using DrawnUi.Camera;
 using DrawnUi.Controls;
 using DrawnUi.Views;
 using MusicNotes.Audio;
+using MusicNotes.Helpers;
 
 namespace MusicNotes.UI;
 
 public partial class AudioPage : BasePageReloadable, IDisposable
 {
-    private AudioRecorder CameraControl;
+    public AudioRecorder Recorder;
     private SkiaShape _takePictureButton;
     private SkiaLabel _flashButton;
     private SkiaLabel _statusLabel;
     private SettingsButton _videoRecordButton;
     private SettingsButton _speechButton;
- 
- 
+    
     private SettingsButton _audioCodecButton;
     private SkiaLayer _previewOverlay;
     private SkiaImage _previewImage;
@@ -31,17 +31,15 @@ public partial class AudioPage : BasePageReloadable, IDisposable
  
     Canvas Canvas;
 
-
-
     protected override void Dispose(bool isDisposing)
     {
         if (isDisposing)
         {
-            if (CameraControl != null)
+            if (Recorder != null)
             {
-                CameraControl?.Stop();
-                AttachSkiaCamera(false);
-                CameraControl = null;
+                Recorder?.Stop();
+                AttachHardware(false);
+                Recorder = null;
             }
 
             this.Content = null;
@@ -57,11 +55,11 @@ public partial class AudioPage : BasePageReloadable, IDisposable
     /// </summary>
     public override void Build()
     {
-        if (CameraControl != null)
+        if (Recorder != null)
         {
-            CameraControl?.Stop();
-            AttachSkiaCamera(false);
-            CameraControl = null;
+            Recorder?.Stop();
+            AttachHardware(false);
+            Recorder = null;
         }
 
         Canvas?.Dispose();
@@ -74,33 +72,33 @@ public partial class AudioPage : BasePageReloadable, IDisposable
         Title = "Music Notes";
 
     }
-    private void AttachSkiaCamera(bool subscribe)
+    private void AttachHardware(bool subscribe)
     {
         if (subscribe)
         {
-            CameraControl.StateChanged += CameraControlOnStateChanged;
-            CameraControl.CaptureSuccess += OnCaptureSuccess;
-            CameraControl.CaptureFailed += OnCaptureFailed;
-            CameraControl.OnError += OnCameraError;
-            CameraControl.VideoRecordingSuccess += OnVideoRecordingSuccess;
-            CameraControl.VideoRecordingProgress += OnVideoRecordingProgress;
+            Recorder.StateChanged += RecorderOnStateChanged;
+            Recorder.CaptureSuccess += OnCaptureSuccess;
+            Recorder.CaptureFailed += OnCaptureFailed;
+            Recorder.OnError += OnCameraError;
+            Recorder.RecordingSuccess += OnRecordingSuccess;
+            Recorder.RecordingProgress += OnRecordingProgress;
 
-            CameraControl.OnAudioSample += OnAudioSample;
+            Recorder.OnAudioSample += OnAudioSample;
 
+            UserSettings.ApplyToHardware(Recorder);
         }
         else
         {
-            if (CameraControl != null)
+            if (Recorder != null)
             {
-                CameraControl.StateChanged -= CameraControlOnStateChanged;
-                CameraControl.CaptureSuccess -= OnCaptureSuccess;
-                CameraControl.CaptureFailed -= OnCaptureFailed;
-                CameraControl.OnError -= OnCameraError;
-                CameraControl.VideoRecordingSuccess -= OnVideoRecordingSuccess;
-                CameraControl.VideoRecordingProgress -= OnVideoRecordingProgress;
- 
+                Recorder.StateChanged -= RecorderOnStateChanged;
+                Recorder.CaptureSuccess -= OnCaptureSuccess;
+                Recorder.CaptureFailed -= OnCaptureFailed;
+                Recorder.OnError -= OnCameraError;
+                Recorder.RecordingSuccess -= OnRecordingSuccess;
+                Recorder.RecordingProgress -= OnRecordingProgress;
 
-                CameraControl.OnAudioSample -= OnAudioSample;
+                Recorder.OnAudioSample -= OnAudioSample;
             }
         }
     }
@@ -109,10 +107,13 @@ public partial class AudioPage : BasePageReloadable, IDisposable
     {
           _musicNotes.AddSample(sample);
           _equalizer.AddSample(sample);
+          _rhythmDetector?.AddSample(sample);
+          _metronome?.AddSample(sample);
+          _musicBPMDetector?.AddSample(sample);
     }
     
 
-    private void CameraControlOnStateChanged(object sender, CameraState e)
+    private void RecorderOnStateChanged(object sender, CameraState e)
     {
         if (e == CameraState.On)
         {
@@ -130,22 +131,22 @@ public partial class AudioPage : BasePageReloadable, IDisposable
 
     private void UpdateStatusText()
     {
-        if (_statusLabel != null && CameraControl != null)
+        if (_statusLabel != null && Recorder != null)
         {
             // Compact status for mobile overlay
-            var statusText = $"{CameraControl.State}";
+            var statusText = $"{Recorder.State}";
 
-            if (CameraControl.Facing == CameraPosition.Manual)
+            if (Recorder.Facing == CameraPosition.Manual)
             {
-                statusText += $" • Cam{CameraControl.CameraIndex}";
+                statusText += $" • Cam{Recorder.CameraIndex}";
             }
-            else if (CameraControl.Facing != CameraPosition.Default)
+            else if (Recorder.Facing != CameraPosition.Default)
             {
-                statusText += $" • {CameraControl.Facing}";
+                statusText += $" • {Recorder.Facing}";
             }
 
             _statusLabel.Text = statusText;
-            _statusLabel.TextColor = CameraControl.State switch
+            _statusLabel.TextColor = Recorder.State switch
             {
                 CameraState.On => Color.FromArgb("#10B981"),
                 CameraState.Off => Color.FromArgb("#9CA3AF"),
@@ -160,7 +161,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
 
     private void UpdateCaptureButtonShape()
     {
-        bool isRecording = CameraControl.IsRecording || CameraControl.IsPreRecording;
+        bool isRecording = Recorder.IsRecording || Recorder.IsPreRecording;
         if (_takePictureButton == null)
             return;
 
@@ -183,7 +184,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
                 }, 0, 1, (uint)_morphSpeed, Easing.SinOut, default, true);
                 
                 // Change color to red
-                if (CameraControl.IsPreRecording)
+                if (Recorder.IsPreRecording)
                 {
                     _takePictureButton.BackgroundColor = Colors.Orange;
                 }
@@ -212,7 +213,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
             {
                 _takePictureButton.CornerRadius = 4;
                 _takePictureButton.WidthRequest = 42;
-                if (CameraControl.IsPreRecording)
+                if (Recorder.IsPreRecording)
                 {
                     _takePictureButton.BackgroundColor = Colors.Orange;
                 }
@@ -232,7 +233,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
 
     private async Task TakePictureAsync()
     {
-        if (CameraControl.State != CameraState.On)
+        if (Recorder.State != CameraState.On)
             return;
 
         try
@@ -240,7 +241,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
             _takePictureButton.IsEnabled = false;
             _takePictureButton.Opacity = 0.5;
 
-            await Task.Run(async () => { await CameraControl.TakePicture(); });
+            await Task.Run(async () => { await Recorder.TakePicture(); });
         }
         finally
         {
@@ -251,13 +252,13 @@ public partial class AudioPage : BasePageReloadable, IDisposable
 
     private void ToggleFlash()
     {
-        if (!CameraControl.IsFlashSupported)
+        if (!Recorder.IsFlashSupported)
         {
             DisplayAlert("Flash", "Flash is not supported on this camera", "OK");
             return;
         }
 
-        CameraControl.FlashMode = CameraControl.FlashMode switch
+        Recorder.FlashMode = Recorder.FlashMode switch
         {
             FlashMode.Off => FlashMode.On,
             FlashMode.On => FlashMode.Strobe,
@@ -268,7 +269,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
 
     private void ToggleCaptureMode()
     {
-        CameraControl.CaptureMode = CameraControl.CaptureMode == CaptureModeType.Still
+        Recorder.CaptureMode = Recorder.CaptureMode == CaptureModeType.Still
             ? CaptureModeType.Video
             : CaptureModeType.Still;
     }
@@ -310,14 +311,14 @@ public partial class AudioPage : BasePageReloadable, IDisposable
         ShowAlert("Camera Error", e);
     }
 
-    private async void OnVideoRecordingSuccess(object sender, CapturedVideo capturedVideo)
+    private async void OnRecordingSuccess(object sender, CapturedVideo capturedVideo)
     {
         try
         {
             Debug.WriteLine($"✅ Video recorded at: {capturedVideo.FilePath}");
 
             // Use SkiaCamera's built-in MoveVideoToGalleryAsync method (consistent with SaveToGalleryAsync for photos)
-            var publicPath = await CameraControl.MoveVideoToGalleryAsync(capturedVideo, "FastRepro");
+            var publicPath = await Recorder.MoveVideoToGalleryAsync(capturedVideo, "FastRepro");
 
             if (!string.IsNullOrEmpty(publicPath))
             {
@@ -337,9 +338,9 @@ public partial class AudioPage : BasePageReloadable, IDisposable
         }
     }
 
-    private void OnVideoRecordingProgress(object sender, TimeSpan duration)
+    private void OnRecordingProgress(object sender, TimeSpan duration)
     {
-        if (_videoRecordButton != null && CameraControl.IsRecording)
+        if (_videoRecordButton != null && Recorder.IsRecording)
         {
             // Update button text with timer in MM:SS format
             _videoRecordButton.AccessoryIcon = $"🛑";
@@ -387,7 +388,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
         try
         {
             // Save to gallery, note we set reorient to false, because it should be handled by metadata in this case
-            var path = await CameraControl.SaveToGalleryAsync(_currentCapturedImage);
+            var path = await Recorder.SaveToGalleryAsync(_currentCapturedImage);
             if (!string.IsNullOrEmpty(path))
             {
                 ShowAlert("Success", $"Photo saved successfully!\nPath: {path}");
@@ -408,18 +409,18 @@ public partial class AudioPage : BasePageReloadable, IDisposable
     {
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            if (CameraControl.State != CameraState.On)
+            if (Recorder.State != CameraState.On)
                 return;
 
             try
             {
-                if (CameraControl.IsRecording)
+                if (Recorder.IsRecording)
                 {
-                    await CameraControl.StopVideoRecording();
+                    await Recorder.StopVideoRecording();
                 }
                 else
                 {
-                    await CameraControl.StartVideoRecording();
+                    await Recorder.StartVideoRecording();
                 }
             }
             catch (NotImplementedException ex)
@@ -438,12 +439,12 @@ public partial class AudioPage : BasePageReloadable, IDisposable
 
     private async Task AbortVideoRecording()
     {
-        if (CameraControl.State != CameraState.On || !(CameraControl.IsRecording || CameraControl.IsPreRecording))
+        if (Recorder.State != CameraState.On || !(Recorder.IsRecording || Recorder.IsPreRecording))
             return;
 
         try
         {
-            await CameraControl.StopVideoRecording(true);
+            await Recorder.StopVideoRecording(true);
             Debug.WriteLine("❌ Video recording aborted");
         }
         catch (Exception ex)
@@ -459,7 +460,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
         {
             try
             {
-                var formats = await CameraControl.GetAvailableCaptureFormatsAsync();
+                var formats = await Recorder.GetAvailableCaptureFormatsAsync();
 
                 if (formats?.Count > 0)
                 {
@@ -474,8 +475,8 @@ public partial class AudioPage : BasePageReloadable, IDisposable
                         var selectedIndex = Array.FindIndex(options, opt => opt == result);
                         if (selectedIndex >= 0)
                         {
-                            CameraControl.PhotoQuality = CaptureQuality.Manual;
-                            CameraControl.PhotoFormatIndex = selectedIndex;
+                            Recorder.PhotoQuality = CaptureQuality.Manual;
+                            Recorder.PhotoFormatIndex = selectedIndex;
 
                             ShowAlert("Format Selected",
                                 $"Selected: {formats[selectedIndex].Description}");
@@ -500,7 +501,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
         {
             try
             {
-                var formats = await CameraControl.GetAvailableVideoFormatsAsync();
+                var formats = await Recorder.GetAvailableVideoFormatsAsync();
 
                 if (formats?.Count > 0)
                 {
@@ -515,8 +516,8 @@ public partial class AudioPage : BasePageReloadable, IDisposable
                         var selectedIndex = Array.FindIndex(options, opt => opt == result);
                         if (selectedIndex >= 0)
                         {
-                            CameraControl.VideoQuality = VideoQuality.Manual;
-                            CameraControl.VideoFormatIndex = selectedIndex;
+                            Recorder.VideoQuality = VideoQuality.Manual;
+                            Recorder.VideoFormatIndex = selectedIndex;
 
                             ShowAlert("Format Selected",
                                 $"Selected: {formats[selectedIndex].Description}");
@@ -541,7 +542,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
         {
             try
             {
-                var cameras = await CameraControl.GetAvailableCamerasAsync();
+                var cameras = await Recorder.GetAvailableCamerasAsync();
 
                 if (cameras?.Count > 0)
                 {
@@ -559,8 +560,8 @@ public partial class AudioPage : BasePageReloadable, IDisposable
                             var selectedCamera = cameras[selectedIndex];
 
                             // Set camera selection - this will automatically trigger restart if camera is running
-                            CameraControl.CameraIndex = selectedCamera.Index;
-                            CameraControl.Facing = CameraPosition.Manual;
+                            Recorder.CameraIndex = selectedCamera.Index;
+                            Recorder.Facing = CameraPosition.Manual;
 
                             Debug.WriteLine(
                                 $"Selected: {selectedCamera.Name} ({selectedCamera.Position})\nId: {selectedCamera.Id} Index: {selectedCamera.Index}");
@@ -579,13 +580,13 @@ public partial class AudioPage : BasePageReloadable, IDisposable
         });
     }
 
-    private async Task SelectAudioSource()
+    public async Task SelectAudioSource()
     {
         MainThread.BeginInvokeOnMainThread(async () =>
         {
             try
             {
-                var inputDevices = await CameraControl.GetAvailableAudioDevicesAsync();
+                var inputDevices = await Recorder.GetAvailableAudioDevicesAsync();
 
                 if (inputDevices?.Count > 0)
                 {
@@ -603,7 +604,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
                     {
                         if (result == "System Default")
                         {
-                            CameraControl.AudioDeviceIndex = -1;
+                            Recorder.AudioDeviceIndex = -1;
                         }
                         else
                         {
@@ -621,7 +622,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
 
                             if (selectedIndex >= 0)
                             {
-                                CameraControl.AudioDeviceIndex = selectedIndex;
+                                Recorder.AudioDeviceIndex = selectedIndex;
                             }
                         }
                     }
@@ -644,7 +645,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
         {
             try
             {
-                var codecs = await CameraControl.GetAvailableAudioCodecsAsync();
+                var codecs = await Recorder.GetAvailableAudioCodecsAsync();
 
                 if (codecs?.Count > 0)
                 {
@@ -662,7 +663,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
                     {
                         if (result == "System Default")
                         {
-                            CameraControl.AudioCodecIndex = -1;
+                            Recorder.AudioCodecIndex = -1;
                             _audioCodecButton.Text = "Codec: Default";
                         }
                         else
@@ -681,7 +682,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
 
                             if (selectedIndex >= 0)
                             {
-                                CameraControl.AudioCodecIndex = selectedIndex;
+                                Recorder.AudioCodecIndex = selectedIndex;
                                 _audioCodecButton.Text = $"{CodecsHelper.GetShortName(result)}";
                             }
                         }
@@ -717,22 +718,22 @@ public partial class AudioPage : BasePageReloadable, IDisposable
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        CameraControl?.Stop();
+        Recorder?.Stop();
     }
 
     private void TogglePreRecording()
     {
-        CameraControl.EnablePreRecording = !CameraControl.EnablePreRecording;
+        Recorder.EnablePreRecording = !Recorder.EnablePreRecording;
 
         if (_preRecordingToggleButton != null)
         {
-            _preRecordingToggleButton.Text = CameraControl.EnablePreRecording ? "Pre-Record: ON" : "Pre-Record: OFF";
-            _preRecordingToggleButton.TintColor = CameraControl.EnablePreRecording ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
+            _preRecordingToggleButton.Text = Recorder.EnablePreRecording ? "Pre-Record: ON" : "Pre-Record: OFF";
+            _preRecordingToggleButton.TintColor = Recorder.EnablePreRecording ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
         }
 
         UpdatePreRecordingStatus();
 
-        Debug.WriteLine($"Pre-Recording: {(CameraControl.EnablePreRecording ? "ENABLED" : "DISABLED")}");
+        Debug.WriteLine($"Pre-Recording: {(Recorder.EnablePreRecording ? "ENABLED" : "DISABLED")}");
     }
 
     private async Task ShowPreRecordingDurationPicker()
@@ -751,7 +752,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
                     var selectedIndex = Array.IndexOf(durations, result);
                     if (selectedIndex >= 0)
                     {
-                        CameraControl.PreRecordDuration = TimeSpan.FromSeconds(values[selectedIndex]);
+                        Recorder.PreRecordDuration = TimeSpan.FromSeconds(values[selectedIndex]);
                         UpdatePreRecordingStatus();
 
                         Debug.WriteLine($"Pre-Recording Duration set to: {values[selectedIndex]} seconds");
@@ -769,7 +770,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
     {
         if (_preRecordingDurationButton != null)
         {
-            _preRecordingDurationButton.Text = $"{CameraControl.PreRecordDuration.TotalSeconds:F0}s";
+            _preRecordingDurationButton.Text = $"{Recorder.PreRecordDuration.TotalSeconds:F0}s";
         }
     }
 

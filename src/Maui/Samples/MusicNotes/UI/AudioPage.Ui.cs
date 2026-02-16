@@ -2,13 +2,21 @@ using AppoMobi.Specials;
 using DrawnUi.Camera;
 using DrawnUi.Controls;
 using DrawnUi.Views;
+using FastPopups;
 using MusicNotes.Audio;
+using MusicNotes.Helpers;
+using ShadersCamera.Views;
 
 namespace MusicNotes.UI
 {
     public partial class AudioPage
     {
         private SkiaLabel _modeSwitchButton;
+        private AudioVisualizer _rhythmDetector;
+        private AudioVisualizer _metronome;
+        private AudioVisualizer _musicBPMDetector;
+        private int _currentMode = 0; // 0=Notes, 1=DrummerBPM, 2=Metronome, 3=MusicBPM
+        private SkiaRichLabel _modeButtonIcon;
 
 
         private void CreateContent()
@@ -31,7 +39,7 @@ namespace MusicNotes.UI
                         {
                             IsVisible=false,
                         }
-                        .Assign(out CameraControl),
+                        .Assign(out Recorder),
 
                         new AudioVisualizer(new AudioInstrumentTuner())
                         {
@@ -40,6 +48,33 @@ namespace MusicNotes.UI
                             HeightRequest = 350,
                             BackgroundColor = Color.Parse("#22000000"),
                         }.Assign(out _musicNotes),
+
+                        new AudioVisualizer(new AudioRhythmDetector())
+                        {
+                            Margin = new (16,16,16,0),
+                            HorizontalOptions = LayoutOptions.Fill,
+                            HeightRequest = 350,
+                            BackgroundColor = Color.Parse("#22000000"),
+                            IsVisible = false,
+                        }.Assign(out _rhythmDetector),
+
+                        new AudioVisualizer(new AudioMetronome())
+                        {
+                            Margin = new (16,16,16,0),
+                            HorizontalOptions = LayoutOptions.Fill,
+                            HeightRequest = 350,
+                            BackgroundColor = Color.Parse("#22000000"),
+                            IsVisible = false,
+                        }.Assign(out _metronome),
+
+                        new AudioVisualizer(new AudioMusicBPMDetector())
+                        {
+                            Margin = new (16,16,16,0),
+                            HorizontalOptions = LayoutOptions.Fill,
+                            HeightRequest = 350,
+                            BackgroundColor = Color.Parse("#22000000"),
+                            IsVisible = false,
+                        }.Assign(out _musicBPMDetector),
 
                         new AudioVisualizer(new AudioSoundBars())
                         {
@@ -64,9 +99,9 @@ namespace MusicNotes.UI
                             VerticalOptions = LayoutOptions.Start,
                             IsVisible = false
                         }
-                        .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording), me =>
+                        .ObserveProperty(Recorder, nameof(Recorder.IsRecording), me =>
                         {
-                            me.IsVisible = CameraControl.IsRecording;
+                            me.IsVisible = Recorder.IsRecording;
                             if (me.IsVisible)
                             {
                                 // Add pulsing animation effect
@@ -114,14 +149,14 @@ namespace MusicNotes.UI
                                     }
                                 }
                                 .OnTapped(me => { ToggleCaptureMode(); })
-                                .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                .ObserveProperty(Recorder, nameof(Recorder.CaptureMode), me =>
                                 {
-                                    _modeSwitchButton.Text = CameraControl.CaptureMode == CaptureModeType.Still ? "PHOTO" : "VIDEO";
+                                    _modeSwitchButton.Text = Recorder.CaptureMode == CaptureModeType.Still ? "PHOTO" : "VIDEO";
                                 })
-                                .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording), me =>
+                                .ObserveProperty(Recorder, nameof(Recorder.IsRecording), me =>
                                 {
                                     // Hide during recording to prevent mode changes
-                                    me.IsVisible = !CameraControl.IsRecording;
+                                    me.IsVisible = !Recorder.IsRecording;
                                 }),
 
                                 // Bottom Control Bar
@@ -174,7 +209,7 @@ namespace MusicNotes.UI
                                                 }
                                                 .OnTapped(me =>
                                                 {
-                                                    if (CameraControl.IsPreRecording || CameraControl.IsRecording)
+                                                    if (Recorder.IsPreRecording || Recorder.IsRecording)
                                                     {
                                                         _ = AbortVideoRecording();
                                                     }
@@ -205,7 +240,15 @@ namespace MusicNotes.UI
                                                         }
                                                     }
                                                 }
-                                                .OnTapped(me => { ToggleSettingsDrawer(); }),
+                                                .OnTapped(me =>
+                                                {
+                                                    MainThread.BeginInvokeOnMainThread(() =>
+                                                    {
+                                                        var popup = new AudioPageSettingsPopup(this);
+                                                        this.ShowPopup(popup);
+                                                    });
+                                                    //ToggleSettingsDrawer();
+                                                }),
 
                                                  
                                                 // MORPHING CAPTURE BUTTON
@@ -242,7 +285,7 @@ namespace MusicNotes.UI
                                                     await me.ScaleToAsync(1.1, 1.1, 100);
                                                     await me.ScaleToAsync(1.0, 1.0, 100);
 
-                                                    if (CameraControl.CaptureMode == CaptureModeType.Still)
+                                                    if (Recorder.CaptureMode == CaptureModeType.Still)
                                                     {
                                                         await TakePictureAsync();
                                                     }
@@ -251,12 +294,12 @@ namespace MusicNotes.UI
                                                         ToggleVideoRecording();
                                                     }
                                                 })
-                                                .ObserveProperty(CameraControl, nameof(CameraControl.State), me =>
+                                                .ObserveProperty(Recorder, nameof(Recorder.State), me =>
                                                 {
-                                                    me.IsEnabled = CameraControl.State == CameraState.On;
+                                                    me.IsEnabled = Recorder.State == CameraState.On;
                                                     me.Opacity = me.IsEnabled ? 1.0 : 0.5;
                                                 })
-                                                .ObserveProperties(CameraControl, new []{nameof(CameraControl.IsRecording), nameof(CameraControl.IsPreRecording)}, me =>
+                                                .ObserveProperties(Recorder, new []{nameof(Recorder.IsRecording), nameof(Recorder.IsPreRecording)}, me =>
                                                 {
                                                     UpdateCaptureButtonShape();
                                                 })
@@ -268,10 +311,124 @@ namespace MusicNotes.UI
                             }
                         },
 
+                        // Bottom Menu Bar
+                        new SkiaShape()
+                        {
+                            Type = ShapeType.Rectangle,
+                            BackgroundColor = Color.FromArgb("#DD000000"),
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.End,
+                            Margin = new Thickness(0, 0, 0, 16),
+                            Padding = new Thickness(12, 8),
+                            HeightRequest = 64,
+                            CornerRadius = 32,
+                            Children =
+                            {
+                                new SkiaRow()
+                                {
+                                    Spacing = 20,
+                                    HorizontalOptions = LayoutOptions.Center,
+                                    VerticalOptions = LayoutOptions.Center,
+                                    Children =
+                                    {
+                                        // Mode Button
+                                        new SkiaShape()
+                                        {
+                                            Type = ShapeType.Rectangle,
+                                            CornerRadius = 12,
+                                            BackgroundColor = Color.FromArgb("#3B82F6"),
+                                            WidthRequest = 48,
+                                            HeightRequest = 48,
+                                            Children =
+                                            {
+                                                new SkiaRichLabel("🎵")
+                                                {
+                                                    FontSize = 24,
+                                                    HorizontalOptions = LayoutOptions.Center,
+                                                    VerticalOptions = LayoutOptions.Center,
+                                                }
+                                                .Assign(out _modeButtonIcon)
+                                            }
+                                        }
+                                        .OnTapped(me => { ToggleVisualizerMode(); }),
+
+                                        // Settings Button
+                                        new SkiaShape()
+                                        {
+                                            Type = ShapeType.Rectangle,
+                                            CornerRadius = 12,
+                                            BackgroundColor = Color.FromArgb("#6B7280"),
+                                            WidthRequest = 48,
+                                            HeightRequest = 48,
+                                            Children =
+                                            {
+                                                new SkiaRichLabel("⚙️")
+                                                {
+                                                    FontSize = 24,
+                                                    HorizontalOptions = LayoutOptions.Center,
+                                                    VerticalOptions = LayoutOptions.Center,
+                                                }
+                                            }
+                                        }
+                                        .OnTapped(me =>
+                                        {
+                                            MainThread.BeginInvokeOnMainThread(() =>
+                                            {
+                                                var popup = new AudioPageSettingsPopup(this);
+                                                this.ShowPopup(popup);
+                                            });
+                                            //ToggleSettingsDrawer();
+                                        }),
+
+                                        // Help Button
+                                        new SkiaShape()
+                                        {
+                                            Type = ShapeType.Rectangle,
+                                            CornerRadius = 12,
+                                            BackgroundColor = Color.FromArgb("#6B7280"),
+                                            WidthRequest = 48,
+                                            HeightRequest = 48,
+                                            Children =
+                                            {
+                                                new SkiaRichLabel("❓")
+                                                {
+                                                    FontSize = 24,
+                                                    HorizontalOptions = LayoutOptions.Center,
+                                                    VerticalOptions = LayoutOptions.Center,
+                                                }
+                                            }
+                                        }
+                                        .OnTapped(me => { /* Help action */ }),
+
+                                        // Profile Button
+                                        new SkiaShape()
+                                        {
+                                            Type = ShapeType.Rectangle,
+                                            CornerRadius = 12,
+                                            BackgroundColor = Color.FromArgb("#6B7280"),
+                                            WidthRequest = 48,
+                                            HeightRequest = 48,
+                                            Children =
+                                            {
+                                                new SkiaRichLabel("👤")
+                                                {
+                                                    FontSize = 24,
+                                                    HorizontalOptions = LayoutOptions.Center,
+                                                    VerticalOptions = LayoutOptions.Center,
+                                                }
+                                            }
+                                        }
+                                        .OnTapped(me => { /* Profile action */ }),
+                                    }
+                                }
+                            }
+                        },
+
                         // Settings Drawer (slides up from bottom)
                         new SkiaDrawer()
                         {
-                            Margin = new Thickness(2, 0, 2, 0),
+                            IsVisible = false,
+                            Margin = new Thickness(2, 0, 2, 96),
                             HeaderSize = 40,
                             Direction = DrawerDirection.FromBottom,
                             VerticalOptions = LayoutOptions.End,
@@ -343,11 +500,11 @@ namespace MusicNotes.UI
 
             Canvas.WillFirstTimeDraw += (sender, context) =>
             {
-                if (CameraControl != null)
+                if (Recorder != null)
                 {
                     Tasks.StartDelayed(TimeSpan.FromMilliseconds(500), () =>
                     {
-                        CameraControl.IsOn = true;
+                        Recorder.IsOn = true;
                         // Speech recognition will auto-start/stop based on recording state
                     });
                 }
@@ -360,13 +517,16 @@ namespace MusicNotes.UI
                 Children = { Canvas }
             };
 
-
-            if (CameraControl != null)
+            if (Recorder != null)
             {
-                // Setup camera event handlers
-                AttachSkiaCamera(true);
+                // Setup SkiaCamera event handlers and apply user settings to it
+                AttachHardware(true);
             }
+
+            ToggleVisualizerMode(UserSettings.Current.Module);
         }
+
+        #region DRAWER
 
         private SkiaShape CreateDrawerHeader()
         {
@@ -477,23 +637,23 @@ namespace MusicNotes.UI
                             // Mode
                             new SettingsButton("📸", "Mode") { TintColor = Color.FromArgb("#0891B2"), }
                                 .OnTapped(me => { ToggleCaptureMode(); })
-                                .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                .ObserveProperty(Recorder, nameof(Recorder.CaptureMode), me =>
                                 {
-                                    me.AccessoryIcon = CameraControl.CaptureMode == CaptureModeType.Still ? "📸" : "🎥";
-                                    me.Text = CameraControl.CaptureMode == CaptureModeType.Still
+                                    me.AccessoryIcon = Recorder.CaptureMode == CaptureModeType.Still ? "📸" : "🎥";
+                                    me.Text = Recorder.CaptureMode == CaptureModeType.Still
                                         ? "Mode: Photo"
                                         : "Mode: Video";
-                                    me.TintColor = CameraControl.CaptureMode == CaptureModeType.Still
+                                    me.TintColor = Recorder.CaptureMode == CaptureModeType.Still
                                         ? Color.FromArgb("#0891B2")
                                         : Color.FromArgb("#7C3AED");
                                 }),
 
                             //Video Source
                             new SettingsButton("📷", "Source") { TintColor = Color.FromArgb("#D97706"), }
-                                .ObserveProperty(CameraControl, nameof(CameraControl.CameraIndex), async (me) =>
+                                .ObserveProperty(Recorder, nameof(Recorder.CameraIndex), async (me) =>
                                 {
-                                    var cameras = await CameraControl.GetAvailableCamerasAsync();
-                                    var index = CameraControl.CameraIndex;
+                                    var cameras = await Recorder.GetAvailableCamerasAsync();
+                                    var index = Recorder.CameraIndex;
                                     if (index < 0)
                                     {
                                         index = 0;
@@ -503,19 +663,21 @@ namespace MusicNotes.UI
                                     me.Text = $"{selectedCamera.Name}";
                                 })
                                 .OnTapped(async me => { await SelectCamera(); }),
+
+
                             new SettingsButton("🎤", "Audio Device") { TintColor = Color.FromArgb("#B45309"), }
-                                .ObserveProperty(CameraControl, nameof(CameraControl.AudioDeviceIndex), async (me) =>
+                                .ObserveProperty(Recorder, nameof(Recorder.AudioDeviceIndex), async (me) =>
                                 {
-                                    if (CameraControl.AudioDeviceIndex < 0)
+                                    if (Recorder.AudioDeviceIndex < 0)
                                     {
                                         me.Text = "System Default Audio";
                                     }
                                     else
                                     {
-                                        var arrayDevices = await CameraControl.GetAvailableAudioDevicesAsync();
+                                        var arrayDevices = await Recorder.GetAvailableAudioDevicesAsync();
                                         if (arrayDevices.Count > 0)
                                         {
-                                            var device = arrayDevices[CameraControl.AudioDeviceIndex];
+                                            var device = arrayDevices[Recorder.AudioDeviceIndex];
                                             me.Text = $"{device}";
                                         }
                                         else
@@ -530,17 +692,17 @@ namespace MusicNotes.UI
                             //Video Formats
                             new SettingsButton("🗂️", "Formats") { TintColor = Color.FromArgb("#4F46E5"), }
                                 .OnTapped(async me => { await ShowPhotoFormatPicker(); })
-                                .ObserveProperties(CameraControl,
+                                .ObserveProperties(Recorder,
                                     new[]
                                     {
-                                        nameof(CameraControl.PhotoFormatIndex), nameof(CameraControl.CaptureMode),
-                                        nameof(CameraControl.CameraIndex),
+                                        nameof(Recorder.PhotoFormatIndex), nameof(Recorder.CaptureMode),
+                                        nameof(Recorder.CameraIndex),
                                     }, async (me) =>
                                     {
-                                        var formats = await CameraControl.GetAvailableCaptureFormatsAsync();
+                                        var formats = await Recorder.GetAvailableCaptureFormatsAsync();
                                         if (formats.Count > 0)
                                         {
-                                            var index = CameraControl.PhotoFormatIndex;
+                                            var index = Recorder.PhotoFormatIndex;
                                             if (index < 0)
                                             {
                                                 index = 0;
@@ -550,23 +712,23 @@ namespace MusicNotes.UI
                                             me.Text = $"{format.Description}";
                                         }
                                     })
-                                .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                .ObserveProperty(Recorder, nameof(Recorder.CaptureMode), me =>
                                 {
-                                    me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Still;
+                                    me.IsVisible = Recorder.CaptureMode == CaptureModeType.Still;
                                 }),
                             new SettingsButton("🗂️", "Formats") { TintColor = Color.FromArgb("#4F46E5"), }
                                 .OnTapped(async me => { await ShowVideoFormatPicker(); })
-                                .ObserveProperties(CameraControl,
+                                .ObserveProperties(Recorder,
                                     new[]
                                     {
-                                        nameof(CameraControl.VideoFormatIndex), nameof(CameraControl.CaptureMode),
-                                        nameof(CameraControl.CameraIndex),
+                                        nameof(Recorder.VideoFormatIndex), nameof(Recorder.CaptureMode),
+                                        nameof(Recorder.CameraIndex),
                                     }, async (me) =>
                                     {
-                                        var formats = await CameraControl.GetAvailableVideoFormatsAsync();
+                                        var formats = await Recorder.GetAvailableVideoFormatsAsync();
                                         if (formats.Count > 0)
                                         {
-                                            var index = CameraControl.VideoFormatIndex;
+                                            var index = Recorder.VideoFormatIndex;
                                             if (index < 0)
                                             {
                                                 index = 0;
@@ -576,25 +738,26 @@ namespace MusicNotes.UI
                                             me.Text = $"{format.Description}";
                                         }
                                     })
-                                .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                .ObserveProperty(Recorder, nameof(Recorder.CaptureMode), me =>
                                 {
-                                    me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                                    me.IsVisible = Recorder.CaptureMode == CaptureModeType.Video;
                                 }),
+
                             new SettingsButton("❌", "Abort")
                                 {
                                     TintColor = Color.FromArgb("#991B1B"), IsVisible = false
                                 }
                                 .Assign(out _videoRecordButton)
                                 .OnTapped(async me => { await AbortVideoRecording(); })
-                                .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording), me =>
+                                .ObserveProperty(Recorder, nameof(Recorder.IsRecording), me =>
                                 {
-                                    me.IsVisible = CameraControl.IsRecording &&
-                                                   CameraControl.CaptureMode == CaptureModeType.Video;
+                                    me.IsVisible = Recorder.IsRecording &&
+                                                   Recorder.CaptureMode == CaptureModeType.Video;
                                 })
-                                .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                .ObserveProperty(Recorder, nameof(Recorder.CaptureMode), me =>
                                 {
-                                    me.IsVisible = CameraControl.IsRecording &&
-                                                   CameraControl.CaptureMode == CaptureModeType.Video;
+                                    me.IsVisible = Recorder.IsRecording &&
+                                                   Recorder.CaptureMode == CaptureModeType.Video;
                                 }),
                         }
                     }
@@ -624,12 +787,12 @@ namespace MusicNotes.UI
                         }
                         .OnTapped(me =>
                         {
-                            CameraControl.UseRealtimeVideoProcessing = !CameraControl.UseRealtimeVideoProcessing;
+                            Recorder.UseRealtimeVideoProcessing = !Recorder.UseRealtimeVideoProcessing;
                         })
-                        .ObserveProperty(() => CameraControl, nameof(CameraControl.UseRealtimeVideoProcessing), me =>
+                        .ObserveProperty(() => Recorder, nameof(Recorder.UseRealtimeVideoProcessing), me =>
                         {
-                            me.Text = CameraControl.UseRealtimeVideoProcessing ? "Processing: ON" : "Processing: OFF";
-                            me.TintColor = CameraControl.UseRealtimeVideoProcessing ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
+                            me.Text = Recorder.UseRealtimeVideoProcessing ? "Processing: ON" : "Processing: OFF";
+                            me.TintColor = Recorder.UseRealtimeVideoProcessing ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
                         }),
 
                     new SettingsButton("🎧", "Audio Monitor: OFF")
@@ -638,12 +801,12 @@ namespace MusicNotes.UI
                     }
                     .OnTapped(me =>
                     {
-                        CameraControl.EnableAudioMonitoring = !CameraControl.EnableAudioMonitoring;
+                        Recorder.EnableAudioMonitoring = !Recorder.EnableAudioMonitoring;
                     })
-                    .ObserveProperty(CameraControl, nameof(CameraControl.EnableAudioMonitoring), me =>
+                    .ObserveProperty(Recorder, nameof(Recorder.EnableAudioMonitoring), me =>
                     {
-                        me.Text = CameraControl.EnableAudioMonitoring ? "Audio Monitor: ON" : "Audio Monitor: OFF";
-                        me.TintColor = CameraControl.EnableAudioMonitoring ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
+                        me.Text = Recorder.EnableAudioMonitoring ? "Audio Monitor: ON" : "Audio Monitor: OFF";
+                        me.TintColor = Recorder.EnableAudioMonitoring ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
                     }),
 
 
@@ -655,12 +818,12 @@ namespace MusicNotes.UI
                     }
                     .OnTapped(me =>
                     {
-                        CameraControl.UseGain = !CameraControl.UseGain;
+                        Recorder.UseGain = !Recorder.UseGain;
                     })
-                    .ObserveProperty(CameraControl, nameof(CameraControl.UseGain), me =>
+                    .ObserveProperty(Recorder, nameof(Recorder.UseGain), me =>
                     {
-                        me.Text = CameraControl.UseGain ? "Gain: ON" : "Gain: OFF";
-                        me.TintColor = CameraControl.UseGain ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
+                        me.Text = Recorder.UseGain ? "Gain: ON" : "Gain: OFF";
+                        me.TintColor = Recorder.UseGain ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
                     }),
 
 
@@ -692,17 +855,17 @@ namespace MusicNotes.UI
                     }
                     .OnTapped(me =>
                     {
-                        CameraControl.EnableAudioRecording = !CameraControl.EnableAudioRecording;
+                        Recorder.EnableAudioRecording = !Recorder.EnableAudioRecording;
                     })
-                    .ObserveProperty(CameraControl, nameof(CameraControl.EnableAudioRecording), me =>
+                    .ObserveProperty(Recorder, nameof(Recorder.EnableAudioRecording), me =>
                     {
-                        me.AccessoryIcon = CameraControl.EnableAudioRecording ? "🔊" : "🔇";
-                        me.Text = CameraControl.EnableAudioRecording ? "Audio: SAVE" : "Audio: SKIP";
-                        me.TintColor = CameraControl.EnableAudioRecording ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
+                        me.AccessoryIcon = Recorder.EnableAudioRecording ? "🔊" : "🔇";
+                        me.Text = Recorder.EnableAudioRecording ? "Audio: SAVE" : "Audio: SKIP";
+                        me.TintColor = Recorder.EnableAudioRecording ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
                     })
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                    .ObserveProperty(Recorder, nameof(Recorder.CaptureMode), me =>
                     {
-                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                        me.IsVisible = Recorder.CaptureMode == CaptureModeType.Video;
                     }),
 
                     new SettingsButton("🎵", "Audio Codec")
@@ -711,9 +874,9 @@ namespace MusicNotes.UI
                     }
                     .Assign(out _audioCodecButton)
                     .OnTapped(async me => { await SelectAudioCodec(); })
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                    .ObserveProperty(Recorder, nameof(Recorder.CaptureMode), me =>
                     {
-                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                        me.IsVisible = Recorder.CaptureMode == CaptureModeType.Video;
                     }),
 
                     new SettingsButton("📹", "Video")
@@ -722,16 +885,16 @@ namespace MusicNotes.UI
                     }
                     .OnTapped(me =>
                     {
-                        CameraControl.EnableVideoRecording = !CameraControl.EnableVideoRecording;
+                        Recorder.EnableVideoRecording = !Recorder.EnableVideoRecording;
                     })
-                    .ObserveProperty(CameraControl, nameof(CameraControl.EnableVideoRecording), me =>
+                    .ObserveProperty(Recorder, nameof(Recorder.EnableVideoRecording), me =>
                     {
-                        me.Text = CameraControl.EnableVideoRecording ? "Video: SAVE" : "Video: SKIP";
-                        me.TintColor = CameraControl.EnableVideoRecording ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
+                        me.Text = Recorder.EnableVideoRecording ? "Video: SAVE" : "Video: SKIP";
+                        me.TintColor = Recorder.EnableVideoRecording ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
                     })
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                    .ObserveProperty(Recorder, nameof(Recorder.CaptureMode), me =>
                     {
-                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                        me.IsVisible = Recorder.CaptureMode == CaptureModeType.Video;
                     }),
 
                     new SettingsButton("⏱️", "Pre-Record: OFF")
@@ -740,20 +903,20 @@ namespace MusicNotes.UI
                     }
                     .Assign(out _preRecordingToggleButton)
                     .OnTapped(me => { TogglePreRecording(); })
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                    .ObserveProperty(Recorder, nameof(Recorder.CaptureMode), me =>
                     {
-                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                        me.IsVisible = Recorder.CaptureMode == CaptureModeType.Video;
                     }),
 
-                    new SettingsButton("⏰", $"{CameraControl.PreRecordDuration.TotalSeconds:F0}s")
+                    new SettingsButton("⏰", $"{Recorder.PreRecordDuration.TotalSeconds:F0}s")
                     {
                         TintColor = Color.FromArgb("#475569"),
                     }
                     .Assign(out _preRecordingDurationButton)
                     .OnTapped(async me => { await ShowPreRecordingDurationPicker(); })
-                    .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                    .ObserveProperty(Recorder, nameof(Recorder.CaptureMode), me =>
                     {
-                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
+                        me.IsVisible = Recorder.CaptureMode == CaptureModeType.Video;
                     }),
 
                    
@@ -786,7 +949,9 @@ namespace MusicNotes.UI
             };
         }
 
-        void ShowAlert(string title, string message)
+        #endregion
+
+        public void ShowAlert(string title, string message)
         {
             MainThread.BeginInvokeOnMainThread(async () =>
             {
@@ -825,6 +990,65 @@ namespace MusicNotes.UI
         private SkiaShape _captureButtonOuter;
         private AudioVisualizer _musicNotes;
         private AudioVisualizer _equalizer;
+
+        private void ToggleVisualizerMode(int index=-1)
+        {
+            var oldMode = _currentMode;
+            if (index >= 0)
+            {
+                _currentMode = index;
+            }
+            else
+            {
+                // Cycle through modes: 0=Notes, 1=DrummerBPM, 2=Metronome, 3=MusicBPM
+                _currentMode = (_currentMode + 1) % 4;
+            }
+
+            // Hide all visualizers
+            if (_musicNotes != null)
+                _musicNotes.IsVisible = false;
+            if (_rhythmDetector != null)
+                _rhythmDetector.IsVisible = false;
+            if (_metronome != null)
+                _metronome.IsVisible = false;
+            if (_musicBPMDetector != null)
+                _musicBPMDetector.IsVisible = false;
+            
+            // Show current mode visualizer
+            switch (_currentMode)
+            {
+                case 0: // Notes
+                    if (_musicNotes != null)
+                        _musicNotes.IsVisible = true;
+                    if (_modeButtonIcon != null)
+                        _modeButtonIcon.Text = "🎵";
+                    break;
+                case 1: // Drummer BPM
+                    if (_rhythmDetector != null)
+                        _rhythmDetector.IsVisible = true;
+                    if (_modeButtonIcon != null)
+                        _modeButtonIcon.Text = "🥁";
+                    break;
+                case 2: // Metronome
+                    if (_metronome != null)
+                        _metronome.IsVisible = true;
+                    if (_modeButtonIcon != null)
+                        _modeButtonIcon.Text = "⏱️";
+                    break;
+                case 3: // Music BPM
+                    if (_musicBPMDetector != null)
+                        _musicBPMDetector.IsVisible = true;
+                    if (_modeButtonIcon != null)
+                        _modeButtonIcon.Text = "🎼";
+                    break;
+            }
+
+            if (oldMode != _currentMode)
+            {
+                UserSettings.Current.Module = _currentMode;
+                UserSettings.Save();
+            }
+        }
 
     }
 }

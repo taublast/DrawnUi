@@ -16,6 +16,13 @@ namespace MusicNotes.Audio
         public bool UseGain { get; set; } = true;
         public int Skin { get; set; } = 0;
 
+        public void Reset()
+        {
+            Array.Clear(_audioFrontBuffer, 0, _audioFrontBuffer.Length);
+            Array.Clear(_audioBackBuffer, 0, _audioBackBuffer.Length);
+            _swapRequested = 0;
+        }
+
         private SKPaint _paintWaveform;
         private SKPaint _paintText;
 

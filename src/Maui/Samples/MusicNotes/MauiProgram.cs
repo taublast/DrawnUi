@@ -1,6 +1,6 @@
 ﻿global using DrawnUi.Draw;
 global using SkiaSharp;
-
+using FastPopups;
 using Microsoft.Extensions.Logging;
 
 namespace MusicNotes
@@ -38,6 +38,7 @@ namespace MusicNotes
                     fonts.AddFont("Orbitron-ExtraBold.ttf", "FontGameExtraBold"); //800
                 });
 
+            builder.AddPopups();
             builder.UseDrawnUi(new()
             {
                 //portrait

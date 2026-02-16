@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using DrawnUi.Camera;
 
 namespace MusicNotes.Audio
@@ -44,6 +45,8 @@ namespace MusicNotes.Audio
             }
 
             OnAudioSample?.Invoke(sample);
+
+            //Debug.WriteLine($"Audio timestamp {sample.Timestamp}");
 
             return base.OnAudioSampleAvailable(sample);
         }

@@ -63,6 +63,18 @@ namespace MusicNotes.Audio
         private SKPaint _paintBar;
         private SKPaint _paintDot;
         private SKPaint _paintText;
+
+        public void Reset()
+        {
+            Array.Clear(_barsFrontBuffer, 0, _barsFrontBuffer.Length);
+            Array.Clear(_barsBackBuffer, 0, _barsBackBuffer.Length);
+            Array.Clear(_peakHold, 0, _peakHold.Length);
+            Array.Clear(_peakHoldFront, 0, _peakHoldFront.Length);
+            _swapRequested = 0;
+
+            _coeffReady = false;
+            _lastSampleRate = 0;
+        }
  
 
         private void InitCoefficients(int sampleRate)

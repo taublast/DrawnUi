@@ -13,6 +13,12 @@ namespace MusicNotes.UI
         /// Visualizers should respect viewport offset/size and not assume (0,0).
         /// </summary>
         void Render(SKCanvas canvas, SKRect viewport, float scale);
+
+        /// <summary>
+        /// Will reset internal state of the visualizer, like if was stated from scratch
+        /// </summary>
+        void Reset();
+
         bool UseGain { get; set; }
         int Skin { get; set; }
     }
