@@ -344,14 +344,23 @@ namespace MusicNotes.Audio
                             return;
                         }
 
-                        if (_smoothBPM > 0)
+                        float candidate = 60000f / intervalMs;
+                        // If change is drastic (>35%), reset history to lock onto new tempo faster
+                        if ((_smoothBPM == 0 && Math.Abs(candidate - _currentBPM) > (_currentBPM * 0.35f)) 
+                            || (_smoothBPM > 0 && Math.Abs(candidate - _smoothBPM) > (_smoothBPM * 0.35f)))
                         {
-                            float candidate = 60000f / intervalMs;
-                            if (Math.Abs(candidate - _smoothBPM) > (_smoothBPM * 0.35f) && _beatTimestamps.Count >= 2)
-                            {
-                                _beatTimestamps.Clear();
-                                _beatTimestamps.Add(prev);
-                            }
+                            // Reset everything cleanly to just the last two beats (the interval)
+                            _beatTimestamps.Clear();
+                            _beatTimestamps.Add(prev);
+                            _beatTimestamps.Add(beatTs);
+                            _lastBeatTime = beatTs;
+                            
+                            // Force immediate update to the new BPM
+                            _currentBPM = candidate;
+                            _smoothBPM = candidate;
+                            
+                            _beatFlash = 1.0f;
+                            return;
                         }
                     }
 
