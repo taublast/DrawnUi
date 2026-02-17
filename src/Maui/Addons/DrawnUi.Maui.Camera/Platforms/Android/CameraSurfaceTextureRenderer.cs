@@ -29,6 +29,7 @@ namespace DrawnUi.Camera
         public int Width => _width;
         public int Height => _height;
         public bool IsInitialized => _initialized;
+        public bool Disabled { get; set; }
 
         /// <summary>
         /// Event fired when a new frame is available from the camera.
@@ -220,7 +221,10 @@ namespace DrawnUi.Camera
 
             public void OnFrameAvailable(SurfaceTexture surfaceTexture)
             {
-                _renderer.OnFrameAvailable?.Invoke(_renderer, surfaceTexture);
+                if (_renderer!=null && _renderer.Disabled)
+                    return;
+
+                _renderer?.OnFrameAvailable?.Invoke(_renderer, surfaceTexture);
             }
         }
 

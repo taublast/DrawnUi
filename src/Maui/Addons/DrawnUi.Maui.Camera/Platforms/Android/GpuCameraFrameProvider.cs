@@ -3,6 +3,7 @@ using Android.Graphics;
 using Android.Views;
 using System;
 using System.Threading;
+using AppoMobi.Specials;
 
 namespace DrawnUi.Camera
 {
@@ -39,6 +40,21 @@ namespace DrawnUi.Camera
             return true;
         }
 
+        void DestroyExistingRenderer()
+        {
+            if (_renderer != null)
+            {
+                lock (_frameLock)
+                {
+                    _renderer.Disabled = true;
+                    _renderer.OnFrameAvailable -= OnFrameAvailable;
+                    _renderer.Dispose();
+                    _renderer = null;
+                }
+            }
+        }
+
+
         /// <summary>
         /// Initialize the GPU camera frame provider.
         /// Must be called on GL thread with valid EGL context.
@@ -47,16 +63,13 @@ namespace DrawnUi.Camera
         /// <param name="height">Frame height</param>
         public bool Initialize(int width, int height)
         {
-            if (_renderer != null)
-            {
-                _renderer.Dispose();
-            }
+            DestroyExistingRenderer();
 
             _renderer = new CameraSurfaceTextureRenderer();
             if (!_renderer.Initialize(width, height))
             {
                 System.Diagnostics.Debug.WriteLine("[GpuCameraFrameProvider] Failed to initialize renderer");
-                _renderer = null;
+                DestroyExistingRenderer();
                 return false;
             }
 
@@ -214,12 +227,7 @@ namespace DrawnUi.Camera
 
             Stop();
 
-            if (_renderer != null)
-            {
-                _renderer.OnFrameAvailable -= OnFrameAvailable;
-                _renderer.Dispose();
-                _renderer = null;
-            }
+            DestroyExistingRenderer();
 
             System.Diagnostics.Debug.WriteLine("[GpuCameraFrameProvider] Disposed");
         }

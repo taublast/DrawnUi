@@ -2351,12 +2351,18 @@ namespace DrawnUi.Camera
                             }
 
                             // Small delay to prevent busy looping
-                            await Task.Delay(10, _encodingCancellation.Token);
+                            if (_encodingCancellation != null)
+                            {
+                                await Task.Delay(10, _encodingCancellation.Token);
+                            }
                         }
                         catch (Exception ex)
                         {
                             System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Background encoding error: {ex.Message}");
-                            await Task.Delay(100, _encodingCancellation.Token);
+                            if (_encodingCancellation != null)
+                            {
+                                await Task.Delay(100, _encodingCancellation.Token);
+                            }
                         }
                     }
                 }
