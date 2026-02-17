@@ -664,7 +664,7 @@ public partial class SkiaCamera
         // Progress reporting
         appleEncoder.ProgressReported += (sender, duration) =>
         {
-            OnVideoRecordingProgress(duration);
+            OnRecordingProgress(duration);
         };
         
         // Dispose previous encoder OR Preserve it
@@ -2120,7 +2120,7 @@ public partial class SkiaCamera
             SetIsRecordingVideo(false);
             if (capturedVideo != null)
             {
-                OnVideoRecordingSuccess(capturedVideo);
+                OnRecordingSuccess(capturedVideo);
             }
 
             IsBusy = false; // Release busy state after successful muxing
@@ -2172,7 +2172,7 @@ public partial class SkiaCamera
                 StartPreviewAudioCapture();
             }
 
-            VideoRecordingFailed?.Invoke(this, ex);
+            RecordingFailed?.Invoke(this, ex);
             throw;
         }
         finally
@@ -2541,7 +2541,7 @@ public partial class SkiaCamera
             IsBusy = false;
             RecordingLockedRotation = -1; // Reset on error
             ClearPreRecordingBuffer();
-            VideoRecordingFailed?.Invoke(this, ex);
+            RecordingFailed?.Invoke(this, ex);
             throw;
         }
     }

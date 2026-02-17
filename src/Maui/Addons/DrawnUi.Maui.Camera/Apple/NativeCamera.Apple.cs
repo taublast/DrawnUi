@@ -3490,7 +3490,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 if (_isRecordingVideo)
                 {
                     var elapsed = DateTime.Now - _recordingStartTime;
-                    VideoRecordingProgress?.Invoke(elapsed);
+                    RecordingProgress?.Invoke(elapsed);
                 }
             });
 
@@ -3501,7 +3501,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             Debug.WriteLine($"[NativeCamera.Apple] Failed to start video recording: {ex.Message}");
             _isRecordingVideo = false;
             CleanupMovieFileOutput();
-            VideoRecordingFailed?.Invoke(ex);
+            RecordingFailed?.Invoke(ex);
         }
     }
 
@@ -3553,7 +3553,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             Debug.WriteLine($"[NativeCamera.Apple] Failed to stop video recording: {ex.Message}");
             _isRecordingVideo = false;
             CleanupMovieFileOutput();
-            VideoRecordingFailed?.Invoke(ex);
+            RecordingFailed?.Invoke(ex);
         }
     }
 
@@ -3689,17 +3689,17 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     /// <summary>
     /// Event fired when video recording completes successfully
     /// </summary>
-    public Action<CapturedVideo> VideoRecordingSuccess { get; set; }
+    public Action<CapturedVideo> RecordingSuccess { get; set; }
 
     /// <summary>
     /// Event fired when video recording fails
     /// </summary>
-    public Action<Exception> VideoRecordingFailed { get; set; }
+    public Action<Exception> RecordingFailed { get; set; }
 
     /// <summary>
     /// Event fired when video recording progress updates
     /// </summary>
-    public Action<TimeSpan> VideoRecordingProgress { get; set; }
+    public Action<TimeSpan> RecordingProgress { get; set; }
 
     /// <summary>
     /// Gets or sets whether pre-recording is enabled.
@@ -3730,7 +3730,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         {
             Debug.WriteLine($"[NativeCamera.Apple] Video recording failed: {error.LocalizedDescription}");
             CleanupMovieFileOutput();
-            VideoRecordingFailed?.Invoke(new Exception(error.LocalizedDescription));
+            RecordingFailed?.Invoke(new Exception(error.LocalizedDescription));
             return;
         }
 
@@ -3757,7 +3757,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             // Fire success event on main thread
             NSOperationQueue.MainQueue.AddOperation(() =>
             {
-                VideoRecordingSuccess?.Invoke(capturedVideo);
+                RecordingSuccess?.Invoke(capturedVideo);
             });
 
             Debug.WriteLine("[NativeCamera.Apple] Video recording completed successfully");
@@ -3765,7 +3765,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         catch (Exception ex)
         {
             Debug.WriteLine($"[NativeCamera.Apple] Error processing recorded video: {ex.Message}");
-            VideoRecordingFailed?.Invoke(ex);
+            RecordingFailed?.Invoke(ex);
         }
         finally
         {
