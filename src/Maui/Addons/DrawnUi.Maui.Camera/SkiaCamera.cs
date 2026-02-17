@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using AppoMobi.Specials;
 using DrawnUi.Views;
+using static DrawnUi.Camera.SkiaCamera;
 using Color = Microsoft.Maui.Graphics.Color;
 
 #if WINDOWS
@@ -1325,7 +1326,7 @@ public partial class SkiaCamera : SkiaControl
     /// <summary>
     /// Stop video recording and finalizes the video file or Aborts if passed parameter is `true`.
     /// Resets the locked rotation and restores normal preview behavior.
-    /// The video file path will be provided through the VideoRecordingSuccess event.
+    /// The video file path will be provided through the RecordingSuccess event.
     /// </summary>
     /// <returns>Async task</returns>
     public async Task StopVideoRecording(bool abort = false)
@@ -1415,7 +1416,7 @@ public partial class SkiaCamera : SkiaControl
                 SetIsPreRecording(false);
                 SetIsRecordingVideo(false);
                 //ClearPreRecordingBuffer();
-                VideoRecordingFailed?.Invoke(this, ex);
+                RecordingFailed?.Invoke(this, ex);
                 IsBusy = false;
                 throw;
             }
@@ -1476,7 +1477,7 @@ public partial class SkiaCamera : SkiaControl
             {
                 if (_audioOnlyEncoder?.IsRecording == true)
                 {
-                    OnVideoRecordingProgress(_audioOnlyEncoder.RecordingDuration);
+                    OnRecordingProgress(_audioOnlyEncoder.RecordingDuration);
                 }
             }, null, 500, 500);
 
@@ -2075,17 +2076,17 @@ public partial class SkiaCamera : SkiaControl
     /// <summary>
     /// Fired when video recording completes successfully
     /// </summary>
-    public event EventHandler<CapturedVideo> VideoRecordingSuccess;
+    public event EventHandler<CapturedVideo> RecordingSuccess;
 
     /// <summary>
     /// Fired when video recording fails
     /// </summary>
-    public event EventHandler<Exception> VideoRecordingFailed;
+    public event EventHandler<Exception> RecordingFailed;
 
     /// <summary>
     /// Fired when video recording progress updates. This will NOT be invoked on UI thread!
     /// </summary>
-    public event EventHandler<TimeSpan> VideoRecordingProgress;
+    public event EventHandler<TimeSpan> RecordingProgress;
 
     /// <summary>
     /// Fired when audio-only recording completes successfully (when EnableVideoRecording=false)
@@ -2645,27 +2646,27 @@ public partial class SkiaCamera : SkiaControl
         NativeControl.SetRecordAudio(EnableAudioRecording);
 
         // Set up video recording callbacks to handle state synchronization
-        NativeControl.VideoRecordingFailed = ex =>
+        NativeControl.RecordingFailed = ex =>
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 SetIsRecordingVideo(false);
-                VideoRecordingFailed?.Invoke(this, ex);
+                RecordingFailed?.Invoke(this, ex);
             });
         };
 
-        NativeControl.VideoRecordingSuccess = capturedVideo =>
+        NativeControl.RecordingSuccess = capturedVideo =>
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 SetIsRecordingVideo(false);
-                OnVideoRecordingSuccess(capturedVideo);
+                OnRecordingSuccess(capturedVideo);
             });
         };
 
-        NativeControl.VideoRecordingProgress = duration =>
+        NativeControl.RecordingProgress = duration =>
         {
-            OnVideoRecordingProgress(duration);
+            OnRecordingProgress(duration);
         };
 
 
@@ -2956,10 +2957,10 @@ public partial class SkiaCamera : SkiaControl
         Debug.WriteLine($"[OnAudioRecordingSuccess] Audio file: {capturedAudio?.FilePath}, Duration: {capturedAudio?.Duration}");
         AudioRecordingSuccess?.Invoke(this, capturedAudio);
 
-        // Also fire VideoRecordingSuccess so existing UI code (gallery saving etc.) works
+        // Also fire RecordingSuccess so existing UI code (gallery saving etc.) works
         if (capturedAudio != null)
         {
-            OnVideoRecordingSuccess(new CapturedVideo
+            OnRecordingSuccess(new CapturedVideo
             {
                 FilePath = capturedAudio.FilePath,
                 Duration = capturedAudio.Duration,
@@ -3423,117 +3424,20 @@ public partial class SkiaCamera : SkiaControl
 
     private static DateTime lastTimeChecked = DateTime.MinValue;
 
+    [Flags]
+    public enum NeedPermissions
+    {
+        Camera     = 1,
+        Gallery    = 2,
+        Microphone = 4,
+        Location   = 8
+    }
+
     /// <summary>
     /// Gets whether camera permissions have been granted
     /// </summary>
     public static bool PermissionsGranted { get; protected set; }
 
-    /// <summary>
-    /// Checks gallery/camera permissions and invokes the appropriate callback
-    /// </summary>
-    /// <param name="granted">Action to invoke if permissions are granted</param>
-    /// <param name="notGranted">Action to invoke if permissions are denied</param>
-    public void CheckAllPermissions(Action granted, Action notGranted, bool avoidSpam = false)
-    {
-        if (!avoidSpam || lastTimeChecked + TimeSpan.FromSeconds(5) < DateTime.Now) //avoid spam
-        {
-            lastTimeChecked = DateTime.Now;
-
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                if (ChecksBusy)
-                    return;
-
-                bool okay1 = false;
-
-                ChecksBusy = true;
-                try
-                {
-                    // Camera permission is still needed for capture
-                    var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
-                    if (status != PermissionStatus.Granted)
-                    {
-                        status = await Permissions.RequestAsync<Permissions.Camera>();
-                    }
-
-                    if (status == PermissionStatus.Granted)
-                    {
-#if IOS || MACCATALYST
-                        okay1 = await RequestGalleryPermissions();
-                        if (okay1 && this.CaptureMode == CaptureModeType.Video && this.EnableAudioRecording)
-                        {
-                            var s = AVCaptureDevice.GetAuthorizationStatus(AVAuthorizationMediaType.Audio);
-                            if (s == AVAuthorizationStatus.NotDetermined)
-                            {
-                                okay1 = await AVCaptureDevice.RequestAccessForMediaTypeAsync(AVAuthorizationMediaType.Audio);
-                            }
-                            else
-                            {
-                                okay1 = true;
-                            }
-                        }
-#elif ANDROID
-                        if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Q)
-                        {
-                            // Scoped storage: request read access (maps to READ_MEDIA_* on API 33+)
-                            var readStatus = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
-                            if (readStatus != PermissionStatus.Granted)
-                            {
-                                readStatus = await Permissions.RequestAsync<Permissions.StorageRead>();
-                            }
-                            okay1 = readStatus == PermissionStatus.Granted;
-                        }
-                        else
-                        {
-                            var writeStatus = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
-                            if (writeStatus != PermissionStatus.Granted)
-                            {
-                                writeStatus = await Permissions.RequestAsync<Permissions.StorageWrite>();
-                            }
-                            okay1 = writeStatus == PermissionStatus.Granted;
-                        }
-
-                        if (okay1 && this.CaptureMode == CaptureModeType.Video && this.EnableAudioRecording)
-                        {
-                            status = await Permissions.CheckStatusAsync<Permissions.Microphone>();
-                            if (status != PermissionStatus.Granted)
-                            {
-                                status = await Permissions.RequestAsync<Permissions.Microphone>();
-                                okay1 = status == PermissionStatus.Granted;
-                            }
-                        }
-#else
-                        var storageStatus = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
-                        if (storageStatus != PermissionStatus.Granted)
-                        {
-                            storageStatus = await Permissions.RequestAsync<Permissions.StorageWrite>();
-                        }
-                        okay1 = storageStatus == PermissionStatus.Granted;
-#endif
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Super.Log(ex);
-                }
-                finally
-                {
-                    if (okay1)
-                    {
-                        PermissionsGranted = true;
-                        granted?.Invoke();
-                    }
-                    else
-                    {
-                        PermissionsGranted = false;
-                        notGranted?.Invoke();
-                    }
-
-                    ChecksBusy = false;
-                }
-            });
-        }
-    }
 
     private bool _GpsBusy;
 
@@ -3596,33 +3500,263 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
-    /// Wrapper used by existing code to request permissions then proceed
+    /// Checks and requests only the permissions specified by <paramref name="request"/> flags,
+    /// then invokes the appropriate callback. Can be called from any thread (main not needed).
+    /// </summary>
+    /// <param name="granted">Invoked when all requested permissions are granted.</param>
+    /// <param name="notGranted">Invoked when at least one requested permission is denied.</param>
+    /// <param name="request">Flags indicating which permissions to check and request.</param>
+    public static void CheckPermissions(Action granted, Action notGranted, NeedPermissions request)
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            if (ChecksBusy)
+                return;
+
+            bool allGranted = true;
+
+            ChecksBusy = true;
+            try
+            {
+                if (request.HasFlag(NeedPermissions.Camera))
+                {
+                    var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
+                    if (status != PermissionStatus.Granted)
+                        status = await Permissions.RequestAsync<Permissions.Camera>();
+                    allGranted = allGranted && status == PermissionStatus.Granted;
+                }
+
+                if (allGranted && request.HasFlag(NeedPermissions.Gallery))
+                {
+#if IOS || MACCATALYST
+                    allGranted = await RequestGalleryPermissions();
+#elif ANDROID
+                    if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Q)
+                    {
+                        var readStatus = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+                        if (readStatus != PermissionStatus.Granted)
+                            readStatus = await Permissions.RequestAsync<Permissions.StorageRead>();
+                        allGranted = readStatus == PermissionStatus.Granted;
+                    }
+                    else
+                    {
+                        var writeStatus = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+                        if (writeStatus != PermissionStatus.Granted)
+                            writeStatus = await Permissions.RequestAsync<Permissions.StorageWrite>();
+                        allGranted = writeStatus == PermissionStatus.Granted;
+                    }
+#else
+                    var storageStatus = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+                    if (storageStatus != PermissionStatus.Granted)
+                        storageStatus = await Permissions.RequestAsync<Permissions.StorageWrite>();
+                    allGranted = storageStatus == PermissionStatus.Granted;
+#endif
+                }
+
+                if (allGranted && request.HasFlag(NeedPermissions.Microphone))
+                {
+#if IOS || MACCATALYST
+                    var s = AVCaptureDevice.GetAuthorizationStatus(AVAuthorizationMediaType.Audio);
+                    if (s == AVAuthorizationStatus.NotDetermined)
+                        allGranted = await AVCaptureDevice.RequestAccessForMediaTypeAsync(AVAuthorizationMediaType.Audio);
+                    else
+                        allGranted = s == AVAuthorizationStatus.Authorized;
+#else
+                    var micStatus = await Permissions.CheckStatusAsync<Permissions.Microphone>();
+                    if (micStatus != PermissionStatus.Granted)
+                        micStatus = await Permissions.RequestAsync<Permissions.Microphone>();
+                    allGranted = micStatus == PermissionStatus.Granted;
+#endif
+                }
+
+                if (allGranted && request.HasFlag(NeedPermissions.Location))
+                {
+                    var locStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+                    if (locStatus != PermissionStatus.Granted)
+                        locStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                    allGranted = locStatus == PermissionStatus.Granted;
+                }
+            }
+            catch (Exception ex)
+            {
+                Super.Log(ex);
+                allGranted = false;
+            }
+            finally
+            {
+                PermissionsGranted = allGranted;
+
+                if (allGranted)
+                    granted?.Invoke();
+                else
+                    notGranted?.Invoke();
+
+                ChecksBusy = false;
+            }
+        });
+    }
+
+
+    /// <summary>
+    /// Checks and requests only the permissions specified by <paramref name="request"/> flags,
+    /// then invokes the appropriate callback. Can be called from any thread (main not needed).
+    /// </summary>    /// <param name="request"></param>
+    /// <returns></returns>
+    public static Task<bool> RequestPermissionsAsync(NeedPermissions request)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+
+        SkiaCamera.CheckPermissions(() =>
+            {
+                tcs.TrySetResult(true);
+            },
+            () =>
+            {
+                tcs.TrySetResult(false);
+            }, request);
+
+        return tcs.Task;
+    }
+
+    /// <summary>
+    /// Silently checks whether the specified permissions are already granted, without showing
+    /// any system permission dialog to the user. Can be called from any thread (main not needed).
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    public static Task<bool> RequestPermissionsGrantedAsync(NeedPermissions request)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+
+        SkiaCamera.CheckPermissionsGranted(() =>
+            {
+                tcs.TrySetResult(true);
+            },
+            () =>
+            {
+                tcs.TrySetResult(false);
+            }, request);
+
+        return tcs.Task;
+    }
+
+    /// <summary>
+    /// Silently checks whether the specified permissions are already granted, without showing
+    /// any system permission dialog to the user. Callbacks are invoked on the main thread.
+    /// Can be called from any thread (main not needed).
+    /// </summary>
+    /// <param name="granted">Invoked when all requested permissions are already granted.</param>
+    /// <param name="notGranted">Invoked when at least one requested permission is not granted.</param>
+    /// <param name="request">Flags indicating which permissions to check.</param>
+    public static void CheckPermissionsGranted(Action granted, Action notGranted, NeedPermissions request)
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            bool allGranted = true;
+
+            try
+            {
+                if (request.HasFlag(NeedPermissions.Camera))
+                {
+                    var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
+                    allGranted = allGranted && status == PermissionStatus.Granted;
+                }
+
+                if (allGranted && request.HasFlag(NeedPermissions.Gallery))
+                {
+#if IOS || MACCATALYST
+                    var authStatus = Photos.PHPhotoLibrary.GetAuthorizationStatus(Photos.PHAccessLevel.ReadWrite);
+                    allGranted = authStatus == Photos.PHAuthorizationStatus.Authorized ||
+                                 authStatus == Photos.PHAuthorizationStatus.Limited;
+#elif ANDROID
+                    if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Q)
+                    {
+                        var readStatus = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+                        allGranted = readStatus == PermissionStatus.Granted;
+                    }
+                    else
+                    {
+                        var writeStatus = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+                        allGranted = writeStatus == PermissionStatus.Granted;
+                    }
+#else
+                    var storageStatus = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+                    allGranted = storageStatus == PermissionStatus.Granted;
+#endif
+                }
+
+                if (allGranted && request.HasFlag(NeedPermissions.Microphone))
+                {
+#if IOS || MACCATALYST
+                    var s = AVCaptureDevice.GetAuthorizationStatus(AVAuthorizationMediaType.Audio);
+                    allGranted = s == AVAuthorizationStatus.Authorized;
+#else
+                    var micStatus = await Permissions.CheckStatusAsync<Permissions.Microphone>();
+                    allGranted = micStatus == PermissionStatus.Granted;
+#endif
+                }
+
+                if (allGranted && request.HasFlag(NeedPermissions.Location))
+                {
+                    var locStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+                    allGranted = locStatus == PermissionStatus.Granted;
+                }
+            }
+            catch (Exception ex)
+            {
+                Super.Log(ex);
+                allGranted = false;
+            }
+
+            if (allGranted)
+                granted?.Invoke();
+            else
+                notGranted?.Invoke();
+        });
+    }
+
+    /// <summary>
+    /// Wrapper used by existing code to request  permissions defined by NeedPermissionsSet then proceed. This is used when camera is turned On.
     /// </summary>
     public void CheckPermissions(Action<object> granted, Action<object> notGranted)
     {
-        CheckAllPermissions(() => granted?.Invoke(null), () => notGranted?.Invoke(null));
+        CheckPermissions(() => granted?.Invoke(null), () => notGranted?.Invoke(null), NeedPermissionsSet);
+    }
+
+    NeedPermissions _needPermissionsSet = NeedPermissions.Camera | NeedPermissions.Gallery;
+    public NeedPermissions NeedPermissionsSet
+    {
+    	get => _needPermissionsSet;
+    	set
+    	{
+    		if (_needPermissionsSet != value)
+    		{
+           		_needPermissionsSet = value;
+    			OnPropertyChanged();	
+    		}
+    	}
     }
 
     #endregion
 
     /// <summary>
-    /// Internal method to raise VideoRecordingSuccess event
+    /// Internal method to raise RecordingSuccess event
     /// </summary>
-    internal void OnVideoRecordingSuccess(CapturedVideo capturedVideo)
+    internal void OnRecordingSuccess(CapturedVideo capturedVideo)
     {
         CurrentRecordingDuration = TimeSpan.Zero;
-        VideoRecordingSuccess?.Invoke(this, capturedVideo);
+        RecordingSuccess?.Invoke(this, capturedVideo);
     }
 
     /// <summary>
-    /// Internal method to raise VideoRecordingProgress event
+    /// Internal method to raise RecordingProgress event
     /// </summary>
-    internal void OnVideoRecordingProgress(TimeSpan duration)
+    internal void OnRecordingProgress(TimeSpan duration)
     {
         CurrentRecordingDuration = duration;
-        if (VideoRecordingProgress != null)
+        if (RecordingProgress != null)
         {
-            VideoRecordingProgress?.Invoke(this, duration);
+            RecordingProgress?.Invoke(this, duration);
         }
     }
 
