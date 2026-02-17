@@ -867,7 +867,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
     // GPU preview renderer (replaces ImageReader+RenderScript for preview on API 26+)
     // Set to false to force the legacy ImageReader+RenderScript path for comparison
-    internal static bool UseGpuPreview { get; set; } = true;
+    internal static bool UseGpuPreview { get; set; } = false;
     private GlPreviewRenderer _glPreviewRenderer;
     private bool _useGlPreview;
 
@@ -3045,7 +3045,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             return;
 
         var elapsed = DateTime.Now - _recordingStartTime;
-        VideoRecordingProgress?.Invoke(elapsed);
+        RecordingProgress?.Invoke(elapsed);
     }
 
     /// <summary>
@@ -3172,7 +3172,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             Log.Error(TAG, $"Failed to start video recording: {ex.Message}");
             _isRecordingVideo = false;
             CleanupMediaRecorder();
-            VideoRecordingFailed?.Invoke(ex);
+            RecordingFailed?.Invoke(ex);
         }
     }
 
@@ -3225,7 +3225,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             CreateCameraPreviewSession();
 
             // Fire success event
-            VideoRecordingSuccess?.Invoke(capturedVideo);
+            RecordingSuccess?.Invoke(capturedVideo);
 
             Log.Debug(TAG, "Video recording completed successfully");
         }
@@ -3234,7 +3234,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             Log.Error(TAG, $"Failed to stop video recording: {ex.Message}");
             _isRecordingVideo = false;
             CleanupMediaRecorder();
-            VideoRecordingFailed?.Invoke(ex);
+            RecordingFailed?.Invoke(ex);
         }
     }
 
@@ -3361,17 +3361,17 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// <summary>
     /// Event fired when video recording completes successfully
     /// </summary>
-    public Action<CapturedVideo> VideoRecordingSuccess { get; set; }
+    public Action<CapturedVideo> RecordingSuccess { get; set; }
 
     /// <summary>
     /// Event fired when video recording fails
     /// </summary>
-    public Action<Exception> VideoRecordingFailed { get; set; }
+    public Action<Exception> RecordingFailed { get; set; }
 
     /// <summary>
     /// Event fired when video recording progress updates
     /// </summary>
-    public Action<TimeSpan> VideoRecordingProgress { get; set; }
+    public Action<TimeSpan> RecordingProgress { get; set; }
 
     /// <summary>
     /// Sets whether audio should be recorded with video.
@@ -3552,7 +3552,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             catch (Exception ex)
             {
                 Log.Error(NativeCamera.TAG, $"Failed to configure video capture session: {ex.Message}");
-                _owner.VideoRecordingFailed?.Invoke(ex);
+                _owner.RecordingFailed?.Invoke(ex);
             }
         }
 
@@ -3561,7 +3561,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             Log.Error(NativeCamera.TAG, "Video capture session configuration failed");
             _owner._isRecordingVideo = false;
             _owner.CleanupMediaRecorder();
-            _owner.VideoRecordingFailed?.Invoke(new Exception("Video capture session configuration failed"));
+            _owner.RecordingFailed?.Invoke(new Exception("Video capture session configuration failed"));
         }
     }
 }

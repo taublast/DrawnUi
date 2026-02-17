@@ -683,7 +683,7 @@ public partial class SkiaCamera : SkiaControl
 
             if (capturedVideo != null)
             {
-                OnVideoRecordingSuccess(capturedVideo);
+                OnRecordingSuccess(capturedVideo);
             }
 
             // Update state and notify success
@@ -712,7 +712,7 @@ public partial class SkiaCamera : SkiaControl
                 StartPreviewAudioCapture();
             }
 
-            VideoRecordingFailed?.Invoke(this, ex);
+            RecordingFailed?.Invoke(this, ex);
             throw;
         }
         finally
@@ -788,7 +788,7 @@ public partial class SkiaCamera : SkiaControl
                 StartPreviewAudioCapture();
             }
 
-            //VideoRecordingFailed?.Invoke(this, ex);
+            //RecordingFailed?.Invoke(this, ex);
             throw;
         }
         finally
@@ -960,7 +960,7 @@ public partial class SkiaCamera : SkiaControl
         // Set up progress reporting
         _captureVideoEncoder.ProgressReported += (sender, duration) =>
         {
-            OnVideoRecordingProgress(duration);
+            OnRecordingProgress(duration);
         };
 
         // Mirror encoder preview to on-screen display (like Apple implementation)
@@ -1256,7 +1256,7 @@ public partial class SkiaCamera : SkiaControl
             IsPreRecording = false;
             RecordingLockedRotation = -1; // Reset on error
             ClearPreRecordingBuffer();
-            VideoRecordingFailed?.Invoke(this, ex);
+            RecordingFailed?.Invoke(this, ex);
             throw;
         }
     }

@@ -2357,7 +2357,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             return;
 
         var elapsed = DateTime.Now - _recordingStartTime;
-        VideoRecordingProgress?.Invoke(elapsed);
+        RecordingProgress?.Invoke(elapsed);
     }
 
 
@@ -2409,7 +2409,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             Debug.WriteLine($"[NativeCameraWindows] Failed to start video recording: {ex.Message}\nStackTrace: {ex.StackTrace}");
             _isRecordingVideo = false;
             _currentVideoFile = null;
-            VideoRecordingFailed?.Invoke(ex);
+            RecordingFailed?.Invoke(ex);
         }
     }
 
@@ -2461,7 +2461,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             }
 
             // Fire success event
-            VideoRecordingSuccess?.Invoke(capturedVideo);
+            RecordingSuccess?.Invoke(capturedVideo);
 
             Debug.WriteLine("[NativeCameraWindows] Video recording completed successfully");
         }
@@ -2469,7 +2469,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         {
             Debug.WriteLine($"[NativeCameraWindows] Failed to stop video recording: {ex.Message}");
             _isRecordingVideo = false;
-            VideoRecordingFailed?.Invoke(ex);
+            RecordingFailed?.Invoke(ex);
         }
         finally
         {
@@ -2646,17 +2646,17 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     /// <summary>
     /// Event fired when video recording completes successfully
     /// </summary>
-    public Action<CapturedVideo> VideoRecordingSuccess { get; set; }
+    public Action<CapturedVideo> RecordingSuccess { get; set; }
 
     /// <summary>
     /// Event fired when video recording fails
     /// </summary>
-    public Action<Exception> VideoRecordingFailed { get; set; }
+    public Action<Exception> RecordingFailed { get; set; }
 
     /// <summary>
     /// Event fired when video recording progress updates
     /// </summary>
-    public Action<TimeSpan> VideoRecordingProgress { get; set; }
+    public Action<TimeSpan> RecordingProgress { get; set; }
 
     /// <summary>
     /// Sets whether audio should be recorded with video.
