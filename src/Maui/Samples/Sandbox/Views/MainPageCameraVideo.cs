@@ -69,7 +69,8 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
                     VerticalOptions = LayoutOptions.Fill,
                     BackgroundColor = Colors.Black,
                     CaptureMode = CaptureModeType.Video,
-                    Aspect = TransformAspect.AspectFit
+                    Aspect = TransformAspect.AspectFit,
+                    NeedPermissionsSet = SkiaCamera.NeedPermissions.Camera | SkiaCamera.NeedPermissions.Gallery | SkiaCamera.NeedPermissions.Microphone
                 }
                 .Assign(out CameraControl)
                 .ObserveSelf((me, prop) =>
@@ -383,8 +384,8 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
         CameraControl.CaptureSuccess += OnCaptureSuccess;
         CameraControl.CaptureFailed += OnCaptureFailed;
         CameraControl.OnError += OnCameraError;
-        CameraControl.VideoRecordingSuccess += OnVideoRecordingSuccess;
-        CameraControl.VideoRecordingProgress += OnVideoRecordingProgress;
+        CameraControl.RecordingSuccess += OnVideoRecordingSuccess;
+        CameraControl.RecordingProgress += OnVideoRecordingProgress;
     }
 
     private void UpdateStatusText()
