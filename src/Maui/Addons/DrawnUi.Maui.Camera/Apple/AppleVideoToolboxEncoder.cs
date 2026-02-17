@@ -464,7 +464,7 @@ namespace DrawnUi.Camera
 
                 [AVVideo.CompressionPropertiesKey] = new NSMutableDictionary
                 {
-                    [AVVideo.ProfileLevelKey] = AVVideo.ProfileLevelH264BaselineAutoLevel,
+                    [AVVideo.ProfileLevelKey] = AVVideo.ProfileLevelH264HighAutoLevel,
 
                     [AVVideo.AverageBitRateKey] = new NSNumber(bitrate),
                     // Very important for real-time / low-latency / streaming
@@ -911,6 +911,12 @@ namespace DrawnUi.Camera
             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Pre-recording cutoff set to {timestamp:F3}s");
         }
 
+        // GPU resource management (prevent Skia GPU memory accumulation during long recordings)
+        private int _gpuFrameCounter = 0;
+        private const int GpuPurgeInterval = 300;  // Purge every 300 frames (~10 seconds at 30fps)
+
+
+
         /// <summary>
         /// Begin a frame for Skia composition. Returns canvas to draw on.
         /// </summary>
@@ -930,6 +936,15 @@ namespace DrawnUi.Camera
 
                 if (_encodingContext != null)
                 {
+
+                    // Periodic GPU resource cleanup to prevent memory accumulation during long recordings
+                    _gpuFrameCounter++;
+                    if (_gpuFrameCounter >= GpuPurgeInterval)
+                    {
+                        _gpuFrameCounter = 0;
+                        _encodingContext.PurgeUnlockedResources(false);  // false = don't scratchResourcesOnly
+                    }
+
                     try
                     {
                         // 1. Get Destination Buffer from Pool (AVAssetWriter or VTCompressionSession)
@@ -1083,8 +1098,6 @@ namespace DrawnUi.Camera
                             PreviewAvailable?.Invoke(this, EventArgs.Empty);
                         }
                     }
-
-
                 }
 
                 // ============================================================================
