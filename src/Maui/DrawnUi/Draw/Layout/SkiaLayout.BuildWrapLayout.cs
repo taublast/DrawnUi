@@ -6,7 +6,8 @@ namespace DrawnUi.Draw;
 public partial class SkiaLayout
 {
     /// <summary>
-    /// Implementation for LayoutType.Wrap 
+    /// Implementation for LayoutType.Wrap
+    /// TODO is seems that remaining space is sometimes not super correct, maybe it doesnt account for padding?..
     /// </summary>
     public class BuildWrapLayout : StackLayoutStructure
     {
@@ -16,7 +17,7 @@ public partial class SkiaLayout
 
         public override ScaledSize Build(SKRect rectForChildrenPixels, float scale)
         {
-            bool isRtl = Super.IsRtl; //todo!!!
+            bool isRtl = Super.IsRtl; //todo
 
             //content size
             float stackHeight = 0.0f;
