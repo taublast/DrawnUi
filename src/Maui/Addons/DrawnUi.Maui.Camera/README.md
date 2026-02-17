@@ -1329,9 +1329,9 @@ public event EventHandler<CapturedImage> CaptureSuccess;
 public event EventHandler<Exception> CaptureFailed;
 
 // Video Recording Events
-public event EventHandler<CapturedVideo> VideoRecordingSuccess;
-public event EventHandler<Exception> VideoRecordingFailed;
-public event EventHandler<TimeSpan> VideoRecordingProgress;
+public event EventHandler<CapturedVideo> RecordingSuccess;
+public event EventHandler<Exception> RecordingFailed;
+public event EventHandler<TimeSpan> RecordingProgress;
 
 // Preview & State Events
 public event EventHandler<LoadedImageSource> NewPreviewSet;
@@ -1573,11 +1573,11 @@ if (camera.CanRecordVideo())
 }
 
 // Subscribe to video recording events
-camera.VideoRecordingSuccess += OnVideoRecordingSuccess;
-camera.VideoRecordingFailed += OnVideoRecordingFailed;
-camera.VideoRecordingProgress += OnVideoRecordingProgress;
+camera.RecordingSuccess += OnRecordingSuccess;
+camera.RecordingFailed += OnRecordingFailed;
+camera.RecordingProgress += OnRecordingProgress;
 
-private async void OnVideoRecordingSuccess(object sender, CapturedVideo video)
+private async void OnRecordingSuccess(object sender, CapturedVideo video)
 {
     // Video recording completed successfully
     var filePath = video.FilePath;
@@ -1588,12 +1588,12 @@ private async void OnVideoRecordingSuccess(object sender, CapturedVideo video)
     var galleryPath = await camera.MoveVideoToGalleryAsync(video, "MyApp");
 }
 
-private void OnVideoRecordingFailed(object sender, Exception ex)
+private void OnRecordingFailed(object sender, Exception ex)
 {
     await DisplayAlert("Recording Error", $"Failed to record video: {ex.Message}", "OK");
 }
 
-private void OnVideoRecordingProgress(object sender, TimeSpan duration)
+private void OnRecordingProgress(object sender, TimeSpan duration)
 {
     // Update UI with recording progress
     RecordingTimeLabel.Text = $"Recording: {duration:mm\\:ss}";
@@ -1737,7 +1737,7 @@ await camera.StartVideoRecording();
 
 **Audio-only recording output:**
 
-Audio-only recordings produce `.m4a` files. The recorded file path is delivered via the `VideoRecordingSuccess` callback (same as video recordings), giving you direct access to the file for playback, upload, or any custom handling.
+Audio-only recordings produce `.m4a` files. The recorded file path is delivered via the `RecordingSuccess` callback (same as video recordings), giving you direct access to the file for playback, upload, or any custom handling.
 
 If you use `MoveVideoToGalleryAsync` to save the audio file to a user-accessible location, the destination differs per platform:
 
@@ -1915,7 +1915,7 @@ camera.FrameProcessor = (frame) =>
 - Frame processing happens in real-time at the target video FPS (typically 30fps)
 - Keep `FrameProcessor` code efficient to avoid frame drops
 - The same `StartVideoRecording()` / `StopVideoRecording()` API works for both modes
-- All existing video events (`VideoRecordingSuccess`, `VideoRecordingFailed`, `VideoRecordingProgress`) work the same
+- All existing video events (`RecordingSuccess`, `RecordingFailed`, `RecordingProgress`) work the same
 - Preview continues uninterrupted during recording in both modes
 
 #### Real-Time Audio Processing
@@ -2216,7 +2216,7 @@ Video recording is designed to have **zero impact on preview performance**:
 
 ```csharp
 // Comprehensive event handling for video recording
-camera.VideoRecordingSuccess += (sender, video) =>
+camera.RecordingSuccess += (sender, video) =>
 {
     MainThread.BeginInvokeOnMainThread(async () =>
     {
@@ -2237,7 +2237,7 @@ camera.VideoRecordingSuccess += (sender, video) =>
     });
 };
 
-camera.VideoRecordingFailed += (sender, exception) =>
+camera.RecordingFailed += (sender, exception) =>
 {
     MainThread.BeginInvokeOnMainThread(async () =>
     {
@@ -2246,7 +2246,7 @@ camera.VideoRecordingFailed += (sender, exception) =>
     });
 };
 
-camera.VideoRecordingProgress += (sender, duration) =>
+camera.RecordingProgress += (sender, duration) =>
 {
     MainThread.BeginInvokeOnMainThread(() =>
     {
@@ -2340,9 +2340,9 @@ public partial class VideoRecordingPage : ContentPage
         };
 
         // Subscribe to video events
-        _camera.VideoRecordingSuccess += OnVideoSuccess;
-        _camera.VideoRecordingFailed += OnVideoFailed;
-        _camera.VideoRecordingProgress += OnVideoProgress;
+        _camera.RecordingSuccess += OnVideoSuccess;
+        _camera.RecordingFailed += OnVideoFailed;
+        _camera.RecordingProgress += OnVideoProgress;
 
         // Create recording button
         _recordButton = new SkiaButton("🎥 Record")
@@ -2587,7 +2587,7 @@ StartVideoRecording()
 StopVideoRecording()
     |
     v
-VideoRecordingSuccess event fires with CapturedVideo
+RecordingSuccess event fires with CapturedVideo
     |
     v
 [Your callback] — optionally customize video.Meta (GPS, author, etc.)
@@ -2619,7 +2619,7 @@ camera.InjectGpsLocation = true;
 await camera.RefreshGpsLocation();
 
 // Later, in your video callback — GPS is embedded automatically
-camera.VideoRecordingSuccess += async (sender, video) =>
+camera.RecordingSuccess += async (sender, video) =>
 {
     var galleryPath = await camera.MoveVideoToGalleryAsync(video, "MyAlbum");
 };
@@ -2628,7 +2628,7 @@ camera.VideoRecordingSuccess += async (sender, video) =>
 **Example — manual GPS coordinates (no RefreshGpsLocation needed):**
 
 ```csharp
-camera.VideoRecordingSuccess += async (sender, video) =>
+camera.RecordingSuccess += async (sender, video) =>
 {
     // Set coordinates explicitly
     video.Latitude = 34.0522;
@@ -2642,7 +2642,7 @@ camera.VideoRecordingSuccess += async (sender, video) =>
 **Example — customize video metadata:**
 
 ```csharp
-camera.VideoRecordingSuccess += async (sender, video) =>
+camera.RecordingSuccess += async (sender, video) =>
 {
     // Pre-fill Meta to override auto-populated fields
     video.Meta = new Metadata
@@ -2667,7 +2667,7 @@ If you save files to your own app folder instead of the gallery, the automatic m
 **Video — inject metadata into any MP4/MOV file:**
 
 ```csharp
-camera.VideoRecordingSuccess += async (sender, video) =>
+camera.RecordingSuccess += async (sender, video) =>
 {
     // Save to your own app folder
     var appPath = Path.Combine(FileSystem.AppDataDirectory, "MyVideos", "recording.mp4");
