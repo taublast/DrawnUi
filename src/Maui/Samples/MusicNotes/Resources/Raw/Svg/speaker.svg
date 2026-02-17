@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:ns1="http://sozi.baierouge.fr" id="svg2" viewBox="0 0 482.07 482.07" version="1.1" inkscape:version="0.91 r13725">
+  <defs id="defs4">
+    <radialGradient id="radialGradient3921" gradientUnits="userSpaceOnUse" cy="552.3" cx="316.95" gradientTransform="matrix(.74845 -.0000041296 .0000046014 .83397 76.893 106.71)" r="243.18">
+      <stop id="stop3925" style="stop-color:#6f6f6f" offset="0"/>
+      <stop id="stop3929" style="stop-color:#4e4e4e" offset=".5"/>
+      <stop id="stop3927" style="stop-color:#2e2e2e" offset="1"/>
+    </radialGradient>
+    <filter id="filter5371" color-interpolation-filters="sRGB">
+      <feGaussianBlur id="feGaussianBlur5373" stdDeviation="6.3049368"/>
+    </filter>
+    <mask id="mask5380">
+      <path id="path5382" style="filter:url(#filter5371);fill:#5a5a5a" d="m-161.15 281.25c-109.1 0-197.56 88.427-197.56 197.53s88.458 197.56 197.56 197.56 197.56-88.458 197.56-197.56-88.458-197.53-197.56-197.53zm0 13.656c101.56 0 183.88 82.319 183.88 183.88s-82.319 183.91-183.88 183.91-183.88-82.35-183.88-183.91 82.319-183.88 183.88-183.88z" transform="matrix(1.2201 0 0 1.2201 621.54 -16.391)"/>
+    </mask>
+    <filter id="filter7006" color-interpolation-filters="sRGB">
+      <feGaussianBlur id="feGaussianBlur7008" stdDeviation="17.768744"/>
+    </filter>
+    <mask id="mask7124">
+      <path id="path7126" style="filter:url(#filter7006);fill:#908474" d="m993 245c-130.22 0-235.78 105.56-235.78 235.78s105.56 235.78 235.78 235.78 235.78-105.56 235.78-235.78-105.6-235.78-235.8-235.78zm0 38.25c109.1 0 197.53 88.427 197.53 197.53s-88.427 197.56-197.53 197.56-197.56-88.458-197.56-197.56 88.458-197.53 197.56-197.53z" transform="matrix(.93985 0 0 .93985 588.73 38.918)"/>
+    </mask>
+    <linearGradient id="linearGradient7198" y2="490.78" gradientUnits="userSpaceOnUse" x2="1810.5" y1="490.78" x1="1233.4">
+      <stop id="stop7194" style="stop-color:#1a1a1a" offset="0"/>
+      <stop id="stop7196" style="stop-color:#717171" offset="1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient7278" y2="567.64" gradientUnits="userSpaceOnUse" x2="181.32" y1="567.64" x1="666.69">
+      <stop id="stop3992" style="stop-color:#ccc898" offset="0"/>
+      <stop id="stop5112" style="stop-color:#79765e" offset=".5"/>
+      <stop id="stop3994" style="stop-color:#504f45" offset="1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient7505" y2="567.8" gradientUnits="userSpaceOnUse" x2="667.22" y1="567.8" x1="183.88">
+      <stop id="stop5386" style="stop-color:#90948c" offset="0"/>
+      <stop id="stop5392" style="stop-color:#2e2e2e" offset=".5"/>
+      <stop id="stop5388" style="stop-color:#0f0f0f" offset="1"/>
+    </linearGradient>
+  </defs>
+  <g id="layer1" transform="translate(-141.64 -229.85)">
+    <path id="path3774" style="fill:#1d1d1d" d="m665.96 567.8a241.04 241.04 0 1 1 -482.07 0 241.04 241.04 0 1 1 482.07 0z" transform="translate(-42.244 -96.912)"/>
+    <path id="path3776" style="fill:#030303" d="m665.96 567.8a241.04 241.04 0 1 1 -482.07 0 241.04 241.04 0 1 1 482.07 0z" transform="matrix(.81959 0 0 .81959 34.417 5.527)"/>
+    <path id="path3797" style="stroke:#5e5e5e;stroke-opacity:.96414;fill:url(#linearGradient7278)" d="m665.96 567.8a241.04 241.04 0 1 1 -482.07 0 241.04 241.04 0 1 1 482.07 0z" transform="matrix(.62371 0 0 .62371 117.65 116.75)"/>
+    <path id="path3799" style="stroke:#000000;stroke-width:4.2936;fill:url(#radialGradient3921)" d="m665.96 567.8a241.04 241.04 0 1 1 -482.07 0 241.04 241.04 0 1 1 482.07 0z" transform="matrix(.27320 0 0 .27320 266.59 315.77)"/>
+    <path id="path5375" style="stroke:#3c3c3c;fill:url(#linearGradient7505)" mask="url(#mask5380)" d="m665.96 567.8a241.04 241.04 0 1 1 -482.07 0 241.04 241.04 0 1 1 482.07 0z" transform="matrix(.81959 0 0 .81959 34.417 5.527)"/>
+    <path id="path7102" style="fill:url(#linearGradient7198)" mask="url(#mask7124)" d="m1522 202.22c-159.36 0-288.56 129.2-288.56 288.56s129.2 288.56 288.56 288.56 288.53-129.2 288.53-288.56-129.17-288.56-288.53-288.56zm0 84c112.97 0 204.53 91.592 204.53 204.56s-91.561 204.56-204.53 204.56-204.56-91.592-204.56-204.56 91.592-204.56 204.56-204.56z" transform="matrix(.79899 0 0 .79899 -833.38 78.761)"/>
+  </g>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
+        <dc:publisher>
+          <cc:Agent rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>speaker</dc:title>
+        <dc:date>2013-03-30T07:17:38</dc:date>
+        <dc:description/>
+        <dc:source>https://openclipart.org/detail/176617/speaker-by-lfidnl-176617</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>LFIdnl</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>speaker</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
