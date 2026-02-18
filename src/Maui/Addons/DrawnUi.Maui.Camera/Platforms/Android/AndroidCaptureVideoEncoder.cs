@@ -923,8 +923,9 @@ namespace DrawnUi.Camera
             _skSurface?.Canvas?.Flush();
             _grContext?.Flush();
 
-            // Publish preview snapshot (throttled to ~30fps)
-            bool shouldGeneratePreview = (System.Threading.Interlocked.Increment(ref _previewFrameCounter) % _previewFrameInterval) == 0;
+            // Publish preview snapshot (throttled to ~30fps, skipped entirely if nobody is listening)
+            bool shouldGeneratePreview = PreviewAvailable != null &&
+                (System.Threading.Interlocked.Increment(ref _previewFrameCounter) % _previewFrameInterval) == 0;
             if (shouldGeneratePreview)
             {
                 SKImage keepAlive = null;
@@ -1247,10 +1248,11 @@ namespace DrawnUi.Camera
 
                 // GPU-native preview generation (glBlitFramebuffer, mirrors MetalPreviewScaler).
                 // Downscale on GPU first, then read back only the small buffer (~900KB vs ~8MB).
-                // Throttled to every 3rd frame to minimize overhead.
+                // Throttled by _previewFrameInterval to limit glReadPixels stalls.
                 _previewFrameCounter++;
-
-                _previewFrameCounter = 0;
+                bool shouldGeneratePreview = _previewFrameCounter >= _previewFrameInterval;
+                if (shouldGeneratePreview)
+                    _previewFrameCounter = 0;
 
                 // Lazy-init scaler on first preview frame (EGL context is current here)
                 if (!_glPreviewScalerInitAttempted)
@@ -1267,11 +1269,11 @@ namespace DrawnUi.Camera
                     }
                 }
 
-                if (_glPreviewScaler != null)
+                if (shouldGeneratePreview && _glPreviewScaler != null)
                 {
-                    // Inform Skia we will modify GL state (FBO bindings)
-                    _grContext.ResetContext();
-
+                    // No ResetContext needed before/after: canvas was already flushed above,
+                    // ScaleAndReadback only touches FBO bindings and restores FBO 0 on exit,
+                    // and the next frame's ResetContext (after OES render) covers any residual state.
                     var previewImage = _glPreviewScaler.ScaleAndReadback();
                     if (previewImage != null)
                     {
@@ -1281,18 +1283,8 @@ namespace DrawnUi.Camera
                             _latestPreviewImage = previewImage;
                         }
 
-                        if (PreviewAvailable != null)
-                        {
-
-                            Task.Run(() =>
-                            {
-                                PreviewAvailable?.Invoke(this, EventArgs.Empty);
-                            }).ConfigureAwait(false);
-                        }
+                        PreviewAvailable?.Invoke(this, EventArgs.Empty);
                     }
-
-                    // Restore Skia's GL state awareness after our FBO changes
-                    _grContext.ResetContext();
                 }
 
                 // Periodic GPU resource cleanup to prevent memory accumulation during long recordings

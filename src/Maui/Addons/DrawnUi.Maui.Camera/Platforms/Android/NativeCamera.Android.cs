@@ -867,7 +867,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
     // GPU preview renderer (replaces ImageReader+RenderScript for preview on API 26+)
     // Set to false to force the legacy ImageReader+RenderScript path for comparison
-    internal static bool UseGpuPreview { get; set; } = false;
+    internal static bool UseGpuPreview { get; set; } = true;
     private GlPreviewRenderer _glPreviewRenderer;
     private bool _useGlPreview;
 
@@ -1312,7 +1312,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
                             _glPreviewRenderer = new GlPreviewRenderer();
                             if (_glPreviewRenderer.Initialize(PreviewWidth, PreviewHeight, gpw, gph,
-                                FormsControl.Facing == CameraPosition.Selfie))
+                                FormsControl.Facing == CameraPosition.Selfie, SensorOrientation))
                             {
                                 _useGlPreview = true;
                                 PreviewSize = new SkiaSharp.SKSize(gpw, gph);
@@ -1393,7 +1393,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
                 _glPreviewRenderer = new GlPreviewRenderer();
                 if (_glPreviewRenderer.Initialize(PreviewWidth, PreviewHeight, gpw, gph,
-                        FormsControl.Facing == CameraPosition.Selfie))
+                        FormsControl.Facing == CameraPosition.Selfie, SensorOrientation))
                 {
                     _useGlPreview = true;
                     PreviewSize = new SkiaSharp.SKSize(gpw, gph);
@@ -2041,9 +2041,6 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             // WE ARE RECORDING !!!
             mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
 
-            // Let camera use default FPS range for proper auto-exposure
-            // FPS is controlled by encoder frame pacing, not camera capture rate
-
             // Disable video stabilization for consistent FOV
             //   try { mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode, (int)ControlVideoStabilizationMode.Off); } catch { }
 
@@ -2080,6 +2077,39 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             // Target only GPU surface — no ImageReader preview stream
             mPreviewRequestBuilder.AddTarget(_gpuCameraSurface);
+
+            // Set FPS range.
+            // Use variable [half, fps] so AE can raise ISO first and then open the shutter
+            // (drop fps) if the scene is still too dark. This prevents throttling all the way
+            // to 5fps while still allowing proper exposure in low light.
+            try
+            {
+                var activity = Platform.CurrentActivity;
+                var manager = (CameraManager)activity.GetSystemService(Context.CameraService);
+                var characteristics = manager.GetCameraCharacteristics(CameraId);
+                var ranges = characteristics.Get(CameraCharacteristics.ControlAeAvailableTargetFpsRanges)
+                    .ToArray<Android.Util.Range>();
+
+                int fpsFloor = targetFps / 2;  // e.g. 15 for 30fps, 30 for 60fps
+
+                // Prefer variable range [floor, fps]; fall back to any range ending at fps
+                var bestRange = ranges.FirstOrDefault(r => (int)r.Lower == fpsFloor && (int)r.Upper == targetFps)
+                    ?? ranges.FirstOrDefault(r => (int)r.Upper == targetFps);
+
+                if (bestRange != null)
+                {
+                    mPreviewRequestBuilder.Set(CaptureRequest.ControlAeTargetFpsRange, bestRange);
+                    Debug.WriteLine($"[NativeCamera GPU] Set FPS range: {bestRange}");
+                }
+                else
+                {
+                    Debug.WriteLine($"[NativeCamera GPU] No matching FPS range found for {targetFps}fps");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[NativeCamera GPU] Error setting FPS range: {ex.Message}");
+            }
 
             System.Diagnostics.Debug.WriteLine($"[NativeCamera] Creating GPU camera session with {surfaces.Count} surfaces — single-stream (preview from encoder)");
 

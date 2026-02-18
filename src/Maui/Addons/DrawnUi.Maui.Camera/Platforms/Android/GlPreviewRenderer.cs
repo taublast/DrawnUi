@@ -50,6 +50,12 @@ namespace DrawnUi.Camera
         private bool _isFrontCamera;
         private int _cameraWidth;
         private int _cameraHeight;
+        private int _sensorOrientation;
+        // glReadPixels returns bottom-to-top data. The SurfaceTexture transform for 90°/0° sensors
+        // produces an FBO where GL y=0 = image bottom, so we need the CPU Y-flip.
+        // For 270°/180° sensors (most front cameras) the transform produces the opposite Y ordering,
+        // so glReadPixels already returns top-to-bottom — CPU Y-flip would invert it.
+        private bool _needsYFlip;
 
         // State
         private bool _initialized;
@@ -77,7 +83,7 @@ namespace DrawnUi.Camera
         /// Initialize the GPU preview renderer. Creates EGL context, SurfaceTexture, and readback FBO.
         /// Must be called before Start(). The initialization runs on a temporary GL thread.
         /// </summary>
-        public bool Initialize(int cameraWidth, int cameraHeight, int previewWidth, int previewHeight, bool isFrontCamera)
+        public bool Initialize(int cameraWidth, int cameraHeight, int previewWidth, int previewHeight, bool isFrontCamera, int sensorOrientation = 90)
         {
             if (_initialized) return true;
 
@@ -86,6 +92,10 @@ namespace DrawnUi.Camera
             _previewWidth = previewWidth;
             _previewHeight = previewHeight;
             _isFrontCamera = isFrontCamera;
+            _sensorOrientation = sensorOrientation;
+            // 90° and 0° sensor orientations: SurfaceTexture transform puts image bottom at GL y=0 → need CPU flip.
+            // 270° and 180° sensor orientations: transform reverses Y in the FBO → CPU flip would double-invert.
+            _needsYFlip = (sensorOrientation == 90 || sensorOrientation == 0);
 
             // Initialize EGL and GL resources on a dedicated thread (EGL context is thread-local)
             bool initSuccess = false;
@@ -158,7 +168,7 @@ namespace DrawnUi.Camera
             }
 
             _initialized = true;
-            System.Diagnostics.Debug.WriteLine($"[GlPreviewRenderer] Initialized: camera={cameraWidth}x{cameraHeight} preview={previewWidth}x{previewHeight} front={isFrontCamera} blitPath={UseBlitPreview}");
+            System.Diagnostics.Debug.WriteLine($"[GlPreviewRenderer] Initialized: camera={cameraWidth}x{cameraHeight} preview={previewWidth}x{previewHeight} front={isFrontCamera} sensor={sensorOrientation}° needsYFlip={_needsYFlip} blitPath={UseBlitPreview}");
             return true;
         }
 
@@ -345,19 +355,26 @@ namespace DrawnUi.Camera
             GLES20.GlReadPixels(0, 0, _previewWidth, _previewHeight,
                 GLES20.GlRgba, GLES20.GlUnsignedByte, _readbackBuffer);
 
-            // Copy to managed buffer and flip Y (glReadPixels returns bottom-to-top)
+            // Copy to managed buffer
             _readbackBuffer.Rewind();
             _readbackBuffer.Get(_managedBuffer, 0, _managedBuffer.Length);
 
-            int rowBytes = _previewWidth * 4;
-            int halfHeight = _previewHeight / 2;
-            for (int y = 0; y < halfHeight; y++)
+            // glReadPixels returns bottom-to-top data. For 90°/0° sensor orientations the
+            // SurfaceTexture transform leaves the image inverted in the FBO, so we must flip.
+            // For 270°/180° sensors (most front cameras) the transform already yields the
+            // correct Y ordering — flipping would invert the image (upside-down selfie bug).
+            if (_needsYFlip)
             {
-                int topOffset = y * rowBytes;
-                int bottomOffset = (_previewHeight - 1 - y) * rowBytes;
-                System.Buffer.BlockCopy(_managedBuffer, topOffset, _flipRowBuffer, 0, rowBytes);
-                System.Buffer.BlockCopy(_managedBuffer, bottomOffset, _managedBuffer, topOffset, rowBytes);
-                System.Buffer.BlockCopy(_flipRowBuffer, 0, _managedBuffer, bottomOffset, rowBytes);
+                int rowBytes = _previewWidth * 4;
+                int halfHeight = _previewHeight / 2;
+                for (int y = 0; y < halfHeight; y++)
+                {
+                    int topOffset = y * rowBytes;
+                    int bottomOffset = (_previewHeight - 1 - y) * rowBytes;
+                    System.Buffer.BlockCopy(_managedBuffer, topOffset, _flipRowBuffer, 0, rowBytes);
+                    System.Buffer.BlockCopy(_managedBuffer, bottomOffset, _managedBuffer, topOffset, rowBytes);
+                    System.Buffer.BlockCopy(_flipRowBuffer, 0, _managedBuffer, bottomOffset, rowBytes);
+                }
             }
 
             var info = new SKImageInfo(_previewWidth, _previewHeight,
@@ -379,15 +396,18 @@ namespace DrawnUi.Camera
             GLES20.GlClear(GLES20.GlColorBufferBit);
             _gpuFrameProvider.RenderToFramebuffer(_cameraWidth, _cameraHeight, _isFrontCamera);
 
-            // 2. Blit from source → readback with downscale + Y-flip
-            //    Inverting dst Y coordinates (dstY0=height, dstY1=0) flips vertically,
-            //    correcting GL's bottom-up pixel order so glReadPixels returns top-to-bottom
-            //    data matching SKImage expectations — same trick as GlPreviewScaler.
+            // 2. Blit from source → readback with downscale + optional Y-flip.
+            //    For 90°/0° sensors: invert dst Y (dstY0=height, dstY1=0) so glReadPixels
+            //    returns top-to-bottom data — same trick as GlPreviewScaler.
+            //    For 270°/180° sensors (most front cameras): SurfaceTexture transform already
+            //    yields the correct Y ordering; blit without Y-flip to avoid double-inversion.
+            int dstY0 = _needsYFlip ? _previewHeight : 0;
+            int dstY1 = _needsYFlip ? 0 : _previewHeight;
             GLES30.GlBindFramebuffer(GLES30.GlReadFramebuffer, _sourceFbo);
             GLES30.GlBindFramebuffer(GLES30.GlDrawFramebuffer, _readbackFbo);
             GLES30.GlBlitFramebuffer(
                 0, 0, _cameraWidth, _cameraHeight,          // src: full camera resolution
-                0, _previewHeight, _previewWidth, 0,         // dst: preview resolution, Y-flipped
+                0, dstY0, _previewWidth, dstY1,              // dst: preview resolution, conditionally Y-flipped
                 GLES20.GlColorBufferBit,
                 GLES20.GlLinear);                             // GPU bilinear filtering
 
