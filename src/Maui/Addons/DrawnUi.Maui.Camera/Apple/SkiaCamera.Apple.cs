@@ -2126,7 +2126,7 @@ public partial class SkiaCamera
             IsBusy = false; // Release busy state after successful muxing
 
             // Restart preview audio if still enabled
-            if ((EnableAudioRecording || EnableAudioMonitoring) && State == CameraState.On)
+            if (State == CameraState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
@@ -2167,7 +2167,7 @@ public partial class SkiaCamera
             IsBusy = false; // Release busy state on error
 
             // Restart preview audio if still enabled
-            if ((EnableAudioRecording || EnableAudioMonitoring) && State == CameraState.On)
+            if (State == CameraState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
@@ -2256,7 +2256,7 @@ public partial class SkiaCamera
             Debug.WriteLine($"[AbortRealtimeVideoProcessing] Capture video flow aborted successfully");
 
             // Restart preview audio if still enabled
-            if ((EnableAudioRecording || EnableAudioMonitoring) && State == CameraState.On)
+            if (State == CameraState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
@@ -2277,7 +2277,7 @@ public partial class SkiaCamera
             SetIsPreRecording(false);
 
             // Restart preview audio if still enabled
-            if ((EnableAudioRecording || EnableAudioMonitoring) && State == CameraState.On)
+            if (State == CameraState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
