@@ -808,7 +808,7 @@ public partial class SkiaCamera : SkiaControl
     /// Default is true.
     /// Whether it should update non-stop or only when a new frame is acquired.
     /// For example if camera gives frames at 30 fps, screen might update around 40fps without this set to true.
-    /// If enabled will force max redraws at 60 fps.
+    /// If enabled will force max redraws at 60 fps and higher up to your display max refresh rate..
     /// </summary>
     public bool ConstantUpdate
     {
@@ -891,7 +891,8 @@ public partial class SkiaCamera : SkiaControl
         {
             Display.Aspect = this.Aspect;
 
-            Display.ScaleX = this.IsMirrored ? -1 : 1;
+            Display.ScaleX = this.MirrorPreviewX ? -1 : 1;
+            Display.ScaleY = this.MirrorPreviewY ? -1 : 1;
         }
     }
 
@@ -915,17 +916,36 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-    public static readonly BindableProperty IsMirroredProperty = BindableProperty.Create(
-        nameof(IsMirrored),
+    public static readonly BindableProperty MirrorPreviewXProperty = BindableProperty.Create(
+        nameof(MirrorPreviewX),
         typeof(bool),
         typeof(SkiaCamera),
         false,
         propertyChanged: NeedInvalidateMeasure);
 
-    public bool IsMirrored
+    /// <summary>
+    /// Affects preview display only, ScaleX will be set to -1 on Display. inside ApplyDisplayProperties method.
+    /// </summary>
+    public bool MirrorPreviewX
     {
-        get { return (bool)GetValue(IsMirroredProperty); }
-        set { SetValue(IsMirroredProperty, value); }
+        get { return (bool)GetValue(MirrorPreviewXProperty); }
+        set { SetValue(MirrorPreviewXProperty, value); }
+    }
+
+    public static readonly BindableProperty MirrorPreviewYProperty = BindableProperty.Create(
+        nameof(MirrorPreviewY),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false,
+        propertyChanged: NeedInvalidateMeasure);
+
+    /// <summary>
+    /// Affects preview display only, ScaleY will be set to -1 on Display. inside ApplyDisplayProperties method.
+    /// </summary>
+    public bool MirrorPreviewY
+    {
+        get { return (bool)GetValue(MirrorPreviewYProperty); }
+        set { SetValue(MirrorPreviewYProperty, value); }
     }
 
     private static readonly BindablePropertyKey PreviewScalePropertyKey = BindableProperty.CreateReadOnly(
