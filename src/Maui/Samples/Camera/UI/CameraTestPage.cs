@@ -105,8 +105,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
             CameraControl.CaptureSuccess += OnCaptureSuccess;
             CameraControl.CaptureFailed += OnCaptureFailed;
             CameraControl.OnError += OnCameraError;
-            CameraControl.VideoRecordingSuccess += OnVideoRecordingSuccess;
-            CameraControl.VideoRecordingProgress += OnVideoRecordingProgress;
+            CameraControl.RecordingSuccess += OnVideoRecordingSuccess;
+            CameraControl.RecordingProgress += OnVideoRecordingProgress;
 
             CameraControl.AudioSampleAvailable += OnAudioCaptured;
 
@@ -124,8 +124,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                 CameraControl.CaptureSuccess -= OnCaptureSuccess;
                 CameraControl.CaptureFailed -= OnCaptureFailed;
                 CameraControl.OnError -= OnCameraError;
-                CameraControl.VideoRecordingSuccess -= OnVideoRecordingSuccess;
-                CameraControl.VideoRecordingProgress -= OnVideoRecordingProgress;
+                CameraControl.RecordingSuccess -= OnVideoRecordingSuccess;
+                CameraControl.RecordingProgress -= OnVideoRecordingProgress;
 
                 CameraControl.AudioSampleAvailable -= OnAudioCaptured;
 

@@ -8,6 +8,7 @@ namespace CameraTests.Views
         public AppCamera()
         {
             //set defaults for this camera
+            NeedPermissionsSet = NeedPermissions.Camera | NeedPermissions.Gallery | NeedPermissions.Microphone | NeedPermissions.Location;
 
             //GPS metadata
             this.InjectGpsLocation = true;
@@ -17,6 +18,12 @@ namespace CameraTests.Views
 
             FrameProcessor = OnFrameProcessing;
             PreviewProcessor = OnFrameProcessing;
+
+
+
+#if DEBUG
+            VideoDiagnosticsOn = true;
+#endif
         }
 
         public static readonly BindableProperty UseGainProperty = BindableProperty.Create(
