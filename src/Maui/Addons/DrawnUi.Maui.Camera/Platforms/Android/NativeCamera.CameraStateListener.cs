@@ -8,6 +8,9 @@ namespace DrawnUi.Camera
         {
             private readonly NativeCamera owner;
 
+            public CameraStateListener(IntPtr handle, Android.Runtime.JniHandleOwnership transfer)
+                : base(handle, transfer) { }
+
             public CameraStateListener(NativeCamera owner)
             {
                 if (owner == null)

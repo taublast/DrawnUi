@@ -2532,7 +2532,13 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             var meta = Reflection.Clone(FormsControl.CameraDevice.Meta);
             var rotation = FormsControl.DeviceRotation;
-            Metadata.ApplyRotation(meta, rotation);
+            // For front camera, sensor rotation and device rotation subtract (not add).
+            // ProcessImage already bakes SensorOrientation into pixels, so the remaining
+            // EXIF correction for landscape selfie shots is the inverse of device rotation.
+            var exifRotation = FormsControl.Facing == CameraPosition.Selfie
+                ? (360 - rotation) % 360
+                : rotation;
+            Metadata.ApplyRotation(meta, exifRotation);
 
             var outImage = new CapturedImage()
             {

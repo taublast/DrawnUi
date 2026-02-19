@@ -214,6 +214,12 @@ namespace DrawnUi.Camera
         {
             private readonly CameraSurfaceTextureRenderer _renderer;
 
+            // Required by the Android/Mono JNI bridge: when Android GC resurrects the native
+            // Java object and needs to re-create the managed wrapper from a native handle,
+            // it looks for this constructor. Without it you get NotSupportedException.
+            public FrameAvailableListener(IntPtr handle, Android.Runtime.JniHandleOwnership transfer)
+                : base(handle, transfer) { }
+
             public FrameAvailableListener(CameraSurfaceTextureRenderer renderer)
             {
                 _renderer = renderer;

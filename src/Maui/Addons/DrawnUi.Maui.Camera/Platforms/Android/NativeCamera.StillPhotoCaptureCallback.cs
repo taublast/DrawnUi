@@ -15,6 +15,9 @@ namespace DrawnUi.Camera
             private long _lastMetadataTimeNs;
             private const long MetadataIntervalNs = 500_000_000; // 500ms
 
+            public PhotoModeCaptureCallback(IntPtr handle, Android.Runtime.JniHandleOwnership transfer)
+                : base(handle, transfer) { }
+
             public PhotoModeCaptureCallback(NativeCamera camera)
             {
                 if (camera == null)
