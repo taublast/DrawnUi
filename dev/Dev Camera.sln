@@ -67,6 +67,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioTest", "..\..\..\..\Au
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayerTests", "..\src\Maui\Samples\Player\PlayerTests.csproj", "{26C49F18-5374-562A-366B-CB7B22C61A68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicNotes", "..\src\Maui\Samples\MusicNotes\MusicNotes.csproj", "{DCE442C6-F210-778B-62C5-4AA403471A98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{26C49F18-5374-562A-366B-CB7B22C61A68}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{26C49F18-5374-562A-366B-CB7B22C61A68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26C49F18-5374-562A-366B-CB7B22C61A68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCE442C6-F210-778B-62C5-4AA403471A98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCE442C6-F210-778B-62C5-4AA403471A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCE442C6-F210-778B-62C5-4AA403471A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCE442C6-F210-778B-62C5-4AA403471A98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -126,6 +132,7 @@ Global
 		{3AFBEF09-A490-2713-E71D-E104B75DD3A8} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 		{C01C8F4E-D4ED-0F22-91BD-9A970DB09902} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 		{26C49F18-5374-562A-366B-CB7B22C61A68} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
+		{DCE442C6-F210-778B-62C5-4AA403471A98} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {329E3D0C-A3F7-4A3E-B61C-6B2D1BD7F708}

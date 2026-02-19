@@ -612,7 +612,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 .OrderByDescending(dims => dims.Width * dims.Height)
                 .ToList();
 
-                Console.WriteLine($"[SkiaCameraApple] Found {uniqueResolutions.Count} unique still image formats:");
+                Debug.WriteLine($"[SkiaCameraApple] Found {uniqueResolutions.Count} unique still image formats:");
 
                 for (int i = 0; i < uniqueResolutions.Count; i++)
                 {
