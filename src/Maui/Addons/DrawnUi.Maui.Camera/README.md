@@ -1,54 +1,23 @@
 ﻿# SkiaCamera
 
-Camera control drawn with SkiaSharp, for use with DrawnUI for for .NET MAUI.  
-Use this control inside a usual MAUI app by wrapping it inside a `Canvas`.
-
-**For iOS, MacCatalyst, Android and Windows**.
-
-## About
-
-This is a camera control, that supports taking photos, recording video with or without sound and writing standalone audio files acting like an audio recorder.  
-The control can process audio/video feed in realtime, applying shaders, visual effects, adding overlays to show captions, audio visualizers etc; it can also adjust audio in realtime before encoding. Processed data will saved to final file. At the same time you can use it as a regular camera control, without any processing.
+A powerful .NET MAUI Camera control, rendered with DrawnUI for for .NET MAUI.
+Use inside any MAUI app just by wrapping with a `Canvas`. Use as Camera or a standalone Audio recorder.
  
-* Draw camera preview and it's UI how You want it.
-* Avoid post-processing anything, WYSIWYG, change and preview data on the fly before encoding.
-* Use realtime video and audio data, ready to use for AI/ML and other calls.
-* Sample app is in the repository demonstrates most of the features, including AI calls.
-
-On top of that the video capture has an optional magic [pre-recording feature](PreRecording.md), also known as "look-back" recording, allows you to capture video footage starting from a few seconds *before* the live video record button was pressed. 
-
-## Features:
-
-- **Renders on a hardware-accelerated SkiaSharp canvas** with all the power of Skia rendering.
-- **Process in realtime video and audio data** before encoding, apply effects, adjust audio etc.
-- **Process captured bitmap** with SkiaSharp and DrawnUi, apply effects, overlay watermark etc.
-- **Monitor incoming audio** read incoming audio without even recording to analize environment, generate optional audio visualizers etc.
-- **Live preview audio and video feed** extractable to integrate with AI/ML.
-- **Manual camera selection** to access ultra-wide, telephoto etc by index or by front/back.
-- **Precise capture format control** with manual resolution selection and automatic preview aspect ratio matching.
-- **Advanced flash control** with independent preview torch and capture flash modes (Off/Auto/On).
-- **Inject custom EXIF**, save GPS locations and much more for both photos and videos!
-- **Cares about going to background** or foreground to automatically stop/resume camera.
-- **Developer-first design**, open for customization with overrides/events,
+* Full featured camera control for iOS, MacCatalyst, Android and Windows.
+* Draw camera preview with effects and overlays, position UI how You feel it.
+* Process live video preview in realtime, use for AI/ML and other calls.
+* Post-process taken photos
+* Process frames being recorded in realtime, save encoded video with your effects/overlays applied without post-processing.
+* Change and visualise audio sample in realtime before encoding.
+* Use [pre-recording mode](PreRecording.md) to capture few seconds before the live recording button was pressed.
+* Abort recording if needed without saving anything.
+* Inject custom EXIF, save GPS location to both photos and video.
 
 ## Sample Apps:
 
 - [CameraTests](https://github.com/taublast/DrawnUi/tree/main/src/Maui/Samples/Camera) - Basic usage of the control.
+- [BPM Tempo Master](...) - Audio visualizer and BPM detector using SkiaCamera's audio monitoring capabilities.
 - [Filters Camera](https://github.com/taublast/ShadersCamera) - Open source piblished still photo-camera with realtime preview and final photo filters, implemented with SKSL shaders.
-
-## **Processing Architecture**
-
-SkiaCamera provides **multiple independent processing channels** — each can be used separately or combined:
-
-| Channel | Callback / Event | Mode | What It Does |
-|---------|-----------------|------|--------------|
-| 📹 **Preview Drawing** | `PreviewProcessor` | Still & Video | Draw overlays on live preview (gauges, guides, AR). Uses `DrawableFrame` with `Scale` for resolution matching |
-| 🎬 **Video Frame Drawing** | `FrameProcessor` | Video (`UseRealtimeVideoProcessing`) | Draw overlays baked into recorded video (watermarks, telemetry, timestamps) |
-| 📸 **Captured Photo** | `CaptureSuccess` event | Still | Post-process captured high-res photo (effects, watermark, save) |
-| 🤖 **Preview Analysis** | `NewPreviewSet` event | Still & Video | Read-only access to preview frames for AI/ML (face detection, QR scanning) |
-| 🎙️ **Audio Processing** | `WriteAudioSample` override | Video (`UseRealtimeVideoProcessing`) | Process raw PCM audio before encoding (volume, effects, visualization) |
-
-> **💡 Key Insight**: All channels are independent. You can show a sketch filter in preview (`PreviewProcessor`), capture the raw photo (`CaptureSuccess`), draw telemetry overlays on recorded video (`FrameProcessor`), and run face detection (`NewPreviewSet`) — all simultaneously. See **Section 10** for detailed usage.
 
 ## Installation
 
@@ -68,28 +37,40 @@ builder.UseDrawnUi();
 
 ## Set up permissions
 
+You need to set up permissions for camera, microphone (if you want to record video with sound) and storage/gallery access.  
+Depending on your use-case you can request just camera permission for preview, or require access to gallery, microphone etc.  
+When saving feed to gallery, and not just temp folder, you usually must be able to read your files back from gallery to show to user at a later time.
+
 ### Windows:
 
 No specific setup needed.
 
 ### Apple:
 
-Put this inside the file `Platforms/iOS/Info.plist` and `Platforms/MacCatalyst/Info.plist` inside the `<dict>` tag:
+Put this inside the file `Platforms/iOS/Info.plist` and `Platforms/MacCatalyst/Info.plist` inside the `<dict>` tag, remove those you might not need:
 
 ```xml
   <key>NSCameraUsageDescription</key>
-  <string>Allow access to the camera</string>	
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Allow access to the library to save photos</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow access to the library to save photos</string>
+    <string>This app uses camera so You could take photos</string>	
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>We need access to the library to save photos</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to the library to save photos</string>
+```
+
+If you want to save video with audio:
+
+```xml
+  <key>NSCameraUsageDescription</key>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>In case You want to save videos with sound</string>
 ```
 
 If you want to geo-tag photos and videos (get and save GPS location metadata) add this:
 
 ```xml
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>To be able to geotag photos and videos</string>
+	<string>In case You want to be able to geotag taken photos and videos</string>
 ```
 
 ### Android
@@ -100,7 +81,16 @@ Put this inside the file `Platforms/Android/AndroidManifest.xml` inside the `<ma
     <!--for camera and gallery access-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
+```
+
+If you want to save video with audio:
+
+```xml
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 ```
 
 If you want to geo-tag photos and videos (get and save GPS location metadata) add this:
@@ -110,7 +100,7 @@ If you want to geo-tag photos and videos (get and save GPS location metadata) ad
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 ```
 
-#### FileProvider Setup (Required for OpenFileInGallery)
+#### FileProvider Setup (only if you want to use OpenFileInGallery that uses gallery app)
 
 To use the `OpenFileInGallery()` method, you must configure a FileProvider. Add this inside the `<application>` tag in `AndroidManifest.xml`:
 
@@ -137,6 +127,18 @@ Create `Platforms/Android/Resources/xml/file_paths.xml`:
 </paths>
 ```
 
+### Request and Check Permissions at run time
+
+SkiaCamera has a powerful built-in permission handling. When you set `IsOn = true`, it automatically checks and requests necessary permissions defined by `NeedPermissionsSet` property flags.  
+Depending on your use-case you can request either just Camera permission for preview, or require access to gallery, microphone etc.  For a quick and lazy approach, simply set `NeedPermissionsSet` to your desired permissions before turning on the camera.    
+
+You can use additional methods to building your own permissions flows, pass appropriate `NeedPermissions` flags to them:
+* `CheckPermissions` - request missing permissions with callbacks.
+* `CheckPermissionsGranted` - check if permissions are already granted without requesting, uses callbacks.
+* `RequestPermissionsAsync` - async Task to request missing permissions and get a final `bool` result. 
+* `RequestPermissionsGrantedAsync` - async Task to check permissions without reqiesting, returns `true` only if all permissions were granted.
+
+
 ## Usage Guide
 
 ## Usage Guide Summary
@@ -156,7 +158,7 @@ Create `Platforms/Android/Resources/xml/file_paths.xml`:
 | 8 | Zoom Control | Manual zoom, pinch-to-zoom |
 | 9 | Camera State Management | `StateChanged` event, `CameraState` |
 | 10 | **Live Processing: FrameProcessor & PreviewProcessor** | Drawing overlays on preview and recorded video, `NewPreviewSet` for AI/ML |
-| 11 | Permission Handling | `CheckPermissions()` |
+| 11 | Permission Handling | `NeedPermissions` flags, `CheckPermissions()`, `CheckPermissionsGranted()`, async helpers |
 | 12 | Complete MVVM Example | Full ViewModel + Page example |
 
 Also covered:
@@ -978,20 +980,109 @@ private void ProcessPreviewFrameForAI(LoadedImageSource source)
 
 ### 11. Permission Handling
 
+All permission methods are **static** and operate on the main thread internally, so they can be called from any thread.
+
+#### `NeedPermissions` flags enum
+
 ```csharp
-// Check and request permissions before starting camera
-SkiaCamera.CheckPermissions(async (granted) =>
+[Flags]
+public enum NeedPermissions
 {
+    Camera     = 1,   // Camera access
+    Gallery    = 2,   // Photo library / storage read-write
+    Microphone = 4,   // Audio recording
+    Location   = 8    // GPS location (for geotagging)
+}
+```
+
+Combine flags with `|`:
+
+```csharp
+var flags = NeedPermissions.Camera | NeedPermissions.Gallery | NeedPermissions.Microphone;
+```
+
+---
+
+#### `CheckPermissions` — request permissions (shows system dialogs)
+
+Checks the specified permissions and **requests any that are not yet granted**, showing the OS permission dialog to the user.
+
+```csharp
+SkiaCamera.CheckPermissions(
+    granted:    () => camera.IsOn = true,
+    notGranted: () => ShowPermissionsError(),
+    request:    NeedPermissions.Camera | NeedPermissions.Gallery | NeedPermissions.Microphone);
+```
+
+Async wrapper — awaitable `Task<bool>`:
+
+```csharp
+bool ok = await SkiaCamera.RequestPermissionsAsync(
+    NeedPermissions.Camera | NeedPermissions.Gallery | NeedPermissions.Microphone);
+
+if (ok)
+    camera.IsOn = true;
+```
+
+---
+
+#### `CheckPermissionsGranted` — silent status check (no dialogs)
+
+Checks the specified permissions **without prompting the user**. Use this to probe the current grant status silently, e.g. to decide whether to show an onboarding flow.
+
+```csharp
+SkiaCamera.CheckPermissionsGranted(
+    granted:    () => camera.IsOn = true,
+    notGranted: () => ShowOnboardingScreen(),
+    request:    NeedPermissions.Camera | NeedPermissions.Gallery | NeedPermissions.Microphone);
+```
+
+Async wrapper — awaitable `Task<bool>`:
+
+```csharp
+bool alreadyGranted = await SkiaCamera.RequestPermissionsGrantedAsync(
+    NeedPermissions.Camera | NeedPermissions.Gallery | NeedPermissions.Microphone);
+
+if (!alreadyGranted)
+    ShowOnboardingScreen();
+```
+
+---
+
+#### `NeedPermissionsSet` — instance property
+
+Controls which permissions are checked automatically when the camera turns on via `IsOn = true`. Defaults to `Camera | Gallery`.
+
+```csharp
+// Also require microphone (e.g. for video with audio)
+camera.NeedPermissionsSet = NeedPermissions.Camera | NeedPermissions.Gallery | NeedPermissions.Microphone;
+camera.IsOn = true;
+```
+
+---
+
+#### Typical onboarding flow
+
+```csharp
+// 1. On page appear: silent probe
+bool alreadyGranted = await SkiaCamera.RequestPermissionsGrantedAsync(
+    NeedPermissions.Camera | NeedPermissions.Gallery | NeedPermissions.Microphone);
+
+if (alreadyGranted)
+{
+    camera.IsOn = true;
+}
+else
+{
+    // 2. Show onboarding UI, then on user action:
+    bool granted = await SkiaCamera.RequestPermissionsAsync(
+        NeedPermissions.Camera | NeedPermissions.Gallery | NeedPermissions.Microphone);
+
     if (granted)
-    {
         camera.IsOn = true;
-    }
     else
-    {
-        // Handle permission denied
-        await DisplayAlert("Permission Required", "Camera access is required", "OK");
-    }
-});
+        ShowOpenSettingsHint(); // direct user to app system settings
+}
 ```
 
 ### 12. Complete MVVM Example
@@ -1290,7 +1381,17 @@ public bool EnableAudioRecording { get; set; }             // Include audio in v
 // Camera Management
 public async Task<List<CameraInfo>> GetAvailableCamerasAsync()
 public async Task<List<CameraInfo>> RefreshAvailableCamerasAsync()
-public static void CheckPermissions(Action<bool> callback)
+
+// Permissions — request (shows OS dialogs)
+public static void CheckPermissions(Action granted, Action notGranted, NeedPermissions request)
+public static Task<bool> RequestPermissionsAsync(NeedPermissions request)
+
+// Permissions — silent check (no dialogs)
+public static void CheckPermissionsGranted(Action granted, Action notGranted, NeedPermissions request)
+public static Task<bool> RequestPermissionsGrantedAsync(NeedPermissions request)
+
+// Permissions — instance, controls which permissions are required on IsOn = true
+public NeedPermissions NeedPermissionsSet { get; set; }  // default: Camera | Gallery
 
 // Capture Format Management
 public async Task<List<CaptureFormat>> GetAvailableCaptureFormatsAsync()
@@ -1408,7 +1509,7 @@ public enum SkiaImageEffect { None, Sepia, BlackAndWhite, Pastel }
 
 | Issue | Cause | Solution |
 |-------|-------|----------|
-| **Camera not starting** | Missing permissions | Use `SkiaCamera.CheckPermissions()` |
+| **Camera not starting** | Missing permissions | Use `SkiaCamera.RequestPermissionsAsync()` or set `NeedPermissionsSet` |
 | **Black preview** | Camera enumeration failed | Check device camera availability |
 | **Capture failures** | Storage permissions | Verify write permissions |
 | **Performance issues** | Unoptimized preview processing | Cache controls, limit frame processing |
@@ -1503,7 +1604,7 @@ await camera.TakePicture();
 4. **Always check `camera.State == CameraState.On` before operations**
 5. **Use `camera.IsOn = true/false` for lifecycle management**
 6. **Subscribe to events before starting camera**
-7. **Handle permissions with `SkiaCamera.CheckPermissions()`**
+7. **Handle permissions with `SkiaCamera.RequestPermissionsAsync()` (request) or `SkiaCamera.RequestPermissionsGrantedAsync()` (silent check)**
 8. **Use `ConfigureAwait(false)` for async operations**
 
 ### Common AI Agent Mistakes to Avoid
