@@ -263,7 +263,7 @@ namespace MusicNotes.Audio
             _beatFlash *= 0.85f;
         }
 
-        public void Render(SKCanvas canvas, SKRect viewport, float scale)
+        public bool Render(SKCanvas canvas, SKRect viewport, float scale)
         {
             if (System.Threading.Interlocked.CompareExchange(ref _swapRequested, 0, 1) == 1)
             {
@@ -385,6 +385,7 @@ namespace MusicNotes.Audio
             _paintTextSmall.Color = SKColors.Gray;
             _paintTextSmall.TextSize = 16 * scale;
             canvas.DrawText("Tap in time with the metronome", centerX, viewport.Bottom - 20 * scale, _paintTextSmall);
+            return false;
         }
 
         public void SetBPM(float bpm)

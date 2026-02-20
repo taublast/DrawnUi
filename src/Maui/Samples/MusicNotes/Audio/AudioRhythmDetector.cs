@@ -444,7 +444,7 @@ namespace MusicNotes.Audio
                 _lastKnownBPM = _smoothBPM;
         }
 
-        public void Render(SKCanvas canvas, SKRect viewport, float scale)
+        public bool Render(SKCanvas canvas, SKRect viewport, float scale)
         {
 
             if (System.Threading.Interlocked.CompareExchange(ref _swapRequested, 0, 1) == 1)
@@ -530,6 +530,7 @@ namespace MusicNotes.Audio
             //    canvas.DrawText("Waiting for sound...", centerX, viewport.Bottom - 20 * scale, _paintTextSmall);
             //    _paintTextSmall.Color = prev;
             //}
+            return false;
         }
 
         private void DrawWaveform(SKCanvas canvas, SKRect viewport, float scale)

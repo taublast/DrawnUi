@@ -45,10 +45,10 @@ namespace MusicNotes.Audio
             System.Threading.Interlocked.Exchange(ref _swapRequested, 1);
         }
 
-        public void Render(SKCanvas canvas, SKRect viewport, float scale)
+        public bool Render(SKCanvas canvas, SKRect viewport, float scale)
         {
             if (viewport.Width <= 0 || viewport.Height <= 0)
-                return;
+                return false;
 
             //canvas.Save();
             //canvas.Translate(viewport.Left, viewport.Top);
@@ -118,6 +118,7 @@ namespace MusicNotes.Audio
             }
 
             //canvas.Restore();
+            return false;
         }
 
         public void Dispose()

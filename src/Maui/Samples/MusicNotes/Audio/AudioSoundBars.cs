@@ -19,23 +19,13 @@ namespace MusicNotes.Audio
         private const int BarCount = 48;
         private const int AnalysisSize = 1024; // Samples to analyze (power of 2 for cleaner bins)
 
-        // Ballistics
-        /// <summary>
-        /// Controls how fast a bar falls down when the audio at that frequency drops.
-        /// Each frame, if the new target is lower than the current value, the bar is set to current * 0.70.
-        /// So it loses 30% of its height per frame.
-        /// This prevents bars from snapping instantly to zero - they fade down smoothly over several frames.
-        /// </summary>
-        private const float ReleaseCoeff = 0.70f;
-
-        /// <summary>
-        /// Controls how fast the floating peak dot falls.
-        /// The dot marks the highest point a bar reached,
-        /// then slowly drifts down at current * 0.97 per frame (only 3% loss per frame).
-        /// Much slower than the bar itself, so the dot lingers near the top
-        /// while the bar drops away underneath it - classic "peak hold" meter behavior.
-        /// </summary>
-        private const float PeakDecay = 0.97f;
+        // Ballistics — per-second rates so behaviour is frame-rate/device-independent.
+        // Decay is applied in Render() every frame, not in AddSample(), so it keeps
+        // running even after audio input stops.
+        /// <summary>Bar release: fraction remaining per second. ~10% left after ~0.2 s.</summary>
+        private const float ReleaseCoeffPerSec = 0.00005f;
+        /// <summary>Peak hold decay: fraction remaining per second. ~15% left after 1 s → dots gone in ~1.7 s.</summary>
+        private const float PeakDecayPerSec = 0.15f;
 
         // Hard cutoff: bins below this fraction of max energy are completely OFF
         private const float CutoffRatio = 0.12f;
@@ -46,9 +36,11 @@ namespace MusicNotes.Audio
 
         private float[] _barsFrontBuffer = new float[BarCount];
         private float[] _barsBackBuffer = new float[BarCount];
+        // _peakHold is written by audio thread (new maximums only) and decayed by render thread.
+        // Both accesses are benign races on float — acceptable for a visualizer.
         private float[] _peakHold = new float[BarCount];
-        private float[] _peakHoldFront = new float[BarCount];
         private int _swapRequested = 0;
+        private long _lastRenderTimestamp = 0;
 
         // Pre-computed Goertzel coefficients per bin
         private float[] _goertzelCoeff = new float[BarCount];
@@ -69,8 +61,8 @@ namespace MusicNotes.Audio
             Array.Clear(_barsFrontBuffer, 0, _barsFrontBuffer.Length);
             Array.Clear(_barsBackBuffer, 0, _barsBackBuffer.Length);
             Array.Clear(_peakHold, 0, _peakHold.Length);
-            Array.Clear(_peakHoldFront, 0, _peakHoldFront.Length);
             _swapRequested = 0;
+            _lastRenderTimestamp = 0;
 
             _coeffReady = false;
             _lastSampleRate = 0;
@@ -172,27 +164,23 @@ namespace MusicNotes.Audio
                     target = (float)Math.Sqrt(normalized);
                 }
 
-                // Instant attack, smooth release
+                // Instant attack: jump up immediately. Release/decay is handled in Render()
+                // so it keeps running even after audio input stops.
                 float current = _barsFrontBuffer[bin];
-                if (target > current)
-                    _barsBackBuffer[bin] = target;
-                else
-                    _barsBackBuffer[bin] = Math.Max(current * ReleaseCoeff, target);
+                _barsBackBuffer[bin] = target > current ? target : current;
 
-                // Peak hold
+                // Peak: only ever goes up here. Render() decays it every frame.
                 if (_barsBackBuffer[bin] > _peakHold[bin])
                     _peakHold[bin] = _barsBackBuffer[bin];
-                else
-                    _peakHold[bin] *= PeakDecay;
             }
 
             System.Threading.Interlocked.Exchange(ref _swapRequested, 1);
         }
 
-        public void Render(SKCanvas canvas, SKRect viewport, float scale)
+        public bool Render(SKCanvas canvas, SKRect viewport, float scale)
         {
             if (viewport.Width <= 0 || viewport.Height <= 0)
-                return;
+                return false;
 
             float width = viewport.Width;
             float height = viewport.Height;
@@ -227,16 +215,28 @@ namespace MusicNotes.Audio
                 };
             }
 
- 
-
-            // Swap buffers
+            // Swap buffers if audio thread produced new data
             if (System.Threading.Interlocked.CompareExchange(ref _swapRequested, 0, 1) == 1)
-            {
                 Array.Copy(_barsBackBuffer, _barsFrontBuffer, BarCount);
-                Array.Copy(_peakHold, _peakHoldFront, BarCount);
-            }
 
- 
+            // Time-based decay applied every frame — works with or without incoming audio
+            long now = System.Diagnostics.Stopwatch.GetTimestamp();
+            long last = System.Threading.Interlocked.Exchange(ref _lastRenderTimestamp, now);
+            float elapsedSec = last == 0
+                ? (1f / 60f)
+                : Math.Min((now - last) / (float)System.Diagnostics.Stopwatch.Frequency, 0.5f);
+            float releaseThisFrame = (float)Math.Pow(ReleaseCoeffPerSec, elapsedSec);
+            float peakDecayThisFrame = (float)Math.Pow(PeakDecayPerSec, elapsedSec);
+
+            bool dirty = false;
+            for (int i = 0; i < BarCount; i++)
+            {
+                _barsFrontBuffer[i] *= releaseThisFrame;
+                _peakHold[i] *= peakDecayThisFrame;
+
+                if (_barsFrontBuffer[i] > 0.01f || (ShowPeakDots && _peakHold[i] > 0.03f))
+                    dirty = true;
+            }
 
             var startX = left;
             var bottomY = top + height;
@@ -250,7 +250,7 @@ namespace MusicNotes.Audio
                 for (int i = 0; i < BarCount; i++)
                 {
                     var level = _barsFrontBuffer[i];
-                    var peakLevel = _peakHoldFront[i];
+                    var peakLevel = _peakHold[i];
                     var x = startX + i * totalSlot + (totalSlot - barWidth) / 2;
 
                     // Only draw bars that are actually ON
@@ -278,7 +278,7 @@ namespace MusicNotes.Audio
                 for (int i = 0; i < BarCount; i++)
                 {
                     var level = _barsFrontBuffer[i];
-                    var peakLevel = _peakHoldFront[i];
+                    var peakLevel = _peakHold[i];
                     var x = startX + i * totalSlot + (totalSlot - barWidth) / 2;
 
                     if (level > 0.01f)
@@ -300,6 +300,7 @@ namespace MusicNotes.Audio
                 }
             }
 
+            return dirty;
         }
 
         public void Dispose()

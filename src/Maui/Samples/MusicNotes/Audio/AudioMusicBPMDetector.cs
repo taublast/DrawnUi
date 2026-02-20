@@ -511,7 +511,7 @@ namespace MusicNotes.Audio
             }
         }
 
-        public void Render(SKCanvas canvas, SKRect viewport, float scale)
+        public bool Render(SKCanvas canvas, SKRect viewport, float scale)
         {
             if (System.Threading.Interlocked.CompareExchange(ref _swapRequested, 0, 1) == 1)
             {
@@ -574,7 +574,9 @@ namespace MusicNotes.Audio
             if (_displayBPM > 0)
             {
                 _paintTextLarge.Color = _hasSignal ? SKColors.White : SKColors.Gray;
-                string bpmText = $"{_displayBPM:F1}";
+
+                string bpmText = $"{_displayBPM:F0}";
+
                 canvas.DrawText(bpmText, centerX, centerY - 20 * scale, _paintTextLarge);
                 canvas.DrawText("BPM", centerX, centerY + 60 * scale, _paintTextSmall);
 
@@ -647,6 +649,7 @@ namespace MusicNotes.Audio
             //    _paintTextSmall.TextSize = 18 * scale;
             //    canvas.DrawText("Waiting for music...", centerX, viewport.Bottom - 20 * scale, _paintTextSmall);
             //}
+            return false;
         }
 
         private void DrawWaveform(SKCanvas canvas, SKRect viewport, float scale)

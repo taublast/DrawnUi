@@ -20,7 +20,10 @@ namespace MusicNotes.Audio
 
             if (Visualizer != null)
             {
-                Visualizer.Render(ctx.Context.Canvas, DrawingRect, ctx.Scale);
+                if (Visualizer.Render(ctx.Context.Canvas, DrawingRect, ctx.Scale))
+                {
+                    Update();
+                }
             }
         }
 

@@ -7,6 +7,9 @@ namespace MusicNotes.Audio
     {
         public AudioRecorder()
         {
+
+            NeedPermissionsSet = NeedPermissions.Gallery | NeedPermissions.Microphone;
+
             this.EnableAudioRecording = true;
 
             //tirn on AUDIO recorder mode

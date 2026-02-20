@@ -54,7 +54,13 @@ public class GlassBackdropEffect : SkiaShaderEffect
     {
         var uniforms = base.CreateUniforms(destination);
 
-        // Pass corner radius in points - shader will convert to pixels using renderingScale
+        // Fix iResolution to be in logical points (base class sets it to pixels).
+        // This makes renderingScale = iImageResolution / iResolution = actual screen density,
+        // so the shader can convert iCornerRadius from points to pixels correctly.
+        var scale = Parent?.RenderingScale ?? 1f;
+        uniforms["iResolution"] = new[] { destination.Width / scale, destination.Height / scale };
+
+        // Pass corner radius in points - shader converts to pixels via renderingScale
         uniforms["iCornerRadius"] = CornerRadius;
 
         // Pass glass depth for controlling 3D emboss intensity

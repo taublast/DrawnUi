@@ -320,10 +320,10 @@ namespace MusicNotes.Audio
             }
         }
 
-        public void Render(SKCanvas canvas, SKRect viewport, float scale)
+        public bool Render(SKCanvas canvas, SKRect viewport, float scale)
         {
             if (viewport.Width <= 0 || viewport.Height <= 0)
-                return;
+                return false;
 
             float width = viewport.Width;
             float height = viewport.Height;
@@ -431,6 +431,7 @@ namespace MusicNotes.Audio
                 canvas.DrawText($"{_displayCents:+0;-0} cents", cx, barY + _paintTextSmall.TextSize * 1.6f, _paintTextSmall);
             }
 
+            return false;
         }
 
         private void DrawMusicalStaff(SKCanvas canvas, float cx, float cy, float lineSpacing, float staffWidth, float scale, int midiNote, int referenceMidi)

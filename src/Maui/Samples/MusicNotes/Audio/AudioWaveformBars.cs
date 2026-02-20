@@ -77,10 +77,10 @@ namespace MusicNotes.Audio
             }
         }
 
-        public void Render(SKCanvas canvas, SKRect viewport, float scale)
+        public bool Render(SKCanvas canvas, SKRect viewport, float scale)
         {
             if (viewport.Width <= 0 || viewport.Height <= 0)
-                return;
+                return false;
 
             float width = viewport.Width;
             float height = viewport.Height;
@@ -181,6 +181,8 @@ namespace MusicNotes.Audio
                     canvas.DrawRect(x, bottomY - barH, barWidth, barH, _paintBar);
                 }
             }
+
+            return false;
         }
 
 

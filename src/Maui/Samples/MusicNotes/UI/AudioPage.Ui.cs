@@ -50,13 +50,24 @@ namespace MusicNotes.UI
                     VerticalOptions = LayoutOptions.Fill,
                     Children =
                     {
-                        new SkiaSvg()
+
+                        //new SkiaSvg()
+                        //{
+                        //    UseCache = SkiaCacheType.Operations,
+                        //    Source = @"Svg\54170161_9344048.svg",
+                        //    Aspect = TransformAspect.Fill,
+                        //    TintColor = Colors.Maroon.WithAlpha(0.2f)
+                        //}.Fill(),
+
+                        new SkiaImage()
                         {
-                            UseCache = SkiaCacheType.Operations,
-                            Source = @"Svg\54170161_9344048.svg",
-                            Aspect = TransformAspect.Fill,
-                            TintColor = Colors.Maroon.WithAlpha(0.2f)
+                            UseCache = SkiaCacheType.Image,
+                            // https://unsplash.com/photos/music-room-with-lights-turned-on-gUK3lA3K7Yo
+                            // by https://unsplash.com/@john_matychuk
+                            Source = @"Images\musicback.jpg",
+                            Aspect = TransformAspect.AspectCover,
                         }.Fill(),
+
                         // Fullscreen Camera preview
                         new AudioRecorder()
                         {
@@ -83,6 +94,7 @@ namespace MusicNotes.UI
 
                         new AudioVisualizer(new AudioMetronome())
                         {
+                            Opacity = 0.9,
                             Margin = new (16,16,16,0),
                             HorizontalOptions = LayoutOptions.Fill,
                             HeightRequest = 350,
@@ -102,22 +114,22 @@ namespace MusicNotes.UI
                         new AudioVisualizer(new AudioSoundBars())
                         {
                             BackgroundColor = Color.Parse("#22000000"),
+                            VerticalOptions = LayoutOptions.End,
                             HorizontalOptions = LayoutOptions.Fill,
-                            Margin = new (16,380,16,0),
-                            HeightRequest = 80,
+                            Margin = new (0,0,0,0),
+                            HeightRequest = 240,
                         }.Assign(out _equalizer),
 
 
                         // Bottom Menu Bar
                         new SkiaShape()
                         {
-                            UseCache = SkiaCacheType.Operations,
                             Type = ShapeType.Rectangle,
                             CornerRadius = 32,
                             //BackgroundColor = Color.FromArgb("#DD000000"),
                             HorizontalOptions = LayoutOptions.Center,
                             VerticalOptions = LayoutOptions.End,
-                            Margin = new Thickness(0, 0, 0, 16),
+                            Margin = new Thickness(0, 0, 0, 36),
                             Children =
                             {
                                 new SkiaBackdrop()
@@ -131,13 +143,14 @@ namespace MusicNotes.UI
                                         {
                                             ShaderSource = @"Shaders\glass.sksl",
                                             CornerRadius = 32,  // Match parent SkiaShape
-                                            GlassDepth = 1.25f   // 3D emboss intensity (0.0-2.0+)
+                                            GlassDepth = 1.5f   // 3D emboss intensity (0.0-2.0+)
                                         }
                                     }
                                 },
                                 new SkiaRow()
                                 {
-                                    Margin = new Thickness(16, 10),
+                                    UseCache = SkiaCacheType.Operations,
+                                    Margin = new Thickness(20, 16),
                                     Spacing = 16,
                                     HorizontalOptions = LayoutOptions.Center,
                                     VerticalOptions = LayoutOptions.Center,
@@ -331,7 +344,7 @@ namespace MusicNotes.UI
             {
                 mainStack,
                 _previewOverlay,
-#if xDEBUG
+#if DEBUG
                 new SkiaLabelFps()
                 {
                     Margin = new(0, 0, 4, 24),
