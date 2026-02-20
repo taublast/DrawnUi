@@ -11,10 +11,12 @@ namespace MusicNotes.Audio
     {
         private const int BufferSize = 2048; // ~46ms at 44.1kHz
         private float[] _sampleBuffer = new float[BufferSize];
+        private float[] _frame = new float[BufferSize];         // Pre-allocated: avoids per-scan GC
+        private float[] _amdfBuffer = new float[BufferSize];    // Pre-allocated: avoids per-scan GC
         private int _writePos = 0;
         private int _samplesAddedSinceLastScan = 0;
         private int _sampleRate = 44100;
-        private const int ScanInterval = 512; // Scan much faster! (was 2048, ~46ms -> now ~11ms)
+        private const int ScanInterval = 256; // ~5.8ms at 44.1kHz
 
         static string placeholder = "  ";
 
@@ -132,8 +134,8 @@ namespace MusicNotes.Audio
 
         private void DetectPitch()
         {
-            // Unroll buffer for analysis (Older -> Newer)
-            float[] frame = new float[BufferSize];
+            // Unroll buffer for analysis (Older -> Newer) — reuse pre-allocated field
+            var frame = _frame;
             int head = _writePos;
             for (int i = 0; i < BufferSize; i++)
             {
@@ -166,8 +168,10 @@ namespace MusicNotes.Audio
             _silenceFrameCount = 0; // Reset when we have signal
 
             // 2. AMDF Pitch Detection
-            // Range: 60Hz - 2000Hz (Extended for whistling/high soprano)
-            int minFreq = 60;
+            // Range: 100Hz - 2000Hz. 100Hz = G2, covers all singing voices including deep bass.
+            // Using 100 instead of 60 reduces maxLag from 735→441, shifting the analysis window
+            // ~7ms closer to the present — critical for catching fast note changes.
+            int minFreq = 100;
             int maxFreq = 2000;
             int minLag = _sampleRate / maxFreq;
             int maxLag = _sampleRate / minFreq;
@@ -184,8 +188,8 @@ namespace MusicNotes.Audio
             int bestLag = -1;
             float minVal = float.MaxValue;
 
-            // Simplified AMDF scan
-            float[] amdf = new float[maxLag + 1];
+            // Reuse pre-allocated AMDF buffer — avoids per-scan allocation in the render loop
+            var amdf = _amdfBuffer;
 
             for (int lag = minLag; lag <= maxLag; lag++)
             {
@@ -215,8 +219,9 @@ namespace MusicNotes.Audio
                 if (halfLag >= minLag)
                 {
                     float halfVal = amdf[halfLag];
-                    // Accept the half-lag if its AMDF value is within 25% of the global minimum
-                    if (halfVal <= minVal * 1.25f)
+                    // Accept the half-lag if its AMDF value is within 10% of the global minimum.
+                    // Tighter than 25% to avoid wrong-direction octave errors on voiced signals.
+                    if (halfVal <= minVal * 1.10f)
                     {
                         bestLag = halfLag;
                         minVal = halfVal;
