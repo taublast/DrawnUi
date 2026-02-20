@@ -9,14 +9,20 @@ namespace MusicNotes.Audio
     /// </summary>
     public class AudioInstrumentTuner : IAudioVisualizer, IDisposable
     {
-        private const int BufferSize = 2048; // ~46ms at 44.1kHz
+        // Pre-allocated max size — 8192 supports up to 96kHz with a ~85ms buffer.
+        // The ACTUAL active portion is _effectiveBufferSamples, computed from the real sample rate.
+        private const int BufferSize = 8192;
         private float[] _sampleBuffer = new float[BufferSize];
-        private float[] _frame = new float[BufferSize];         // Pre-allocated: avoids per-scan GC
-        private float[] _amdfBuffer = new float[BufferSize];    // Pre-allocated: avoids per-scan GC
+        private float[] _frame = new float[BufferSize];      // Pre-allocated: avoids per-scan GC
+        private float[] _amdfBuffer = new float[BufferSize]; // Pre-allocated: avoids per-scan GC
         private int _writePos = 0;
         private int _samplesAddedSinceLastScan = 0;
         private int _sampleRate = 44100;
-        private const int ScanInterval = 256; // ~5.8ms at 44.1kHz
+
+        // Time-based parameters — recomputed on every sample-rate change so behaviour is
+        // identical in wall-clock seconds on mobile (44.1kHz), PC (48kHz) and high-res PC (96kHz).
+        private int _effectiveBufferSamples = 2205; // sampleRate × 50ms  (default 44.1kHz)
+        private int _scanIntervalSamples    = 265;  // sampleRate ×  6ms  (default 44.1kHz)
 
         static string placeholder = "  ";
 
@@ -28,9 +34,13 @@ namespace MusicNotes.Audio
         private float _currentCents = 0;
         private bool _hasSignal = false;
 
-        // Note Stability (Debouncing)
-        private int _potentialMidiNote = 0;
-        private int _noteStabilityCounter = 0;
+        // Note Vote Buffer — rolling majority vote over last N scans.
+        // Tolerates up to (NoteVoteWindow - NoteVoteThreshold) transient wrong detections
+        // per window without causing a visible blink, while still switching in ~18ms when genuine.
+        private const int NoteVoteWindow    = 5; // 5 scans × ~6ms = ~30ms history
+        private const int NoteVoteThreshold = 3; // need 3 out of 5 to confirm/change
+        private int[] _noteVoteBuffer = new int[NoteVoteWindow];
+        private int _voteBufferHead = 0;
         private System.Collections.Generic.List<float> _centsBuffer = new System.Collections.Generic.List<float>();
 
         // Smoothing for UI
@@ -63,12 +73,19 @@ namespace MusicNotes.Audio
         public bool UseGain { get; set; } = true;
         public int Skin { get; set; } = 0;
 
+        private void UpdateSampleRateParams()
+        {
+            _effectiveBufferSamples = Math.Min((int)(_sampleRate * 0.050f), BufferSize); // 50ms of audio
+            _scanIntervalSamples    = Math.Max(64, (int)(_sampleRate * 0.006f));         // 6ms, min 64
+        }
+
         public void Reset()
         {
             Array.Clear(_sampleBuffer, 0, _sampleBuffer.Length);
             _writePos = 0;
             _samplesAddedSinceLastScan = 0;
             _sampleRate = 44100;
+            UpdateSampleRateParams();
 
             _currentNote = placeholder;
             _currentNoteSolf = placeholder;
@@ -77,8 +94,8 @@ namespace MusicNotes.Audio
             _currentCents = 0;
             _hasSignal = false;
 
-            _potentialMidiNote = 0;
-            _noteStabilityCounter = 0;
+            Array.Clear(_noteVoteBuffer, 0, _noteVoteBuffer.Length);
+            _voteBufferHead = 0;
             _centsBuffer?.Clear();
             _smoothCents = 0;
 
@@ -98,8 +115,14 @@ namespace MusicNotes.Audio
 
         public void AddSample(AudioSample sample)
         {
-            if (sample.SampleRate > 0)
+            if (sample.SampleRate > 0 && sample.SampleRate != _sampleRate)
+            {
                 _sampleRate = sample.SampleRate;
+                UpdateSampleRateParams();
+                // Clamp write position in case the effective buffer shrank
+                _writePos = _writePos % _effectiveBufferSamples;
+                _samplesAddedSinceLastScan = 0;
+            }
 
             // Handle channels (use first channel only)
             int channels = sample.Channels > 0 ? sample.Channels : 1;
@@ -118,13 +141,13 @@ namespace MusicNotes.Audio
                     val = Math.Clamp(val, -1.0f, 1.0f); // Prevent clipping
 
                     _sampleBuffer[_writePos] = val;
-                    _writePos = (_writePos + 1) % BufferSize;
+                    _writePos = (_writePos + 1) % _effectiveBufferSamples;
                 }
             }
 
             _samplesAddedSinceLastScan += (sampleCount / channels);
 
-            if (_samplesAddedSinceLastScan >= ScanInterval)
+            if (_samplesAddedSinceLastScan >= _scanIntervalSamples)
             {
                 DetectPitch();
                 _samplesAddedSinceLastScan = 0;
@@ -134,19 +157,22 @@ namespace MusicNotes.Audio
 
         private void DetectPitch()
         {
+            int bufLen = _effectiveBufferSamples;
+
             // Unroll buffer for analysis (Older -> Newer) — reuse pre-allocated field
             var frame = _frame;
             int head = _writePos;
-            for (int i = 0; i < BufferSize; i++)
+            for (int i = 0; i < bufLen; i++)
             {
-                int idx = (head - BufferSize + i + BufferSize) % BufferSize;
+                int idx = (head - bufLen + i + bufLen) % bufLen;
                 frame[i] = _sampleBuffer[idx];
             }
 
-            // 1. RMS Check (Silence detection) - Check ONLY recent data
+            // 1. RMS Check (Silence detection) — time-based window (~23ms) so sensitivity
+            //    is the same regardless of sample rate.
+            int rmsWindow = Math.Min((int)(_sampleRate * 0.023f), bufLen / 2);
             float rms = 0;
-            int rmsWindow = 1024; // Check last ~23ms
-            for (int i = BufferSize - rmsWindow; i < BufferSize; i++) rms += frame[i] * frame[i];
+            for (int i = bufLen - rmsWindow; i < bufLen; i++) rms += frame[i] * frame[i];
             rms = (float)Math.Sqrt(rms / rmsWindow);
 
             // Adjust silence threshold based on gain setting
@@ -159,7 +185,8 @@ namespace MusicNotes.Audio
                 //_currentNote = placeholder;
                 //_currentNoteSolf = placeholder;
                 //_currentMidiNote = 0;
-                _noteStabilityCounter = 0;
+                Array.Clear(_noteVoteBuffer, 0, _noteVoteBuffer.Length);
+                _voteBufferHead = 0;
                 _centsBuffer.Clear();
                 _silenceFrameCount++; // Track silence for staff re-centering
                 return;
@@ -176,12 +203,12 @@ namespace MusicNotes.Audio
             int minLag = _sampleRate / maxFreq;
             int maxLag = _sampleRate / minFreq;
 
-            if (maxLag >= BufferSize) maxLag = BufferSize - 1;
+            if (maxLag >= bufLen) maxLag = bufLen - 1;
 
-            // USE NEWEST DATA
-            // Use a Fixed Window Size for detection at the END of the buffer
-            int windowSize = 900; // Analysis Window (~20ms)
-            int analysisStart = BufferSize - maxLag - windowSize;
+            // USE NEWEST DATA — window size is time-based (~20ms) so AMDF always analyses
+            // the same duration of audio regardless of sample rate.
+            int windowSize = Math.Min((int)(_sampleRate * 0.020f), bufLen - maxLag - 1);
+            int analysisStart = bufLen - maxLag - windowSize;
 
             if (analysisStart < 0) analysisStart = 0;
 
@@ -253,24 +280,29 @@ namespace MusicNotes.Audio
                 double noteNum = 69 + 12 * Math.Log2(_currentFrequency / 440.0);
                 int detectedMidiNote = (int)Math.Round(noteNum);
 
-                // Stability Logic:
-                // Only switch the "Main Note" if we detect a new note consistently
-                if (detectedMidiNote == _potentialMidiNote)
+                // Rolling majority vote: push this scan's detection into the circular buffer,
+                // then count which note appears most. Only switch when a note reaches
+                // NoteVoteThreshold votes — this filters transient AMDF errors without delay.
+                _noteVoteBuffer[_voteBufferHead % NoteVoteWindow] = detectedMidiNote;
+                _voteBufferHead++;
+
+                int winnerNote  = 0;
+                int winnerCount = 0;
+                for (int vi = 0; vi < NoteVoteWindow; vi++)
                 {
-                    if (_noteStabilityCounter < 10) _noteStabilityCounter++;
-                }
-                else
-                {
-                    _potentialMidiNote = detectedMidiNote;
-                    _noteStabilityCounter = 0;
+                    int candidate = _noteVoteBuffer[vi];
+                    if (candidate == 0) continue;
+                    int count = 0;
+                    for (int vj = 0; vj < NoteVoteWindow; vj++)
+                        if (_noteVoteBuffer[vj] == candidate) count++;
+                    if (count > winnerCount) { winnerCount = count; winnerNote = candidate; }
                 }
 
-                // Require 2 consecutive same-note detections (approx 10-20ms)
-                if (_noteStabilityCounter >= 1)
+                if (winnerCount >= NoteVoteThreshold && winnerNote > 0)
                 {
-                    if (_currentMidiNote != detectedMidiNote)
+                    if (_currentMidiNote != winnerNote)
                     {
-                        _currentMidiNote = detectedMidiNote;
+                        _currentMidiNote = winnerNote;
                         _centsBuffer.Clear();
                     }
 
@@ -279,7 +311,6 @@ namespace MusicNotes.Audio
                     _currentNote = NoteNames[noteIndex];
                     _currentNoteSolf = SolfegeNames[noteIndex];
 
-                    // Dynamic Staff Centering: Adjust reference to keep notes on main staff
                     UpdateStaffReference(_currentMidiNote);
                 }
 
