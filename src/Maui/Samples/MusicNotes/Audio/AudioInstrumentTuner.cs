@@ -9,7 +9,7 @@ namespace MusicNotes.Audio
     /// </summary>
     public class AudioInstrumentTuner : IAudioVisualizer, IDisposable
     {
-        private const int BufferSize = 4096; // ~90ms at 44.1kHz
+        private const int BufferSize = 2048; // ~46ms at 44.1kHz
         private float[] _sampleBuffer = new float[BufferSize];
         private int _writePos = 0;
         private int _samplesAddedSinceLastScan = 0;
@@ -46,6 +46,8 @@ namespace MusicNotes.Audio
         private float _displayFrequency = 0;
         private float _displayCents = 0;
         private SKColor _displayColor = SKColors.Gray;
+        private int _displayStaffReferenceMidi = 71;
+        private bool _displayHasSignal = false;
         private int _swapRequested = 0;
 
         private SKPaint _paintTextLarge;
@@ -87,6 +89,8 @@ namespace MusicNotes.Audio
             _displayFrequency = 0;
             _displayCents = 0;
             _displayColor = SKColors.Gray;
+            _displayStaffReferenceMidi = 71;
+            _displayHasSignal = false;
             _swapRequested = 0;
         }
 
@@ -172,7 +176,7 @@ namespace MusicNotes.Audio
 
             // USE NEWEST DATA
             // Use a Fixed Window Size for detection at the END of the buffer
-            int windowSize = 1500; // Analysis Window (~34ms)
+            int windowSize = 900; // Analysis Window (~20ms)
             int analysisStart = BufferSize - maxLag - windowSize;
 
             if (analysisStart < 0) analysisStart = 0;
@@ -203,8 +207,24 @@ namespace MusicNotes.Audio
             }
 
             // Octave Error Correction
-            // Parabolic Interpolation
+            // AMDF often returns double the true lag (one octave below the real pitch).
+            // Check if bestLag/2 is also a strong candidate — if so, prefer it (higher frequency = less error).
+            if (bestLag > 0)
+            {
+                int halfLag = bestLag / 2;
+                if (halfLag >= minLag)
+                {
+                    float halfVal = amdf[halfLag];
+                    // Accept the half-lag if its AMDF value is within 25% of the global minimum
+                    if (halfVal <= minVal * 1.25f)
+                    {
+                        bestLag = halfLag;
+                        minVal = halfVal;
+                    }
+                }
+            }
 
+            // Parabolic Interpolation
             if (bestLag > 0 && bestLag < maxLag)
             {
                 // Parabolic Interpolation
@@ -240,8 +260,8 @@ namespace MusicNotes.Audio
                     _noteStabilityCounter = 0;
                 }
 
-                // Lower threshold for faster response (approx 20-30ms)
-                if (_noteStabilityCounter > 1)
+                // Require 2 consecutive same-note detections (approx 10-20ms)
+                if (_noteStabilityCounter >= 1)
                 {
                     if (_currentMidiNote != detectedMidiNote)
                     {
@@ -265,7 +285,7 @@ namespace MusicNotes.Audio
                     float rawCents = 1200 * (float)Math.Log2(_currentFrequency / targetFreq);
 
                     _centsBuffer.Add(rawCents);
-                    if (_centsBuffer.Count > 10) _centsBuffer.RemoveAt(0);
+                    if (_centsBuffer.Count > 5) _centsBuffer.RemoveAt(0);
 
                     float sum = 0;
                     foreach (var c in _centsBuffer) sum += c;
@@ -344,17 +364,19 @@ namespace MusicNotes.Audio
                 _displayNoteSolf = _currentNoteSolf;
                 _displayMidiNote = _currentMidiNote;
                 _displayFrequency = _currentFrequency;
+                _displayStaffReferenceMidi = _staffReferenceMidi;
+                _displayHasSignal = _hasSignal;
 
                 // Smooth cents for display
-                if (_hasSignal)
-                    _smoothCents = _smoothCents * 0.7f + _currentCents * 0.3f;
+                if (_displayHasSignal)
+                    _smoothCents = _smoothCents * 0.5f + _currentCents * 0.5f;
                 else
                     _smoothCents = _smoothCents * 0.9f;
 
                 _displayCents = _smoothCents;
 
                 // Color logic
-                if (_hasSignal)
+                if (_displayHasSignal)
                 {
                     if (Math.Abs(_displayCents) < 10) _displayColor = SKColors.Lime;
                     else if (Math.Abs(_displayCents) < 25) _displayColor = SKColors.Yellow;
@@ -399,10 +421,10 @@ namespace MusicNotes.Audio
             float staffWidth = width * 0.75f;
             float lineSpacing = Math.Max(2f * scale, height * 0.035f);
             // Show notes if we have a detected note (even if signal isn't perfect)
-            DrawMusicalStaff(canvas, cx, cyStaff, lineSpacing, staffWidth, scale, _displayMidiNote > 0 ? _displayMidiNote : 0, _staffReferenceMidi);
+            DrawMusicalStaff(canvas, cx, cyStaff, lineSpacing, staffWidth, scale, _displayMidiNote > 0 ? _displayMidiNote : 0, _displayStaffReferenceMidi);
 
             // Draw Info
-            if (_hasSignal)
+            if (_displayHasSignal)
             {
                 _paintTextSmall.Color = SKColors.White.WithAlpha(95);
                 _paintGauge.Color = SKColors.Gray.WithAlpha(95);
