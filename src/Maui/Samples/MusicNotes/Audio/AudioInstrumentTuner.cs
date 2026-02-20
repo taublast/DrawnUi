@@ -404,32 +404,40 @@ namespace MusicNotes.Audio
             // Draw Info
             if (_hasSignal)
             {
-                _paintTextSmall.TextSize = textInfo;
-                _paintTextSmall.Color = SKColors.White.WithAlpha(180);
-                canvas.DrawText($"{_displayFrequency:F1} Hz", cx, cyInfo, _paintTextSmall);
-
-                // Gauge Background
-                float barWidth = width * 0.75f;
-                float barY = cyGauge;
-
-                _paintGauge.Color = SKColors.Gray.WithAlpha(80);
-                _paintGauge.StrokeWidth = 6 * scale;
-                canvas.DrawLine(cx - barWidth / 2, barY, cx + barWidth / 2, barY, _paintGauge);
-                float tick = Math.Max(2f * scale, height * 0.03f);
-                canvas.DrawLine(cx, barY - tick, cx, barY + tick, _paintGauge); // Center tick
-
-                // Gauge Needle
-                float offset = (_displayCents / 50.0f) * (barWidth / 2);
-                offset = Math.Clamp(offset, -barWidth / 2, barWidth / 2);
-
-                _paintNeedle.Color = _displayColor;
-                float dotRadius = Math.Max(2f * scale, height * 0.03f);
-                canvas.DrawCircle(cx + offset, barY, dotRadius, _paintNeedle);
-
-                // Cents Text
-                _paintTextSmall.TextSize = Math.Max(8f * scale, minDim * 0.08f);
-                canvas.DrawText($"{_displayCents:+0;-0} cents", cx, barY + _paintTextSmall.TextSize * 1.6f, _paintTextSmall);
+                _paintTextSmall.Color = SKColors.White.WithAlpha(95);
+                _paintGauge.Color = SKColors.Gray.WithAlpha(95);
             }
+            else
+            {
+                _paintTextSmall.Color = SKColors.White.WithAlpha(50);
+                _paintGauge.Color = SKColors.Gray.WithAlpha(50);
+            }
+
+            _paintGauge.StrokeWidth = 6 * scale;
+            _paintTextSmall.TextSize = textInfo;
+
+            canvas.DrawText($"{_displayFrequency:F1} Hz", cx, cyInfo, _paintTextSmall);
+
+            // Gauge Background
+            float barWidth = width * 0.75f;
+            float barY = cyGauge;
+
+            canvas.DrawLine(cx - barWidth / 2, barY, cx + barWidth / 2, barY, _paintGauge);
+            float tick = Math.Max(2f * scale, height * 0.03f);
+            canvas.DrawLine(cx, barY - tick, cx, barY + tick, _paintGauge); // Center tick
+
+            // Gauge Needle
+            float offset = (_displayCents / 50.0f) * (barWidth / 2);
+            offset = Math.Clamp(offset, -barWidth / 2, barWidth / 2);
+
+            _paintNeedle.Color = _displayColor;
+            float dotRadius = Math.Max(2f * scale, height * 0.03f);
+            canvas.DrawCircle(cx + offset, barY, dotRadius, _paintNeedle);
+
+            // Cents Text
+            _paintTextSmall.TextSize = Math.Max(8f * scale, minDim * 0.08f);
+            canvas.DrawText($"{_displayCents:+0;-0} cents", cx, barY + _paintTextSmall.TextSize * 1.6f, _paintTextSmall);
+
 
             return false;
         }
