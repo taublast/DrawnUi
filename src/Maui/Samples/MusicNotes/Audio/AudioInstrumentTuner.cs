@@ -34,12 +34,16 @@ namespace MusicNotes.Audio
         private float _currentCents = 0;
         private bool _hasSignal = false;
 
-        // Note Vote Buffer — rolling majority vote over last N scans.
-        // Tolerates up to (NoteVoteWindow - NoteVoteThreshold) transient wrong detections
-        // per window without causing a visible blink, while still switching in ~18ms when genuine.
-        private const int NoteVoteWindow    = 5; // 5 scans × ~6ms = ~30ms history
-        private const int NoteVoteThreshold = 3; // need 3 out of 5 to confirm/change
-        private int[] _noteVoteBuffer = new int[NoteVoteWindow];
+        // Note Vote Buffer — rolling majority vote over a TIME-BASED window.
+        // Target window = VoteWindowMs of real audio regardless of scan rate.
+        // PC (6ms scans) → ~10 slots; mobile (23ms chunks) → ~3 slots — both cover ~60ms.
+        private const float VoteWindowMs      = 60f;  // target history in wall-clock ms
+        private const float VoteThresholdRatio = 0.60f; // fraction of window needed to confirm
+        private const int   MaxVoteWindow      = 32;  // pre-alloc ceiling
+        private int   _voteWindowScans  = 5;   // recomputed from actual scan interval
+        private int   _voteThreshold    = 3;   // recomputed from _voteWindowScans
+        private float _avgScanIntervalSamples = 265f; // EMA of measured scan intervals
+        private int[] _noteVoteBuffer = new int[MaxVoteWindow];
         private int _voteBufferHead = 0;
         private System.Collections.Generic.List<float> _centsBuffer = new System.Collections.Generic.List<float>();
 
@@ -77,6 +81,15 @@ namespace MusicNotes.Audio
         {
             _effectiveBufferSamples = Math.Min((int)(_sampleRate * 0.050f), BufferSize); // 50ms of audio
             _scanIntervalSamples    = Math.Max(64, (int)(_sampleRate * 0.006f));         // 6ms, min 64
+            _avgScanIntervalSamples = _scanIntervalSamples; // reset EMA on sample rate change
+            RecalcVoteParams();
+        }
+
+        private void RecalcVoteParams()
+        {
+            float scanMs = _avgScanIntervalSamples * 1000f / _sampleRate;
+            _voteWindowScans = Math.Max(3, Math.Min(MaxVoteWindow, (int)Math.Ceiling(VoteWindowMs / scanMs)));
+            _voteThreshold   = Math.Max(2, (int)Math.Ceiling(_voteWindowScans * VoteThresholdRatio));
         }
 
         public void Reset()
@@ -149,6 +162,9 @@ namespace MusicNotes.Audio
 
             if (_samplesAddedSinceLastScan >= _scanIntervalSamples)
             {
+                // Update EMA of actual scan interval (reflects real audio chunk size per platform)
+                _avgScanIntervalSamples = _avgScanIntervalSamples * 0.75f + _samplesAddedSinceLastScan * 0.25f;
+                RecalcVoteParams();
                 DetectPitch();
                 _samplesAddedSinceLastScan = 0;
                 System.Threading.Interlocked.Exchange(ref _swapRequested, 1);
@@ -280,25 +296,24 @@ namespace MusicNotes.Audio
                 double noteNum = 69 + 12 * Math.Log2(_currentFrequency / 440.0);
                 int detectedMidiNote = (int)Math.Round(noteNum);
 
-                // Rolling majority vote: push this scan's detection into the circular buffer,
-                // then count which note appears most. Only switch when a note reaches
-                // NoteVoteThreshold votes — this filters transient AMDF errors without delay.
-                _noteVoteBuffer[_voteBufferHead % NoteVoteWindow] = detectedMidiNote;
+                // Rolling majority vote over a time-based window (_voteWindowScans slots = ~60ms).
+                // _voteWindowScans adapts to actual scan interval so PC and mobile behave the same.
+                _noteVoteBuffer[_voteBufferHead % _voteWindowScans] = detectedMidiNote;
                 _voteBufferHead++;
 
                 int winnerNote  = 0;
                 int winnerCount = 0;
-                for (int vi = 0; vi < NoteVoteWindow; vi++)
+                for (int vi = 0; vi < _voteWindowScans; vi++)
                 {
                     int candidate = _noteVoteBuffer[vi];
                     if (candidate == 0) continue;
                     int count = 0;
-                    for (int vj = 0; vj < NoteVoteWindow; vj++)
+                    for (int vj = 0; vj < _voteWindowScans; vj++)
                         if (_noteVoteBuffer[vj] == candidate) count++;
                     if (count > winnerCount) { winnerCount = count; winnerNote = candidate; }
                 }
 
-                if (winnerCount >= NoteVoteThreshold && winnerNote > 0)
+                if (winnerCount >= _voteThreshold && winnerNote > 0)
                 {
                     if (_currentMidiNote != winnerNote)
                     {

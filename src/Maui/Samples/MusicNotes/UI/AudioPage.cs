@@ -51,7 +51,7 @@ public partial class AudioPage : BasePageReloadable, IDisposable
 
     public AudioPage()
     {
-        Title = "Music Notes";
+        Title = "Pitch & Tempo";
 
     }
     private void AttachHardware(bool subscribe)
@@ -87,11 +87,19 @@ public partial class AudioPage : BasePageReloadable, IDisposable
 
     private void OnAudioSample(AudioSample sample)
     {
-          _musicNotes.AddSample(sample);
-          _equalizer.AddSample(sample);
+        if (_musicNotesWrapper.IsVisible)
+        {
+            _musicNotes.AddSample(sample);
+        }
+
+        _equalizer.AddSample(sample);
           _rhythmDetector?.AddSample(sample);
           _metronome?.AddSample(sample);
-          _musicBPMDetector?.AddSample(sample);
+
+          if (_musicBPMDetectorWrapper.IsVisible)
+          {
+              _musicBPMDetector?.AddSample(sample);
+        }
     }
     
 

@@ -7,6 +7,9 @@ uniform float2 iOffset;          // Top-left corner of DrawingRect
 uniform float2 iOrigin;          // Mouse drag started here
 uniform float  iCornerRadius;    // Corner radius in pixels (pre-scaled by RenderingScale on C# side)
 uniform float  iGlassDepth;      // 3D depth/emboss intensity (0.0 = flat, 1.0 = normal, 2.0+ = pronounced)
+uniform float  iBlurStrength;    // Blur intensity multiplier (1.0 = default, 0.0 = no blur, 2.0 = double)
+uniform float  iGlassOpacity;    // Glass panel opacity (0.0 = fully transparent, 1.0 = fully opaque), default 0.75
+uniform float4 iGlassColor;      // Glass tint color (rgb = tint, a = tint strength; a=0 means no tint)
 
 //Originated from MIT licenced https://github.com/bergice/liquidglass
 //Adapted/edited by taublast, still MIT
@@ -30,7 +33,7 @@ half3 blurBackground(float2 uv) {
     float radius = 3.0;
     for (int x = -3; x <= 3; x++) {
         for (int y = -3; y <= 3; y++) {
-            float2 offset = float2(float(x), float(y)) * 2.0 / iImageResolution;
+            float2 offset = float2(float(x), float(y)) * 2.0 * iBlurStrength / iImageResolution;
             float weight = exp(-(float(x * x + y * y)) / (2.0 * radius));
             result += iImage1.eval(uv + offset).rgb * weight;
             total += weight;
@@ -131,10 +134,13 @@ half4 main(float2 fragCoord) {
     half3 glow = mix(edgeSample * 1.4, half3(0.9), 0.35);
     half3 color = mix(base, glow, edge * 0.5 * iGlassDepth);
 
+    // Apply glass color tint (iGlassColor.a = 0 means no tint, nothing changes)
+    color = mix(color, iGlassColor.rgb, iGlassColor.a);
+
     // Blend with original using alpha mask for smooth antialiased edges
     half4 originalColor = iImage1.eval(inputCoord);
     half3 finalColor = mix(originalColor.rgb, color, alpha);
-    float finalAlpha = originalColor.a * (0.75 * alpha + (1.0 - alpha));
+    float finalAlpha = originalColor.a * (iGlassOpacity * alpha + (1.0 - alpha));
 
     return half4(finalColor, finalAlpha);
 }

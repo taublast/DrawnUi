@@ -563,7 +563,7 @@ namespace MusicNotes.Audio
             float centerY = viewport.MidY;
 
             // Clear background
-            canvas.DrawRect(viewport, new SKPaint { Color = new SKColor(20, 20, 30) });
+            //canvas.DrawRect(viewport, new SKPaint { Color = new SKColor(20, 20, 30) });
 
             // Draw title
             _paintTextSmall.TextSize = 24 * scale;

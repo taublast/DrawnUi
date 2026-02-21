@@ -27,13 +27,15 @@ namespace MusicNotes.UI
         private SkiaLabel[] _tabLabels;
         private AudioVisualizer _rhythmDetector;
         private AudioVisualizer _metronome;
-        private AudioVisualizer _musicBPMDetector;
         private int _currentMode = 0; // 0=Notes, 1=DrummerBPM, 2=Metronome, 3=MusicBPM
         private SkiaLabel _modeButtonIcon;
 
         private bool _isLayoutLandscape;
         private SkiaShape _captureButtonOuter;
         private AudioVisualizer _musicNotes;
+        private SkiaControl _musicNotesWrapper;
+        private AudioVisualizer _musicBPMDetector;
+        private SkiaControl _musicBPMDetectorWrapper;
         private AudioVisualizer _equalizer;
 
         private void CreateContent()
@@ -75,13 +77,45 @@ namespace MusicNotes.UI
                         }
                         .Assign(out Recorder),
 
-                        new AudioVisualizer(new AudioInstrumentTuner())
+                        //NOTES
+                        new SkiaShape()
                         {
                             Margin = new (16,16,16,0),
                             HorizontalOptions = LayoutOptions.Fill,
-                            HeightRequest = 350,
-                            BackgroundColor = Color.Parse("#22000000"),
-                        }.Assign(out _musicNotes),
+                            HeightRequest = 375,
+                            CornerRadius = 24,
+                            Children =
+                            {
+                                new SkiaBackdrop()
+                                {
+                                    UseCache = SkiaCacheType.Operations,
+                                    HorizontalOptions = LayoutOptions.Fill,
+                                    VerticalOptions = LayoutOptions.Fill,
+                                    Blur = 0,
+                                    VisualEffects = new List<SkiaEffect>
+                                    {
+                                        new GlassBackdropEffect()
+                                        {
+                                            ShaderSource = @"Shaders\glass.sksl",
+                                            BlurStrength = 1.0f,
+                                            GlassOpacity = 0.9f,
+                                            GlassColor = Colors.Black.WithAlpha(0.33f),
+                                            CornerRadius = 24,
+                                            GlassDepth = 1.66f
+                                        }
+                                    }
+                                },
+
+                                new AudioVisualizer(new AudioInstrumentTuner())
+                                {
+                                    Margin = new (16,16,16,0),
+                                    HorizontalOptions = LayoutOptions.Fill,
+                                    VerticalOptions = LayoutOptions.Fill,
+                                }.Assign(out _musicNotes),
+
+                            }
+                        }.Assign(out _musicNotesWrapper),
+
 
                         new AudioVisualizer(new AudioRhythmDetector())
                         {
@@ -102,14 +136,44 @@ namespace MusicNotes.UI
                             IsVisible = false,
                         }.Assign(out _metronome),
 
-                        new AudioVisualizer(new AudioMusicBPMDetector())
+                        // BPM MUSIC
+                        new SkiaShape()
                         {
                             Margin = new (16,16,16,0),
                             HorizontalOptions = LayoutOptions.Fill,
                             HeightRequest = 350,
-                            BackgroundColor = Color.Parse("#22000000"),
-                            IsVisible = false,
-                        }.Assign(out _musicBPMDetector),
+
+                            Children =
+                            {
+                                new SkiaBackdrop()
+                                {
+                                    UseCache = SkiaCacheType.Operations,
+                                    HorizontalOptions = LayoutOptions.Fill,
+                                    VerticalOptions = LayoutOptions.Fill,
+                                    Blur = 0,
+                                    VisualEffects = new List<SkiaEffect>
+                                    {
+                                        new GlassBackdropEffect()
+                                        {
+                                            ShaderSource = @"Shaders\glass.sksl",
+                                            BlurStrength = 1.0f,
+                                            GlassOpacity = 0.9f,
+                                            GlassColor = Colors.Black.WithAlpha(0.33f),
+                                            CornerRadius = 32,
+                                            GlassDepth = 1.66f
+                                        }
+                                    }
+                                },
+
+                                new AudioVisualizer(new AudioMusicBPMDetector())
+                                {
+                                    Margin = 1,
+                                    HorizontalOptions = LayoutOptions.Fill,
+                                    VerticalOptions = LayoutOptions.Fill,
+                                }.Assign(out _musicBPMDetector),
+
+                            }
+                        }.Assign(out _musicBPMDetectorWrapper),
 
                         new AudioVisualizer(new AudioSoundBars())
                         {
@@ -142,8 +206,11 @@ namespace MusicNotes.UI
                                         new GlassBackdropEffect()
                                         {
                                             ShaderSource = @"Shaders\glass.sksl",
+                                            BlurStrength = 1.0f,
+                                            GlassOpacity = 0.9f,
+                                            GlassColor = Colors.White.WithAlpha(0.05f),
                                             CornerRadius = 32,  // Match parent SkiaShape
-                                            GlassDepth = 1.5f   // 3D emboss intensity (0.0-2.0+)
+                                            GlassDepth = 1.4f   // 3D emboss intensity (0.0-2.0+)
                                         }
                                     }
                                 },
@@ -183,9 +250,9 @@ namespace MusicNotes.UI
                                                 Type = GradientType.Linear,
                                                 Colors = new List<Color>()
                                                 {
-                                                    Colors.DarkGrey,
+                                                    Colors.CornflowerBlue.Lighten(0.6f),
                                                     Colors.CornflowerBlue,
-                                                    Colors.Gray
+                                                    Colors.CornflowerBlue.Darken(0.6f)
                                                 },
                                                 ColorPositions = new List<double>()
                                                 {
@@ -226,9 +293,9 @@ namespace MusicNotes.UI
                                                 Type = GradientType.Linear,
                                                 Colors = new List<Color>()
                                                 {
-                                                    Colors.DarkGrey,
+                                                    Colors.DarkCyan.Lighten(0.6f),
                                                     Colors.DarkCyan,
-                                                    Colors.Gray
+                                                    Colors.DarkCyan.Darken(0.6f)
                                                 },
                                                 ColorPositions = new List<double>()
                                                 {
@@ -275,9 +342,9 @@ namespace MusicNotes.UI
                                                 Type = GradientType.Linear,
                                                 Colors = new List<Color>()
                                                 {
-                                                    Colors.DarkGrey,
+                                                    Colors.Orange.Lighten(0.6f),
                                                     Colors.Orange,
-                                                    Colors.Gray
+                                                    Colors.Orange.Darken(0.6f)
                                                 },
                                                 ColorPositions = new List<double>()
                                                 {
@@ -416,21 +483,21 @@ namespace MusicNotes.UI
             }
 
             // Hide all visualizers
-            if (_musicNotes != null)
-                _musicNotes.IsVisible = false;
+            if (_musicNotesWrapper != null)
+                _musicNotesWrapper.IsVisible = false;
             if (_rhythmDetector != null)
                 _rhythmDetector.IsVisible = false;
             if (_metronome != null)
                 _metronome.IsVisible = false;
-            if (_musicBPMDetector != null)
-                _musicBPMDetector.IsVisible = false;
+            if (_musicBPMDetectorWrapper != null)
+                _musicBPMDetectorWrapper.IsVisible = false;
             
             // Show current mode visualizer
             switch (_currentMode)
             {
                 case 0: // Notes
-                    if (_musicNotes != null)
-                        _musicNotes.IsVisible = true;
+                    if (_musicNotesWrapper != null)
+                        _musicNotesWrapper.IsVisible = true;
                     if (_modeButtonIcon != null)
                         _modeButtonIcon.Text = IconFont.PlaylistMusic;//"🎵";
                     break;
@@ -447,8 +514,8 @@ namespace MusicNotes.UI
                         _modeButtonIcon.Text = IconFont.AccountMusic;// "⏱️";
                     break;
                 case 3: // Music BPM
-                    if (_musicBPMDetector != null)
-                        _musicBPMDetector.IsVisible = true;
+                    if (_musicBPMDetectorWrapper != null)
+                        _musicBPMDetectorWrapper.IsVisible = true;
                     if (_modeButtonIcon != null)
                         _modeButtonIcon.Text = IconFont.TimerMusic;//IconFont.Music;//"🎼";
                     break;
