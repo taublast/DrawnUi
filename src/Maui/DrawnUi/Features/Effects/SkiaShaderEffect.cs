@@ -1,6 +1,4 @@
-﻿using ExCSS;
-
-namespace DrawnUi.Draw;
+﻿namespace DrawnUi.Draw;
 
 /// <summary>
 /// IPostRendererEffect
@@ -106,6 +104,10 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
             {
                 PaintWithShader.Shader = shader;
                 ctx.Context.Canvas.DrawRect(ctx.Destination, PaintWithShader);
+            }
+            else
+            {
+                Debug.WriteLine($"SkiaShaderEffect failed to create shader, source: {ShaderSource}");
             }
         }
         finally
@@ -289,6 +291,10 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
 
     protected void SendError(string error)
     {
+        if (OnCompilationError == null)
+        {
+            throw new ApplicationException($"Shader compilation error: {error}");
+        }
         OnCompilationError?.Invoke(this, error);
     }
 
