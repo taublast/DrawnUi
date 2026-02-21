@@ -6375,46 +6375,60 @@ namespace DrawnUi.Draw
 
             if (!DisableEffects && VisualEffects.Count > 0)
             {
-                if (_paintWithEffects == null)
-                {
-                    _paintWithEffects = new() { IsAntialias = true, FilterQuality = SKFilterQuality.Medium };
-                }
-
                 var effectColor = EffectColorFilter;
                 var effectImage = EffectImageFilter;
-
-                if (effectImage != null)
-                    _paintWithEffects.ImageFilter = effectImage.CreateFilter(ctx.Destination);
-                else
-                    _paintWithEffects.ImageFilter = null; //will be disposed internally by effect
-
-                if (effectColor != null)
-                    _paintWithEffects.ColorFilter = effectColor.CreateFilter(ctx.Destination);
-                else
-                    _paintWithEffects.ColorFilter = null;
-
-                var restore = ctx.Context.Canvas.SaveLayer(_paintWithEffects);
-
-                bool hasDrawnControl = false;
-
                 var renderers = EffectRenderers;
 
-                if (renderers.Count > 0)
-                {
-                    foreach (var effect in renderers)
-                    {
-                        var chainedEffectResult = effect.Draw(ctx, PaintWithEffectsInternal);
-                        if (chainedEffectResult.DrawnControl)
-                            hasDrawnControl = true;
-                    }
-                }
+                // Only create a SaveLayer when there are actual filter/renderer effects.
+                // IPostRendererEffect (SkiaShaderEffect etc.) run in DrawDirectInternal AFTER
+                // PaintWithEffects closes, so they do not need a SaveLayer here.
+                // Creating an unnecessary SaveLayer breaks SkiaBackdrop snapshot capture because
+                // children render into the layer buffer rather than the main surface.
+                bool needsSaveLayer = effectImage != null || effectColor != null || renderers.Count > 0;
 
-                if (!hasDrawnControl)
+                if (needsSaveLayer)
                 {
+                    if (_paintWithEffects == null)
+                    {
+                        _paintWithEffects = new() { IsAntialias = true, FilterQuality = SKFilterQuality.Medium };
+                    }
+
+                    if (effectImage != null)
+                        _paintWithEffects.ImageFilter = effectImage.CreateFilter(ctx.Destination);
+                    else
+                        _paintWithEffects.ImageFilter = null; //will be disposed internally by effect
+
+                    if (effectColor != null)
+                        _paintWithEffects.ColorFilter = effectColor.CreateFilter(ctx.Destination);
+                    else
+                        _paintWithEffects.ColorFilter = null;
+
+                    var restore = ctx.Context.Canvas.SaveLayer(_paintWithEffects);
+
+                    bool hasDrawnControl = false;
+
+                    if (renderers.Count > 0)
+                    {
+                        foreach (var effect in renderers)
+                        {
+                            var chainedEffectResult = effect.Draw(ctx, PaintWithEffectsInternal);
+                            if (chainedEffectResult.DrawnControl)
+                                hasDrawnControl = true;
+                        }
+                    }
+
+                    if (!hasDrawnControl)
+                    {
+                        PaintWithEffectsInternal(ctx);
+                    }
+
+                    ctx.Context.Canvas.RestoreToCount(restore);
+                }
+                else
+                {
+                    // Only post-renderers in VisualEffects — no SaveLayer needed
                     PaintWithEffectsInternal(ctx);
                 }
-
-                ctx.Context.Canvas.RestoreToCount(restore);
             }
             else
             {
