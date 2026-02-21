@@ -17,6 +17,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\SkiaControl.Invalidation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\SkiaControl.Shared.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\VisualTreeHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\AnimatedShaderEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\IColorEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\IImageEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\IRenderEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\ISkiaEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\ISkiaPostRendererEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\IStateEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\SkiaEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\SkiaShaderEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\StateEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\ControlLifecycleState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\SkiaCacheType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\ThermalState.cs" />
