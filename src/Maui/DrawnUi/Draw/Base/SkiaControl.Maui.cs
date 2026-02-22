@@ -462,6 +462,7 @@ namespace DrawnUi.Draw
             {
                 PlatformShadow = null;
             }
+            InvalidateShadowPaint();
         }
 
         protected SkiaShadow PlatformShadow

@@ -1,4 +1,4 @@
-﻿namespace DrawnUi.Draw;
+namespace DrawnUi.Draw;
 
 /// <summary>
 /// IPostRendererEffect
@@ -7,6 +7,36 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
 {
     protected SKPaint PaintWithShader;
 
+    // ─── IPostRendererEffect ────────────────────────────────────────────────
+
+    /// <inheritdoc/>
+    public PostRendererEffectUseBackgroud UseBackground { get; set; } = PostRendererEffectUseBackgroud.Always;
+
+    /// <inheritdoc/>
+    public bool AquiredBackground { get; set; }
+
+    // Frozen snapshot for Once mode
+    private SKImage _frozenSnapshot;
+    private bool _frozenSnapshotOwned;
+
+    private void ReleaseFrozenSnapshot()
+    {
+        if (Parent != null)
+        {
+            Parent.DisposeObject(_frozenSnapshot);
+        }
+        else
+        if (_frozenSnapshotOwned && _frozenSnapshot != null)
+        {
+            _frozenSnapshot.Dispose();
+            _frozenSnapshot = null;
+        }
+
+        _frozenSnapshotOwned = false;
+    }
+
+    // ─── UseContext / AutoCreateInputTexture ────────────────────────────────
+
     public static readonly BindableProperty UseContextProperty = BindableProperty.Create(nameof(UseContext),
         typeof(bool),
         typeof(SkiaShaderEffect),
@@ -14,7 +44,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         propertyChanged: NeedUpdate);
 
     /// <summary>
-    /// Use either context of global Superview background, default is True.
+    /// Use either context or global Superview background, default is True.
     /// </summary>
     public bool UseContext
     {
@@ -40,6 +70,26 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
     }
 
     /// <summary>
+    /// Blend mode used when drawing the shader effect on the canvas. Default is SrcOver.
+    /// For generative overlay effects (UseBackground = Never), use Plus for additive blending.
+    /// </summary>
+    public SKBlendMode BlendMode { get; set; } = SKBlendMode.SrcOver;
+
+    // ─── Snapshot helpers ───────────────────────────────────────────────────
+
+    protected void Flush(SkiaDrawingContext ctx)
+    {
+        if (UseContext)
+        {
+            ctx.Canvas.Flush();
+        }
+        else
+        {
+            ctx.Superview.CanvasView.Surface.Flush();
+        }
+    }
+
+    /// <summary>
     /// Create snapshot from the current parent control drawing state to use as input texture for the shader
     /// </summary>
     protected virtual SKImage CreateSnapshot(SkiaDrawingContext ctx, SKRect destination)
@@ -59,26 +109,43 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         }
     }
 
-    void Flush(SkiaDrawingContext ctx)
-    {
-        if (UseContext)
-        {
-            ctx.Canvas.Flush();
-        }
-        else
-        {
-            ctx.Superview.CanvasView.Surface.Flush();
-        }
-    }
-
+    /// <summary>
+    /// Returns the background texture according to the current UseBackground mode.
+    /// Always  — live snapshot (or parent cache) every frame.
+    /// Once    — snapshot taken on first call, frozen thereafter; reset AquiredBackground to re-capture.
+    /// Never   — returns null; shader must not require iImage1.
+    /// </summary>
     protected virtual SKImage GetPrimaryTextureImage(SkiaDrawingContext ctx, SKRect destination)
     {
-        if (Parent?.CachedImage == null && AutoCreateInputTexture)
+        switch (UseBackground)
         {
-            return CreateSnapshot(ctx, destination);
-        }
+            case PostRendererEffectUseBackgroud.Never:
+                return null;
 
-        return Parent?.CachedImage;
+            case PostRendererEffectUseBackgroud.Once:
+                if (!AquiredBackground)
+                {
+                    ReleaseFrozenSnapshot();
+
+                    var snapshot = Parent?.CachedImage;
+                    if (Parent?.CachedImage == null && AutoCreateInputTexture)
+                    {
+                        snapshot = CreateSnapshot(ctx, destination);
+                    }
+
+                    AquiredBackground = true;
+                    _frozenSnapshot = snapshot;
+                    return snapshot;
+                }
+                return _frozenSnapshot;
+
+            default: // Always
+                if (Parent?.CachedImage == null && AutoCreateInputTexture)
+                {
+                    return CreateSnapshot(ctx, destination);
+                }
+                return Parent?.CachedImage;
+        }
     }
 
     /// <summary>
@@ -102,6 +169,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
             shader = CreateShader(ctx, image);
             if (shader != null)
             {
+                PaintWithShader.BlendMode = BlendMode;
                 PaintWithShader.Shader = shader;
                 ctx.Context.Canvas.DrawRect(ctx.Destination, PaintWithShader);
             }
@@ -112,7 +180,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         }
         finally
         {
-            // Dispose the image if we created it
+            // Dispose the image if we created it (not frozen, not parent cache)
             if (shouldDisposeImage && image != null)
             {
                 image.Dispose();
@@ -128,10 +196,13 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
     }
 
     /// <summary>
-    /// Checks if image is a new snapshot that needs disposal
+    /// Checks if image is a new snapshot that needs disposal this frame.
+    /// Frozen snapshots are managed by ReleaseFrozenSnapshot; parent cache is never owned.
     /// </summary>
     protected virtual bool ShouldDisposePreviousTexture(SKImage image)
     {
+        // Frozen snapshot lifecycle is managed separately — never dispose per-frame
+        if (image == _frozenSnapshot) return false;
         // Don't dispose if it's the cached image from parent
         return image != null && image != Parent?.CachedImage;
     }
@@ -172,29 +243,37 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
 
         try
         {
-            // Step 2: Get or create source image
-            if (source == null && AutoCreateInputTexture)
+            // Step 2: For Always/Once modes, ensure we have a source image
+            if (UseBackground != PostRendererEffectUseBackgroud.Never)
             {
-                source = CreateSnapshot(ctx.Context, destination);
-                sourceToDispose = source;
-            }
+                if (source == null && AutoCreateInputTexture)
+                {
+                    source = CreateSnapshot(ctx.Context, destination);
+                    sourceToDispose = source;
+                }
 
-            if (source == null)
-                return null;
+                if (source == null)
+                    return null;
+            }
 
             // Step 3: Create everything fresh (no caching)
             var samplingOptions = new SKSamplingOptions(FilterMode, MipmapMode);
-            using var primaryTexture = source.ToShader(TileMode, TileMode, samplingOptions);
+            SKShader primaryTextureShader = source != null
+                ? source.ToShader(TileMode, TileMode, samplingOptions)
+                : null;
 
-            using var textureUniforms = CreateTexturesUniforms(ctx.Context, destination, primaryTexture);
-            using var uniforms = CreateUniforms(destination);
+            using (primaryTextureShader)
+            {
+                using var textureUniforms = CreateTexturesUniforms(ctx.Context, destination, primaryTextureShader);
+                using var uniforms = CreateUniforms(destination);
 
-            // Step 4: Create final shader
-            return CompiledShader.ToShader(uniforms, textureUniforms);
+                // Step 4: Create final shader
+                return CompiledShader.ToShader(uniforms, textureUniforms);
+            }
         }
         finally
         {
-            // Dispose any snapshot we created
+            // Dispose any snapshot we created this frame (not frozen, not parent cache)
             if (sourceToDispose != null)
             {
                 Parent?.DisposeObject(sourceToDispose); // ?? sourceToDispose.Dispose();
@@ -205,6 +284,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
     // ✅ KEEP: Only CPU-side compiled shader
     protected SKRuntimeEffect CompiledShader;
     private bool _hasNewShader;
+    private bool _ownCompiledShader; // true only when compiled without cache (custom ShaderCode)
     private string _customCode;
     private string _lastSource;
 
@@ -319,6 +399,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         }
 
         CompiledShader = SkSl.Compile(shaderCode, ShaderSource, useCache, onError);
+        _ownCompiledShader = !useCache; // cache owns it when useCache=true
     }
 
     public string LoadedCode { get; set; }
@@ -434,9 +515,13 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
     /// </summary>
     protected override void OnDisposing()
     {
-        // Only dispose CPU-side compiled shader
-        CompiledShader?.Dispose();
+        ReleaseFrozenSnapshot();
+
+        // Only dispose CompiledShader if this instance owns it (not from cache)
+        if (_ownCompiledShader)
+            CompiledShader?.Dispose();
         CompiledShader = null;
+        _ownCompiledShader = false;
 
         PaintWithShader?.Dispose();
         PaintWithShader = null;

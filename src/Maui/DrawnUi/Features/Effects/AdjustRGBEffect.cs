@@ -114,11 +114,12 @@ public class ChainAdjustRGBEffect : BaseChainedEffect
     {
         if (NeedApply)
         {
-            using var paint = new SKPaint();
+            if (Paint == null)
+            {
+                Paint = new SKPaint { ColorFilter = CreateRGBAdjustmentFilter(Red, Green, Blue) };
+            }
 
-            paint.ColorFilter = CreateRGBAdjustmentFilter(Red, Green, Blue);
-
-            ctx.Context.Canvas.SaveLayer(paint);
+            ctx.Context.Canvas.SaveLayer(Paint);
 
             drawControl(ctx);
 

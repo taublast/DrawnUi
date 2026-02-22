@@ -116,6 +116,31 @@ public class ChainDropShadowsEffect : BaseChainedEffect
         }
     }
 
+    private List<SKImageFilter> _cachedFilters;
+    private float _cachedFiltersScale;
+
+    private void DisposeCachedFilters()
+    {
+        if (_cachedFilters != null)
+        {
+            foreach (var f in _cachedFilters)
+                f?.Dispose();
+            _cachedFilters = null;
+        }
+    }
+
+    public override void Update()
+    {
+        DisposeCachedFilters();
+        base.Update();
+    }
+
+    protected override void OnDisposing()
+    {
+        DisposeCachedFilters();
+        base.OnDisposing();
+    }
+
     public override ChainEffectResult Draw(DrawingContext ctx, Action<DrawingContext> drawControl)
     {
         if (NeedApply)
@@ -125,29 +150,33 @@ public class ChainDropShadowsEffect : BaseChainedEffect
                 Paint = new();
             }
 
-            var restore = 0;
+            float currentScale = Parent?.RenderingScale ?? 1f;
 
-            //draw every shadow without the controls itsselfs
-            if (Shadows != null)
+            // Rebuild filters when null (invalidated) or when scale has changed
+            if (_cachedFilters == null || _cachedFiltersScale != currentScale)
             {
+                DisposeCachedFilters();
+                _cachedFiltersScale = currentScale;
+                _cachedFilters = new List<SKImageFilter>(Shadows.Count);
+
                 foreach (var shadow in Shadows)
                 {
-                    //SkiaControl.AddShadowFilter(paint, shadow, Parent.RenderingScale);
-
-                    Paint.ImageFilter = SKImageFilter.CreateDropShadowOnly(
-                        (float)Math.Round(shadow.X * Parent.RenderingScale),
-                        (float)Math.Round(shadow.Y * Parent.RenderingScale),
+                    _cachedFilters.Add(SKImageFilter.CreateDropShadowOnly(
+                        (float)Math.Round(shadow.X * currentScale),
+                        (float)Math.Round(shadow.Y * currentScale),
                         (float)shadow.Blur, (float)shadow.Blur,
-                        shadow.Color.ToSKColor());
-
-                    var saved = ctx.Context.Canvas.SaveLayer(Paint);
-
-                    drawControl(ctx);
-
-                    ctx.Context.Canvas.RestoreToCount(saved);
+                        shadow.Color.ToSKColor()));
                 }
             }
 
+            //draw every shadow without the control itself
+            foreach (var filter in _cachedFilters)
+            {
+                Paint.ImageFilter = filter;
+                var saved = ctx.Context.Canvas.SaveLayer(Paint);
+                drawControl(ctx);
+                ctx.Context.Canvas.RestoreToCount(saved);
+            }
 
             return ChainEffectResult.Create(false);
         }

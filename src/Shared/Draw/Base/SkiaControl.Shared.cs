@@ -3214,6 +3214,7 @@ namespace DrawnUi.Draw
 
         public virtual void OnScaleChanged()
         {
+            InvalidateShadowPaint();
             InvalidateMeasure();
         }
 
@@ -5539,6 +5540,7 @@ namespace DrawnUi.Draw
 
                     _paintWithOpacity?.Dispose();
                     _paintWithEffects?.Dispose();
+                    _shadowLayerPaint?.Dispose();
                     _preparedClipBounds?.Dispose();
 
                     EffectColorFilter = null;
@@ -6347,13 +6349,25 @@ namespace DrawnUi.Draw
 
         protected bool NeedRemeasuring;
 
+        private SKPaint _shadowLayerPaint;
+
+        protected void InvalidateShadowPaint()
+        {
+            var kill = _shadowLayerPaint;
+            _shadowLayerPaint = null;
+            kill?.Dispose();
+        }
+
         protected virtual void PaintWithShadows(DrawingContext ctx, Action render)
         {
             if (PlatformShadow != null)
             {
-                using var paint = new SKPaint() { IsAntialias = true, FilterQuality = SKFilterQuality.Medium };
-                SetupShadow(paint, PlatformShadow, RenderingScale);
-                var saved = ctx.Context.Canvas.SaveLayer(paint);
+                if (_shadowLayerPaint == null)
+                {
+                    _shadowLayerPaint = new SKPaint() { IsAntialias = true, FilterQuality = SKFilterQuality.Medium };
+                    SetupShadow(_shadowLayerPaint, PlatformShadow, RenderingScale);
+                }
+                var saved = ctx.Context.Canvas.SaveLayer(_shadowLayerPaint);
                 render();
                 ctx.Context.Canvas.RestoreToCount(saved);
             }

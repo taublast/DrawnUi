@@ -43,6 +43,7 @@ public class AnimatedShaderEffect : SkiaShaderEffect
         Animator ??= new RangeAnimator(parent);
 
         Progress = 0.0;
+        AquiredBackground = false; // Reset so Once mode re-captures background on next render
 
         Animator.Start(
             value =>
