@@ -200,7 +200,7 @@ public class SkiaBackdrop : ContentLayout, ISkiaGestureListener
                     SKImage snapshot;
                     if (UseContext)
                     {
-                        //ctx.Context.Canvas.Flush();
+                        ctx.Context.Canvas.Flush();
                         snapshot = ctx.Context.Surface.Snapshot(new((int)destination.Left, (int)destination.Top,
                             (int)destination.Right, (int)destination.Bottom));
                     }
