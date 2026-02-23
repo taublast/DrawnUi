@@ -33,6 +33,7 @@ public partial class SkiaRichLabel : SkiaLabel
                     isItalic = false;
                     isHeading1 = false;
                     isHeading2 = false;
+                    isHeading3 = false;
                     isCodeBlock = false;
                     hadParagraph = false;
                     isStrikethrough = false;
@@ -65,16 +66,15 @@ public partial class SkiaRichLabel : SkiaLabel
     {
         var wasHeading1 = isHeading1;
         var wasHeading2 = isHeading2;
+        var wasHeading3 = isHeading3;
         var wasCode = isCodeBlock;
 
         if (block.Tag == BlockTag.AtxHeading || block.Tag == BlockTag.SetextHeading)
         {
             var level = block.Heading.Level;
             isHeading1 = level == 1;
-            if (!isHeading1)
-            {
-                isHeading2 = true;
-            }
+            isHeading2 = level == 2;
+            isHeading3 = level >= 3;
 
             if (block.InlineContent != null)
             {
@@ -85,11 +85,11 @@ public partial class SkiaRichLabel : SkiaLabel
 
                 hadParagraph = true;
 
-                var inline = block.InlineContent.FirstChild;
-                while (inline != null)
+                var currentInline = block.InlineContent;
+                while (currentInline != null)
                 {
-                    RenderInline(inline);
-                    inline = inline.NextSibling;
+                    RenderInline(currentInline);
+                    currentInline = currentInline.NextSibling;
                 }
             }
         }
@@ -107,23 +107,11 @@ public partial class SkiaRichLabel : SkiaLabel
 
             hadParagraph = true;
 
-            var inline = block.InlineContent?.FirstChild;
-            if (inline == null)
+            var currentInline = block.InlineContent;
+            while (currentInline != null)
             {
-                var currentInline = block.InlineContent;
-                while (currentInline != null)
-                {
-                    RenderInline(currentInline);
-                    currentInline = currentInline.NextSibling;
-                }
-            }
-            else
-            {
-                while (inline != null)
-                {
-                    RenderInline(inline);
-                    inline = inline.NextSibling;
-                }
+                RenderInline(currentInline);
+                currentInline = currentInline.NextSibling;
             }
         }
         else if (block.Tag == BlockTag.IndentedCode || block.Tag == BlockTag.FencedCode)
@@ -190,6 +178,7 @@ public partial class SkiaRichLabel : SkiaLabel
         isCodeBlock = wasCode;
         isHeading1 = wasHeading1;
         isHeading2 = wasHeading2;
+        isHeading3 = wasHeading3;
     }
 
     // Replace RenderOrderedListItem method:

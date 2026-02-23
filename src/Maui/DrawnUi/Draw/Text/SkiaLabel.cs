@@ -3029,6 +3029,9 @@ namespace DrawnUi.Draw
             typeof(double), typeof(SkiaLabel), 1.0,
             propertyChanged: NeedInvalidateMeasure);
 
+        /// <summary>
+        /// Default is 1.0
+        /// </summary>
         public double LineSpacing
         {
             get { return (double)GetValue(LineSpacingProperty); }

@@ -57,13 +57,22 @@ public partial class SkiaRichLabel : SkiaLabel
         if (isHeading1)
         {
             span.IsBold = true;
-            span.FontSize += 6;
+            span.FontSize = this.FontSize + 9;
+            span.TextColor = this.HeadingTextColor;
         }
 
         if (isHeading2)
         {
             span.IsBold = true;
-            span.FontSize += 3;
+            span.FontSize = this.FontSize + 4;
+            span.TextColor = this.HeadingTextColor;
+        }
+
+        if (isHeading3)
+        {
+            span.IsBold = true;
+            span.FontSize = this.FontSize + 2;
+            span.TextColor = this.HeadingTextColor;
         }
 
         span.IsBold |= fontAttributes.HasFlag(FontAttributes.Bold);
@@ -241,6 +250,7 @@ public partial class SkiaRichLabel : SkiaLabel
     protected bool isCodeBlock;
     protected bool isHeading1;
     protected bool isHeading2;
+    protected bool isHeading3;
     protected bool isStrikethrough;
 
     #region LINKS
@@ -325,6 +335,19 @@ public partial class SkiaRichLabel : SkiaLabel
     {
         get { return (Color)GetValue(CodeTextColorProperty); }
         set { SetValue(CodeTextColorProperty, value); }
+    }
+
+    public static readonly BindableProperty HeadingTextColorProperty = BindableProperty.Create(
+        nameof(HeadingTextColor),
+        typeof(Color),
+        typeof(SkiaLabel),
+        ColorCode,
+        propertyChanged: NeedUpdateFont);
+
+    public Color HeadingTextColor
+    {
+        get { return (Color)GetValue(HeadingTextColorProperty); }
+        set { SetValue(HeadingTextColorProperty, value); }
     }
 
     public static readonly BindableProperty CodeBlockBackgroundColorProperty = BindableProperty.Create(
