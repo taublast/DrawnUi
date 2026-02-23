@@ -150,7 +150,7 @@ public partial class SkiaControl
                     if (_renderObject != null) //if we already have something in actual cache then
                     {
                         if (UsesCacheDoubleBuffering
-                            || UsingCacheType == SkiaCacheType.Image //to just reuse same surface
+                            //|| UsingCacheType == SkiaCacheType.Image //to just reuse same surface
                             || UsingCacheType == SkiaCacheType.ImageComposite)
                         {
                             RenderObjectPrevious = _renderObject; //send it to back for special cases
@@ -286,6 +286,11 @@ public partial class SkiaControl
     {
         if (cache != null)
         {
+            if (cache.Surface != null && cache.Surface.Handle == 0)
+            {
+                return false; //maybe disposed by GC
+            }
+
             if (!CompareSize(cache.RecordingArea.Size, recordingArea.Size, 1))
             {
                 CacheValidity = CacheValidityType.SizeMismatch;
@@ -411,7 +416,8 @@ public partial class SkiaControl
                     surface = reuseSurfaceFrom.Surface;
                     if (surface == null || surface.Handle == 0)
                     {
-                        return null; //would be unexpected
+                        Super.Log("CreateRenderingObject failed to reuse surface!");
+                        return null; //would be totally unexpected
                     }
 
                     reuseSurfaceFrom.PreserveSourceFromDispose = true; //we will dispose that source in this new object
@@ -1050,7 +1056,11 @@ public partial class SkiaControl
             oldObject = RenderObject;
         }
         else
-        if (UsingCacheType == SkiaCacheType.ImageComposite || UsingCacheType == SkiaCacheType.Image)
+
+        //tried to reuse surface for image SkiaCacheType.Image
+        //but is seems to be GCed after GC hits randomly  along with some other object, like shader or something unsure
+        //so safer not to reusage at this stage
+        if (UsingCacheType == SkiaCacheType.ImageComposite)//_ || UsingCacheType == SkiaCacheType.Image)
         {
             oldObject = RenderObjectPrevious;
         }
