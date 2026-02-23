@@ -2224,6 +2224,8 @@ namespace DrawnUi.Draw
 
             Superview?.SetViewTreeVisibilityByParent(this, newvalue);
 
+            ParentVisibilityChanged?.Invoke(this, newvalue);
+
             if (!newvalue)
             {
                 if (this.UsingCacheType == SkiaCacheType.GPU)
@@ -2259,6 +2261,8 @@ namespace DrawnUi.Draw
         }
 
         public event EventHandler<bool> VisibilityChanged;
+
+        public event EventHandler<bool> ParentVisibilityChanged;
 
         public void SendVisibilityChanged()
         {
@@ -6592,7 +6596,10 @@ namespace DrawnUi.Draw
                 _paintWithOpacity.IsDither = IsDistorted;
                 _paintWithOpacity.FilterQuality = SKFilterQuality.Medium;
 
-                cache.Draw(ctx.Context.Canvas, context.Destination, _paintWithOpacity);
+                if (EffectPostRenderers.Count == 0)
+                {
+                    cache.Draw(ctx.Context.Canvas, context.Destination, _paintWithOpacity);
+                }
 
                 // Apply chained post renderers - each snapshots from canvas, enabling shader-after-shader
                 foreach (var postRenderer in EffectPostRenderers)
