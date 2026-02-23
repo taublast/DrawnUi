@@ -409,7 +409,7 @@ public partial class SkiaControl
                 {
                     //reusing existing surface
                     surface = reuseSurfaceFrom.Surface;
-                    if (surface == null)
+                    if (surface == null || surface.Handle == 0)
                     {
                         return null; //would be unexpected
                     }
