@@ -1568,7 +1568,9 @@ namespace DrawnUi.Draw
                         var smartMeasure = MeasureLineGlyphs(paint, adding, needsShaping, scale);
 
                         var widthBlock = (float)Math.Round(smartMeasure.Width);
-                        var heightBlock = LineHeightPixels;
+                        var spanMetrics = paint.FontMetrics;
+                        var spanLineHeight = (float)Math.Round((-spanMetrics.Ascent + spanMetrics.Descent) * LineHeight);
+                        var heightBlock = spanLineHeight > LineHeightPixels ? spanLineHeight : LineHeightPixels;
 
                         if (paint.TextSkewX != 0)
                         {
