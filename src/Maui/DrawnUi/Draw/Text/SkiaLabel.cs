@@ -2490,8 +2490,7 @@ namespace DrawnUi.Draw
             }
             else if (LineSpacing != 1)
             {
-                double defaultLeading = lineHeight * 0.1;
-                return defaultLeading * LineSpacing;
+                return lineHeight * (LineSpacing - 1);
             }
 
             return 0;
