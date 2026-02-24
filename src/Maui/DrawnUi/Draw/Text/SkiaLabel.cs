@@ -1569,7 +1569,7 @@ namespace DrawnUi.Draw
 
                         var widthBlock = (float)Math.Round(smartMeasure.Width);
                         var spanMetrics = paint.FontMetrics;
-                        var spanLineHeight = (float)Math.Round((-spanMetrics.Ascent + spanMetrics.Descent) * LineHeight);
+                        var spanLineHeight = (float)Math.Round((GetCorrectedAscent(paint) + spanMetrics.Descent) * LineHeight);
                         var heightBlock = spanLineHeight > LineHeightPixels ? spanLineHeight : LineHeightPixels;
 
                         if (paint.TextSkewX != 0)
@@ -2525,11 +2525,34 @@ namespace DrawnUi.Draw
 
         #region FONT
 
+#if WINDOWS
+        /// <summary>
+        /// On Windows/DirectWrite, Ascent is read from OS/2 usWinAscent which is inflated
+        /// compared to FreeType/hhea on Android. MeasureText("H") gives the actual glyph
+        /// height which is consistent across platforms (verified: H.ink/TextSize is identical
+        /// on Android and Windows for the same font). Factor 1.05 matches Android's natural
+        /// Ascent/H-ink ratio (~1.047), giving identical visual top padding on both platforms.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static float GetCorrectedAscent(SKPaint paint)
+        {
+            var hBounds = new SKRect();
+            paint.MeasureText("H", ref hBounds);
+            return hBounds.IsEmpty || hBounds.Top >= 0
+                ? -paint.FontMetrics.Ascent
+                : -hBounds.Top * 1.05f;
+        }
+#else
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static float GetCorrectedAscent(SKPaint paint) => -paint.FontMetrics.Ascent;
+#endif
+
+
         void UpdateFontMetrics(SKPaint paint)
         {
             FontMetrics = paint.FontMetrics;
             LineHeightPixels =
-                (float)Math.Round((-FontMetrics.Ascent + FontMetrics.Descent) * LineHeight); //PaintText.FontSpacing;
+                (float)Math.Round((GetCorrectedAscent(paint) + FontMetrics.Descent) * LineHeight); //PaintText.FontSpacing;
             fontUnderline = FontMetrics.UnderlinePosition.GetValueOrDefault();
 
             if (!string.IsNullOrEmpty(this.MonoForDigits))
@@ -3520,11 +3543,10 @@ namespace DrawnUi.Draw
             return this;
         }
 
-        public virtual bool OnFocusChanged(bool focus)
+        public new virtual bool OnFocusChanged(bool focus)
         {
             return false;
         }
-
 
         public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args,
             GestureEventProcessingInfo apply)
