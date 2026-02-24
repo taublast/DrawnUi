@@ -95,7 +95,7 @@ namespace DrawnUi.Camera
             _sensorOrientation = sensorOrientation;
             // 90° and 0° sensor orientations: SurfaceTexture transform puts image bottom at GL y=0 → need CPU flip.
             // 270° and 180° sensor orientations: transform reverses Y in the FBO → CPU flip would double-invert.
-            _needsYFlip = (sensorOrientation == 90 || sensorOrientation == 0);
+            _needsYFlip = true;//(sensorOrientation == 90 || sensorOrientation == 0); isFrontCamera whatever..
 
             // Initialize EGL and GL resources on a dedicated thread (EGL context is thread-local)
             bool initSuccess = false;
