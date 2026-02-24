@@ -499,7 +499,7 @@ namespace CameraTests.Views
                 CameraControl.EnableAudioRecording = true;
 
                 // Setup camera event handlers
-                SetupCameraEvents(true);
+                AttachHardware(true);
             }
 
         }
@@ -1091,5 +1091,12 @@ namespace CameraTests.Views
             }
         }
 
+        private void OnPermissionsResultChanged(object sender, bool e)
+        {
+            if (!e)
+            {
+                ShowAlert("Error", "The application does not have the required permissions to access all the camera features.");
+            }
+        }
     }
 }

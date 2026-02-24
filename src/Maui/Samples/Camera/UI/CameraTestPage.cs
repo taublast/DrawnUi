@@ -45,7 +45,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
             if (CameraControl != null)
             {
                 CameraControl?.Stop();
-                SetupCameraEvents(false);
+                AttachHardware(false);
                 CameraControl = null;
             }
 
@@ -73,7 +73,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         if (CameraControl != null)
         {
             CameraControl?.Stop();
-            SetupCameraEvents(false);
+            AttachHardware(false);
             CameraControl = null;
         }
 
@@ -97,17 +97,17 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
             _realtimeTranscriptionService.SendingData += OnTranscriptionWorking;
         }
     }
-    private void SetupCameraEvents(bool subscribe)
+    private void AttachHardware(bool subscribe)
     {
         if (subscribe)
         {
+            CameraControl.PermissionsResult += OnPermissionsResultChanged;
             CameraControl.StateChanged += CameraControlOnStateChanged;
             CameraControl.CaptureSuccess += OnCaptureSuccess;
             CameraControl.CaptureFailed += OnCaptureFailed;
             CameraControl.OnError += OnCameraError;
             CameraControl.RecordingSuccess += OnVideoRecordingSuccess;
             CameraControl.RecordingProgress += OnVideoRecordingProgress;
-
             CameraControl.AudioSampleAvailable += OnAudioCaptured;
 
             // Monitor recording state changes to start/stop speech recognition
@@ -120,6 +120,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         {
             if (CameraControl != null)
             {
+                CameraControl.PermissionsResult -= OnPermissionsResultChanged;
                 CameraControl.StateChanged -= CameraControlOnStateChanged;
                 CameraControl.CaptureSuccess -= OnCaptureSuccess;
                 CameraControl.CaptureFailed -= OnCaptureFailed;

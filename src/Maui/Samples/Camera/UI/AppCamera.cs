@@ -8,7 +8,7 @@ namespace CameraTests.Views
         public AppCamera()
         {
             //set defaults for this camera
-            NeedPermissionsSet = NeedPermissions.Camera | NeedPermissions.Gallery | NeedPermissions.Microphone | NeedPermissions.Location;
+            NeedPermissionsSet = NeedPermissions.Camera | NeedPermissions.Gallery | NeedPermissions.Microphone;
 
             //GPS metadata
             this.InjectGpsLocation = true;
@@ -18,8 +18,6 @@ namespace CameraTests.Views
 
             FrameProcessor = OnFrameProcessing;
             PreviewProcessor = OnFrameProcessing;
-
-
 
 #if DEBUG
             VideoDiagnosticsOn = true;

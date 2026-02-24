@@ -1711,6 +1711,7 @@ public partial class SkiaCamera : SkiaControl
                         Debug.WriteLine("[SkiaCamera] Starting..");
                         PermissionsWarning = false;
                         PermissionsError = false;
+                        OnPermissionsResultChanged(true);
                         StartInternal();
                     },
                     (presented) =>
@@ -1719,6 +1720,7 @@ public partial class SkiaCamera : SkiaControl
                         IsOn = false;
                         PermissionsWarning = true;
                         PermissionsError = true;
+                        OnPermissionsResultChanged(false);
                     });
             }
             catch (Exception e)
@@ -1729,6 +1731,19 @@ public partial class SkiaCamera : SkiaControl
 
     }
 
+    /// <summary>
+    /// Will be called when trying to activate camera (IsOn->StartWithPermissionsInternal) and permissions result is available.
+    /// </summary>
+    /// <param name="granted"></param>
+    protected virtual void OnPermissionsResultChanged(bool granted)
+    {
+        PermissionsResult?.Invoke(this, granted);
+    }
+
+    /// <summary>
+    /// Will be invoked by OnPermissionsResultChanged when trying to activate camera (IsOn->StartWithPermissionsInternal) and permissions result is available.
+    /// </summary>
+    public event EventHandler<bool> PermissionsResult;
 
     /// <summary>
     /// Starts the camera after permissions where acquired
@@ -3596,6 +3611,8 @@ public partial class SkiaCamera : SkiaControl
                         locStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
                     allGranted = locStatus == PermissionStatus.Granted;
                 }
+
+                Super.Log($"[SkiaCamera] Permissions granted: {allGranted} for {request}");
             }
             catch (Exception ex)
             {
