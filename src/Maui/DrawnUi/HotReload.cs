@@ -16,7 +16,10 @@ namespace DrawnUi
         private static RestartingTimer UpdateOnTimerOnly = new (DelayMs, () =>
         {
             Trace.WriteLine("[HOTRELOAD] Updating Application =>");
-            UpdateApplicationEvent?.Invoke(null);
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                UpdateApplicationEvent?.Invoke(null);
+            });
         });
 
         public static void ClearCache(Type[]? types)
