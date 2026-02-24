@@ -26,7 +26,7 @@ namespace DrawnUi.Controls
             if (FillGradient != null)
                 FillGradient.BindingContext = BindingContext;
 
-            foreach (var view in this.Views)
+            foreach (var view in this.Children)
             {
                 if (view.BindingContext == null)
                     view.SetInheritedBindingContext(BindingContext);
@@ -90,7 +90,7 @@ namespace DrawnUi.Controls
         {
             base.OnLayoutChanged();
 
-            foreach (var view in Views)
+            foreach (var view in Children)
             {
                 if (view is IInsideViewport viewport)
                 {
@@ -137,10 +137,10 @@ namespace DrawnUi.Controls
 
             base.OnChildAdded(view);
 
-            var previous = Views.Count - 2;
+            var previous = Children.Count - 2;
             if (previous >= 0)
             {
-                HideView(view as SkiaControl, Views.Count - 1, false);
+                HideView(view as SkiaControl, Children.Count - 1, false);
             }
             else
             {
@@ -189,17 +189,19 @@ namespace DrawnUi.Controls
             try
             {
                 var stack = GetNavigationStack(selectedIndex);
-                var view = stack.LastOrDefault();
-                if (view != null)
-                    return stack.Last();
+                if (stack.Count >0)
+                {
+                    var view = stack.LastOrDefault();
+                    if (view != null)
+                        return stack.Last();
 
-                return new NavigationStackEntry(Views[selectedIndex] as SkiaControl, false, false);
+                }
+                return new NavigationStackEntry(Children[selectedIndex] as SkiaControl, false, false);
             }
             catch (Exception e)
             {
                 Trace.WriteLine(e);
             }
-
             return null;
         }
 
@@ -207,7 +209,7 @@ namespace DrawnUi.Controls
         {
             try
             {
-                return new NavigationStackEntry(Views[selectedIndex] as SkiaControl, false, false);
+                return new NavigationStackEntry(Children[selectedIndex] as SkiaControl, false, false);
             }
             catch (Exception e)
             {
@@ -1142,7 +1144,7 @@ namespace DrawnUi.Controls
                             SetNewVisibleViewAsOneVisible();
                         }
 
-                        foreach (var view in Views)
+                        foreach (var view in Children)
                         {
                             if (isAnimating && view == previousVisibleView?.View)
                                 continue;
