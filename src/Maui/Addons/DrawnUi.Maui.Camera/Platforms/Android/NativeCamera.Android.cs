@@ -456,7 +456,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// </summary>
     /// <param name="image"></param>
     /// <param name="output"></param>
-    public void ProcessImage(Image image, Allocation output)
+    public void ProcessImage(Image image, Allocation output, bool mirrorX, bool mirrorY)
     {
         var rotation = SensorOrientation;
 
@@ -464,7 +464,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         {
             if (Splines.Current != null)
                 Rendering.BlitWithLUT(rs, Splines.Renderer, Splines.Current.RendererLUT, image, output, rotation,
-                    Gamma, false, false);
+                    Gamma, mirrorX, mirrorY);
             else
                 Rendering.TestOutput(rs, output);
         }
@@ -472,20 +472,20 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         {
             if (Effect == CameraEffect.ColorNegativeManual)
             {
-                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, false, true, false, false);
+                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, false, true, mirrorX, mirrorY);
             }
             else if (Effect == CameraEffect.GrayscaleNegative)
             {
-                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, true, true, false, false);
+                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, true, true, mirrorX, mirrorY);
             }
             else if (Effect == CameraEffect.Grayscale)
             {
-                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, true, false, false, false);
+                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, true, false, mirrorX, mirrorY);
             }
             else
             {
                 //default, no effects
-                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, false, false, false, false);
+                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, false, false, mirrorX, mirrorY);
                 //Rendering.TestOutput(rs, output);
             }
         }
@@ -600,7 +600,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         // RenderScript YUV→RGB conversion
         if (!_useGlPreview)
         {
-            ProcessImage(image, allocated.Allocation);
+            ProcessImage(image, allocated.Allocation, false, false);
             allocated.Update();
         }
 
@@ -622,7 +622,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         var outImage = new CapturedImage()
         {
-            Facing = FormsControl.Facing,
+            Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
             Time = monotonicTime,
             Image = sk,
             Meta = meta,
@@ -1082,10 +1082,16 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     var sensorSize =
                         (Android.Util.SizeF)characteristics.Get(CameraCharacteristics.SensorInfoPhysicalSize);
 
+                    var actualFacing = FormsControl.Facing;
+                    if (facing?.IntValue() == (int)LensFacing.Front)
+                        actualFacing = CameraPosition.Selfie;
+                    else if (facing?.IntValue() == (int)LensFacing.Back)
+                        actualFacing = CameraPosition.Default;
+
                     var unit = new CameraUnit
                     {
                         Id = cameraId,
-                        Facing = FormsControl.Facing,
+                        Facing = actualFacing,
                         MinFocalDistance =
                             (float)characteristics.Get(CameraCharacteristics.LensInfoMinimumFocusDistance),
                         //LensDistortion = (???)characteristics.Get(CameraCharacteristics.LensDistortion),
@@ -2283,7 +2289,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         var outImage = new CapturedImage()
         {
-            Facing = FormsControl.Facing,
+            Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
             Time = monotonicTime,
             Image = skImage,
             Meta = meta,
@@ -2508,9 +2514,12 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 width = image.Height;
             }
 
+            //android flips it internally
+            bool flipSelfie = !FormsControl.MirrorSavedSelfiePhoto && FormsControl.CameraDevice.Facing == CameraPosition.Selfie;
+
             using var allocated = new AllocatedBitmap(rs, width, height);
 
-            ProcessImage(image, allocated.Allocation);
+            ProcessImage(image, allocated.Allocation, flipSelfie, false);
 
             allocated.Update();
 
@@ -2542,7 +2551,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             var outImage = new CapturedImage()
             {
-                Facing = FormsControl.Facing,
+                Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
                 Time = DateTime.UtcNow,
                 Image = allocated.Bitmap.ToSKImage(),
                 Meta = meta,

@@ -236,26 +236,20 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
-    /// Readonly, gets whether video recording is supported on the current device/camera
+    /// Normally the preview in sefie mode is mirrored and when you saved the still photo is should either get mirrored back or saved as you saw it in preview.
+    /// In native cameras apps usually the saved photo is mirrored back to normal, we do not do that here by default, we save what you just saw in preview.
+    /// This property (default is False) allows you to control this.
     /// </summary>
-    public bool CanRecordVideo
-    {
-        get { return NativeControl?.CanRecordVideo() ?? false; }
-    }
+    public static readonly BindableProperty MirrorSavedSelfiePhotoProperty = BindableProperty.Create(
+        nameof(MirrorSavedSelfiePhoto),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false);
 
-    /// <summary>
-    /// Gets the current recording duration (if recording)
-    /// </summary>
-    public TimeSpan LiveRecordingDuration
+    public bool MirrorSavedSelfiePhoto
     {
-        get
-        {
-            if (_captureVideoEncoder != null)
-            {
-                return _captureVideoEncoder.LiveRecordingDuration;
-            }
-            return TimeSpan.Zero;
-        }
+        get { return (bool)GetValue(MirrorSavedSelfiePhotoProperty); }
+        set { SetValue(MirrorSavedSelfiePhotoProperty, value); }
     }
 
     public static readonly BindableProperty AudioDeviceIndexProperty = BindableProperty.Create(
@@ -444,11 +438,29 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
+
     /// <summary>
-    /// Callback for processing individual frames during capture video flow.
-    /// Only used when UseRealtimeVideoProcessing is true.
-    /// Parameters: SKCanvas (for drawing), SKImageInfo (frame info), TimeSpan (recording timestamp)
+    /// Readonly, gets whether video recording is supported on the current device/camera
     /// </summary>
+    public bool CanRecordVideo
+    {
+        get { return NativeControl?.CanRecordVideo() ?? false; }
+    }
+
+    /// <summary>
+    /// Gets the current recording duration (if recording)
+    /// </summary>
+    public TimeSpan LiveRecordingDuration
+    {
+        get
+        {
+            if (_captureVideoEncoder != null)
+            {
+                return _captureVideoEncoder.LiveRecordingDuration;
+            }
+            return TimeSpan.Zero;
+        }
+    }
 
     #endregion
 
