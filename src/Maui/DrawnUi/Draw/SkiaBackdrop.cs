@@ -8,6 +8,11 @@ namespace DrawnUi.Draw;
 /// </summary>
 public class SkiaBackdrop : ContentLayout, ISkiaGestureListener
 {
+    public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
+    {
+        return base.OnMeasuring(widthConstraint, heightConstraint, scale);
+    }
+
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
         //consume everything
@@ -152,11 +157,21 @@ public class SkiaBackdrop : ContentLayout, ISkiaGestureListener
         var destination = ctx.Destination;
         var scale = ctx.Scale;
 
+        // Capture before invalidation: if we dispose synchronously below,
+        // kill stays null to prevent a second DisposeObject call on the same handle.
+        SKImageFilter kill1 = null;
+        SKColorFilter kill2 = null;
+
         if (NeedInvalidateImageFilter)
         {
             NeedInvalidateImageFilter = false;
             PaintImageFilter?.Dispose();
             PaintImageFilter = null;
+            // kill1 stays null — already disposed above
+        }
+        else
+        {
+            kill1 = ImagePaint?.ImageFilter;
         }
 
         if (NeedInvalidateColorFilter)
@@ -164,6 +179,11 @@ public class SkiaBackdrop : ContentLayout, ISkiaGestureListener
             NeedInvalidateColorFilter = false;
             PaintColorFilter?.Dispose();
             PaintColorFilter = null;
+            // kill2 stays null — already disposed above
+        }
+        else
+        {
+            kill2 = ImagePaint?.ColorFilter;
         }
 
         if (destination.Width > 0 && destination.Height > 0)
@@ -173,9 +193,6 @@ public class SkiaBackdrop : ContentLayout, ISkiaGestureListener
             PaintTintBackground(ctx.Context.Canvas, destination);
 
             BuildPaint();
-
-            var kill1 = ImagePaint.ImageFilter;
-            var kill2 = ImagePaint.ColorFilter;
 
             ImagePaint.ImageFilter = PaintImageFilter;
             ImagePaint.ColorFilter = PaintColorFilter;
@@ -304,12 +321,12 @@ public class SkiaBackdrop : ContentLayout, ISkiaGestureListener
 
     protected virtual void BuildPaint()
     {
-        if (PaintColorFilter == null)
+        if (PaintColorFilter == null && Brightness != 1.0)
         {
             PaintColorFilter = SkiaImageEffects.Gamma((float)this.Brightness);
         }
 
-        if (PaintImageFilter == null)
+        if (PaintImageFilter == null && Blur > 0)
         {
             PaintImageFilter = SKImageFilter.CreateBlur((float)Blur * RenderingScale, (float)Blur * RenderingScale, SKShaderTileMode.Mirror);
         }
