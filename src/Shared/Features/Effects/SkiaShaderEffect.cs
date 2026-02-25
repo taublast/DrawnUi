@@ -19,7 +19,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
     private SKImage _frozenSnapshot;
     private bool _frozenSnapshotOwned;
 
-    private void ReleaseFrozenSnapshot()
+    public void ReleaseFrozenSnapshot()
     {
         if (Parent != null)
         {
@@ -33,6 +33,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         }
 
         _frozenSnapshotOwned = false;
+        _frozenSnapshot = null;
     }
 
     // ─── UseContext / AutoCreateInputTexture ────────────────────────────────
@@ -125,7 +126,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
             case PostRendererEffectUseBackgroud.Once:
                 if (!AquiredBackground)
                 {
-                    ReleaseFrozenSnapshot();
+                    _frozenSnapshotOwned = false;
 
                     var snapshot = Parent?.CachedImage;
                     if (Parent?.CachedImage == null && AutoCreateInputTexture)
@@ -502,24 +503,16 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
     }
 
     /// <summary>
-    /// Simplified update - no GPU resources to dispose
-    /// </summary>
-    public override void Update()
-    {
-        // Nothing to dispose - we don't cache GPU resources!
-        base.Update();
-    }
-
-    /// <summary>
     /// Simplified dispose - only CPU-side resources
     /// </summary>
     protected override void OnDisposing()
     {
-        ReleaseFrozenSnapshot();
+        //ReleaseFrozenSnapshot();
 
         // Only dispose CompiledShader if this instance owns it (not from cache)
         if (_ownCompiledShader)
             CompiledShader?.Dispose();
+
         CompiledShader = null;
         _ownCompiledShader = false;
 
