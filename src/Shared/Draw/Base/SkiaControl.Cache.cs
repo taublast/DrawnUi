@@ -133,7 +133,10 @@ public partial class SkiaControl
     CachedObject _renderObjectPrevious;
 
     /// <summary>
-    /// The cached representation of the control. Will be used on redraws without calling Paint etc, until the control is requested to be updated.
+    /// The cached representation of the control.
+    /// Will be used on redraws without calling Paint etc, until the control is requested to be updated.
+    /// This WILL NOT raise PropertyChanged !!! (avoiding MAUI concurrent access conflict)
+    /// Use OnCacheCreated (CacheCreated event) and OnCacheDestroyed (CacheDestroyed event).
     /// </summary>
     //[EditorBrowsable(EditorBrowsableState.Never)]
     public CachedObject RenderObject
@@ -168,7 +171,6 @@ public partial class SkiaControl
                     }
 
                     _renderObject = value;
-                    OnPropertyChanged();
 
                     if (value != null)
                         OnCacheCreated();
