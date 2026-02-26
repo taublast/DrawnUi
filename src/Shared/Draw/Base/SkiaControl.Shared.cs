@@ -57,6 +57,11 @@ namespace DrawnUi.Draw
             }
         }
 
+        /// <summary>
+        /// Will be called by the Canvas. 
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public virtual bool OnHover(bool state)
         {
             return state;
@@ -573,7 +578,13 @@ namespace DrawnUi.Draw
             if (cancel == default)
                 cancel = new CancellationTokenSource();
 
-            var tcs = new TaskCompletionSource<bool>(cancel.Token);
+            var tcs = new TaskCompletionSource<bool>();
+
+            CancellationTokenRegistration registration = default;
+            registration = cancel.Token.Register(() =>
+            {
+                animator.Stop();
+            });
 
             // Update animator parameters
             animator.mMinValue = 0;
@@ -583,8 +594,19 @@ namespace DrawnUi.Draw
 
             animator.OnStop = () =>
             {
+                registration.Dispose();
                 if (!tcs.Task.IsCompleted)
-                    tcs.SetResult(true);
+                {
+                    if (cancel.IsCancellationRequested)
+                    {
+                        callbaclOnCancel?.Invoke();
+                        tcs.TrySetCanceled(cancel.Token);
+                    }
+                    else
+                    {
+                        tcs.TrySetResult(true);
+                    }
+                }
                 DisposeObject(animator);
             };
             animator.OnUpdated = (value) =>
@@ -592,12 +614,6 @@ namespace DrawnUi.Draw
                 if (!cancel.IsCancellationRequested)
                 {
                     callback?.Invoke(value);
-                }
-                else
-                {
-                    callbaclOnCancel?.Invoke();
-                    animator.Stop();
-                    DisposeObject(animator);
                 }
             };
 
@@ -642,7 +658,14 @@ namespace DrawnUi.Draw
                 }
             }
 
-            _fadeCancelTokenSource = cancel ?? new CancellationTokenSource();
+            if (cancel != null)
+            {
+                _fadeCancelTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancel.Token);
+            }
+            else
+            {
+                _fadeCancelTokenSource = new CancellationTokenSource();
+            }
 
             var startOpacity = this.Opacity;
             return AnimateAsync(
@@ -651,11 +674,7 @@ namespace DrawnUi.Draw
                     this.Opacity = startOpacity + (end - startOpacity) * value;
                     //Debug.WriteLine($"[ANIM] Opacity: {this.Opacity}");
                 },
-                () =>
-                {
-                    this.Opacity = end;
-                    //Debug.WriteLine($"[ANIM] Opacity END: {this.Opacity}");
-                },
+                null,
                 ms,
                 easing,
                 _fadeCancelTokenSource);
@@ -698,7 +717,14 @@ namespace DrawnUi.Draw
                 }
             }
 
-            _scaleCancelTokenSource = cancel ?? new CancellationTokenSource();
+            if (cancel != null)
+            {
+                _scaleCancelTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancel.Token);
+            }
+            else
+            {
+                _scaleCancelTokenSource = new CancellationTokenSource();
+            }
 
             var startScaleX = this.ScaleX;
             var startScaleY = this.ScaleY;
@@ -708,11 +734,7 @@ namespace DrawnUi.Draw
                     this.ScaleX = startScaleX + (x - startScaleX) * value;
                     this.ScaleY = startScaleY + (y - startScaleY) * value;
                 },
-                () =>
-                {
-                    this.ScaleX = x;
-                    this.ScaleY = y;
-                }, length, easing, _scaleCancelTokenSource);
+                null, length, easing, _scaleCancelTokenSource);
         }
 
         CancellationTokenSource _translateCancelTokenSource;
@@ -752,7 +774,14 @@ namespace DrawnUi.Draw
                 }
             }
 
-            _translateCancelTokenSource = cancel ?? new CancellationTokenSource();
+            if (cancel != null)
+            {
+                _translateCancelTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancel.Token);
+            }
+            else
+            {
+                _translateCancelTokenSource = new CancellationTokenSource();
+            }
 
             var startTranslationX = this.TranslationX;
             var startTranslationY = this.TranslationY;
@@ -762,11 +791,7 @@ namespace DrawnUi.Draw
                     this.TranslationX = (float)(startTranslationX + (x - startTranslationX) * value);
                     this.TranslationY = (float)(startTranslationY + (y - startTranslationY) * value);
                 },
-                () =>
-                {
-                    this.TranslationX = x;
-                    this.TranslationY = y;
-                },
+                null,
                 length, easing, _translateCancelTokenSource);
         }
 
@@ -806,12 +831,19 @@ namespace DrawnUi.Draw
                 }
             }
 
-            _rotateCancelTokenSource = cancel ?? new CancellationTokenSource();
+            if (cancel != null)
+            {
+                _rotateCancelTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancel.Token);
+            }
+            else
+            {
+                _rotateCancelTokenSource = new CancellationTokenSource();
+            }
 
             var startRotation = this.Rotation;
 
             return AnimateAsync(value => { this.Rotation = (float)(startRotation + (end - startRotation) * value); },
-                () => { this.Rotation = end; },
+                null,
                 length, easing, _rotateCancelTokenSource);
         }
 
@@ -863,7 +895,16 @@ namespace DrawnUi.Draw
         {
             RangeAnimator animator = null;
 
-            var tcs = new TaskCompletionSource<bool>(cancel);
+            var tcs = new TaskCompletionSource<bool>();
+
+            CancellationTokenRegistration registration = default;
+            if (cancel.CanBeCanceled)
+            {
+                registration = cancel.Register(() =>
+                {
+                    animator?.Stop();
+                });
+            }
 
             tcs.Task.ContinueWith(task => { DisposeObject(animator); });
 
@@ -871,11 +912,19 @@ namespace DrawnUi.Draw
             {
                 OnStop = () =>
                 {
-                    //if (animator.WasStarted && !cancel.IsCancellationRequested)
+                    registration.Dispose();
+                    if (!tcs.Task.IsCompleted)
                     {
-                        if (applyEndValueOnStop)
-                            callback?.Invoke(end);
-                        tcs.SetResult(true);
+                        if (cancel.IsCancellationRequested)
+                        {
+                            if (applyEndValueOnStop)
+                                callback?.Invoke(end);
+                            tcs.TrySetCanceled(cancel);
+                        }
+                        else
+                        {
+                            tcs.TrySetResult(true);
+                        }
                     }
                 }
             };
@@ -885,10 +934,6 @@ namespace DrawnUi.Draw
                     if (!cancel.IsCancellationRequested)
                     {
                         callback?.Invoke(value);
-                    }
-                    else
-                    {
-                        animator.Stop();
                     }
                 },
                 start, end, (uint)length, easing, delayMs);
@@ -1785,6 +1830,24 @@ namespace DrawnUi.Draw
 
             return forChild;
         }
+
+        /// <summary>
+        /// Will check if hovered by pointer and set IsHovered accordingly
+        /// </summary>
+        public virtual void CheckHovered(SkiaGesturesParameters args)
+        {
+
+#if WINDOWS || MACCATALYST || ANDROID
+            if (args.Type == TouchActionResult.Pointer)
+            {
+                SetHover(true);
+            }
+#else
+            //for iOS todo
+
+#endif
+        }
+
         public virtual ISkiaGestureListener ProcessGestures(
             SkiaGesturesParameters args,
             GestureEventProcessingInfo apply)
@@ -2086,7 +2149,7 @@ namespace DrawnUi.Draw
 
             if (BlockGesturesBelow && consumed == null && args.Type != TouchActionResult.Up)
             {
-                return this as ISkiaGestureListener;
+                consumed = this as ISkiaGestureListener;
             }
 
             return consumed;
