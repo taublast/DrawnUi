@@ -12,6 +12,11 @@ namespace DrawnUi.Draw;
 /// </summary>
 public class AnimatedShaderEffect : SkiaShaderEffect
 {
+   /// <summary>
+    /// Normalized center position of the effect (0.0–1.0 in each axis).
+    /// </summary>
+    public SKPoint Center { get; set; } = new SKPoint(0.5f, 0.5f);
+
     protected virtual void OnCompleted()
     {
         Completed?.Invoke(this, EventArgs.Empty);
@@ -37,10 +42,25 @@ public class AnimatedShaderEffect : SkiaShaderEffect
     /// Starts the celebration animation on the given parent control.
     /// Safe to call multiple times — restarts from zero each time.
     /// </summary>
-    public virtual void Play(SkiaControl parent)
+    public virtual void Play()
     {
         Animator?.Stop();
-        Animator ??= new RangeAnimator(parent);
+
+        if (Parent == null)
+        {
+            return;
+        }
+
+        Animator ??= new RangeAnimator(Parent)
+        {
+            OnStop = () =>
+            {
+                if (Animator.WasStarted)
+                {
+                    OnCompleted();
+                }
+            }
+        };
 
         Progress = 0.0;
         AquiredBackground = false; // Reset so Once mode re-captures background on next render
@@ -48,13 +68,9 @@ public class AnimatedShaderEffect : SkiaShaderEffect
         Animator.Start(
             value =>
             {
+                //Debug.WriteLine($"Animator {value}");
                 Progress = value;
                 Update();
-
-                if (value >= 1.0)
-                {
-                    OnCompleted();
-                }
             },
             start:   0.0,
             end:     1.0,
@@ -76,6 +92,7 @@ public class AnimatedShaderEffect : SkiaShaderEffect
     {
         var uniforms = base.CreateUniforms(destination);
         uniforms["progress"] = (float)Progress;
+        uniforms["iCenter"] = new float[] { Center.X, Center.Y };
 
         return uniforms;
     }

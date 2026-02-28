@@ -11,9 +11,11 @@ public class BaseChainedEffect : SkiaEffect, IRenderEffect
 
     public override void Update()
     {
-        var kill = Paint;
+        if (Parent != null && Paint != null)
+        {
+            Parent.DisposeObject(Paint);
+        }
         Paint = null;
-        kill?.Dispose();
 
         base.Update();
     }

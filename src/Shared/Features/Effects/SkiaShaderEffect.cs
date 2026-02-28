@@ -124,7 +124,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
                 return null;
 
             case PostRendererEffectUseBackgroud.Once:
-                if (!AquiredBackground)
+                if (!AquiredBackground || _frozenSnapshot.Handle==0) //check handle as cache might be disposed
                 {
                     _frozenSnapshotOwned = false;
 
@@ -253,15 +253,12 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
                     sourceToDispose = source;
                 }
 
-                if (source == null)
+                if (source == null || source.Handle==0)
                     return null;
             }
 
             // Step 3: Create everything fresh (no caching)
-            var samplingOptions = new SKSamplingOptions(FilterMode, MipmapMode);
-            SKShader primaryTextureShader = source != null
-                ? source.ToShader(TileMode, TileMode, samplingOptions)
-                : null;
+            SKShader primaryTextureShader = CreatePrimaryTextureShader(source);
 
             using (primaryTextureShader)
             {
@@ -281,6 +278,19 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
             }
         }
     }
+
+    protected virtual SKShader CreatePrimaryTextureShader(SKImage source)
+    {
+        if (source == null) return null;
+        var samplingOptions = new SKSamplingOptions(FilterMode, MipmapMode);
+        return source.ToShader(TileMode, TileMode, samplingOptions);
+    }
+
+    // Pre-allocated uniform value buffers — reused every frame to avoid per-frame heap alloc
+    private readonly float[] _uniformMouse = new float[4];
+    private readonly float[] _uniformOffset = new float[2];
+    private readonly float[] _uniformResolution = new float[2];
+    protected readonly float[] _uniformImageResolution = new float[2];
 
     // ✅ KEEP: Only CPU-side compiled shader
     protected SKRuntimeEffect CompiledShader;
@@ -326,14 +336,19 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         SKSize iImageResolution = iResolution;
         var uniforms = new SKRuntimeEffectUniforms(CompiledShader);
 
-        uniforms["iMouse"] = new[] { MouseCurrent.X, MouseCurrent.Y, MouseInitial.X, MouseInitial.Y };
+        _uniformMouse[0] = MouseCurrent.X; _uniformMouse[1] = MouseCurrent.Y;
+        _uniformMouse[2] = MouseInitial.X; _uniformMouse[3] = MouseInitial.Y;
+        uniforms["iMouse"] = _uniformMouse;
         uniforms["iTime"] = TimeSeconds;
-        uniforms["iOffset"] = new[] { viewport.Left, viewport.Top };
+        _uniformOffset[0] = viewport.Left; _uniformOffset[1] = viewport.Top;
+        uniforms["iOffset"] = _uniformOffset;
 
         // Viewport size in pixels, can be different from size of images passed as sources
-        uniforms["iResolution"] = new[] { iResolution.Width, iResolution.Height };
+        _uniformResolution[0] = iResolution.Width; _uniformResolution[1] = iResolution.Height;
+        uniforms["iResolution"] = _uniformResolution;
 
-        uniforms["iImageResolution"] = new[] { iImageResolution.Width, iImageResolution.Height };
+        _uniformImageResolution[0] = iImageResolution.Width; _uniformImageResolution[1] = iImageResolution.Height;
+        uniforms["iImageResolution"] = _uniformImageResolution;
 
         return uniforms;
     }
@@ -434,6 +449,9 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         typeof(SkiaShaderEffect),
         string.Empty, propertyChanged: NeedChangeSource);
 
+    /// <summary>
+    /// Changing this directly will force  the shader to recompile
+    /// </summary>
     public string ShaderCode
     {
         get { return (string)GetValue(ShaderCodeProperty); }
@@ -445,6 +463,9 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
         typeof(SkiaShaderEffect),
         string.Empty, propertyChanged: NeedChangeSource);
 
+    /// <summary>
+    /// FIlename from resources, ex: @"Shaders\blit.sksl"
+    /// </summary>
     public string ShaderSource
     {
         get { return (string)GetValue(ShaderSourceProperty); }
