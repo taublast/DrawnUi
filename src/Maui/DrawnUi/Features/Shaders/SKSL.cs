@@ -21,6 +21,18 @@ public static class SkSl
         return json;
     }
 
+    public static void Precompile(params string[] filenames)
+    {
+        foreach (var filename in filenames)
+        {
+            if (!CompiledCache.TryGetValue(filename, out _))
+            {
+                string shaderCode = SkSl.LoadFromResources(filename);
+                SkSl.Compile(shaderCode, filename, true);
+            }
+        }
+    }
+
     public static Dictionary<string, SKRuntimeEffect> CompiledCache = new();
 
     /// <summary>
