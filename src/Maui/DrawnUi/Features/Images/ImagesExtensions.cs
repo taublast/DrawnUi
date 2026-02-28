@@ -29,13 +29,13 @@ namespace DrawnUi.Features.Images
             }
             else
             {
-                var retryPolicy = Policy
-                    .HandleResult<HttpResponseMessage>(r =>
-                        r.StatusCode == HttpStatusCode.GatewayTimeout
-                        || r.StatusCode == HttpStatusCode.RequestTimeout)
-                    .Or<HttpRequestException>()
-                    .Or<TimeoutRejectedException>()
-                    .WaitAndRetryAsync(new[] { TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(3), });
+                //var retryPolicy = Policy
+                //    .HandleResult<HttpResponseMessage>(r =>
+                //        r.StatusCode == HttpStatusCode.GatewayTimeout
+                //        || r.StatusCode == HttpStatusCode.RequestTimeout)
+                //    .Or<HttpRequestException>()
+                //    .Or<TimeoutRejectedException>()
+                //    .WaitAndRetryAsync(new[] { TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(3), });
 
                 clientBuilder = services.AddHttpClient(HttpClientKey,
                         client => { client.DefaultRequestHeaders.Add("User-Agent", Super.UserAgent); })
@@ -48,8 +48,8 @@ namespace DrawnUi.Features.Images
                         }
 
                         return handler;
-                    })
-                    .AddPolicyHandler(retryPolicy);
+                    });
+                    //.AddPolicyHandler(retryPolicy);
             }
 
             delegateBuilder?.Invoke(clientBuilder);
