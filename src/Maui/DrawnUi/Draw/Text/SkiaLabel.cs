@@ -2528,19 +2528,24 @@ namespace DrawnUi.Draw
 #if WINDOWS
         /// <summary>
         /// On Windows/DirectWrite, Ascent is read from OS/2 usWinAscent which is inflated
-        /// compared to FreeType/hhea on Android. MeasureText("H") gives the actual glyph
-        /// height which is consistent across platforms (verified: H.ink/TextSize is identical
-        /// on Android and Windows for the same font). Factor 1.05 matches Android's natural
-        /// Ascent/H-ink ratio (~1.047), giving identical visual top padding on both platforms.
+        /// compared to FreeType/hhea on Android. We measure an actual ascender glyph ("l")
+        /// to get the true ascender height, which is what FontMetrics.Ascent is supposed to
+        /// represent. Result is cached per (typeface, size) to avoid repeated native calls
+        /// in the per-span measurement loop.
         /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static readonly System.Collections.Concurrent.ConcurrentDictionary<(IntPtr, float), float> _correctedAscentCache = new();
+
         static float GetCorrectedAscent(SKPaint paint)
         {
-            var hBounds = new SKRect();
-            paint.MeasureText("H", ref hBounds);
-            return hBounds.IsEmpty || hBounds.Top >= 0
-                ? -paint.FontMetrics.Ascent
-                : -hBounds.Top * 1.05f;
+            var key = (paint.Typeface?.Handle ?? IntPtr.Zero, paint.TextSize);
+            return _correctedAscentCache.GetOrAdd(key, _ =>
+            {
+                var bounds = new SKRect();
+                paint.MeasureText("Á", ref bounds);
+                return bounds.IsEmpty || bounds.Top >= 0
+                    ? -paint.FontMetrics.Ascent
+                    : -bounds.Top;
+            });
         }
 #else
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
