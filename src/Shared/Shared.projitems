@@ -24,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\ISkiaEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\ISkiaPostRendererEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\IStateEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\PostRendererEffectUseBackgroud.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\SkiaEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\SkiaShaderEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\StateEffect.cs" />
