@@ -119,7 +119,7 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
                                     .OnTapped(async me => { await TakePictureAsync(); })
                                     .ObserveProperty(CameraControl, nameof(CameraControl.State), me =>
                                     {
-                                        me.IsEnabled = CameraControl.State == CameraState.On;
+                                        me.IsEnabled = CameraControl.State == HardwareState.On;
                                         me.Opacity = me.IsEnabled ? 1.0 : 0.5;
                                     }),
 
@@ -405,9 +405,9 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
             _statusLabel.Text = statusText;
             _statusLabel.TextColor = CameraControl.State switch
             {
-                CameraState.On => Colors.Green,
-                CameraState.Off => Colors.Gray,
-                CameraState.Error => Colors.Red,
+                HardwareState.On => Colors.Green,
+                HardwareState.Off => Colors.Gray,
+                HardwareState.Error => Colors.Red,
                 _ => Colors.Gray
             };
         }
@@ -415,7 +415,7 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
 
     private async Task TakePictureAsync()
     {
-        if (CameraControl.State != CameraState.On)
+        if (CameraControl.State != HardwareState.On)
             return;
 
         try
@@ -570,7 +570,7 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
     {
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            if (CameraControl.State != CameraState.On)
+            if (CameraControl.State != HardwareState.On)
                 return;
 
             try
