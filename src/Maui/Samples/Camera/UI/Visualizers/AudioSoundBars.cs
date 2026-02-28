@@ -12,7 +12,7 @@ namespace CameraTests
     public class AudioSoundBars : IAudioVisualizer, IDisposable
     {
         public bool UseGain { get; set; } = true;
-        public int Skin { get; set; } = 1;
+        public int Skin { get; set; } = 0;
         public bool ShowPeakDots { get; set; } = true;
 
         private const int BarCount = 48;

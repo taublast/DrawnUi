@@ -51,7 +51,7 @@ namespace CameraTests
         private static readonly string[] SolfegeNames = { "Do", "Do#", "Re", "Re#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si" };
 
         public bool UseGain { get; set; } = true;
-        public int Skin { get; set; } = 0;
+        public int Skin { get; set; } = 1;
 
         public void AddSample(AudioSample sample)
         {

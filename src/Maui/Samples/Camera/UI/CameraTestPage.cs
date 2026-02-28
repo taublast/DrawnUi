@@ -157,9 +157,9 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
         }
     }
 
-    private void CameraControlOnStateChanged(object sender, CameraState e)
+    private void CameraControlOnStateChanged(object sender, HardwareState e)
     {
-        if (e == CameraState.On)
+        if (e == HardwareState.On)
         {
             RefreshGpsLocationIfNeeded();
         }
@@ -281,9 +281,9 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
             _statusLabel.Text = statusText;
             _statusLabel.TextColor = CameraControl.State switch
             {
-                CameraState.On => Color.FromArgb("#10B981"),
-                CameraState.Off => Color.FromArgb("#9CA3AF"),
-                CameraState.Error => Color.FromArgb("#DC2626"),
+                HardwareState.On => Color.FromArgb("#10B981"),
+                HardwareState.Off => Color.FromArgb("#9CA3AF"),
+                HardwareState.Error => Color.FromArgb("#DC2626"),
                 _ => Color.FromArgb("#9CA3AF")
             };
         }
@@ -366,7 +366,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
     private async Task TakePictureAsync()
     {
-        if (CameraControl.State != CameraState.On)
+        if (CameraControl.State != HardwareState.On)
             return;
 
         try
@@ -542,7 +542,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     {
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            if (CameraControl.State != CameraState.On)
+            if (CameraControl.State != HardwareState.On)
                 return;
 
             try
@@ -572,7 +572,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
     private async Task AbortVideoRecording()
     {
-        if (CameraControl.State != CameraState.On || !(CameraControl.IsRecording || CameraControl.IsPreRecording))
+        if (CameraControl.State != HardwareState.On || !(CameraControl.IsRecording || CameraControl.IsPreRecording))
             return;
 
         try

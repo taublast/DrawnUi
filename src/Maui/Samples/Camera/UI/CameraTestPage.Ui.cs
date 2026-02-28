@@ -349,7 +349,7 @@ namespace CameraTests.Views
                                         })
                                         .ObserveProperty(CameraControl, nameof(CameraControl.State), me =>
                                         {
-                                            me.IsEnabled = CameraControl.State == CameraState.On;
+                                            me.IsEnabled = CameraControl.State == HardwareState.On;
                                             me.Opacity = me.IsEnabled ? 1.0 : 0.5;
                                         })
                                         .ObserveProperties(CameraControl, new []{nameof(CameraControl.IsRecording), nameof(CameraControl.IsPreRecording)}, me =>
@@ -364,32 +364,6 @@ namespace CameraTests.Views
                     }
                 },
 
-                // Status Display (top-center)
-                /*
-                new SkiaShape()
-                {
-                    UseCache = SkiaCacheType.Operations,
-                    Type = ShapeType.Rectangle,
-                    BackgroundColor = Color.FromArgb("#CC000000"),
-                    CornerRadius = 12,
-                    Padding = new(12, 6),
-                    Margin = new(0, 52, 0, 0),
-                    HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.Start,
-                    Children =
-                    {
-                        new SkiaLabel("Camera: Off")
-                        {
-                            FontSize = 12,
-                            TextColor = Colors.Gray,
-                            FontAttributes = FontAttributes.Bold,
-                            HorizontalOptions = LayoutOptions.Center,
-                            UseCache = SkiaCacheType.Operations
-                        }
-                        .Assign(out _statusLabel)
-                    }
-                },
-                */
 
                 // Settings Drawer (slides up from bottom)
                 new SkiaDrawer()
@@ -449,6 +423,7 @@ namespace CameraTests.Views
 #if DEBUG
                 new SkiaLabelFps()
                 {
+                    ForceRefresh = true,
                     Margin = new(0, 0, 4, 24),
                     VerticalOptions = LayoutOptions.End,
                     HorizontalOptions = LayoutOptions.End,
@@ -628,39 +603,65 @@ namespace CameraTests.Views
                             new SettingsButton("📷", "Source") { TintColor = Color.FromArgb("#D97706"), }
                                 .ObserveProperty(CameraControl, nameof(CameraControl.CameraIndex), async (me) =>
                                 {
-                                    var cameras = await CameraControl.GetAvailableCamerasAsync();
-                                    var index = CameraControl.CameraIndex;
-                                    if (index < 0)
+                                    try
                                     {
-                                        index = 0;
+                                        var cameras = await CameraControl.GetAvailableCamerasAsync();
+                                        if (cameras.Count > 0)
+                                        {
+                                            var index = CameraControl.CameraIndex;
+                                            if (index < 0)
+                                            {
+                                                index = 0;
+                                            }
+                                            var selectedCamera = cameras.First(c => c.Index == index);
+                                            me.Text = $"{selectedCamera.Name}";
+                                        }
+                                        else
+                                        {
+                                            me.Text = $"No cameras";
+                                        }
                                     }
-
-                                    var selectedCamera = cameras.First(c => c.Index == index);
-                                    me.Text = $"{selectedCamera.Name}";
+                                    catch (Exception e)
+                                    {
+                                        Super.Log(e);
+                                        me.Text = $"Error";
+                                    }
                                 })
                                 .OnTapped(async me => { await SelectCamera(); }),
                             new SettingsButton("🎤", "Audio Device") { TintColor = Color.FromArgb("#B45309"), }
                                 .ObserveProperty(CameraControl, nameof(CameraControl.AudioDeviceIndex), async (me) =>
                                 {
-                                    if (CameraControl.AudioDeviceIndex < 0)
+                                    try
                                     {
-                                        me.Text = "System Default Audio";
-                                    }
-                                    else
-                                    {
-                                        var arrayDevices = await CameraControl.GetAvailableAudioDevicesAsync();
-                                        if (arrayDevices.Count > 0)
+                                        if (CameraControl.AudioDeviceIndex < 0)
                                         {
-                                            var device = arrayDevices[CameraControl.AudioDeviceIndex];
-                                            me.Text = $"{device}";
+                                            me.Text = "System Default Audio";
                                         }
                                         else
                                         {
-                                            me.Text = "Error";
+                                            var arrayDevices = await CameraControl.GetAvailableAudioDevicesAsync();
+                                            if (arrayDevices.Count > 0)
+                                            {
+                                                var device = arrayDevices[CameraControl.AudioDeviceIndex];
+                                                me.Text = $"{device}";
+                                            }
+                                            else
+                                            {
+                                                me.Text = "Error";
+                                            }
                                         }
                                     }
+                                    catch (Exception e)
+                                    {
+                                        Super.Log(e);
+                                        me.Text = $"Error";
+                                    }
+
                                 })
-                                .OnTapped(async me => { await SelectAudioSource(); }),
+                                .OnTapped(async me =>
+                                {
+                                    await SelectAudioSource();
+                                }),
 
 
                             //Video Formats
@@ -673,18 +674,27 @@ namespace CameraTests.Views
                                         nameof(CameraControl.CameraIndex),
                                     }, async (me) =>
                                     {
-                                        var formats = await CameraControl.GetAvailableCaptureFormatsAsync();
-                                        if (formats.Count > 0)
+                                        try
                                         {
-                                            var index = CameraControl.PhotoFormatIndex;
-                                            if (index < 0)
+                                            var formats = await CameraControl.GetAvailableCaptureFormatsAsync();
+                                            if (formats.Count > 0)
                                             {
-                                                index = 0;
-                                            }
+                                                var index = CameraControl.PhotoFormatIndex;
+                                                if (index < 0)
+                                                {
+                                                    index = 0;
+                                                }
 
-                                            var format = formats.First(c => c.Index == index);
-                                            me.Text = $"{format.Description}";
+                                                var format = formats.First(c => c.Index == index);
+                                                me.Text = $"{format.Description}";
+                                            }
                                         }
+                                        catch (Exception e)
+                                        {
+                                            Super.Log(e);
+                                            me.Text = $"Error";
+                                        }
+
                                     })
                                 .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                                 {
@@ -699,17 +709,25 @@ namespace CameraTests.Views
                                         nameof(CameraControl.CameraIndex),
                                     }, async (me) =>
                                     {
-                                        var formats = await CameraControl.GetAvailableVideoFormatsAsync();
-                                        if (formats.Count > 0)
+                                        try
                                         {
-                                            var index = CameraControl.VideoFormatIndex;
-                                            if (index < 0)
+                                            var formats = await CameraControl.GetAvailableVideoFormatsAsync();
+                                            if (formats.Count > 0)
                                             {
-                                                index = 0;
-                                            }
+                                                var index = CameraControl.VideoFormatIndex;
+                                                if (index < 0)
+                                                {
+                                                    index = 0;
+                                                }
 
-                                            var format = formats.First(c => c.Index == index);
-                                            me.Text = $"{format.Description}";
+                                                var format = formats.First(c => c.Index == index);
+                                                me.Text = $"{format.Description}";
+                                            }
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Super.Log(e);
+                                            me.Text = $"Error";
                                         }
                                     })
                                 .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
@@ -724,13 +742,11 @@ namespace CameraTests.Views
                                 .OnTapped(async me => { await AbortVideoRecording(); })
                                 .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording), me =>
                                 {
-                                    me.IsVisible = CameraControl.IsRecording &&
-                                                   CameraControl.CaptureMode == CaptureModeType.Video;
+                                    me.IsVisible = CameraControl.IsRecording && CameraControl.CaptureMode == CaptureModeType.Video;
                                 })
                                 .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
                                 {
-                                    me.IsVisible = CameraControl.IsRecording &&
-                                                   CameraControl.CaptureMode == CaptureModeType.Video;
+                                    me.IsVisible = CameraControl.IsRecording && CameraControl.CaptureMode == CaptureModeType.Video;
                                 }),
                         }
                     }
@@ -745,13 +761,13 @@ namespace CameraTests.Views
                     HorizontalOptions = LayoutOptions.Fill,
                     VerticalOptions = LayoutOptions.Fill,
                     Content = new SkiaWrap
-            {
-                Spacing = 8,
-                UseCache = SkiaCacheType.Operations,
-                Padding = new Thickness(16),
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Start,
-                Children =
+                    {
+                        Spacing = 8,
+                        UseCache = SkiaCacheType.Operations,
+                        Padding = new Thickness(16),
+                        HorizontalOptions = LayoutOptions.Fill,
+                        VerticalOptions = LayoutOptions.Start,
+                        Children =
                 {
                     // Processing
                     new SettingsButton("⚙️", "Processing: ON")
@@ -819,7 +835,7 @@ namespace CameraTests.Views
                         ToggleSpeech();
                     }),
                 }
-            }
+                    }
                 };
 
             // Tab 2: Export / Recording Settings
@@ -831,13 +847,13 @@ namespace CameraTests.Views
                     HorizontalOptions = LayoutOptions.Fill,
                     VerticalOptions = LayoutOptions.Fill,
                     Content = new SkiaWrap
-            {
-                Spacing = 8,
-                UseCache = SkiaCacheType.Operations,
-                Padding = new Thickness(16),
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Start,
-                Children =
+                    {
+                        Spacing = 8,
+                        UseCache = SkiaCacheType.Operations,
+                        Padding = new Thickness(16),
+                        HorizontalOptions = LayoutOptions.Fill,
+                        VerticalOptions = LayoutOptions.Start,
+                        Children =
                 {
                     new SettingsButton("🔇", "Audio")
                     {
@@ -924,7 +940,7 @@ namespace CameraTests.Views
                         me.TintColor = CameraControl.InjectGpsLocation ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
                     }),
                 }
-            }
+                    }
                 };
 
             return new SkiaStack()
