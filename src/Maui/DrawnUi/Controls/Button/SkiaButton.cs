@@ -717,10 +717,7 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
     {
         //Debug.WriteLine($"SkiaButton {Text}. {args.Type} {args.Event.Distance.Delta}");
 
-        if (args.Type == TouchActionResult.Pointer) 
-        {
-            SetHover(true);
-        }
+        CheckHovered(args);
 
         var point = TranslateInputOffsetToPixels(args.Event.Location, apply.ChildOffset);
 

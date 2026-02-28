@@ -1761,6 +1761,8 @@ public class SkiaCarousel : SnappingLayout
 
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
+        CheckHovered(args);
+
         bool wrongDirection = false;
         bool passedToChildren = false;
         var consumedDefault = BlockGesturesBelow ? this : null;

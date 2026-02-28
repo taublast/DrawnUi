@@ -10,6 +10,8 @@ public class SkiaToggle : SkiaLayout
 {
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
+        CheckHovered(args);
+
         if (args.Type == TouchActionResult.Tapped)
         {
             IsToggled = !IsToggled;

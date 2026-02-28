@@ -475,6 +475,8 @@ public class SkiaSlider : SkiaLayout
 
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
+        CheckHovered(args);
+
         //Super.Log($"[Touch] SLIDER got {args.Type}");
 
         bool passedToChildren = false;
