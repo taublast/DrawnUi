@@ -26,6 +26,8 @@ items:
   - DrawnUi.Draw.SkiaRichLabel.CreateLineBreak
   - DrawnUi.Draw.SkiaRichLabel.CreateLiteral(System.String)
   - DrawnUi.Draw.SkiaRichLabel.GetLinkLabelText(CommonMark.Syntax.Inline)
+  - DrawnUi.Draw.SkiaRichLabel.HeadingTextColor
+  - DrawnUi.Draw.SkiaRichLabel.HeadingTextColorProperty
   - DrawnUi.Draw.SkiaRichLabel.LinkColor
   - DrawnUi.Draw.SkiaRichLabel.LinkColorProperty
   - DrawnUi.Draw.SkiaRichLabel.LinkTapped
@@ -57,6 +59,7 @@ items:
   - DrawnUi.Draw.SkiaRichLabel.isCodeBlock
   - DrawnUi.Draw.SkiaRichLabel.isHeading1
   - DrawnUi.Draw.SkiaRichLabel.isHeading2
+  - DrawnUi.Draw.SkiaRichLabel.isHeading3
   - DrawnUi.Draw.SkiaRichLabel.isItalic
   - DrawnUi.Draw.SkiaRichLabel.isStrikethrough
   - DrawnUi.Draw.SkiaRichLabel.standardSymbols
@@ -470,6 +473,7 @@ items:
   - DrawnUi.Draw.SkiaControl.OnChildTapped(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelow
   - DrawnUi.Draw.SkiaControl.UpdateLocks
@@ -489,6 +493,7 @@ items:
   - DrawnUi.Draw.SkiaControl.OnParentVisibilityChanged(System.Boolean)
   - DrawnUi.Draw.SkiaControl.PropagateVisibilityChanged(System.Boolean)
   - DrawnUi.Draw.SkiaControl.VisibilityChanged
+  - DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
   - DrawnUi.Draw.SkiaControl.SendVisibilityChanged
   - DrawnUi.Draw.SkiaControl.OnVisibilityChanged(System.Boolean)
   - DrawnUi.Draw.SkiaControl.lockPausingAnimators
@@ -752,6 +757,7 @@ items:
   - DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
   - DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
   - DrawnUi.Draw.SkiaControl.NeedRemeasuring
+  - DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
   - DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   - DrawnUi.Draw.SkiaControl.PaintWithEffects(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaControl.OnFirstDrawn
@@ -1164,7 +1170,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderBlock
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 63
+    startLine: 64
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1197,7 +1203,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderOrderedListItem
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 195
+    startLine: 184
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1231,7 +1237,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderBulletListItem
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 219
+    startLine: 208
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1260,7 +1266,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderInline
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 243
+    startLine: 232
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1289,7 +1295,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderBlock
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 316
+    startLine: 305
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1318,7 +1324,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddCodeSpan
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 389
+    startLine: 378
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1347,7 +1353,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddLinkSpan
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 401
+    startLine: 390
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1376,7 +1382,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetLinkLabelText
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 418
+    startLine: 407
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1407,7 +1413,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateLineBreak
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 439
+    startLine: 428
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1437,7 +1443,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateLiteral
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaMarkdownLabel.CommonMark.cs
-    startLine: 447
+    startLine: 436
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1761,7 +1767,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddTextSpan
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 74
+    startLine: 83
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1795,7 +1801,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: standardSymbols
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 183
+    startLine: 192
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1822,7 +1828,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessSpanData
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 190
+    startLine: 199
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1860,7 +1866,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: hadParagraph
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 237
+    startLine: 246
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1887,7 +1893,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: isBold
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 238
+    startLine: 247
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1914,7 +1920,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: isItalic
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 239
+    startLine: 248
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1941,7 +1947,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: isCodeBlock
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 240
+    startLine: 249
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1968,7 +1974,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: isHeading1
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 241
+    startLine: 250
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1995,7 +2001,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: isHeading2
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 242
+    startLine: 251
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2004,6 +2010,33 @@ items:
     return:
       type: System.Boolean
     content.vb: Protected isHeading2 As Boolean
+- uid: DrawnUi.Draw.SkiaRichLabel.isHeading3
+  commentId: F:DrawnUi.Draw.SkiaRichLabel.isHeading3
+  id: isHeading3
+  parent: DrawnUi.Draw.SkiaRichLabel
+  langs:
+  - csharp
+  - vb
+  name: isHeading3
+  nameWithType: SkiaRichLabel.isHeading3
+  fullName: DrawnUi.Draw.SkiaRichLabel.isHeading3
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: isHeading3
+    path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
+    startLine: 252
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected bool isHeading3
+    return:
+      type: System.Boolean
+    content.vb: Protected isHeading3 As Boolean
 - uid: DrawnUi.Draw.SkiaRichLabel.isStrikethrough
   commentId: F:DrawnUi.Draw.SkiaRichLabel.isStrikethrough
   id: isStrikethrough
@@ -2022,7 +2055,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: isStrikethrough
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 243
+    startLine: 253
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2049,7 +2082,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnSpanTapped
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 252
+    startLine: 262
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2085,7 +2118,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandLinkTappedProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 260
+    startLine: 270
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2112,7 +2145,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandLinkTapped
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 265
+    startLine: 275
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2141,7 +2174,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LinkTapped
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 271
+    startLine: 281
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2168,7 +2201,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 273
+    startLine: 283
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2197,7 +2230,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLinkTapped
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 280
+    startLine: 290
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2231,7 +2264,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StrikeoutColorProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 290
+    startLine: 300
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2258,7 +2291,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StrikeoutColor
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 297
+    startLine: 307
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2287,7 +2320,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LinkColorProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 303
+    startLine: 313
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2314,7 +2347,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LinkColor
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 310
+    startLine: 320
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2343,7 +2376,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CodeTextColorProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 316
+    startLine: 326
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2370,7 +2403,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CodeTextColor
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 323
+    startLine: 333
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2381,6 +2414,62 @@ items:
       type: Microsoft.Maui.Graphics.Color
     content.vb: Public Property CodeTextColor As Color
   overload: DrawnUi.Draw.SkiaRichLabel.CodeTextColor*
+- uid: DrawnUi.Draw.SkiaRichLabel.HeadingTextColorProperty
+  commentId: F:DrawnUi.Draw.SkiaRichLabel.HeadingTextColorProperty
+  id: HeadingTextColorProperty
+  parent: DrawnUi.Draw.SkiaRichLabel
+  langs:
+  - csharp
+  - vb
+  name: HeadingTextColorProperty
+  nameWithType: SkiaRichLabel.HeadingTextColorProperty
+  fullName: DrawnUi.Draw.SkiaRichLabel.HeadingTextColorProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HeadingTextColorProperty
+    path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
+    startLine: 339
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty HeadingTextColorProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly HeadingTextColorProperty As BindableProperty
+- uid: DrawnUi.Draw.SkiaRichLabel.HeadingTextColor
+  commentId: P:DrawnUi.Draw.SkiaRichLabel.HeadingTextColor
+  id: HeadingTextColor
+  parent: DrawnUi.Draw.SkiaRichLabel
+  langs:
+  - csharp
+  - vb
+  name: HeadingTextColor
+  nameWithType: SkiaRichLabel.HeadingTextColor
+  fullName: DrawnUi.Draw.SkiaRichLabel.HeadingTextColor
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HeadingTextColor
+    path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
+    startLine: 346
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public Color HeadingTextColor { get; set; }
+    parameters: []
+    return:
+      type: Microsoft.Maui.Graphics.Color
+    content.vb: Public Property HeadingTextColor As Color
+  overload: DrawnUi.Draw.SkiaRichLabel.HeadingTextColor*
 - uid: DrawnUi.Draw.SkiaRichLabel.CodeBlockBackgroundColorProperty
   commentId: F:DrawnUi.Draw.SkiaRichLabel.CodeBlockBackgroundColorProperty
   id: CodeBlockBackgroundColorProperty
@@ -2399,7 +2488,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CodeBlockBackgroundColorProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 329
+    startLine: 352
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2426,7 +2515,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CodeBlockBackgroundColor
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 336
+    startLine: 359
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2455,7 +2544,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CodeBackgroundColorProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 342
+    startLine: 365
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2482,7 +2571,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CodeBackgroundColor
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 349
+    startLine: 372
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2511,7 +2600,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PrefixBulletProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 355
+    startLine: 378
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2538,7 +2627,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PrefixBullet
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 362
+    startLine: 385
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2567,7 +2656,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PrefixNumberedProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 368
+    startLine: 391
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2594,7 +2683,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PrefixNumbered
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 375
+    startLine: 398
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2623,7 +2712,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UnderlineLinkProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 381
+    startLine: 404
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2650,7 +2739,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UnderlineLink
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 388
+    startLine: 411
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2679,7 +2768,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UnderlineWidthProperty
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 394
+    startLine: 417
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2706,7 +2795,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UnderlineWidth
     path: ../src/Maui/DrawnUi/Controls/Labels/SkiaRichLabel.cs
-    startLine: 404
+    startLine: 427
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10938,6 +11027,31 @@ references:
     name: GestureEventProcessingInfo
     href: DrawnUi.Draw.GestureEventProcessingInfo.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+  commentId: M:DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckHovered_DrawnUi_Draw_SkiaGesturesParameters_
+  name: CheckHovered(SkiaGesturesParameters)
+  nameWithType: SkiaControl.CheckHovered(SkiaGesturesParameters)
+  fullName: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+    name: CheckHovered
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckHovered_DrawnUi_Draw_SkiaGesturesParameters_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+    name: CheckHovered
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckHovered_DrawnUi_Draw_SkiaGesturesParameters_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   commentId: F:DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -11155,6 +11269,13 @@ references:
   name: VisibilityChanged
   nameWithType: SkiaControl.VisibilityChanged
   fullName: DrawnUi.Draw.SkiaControl.VisibilityChanged
+- uid: DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
+  commentId: E:DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ParentVisibilityChanged
+  name: ParentVisibilityChanged
+  nameWithType: SkiaControl.ParentVisibilityChanged
+  fullName: DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
 - uid: DrawnUi.Draw.SkiaControl.SendVisibilityChanged
   commentId: M:DrawnUi.Draw.SkiaControl.SendVisibilityChanged
   parent: DrawnUi.Draw.SkiaControl
@@ -16409,6 +16530,25 @@ references:
   name: NeedRemeasuring
   nameWithType: SkiaControl.NeedRemeasuring
   fullName: DrawnUi.Draw.SkiaControl.NeedRemeasuring
+- uid: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+  commentId: M:DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateShadowPaint
+  name: InvalidateShadowPaint()
+  nameWithType: SkiaControl.InvalidateShadowPaint()
+  fullName: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+    name: InvalidateShadowPaint
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateShadowPaint
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+    name: InvalidateShadowPaint
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateShadowPaint
+  - name: (
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   commentId: M:DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   parent: DrawnUi.Draw.SkiaControl
@@ -33525,6 +33665,12 @@ references:
   name: CodeTextColor
   nameWithType: SkiaRichLabel.CodeTextColor
   fullName: DrawnUi.Draw.SkiaRichLabel.CodeTextColor
+- uid: DrawnUi.Draw.SkiaRichLabel.HeadingTextColor*
+  commentId: Overload:DrawnUi.Draw.SkiaRichLabel.HeadingTextColor
+  href: DrawnUi.Draw.SkiaRichLabel.html#DrawnUi_Draw_SkiaRichLabel_HeadingTextColor
+  name: HeadingTextColor
+  nameWithType: SkiaRichLabel.HeadingTextColor
+  fullName: DrawnUi.Draw.SkiaRichLabel.HeadingTextColor
 - uid: DrawnUi.Draw.SkiaRichLabel.CodeBlockBackgroundColor*
   commentId: Overload:DrawnUi.Draw.SkiaRichLabel.CodeBlockBackgroundColor
   href: DrawnUi.Draw.SkiaRichLabel.html#DrawnUi_Draw_SkiaRichLabel_CodeBlockBackgroundColor

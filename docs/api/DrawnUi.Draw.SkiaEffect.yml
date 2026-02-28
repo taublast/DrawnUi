@@ -22,11 +22,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+      path: src/Shared/Features/Effects/SkiaEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaEffect
-    path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+    path: ../src/Shared/Features/Effects/SkiaEffect.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -94,11 +94,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+      path: src/Shared/Features/Effects/SkiaEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Parent
-    path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+    path: ../src/Shared/Features/Effects/SkiaEffect.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -125,11 +125,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+      path: src/Shared/Features/Effects/SkiaEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
-    path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+    path: ../src/Shared/Features/Effects/SkiaEffect.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -151,11 +151,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+      path: src/Shared/Features/Effects/SkiaEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Attach
-    path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+    path: ../src/Shared/Features/Effects/SkiaEffect.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui
@@ -180,11 +180,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+      path: src/Shared/Features/Effects/SkiaEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dettach
-    path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+    path: ../src/Shared/Features/Effects/SkiaEffect.cs
     startLine: 20
   assemblies:
   - DrawnUi.Maui
@@ -206,11 +206,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+      path: src/Shared/Features/Effects/SkiaEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
-    path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+    path: ../src/Shared/Features/Effects/SkiaEffect.cs
     startLine: 26
   assemblies:
   - DrawnUi.Maui
@@ -236,11 +236,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+      path: src/Shared/Features/Effects/SkiaEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
-    path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+    path: ../src/Shared/Features/Effects/SkiaEffect.cs
     startLine: 35
   assemblies:
   - DrawnUi.Maui
@@ -266,11 +266,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+      path: src/Shared/Features/Effects/SkiaEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedUpdate
-    path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+    path: ../src/Shared/Features/Effects/SkiaEffect.cs
     startLine: 40
   assemblies:
   - DrawnUi.Maui
@@ -302,11 +302,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+      path: src/Shared/Features/Effects/SkiaEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
-    path: ../src/Maui/DrawnUi/Features/Effects/SkiaEffect.cs
+    path: ../src/Shared/Features/Effects/SkiaEffect.cs
     startLine: 48
   assemblies:
   - DrawnUi.Maui

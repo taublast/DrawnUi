@@ -999,6 +999,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.AnimatedShaderEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.AnimatedShaderEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.AnimatedShaderEffect",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.AnimatedShaderEffect.yml\" sourcestartlinenumber=\"1\">Animated shader effect driven by a RangeAnimator (progress 0→1).\nAttach to a SkiaImage (or any cached control), call Play(), remove on Completed.</p>\n<p sourcefile=\"api/DrawnUi.Draw.AnimatedShaderEffect.yml\" sourcestartlinenumber=\"4\">Usage:\nvar fx = new AnimatedShaderEffect { ShaderSource = <xref href=\"Shaders\\yourshader.sksl\" data-throw-if-not-resolved=\"False\" data-raw-source=\"@&quot;Shaders\\yourshader.sksl&quot;\" sourcefile=\"api/DrawnUi.Draw.AnimatedShaderEffect.yml\" sourcestartlinenumber=\"5\"></xref> };\nfx.Completed += (s, e) =&gt; { _backgroundImage.FX.Remove(fx); fx.Dispose(); };\n_backgroundImage.FX.Add(fx);\nfx.Play(_backgroundImage);</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Draw.AnimatorBase.yml",
       "output": {
         ".html": {
@@ -2833,6 +2847,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.OuterGlowEffect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.OuterGlowEffect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.OuterGlowEffect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Draw.PanningModeType.yml",
       "output": {
         ".html": {
@@ -2956,6 +2984,20 @@
       "IsMRef": true,
       "Title": "DrawnUi.Draw.PointedDirectionType",
       "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.PostRendererEffectUseBackgroud.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.PostRendererEffectUseBackgroud.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.PostRendererEffectUseBackgroud",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.PostRendererEffectUseBackgroud.yml\" sourcestartlinenumber=\"1\">Controls how the effect acquires the background texture for its shader.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -4159,7 +4201,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "DrawnUi.Draw.SkiaLayout.BuildWrapLayout",
-      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLayout.BuildWrapLayout.yml\" sourcestartlinenumber=\"1\">Implementation for LayoutType.Wrap</p>\n"
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaLayout.BuildWrapLayout.yml\" sourcestartlinenumber=\"1\">Implementation for LayoutType.Wrap\nTODO is seems that remaining space is sometimes not super correct, maybe it doesnt account for padding?..</p>\n"
     },
     {
       "type": "ManagedReference",

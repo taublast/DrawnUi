@@ -243,6 +243,7 @@ items:
   - DrawnUi.Views.DrawnView.OnMeasured
   - DrawnUi.Views.DrawnView.Measured
   - DrawnUi.Views.DrawnView.IsDisposed
+  - DrawnUi.Views.DrawnView.CreateContext(SkiaSharp.SKSurface)
   - DrawnUi.Views.DrawnView.DrawingThreadId
   - DrawnUi.Views.DrawnView.WasRendered
   - DrawnUi.Views.DrawnView.WasDrawn
@@ -283,6 +284,7 @@ items:
   - DrawnUi.Views.DrawnView.PushToOffscreenRendering(DrawnUi.Draw.SkiaControl,System.Threading.CancellationToken)
   - DrawnUi.Views.DrawnView.ProcessOffscreenCacheRenderingAsync
   - DrawnUi.Views.DrawnView.RenderingScaleProperty
+  - DrawnUi.Views.DrawnView.NeedInvalidateCanvas(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
   - DrawnUi.Views.DrawnView.OnDensityChanged
   - DrawnUi.Views.DrawnView.RenderingScale
   - DrawnUi.Views.DrawnView.RenderingModeProperty
@@ -4758,6 +4760,34 @@ references:
   name: IsDisposed
   nameWithType: DrawnView.IsDisposed
   fullName: DrawnUi.Views.DrawnView.IsDisposed
+- uid: DrawnUi.Views.DrawnView.CreateContext(SkiaSharp.SKSurface)
+  commentId: M:DrawnUi.Views.DrawnView.CreateContext(SkiaSharp.SKSurface)
+  parent: DrawnUi.Views.DrawnView
+  isExternal: true
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CreateContext_SkiaSharp_SKSurface_
+  name: CreateContext(SKSurface)
+  nameWithType: DrawnView.CreateContext(SKSurface)
+  fullName: DrawnUi.Views.DrawnView.CreateContext(SkiaSharp.SKSurface)
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView.CreateContext(SkiaSharp.SKSurface)
+    name: CreateContext
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CreateContext_SkiaSharp_SKSurface_
+  - name: (
+  - uid: SkiaSharp.SKSurface
+    name: SKSurface
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView.CreateContext(SkiaSharp.SKSurface)
+    name: CreateContext
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CreateContext_SkiaSharp_SKSurface_
+  - name: (
+  - uid: SkiaSharp.SKSurface
+    name: SKSurface
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.sksurface
+  - name: )
 - uid: DrawnUi.Views.DrawnView.DrawingThreadId
   commentId: P:DrawnUi.Views.DrawnView.DrawingThreadId
   parent: DrawnUi.Views.DrawnView
@@ -5364,6 +5394,61 @@ references:
   name: RenderingScaleProperty
   nameWithType: DrawnView.RenderingScaleProperty
   fullName: DrawnUi.Views.DrawnView.RenderingScaleProperty
+- uid: DrawnUi.Views.DrawnView.NeedInvalidateCanvas(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+  commentId: M:DrawnUi.Views.DrawnView.NeedInvalidateCanvas(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+  parent: DrawnUi.Views.DrawnView
+  isExternal: true
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_NeedInvalidateCanvas_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_
+  name: NeedInvalidateCanvas(BindableObject, object, object)
+  nameWithType: DrawnView.NeedInvalidateCanvas(BindableObject, object, object)
+  fullName: DrawnUi.Views.DrawnView.NeedInvalidateCanvas(Microsoft.Maui.Controls.BindableObject, object, object)
+  nameWithType.vb: DrawnView.NeedInvalidateCanvas(BindableObject, Object, Object)
+  fullName.vb: DrawnUi.Views.DrawnView.NeedInvalidateCanvas(Microsoft.Maui.Controls.BindableObject, Object, Object)
+  name.vb: NeedInvalidateCanvas(BindableObject, Object, Object)
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView.NeedInvalidateCanvas(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+    name: NeedInvalidateCanvas
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_NeedInvalidateCanvas_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableObject
+    name: BindableObject
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView.NeedInvalidateCanvas(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+    name: NeedInvalidateCanvas
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_NeedInvalidateCanvas_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableObject
+    name: BindableObject
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
 - uid: DrawnUi.Views.DrawnView.OnDensityChanged
   commentId: M:DrawnUi.Views.DrawnView.OnDensityChanged
   parent: DrawnUi.Views.DrawnView

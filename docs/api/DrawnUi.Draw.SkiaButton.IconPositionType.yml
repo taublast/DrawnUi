@@ -21,7 +21,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IconPositionType
     path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
-    startLine: 882
+    startLine: 879
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -50,7 +50,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Left
     path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
-    startLine: 887
+    startLine: 884
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -78,7 +78,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Right
     path: ../src/Maui/DrawnUi/Controls/Button/SkiaButton.cs
-    startLine: 892
+    startLine: 889
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

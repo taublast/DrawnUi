@@ -10,6 +10,7 @@ items:
   - DrawnUi.Draw.AdjustBrightnessEffect
   - DrawnUi.Draw.AdjustRGBEffect
   - DrawnUi.Draw.AnimateExtensions
+  - DrawnUi.Draw.AnimatedShaderEffect
   - DrawnUi.Draw.AnimatorBase
   - DrawnUi.Draw.ApplySpan
   - DrawnUi.Draw.AutoSizeType
@@ -141,6 +142,7 @@ items:
   - DrawnUi.Draw.ObjectAliveType
   - DrawnUi.Draw.ObservableAttachedItemsCollection`1
   - DrawnUi.Draw.OrientationType
+  - DrawnUi.Draw.OuterGlowEffect
   - DrawnUi.Draw.PanningModeType
   - DrawnUi.Draw.PendulumAnimator
   - DrawnUi.Draw.PerpetualPendulumAnimator
@@ -150,6 +152,7 @@ items:
   - DrawnUi.Draw.PlanesScroll.ViewLayoutInfo
   - DrawnUi.Draw.PointIsInsideResult
   - DrawnUi.Draw.PointedDirectionType
+  - DrawnUi.Draw.PostRendererEffectUseBackgroud
   - DrawnUi.Draw.PrebuiltControlStyle
   - DrawnUi.Draw.ProgressAnimator
   - DrawnUi.Draw.ProgressTrail
@@ -1482,48 +1485,12 @@ references:
   name: DropShadowEffect
   nameWithType: DropShadowEffect
   fullName: DrawnUi.Draw.DropShadowEffect
-- uid: DrawnUi.Draw.IColorEffect
-  commentId: T:DrawnUi.Draw.IColorEffect
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.IColorEffect.html
-  name: IColorEffect
-  nameWithType: IColorEffect
-  fullName: DrawnUi.Draw.IColorEffect
-- uid: DrawnUi.Draw.IImageEffect
-  commentId: T:DrawnUi.Draw.IImageEffect
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.IImageEffect.html
-  name: IImageEffect
-  nameWithType: IImageEffect
-  fullName: DrawnUi.Draw.IImageEffect
-- uid: DrawnUi.Draw.IRenderEffect
-  commentId: T:DrawnUi.Draw.IRenderEffect
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.IRenderEffect.html
-  name: IRenderEffect
-  nameWithType: IRenderEffect
-  fullName: DrawnUi.Draw.IRenderEffect
-- uid: DrawnUi.Draw.ISkiaEffect
-  commentId: T:DrawnUi.Draw.ISkiaEffect
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.ISkiaEffect.html
-  name: ISkiaEffect
-  nameWithType: ISkiaEffect
-  fullName: DrawnUi.Draw.ISkiaEffect
-- uid: DrawnUi.Draw.IPostRendererEffect
-  commentId: T:DrawnUi.Draw.IPostRendererEffect
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.IPostRendererEffect.html
-  name: IPostRendererEffect
-  nameWithType: IPostRendererEffect
-  fullName: DrawnUi.Draw.IPostRendererEffect
-- uid: DrawnUi.Draw.IStateEffect
-  commentId: T:DrawnUi.Draw.IStateEffect
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.IStateEffect.html
-  name: IStateEffect
-  nameWithType: IStateEffect
-  fullName: DrawnUi.Draw.IStateEffect
+- uid: DrawnUi.Draw.OuterGlowEffect
+  commentId: T:DrawnUi.Draw.OuterGlowEffect
+  href: DrawnUi.Draw.OuterGlowEffect.html
+  name: OuterGlowEffect
+  nameWithType: OuterGlowEffect
+  fullName: DrawnUi.Draw.OuterGlowEffect
 - uid: DrawnUi.Draw.SaturationEffect
   commentId: T:DrawnUi.Draw.SaturationEffect
   href: DrawnUi.Draw.SaturationEffect.html
@@ -1542,26 +1509,6 @@ references:
   name: SkiaDoubleAttachedTexturesEffect
   nameWithType: SkiaDoubleAttachedTexturesEffect
   fullName: DrawnUi.Draw.SkiaDoubleAttachedTexturesEffect
-- uid: DrawnUi.Draw.SkiaEffect
-  commentId: T:DrawnUi.Draw.SkiaEffect
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.SkiaEffect.html
-  name: SkiaEffect
-  nameWithType: SkiaEffect
-  fullName: DrawnUi.Draw.SkiaEffect
-- uid: DrawnUi.Draw.SkiaShaderEffect
-  commentId: T:DrawnUi.Draw.SkiaShaderEffect
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.SkiaShaderEffect.html
-  name: SkiaShaderEffect
-  nameWithType: SkiaShaderEffect
-  fullName: DrawnUi.Draw.SkiaShaderEffect
-- uid: DrawnUi.Draw.StateEffect
-  commentId: T:DrawnUi.Draw.StateEffect
-  href: DrawnUi.Draw.StateEffect.html
-  name: StateEffect
-  nameWithType: StateEffect
-  fullName: DrawnUi.Draw.StateEffect
 - uid: DrawnUi.Draw.TintEffect
   commentId: T:DrawnUi.Draw.TintEffect
   href: DrawnUi.Draw.TintEffect.html
@@ -1872,6 +1819,81 @@ references:
   name: VisualTreeHandler
   nameWithType: VisualTreeHandler
   fullName: DrawnUi.Draw.VisualTreeHandler
+- uid: DrawnUi.Draw.AnimatedShaderEffect
+  commentId: T:DrawnUi.Draw.AnimatedShaderEffect
+  href: DrawnUi.Draw.AnimatedShaderEffect.html
+  name: AnimatedShaderEffect
+  nameWithType: AnimatedShaderEffect
+  fullName: DrawnUi.Draw.AnimatedShaderEffect
+- uid: DrawnUi.Draw.IColorEffect
+  commentId: T:DrawnUi.Draw.IColorEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IColorEffect.html
+  name: IColorEffect
+  nameWithType: IColorEffect
+  fullName: DrawnUi.Draw.IColorEffect
+- uid: DrawnUi.Draw.IImageEffect
+  commentId: T:DrawnUi.Draw.IImageEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IImageEffect.html
+  name: IImageEffect
+  nameWithType: IImageEffect
+  fullName: DrawnUi.Draw.IImageEffect
+- uid: DrawnUi.Draw.IRenderEffect
+  commentId: T:DrawnUi.Draw.IRenderEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IRenderEffect.html
+  name: IRenderEffect
+  nameWithType: IRenderEffect
+  fullName: DrawnUi.Draw.IRenderEffect
+- uid: DrawnUi.Draw.ISkiaEffect
+  commentId: T:DrawnUi.Draw.ISkiaEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaEffect.html
+  name: ISkiaEffect
+  nameWithType: ISkiaEffect
+  fullName: DrawnUi.Draw.ISkiaEffect
+- uid: DrawnUi.Draw.IPostRendererEffect
+  commentId: T:DrawnUi.Draw.IPostRendererEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IPostRendererEffect.html
+  name: IPostRendererEffect
+  nameWithType: IPostRendererEffect
+  fullName: DrawnUi.Draw.IPostRendererEffect
+- uid: DrawnUi.Draw.IStateEffect
+  commentId: T:DrawnUi.Draw.IStateEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IStateEffect.html
+  name: IStateEffect
+  nameWithType: IStateEffect
+  fullName: DrawnUi.Draw.IStateEffect
+- uid: DrawnUi.Draw.PostRendererEffectUseBackgroud
+  commentId: T:DrawnUi.Draw.PostRendererEffectUseBackgroud
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.PostRendererEffectUseBackgroud.html
+  name: PostRendererEffectUseBackgroud
+  nameWithType: PostRendererEffectUseBackgroud
+  fullName: DrawnUi.Draw.PostRendererEffectUseBackgroud
+- uid: DrawnUi.Draw.SkiaEffect
+  commentId: T:DrawnUi.Draw.SkiaEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaEffect.html
+  name: SkiaEffect
+  nameWithType: SkiaEffect
+  fullName: DrawnUi.Draw.SkiaEffect
+- uid: DrawnUi.Draw.SkiaShaderEffect
+  commentId: T:DrawnUi.Draw.SkiaShaderEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaShaderEffect.html
+  name: SkiaShaderEffect
+  nameWithType: SkiaShaderEffect
+  fullName: DrawnUi.Draw.SkiaShaderEffect
+- uid: DrawnUi.Draw.StateEffect
+  commentId: T:DrawnUi.Draw.StateEffect
+  href: DrawnUi.Draw.StateEffect.html
+  name: StateEffect
+  nameWithType: StateEffect
+  fullName: DrawnUi.Draw.StateEffect
 - uid: DrawnUi.Draw.ControlLifecycleState
   commentId: T:DrawnUi.Draw.ControlLifecycleState
   parent: DrawnUi.Draw

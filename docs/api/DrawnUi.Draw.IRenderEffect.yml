@@ -15,11 +15,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/IRenderEffect.cs
+      path: src/Shared/Features/Effects/IRenderEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IRenderEffect
-    path: ../src/Maui/DrawnUi/Features/Effects/IRenderEffect.cs
+    path: ../src/Shared/Features/Effects/IRenderEffect.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -48,11 +48,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/IRenderEffect.cs
+      path: src/Shared/Features/Effects/IRenderEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
-    path: ../src/Maui/DrawnUi/Features/Effects/IRenderEffect.cs
+    path: ../src/Shared/Features/Effects/IRenderEffect.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui

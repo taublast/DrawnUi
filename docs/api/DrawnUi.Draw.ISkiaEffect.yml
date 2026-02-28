@@ -17,11 +17,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+      path: src/Shared/Features/Effects/ISkiaEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ISkiaEffect
-    path: ../src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+    path: ../src/Shared/Features/Effects/ISkiaEffect.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -47,11 +47,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+      path: src/Shared/Features/Effects/ISkiaEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Attach
-    path: ../src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+    path: ../src/Shared/Features/Effects/ISkiaEffect.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -76,11 +76,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+      path: src/Shared/Features/Effects/ISkiaEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dettach
-    path: ../src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+    path: ../src/Shared/Features/Effects/ISkiaEffect.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -102,11 +102,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+      path: src/Shared/Features/Effects/ISkiaEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
-    path: ../src/Maui/DrawnUi/Features/Effects/ISkiaEffect.cs
+    path: ../src/Shared/Features/Effects/ISkiaEffect.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui

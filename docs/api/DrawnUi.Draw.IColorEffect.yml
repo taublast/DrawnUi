@@ -16,11 +16,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/IColorEffect.cs
+      path: src/Shared/Features/Effects/IColorEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IColorEffect
-    path: ../src/Maui/DrawnUi/Features/Effects/IColorEffect.cs
+    path: ../src/Shared/Features/Effects/IColorEffect.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -49,11 +49,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/IColorEffect.cs
+      path: src/Shared/Features/Effects/IColorEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Filter
-    path: ../src/Maui/DrawnUi/Features/Effects/IColorEffect.cs
+    path: ../src/Shared/Features/Effects/IColorEffect.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -78,11 +78,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/IColorEffect.cs
+      path: src/Shared/Features/Effects/IColorEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateFilter
-    path: ../src/Maui/DrawnUi/Features/Effects/IColorEffect.cs
+    path: ../src/Shared/Features/Effects/IColorEffect.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui

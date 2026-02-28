@@ -21,11 +21,14 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BuildWrapLayout
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.BuildWrapLayout.cs
-    startLine: 10
+    startLine: 11
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
-  summary: Implementation for LayoutType.Wrap
+  summary: >-
+    Implementation for LayoutType.Wrap
+
+    TODO is seems that remaining space is sometimes not super correct, maybe it doesnt account for padding?..
   example: []
   syntax:
     content: 'public class SkiaLayout.BuildWrapLayout : StackLayoutStructure'
@@ -67,7 +70,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.BuildWrapLayout.cs
-    startLine: 12
+    startLine: 13
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -99,7 +102,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Build
     path: ../src/Maui/DrawnUi/Draw/Layout/SkiaLayout.BuildWrapLayout.cs
-    startLine: 16
+    startLine: 17
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

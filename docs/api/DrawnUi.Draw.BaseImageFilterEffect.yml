@@ -37,6 +37,7 @@ items:
   derivedClasses:
   - DrawnUi.Draw.BlurEffect
   - DrawnUi.Draw.DropShadowEffect
+  - DrawnUi.Draw.OuterGlowEffect
   implements:
   - System.ComponentModel.INotifyPropertyChanged
   - System.IDisposable
@@ -198,7 +199,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Features/Effects/BaseImageFilterEffect.cs
-    startLine: 19
+    startLine: 22
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

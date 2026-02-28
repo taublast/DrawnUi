@@ -22,7 +22,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OffscreenCommand
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1761
+    startLine: 1763
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -61,7 +61,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1761
+    startLine: 1763
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -95,7 +95,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Control
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1761
+    startLine: 1763
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -124,7 +124,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Cancel
     path: ../src/Maui/DrawnUi/Views/DrawnView.cs
-    startLine: 1761
+    startLine: 1763
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views

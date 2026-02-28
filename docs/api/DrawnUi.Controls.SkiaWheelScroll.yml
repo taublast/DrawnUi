@@ -626,6 +626,7 @@ items:
   - DrawnUi.Draw.SkiaControl.OnChildTapped(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelow
   - DrawnUi.Draw.SkiaControl.UpdateLocks
@@ -645,6 +646,7 @@ items:
   - DrawnUi.Draw.SkiaControl.OnParentVisibilityChanged(System.Boolean)
   - DrawnUi.Draw.SkiaControl.PropagateVisibilityChanged(System.Boolean)
   - DrawnUi.Draw.SkiaControl.VisibilityChanged
+  - DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
   - DrawnUi.Draw.SkiaControl.SendVisibilityChanged
   - DrawnUi.Draw.SkiaControl.OnVisibilityChanged(System.Boolean)
   - DrawnUi.Draw.SkiaControl.OnDisposing
@@ -902,6 +904,7 @@ items:
   - DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
   - DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
   - DrawnUi.Draw.SkiaControl.NeedRemeasuring
+  - DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
   - DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   - DrawnUi.Draw.SkiaControl.PaintWithEffects(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaControl.OnFirstDrawn
@@ -1349,7 +1352,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DebugWheel
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 37
+    startLine: 39
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1378,7 +1381,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Helper3dChildren
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 39
+    startLine: 41
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1405,7 +1408,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CellsPool
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 41
+    startLine: 43
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1434,7 +1437,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DataSource
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 43
+    startLine: 45
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1461,7 +1464,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemsWrapper
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 45
+    startLine: 47
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1488,7 +1491,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SelectedIndexChanged
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 52
+    startLine: 54
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1517,7 +1520,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnSelectedIndexChanged
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 57
+    startLine: 59
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1551,7 +1554,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HorizontalChildAlignement
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 68
+    startLine: 70
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1580,7 +1583,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Use3d
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 70
+    startLine: 72
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1609,7 +1612,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HapticEnabledProperty
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 72
+    startLine: 74
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1636,7 +1639,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HapticEnabled
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 78
+    startLine: 80
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1665,7 +1668,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FadeProperty
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 84
+    startLine: 86
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1692,7 +1695,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Fade
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 90
+    startLine: 92
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1721,7 +1724,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLoopedProperty
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 96
+    startLine: 98
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1748,7 +1751,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLooped
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 102
+    startLine: 104
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1777,7 +1780,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LinesColorProperty
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 108
+    startLine: 110
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1804,7 +1807,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LinesColor
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 114
+    startLine: 116
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1833,7 +1836,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FadeStrengthProperty
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 120
+    startLine: 122
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1860,7 +1863,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FadeStrength
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 129
+    startLine: 131
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1891,7 +1894,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FadeMinProperty
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 135
+    startLine: 137
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1918,7 +1921,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FadeMin
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 144
+    startLine: 146
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1949,7 +1952,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: WheelScrollingOffset
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 151
+    startLine: 153
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1978,7 +1981,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemHeight
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 165
+    startLine: 167
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2007,7 +2010,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SelectedIndexProperty
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 180
+    startLine: 182
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2034,7 +2037,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SelectedIndex
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 209
+    startLine: 211
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2065,7 +2068,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: VisibleItemCountProperty
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 215
+    startLine: 217
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2092,7 +2095,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: VisibleItemCount
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 229
+    startLine: 231
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2121,7 +2124,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateDefaultContent
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 252
+    startLine: 254
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2149,7 +2152,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MeasureContent
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 259
+    startLine: 261
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2194,7 +2197,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetContentSize
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 266
+    startLine: 268
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2222,7 +2225,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutPositionChanged
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 278
+    startLine: 280
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2251,7 +2254,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutChanged
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 291
+    startLine: 293
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2280,7 +2283,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawVirtual
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 304
+    startLine: 306
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2313,7 +2316,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyVisibleItemCount
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 369
+    startLine: 371
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2339,7 +2342,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintSelectionIndicator
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 608
+    startLine: 610
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2371,7 +2374,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StartToFlingFrom
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 643
+    startLine: 645
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2412,7 +2415,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PositionViewport
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 684
+    startLine: 686
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2469,7 +2472,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CheckNeedToSnap
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 712
+    startLine: 714
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2499,7 +2502,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Snap
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 721
+    startLine: 723
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2533,7 +2536,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnScrollCompleted
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 747
+    startLine: 749
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2562,7 +2565,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ActualizeSelectedIndex
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 759
+    startLine: 761
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2590,7 +2593,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ClampOffset
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 854
+    startLine: 856
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2632,7 +2635,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollToIndex
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 905
+    startLine: 907
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2668,7 +2671,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CellsCount
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 954
+    startLine: 956
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2697,7 +2700,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: VisibleCellsCountHalf
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 955
+    startLine: 957
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2726,7 +2729,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: WheelHalfHeight
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 956
+    startLine: 958
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2755,7 +2758,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: WheelVerticalCenter
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 957
+    startLine: 959
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2784,7 +2787,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UseSpacing
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 958
+    startLine: 960
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2813,7 +2816,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsIndexValid
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 971
+    startLine: 973
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2847,7 +2850,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemsSourceCount
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 983
+    startLine: 985
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2876,7 +2879,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCellPositionForIndex
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 1029
+    startLine: 1031
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2910,7 +2913,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetIndexAtCellPosition
     path: ../src/Maui/DrawnUi/Controls/PickerWheel/SkiaWheelScroll.cs
-    startLine: 1042
+    startLine: 1044
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -13118,6 +13121,31 @@ references:
     name: GestureEventProcessingInfo
     href: DrawnUi.Draw.GestureEventProcessingInfo.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+  commentId: M:DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckHovered_DrawnUi_Draw_SkiaGesturesParameters_
+  name: CheckHovered(SkiaGesturesParameters)
+  nameWithType: SkiaControl.CheckHovered(SkiaGesturesParameters)
+  fullName: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+    name: CheckHovered
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckHovered_DrawnUi_Draw_SkiaGesturesParameters_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+    name: CheckHovered
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckHovered_DrawnUi_Draw_SkiaGesturesParameters_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   commentId: F:DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -13335,6 +13363,13 @@ references:
   name: VisibilityChanged
   nameWithType: SkiaControl.VisibilityChanged
   fullName: DrawnUi.Draw.SkiaControl.VisibilityChanged
+- uid: DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
+  commentId: E:DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ParentVisibilityChanged
+  name: ParentVisibilityChanged
+  nameWithType: SkiaControl.ParentVisibilityChanged
+  fullName: DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
 - uid: DrawnUi.Draw.SkiaControl.SendVisibilityChanged
   commentId: M:DrawnUi.Draw.SkiaControl.SendVisibilityChanged
   parent: DrawnUi.Draw.SkiaControl
@@ -18386,6 +18421,25 @@ references:
   name: NeedRemeasuring
   nameWithType: SkiaControl.NeedRemeasuring
   fullName: DrawnUi.Draw.SkiaControl.NeedRemeasuring
+- uid: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+  commentId: M:DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateShadowPaint
+  name: InvalidateShadowPaint()
+  nameWithType: SkiaControl.InvalidateShadowPaint()
+  fullName: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+    name: InvalidateShadowPaint
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateShadowPaint
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+    name: InvalidateShadowPaint
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateShadowPaint
+  - name: (
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   commentId: M:DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   parent: DrawnUi.Draw.SkiaControl

@@ -40,15 +40,22 @@ items:
   - DrawnUi.Draw.ICanBeUpdated
   inheritedMembers:
   - DrawnUi.Draw.SkiaShaderEffect.PaintWithShader
+  - DrawnUi.Draw.SkiaShaderEffect.UseBackground
+  - DrawnUi.Draw.SkiaShaderEffect.AquiredBackground
+  - DrawnUi.Draw.SkiaShaderEffect.ReleaseFrozenSnapshot
   - DrawnUi.Draw.SkiaShaderEffect.UseContextProperty
   - DrawnUi.Draw.SkiaShaderEffect.UseContext
   - DrawnUi.Draw.SkiaShaderEffect.AutoCreateInputTextureProperty
   - DrawnUi.Draw.SkiaShaderEffect.AutoCreateInputTexture
+  - DrawnUi.Draw.SkiaShaderEffect.BlendMode
+  - DrawnUi.Draw.SkiaShaderEffect.Flush(DrawnUi.Draw.SkiaDrawingContext)
   - DrawnUi.Draw.SkiaShaderEffect.CreateSnapshot(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
   - DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTextureImage(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
   - DrawnUi.Draw.SkiaShaderEffect.Render(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(SkiaSharp.SKImage)
   - DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage)
+  - DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
+  - DrawnUi.Draw.SkiaShaderEffect._uniformImageResolution
   - DrawnUi.Draw.SkiaShaderEffect.CompiledShader
   - DrawnUi.Draw.SkiaShaderEffect.NeedApply
   - DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
@@ -78,12 +85,12 @@ items:
   - DrawnUi.Draw.SkiaShaderEffect.MipmapMode
   - DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
   - DrawnUi.Draw.SkiaShaderEffect.TileMode
-  - DrawnUi.Draw.SkiaShaderEffect.Update
   - DrawnUi.Draw.SkiaShaderEffect.OnDisposing
   - DrawnUi.Draw.SkiaEffect.Parent
   - DrawnUi.Draw.SkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaEffect.Dettach
   - DrawnUi.Draw.SkiaEffect.Dispose
+  - DrawnUi.Draw.SkiaEffect.Update
   - DrawnUi.Draw.SkiaEffect.NeedUpdate(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
   - Microsoft.Maui.Controls.BindableObject.BindingContextProperty
   - Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindableProperty)
@@ -224,6 +231,39 @@ references:
   name: PaintWithShader
   nameWithType: SkiaShaderEffect.PaintWithShader
   fullName: DrawnUi.Draw.SkiaShaderEffect.PaintWithShader
+- uid: DrawnUi.Draw.SkiaShaderEffect.UseBackground
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.UseBackground
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_UseBackground
+  name: UseBackground
+  nameWithType: SkiaShaderEffect.UseBackground
+  fullName: DrawnUi.Draw.SkiaShaderEffect.UseBackground
+- uid: DrawnUi.Draw.SkiaShaderEffect.AquiredBackground
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.AquiredBackground
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_AquiredBackground
+  name: AquiredBackground
+  nameWithType: SkiaShaderEffect.AquiredBackground
+  fullName: DrawnUi.Draw.SkiaShaderEffect.AquiredBackground
+- uid: DrawnUi.Draw.SkiaShaderEffect.ReleaseFrozenSnapshot
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.ReleaseFrozenSnapshot
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ReleaseFrozenSnapshot
+  name: ReleaseFrozenSnapshot()
+  nameWithType: SkiaShaderEffect.ReleaseFrozenSnapshot()
+  fullName: DrawnUi.Draw.SkiaShaderEffect.ReleaseFrozenSnapshot()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.ReleaseFrozenSnapshot
+    name: ReleaseFrozenSnapshot
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ReleaseFrozenSnapshot
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.ReleaseFrozenSnapshot
+    name: ReleaseFrozenSnapshot
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ReleaseFrozenSnapshot
+  - name: (
+  - name: )
 - uid: DrawnUi.Draw.SkiaShaderEffect.UseContextProperty
   commentId: F:DrawnUi.Draw.SkiaShaderEffect.UseContextProperty
   parent: DrawnUi.Draw.SkiaShaderEffect
@@ -252,6 +292,38 @@ references:
   name: AutoCreateInputTexture
   nameWithType: SkiaShaderEffect.AutoCreateInputTexture
   fullName: DrawnUi.Draw.SkiaShaderEffect.AutoCreateInputTexture
+- uid: DrawnUi.Draw.SkiaShaderEffect.BlendMode
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.BlendMode
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_BlendMode
+  name: BlendMode
+  nameWithType: SkiaShaderEffect.BlendMode
+  fullName: DrawnUi.Draw.SkiaShaderEffect.BlendMode
+- uid: DrawnUi.Draw.SkiaShaderEffect.Flush(DrawnUi.Draw.SkiaDrawingContext)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.Flush(DrawnUi.Draw.SkiaDrawingContext)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Flush_DrawnUi_Draw_SkiaDrawingContext_
+  name: Flush(SkiaDrawingContext)
+  nameWithType: SkiaShaderEffect.Flush(SkiaDrawingContext)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.Flush(DrawnUi.Draw.SkiaDrawingContext)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.Flush(DrawnUi.Draw.SkiaDrawingContext)
+    name: Flush
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Flush_DrawnUi_Draw_SkiaDrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaDrawingContext
+    name: SkiaDrawingContext
+    href: DrawnUi.Draw.SkiaDrawingContext.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.Flush(DrawnUi.Draw.SkiaDrawingContext)
+    name: Flush
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Flush_DrawnUi_Draw_SkiaDrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaDrawingContext
+    name: SkiaDrawingContext
+    href: DrawnUi.Draw.SkiaDrawingContext.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaShaderEffect.CreateSnapshot(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
   commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreateSnapshot(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
   parent: DrawnUi.Draw.SkiaShaderEffect
@@ -419,6 +491,41 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
   - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreatePrimaryTextureShader_SkiaSharp_SKImage_
+  name: CreatePrimaryTextureShader(SKImage)
+  nameWithType: SkiaShaderEffect.CreatePrimaryTextureShader(SKImage)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
+    name: CreatePrimaryTextureShader
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreatePrimaryTextureShader_SkiaSharp_SKImage_
+  - name: (
+  - uid: SkiaSharp.SKImage
+    name: SKImage
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
+    name: CreatePrimaryTextureShader
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreatePrimaryTextureShader_SkiaSharp_SKImage_
+  - name: (
+  - uid: SkiaSharp.SKImage
+    name: SKImage
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect._uniformImageResolution
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect._uniformImageResolution
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect__uniformImageResolution
+  name: _uniformImageResolution
+  nameWithType: SkiaShaderEffect._uniformImageResolution
+  fullName: DrawnUi.Draw.SkiaShaderEffect._uniformImageResolution
 - uid: DrawnUi.Draw.SkiaShaderEffect.CompiledShader
   commentId: F:DrawnUi.Draw.SkiaShaderEffect.CompiledShader
   parent: DrawnUi.Draw.SkiaShaderEffect
@@ -868,25 +975,6 @@ references:
   name: TileMode
   nameWithType: SkiaShaderEffect.TileMode
   fullName: DrawnUi.Draw.SkiaShaderEffect.TileMode
-- uid: DrawnUi.Draw.SkiaShaderEffect.Update
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.Update
-  parent: DrawnUi.Draw.SkiaShaderEffect
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Update
-  name: Update()
-  nameWithType: SkiaShaderEffect.Update()
-  fullName: DrawnUi.Draw.SkiaShaderEffect.Update()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.Update
-    name: Update
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Update
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.Update
-    name: Update
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Update
-  - name: (
-  - name: )
 - uid: DrawnUi.Draw.SkiaShaderEffect.OnDisposing
   commentId: M:DrawnUi.Draw.SkiaShaderEffect.OnDisposing
   parent: DrawnUi.Draw.SkiaShaderEffect
@@ -974,6 +1062,25 @@ references:
   - uid: DrawnUi.Draw.SkiaEffect.Dispose
     name: Dispose
     href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Dispose
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaEffect.Update
+  commentId: M:DrawnUi.Draw.SkiaEffect.Update
+  parent: DrawnUi.Draw.SkiaEffect
+  href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Update
+  name: Update()
+  nameWithType: SkiaEffect.Update()
+  fullName: DrawnUi.Draw.SkiaEffect.Update()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaEffect.Update
+    name: Update
+    href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Update
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaEffect.Update
+    name: Update
+    href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Update
   - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaEffect.NeedUpdate(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class AnimatedShaderEffect | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class AnimatedShaderEffect | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../images/draw.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/new/main/apiSpec/new?filename=DrawnUi_Draw_AnimatedShaderEffect.md&amp;value=---%0Auid%3A%20DrawnUi.Draw.AnimatedShaderEffect%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/draw.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="DrawnUi.Draw.AnimatedShaderEffect">
+
+
+
+  <h1 id="DrawnUi_Draw_AnimatedShaderEffect" data-uid="DrawnUi.Draw.AnimatedShaderEffect" class="text-break">
+Class AnimatedShaderEffect  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Effects/AnimatedShaderEffect.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="DrawnUi.html">DrawnUi</a>.<a class="xref" href="DrawnUi.Draw.html">Draw</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>DrawnUi.Maui.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Animated shader effect driven by a RangeAnimator (progress 0→1).
+Attach to a SkiaImage (or any cached control), call Play(), remove on Completed.</p>
+<p>Usage:
+var fx = new AnimatedShaderEffect { ShaderSource = @&quot;Shaders\yourshader.sksl&quot; };
+fx.Completed += (s, e) =&gt; { _backgroundImage.FX.Remove(fx); fx.Dispose(); };
+_backgroundImage.FX.Add(fx);
+fx.Play(_backgroundImage);</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class AnimatedShaderEffect : SkiaShaderEffect, INotifyPropertyChanged, IDisposable, IPostRendererEffect, ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject">BindableObject</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.SkiaEffect.html">SkiaEffect</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html">SkiaShaderEffect</a></div>
+      <div><span class="xref">AnimatedShaderEffect</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.IPostRendererEffect.html">IPostRendererEffect</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ISkiaEffect.html">ISkiaEffect</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ICanBeUpdatedWithContext.html">ICanBeUpdatedWithContext</a></div>
+      <div><a class="xref" href="DrawnUi.Draw.ICanBeUpdated.html">ICanBeUpdated</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_PaintWithShader">SkiaShaderEffect.PaintWithShader</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_UseBackground">SkiaShaderEffect.UseBackground</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_AquiredBackground">SkiaShaderEffect.AquiredBackground</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ReleaseFrozenSnapshot">SkiaShaderEffect.ReleaseFrozenSnapshot()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_UseContextProperty">SkiaShaderEffect.UseContextProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_UseContext">SkiaShaderEffect.UseContext</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_AutoCreateInputTextureProperty">SkiaShaderEffect.AutoCreateInputTextureProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_AutoCreateInputTexture">SkiaShaderEffect.AutoCreateInputTexture</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_BlendMode">SkiaShaderEffect.BlendMode</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Flush_DrawnUi_Draw_SkiaDrawingContext_">SkiaShaderEffect.Flush(SkiaDrawingContext)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateSnapshot_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_">SkiaShaderEffect.CreateSnapshot(SkiaDrawingContext, SKRect)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetPrimaryTextureImage_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_">SkiaShaderEffect.GetPrimaryTextureImage(SkiaDrawingContext, SKRect)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Render_DrawnUi_Draw_DrawingContext_">SkiaShaderEffect.Render(DrawingContext)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShouldDisposePreviousTexture_SkiaSharp_SKImage_">SkiaShaderEffect.ShouldDisposePreviousTexture(SKImage)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateShader_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_">SkiaShaderEffect.CreateShader(DrawingContext, SKImage)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreatePrimaryTextureShader_SkiaSharp_SKImage_">SkiaShaderEffect.CreatePrimaryTextureShader(SKImage)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect__uniformImageResolution">SkiaShaderEffect._uniformImageResolution</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompiledShader">SkiaShaderEffect.CompiledShader</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NeedApply">SkiaShaderEffect.NeedApply</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TimeSeconds">SkiaShaderEffect.TimeSeconds</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MouseCurrent">SkiaShaderEffect.MouseCurrent</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MouseInitial">SkiaShaderEffect.MouseInitial</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateTexturesUniforms_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_SkiaSharp_SKShader_">SkiaShaderEffect.CreateTexturesUniforms(SkiaDrawingContext, SKRect, SKShader)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect__template">SkiaShaderEffect._template</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect__templatePlacehodler">SkiaShaderEffect._templatePlacehodler</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader">SkiaShaderEffect.CompileShader()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_OnCompilationError">SkiaShaderEffect.OnCompilationError</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SendError_System_String_">SkiaShaderEffect.SendError(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NormalizeShaderCode_System_String_">SkiaShaderEffect.NormalizeShaderCode(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__">SkiaShaderEffect.CompileShader(string, bool, Action&lt;string&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_LoadedCode">SkiaShaderEffect.LoadedCode</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ApplyShaderSource">SkiaShaderEffect.ApplyShaderSource()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NeedChangeSource_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_">SkiaShaderEffect.NeedChangeSource(BindableObject, object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderCodeProperty">SkiaShaderEffect.ShaderCodeProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderCode">SkiaShaderEffect.ShaderCode</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderSourceProperty">SkiaShaderEffect.ShaderSourceProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderSource">SkiaShaderEffect.ShaderSource</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderTemplateProperty">SkiaShaderEffect.ShaderTemplateProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderTemplate">SkiaShaderEffect.ShaderTemplate</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_FilterModeProperty">SkiaShaderEffect.FilterModeProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MipmapModeProperty">SkiaShaderEffect.MipmapModeProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_FilterMode">SkiaShaderEffect.FilterMode</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MipmapMode">SkiaShaderEffect.MipmapMode</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TileModeProperty">SkiaShaderEffect.TileModeProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TileMode">SkiaShaderEffect.TileMode</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Parent">SkiaEffect.Parent</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Attach_DrawnUi_Draw_SkiaControl_">SkiaEffect.Attach(SkiaControl)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Dettach">SkiaEffect.Dettach()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Dispose">SkiaEffect.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Update">SkiaEffect.Update()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_NeedUpdate_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_">SkiaEffect.NeedUpdate(BindableObject, object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.bindingcontextproperty">BindableObject.BindingContextProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindableproperty)">BindableObject.ClearValue(BindableProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindablepropertykey)">BindableObject.ClearValue(BindablePropertyKey)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.getvalue">BindableObject.GetValue(BindableProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.isset">BindableObject.IsSet(BindableProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.removebinding">BindableObject.RemoveBinding(BindableProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setbinding">BindableObject.SetBinding(BindableProperty, BindingBase)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.applybindings">BindableObject.ApplyBindings()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onbindingcontextchanged">BindableObject.OnBindingContextChanged()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onpropertychanged">BindableObject.OnPropertyChanged(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onpropertychanging">BindableObject.OnPropertyChanging(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.unapplybindings">BindableObject.UnapplyBindings()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindableproperty-system-object)">BindableObject.SetValue(BindableProperty, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindablepropertykey-system-object)">BindableObject.SetValue(BindablePropertyKey, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindableproperty)">BindableObject.CoerceValue(BindableProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindablepropertykey)">BindableObject.CoerceValue(BindablePropertyKey)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.dispatcher">BindableObject.Dispatcher</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.bindingcontext">BindableObject.BindingContext</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.propertychanged">BindableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.propertychanging">BindableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.bindingcontextchanged">BindableObject.BindingContextChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__">FluentExtensions.Assign&lt;T&gt;(T, out T)</a>
+  </div>
+  <div>
+      <a class="xref" href="DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_">ThemeBindings.WithThemeBinding&lt;TControl&gt;(TControl, BindableProperty, object, object, object)</a>
+  </div>
+  <div>
+      <a class="xref" href="DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_">InternalExtensions.FromPlatform(object)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="DrawnUi_Draw_AnimatedShaderEffect_Animator" data-uid="DrawnUi.Draw.AnimatedShaderEffect.Animator">
+  Animator
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Effects/AnimatedShaderEffect.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected RangeAnimator Animator</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Draw.RangeAnimator.html">RangeAnimator</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="DrawnUi_Draw_AnimatedShaderEffect_Center_" data-uid="DrawnUi.Draw.AnimatedShaderEffect.Center*"></a>
+
+  <h3 id="DrawnUi_Draw_AnimatedShaderEffect_Center" data-uid="DrawnUi.Draw.AnimatedShaderEffect.Center">
+  Center
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Effects/AnimatedShaderEffect.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Normalized center position of the effect (0.0–1.0 in each axis).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SKPoint Center { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpoint">SKPoint</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_AnimatedShaderEffect_DurationMs_" data-uid="DrawnUi.Draw.AnimatedShaderEffect.DurationMs*"></a>
+
+  <h3 id="DrawnUi_Draw_AnimatedShaderEffect_DurationMs" data-uid="DrawnUi.Draw.AnimatedShaderEffect.DurationMs">
+  DurationMs
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Effects/AnimatedShaderEffect.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Total animation duration in milliseconds. Default 2500.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint DurationMs { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_AnimatedShaderEffect_Progress_" data-uid="DrawnUi.Draw.AnimatedShaderEffect.Progress*"></a>
+
+  <h3 id="DrawnUi_Draw_AnimatedShaderEffect_Progress" data-uid="DrawnUi.Draw.AnimatedShaderEffect.Progress">
+  Progress
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Effects/AnimatedShaderEffect.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Current animation progress 0.0 → 1.0.
+Set automatically by Play(); can also be set manually for debugging.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Progress { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="DrawnUi_Draw_AnimatedShaderEffect_CreateUniforms_" data-uid="DrawnUi.Draw.AnimatedShaderEffect.CreateUniforms*"></a>
+
+  <h3 id="DrawnUi_Draw_AnimatedShaderEffect_CreateUniforms_SkiaSharp_SKRect_" data-uid="DrawnUi.Draw.AnimatedShaderEffect.CreateUniforms(SkiaSharp.SKRect)">
+  CreateUniforms(SKRect)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Effects/AnimatedShaderEffect.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates uniforms fresh each time</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override SKRuntimeEffectUniforms CreateUniforms(SKRect destination)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>destination</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skrect">SKRect</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skruntimeeffectuniforms">SKRuntimeEffectUniforms</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_AnimatedShaderEffect_OnCompleted_" data-uid="DrawnUi.Draw.AnimatedShaderEffect.OnCompleted*"></a>
+
+  <h3 id="DrawnUi_Draw_AnimatedShaderEffect_OnCompleted" data-uid="DrawnUi.Draw.AnimatedShaderEffect.OnCompleted">
+  OnCompleted()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Effects/AnimatedShaderEffect.cs/#L20"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnCompleted()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_AnimatedShaderEffect_OnDisposing_" data-uid="DrawnUi.Draw.AnimatedShaderEffect.OnDisposing*"></a>
+
+  <h3 id="DrawnUi_Draw_AnimatedShaderEffect_OnDisposing" data-uid="DrawnUi.Draw.AnimatedShaderEffect.OnDisposing">
+  OnDisposing()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Effects/AnimatedShaderEffect.cs/#L100"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Simplified dispose - only CPU-side resources</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnDisposing()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_AnimatedShaderEffect_Play_" data-uid="DrawnUi.Draw.AnimatedShaderEffect.Play*"></a>
+
+  <h3 id="DrawnUi_Draw_AnimatedShaderEffect_Play" data-uid="DrawnUi.Draw.AnimatedShaderEffect.Play">
+  Play()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Effects/AnimatedShaderEffect.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts the celebration animation on the given parent control.
+Safe to call multiple times — restarts from zero each time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void Play()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_AnimatedShaderEffect_Stop_" data-uid="DrawnUi.Draw.AnimatedShaderEffect.Stop*"></a>
+
+  <h3 id="DrawnUi_Draw_AnimatedShaderEffect_Stop" data-uid="DrawnUi.Draw.AnimatedShaderEffect.Stop">
+  Stop()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Effects/AnimatedShaderEffect.cs/#L86"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Stops the animation without firing Completed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void Stop()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="events">Events
+</h2>
+
+
+
+  <h3 id="DrawnUi_Draw_AnimatedShaderEffect_Completed" data-uid="DrawnUi.Draw.AnimatedShaderEffect.Completed">
+  Completed
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Effects/AnimatedShaderEffect.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler Completed</code></pre>
+  </div>
+
+
+
+
+
+
+  <h4 class="section">Event Type</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.eventhandler">EventHandler</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Effects/AnimatedShaderEffect.cs/#L13" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Made by <a href="https://taublast.github.io/about/">Nick Kovalsky aka AppoMobi (@taublast)</a><script>(function(){try{const fix=function(){const brand=document.querySelector('a.navbar-brand');if(brand){brand.setAttribute('href','/');}document.querySelectorAll('a[href]').forEach(function(a){var href=a.getAttribute('href');if(!href||href.startsWith('http'))return;if(href==='index.html'||href==='/index.html'||href==='../index.html'){a.setAttribute('href','/');return;}if(href.endsWith('/articles/index.html')||href==='articles/index.html'||href==='../articles/index.html'){a.setAttribute('href','/articles/');return;}var m=href.match(/^(?:\.?\.?\/)?articles\/.*\/index\.html(.*)$/);if(m){var p=href.replace(/\/index\.html(.*)$/,'/');if(!p.startsWith('/')){p='/' + p.replace(/^\/?/,'');}a.setAttribute('href',p);}});};if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fix);}else{fix();}}catch(e){})();</script>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
