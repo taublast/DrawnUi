@@ -156,7 +156,7 @@ You can use additional methods to building your own permissions flows, pass appr
 | 6 | Opening Files in Gallery | `OpenFileInGallery()` |
 | 7 | Real-Time Effects & Custom Shaders | Built-in effects, SKSL shaders |
 | 8 | Zoom Control | Manual zoom, pinch-to-zoom |
-| 9 | Camera State Management | `StateChanged` event, `CameraState` |
+| 9 | Camera State Management | `StateChanged` event, `HardwareState` |
 | 10 | **Live Processing: FrameProcessor & PreviewProcessor** | Drawing overlays on preview and recorded video, `NewPreviewSet` for AI/ML |
 | 11 | Permission Handling | `NeedPermissions` flags, `CheckPermissions()`, `CheckPermissionsGranted()`, async helpers |
 | 12 | Complete MVVM Example | Full ViewModel + Page example |
@@ -237,7 +237,7 @@ var camera = new SkiaCamera
 | `Effect` | `SkiaImageEffect` | `None` | Real-time effects: `None`, `Sepia`, `BlackAndWhite`, `Pastel` |
 | `Zoom` | `double` | `1.0` | Camera zoom level |
 | `ZoomLimitMin/Max` | `double` | `1.0/10.0` | Zoom constraints |
-| `State` | `CameraState` | `Off` | Current camera state (read-only) |
+| `State` | `HardwareState` | `Off` | Current camera state (read-only) |
 | `IsBusy` | `bool` | `false` | Whether camera is processing (read-only) |
 
 ### 3. Camera Lifecycle Management
@@ -650,7 +650,7 @@ camera.CaptureFailed += OnCaptureFailed;
 
 private async void TakePicture()
 {
-    if (camera.State == CameraState.On && !camera.IsBusy)
+    if (camera.State == HardwareState.On && !camera.IsBusy)
     {
         // Optional: Flash screen effect
         camera.FlashScreen(Color.Parse("#EEFFFFFF"));
@@ -691,7 +691,7 @@ private void OnCaptureFailed(object sender, Exception ex)
 ```csharp
 public ICommand CommandCapturePhoto => new Command(async () =>
 {
-    if (camera.State == CameraState.On && !camera.IsBusy)
+    if (camera.State == HardwareState.On && !camera.IsBusy)
     {
         camera.FlashScreen(Color.Parse("#EEFFFFFF"));
         await camera.TakePicture().ConfigureAwait(false);
@@ -826,24 +826,24 @@ private void OnZoomed(object sender, ZoomEventArgs e)
 // Subscribe to state changes
 camera.StateChanged += OnCameraStateChanged;
 
-private void OnCameraStateChanged(object sender, CameraState newState)
+private void OnCameraStateChanged(object sender, HardwareState newState)
 {
     switch (newState)
     {
-        case CameraState.Off:
+        case HardwareState.Off:
             // Camera is off
             break;
-        case CameraState.On:
+        case HardwareState.On:
             // Camera is running
             break;
-        case CameraState.Error:
+        case HardwareState.Error:
             // Camera error occurred
             break;
     }
 }
 
 // Check camera state before operations
-if (camera.State == CameraState.On)
+if (camera.State == HardwareState.On)
 {
     // Safe to perform camera operations
 }
@@ -1106,7 +1106,7 @@ public class CameraViewModel : INotifyPropertyChanged, IDisposable
 
     public ICommand CommandCapturePhoto => new Command(async () =>
     {
-        if (_camera?.State == CameraState.On && !_camera.IsBusy)
+        if (_camera?.State == HardwareState.On && !_camera.IsBusy)
         {
             _camera.FlashScreen(Color.Parse("#EEFFFFFF"));
             await _camera.TakePicture().ConfigureAwait(false);
@@ -1318,9 +1318,9 @@ private async void OnCameraError(object sender, string error)
     }
 }
 
-private void OnCameraStateChanged(object sender, CameraState newState)
+private void OnCameraStateChanged(object sender, HardwareState newState)
 {
-    if (newState == CameraState.On)
+    if (newState == HardwareState.On)
     {
         // Reset retry counter on successful start
         _cameraRestartAttempts = 0;
@@ -1337,7 +1337,7 @@ private void OnCameraStateChanged(object sender, CameraState newState)
 public bool IsOn { get; set; }                    // Start/stop camera
 public CameraPosition Facing { get; set; }        // Camera selection mode
 public int CameraIndex { get; set; }              // Manual camera index
-public CameraState State { get; }                 // Current state (read-only)
+public HardwareState State { get; }                 // Current state (read-only)
 public bool IsBusy { get; }                       // Processing state (read-only)
 
 // Capture Settings
@@ -1436,7 +1436,7 @@ public event EventHandler<TimeSpan> RecordingProgress;
 
 // Preview & State Events
 public event EventHandler<LoadedImageSource> NewPreviewSet;
-public event EventHandler<CameraState> StateChanged;
+public event EventHandler<HardwareState> StateChanged;
 public event EventHandler<string> OnError;
 public event EventHandler<double> Zoomed;
 ```
@@ -1495,7 +1495,7 @@ public class CapturedVideo
 ### Enums
 ```csharp
 public enum CameraPosition { Default, Selfie, Manual }
-public enum CameraState { Off, On, Error }
+public enum HardwareState { Off, On, Error }
 public enum CaptureQuality { Max, Medium, Low, Preview, Manual }
 public enum VideoQuality { Low, Standard, High, Ultra, Manual }
 public enum FlashMode { Off, On, Strobe }
@@ -1601,7 +1601,7 @@ await camera.TakePicture();
 1. **Understand dual channels**: Preview processing ≠ Capture processing
 2. **Channel 1 (Preview)**: Use `NewPreviewSet` event for real-time AI/ML
 3. **Channel 2 (Capture)**: Use `CaptureSuccess` event for high-quality processing
-4. **Always check `camera.State == CameraState.On` before operations**
+4. **Always check `camera.State == HardwareState.On` before operations**
 5. **Use `camera.IsOn = true/false` for lifecycle management**
 6. **Subscribe to events before starting camera**
 7. **Handle permissions with `SkiaCamera.RequestPermissionsAsync()` (request) or `SkiaCamera.RequestPermissionsGrantedAsync()` (silent check)**
@@ -1633,7 +1633,7 @@ camera.CaptureSuccess += (s, captured) => {
 };
 
 camera.IsOn = true; // Proper lifecycle
-if (camera.State == CameraState.On && !camera.IsBusy)
+if (camera.State == HardwareState.On && !camera.IsBusy)
     await camera.TakePicture().ConfigureAwait(false);
 ```
 
@@ -2234,7 +2234,7 @@ private void ToggleAudioRecording()
 
 private async Task ToggleVideoRecording()
 {
-    if (CameraControl.State != CameraState.On)
+    if (CameraControl.State != HardwareState.On)
         return;
 
     try
