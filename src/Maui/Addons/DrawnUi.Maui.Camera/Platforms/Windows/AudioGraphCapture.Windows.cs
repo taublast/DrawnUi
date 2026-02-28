@@ -37,6 +37,21 @@ namespace DrawnUi.Camera.Platforms.Windows
 
         public event EventHandler<AudioSample>? SampleAvailable;
 
+        string _lastError;
+        public string LastError
+        {
+            get => _lastError;
+            set
+            {
+                if (_lastError != value)
+                {
+                    _lastError = value;
+                    Super.Log($"[AudioGraphCapture] {value}");
+                }
+            }
+        }
+
+
         /// <summary>
         /// Start audio capture with optional device selection
         /// </summary>

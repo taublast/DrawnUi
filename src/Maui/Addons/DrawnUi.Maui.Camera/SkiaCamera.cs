@@ -1074,9 +1074,9 @@ public partial class SkiaCamera : SkiaControl
 
     public static readonly BindableProperty StateProperty = BindableProperty.Create(
         nameof(State),
-        typeof(CameraState),
+        typeof(HardwareState),
         typeof(SkiaCamera),
-        CameraState.Off,
+        HardwareState.Off,
         BindingMode.OneWayToSource, propertyChanged: ControlStateChanged);
 
     private static void ControlStateChanged(BindableObject bindable, object oldvalue, object newvalue)
@@ -1087,7 +1087,7 @@ public partial class SkiaCamera : SkiaControl
             control.UpdateInfo();
 
             // Update preview scale when camera becomes ready
-            if (control.State == CameraState.On)
+            if (control.State == HardwareState.On)
             {
                 control.UpdatePreviewScaleFromFormat();
 
@@ -1105,9 +1105,9 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-    public CameraState State
+    public HardwareState State
     {
-        get { return (CameraState)GetValue(StateProperty); }
+        get { return (HardwareState)GetValue(StateProperty); }
         set { SetValue(StateProperty, value); }
     }
 
@@ -1793,7 +1793,7 @@ public partial class SkiaCamera : SkiaControl
             // Pure audio-only mode: no video recording, no preview
             Debug.WriteLine("[SkiaCamera] Starting in pure audio-only mode (no camera hardware)");
             StartPreviewAudioCapture();
-            State = CameraState.On;
+            State = HardwareState.On;
         }
 #endif
     }
@@ -2145,7 +2145,7 @@ public partial class SkiaCamera : SkiaControl
     /// </summary>
     public event EventHandler<Exception> AudioRecordingFailed;
 
-    public event EventHandler<CameraState> StateChanged;
+    public event EventHandler<HardwareState> StateChanged;
 
     internal void RaiseError(string error)
     {
@@ -3050,7 +3050,7 @@ public partial class SkiaCamera : SkiaControl
     {
         base.OnLayoutReady();
 
-        if (State == CameraState.Error)
+        if (State == HardwareState.Error)
             StartInternal();
     }
 
@@ -3402,14 +3402,14 @@ public partial class SkiaCamera : SkiaControl
     {
         base.Paint(ctx);
 
-        if (State == CameraState.On)
+        if (State == HardwareState.On)
         {
             SetFrameFromNative();
         }
 
         DrawViews(ctx);
 
-        if (ConstantUpdate && State == CameraState.On)
+        if (ConstantUpdate && State == HardwareState.On)
         {
             Update();
         }
@@ -3562,6 +3562,8 @@ public partial class SkiaCamera : SkiaControl
 
             bool allGranted = true;
 
+            bool wasAsking = false;
+
             ChecksBusy = true;
             try
             {
@@ -3569,7 +3571,10 @@ public partial class SkiaCamera : SkiaControl
                 {
                     var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
                     if (status != PermissionStatus.Granted)
+                    {
+                        wasAsking = true;
                         status = await Permissions.RequestAsync<Permissions.Camera>();
+                    }
                     allGranted = allGranted && status == PermissionStatus.Granted;
                 }
 
@@ -3605,13 +3610,21 @@ public partial class SkiaCamera : SkiaControl
 #if IOS || MACCATALYST
                     var s = AVCaptureDevice.GetAuthorizationStatus(AVAuthorizationMediaType.Audio);
                     if (s == AVAuthorizationStatus.NotDetermined)
+                    {
+                        wasAsking = true;
                         allGranted = await AVCaptureDevice.RequestAccessForMediaTypeAsync(AVAuthorizationMediaType.Audio);
+                    }
                     else
+                    {
                         allGranted = s == AVAuthorizationStatus.Authorized;
+                    }
 #else
                     var micStatus = await Permissions.CheckStatusAsync<Permissions.Microphone>();
                     if (micStatus != PermissionStatus.Granted)
+                    {
+                        wasAsking = true;
                         micStatus = await Permissions.RequestAsync<Permissions.Microphone>();
+                    }
                     allGranted = micStatus == PermissionStatus.Granted;
 #endif
                 }
@@ -3620,8 +3633,16 @@ public partial class SkiaCamera : SkiaControl
                 {
                     var locStatus = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
                     if (locStatus != PermissionStatus.Granted)
+                    {
                         locStatus = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                        wasAsking = true;
+                    }
                     allGranted = locStatus == PermissionStatus.Granted;
+                }
+
+                if (allGranted && wasAsking)
+                {
+                    await Task.Delay(100); //let OS reconfig hardware in async after granted, critical for iOS
                 }
 
                 Super.Log($"[SkiaCamera] Permissions granted: {allGranted} for {request}");
@@ -3878,7 +3899,7 @@ public partial class SkiaCamera : SkiaControl
             StopPreviewAudioCapture();
         }
         
-        State = CameraState.Off;
+        State = HardwareState.Off;
     }
 
     /// <summary>

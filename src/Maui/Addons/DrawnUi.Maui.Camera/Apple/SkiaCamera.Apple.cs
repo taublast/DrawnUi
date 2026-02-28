@@ -2126,7 +2126,7 @@ public partial class SkiaCamera
             IsBusy = false; // Release busy state after successful muxing
 
             // Restart preview audio if still enabled
-            if (State == CameraState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
+            if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
@@ -2167,7 +2167,7 @@ public partial class SkiaCamera
             IsBusy = false; // Release busy state on error
 
             // Restart preview audio if still enabled
-            if (State == CameraState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
+            if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
@@ -2256,7 +2256,7 @@ public partial class SkiaCamera
             Debug.WriteLine($"[AbortRealtimeVideoProcessing] Capture video flow aborted successfully");
 
             // Restart preview audio if still enabled
-            if (State == CameraState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
+            if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
@@ -2277,7 +2277,7 @@ public partial class SkiaCamera
             SetIsPreRecording(false);
 
             // Restart preview audio if still enabled
-            if (State == CameraState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
+            if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
@@ -3467,18 +3467,25 @@ public partial class SkiaCamera
 
         Task.Run(async () =>
         {
+            if (!await _audioSemaphore.WaitAsync(1)) // Skip if busy processing
+                return;
+
             try
             {
+                StopPreviewAudioCapture();
+
                 _previewAudioCapture = new AudioCaptureApple();
                 _previewAudioCapture.SampleAvailable += OnPreviewAudioSampleAvailable;
-                var started = await _previewAudioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
+                var started = await _previewAudioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth,
+                    AudioDeviceIndex);
                 if (started)
                 {
-                    Debug.WriteLine($"[SkiaCamera.Apple] Preview audio capture started: {_previewAudioCapture.SampleRate}Hz, {_previewAudioCapture.Channels}ch");
+                    Debug.WriteLine(
+                        $"[SkiaCamera.Apple] Preview audio capture started: {_previewAudioCapture.SampleRate}Hz, {_previewAudioCapture.Channels}ch");
                 }
                 else
                 {
-                    Debug.WriteLine("[SkiaCamera.Apple] Preview audio capture failed to start");
+                    RaiseError($"Preview audio capture failed to start: {_previewAudioCapture.LastError}");
                     _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
                     _previewAudioCapture.Dispose();
                     _previewAudioCapture = null;
@@ -3486,9 +3493,23 @@ public partial class SkiaCamera
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[SkiaCamera.Apple] Preview audio capture error: {ex.Message}");
+                RaiseError($"Preview audio capture error: {ex}");
+            }
+            finally
+            {
+                _audioSemaphore?.Release();
             }
         });
+    }
+
+ 
+
+    private SemaphoreSlim _audioSemaphore = new(1, 1);
+
+    public override void OnDisposing()
+    {
+        _audioSemaphore?.Dispose();
+        _audioSemaphore = null;
     }
 
     partial void StopPreviewAudioCapture()
@@ -3499,8 +3520,12 @@ public partial class SkiaCamera
         try
         {
             _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
-            _ = _previewAudioCapture.StopAsync();
-            _previewAudioCapture.Dispose();
+            var kill = _previewAudioCapture;
+            _ = kill.StopAsync().ContinueWith(_ =>
+            {
+                kill.Dispose();
+            });
+
             _previewAudioCapture = null;
             Debug.WriteLine("[SkiaCamera.Apple] Preview audio capture stopped");
         }

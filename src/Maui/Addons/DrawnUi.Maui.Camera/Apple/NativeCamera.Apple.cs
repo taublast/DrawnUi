@@ -31,6 +31,20 @@ namespace DrawnUi.Camera;
 
 public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotifyPropertyChanged, IAVCaptureVideoDataOutputSampleBufferDelegate, IAVCaptureFileOutputRecordingDelegate, IAudioCapture, IAVCaptureAudioDataOutputSampleBufferDelegate
 {
+    string _lastError;
+    public string LastError
+    {
+        get => _lastError;
+        set
+        {
+            if (_lastError != value)
+            {
+                _lastError = value;
+                Super.Log($"[NativeCamera] {value}");
+            }
+        }
+    }
+
     protected override void Dispose(bool disposing)
     {
         if (disposing)
@@ -239,13 +253,13 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 switch (value)
                 {
                     case CameraProcessorState.Enabled:
-                        FormsControl.State = CameraState.On;
+                        FormsControl.State = HardwareState.On;
                         break;
                     case CameraProcessorState.Error:
-                        FormsControl.State = CameraState.Error;
+                        FormsControl.State = HardwareState.Error;
                         break;
                     default:
-                        FormsControl.State = CameraState.Off;
+                        FormsControl.State = HardwareState.Off;
                         break;
                 }
             }
@@ -270,13 +284,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
         catch (Exception e)
         {
-            Console.WriteLine($"[NativeCameraiOS] Setup error: {e}");
+            LastError = $"Setup error: {e.Message}";
             State = CameraProcessorState.Error;
         }
     }
-
-
-
 
     object lockSetup = new();
 
@@ -396,10 +407,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         {
                             targetFps = 60.0;
                         }
-                        
+
                         // Check if format supports this FPS
                         bool supported = false;
-                        foreach(var range in format.VideoSupportedFrameRateRanges)
+                        foreach (var range in format.VideoSupportedFrameRateRanges)
                         {
                             if (Math.Abs(range.MaxFrameRate - targetFps) < 0.1)
                             {
@@ -407,7 +418,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                                 break;
                             }
                         }
-                        
+
                         if (supported)
                         {
                             try
@@ -416,7 +427,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                                 videoDevice.ActiveVideoMaxFrameDuration = new CMTime(1, (int)targetFps);
                                 Console.WriteLine($"[NativeCameraiOS] Set FPS to {targetFps}");
                             }
-                            catch(Exception e)
+                            catch (Exception e)
                             {
                                 Console.WriteLine($"[NativeCameraiOS] Failed to set FPS: {e.Message}");
                             }
@@ -576,8 +587,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 if (formatDescription != null)
                 {
                     var dimensions = formatDescription.Dimensions;
-                    PreviewWidth = (int)dimensions.Width;  
-                    PreviewHeight = (int)dimensions.Height; 
+                    PreviewWidth = (int)dimensions.Width;
+                    PreviewHeight = (int)dimensions.Height;
                     FormsControl.SetRotatedContentSize(new SKSize(dimensions.Width, dimensions.Height), 0);
                 }
             }
@@ -841,8 +852,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
 
         var best = formatDetails
-            .Select(d => new { 
-                d, 
+            .Select(d => new
+            {
+                d,
                 ar = d.VideoDims.Height > 0 ? (double)d.VideoDims.Width / d.VideoDims.Height : 0.0,
                 maxFps = GetMaxFps(d.Format),
                 supportsTargetFps = SupportsFps(d.Format, targetFps)
@@ -860,7 +872,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
     private bool SupportsFps(AVCaptureDeviceFormat format, double targetFps)
     {
-        foreach(var range in format.VideoSupportedFrameRateRanges)
+        foreach (var range in format.VideoSupportedFrameRateRanges)
         {
             // Check if targetFps is within range (with small epsilon for float comparison)
             if (range.MinFrameRate <= targetFps + 0.1 && range.MaxFrameRate >= targetFps - 0.1)
@@ -872,7 +884,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     private double GetMaxFps(AVCaptureDeviceFormat format)
     {
         double max = 0;
-        foreach(var range in format.VideoSupportedFrameRateRanges)
+        foreach (var range in format.VideoSupportedFrameRateRanges)
         {
             if (range.MaxFrameRate > max) max = range.MaxFrameRate;
         }
@@ -1680,7 +1692,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
             var tcs = new TaskCompletionSource<string>();
             string assetId = null;
-            
+
             Console.WriteLine($"[SaveJpgStreamToGallery] Calling PerformChanges...");
             PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
             {
@@ -2210,8 +2222,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                 int length = (int)blockBuffer.DataLength;
                 byte[] data = new byte[length];
-                
-                unsafe 
+
+                unsafe
                 {
                     fixed (byte* p = data)
                     {
@@ -2309,8 +2321,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     int scaledHeight = ((int)(height * scale) / 2) * 2;
 
                     // Initialize Metal scaler on first use OR if dimensions changed
-                    if (_metalScaler == null || 
-                        _metalScaler.OutputWidth != scaledWidth || 
+                    if (_metalScaler == null ||
+                        _metalScaler.OutputWidth != scaledWidth ||
                         _metalScaler.OutputHeight != scaledHeight)
                     {
                         _metalScaler?.Dispose();
@@ -2399,10 +2411,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                             {
                                 unit.FieldOfView = formatInfo.VideoFieldOfView;
                             }
+                        }
                     }
+                    catch { }
                 }
-                catch { }
-            }
 
                 switch ((int)CurrentRotation)
                 {
@@ -2868,17 +2880,17 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 }
 
                 Debug.WriteLine($"[NativeCamera.Apple] GetCurrentVideoFormat: {quality} quality -> {bestFormat.Width}x{bestFormat.Height}@{reportedFps} (Base: {bestFormat.FrameRate})");
-                
+
                 // Return a copy with adjusted FPS
-                return new VideoFormat 
+                return new VideoFormat
                 {
                     Index = -1,
-                    Width = bestFormat.Width, 
-                    Height = bestFormat.Height, 
-                    FrameRate = reportedFps, 
-                    Codec = bestFormat.Codec, 
-                    BitRate = bestFormat.BitRate, 
-                    FormatId = bestFormat.FormatId 
+                    Width = bestFormat.Width,
+                    Height = bestFormat.Height,
+                    FrameRate = reportedFps,
+                    Codec = bestFormat.Codec,
+                    BitRate = bestFormat.BitRate,
+                    FormatId = bestFormat.FormatId
                 };
             }
         }
@@ -3058,23 +3070,25 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 }
             }
 
-            // Select specific audio input device if requested
-            if (deviceIndex >= 0)
+            if (deviceIndex < 0) //cant pass -1 to apple, will throw
             {
-                var audioSession = AVAudioSession.SharedInstance();
-                var availableInputs = audioSession.AvailableInputs;
-                if (availableInputs != null && deviceIndex < availableInputs.Length)
+                deviceIndex = 0;
+            }
+
+            // Select specific audio input device if requested
+            var audioSession = AVAudioSession.SharedInstance();
+            var availableInputs = audioSession.AvailableInputs;
+            if (availableInputs != null && deviceIndex < availableInputs.Length)
+            {
+                var selectedInput = availableInputs[deviceIndex];
+                NSError sessionError;
+                if (audioSession.SetPreferredInput(selectedInput, out sessionError))
                 {
-                    var selectedInput = availableInputs[deviceIndex];
-                    NSError sessionError;
-                    if (audioSession.SetPreferredInput(selectedInput, out sessionError))
-                    {
-                        Debug.WriteLine($"[NativeCamera.Apple] Selected audio device [{deviceIndex}]: {selectedInput.PortName}");
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"[NativeCamera.Apple] Failed to select audio device: {sessionError?.LocalizedDescription}");
-                    }
+                    Debug.WriteLine($"[NativeCamera.Apple] Selected audio device [{deviceIndex}]: {selectedInput.PortName}");
+                }
+                else
+                {
+                    Debug.WriteLine($"[NativeCamera.Apple] Failed to select audio device: {sessionError?.LocalizedDescription}");
                 }
             }
 
@@ -3787,6 +3801,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     }
 
     #endregion
- 
+
 }
 #endif

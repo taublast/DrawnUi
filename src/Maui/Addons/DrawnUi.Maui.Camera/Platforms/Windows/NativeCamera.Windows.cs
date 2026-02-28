@@ -305,6 +305,20 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     FlashMode _flashMode = FlashMode.Off;
     CaptureFlashMode _captureFlashMode = CaptureFlashMode.Auto;
 
+    string _lastError;
+    public string LastError
+    {
+        get => _lastError;
+        set
+        {
+            if (_lastError != value)
+            {
+                _lastError = value;
+                Super.Log($"[NativeCamera] {value}");
+            }
+        }
+    }
+
     public int PreviewWidth { get; private set; }
     public int PreviewHeight { get; private set; }
 
@@ -366,13 +380,13 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                     switch (value)
                     {
                         case CameraProcessorState.Enabled:
-                            FormsControl.State = CameraState.On;
+                            FormsControl.State = HardwareState.On;
                             break;
                         case CameraProcessorState.Error:
-                            FormsControl.State = CameraState.Error;
+                            FormsControl.State = HardwareState.Error;
                             break;
                         default:
-                            FormsControl.State = CameraState.Off;
+                            FormsControl.State = HardwareState.Off;
                             break;
                     }
                 });

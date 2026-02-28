@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using NetworkExtension;
 
 namespace DrawnUi.Camera;
 
@@ -25,6 +26,20 @@ public class AudioCaptureApple : IAudioCapture
     public AudioBitDepth BitDepth { get; private set; }
 
     public event EventHandler<AudioSample> SampleAvailable;
+
+    string _lastError;
+    public string LastError
+    {
+        get => _lastError;
+        set
+        {
+            if (_lastError != value)
+            {
+                _lastError = value;
+                Super.Log($"[AudioCaptureApple] {value}");
+            }
+        }
+    }
 
     /// <summary>
     /// Get list of available audio input devices
@@ -55,7 +70,7 @@ public class AudioCaptureApple : IAudioCapture
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[AudioCaptureApple] Error getting audio devices: {ex.Message}");
+            Debug.WriteLine($"[AudioCaptureApple] Error getting audio devices: {ex}");
         }
         return Task.FromResult(devices);
     }
@@ -63,7 +78,8 @@ public class AudioCaptureApple : IAudioCapture
     public async Task<bool> StartAsync(int sampleRate = 44100, int channels = 1,
                                         AudioBitDepth bitDepth = AudioBitDepth.Pcm16Bit, int deviceIndex = -1)
     {
-        if (_isCapturing) return true;
+        if (_isCapturing)
+            return true;
 
         try
         {
@@ -74,13 +90,15 @@ public class AudioCaptureApple : IAudioCapture
                 var granted = await AVCaptureDevice.RequestAccessForMediaTypeAsync(AVAuthorizationMediaType.Audio);
                 if (!granted)
                 {
-                    Debug.WriteLine("[AudioCaptureApple] Microphone permission denied");
+                    LastError = "Microphone permission denied";
+                    Cleanup();
                     return false;
                 }
             }
             else if (status != AVAuthorizationStatus.Authorized)
             {
-                Debug.WriteLine($"[AudioCaptureApple] Microphone permission status: {status}");
+                LastError = $"Microphone permission status: {status}";
+                Cleanup();
                 return false;
             }
 
@@ -92,35 +110,44 @@ public class AudioCaptureApple : IAudioCapture
                 out sessionError);
             if (sessionError != null)
             {
-                Debug.WriteLine($"[AudioCaptureApple] Audio session category error: {sessionError}");
+                LastError = $"Audio session category error: {sessionError}";
+                Cleanup();
+                return false;
+            }
+
+            if (deviceIndex < 0)
+            {
+                deviceIndex = 0;
             }
 
             // Select specific audio input device if requested
-            if (deviceIndex >= 0)
+            var availableInputs = audioSession.AvailableInputs;
+            if (availableInputs != null && deviceIndex < availableInputs.Length)
             {
-                var availableInputs = audioSession.AvailableInputs;
-                if (availableInputs != null && deviceIndex < availableInputs.Length)
+                var selectedInput = availableInputs[deviceIndex];
+                if (audioSession.SetPreferredInput(selectedInput, out sessionError))
                 {
-                    var selectedInput = availableInputs[deviceIndex];
-                    if (audioSession.SetPreferredInput(selectedInput, out sessionError))
-                    {
-                        Debug.WriteLine($"[AudioCaptureApple] Selected audio device [{deviceIndex}]: {selectedInput.PortName}");
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"[AudioCaptureApple] Failed to select audio device: {sessionError?.LocalizedDescription}");
-                    }
+                    Debug.WriteLine($"[AudioCaptureApple] Selected audio device [{deviceIndex}]: {selectedInput.PortName}");
                 }
                 else
                 {
-                    Debug.WriteLine($"[AudioCaptureApple] Invalid device index {deviceIndex}, using default");
+                    LastError = "Failed to select audio device: {sessionError?.LocalizedDescription}";
+                    Cleanup();
+                    return false;
                 }
             }
+            else
+            {
+                Debug.WriteLine($"[AudioCaptureApple] Invalid device index {deviceIndex}, using default");
+            }
+
 
             audioSession.SetActive(true, out sessionError);
             if (sessionError != null)
             {
-                Debug.WriteLine($"[AudioCaptureApple] Audio session activation error: {sessionError}");
+                LastError = $"Audio session activation error: {sessionError}";
+                Cleanup();
+                return false;
             }
 
             // Store requested parameters
@@ -170,7 +197,7 @@ public class AudioCaptureApple : IAudioCapture
             NSError engineError;
             if (!_audioEngine.StartAndReturnError(out engineError))
             {
-                Debug.WriteLine($"[AudioCaptureApple] Engine start failed: {engineError?.LocalizedDescription}");
+                LastError = $"Engine start failed: {engineError?.LocalizedDescription}";
                 Cleanup();
                 return false;
             }
@@ -183,7 +210,7 @@ public class AudioCaptureApple : IAudioCapture
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[AudioCaptureApple] Start failed: {ex}");
+            LastError = $"Start failed:[{sampleRate}, {channels}, {bitDepth}, {deviceIndex}]  {ex}";
             Cleanup();
             return false;
         }

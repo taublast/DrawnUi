@@ -1523,13 +1523,13 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     switch (value)
                     {
                         case CameraProcessorState.Enabled:
-                            FormsControl.State = CameraState.On;
+                            FormsControl.State = HardwareState.On;
                             break;
                         case CameraProcessorState.Error:
-                            FormsControl.State = CameraState.Error;
+                            FormsControl.State = HardwareState.Error;
                             break;
                         default:
-                            FormsControl.State = CameraState.Off;
+                            FormsControl.State = HardwareState.Off;
                             break;
                     }
                 }

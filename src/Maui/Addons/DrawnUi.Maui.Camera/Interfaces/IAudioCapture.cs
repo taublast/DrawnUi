@@ -17,6 +17,7 @@ namespace DrawnUi.Camera
 
     public interface IAudioCapture : IDisposable
     {
+        string LastError { get; }
         bool IsCapturing { get; }
         int SampleRate { get; }
         int Channels { get; }
