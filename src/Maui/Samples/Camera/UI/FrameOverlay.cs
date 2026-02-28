@@ -65,7 +65,10 @@ namespace CameraTests.UI
 
         public void AddAudioSample(AudioSample sample)
         {
-            Visualizer?.AddSample(sample);
+            if (Visualizer != null && Visualizer.IsVisible)
+            {
+                Visualizer?.AddSample(sample);
+            }
         }
 
         public string SwitchVisualizer(int index = -1)
