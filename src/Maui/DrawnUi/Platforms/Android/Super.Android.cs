@@ -16,6 +16,7 @@ public partial class Super
     public static Android.App.Activity MainActivity { get; set; }
 
     private static FrameCallback _frameCallback;
+    private static long _lastFrameNanos;
 
     static bool _loopStarting = false;
     static bool _loopStarted = false;
@@ -88,7 +89,21 @@ public partial class Super
             {
                 if (isRendering)
                     return;
+
+                if (MaxFps > 0)
+                {
+                    // Vsync-aligned: skip N whole frames where N = ceil(RefreshRate / MaxFps).
+                    var skipFrames = (long)Math.Ceiling((double)RefreshRate / MaxFps);
+                    var minIntervalNanos = skipFrames * (1_000_000_000L / RefreshRate);
+                    if (nanos - _lastFrameNanos < minIntervalNanos)
+                    {
+                        Choreographer.Instance.PostFrameCallback(_frameCallback);
+                        return;
+                    }
+                }
+
                 isRendering = true;
+                _lastFrameNanos = nanos;
                 OnFrame?.Invoke(null, null);
                 Choreographer.Instance.PostFrameCallback(_frameCallback);
                 isRendering = false;

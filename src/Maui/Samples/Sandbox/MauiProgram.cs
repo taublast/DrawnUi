@@ -47,6 +47,10 @@ namespace Sandbox
                     fonts.AddFont("Orbitron-ExtraBold.ttf", "FontGameExtraBold"); //800
                 });
 
+#if IOS //spare battery because apple metal is draining much.
+            Super.MaxFps = 30; 
+#endif
+
             builder.UseDrawnUi(new()
             {
                 UseDesktopKeyboard = true, //will not work with maui shell on apple!!

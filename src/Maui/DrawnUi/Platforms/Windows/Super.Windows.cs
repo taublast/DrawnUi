@@ -128,8 +128,16 @@ namespace DrawnUi.Draw
                                             _loopStarted = true;
                                             try
                                             {
+                                                var frameStopwatch = Stopwatch.StartNew();
                                                 CompositionTarget.Rendering += (s, a) =>
                                                 {
+                                                    if (MaxFps > 0)
+                                                    {
+                                                        var minIntervalMs = 1000.0 / MaxFps;
+                                                        if (frameStopwatch.Elapsed.TotalMilliseconds < minIntervalMs)
+                                                            return;
+                                                        frameStopwatch.Restart();
+                                                    }
                                                     OnFrame?.Invoke(null, null);
                                                 };
                                             }
@@ -162,7 +170,7 @@ namespace DrawnUi.Draw
                     OnFrame?.Invoke(null, null);
                 });
 
-                Looper.StartOnMainThread(120);
+                Looper.StartOnMainThread(MaxFps > 0 ? MaxFps : RefreshRate);
             }
         }
 
@@ -171,6 +179,12 @@ namespace DrawnUi.Draw
         public static extern bool SetFocus(IntPtr hWnd);
 
         static Looper Looper { get; set; }
+
+        static partial void OnMaxFpsChanged(int fps)
+        {
+            if (!UsingDisplaySync)
+                Looper?.SetTargetFps(fps > 0 ? fps : RefreshRate);
+        }
 
         public static event EventHandler OnFrame;
 

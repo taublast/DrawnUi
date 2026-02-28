@@ -48,6 +48,27 @@ public partial class Super
 
 #endif
 
+    private static int _maxFps;
+
+    /// <summary>
+    /// Limits the rendering loop to this frame rate. 0 means unlimited (uses display refresh rate).
+    /// on iOS this will work only in steps 60, 30, 20, 15, 12... if you set 35 ios would run at run 60.
+    /// On Android you might want to set a bit higher like 35 to get around 30to and avoid never reaching 30.
+    /// Can be changed at runtime on all platforms.
+    /// </summary>
+    public static int MaxFps
+    {
+        get => _maxFps;
+        set
+        {
+            if (_maxFps == value) return;
+            _maxFps = value;
+            OnMaxFpsChanged(value);
+        }
+    }
+
+    static partial void OnMaxFpsChanged(int fps);
+
     /// <summary>
     /// Can optionally disable hardware-acceleration with this flag, for example on iOS you would want to avoid creating many metal views.
     /// </summary>
