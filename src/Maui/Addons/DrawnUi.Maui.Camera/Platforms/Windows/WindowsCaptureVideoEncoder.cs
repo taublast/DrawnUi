@@ -105,9 +105,9 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
 
         // Normal recording mode: drop audio samples before first video frame
-        if (!_hasFirstVideoFrame && !IsPreRecordingMode)
+        // (skip this gate in audio-only mode where no video frames will arrive)
+        if (!_hasFirstVideoFrame && !IsPreRecordingMode && !AudioOnly)
         {
-            //Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] WriteAudioSample DROP: Waiting for first video frame (timestamp={timestampNs / 1_000_000.0:F1}ms), PreRecMode={IsPreRecordingMode}");
             return; // No video frame yet, drop audio
         }
 
@@ -202,6 +202,8 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     private readonly object _previewLock = new();
     private SKImage _latestPreviewImage; // swapped out to UI on demand
     private SKBitmap _readbackBitmap;    // reused CPU buffer to avoid per-frame allocs
+    private SKSurface _previewSurface;   // reused downscale surface for preview
+    private SKImageInfo _previewSurfaceInfo;
     public event EventHandler PreviewAvailable;
 
 
@@ -257,6 +259,11 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     // Interface implementation - required by ICaptureVideoEncoder
     public bool IsPreRecordingMode { get; set; }
     public SkiaCamera ParentCamera { get; set; }
+
+    /// <summary>
+    /// When true, skips video stream creation - the MP4 will contain only AAC audio.
+    /// </summary>
+    public bool AudioOnly { get; set; }
 
     private void CreateSinkWriterInternal(string path)
     {
@@ -439,6 +446,8 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
     /// <summary>
     /// Submits current GPU frame to encoder. Temporary: performs CPU readback into existing AddFrame pipeline.
+    /// Preview is downscaled from the full-res GPU surface to avoid double processing
+    /// (FrameProcessor overlay is already baked in, so PreviewProcessor can be skipped).
     /// </summary>
     public async Task SubmitFrameAsync()
     {
@@ -450,10 +459,27 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
                 if (!_isRecording || _gpuSurface == null)
                     return;
 
-                // Publish a GPU snapshot for preview
-                snapshot = _gpuSurface.Snapshot();
-                if (snapshot == null)
+                _gpuSurface.Canvas.Flush();
+
+                // Downscale the processed GPU frame for preview (same optimization as Apple encoder)
+                using var gpuSnap = _gpuSurface.Snapshot();
+                if (gpuSnap == null)
                     return;
+
+                int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                int pw = Math.Min(_width, maxPreviewWidth);
+                int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+
+                var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
+
+                if (_previewSurface == null || _previewSurfaceInfo.Width != pInfo.Width || _previewSurfaceInfo.Height != pInfo.Height)
+                {
+                    _previewSurface?.Dispose();
+                    _previewSurfaceInfo = pInfo;
+                    _previewSurface = SKSurface.Create(pInfo);
+                }
+                _previewSurface.Canvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
+                snapshot = _previewSurface.Snapshot();
 
                 lock (_previewLock)
                 {
@@ -956,6 +982,8 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         }
         _readbackBitmap?.Dispose();
         _readbackBitmap = null;
+        _previewSurface?.Dispose();
+        _previewSurface = null;
         _gpuSurface?.Dispose();
         _gpuSurface = null;
     }
@@ -2376,55 +2404,58 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     /// </summary>
     private void ConfigureH264OutputAndRGB32Input()
     {
-        // Configure OUTPUT type (H.264)
-        var hr = PInvoke.MFCreateMediaType(out var outType);
-        if (hr.Failed)
-            throw new InvalidOperationException($"MFCreateMediaType(out) failed: 0x{hr.Value:X8}");
-
-        try
+        if (!AudioOnly)
         {
-            outType.SetGUID(MFGuids.MF_MT_MAJOR_TYPE, MFGuids.MFMediaType_Video);
-            outType.SetGUID(MFGuids.MF_MT_SUBTYPE, MFGuids.MFVideoFormat_H264);
+            // Configure OUTPUT type (H.264)
+            var hr = PInvoke.MFCreateMediaType(out var outType);
+            if (hr.Failed)
+                throw new InvalidOperationException($"MFCreateMediaType(out) failed: 0x{hr.Value:X8}");
 
-            SetAttributeSize(outType, MFGuids.MF_MT_FRAME_SIZE, (uint)_width, (uint)_height);
-            SetAttributeRatio(outType, MFGuids.MF_MT_FRAME_RATE, (uint)_frameRate, 1);
-            SetAttributeRatio(outType, MFGuids.MF_MT_PIXEL_ASPECT_RATIO, 1, 1);
-            outType.SetUINT32(MFGuids.MF_MT_INTERLACE_MODE, 2); // Progressive
-            outType.SetUINT32(MFGuids.MF_MT_MPEG2_PROFILE, 100); // H.264 High profile
+            try
+            {
+                outType.SetGUID(MFGuids.MF_MT_MAJOR_TYPE, MFGuids.MFMediaType_Video);
+                outType.SetGUID(MFGuids.MF_MT_SUBTYPE, MFGuids.MFVideoFormat_H264);
 
-            uint bitrate = (uint)(Math.Max(1, _width * _height) * Math.Max(1, _frameRate) * 4 / 10);
-            outType.SetUINT32(MFGuids.MF_MT_AVG_BITRATE, bitrate);
+                SetAttributeSize(outType, MFGuids.MF_MT_FRAME_SIZE, (uint)_width, (uint)_height);
+                SetAttributeRatio(outType, MFGuids.MF_MT_FRAME_RATE, (uint)_frameRate, 1);
+                SetAttributeRatio(outType, MFGuids.MF_MT_PIXEL_ASPECT_RATIO, 1, 1);
+                outType.SetUINT32(MFGuids.MF_MT_INTERLACE_MODE, 2); // Progressive
+                outType.SetUINT32(MFGuids.MF_MT_MPEG2_PROFILE, 100); // H.264 High profile
 
-            _sinkWriter.AddStream(outType, out _streamIndex);
-        }
-        finally
-        {
-            Marshal.ReleaseComObject(outType);
-        }
+                uint bitrate = (uint)(Math.Max(1, _width * _height) * Math.Max(1, _frameRate) * 4 / 10);
+                outType.SetUINT32(MFGuids.MF_MT_AVG_BITRATE, bitrate);
 
-        // Configure INPUT type (RGB32)
-        hr = PInvoke.MFCreateMediaType(out var inType);
-        if (hr.Failed)
-            throw new InvalidOperationException($"MFCreateMediaType(in) failed: 0x{hr.Value:X8}");
+                _sinkWriter.AddStream(outType, out _streamIndex);
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(outType);
+            }
 
-        try
-        {
-            inType.SetGUID(MFGuids.MF_MT_MAJOR_TYPE, MFGuids.MFMediaType_Video);
-            inType.SetGUID(MFGuids.MF_MT_SUBTYPE, MFGuids.MFVideoFormat_RGB32);
-            SetAttributeSize(inType, MFGuids.MF_MT_FRAME_SIZE, (uint)_width, (uint)_height);
-            SetAttributeRatio(inType, MFGuids.MF_MT_FRAME_RATE, (uint)_frameRate, 1);
-            SetAttributeRatio(inType, MFGuids.MF_MT_PIXEL_ASPECT_RATIO, 1, 1);
-            inType.SetUINT32(MFGuids.MF_MT_INTERLACE_MODE, 2);
-            inType.SetUINT32(MFGuids.MF_MT_ALL_SAMPLES_INDEPENDENT, 1);
-            inType.SetUINT32(MFGuids.MF_MT_DEFAULT_STRIDE, (uint)(_width * 4));
-            inType.SetUINT32(MFGuids.MF_MT_FIXED_SIZE_SAMPLES, 1);
-            inType.SetUINT32(MFGuids.MF_MT_SAMPLE_SIZE, (uint)(_width * _height * 4));
+            // Configure INPUT type (RGB32)
+            hr = PInvoke.MFCreateMediaType(out var inType);
+            if (hr.Failed)
+                throw new InvalidOperationException($"MFCreateMediaType(in) failed: 0x{hr.Value:X8}");
 
-            _sinkWriter.SetInputMediaType(_streamIndex, inType, null);
-        }
-        finally
-        {
-            Marshal.ReleaseComObject(inType);
+            try
+            {
+                inType.SetGUID(MFGuids.MF_MT_MAJOR_TYPE, MFGuids.MFMediaType_Video);
+                inType.SetGUID(MFGuids.MF_MT_SUBTYPE, MFGuids.MFVideoFormat_RGB32);
+                SetAttributeSize(inType, MFGuids.MF_MT_FRAME_SIZE, (uint)_width, (uint)_height);
+                SetAttributeRatio(inType, MFGuids.MF_MT_FRAME_RATE, (uint)_frameRate, 1);
+                SetAttributeRatio(inType, MFGuids.MF_MT_PIXEL_ASPECT_RATIO, 1, 1);
+                inType.SetUINT32(MFGuids.MF_MT_INTERLACE_MODE, 2);
+                inType.SetUINT32(MFGuids.MF_MT_ALL_SAMPLES_INDEPENDENT, 1);
+                inType.SetUINT32(MFGuids.MF_MT_DEFAULT_STRIDE, (uint)(_width * 4));
+                inType.SetUINT32(MFGuids.MF_MT_FIXED_SIZE_SAMPLES, 1);
+                inType.SetUINT32(MFGuids.MF_MT_SAMPLE_SIZE, (uint)(_width * _height * 4));
+
+                _sinkWriter.SetInputMediaType(_streamIndex, inType, null);
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(inType);
+            }
         }
 
         if (_recordAudio)

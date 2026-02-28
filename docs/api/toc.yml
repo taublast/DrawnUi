@@ -217,6 +217,9 @@ items:
   - uid: DrawnUi.Draw.AnimateExtensions
     name: AnimateExtensions
     type: Class
+  - uid: DrawnUi.Draw.AnimatedShaderEffect
+    name: AnimatedShaderEffect
+    type: Class
   - uid: DrawnUi.Draw.AnimatorBase
     name: AnimatorBase
     type: Class
@@ -610,6 +613,9 @@ items:
   - uid: DrawnUi.Draw.OrientationType
     name: OrientationType
     type: Enum
+  - uid: DrawnUi.Draw.OuterGlowEffect
+    name: OuterGlowEffect
+    type: Class
   - uid: DrawnUi.Draw.PanningModeType
     name: PanningModeType
     type: Enum
@@ -636,6 +642,9 @@ items:
     type: Class
   - uid: DrawnUi.Draw.PointedDirectionType
     name: PointedDirectionType
+    type: Enum
+  - uid: DrawnUi.Draw.PostRendererEffectUseBackgroud
+    name: PostRendererEffectUseBackgroud
     type: Enum
   - uid: DrawnUi.Draw.PrebuiltControlStyle
     name: PrebuiltControlStyle

@@ -1,0 +1,2751 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.AnimatedShaderEffect
+  commentId: T:DrawnUi.Draw.AnimatedShaderEffect
+  id: AnimatedShaderEffect
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.AnimatedShaderEffect.Animator
+  - DrawnUi.Draw.AnimatedShaderEffect.Center
+  - DrawnUi.Draw.AnimatedShaderEffect.Completed
+  - DrawnUi.Draw.AnimatedShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+  - DrawnUi.Draw.AnimatedShaderEffect.DurationMs
+  - DrawnUi.Draw.AnimatedShaderEffect.OnCompleted
+  - DrawnUi.Draw.AnimatedShaderEffect.OnDisposing
+  - DrawnUi.Draw.AnimatedShaderEffect.Play
+  - DrawnUi.Draw.AnimatedShaderEffect.Progress
+  - DrawnUi.Draw.AnimatedShaderEffect.Stop
+  langs:
+  - csharp
+  - vb
+  name: AnimatedShaderEffect
+  nameWithType: AnimatedShaderEffect
+  fullName: DrawnUi.Draw.AnimatedShaderEffect
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Features/Effects/AnimatedShaderEffect.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AnimatedShaderEffect
+    path: ../src/Shared/Features/Effects/AnimatedShaderEffect.cs
+    startLine: 12
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Animated shader effect driven by a RangeAnimator (progress 0→1).
+
+    Attach to a SkiaImage (or any cached control), call Play(), remove on Completed.
+
+
+    Usage:
+      var fx = new AnimatedShaderEffect { ShaderSource = @"Shaders\yourshader.sksl" };
+      fx.Completed += (s, e) =&gt; { _backgroundImage.FX.Remove(fx); fx.Dispose(); };
+      _backgroundImage.FX.Add(fx);
+      fx.Play(_backgroundImage);
+  example: []
+  syntax:
+    content: 'public class AnimatedShaderEffect : SkiaShaderEffect, INotifyPropertyChanged, IDisposable, IPostRendererEffect, ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated'
+    content.vb: Public Class AnimatedShaderEffect Inherits SkiaShaderEffect Implements INotifyPropertyChanged, IDisposable, IPostRendererEffect, ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated
+  inheritance:
+  - System.Object
+  - Microsoft.Maui.Controls.BindableObject
+  - DrawnUi.Draw.SkiaEffect
+  - DrawnUi.Draw.SkiaShaderEffect
+  implements:
+  - System.ComponentModel.INotifyPropertyChanged
+  - System.IDisposable
+  - DrawnUi.Draw.IPostRendererEffect
+  - DrawnUi.Draw.ISkiaEffect
+  - DrawnUi.Draw.ICanBeUpdatedWithContext
+  - DrawnUi.Draw.ICanBeUpdated
+  inheritedMembers:
+  - DrawnUi.Draw.SkiaShaderEffect.PaintWithShader
+  - DrawnUi.Draw.SkiaShaderEffect.UseBackground
+  - DrawnUi.Draw.SkiaShaderEffect.AquiredBackground
+  - DrawnUi.Draw.SkiaShaderEffect.ReleaseFrozenSnapshot
+  - DrawnUi.Draw.SkiaShaderEffect.UseContextProperty
+  - DrawnUi.Draw.SkiaShaderEffect.UseContext
+  - DrawnUi.Draw.SkiaShaderEffect.AutoCreateInputTextureProperty
+  - DrawnUi.Draw.SkiaShaderEffect.AutoCreateInputTexture
+  - DrawnUi.Draw.SkiaShaderEffect.BlendMode
+  - DrawnUi.Draw.SkiaShaderEffect.Flush(DrawnUi.Draw.SkiaDrawingContext)
+  - DrawnUi.Draw.SkiaShaderEffect.CreateSnapshot(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTextureImage(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaShaderEffect.Render(DrawnUi.Draw.DrawingContext)
+  - DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(SkiaSharp.SKImage)
+  - DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage)
+  - DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
+  - DrawnUi.Draw.SkiaShaderEffect._uniformImageResolution
+  - DrawnUi.Draw.SkiaShaderEffect.CompiledShader
+  - DrawnUi.Draw.SkiaShaderEffect.NeedApply
+  - DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+  - DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  - DrawnUi.Draw.SkiaShaderEffect.MouseInitial
+  - DrawnUi.Draw.SkiaShaderEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
+  - DrawnUi.Draw.SkiaShaderEffect._template
+  - DrawnUi.Draw.SkiaShaderEffect._templatePlacehodler
+  - DrawnUi.Draw.SkiaShaderEffect.CompileShader
+  - DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
+  - DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
+  - DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
+  - DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+  - DrawnUi.Draw.SkiaShaderEffect.LoadedCode
+  - DrawnUi.Draw.SkiaShaderEffect.ApplyShaderSource
+  - DrawnUi.Draw.SkiaShaderEffect.NeedChangeSource(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+  - DrawnUi.Draw.SkiaShaderEffect.ShaderCodeProperty
+  - DrawnUi.Draw.SkiaShaderEffect.ShaderCode
+  - DrawnUi.Draw.SkiaShaderEffect.ShaderSourceProperty
+  - DrawnUi.Draw.SkiaShaderEffect.ShaderSource
+  - DrawnUi.Draw.SkiaShaderEffect.ShaderTemplateProperty
+  - DrawnUi.Draw.SkiaShaderEffect.ShaderTemplate
+  - DrawnUi.Draw.SkiaShaderEffect.FilterModeProperty
+  - DrawnUi.Draw.SkiaShaderEffect.MipmapModeProperty
+  - DrawnUi.Draw.SkiaShaderEffect.FilterMode
+  - DrawnUi.Draw.SkiaShaderEffect.MipmapMode
+  - DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
+  - DrawnUi.Draw.SkiaShaderEffect.TileMode
+  - DrawnUi.Draw.SkiaEffect.Parent
+  - DrawnUi.Draw.SkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.SkiaEffect.Dettach
+  - DrawnUi.Draw.SkiaEffect.Dispose
+  - DrawnUi.Draw.SkiaEffect.Update
+  - DrawnUi.Draw.SkiaEffect.NeedUpdate(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+  - Microsoft.Maui.Controls.BindableObject.BindingContextProperty
+  - Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindableProperty)
+  - Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  - Microsoft.Maui.Controls.BindableObject.GetValue(Microsoft.Maui.Controls.BindableProperty)
+  - Microsoft.Maui.Controls.BindableObject.IsSet(Microsoft.Maui.Controls.BindableProperty)
+  - Microsoft.Maui.Controls.BindableObject.RemoveBinding(Microsoft.Maui.Controls.BindableProperty)
+  - Microsoft.Maui.Controls.BindableObject.SetBinding(Microsoft.Maui.Controls.BindableProperty,Microsoft.Maui.Controls.BindingBase)
+  - Microsoft.Maui.Controls.BindableObject.ApplyBindings
+  - Microsoft.Maui.Controls.BindableObject.OnBindingContextChanged
+  - Microsoft.Maui.Controls.BindableObject.OnPropertyChanged(System.String)
+  - Microsoft.Maui.Controls.BindableObject.OnPropertyChanging(System.String)
+  - Microsoft.Maui.Controls.BindableObject.UnapplyBindings
+  - Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindableProperty,System.Object)
+  - Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindablePropertyKey,System.Object)
+  - Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindableProperty)
+  - Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  - Microsoft.Maui.Controls.BindableObject.Dispatcher
+  - Microsoft.Maui.Controls.BindableObject.BindingContext
+  - Microsoft.Maui.Controls.BindableObject.PropertyChanged
+  - Microsoft.Maui.Controls.BindableObject.PropertyChanging
+  - Microsoft.Maui.Controls.BindableObject.BindingContextChanged
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - DrawnUi.Draw.AnimatedShaderEffect.DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.AnimatedShaderEffect@)
+  - DrawnUi.Draw.AnimatedShaderEffect.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.AnimatedShaderEffect.Center
+  commentId: P:DrawnUi.Draw.AnimatedShaderEffect.Center
+  id: Center
+  parent: DrawnUi.Draw.AnimatedShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: Center
+  nameWithType: AnimatedShaderEffect.Center
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.Center
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Effects/AnimatedShaderEffect.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Center
+    path: ../src/Shared/Features/Effects/AnimatedShaderEffect.cs
+    startLine: 17
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Normalized center position of the effect (0.0–1.0 in each axis).
+  example: []
+  syntax:
+    content: public SKPoint Center { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKPoint
+    content.vb: Public Property Center As SKPoint
+  overload: DrawnUi.Draw.AnimatedShaderEffect.Center*
+- uid: DrawnUi.Draw.AnimatedShaderEffect.OnCompleted
+  commentId: M:DrawnUi.Draw.AnimatedShaderEffect.OnCompleted
+  id: OnCompleted
+  parent: DrawnUi.Draw.AnimatedShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: OnCompleted()
+  nameWithType: AnimatedShaderEffect.OnCompleted()
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.OnCompleted()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Effects/AnimatedShaderEffect.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnCompleted
+    path: ../src/Shared/Features/Effects/AnimatedShaderEffect.cs
+    startLine: 19
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected virtual void OnCompleted()
+    content.vb: Protected Overridable Sub OnCompleted()
+  overload: DrawnUi.Draw.AnimatedShaderEffect.OnCompleted*
+- uid: DrawnUi.Draw.AnimatedShaderEffect.Completed
+  commentId: E:DrawnUi.Draw.AnimatedShaderEffect.Completed
+  id: Completed
+  parent: DrawnUi.Draw.AnimatedShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: Completed
+  nameWithType: AnimatedShaderEffect.Completed
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.Completed
+  type: Event
+  source:
+    remote:
+      path: src/Shared/Features/Effects/AnimatedShaderEffect.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Completed
+    path: ../src/Shared/Features/Effects/AnimatedShaderEffect.cs
+    startLine: 24
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public event EventHandler Completed
+    return:
+      type: System.EventHandler
+    content.vb: Public Event Completed As EventHandler
+- uid: DrawnUi.Draw.AnimatedShaderEffect.DurationMs
+  commentId: P:DrawnUi.Draw.AnimatedShaderEffect.DurationMs
+  id: DurationMs
+  parent: DrawnUi.Draw.AnimatedShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: DurationMs
+  nameWithType: AnimatedShaderEffect.DurationMs
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.DurationMs
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Effects/AnimatedShaderEffect.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DurationMs
+    path: ../src/Shared/Features/Effects/AnimatedShaderEffect.cs
+    startLine: 29
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Total animation duration in milliseconds. Default 2500.
+  example: []
+  syntax:
+    content: public uint DurationMs { get; set; }
+    parameters: []
+    return:
+      type: System.UInt32
+    content.vb: Public Property DurationMs As UInteger
+  overload: DrawnUi.Draw.AnimatedShaderEffect.DurationMs*
+- uid: DrawnUi.Draw.AnimatedShaderEffect.Progress
+  commentId: P:DrawnUi.Draw.AnimatedShaderEffect.Progress
+  id: Progress
+  parent: DrawnUi.Draw.AnimatedShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: Progress
+  nameWithType: AnimatedShaderEffect.Progress
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.Progress
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Effects/AnimatedShaderEffect.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Progress
+    path: ../src/Shared/Features/Effects/AnimatedShaderEffect.cs
+    startLine: 35
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Current animation progress 0.0 → 1.0.
+
+    Set automatically by Play(); can also be set manually for debugging.
+  example: []
+  syntax:
+    content: public double Progress { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Property Progress As Double
+  overload: DrawnUi.Draw.AnimatedShaderEffect.Progress*
+- uid: DrawnUi.Draw.AnimatedShaderEffect.Animator
+  commentId: F:DrawnUi.Draw.AnimatedShaderEffect.Animator
+  id: Animator
+  parent: DrawnUi.Draw.AnimatedShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: Animator
+  nameWithType: AnimatedShaderEffect.Animator
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.Animator
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Features/Effects/AnimatedShaderEffect.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Animator
+    path: ../src/Shared/Features/Effects/AnimatedShaderEffect.cs
+    startLine: 38
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected RangeAnimator Animator
+    return:
+      type: DrawnUi.Draw.RangeAnimator
+    content.vb: Protected Animator As RangeAnimator
+- uid: DrawnUi.Draw.AnimatedShaderEffect.Play
+  commentId: M:DrawnUi.Draw.AnimatedShaderEffect.Play
+  id: Play
+  parent: DrawnUi.Draw.AnimatedShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: Play()
+  nameWithType: AnimatedShaderEffect.Play()
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.Play()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Effects/AnimatedShaderEffect.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Play
+    path: ../src/Shared/Features/Effects/AnimatedShaderEffect.cs
+    startLine: 44
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Starts the celebration animation on the given parent control.
+
+    Safe to call multiple times — restarts from zero each time.
+  example: []
+  syntax:
+    content: public virtual void Play()
+    content.vb: Public Overridable Sub Play()
+  overload: DrawnUi.Draw.AnimatedShaderEffect.Play*
+- uid: DrawnUi.Draw.AnimatedShaderEffect.Stop
+  commentId: M:DrawnUi.Draw.AnimatedShaderEffect.Stop
+  id: Stop
+  parent: DrawnUi.Draw.AnimatedShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: Stop()
+  nameWithType: AnimatedShaderEffect.Stop()
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.Stop()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Effects/AnimatedShaderEffect.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Stop
+    path: ../src/Shared/Features/Effects/AnimatedShaderEffect.cs
+    startLine: 85
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Stops the animation without firing Completed.
+  example: []
+  syntax:
+    content: public virtual void Stop()
+    content.vb: Public Overridable Sub [Stop]()
+  overload: DrawnUi.Draw.AnimatedShaderEffect.Stop*
+- uid: DrawnUi.Draw.AnimatedShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.AnimatedShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+  id: CreateUniforms(SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.AnimatedShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: CreateUniforms(SKRect)
+  nameWithType: AnimatedShaderEffect.CreateUniforms(SKRect)
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Effects/AnimatedShaderEffect.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CreateUniforms
+    path: ../src/Shared/Features/Effects/AnimatedShaderEffect.cs
+    startLine: 90
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Creates uniforms fresh each time
+  example: []
+  syntax:
+    content: protected override SKRuntimeEffectUniforms CreateUniforms(SKRect destination)
+    parameters:
+    - id: destination
+      type: SkiaSharp.SKRect
+    return:
+      type: SkiaSharp.SKRuntimeEffectUniforms
+    content.vb: Protected Overrides Function CreateUniforms(destination As SKRect) As SKRuntimeEffectUniforms
+  overridden: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+  overload: DrawnUi.Draw.AnimatedShaderEffect.CreateUniforms*
+- uid: DrawnUi.Draw.AnimatedShaderEffect.OnDisposing
+  commentId: M:DrawnUi.Draw.AnimatedShaderEffect.OnDisposing
+  id: OnDisposing
+  parent: DrawnUi.Draw.AnimatedShaderEffect
+  langs:
+  - csharp
+  - vb
+  name: OnDisposing()
+  nameWithType: AnimatedShaderEffect.OnDisposing()
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.OnDisposing()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Effects/AnimatedShaderEffect.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnDisposing
+    path: ../src/Shared/Features/Effects/AnimatedShaderEffect.cs
+    startLine: 99
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Simplified dispose - only CPU-side resources
+  example: []
+  syntax:
+    content: protected override void OnDisposing()
+    content.vb: Protected Overrides Sub OnDisposing()
+  overridden: DrawnUi.Draw.SkiaShaderEffect.OnDisposing
+  overload: DrawnUi.Draw.AnimatedShaderEffect.OnDisposing*
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Microsoft.Maui.Controls.BindableObject
+  commentId: T:Microsoft.Maui.Controls.BindableObject
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject
+  name: BindableObject
+  nameWithType: BindableObject
+  fullName: Microsoft.Maui.Controls.BindableObject
+- uid: DrawnUi.Draw.SkiaEffect
+  commentId: T:DrawnUi.Draw.SkiaEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaEffect.html
+  name: SkiaEffect
+  nameWithType: SkiaEffect
+  fullName: DrawnUi.Draw.SkiaEffect
+- uid: DrawnUi.Draw.SkiaShaderEffect
+  commentId: T:DrawnUi.Draw.SkiaShaderEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaShaderEffect.html
+  name: SkiaShaderEffect
+  nameWithType: SkiaShaderEffect
+  fullName: DrawnUi.Draw.SkiaShaderEffect
+- uid: System.ComponentModel.INotifyPropertyChanged
+  commentId: T:System.ComponentModel.INotifyPropertyChanged
+  parent: System.ComponentModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged
+  name: INotifyPropertyChanged
+  nameWithType: INotifyPropertyChanged
+  fullName: System.ComponentModel.INotifyPropertyChanged
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: DrawnUi.Draw.IPostRendererEffect
+  commentId: T:DrawnUi.Draw.IPostRendererEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IPostRendererEffect.html
+  name: IPostRendererEffect
+  nameWithType: IPostRendererEffect
+  fullName: DrawnUi.Draw.IPostRendererEffect
+- uid: DrawnUi.Draw.ISkiaEffect
+  commentId: T:DrawnUi.Draw.ISkiaEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ISkiaEffect.html
+  name: ISkiaEffect
+  nameWithType: ISkiaEffect
+  fullName: DrawnUi.Draw.ISkiaEffect
+- uid: DrawnUi.Draw.ICanBeUpdatedWithContext
+  commentId: T:DrawnUi.Draw.ICanBeUpdatedWithContext
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ICanBeUpdatedWithContext.html
+  name: ICanBeUpdatedWithContext
+  nameWithType: ICanBeUpdatedWithContext
+  fullName: DrawnUi.Draw.ICanBeUpdatedWithContext
+- uid: DrawnUi.Draw.ICanBeUpdated
+  commentId: T:DrawnUi.Draw.ICanBeUpdated
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ICanBeUpdated.html
+  name: ICanBeUpdated
+  nameWithType: ICanBeUpdated
+  fullName: DrawnUi.Draw.ICanBeUpdated
+- uid: DrawnUi.Draw.SkiaShaderEffect.PaintWithShader
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect.PaintWithShader
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_PaintWithShader
+  name: PaintWithShader
+  nameWithType: SkiaShaderEffect.PaintWithShader
+  fullName: DrawnUi.Draw.SkiaShaderEffect.PaintWithShader
+- uid: DrawnUi.Draw.SkiaShaderEffect.UseBackground
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.UseBackground
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_UseBackground
+  name: UseBackground
+  nameWithType: SkiaShaderEffect.UseBackground
+  fullName: DrawnUi.Draw.SkiaShaderEffect.UseBackground
+- uid: DrawnUi.Draw.SkiaShaderEffect.AquiredBackground
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.AquiredBackground
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_AquiredBackground
+  name: AquiredBackground
+  nameWithType: SkiaShaderEffect.AquiredBackground
+  fullName: DrawnUi.Draw.SkiaShaderEffect.AquiredBackground
+- uid: DrawnUi.Draw.SkiaShaderEffect.ReleaseFrozenSnapshot
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.ReleaseFrozenSnapshot
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ReleaseFrozenSnapshot
+  name: ReleaseFrozenSnapshot()
+  nameWithType: SkiaShaderEffect.ReleaseFrozenSnapshot()
+  fullName: DrawnUi.Draw.SkiaShaderEffect.ReleaseFrozenSnapshot()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.ReleaseFrozenSnapshot
+    name: ReleaseFrozenSnapshot
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ReleaseFrozenSnapshot
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.ReleaseFrozenSnapshot
+    name: ReleaseFrozenSnapshot
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ReleaseFrozenSnapshot
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.UseContextProperty
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect.UseContextProperty
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_UseContextProperty
+  name: UseContextProperty
+  nameWithType: SkiaShaderEffect.UseContextProperty
+  fullName: DrawnUi.Draw.SkiaShaderEffect.UseContextProperty
+- uid: DrawnUi.Draw.SkiaShaderEffect.UseContext
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.UseContext
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_UseContext
+  name: UseContext
+  nameWithType: SkiaShaderEffect.UseContext
+  fullName: DrawnUi.Draw.SkiaShaderEffect.UseContext
+- uid: DrawnUi.Draw.SkiaShaderEffect.AutoCreateInputTextureProperty
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect.AutoCreateInputTextureProperty
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_AutoCreateInputTextureProperty
+  name: AutoCreateInputTextureProperty
+  nameWithType: SkiaShaderEffect.AutoCreateInputTextureProperty
+  fullName: DrawnUi.Draw.SkiaShaderEffect.AutoCreateInputTextureProperty
+- uid: DrawnUi.Draw.SkiaShaderEffect.AutoCreateInputTexture
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.AutoCreateInputTexture
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_AutoCreateInputTexture
+  name: AutoCreateInputTexture
+  nameWithType: SkiaShaderEffect.AutoCreateInputTexture
+  fullName: DrawnUi.Draw.SkiaShaderEffect.AutoCreateInputTexture
+- uid: DrawnUi.Draw.SkiaShaderEffect.BlendMode
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.BlendMode
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_BlendMode
+  name: BlendMode
+  nameWithType: SkiaShaderEffect.BlendMode
+  fullName: DrawnUi.Draw.SkiaShaderEffect.BlendMode
+- uid: DrawnUi.Draw.SkiaShaderEffect.Flush(DrawnUi.Draw.SkiaDrawingContext)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.Flush(DrawnUi.Draw.SkiaDrawingContext)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Flush_DrawnUi_Draw_SkiaDrawingContext_
+  name: Flush(SkiaDrawingContext)
+  nameWithType: SkiaShaderEffect.Flush(SkiaDrawingContext)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.Flush(DrawnUi.Draw.SkiaDrawingContext)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.Flush(DrawnUi.Draw.SkiaDrawingContext)
+    name: Flush
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Flush_DrawnUi_Draw_SkiaDrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaDrawingContext
+    name: SkiaDrawingContext
+    href: DrawnUi.Draw.SkiaDrawingContext.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.Flush(DrawnUi.Draw.SkiaDrawingContext)
+    name: Flush
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Flush_DrawnUi_Draw_SkiaDrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaDrawingContext
+    name: SkiaDrawingContext
+    href: DrawnUi.Draw.SkiaDrawingContext.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.CreateSnapshot(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreateSnapshot(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateSnapshot_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
+  name: CreateSnapshot(SkiaDrawingContext, SKRect)
+  nameWithType: SkiaShaderEffect.CreateSnapshot(SkiaDrawingContext, SKRect)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CreateSnapshot(DrawnUi.Draw.SkiaDrawingContext, SkiaSharp.SKRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateSnapshot(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+    name: CreateSnapshot
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateSnapshot_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaDrawingContext
+    name: SkiaDrawingContext
+    href: DrawnUi.Draw.SkiaDrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateSnapshot(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+    name: CreateSnapshot
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateSnapshot_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaDrawingContext
+    name: SkiaDrawingContext
+    href: DrawnUi.Draw.SkiaDrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTextureImage(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTextureImage(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetPrimaryTextureImage_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
+  name: GetPrimaryTextureImage(SkiaDrawingContext, SKRect)
+  nameWithType: SkiaShaderEffect.GetPrimaryTextureImage(SkiaDrawingContext, SKRect)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTextureImage(DrawnUi.Draw.SkiaDrawingContext, SkiaSharp.SKRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTextureImage(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+    name: GetPrimaryTextureImage
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetPrimaryTextureImage_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaDrawingContext
+    name: SkiaDrawingContext
+    href: DrawnUi.Draw.SkiaDrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTextureImage(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+    name: GetPrimaryTextureImage
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetPrimaryTextureImage_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaDrawingContext
+    name: SkiaDrawingContext
+    href: DrawnUi.Draw.SkiaDrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.Render(DrawnUi.Draw.DrawingContext)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.Render(DrawnUi.Draw.DrawingContext)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Render_DrawnUi_Draw_DrawingContext_
+  name: Render(DrawingContext)
+  nameWithType: SkiaShaderEffect.Render(DrawingContext)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.Render(DrawnUi.Draw.DrawingContext)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.Render(DrawnUi.Draw.DrawingContext)
+    name: Render
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Render_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.Render(DrawnUi.Draw.DrawingContext)
+    name: Render
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Render_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(SkiaSharp.SKImage)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(SkiaSharp.SKImage)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShouldDisposePreviousTexture_SkiaSharp_SKImage_
+  name: ShouldDisposePreviousTexture(SKImage)
+  nameWithType: SkiaShaderEffect.ShouldDisposePreviousTexture(SKImage)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(SkiaSharp.SKImage)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(SkiaSharp.SKImage)
+    name: ShouldDisposePreviousTexture
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShouldDisposePreviousTexture_SkiaSharp_SKImage_
+  - name: (
+  - uid: SkiaSharp.SKImage
+    name: SKImage
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(SkiaSharp.SKImage)
+    name: ShouldDisposePreviousTexture
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShouldDisposePreviousTexture_SkiaSharp_SKImage_
+  - name: (
+  - uid: SkiaSharp.SKImage
+    name: SKImage
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateShader_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_
+  name: CreateShader(DrawingContext, SKImage)
+  nameWithType: SkiaShaderEffect.CreateShader(DrawingContext, SKImage)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext, SkiaSharp.SKImage)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage)
+    name: CreateShader
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateShader_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKImage
+    name: SKImage
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage)
+    name: CreateShader
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateShader_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKImage
+    name: SKImage
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreatePrimaryTextureShader_SkiaSharp_SKImage_
+  name: CreatePrimaryTextureShader(SKImage)
+  nameWithType: SkiaShaderEffect.CreatePrimaryTextureShader(SKImage)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
+    name: CreatePrimaryTextureShader
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreatePrimaryTextureShader_SkiaSharp_SKImage_
+  - name: (
+  - uid: SkiaSharp.SKImage
+    name: SKImage
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
+    name: CreatePrimaryTextureShader
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreatePrimaryTextureShader_SkiaSharp_SKImage_
+  - name: (
+  - uid: SkiaSharp.SKImage
+    name: SKImage
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect._uniformImageResolution
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect._uniformImageResolution
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect__uniformImageResolution
+  name: _uniformImageResolution
+  nameWithType: SkiaShaderEffect._uniformImageResolution
+  fullName: DrawnUi.Draw.SkiaShaderEffect._uniformImageResolution
+- uid: DrawnUi.Draw.SkiaShaderEffect.CompiledShader
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect.CompiledShader
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompiledShader
+  name: CompiledShader
+  nameWithType: SkiaShaderEffect.CompiledShader
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CompiledShader
+- uid: DrawnUi.Draw.SkiaShaderEffect.NeedApply
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.NeedApply
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NeedApply
+  name: NeedApply
+  nameWithType: SkiaShaderEffect.NeedApply
+  fullName: DrawnUi.Draw.SkiaShaderEffect.NeedApply
+- uid: DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TimeSeconds
+  name: TimeSeconds
+  nameWithType: SkiaShaderEffect.TimeSeconds
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
+- uid: DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MouseCurrent
+  name: MouseCurrent
+  nameWithType: SkiaShaderEffect.MouseCurrent
+  fullName: DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
+- uid: DrawnUi.Draw.SkiaShaderEffect.MouseInitial
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.MouseInitial
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MouseInitial
+  name: MouseInitial
+  nameWithType: SkiaShaderEffect.MouseInitial
+  fullName: DrawnUi.Draw.SkiaShaderEffect.MouseInitial
+- uid: DrawnUi.Draw.SkiaShaderEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateTexturesUniforms_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_SkiaSharp_SKShader_
+  name: CreateTexturesUniforms(SkiaDrawingContext, SKRect, SKShader)
+  nameWithType: SkiaShaderEffect.CreateTexturesUniforms(SkiaDrawingContext, SKRect, SKShader)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext, SkiaSharp.SKRect, SkiaSharp.SKShader)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
+    name: CreateTexturesUniforms
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateTexturesUniforms_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_SkiaSharp_SKShader_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaDrawingContext
+    name: SkiaDrawingContext
+    href: DrawnUi.Draw.SkiaDrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKShader
+    name: SKShader
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skshader
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
+    name: CreateTexturesUniforms
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateTexturesUniforms_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_SkiaSharp_SKShader_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaDrawingContext
+    name: SkiaDrawingContext
+    href: DrawnUi.Draw.SkiaDrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKShader
+    name: SKShader
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skshader
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect._template
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect._template
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect__template
+  name: _template
+  nameWithType: SkiaShaderEffect._template
+  fullName: DrawnUi.Draw.SkiaShaderEffect._template
+- uid: DrawnUi.Draw.SkiaShaderEffect._templatePlacehodler
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect._templatePlacehodler
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect__templatePlacehodler
+  name: _templatePlacehodler
+  nameWithType: SkiaShaderEffect._templatePlacehodler
+  fullName: DrawnUi.Draw.SkiaShaderEffect._templatePlacehodler
+- uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CompileShader
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader
+  name: CompileShader()
+  nameWithType: SkiaShaderEffect.CompileShader()
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CompileShader()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader
+    name: CompileShader
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader
+    name: CompileShader
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
+  commentId: E:DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_OnCompilationError
+  name: OnCompilationError
+  nameWithType: SkiaShaderEffect.OnCompilationError
+  fullName: DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
+- uid: DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SendError_System_String_
+  name: SendError(string)
+  nameWithType: SkiaShaderEffect.SendError(string)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.SendError(string)
+  nameWithType.vb: SkiaShaderEffect.SendError(String)
+  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.SendError(String)
+  name.vb: SendError(String)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
+    name: SendError
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SendError_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
+    name: SendError
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SendError_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NormalizeShaderCode_System_String_
+  name: NormalizeShaderCode(string)
+  nameWithType: SkiaShaderEffect.NormalizeShaderCode(string)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(string)
+  nameWithType.vb: SkiaShaderEffect.NormalizeShaderCode(String)
+  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(String)
+  name.vb: NormalizeShaderCode(String)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
+    name: NormalizeShaderCode
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NormalizeShaderCode_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
+    name: NormalizeShaderCode
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NormalizeShaderCode_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__
+  name: CompileShader(string, bool, Action<string>)
+  nameWithType: SkiaShaderEffect.CompileShader(string, bool, Action<string>)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CompileShader(string, bool, System.Action<string>)
+  nameWithType.vb: SkiaShaderEffect.CompileShader(String, Boolean, Action(Of String))
+  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.CompileShader(String, Boolean, System.Action(Of String))
+  name.vb: CompileShader(String, Boolean, Action(Of String))
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+    name: CompileShader
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+    name: CompileShader
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.LoadedCode
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.LoadedCode
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_LoadedCode
+  name: LoadedCode
+  nameWithType: SkiaShaderEffect.LoadedCode
+  fullName: DrawnUi.Draw.SkiaShaderEffect.LoadedCode
+- uid: DrawnUi.Draw.SkiaShaderEffect.ApplyShaderSource
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.ApplyShaderSource
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ApplyShaderSource
+  name: ApplyShaderSource()
+  nameWithType: SkiaShaderEffect.ApplyShaderSource()
+  fullName: DrawnUi.Draw.SkiaShaderEffect.ApplyShaderSource()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.ApplyShaderSource
+    name: ApplyShaderSource
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ApplyShaderSource
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.ApplyShaderSource
+    name: ApplyShaderSource
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ApplyShaderSource
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.NeedChangeSource(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.NeedChangeSource(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NeedChangeSource_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_
+  name: NeedChangeSource(BindableObject, object, object)
+  nameWithType: SkiaShaderEffect.NeedChangeSource(BindableObject, object, object)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.NeedChangeSource(Microsoft.Maui.Controls.BindableObject, object, object)
+  nameWithType.vb: SkiaShaderEffect.NeedChangeSource(BindableObject, Object, Object)
+  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.NeedChangeSource(Microsoft.Maui.Controls.BindableObject, Object, Object)
+  name.vb: NeedChangeSource(BindableObject, Object, Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.NeedChangeSource(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+    name: NeedChangeSource
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NeedChangeSource_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableObject
+    name: BindableObject
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.NeedChangeSource(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+    name: NeedChangeSource
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NeedChangeSource_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableObject
+    name: BindableObject
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.ShaderCodeProperty
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect.ShaderCodeProperty
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderCodeProperty
+  name: ShaderCodeProperty
+  nameWithType: SkiaShaderEffect.ShaderCodeProperty
+  fullName: DrawnUi.Draw.SkiaShaderEffect.ShaderCodeProperty
+- uid: DrawnUi.Draw.SkiaShaderEffect.ShaderCode
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.ShaderCode
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderCode
+  name: ShaderCode
+  nameWithType: SkiaShaderEffect.ShaderCode
+  fullName: DrawnUi.Draw.SkiaShaderEffect.ShaderCode
+- uid: DrawnUi.Draw.SkiaShaderEffect.ShaderSourceProperty
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect.ShaderSourceProperty
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderSourceProperty
+  name: ShaderSourceProperty
+  nameWithType: SkiaShaderEffect.ShaderSourceProperty
+  fullName: DrawnUi.Draw.SkiaShaderEffect.ShaderSourceProperty
+- uid: DrawnUi.Draw.SkiaShaderEffect.ShaderSource
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.ShaderSource
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderSource
+  name: ShaderSource
+  nameWithType: SkiaShaderEffect.ShaderSource
+  fullName: DrawnUi.Draw.SkiaShaderEffect.ShaderSource
+- uid: DrawnUi.Draw.SkiaShaderEffect.ShaderTemplateProperty
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect.ShaderTemplateProperty
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderTemplateProperty
+  name: ShaderTemplateProperty
+  nameWithType: SkiaShaderEffect.ShaderTemplateProperty
+  fullName: DrawnUi.Draw.SkiaShaderEffect.ShaderTemplateProperty
+- uid: DrawnUi.Draw.SkiaShaderEffect.ShaderTemplate
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.ShaderTemplate
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderTemplate
+  name: ShaderTemplate
+  nameWithType: SkiaShaderEffect.ShaderTemplate
+  fullName: DrawnUi.Draw.SkiaShaderEffect.ShaderTemplate
+- uid: DrawnUi.Draw.SkiaShaderEffect.FilterModeProperty
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect.FilterModeProperty
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_FilterModeProperty
+  name: FilterModeProperty
+  nameWithType: SkiaShaderEffect.FilterModeProperty
+  fullName: DrawnUi.Draw.SkiaShaderEffect.FilterModeProperty
+- uid: DrawnUi.Draw.SkiaShaderEffect.MipmapModeProperty
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect.MipmapModeProperty
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MipmapModeProperty
+  name: MipmapModeProperty
+  nameWithType: SkiaShaderEffect.MipmapModeProperty
+  fullName: DrawnUi.Draw.SkiaShaderEffect.MipmapModeProperty
+- uid: DrawnUi.Draw.SkiaShaderEffect.FilterMode
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.FilterMode
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_FilterMode
+  name: FilterMode
+  nameWithType: SkiaShaderEffect.FilterMode
+  fullName: DrawnUi.Draw.SkiaShaderEffect.FilterMode
+- uid: DrawnUi.Draw.SkiaShaderEffect.MipmapMode
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.MipmapMode
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_MipmapMode
+  name: MipmapMode
+  nameWithType: SkiaShaderEffect.MipmapMode
+  fullName: DrawnUi.Draw.SkiaShaderEffect.MipmapMode
+- uid: DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
+  commentId: F:DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TileModeProperty
+  name: TileModeProperty
+  nameWithType: SkiaShaderEffect.TileModeProperty
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TileModeProperty
+- uid: DrawnUi.Draw.SkiaShaderEffect.TileMode
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.TileMode
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_TileMode
+  name: TileMode
+  nameWithType: SkiaShaderEffect.TileMode
+  fullName: DrawnUi.Draw.SkiaShaderEffect.TileMode
+- uid: DrawnUi.Draw.SkiaEffect.Parent
+  commentId: P:DrawnUi.Draw.SkiaEffect.Parent
+  parent: DrawnUi.Draw.SkiaEffect
+  href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Parent
+  name: Parent
+  nameWithType: SkiaEffect.Parent
+  fullName: DrawnUi.Draw.SkiaEffect.Parent
+- uid: DrawnUi.Draw.SkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.SkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.SkiaEffect
+  href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Attach_DrawnUi_Draw_SkiaControl_
+  name: Attach(SkiaControl)
+  nameWithType: SkiaEffect.Attach(SkiaControl)
+  fullName: DrawnUi.Draw.SkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+    name: Attach
+    href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Attach_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
+    name: Attach
+    href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Attach_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaEffect.Dettach
+  commentId: M:DrawnUi.Draw.SkiaEffect.Dettach
+  parent: DrawnUi.Draw.SkiaEffect
+  href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Dettach
+  name: Dettach()
+  nameWithType: SkiaEffect.Dettach()
+  fullName: DrawnUi.Draw.SkiaEffect.Dettach()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaEffect.Dettach
+    name: Dettach
+    href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Dettach
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaEffect.Dettach
+    name: Dettach
+    href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Dettach
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaEffect.Dispose
+  commentId: M:DrawnUi.Draw.SkiaEffect.Dispose
+  parent: DrawnUi.Draw.SkiaEffect
+  href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Dispose
+  name: Dispose()
+  nameWithType: SkiaEffect.Dispose()
+  fullName: DrawnUi.Draw.SkiaEffect.Dispose()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaEffect.Dispose
+    name: Dispose
+    href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaEffect.Dispose
+    name: Dispose
+    href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Dispose
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaEffect.Update
+  commentId: M:DrawnUi.Draw.SkiaEffect.Update
+  parent: DrawnUi.Draw.SkiaEffect
+  href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Update
+  name: Update()
+  nameWithType: SkiaEffect.Update()
+  fullName: DrawnUi.Draw.SkiaEffect.Update()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaEffect.Update
+    name: Update
+    href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Update
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaEffect.Update
+    name: Update
+    href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_Update
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaEffect.NeedUpdate(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+  commentId: M:DrawnUi.Draw.SkiaEffect.NeedUpdate(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+  parent: DrawnUi.Draw.SkiaEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_NeedUpdate_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_
+  name: NeedUpdate(BindableObject, object, object)
+  nameWithType: SkiaEffect.NeedUpdate(BindableObject, object, object)
+  fullName: DrawnUi.Draw.SkiaEffect.NeedUpdate(Microsoft.Maui.Controls.BindableObject, object, object)
+  nameWithType.vb: SkiaEffect.NeedUpdate(BindableObject, Object, Object)
+  fullName.vb: DrawnUi.Draw.SkiaEffect.NeedUpdate(Microsoft.Maui.Controls.BindableObject, Object, Object)
+  name.vb: NeedUpdate(BindableObject, Object, Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaEffect.NeedUpdate(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+    name: NeedUpdate
+    href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_NeedUpdate_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableObject
+    name: BindableObject
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaEffect.NeedUpdate(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
+    name: NeedUpdate
+    href: DrawnUi.Draw.SkiaEffect.html#DrawnUi_Draw_SkiaEffect_NeedUpdate_Microsoft_Maui_Controls_BindableObject_System_Object_System_Object_
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableObject
+    name: BindableObject
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.BindingContextProperty
+  commentId: F:Microsoft.Maui.Controls.BindableObject.BindingContextProperty
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.bindingcontextproperty
+  name: BindingContextProperty
+  nameWithType: BindableObject.BindingContextProperty
+  fullName: Microsoft.Maui.Controls.BindableObject.BindingContextProperty
+- uid: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindableProperty)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindableProperty)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindableproperty)
+  name: ClearValue(BindableProperty)
+  nameWithType: BindableObject.ClearValue(BindableProperty)
+  fullName: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindableProperty)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindableProperty)
+    name: ClearValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindableproperty)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindableProperty)
+    name: ClearValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindableproperty)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindablepropertykey)
+  name: ClearValue(BindablePropertyKey)
+  nameWithType: BindableObject.ClearValue(BindablePropertyKey)
+  fullName: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindablePropertyKey)
+    name: ClearValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindablepropertykey)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindablePropertyKey
+    name: BindablePropertyKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindablepropertykey
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindablePropertyKey)
+    name: ClearValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.clearvalue#microsoft-maui-controls-bindableobject-clearvalue(microsoft-maui-controls-bindablepropertykey)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindablePropertyKey
+    name: BindablePropertyKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindablepropertykey
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.GetValue(Microsoft.Maui.Controls.BindableProperty)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.GetValue(Microsoft.Maui.Controls.BindableProperty)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.getvalue
+  name: GetValue(BindableProperty)
+  nameWithType: BindableObject.GetValue(BindableProperty)
+  fullName: Microsoft.Maui.Controls.BindableObject.GetValue(Microsoft.Maui.Controls.BindableProperty)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.GetValue(Microsoft.Maui.Controls.BindableProperty)
+    name: GetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.getvalue
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.GetValue(Microsoft.Maui.Controls.BindableProperty)
+    name: GetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.getvalue
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.IsSet(Microsoft.Maui.Controls.BindableProperty)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.IsSet(Microsoft.Maui.Controls.BindableProperty)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.isset
+  name: IsSet(BindableProperty)
+  nameWithType: BindableObject.IsSet(BindableProperty)
+  fullName: Microsoft.Maui.Controls.BindableObject.IsSet(Microsoft.Maui.Controls.BindableProperty)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.IsSet(Microsoft.Maui.Controls.BindableProperty)
+    name: IsSet
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.isset
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.IsSet(Microsoft.Maui.Controls.BindableProperty)
+    name: IsSet
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.isset
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.RemoveBinding(Microsoft.Maui.Controls.BindableProperty)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.RemoveBinding(Microsoft.Maui.Controls.BindableProperty)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.removebinding
+  name: RemoveBinding(BindableProperty)
+  nameWithType: BindableObject.RemoveBinding(BindableProperty)
+  fullName: Microsoft.Maui.Controls.BindableObject.RemoveBinding(Microsoft.Maui.Controls.BindableProperty)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.RemoveBinding(Microsoft.Maui.Controls.BindableProperty)
+    name: RemoveBinding
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.removebinding
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.RemoveBinding(Microsoft.Maui.Controls.BindableProperty)
+    name: RemoveBinding
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.removebinding
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.SetBinding(Microsoft.Maui.Controls.BindableProperty,Microsoft.Maui.Controls.BindingBase)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.SetBinding(Microsoft.Maui.Controls.BindableProperty,Microsoft.Maui.Controls.BindingBase)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setbinding
+  name: SetBinding(BindableProperty, BindingBase)
+  nameWithType: BindableObject.SetBinding(BindableProperty, BindingBase)
+  fullName: Microsoft.Maui.Controls.BindableObject.SetBinding(Microsoft.Maui.Controls.BindableProperty, Microsoft.Maui.Controls.BindingBase)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.SetBinding(Microsoft.Maui.Controls.BindableProperty,Microsoft.Maui.Controls.BindingBase)
+    name: SetBinding
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setbinding
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindingBase
+    name: BindingBase
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindingbase
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.SetBinding(Microsoft.Maui.Controls.BindableProperty,Microsoft.Maui.Controls.BindingBase)
+    name: SetBinding
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setbinding
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindingBase
+    name: BindingBase
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindingbase
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.ApplyBindings
+  commentId: M:Microsoft.Maui.Controls.BindableObject.ApplyBindings
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.applybindings
+  name: ApplyBindings()
+  nameWithType: BindableObject.ApplyBindings()
+  fullName: Microsoft.Maui.Controls.BindableObject.ApplyBindings()
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.ApplyBindings
+    name: ApplyBindings
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.applybindings
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.ApplyBindings
+    name: ApplyBindings
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.applybindings
+  - name: (
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.OnBindingContextChanged
+  commentId: M:Microsoft.Maui.Controls.BindableObject.OnBindingContextChanged
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onbindingcontextchanged
+  name: OnBindingContextChanged()
+  nameWithType: BindableObject.OnBindingContextChanged()
+  fullName: Microsoft.Maui.Controls.BindableObject.OnBindingContextChanged()
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.OnBindingContextChanged
+    name: OnBindingContextChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onbindingcontextchanged
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.OnBindingContextChanged
+    name: OnBindingContextChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onbindingcontextchanged
+  - name: (
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.OnPropertyChanged(System.String)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.OnPropertyChanged(System.String)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onpropertychanged
+  name: OnPropertyChanged(string)
+  nameWithType: BindableObject.OnPropertyChanged(string)
+  fullName: Microsoft.Maui.Controls.BindableObject.OnPropertyChanged(string)
+  nameWithType.vb: BindableObject.OnPropertyChanged(String)
+  fullName.vb: Microsoft.Maui.Controls.BindableObject.OnPropertyChanged(String)
+  name.vb: OnPropertyChanged(String)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.OnPropertyChanged(System.String)
+    name: OnPropertyChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onpropertychanged
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.OnPropertyChanged(System.String)
+    name: OnPropertyChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onpropertychanged
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.OnPropertyChanging(System.String)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.OnPropertyChanging(System.String)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onpropertychanging
+  name: OnPropertyChanging(string)
+  nameWithType: BindableObject.OnPropertyChanging(string)
+  fullName: Microsoft.Maui.Controls.BindableObject.OnPropertyChanging(string)
+  nameWithType.vb: BindableObject.OnPropertyChanging(String)
+  fullName.vb: Microsoft.Maui.Controls.BindableObject.OnPropertyChanging(String)
+  name.vb: OnPropertyChanging(String)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.OnPropertyChanging(System.String)
+    name: OnPropertyChanging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onpropertychanging
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.OnPropertyChanging(System.String)
+    name: OnPropertyChanging
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.onpropertychanging
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.UnapplyBindings
+  commentId: M:Microsoft.Maui.Controls.BindableObject.UnapplyBindings
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.unapplybindings
+  name: UnapplyBindings()
+  nameWithType: BindableObject.UnapplyBindings()
+  fullName: Microsoft.Maui.Controls.BindableObject.UnapplyBindings()
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.UnapplyBindings
+    name: UnapplyBindings
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.unapplybindings
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.UnapplyBindings
+    name: UnapplyBindings
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.unapplybindings
+  - name: (
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindableProperty,System.Object)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindableProperty,System.Object)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindableproperty-system-object)
+  name: SetValue(BindableProperty, object)
+  nameWithType: BindableObject.SetValue(BindableProperty, object)
+  fullName: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindableProperty, object)
+  nameWithType.vb: BindableObject.SetValue(BindableProperty, Object)
+  fullName.vb: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindableProperty, Object)
+  name.vb: SetValue(BindableProperty, Object)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindableProperty,System.Object)
+    name: SetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindableproperty-system-object)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindableProperty,System.Object)
+    name: SetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindableproperty-system-object)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindablePropertyKey,System.Object)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindablePropertyKey,System.Object)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindablepropertykey-system-object)
+  name: SetValue(BindablePropertyKey, object)
+  nameWithType: BindableObject.SetValue(BindablePropertyKey, object)
+  fullName: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindablePropertyKey, object)
+  nameWithType.vb: BindableObject.SetValue(BindablePropertyKey, Object)
+  fullName.vb: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindablePropertyKey, Object)
+  name.vb: SetValue(BindablePropertyKey, Object)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindablePropertyKey,System.Object)
+    name: SetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindablepropertykey-system-object)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindablePropertyKey
+    name: BindablePropertyKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindablepropertykey
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.SetValue(Microsoft.Maui.Controls.BindablePropertyKey,System.Object)
+    name: SetValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.setvalue#microsoft-maui-controls-bindableobject-setvalue(microsoft-maui-controls-bindablepropertykey-system-object)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindablePropertyKey
+    name: BindablePropertyKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindablepropertykey
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindableProperty)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindableProperty)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindableproperty)
+  name: CoerceValue(BindableProperty)
+  nameWithType: BindableObject.CoerceValue(BindableProperty)
+  fullName: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindableProperty)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindableProperty)
+    name: CoerceValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindableproperty)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindableProperty)
+    name: CoerceValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindableproperty)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  commentId: M:Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindablepropertykey)
+  name: CoerceValue(BindablePropertyKey)
+  nameWithType: BindableObject.CoerceValue(BindablePropertyKey)
+  fullName: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindablePropertyKey)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindablePropertyKey)
+    name: CoerceValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindablepropertykey)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindablePropertyKey
+    name: BindablePropertyKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindablepropertykey
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.BindableObject.CoerceValue(Microsoft.Maui.Controls.BindablePropertyKey)
+    name: CoerceValue
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.coercevalue#microsoft-maui-controls-bindableobject-coercevalue(microsoft-maui-controls-bindablepropertykey)
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindablePropertyKey
+    name: BindablePropertyKey
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindablepropertykey
+  - name: )
+- uid: Microsoft.Maui.Controls.BindableObject.Dispatcher
+  commentId: P:Microsoft.Maui.Controls.BindableObject.Dispatcher
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.dispatcher
+  name: Dispatcher
+  nameWithType: BindableObject.Dispatcher
+  fullName: Microsoft.Maui.Controls.BindableObject.Dispatcher
+- uid: Microsoft.Maui.Controls.BindableObject.BindingContext
+  commentId: P:Microsoft.Maui.Controls.BindableObject.BindingContext
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.bindingcontext
+  name: BindingContext
+  nameWithType: BindableObject.BindingContext
+  fullName: Microsoft.Maui.Controls.BindableObject.BindingContext
+- uid: Microsoft.Maui.Controls.BindableObject.PropertyChanged
+  commentId: E:Microsoft.Maui.Controls.BindableObject.PropertyChanged
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.propertychanged
+  name: PropertyChanged
+  nameWithType: BindableObject.PropertyChanged
+  fullName: Microsoft.Maui.Controls.BindableObject.PropertyChanged
+- uid: Microsoft.Maui.Controls.BindableObject.PropertyChanging
+  commentId: E:Microsoft.Maui.Controls.BindableObject.PropertyChanging
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.propertychanging
+  name: PropertyChanging
+  nameWithType: BindableObject.PropertyChanging
+  fullName: Microsoft.Maui.Controls.BindableObject.PropertyChanging
+- uid: Microsoft.Maui.Controls.BindableObject.BindingContextChanged
+  commentId: E:Microsoft.Maui.Controls.BindableObject.BindingContextChanged
+  parent: Microsoft.Maui.Controls.BindableObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.bindingcontextchanged
+  name: BindingContextChanged
+  nameWithType: BindableObject.BindingContextChanged
+  fullName: Microsoft.Maui.Controls.BindableObject.BindingContextChanged
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.AnimatedShaderEffect.DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.AnimatedShaderEffect@)
+  commentId: M:DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  name: Assign<AnimatedShaderEffect>(AnimatedShaderEffect, out AnimatedShaderEffect)
+  nameWithType: FluentExtensions.Assign<AnimatedShaderEffect>(AnimatedShaderEffect, out AnimatedShaderEffect)
+  fullName: DrawnUi.Draw.FluentExtensions.Assign<DrawnUi.Draw.AnimatedShaderEffect>(DrawnUi.Draw.AnimatedShaderEffect, out DrawnUi.Draw.AnimatedShaderEffect)
+  nameWithType.vb: FluentExtensions.Assign(Of AnimatedShaderEffect)(AnimatedShaderEffect, AnimatedShaderEffect)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Assign(Of DrawnUi.Draw.AnimatedShaderEffect)(DrawnUi.Draw.AnimatedShaderEffect, DrawnUi.Draw.AnimatedShaderEffect)
+  name.vb: Assign(Of AnimatedShaderEffect)(AnimatedShaderEffect, AnimatedShaderEffect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.AnimatedShaderEffect,DrawnUi.Draw.AnimatedShaderEffect@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: <
+  - uid: DrawnUi.Draw.AnimatedShaderEffect
+    name: AnimatedShaderEffect
+    href: DrawnUi.Draw.AnimatedShaderEffect.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.AnimatedShaderEffect
+    name: AnimatedShaderEffect
+    href: DrawnUi.Draw.AnimatedShaderEffect.html
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - uid: DrawnUi.Draw.AnimatedShaderEffect
+    name: AnimatedShaderEffect
+    href: DrawnUi.Draw.AnimatedShaderEffect.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.AnimatedShaderEffect,DrawnUi.Draw.AnimatedShaderEffect@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.AnimatedShaderEffect
+    name: AnimatedShaderEffect
+    href: DrawnUi.Draw.AnimatedShaderEffect.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.AnimatedShaderEffect
+    name: AnimatedShaderEffect
+    href: DrawnUi.Draw.AnimatedShaderEffect.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.AnimatedShaderEffect
+    name: AnimatedShaderEffect
+    href: DrawnUi.Draw.AnimatedShaderEffect.html
+  - name: )
+- uid: DrawnUi.Draw.AnimatedShaderEffect.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  parent: DrawnUi.Draw.ThemeBindings
+  definition: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  name: WithThemeBinding<AnimatedShaderEffect>(AnimatedShaderEffect, BindableProperty, object, object, object)
+  nameWithType: ThemeBindings.WithThemeBinding<AnimatedShaderEffect>(AnimatedShaderEffect, BindableProperty, object, object, object)
+  fullName: DrawnUi.Draw.ThemeBindings.WithThemeBinding<DrawnUi.Draw.AnimatedShaderEffect>(DrawnUi.Draw.AnimatedShaderEffect, Microsoft.Maui.Controls.BindableProperty, object, object, object)
+  nameWithType.vb: ThemeBindings.WithThemeBinding(Of AnimatedShaderEffect)(AnimatedShaderEffect, BindableProperty, Object, Object, Object)
+  fullName.vb: DrawnUi.Draw.ThemeBindings.WithThemeBinding(Of DrawnUi.Draw.AnimatedShaderEffect)(DrawnUi.Draw.AnimatedShaderEffect, Microsoft.Maui.Controls.BindableProperty, Object, Object, Object)
+  name.vb: WithThemeBinding(Of AnimatedShaderEffect)(AnimatedShaderEffect, BindableProperty, Object, Object, Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(DrawnUi.Draw.AnimatedShaderEffect,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: <
+  - uid: DrawnUi.Draw.AnimatedShaderEffect
+    name: AnimatedShaderEffect
+    href: DrawnUi.Draw.AnimatedShaderEffect.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.AnimatedShaderEffect
+    name: AnimatedShaderEffect
+    href: DrawnUi.Draw.AnimatedShaderEffect.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(DrawnUi.Draw.AnimatedShaderEffect,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.AnimatedShaderEffect
+    name: AnimatedShaderEffect
+    href: DrawnUi.Draw.AnimatedShaderEffect.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.AnimatedShaderEffect
+    name: AnimatedShaderEffect
+    href: DrawnUi.Draw.AnimatedShaderEffect.html
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Microsoft.Maui.Controls
+  commentId: N:Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Controls
+  nameWithType: Microsoft.Maui.Controls
+  fullName: Microsoft.Maui.Controls
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Controls
+    name: Controls
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls
+- uid: System.ComponentModel
+  commentId: N:System.ComponentModel
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.ComponentModel
+  nameWithType: System.ComponentModel
+  fullName: System.ComponentModel
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.ComponentModel
+    name: ComponentModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.componentmodel
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.ComponentModel
+    name: ComponentModel
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.componentmodel
+- uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  commentId: M:DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  name: Assign<T>(T, out T)
+  nameWithType: FluentExtensions.Assign<T>(T, out T)
+  fullName: DrawnUi.Draw.FluentExtensions.Assign<T>(T, out T)
+  nameWithType.vb: FluentExtensions.Assign(Of T)(T, T)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Assign(Of T)(T, T)
+  name.vb: Assign(Of T)(T, T)
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
+    name: Assign
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions
+  commentId: T:DrawnUi.Draw.FluentExtensions
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.FluentExtensions.html
+  name: FluentExtensions
+  nameWithType: FluentExtensions
+  fullName: DrawnUi.Draw.FluentExtensions
+- uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  isExternal: true
+  href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  name: WithThemeBinding<TControl>(TControl, BindableProperty, object, object, object)
+  nameWithType: ThemeBindings.WithThemeBinding<TControl>(TControl, BindableProperty, object, object, object)
+  fullName: DrawnUi.Draw.ThemeBindings.WithThemeBinding<TControl>(TControl, Microsoft.Maui.Controls.BindableProperty, object, object, object)
+  nameWithType.vb: ThemeBindings.WithThemeBinding(Of TControl)(TControl, BindableProperty, Object, Object, Object)
+  fullName.vb: DrawnUi.Draw.ThemeBindings.WithThemeBinding(Of TControl)(TControl, Microsoft.Maui.Controls.BindableProperty, Object, Object, Object)
+  name.vb: WithThemeBinding(Of TControl)(TControl, BindableProperty, Object, Object, Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: <
+  - name: TControl
+  - name: '>'
+  - name: (
+  - name: TControl
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+    name: WithThemeBinding
+    href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TControl
+  - name: )
+  - name: (
+  - name: TControl
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.ThemeBindings
+  commentId: T:DrawnUi.Draw.ThemeBindings
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ThemeBindings.html
+  name: ThemeBindings
+  nameWithType: ThemeBindings
+  fullName: DrawnUi.Draw.ThemeBindings
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.AnimatedShaderEffect.Center*
+  commentId: Overload:DrawnUi.Draw.AnimatedShaderEffect.Center
+  href: DrawnUi.Draw.AnimatedShaderEffect.html#DrawnUi_Draw_AnimatedShaderEffect_Center
+  name: Center
+  nameWithType: AnimatedShaderEffect.Center
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.Center
+- uid: SkiaSharp.SKPoint
+  commentId: T:SkiaSharp.SKPoint
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  name: SKPoint
+  nameWithType: SKPoint
+  fullName: SkiaSharp.SKPoint
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.AnimatedShaderEffect.OnCompleted*
+  commentId: Overload:DrawnUi.Draw.AnimatedShaderEffect.OnCompleted
+  href: DrawnUi.Draw.AnimatedShaderEffect.html#DrawnUi_Draw_AnimatedShaderEffect_OnCompleted
+  name: OnCompleted
+  nameWithType: AnimatedShaderEffect.OnCompleted
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.OnCompleted
+- uid: System.EventHandler
+  commentId: T:System.EventHandler
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler
+  name: EventHandler
+  nameWithType: EventHandler
+  fullName: System.EventHandler
+- uid: DrawnUi.Draw.AnimatedShaderEffect.DurationMs*
+  commentId: Overload:DrawnUi.Draw.AnimatedShaderEffect.DurationMs
+  href: DrawnUi.Draw.AnimatedShaderEffect.html#DrawnUi_Draw_AnimatedShaderEffect_DurationMs
+  name: DurationMs
+  nameWithType: AnimatedShaderEffect.DurationMs
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.DurationMs
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.uint32
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: DrawnUi.Draw.AnimatedShaderEffect.Progress*
+  commentId: Overload:DrawnUi.Draw.AnimatedShaderEffect.Progress
+  href: DrawnUi.Draw.AnimatedShaderEffect.html#DrawnUi_Draw_AnimatedShaderEffect_Progress
+  name: Progress
+  nameWithType: AnimatedShaderEffect.Progress
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.Progress
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Draw.RangeAnimator
+  commentId: T:DrawnUi.Draw.RangeAnimator
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.RangeAnimator.html
+  name: RangeAnimator
+  nameWithType: RangeAnimator
+  fullName: DrawnUi.Draw.RangeAnimator
+- uid: DrawnUi.Draw.AnimatedShaderEffect.Play*
+  commentId: Overload:DrawnUi.Draw.AnimatedShaderEffect.Play
+  href: DrawnUi.Draw.AnimatedShaderEffect.html#DrawnUi_Draw_AnimatedShaderEffect_Play
+  name: Play
+  nameWithType: AnimatedShaderEffect.Play
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.Play
+- uid: DrawnUi.Draw.AnimatedShaderEffect.Stop*
+  commentId: Overload:DrawnUi.Draw.AnimatedShaderEffect.Stop
+  href: DrawnUi.Draw.AnimatedShaderEffect.html#DrawnUi_Draw_AnimatedShaderEffect_Stop
+  name: Stop
+  nameWithType: AnimatedShaderEffect.Stop
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.Stop
+- uid: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateUniforms_SkiaSharp_SKRect_
+  name: CreateUniforms(SKRect)
+  nameWithType: SkiaShaderEffect.CreateUniforms(SKRect)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+    name: CreateUniforms
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateUniforms_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+    name: CreateUniforms
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateUniforms_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.AnimatedShaderEffect.CreateUniforms*
+  commentId: Overload:DrawnUi.Draw.AnimatedShaderEffect.CreateUniforms
+  href: DrawnUi.Draw.AnimatedShaderEffect.html#DrawnUi_Draw_AnimatedShaderEffect_CreateUniforms_SkiaSharp_SKRect_
+  name: CreateUniforms
+  nameWithType: AnimatedShaderEffect.CreateUniforms
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.CreateUniforms
+- uid: SkiaSharp.SKRect
+  commentId: T:SkiaSharp.SKRect
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  name: SKRect
+  nameWithType: SKRect
+  fullName: SkiaSharp.SKRect
+- uid: SkiaSharp.SKRuntimeEffectUniforms
+  commentId: T:SkiaSharp.SKRuntimeEffectUniforms
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skruntimeeffectuniforms
+  name: SKRuntimeEffectUniforms
+  nameWithType: SKRuntimeEffectUniforms
+  fullName: SkiaSharp.SKRuntimeEffectUniforms
+- uid: DrawnUi.Draw.SkiaShaderEffect.OnDisposing
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.OnDisposing
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_OnDisposing
+  name: OnDisposing()
+  nameWithType: SkiaShaderEffect.OnDisposing()
+  fullName: DrawnUi.Draw.SkiaShaderEffect.OnDisposing()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.OnDisposing
+    name: OnDisposing
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_OnDisposing
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.OnDisposing
+    name: OnDisposing
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_OnDisposing
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.AnimatedShaderEffect.OnDisposing*
+  commentId: Overload:DrawnUi.Draw.AnimatedShaderEffect.OnDisposing
+  href: DrawnUi.Draw.AnimatedShaderEffect.html#DrawnUi_Draw_AnimatedShaderEffect_OnDisposing
+  name: OnDisposing
+  nameWithType: AnimatedShaderEffect.OnDisposing
+  fullName: DrawnUi.Draw.AnimatedShaderEffect.OnDisposing

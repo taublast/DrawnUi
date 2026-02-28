@@ -36,38 +36,33 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 
 ---
 
-## 🆕 What's new for 1.9.0.1
+## 🆕 What's new for 1.9.1.2
 
-* Fix iOS simulator incorrect layouts bug, due `(int)Math.Ceiling(float.PositiveInfinity)` returning a *negative* value on simulator runtime, other runtimes return positive value as expected. 
-* Fix `SkiaSlider` tap on Thumb not triggered if deep cached until redrawn.
-* Fix gesture mapping coordinates inside many cached levels.
-* Added some new helper functions to track gestures, more [in gestures doc](..todo).
-* Fix `SkiaLabel` text offset when stroke is enabled.
-* Fix `SkiaCarousel` sometimes not snapping after different gestures.
-* `SkiaScroll` scrolling smoothness improved, and some other fixes.
-* Added `SkiaDecoratedStack` to draw decorated lines between lines/columns.
-* Added new props for grid and stack layout, more [in layouts doc](..todo).
-* `SkiaCamera` audio recording improved, added callbacks to process audio samples in realtime and other improvements. More info about new camera video/audio realtime features to come soon.
-* Can now chain many shaders via VisualEffects.
+Hint: critically approaching to the upcoming version 1.10 that would leave .net9 behind.
+
+* Added `Super.FpsLimit` static property to be able to save battery on mobile, like capping Apple Metal to 30.
+* Fix font accent for `SkiaLabel` on WIndows being not consistent with other platforms.
+* Fix font accent for `SkiaLabel` on WIndows being not consistent with other platforms.
+* Fixes pack for `SkiaRichLabel` Markdown rendering.
+* Added`Precompile` to `SkSl` and other shader rendering pipeline improvements
+* Added `OuterGlowEffect`
+* `SkiaBackdrop` GC pressure optimizations.
+* `SkiaViewSwitcher` fixes for creation in code-behind (no XAML).
+* Removed `OnPropertyChanged();` call from `CachedObject RenderObject` property. Can't track by property changed anymore, trackable via CacheCreated and CacheDestroyed events.
+* Fix cancellation for animation helpers methods.
+* Huge pack of fixes and improvements for `SkiaCamera` will be announced separately.
 * Other fixes and improvements.
 
 ## 💡 Hint of the Day
 
-**❓ Q: How to make images to Fade-In when loaded?**
+**❓ Q: How to reduce battery drain/heat on iPhone in constant sceen updates scenarios?**
 
-**💡 A:** Subclass `SkiaImage` to define your animation:
+**💡 A:** Might be Apple Metal specifics, cap FPS:
 
 ```csharp
-public class BannerImage : SkiaImage
-{
-    public override void OnSuccess(string source)
-    {
-        base.OnSuccess(source);
-
-        this.Opacity = 0.01;
-        _ = this.FadeToAsync(1, 300, Easing.SinIn);
-    }
-}
+#if IOS //spare battery because apple metal is draining much. android is not affected at the same level.
+            Super.MaxFps = 30;
+#endif
 ```
 
 ---

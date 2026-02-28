@@ -22,6 +22,7 @@ items:
   - DrawnUi.Draw.SkiaBackdrop.NeedInvalidateColorFilter
   - DrawnUi.Draw.SkiaBackdrop.NeedInvalidateImageFilter
   - DrawnUi.Draw.SkiaBackdrop.OnDisposing
+  - DrawnUi.Draw.SkiaBackdrop.OnMeasuring(System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaBackdrop.OnScaleChanged
   - DrawnUi.Draw.SkiaBackdrop.Paint(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaBackdrop.PaintColorFilter
@@ -176,7 +177,6 @@ items:
   - DrawnUi.Draw.SkiaLayout.lockMeasureLayout
   - DrawnUi.Draw.SkiaLayout.MeasureLayout(DrawnUi.Draw.MeasureRequest,System.Boolean)
   - DrawnUi.Draw.SkiaLayout._lockTemplates
-  - DrawnUi.Draw.SkiaLayout.OnMeasuring(System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaLayout.ApplyMeasureResult
   - DrawnUi.Draw.SkiaLayout.InvalidatedChildrenInternal
   - DrawnUi.Draw.SkiaLayout.Draw(DrawnUi.Draw.DrawingContext)
@@ -483,6 +483,7 @@ items:
   - DrawnUi.Draw.SkiaControl.OnChildTapped(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelow
   - DrawnUi.Draw.SkiaControl.UpdateLocks
@@ -501,6 +502,7 @@ items:
   - DrawnUi.Draw.SkiaControl.HorizontalOptions
   - DrawnUi.Draw.SkiaControl.OnParentVisibilityChanged(System.Boolean)
   - DrawnUi.Draw.SkiaControl.VisibilityChanged
+  - DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
   - DrawnUi.Draw.SkiaControl.SendVisibilityChanged
   - DrawnUi.Draw.SkiaControl.OnVisibilityChanged(System.Boolean)
   - DrawnUi.Draw.SkiaControl.lockPausingAnimators
@@ -756,6 +758,7 @@ items:
   - DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
   - DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
   - DrawnUi.Draw.SkiaControl.NeedRemeasuring
+  - DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
   - DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   - DrawnUi.Draw.SkiaControl.PaintWithEffects(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaControl.OnFirstDrawn
@@ -1124,6 +1127,51 @@ items:
   - Microsoft.Maui.Controls.VisualElement.DrawnUi.Draw.StaticResourcesExtensions.GetAllWithMyselfParents
   - Microsoft.Maui.IView.DrawnUi.Extensions.InternalExtensions.DisposeControlAndChildren
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.SkiaBackdrop.OnMeasuring(System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaBackdrop.OnMeasuring(System.Single,System.Single,System.Single)
+  id: OnMeasuring(System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.SkiaBackdrop
+  langs:
+  - csharp
+  - vb
+  name: OnMeasuring(float, float, float)
+  nameWithType: SkiaBackdrop.OnMeasuring(float, float, float)
+  fullName: DrawnUi.Draw.SkiaBackdrop.OnMeasuring(float, float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnMeasuring
+    path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: If you call this while measurement is in process (IsMeasuring==True) will return last measured value.
+  example: []
+  syntax:
+    content: public override ScaledSize OnMeasuring(float widthConstraint, float heightConstraint, float scale)
+    parameters:
+    - id: widthConstraint
+      type: System.Single
+      description: ''
+    - id: heightConstraint
+      type: System.Single
+      description: ''
+    - id: scale
+      type: System.Single
+      description: ''
+    return:
+      type: DrawnUi.Draw.ScaledSize
+      description: ''
+    content.vb: Public Overrides Function OnMeasuring(widthConstraint As Single, heightConstraint As Single, scale As Single) As ScaledSize
+  overridden: DrawnUi.Draw.SkiaLayout.OnMeasuring(System.Single,System.Single,System.Single)
+  overload: DrawnUi.Draw.SkiaBackdrop.OnMeasuring*
+  nameWithType.vb: SkiaBackdrop.OnMeasuring(Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.SkiaBackdrop.OnMeasuring(Single, Single, Single)
+  name.vb: OnMeasuring(Single, Single, Single)
 - uid: DrawnUi.Draw.SkiaBackdrop.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   commentId: M:DrawnUi.Draw.SkiaBackdrop.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   id: ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
@@ -1142,7 +1190,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessGestures
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 10
+    startLine: 15
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1177,7 +1225,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ImagePaint
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 19
+    startLine: 24
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1206,7 +1254,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintImageFilter
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 24
+    startLine: 29
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1235,7 +1283,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintColorFilter
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 29
+    startLine: 34
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1264,7 +1312,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedInvalidateImageFilter
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 31
+    startLine: 36
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1293,7 +1341,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedInvalidateColorFilter
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 32
+    startLine: 37
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1322,7 +1370,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateImageFilter
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 34
+    startLine: 39
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1348,7 +1396,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateColorFilter
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 39
+    startLine: 44
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1374,7 +1422,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BlurProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 62
+    startLine: 67
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1401,7 +1449,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Blur
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 70
+    startLine: 75
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1430,7 +1478,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BrightnessProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 76
+    startLine: 81
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1457,7 +1505,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Brightness
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 84
+    startLine: 89
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1486,7 +1534,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UseContextProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 90
+    startLine: 95
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1513,7 +1561,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UseContext
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 99
+    startLine: 104
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1544,7 +1592,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HasEffects
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 105
+    startLine: 110
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1573,7 +1621,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 113
+    startLine: 118
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1602,7 +1650,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CanUseCacheDoubleBuffering
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 136
+    startLine: 141
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1634,7 +1682,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 144
+    startLine: 149
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1672,7 +1720,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Snapshot
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 237
+    startLine: 254
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1701,7 +1749,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CacheSourceProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 242
+    startLine: 259
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1728,7 +1776,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CacheSource
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 249
+    startLine: 266
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1757,7 +1805,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AttachSource
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 265
+    startLine: 282
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1785,7 +1833,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetImage
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 285
+    startLine: 302
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1821,7 +1869,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnScaleChanged
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 296
+    startLine: 313
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1849,7 +1897,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BuildPaint
     path: ../src/Maui/DrawnUi/Draw/SkiaBackdrop.cs
-    startLine: 304
+    startLine: 321
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4071,61 +4119,6 @@ references:
   name: _lockTemplates
   nameWithType: SkiaLayout._lockTemplates
   fullName: DrawnUi.Draw.SkiaLayout._lockTemplates
-- uid: DrawnUi.Draw.SkiaLayout.OnMeasuring(System.Single,System.Single,System.Single)
-  commentId: M:DrawnUi.Draw.SkiaLayout.OnMeasuring(System.Single,System.Single,System.Single)
-  parent: DrawnUi.Draw.SkiaLayout
-  isExternal: true
-  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnMeasuring_System_Single_System_Single_System_Single_
-  name: OnMeasuring(float, float, float)
-  nameWithType: SkiaLayout.OnMeasuring(float, float, float)
-  fullName: DrawnUi.Draw.SkiaLayout.OnMeasuring(float, float, float)
-  nameWithType.vb: SkiaLayout.OnMeasuring(Single, Single, Single)
-  fullName.vb: DrawnUi.Draw.SkiaLayout.OnMeasuring(Single, Single, Single)
-  name.vb: OnMeasuring(Single, Single, Single)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaLayout.OnMeasuring(System.Single,System.Single,System.Single)
-    name: OnMeasuring
-    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnMeasuring_System_Single_System_Single_System_Single_
-  - name: (
-  - uid: System.Single
-    name: float
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: ','
-  - name: " "
-  - uid: System.Single
-    name: float
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: ','
-  - name: " "
-  - uid: System.Single
-    name: float
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaLayout.OnMeasuring(System.Single,System.Single,System.Single)
-    name: OnMeasuring
-    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnMeasuring_System_Single_System_Single_System_Single_
-  - name: (
-  - uid: System.Single
-    name: Single
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: ','
-  - name: " "
-  - uid: System.Single
-    name: Single
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: ','
-  - name: " "
-  - uid: System.Single
-    name: Single
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: )
 - uid: DrawnUi.Draw.SkiaLayout.ApplyMeasureResult
   commentId: M:DrawnUi.Draw.SkiaLayout.ApplyMeasureResult
   parent: DrawnUi.Draw.SkiaLayout
@@ -11293,6 +11286,31 @@ references:
     name: GestureEventProcessingInfo
     href: DrawnUi.Draw.GestureEventProcessingInfo.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+  commentId: M:DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckHovered_DrawnUi_Draw_SkiaGesturesParameters_
+  name: CheckHovered(SkiaGesturesParameters)
+  nameWithType: SkiaControl.CheckHovered(SkiaGesturesParameters)
+  fullName: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+    name: CheckHovered
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckHovered_DrawnUi_Draw_SkiaGesturesParameters_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+    name: CheckHovered
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckHovered_DrawnUi_Draw_SkiaGesturesParameters_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   commentId: F:DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -11479,6 +11497,13 @@ references:
   name: VisibilityChanged
   nameWithType: SkiaControl.VisibilityChanged
   fullName: DrawnUi.Draw.SkiaControl.VisibilityChanged
+- uid: DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
+  commentId: E:DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ParentVisibilityChanged
+  name: ParentVisibilityChanged
+  nameWithType: SkiaControl.ParentVisibilityChanged
+  fullName: DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
 - uid: DrawnUi.Draw.SkiaControl.SendVisibilityChanged
   commentId: M:DrawnUi.Draw.SkiaControl.SendVisibilityChanged
   parent: DrawnUi.Draw.SkiaControl
@@ -16449,6 +16474,25 @@ references:
   name: NeedRemeasuring
   nameWithType: SkiaControl.NeedRemeasuring
   fullName: DrawnUi.Draw.SkiaControl.NeedRemeasuring
+- uid: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+  commentId: M:DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateShadowPaint
+  name: InvalidateShadowPaint()
+  nameWithType: SkiaControl.InvalidateShadowPaint()
+  fullName: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+    name: InvalidateShadowPaint
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateShadowPaint
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+    name: InvalidateShadowPaint
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateShadowPaint
+  - name: (
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   commentId: M:DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   parent: DrawnUi.Draw.SkiaControl
@@ -33440,6 +33484,85 @@ references:
   - uid: DrawnUi.Extensions
     name: Extensions
     href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.SkiaLayout.OnMeasuring(System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.SkiaLayout.OnMeasuring(System.Single,System.Single,System.Single)
+  parent: DrawnUi.Draw.SkiaLayout
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnMeasuring_System_Single_System_Single_System_Single_
+  name: OnMeasuring(float, float, float)
+  nameWithType: SkiaLayout.OnMeasuring(float, float, float)
+  fullName: DrawnUi.Draw.SkiaLayout.OnMeasuring(float, float, float)
+  nameWithType.vb: SkiaLayout.OnMeasuring(Single, Single, Single)
+  fullName.vb: DrawnUi.Draw.SkiaLayout.OnMeasuring(Single, Single, Single)
+  name.vb: OnMeasuring(Single, Single, Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLayout.OnMeasuring(System.Single,System.Single,System.Single)
+    name: OnMeasuring
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnMeasuring_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLayout.OnMeasuring(System.Single,System.Single,System.Single)
+    name: OnMeasuring
+    href: DrawnUi.Draw.SkiaLayout.html#DrawnUi_Draw_SkiaLayout_OnMeasuring_System_Single_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+- uid: DrawnUi.Draw.SkiaBackdrop.OnMeasuring*
+  commentId: Overload:DrawnUi.Draw.SkiaBackdrop.OnMeasuring
+  href: DrawnUi.Draw.SkiaBackdrop.html#DrawnUi_Draw_SkiaBackdrop_OnMeasuring_System_Single_System_Single_System_Single_
+  name: OnMeasuring
+  nameWithType: SkiaBackdrop.OnMeasuring
+  fullName: DrawnUi.Draw.SkiaBackdrop.OnMeasuring
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.ScaledSize
+  commentId: T:DrawnUi.Draw.ScaledSize
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ScaledSize.html
+  name: ScaledSize
+  nameWithType: ScaledSize
+  fullName: DrawnUi.Draw.ScaledSize
 - uid: DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   commentId: M:DrawnUi.Draw.SkiaControl.ProcessGestures(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   parent: DrawnUi.Draw.SkiaControl

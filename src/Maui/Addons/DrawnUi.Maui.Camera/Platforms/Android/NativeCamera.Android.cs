@@ -1,4 +1,7 @@
-﻿using Android.Content;
+﻿using System.Buffers;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
 using Android.Hardware.Camera2;
@@ -11,14 +14,10 @@ using Android.Util;
 using Android.Views;
 using AppoMobi.Maui.Gestures;
 using AppoMobi.Maui.Native.Droid.Graphics;
+using AppoMobi.Specials;
 using Java.Lang;
 using Java.Util.Concurrent;
 using SkiaSharp.Views.Android;
-using System.Buffers;
-using System.ComponentModel;
-using System.Globalization;
-using System.Runtime.CompilerServices;
-using AppoMobi.Specials;
 using Boolean = System.Boolean;
 using Debug = System.Diagnostics.Debug;
 using Exception = System.Exception;
@@ -77,6 +76,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
                     formats.Add(new CaptureFormat
                     {
+                        Index = i,
                         Width = size.Width,
                         Height = size.Height,
                         FormatId = $"android_yuv_{cameraId}_{i}"
@@ -95,23 +95,27 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
     public static void FillMetadata(Metadata meta, CaptureResult result)
     {
-        // Get the camera's chosen exposure settings for "proper" exposure
-        var measuredExposureTime = (long)result.Get(CaptureResult.SensorExposureTime);
-        var measuredSensitivity = (int)result.Get(CaptureResult.SensorSensitivity);
-        var measuredAperture = (float)result.Get(CaptureResult.LensAperture);
-        var usedLens = (float)result.Get(CaptureResult.LensFocalLength);
+        // Each result.Get() returns a Java boxed primitive wrapper (Java.Lang.Long, etc.)
+        // Must dispose after extracting value to avoid GC bridge pressure
+        using var jExposure = (Java.Lang.Long)result.Get(CaptureResult.SensorExposureTime);
+        using var jSensitivity = (Java.Lang.Integer)result.Get(CaptureResult.SensorSensitivity);
+        using var jAperture = (Java.Lang.Float)result.Get(CaptureResult.LensAperture);
+        using var jFocalLength = (Java.Lang.Float)result.Get(CaptureResult.LensFocalLength);
+        using var jOrientation = (Java.Lang.Integer)result.Get(CaptureResult.JpegOrientation);
+
+        var measuredExposureTime = jExposure?.LongValue() ?? 0L;
+        var measuredSensitivity = jSensitivity?.IntValue() ?? 0;
+        var measuredAperture = jAperture?.FloatValue() ?? 0f;
+        var usedLens = jFocalLength?.FloatValue() ?? 0f;
 
         // Convert to standard units
         double shutterSpeed = measuredExposureTime / 1_000_000_000.0; // nanoseconds to seconds
-        double iso = measuredSensitivity;
-        double aperture = measuredAperture;
 
         meta.FocalLength = usedLens;
-        meta.ISO = (int)iso;
-        meta.Aperture = aperture;
+        meta.ISO = measuredSensitivity;
+        meta.Aperture = measuredAperture;
         meta.Shutter = shutterSpeed;
-
-        meta.Orientation = (int)result.Get(CaptureResult.JpegOrientation);
+        meta.Orientation = jOrientation?.IntValue() ?? 0;
     }
 
     public void SetZoom(float zoom)
@@ -199,6 +203,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             {
                 return new CaptureFormat
                 {
+                    Index = -1,
                     Width = CaptureWidth,
                     Height = CaptureHeight,
                     FormatId = $"android_{CameraId}_{CaptureWidth}x{CaptureHeight}"
@@ -451,7 +456,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// </summary>
     /// <param name="image"></param>
     /// <param name="output"></param>
-    public void ProcessImage(Image image, Allocation output)
+    public void ProcessImage(Image image, Allocation output, bool mirrorX, bool mirrorY)
     {
         var rotation = SensorOrientation;
 
@@ -459,7 +464,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         {
             if (Splines.Current != null)
                 Rendering.BlitWithLUT(rs, Splines.Renderer, Splines.Current.RendererLUT, image, output, rotation,
-                    Gamma, false, false);
+                    Gamma, mirrorX, mirrorY);
             else
                 Rendering.TestOutput(rs, output);
         }
@@ -467,20 +472,20 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         {
             if (Effect == CameraEffect.ColorNegativeManual)
             {
-                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, false, true, false, false);
+                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, false, true, mirrorX, mirrorY);
             }
             else if (Effect == CameraEffect.GrayscaleNegative)
             {
-                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, true, true, false, false);
+                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, true, true, mirrorX, mirrorY);
             }
             else if (Effect == CameraEffect.Grayscale)
             {
-                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, true, false, false, false);
+                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, true, false, mirrorX, mirrorY);
             }
             else
             {
                 //default, no effects
-                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, false, false, false, false);
+                Rendering.BlitAdjust(rs, Splines.Renderer, image, output, rotation, Gamma, false, false, mirrorX, mirrorY);
                 //Rendering.TestOutput(rs, output);
             }
         }
@@ -559,7 +564,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             _frameAvailable?.Reset();
 
-            if (image == null) continue;
+            if (image == null)
+                continue;
 
             try
             {
@@ -571,7 +577,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             }
             finally
             {
-                image.Close();  // Return to ImageReader pool
+                image.Close();   // Return to ImageReader pool
             }
         }
     }
@@ -592,11 +598,14 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         }
 
         // RenderScript YUV→RGB conversion
-        ProcessImage(image, allocated.Allocation);
-        allocated.Update();
+        if (!_useGlPreview)
+        {
+            ProcessImage(image, allocated.Allocation, false, false);
+            allocated.Update();
+        }
 
         // During capture video flow recording, avoid any UI preview work
-        bool inCaptureRecording = FormsControl.UseRealtimeVideoProcessing && FormsControl.IsRecordingVideo;
+        bool inCaptureRecording = FormsControl.UseRealtimeVideoProcessing && FormsControl.IsRecording;
 
         // Convert to SKImage
         var sk = allocated.Bitmap.ToSKImage();
@@ -613,7 +622,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         var outImage = new CapturedImage()
         {
-            Facing = FormsControl.Facing,
+            Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
             Time = monotonicTime,
             Image = sk,
             Meta = meta,
@@ -628,6 +637,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         Preview = outImage;
         FormsControl.UpdatePreview();
+        
     }
 
     #endregion
@@ -752,8 +762,13 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         _flashMode = parent.FlashMode;
         _captureFlashMode = parent.CaptureFlashMode;
 
-        rs = RenderScript.Create(Platform.AppContext);
-        Splines.Initialize(rs);
+        // Defer RenderScript init — GPU preview path (API 26+) doesn't need it.
+        // RenderScript will be lazily initialized if needed (legacy preview fallback or still capture).
+        if (!UseGpuPreview || !GpuCameraFrameProvider.IsSupported())
+        {
+            rs = RenderScript.Create(Platform.AppContext);
+            Splines.Initialize(rs);
+        }
     }
 
     //private readonly FramesQueue _stack = new();
@@ -850,6 +865,12 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     private bool _useGpuCameraPath;
     public bool IsGpuCameraPathActive => _useGpuCameraPath && _gpuCameraSurface != null;
 
+    // GPU preview renderer (replaces ImageReader+RenderScript for preview on API 26+)
+    // Set to false to force the legacy ImageReader+RenderScript path for comparison
+    internal static bool UseGpuPreview { get; set; } = true;
+    private GlPreviewRenderer _glPreviewRenderer;
+    private bool _useGlPreview;
+
     //{@link CaptureRequest.Builder} for the camera preview
     public CaptureRequest.Builder mPreviewRequestBuilder;
 
@@ -909,7 +930,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     public int SensorOrientation { get; set; }
 
     // A {@link CameraCaptureSession.CaptureCallback} that handles events related to JPEG capture.
-    public StillPhotoCaptureCallback mCaptureCallback;
+    public PhotoModeCaptureCallback mCaptureCallback;
 
     // Shows a {@link Toast} on the UI thread.
     public void ShowToast(string text)
@@ -1061,10 +1082,16 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     var sensorSize =
                         (Android.Util.SizeF)characteristics.Get(CameraCharacteristics.SensorInfoPhysicalSize);
 
+                    var actualFacing = FormsControl.Facing;
+                    if (facing?.IntValue() == (int)LensFacing.Front)
+                        actualFacing = CameraPosition.Selfie;
+                    else if (facing?.IntValue() == (int)LensFacing.Back)
+                        actualFacing = CameraPosition.Default;
+
                     var unit = new CameraUnit
                     {
                         Id = cameraId,
-                        Facing = FormsControl.Facing,
+                        Facing = actualFacing,
                         MinFocalDistance =
                             (float)characteristics.Get(CameraCharacteristics.LensInfoMinimumFocusDistance),
                         //LensDistortion = (???)characteristics.Get(CameraCharacteristics.LensDistortion),
@@ -1087,8 +1114,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 if (!cameras.Any())
                     return;
 
-                // Select camera based on manual index or default to first
-                CameraUnit selectedCamera;
+                // Select camera based on manual device ID, index, or default to first
+                CameraUnit selectedCamera = null;
                 if (FormsControl.Facing == CameraPosition.Manual && FormsControl.CameraIndex >= 0)
                 {
                     if (FormsControl.CameraIndex < cameras.Count)
@@ -1100,7 +1127,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     else
                     {
                         Debug.WriteLine(
-                            $"[NativeCameraAndroid] Invalid camera index {FormsControl.CameraIndex}, falling back to first camera");
+                            $"[NativeCameraAndroid] Invalid camera index {FormsControl.CameraIndex} (have {cameras.Count} cameras), falling back to first camera");
                         selectedCamera = cameras[0];
                     }
                 }
@@ -1275,11 +1302,57 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
                     System.Diagnostics.Debug.WriteLine($"[PREVIEW] Selected {PreviewWidth}x{PreviewHeight} rotated={rotated} max={maxPreviewWidth}x{maxPreviewHeight} aspectTarget={aspectTarget.Width}x{aspectTarget.Height}");
 
-                    mImageReaderPreview =
-                        ImageReader.NewInstance(PreviewWidth, PreviewHeight, ImageFormatType.Yuv420888, 3);
-                    mImageReaderPreview.SetOnImageAvailableListener(this, mBackgroundHandler);
+                    // Try GPU preview path (API 26+) — uses OES shader for zero-copy YUV→RGB on GPU
+                    _useGlPreview = false;
+                    if (UseGpuPreview && GpuCameraFrameProvider.IsSupported())
+                    {
+                        try
+                        {
+                            var gpw = PreviewHeight;
+                            var gph = PreviewWidth;
+                            if (SensorOrientation == 0 || SensorOrientation == 180)
+                            {
+                                gpw = PreviewWidth;
+                                gph = PreviewHeight;
+                            }
 
-                    AllocateOutSurface();
+                            _glPreviewRenderer = new GlPreviewRenderer();
+                            if (_glPreviewRenderer.Initialize(PreviewWidth, PreviewHeight, gpw, gph,
+                                FormsControl.Facing == CameraPosition.Selfie, SensorOrientation))
+                            {
+                                _useGlPreview = true;
+                                PreviewSize = new SkiaSharp.SKSize(gpw, gph);
+                                FormsControl.SetRotatedContentSize(PreviewSize, SensorOrientation);
+
+                                // Wire preview delivery
+                                _glPreviewRenderer.PreviewFrameReady += OnGlPreviewFrameReady;
+
+                                Debug.WriteLine($"[NativeCamera] GPU preview enabled: {PreviewWidth}x{PreviewHeight} -> {gpw}x{gph}");
+                            }
+                            else
+                            {
+                                _glPreviewRenderer?.Dispose();
+                                _glPreviewRenderer = null;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"[NativeCamera] GPU preview init failed, falling back to ImageReader: {ex.Message}");
+                            _glPreviewRenderer?.Dispose();
+                            _glPreviewRenderer = null;
+                            _useGlPreview = false;
+                        }
+                    }
+
+                    // Fallback: ImageReader + RenderScript path
+                    if (!_useGlPreview)
+                    {
+                        EnsureRenderScriptInitialized();
+                        mImageReaderPreview =
+                            ImageReader.NewInstance(PreviewWidth, PreviewHeight, ImageFormatType.Yuv420888, 3);
+                        mImageReaderPreview.SetOnImageAvailableListener(this, mBackgroundHandler);
+                        AllocateOutSurface();
+                    }
 
                     CameraId = cameraUnit.Id;
 
@@ -1308,6 +1381,53 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 //ErrorDialog.NewInstance(GetString(Resource.String.camera_error)).Show(ChildFragmentManager, FRAGMENT_DIALOG);
             }
         }
+    }
+
+    bool CreatePreviewRenderer()
+    {
+        if (UseGpuPreview && GpuCameraFrameProvider.IsSupported())
+        {
+            try
+            {
+                var gpw = PreviewHeight;
+                var gph = PreviewWidth;
+                if (SensorOrientation == 0 || SensorOrientation == 180)
+                {
+                    gpw = PreviewWidth;
+                    gph = PreviewHeight;
+                }
+
+                _glPreviewRenderer = new GlPreviewRenderer();
+                if (_glPreviewRenderer.Initialize(PreviewWidth, PreviewHeight, gpw, gph,
+                        FormsControl.Facing == CameraPosition.Selfie, SensorOrientation))
+                {
+                    _useGlPreview = true;
+                    PreviewSize = new SkiaSharp.SKSize(gpw, gph);
+                    FormsControl.SetRotatedContentSize(PreviewSize, SensorOrientation);
+
+                    // Wire preview delivery
+                    _glPreviewRenderer.PreviewFrameReady += OnGlPreviewFrameReady;
+
+                    Debug.WriteLine($"[NativeCamera] GPU preview enabled: {PreviewWidth}x{PreviewHeight} -> {gpw}x{gph}");
+
+                    return true;
+                }
+                else
+                {
+                    _glPreviewRenderer?.Dispose();
+                    _glPreviewRenderer = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[NativeCamera] GPU preview init failed, falling back to ImageReader: {ex.Message}");
+                _glPreviewRenderer?.Dispose();
+                _glPreviewRenderer = null;
+                _useGlPreview = false;
+            }
+        }
+
+        return false;
     }
 
     object lockSetup = new();
@@ -1403,13 +1523,13 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     switch (value)
                     {
                         case CameraProcessorState.Enabled:
-                            FormsControl.State = CameraState.On;
+                            FormsControl.State = HardwareState.On;
                             break;
                         case CameraProcessorState.Error:
-                            FormsControl.State = CameraState.Error;
+                            FormsControl.State = HardwareState.Error;
                             break;
                         default:
-                            FormsControl.State = CameraState.Off;
+                            FormsControl.State = HardwareState.Off;
                             break;
                     }
                 }
@@ -1496,7 +1616,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 }
 
                 if (mCaptureCallback == null)
-                    mCaptureCallback = new StillPhotoCaptureCallback(this);
+                    mCaptureCallback = new PhotoModeCaptureCallback(this);
 
                 SetupHardware(width, height);
 
@@ -1509,8 +1629,15 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 State = CameraProcessorState.Enabled;
                 Debug.WriteLine($"[CAMERA] {CameraId} Started");
 
-                // Start async frame processing thread (iOS-style)
-                StartFrameProcessingThread();
+                // Start preview: GPU path or legacy frame processing thread
+                if (_useGlPreview && _glPreviewRenderer != null)
+                {
+                    _glPreviewRenderer.Start();
+                }
+                else
+                {
+                    StartFrameProcessingThread();
+                }
 
                 return true;
             }
@@ -1563,6 +1690,15 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             mStateCallback = null;
             mCaptureCallback = null;
+
+            // Stop GPU preview renderer if active
+            if (_glPreviewRenderer != null)
+            {
+                _glPreviewRenderer.Stop();
+                _glPreviewRenderer.Dispose();
+                _glPreviewRenderer = null;
+                _useGlPreview = false;
+            }
 
             // Stop async frame processing thread before closing ImageReader
             StopFrameProcessingThread();
@@ -1854,7 +1990,18 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 }
             }
 
-            var surfaces = new List<Surface> { mImageReaderPreview.Surface };
+            // Choose preview surface: GPU renderer or ImageReader
+            Surface previewSurface;
+            if (_useGlPreview && _glPreviewRenderer != null)
+            {
+                previewSurface = _glPreviewRenderer.GetCameraOutputSurface();
+            }
+            else
+            {
+                previewSurface = mImageReaderPreview.Surface;
+            }
+
+            var surfaces = new List<Surface> { previewSurface };
             if (mImageReaderPhoto != null)
                 surfaces.Add(mImageReaderPhoto.Surface);
 
@@ -1885,15 +2032,20 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             return;
         }
 
+        // Stop GL preview renderer — encoder takes over the camera stream
+        if (_useGlPreview && _glPreviewRenderer != null)
+        {
+            _glPreviewRenderer.Stop();
+            System.Diagnostics.Debug.WriteLine("[NativeCamera] GL preview stopped for GPU camera session");
+        }
+
         try
         {
             _gpuCameraSurface = gpuSurface;
             _useGpuCameraPath = true;
 
+            // WE ARE RECORDING !!!
             mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
-
-            // Let camera use default FPS range for proper auto-exposure
-            // FPS is controlled by encoder frame pacing, not camera capture rate
 
             // Disable video stabilization for consistent FOV
             //   try { mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode, (int)ControlVideoStabilizationMode.Off); } catch { }
@@ -1917,24 +2069,55 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 }
             }
 
-            // GPU path: 2 streams - GPU surface for recording, ImageReader for preview
-            // Preview comes from ImageReader (lightweight), recording from GPU surface (full processing)
+            // GPU path: SINGLE STREAM — camera feeds only the encoder surface.
+            // Preview is derived from the recording stream via GlPreviewScaler (GPU downscale).
+            // This eliminates dual-stream overhead and mirrors Apple's MetalPreviewScaler pattern.
             var surfaces = new List<Surface>
             {
-                _gpuCameraSurface,           // GPU path for encoder
-                mImageReaderPreview.Surface  // ImageReader for preview display
+                _gpuCameraSurface           // GPU path for encoder (preview derived from this)
             };
 
             // Still need photo surface for photo capture during recording
             if (mImageReaderPhoto != null)
                 surfaces.Add(mImageReaderPhoto.Surface);
 
-            // Target both surfaces - camera outputs to encoder AND preview
+            // Target only GPU surface — no ImageReader preview stream
             mPreviewRequestBuilder.AddTarget(_gpuCameraSurface);
-            mPreviewRequestBuilder.AddTarget(mImageReaderPreview.Surface);
 
+            // Set FPS range.
+            // Use variable [half, fps] so AE can raise ISO first and then open the shutter
+            // (drop fps) if the scene is still too dark. This prevents throttling all the way
+            // to 5fps while still allowing proper exposure in low light.
+            try
+            {
+                var activity = Platform.CurrentActivity;
+                var manager = (CameraManager)activity.GetSystemService(Context.CameraService);
+                var characteristics = manager.GetCameraCharacteristics(CameraId);
+                var ranges = characteristics.Get(CameraCharacteristics.ControlAeAvailableTargetFpsRanges)
+                    .ToArray<Android.Util.Range>();
 
-            System.Diagnostics.Debug.WriteLine($"[NativeCamera] Creating GPU camera session with {surfaces.Count} surfaces - GPU + ImageReader preview");
+                int fpsFloor = targetFps / 2;  // e.g. 15 for 30fps, 30 for 60fps
+
+                // Prefer variable range [floor, fps]; fall back to any range ending at fps
+                var bestRange = ranges.FirstOrDefault(r => (int)r.Lower == fpsFloor && (int)r.Upper == targetFps)
+                    ?? ranges.FirstOrDefault(r => (int)r.Upper == targetFps);
+
+                if (bestRange != null)
+                {
+                    mPreviewRequestBuilder.Set(CaptureRequest.ControlAeTargetFpsRange, bestRange);
+                    Debug.WriteLine($"[NativeCamera GPU] Set FPS range: {bestRange}");
+                }
+                else
+                {
+                    Debug.WriteLine($"[NativeCamera GPU] No matching FPS range found for {targetFps}fps");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[NativeCamera GPU] Error setting FPS range: {ex.Message}");
+            }
+
+            System.Diagnostics.Debug.WriteLine($"[NativeCamera] Creating GPU camera session with {surfaces.Count} surfaces — single-stream (preview from encoder)");
 
             mCameraDevice.CreateCaptureSession(
                 surfaces,
@@ -1951,7 +2134,10 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     }
 
     /// <summary>
-    /// Stop using GPU camera path and revert to normal preview session.
+    /// Stop using GPU camera path and immediately create a new preview Camera2 session.
+    /// Camera2 must always have a valid session with a valid surface — leaving it with a broken
+    /// session (dead encoder surface) causes the device to error out.
+    /// The GL preview thread is NOT started here — call ResumeGlPreview() after encoder is disposed.
     /// </summary>
     public void StopGpuCameraSession()
     {
@@ -1960,10 +2146,30 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         _useGpuCameraPath = false;
         _gpuCameraSurface = null;
 
-        // Recreate normal preview session
+        // Immediately create new Camera2 session so the device doesn't sit with a broken session.
+        // Frames will go to the GL preview's SurfaceTexture (buffered until GL thread starts).
         CreateCameraPreviewSession();
 
-        System.Diagnostics.Debug.WriteLine("[NativeCamera] GPU camera session stopped, reverted to normal preview");
+        if (_useGlPreview)
+        {
+            ResumeGlPreview();
+        }
+
+        System.Diagnostics.Debug.WriteLine("[NativeCamera] GPU camera session stopped, new preview session created");
+    }
+
+    /// <summary>
+    /// Start the GL preview thread to begin processing frames.
+    /// Must be called AFTER encoder is fully disposed (its TearDownEgl affects EGL state).
+    /// The Camera2 session is already targeting the GL preview surface (from StopGpuCameraSession).
+    /// </summary>
+    public void ResumeGlPreview()
+    {
+        if (_useGlPreview && _glPreviewRenderer != null)
+        {
+            _glPreviewRenderer.Start();
+            System.Diagnostics.Debug.WriteLine("[NativeCamera] GL preview thread started");
+        }
     }
 
 
@@ -2062,6 +2268,53 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     void OnPreviewCaptureSuccess(CapturedImage result)
     {
         PreviewCaptureSuccess?.Invoke(result);
+    }
+
+    /// <summary>
+    /// Called by GlPreviewRenderer when a GPU-rendered preview frame is ready.
+    /// Mirrors ProcessFrameOnBackgroundThread's delivery path.
+    /// </summary>
+    private void OnGlPreviewFrameReady(SkiaSharp.SKImage skImage, long timestampNs)
+    {
+        if (skImage == null) return;
+
+        bool inCaptureRecording = FormsControl.UseRealtimeVideoProcessing && FormsControl.IsRecording;
+
+        var meta = FormsControl.CameraDevice.Meta;
+        var rotation = FormsControl.DeviceRotation;
+        Metadata.ApplyRotation(meta, rotation);
+
+        var micros = timestampNs / 1000L;
+        var monotonicTime = new DateTime(micros * 10, DateTimeKind.Utc);
+
+        var outImage = new CapturedImage()
+        {
+            Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
+            Time = monotonicTime,
+            Image = skImage,
+            Meta = meta,
+            Rotation = rotation
+        };
+
+        if (!inCaptureRecording)
+        {
+            OnPreviewCaptureSuccess(outImage);
+        }
+
+        Preview = outImage;
+        FormsControl.UpdatePreview();
+    }
+
+    /// <summary>
+    /// Lazily initialize RenderScript (only needed for legacy preview path and still capture).
+    /// </summary>
+    private void EnsureRenderScriptInitialized()
+    {
+        if (rs == null)
+        {
+            rs = RenderScript.Create(Platform.AppContext);
+            Splines.Initialize(rs);
+        }
     }
 
     public void StopCapturingStillImage()
@@ -2249,6 +2502,9 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     {
         try
         {
+            // Still capture always needs RenderScript for YUV→RGB
+            EnsureRenderScriptInitialized();
+
             var width = image.Width;
             var height = image.Height;
 
@@ -2258,9 +2514,12 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 width = image.Height;
             }
 
+            //android flips it internally
+            bool flipSelfie = !FormsControl.MirrorSavedSelfiePhoto && FormsControl.CameraDevice.Facing == CameraPosition.Selfie;
+
             using var allocated = new AllocatedBitmap(rs, width, height);
 
-            ProcessImage(image, allocated.Allocation);
+            ProcessImage(image, allocated.Allocation, flipSelfie, false);
 
             allocated.Update();
 
@@ -2282,11 +2541,17 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             var meta = Reflection.Clone(FormsControl.CameraDevice.Meta);
             var rotation = FormsControl.DeviceRotation;
-            Metadata.ApplyRotation(meta, rotation);
+            // For front camera, sensor rotation and device rotation subtract (not add).
+            // ProcessImage already bakes SensorOrientation into pixels, so the remaining
+            // EXIF correction for landscape selfie shots is the inverse of device rotation.
+            var exifRotation = FormsControl.Facing == CameraPosition.Selfie
+                ? (360 - rotation) % 360
+                : rotation;
+            Metadata.ApplyRotation(meta, exifRotation);
 
             var outImage = new CapturedImage()
             {
-                Facing = FormsControl.Facing,
+                Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
                 Time = DateTime.UtcNow,
                 Image = allocated.Bitmap.ToSKImage(),
                 Meta = meta,
@@ -2445,6 +2710,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             var profile = GetVideoProfile();
             return new VideoFormat
             {
+                Index=-1,
                 Width = profile.VideoFrameWidth,
                 Height = profile.VideoFrameHeight,
                 FrameRate = profile.VideoFrameRate,
@@ -2477,7 +2743,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         var moviesDir = activity.GetExternalFilesDir(Android.OS.Environment.DirectoryMovies);
         _currentVideoFile = System.IO.Path.Combine(moviesDir.AbsolutePath, fileName);
 
-        bool includeAudio = FormsControl?.RecordAudio == true;
+        bool includeAudio = FormsControl?.EnableAudioRecording == true;
         if (includeAudio)
         {
             includeAudio = await FormsControl.EnsureMicrophonePermissionAsync();
@@ -2737,6 +3003,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             (CamcorderQuality.Qcif,   "QCIF"),   // 176x144
         };
 
+        int i = 0;
         foreach (var (quality, name) in supportedQualities)
         {
             if (CamcorderProfile.HasProfile(cameraId, quality))
@@ -2744,6 +3011,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 var profile = CamcorderProfile.Get(cameraId, quality);
                 formats.Add(new VideoFormat
                 {
+                    Index = i++,
                     Width = profile.VideoFrameWidth,
                     Height = profile.VideoFrameHeight,
                     FrameRate = profile.VideoFrameRate,
@@ -2761,6 +3029,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             var profile = CamcorderProfile.Get(cameraId, CamcorderQuality.Low);
             formats.Add(new VideoFormat
             {
+                Index=i++,
                 Width = profile.VideoFrameWidth,
                 Height = profile.VideoFrameHeight,
                 FrameRate = profile.VideoFrameRate,
@@ -2821,7 +3090,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             return;
 
         var elapsed = DateTime.Now - _recordingStartTime;
-        VideoRecordingProgress?.Invoke(elapsed);
+        RecordingProgress?.Invoke(elapsed);
     }
 
     /// <summary>
@@ -2948,7 +3217,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             Log.Error(TAG, $"Failed to start video recording: {ex.Message}");
             _isRecordingVideo = false;
             CleanupMediaRecorder();
-            VideoRecordingFailed?.Invoke(ex);
+            RecordingFailed?.Invoke(ex);
         }
     }
 
@@ -2985,15 +3254,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 Format = GetCurrentVideoFormat(),
                 Facing = FormsControl.Facing,
                 Time = _recordingStartTime,
-                FileSizeBytes = fileSizeBytes,
-                Metadata = new Dictionary<string, object>
-                {
-                    { "Platform", "Android" },
-                    { "CameraId", CameraId },
-                    { "RecordingStartTime", _recordingStartTime },
-                    { "RecordingEndTime", recordingEndTime },
-                    { "SensorOrientation", SensorOrientation }
-                }
+                FileSizeBytes = fileSizeBytes
             };
 
             _isRecordingVideo = false;
@@ -3009,7 +3270,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             CreateCameraPreviewSession();
 
             // Fire success event
-            VideoRecordingSuccess?.Invoke(capturedVideo);
+            RecordingSuccess?.Invoke(capturedVideo);
 
             Log.Debug(TAG, "Video recording completed successfully");
         }
@@ -3018,7 +3279,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             Log.Error(TAG, $"Failed to stop video recording: {ex.Message}");
             _isRecordingVideo = false;
             CleanupMediaRecorder();
-            VideoRecordingFailed?.Invoke(ex);
+            RecordingFailed?.Invoke(ex);
         }
     }
 
@@ -3046,7 +3307,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// <param name="videoFilePath">Path to video file</param>
     /// <param name="album">Optional album name</param>
     /// <returns>Gallery path if successful, null if failed</returns>
-    public async Task<string> SaveVideoToGallery(string videoFilePath, string album)
+    public async Task<string> SaveVideoToGallery(string videoFilePath, string album, Metadata meta = null)
     {
         try
         {
@@ -3145,17 +3406,17 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// <summary>
     /// Event fired when video recording completes successfully
     /// </summary>
-    public Action<CapturedVideo> VideoRecordingSuccess { get; set; }
+    public Action<CapturedVideo> RecordingSuccess { get; set; }
 
     /// <summary>
     /// Event fired when video recording fails
     /// </summary>
-    public Action<Exception> VideoRecordingFailed { get; set; }
+    public Action<Exception> RecordingFailed { get; set; }
 
     /// <summary>
     /// Event fired when video recording progress updates
     /// </summary>
-    public Action<TimeSpan> VideoRecordingProgress { get; set; }
+    public Action<TimeSpan> RecordingProgress { get; set; }
 
     /// <summary>
     /// Sets whether audio should be recorded with video.
@@ -3336,7 +3597,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             catch (Exception ex)
             {
                 Log.Error(NativeCamera.TAG, $"Failed to configure video capture session: {ex.Message}");
-                _owner.VideoRecordingFailed?.Invoke(ex);
+                _owner.RecordingFailed?.Invoke(ex);
             }
         }
 
@@ -3345,7 +3606,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             Log.Error(NativeCamera.TAG, "Video capture session configuration failed");
             _owner._isRecordingVideo = false;
             _owner.CleanupMediaRecorder();
-            _owner.VideoRecordingFailed?.Invoke(new Exception("Video capture session configuration failed"));
+            _owner.RecordingFailed?.Invoke(new Exception("Video capture session configuration failed"));
         }
     }
 }

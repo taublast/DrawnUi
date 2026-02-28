@@ -24,6 +24,20 @@ public class AudioCaptureAndroid : IAudioCapture
 
     public event EventHandler<AudioSample> SampleAvailable;
 
+    string _lastError;
+    public string LastError
+    {
+        get => _lastError;
+        set
+        {
+            if (_lastError != value)
+            {
+                _lastError = value;
+                Super.Log($"[AudioCaptureAndroid] {value}");
+            }
+        }
+    }
+
     /// <summary>
     /// Get list of available audio input devices
     /// </summary>
@@ -105,7 +119,7 @@ public class AudioCaptureAndroid : IAudioCapture
             
             if (_bufferSize == (int)TrackStatus.Error || _bufferSize == (int)TrackStatus.ErrorBadValue)
             {
-                 Debug.WriteLine($"[AudioCaptureAndroid] Invalid audio parameters. Rate: {sampleRate}, Ch: {channels}, Fmt: {audioFormat}");
+                 LastError= $"Invalid audio parameters. Rate: {sampleRate}, Ch: {channels}, Fmt: {audioFormat}";
                  return false;
             }
 
@@ -118,7 +132,7 @@ public class AudioCaptureAndroid : IAudioCapture
 
             if (_audioRecord.State != State.Initialized)
             {
-                Debug.WriteLine("[AudioCaptureAndroid] AudioRecord failed to initialize.");
+                LastError="AudioRecord failed to initialize.";
                 return false;
             }
 
@@ -166,7 +180,7 @@ public class AudioCaptureAndroid : IAudioCapture
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"[AudioCaptureAndroid] Start failed: {ex}");
+            LastError=$"Start failed: {ex}";
             StopCaptureInternal();
             return false;
         }

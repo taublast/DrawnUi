@@ -21,6 +21,18 @@ public static class SkSl
         return json;
     }
 
+    public static void Precompile(params string[] filenames)
+    {
+        foreach (var filename in filenames)
+        {
+            if (!CompiledCache.TryGetValue(filename, out _))
+            {
+                string shaderCode = SkSl.LoadFromResources(filename);
+                SkSl.Compile(shaderCode, filename, true);
+            }
+        }
+    }
+
     public static Dictionary<string, SKRuntimeEffect> CompiledCache = new();
 
     /// <summary>
@@ -84,7 +96,7 @@ public static class SkSl
         return compiled;
     }
 
-    static void ThrowCompilationError(string shaderCode, string errors, string filename = null)
+    public static void ThrowCompilationError(string shaderCode, string errors, string filename = null)
     {
         // Regular expression to find the line number in the error message
         var regex = new Regex(@"error (\d+):");

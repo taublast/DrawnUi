@@ -8,8 +8,10 @@ items:
   - DrawnUi.Draw.ChainDropShadowsEffect.Draw(DrawnUi.Draw.DrawingContext,System.Action{DrawnUi.Draw.DrawingContext})
   - DrawnUi.Draw.ChainDropShadowsEffect.NeedApply
   - DrawnUi.Draw.ChainDropShadowsEffect.OnBindingContextChanged
+  - DrawnUi.Draw.ChainDropShadowsEffect.OnDisposing
   - DrawnUi.Draw.ChainDropShadowsEffect.Shadows
   - DrawnUi.Draw.ChainDropShadowsEffect.ShadowsProperty
+  - DrawnUi.Draw.ChainDropShadowsEffect.Update
   langs:
   - csharp
   - vb
@@ -51,8 +53,6 @@ items:
   - DrawnUi.Draw.ICanBeUpdated
   inheritedMembers:
   - DrawnUi.Draw.BaseChainedEffect.Paint
-  - DrawnUi.Draw.BaseChainedEffect.Update
-  - DrawnUi.Draw.BaseChainedEffect.OnDisposing
   - DrawnUi.Draw.SkiaEffect.Parent
   - DrawnUi.Draw.SkiaEffect.Attach(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaEffect.Dettach
@@ -180,6 +180,63 @@ items:
     content.vb: Protected Overrides Sub OnBindingContextChanged()
   overridden: Microsoft.Maui.Controls.BindableObject.OnBindingContextChanged
   overload: DrawnUi.Draw.ChainDropShadowsEffect.OnBindingContextChanged*
+- uid: DrawnUi.Draw.ChainDropShadowsEffect.Update
+  commentId: M:DrawnUi.Draw.ChainDropShadowsEffect.Update
+  id: Update
+  parent: DrawnUi.Draw.ChainDropShadowsEffect
+  langs:
+  - csharp
+  - vb
+  name: Update()
+  nameWithType: ChainDropShadowsEffect.Update()
+  fullName: DrawnUi.Draw.ChainDropShadowsEffect.Update()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Update
+    path: ../src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
+    startLine: 131
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: You MUST clear any cached resources as soon as this is called. Not on next draw!
+  example: []
+  syntax:
+    content: public override void Update()
+    content.vb: Public Overrides Sub Update()
+  overridden: DrawnUi.Draw.BaseChainedEffect.Update
+  overload: DrawnUi.Draw.ChainDropShadowsEffect.Update*
+- uid: DrawnUi.Draw.ChainDropShadowsEffect.OnDisposing
+  commentId: M:DrawnUi.Draw.ChainDropShadowsEffect.OnDisposing
+  id: OnDisposing
+  parent: DrawnUi.Draw.ChainDropShadowsEffect
+  langs:
+  - csharp
+  - vb
+  name: OnDisposing()
+  nameWithType: ChainDropShadowsEffect.OnDisposing()
+  fullName: DrawnUi.Draw.ChainDropShadowsEffect.OnDisposing()
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: OnDisposing
+    path: ../src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
+    startLine: 137
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: protected override void OnDisposing()
+    content.vb: Protected Overrides Sub OnDisposing()
+  overridden: DrawnUi.Draw.BaseChainedEffect.OnDisposing
+  overload: DrawnUi.Draw.ChainDropShadowsEffect.OnDisposing*
 - uid: DrawnUi.Draw.ChainDropShadowsEffect.Draw(DrawnUi.Draw.DrawingContext,System.Action{DrawnUi.Draw.DrawingContext})
   commentId: M:DrawnUi.Draw.ChainDropShadowsEffect.Draw(DrawnUi.Draw.DrawingContext,System.Action{DrawnUi.Draw.DrawingContext})
   id: Draw(DrawnUi.Draw.DrawingContext,System.Action{DrawnUi.Draw.DrawingContext})
@@ -198,7 +255,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
-    startLine: 118
+    startLine: 143
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -240,7 +297,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
     path: ../src/Maui/DrawnUi/Features/Effects/ChainDropShadowsEffect.cs
-    startLine: 157
+    startLine: 186
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -360,44 +417,6 @@ references:
   name: Paint
   nameWithType: BaseChainedEffect.Paint
   fullName: DrawnUi.Draw.BaseChainedEffect.Paint
-- uid: DrawnUi.Draw.BaseChainedEffect.Update
-  commentId: M:DrawnUi.Draw.BaseChainedEffect.Update
-  parent: DrawnUi.Draw.BaseChainedEffect
-  href: DrawnUi.Draw.BaseChainedEffect.html#DrawnUi_Draw_BaseChainedEffect_Update
-  name: Update()
-  nameWithType: BaseChainedEffect.Update()
-  fullName: DrawnUi.Draw.BaseChainedEffect.Update()
-  spec.csharp:
-  - uid: DrawnUi.Draw.BaseChainedEffect.Update
-    name: Update
-    href: DrawnUi.Draw.BaseChainedEffect.html#DrawnUi_Draw_BaseChainedEffect_Update
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.BaseChainedEffect.Update
-    name: Update
-    href: DrawnUi.Draw.BaseChainedEffect.html#DrawnUi_Draw_BaseChainedEffect_Update
-  - name: (
-  - name: )
-- uid: DrawnUi.Draw.BaseChainedEffect.OnDisposing
-  commentId: M:DrawnUi.Draw.BaseChainedEffect.OnDisposing
-  parent: DrawnUi.Draw.BaseChainedEffect
-  href: DrawnUi.Draw.BaseChainedEffect.html#DrawnUi_Draw_BaseChainedEffect_OnDisposing
-  name: OnDisposing()
-  nameWithType: BaseChainedEffect.OnDisposing()
-  fullName: DrawnUi.Draw.BaseChainedEffect.OnDisposing()
-  spec.csharp:
-  - uid: DrawnUi.Draw.BaseChainedEffect.OnDisposing
-    name: OnDisposing
-    href: DrawnUi.Draw.BaseChainedEffect.html#DrawnUi_Draw_BaseChainedEffect_OnDisposing
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.BaseChainedEffect.OnDisposing
-    name: OnDisposing
-    href: DrawnUi.Draw.BaseChainedEffect.html#DrawnUi_Draw_BaseChainedEffect_OnDisposing
-  - name: (
-  - name: )
 - uid: DrawnUi.Draw.SkiaEffect.Parent
   commentId: P:DrawnUi.Draw.SkiaEffect.Parent
   parent: DrawnUi.Draw.SkiaEffect
@@ -1818,6 +1837,56 @@ references:
   name: OnBindingContextChanged
   nameWithType: ChainDropShadowsEffect.OnBindingContextChanged
   fullName: DrawnUi.Draw.ChainDropShadowsEffect.OnBindingContextChanged
+- uid: DrawnUi.Draw.BaseChainedEffect.Update
+  commentId: M:DrawnUi.Draw.BaseChainedEffect.Update
+  parent: DrawnUi.Draw.BaseChainedEffect
+  href: DrawnUi.Draw.BaseChainedEffect.html#DrawnUi_Draw_BaseChainedEffect_Update
+  name: Update()
+  nameWithType: BaseChainedEffect.Update()
+  fullName: DrawnUi.Draw.BaseChainedEffect.Update()
+  spec.csharp:
+  - uid: DrawnUi.Draw.BaseChainedEffect.Update
+    name: Update
+    href: DrawnUi.Draw.BaseChainedEffect.html#DrawnUi_Draw_BaseChainedEffect_Update
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.BaseChainedEffect.Update
+    name: Update
+    href: DrawnUi.Draw.BaseChainedEffect.html#DrawnUi_Draw_BaseChainedEffect_Update
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ChainDropShadowsEffect.Update*
+  commentId: Overload:DrawnUi.Draw.ChainDropShadowsEffect.Update
+  href: DrawnUi.Draw.ChainDropShadowsEffect.html#DrawnUi_Draw_ChainDropShadowsEffect_Update
+  name: Update
+  nameWithType: ChainDropShadowsEffect.Update
+  fullName: DrawnUi.Draw.ChainDropShadowsEffect.Update
+- uid: DrawnUi.Draw.BaseChainedEffect.OnDisposing
+  commentId: M:DrawnUi.Draw.BaseChainedEffect.OnDisposing
+  parent: DrawnUi.Draw.BaseChainedEffect
+  href: DrawnUi.Draw.BaseChainedEffect.html#DrawnUi_Draw_BaseChainedEffect_OnDisposing
+  name: OnDisposing()
+  nameWithType: BaseChainedEffect.OnDisposing()
+  fullName: DrawnUi.Draw.BaseChainedEffect.OnDisposing()
+  spec.csharp:
+  - uid: DrawnUi.Draw.BaseChainedEffect.OnDisposing
+    name: OnDisposing
+    href: DrawnUi.Draw.BaseChainedEffect.html#DrawnUi_Draw_BaseChainedEffect_OnDisposing
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.BaseChainedEffect.OnDisposing
+    name: OnDisposing
+    href: DrawnUi.Draw.BaseChainedEffect.html#DrawnUi_Draw_BaseChainedEffect_OnDisposing
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ChainDropShadowsEffect.OnDisposing*
+  commentId: Overload:DrawnUi.Draw.ChainDropShadowsEffect.OnDisposing
+  href: DrawnUi.Draw.ChainDropShadowsEffect.html#DrawnUi_Draw_ChainDropShadowsEffect_OnDisposing
+  name: OnDisposing
+  nameWithType: ChainDropShadowsEffect.OnDisposing
+  fullName: DrawnUi.Draw.ChainDropShadowsEffect.OnDisposing
 - uid: DrawnUi.Draw.BaseChainedEffect.Draw(DrawnUi.Draw.DrawingContext,System.Action{DrawnUi.Draw.DrawingContext})
   commentId: M:DrawnUi.Draw.BaseChainedEffect.Draw(DrawnUi.Draw.DrawingContext,System.Action{DrawnUi.Draw.DrawingContext})
   parent: DrawnUi.Draw.BaseChainedEffect

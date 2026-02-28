@@ -121,6 +121,17 @@ Classes
       <dd></dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="DrawnUi.Draw.AnimatedShaderEffect.html">AnimatedShaderEffect</a></dt>
+      <dd><p>Animated shader effect driven by a RangeAnimator (progress 0→1).
+Attach to a SkiaImage (or any cached control), call Play(), remove on Completed.</p>
+<p>Usage:
+var fx = new AnimatedShaderEffect { ShaderSource = @&quot;Shaders\yourshader.sksl&quot; };
+fx.Completed += (s, e) =&gt; { _backgroundImage.FX.Remove(fx); fx.Dispose(); };
+_backgroundImage.FX.Add(fx);
+fx.Play(_backgroundImage);</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="DrawnUi.Draw.AnimatorBase.html">AnimatorBase</a></dt>
       <dd></dd>
     </dl>
@@ -368,6 +379,10 @@ Do not use this in prod, this will be invalidated every frame, causing non-stop 
       <dt><a class="xref" href="DrawnUi.Draw.ObservableAttachedItemsCollection-1.html">ObservableAttachedItemsCollection&lt;T&gt;</a></dt>
       <dd><p>We have to subclass ObservableCollection to avoid it sending empty oldItems upon Reset.</p>
 </dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="DrawnUi.Draw.OuterGlowEffect.html">OuterGlowEffect</a></dt>
+      <dd></dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="DrawnUi.Draw.PendulumAnimator.html">PendulumAnimator</a></dt>
@@ -676,7 +691,8 @@ Used to detect and compensate for position changes due to visibility changes</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="DrawnUi.Draw.SkiaLayout.BuildWrapLayout.html">SkiaLayout.BuildWrapLayout</a></dt>
-      <dd><p>Implementation for LayoutType.Wrap</p>
+      <dd><p>Implementation for LayoutType.Wrap
+TODO is seems that remaining space is sometimes not super correct, maybe it doesnt account for padding?..</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1333,6 +1349,11 @@ Enums
     <dl class="jumplist">
       <dt><a class="xref" href="DrawnUi.Draw.PointedDirectionType.html">PointedDirectionType</a></dt>
       <dd></dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="DrawnUi.Draw.PostRendererEffectUseBackgroud.html">PostRendererEffectUseBackgroud</a></dt>
+      <dd><p>Controls how the effect acquires the background texture for its shader.</p>
+</dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="DrawnUi.Draw.PrebuiltControlStyle.html">PrebuiltControlStyle</a></dt>

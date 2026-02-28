@@ -133,7 +133,10 @@ public partial class SkiaControl
     CachedObject _renderObjectPrevious;
 
     /// <summary>
-    /// The cached representation of the control. Will be used on redraws without calling Paint etc, until the control is requested to be updated.
+    /// The cached representation of the control.
+    /// Will be used on redraws without calling Paint etc, until the control is requested to be updated.
+    /// This WILL NOT raise PropertyChanged !!! (avoiding MAUI concurrent access conflict)
+    /// Use OnCacheCreated (CacheCreated event) and OnCacheDestroyed (CacheDestroyed event).
     /// </summary>
     //[EditorBrowsable(EditorBrowsableState.Never)]
     public CachedObject RenderObject
@@ -150,7 +153,7 @@ public partial class SkiaControl
                     if (_renderObject != null) //if we already have something in actual cache then
                     {
                         if (UsesCacheDoubleBuffering
-                            || UsingCacheType == SkiaCacheType.Image //to just reuse same surface
+                            //|| UsingCacheType == SkiaCacheType.Image //to just reuse same surface
                             || UsingCacheType == SkiaCacheType.ImageComposite)
                         {
                             RenderObjectPrevious = _renderObject; //send it to back for special cases
@@ -168,7 +171,6 @@ public partial class SkiaControl
                     }
 
                     _renderObject = value;
-                    OnPropertyChanged();
 
                     if (value != null)
                         OnCacheCreated();
@@ -286,6 +288,11 @@ public partial class SkiaControl
     {
         if (cache != null)
         {
+            if (cache.Surface != null && cache.Surface.Handle == 0)
+            {
+                return false; //maybe disposed by GC
+            }
+
             if (!CompareSize(cache.RecordingArea.Size, recordingArea.Size, 1))
             {
                 CacheValidity = CacheValidityType.SizeMismatch;
@@ -409,9 +416,10 @@ public partial class SkiaControl
                 {
                     //reusing existing surface
                     surface = reuseSurfaceFrom.Surface;
-                    if (surface == null)
+                    if (surface == null || surface.Handle == 0)
                     {
-                        return null; //would be unexpected
+                        Super.Log("CreateRenderingObject failed to reuse surface!");
+                        return null; //would be totally unexpected
                     }
 
                     reuseSurfaceFrom.PreserveSourceFromDispose = true; //we will dispose that source in this new object
@@ -721,13 +729,11 @@ public partial class SkiaControl
     {
         await semaphoreOffsecreenProcess.WaitAsync();
 
-        if (_offscreenCacheRenderingQueue.Count == 0)
-            return;
-
-        _processingOffscrenRendering = true;
-
         try
         {
+            if (_offscreenCacheRenderingQueue.Count == 0)
+                return;
+
             Action action = _offscreenCacheRenderingQueue.Pop();
             while (!IsDisposed && !IsDisposing && action != null)
             {
@@ -745,11 +751,6 @@ public partial class SkiaControl
                     Super.Log(e);
                 }
             }
-
-            //if (NeedUpdate || RenderObjectNeedsUpdate) //someone changed us while rendering inner content
-            //{
-            //    Update(); //kick
-            //}
         }
         finally
         {
@@ -1057,7 +1058,11 @@ public partial class SkiaControl
             oldObject = RenderObject;
         }
         else
-        if (UsingCacheType == SkiaCacheType.ImageComposite || UsingCacheType == SkiaCacheType.Image)
+
+        //tried to reuse surface for image SkiaCacheType.Image
+        //but is seems to be GCed after GC hits randomly  along with some other object, like shader or something unsure
+        //so safer not to reusage at this stage
+        if (UsingCacheType == SkiaCacheType.ImageComposite)//_ || UsingCacheType == SkiaCacheType.Image)
         {
             oldObject = RenderObjectPrevious;
         }

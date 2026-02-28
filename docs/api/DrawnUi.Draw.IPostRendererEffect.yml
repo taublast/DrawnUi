@@ -5,7 +5,9 @@ items:
   id: IPostRendererEffect
   parent: DrawnUi.Draw
   children:
+  - DrawnUi.Draw.IPostRendererEffect.AquiredBackground
   - DrawnUi.Draw.IPostRendererEffect.Render(DrawnUi.Draw.DrawingContext)
+  - DrawnUi.Draw.IPostRendererEffect.UseBackground
   langs:
   - csharp
   - vb
@@ -15,11 +17,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ISkiaPostRendererEffect.cs
+      path: src/Shared/Features/Effects/ISkiaPostRendererEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IPostRendererEffect
-    path: ../src/Maui/DrawnUi/Features/Effects/ISkiaPostRendererEffect.cs
+    path: ../src/Shared/Features/Effects/ISkiaPostRendererEffect.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -48,11 +50,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ISkiaPostRendererEffect.cs
+      path: src/Shared/Features/Effects/ISkiaPostRendererEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Render
-    path: ../src/Maui/DrawnUi/Features/Effects/ISkiaPostRendererEffect.cs
+    path: ../src/Shared/Features/Effects/ISkiaPostRendererEffect.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -64,6 +66,68 @@ items:
       type: DrawnUi.Draw.DrawingContext
     content.vb: Sub Render(ctx As DrawingContext)
   overload: DrawnUi.Draw.IPostRendererEffect.Render*
+- uid: DrawnUi.Draw.IPostRendererEffect.UseBackground
+  commentId: P:DrawnUi.Draw.IPostRendererEffect.UseBackground
+  id: UseBackground
+  parent: DrawnUi.Draw.IPostRendererEffect
+  langs:
+  - csharp
+  - vb
+  name: UseBackground
+  nameWithType: IPostRendererEffect.UseBackground
+  fullName: DrawnUi.Draw.IPostRendererEffect.UseBackground
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Effects/ISkiaPostRendererEffect.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UseBackground
+    path: ../src/Shared/Features/Effects/ISkiaPostRendererEffect.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Controls how/when the background texture is captured. Default is Always.
+  example: []
+  syntax:
+    content: PostRendererEffectUseBackgroud UseBackground { get; set; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.PostRendererEffectUseBackgroud
+    content.vb: Property UseBackground As PostRendererEffectUseBackgroud
+  overload: DrawnUi.Draw.IPostRendererEffect.UseBackground*
+- uid: DrawnUi.Draw.IPostRendererEffect.AquiredBackground
+  commentId: P:DrawnUi.Draw.IPostRendererEffect.AquiredBackground
+  id: AquiredBackground
+  parent: DrawnUi.Draw.IPostRendererEffect
+  langs:
+  - csharp
+  - vb
+  name: AquiredBackground
+  nameWithType: IPostRendererEffect.AquiredBackground
+  fullName: DrawnUi.Draw.IPostRendererEffect.AquiredBackground
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Effects/ISkiaPostRendererEffect.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: AquiredBackground
+    path: ../src/Shared/Features/Effects/ISkiaPostRendererEffect.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: True once the Once-mode snapshot has been captured. Reset to false to re-capture.
+  example: []
+  syntax:
+    content: bool AquiredBackground { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Property AquiredBackground As Boolean
+  overload: DrawnUi.Draw.IPostRendererEffect.AquiredBackground*
 references:
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
@@ -288,3 +352,40 @@ references:
   name: DrawingContext
   nameWithType: DrawingContext
   fullName: DrawnUi.Draw.DrawingContext
+- uid: DrawnUi.Draw.IPostRendererEffect.UseBackground*
+  commentId: Overload:DrawnUi.Draw.IPostRendererEffect.UseBackground
+  href: DrawnUi.Draw.IPostRendererEffect.html#DrawnUi_Draw_IPostRendererEffect_UseBackground
+  name: UseBackground
+  nameWithType: IPostRendererEffect.UseBackground
+  fullName: DrawnUi.Draw.IPostRendererEffect.UseBackground
+- uid: DrawnUi.Draw.PostRendererEffectUseBackgroud
+  commentId: T:DrawnUi.Draw.PostRendererEffectUseBackgroud
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.PostRendererEffectUseBackgroud.html
+  name: PostRendererEffectUseBackgroud
+  nameWithType: PostRendererEffectUseBackgroud
+  fullName: DrawnUi.Draw.PostRendererEffectUseBackgroud
+- uid: DrawnUi.Draw.IPostRendererEffect.AquiredBackground*
+  commentId: Overload:DrawnUi.Draw.IPostRendererEffect.AquiredBackground
+  href: DrawnUi.Draw.IPostRendererEffect.html#DrawnUi_Draw_IPostRendererEffect_AquiredBackground
+  name: AquiredBackground
+  nameWithType: IPostRendererEffect.AquiredBackground
+  fullName: DrawnUi.Draw.IPostRendererEffect.AquiredBackground
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System

@@ -42,7 +42,6 @@ public struct SplinePreset //float 4bytes both metal and c#
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
     public float[] Bs;
 
-
     public byte Tag;
 };
 

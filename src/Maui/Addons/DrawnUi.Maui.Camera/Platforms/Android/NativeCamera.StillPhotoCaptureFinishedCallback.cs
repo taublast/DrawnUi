@@ -8,6 +8,9 @@ namespace DrawnUi.Camera
         {
             private readonly NativeCamera _camera;
 
+            public StillPhotoCaptureFinishedCallback(IntPtr handle, Android.Runtime.JniHandleOwnership transfer)
+                : base(handle, transfer) { }
+
             public StillPhotoCaptureFinishedCallback(NativeCamera camera)
             {
                 if (camera == null)

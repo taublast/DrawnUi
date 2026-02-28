@@ -14,6 +14,8 @@ namespace DrawnUi.Controls
 
         public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
         {
+            CheckHovered(args);
+
             var consumedDefault = BlockGesturesBelow ? this : null;
 
             if (!RespondsToGestures  

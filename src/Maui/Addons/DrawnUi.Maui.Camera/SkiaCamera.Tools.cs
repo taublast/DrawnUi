@@ -8,6 +8,7 @@ using Foundation;
 using Photos;
 using AVFoundation;
 using AVKit;
+using CoreLocation;
 #endif
 
 using SKCanvas = SkiaSharp.SKCanvas;
@@ -905,16 +906,34 @@ public partial class SkiaCamera : SkiaControl
 
         // Use the existing filename from the path (may have been renamed by caller)
         var fileName = Path.GetFileName(privateVideoPath);
-        
-        var contentValues = new Android.Content.ContentValues();
-        contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.DisplayName, fileName);
-        contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.MimeType, "video/mp4");
-        contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.RelativePath, 
-            Android.OS.Environment.DirectoryDcim + $"/{albumName}");
-        contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.DateAdded, 
-            Java.Lang.JavaSystem.CurrentTimeMillis() / 1000);
+        var ext = Path.GetExtension(privateVideoPath)?.ToLowerInvariant();
+        var isAudio = ext == ".m4a" || ext == ".aac" || ext == ".mp3" || ext == ".wav";
 
-        var uri = resolver.Insert(Android.Provider.MediaStore.Video.Media.ExternalContentUri, contentValues);
+        var contentValues = new Android.Content.ContentValues();
+
+        if (isAudio)
+        {
+            contentValues.Put(Android.Provider.MediaStore.Audio.Media.InterfaceConsts.DisplayName, fileName);
+            contentValues.Put(Android.Provider.MediaStore.Audio.Media.InterfaceConsts.MimeType, "audio/mp4");
+            contentValues.Put(Android.Provider.MediaStore.Audio.Media.InterfaceConsts.RelativePath,
+                Android.OS.Environment.DirectoryMusic + $"/{albumName}");
+            contentValues.Put(Android.Provider.MediaStore.Audio.Media.InterfaceConsts.DateAdded,
+                Java.Lang.JavaSystem.CurrentTimeMillis() / 1000);
+        }
+        else
+        {
+            contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.DisplayName, fileName);
+            contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.MimeType, "video/mp4");
+            contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.RelativePath,
+                Android.OS.Environment.DirectoryDcim + $"/{albumName}");
+            contentValues.Put(Android.Provider.MediaStore.Video.Media.InterfaceConsts.DateAdded,
+                Java.Lang.JavaSystem.CurrentTimeMillis() / 1000);
+        }
+
+        var externalUri = isAudio
+            ? Android.Provider.MediaStore.Audio.Media.ExternalContentUri
+            : Android.Provider.MediaStore.Video.Media.ExternalContentUri;
+        var uri = resolver.Insert(externalUri, contentValues);
 
         if (uri != null)
         {
@@ -996,9 +1015,13 @@ public partial class SkiaCamera : SkiaControl
 
     /// <summary>
     /// iOS/macOS implementation to move video from temp to Photos library.
+    /// Audio files (.m4a etc) are saved to shared Documents folder (accessible via Files app)
+    /// since iOS Photos library does not support audio-only assets.
     /// iOS 26 fix: uses two-step approach to avoid stale album references across PerformChanges calls.
     /// </summary>
-    protected async Task<string> MoveVideoToGalleryApple(string privateVideoPath, string album, bool deleteOriginal)
+    protected async Task<string> MoveVideoToGalleryApple(string privateVideoPath, string album, bool deleteOriginal,
+        double? latitude = null, double? longitude = null, DateTime? creationDate = null,
+        Metadata meta = null)
     {
         try
         {
@@ -1015,23 +1038,63 @@ public partial class SkiaCamera : SkiaControl
                 return null;
             }
 
+            // Check if this is an audio file - Photos library doesn't support audio
+            var ext = Path.GetExtension(privateVideoPath)?.ToLowerInvariant();
+            var isAudio = ext == ".m4a" || ext == ".aac" || ext == ".mp3" || ext == ".wav";
+
+            if (isAudio)
+            {
+                return await SaveAudioToDocumentsApple(privateVideoPath, album, deleteOriginal);
+            }
+
             await Task.Delay(100); // just in case
+
+            // Re-export through AVAssetExportSession to inject Apple QuickTime metadata
+            // (make, model, software, date) that iOS Photos reads for camera info display.
+            string reExportedPath = null;
+            string fileToSave = privateVideoPath;
+            if (meta != null)
+            {
+                reExportedPath = await ReExportWithAppleMetadataAsync(privateVideoPath, meta);
+                if (reExportedPath != null)
+                    fileToSave = reExportedPath;
+            }
 
             var authStatus = await PHPhotoLibrary.RequestAuthorizationAsync(PHAccessLevel.ReadWrite);
             if (authStatus != PHAuthorizationStatus.Authorized && authStatus != PHAuthorizationStatus.Limited)
             {
                 Debug.WriteLine($"[SkiaCamera] Photos permission not granted. Status: {authStatus}");
+                if (reExportedPath != null) try { File.Delete(reExportedPath); } catch { }
                 return null;
             }
 
-            var tempUrl = NSUrl.FromFilename(privateVideoPath);
+            var tempUrl = NSUrl.FromFilename(fileToSave);
             var tcs = new TaskCompletionSource<string>();
             PHObjectPlaceholder placeholder = null;
 
-            // STEP 1: Create video asset ONLY (no album operations)
+            // STEP 1: Create video asset using PHAssetCreationRequest + AddResource
+            // to preserve file-level metadata (moov > meta box with camera info).
             PHPhotoLibrary.SharedPhotoLibrary.PerformChanges(() =>
             {
-                var request = PHAssetChangeRequest.FromVideo(tempUrl);
+                var request = PHAssetCreationRequest.CreationRequestForAsset();
+                var resourceOptions = new PHAssetResourceCreationOptions
+                {
+                    OriginalFilename = Path.GetFileName(privateVideoPath)
+                };
+                request.AddResource(PHAssetResourceType.Video, tempUrl, resourceOptions);
+
+                // Set GPS location on the Photos asset (iOS ignores ©xyz from file during import)
+                if (latitude.HasValue && longitude.HasValue)
+                {
+                    request.Location = new CLLocation(latitude.Value, longitude.Value);
+                }
+
+                // Set creation date for proper chronological sorting
+                if (creationDate.HasValue)
+                {
+                    request.CreationDate = (Foundation.NSDate)creationDate.Value;
+                }
+
                 placeholder = request.PlaceholderForCreatedAsset;
             },
             (success, error) =>
@@ -1060,6 +1123,16 @@ public partial class SkiaCamera : SkiaControl
                 await AddAssetToAlbumAsync(videoLocalId, album);
             }
 
+            // Clean up re-exported temp file
+            if (reExportedPath != null)
+            {
+                Tasks.StartDelayed(TimeSpan.FromSeconds(2), () =>
+                {
+                    try { File.Delete(reExportedPath); }
+                    catch { }
+                });
+            }
+
             // Delete original if requested
             if (deleteOriginal)
             {
@@ -1075,6 +1148,141 @@ public partial class SkiaCamera : SkiaControl
         catch (Exception ex)
         {
             Debug.WriteLine($"[SkiaCamera] Exception: {ex.Message}");
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Re-exports a video via AVAssetExportSession with passthrough (no re-encoding) to inject
+    /// Apple QuickTime metadata (make, model, software, creation date) that iOS Photos reads.
+    /// Returns the temp file path on success, or null if export fails (caller should use original).
+    /// </summary>
+    internal static async Task<string> ReExportWithAppleMetadataAsync(string inputPath, Metadata meta)
+    {
+#if IOS || MACCATALYST
+        try
+        {
+            var asset = AVUrlAsset.Create(NSUrl.FromFilename(inputPath));
+            var exportSession = new AVAssetExportSession(asset, AVAssetExportSessionPreset.Passthrough);
+
+            var tempPath = Path.Combine(Path.GetTempPath(), $"meta_{Guid.NewGuid():N}.mov");
+            exportSession.OutputUrl = NSUrl.FromFilename(tempPath);
+            exportSession.OutputFileType = AVFileTypes.QuickTimeMovie.GetConstant();
+
+            var items = new List<AVMutableMetadataItem>();
+
+            void AddItem(NSString keySpace, NSString key, NSObject value)
+            {
+                if (value == null) return;
+                var item = new AVMutableMetadataItem
+                {
+                    KeySpace = keySpace,
+                    Key = key,
+                    Value = value
+                };
+                items.Add(item);
+            }
+
+            var mdta = new NSString("mdta");
+
+            AddItem(mdta, new NSString("com.apple.quicktime.make"),
+                new NSString(meta?.Vendor ?? DeviceInfo.Manufacturer));
+            AddItem(mdta, new NSString("com.apple.quicktime.model"),
+                new NSString(meta?.Model ?? DeviceInfo.Model));
+            AddItem(mdta, new NSString("com.apple.quicktime.software"),
+                new NSString(meta?.Software ?? $"{AppInfo.Name} {AppInfo.VersionString}"));
+            AddItem(mdta, new NSString("com.apple.quicktime.creationdate"),
+                new NSString((meta?.DateTimeOriginal ?? DateTime.UtcNow).ToString("yyyy-MM-ddTHH:mm:ssZ")));
+
+            // Actually there is a "No lens information" bug on iOS for video so this most probably would not be shown
+            if (!string.IsNullOrEmpty(meta?.LensModel))
+            {
+                // OLD (doesn't work reliably for lens in Photos)
+                if (!string.IsNullOrEmpty(meta?.LensModel))
+                {
+                    AddItem(mdta, new NSString("com.apple.quicktime.camera.lens.model"),   
+                        new NSString(meta.LensModel));
+                }
+
+                // native iPhone videos actually use
+                if (!string.IsNullOrEmpty(meta?.LensModel))
+                {
+                    AddItem(mdta, new NSString("com.apple.quicktime.camera.lens_model"),  // underscore
+                        new NSString(meta.LensModel));
+                }
+            }
+
+            // Camera identifier - shows ok in Media Library
+            var model = meta?.Model ?? DeviceInfo.Model;
+            if (!string.IsNullOrEmpty(model))
+            {
+                AddItem(mdta, new NSString("com.apple.quicktime.camera.identifier"),
+                    new NSString(model));
+            }
+
+            exportSession.Metadata = items.ToArray();
+
+            Debug.WriteLine($"[SkiaCamera] AVAssetExportSession: re-exporting with {items.Count} metadata items");
+
+            await exportSession.ExportTaskAsync();
+
+            if (exportSession.Status == AVAssetExportSessionStatus.Completed)
+            {
+                Debug.WriteLine($"[SkiaCamera] AVAssetExportSession: success, output: {tempPath}");
+                return tempPath;
+            }
+
+            Debug.WriteLine($"[SkiaCamera] AVAssetExportSession failed: {exportSession.Status} - {exportSession.Error?.LocalizedDescription}");
+            if (File.Exists(tempPath)) try { File.Delete(tempPath); } catch { }
+            return null;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] ReExportWithAppleMetadataAsync failed: {ex.Message}");
+            return null;
+        }
+#else
+        return null;
+#endif
+    }
+
+    /// <summary>
+    /// Saves audio file to the app's shared Documents directory, accessible via iOS Files app.
+    /// iOS Photos library does not support audio-only assets.
+    /// </summary>
+    private async Task<string> SaveAudioToDocumentsApple(string privateAudioPath, string album, bool deleteOriginal)
+    {
+        try
+        {
+            // Save to app's Documents folder which is accessible via Files app
+            var documentsDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var targetDir = string.IsNullOrEmpty(album) ? documentsDir : Path.Combine(documentsDir, album);
+
+            if (!Directory.Exists(targetDir))
+                Directory.CreateDirectory(targetDir);
+
+            var fileName = Path.GetFileName(privateAudioPath);
+            var targetPath = Path.Combine(targetDir, fileName);
+
+            if (File.Exists(targetPath))
+                File.Delete(targetPath);
+
+            if (deleteOriginal)
+            {
+                File.Move(privateAudioPath, targetPath);
+                Debug.WriteLine($"[SkiaCamera] Apple: MOVED audio to Documents: {targetPath}");
+            }
+            else
+            {
+                File.Copy(privateAudioPath, targetPath, true);
+                Debug.WriteLine($"[SkiaCamera] Apple: COPIED audio to Documents: {targetPath}");
+            }
+
+            return targetPath;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera] Apple audio save error: {ex.Message}");
             return null;
         }
     }

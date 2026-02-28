@@ -170,8 +170,12 @@ namespace DrawnUi.Camera
         private SKSurface _previewRasterSurface;  // Cached to avoid allocation every frame
         private int _previewWidth, _previewHeight;
         private int _previewFrameCounter = 0;
-        private const int PreviewFrameSkip = 2;  // Only update preview every Nth frame (2 = every other frame)
+        private int _previewFrameInterval = 1; // Computed: generate 1 out of N frames to target ~30fps preview
         public event EventHandler PreviewAvailable;
+
+        // GPU preview scaler (glBlitFramebuffer-based, mirrors MetalPreviewScaler)
+        private GlPreviewScaler _glPreviewScaler;
+        private bool _glPreviewScalerInitAttempted;
 
         // GPU camera path support (SurfaceTexture zero-copy)
         private GpuCameraFrameProvider _gpuFrameProvider;
@@ -307,6 +311,7 @@ namespace DrawnUi.Camera
             _width = Math.Max(16, width);
             _height = Math.Max(16, height);
             _frameRate = Math.Max(1, frameRate);
+            _previewFrameInterval = Math.Max(1, _frameRate / 30);
             _deviceRotation = deviceRotation;
             _recordAudio = recordAudio;
             _preRecordingDuration = TimeSpan.Zero;
@@ -353,14 +358,14 @@ namespace DrawnUi.Camera
                     int aChannels = 1;
 
                     MediaFormat aFormat = MediaFormat.CreateAudioFormat(_selectedAudioMimeType, aSampleRate, aChannels);
-                    
+
                     // Configure based on codec type
                     if (_selectedAudioMimeType == MediaFormat.MimetypeAudioAac)
                     {
                         aFormat.SetInteger(MediaFormat.KeyAacProfile, (int)MediaCodecProfileType.Aacobjectlc);
                     }
                     // Add other codec configurations here as needed
-                    
+
                     aFormat.SetInteger(MediaFormat.KeyBitRate, 128000);
                     aFormat.SetInteger(MediaFormat.KeyMaxInputSize, 16384 * 2);
 
@@ -918,44 +923,49 @@ namespace DrawnUi.Camera
             _skSurface?.Canvas?.Flush();
             _grContext?.Flush();
 
-            // Publish preview snapshot
-            SKImage keepAlive = null;
-            try
+            // Publish preview snapshot (throttled to ~30fps, skipped entirely if nobody is listening)
+            bool shouldGeneratePreview = PreviewAvailable != null &&
+                (System.Threading.Interlocked.Increment(ref _previewFrameCounter) % _previewFrameInterval) == 0;
+            if (shouldGeneratePreview)
             {
-                using var gpuSnap = _skSurface?.Snapshot();
-                if (gpuSnap != null)
+                SKImage keepAlive = null;
+                try
                 {
-                    int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
-
-                    int pw = Math.Min(_width, maxPreviewWidth);
-                    int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
-
-                    // Reuse cached surface to avoid GC pressure (was allocating ~2MB per frame)
-                    if (_previewRasterSurface == null || _previewWidth != pw || _previewHeight != ph)
+                    using var gpuSnap = _skSurface?.Snapshot();
+                    if (gpuSnap != null)
                     {
-                        _previewRasterSurface?.Dispose();
-                        var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
-                        _previewRasterSurface = SKSurface.Create(pInfo);
-                        _previewWidth = pw;
-                        _previewHeight = ph;
-                    }
+                        int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
 
-                    var pCanvas = _previewRasterSurface.Canvas;
-                    pCanvas.Clear(SKColors.Transparent);
-                    pCanvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
+                        int pw = Math.Min(_width, maxPreviewWidth);
+                        int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
 
-                    keepAlive = _previewRasterSurface.Snapshot();
-                    lock (_previewLock)
-                    {
-                        _latestPreviewImage?.Dispose();
-                        _latestPreviewImage = keepAlive;
-                        keepAlive = null;
+                        // Reuse cached surface to avoid GC pressure (was allocating ~2MB per frame)
+                        if (_previewRasterSurface == null || _previewWidth != pw || _previewHeight != ph)
+                        {
+                            _previewRasterSurface?.Dispose();
+                            var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
+                            _previewRasterSurface = SKSurface.Create(pInfo);
+                            _previewWidth = pw;
+                            _previewHeight = ph;
+                        }
+
+                        var pCanvas = _previewRasterSurface.Canvas;
+                        pCanvas.Clear(SKColors.Transparent);
+                        pCanvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
+
+                        keepAlive = _previewRasterSurface.Snapshot();
+                        lock (_previewLock)
+                        {
+                            _latestPreviewImage?.Dispose();
+                            _latestPreviewImage = keepAlive;
+                            keepAlive = null;
+                        }
+                        PreviewAvailable?.Invoke(this, EventArgs.Empty);
                     }
-                    PreviewAvailable?.Invoke(this, EventArgs.Empty);
                 }
+                catch { keepAlive?.Dispose(); keepAlive = null; }
+                finally { keepAlive?.Dispose(); }
             }
-            catch { keepAlive?.Dispose(); keepAlive = null; }
-            finally { keepAlive?.Dispose(); }
 
             long ptsNanos = (long)(_pendingTimestamp.TotalMilliseconds * 1_000_000.0);
             EGLExt.EglPresentationTimeANDROID(_eglDisplay, _eglSurface, ptsNanos);
@@ -1235,6 +1245,47 @@ namespace DrawnUi.Camera
                 // 4. Flush and submit to encoder
                 canvas.Flush();
                 _grContext.Flush();
+
+                // GPU-native preview generation (glBlitFramebuffer, mirrors MetalPreviewScaler).
+                // Downscale on GPU first, then read back only the small buffer (~900KB vs ~8MB).
+                // Throttled by _previewFrameInterval to limit glReadPixels stalls.
+                _previewFrameCounter++;
+                bool shouldGeneratePreview = _previewFrameCounter >= _previewFrameInterval;
+                if (shouldGeneratePreview)
+                    _previewFrameCounter = 0;
+
+                // Lazy-init scaler on first preview frame (EGL context is current here)
+                if (!_glPreviewScalerInitAttempted)
+                {
+                    _glPreviewScalerInitAttempted = true;
+                    int maxPw = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                    int pw = Math.Min(_width, maxPw);
+                    int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+                    _glPreviewScaler = new GlPreviewScaler();
+                    if (!_glPreviewScaler.Initialize(_width, _height, pw, ph))
+                    {
+                        _glPreviewScaler?.Dispose();
+                        _glPreviewScaler = null;
+                    }
+                }
+
+                if (shouldGeneratePreview && _glPreviewScaler != null)
+                {
+                    // No ResetContext needed before/after: canvas was already flushed above,
+                    // ScaleAndReadback only touches FBO bindings and restores FBO 0 on exit,
+                    // and the next frame's ResetContext (after OES render) covers any residual state.
+                    var previewImage = _glPreviewScaler.ScaleAndReadback();
+                    if (previewImage != null)
+                    {
+                        lock (_previewLock)
+                        {
+                            _latestPreviewImage?.Dispose();
+                            _latestPreviewImage = previewImage;
+                        }
+
+                        PreviewAvailable?.Invoke(this, EventArgs.Empty);
+                    }
+                }
 
                 // Periodic GPU resource cleanup to prevent memory accumulation during long recordings
                 _gpuFrameCounter++;
@@ -2114,7 +2165,10 @@ namespace DrawnUi.Camera
                 EGL14.EglMakeCurrent(_eglDisplay, EGL14.EglNoSurface, EGL14.EglNoSurface, EGL14.EglNoContext);
                 if (_eglSurface != EGL14.EglNoSurface) EGL14.EglDestroySurface(_eglDisplay, _eglSurface);
                 if (_eglContext != EGL14.EglNoContext) EGL14.EglDestroyContext(_eglDisplay, _eglContext);
-                EGL14.EglTerminate(_eglDisplay);
+                // NOTE: Do NOT call EglTerminate — it destroys the process-wide default display,
+                // which invalidates EGL contexts used by other components (e.g. GlPreviewRenderer).
+                // EglReleaseThread is sufficient to clean up per-thread EGL state.
+                EGL14.EglReleaseThread();
             }
             _eglDisplay = EGL14.EglNoDisplay;
             _eglSurface = EGL14.EglNoSurface;
@@ -2128,6 +2182,10 @@ namespace DrawnUi.Camera
 
             _previewRasterSurface?.Dispose();
             _previewRasterSurface = null;
+
+            _glPreviewScaler?.Dispose();
+            _glPreviewScaler = null;
+            _glPreviewScalerInitAttempted = false;
         }
 
         private void FeedAudioEncoder(AudioSample sample)
@@ -2285,12 +2343,18 @@ namespace DrawnUi.Camera
                             }
 
                             // Small delay to prevent busy looping
-                            await Task.Delay(10, _encodingCancellation.Token);
+                            if (_encodingCancellation != null)
+                            {
+                                await Task.Delay(10, _encodingCancellation.Token);
+                            }
                         }
                         catch (Exception ex)
                         {
                             System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Background encoding error: {ex.Message}");
-                            await Task.Delay(100, _encodingCancellation.Token);
+                            if (_encodingCancellation != null)
+                            {
+                                await Task.Delay(100, _encodingCancellation.Token);
+                            }
                         }
                     }
                 }
@@ -2322,7 +2386,8 @@ namespace DrawnUi.Camera
                     audioFormat.SetInteger(MediaFormat.KeySampleRate, 44100);
                     audioFormat.SetInteger(MediaFormat.KeyChannelCount, 1);
                     audioFormat.SetInteger(MediaFormat.KeyBitRate, 128000);
-                    
+                    audioFormat.SetInteger(MediaFormat.KeyMaxInputSize, 16384 * 2);
+
                     // Configure based on codec type
                     if (_selectedAudioMimeType == MediaFormat.MimetypeAudioAac)
                     {
@@ -2339,10 +2404,18 @@ namespace DrawnUi.Camera
                     {
                         var inputBuffer = tempAudioCodec.GetInputBuffer(inputIndex);
                         inputBuffer.Clear();
-                        inputBuffer.Put(pcmSample.Data);
+
+                        var data = pcmSample.Data;
+                        if (data.Length > inputBuffer.Remaining())
+                        {
+                            var newData = new byte[inputBuffer.Remaining()];
+                            Array.Copy(data, newData, newData.Length);
+                            data = newData;
+                        }
+                        inputBuffer.Put(data);
 
                         long ptsUs = pcmSample.TimestampNs / 1000;
-                        tempAudioCodec.QueueInputBuffer(inputIndex, 0, pcmSample.Data.Length, ptsUs, 0);
+                        tempAudioCodec.QueueInputBuffer(inputIndex, 0, data.Length, ptsUs, 0);
                     }
 
                     // Get encoded AAC data

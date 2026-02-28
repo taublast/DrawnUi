@@ -23,7 +23,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NavigationStackEntry
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 325
+    startLine: 327
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -62,7 +62,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 325
+    startLine: 327
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -98,7 +98,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: View
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 325
+    startLine: 327
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -127,7 +127,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Animated
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 325
+    startLine: 327
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -156,7 +156,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Preserve
     path: ../src/Maui/DrawnUi/Controls/ViewSwitcher/SkiaViewSwitcher.cs
-    startLine: 325
+    startLine: 327
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls

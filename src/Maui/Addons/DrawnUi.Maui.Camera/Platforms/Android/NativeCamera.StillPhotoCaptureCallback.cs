@@ -8,12 +8,17 @@ namespace DrawnUi.Camera
 {
     public partial class NativeCamera
     {
-        public class StillPhotoCaptureCallback : CameraCaptureSession.CaptureCallback,
+        public class PhotoModeCaptureCallback : CameraCaptureSession.CaptureCallback,
             Android.Media.ImageReader.IOnImageAvailableListener
         {
             private readonly NativeCamera _camera;
+            private long _lastMetadataTimeNs;
+            private const long MetadataIntervalNs = 500_000_000; // 500ms
 
-            public StillPhotoCaptureCallback(NativeCamera camera)
+            public PhotoModeCaptureCallback(IntPtr handle, Android.Runtime.JniHandleOwnership transfer)
+                : base(handle, transfer) { }
+
+            public PhotoModeCaptureCallback(NativeCamera camera)
             {
                 if (camera == null)
                     throw new System.ArgumentNullException("camera");
@@ -65,7 +70,13 @@ namespace DrawnUi.Camera
 
             private void Process(CaptureResult result)
             {
-                NativeCamera.FillMetadata(_camera.FormsControl.CameraDevice.Meta, result);
+                // Throttle metadata reads to avoid per-frame Java boxed object allocations
+                var now = Android.OS.SystemClock.ElapsedRealtimeNanos();
+                if (now - _lastMetadataTimeNs > MetadataIntervalNs)
+                {
+                    _lastMetadataTimeNs = now;
+                    NativeCamera.FillMetadata(_camera.FormsControl.CameraDevice.Meta, result);
+                }
 
                 switch (_camera.mState)
                 {

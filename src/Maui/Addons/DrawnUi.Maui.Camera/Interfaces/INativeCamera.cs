@@ -134,22 +134,22 @@ public interface INativeCamera : IDisposable
     /// <param name="videoFilePath">Path to video file</param>
     /// <param name="album">Optional album name</param>
     /// <returns>Gallery path if successful, null if failed</returns>
-    Task<string> SaveVideoToGallery(string videoFilePath, string album);
+    Task<string> SaveVideoToGallery(string videoFilePath, string album, Metadata meta = null);
 
     /// <summary>
     /// Event fired when video recording completes successfully
     /// </summary>
-    Action<CapturedVideo> VideoRecordingSuccess { get; set; }
+    Action<CapturedVideo> RecordingSuccess { get; set; }
 
     /// <summary>
     /// Event fired when video recording fails
     /// </summary>
-    Action<Exception> VideoRecordingFailed { get; set; }
+    Action<Exception> RecordingFailed { get; set; }
 
     /// <summary>
     /// Event fired when video recording progress updates
     /// </summary>
-    Action<TimeSpan> VideoRecordingProgress { get; set; }
+    Action<TimeSpan> RecordingProgress { get; set; }
 
     /// <summary>
     /// Gets or sets whether pre-recording is enabled.

@@ -64,6 +64,7 @@ public static class AndroidVideoRecordingTest
             (CamcorderQuality.Low, "Low")
         };
 
+        int i = 0;
         foreach (var (quality, name) in supportedQualities)
         {
             if (CamcorderProfile.HasProfile(cameraId, quality))
@@ -71,6 +72,7 @@ public static class AndroidVideoRecordingTest
                 var profile = CamcorderProfile.Get(cameraId, quality);
                 formats.Add(new VideoFormat
                 {
+                    Index = i++,
                     Width = profile.VideoFrameWidth,
                     Height = profile.VideoFrameHeight,
                     FrameRate = profile.VideoFrameRate,
@@ -186,9 +188,9 @@ public static class AndroidVideoRecordingTest
             var testRecorder = new TestVideoRecorder();
             
             // Test event assignments
-            testRecorder.VideoRecordingSuccess += (video) => Debug.WriteLine($"Success: {video}");
-            testRecorder.VideoRecordingFailed += (ex) => Debug.WriteLine($"Failed: {ex.Message}");
-            testRecorder.VideoRecordingProgress += (time) => Debug.WriteLine($"Progress: {time}");
+            testRecorder.RecordingSuccess += (video) => Debug.WriteLine($"Success: {video}");
+            testRecorder.RecordingFailed += (ex) => Debug.WriteLine($"Failed: {ex.Message}");
+            testRecorder.RecordingProgress += (time) => Debug.WriteLine($"Progress: {time}");
             
             // Test event invocations (simulate)
             testRecorder.SimulateSuccess();
@@ -209,9 +211,9 @@ public static class AndroidVideoRecordingTest
 /// </summary>
 internal class TestVideoRecorder
 {
-    public Action<CapturedVideo> VideoRecordingSuccess { get; set; }
-    public Action<Exception> VideoRecordingFailed { get; set; }
-    public Action<TimeSpan> VideoRecordingProgress { get; set; }
+    public Action<CapturedVideo> RecordingSuccess { get; set; }
+    public Action<Exception> RecordingFailed { get; set; }
+    public Action<TimeSpan> RecordingProgress { get; set; }
 
     public void SimulateSuccess()
     {
@@ -223,16 +225,16 @@ internal class TestVideoRecorder
             FileSizeBytes = 1024 * 1024 * 10 // 10MB
         };
         
-        VideoRecordingSuccess?.Invoke(testVideo);
+        RecordingSuccess?.Invoke(testVideo);
     }
 
     public void SimulateFailed()
     {
-        VideoRecordingFailed?.Invoke(new Exception("Test recording failed"));
+        RecordingFailed?.Invoke(new Exception("Test recording failed"));
     }
 
     public void SimulateProgress()
     {
-        VideoRecordingProgress?.Invoke(TimeSpan.FromSeconds(15));
+        RecordingProgress?.Invoke(TimeSpan.FromSeconds(15));
     }
 }

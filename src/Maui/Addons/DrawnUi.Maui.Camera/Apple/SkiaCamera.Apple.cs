@@ -18,6 +18,7 @@ namespace DrawnUi.Camera;
 
 public partial class SkiaCamera
 {
+    private const bool ShouldOptimizeForNetworkUse = false; //might reduce heat and throttling
 
     private Task _preRecFlushTask;
     private AudioSample[] _preRecordedAudioSamples;  // Saved at pre-rec → live transition
@@ -26,18 +27,11 @@ public partial class SkiaCamera
     // Allocated once when EnablePreRecording=true, reused across recording sessions
     private PrerecordingEncodedBufferApple _sharedPreRecordingBuffer;
 
-    // Second pre-allocated buffer used to avoid Reset()/drain races when an old encoder
-    // is being flushed in the background (overlap mode).
-    private PrerecordingEncodedBufferApple _sharedPreRecordingBuffer2;
-
-    // When overlap mode flushes the old pre-recording encoder in the background, that encoder
-    // may still be enumerating its buffer. Mark it as busy so we don't hand it to a new session.
-    private PrerecordingEncodedBufferApple _sharedPreRecordingBufferInFlush;
-
-    // Track which shared buffer was last handed to a pre-recording encoder.
-    private PrerecordingEncodedBufferApple _lastSharedPreRecordingBufferUsed;
-
-    private readonly object _sharedPreRecordingBufferLock = new object();
+    // Cached zero-copy SKImage to avoid per-frame GPU allocations during recording.
+    // The image wraps the live Metal texture — Skia reads current texture data at draw time.
+    private SKImage _cachedZeroCopyImage;
+    private IntPtr _cachedZeroCopyTextureHandle;
+    private GRContext _cachedZeroCopyContext;
 
     // Streaming audio writer for OOM-safe live recording (audio goes to file, not memory)
     private AVAssetWriter _liveAudioWriter;
@@ -55,55 +49,16 @@ public partial class SkiaCamera
     /// </summary>
     partial void EnsurePreRecordingBufferPreAllocated()
     {
-        // Default to 12 Mbps if we don't have encoder bitrate yet
-        long estimatedBitrate = 12_000_000;
-
-        lock (_sharedPreRecordingBufferLock)
+        if (_sharedPreRecordingBuffer == null)
         {
-            if (_sharedPreRecordingBuffer == null)
-            {
-                _sharedPreRecordingBuffer = new PrerecordingEncodedBufferApple(PreRecordDuration, estimatedBitrate);
-                Debug.WriteLine($"[SkiaCamera.Apple] Pre-allocated shared pre-recording buffer A: {PreRecordDuration.TotalSeconds}s @ ~{estimatedBitrate / 1_000_000}Mbps");
-            }
-            else
-            {
-                Debug.WriteLine("[SkiaCamera.Apple] Shared pre-recording buffer A already allocated, reusing");
-            }
+            // Default to 12 Mbps if we don't have encoder bitrate yet
+            long estimatedBitrate = 12_000_000;
+            _sharedPreRecordingBuffer = new PrerecordingEncodedBufferApple(PreRecordDuration, estimatedBitrate);
+            Debug.WriteLine($"[SkiaCamera.Apple] Pre-allocated shared pre-recording buffer: {PreRecordDuration.TotalSeconds}s @ ~{estimatedBitrate / 1_000_000}Mbps");
         }
-    }
-
-    private void EnsureSecondSharedPreRecordingBufferAllocated_NoLock(long estimatedBitrate)
-    {
-        if (_sharedPreRecordingBuffer2 != null)
-            return;
-
-        _sharedPreRecordingBuffer2 = new PrerecordingEncodedBufferApple(PreRecordDuration, estimatedBitrate);
-        Debug.WriteLine($"[SkiaCamera.Apple] Lazily allocated shared pre-recording buffer B: {PreRecordDuration.TotalSeconds}s @ ~{estimatedBitrate / 1_000_000}Mbps");
-    }
-
-    private PrerecordingEncodedBufferApple GetSharedPreRecordingBufferForNewSession()
-    {
-        lock (_sharedPreRecordingBufferLock)
+        else
         {
-            // Prefer buffer A unless it's currently being flushed.
-            if (_sharedPreRecordingBuffer != null && !ReferenceEquals(_sharedPreRecordingBuffer, _sharedPreRecordingBufferInFlush))
-                return _sharedPreRecordingBuffer;
-
-            // If buffer A is busy and buffer B hasn't been allocated yet, allocate it now.
-            // This avoids overlap flush/reset races while keeping baseline memory lower.
-            if (_sharedPreRecordingBuffer != null && ReferenceEquals(_sharedPreRecordingBuffer, _sharedPreRecordingBufferInFlush) && _sharedPreRecordingBuffer2 == null)
-            {
-                // Default to 12 Mbps if we don't have encoder bitrate yet
-                long estimatedBitrate = 12_000_000;
-                EnsureSecondSharedPreRecordingBufferAllocated_NoLock(estimatedBitrate);
-            }
-
-            if (_sharedPreRecordingBuffer2 != null && !ReferenceEquals(_sharedPreRecordingBuffer2, _sharedPreRecordingBufferInFlush))
-                return _sharedPreRecordingBuffer2;
-
-            // Should not happen (only one background flush task is expected), but return something
-            // deterministic rather than null.
-            return _sharedPreRecordingBuffer ?? _sharedPreRecordingBuffer2;
+            Debug.WriteLine("[SkiaCamera.Apple] Shared pre-recording buffer already allocated, reusing");
         }
     }
 
@@ -241,7 +196,7 @@ public partial class SkiaCamera
     {
         // CRITICAL: Do synchronous checks BEFORE creating any Task to avoid async state machine
         // and Task allocation overhead when frames are dropped (fixes memory/GC pressure)
-        if (!(IsRecordingVideo || IsPreRecording) || _captureVideoEncoder == null)
+        if (!(IsRecording || IsPreRecording) || _captureVideoEncoder == null)
             return;
 
         // Make sure we never queue more than one frame — drop if previous is still processing
@@ -251,7 +206,6 @@ public partial class SkiaCamera
             return;
         }
 
-        // Only now fire the async work - we've already acquired the frame slot
         _ = CaptureFrameCore();
     }
 
@@ -260,7 +214,7 @@ public partial class SkiaCamera
         try
         {
             // Double-check encoder still exists (race condition protection)
-            if (_captureVideoEncoder == null || (!IsRecordingVideo && !IsPreRecording))
+            if (_captureVideoEncoder == null || (!IsRecording && !IsPreRecording))
                 return;
 
             var elapsed = DateTime.Now - _captureVideoStartTime;
@@ -285,19 +239,27 @@ public partial class SkiaCamera
                         try
                         {
                             var texture = nativeCam.PreviewTexture;
-                            var width = (int)texture.Width;
-                            var height = (int)texture.Height;
+                            var handle = texture.Handle;
 
-                            var textureInfo = new GRMtlTextureInfo(texture.Handle);
-                            using var backendTexture = new GRBackendTexture(width, height, false, textureInfo);
-
-                            // Create image (BORROWED texture, will NOT dispose underlying Metal texture)
-                            // Use encoder-specific context to ensure compatibility
-                            var image = SKImage.FromTexture(encoderContext, backendTexture, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
-
-                            if (image != null)
+                            // Cache the SKImage wrapping the Metal texture — avoids per-frame
+                            // GRMtlTextureInfo + GRBackendTexture + SKImage.FromTexture allocations.
+                            // The image wraps a live GPU texture, so each draw reads current frame data.
+                            if (_cachedZeroCopyImage == null || _cachedZeroCopyTextureHandle != handle || _cachedZeroCopyContext != encoderContext)
                             {
-                                imageToDraw = image;
+                                _cachedZeroCopyImage?.Dispose();
+                                var textureInfo = new GRMtlTextureInfo(handle);
+                                using var backendTexture = new GRBackendTexture(
+                                    (int)texture.Width, (int)texture.Height, false, textureInfo);
+                                _cachedZeroCopyImage = SKImage.FromTexture(
+                                    encoderContext, backendTexture, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
+                                _cachedZeroCopyTextureHandle = handle;
+                                _cachedZeroCopyContext = encoderContext;
+                            }
+
+                            if (_cachedZeroCopyImage != null)
+                            {
+                                imageToDraw = _cachedZeroCopyImage;
+                                shouldDisposeImage = false;
                                 imageRotation = (int)nativeCam.CurrentRotation;
                                 imageFlip = (CameraDevice?.Facing ?? Facing) == CameraPosition.Selfie;
                             }
@@ -430,6 +392,7 @@ public partial class SkiaCamera
                     __swA.Stop();
                     _diagLastSubmitMs = __swA.Elapsed.TotalMilliseconds;
                     System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                    CalculateRecordingFps();
                 }
                 finally
                 {
@@ -484,12 +447,12 @@ public partial class SkiaCamera
         // OOM-SAFE AUDIO HANDLING:
         // - Pre-recording phase: Write to circular buffer (bounded memory, ~5 sec max)
         // - Live recording phase: Stream directly to file (zero memory growth)
-        if (IsPreRecording && !IsRecordingVideo)
+        if (IsPreRecording && !IsRecording)
         {
             // Pre-recording: Circular buffer keeps last N seconds (bounded memory)
             _audioBuffer?.Write(sample);
         }
-        else if (IsRecordingVideo && _liveAudioWriter != null)
+        else if (IsRecording && _liveAudioWriter != null)
         {
             // Live recording: Stream directly to file (OOM-safe)
             WriteSampleToLiveAudioWriter(sample);
@@ -509,7 +472,7 @@ public partial class SkiaCamera
         ICaptureVideoEncoder oldEncoderToReturn = null;
         
         // Configuration phase - working with local 'appleEncoder' variable
-        if (RecordAudio)
+        if (EnableAudioRecording)
         {
             try
             {
@@ -526,7 +489,7 @@ public partial class SkiaCamera
                 // - Pre-recording phase: CIRCULAR buffer (bounded memory, keeps last N seconds)
                 // - Live recording phase: STREAMING to file (zero memory growth)
                 // Buffer/writer is switched at pre-rec → live transition (see StartVideoRecording)
-                if (EnablePreRecording && !IsRecordingVideo)
+                if (EnablePreRecording && !IsRecording)
                 {
                     // Pre-recording phase: Circular buffer matching video duration
                     if (_audioBuffer == null)
@@ -539,7 +502,7 @@ public partial class SkiaCamera
                     // Creates AVAssetWriter/Input but doesn't start writing yet
                     EnsureLiveAudioWriterPreAllocated(AudioSampleRate, AudioChannels);
                 }
-                else if (IsRecordingVideo && _liveAudioWriter == null)
+                else if (IsRecording && _liveAudioWriter == null)
                 {
                     // Live-only (no pre-recording): Start streaming writer immediately
                     if (StartLiveAudioWriter(AudioSampleRate, AudioChannels))
@@ -576,26 +539,18 @@ public partial class SkiaCamera
         appleEncoder.ParentCamera = this;
         appleEncoder.IsPreRecordingMode = IsPreRecording;
 
-        // Pass pre-allocated buffer if available (avoids lag spike on record start).
-        // In overlap mode, pick the buffer that's not currently being flushed in the background.
-        if (IsPreRecording)
+        // Pass pre-allocated buffer if available (avoids lag spike on record start)
+        if (IsPreRecording && _sharedPreRecordingBuffer != null)
         {
-            var sharedBuffer = GetSharedPreRecordingBufferForNewSession();
-            if (sharedBuffer != null)
-            {
-                appleEncoder.SharedPreRecordingBuffer = sharedBuffer;
-                lock (_sharedPreRecordingBufferLock)
-                {
-                    _lastSharedPreRecordingBufferUsed = sharedBuffer;
-                }
-                Debug.WriteLine("[StartRealtimeVideoProcessing] Using pre-allocated shared buffer (race-free overlap)");
-            }
+            appleEncoder.SharedPreRecordingBuffer = _sharedPreRecordingBuffer;
+            Debug.WriteLine($"[StartRealtimeVideoProcessing] Using pre-allocated shared buffer (no allocation lag)");
         }
 
         Debug.WriteLine($"[StartRealtimeVideoProcessing] iOS encoder initialized with IsPreRecordingMode={IsPreRecording}");
 
-        // Always use raw camera frames for preview (PreviewProcessor only, not FrameProcessor)
-        UseRecordingFramesForPreview = false;
+        // Use encoder's processed frames for preview — FrameProcessor overlay is already baked in,
+        // so PreviewProcessor can be skipped, eliminating duplicate GPU overlay work.
+        UseRecordingFramesForPreview = true;
         
         if (MirrorRecordingToPreview)
         {
@@ -659,7 +614,7 @@ public partial class SkiaCamera
 
         // Pass locked rotation to encoder for proper video orientation metadata (iOS-specific)
         // Initialize the NEW encoder
-        await appleEncoder.InitializeAsync(outputPath, width, height, fps, RecordAudio, RecordingLockedRotation);
+        await appleEncoder.InitializeAsync(outputPath, width, height, fps, EnableAudioRecording, RecordingLockedRotation);
 
         // ✅ CRITICAL: If transitioning from pre-recording to live, set the duration offset BEFORE StartAsync
         // BUT ONLY if pre-recording file actually exists and has content (otherwise standalone live recording will be corrupted!)
@@ -709,7 +664,7 @@ public partial class SkiaCamera
         // Progress reporting
         appleEncoder.ProgressReported += (sender, duration) =>
         {
-            OnVideoRecordingProgress(duration);
+            OnRecordingProgress(duration);
         };
         
         // Dispose previous encoder OR Preserve it
@@ -747,6 +702,7 @@ public partial class SkiaCamera
             _diagDroppedFrames = 0;
             _diagSubmittedFrames = 0;
             _diagLastSubmitMs = 0;
+            ResetRecordingFps();
         }
 
         _targetFps = fps;
@@ -1130,30 +1086,39 @@ public partial class SkiaCamera
         NativeControl?.ApplyDeviceOrientation(DeviceRotation);
     }
 
+    /// <summary>
+    /// Returns the device types used for camera discovery on this iOS version.
+    /// Must be consistent everywhere we enumerate or look up cameras.
+    /// </summary>
+    internal static AVFoundation.AVCaptureDeviceType[] GetDiscoveryDeviceTypes()
+    {
+        var deviceTypes = new List<AVFoundation.AVCaptureDeviceType>
+        {
+            AVFoundation.AVCaptureDeviceType.BuiltInWideAngleCamera,
+            AVFoundation.AVCaptureDeviceType.BuiltInTelephotoCamera,
+            AVFoundation.AVCaptureDeviceType.BuiltInUltraWideCamera
+        };
+
+        if (UIKit.UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
+        {
+            deviceTypes.Add(AVFoundation.AVCaptureDeviceType.BuiltInDualCamera);
+            deviceTypes.Add(AVFoundation.AVCaptureDeviceType.BuiltInTripleCamera);
+            deviceTypes.Add(AVFoundation.AVCaptureDeviceType.BuiltInTrueDepthCamera);
+            deviceTypes.Add(AVFoundation.AVCaptureDeviceType.BuiltInLiDarDepthCamera);
+            deviceTypes.Add(AVFoundation.AVCaptureDeviceType.BuiltInDualWideCamera);
+        }
+
+        return deviceTypes.ToArray();
+    }
+
     protected async Task<List<CameraInfo>> GetAvailableCamerasPlatform(bool refresh)
     {
         var cameras = new List<CameraInfo>();
 
         try
         {
-            var deviceTypes = new AVFoundation.AVCaptureDeviceType[]
-            {
-                AVFoundation.AVCaptureDeviceType.BuiltInWideAngleCamera,
-                AVFoundation.AVCaptureDeviceType.BuiltInTelephotoCamera,
-                AVFoundation.AVCaptureDeviceType.BuiltInUltraWideCamera
-            };
-
-            if (UIKit.UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
-            {
-                deviceTypes = deviceTypes.Concat(new[]
-                {
-                    AVFoundation.AVCaptureDeviceType.BuiltInDualCamera,
-                    AVFoundation.AVCaptureDeviceType.BuiltInTripleCamera
-                }).ToArray();
-            }
-
             var discoverySession = AVFoundation.AVCaptureDeviceDiscoverySession.Create(
-                deviceTypes,
+                GetDiscoveryDeviceTypes(),
                 AVFoundation.AVMediaTypes.Video,
                 AVFoundation.AVCaptureDevicePosition.Unspecified);
 
@@ -1169,13 +1134,18 @@ public partial class SkiaCamera
                     _ => CameraPosition.Default
                 };
 
+                var supportsVideo = device.SupportsAVCaptureSessionPreset(AVFoundation.AVCaptureSession.PresetHigh);
+                var supportsPhoto = device.SupportsAVCaptureSessionPreset(AVFoundation.AVCaptureSession.PresetPhoto);
+
                 cameras.Add(new CameraInfo
                 {
                     Id = device.UniqueID,
                     Name = device.LocalizedName,
                     Position = position,
                     Index = i,
-                    HasFlash = device.HasFlash
+                    HasFlash = device.HasFlash,
+                    SupportsVideo = supportsVideo,
+                    SupportsPhoto = supportsPhoto
                 });
             }
         }
@@ -1274,7 +1244,7 @@ public partial class SkiaCamera
             status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
         }
 
-        if (status == PermissionStatus.Granted && this.CaptureMode == CaptureModeType.Video && this.RecordAudio)
+        if (status == PermissionStatus.Granted && this.CaptureMode == CaptureModeType.Video && this.EnableAudioRecording)
         {
             var s = AVCaptureDevice.GetAuthorizationStatus(AVAuthorizationMediaType.Audio);
             if (s == AVAuthorizationStatus.NotDetermined)
@@ -1626,7 +1596,7 @@ public partial class SkiaCamera
                     {
                         OutputUrl = outputUrl,
                         OutputFileType = AVFoundation.AVFileTypes.Mpeg4.GetConstant(),
-                        ShouldOptimizeForNetworkUse = true
+                        ShouldOptimizeForNetworkUse = ShouldOptimizeForNetworkUse
                         // No VideoComposition - passthrough preserves original encoding
                     };
 
@@ -1952,6 +1922,12 @@ public partial class SkiaCamera
                 retries++;
             }
 
+            // Release cached GPU resources before encoder disposal
+            _cachedZeroCopyImage?.Dispose();
+            _cachedZeroCopyImage = null;
+            _cachedZeroCopyTextureHandle = IntPtr.Zero;
+            _cachedZeroCopyContext = null;
+
             // OOM-SAFE AUDIO HANDLING:
             // 1. Stop live audio writer (instant - audio already on disk)
             // 2. Write pre-rec audio to file if present (fast - only ~5 sec max)
@@ -1961,7 +1937,7 @@ public partial class SkiaCamera
             var stopwatchTotal = System.Diagnostics.Stopwatch.StartNew();
             var stopwatchStep = new System.Diagnostics.Stopwatch();
 
-            if (RecordAudio)
+            if (EnableAudioRecording)
             {
                 // Stop the streaming audio writer and get its file path (instant - already on disk)
                 stopwatchStep.Restart();
@@ -2026,11 +2002,6 @@ public partial class SkiaCamera
                 await _preRecFlushTask;
                 _preRecFlushTask = null;
                 Debug.WriteLine("[StopRealtimeVideoProcessing] Pre-recording flush completed.");
-
-                lock (_sharedPreRecordingBufferLock)
-                {
-                    _sharedPreRecordingBufferInFlush = null;
-                }
             }
 
             // OPTIMIZED: Skip audio concatenation - pass both files directly to MuxVideosInternal
@@ -2149,13 +2120,13 @@ public partial class SkiaCamera
             SetIsRecordingVideo(false);
             if (capturedVideo != null)
             {
-                OnVideoRecordingSuccess(capturedVideo);
+                OnRecordingSuccess(capturedVideo);
             }
 
             IsBusy = false; // Release busy state after successful muxing
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
@@ -2196,12 +2167,12 @@ public partial class SkiaCamera
             IsBusy = false; // Release busy state on error
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
 
-            VideoRecordingFailed?.Invoke(this, ex);
+            RecordingFailed?.Invoke(this, ex);
             throw;
         }
         finally
@@ -2285,7 +2256,7 @@ public partial class SkiaCamera
             Debug.WriteLine($"[AbortRealtimeVideoProcessing] Capture video flow aborted successfully");
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
@@ -2306,7 +2277,7 @@ public partial class SkiaCamera
             SetIsPreRecording(false);
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
@@ -2339,7 +2310,7 @@ public partial class SkiaCamera
     /// 
     /// State machine logic:
     /// - If EnablePreRecording && !IsPreRecording: Start memory-only recording (pre-recording phase)
-    /// - If IsPreRecording && !IsRecordingVideo: Prepend buffer and start file recording (normal phase)
+    /// - If IsPreRecording && !IsRecording: Prepend buffer and start file recording (normal phase)
     /// - Otherwise: Start normal file recording
     /// </summary>
     /// <returns>Async task</returns>
@@ -2351,21 +2322,21 @@ public partial class SkiaCamera
             return;
         }
 
-        // Handle audio-only recording (RecordVideo=false)
-        if (!RecordVideo)
+        // Handle audio-only recording (EnableVideoRecording=false)
+        if (!EnableVideoRecording)
         {
-            if (!RecordAudio)
-                throw new InvalidOperationException("RecordAudio must be true when RecordVideo is false");
+            if (!EnableAudioRecording)
+                throw new InvalidOperationException("EnableAudioRecording must be true when EnableVideoRecording is false");
             await StartAudioOnlyRecording();
             return;
         }
 
-        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
+        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecording={IsRecording}");
 
         try
         {
             // State 1 -> State 2: If pre-recording enabled and not yet in pre-recording phase, start memory-only recording
-            if (EnablePreRecording && !IsPreRecording && !IsRecordingVideo)
+            if (EnablePreRecording && !IsPreRecording && !IsRecording)
             {
                 Debug.WriteLine("[StartVideoRecording] Transitioning to IsPreRecording (memory-only recording)");
                 SetIsPreRecording(true);
@@ -2386,9 +2357,9 @@ public partial class SkiaCamera
                 }
             }
             // State 2 -> State 3: If in pre-recording phase, transition to file recording with muxing
-            else if (IsPreRecording && !IsRecordingVideo)
+            else if (IsPreRecording && !IsRecording)
             {
-                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecordingVideo (file recording with mux) [OVERLAP MODE]");
+                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecording (file recording with mux) [OVERLAP MODE]");
 
                 // 1. GLOBAL TIMELINE: Capture current duration but DON'T stop pre-rec
                 // Pre-rec continues running until the swap - ZERO frames lost
@@ -2406,7 +2377,7 @@ public partial class SkiaCamera
                 // 2. Process Audio (Save buffer, start writer)
                 // SAVE PRE-REC AUDIO before transition - DON'T TRIM YET
                 // Audio will be trimmed in background task AFTER video is finalized (for correct sync)
-                if (_audioBuffer != null && RecordAudio)
+                if (_audioBuffer != null && EnableAudioRecording)
                 {
                     var allAudioSamples = _audioBuffer.GetAllSamples();
                     Debug.WriteLine($"[StartVideoRecording] Saving ALL {allAudioSamples?.Length ?? 0} audio samples (will trim after video is finalized)");
@@ -2474,20 +2445,6 @@ public partial class SkiaCamera
                 {
                     Debug.WriteLine("[StartVideoRecording] Spawning background task to stop/flush old encoder");
 
-                    // Old encoder will drain its pre-recording buffer asynchronously; prevent reusing/resetting
-                    // the same shared buffer for a new pre-recording session until that drain completes.
-                    lock (_sharedPreRecordingBufferLock)
-                    {
-                        if (oldEncoderToStop is AppleVideoToolboxEncoder oldAppleEnc && oldAppleEnc.SharedPreRecordingBuffer != null)
-                        {
-                            _sharedPreRecordingBufferInFlush = oldAppleEnc.SharedPreRecordingBuffer;
-                        }
-                        else
-                        {
-                            _sharedPreRecordingBufferInFlush = _lastSharedPreRecordingBufferUsed;
-                        }
-                    }
-
                     _preRecFlushTask = Task.Run(async () =>
                     {
                         try
@@ -2554,18 +2511,11 @@ public partial class SkiaCamera
                         {
                             Debug.WriteLine($"[StartVideoRecording] BkTask Error: {ex}");
                         }
-                        finally
-                        {
-                            lock (_sharedPreRecordingBufferLock)
-                            {
-                                _sharedPreRecordingBufferInFlush = null;
-                            }
-                        }
                     });
                 }
             }
             // Normal recording (no pre-recording)
-            else if (!IsRecordingVideo)
+            else if (!IsRecording)
             {
                 Debug.WriteLine("[StartVideoRecording] Starting normal recording (no pre-recording)");
                 SetIsRecordingVideo(true);
@@ -2591,7 +2541,7 @@ public partial class SkiaCamera
             IsBusy = false;
             RecordingLockedRotation = -1; // Reset on error
             ClearPreRecordingBuffer();
-            VideoRecordingFailed?.Invoke(this, ex);
+            RecordingFailed?.Invoke(this, ex);
             throw;
         }
     }
@@ -3470,7 +3420,7 @@ public partial class SkiaCamera
             using var exportSession = new AVAssetExportSession(composition, AVAssetExportSessionPreset.Passthrough);
             exportSession.OutputUrl = NSUrl.FromFilename(outputPath);
             exportSession.OutputFileType = AVFileTypes.Mpeg4.GetConstant();
-            exportSession.ShouldOptimizeForNetworkUse = true;
+            exportSession.ShouldOptimizeForNetworkUse = ShouldOptimizeForNetworkUse;
 
             var tcs = new TaskCompletionSource<bool>();
             exportSession.ExportAsynchronously(() =>
@@ -3511,23 +3461,31 @@ public partial class SkiaCamera
 
     partial void StartPreviewAudioCapture()
     {
-        if (_previewAudioCapture != null || !RecordAudio)
+        // Start audio capture if either recording audio or audio monitoring is enabled
+        if (_previewAudioCapture != null || (!EnableAudioRecording && !EnableAudioMonitoring))
             return;
 
         Task.Run(async () =>
         {
+            if (!await _audioSemaphore.WaitAsync(1)) // Skip if busy processing
+                return;
+
             try
             {
+                StopPreviewAudioCapture();
+
                 _previewAudioCapture = new AudioCaptureApple();
                 _previewAudioCapture.SampleAvailable += OnPreviewAudioSampleAvailable;
-                var started = await _previewAudioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
+                var started = await _previewAudioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth,
+                    AudioDeviceIndex);
                 if (started)
                 {
-                    Debug.WriteLine($"[SkiaCamera.Apple] Preview audio capture started: {_previewAudioCapture.SampleRate}Hz, {_previewAudioCapture.Channels}ch");
+                    Debug.WriteLine(
+                        $"[SkiaCamera.Apple] Preview audio capture started: {_previewAudioCapture.SampleRate}Hz, {_previewAudioCapture.Channels}ch");
                 }
                 else
                 {
-                    Debug.WriteLine("[SkiaCamera.Apple] Preview audio capture failed to start");
+                    RaiseError($"Preview audio capture failed to start: {_previewAudioCapture.LastError}");
                     _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
                     _previewAudioCapture.Dispose();
                     _previewAudioCapture = null;
@@ -3535,9 +3493,23 @@ public partial class SkiaCamera
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[SkiaCamera.Apple] Preview audio capture error: {ex.Message}");
+                RaiseError($"Preview audio capture error: {ex}");
+            }
+            finally
+            {
+                _audioSemaphore?.Release();
             }
         });
+    }
+
+ 
+
+    private SemaphoreSlim _audioSemaphore = new(1, 1);
+
+    public override void OnDisposing()
+    {
+        _audioSemaphore?.Dispose();
+        _audioSemaphore = null;
     }
 
     partial void StopPreviewAudioCapture()
@@ -3548,8 +3520,12 @@ public partial class SkiaCamera
         try
         {
             _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
-            _ = _previewAudioCapture.StopAsync();
-            _previewAudioCapture.Dispose();
+            var kill = _previewAudioCapture;
+            _ = kill.StopAsync().ContinueWith(_ =>
+            {
+                kill.Dispose();
+            });
+
             _previewAudioCapture = null;
             Debug.WriteLine("[SkiaCamera.Apple] Preview audio capture stopped");
         }

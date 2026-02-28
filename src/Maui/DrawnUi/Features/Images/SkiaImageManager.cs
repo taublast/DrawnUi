@@ -958,15 +958,23 @@ public partial class SkiaImageManager : IDisposable
 
     private static async Task<SKBitmap> LoadImageFromInternetAsyncSingle(UriImageSource uriSource, CancellationToken cancel)
     {
-        using HttpClient client = Super.Services.CreateHttpClient();
-        var response = await client.GetAsync(uriSource.Uri, cancel);
-        if (response.IsSuccessStatusCode)
+        try
         {
-            using (var stream = await response.Content.ReadAsStreamAsync())
+            using HttpClient client = Super.Services.CreateHttpClient();
+            var response = await client.GetAsync(uriSource.Uri, cancel);
+            if (response.IsSuccessStatusCode)
             {
-                return SKBitmap.Decode(stream);
+                using (var stream = await response.Content.ReadAsStreamAsync())
+                {
+                    return SKBitmap.Decode(stream);
+                }
             }
         }
+        catch (Exception e)
+        {
+            Debug.WriteLine(e);
+        }
+      
         return null;
     }
 }

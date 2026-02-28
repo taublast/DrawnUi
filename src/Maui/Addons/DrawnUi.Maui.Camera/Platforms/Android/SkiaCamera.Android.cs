@@ -1,12 +1,7 @@
 ﻿using System.Diagnostics;
 using Android.Content;
-using Android.Hardware.Camera2;
 using Android.Media;
-using Android.Telecom;
 using DrawnUi.Camera.Platforms.Android;
-using Microsoft.Maui.Controls.PlatformConfiguration;
-using static AndroidX.Media3.ExoPlayer.Upstream.Experimental.SlidingWeightedAverageBandwidthStatistic;
-
 
 namespace DrawnUi.Camera;
 
@@ -169,10 +164,17 @@ public partial class SkiaCamera
             var manager = (Android.Hardware.Camera2.CameraManager)context.GetSystemService(Android.Content.Context.CameraService);
             var cameraIds = manager.GetCameraIdList();
 
+            int validIndex = 0;
             for (int i = 0; i < cameraIds.Length; i++)
             {
                 var cameraId = cameraIds[i];
                 var characteristics = manager.GetCameraCharacteristics(cameraId);
+
+                // Skip cameras without stream configuration (same filter as SetupHardware)
+                var map = (Android.Hardware.Camera2.Params.StreamConfigurationMap)characteristics.Get(
+                    Android.Hardware.Camera2.CameraCharacteristics.ScalerStreamConfigurationMap);
+                if (map == null)
+                    continue;
 
                 var facing = (Java.Lang.Integer)characteristics.Get(Android.Hardware.Camera2.CameraCharacteristics.LensFacing);
                 var position = CameraPosition.Default;
@@ -189,14 +191,21 @@ public partial class SkiaCamera
 
                 var flashAvailable = (Java.Lang.Boolean)characteristics.Get(Android.Hardware.Camera2.CameraCharacteristics.FlashInfoAvailable);
 
+                // Check video/photo capability via available output sizes
+                var supportsVideo = map.GetOutputSizes(Java.Lang.Class.FromType(typeof(Android.Media.MediaRecorder)))?.Length > 0;
+                var supportsPhoto = map.GetOutputSizes((int)Android.Graphics.ImageFormatType.Jpeg)?.Length > 0;
+
                 cameras.Add(new CameraInfo
                 {
                     Id = cameraId,
-                    Name = $"Camera {i} ({position})",
+                    Name = $"Camera {cameraId} ({position})",
                     Position = position,
-                    Index = i,
-                    HasFlash = flashAvailable?.BooleanValue() ?? false
+                    Index = validIndex,
+                    HasFlash = flashAvailable?.BooleanValue() ?? false,
+                    SupportsVideo = supportsVideo,
+                    SupportsPhoto = supportsPhoto
                 });
+                validIndex++;
             }
         }
         catch (Exception ex)
@@ -645,7 +654,7 @@ public partial class SkiaCamera
 
             if (capturedVideo != null)
             {
-                OnVideoRecordingSuccess(capturedVideo);
+                OnRecordingSuccess(capturedVideo);
             }
 
             // Update state and notify success
@@ -654,7 +663,7 @@ public partial class SkiaCamera
             IsBusy = false; // Release busy state after successful processing
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
@@ -670,12 +679,12 @@ public partial class SkiaCamera
             IsBusy = false; // Release busy state on error
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
 
-            VideoRecordingFailed?.Invoke(this, ex);
+            RecordingFailed?.Invoke(this, ex);
             throw;
         }
         finally
@@ -763,7 +772,7 @@ public partial class SkiaCamera
             SetIsRecordingVideo(false);
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
@@ -778,12 +787,12 @@ public partial class SkiaCamera
             SetIsRecordingVideo(false);
 
             // Restart preview audio if still enabled
-            if (RecordAudio && State == CameraState.On)
+            if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
             {
                 StartPreviewAudioCapture();
             }
 
-            //VideoRecordingFailed?.Invoke(this, ex);
+            //RecordingFailed?.Invoke(this, ex);
             throw;
         }
         finally
@@ -818,25 +827,9 @@ public partial class SkiaCamera
 
         Debug.WriteLine($"[StartRealtimeVideoProcessing] Android encoder initialized with IsPreRecordingMode={IsPreRecording}");
 
-        // Control preview source: processed frames from encoder (PreviewVideoFlow=true) or raw camera (PreviewVideoFlow=false)
-        // Only applies when UseRealtimeVideoProcessing is TRUE (enforced by caller)
-        UseRecordingFramesForPreview = false;//PreviewVideoFlow;
-
-        // Invalidate preview when the encoder publishes a new composed frame (Android mirror)
-        if (PreviewVideoFlow && _captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
-        {
-            _encoderPreviewInvalidateHandler = (s, e) =>
-            {
-                try
-                {
-                    SafeAction(() => UpdatePreview());
-                }
-                catch
-                {
-                }
-            };
-            _droidEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
-        }
+        // Preview source: GPU path sets UseRecordingFramesForPreview=true later (single-stream,
+        // preview derived from encoder via GlPreviewScaler). Legacy path stays false (ImageReader preview).
+        UseRecordingFramesForPreview = false;
 
         // CRITICAL: Always use final Movies directory path (single-file approach)
         // Buffer stays in memory, so output path doesn't matter during pre-recording phase
@@ -885,7 +878,7 @@ public partial class SkiaCamera
         SetSourceFrameDimensions(width, height);
 
         // Pass locked rotation to encoder for proper video orientation metadata (Android-specific)
-        var audioEnabled = RecordAudio;
+        var audioEnabled = EnableAudioRecording;
         if (audioEnabled)
         {
             audioEnabled = await EnsureMicrophonePermissionAsync();
@@ -1040,7 +1033,7 @@ public partial class SkiaCamera
                         // Track camera input FPS (count every frame camera delivers)
                         CalculateCameraInputFps();
 
-                        if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
+                        if ((!IsPreRecording && !IsRecording) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
                         {
                             return;
                         }
@@ -1059,7 +1052,6 @@ public partial class SkiaCamera
                             DrawDiagnostics
                         );
 
-                        // EXIT IMMEDIATELY - camera callback complete in microseconds
                     };
 
                     // Subscribe to GPU frame processed event for FPS tracking
@@ -1070,7 +1062,26 @@ public partial class SkiaCamera
                         CalculateRecordingFps();
                     };
 
-                    Debug.WriteLine($"[StartRealtimeVideoProcessing] GPU camera session created");
+                    // GPU path: single-stream, preview derived from encoder via GlPreviewScaler.
+                    // FrameProcessor overlay is already baked in, so PreviewProcessor is skipped.
+                    UseRecordingFramesForPreview = true;
+
+                    if (MirrorRecordingToPreview && _captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
+                    {
+                        _encoderPreviewInvalidateHandler = (s, e) =>
+                        {
+                            try
+                            {
+                                SafeAction(() => UpdatePreview());
+                            }
+                            catch
+                            {
+                            }
+                        };
+                        _droidEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
+                    }
+
+                    Debug.WriteLine($"[StartRealtimeVideoProcessing] GPU camera session created (single-stream, UseRecordingFramesForPreview=true)");
                 }
                 else
                 {
@@ -1091,7 +1102,7 @@ public partial class SkiaCamera
 
                         // CRITICAL: Process frames during BOTH pre-recording AND live recording
                         // If encoder is null/disposed during transition, this check will catch it and return gracefully
-                        if ((!IsPreRecording && !IsRecordingVideo) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
+                        if ((!IsPreRecording && !IsRecording) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
                             return;
 
                         // Warmup: drop the first frame to avoid occasional corrupted first frame artifacts
@@ -1195,7 +1206,7 @@ public partial class SkiaCamera
         // Progress reporting
         _captureVideoEncoder.ProgressReported += (sender, duration) =>
         {
-            MainThread.BeginInvokeOnMainThread(() => OnVideoRecordingProgress(duration));
+            OnRecordingProgress(duration);
         };
 
     }
@@ -1207,7 +1218,7 @@ public partial class SkiaCamera
     /// 
     /// State machine logic:
     /// - If EnablePreRecording && !IsPreRecording: Start memory-only recording (pre-recording phase)
-    /// - If IsPreRecording && !IsRecordingVideo: Prepend buffer and start file recording (normal phase)
+    /// - If IsPreRecording && !IsRecording: Prepend buffer and start file recording (normal phase)
     /// - Otherwise: Start normal file recording
     /// </summary>
     /// <returns>Async task</returns>
@@ -1219,21 +1230,21 @@ public partial class SkiaCamera
             return;
         }
 
-        // Handle audio-only recording (RecordVideo=false)
-        if (!RecordVideo)
+        // Handle audio-only recording (EnableVideoRecording=false)
+        if (!EnableVideoRecording)
         {
-            if (!RecordAudio)
-                throw new InvalidOperationException("RecordAudio must be true when RecordVideo is false");
+            if (!EnableAudioRecording)
+                throw new InvalidOperationException("EnableAudioRecording must be true when EnableVideoRecording is false");
             await StartAudioOnlyRecording();
             return;
         }
 
-        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecordingVideo={IsRecordingVideo}");
+        Debug.WriteLine($"[StartVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecording={IsRecording}");
 
         try
         {
             // State 1 -> State 2: If pre-recording enabled and not yet in pre-recording phase, start memory-only recording
-            if (EnablePreRecording && !IsPreRecording && !IsRecordingVideo)
+            if (EnablePreRecording && !IsPreRecording && !IsRecording)
             {
                 Debug.WriteLine("[StartVideoRecording] Transitioning to IsPreRecording (memory-only recording)");
                 SetIsPreRecording(true);
@@ -1254,9 +1265,9 @@ public partial class SkiaCamera
                 }
             }
             // State 2 -> State 3: If in pre-recording phase, transition to file recording with muxing
-            else if (IsPreRecording && !IsRecordingVideo)
+            else if (IsPreRecording && !IsRecording)
             {
-                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecordingVideo (file recording with mux)");
+                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecording (file recording with mux)");
 
                 // CRITICAL ANDROID FIX: Single-file approach - reuse existing encoder!
                 // Encoder was already initialized and warmed up during pre-recording phase
@@ -1291,7 +1302,7 @@ public partial class SkiaCamera
  
             }
             // Normal recording (no pre-recording)
-            else if (!IsRecordingVideo)
+            else if (!IsRecording)
             {
                 Debug.WriteLine("[StartVideoRecording] Starting normal recording (no pre-recording)");
                 SetIsRecordingVideo(true);
@@ -1317,7 +1328,7 @@ public partial class SkiaCamera
             IsBusy = false;
             RecordingLockedRotation = -1; // Reset on error
             ClearPreRecordingBuffer();
-            VideoRecordingFailed?.Invoke(this, ex);
+            RecordingFailed?.Invoke(this, ex);
             throw;
         }
 
@@ -1389,15 +1400,30 @@ public partial class SkiaCamera
         OnAudioSampleAvailable(sample);
     }
 
+    private SemaphoreSlim _audioSemaphore = new(1, 1);
+
+    public override void OnDisposing()
+    {
+        _audioSemaphore?.Dispose();
+        _audioSemaphore = null;
+    }
+
+
     partial void StartPreviewAudioCapture()
     {
-        if (_previewAudioCapture != null || !RecordAudio)
+        // Start audio capture if either recording audio or audio monitoring is enabled
+        if (_previewAudioCapture != null || (!EnableAudioRecording && !EnableAudioMonitoring))
             return;
 
         Task.Run(async () =>
         {
+            if (!await _audioSemaphore.WaitAsync(1)) // Skip if busy processing
+                return;
+
             try
             {
+                StopPreviewAudioCapture();
+
                 _previewAudioCapture = new AudioCaptureAndroid();
                 _previewAudioCapture.SampleAvailable += OnPreviewAudioSampleAvailable;
                 var started = await _previewAudioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth, AudioDeviceIndex);
@@ -1417,6 +1443,10 @@ public partial class SkiaCamera
             {
                 Debug.WriteLine($"[SkiaCamera.Android] Preview audio capture error: {ex.Message}");
             }
+            finally
+            {
+                _audioSemaphore?.Release();
+            }
         });
     }
 
@@ -1428,8 +1458,12 @@ public partial class SkiaCamera
         try
         {
             _previewAudioCapture.SampleAvailable -= OnPreviewAudioSampleAvailable;
-            _ = _previewAudioCapture.StopAsync();
-            _previewAudioCapture.Dispose();
+            var kill = _previewAudioCapture;
+            _ = kill.StopAsync().ContinueWith(_ =>
+            {
+                kill.Dispose();
+            });
+
             _previewAudioCapture = null;
             Debug.WriteLine("[SkiaCamera.Android] Preview audio capture stopped");
         }

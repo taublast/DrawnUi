@@ -16,6 +16,7 @@ public partial class NewsCell : DrawnListCell
         TimeWindowMs = 100;
     }
 
+ 
     protected override void SetContent(object ctx)
     {
         base.SetContent(ctx);

@@ -15,11 +15,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/StateEffect.cs
+      path: src/Shared/Features/Effects/StateEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StateEffect
-    path: ../src/Maui/DrawnUi/Features/Effects/StateEffect.cs
+    path: ../src/Shared/Features/Effects/StateEffect.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -92,11 +92,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/StateEffect.cs
+      path: src/Shared/Features/Effects/StateEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateState
-    path: ../src/Maui/DrawnUi/Features/Effects/StateEffect.cs
+    path: ../src/Shared/Features/Effects/StateEffect.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui

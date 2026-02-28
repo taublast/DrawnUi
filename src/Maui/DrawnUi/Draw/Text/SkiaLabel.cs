@@ -1568,7 +1568,9 @@ namespace DrawnUi.Draw
                         var smartMeasure = MeasureLineGlyphs(paint, adding, needsShaping, scale);
 
                         var widthBlock = (float)Math.Round(smartMeasure.Width);
-                        var heightBlock = LineHeightPixels;
+                        var spanMetrics = paint.FontMetrics;
+                        var spanLineHeight = (float)Math.Round((GetCorrectedAscent(paint) + spanMetrics.Descent) * LineHeight);
+                        var heightBlock = spanLineHeight > LineHeightPixels ? spanLineHeight : LineHeightPixels;
 
                         if (paint.TextSkewX != 0)
                         {
@@ -2488,8 +2490,7 @@ namespace DrawnUi.Draw
             }
             else if (LineSpacing != 1)
             {
-                double defaultLeading = lineHeight * 0.1;
-                return defaultLeading * LineSpacing;
+                return lineHeight * (LineSpacing - 1);
             }
 
             return 0;
@@ -2524,11 +2525,39 @@ namespace DrawnUi.Draw
 
         #region FONT
 
+#if WINDOWS
+        /// <summary>
+        /// On Windows/DirectWrite, Ascent is read from OS/2 usWinAscent which is inflated
+        /// compared to FreeType/hhea on Android. We measure an actual ascender glyph ("l")
+        /// to get the true ascender height, which is what FontMetrics.Ascent is supposed to
+        /// represent. Result is cached per (typeface, size) to avoid repeated native calls
+        /// in the per-span measurement loop.
+        /// </summary>
+        static readonly System.Collections.Concurrent.ConcurrentDictionary<(IntPtr, float), float> _correctedAscentCache = new();
+
+        static float GetCorrectedAscent(SKPaint paint)
+        {
+            var key = (paint.Typeface?.Handle ?? IntPtr.Zero, paint.TextSize);
+            return _correctedAscentCache.GetOrAdd(key, _ =>
+            {
+                var bounds = new SKRect();
+                paint.MeasureText("Á", ref bounds);
+                return bounds.IsEmpty || bounds.Top >= 0
+                    ? -paint.FontMetrics.Ascent
+                    : -bounds.Top;
+            });
+        }
+#else
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static float GetCorrectedAscent(SKPaint paint) => -paint.FontMetrics.Ascent;
+#endif
+
+
         void UpdateFontMetrics(SKPaint paint)
         {
             FontMetrics = paint.FontMetrics;
             LineHeightPixels =
-                (float)Math.Round((-FontMetrics.Ascent + FontMetrics.Descent) * LineHeight); //PaintText.FontSpacing;
+                (float)Math.Round((GetCorrectedAscent(paint) + FontMetrics.Descent) * LineHeight); //PaintText.FontSpacing;
             fontUnderline = FontMetrics.UnderlinePosition.GetValueOrDefault();
 
             if (!string.IsNullOrEmpty(this.MonoForDigits))
@@ -3029,6 +3058,9 @@ namespace DrawnUi.Draw
             typeof(double), typeof(SkiaLabel), 1.0,
             propertyChanged: NeedInvalidateMeasure);
 
+        /// <summary>
+        /// Default is 1.0
+        /// </summary>
         public double LineSpacing
         {
             get { return (double)GetValue(LineSpacingProperty); }
@@ -3516,11 +3548,10 @@ namespace DrawnUi.Draw
             return this;
         }
 
-        public virtual bool OnFocusChanged(bool focus)
+        public new virtual bool OnFocusChanged(bool focus)
         {
             return false;
         }
-
 
         public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args,
             GestureEventProcessingInfo apply)

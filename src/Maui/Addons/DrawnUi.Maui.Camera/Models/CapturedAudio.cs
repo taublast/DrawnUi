@@ -5,7 +5,7 @@ namespace DrawnUi.Camera
 {
     /// <summary>
     /// Represents a captured audio recording (M4A file).
-    /// Returned from audio-only recording when RecordVideo=false.
+    /// Returned from audio-only recording when EnableVideoRecording=false.
     /// </summary>
     public class CapturedAudio : IDisposable
     {

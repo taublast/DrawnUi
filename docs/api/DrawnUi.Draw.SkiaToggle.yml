@@ -488,6 +488,7 @@ items:
   - DrawnUi.Draw.SkiaControl.OnChildTapped(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.CheckChildGestureHit(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   - DrawnUi.Draw.SkiaControl.BlockGesturesBelow
   - DrawnUi.Draw.SkiaControl.UpdateLocks
@@ -506,6 +507,7 @@ items:
   - DrawnUi.Draw.SkiaControl.HorizontalOptions
   - DrawnUi.Draw.SkiaControl.OnParentVisibilityChanged(System.Boolean)
   - DrawnUi.Draw.SkiaControl.VisibilityChanged
+  - DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
   - DrawnUi.Draw.SkiaControl.SendVisibilityChanged
   - DrawnUi.Draw.SkiaControl.OnVisibilityChanged(System.Boolean)
   - DrawnUi.Draw.SkiaControl.lockPausingAnimators
@@ -762,6 +764,7 @@ items:
   - DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
   - DrawnUi.Draw.SkiaControl.PostDrawAction(System.Action)
   - DrawnUi.Draw.SkiaControl.NeedRemeasuring
+  - DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
   - DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   - DrawnUi.Draw.SkiaControl.PaintWithEffects(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaControl.OnFirstDrawn
@@ -1183,7 +1186,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutChanged
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 21
+    startLine: 23
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1212,7 +1215,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnToggledChanged
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 31
+    startLine: 33
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1240,7 +1243,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsInternalCall
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 40
+    startLine: 42
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1267,7 +1270,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ChangeDefaultValue
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 42
+    startLine: 44
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1293,7 +1296,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NotifyWasToggled
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 50
+    startLine: 52
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1319,7 +1322,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 62
+    startLine: 64
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1348,7 +1351,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Toggled
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 69
+    startLine: 71
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1375,7 +1378,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyProperties
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 74
+    startLine: 76
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1403,7 +1406,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandToggledProperty
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 81
+    startLine: 83
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1430,7 +1433,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandToggled
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 84
+    startLine: 86
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1459,7 +1462,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsToggledProperty
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 90
+    startLine: 92
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1486,7 +1489,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsToggled
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 102
+    startLine: 104
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1515,7 +1518,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultValueProperty
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 108
+    startLine: 110
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1542,7 +1545,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultValue
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 120
+    startLine: 122
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1571,7 +1574,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RespondsToGesturesProperty
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 126
+    startLine: 128
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1598,7 +1601,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RespondsToGestures
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 132
+    startLine: 134
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1627,7 +1630,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandTappedProperty
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 138
+    startLine: 140
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1654,7 +1657,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandTapped
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 144
+    startLine: 146
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1683,7 +1686,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandTappedParameterProperty
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 150
+    startLine: 152
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1710,7 +1713,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommandTappedParameter
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 156
+    startLine: 158
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1739,7 +1742,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedUpdateProperties
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 162
+    startLine: 164
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1775,7 +1778,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorThumbOnProperty
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 169
+    startLine: 171
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1802,7 +1805,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorThumbOn
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 175
+    startLine: 177
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1831,7 +1834,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorFrameOnProperty
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 181
+    startLine: 183
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1858,7 +1861,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorFrameOn
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 187
+    startLine: 189
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1887,7 +1890,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorThumbOffProperty
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 193
+    startLine: 195
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1914,7 +1917,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorThumbOff
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 199
+    startLine: 201
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1943,7 +1946,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorFrameOffProperty
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 205
+    startLine: 207
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1970,7 +1973,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorFrameOff
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 211
+    startLine: 213
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1999,7 +2002,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAnimatedProperty
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 217
+    startLine: 219
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2026,7 +2029,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAnimated
     path: ../src/Maui/DrawnUi/Controls/Switches/SkiaToggle.cs
-    startLine: 223
+    startLine: 225
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11377,6 +11380,31 @@ references:
     name: GestureEventProcessingInfo
     href: DrawnUi.Draw.GestureEventProcessingInfo.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+  commentId: M:DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckHovered_DrawnUi_Draw_SkiaGesturesParameters_
+  name: CheckHovered(SkiaGesturesParameters)
+  nameWithType: SkiaControl.CheckHovered(SkiaGesturesParameters)
+  fullName: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+    name: CheckHovered
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckHovered_DrawnUi_Draw_SkiaGesturesParameters_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.CheckHovered(DrawnUi.Draw.SkiaGesturesParameters)
+    name: CheckHovered
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckHovered_DrawnUi_Draw_SkiaGesturesParameters_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   commentId: F:DrawnUi.Draw.SkiaControl.BlockGesturesBelowProperty
   parent: DrawnUi.Draw.SkiaControl
@@ -11563,6 +11591,13 @@ references:
   name: VisibilityChanged
   nameWithType: SkiaControl.VisibilityChanged
   fullName: DrawnUi.Draw.SkiaControl.VisibilityChanged
+- uid: DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
+  commentId: E:DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ParentVisibilityChanged
+  name: ParentVisibilityChanged
+  nameWithType: SkiaControl.ParentVisibilityChanged
+  fullName: DrawnUi.Draw.SkiaControl.ParentVisibilityChanged
 - uid: DrawnUi.Draw.SkiaControl.SendVisibilityChanged
   commentId: M:DrawnUi.Draw.SkiaControl.SendVisibilityChanged
   parent: DrawnUi.Draw.SkiaControl
@@ -16552,6 +16587,25 @@ references:
   name: NeedRemeasuring
   nameWithType: SkiaControl.NeedRemeasuring
   fullName: DrawnUi.Draw.SkiaControl.NeedRemeasuring
+- uid: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+  commentId: M:DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateShadowPaint
+  name: InvalidateShadowPaint()
+  nameWithType: SkiaControl.InvalidateShadowPaint()
+  fullName: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+    name: InvalidateShadowPaint
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateShadowPaint
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.InvalidateShadowPaint
+    name: InvalidateShadowPaint
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_InvalidateShadowPaint
+  - name: (
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   commentId: M:DrawnUi.Draw.SkiaControl.PaintWithShadows(DrawnUi.Draw.DrawingContext,System.Action)
   parent: DrawnUi.Draw.SkiaControl

@@ -94,7 +94,7 @@ public class Canvas : DrawnView, IGestureListener
         base.InvalidateMeasure();
     }
 
-    bool _wasMeasured;
+  bool _wasMeasured;
 
     protected Size AdaptSizeToContentIfNeeded(double widthConstraint, double heightConstraint, bool force = false)
     {
@@ -740,13 +740,13 @@ public class Canvas : DrawnView, IGestureListener
 
             if (hasHover is SkiaControl o)
             {
-                o.IsHovered = false;
+                o.IsHovered = o.OnHover(false);
             }
 
             hasHover = value;
             if (hasHover is SkiaControl n)
             {
-                n.IsHovered = true;
+                n.IsHovered = n.OnHover(true); 
             }
 
             OnPropertyChanged();

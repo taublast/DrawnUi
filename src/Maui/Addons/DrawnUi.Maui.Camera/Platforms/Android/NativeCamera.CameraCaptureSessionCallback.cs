@@ -8,6 +8,9 @@ namespace DrawnUi.Camera
         {
             private readonly NativeCamera owner;
 
+            public CameraCaptureSessionCallback(IntPtr handle, Android.Runtime.JniHandleOwnership transfer)
+                : base(handle, transfer) { }
+
             public CameraCaptureSessionCallback(NativeCamera owner)
             {
                 if (owner == null)
@@ -31,11 +34,18 @@ namespace DrawnUi.Camera
                 owner.CaptureSession = session;
                 try
                 {
-                    // For GPU path, targets are already set in CreateGpuCameraSession
-                    // For normal path, we need to add the preview surface
+                    // For GPU camera path (recording), targets are already set in CreateGpuCameraSession.
+                    // For normal path, add the appropriate preview surface.
                     if (!owner._useGpuCameraPath)
                     {
-                        owner.mPreviewRequestBuilder.AddTarget(owner.mImageReaderPreview.Surface);
+                        if (owner._useGlPreview && owner._glPreviewRenderer != null)
+                        {
+                            owner.mPreviewRequestBuilder.AddTarget(owner._glPreviewRenderer.GetCameraOutputSurface());
+                        }
+                        else
+                        {
+                            owner.mPreviewRequestBuilder.AddTarget(owner.mImageReaderPreview.Surface);
+                        }
                     }
 
                     // Apply preview-specific settings (focus mode only, flash already set in CreateCameraPreviewSession)

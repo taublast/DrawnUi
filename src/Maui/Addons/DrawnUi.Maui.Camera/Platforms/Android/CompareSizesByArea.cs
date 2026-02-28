@@ -6,6 +6,11 @@ namespace DrawnUi.Camera
 {
     public class CompareSizesByArea : Java.Lang.Object, IComparator
     {
+        public CompareSizesByArea(IntPtr handle, Android.Runtime.JniHandleOwnership transfer)
+            : base(handle, transfer) { }
+
+        public CompareSizesByArea() { }
+
         public int Compare(Object lhs, Object rhs)
         {
             var lhsSize = (Android.Util.Size)lhs;

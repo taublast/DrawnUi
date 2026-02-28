@@ -305,6 +305,20 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     FlashMode _flashMode = FlashMode.Off;
     CaptureFlashMode _captureFlashMode = CaptureFlashMode.Auto;
 
+    string _lastError;
+    public string LastError
+    {
+        get => _lastError;
+        set
+        {
+            if (_lastError != value)
+            {
+                _lastError = value;
+                Super.Log($"[NativeCamera] {value}");
+            }
+        }
+    }
+
     public int PreviewWidth { get; private set; }
     public int PreviewHeight { get; private set; }
 
@@ -366,13 +380,13 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                     switch (value)
                     {
                         case CameraProcessorState.Enabled:
-                            FormsControl.State = CameraState.On;
+                            FormsControl.State = HardwareState.On;
                             break;
                         case CameraProcessorState.Error:
-                            FormsControl.State = CameraState.Error;
+                            FormsControl.State = HardwareState.Error;
                             break;
                         default:
-                            FormsControl.State = CameraState.Off;
+                            FormsControl.State = HardwareState.Off;
                             break;
                     }
                 });
@@ -472,7 +486,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             }
             else
             {
-                Debug.WriteLine($"[NativeCameraWindows] Invalid camera index {FormsControl.CameraIndex}, falling back to first camera");
+                Debug.WriteLine($"[NativeCameraWindows] Invalid camera index {FormsControl.CameraIndex} (have {devices.Count} devices), falling back to first camera");
                 _cameraDevice = devices.FirstOrDefault();
             }
         }
@@ -503,7 +517,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         var captureMode = StreamingCaptureMode.Video;
         string preferredAudioDeviceId = null;
 
-        if (FormsControl != null && FormsControl.RecordAudio)
+        if (FormsControl != null && FormsControl.EnableAudioRecording)
         {
             // Try to find an audio device
             var audioDevices = await DeviceInformation.FindAllAsync(DeviceClass.AudioCapture);
@@ -540,7 +554,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             }
             else
             {
-                Debug.WriteLine("[NativeCameraWindows] RecordAudio is requested, but NO AudioCapture devices found! Fallback to Video only.");
+                Debug.WriteLine("[NativeCameraWindows] EnableAudioRecording is requested, but NO AudioCapture devices found! Fallback to Video only.");
                 captureMode = StreamingCaptureMode.Video;
             }
         }
@@ -1031,7 +1045,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
                 capturedImage = new CapturedImage()
                 {
-                    Facing = FormsControl.Facing,
+                    Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
                     Time = DateTime.UtcNow,
                     Image = skImage, // Transfer ownership to CapturedImage - renderer will dispose
                     Meta = meta,
@@ -1157,7 +1171,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
                 var capturedImage = new CapturedImage()
                 {
-                    Facing = FormsControl.Facing,
+                    Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
                     Time = DateTime.UtcNow,
                     Image = skImage, // Transfer ownership to CapturedImage - renderer will dispose
                     Meta = meta,
@@ -1320,7 +1334,6 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         if (_frameReader == null)
         {
             //Debug.WriteLine("[NativeCameraWindows] Frame reader is null, cannot start");
-            State = CameraProcessorState.Error;
             return;
         }
 
@@ -1914,6 +1927,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             {
                 return new CaptureFormat
                 {
+                    Index = -1,
                     Width = (int)width,
                     Height = (int)height,
                     FormatId = $"windows_{_cameraDevice?.Id}_{width}x{height}"
@@ -1985,7 +1999,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
             var capturedImage = new CapturedImage()
             {
-                Facing = FormsControl.Facing,
+                Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
                 Time = DateTime.UtcNow,
                 Image = skImage,
                 Rotation = rotation,
@@ -2177,6 +2191,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                     .ThenByDescending(f => f.FPS)
                     .ToList();
 
+                var i = 0;
                 foreach (var fmt in uniqueFormats)
                 {
                     // Estimate bitrate based on resolution and framerate
@@ -2191,6 +2206,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
                     formats.Add(new VideoFormat
                     {
+                        Index = i++,
                         Width = fmt.Width,
                         Height = fmt.Height,
                         FrameRate = fmt.FPS,
@@ -2293,7 +2309,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         }
 
         // Remove audio if not recording audio
-        if (!FormsControl.RecordAudio)
+        if (!FormsControl.EnableAudioRecording)
         {
             profile.Audio = null;
             //Debug.WriteLine("[NativeCamera.Windows] Audio disabled for video recording");
@@ -2327,7 +2343,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             }
 
             // Handle audio setting for manual profile too
-            if (!FormsControl.RecordAudio)
+            if (!FormsControl.EnableAudioRecording)
             {
                 profile.Audio = null;
             }
@@ -2338,7 +2354,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         {
             // Fallback to standard quality
             var fallbackProfile = MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p);
-            if (!FormsControl.RecordAudio)
+            if (!FormsControl.EnableAudioRecording)
             {
                 fallbackProfile.Audio = null;
             }
@@ -2355,7 +2371,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             return;
 
         var elapsed = DateTime.Now - _recordingStartTime;
-        VideoRecordingProgress?.Invoke(elapsed);
+        RecordingProgress?.Invoke(elapsed);
     }
 
 
@@ -2407,7 +2423,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             Debug.WriteLine($"[NativeCameraWindows] Failed to start video recording: {ex.Message}\nStackTrace: {ex.StackTrace}");
             _isRecordingVideo = false;
             _currentVideoFile = null;
-            VideoRecordingFailed?.Invoke(ex);
+            RecordingFailed?.Invoke(ex);
         }
     }
 
@@ -2447,14 +2463,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 Format = GetCurrentVideoFormat(),
                 Facing = FormsControl.Facing,
                 Time = _recordingStartTime,
-                FileSizeBytes = fileSizeBytes,
-                Metadata = new Dictionary<string, object>
-                {
-                    { "Platform", "Windows" },
-                    { "CameraDevice", _cameraDevice?.Name ?? "Unknown" },
-                    { "RecordingStartTime", _recordingStartTime },
-                    { "RecordingEndTime", recordingEndTime }
-                }
+                FileSizeBytes = fileSizeBytes
             };
 
             _isRecordingVideo = false;
@@ -2466,7 +2475,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             }
 
             // Fire success event
-            VideoRecordingSuccess?.Invoke(capturedVideo);
+            RecordingSuccess?.Invoke(capturedVideo);
 
             Debug.WriteLine("[NativeCameraWindows] Video recording completed successfully");
         }
@@ -2474,7 +2483,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         {
             Debug.WriteLine($"[NativeCameraWindows] Failed to stop video recording: {ex.Message}");
             _isRecordingVideo = false;
-            VideoRecordingFailed?.Invoke(ex);
+            RecordingFailed?.Invoke(ex);
         }
         finally
         {
@@ -2641,7 +2650,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     /// <param name="videoFilePath">Path to video file</param>
     /// <param name="album">Optional album name</param>
     /// <returns>Gallery path if successful, null if failed</returns>
-    public async Task<string> SaveVideoToGallery(string videoFilePath, string album)
+    public async Task<string> SaveVideoToGallery(string videoFilePath, string album, Metadata meta = null)
     {
         // TODO: Implement Windows video save to gallery
         await Task.Delay(100); // Placeholder
@@ -2651,17 +2660,17 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
     /// <summary>
     /// Event fired when video recording completes successfully
     /// </summary>
-    public Action<CapturedVideo> VideoRecordingSuccess { get; set; }
+    public Action<CapturedVideo> RecordingSuccess { get; set; }
 
     /// <summary>
     /// Event fired when video recording fails
     /// </summary>
-    public Action<Exception> VideoRecordingFailed { get; set; }
+    public Action<Exception> RecordingFailed { get; set; }
 
     /// <summary>
     /// Event fired when video recording progress updates
     /// </summary>
-    public Action<TimeSpan> VideoRecordingProgress { get; set; }
+    public Action<TimeSpan> RecordingProgress { get; set; }
 
     /// <summary>
     /// Sets whether audio should be recorded with video.

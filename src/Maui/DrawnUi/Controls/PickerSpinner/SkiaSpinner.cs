@@ -658,6 +658,8 @@ public class SkiaSpinner : SkiaLayout
 
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
+        CheckHovered(args);
+
         var consumedDefault = BlockGesturesBelow ? this : null;
 
         if (!RespondsToGestures || Wheel == null || ItemsCount < 1

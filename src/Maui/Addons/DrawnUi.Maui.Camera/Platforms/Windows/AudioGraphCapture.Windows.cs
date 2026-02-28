@@ -37,15 +37,33 @@ namespace DrawnUi.Camera.Platforms.Windows
 
         public event EventHandler<AudioSample>? SampleAvailable;
 
+        string _lastError;
+        public string LastError
+        {
+            get => _lastError;
+            set
+            {
+                if (_lastError != value)
+                {
+                    _lastError = value;
+                    Super.Log($"[AudioGraphCapture] {value}");
+                }
+            }
+        }
+
+
         /// <summary>
         /// Start audio capture with optional device selection
         /// </summary>
         public async Task<bool> StartAsync(int sampleRate = 44100, int channels = 1, AudioBitDepth bitDepth = AudioBitDepth.Pcm16Bit, int deviceIndex = -1)
         {
-            if (_isCapturing)
+            lock (_lock)
             {
-                Debug.WriteLine("[AudioGraphCapture] Already capturing");
-                return true;
+                if (_isCapturing)
+                {
+                    Debug.WriteLine("[AudioGraphCapture] Already capturing");
+                    return true;
+                }
             }
 
             SampleRate = sampleRate;
@@ -75,17 +93,26 @@ namespace DrawnUi.Camera.Platforms.Windows
                     return false;
                 }
 
-                _audioGraph = result.Graph;
+                lock (_lock)
+                {
+                    _audioGraph = result.Graph;
 
-                // Update with actual AudioGraph settings (may differ from requested)
-                // AudioGraph controls the actual format - we must use what it provides
-                SampleRate = (int)_audioGraph.EncodingProperties.SampleRate;
-                Channels = (int)_audioGraph.EncodingProperties.ChannelCount;
+                    // Update with actual AudioGraph settings (may differ from requested)
+                    // AudioGraph controls the actual format - we must use what it provides
+                    SampleRate = (int)_audioGraph.EncodingProperties.SampleRate;
+                    Channels = (int)_audioGraph.EncodingProperties.ChannelCount;
+                }
+
+                AudioGraph audioGraph;
+                lock (_lock)
+                {
+                    audioGraph = _audioGraph;
+                }
 
                 Debug.WriteLine($"[AudioGraphCapture] AudioGraph created successfully:");
                 Debug.WriteLine($"[AudioGraphCapture]   Requested: {sampleRate}Hz/{channels}ch - Actual: {SampleRate}Hz/{Channels}ch");
-                Debug.WriteLine($"[AudioGraphCapture]   SamplesPerQuantum: {_audioGraph.SamplesPerQuantum}");
-                Debug.WriteLine($"[AudioGraphCapture]   LatencyInSamples: {_audioGraph.LatencyInSamples}");
+                Debug.WriteLine($"[AudioGraphCapture]   SamplesPerQuantum: {audioGraph.SamplesPerQuantum}");
+                Debug.WriteLine($"[AudioGraphCapture]   LatencyInSamples: {audioGraph.LatencyInSamples}");
 
                 // Find audio input device
                 var devices = await DeviceInformation.FindAllAsync(DeviceClass.AudioCapture);
@@ -127,9 +154,9 @@ namespace DrawnUi.Camera.Platforms.Windows
                 }
 
                 // Create device input node
-                var inputResult = await _audioGraph.CreateDeviceInputNodeAsync(
+                var inputResult = await audioGraph.CreateDeviceInputNodeAsync(
                     global::Windows.Media.Capture.MediaCategory.Media,
-                    _audioGraph.EncodingProperties,
+                    audioGraph.EncodingProperties,
                     selectedDevice);
 
                 if (inputResult.Status != AudioDeviceNodeCreationStatus.Success)
@@ -138,20 +165,23 @@ namespace DrawnUi.Camera.Platforms.Windows
                     return false;
                 }
 
-                _deviceInputNode = inputResult.DeviceInputNode;
+                lock (_lock)
+                {
+                    _deviceInputNode = inputResult.DeviceInputNode;
 
-                // Create frame output node - this gives us frame-by-frame access
-                _frameOutputNode = _audioGraph.CreateFrameOutputNode(_audioGraph.EncodingProperties);
+                    // Create frame output node - this gives us frame-by-frame access
+                    _frameOutputNode = audioGraph.CreateFrameOutputNode(audioGraph.EncodingProperties);
 
-                // Connect input to output
-                _deviceInputNode.AddOutgoingConnection(_frameOutputNode);
+                    // Connect input to output
+                    _deviceInputNode.AddOutgoingConnection(_frameOutputNode);
 
-                // Subscribe to quantum started event - this fires for each audio frame
-                _audioGraph.QuantumStarted += OnAudioGraphQuantumStarted;
+                    // Subscribe to quantum started event - this fires for each audio frame
+                    audioGraph.QuantumStarted += OnAudioGraphQuantumStarted;
 
-                // Start the audio graph
-                _audioGraph.Start();
-                _isCapturing = true;
+                    // Start the audio graph
+                    audioGraph.Start();
+                    _isCapturing = true;
+                }
 
                 Debug.WriteLine("[AudioGraphCapture] Capture started successfully");
                 return true;
@@ -171,14 +201,20 @@ namespace DrawnUi.Camera.Platforms.Windows
         /// </summary>
         private void OnAudioGraphQuantumStarted(AudioGraph sender, object args)
         {
-            if (!_isCapturing || _frameOutputNode == null)
-                return;
+            AudioFrameOutputNode frameOutputNode;
+            lock (_lock)
+            {
+                if (!_isCapturing || _frameOutputNode == null)
+                    return;
+                
+                frameOutputNode = _frameOutputNode;
+            }
 
             try
             {
                 // Get the audio frame from the output node
                 // Windows.Media.AudioFrame
-                using var frame = _frameOutputNode.GetFrame();
+                using var frame = frameOutputNode.GetFrame();
                 if (frame == null) return;
 
                 using var buffer = frame.LockBuffer(AudioBufferAccessMode.Read);
@@ -282,15 +318,21 @@ namespace DrawnUi.Camera.Platforms.Windows
 
         public async Task StopAsync()
         {
-            if (!_isCapturing)
-                return;
-
-            _isCapturing = false;
-
-            if (_audioGraph != null)
+            AudioGraph audioGraph = null;
+            
+            lock (_lock)
             {
-                _audioGraph.QuantumStarted -= OnAudioGraphQuantumStarted;
-                _audioGraph.Stop();
+                if (!_isCapturing)
+                    return;
+
+                _isCapturing = false;
+                audioGraph = _audioGraph;
+            }
+
+            if (audioGraph != null)
+            {
+                audioGraph.QuantumStarted -= OnAudioGraphQuantumStarted;
+                audioGraph.Stop();
             }
 
             Debug.WriteLine("[AudioGraphCapture] Capture stopped");
@@ -334,13 +376,24 @@ namespace DrawnUi.Camera.Platforms.Windows
             {
                 StopAsync().Wait(1000);
 
-                _frameOutputNode?.Dispose();
-                _deviceInputNode?.Dispose();
-                _audioGraph?.Dispose();
+                AudioFrameOutputNode frameOutputNode;
+                AudioDeviceInputNode deviceInputNode;
+                AudioGraph audioGraph;
+                
+                lock (_lock)
+                {
+                    frameOutputNode = _frameOutputNode;
+                    deviceInputNode = _deviceInputNode;
+                    audioGraph = _audioGraph;
+                    
+                    _frameOutputNode = null;
+                    _deviceInputNode = null;
+                    _audioGraph = null;
+                }
 
-                _frameOutputNode = null;
-                _deviceInputNode = null;
-                _audioGraph = null;
+                frameOutputNode?.Dispose();
+                deviceInputNode?.Dispose();
+                audioGraph?.Dispose();
             }
             catch (Exception ex)
             {

@@ -30,6 +30,7 @@ public class AudioOnlyEncoderApple : IAudioOnlyEncoder
     private int _channels;
     private readonly object _writeLock = new();
     private long _totalSamplesWritten;
+    private long _firstTimestampNs = -1;
     private CMAudioFormatDescription _audioFormatDescription;
 
     // Track memory allocations for cleanup
@@ -122,6 +123,7 @@ public class AudioOnlyEncoderApple : IAudioOnlyEncoder
         _startTime = DateTime.Now;
         _isRecording = true;
         _totalSamplesWritten = 0;
+        _firstTimestampNs = -1;
 
         Debug.WriteLine("[AudioOnlyEncoderApple] Started recording");
         return Task.CompletedTask;
@@ -226,7 +228,10 @@ public class AudioOnlyEncoderApple : IAudioOnlyEncoder
                 return null;
             }
 
-            double timeSec = (double)sample.TimestampNs / 1_000_000_000;
+            // Make timestamps relative to first sample (absolute timestamps cause bogus duration)
+            if (_firstTimestampNs < 0)
+                _firstTimestampNs = sample.TimestampNs;
+            double timeSec = (double)(sample.TimestampNs - _firstTimestampNs) / 1_000_000_000;
             var presentationTime = CMTime.FromSeconds(timeSec, sample.SampleRate);
 
             var sampleBuffer = CMSampleBuffer.CreateWithPacketDescriptions(

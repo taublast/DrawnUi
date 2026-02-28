@@ -1,6 +1,4 @@
 #if IOS || MACCATALYST
-using System;
-using System.Threading;
 using CoreVideo;
 using Metal;
 using Foundation;

@@ -1,0 +1,239 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.PostRendererEffectUseBackgroud
+  commentId: T:DrawnUi.Draw.PostRendererEffectUseBackgroud
+  id: PostRendererEffectUseBackgroud
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.PostRendererEffectUseBackgroud.Always
+  - DrawnUi.Draw.PostRendererEffectUseBackgroud.Never
+  - DrawnUi.Draw.PostRendererEffectUseBackgroud.Once
+  langs:
+  - csharp
+  - vb
+  name: PostRendererEffectUseBackgroud
+  nameWithType: PostRendererEffectUseBackgroud
+  fullName: DrawnUi.Draw.PostRendererEffectUseBackgroud
+  type: Enum
+  source:
+    remote:
+      path: src/Shared/Features/Effects/PostRendererEffectUseBackgroud.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: PostRendererEffectUseBackgroud
+    path: ../src/Shared/Features/Effects/PostRendererEffectUseBackgroud.cs
+    startLine: 5
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Controls how the effect acquires the background texture for its shader.
+  example: []
+  syntax:
+    content: public enum PostRendererEffectUseBackgroud
+    content.vb: Public Enum PostRendererEffectUseBackgroud
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Draw.PostRendererEffectUseBackgroud.Always
+  commentId: F:DrawnUi.Draw.PostRendererEffectUseBackgroud.Always
+  id: Always
+  parent: DrawnUi.Draw.PostRendererEffectUseBackgroud
+  langs:
+  - csharp
+  - vb
+  name: Always
+  nameWithType: PostRendererEffectUseBackgroud.Always
+  fullName: DrawnUi.Draw.PostRendererEffectUseBackgroud.Always
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Features/Effects/PostRendererEffectUseBackgroud.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Always
+    path: ../src/Shared/Features/Effects/PostRendererEffectUseBackgroud.cs
+    startLine: 8
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Live snapshot every frame (glass/blur effects). Default.
+  example: []
+  syntax:
+    content: Always = 0
+    return:
+      type: DrawnUi.Draw.PostRendererEffectUseBackgroud
+- uid: DrawnUi.Draw.PostRendererEffectUseBackgroud.Once
+  commentId: F:DrawnUi.Draw.PostRendererEffectUseBackgroud.Once
+  id: Once
+  parent: DrawnUi.Draw.PostRendererEffectUseBackgroud
+  langs:
+  - csharp
+  - vb
+  name: Once
+  nameWithType: PostRendererEffectUseBackgroud.Once
+  fullName: DrawnUi.Draw.PostRendererEffectUseBackgroud.Once
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Features/Effects/PostRendererEffectUseBackgroud.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Once
+    path: ../src/Shared/Features/Effects/PostRendererEffectUseBackgroud.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Snapshot taken once on first render, then frozen (transition effects). You can set AquiredBackground property to false to re-request background aquisition.
+  example: []
+  syntax:
+    content: Once = 1
+    return:
+      type: DrawnUi.Draw.PostRendererEffectUseBackgroud
+- uid: DrawnUi.Draw.PostRendererEffectUseBackgroud.Never
+  commentId: F:DrawnUi.Draw.PostRendererEffectUseBackgroud.Never
+  id: Never
+  parent: DrawnUi.Draw.PostRendererEffectUseBackgroud
+  langs:
+  - csharp
+  - vb
+  name: Never
+  nameWithType: PostRendererEffectUseBackgroud.Never
+  fullName: DrawnUi.Draw.PostRendererEffectUseBackgroud.Never
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Features/Effects/PostRendererEffectUseBackgroud.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Never
+    path: ../src/Shared/Features/Effects/PostRendererEffectUseBackgroud.cs
+    startLine: 14
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: 'No background texture — effect renders on transparent (generative: confetti, fireworks).'
+  example: []
+  syntax:
+    content: Never = 2
+    return:
+      type: DrawnUi.Draw.PostRendererEffectUseBackgroud
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.Draw.PostRendererEffectUseBackgroud
+  commentId: T:DrawnUi.Draw.PostRendererEffectUseBackgroud
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.PostRendererEffectUseBackgroud.html
+  name: PostRendererEffectUseBackgroud
+  nameWithType: PostRendererEffectUseBackgroud
+  fullName: DrawnUi.Draw.PostRendererEffectUseBackgroud

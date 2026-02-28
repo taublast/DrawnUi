@@ -225,7 +225,7 @@ namespace DrawnUi.Draw
             catch (Exception e)
             {
                 //we are avoiding MAUI crashes due concurrent access to properties from different threads
-                Super.Log(e);
+                Super.Log($"[{propertyName}] {e}");
             }
 
             //if (!isApplyingStyle && !string.IsNullOrEmpty(propertyName))
@@ -462,6 +462,7 @@ namespace DrawnUi.Draw
             {
                 PlatformShadow = null;
             }
+            InvalidateShadowPaint();
         }
 
         protected SkiaShadow PlatformShadow

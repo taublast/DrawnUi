@@ -160,6 +160,8 @@ public class SkiaRadioButton : SkiaToggle, ISkiaRadioButton
 
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
+        CheckHovered(args);
+
         if (args.Type == TouchActionResult.Tapped)
         {
             if (!IsToggled)

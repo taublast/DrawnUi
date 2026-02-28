@@ -30,6 +30,16 @@ public class CameraInfo
     /// </summary>
     public bool HasFlash { get; set; }
 
+    /// <summary>
+    /// Whether this camera supports video recording
+    /// </summary>
+    public bool SupportsVideo { get; set; }
+
+    /// <summary>
+    /// Whether this camera supports photo capture
+    /// </summary>
+    public bool SupportsPhoto { get; set; }
+
     public override string ToString()
     {
         return $"{Name} ({Position})";

@@ -610,18 +610,20 @@ namespace DrawnUi.Views
             DeviceOrientation.Unknown,
             propertyChanged: UpdateRotation);
 
+
+        public DeviceOrientation Orientation
+        {
+            get { return (DeviceOrientation)GetValue(OrientationProperty); }
+            set { SetValue(OrientationProperty, value); }
+        }
+
+
         private static void UpdateRotation(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (bindable is DrawnView control)
             {
                 control.OrientationChanged?.Invoke(control, (DeviceOrientation)newvalue);
             }
-        }
-
-        public DeviceOrientation Orientation
-        {
-            get { return (DeviceOrientation)GetValue(OrientationProperty); }
-            set { SetValue(OrientationProperty, value); }
         }
 
         //{
@@ -1345,7 +1347,7 @@ namespace DrawnUi.Views
 
         public bool IsDisposed { get; protected set; }
 
-        SkiaDrawingContext CreateContext(SKSurface surface)
+        protected virtual SkiaDrawingContext CreateContext(SKSurface surface)
         {
             return new SkiaDrawingContext()
             {
@@ -1659,7 +1661,7 @@ namespace DrawnUi.Views
             DisposeManager.EnqueueDisposable(resource, FrameNumber);
         }
 
-        protected DisposableManager DisposeManager { get; } = new(3);
+        protected DisposableManager DisposeManager { get; } = new();
 
         public readonly struct TimedDisposable : IDisposable
         {
@@ -2043,16 +2045,18 @@ namespace DrawnUi.Views
         public static readonly BindableProperty RenderingScaleProperty = BindableProperty.Create(nameof(RenderingScale),
             typeof(float), typeof(DrawnView),
             -1.0f,
-            propertyChanged: (b, o, n) =>
+            propertyChanged: NeedInvalidateCanvas);
+
+        protected static void NeedInvalidateCanvas(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            var control = bindable as DrawnView;
             {
-                var control = b as DrawnView;
+                if (control != null && !control.IsDisposed)
                 {
-                    if (control != null && !control.IsDisposed)
-                    {
-                        control.OnDensityChanged();
-                    }
+                    control.OnDensityChanged();
                 }
-            });
+            }
+        }
 
         public virtual void OnDensityChanged()
         {
@@ -2060,6 +2064,9 @@ namespace DrawnUi.Views
             Update();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public float RenderingScale
         {
             get

@@ -11,9 +11,12 @@ public class BaseImageFilterEffect : SkiaEffect, IImageEffect
 
     public override void Update()
     {
-        var kill = Filter;
+        if (Parent != null && Filter!=null)
+        {
+            Parent.DisposeObject(Filter);
+        }
         Filter = null;
-        kill?.Dispose();
+
         base.Update();
     }
 

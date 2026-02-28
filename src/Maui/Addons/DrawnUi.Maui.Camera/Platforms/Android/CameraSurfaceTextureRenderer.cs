@@ -24,10 +24,12 @@ namespace DrawnUi.Camera
         private bool _disposed;
         private int _creationThreadId;
         private bool _needsReattach = false;
+        private FrameAvailableListener _frameListener; // prevent GC collection
 
         public int Width => _width;
         public int Height => _height;
         public bool IsInitialized => _initialized;
+        public bool Disabled { get; set; }
 
         /// <summary>
         /// Event fired when a new frame is available from the camera.
@@ -68,7 +70,8 @@ namespace DrawnUi.Camera
                 // CRITICAL: Must provide a Handler with a Looper, otherwise callbacks won't be delivered
                 // if the current thread doesn't have a Looper (like the EGL thread)
                 var handler = new Android.OS.Handler(Android.OS.Looper.MainLooper);
-                _surfaceTexture.SetOnFrameAvailableListener(new FrameAvailableListener(this), handler);
+                _frameListener = new FrameAvailableListener(this);
+                _surfaceTexture.SetOnFrameAvailableListener(_frameListener, handler);
                 System.Diagnostics.Debug.WriteLine("[CameraSurfaceTextureRenderer] Frame listener set with MainLooper handler");
 
                 // Create Surface for Camera2 output target
@@ -108,6 +111,22 @@ namespace DrawnUi.Camera
         }
 
         /// <summary>
+        /// Re-register the OnFrameAvailable listener on the SurfaceTexture.
+        /// Must be called after a Camera2 session cycle (the listener can stop firing
+        /// when the SurfaceTexture is removed from and re-added to a Camera2 session).
+        /// </summary>
+        public void ResetFrameListener()
+        {
+            if (_surfaceTexture == null || !_initialized) return;
+
+            _frameListener?.Dispose();
+            _frameListener = new FrameAvailableListener(this);
+            var handler = new Android.OS.Handler(Android.OS.Looper.MainLooper);
+            _surfaceTexture.SetOnFrameAvailableListener(_frameListener, handler);
+            System.Diagnostics.Debug.WriteLine("[CameraSurfaceTextureRenderer] Frame listener re-registered");
+        }
+
+        /// <summary>
         /// Update the texture with the latest camera frame.
         /// Must be called on GL thread with valid EGL context.
         /// </summary>
@@ -132,24 +151,31 @@ namespace DrawnUi.Camera
 
             try
             {
-                // Reattach SurfaceTexture to current EGL context if needed (API 26+ only)
+                // Reattach SurfaceTexture to current EGL context if needed (API 26+ only).
+                // Separate try-catch for DetachFromGLContext: if the old GL context is already
+                // destroyed, detach throws but the SurfaceTexture may be implicitly detached.
+                // AttachToGLContext must still run to bind to the new context.
                 if (_needsReattach)
                 {
                     System.Diagnostics.Debug.WriteLine($"[SurfaceTexture] Reattaching to current EGL context on thread {currentThreadId}");
-                    _surfaceTexture.DetachFromGLContext();
+
+                    try { _surfaceTexture.DetachFromGLContext(); }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[SurfaceTexture] DetachFromGLContext: {ex.Message} (continuing — may already be detached)");
+                    }
+
                     _surfaceTexture.AttachToGLContext(_oesTextureId);
                     _creationThreadId = currentThreadId;
                     _needsReattach = false;
-                    System.Diagnostics.Debug.WriteLine($"[SurfaceTexture] ✓ Reattached successfully");
+                    System.Diagnostics.Debug.WriteLine($"[SurfaceTexture] Reattached successfully on thread {currentThreadId}");
                 }
 
-                long beforeTs = _surfaceTexture.Timestamp;
                 _surfaceTexture.UpdateTexImage();
-                long afterTs = _surfaceTexture.Timestamp;
                 _surfaceTexture.GetTransformMatrix(_transformMatrix);
 
                 _updateCount++;
-                _lastTimestamp = afterTs;
+                _lastTimestamp = _surfaceTexture.Timestamp;
             }
             catch (Exception ex)
             {
@@ -188,6 +214,12 @@ namespace DrawnUi.Camera
         {
             private readonly CameraSurfaceTextureRenderer _renderer;
 
+            // Required by the Android/Mono JNI bridge: when Android GC resurrects the native
+            // Java object and needs to re-create the managed wrapper from a native handle,
+            // it looks for this constructor. Without it you get NotSupportedException.
+            public FrameAvailableListener(IntPtr handle, Android.Runtime.JniHandleOwnership transfer)
+                : base(handle, transfer) { }
+
             public FrameAvailableListener(CameraSurfaceTextureRenderer renderer)
             {
                 _renderer = renderer;
@@ -195,7 +227,10 @@ namespace DrawnUi.Camera
 
             public void OnFrameAvailable(SurfaceTexture surfaceTexture)
             {
-                _renderer.OnFrameAvailable?.Invoke(_renderer, surfaceTexture);
+                if (_renderer!=null && _renderer.Disabled)
+                    return;
+
+                _renderer?.OnFrameAvailable?.Invoke(_renderer, surfaceTexture);
             }
         }
 
@@ -206,6 +241,9 @@ namespace DrawnUi.Camera
 
             _shader?.Dispose();
             _shader = null;
+
+            _frameListener?.Dispose();
+            _frameListener = null;
 
             _cameraSurface?.Release();
             _cameraSurface?.Dispose();

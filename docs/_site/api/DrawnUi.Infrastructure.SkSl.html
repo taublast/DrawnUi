@@ -155,7 +155,7 @@ Class SkSl  <a class="header-action link-secondary" title="View source" href="ht
 
   <h3 id="DrawnUi_Infrastructure_SkSl_CompiledCache" data-uid="DrawnUi.Infrastructure.SkSl.CompiledCache">
   CompiledCache
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Features/Shaders/SKSL.cs/#L24"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Features/Shaders/SKSL.cs/#L36"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -190,7 +190,7 @@ Class SkSl  <a class="header-action link-secondary" title="View source" href="ht
 
   <h3 id="DrawnUi_Infrastructure_SkSl_Compile_System_String_" data-uid="DrawnUi.Infrastructure.SkSl.Compile(System.String)">
   Compile(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Features/Shaders/SKSL.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Features/Shaders/SKSL.cs/#L43"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Will compile your SKSL shader code into SKRuntimeEffect.</p>
@@ -227,7 +227,7 @@ Class SkSl  <a class="header-action link-secondary" title="View source" href="ht
 
   <h3 id="DrawnUi_Infrastructure_SkSl_Compile_System_String_System_String_System_Boolean_System_Action_System_String__" data-uid="DrawnUi.Infrastructure.SkSl.Compile(System.String,System.String,System.Boolean,System.Action{System.String})">
   Compile(string, string, bool, Action&lt;string&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Features/Shaders/SKSL.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Features/Shaders/SKSL.cs/#L55"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Will compile your SKSL shader code into SKRuntimeEffect.
@@ -271,7 +271,7 @@ The filename parameter is used for debugging and caching. Do not forget to disab
 
   <h3 id="DrawnUi_Infrastructure_SkSl_CreateShader_SkiaSharp_SKRuntimeEffect_SkiaSharp_SKRuntimeEffectUniforms_System_Collections_Generic_Dictionary_System_String_SkiaSharp_SKShader__" data-uid="DrawnUi.Infrastructure.SkSl.CreateShader(SkiaSharp.SKRuntimeEffect,SkiaSharp.SKRuntimeEffectUniforms,System.Collections.Generic.Dictionary{System.String,SkiaSharp.SKShader})">
   CreateShader(SKRuntimeEffect, SKRuntimeEffectUniforms, Dictionary&lt;string, SKShader&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Features/Shaders/SKSL.cs/#L122"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Features/Shaders/SKSL.cs/#L134"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -368,6 +368,72 @@ The filename parameter is used for debugging and caching. Do not forget to disab
     <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
     <dd></dd>
   </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkSl_Precompile_" data-uid="DrawnUi.Infrastructure.SkSl.Precompile*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkSl_Precompile_System_String___" data-uid="DrawnUi.Infrastructure.SkSl.Precompile(System.String[])">
+  Precompile(params string[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Features/Shaders/SKSL.cs/#L24"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Precompile(params string[] filenames)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>filenames</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>[]</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkSl_ThrowCompilationError_" data-uid="DrawnUi.Infrastructure.SkSl.ThrowCompilationError*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkSl_ThrowCompilationError_System_String_System_String_System_String_" data-uid="DrawnUi.Infrastructure.SkSl.ThrowCompilationError(System.String,System.String,System.String)">
+  ThrowCompilationError(string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Features/Shaders/SKSL.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void ThrowCompilationError(string shaderCode, string errors, string filename = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>shaderCode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>errors</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>filename</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
 
 
 

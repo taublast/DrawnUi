@@ -63,14 +63,14 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
                 // Camera preview
                 new SkiaCamera()
                 {
-                    RecordAudio = true,
                     UseRealtimeVideoProcessing = false, // Enable capture video flow for overlay recording
                     VideoQuality = VideoQuality.Standard, //change this or select manually in menu
                     HorizontalOptions = LayoutOptions.Fill,
                     VerticalOptions = LayoutOptions.Fill,
                     BackgroundColor = Colors.Black,
                     CaptureMode = CaptureModeType.Video,
-                    Aspect = TransformAspect.AspectFit
+                    Aspect = TransformAspect.AspectFit,
+                    NeedPermissionsSet = SkiaCamera.NeedPermissions.Camera | SkiaCamera.NeedPermissions.Gallery | SkiaCamera.NeedPermissions.Microphone
                 }
                 .Assign(out CameraControl)
                 .ObserveSelf((me, prop) =>
@@ -119,7 +119,7 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
                                     .OnTapped(async me => { await TakePictureAsync(); })
                                     .ObserveProperty(CameraControl, nameof(CameraControl.State), me =>
                                     {
-                                        me.IsEnabled = CameraControl.State == CameraState.On;
+                                        me.IsEnabled = CameraControl.State == HardwareState.On;
                                         me.Opacity = me.IsEnabled ? 1.0 : 0.5;
                                     }),
 
@@ -191,9 +191,9 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
                                     }
                                     .Assign(out _videoRecordButton)
                                     .OnTapped(async me => { await ToggleVideoRecording(); })
-                                    .ObserveProperty(CameraControl, nameof(CameraControl.IsRecordingVideo), me =>
+                                    .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording), me =>
                                     {
-                                        if (CameraControl.IsRecordingVideo)
+                                        if (CameraControl.IsRecording)
                                         {
                                             me.Text = "🛑 Stop (00:00)";
                                             me.BackgroundColor = Colors.Red;
@@ -384,8 +384,8 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
         CameraControl.CaptureSuccess += OnCaptureSuccess;
         CameraControl.CaptureFailed += OnCaptureFailed;
         CameraControl.OnError += OnCameraError;
-        CameraControl.VideoRecordingSuccess += OnVideoRecordingSuccess;
-        CameraControl.VideoRecordingProgress += OnVideoRecordingProgress;
+        CameraControl.RecordingSuccess += OnVideoRecordingSuccess;
+        CameraControl.RecordingProgress += OnVideoRecordingProgress;
     }
 
     private void UpdateStatusText()
@@ -405,9 +405,9 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
             _statusLabel.Text = statusText;
             _statusLabel.TextColor = CameraControl.State switch
             {
-                CameraState.On => Colors.Green,
-                CameraState.Off => Colors.Gray,
-                CameraState.Error => Colors.Red,
+                HardwareState.On => Colors.Green,
+                HardwareState.Off => Colors.Gray,
+                HardwareState.Error => Colors.Red,
                 _ => Colors.Gray
             };
         }
@@ -415,7 +415,7 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
 
     private async Task TakePictureAsync()
     {
-        if (CameraControl.State != CameraState.On)
+        if (CameraControl.State != HardwareState.On)
             return;
 
         try
@@ -511,7 +511,7 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
 
     private void OnVideoRecordingProgress(object sender, TimeSpan duration)
     {
-        if (_videoRecordButton != null && CameraControl.IsRecordingVideo)
+        if (_videoRecordButton != null && CameraControl.IsRecording)
         {
             // Update button text with timer in MM:SS format
             _videoRecordButton.Text = $"🛑 Stop ({duration:mm\\:ss})";
@@ -570,12 +570,12 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
     {
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            if (CameraControl.State != CameraState.On)
+            if (CameraControl.State != HardwareState.On)
                 return;
 
             try
             {
-                if (CameraControl.IsRecordingVideo)
+                if (CameraControl.IsRecording)
                 {
                     await CameraControl.StopVideoRecording();
                 }

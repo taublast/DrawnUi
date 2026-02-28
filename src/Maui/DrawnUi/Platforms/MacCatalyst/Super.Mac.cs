@@ -157,7 +157,18 @@ namespace DrawnUi.Draw
                                     _loopStarted = true;
                                     try
                                     {
-                                        _displayLink = CADisplayLink.Create(() => OnFrame?.Invoke(null, null));
+                                        _displayLink = CADisplayLink.Create(() =>
+                                        {
+                                            if (MaxFps > 0)
+                                            {
+                                                var skipFrames = Math.Ceiling((double)RefreshRate / MaxFps);
+                                                var minInterval = skipFrames / RefreshRate - 0.001;
+                                                if (_displayLink.Timestamp - _lastDisplayTimestamp < minInterval)
+                                                    return;
+                                                _lastDisplayTimestamp = _displayLink.Timestamp;
+                                            }
+                                            OnFrame?.Invoke(null, null);
+                                        });
                                         _displayLink.AddToRunLoop(NSRunLoop.Current, NSRunLoopMode.Default);
                                     }
                                     catch (Exception e)
@@ -195,9 +206,17 @@ namespace DrawnUi.Draw
         /// </summary>
         public static bool UseDisplaySync = false;
 
+        static partial void OnMaxFpsChanged(int fps)
+        {
+            // Display link callback reads MaxFps dynamically, no action needed there.
+            // Update looper fps if it's being used instead of CADisplayLink.
+            Looper?.SetTargetFps(fps > 0 ? fps : RefreshRate);
+        }
+
         public static event EventHandler OnFrame;
 
         static CADisplayLink _displayLink;
+        static double _lastDisplayTimestamp;
 
         /// <summary>
         /// Opens web link in native browser

@@ -31,9 +31,21 @@ public class CapturedVideo : IDisposable
     public DateTime Time { get; set; }
 
     /// <summary>
-    /// Additional metadata (GPS, device info, etc.)
+    /// Video metadata for MP4 udta atoms (GPS, author, camera model, date, etc.).
+    /// Similar to CapturedImage.Meta for EXIF. Set before saving to customize injected metadata.
+    /// If null when saving, the camera control auto-fills it with device info and GPS.
     /// </summary>
-    public Dictionary<string, object> Metadata { get; set; } = new();
+    public Metadata Meta { get; set; }
+
+    /// <summary>
+    /// GPS latitude in decimal degrees. Set before saving to gallery to embed location in the video file.
+    /// </summary>
+    public double? Latitude { get; set; }
+
+    /// <summary>
+    /// GPS longitude in decimal degrees. Set before saving to gallery to embed location in the video file.
+    /// </summary>
+    public double? Longitude { get; set; }
 
     /// <summary>
     /// File size in bytes
