@@ -632,7 +632,7 @@ namespace DrawnUi.Draw
         /// <param name="easing"></param>
         /// <param name="cancel"></param>
         /// <returns></returns>
-        public Task FadeToAsync(double end, float ms = 250, Easing easing = null,
+        public async Task FadeToAsync(double end, float ms = 250, Easing easing = null,
             CancellationTokenSource cancel = default)
         {
             if (_fadeCancelTokenSource != null)
@@ -668,16 +668,25 @@ namespace DrawnUi.Draw
             }
 
             var startOpacity = this.Opacity;
-            return AnimateAsync(
-                (value) =>
-                {
-                    this.Opacity = startOpacity + (end - startOpacity) * value;
-                    //Debug.WriteLine($"[ANIM] Opacity: {this.Opacity}");
-                },
-                null,
-                ms,
-                easing,
-                _fadeCancelTokenSource);
+
+            try
+            {
+                await AnimateAsync(
+                    (value) =>
+                    {
+                        this.Opacity = startOpacity + (end - startOpacity) * value;
+                        //Debug.WriteLine($"[ANIM] Opacity: {this.Opacity}");
+                    },
+                    null,
+                    ms,
+                    easing,
+                    _fadeCancelTokenSource);
+
+            }
+            catch (TaskCanceledException)
+            {
+                this.Opacity = end;
+            }
         }
 
         CancellationTokenSource _scaleCancelTokenSource;
@@ -691,7 +700,7 @@ namespace DrawnUi.Draw
         /// <param name="easing"></param>
         /// <param name="cancel"></param>
         /// <returns></returns>
-        public Task ScaleToAsync(double x, double y, float length = 250, Easing easing = null,
+        public async Task ScaleToAsync(double x, double y, float length = 250, Easing easing = null,
             CancellationTokenSource cancel = default)
         {
             if (_scaleCancelTokenSource != null)
@@ -729,12 +738,20 @@ namespace DrawnUi.Draw
             var startScaleX = this.ScaleX;
             var startScaleY = this.ScaleY;
 
-            return AnimateAsync(value =>
-                {
-                    this.ScaleX = startScaleX + (x - startScaleX) * value;
-                    this.ScaleY = startScaleY + (y - startScaleY) * value;
-                },
-                null, length, easing, _scaleCancelTokenSource);
+            try
+            {
+                await AnimateAsync(value =>
+                    {
+                        this.ScaleX = startScaleX + (x - startScaleX) * value;
+                        this.ScaleY = startScaleY + (y - startScaleY) * value;
+                    },
+                    null, length, easing, _scaleCancelTokenSource);
+            }
+            catch (TaskCanceledException)
+            {
+                this.ScaleX = x;
+                this.ScaleY = y;
+            }
         }
 
         CancellationTokenSource _translateCancelTokenSource;
@@ -748,7 +765,7 @@ namespace DrawnUi.Draw
         /// <param name="easing"></param>
         /// <param name="cancel"></param>
         /// <returns></returns>
-        public Task TranslateToAsync(double x, double y, float length = 250, Easing easing = null,
+        public async Task TranslateToAsync(double x, double y, float length = 250, Easing easing = null,
             CancellationTokenSource cancel = default)
         {
             if (_translateCancelTokenSource != null)
@@ -786,13 +803,22 @@ namespace DrawnUi.Draw
             var startTranslationX = this.TranslationX;
             var startTranslationY = this.TranslationY;
 
-            return AnimateAsync(value =>
-                {
-                    this.TranslationX = (float)(startTranslationX + (x - startTranslationX) * value);
-                    this.TranslationY = (float)(startTranslationY + (y - startTranslationY) * value);
-                },
-                null,
-                length, easing, _translateCancelTokenSource);
+            try
+            {
+                await AnimateAsync(value =>
+                    {
+                        this.TranslationX = (float)(startTranslationX + (x - startTranslationX) * value);
+                        this.TranslationY = (float)(startTranslationY + (y - startTranslationY) * value);
+                    },
+                    null,
+                    length, easing, _translateCancelTokenSource);
+
+            }
+            catch (TaskCanceledException)
+            {
+                this.TranslationX = x;
+                this.TranslationY = y;
+            }
         }
 
         CancellationTokenSource _rotateCancelTokenSource;
@@ -805,7 +831,7 @@ namespace DrawnUi.Draw
         /// <param name="easing"></param>
         /// <param name="cancel"></param>
         /// <returns></returns>
-        public Task RotateToAsync(double end, uint length = 250, Easing easing = null,
+        public async Task RotateToAsync(double end, uint length = 250, Easing easing = null,
             CancellationTokenSource cancel = default)
         {
             if (_rotateCancelTokenSource != null)
@@ -842,9 +868,16 @@ namespace DrawnUi.Draw
 
             var startRotation = this.Rotation;
 
-            return AnimateAsync(value => { this.Rotation = (float)(startRotation + (end - startRotation) * value); },
-                null,
-                length, easing, _rotateCancelTokenSource);
+            try
+            {
+                await AnimateAsync(value => { this.Rotation = (float)(startRotation + (end - startRotation) * value); },
+                    null,
+                    length, easing, _rotateCancelTokenSource);
+
+            }
+            catch (TaskCanceledException)
+            {
+            }
         }
 
         public virtual void OnPrintDebug()
