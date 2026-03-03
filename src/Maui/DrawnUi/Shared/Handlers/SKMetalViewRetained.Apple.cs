@@ -1,4 +1,4 @@
-﻿using CoreGraphics;
+using CoreGraphics;
 using Foundation;
 using Metal;
 using MetalKit;
@@ -8,7 +8,7 @@ using UIKit;
 namespace DrawnUi.Views
 {
     /// <summary>
-    /// A Metal-backed SkiaSharp view that implements retained rendering  
+    /// A Metal-backed SkiaSharp view that implements retained rendering
     /// </summary>
     [Register(nameof(SKMetalViewRetained))]
     [DesignTimeVisible(true)]
@@ -25,24 +25,36 @@ namespace DrawnUi.Views
             remove { DisposedInternal -= value; }
         }
 
+        // ── Shared Metal pipeline ────────────────────────────────────────────────
+        // One GRContext, one command queue, one Metal backend context shared across
+        // all SKMetalViewRetained instances. Ref-counted: created on first view,
+        // destroyed when the last view is disposed.
+        private static GRContext _sharedContext;
+        private static IMTLCommandQueue _sharedQueue;
+        private static GRMtlBackendContext _sharedBackendContext;
+        private static GCHandle _sharedQueuePin;
+        private static int _sharedContextRefCount;
+        private static readonly object _sharedContextLock = new object();
+
+        // ── Per-view state ───────────────────────────────────────────────────────
         private bool _designMode;
+        private bool _initialized; // true only if shared ref count was incremented
         private IMTLDevice _device;
-        private GRMtlBackendContext _backendContext;
-        private GRContext _context;
         private SKSize _canvasSize;
 
-        // Double-buffering for thread safety
-        private IMTLTexture _retainedTexture; // Current texture being rendered
-        private IMTLTexture _pendingTexture; // New texture awaiting swap
+        // Retained rendering buffer (per-view: each Canvas has its own texture)
+        private IMTLTexture _retainedTexture;
+        private IMTLTexture _pendingTexture;
         private readonly object _textureSwapLock = new object();
-        private volatile bool _swapPending; // Flag to signal swap
-        private bool _firstFrame = true; // Track first frame for initial setup
-        private bool _needsFullRedraw = true; // For initial frame or size change
-        private GCHandle _queuePin;
+        private volatile bool _swapPending;
+        private bool _firstFrame = true;
+        private bool _needsFullRedraw = true;
 
-        // CPU Pre-rendering optimization
+        // CPU Pre-rendering optimization (per-view)
         private SKImage _preRenderedImage;
         private bool _preRenderingAttempted;
+
+        // ── Public surface ───────────────────────────────────────────────────────
 
         /// <summary>
         /// Gets a value indicating whether the view is using manual refresh mode.
@@ -55,14 +67,18 @@ namespace DrawnUi.Views
         public SKSize CanvasSize => _canvasSize;
 
         /// <summary>
-        /// Gets the SkiaSharp GRContext used for rendering.
+        /// Gets the SkiaSharp GRContext used for rendering (shared across all instances).
         /// </summary>
-        public GRContext GRContext => _context;
+        public GRContext GRContext => _sharedContext;
 
         /// <summary>
-        /// So we can access queue and device for some neat usage
+        /// Gets the Metal backend context (shared across all instances).
         /// </summary>
-        public GRMtlBackendContext MetalBackend => _backendContext;
+        public GRMtlBackendContext MetalBackend => _sharedBackendContext;
+
+        public IMTLCommandQueue Queue { get; protected set; }
+
+        // ── Constructors ─────────────────────────────────────────────────────────
 
         // created in code
         public SKMetalViewRetained()
@@ -134,73 +150,69 @@ namespace DrawnUi.Views
             // GPU memory used not only for rendering but could be read by SkiaSharp too
             FramebufferOnly = false;
 
-            Device = _device;
-            Queue = _device.CreateCommandQueue();
-
-            _backendContext = new GRMtlBackendContext
+            // Acquire a reference to the shared Metal pipeline.
+            // Created on demand by the first view; reused by all subsequent views.
+            lock (_sharedContextLock)
             {
-                Device = Device,
-                Queue = Queue
-            };
+                _sharedContextRefCount++;
+                _initialized = true;
 
+                if (_sharedContext == null)
+                {
+                    _sharedQueue = _device.CreateCommandQueue();
+
+                    _sharedBackendContext = new GRMtlBackendContext
+                    {
+                        Device = _device,
+                        Queue = _sharedQueue
+                    };
+
+                    // Prevent GC from moving/finalizing the queue while Metal holds raw pointers to it
+                    _sharedQueuePin = GCHandle.Alloc(_sharedBackendContext.Queue, GCHandleType.Pinned);
+
+                    _sharedContext = GRContext.CreateMetal(_sharedBackendContext);
+                }
+            }
+
+            Device = _device;
+            Queue = _sharedQueue; // MTKView uses the shared queue for drawable presentation
             Delegate = this;
-
-            //fix GC crash
-            _queuePin = GCHandle.Alloc(_backendContext.Queue, GCHandleType.Pinned);
         }
 
-        public IMTLCommandQueue Queue { get; protected set; }
-
-        //public override void LayoutSubviews()
-        //{
-        //    base.LayoutSubviews();
-
-        //    // Update canvas size from frame
-        //    var frameSize = Frame.Size.ToSKSize();
-        //    if (frameSize.Width > 0 && frameSize.Height > 0)
-        //    {
-        //        _canvasSize = frameSize;
-        //        // Try CPU pre-rendering when layout is established
-        //        TryCpuPreRendering();
-        //    }
-        //}
+        // ── MTKView delegate ─────────────────────────────────────────────────────
 
         void IMTKViewDelegate.DrawableSizeWillChange(MTKView view, CGSize size)
         {
             if (stopped)
-            {
                 return;
-            }
 
             var newSize = size.ToSKSize();
-
             _canvasSize = newSize;
 
-            // Try CPU pre-rendering now that we have correct dimensions
             TryCpuPreRendering();
 
             PrepareNewTexture();
 
             if (ManualRefresh)
-                SetNeedsDisplay(); // only if size *really* changed
+                SetNeedsDisplay();
         }
 
         void IMTKViewDelegate.Draw(MTKView view)
         {
-            if (_designMode || _backendContext.Queue == null || CurrentDrawable?.Texture == null || stopped)
+            if (_designMode || _sharedBackendContext.Queue == null || CurrentDrawable?.Texture == null || stopped)
                 return;
 
             _canvasSize = DrawableSize.ToSKSize();
             if (_canvasSize.Width <= 0 || _canvasSize.Height <= 0)
                 return;
 
+            var context = _sharedContext;
+            if (context == null)
+                return;
+
             try
             {
                 inQueue++;
-
-
-                // Create context if needed
-                _context ??= GRContext.CreateMetal(_backendContext);
 
                 // Handle initial frame or ensure texture exists
                 if (_firstFrame || _retainedTexture == null)
@@ -246,13 +258,13 @@ namespace DrawnUi.Views
                     try
                     {
                         // Fast blit: Draw pre-rendered image to texture surface
-                        using (var surface = SKSurface.Create(_context, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888))
+                        using (var surface = SKSurface.Create(context, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888))
                         {
                             surface.Canvas.DrawImage(_preRenderedImage, 0, 0);
                             surface.Flush();
                         }
 
-                        _context.Flush();
+                        context.Flush();
 
                         // Dispose pre-rendered image and clear reference BEFORE returning
                         // This ensures no other frame can see or use this image
@@ -264,7 +276,7 @@ namespace DrawnUi.Views
                         //Debug.WriteLine("[SKMetalView] First frame: Used CPU pre-rendered image (fast blit)");
 
                         // Immediately copy to screen and return - skip normal rendering
-                        using var commandBuffer = _backendContext.Queue.CommandBuffer();
+                        using var commandBuffer = _sharedBackendContext.Queue.CommandBuffer();
                         if (commandBuffer == null) return;
                         using var blitEncoder = commandBuffer.BlitCommandEncoder;
 
@@ -290,7 +302,7 @@ namespace DrawnUi.Views
 
                 // NORMAL RENDERING PATH
                 // Create surface from the render target
-                using var surfaceNormal = SKSurface.Create(_context, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
+                using var surfaceNormal = SKSurface.Create(context, renderTarget, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
                 using var canvas = surfaceNormal.Canvas;
 
                 // Clear if needed
@@ -304,12 +316,12 @@ namespace DrawnUi.Views
                 OnPaintSurface(e);
 
                 surfaceNormal.Flush();
-                _context.Flush();
+                context.Flush();
 
                 _needsFullRedraw = false;
 
                 // Copy retained texture to screen
-                using var commandBuffer2 = _backendContext.Queue.CommandBuffer();
+                using var commandBuffer2 = _sharedBackendContext.Queue.CommandBuffer();
                 if (commandBuffer2 == null) return;
                 using var blitEncoder2 = commandBuffer2.BlitCommandEncoder;
 
@@ -333,6 +345,8 @@ namespace DrawnUi.Views
 
         }
 
+        // ── Texture management ───────────────────────────────────────────────────
+
         /// <summary>
         /// Creates a new texture for future use
         /// </summary>
@@ -351,7 +365,7 @@ namespace DrawnUi.Views
                 StorageMode = DeviceInfo.Current.DeviceType == DeviceType.Virtual
                     ? MTLStorageMode.Private
                     : MTLStorageMode.Shared,
-                SampleCount = 1 //required 1 for skiasharp 
+                SampleCount = 1 //required 1 for skiasharp
             };
 
             lock (_textureSwapLock)
@@ -377,6 +391,8 @@ namespace DrawnUi.Views
                 _swapPending = false;
             }
         }
+
+        // ── CPU pre-rendering ────────────────────────────────────────────────────
 
         /// <summary>
         /// CPU PRE-RENDERING OPTIMIZATION
@@ -440,8 +456,10 @@ namespace DrawnUi.Views
                 _preRenderedImage?.Dispose();
                 _preRenderedImage = null;
             }
- 
+
         }
+
+        // ── Paint surface ────────────────────────────────────────────────────────
 
         public event EventHandler<SKPaintMetalSurfaceEventArgs> PaintSurface;
 
@@ -469,9 +487,11 @@ namespace DrawnUi.Views
             SetNeedsDisplay();
         }
 
-        bool stopped=false;
+        // ── Dispose ──────────────────────────────────────────────────────────────
 
-        int inQueue=0;
+        bool stopped = false;
+
+        int inQueue = 0;
 
         protected override void Dispose(bool disposing)
         {
@@ -486,35 +506,53 @@ namespace DrawnUi.Views
                         await Task.Delay(16);
                     }
 
+                    // ── Per-view resources (dispose immediately, no sharing) ──────
                     _preRenderedImage?.Dispose();
                     _preRenderedImage = null;
 
                     lock (_textureSwapLock)
                     {
-                        if (_queuePin.IsAllocated)
-                        {
-                            var queue = _queuePin.Target;
-                            if (queue != null)
-                            {
-                                GC.SuppressFinalize(queue); //avoid crash 
-                            }
-                            _queuePin.Free();
-                        }
-
                         _retainedTexture?.Dispose();
                         _pendingTexture?.Dispose();
                         _retainedTexture = null;
                         _pendingTexture = null;
                         _swapPending = false;
                     }
-                    _context?.Dispose();
-                    _context = null;
+
+                    // ── Shared pipeline (decrement ref count, release when last) ──
+                    lock (_sharedContextLock)
+                    {
+                        if (_initialized)
+                        {
+                            _initialized = false;
+                            _sharedContextRefCount--;
+
+                            if (_sharedContextRefCount == 0 && _sharedContext != null)
+                            {
+                                // Flush all pending Skia GPU work and release the
+                                // GPU resource cache before tearing down the context.
+                                _sharedContext.Flush();
+                                _sharedContext.PurgeResources();
+                                _sharedContext.Dispose();
+                                _sharedContext = null;
+
+                                // Release the queue pin, then explicitly dispose the
+                                // queue so the ObjC reference count drops to zero.
+                                if (_sharedQueuePin.IsAllocated)
+                                {
+                                    _sharedQueuePin.Free();
+                                }
+                                (_sharedQueue as IDisposable)?.Dispose();
+                                _sharedQueue = null;
+                                _sharedBackendContext = default;
+                            }
+                        }
+                    }
 
                     base.Dispose(disposing);
 
                     Debug.WriteLine($"[SKMetalView] Disposed!");
                 });
-
             }
         }
     }

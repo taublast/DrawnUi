@@ -499,6 +499,7 @@ public class Canvas : DrawnView, IGestureListener
 
     public override void OnDisposing()
     {
+        Debug.WriteLine($"[Canvas] Disposing {this.Tag}");
         base.OnDisposing();
 
         SetContent(null);

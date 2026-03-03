@@ -641,7 +641,7 @@ namespace DrawnUi.Draw
                 {
                     _fadeCancelTokenSource.Cancel();
                 }
-                catch (ObjectDisposedException)
+                catch 
                 {
                 }
                 finally
@@ -683,7 +683,7 @@ namespace DrawnUi.Draw
                     _fadeCancelTokenSource);
 
             }
-            catch (TaskCanceledException)
+            catch 
             {
                 this.Opacity = end;
             }
@@ -709,7 +709,7 @@ namespace DrawnUi.Draw
                 {
                     _scaleCancelTokenSource.Cancel();
                 }
-                catch (ObjectDisposedException)
+                catch 
                 {
                 }
                 finally
@@ -747,7 +747,7 @@ namespace DrawnUi.Draw
                     },
                     null, length, easing, _scaleCancelTokenSource);
             }
-            catch (TaskCanceledException)
+            catch 
             {
                 this.ScaleX = x;
                 this.ScaleY = y;
@@ -774,7 +774,7 @@ namespace DrawnUi.Draw
                 {
                     _translateCancelTokenSource.Cancel();
                 }
-                catch (ObjectDisposedException)
+                catch 
                 {
                 }
                 finally
@@ -814,7 +814,7 @@ namespace DrawnUi.Draw
                     length, easing, _translateCancelTokenSource);
 
             }
-            catch (TaskCanceledException)
+            catch 
             {
                 this.TranslationX = x;
                 this.TranslationY = y;
@@ -840,7 +840,7 @@ namespace DrawnUi.Draw
                 {
                     _rotateCancelTokenSource.Cancel();
                 }
-                catch (ObjectDisposedException)
+                catch 
                 {
                 }
                 finally
@@ -875,7 +875,7 @@ namespace DrawnUi.Draw
                     length, easing, _rotateCancelTokenSource);
 
             }
-            catch (TaskCanceledException)
+            catch 
             {
             }
         }
