@@ -11,9 +11,14 @@ public class BaseColorFilterEffect : SkiaEffect, IColorEffect
 
     public override void Update()
     {
-        if (Parent != null && Filter != null)
+        var kill = Filter;
+        if (Parent != null)
         {
-            Parent.DisposeObject(Filter);
+            Parent.DisposeObject(kill);
+        }
+        else
+        {
+            kill?.Dispose();
         }
         Filter = null;
 

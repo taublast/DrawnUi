@@ -1,4 +1,6 @@
-﻿namespace DrawnUi.Draw;
+﻿using static System.Net.WebRequestMethods;
+
+namespace DrawnUi.Draw;
 
 public class BaseChainedEffect : SkiaEffect, IRenderEffect
 {
@@ -11,9 +13,14 @@ public class BaseChainedEffect : SkiaEffect, IRenderEffect
 
     public override void Update()
     {
-        if (Parent != null && Paint != null)
+        var kill = Paint;
+        if (Parent != null)
         {
-            Parent.DisposeObject(Paint);
+            Parent.DisposeObject(kill);
+        }
+        else
+        {
+            kill?.Dispose();
         }
         Paint = null;
 
