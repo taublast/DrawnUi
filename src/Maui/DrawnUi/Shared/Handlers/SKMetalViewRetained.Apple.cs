@@ -170,6 +170,7 @@ namespace DrawnUi.Views
                     // Prevent GC from moving/finalizing the queue while Metal holds raw pointers to it
                     _sharedQueuePin = GCHandle.Alloc(_sharedBackendContext.Queue, GCHandleType.Pinned);
 
+                    //todo if SkiaSharp doesn't throw but just returns null woul need to check logic for _sharedContextRefCount a bit..
                     _sharedContext = GRContext.CreateMetal(_sharedBackendContext);
                 }
             }
