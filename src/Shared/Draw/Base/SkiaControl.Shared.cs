@@ -923,8 +923,8 @@ namespace DrawnUi.Draw
         public Task AnimateRangeAsync(Action<double> callback,
             double start, double end, double length = 250,
             Easing easing = null,
-            CancellationToken cancel = default,
-            bool applyEndValueOnStop = false, int delayMs = 0)
+            int delayMs = 0,
+            CancellationToken cancel = default)
         {
             RangeAnimator animator = null;
 
@@ -936,47 +936,30 @@ namespace DrawnUi.Draw
                 registration = cancel.Register(() =>
                 {
                     animator?.Stop();
-                    // Fallback: if animator was in delay phase, Stop() was a no-op (IsRunning=false)
-                    // and OnStop never fired, leaving the TCS incomplete and the ghost animator alive.
-                    // Complete the TCS here so DisposeObject runs and the delayed start is neutralized.
-                    if (!tcs.Task.IsCompleted)
-                    {
-                        if (applyEndValueOnStop)
-                            callback?.Invoke(end);
-                        tcs.TrySetCanceled(cancel);
-                    }
                 });
             }
 
-            tcs.Task.ContinueWith(task => { DisposeObject(animator); });
+            tcs.Task.ContinueWith(task =>
+            {
+                DisposeObject(animator);
+            });
 
             animator = new RangeAnimator(this)
             {
                 OnStop = () =>
                 {
-                    registration.Dispose();
+                    callback?.Invoke(end);
                     if (!tcs.Task.IsCompleted)
                     {
-                        if (cancel.IsCancellationRequested)
-                        {
-                            if (applyEndValueOnStop)
-                                callback?.Invoke(end);
-                            tcs.TrySetCanceled(cancel);
-                        }
-                        else
-                        {
-                            tcs.TrySetResult(true);
-                        }
+                        tcs.TrySetResult(true);
                     }
+                    registration.Dispose();
                 }
             };
             animator.Start(
                 (value) =>
                 {
-                    if (!cancel.IsCancellationRequested)
-                    {
-                        callback?.Invoke(value);
-                    }
+                    callback?.Invoke(value);
                 },
                 start, end, (uint)length, easing, delayMs);
 
