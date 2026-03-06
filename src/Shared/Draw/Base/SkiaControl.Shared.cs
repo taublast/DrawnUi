@@ -936,6 +936,15 @@ namespace DrawnUi.Draw
                 registration = cancel.Register(() =>
                 {
                     animator?.Stop();
+                    // Fallback: if animator was in delay phase, Stop() was a no-op (IsRunning=false)
+                    // and OnStop never fired, leaving the TCS incomplete and the ghost animator alive.
+                    // Complete the TCS here so DisposeObject runs and the delayed start is neutralized.
+                    if (!tcs.Task.IsCompleted)
+                    {
+                        if (applyEndValueOnStop)
+                            callback?.Invoke(end);
+                        tcs.TrySetCanceled(cancel);
+                    }
                 });
             }
 
