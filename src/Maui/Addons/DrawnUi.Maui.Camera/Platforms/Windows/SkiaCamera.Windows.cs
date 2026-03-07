@@ -687,7 +687,7 @@ public partial class SkiaCamera : SkiaControl
             }
 
             // Update state and notify success
-            IsRecording = false;
+            SetIsRecordingVideo(false);
             IsBusy = false; // Release busy state after successful muxing
 
             // Restart preview audio if still enabled
@@ -703,7 +703,7 @@ public partial class SkiaCamera : SkiaControl
             _frameCaptureTimer = null;
             _captureVideoEncoder = null;
 
-            IsRecording = false;
+            SetIsRecordingVideo(false);
             IsBusy = false; // Release busy state on error
 
             // Restart preview audio if still enabled
@@ -765,7 +765,7 @@ public partial class SkiaCamera : SkiaControl
             // Stop encoder
             await encoder?.AbortAsync();
 
-            IsRecording = false;
+            SetIsRecordingVideo(false);
 
             // Restart preview audio if still enabled
             if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
@@ -780,7 +780,7 @@ public partial class SkiaCamera : SkiaControl
             _frameCaptureTimer = null;
             _captureVideoEncoder = null;
 
-            IsRecording = false;
+            SetIsRecordingVideo(false);
 
             // Restart preview audio if still enabled
             if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
@@ -1018,6 +1018,9 @@ public partial class SkiaCamera : SkiaControl
                     return;
                 }
 
+                // Fire ML hook — raw frame before FrameProcessor overlays, synchronous call expected
+                OnRawFrameAcquired(imgCopy, DeviceRotation);
+
                 var elapsed = DateTime.Now - _captureVideoStartTime;
 
                 // GPU surface must be accessed from main thread
@@ -1103,7 +1106,7 @@ public partial class SkiaCamera : SkiaControl
                 throw new InvalidOperationException("EnableAudioRecording must be true when EnableVideoRecording is false");
 
             Debug.WriteLine("[StartVideoRecording] Audio-only mode: using video encoder without video frames");
-            IsRecording = true;
+            SetIsRecordingVideo(true);
             await StartRealtimeVideoProcessing();
             return;
         }
@@ -1116,7 +1119,7 @@ public partial class SkiaCamera : SkiaControl
             if (EnablePreRecording && !IsPreRecording && !IsRecording)
             {
                 Debug.WriteLine("[StartVideoRecording] Transitioning to IsPreRecording (memory-only recording)");
-                IsPreRecording = true;
+                SetIsPreRecording(true);
                 InitializePreRecordingBuffer();
 
                 // Lock the current device rotation for the entire recording session
@@ -1166,8 +1169,8 @@ public partial class SkiaCamera : SkiaControl
                 }
 
                 // Update state flags BEFORE creating new encoder
-                IsPreRecording = false;
-                IsRecording = true;
+                SetIsPreRecording(false);
+                SetIsRecordingVideo(true);
                 RecordingLockedRotation = DeviceRotation;
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
@@ -1234,7 +1237,7 @@ public partial class SkiaCamera : SkiaControl
             else if (!IsRecording)
             {
                 Debug.WriteLine("[StartVideoRecording] Starting normal recording (no pre-recording)");
-                IsRecording = true;
+                SetIsRecordingVideo(true);
 
                 // Lock the current device rotation for the entire recording session
                 RecordingLockedRotation = DeviceRotation;
@@ -1252,8 +1255,8 @@ public partial class SkiaCamera : SkiaControl
         }
         catch (Exception ex)
         {
-            IsRecording = false;
-            IsPreRecording = false;
+            SetIsRecordingVideo(false);
+            SetIsPreRecording(false);
             RecordingLockedRotation = -1; // Reset on error
             ClearPreRecordingBuffer();
             RecordingFailed?.Invoke(this, ex);
@@ -1433,6 +1436,58 @@ public partial class SkiaCamera : SkiaControl
                 tcs.TrySetException(ex);
             }
         });
+    }
+
+    #endregion
+
+    #region ML Frame Helper
+
+    protected partial bool TryGetMLFrame(SKImage rawImage, int targetWidth, int targetHeight, byte[] outputBuffer)
+    {
+        if (rawImage == null)
+            return false;
+
+        int required = targetWidth * targetHeight * 4;
+        if (outputBuffer == null || outputBuffer.Length < required)
+            return false;
+
+        var info = new SKImageInfo(targetWidth, targetHeight, SKColorType.Rgba8888, SKAlphaType.Premul);
+
+        // Try GPU-backed surface using encoder's GRContext
+        GRContext grContext = null;
+        if (_captureVideoEncoder is WindowsCaptureVideoEncoder winEnc)
+            grContext = winEnc.Context;
+
+        SKSurface surface = grContext != null
+            ? SKSurface.Create(grContext, false, info)
+            : SKSurface.Create(info);
+
+        if (surface == null)
+            return false;
+
+        try
+        {
+            using var paint = new SKPaint { FilterQuality = SKFilterQuality.Low };
+            surface.Canvas.DrawImage(rawImage, new SKRect(0, 0, targetWidth, targetHeight), paint);
+            surface.Canvas.Flush();
+            using var snapshot = surface.Snapshot();
+            if (snapshot == null)
+                return false;
+
+            var handle = System.Runtime.InteropServices.GCHandle.Alloc(outputBuffer, System.Runtime.InteropServices.GCHandleType.Pinned);
+            try
+            {
+                return snapshot.ReadPixels(info, handle.AddrOfPinnedObject(), targetWidth * 4, 0, 0);
+            }
+            finally
+            {
+                handle.Free();
+            }
+        }
+        finally
+        {
+            surface.Dispose();
+        }
     }
 
     #endregion

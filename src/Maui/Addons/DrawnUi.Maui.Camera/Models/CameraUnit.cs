@@ -9,7 +9,7 @@ public class CameraUnit : IHasStringId
 
     public float FieldOfView { get; set; }
 
-    public CameraPosition Facing { get; set; }
+    public CameraPosition Position { get; set; }
 
     public string Id { get; set; }
 

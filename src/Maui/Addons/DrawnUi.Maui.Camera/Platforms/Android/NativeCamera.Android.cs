@@ -622,7 +622,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         var outImage = new CapturedImage()
         {
-            Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
+            Facing = FormsControl.CameraDevice?.Position ?? FormsControl.Facing,
             Time = monotonicTime,
             Image = sk,
             Meta = meta,
@@ -1091,7 +1091,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     var unit = new CameraUnit
                     {
                         Id = cameraId,
-                        Facing = actualFacing,
+                        Position = actualFacing,
                         MinFocalDistance =
                             (float)characteristics.Get(CameraCharacteristics.LensInfoMinimumFocusDistance),
                         //LensDistortion = (???)characteristics.Get(CameraCharacteristics.LensDistortion),
@@ -1318,7 +1318,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
                             _glPreviewRenderer = new GlPreviewRenderer();
                             if (_glPreviewRenderer.Initialize(PreviewWidth, PreviewHeight, gpw, gph,
-                                FormsControl.Facing == CameraPosition.Selfie, SensorOrientation))
+                                false, SensorOrientation))
                             {
                                 _useGlPreview = true;
                                 PreviewSize = new SkiaSharp.SKSize(gpw, gph);
@@ -1399,7 +1399,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
                 _glPreviewRenderer = new GlPreviewRenderer();
                 if (_glPreviewRenderer.Initialize(PreviewWidth, PreviewHeight, gpw, gph,
-                        FormsControl.Facing == CameraPosition.Selfie, SensorOrientation))
+                        false, SensorOrientation))
                 {
                     _useGlPreview = true;
                     PreviewSize = new SkiaSharp.SKSize(gpw, gph);
@@ -2289,7 +2289,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         var outImage = new CapturedImage()
         {
-            Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
+            Facing = FormsControl.CameraDevice?.Position ?? FormsControl.Facing,
             Time = monotonicTime,
             Image = skImage,
             Meta = meta,
@@ -2515,7 +2515,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             }
 
             //android flips it internally
-            bool flipSelfie = !FormsControl.MirrorSavedSelfiePhoto && FormsControl.CameraDevice.Facing == CameraPosition.Selfie;
+            bool flipSelfie = !FormsControl.MirrorSavedSelfiePhoto && FormsControl.CameraDevice.Position == CameraPosition.Selfie;
 
             using var allocated = new AllocatedBitmap(rs, width, height);
 
@@ -2544,14 +2544,14 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             // For front camera, sensor rotation and device rotation subtract (not add).
             // ProcessImage already bakes SensorOrientation into pixels, so the remaining
             // EXIF correction for landscape selfie shots is the inverse of device rotation.
-            var exifRotation = FormsControl.Facing == CameraPosition.Selfie
+            var exifRotation = false
                 ? (360 - rotation) % 360
                 : rotation;
             Metadata.ApplyRotation(meta, exifRotation);
 
             var outImage = new CapturedImage()
             {
-                Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
+                Facing = FormsControl.CameraDevice?.Position ?? FormsControl.Facing,
                 Time = DateTime.UtcNow,
                 Image = allocated.Bitmap.ToSKImage(),
                 Meta = meta,
@@ -2798,7 +2798,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         var deviceRotation = FormsControl?.RecordingLockedRotation ?? 0;
 
         int orientationHint;
-        if (FormsControl.Facing == CameraPosition.Selfie)
+        if (false)
         {
             // Front camera: compensate for mirroring
             orientationHint = (SensorOrientation - deviceRotation + 360) % 360;

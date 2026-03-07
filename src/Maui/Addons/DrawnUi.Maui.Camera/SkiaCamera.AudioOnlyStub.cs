@@ -19,6 +19,11 @@ public partial class SkiaCamera
     {
         task = System.Threading.Tasks.Task.CompletedTask;
     }
+
+    protected partial bool TryGetMLFrame(SKImage rawImage, int targetWidth, int targetHeight, byte[] outputBuffer)
+    {
+        return false;
+    }
 }
 
 #endif

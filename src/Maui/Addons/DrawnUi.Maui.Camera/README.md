@@ -158,6 +158,7 @@ You can use additional methods to building your own permissions flows, pass appr
 | 8 | Zoom Control | Manual zoom, pinch-to-zoom |
 | 9 | Camera State Management | `StateChanged` event, `HardwareState` |
 | 10 | **Live Processing: FrameProcessor & PreviewProcessor** | Drawing overlays on preview and recorded video, `NewPreviewSet` for AI/ML |
+| 10a | **Raw Frame ML Hook: OnRawFrameAcquired & TryGetMLFrame** | Zero-overhead GPU-accelerated raw frame access for ML/AI inference |
 | 11 | Permission Handling | `NeedPermissions` flags, `CheckPermissions()`, `CheckPermissionsGranted()`, async helpers |
 | 12 | Complete MVVM Example | Full ViewModel + Page example |
 
@@ -859,7 +860,10 @@ SkiaCamera provides **two drawing callbacks** for real-time overlay rendering, p
 | `PreviewProcessor` | `Action<DrawableFrame>` | Each **preview** frame before display | Show overlays on live preview (e.g., gauges, guides) |
 | `NewPreviewSet` | `EventHandler<LoadedImageSource>` | Each preview frame after display | Read-only AI/ML analysis, face detection, QR scanning |
 
-> **Key Insight**: `FrameProcessor` draws on what gets **recorded**. `PreviewProcessor` draws on what the user **sees**. `NewPreviewSet` lets you **read** preview frames without drawing. All three are independent.
+> **Key Insight**: `FrameProcessor` draws on what gets **recorded**. 
+`PreviewProcessor` draws on what the user **sees**. 
+`NewPreviewSet` lets you **read** already processed preview frames.
+All three are independent.
 
 #### FrameProcessor (Video Recording Overlay)
 
@@ -963,7 +967,27 @@ private void OnNewPreviewFrame(object sender, LoadedImageSource source)
 {
     // Fires for every preview frame (30-60 FPS)
     // Read-only — does not affect what user sees or what gets recorded
-    Task.Run(() => ProcessPreviewFrameForAI(source));
+    source.ProtectFromDispose = true; // set synchronously before returning — safe, disposal is 3 frames away minimum
+    
+    if (!_mlSemaphore.Wait(0)) // skip frame if ML is still busy
+    {
+        source.ProtectFromDispose = false;
+        return;
+    }
+
+    Task.Run(async () =>
+    {
+        try
+        {
+            await RunMLAsync(source.Image);
+        }
+        finally
+        {
+            source.ProtectFromDispose = false;
+            source.Dispose(); // manually clean up — DisposableManager already skipped it
+            _mlSemaphore.Release();
+        }
+    });
 }
 
 private void ProcessPreviewFrameForAI(LoadedImageSource source)
@@ -977,6 +1001,94 @@ private void ProcessPreviewFrameForAI(LoadedImageSource source)
     });
 }
 ```
+
+### 10a. Raw Frame ML Hook: OnRawFrameAcquired & TryGetMLFrame
+
+When you need to run ML/AI inference on **raw camera frames** — before any `FrameProcessor` overlay is composited — use the `OnRawFrameAcquired` + `TryGetMLFrame` API.
+
+> **Why not `NewPreviewSet`?**
+> `NewPreviewSet` fires *after* the preview image has been composited. During recording with `UseRecordingFramesForPreview = true` (the default), the preview already has `FrameProcessor` overlays baked in. For true raw-frame ML inference you need `OnRawFrameAcquired`.
+
+#### Overview
+
+| Member | Kind | Description |
+|--------|------|-------------|
+| `OnRawFrameAcquired(SKImage rawImage, int rotation)` | `protected internal virtual` | Called every frame with the raw camera image, before any overlay/compositing. Override in a subclass. |
+| `TryGetMLFrame(SKImage rawImage, int targetWidth, int targetHeight, byte[] outputBuffer)` | `protected partial bool` | GPU-accelerated scale + pixel readback into a **pre-allocated** byte array (RGBA8888). Call synchronously from inside `OnRawFrameAcquired`. |
+
+#### Platform implementation
+
+Each platform uses its own GPU-native path — no extra allocation per frame:
+
+| Platform | GPU mechanism |
+|----------|---------------|
+| iOS / MacCatalyst | `MetalPreviewScaler` — Metal compute shader reads the live CVPixelBuffer texture |
+| Android (GPU path) | `GlPreviewScaler` — `glBlitFramebuffer` from FBO 0 into a dedicated ML-sized FBO, then `glReadPixels` |
+| Android (legacy path) | CPU `SKSurface + DrawImage` |
+| Windows | GPU `SKSurface` backed by the encoder's `GRContext`, falls back to CPU |
+
+#### Usage
+
+Subclass `SkiaCamera` and override `OnRawFrameAcquired`:
+
+```csharp
+public class MyCam : SkiaCamera
+{
+    // Pre-allocate once — zero GC per frame
+    private readonly byte[] _mlBuffer = new byte[224 * 224 * 4]; // RGBA8888
+    private readonly SemaphoreSlim _mlSemaphore = new(1, 1);
+
+    protected internal override void OnRawFrameAcquired(SKImage rawImage, int rotation)
+    {
+        // TryGetMLFrame MUST be called synchronously here (Android GPU path: EGL context is current)
+        if (!TryGetMLFrame(rawImage, 224, 224, _mlBuffer))
+            return;
+
+        if (!_mlSemaphore.Wait(0)) // drop frame if previous inference still running
+            return;
+
+        // Copy into a new array for the background task — or use your own ring buffer
+        var snapshot = _mlBuffer.ToArray();
+
+        Task.Run(() =>
+        {
+            try   { RunInference(snapshot, rotation); }
+            finally { _mlSemaphore.Release(); }
+        });
+    }
+}
+```
+
+> **Android GPU path note**: `TryGetMLFrame` uses OpenGL operations that require the EGL context to be current on the calling thread. It **must** be called **synchronously** inside `OnRawFrameAcquired` — do not defer the call to a `Task.Run`.
+
+#### Buffer layout
+
+`outputBuffer` is filled with raw **RGBA8888** pixels, `targetWidth * targetHeight * 4` bytes, top-to-bottom, no row padding. Allocate it once as `new byte[targetWidth * targetHeight * 4]`.
+
+#### Choosing target dimensions
+
+Smaller dimensions = faster GPU blit + smaller readback. For common ML model inputs:
+
+```csharp
+// MobileNet / EfficientDet / YOLO-style 224×224 or 320×320
+private readonly byte[] _mlBuffer = new byte[320 * 320 * 4];
+
+protected internal override void OnRawFrameAcquired(SKImage rawImage, int rotation)
+{
+    TryGetMLFrame(rawImage, 320, 320, _mlBuffer);
+    // ...
+}
+```
+
+The internal GPU scaler is created lazily on first call and **reused** across frames. If you change `targetWidth`/`targetHeight` at runtime a new scaler is created automatically (old one is disposed).
+
+#### Comparison of raw-frame ML options
+
+| API | Fires when | Has overlays? | GPU path? | Zero-alloc? |
+|-----|-----------|---------------|-----------|-------------|
+| `NewPreviewSet` | After preview display | Yes (when recording) | No | No |
+| `PreviewProcessor` callback | Preview compositing | Partial | No | No |
+| **`OnRawFrameAcquired` + `TryGetMLFrame`** | Before any compositing | **Never** | **Yes** | **Yes** |
 
 ### 11. Permission Handling
 
@@ -1576,9 +1688,29 @@ var camera = new SkiaCamera
 };
 
 // 2. CHANNEL 1: Live preview processing for AI/ML
-camera.NewPreviewSet += (s, source) => {
-    // Real-time AI processing on preview frames
-    Task.Run(() => ProcessFrameForAI(source.Image));
+camera.NewPreviewSet += (s, source) =>
+{
+    source.ProtectFromDispose = true; // set synchronously before returning — safe, disposal is 3 frames away minimum
+    
+    if (!_mlSemaphore.Wait(0)) // skip frame if ML is still busy
+    {
+        source.ProtectFromDispose = false;
+        return;
+    }
+
+    Task.Run(async () =>
+    {
+        try
+        {
+            await RunMLAsync(source.Image);
+        }
+        finally
+        {
+            source.ProtectFromDispose = false;
+            source.Dispose(); // manually clean up — DisposableManager already skipped it
+            _mlSemaphore.Release();
+        }
+    });
 };
 
 // 3. CHANNEL 2: Captured photo processing
@@ -1595,6 +1727,8 @@ camera.CameraIndex = 2; // Select third camera
 // 5. Take photo (triggers Channel 2 processing)
 await camera.TakePicture();
 ```
+
+ 
 
 ### Key Patterns for AI Agents
 

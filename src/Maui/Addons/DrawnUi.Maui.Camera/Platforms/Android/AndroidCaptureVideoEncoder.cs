@@ -177,6 +177,11 @@ namespace DrawnUi.Camera
         private GlPreviewScaler _glPreviewScaler;
         private bool _glPreviewScalerInitAttempted;
 
+        // ML scaler — dedicated scaler at ML dimensions, lazily created on GPU thread
+        private GlPreviewScaler _mlGlScaler;
+        private int _mlGlScalerTargetWidth;
+        private int _mlGlScalerTargetHeight;
+
         // GPU camera path support (SurfaceTexture zero-copy)
         private GpuCameraFrameProvider _gpuFrameProvider;
         private bool _useGpuCameraPath;
@@ -1011,6 +1016,31 @@ namespace DrawnUi.Camera
             }
         }
 
+        /// <summary>
+        /// Scale the raw camera frame (currently in FBO 0) into outputBuffer using the GPU scaler.
+        /// MUST be called synchronously from OnRawFrameAcquired while EGL context is current.
+        /// Returns false if the scaler is not ready or outputBuffer is too small.
+        /// </summary>
+        public bool TryScaleRawFrameForML(int targetWidth, int targetHeight, byte[] outputBuffer)
+        {
+            // Lazily init / recreate when target dimensions change
+            if (_mlGlScaler == null || _mlGlScalerTargetWidth != targetWidth || _mlGlScalerTargetHeight != targetHeight)
+            {
+                _mlGlScaler?.Dispose();
+                _mlGlScaler = new GlPreviewScaler();
+                if (!_mlGlScaler.Initialize(_width, _height, targetWidth, targetHeight))
+                {
+                    _mlGlScaler.Dispose();
+                    _mlGlScaler = null;
+                    return false;
+                }
+                _mlGlScalerTargetWidth = targetWidth;
+                _mlGlScalerTargetHeight = targetHeight;
+            }
+
+            return _mlGlScaler.ScaleAndReadbackTo(outputBuffer);
+        }
+
         #region GPU Encoding Thread (Async Processing)
 
         /// <summary>
@@ -1188,6 +1218,10 @@ namespace DrawnUi.Camera
 
                 // Render OES texture from SurfaceTexture
                 _gpuFrameProvider.RenderToFramebuffer(_width, _height, _isFrontCamera);
+
+                // Fire ML hook — raw camera frame in FBO 0, EGL current, before FrameProcessor overlays
+                // Override OnRawFrameAcquired and call TryGetMLFrame synchronously (EGL context must be current)
+                ParentCamera?.OnRawFrameAcquired(null, ParentCamera.DeviceRotation);
 
                 // 2. Ensure Skia surface is ready for overlays
                 if (_grContext == null)
@@ -2186,6 +2220,9 @@ namespace DrawnUi.Camera
             _glPreviewScaler?.Dispose();
             _glPreviewScaler = null;
             _glPreviewScalerInitAttempted = false;
+
+            _mlGlScaler?.Dispose();
+            _mlGlScaler = null;
         }
 
         private void FeedAudioEncoder(AudioSample sample)

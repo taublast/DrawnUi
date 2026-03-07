@@ -174,6 +174,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
     // GPU composition fields (temporary bridge until full Media Foundation path is implemented)
     private GRContext _grContext;                 // Provided by DrawnUi accelerated surface
+    public GRContext Context => _grContext;
     private SKSurface _gpuSurface;                // Encoder-owned GPU surface to draw overlays
     private SKImageInfo _gpuInfo;                 // Matches encoder dimensions
     private readonly object _frameLock = new();   // Protects Begin/Submit sequence

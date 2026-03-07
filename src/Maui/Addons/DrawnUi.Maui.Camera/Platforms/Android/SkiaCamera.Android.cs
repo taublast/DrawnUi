@@ -908,7 +908,7 @@ public partial class SkiaCamera
             // Try to initialize GPU camera path for zero-copy frame capture
             if (GpuCameraFrameProvider.IsSupported())
             {
-                bool isFrontCamera = Facing == CameraPosition.Selfie;
+                bool isFrontCamera = false;
                 // Pass raw camera dimensions for SurfaceTexture - camera outputs frames in native orientation
                 // Transform matrix from SurfaceTexture handles rotation to match encoder dimensions
                 useGpuCameraPath = androidEncoder.InitializeGpuCameraPath(isFrontCamera, rawWidth, rawHeight);
@@ -1130,6 +1130,11 @@ public partial class SkiaCamera
 
                         try
                         {
+                            // Fire ML hook — raw SKImage before BeginFrame / FrameProcessor overlays
+                            var rawImg = captured?.Image;
+                            if (rawImg != null)
+                                OnRawFrameAcquired(rawImg, DeviceRotation);
+
                             using (droidEnc.BeginFrame(elapsedLocal, out var canvas, out var info))
                             {
                                 var img = captured?.Image;
@@ -1139,7 +1144,7 @@ public partial class SkiaCamera
                                 var rects = GetAspectFillRects(img.Width, img.Height, info.Width, info.Height);
 
                                 // Apply 180° flip for selfie camera in landscape (sensor is opposite orientation)
-                                var isSelfieInLandscape = Facing == CameraPosition.Selfie && (RecordingLockedRotation == 90 || RecordingLockedRotation == 270);
+                                var isSelfieInLandscape = false && (RecordingLockedRotation == 90 || RecordingLockedRotation == 270);
                                 if (isSelfieInLandscape)
                                 {
                                     canvas.Save();
@@ -1548,6 +1553,51 @@ public partial class SkiaCamera
                 tcs.TrySetException(ex);
             }
         });
+    }
+
+    #endregion
+
+    #region ML Frame Helper
+
+    protected partial bool TryGetMLFrame(SKImage rawImage, int targetWidth, int targetHeight, byte[] outputBuffer)
+    {
+        // GPU path: rawImage is null, raw frame is in GL FBO 0 — delegate to encoder's GPU scaler.
+        // MUST be called synchronously from OnRawFrameAcquired while EGL context is current.
+        if (rawImage == null)
+        {
+            if (_captureVideoEncoder is AndroidCaptureVideoEncoder droidEnc)
+                return droidEnc.TryScaleRawFrameForML(targetWidth, targetHeight, outputBuffer);
+            return false;
+        }
+
+        // Legacy path: rawImage is a CPU-raster SKImage — scale via CPU Skia surface.
+        int required = targetWidth * targetHeight * 4;
+        if (outputBuffer == null || outputBuffer.Length < required)
+            return false;
+
+        var info = new SKImageInfo(targetWidth, targetHeight, SKColorType.Rgba8888, SKAlphaType.Premul);
+        using var surface = SKSurface.Create(info);
+        if (surface == null)
+            return false;
+
+        using var paint = new SKPaint { FilterQuality = SKFilterQuality.Low };
+        var dst = new SKRect(0, 0, targetWidth, targetHeight);
+        surface.Canvas.DrawImage(rawImage, dst, paint);
+        surface.Canvas.Flush();
+
+        using var snapshot = surface.Snapshot();
+        if (snapshot == null)
+            return false;
+
+        var handle = System.Runtime.InteropServices.GCHandle.Alloc(outputBuffer, System.Runtime.InteropServices.GCHandleType.Pinned);
+        try
+        {
+            return snapshot.ReadPixels(info, handle.AddrOfPinnedObject(), targetWidth * 4, 0, 0);
+        }
+        finally
+        {
+            handle.Free();
+        }
     }
 
     #endregion
