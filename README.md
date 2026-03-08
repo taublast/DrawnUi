@@ -43,14 +43,17 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 
 ## 💡 Hint of the Day
 
-**❓ Q: How to reduce battery drain/heat on iPhone in constant sceen updates scenarios?**
+**❓ Q: How to expand button hitbox?**
 
-**💡 A:** Might be Apple Metal specifics, cap FPS:
+**💡 A:** Every drawn control can do that:
 
 ```csharp
-#if IOS //spare battery because apple metal is draining much. android is not affected at the same level.
-            Super.MaxFps = 30;
-#endif
+public override SKRect CreateHitRect()
+{
+    var ret = base.CreateHitRect();
+    ret.Inflate(10*RenderingScale, 10*RenderingScale);
+    return ret;
+}
 ```
 
 ---
