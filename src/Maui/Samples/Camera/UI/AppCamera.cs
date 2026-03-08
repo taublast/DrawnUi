@@ -28,7 +28,7 @@ namespace CameraTests.Views
             nameof(UseGain),
             typeof(bool),
             typeof(AppCamera),
-            false);
+            true);
 
         public bool UseGain
         {

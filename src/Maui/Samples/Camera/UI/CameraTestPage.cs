@@ -13,7 +13,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 {
     private AppCamera CameraControl;
     private SkiaShape _takePictureButton;
-    private SkiaLabel _flashButton;
+    private SkiaSvg _flashButton;
     private SkiaLabel _statusLabel;
     private SettingsButton _videoRecordButton;
     private SettingsButton _speechButton;

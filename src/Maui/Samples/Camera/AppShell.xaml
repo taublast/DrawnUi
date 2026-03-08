@@ -11,7 +11,7 @@
 
     <!--  Camera  -->
     <ShellContent
-        Title="SkiaCamera Test"
+        Title="SkiaCamera"
         ContentTemplate="{DataTemplate views:CameraTestPage}"
         Route="MainPage" />
 
