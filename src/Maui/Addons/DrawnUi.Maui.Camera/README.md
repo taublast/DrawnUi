@@ -16,8 +16,8 @@ Use inside any MAUI app just by wrapping with a `Canvas`. Use as Camera or a sta
 ## Sample Apps:
 
 - [CameraTests](https://github.com/taublast/DrawnUi/tree/main/src/Maui/Samples/Camera) - Basic usage of the control.
-- [BPM Tempo Master](...) - Audio visualizer and BPM detector using SkiaCamera's audio monitoring capabilities.
 - [Filters Camera](https://github.com/taublast/ShadersCamera) - Open source piblished still photo-camera with realtime preview and final photo filters, implemented with SKSL shaders.
+- [SolTempo](https://github.com/taublast/SolTempo) - Audio visualizer and BPM detector using SkiaCamera's audio monitoring capabilities.
 
 ## Installation
 

@@ -27,16 +27,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "Performance_Analysis_Android_Windows.md",
-      "output": {
-        ".html": {
-          "relative_path": "Performance_Analysis_Android_Windows.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "README.md",
       "output": {
         ".html": {
