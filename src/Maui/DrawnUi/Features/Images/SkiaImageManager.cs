@@ -940,10 +940,10 @@ public partial class SkiaImageManager : IDisposable
                     await Task.Delay(delay, cancel);
                 }
             }
-            catch (OperationCanceledException)
+            catch (TaskCanceledException)
             {
-                // Cancellation requested - propagate immediately without retry
-                throw;
+                // Cancellation requested - exit immediately without retry
+                return null;
             }
             catch (Exception ex) when (attempt < HttpRetryMaxAttempts)
             {
@@ -969,6 +969,10 @@ public partial class SkiaImageManager : IDisposable
                     return SKBitmap.Decode(stream);
                 }
             }
+        }
+        catch (TaskCanceledException)
+        {
+
         }
         catch (Exception e)
         {
