@@ -143,7 +143,7 @@ public class SkiaWheelShape : SkiaShape
 
                 tree.Add(new SkiaControlWithRect(child,
                     context.Destination,
-                    child.DrawingRect,
+                    child.CreateHitRect(),
                     index,
                     -1, // Default freeze index
                     child.BindingContext)); // Capture current binding context
@@ -247,7 +247,7 @@ public class SkiaWheelShape : SkiaShape
 
                 tree.Add(new SkiaControlWithRect(child,
                     context.Destination,
-                    child.DrawingRect,
+                    child.CreateHitRect(),
                     index,
                     -1, // Default freeze index
                     child.BindingContext)); // Capture current binding context

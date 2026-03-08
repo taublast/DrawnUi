@@ -6746,7 +6746,7 @@ namespace DrawnUi.Draw
                         {
                             tree.Add(new SkiaControlWithRect(child,
                                 context.Destination,
-                                child.DrawingRect,
+                                child.CreateHitRect(),
                                 count,
                                 -1, // Default freeze index
                                 child.BindingContext)); // Capture current binding context
@@ -6764,6 +6764,15 @@ namespace DrawnUi.Draw
             SetRenderingTree(tree);
 
             return count;
+        }
+
+        /// <summary>
+        /// This will be used for gesture detection, return s DrawingRect in bas, you could choose to override to expand etc..
+        /// </summary>
+        /// <returns></returns>
+        public virtual SKRect CreateHitRect()
+        {
+            return DrawingRect;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

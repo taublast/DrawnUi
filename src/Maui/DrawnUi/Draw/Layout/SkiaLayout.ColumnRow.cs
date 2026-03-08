@@ -2550,7 +2550,7 @@ else
 
                                         tree.Add(new SkiaControlWithRect(control,
                                             destinationRect,
-                                            control.DrawingRect,
+                                            control.CreateHitRect(),
                                             index,
                                             control.ContextIndex, // freeze index
                                             control.BindingContext)); // freeze binding context
