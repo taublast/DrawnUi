@@ -155,6 +155,50 @@ namespace DrawnUi.Camera
             }
         }
 
+        /// <summary>
+        /// Downscale the current source framebuffer to output size and copy pixels into a pre-allocated buffer.
+        /// Must be called on GL thread with active EGL context.
+        /// Returns false on failure or if outputBuffer is too small.
+        /// </summary>
+        public bool ScaleAndReadbackTo(byte[] outputBuffer, int sourceFbo = 0)
+        {
+            if (!_isInitialized)
+                return false;
+
+            int required = _outputWidth * _outputHeight * 4;
+            if (outputBuffer == null || outputBuffer.Length < required)
+                return false;
+
+            try
+            {
+                GLES30.GlBindFramebuffer(GLES30.GlReadFramebuffer, sourceFbo);
+                GLES30.GlBindFramebuffer(GLES30.GlDrawFramebuffer, _previewFbo);
+
+                GLES30.GlBlitFramebuffer(
+                    0, 0, _inputWidth, _inputHeight,
+                    0, _outputHeight, _outputWidth, 0,
+                    GLES20.GlColorBufferBit,
+                    GLES20.GlLinear);
+
+                GLES30.GlBindFramebuffer(GLES30.GlReadFramebuffer, _previewFbo);
+                _readbackBuffer.Clear();
+                GLES20.GlReadPixels(0, 0, _outputWidth, _outputHeight,
+                    GLES20.GlRgba, GLES20.GlUnsignedByte, _readbackBuffer);
+
+                _readbackBuffer.Rewind();
+                _readbackBuffer.Get(outputBuffer, 0, required);
+
+                GLES20.GlBindFramebuffer(GLES20.GlFramebuffer, 0);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[GlPreviewScaler] ScaleAndReadbackTo error: {ex.Message}");
+                try { GLES20.GlBindFramebuffer(GLES20.GlFramebuffer, 0); } catch { }
+                return false;
+            }
+        }
+
         public void Dispose()
         {
             if (_isDisposed)

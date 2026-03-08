@@ -53,6 +53,31 @@ A: Use the `BlockGesturesBelow="True"` property on the top control. Note that `I
 **Q: How do I internally rebuild the ItemsSource?**  
 A: Directly call `layout.ApplyItemsSource()`.
 
+** Q: How to make images to Fade-In when loaded?**
+A: Subclass `SkiaImage` to define your animation:
+
+```csharp
+public class BannerImage : SkiaImage
+{
+    public override void OnSuccess(string source)
+    {
+        base.OnSuccess(source);
+
+        this.Opacity = 0.01;
+        _ = this.FadeToAsync(1, 300, Easing.SinIn);
+    }
+}
+```
+
+**Q: How to reduce battery drain/heat on iPhone in constant sceen updates scenarios?**
+A: Might be Apple Metal specifics, cap FPS:
+
+```csharp
+#if IOS //spare battery because apple metal is draining much. android is not affected at the same level.
+            Super.MaxFps = 30;
+#endif
+```
+
 ## Troubleshooting
  
 **Q: Why is scrolling/rendering slow?**  

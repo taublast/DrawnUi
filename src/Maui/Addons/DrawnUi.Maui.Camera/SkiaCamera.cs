@@ -639,7 +639,10 @@ public partial class SkiaCamera : SkiaControl
         typeof(CameraPosition),
         typeof(SkiaCamera),
         CameraPosition.Default,
-        propertyChanged: NeedRestart);
+        propertyChanged: (bindable, value, newValue) =>
+        {
+            NeedRestart(bindable, value, newValue);
+        });
 
     public CameraPosition Facing
     {
@@ -2638,7 +2641,7 @@ public partial class SkiaCamera : SkiaControl
             {
                 if (string.IsNullOrEmpty(meta.LensModel) && CameraDevice != null)
                 {
-                    var facing = CameraDevice.Facing == CameraPosition.Selfie ? "Front Camera" : "Back Camera";
+                    var facing = CameraDevice.Position == CameraPosition.Selfie ? "Front Camera" : "Back Camera";
                     var focalStr = "";
                     if (CameraDevice.FocalLengths?.Count > 0)
                     {
@@ -3307,6 +3310,30 @@ public partial class SkiaCamera : SkiaControl
         return NativeControl.GetPreviewImage();
     }
 
+    /// <summary>
+    /// Called on every camera frame before any compositing, overlay or preview downscaling.
+    /// During recording this fires with the raw camera input before FrameProcessor draws overlays
+    /// (via platform recording loops). During preview-only this fires with the raw preview frame.
+    /// Override to implement ML/AI processing. Call TryGetMLFrame() inside to get GPU-scaled pixel data.
+    /// Must not block — copy pixels synchronously into a pre-allocated buffer and hand off to a background thread.
+    /// </summary>
+    /// <param name="rawImage">
+    /// Raw camera frame as SKImage. Valid only for the duration of this call — do not cache.
+    /// Null on Android GPU path (OES SurfaceTexture); TryGetMLFrame handles that case internally via GL blit.
+    /// </param>
+    /// <param name="rotation">Current device rotation in degrees (0/90/180/270).</param>
+    protected internal virtual void OnRawFrameAcquired(SKImage rawImage, int rotation) { }
+
+    /// <summary>
+    /// Scales the raw camera frame to targetWidth×targetHeight RGBA pixels into outputBuffer.
+    /// Must be called synchronously from within OnRawFrameAcquired — context is not valid elsewhere.
+    /// Uses the same GPU path the camera uses internally: MetalPreviewScaler (iOS/Mac),
+    /// GlPreviewScaler (Android GPU path), SKSurface+GRContext (Windows), CPU SKSurface (Android legacy).
+    /// outputBuffer must be pre-allocated: targetWidth * targetHeight * 4 bytes.
+    /// Returns false if scaling failed or no raw frame is available.
+    /// </summary>
+    protected partial bool TryGetMLFrame(SKImage rawImage, int targetWidth, int targetHeight, byte[] outputBuffer);
+
     protected virtual void SetFrameFromNative()
     {
         if (NativeControl != null && !FrameAquired)
@@ -3326,6 +3353,15 @@ public partial class SkiaCamera : SkiaControl
                     {
                         UpdatePreviewScale();
                     }
+                }
+
+                // Fire ML hook for non-recording path (preview-only).
+                // Recording paths fire their own hook earlier (before FrameProcessor overlays) in
+                // CaptureFrameCore (Apple), ProcessGpuFrameOnThread (Android GPU), and
+                // PreviewCaptureSuccess (Windows) — so we skip here to avoid double-firing.
+                if (!(UseRecordingFramesForPreview && (IsRecording || IsPreRecording)))
+                {
+                    OnRawFrameAcquired(image, DeviceRotation);
                 }
 
                 // Apply PreviewProcessor if set — but skip when UseRecordingFramesForPreview is active
@@ -3617,6 +3653,25 @@ public partial class SkiaCamera : SkiaControl
                     else
                     {
                         allGranted = s == AVAuthorizationStatus.Authorized;
+                    }
+#elif WINDOWS
+                    // MAUI's Permissions.Microphone on Windows tries to read AppxManifest.xml
+                    // which doesn't exist for unpackaged apps (WindowsPackageType=None).
+                    // Use WinRT AppCapability API instead - works for both packaged and unpackaged.
+                    try
+                    {
+                        var cap = Windows.Security.Authorization.AppCapabilityAccess.AppCapability.Create("microphone");
+                        var accessStatus = cap.CheckAccess();
+                        if (accessStatus != Windows.Security.Authorization.AppCapabilityAccess.AppCapabilityAccessStatus.Allowed)
+                        {
+                            wasAsking = true;
+                            accessStatus = await cap.RequestAccessAsync();
+                        }
+                        allGranted = allGranted && accessStatus == Windows.Security.Authorization.AppCapabilityAccess.AppCapabilityAccessStatus.Allowed;
+                    }
+                    catch
+                    {
+                        // Fallback: let OS enforce at point of use
                     }
 #else
                     var micStatus = await Permissions.CheckStatusAsync<Permissions.Microphone>();

@@ -774,19 +774,6 @@ public class Canvas : DrawnView, IGestureListener
 
     public event EventHandler Tapped;
 
-    /// <summary>
-    /// To filter micro-gestures on super sensitive screens, start passing panning only when threshold is once overpassed
-    /// </summary>
-    public static float FirstPanThreshold = 5;
-
-    bool _isPanning;
-    bool _blockedPanning;
-    bool _hadTap;
-    bool _hadLong;
-
-    // Track which pointers are currently long pressed
-    private readonly HashSet<long> _longPressedPointers = new();
-
 
     /*
      added:
@@ -816,57 +803,6 @@ public class Canvas : DrawnView, IGestureListener
             return;
         }
 
-#if ANDROID //todo move all this fun to gestures lib now:
-        // on some devices like galaxy the screen is too sensitive for panning
-        // so it send micro-panning gestures when the finger just went down to screen
-        // like not moving yet so we filter micro-pan
-        // at the same time those screens detect pan instead of tap inside getsure lib
-        // so this is a specific android workaround, to be moved to gestures lib
-        if (touchAction == TouchActionResult.Tapped)
-        {
-            _hadTap = true;
-        }
-        else if (touchAction == TouchActionResult.LongPressing)
-        {
-            _hadLong = true;
-            _longPressedPointers.Add(args1.Id); // mark this pointer as long-pressed
-        }
-        else if (touchAction == TouchActionResult.Down)
-        {
-            _hadLong = false;
-            _hadTap = false;
-            _blockedPanning = false;
-        }
-        else if (touchAction == TouchActionResult.Up)
-        {
-            _longPressedPointers.Remove(args1.Id); // clear long-press state
-        }
-        else if (touchAction == TouchActionResult.Panning)
-        {
-            //filter micro-gestures
-            if ((Math.Abs(args1.Distance.Delta.X) < 1 && Math.Abs(args1.Distance.Delta.Y) < 1)
-                || (Math.Abs(args1.Distance.Velocity.X / RenderingScale) < 1 &&
-                    Math.Abs(args1.Distance.Velocity.Y / RenderingScale) < 1))
-            {
-                _blockedPanning = true;
-                return;
-            }
-
-            var threshold = FirstPanThreshold * RenderingScale;
-
-            if (!_isPanning)
-            {
-                //filter first panning movement on super sensitive screens
-                if (Math.Abs(args1.Distance.Total.X) < threshold && Math.Abs(args1.Distance.Total.Y) < threshold)
-                {
-                    return;
-                }
-
-                _isPanning = true;
-            }
-        }
-#endif
-
         if (touchAction == TouchActionResult.Tapped)
         {
             Tapped?.Invoke(this, EventArgs.Empty);
@@ -874,7 +810,6 @@ public class Canvas : DrawnView, IGestureListener
 
         if (touchAction == TouchActionResult.Down)
         {
-            _isPanning = false;
             if (AttachedTouchEffect != null)
             {
                 AttachedTouchEffect.WIllLock = ShareLockState.Initial;
@@ -926,186 +861,8 @@ public class Canvas : DrawnView, IGestureListener
             }
         }, LongKeyGenerator.Next());
 
-        //filter micro-pan
-        bool fixMicroPan = _blockedPanning && !_hadTap && !_isPanning && !_hadLong;
-
-        // allow taps from other fingers if some pointer is in long-press state
-        bool hadPalm = touchAction == TouchActionResult.Up && _longPressedPointers.Any(id => id != args1.Id);
-
-        if (fixMicroPan || hadPalm)
-        {
-            PostponeExecutionBeforeDraw(() =>
-            {
-                try
-                {
-                    var tapped = SkiaGesturesParameters.Create(TouchActionResult.Tapped, args1);
-                    ProcessGestures(tapped);
-                }
-                catch (Exception e)
-                {
-                    Super.Log(e);
-                }
-            }, LongKeyGenerator.Next());
-        }
-
         Repaint();
     }
-
-    /// <summary>
-    /// IGestureListener implementation
-    /// </summary>
-    /// <param name="type"></param>
-    /// <param name="args1"></param>
-    /// <param name="touchAction"></param>
-    public virtual void OnGestureEventOld(TouchActionType type, TouchActionEventArgs args1, TouchActionResult touchAction)
-    {
-        //Debug.WriteLine($"[Canvas] {touchAction} {args1.Location}");
-
-        if (!CanDraw)
-        {
-            // if we got a gesture looks like we went back to visibility again
-            // but do NOT process gestures received when we are not rendering this view
-            // could break any presumed logic
-            NeedCheckParentVisibility = true;
-            Repaint();
-            return;
-        }
-
-#if ANDROID //todo move all this fun to gestures lib now:
-        // on some devices like galaxy the screen is too sensitive for panning
-        // so it send micro-panning gestures when the finger just went down to screen
-        // like not moving yet so we filter micro-pan
-        // at the same time those screens detect pan instead of tap inside getsure lib
-        // so this is a specific android workaround, to be moved to gestures lib
-        if (touchAction == TouchActionResult.Tapped)
-        {
-            _hadTap = true;
-        }
-        else if (touchAction == TouchActionResult.LongPressing)
-        {
-            _hadLong = true;
-            _longPressedPointers.Add(args1.Id); // mark this pointer as long-pressed
-        }
-        else if (touchAction == TouchActionResult.Down)
-        {
-            _hadLong = false;
-            _hadTap = false;
-            _blockedPanning = false;
-        }
-        else if (touchAction == TouchActionResult.Up)
-        {
-            _longPressedPointers.Remove(args1.Id); // clear long-press state
-        }
-        else if (touchAction == TouchActionResult.Panning)
-        {
-            //filter micro-gestures
-            if ((Math.Abs(args1.Distance.Delta.X) < 1 && Math.Abs(args1.Distance.Delta.Y) < 1)
-                || (Math.Abs(args1.Distance.Velocity.X / RenderingScale) < 1 &&
-                    Math.Abs(args1.Distance.Velocity.Y / RenderingScale) < 1))
-            {
-                _blockedPanning = true;
-                return;
-            }
-
-            var threshold = FirstPanThreshold * RenderingScale;
-
-            if (!_isPanning)
-            {
-                //filter first panning movement on super sensitive screens
-                if (Math.Abs(args1.Distance.Total.X) < threshold && Math.Abs(args1.Distance.Total.Y) < threshold)
-                {
-                    return;
-                }
-
-                _isPanning = true;
-            }
-        }
-#endif
-
-        if (touchAction == TouchActionResult.Tapped)
-        {
-            Tapped?.Invoke(this, EventArgs.Empty);
-        }
-
-        if (touchAction == TouchActionResult.Down)
-        {
-            _isPanning = false;
-            if (AttachedTouchEffect != null)
-            {
-                AttachedTouchEffect.WIllLock = ShareLockState.Initial;
-            }
-        }
-
-        var args = SkiaGesturesParameters.Create(touchAction, args1);
-
-        if (GesturesDebugColor.Alpha > 0)
-        {
-            if (DebugPointer == null)
-            {
-                DebugPointer = CreateDebugPointer();
-            }
-
-            if (args.Type == TouchActionResult.Down)
-            {
-                _debugIsPressed = true;
-                _debugIsDown = true;
-                DebugPointer.IsVisible = true;
-            }
-            else
-            {
-                _debugIsDown = false;
-                if (args.Type == TouchActionResult.Up)
-                {
-                    _debugIsPressed = false;
-                    _PressedPosition = SKPoint.Empty;
-                }
-            }
-
-            if (_debugIsPressed)
-            {
-                //pixels already
-                _PressedPosition = new(args.Event.Location.X, args.Event.Location.Y);
-            }
-        }
-
-        //this is intended to not lose gestures when fps drops and avoid crashes in double-buffering
-        PostponeExecutionBeforeDraw(() =>
-        {
-            try
-            {
-                ProcessGestures(args);
-            }
-            catch (Exception e)
-            {
-                Super.Log(e);
-            }
-        }, LongKeyGenerator.Next());
-
-        //filter micro-pan
-        bool fixMicroPan = _blockedPanning && !_hadTap && !_isPanning && !_hadLong;
-
-        // allow taps from other fingers if some pointer is in long-press state
-        bool hadPalm = touchAction == TouchActionResult.Up && _longPressedPointers.Any(id => id != args1.Id);
-
-        if (fixMicroPan || hadPalm)
-        {
-            PostponeExecutionBeforeDraw(() =>
-            {
-                try
-                {
-                    var tapped = SkiaGesturesParameters.Create(TouchActionResult.Tapped, args1);
-                    ProcessGestures(tapped);
-                }
-                catch (Exception e)
-                {
-                    Super.Log(e);
-                }
-            }, LongKeyGenerator.Next());
-        }
-
-        Repaint();
-    }
-
 
     #endregion
 

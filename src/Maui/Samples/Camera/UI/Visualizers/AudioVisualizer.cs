@@ -61,7 +61,7 @@ namespace CameraTests.Visualizers
                 _visualizerIndex = index;
             }
 
-            if (_visualizerIndex > 8 || _visualizerIndex < 0)
+            if (_visualizerIndex > 6 || _visualizerIndex < 0)
             {
                 _visualizerIndex = 0;
             }
@@ -75,34 +75,30 @@ namespace CameraTests.Visualizers
             switch (_visualizerIndex)
             {
                 case 0:
-                    Visualizer = new AudioSoundBars();
-                    VisualizerName = "Sound Bars";
+                    Visualizer = new AudioLevelsPeak();
+                    VisualizerName = "Peak Monitor";
                     break;
                 case 1:
                     Visualizer = new AudioLevelsVU();
                     VisualizerName = "VU Meter";
                     break;
                 case 2:
-                    Visualizer = new AudioLevelsPeak();
-                    VisualizerName = "Peak Monitor";
-                    break;
-                case 3:
                     Visualizer = new AudioOscillograph();
                     VisualizerName = "Oscillograph";
+                    break;
+                case 3:
+                    Visualizer = new AudioSoundBars();
+                    VisualizerName = "Sound Bars";
                     break;
                 case 4:
                     Visualizer = new AudioRadialGauge();
                     VisualizerName = "Gauge";
                     break;
                 case 5:
-                    Visualizer = new AudioInstrumentTuner();
-                    VisualizerName = "Tuner";
-                    break;
-                case 6:
                     Visualizer = new AudioWaveformBars();
                     VisualizerName = "Waveform Bars";
                     break;
-                case 8:
+                case 6:
                     Visualizer = null;
                     VisualizerName = "None";
                     break;
@@ -111,7 +107,7 @@ namespace CameraTests.Visualizers
             if (Visualizer != null)
             {
                 // Gain is applied upstream in OnAudioSampleAvailable, visualizers get pre-amplified signal
-                Visualizer.UseGain = false;
+                Visualizer.UseGain = _visualizerIndex != 5; //additional gain inside visualiser
             }
 
             DisposeObject(old);

@@ -4,7 +4,7 @@ namespace DrawnUI.Tutorials.NewsFeed
 {
     public class DrawnListCell : SkiaDynamicDrawnCell
     {
-        protected CancellationTokenSource _animationTokenSource;
+        private CancellationTokenSource _animationTokenSource;
 
         protected bool Animate = true;
 
@@ -28,33 +28,14 @@ namespace DrawnUI.Tutorials.NewsFeed
         {
             if (Animate)
             {
-                if (_animationTokenSource != null)
-                {
-                    try
-                    {
-                        _animationTokenSource.Cancel();
-                    }
-                    catch (ObjectDisposedException)
-                    {
-                    }
-                    finally
-                    {
-                        try
-                        {
-                            _animationTokenSource.Dispose();
-                        }
-                        catch (ObjectDisposedException)
-                        {
-                        }
-
-                        _animationTokenSource = null;
-                    }
-                }
-
+                var old = _animationTokenSource;
+                _animationTokenSource?.Cancel();
                 _animationTokenSource = new CancellationTokenSource();
 
                 Opacity = 0;
                 Scale = InitialScale; // Initial small scale
+
+                DisposeObject(old);
             }
         }
 
@@ -92,29 +73,19 @@ namespace DrawnUI.Tutorials.NewsFeed
                     int delayMs = _lastDelay;
 
                     // Animate opacity and scale together
-
-                    
-                    _ = AnimateAsync(
-                        (value) =>
-                        {
-                            if (_animationTokenSource.IsCancellationRequested || value >= 1)
-                            {
-                                Opacity = 1;
-                                Scale = 1;
-                                return; 
-                            }
-
-                            Opacity = value;
-                            Scale = InitialScale + (1 - InitialScale) * value; // Scale from InitialScale to 1
-                        },
-                        () =>
+                    _ = AnimateRangeAsync(d =>
+                    {
+                        if (d >= 1)
                         {
                             Opacity = 1;
                             Scale = 1;
-                        },
-                        TimeAnimateMs,
-                        Easing.SinInOut,
-                        _animationTokenSource);
+                        }
+                        else
+                        {
+                            Opacity = d;
+                            Scale = InitialScale + (1 - InitialScale) * d; // Scale from InitialScale to 1
+                        }
+                    }, 0, 1, TimeAnimateMs, Easing.SinInOut, delayMs, _animationTokenSource.Token);
                 }
             }
 
@@ -123,14 +94,8 @@ namespace DrawnUI.Tutorials.NewsFeed
 
         protected override void SetContent(object ctx)
         {
-            //StopOngoingAnimations();
-
             base.SetContent(ctx);
-
             WasVisible = false;
-
-            Opacity = 1;
-            Scale = 1;
         }
     }
 }

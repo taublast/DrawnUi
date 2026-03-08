@@ -13,7 +13,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 {
     private AppCamera CameraControl;
     private SkiaShape _takePictureButton;
-    private SkiaLabel _flashButton;
+    private SkiaSvg _flashButton;
     private SkiaLabel _statusLabel;
     private SettingsButton _videoRecordButton;
     private SettingsButton _speechButton;
@@ -101,6 +101,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
     {
         if (subscribe)
         {
+            AttachHardware(false);
+
             CameraControl.PermissionsResult += OnPermissionsResultChanged;
             CameraControl.StateChanged += CameraControlOnStateChanged;
             CameraControl.CaptureSuccess += OnCaptureSuccess;
@@ -111,7 +113,8 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
             CameraControl.AudioSampleAvailable += OnAudioCaptured;
 
             // Monitor recording state changes to start/stop speech recognition
-            CameraControl.PropertyChanged += CameraControlOnPropertyChanged;
+            CameraControl.IsRecordingVideoChanged += OnIsRecordingStateChanged;
+            CameraControl.IsPreRecordingVideoChanged += OnIsPreRecordingStateChanged;
 
             //CameraControl.OnAudioSample += HUD.AddAudioSample;
 
@@ -130,20 +133,22 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
 
                 CameraControl.AudioSampleAvailable -= OnAudioCaptured;
 
-                CameraControl.PropertyChanged -= CameraControlOnPropertyChanged;
+                CameraControl.IsRecordingVideoChanged -= OnIsRecordingStateChanged;
+                CameraControl.IsPreRecordingVideoChanged -= OnIsPreRecordingStateChanged;
 
                 //CameraControl.OnAudioSample -= HUD.AddAudioSample;
             }
         }
     }
 
-    private void CameraControlOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void OnIsRecordingStateChanged(object sender, bool e)
     {
-        if (e.PropertyName == nameof(CameraControl.IsRecording) ||
-            e.PropertyName == nameof(CameraControl.IsPreRecording))
-        {
-            OnRecordingStateChanged();
-        }
+        OnRecordingStateChanged();
+    }
+
+    private void OnIsPreRecordingStateChanged(object sender, bool e)
+    {
+        OnRecordingStateChanged();
     }
 
     void RefreshGpsLocationIfNeeded()
@@ -314,7 +319,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                 {
                     _takePictureButton.CornerRadius = 30 - (30 - 4) * value; // 30 to 4
                     _takePictureButton.WidthRequest = 60 - (60 - 42) * value; // 60 to 42
-                }, 0, 1, (uint)_morphSpeed, Easing.SinOut, default, true);
+                }, 0, 1, (uint)_morphSpeed, Easing.SinOut);
                 
                 // Change color to red
                 if (CameraControl.IsPreRecording)
@@ -333,7 +338,7 @@ public partial class CameraTestPage : BasePageReloadable, IDisposable
                 {
                     _takePictureButton.CornerRadius = 4 + (30 - 4) * value; // 4 to 30
                     _takePictureButton.WidthRequest = 42 + (60 - 42) * value; // 42 to 60
-                }, 0, 1, (uint)_morphSpeed, Easing.SinIn, default, true);
+                }, 0, 1, (uint)_morphSpeed, Easing.SinIn);
                 
                 // Change color back to light gray
                 _takePictureButton.BackgroundColor = Color.FromArgb("#CECECE");

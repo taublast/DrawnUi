@@ -241,9 +241,12 @@ namespace CameraTests.Views
                                             BackgroundColor = Colors.Black,
                                             Children =
                                             {
-                                                new SkiaRichLabel("⚙️")
+                                                new SkiaSvg()
                                                 {
-                                                    FontSize = 20,
+                                                    Source = "Svg/icon_settings.svg",
+                                                    TintColor = Colors.White.WithAlpha(0.8f),
+                                                    HeightRequest = 24,
+                                                    WidthRequest = 24,
                                                     VerticalOptions = LayoutOptions.Center,
                                                     HorizontalOptions = LayoutOptions.Center,
                                                 }
@@ -264,9 +267,12 @@ namespace CameraTests.Views
                                             BackgroundColor = Colors.Black,
                                             Children =
                                             {
-                                                new SkiaRichLabel("⚡")
+                                                new SkiaSvg()
                                                 {
-                                                    FontSize = 20,
+                                                    Source = "Svg/icon_flash_off.svg",
+                                                    TintColor = Colors.White.WithAlpha(0.8f),
+                                                    HeightRequest = 24,
+                                                    WidthRequest = 24,
                                                     VerticalOptions = LayoutOptions.Center,
                                                     HorizontalOptions = LayoutOptions.Center,
                                                 }
@@ -276,8 +282,8 @@ namespace CameraTests.Views
                                         .OnTapped(me => { ToggleFlash(); })
                                         .ObserveProperty(CameraControl, nameof(CameraControl.FlashMode), me =>
                                         {
-                                            _flashButton.Text = CameraControl.FlashMode == FlashMode.Off ? "⚡" :
-                                                               CameraControl.FlashMode == FlashMode.On ? "💡" : "✨";
+                                            _flashButton.Source = CameraControl.FlashMode == FlashMode.Off ? "Svg/icon_flash_off.svg" :
+                                                                  CameraControl.FlashMode == FlashMode.On ? "Svg/icon_flash_on.svg" : "Svg/icon_flash_auto.svg";
                                         }),
 
                                         // Flip Camera button
@@ -293,9 +299,12 @@ namespace CameraTests.Views
                                             BackgroundColor = Colors.Black,
                                             Children =
                                             {
-                                                new SkiaRichLabel("🔄")
+                                                new SkiaSvg()
                                                 {
-                                                    FontSize = 20,
+                                                    Source = "Svg/icon_camera_flip.svg",
+                                                    TintColor = Colors.White.WithAlpha(0.8f),
+                                                    HeightRequest = 24,
+                                                    WidthRequest = 24,
                                                     VerticalOptions = LayoutOptions.Center,
                                                     HorizontalOptions = LayoutOptions.Center,
                                                 }

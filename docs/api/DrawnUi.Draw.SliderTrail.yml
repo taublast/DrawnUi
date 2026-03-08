@@ -472,7 +472,7 @@ items:
   - DrawnUi.Draw.SkiaControl.PrintDebug(System.String)
   - DrawnUi.Draw.SkiaControl.DebugRenderingProperty
   - DrawnUi.Draw.SkiaControl.DebugRendering
-  - DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
+  - DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Int32,System.Threading.CancellationToken)
   - DrawnUi.Draw.SkiaControl.NotValidPoint
   - DrawnUi.Draw.SkiaControl.PointIsValid(SkiaSharp.SKPoint)
   - DrawnUi.Draw.SkiaControl.SizeRequest
@@ -806,6 +806,7 @@ items:
   - DrawnUi.Draw.SkiaControl.UseTranslationX
   - DrawnUi.Draw.SkiaControl.LinkTransforms
   - DrawnUi.Draw.SkiaControl.RenderViewsList(DrawnUi.Draw.DrawingContext,System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl})
+  - DrawnUi.Draw.SkiaControl.CreateHitRect
   - DrawnUi.Draw.SkiaControl._measuredStamp
   - DrawnUi.Draw.SkiaControl._builtRenderTreeStamp
   - DrawnUi.Draw.SkiaControl.RenderTree
@@ -10431,21 +10432,21 @@ references:
   name: DebugRendering
   nameWithType: SkiaControl.DebugRendering
   fullName: DrawnUi.Draw.SkiaControl.DebugRendering
-- uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
-  commentId: M:DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
+- uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Int32,System.Threading.CancellationToken)
+  commentId: M:DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Int32,System.Threading.CancellationToken)
   parent: DrawnUi.Draw.SkiaControl
   isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_
-  name: AnimateRangeAsync(Action<double>, double, double, double, Easing, CancellationToken, bool, int)
-  nameWithType: SkiaControl.AnimateRangeAsync(Action<double>, double, double, double, Easing, CancellationToken, bool, int)
-  fullName: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action<double>, double, double, double, Microsoft.Maui.Easing, System.Threading.CancellationToken, bool, int)
-  nameWithType.vb: SkiaControl.AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, CancellationToken, Boolean, Integer)
-  fullName.vb: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action(Of Double), Double, Double, Double, Microsoft.Maui.Easing, System.Threading.CancellationToken, Boolean, Integer)
-  name.vb: AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, CancellationToken, Boolean, Integer)
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Int32_System_Threading_CancellationToken_
+  name: AnimateRangeAsync(Action<double>, double, double, double, Easing, int, CancellationToken)
+  nameWithType: SkiaControl.AnimateRangeAsync(Action<double>, double, double, double, Easing, int, CancellationToken)
+  fullName: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action<double>, double, double, double, Microsoft.Maui.Easing, int, System.Threading.CancellationToken)
+  nameWithType.vb: SkiaControl.AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, Integer, CancellationToken)
+  fullName.vb: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action(Of Double), Double, Double, Double, Microsoft.Maui.Easing, Integer, System.Threading.CancellationToken)
+  name.vb: AnimateRangeAsync(Action(Of Double), Double, Double, Double, Easing, Integer, CancellationToken)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
+  - uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Int32,System.Threading.CancellationToken)
     name: AnimateRangeAsync
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Int32_System_Threading_CancellationToken_
   - name: (
   - uid: System.Action`1
     name: Action
@@ -10483,27 +10484,21 @@ references:
     href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
   - name: ','
   - name: " "
-  - uid: System.Threading.CancellationToken
-    name: CancellationToken
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
-  - name: ','
-  - name: " "
-  - uid: System.Boolean
-    name: bool
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.boolean
-  - name: ','
-  - name: " "
   - uid: System.Int32
     name: int
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Threading.CancellationToken,System.Boolean,System.Int32)
+  - uid: DrawnUi.Draw.SkiaControl.AnimateRangeAsync(System.Action{System.Double},System.Double,System.Double,System.Double,Microsoft.Maui.Easing,System.Int32,System.Threading.CancellationToken)
     name: AnimateRangeAsync
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Threading_CancellationToken_System_Boolean_System_Int32_
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AnimateRangeAsync_System_Action_System_Double__System_Double_System_Double_System_Double_Microsoft_Maui_Easing_System_Int32_System_Threading_CancellationToken_
   - name: (
   - uid: System.Action`1
     name: Action
@@ -10543,22 +10538,16 @@ references:
     href: https://learn.microsoft.com/dotnet/api/microsoft.maui.easing
   - name: ','
   - name: " "
-  - uid: System.Threading.CancellationToken
-    name: CancellationToken
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
-  - name: ','
-  - name: " "
-  - uid: System.Boolean
-    name: Boolean
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.boolean
-  - name: ','
-  - name: " "
   - uid: System.Int32
     name: Integer
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.NotValidPoint
   commentId: M:DrawnUi.Draw.SkiaControl.NotValidPoint
@@ -17360,6 +17349,25 @@ references:
     name: SkiaControl
     href: DrawnUi.Draw.SkiaControl.html
   - name: )
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.CreateHitRect
+  commentId: M:DrawnUi.Draw.SkiaControl.CreateHitRect
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateHitRect
+  name: CreateHitRect()
+  nameWithType: SkiaControl.CreateHitRect()
+  fullName: DrawnUi.Draw.SkiaControl.CreateHitRect()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.CreateHitRect
+    name: CreateHitRect
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateHitRect
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.CreateHitRect
+    name: CreateHitRect
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateHitRect
+  - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaControl._measuredStamp
   commentId: F:DrawnUi.Draw.SkiaControl._measuredStamp

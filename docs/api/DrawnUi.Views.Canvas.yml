@@ -30,7 +30,6 @@ items:
   - DrawnUi.Views.Canvas.DumpDebug
   - DrawnUi.Views.Canvas.EnableUpdates
   - DrawnUi.Views.Canvas.FindViewCoordinatesRecursive(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl,SkiaSharp.SKPoint)
-  - DrawnUi.Views.Canvas.FirstPanThreshold
   - DrawnUi.Views.Canvas.Gestures
   - DrawnUi.Views.Canvas.GesturesDebugColor
   - DrawnUi.Views.Canvas.GesturesDebugColorProperty
@@ -51,7 +50,6 @@ items:
   - DrawnUi.Views.Canvas.OnDestroyingVew
   - DrawnUi.Views.Canvas.OnDisposing
   - DrawnUi.Views.Canvas.OnGestureEvent(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)
-  - DrawnUi.Views.Canvas.OnGestureEventOld(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)
   - DrawnUi.Views.Canvas.OnGesturesAttachChanged
   - DrawnUi.Views.Canvas.OnHandlerChanged
   - DrawnUi.Views.Canvas.OnHandlerChanging(Microsoft.Maui.Controls.HandlerChangingEventArgs)
@@ -1520,7 +1518,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Context
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 509
+    startLine: 510
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1547,7 +1545,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReceivedInput
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 514
+    startLine: 515
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1578,7 +1576,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HadInput
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 519
+    startLine: 520
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1609,7 +1607,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSavedGesture
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 526
+    startLine: 527
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1644,7 +1642,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessGestures
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 549
+    startLine: 550
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1673,7 +1671,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HasHover
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 728
+    startLine: 729
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1704,7 +1702,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SignalInput
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 758
+    startLine: 759
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1739,7 +1737,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Tapped
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 773
+    startLine: 774
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1748,35 +1746,6 @@ items:
     return:
       type: System.EventHandler
     content.vb: Public Event Tapped As EventHandler
-- uid: DrawnUi.Views.Canvas.FirstPanThreshold
-  commentId: F:DrawnUi.Views.Canvas.FirstPanThreshold
-  id: FirstPanThreshold
-  parent: DrawnUi.Views.Canvas
-  langs:
-  - csharp
-  - vb
-  name: FirstPanThreshold
-  nameWithType: Canvas.FirstPanThreshold
-  fullName: DrawnUi.Views.Canvas.FirstPanThreshold
-  type: Field
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Views/Canvas.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: FirstPanThreshold
-    path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 778
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Views
-  summary: To filter micro-gestures on super sensitive screens, start passing panning only when threshold is once overpassed
-  example: []
-  syntax:
-    content: public static float FirstPanThreshold
-    return:
-      type: System.Single
-    content.vb: Public Shared FirstPanThreshold As Single
 - uid: DrawnUi.Views.Canvas.OnGestureEvent(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)
   commentId: M:DrawnUi.Views.Canvas.OnGestureEvent(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)
   id: OnGestureEvent(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)
@@ -1795,7 +1764,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnGestureEvent
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 803
+    startLine: 791
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1817,44 +1786,6 @@ items:
   overload: DrawnUi.Views.Canvas.OnGestureEvent*
   implements:
   - AppoMobi.Maui.Gestures.IGestureListener.OnGestureEvent(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)
-- uid: DrawnUi.Views.Canvas.OnGestureEventOld(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)
-  commentId: M:DrawnUi.Views.Canvas.OnGestureEventOld(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)
-  id: OnGestureEventOld(AppoMobi.Maui.Gestures.TouchActionType,AppoMobi.Maui.Gestures.TouchActionEventArgs,AppoMobi.Maui.Gestures.TouchActionResult)
-  parent: DrawnUi.Views.Canvas
-  langs:
-  - csharp
-  - vb
-  name: OnGestureEventOld(TouchActionType, TouchActionEventArgs, TouchActionResult)
-  nameWithType: Canvas.OnGestureEventOld(TouchActionType, TouchActionEventArgs, TouchActionResult)
-  fullName: DrawnUi.Views.Canvas.OnGestureEventOld(AppoMobi.Maui.Gestures.TouchActionType, AppoMobi.Maui.Gestures.TouchActionEventArgs, AppoMobi.Maui.Gestures.TouchActionResult)
-  type: Method
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Views/Canvas.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: OnGestureEventOld
-    path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 958
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Views
-  summary: IGestureListener implementation
-  example: []
-  syntax:
-    content: public virtual void OnGestureEventOld(TouchActionType type, TouchActionEventArgs args1, TouchActionResult touchAction)
-    parameters:
-    - id: type
-      type: AppoMobi.Maui.Gestures.TouchActionType
-      description: ''
-    - id: args1
-      type: AppoMobi.Maui.Gestures.TouchActionEventArgs
-      description: ''
-    - id: touchAction
-      type: AppoMobi.Maui.Gestures.TouchActionResult
-      description: ''
-    content.vb: Public Overridable Sub OnGestureEventOld(type As TouchActionType, args1 As TouchActionEventArgs, touchAction As TouchActionResult)
-  overload: DrawnUi.Views.Canvas.OnGestureEventOld*
 - uid: DrawnUi.Views.Canvas.BreakLine
   commentId: M:DrawnUi.Views.Canvas.BreakLine
   id: BreakLine
@@ -1873,7 +1804,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BreakLine
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1112
+    startLine: 870
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1899,7 +1830,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LineBreaks
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1117
+    startLine: 875
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1926,7 +1857,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1120
+    startLine: 878
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1955,7 +1886,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1124
+    startLine: 882
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1981,7 +1912,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayRippleAnimation
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1129
+    startLine: 887
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2019,7 +1950,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayShimmerAnimation
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1135
+    startLine: 893
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2059,7 +1990,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TimeLastGC
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1148
+    startLine: 906
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2088,7 +2019,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DelayNanosBetweenGC
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1149
+    startLine: 907
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2117,7 +2048,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CollectGarbage
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1151
+    startLine: 909
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2149,7 +2080,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPropertyChanged
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1168
+    startLine: 926
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2185,7 +2116,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GesturesDebugColorProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1181
+    startLine: 939
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2212,7 +2143,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GesturesDebugColor
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1187
+    startLine: 945
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2241,7 +2172,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReserveSpaceAroundProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1193
+    startLine: 951
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2268,7 +2199,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReserveSpaceAround
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1199
+    startLine: 957
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2297,7 +2228,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GesturesProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1213
+    startLine: 971
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2324,7 +2255,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Gestures
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1219
+    startLine: 977
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2353,7 +2284,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ContentProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1227
+    startLine: 985
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2380,7 +2311,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Content
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1243
+    startLine: 1001
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2409,7 +2340,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnParentChanged
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1253
+    startLine: 1011
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2439,7 +2370,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EnableUpdates
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1263
+    startLine: 1021
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2467,7 +2398,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisableUpdates
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1273
+    startLine: 1031
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2495,7 +2426,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1278
+    startLine: 1036
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2526,7 +2457,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetGesturePositionInsideControl
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1383
+    startLine: 1141
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2573,7 +2504,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FindViewCoordinatesRecursive
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1428
+    startLine: 1186
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -11648,12 +11579,6 @@ references:
   name: TouchActionEventArgs
   nameWithType: TouchActionEventArgs
   fullName: AppoMobi.Maui.Gestures.TouchActionEventArgs
-- uid: DrawnUi.Views.Canvas.OnGestureEventOld*
-  commentId: Overload:DrawnUi.Views.Canvas.OnGestureEventOld
-  href: DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_OnGestureEventOld_AppoMobi_Maui_Gestures_TouchActionType_AppoMobi_Maui_Gestures_TouchActionEventArgs_AppoMobi_Maui_Gestures_TouchActionResult_
-  name: OnGestureEventOld
-  nameWithType: Canvas.OnGestureEventOld
-  fullName: DrawnUi.Views.Canvas.OnGestureEventOld
 - uid: DrawnUi.Views.Canvas.BreakLine*
   commentId: Overload:DrawnUi.Views.Canvas.BreakLine
   href: DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_BreakLine

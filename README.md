@@ -36,21 +36,27 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 
 ---
 
-## 🆕 What's new for 1.9.3.1
+## 🆕 What's new for 1.9.4.1
 
-* iOS hardware-accelerated view now uses shared Apple Metal context for all views instead of one per view, improving performance and reducing memory usage.
-* Several memory leaks fixed.
+* Added virtual `CreateHitRect` for overriding hitboxes of all controls.
+* `AnimateRangeAsync` signature change, fix cancellation
+* `SkiaCamera`: fix Facing, add `OnRawFrameAcquired`, `TryGetMLFrame` methods.
+* Using next version of gestures nuget.
+* Minor fixes and optimizations.
 
 ## 💡 Hint of the Day
 
-**❓ Q: How to reduce battery drain/heat on iPhone in constant sceen updates scenarios?**
+**❓ Q: How to expand button hitbox?**
 
-**💡 A:** Might be Apple Metal specifics, cap FPS:
+**💡 A:** Every drawn control can do that:
 
 ```csharp
-#if IOS //spare battery because apple metal is draining much. android is not affected at the same level.
-            Super.MaxFps = 30;
-#endif
+public override SKRect CreateHitRect()
+{
+    var ret = base.CreateHitRect();
+    ret.Inflate(10*RenderingScale, 10*RenderingScale);
+    return ret;
+}
 ```
 
 ---

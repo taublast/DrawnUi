@@ -65,7 +65,6 @@
         <Compile Remove="Platforms\Windows\NewFolder\**" />
     </ItemGroup>
 
-
     <ItemGroup>
         <None Include="..\..\..\CLAUDE.md" Link="CLAUDE.md" />
         <None Include="..\..\..\CONTRIBUTING.md" Link="CONTRIBUTING.md" />
@@ -86,7 +85,7 @@
         <!--cannot use due to .net runtime bug still being worked out to be fixed-->
         <!--<PackageReference Include="Markdig" Version="0.41.1" />-->
         <PackageReference Include="CommonMark.NET" Version="0.15.1" />
-        <PackageReference Include="AppoMobi.Maui.Gestures" Version="1.11.9.1" />
+        <PackageReference Include="AppoMobi.Maui.Gestures" Version="1.11.9.2" />
         <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.0" />
         <PackageReference Include="SkiaSharp.Skottie" Version="3.119.0" />
         <PackageReference Include="Svg.Skia" Version="3.0.3" />
@@ -110,7 +109,6 @@
     <ItemGroup Condition="$(TargetFramework.Contains('catalyst')) == true">
         <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.6" />
     </ItemGroup>
-
 
     <!-- FIX for Windows unpackaged mode when library is referenced directly -->
     <ItemGroup Condition="$(TargetFramework.Contains('windows')) == true">
@@ -146,7 +144,6 @@
         </None>
     </ItemGroup>
 
-
     <!--ANDROID ONLY-->
     <ItemGroup Condition="$(TargetFramework.Contains('android')) == true">
         <!--fix android bad alignement-->
@@ -181,7 +178,6 @@
         <Folder Include="Internals\Handlers\" />
     </ItemGroup>
 
-
     <ItemGroup>
         <Compile Remove="Shared/**/*.*pple.cs" />
         <None Include="Shared/**/*.*pple.cs" />
@@ -199,8 +195,6 @@
         </Compile>
     </ItemGroup>
 
-
     <Import Project="..\..\Shared\Shared.projitems" Label="Shared" />
-
 
 </Project>

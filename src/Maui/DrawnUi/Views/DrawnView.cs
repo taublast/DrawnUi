@@ -576,25 +576,7 @@ namespace DrawnUi.Views
 
         private bool _initialized;
 
-        private void Init()
-        {
-            if (!_initialized)
-            {
-                _initialized = true;
-
-                HorizontalOptions = LayoutOptions.Start;
-                VerticalOptions = LayoutOptions.Start;
-                Padding = new Thickness(0);
-
-                SizeChanged += ViewSizeChanged;
-
-                //bug this creates garbage on aandroid on every frame
-                // DeviceDisplay.Current.MainDisplayInfoChanged += OnMainDisplayInfoChanged;
-                InitFramework(true);
-
-                SurfaceCacheManager = new(this);
-            }
-        }
+      
 
         public void SetDeviceOrientation(DeviceOrientation value)
         {
@@ -2199,7 +2181,7 @@ namespace DrawnUi.Views
         protected SKPaint PaintSystem { get; set; }
         public SKRect Destination { get; protected set; }
 
-        public void PaintTintBackground(SKCanvas canvas)
+        public virtual void PaintTintBackground(SKCanvas canvas)
         {
             if (BackgroundColor != null && BackgroundColor != Colors.Transparent)
             {

@@ -33,6 +33,11 @@ public partial class SkiaCamera
     private IntPtr _cachedZeroCopyTextureHandle;
     private GRContext _cachedZeroCopyContext;
 
+    // ML scaler — lazily created, reused across frames
+    private MetalPreviewScaler _mlScaler;
+    private int _mlScalerTargetWidth;
+    private int _mlScalerTargetHeight;
+
     // Streaming audio writer for OOM-safe live recording (audio goes to file, not memory)
     private AVAssetWriter _liveAudioWriter;
     private AVAssetWriterInput _liveAudioInput;
@@ -261,7 +266,7 @@ public partial class SkiaCamera
                                 imageToDraw = _cachedZeroCopyImage;
                                 shouldDisposeImage = false;
                                 imageRotation = (int)nativeCam.CurrentRotation;
-                                imageFlip = (CameraDevice?.Facing ?? Facing) == CameraPosition.Selfie;
+                                imageFlip = (CameraDevice?.Position ?? Facing) == CameraPosition.Selfie;
                             }
                         }
                         catch (Exception ex)
@@ -287,6 +292,9 @@ public partial class SkiaCamera
                     Debug.WriteLine("[CaptureFrame] No preview image available from camera");
                     return;
                 }
+
+                // Fire ML hook — raw frame before FrameProcessor overlays are composited
+                OnRawFrameAcquired(imageToDraw, imageRotation);
 
                 try
                 {
@@ -3610,6 +3618,42 @@ public partial class SkiaCamera
                 tcs.TrySetException(ex);
             }
         });
+    }
+
+    #endregion
+
+    #region ML Frame Helper
+
+    protected partial bool TryGetMLFrame(SKImage rawImage, int targetWidth, int targetHeight, byte[] outputBuffer)
+    {
+        if (NativeControl is not NativeCamera nativeCam)
+            return false;
+
+        var texture = nativeCam.PreviewTexture;
+        if (texture == null)
+            return false;
+
+        int srcW = nativeCam.PreviewWidth;
+        int srcH = nativeCam.PreviewHeight;
+        if (srcW <= 0 || srcH <= 0)
+            return false;
+
+        // Lazily create / recreate scaler when dimensions change
+        if (_mlScaler == null || _mlScalerTargetWidth != targetWidth || _mlScalerTargetHeight != targetHeight)
+        {
+            _mlScaler?.Dispose();
+            _mlScaler = new MetalPreviewScaler();
+            if (!_mlScaler.Initialize(srcW, srcH, targetWidth, targetHeight))
+            {
+                _mlScaler.Dispose();
+                _mlScaler = null;
+                return false;
+            }
+            _mlScalerTargetWidth = targetWidth;
+            _mlScalerTargetHeight = targetHeight;
+        }
+
+        return _mlScaler.ScaleFromTexture(texture, outputBuffer, out _);
     }
 
     #endregion

@@ -623,7 +623,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             var cameraUnit = new CameraUnit
             {
                 Id = _cameraDevice.Id,
-                Facing = FormsControl.Facing,
+                Position = FormsControl.Facing,
                 FocalLengths = cameraSpecs.FocalLengths,
                 FocalLength = cameraSpecs.FocalLength,
                 FieldOfView = cameraSpecs.FieldOfView,
@@ -638,7 +638,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
             Debug.WriteLine($"[NativeCameraWindows] CameraUnit created from real data:");
             Debug.WriteLine($"  - Id: {cameraUnit.Id}");
-            Debug.WriteLine($"  - Facing: {cameraUnit.Facing}");
+            Debug.WriteLine($"  - Facing: {cameraUnit.Position}");
             Debug.WriteLine($"  - Focal Length: {cameraUnit.FocalLength}mm");
             Debug.WriteLine($"  - FOV: {cameraUnit.FieldOfView}°");
             Debug.WriteLine($"  - Sensor: {cameraUnit.SensorWidth}x{cameraUnit.SensorHeight}mm");
@@ -1045,7 +1045,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
                 capturedImage = new CapturedImage()
                 {
-                    Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
+                    Facing = FormsControl.CameraDevice?.Position ?? FormsControl.Facing,
                     Time = DateTime.UtcNow,
                     Image = skImage, // Transfer ownership to CapturedImage - renderer will dispose
                     Meta = meta,
@@ -1171,7 +1171,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
                 var capturedImage = new CapturedImage()
                 {
-                    Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
+                    Facing = FormsControl.CameraDevice?.Position ?? FormsControl.Facing,
                     Time = DateTime.UtcNow,
                     Image = skImage, // Transfer ownership to CapturedImage - renderer will dispose
                     Meta = meta,
@@ -1999,7 +1999,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
             var capturedImage = new CapturedImage()
             {
-                Facing = FormsControl.CameraDevice?.Facing ?? FormsControl.Facing,
+                Facing = FormsControl.CameraDevice?.Position ?? FormsControl.Facing,
                 Time = DateTime.UtcNow,
                 Image = skImage,
                 Rotation = rotation,
