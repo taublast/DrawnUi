@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using DrawnUi.Infrastructure.Enums;
+using Microsoft.Maui.HotReload;
 
 namespace DrawnUi.Views
 {
@@ -12,6 +13,27 @@ namespace DrawnUi.Views
     [ContentProperty("Children")]
     public partial class DrawnView : ContentView, IDrawnBase, IAnimatorsManager, IVisualTreeElement
     {
+        private void Init()
+        {
+            if (!_initialized)
+            {
+                _initialized = true;
+
+                HorizontalOptions = LayoutOptions.Start;
+                VerticalOptions = LayoutOptions.Start;
+                Padding = new Thickness(0);
+
+                SizeChanged += ViewSizeChanged;
+
+                //bug this creates garbage on aandroid on every frame
+                // DeviceDisplay.Current.MainDisplayInfoChanged += OnMainDisplayInfoChanged;
+                InitFramework(true);
+
+
+                SurfaceCacheManager = new(this);
+            }
+        }
+
         public virtual void OnHotReload()
         {
 
