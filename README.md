@@ -36,10 +36,13 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 
 ---
 
-## 🆕 What's new for 1.9.3.1
+## 🆕 What's new for 1.9.4.1
 
-* iOS hardware-accelerated view now uses shared Apple Metal context for all views instead of one per view, improving performance and reducing memory usage.
-* Several memory leaks fixed.
+* Added virtual `CreateHitRect` for overriding hitboxes of all controls.
+* `AnimateRangeAsync` signature change, fix cancellation
+* `SkiaCamera`: fix Facing, add `OnRawFrameAcquired`, `TryGetMLFrame` methods.
+* Using next version of gestures nuget.
+* Minor fixes and optimizations.
 
 ## 💡 Hint of the Day
 

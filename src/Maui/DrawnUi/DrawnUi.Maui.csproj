@@ -110,7 +110,6 @@
         <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.6" />
     </ItemGroup>
 
-
     <!-- FIX for Windows unpackaged mode when library is referenced directly -->
     <ItemGroup Condition="$(TargetFramework.Contains('windows')) == true">
         <None Include="Platforms/Windows/Natives/libEGL.dll">
@@ -144,7 +143,6 @@
             <PackagePath>build/DrawnUi.Maui.targets</PackagePath>
         </None>
     </ItemGroup>
-
 
     <!--ANDROID ONLY-->
     <ItemGroup Condition="$(TargetFramework.Contains('android')) == true">
@@ -180,7 +178,6 @@
         <Folder Include="Internals\Handlers\" />
     </ItemGroup>
 
-
     <ItemGroup>
         <Compile Remove="Shared/**/*.*pple.cs" />
         <None Include="Shared/**/*.*pple.cs" />
@@ -198,8 +195,6 @@
         </Compile>
     </ItemGroup>
 
-
     <Import Project="..\..\Shared\Shared.projitems" Label="Shared" />
-
 
 </Project>

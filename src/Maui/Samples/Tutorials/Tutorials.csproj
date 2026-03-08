@@ -13,12 +13,12 @@
         <SingleProject>true</SingleProject>
         <ImplicitUsings>enable</ImplicitUsings>
 
-        <UseSource>true</UseSource>
+        <UseSource>false</UseSource>
 
     </PropertyGroup>
 
     <ItemGroup Condition="'$(UseSource)' != 'true'">
-        <PackageReference Include="DrawnUi.Maui" Version="1.9.3.1" />
+        <PackageReference Include="DrawnUi.Maui" Version="1.9.4.1" />
     </ItemGroup>
 
 	<PropertyGroup>
