@@ -597,8 +597,10 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             BufferPreRecordingFrame(image, image.Timestamp);
         }
 
-        // RenderScript YUV→RGB conversion
-        if (!_useGlPreview)
+        // RenderScript YUV→RGB conversion.
+        // In the experimental dual-stream recording mode we temporarily process ImageReader preview
+        // frames even if GL preview is enabled for non-recording preview sessions.
+        if (!_useGlPreview || (_useGpuCameraPath && AndroidCameraExperimentalFlags.UseLegacyDualStreamPreviewDuringRecording))
         {
             ProcessImage(image, allocated.Allocation, false, false);
             allocated.Update();
@@ -1991,15 +1993,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             }
 
             // Choose preview surface: GPU renderer or ImageReader
-            Surface previewSurface;
-            if (_useGlPreview && _glPreviewRenderer != null)
-            {
-                previewSurface = _glPreviewRenderer.GetCameraOutputSurface();
-            }
-            else
-            {
-                previewSurface = mImageReaderPreview.Surface;
-            }
+            var previewSurface = GetActivePreviewSurface();
 
             var surfaces = new List<Surface> { previewSurface };
             if (mImageReaderPhoto != null)
@@ -2043,6 +2037,16 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         {
             _gpuCameraSurface = gpuSurface;
             _useGpuCameraPath = true;
+            bool useDualStreamPreview = AndroidCameraExperimentalFlags.UseLegacyDualStreamPreviewDuringRecording;
+
+            if (useDualStreamPreview && mImageReaderPreview == null)
+            {
+                EnsureRenderScriptInitialized();
+                mImageReaderPreview =
+                    ImageReader.NewInstance(PreviewWidth, PreviewHeight, ImageFormatType.Yuv420888, 3);
+                mImageReaderPreview.SetOnImageAvailableListener(this, mBackgroundHandler);
+                AllocateOutSurface();
+            }
 
             // WE ARE RECORDING !!!
             mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
@@ -2069,20 +2073,29 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 }
             }
 
-            // GPU path: SINGLE STREAM — camera feeds only the encoder surface.
-            // Preview is derived from the recording stream via GlPreviewScaler (GPU downscale).
-            // This eliminates dual-stream overhead and mirrors Apple's MetalPreviewScaler pattern.
+            // GPU path: by default use a single stream where preview is derived from the recording
+            // stream. The experimental dual-stream mode restores ImageReader preview while keeping
+            // recording on the encoder surface for comparison testing.
             var surfaces = new List<Surface>
             {
-                _gpuCameraSurface           // GPU path for encoder (preview derived from this)
+                _gpuCameraSurface
             };
+
+            if (useDualStreamPreview && mImageReaderPreview != null)
+            {
+                surfaces.Add(mImageReaderPreview.Surface);
+            }
 
             // Still need photo surface for photo capture during recording
             if (mImageReaderPhoto != null)
                 surfaces.Add(mImageReaderPhoto.Surface);
 
-            // Target only GPU surface — no ImageReader preview stream
+            // Recording always targets the GPU surface.
             mPreviewRequestBuilder.AddTarget(_gpuCameraSurface);
+            if (useDualStreamPreview && mImageReaderPreview != null)
+            {
+                mPreviewRequestBuilder.AddTarget(mImageReaderPreview.Surface);
+            }
 
             // Set FPS range.
             // Use variable [half, fps] so AE can raise ISO first and then open the shutter
@@ -2117,7 +2130,10 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 Debug.WriteLine($"[NativeCamera GPU] Error setting FPS range: {ex.Message}");
             }
 
-            System.Diagnostics.Debug.WriteLine($"[NativeCamera] Creating GPU camera session with {surfaces.Count} surfaces — single-stream (preview from encoder)");
+            System.Diagnostics.Debug.WriteLine(
+                useDualStreamPreview
+                    ? $"[NativeCamera] Creating GPU camera session with {surfaces.Count} surfaces — dual-stream test mode"
+                    : $"[NativeCamera] Creating GPU camera session with {surfaces.Count} surfaces — single-stream (preview from encoder)");
 
             mCameraDevice.CreateCaptureSession(
                 surfaces,
@@ -3081,6 +3097,23 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         }
     }
 
+    private Surface GetActivePreviewSurface()
+    {
+        if (_useGlPreview && _glPreviewRenderer != null)
+        {
+            var glSurface = _glPreviewRenderer.GetCameraOutputSurface();
+            if (glSurface != null)
+                return glSurface;
+
+            Debug.WriteLine("[NativeCameraAndroid] GL preview is enabled but returned a null surface.");
+        }
+
+        if (mImageReaderPreview?.Surface != null)
+            return mImageReaderPreview.Surface;
+
+        throw new InvalidOperationException("No preview surface is available for the current Android camera session.");
+    }
+
     /// <summary>
     /// Timer callback for video recording progress
     /// </summary>
@@ -3120,10 +3153,11 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             await SetupMediaRecorder();
 
             // Get surfaces for preview and recording
-            var surfaces = new List<Surface>();
-
-            // Preview surface
-            surfaces.Add(mImageReaderPreview.Surface);
+            var previewSurface = GetActivePreviewSurface();
+            var surfaces = new List<Surface>
+            {
+                previewSurface
+            };
 
             // MediaRecorder surface
             var recorderSurface = _mediaRecorder.Surface;
@@ -3142,7 +3176,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             //}
 
-            mPreviewRequestBuilder.AddTarget(mImageReaderPreview.Surface);
+            mPreviewRequestBuilder.AddTarget(previewSurface);
             mPreviewRequestBuilder.AddTarget(recorderSurface);
 
             var activity = Platform.CurrentActivity;

@@ -2433,23 +2433,40 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 }
 
                 var time = DateTime.UtcNow;
+                var frameRotation = CurrentRotation;
+                var frameFacing = FormsControl.CameraDevice?.Position ?? FormsControl.Facing;
 
-                // Get RawFrameData from pool to avoid GC allocation every frame
-                if (!_rawFrameDataPool.TryDequeue(out var rawFrame))
+                // Build the rotated preview image here on the background thread so that
+                // GetPreviewImage() on the UI/Paint thread is a cheap lock+swap with no CPU work.
+                var info = new SKImageInfo(previewWidth, previewHeight, SKColorType.Bgra8888, SKAlphaType.Premul);
+                SKImage rotatedImage = null;
+                var gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(pixelData, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
                 {
-                    rawFrame = new RawFrameData();
+                    var pinnedPtr = gcHandle.AddrOfPinnedObject();
+                    using var rawImage = SKImage.FromPixels(info, pinnedPtr, bytesPerRow);
+                    using var bitmap = SKBitmap.FromImage(rawImage);
+                    using var rotatedBitmap = HandleOrientationForPreview(bitmap, (double)frameRotation, frameFacing == CameraPosition.Selfie);
+                    rotatedImage = SKImage.FromBitmap(rotatedBitmap);
                 }
-                rawFrame.Width = previewWidth;
-                rawFrame.Height = previewHeight;
-                rawFrame.BytesPerRow = bytesPerRow;
-                rawFrame.Time = time;
-                rawFrame.CurrentRotation = CurrentRotation;
-                rawFrame.Facing = FormsControl.CameraDevice?.Position ?? FormsControl.Facing;
-                rawFrame.Orientation = (int)CurrentRotation;
-                rawFrame.PixelData = pixelData;
+                finally
+                {
+                    gcHandle.Free();
+                    // Pixel data is no longer needed — SKImage.FromBitmap copied the pixels; return buffer to pool.
+                    _pixelBufferPool.Enqueue(pixelData);
+                }
 
-                SetRawFrame(rawFrame);
-                hasFrame = true;
+                if (rotatedImage != null)
+                {
+                    SetCapture(new CapturedImage
+                    {
+                        Image = rotatedImage,
+                        Time = time,
+                        Facing = frameFacing,
+                        Rotation = (int)frameRotation
+                    });
+                    hasFrame = true;
+                }
 
                 if (hasFrame)
                 {

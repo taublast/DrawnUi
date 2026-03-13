@@ -3367,7 +3367,7 @@ public partial class SkiaCamera : SkiaControl
                 // Apply PreviewProcessor if set — but skip when UseRecordingFramesForPreview is active
                 // because the encoder preview already has FrameProcessor overlay baked in.
                 SKImage finalImage = image;
-                if (PreviewProcessor != null && !(UseRecordingFramesForPreview && (IsRecording || IsPreRecording)))
+                if (UseRealtimeVideoProcessing && PreviewProcessor != null && !(UseRecordingFramesForPreview && (IsRecording || IsPreRecording)))
                 {
                     var processed = ApplyPreviewProcessor(image);
                     if (processed != null)

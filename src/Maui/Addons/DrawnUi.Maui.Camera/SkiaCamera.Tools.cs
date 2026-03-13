@@ -1352,59 +1352,6 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-    /// <summary>
-    /// Invoke from Main thread only
-    /// </summary>
-    /// <param name="localIdentifier"></param>
-    /// <returns></returns>
-    public static async Task PlayVideoFromPhotosAsync(string localIdentifier)
-    {
-        if (string.IsNullOrEmpty(localIdentifier))
-            return;
-
-        // 1. Fetch the PHAsset
-        var fetchResult = PHAsset.FetchAssetsUsingLocalIdentifiers(new[] { localIdentifier }, null);
-
-        if (fetchResult.Count == 0)
-        {
-            Debug.WriteLine("Video no longer exists in Photos library");
-            // → maybe user deleted it manually
-            return;
-        }
-
-        var asset = fetchResult[0] as PHAsset;
-
-        // Option A – Most elegant: play directly using AVPlayer (recommended)
-        var playerVC = new AVPlayerViewController();
-
-        PHImageManager.DefaultManager.RequestAVAsset(asset, null, (avAsset, audioMix, info) =>
-        {
-            if (avAsset != null)
-            {
-                var player = AVPlayer.FromPlayerItem(new AVPlayerItem(avAsset));
-                playerVC.Player = player;
-
-                player.Play();
-                // Very important: run on main thread!
-                //InvokeOnMainThread(() =>
-                //{
-                //    PresentViewController(playerVC, true, () =>
-                //    {
-                //        player.Play();
-                //    });
-                //});
-            }
-            else
-            {
-                Debug.WriteLine("Could not get AVAsset");
-            }
-        });
-
-        // Option B – If you really need a temporary file (less recommended)
-        // PHImageManager.DefaultManager.RequestExportSessionForVideo(...)
-        // then export to temp folder and play with normal video player
-    }
-
 #endif
 
 #if WINDOWS

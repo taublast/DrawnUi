@@ -549,12 +549,15 @@ public class PrerecordingEncodedBuffer : IDisposable
 
             _frames.RemoveAll(f => f.Timestamp < cutoffTimestamp);
 
-            int afterPrune = _frames.Count;
-            int pruned = beforePrune - afterPrune;
+                int removedLeadingDeltaFrames = 0;
+                while (_frames.Count > 0 && !_frames[0].IsKeyFrame)
+                {
+                    _frames.RemoveAt(0);
+                    removedLeadingDeltaFrames++;
+                }
 
-            // DON'T remove leading P-frames for pre-recording!
-            // We write ALL frames at once to MediaMuxer in StartAsync, so it can handle P-frames at start.
-            // Removing leading P-frames loses ~1 second of video (time between cutoff and first keyframe).
+                int afterPrune = _frames.Count;
+                int pruned = beforePrune - afterPrune;
 
             if (pruned > 0)
             {
@@ -562,7 +565,7 @@ public class PrerecordingEncodedBuffer : IDisposable
                 {
                     bool firstIsKeyframe = _frames[0].IsKeyFrame;
                     System.Diagnostics.Debug.WriteLine(
-                        $"[PreRecording] PruneToMaxDuration: {beforePrune} -> {afterPrune} frames (pruned {pruned} by time cutoff)");
+                            $"[PreRecording] PruneToMaxDuration: {beforePrune} -> {afterPrune} frames (removed {pruned}, dropped {removedLeadingDeltaFrames} leading delta frames to start on keyframe)");
                     System.Diagnostics.Debug.WriteLine(
                         $"[PreRecording] First frame at {_frames[0].Timestamp.TotalSeconds:F3}s ({(firstIsKeyframe ? "I-frame" : "P-frame")})");
                 }

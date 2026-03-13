@@ -124,6 +124,92 @@ public partial class SkiaCamera
         Platform.AppContext.StartActivity(intent);
     }
 
+    /// <summary>
+    /// Opens a gallery video using the identifier previously returned by MoveVideoToGalleryAsync.
+    /// Supports MediaStore content URIs, full file paths, and Android display names returned from scoped storage saves.
+    /// </summary>
+    /// <param name="galleryIdentifier">Content URI, full path, or MediaStore display name.</param>
+    public static async Task PlayVideoDirectly(string galleryIdentifier)
+    {
+        if (string.IsNullOrWhiteSpace(galleryIdentifier))
+            return;
+
+        try
+        {
+            var videoUri = await ResolveGalleryVideoUriAsync(galleryIdentifier);
+
+            if (videoUri == null)
+            {
+                Debug.WriteLine($"[SkiaCameraAndroid] Could not resolve gallery video: {galleryIdentifier}");
+                return;
+            }
+
+            await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                var intent = new Intent(Intent.ActionView);
+                intent.SetDataAndType(videoUri, "video/*");
+                intent.AddFlags(ActivityFlags.NewTask | ActivityFlags.GrantReadUriPermission);
+                Platform.AppContext.StartActivity(intent);
+            });
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCameraAndroid] Error opening gallery video '{galleryIdentifier}': {ex.Message}");
+        }
+    }
+
+    private static async Task<Android.Net.Uri> ResolveGalleryVideoUriAsync(string galleryIdentifier)
+    {
+        if (galleryIdentifier.StartsWith("content://", StringComparison.OrdinalIgnoreCase))
+            return Android.Net.Uri.Parse(galleryIdentifier);
+
+        if (galleryIdentifier.StartsWith("file://", StringComparison.OrdinalIgnoreCase))
+        {
+            var fileUri = Android.Net.Uri.Parse(galleryIdentifier);
+            var filePath = fileUri?.Path;
+            if (!string.IsNullOrWhiteSpace(filePath) && File.Exists(filePath))
+            {
+                return FileProvider.GetUriForFile(
+                    Platform.AppContext,
+                    Platform.AppContext.PackageName + ".provider",
+                    new Java.IO.File(filePath));
+            }
+        }
+
+        if (Path.IsPathRooted(galleryIdentifier) && File.Exists(galleryIdentifier))
+        {
+            return FileProvider.GetUriForFile(
+                Platform.AppContext,
+                Platform.AppContext.PackageName + ".provider",
+                new Java.IO.File(galleryIdentifier));
+        }
+
+        return await Task.Run(() => FindVideoUriByDisplayName(galleryIdentifier));
+    }
+
+    private static Android.Net.Uri FindVideoUriByDisplayName(string displayName)
+    {
+        var context = Platform.CurrentActivity ?? Android.App.Application.Context;
+        var resolver = context.ContentResolver;
+        var projection = new[] { "_id" };
+        var selection = Android.Provider.MediaStore.Video.Media.InterfaceConsts.DisplayName + " = ?";
+        var selectionArgs = new[] { displayName };
+        var sortOrder = Android.Provider.MediaStore.Video.Media.InterfaceConsts.DateAdded + " DESC";
+
+        using var cursor = resolver.Query(
+            Android.Provider.MediaStore.Video.Media.ExternalContentUri,
+            projection,
+            selection,
+            selectionArgs,
+            sortOrder);
+
+        if (cursor?.MoveToFirst() != true)
+            return null;
+
+        var contentId = cursor.GetLong(0);
+        return ContentUris.WithAppendedId(Android.Provider.MediaStore.Video.Media.ExternalContentUri, contentId);
+    }
+
 
     public virtual Metadata CreateMetadata()
     {
@@ -1062,11 +1148,13 @@ public partial class SkiaCamera
                         CalculateRecordingFps();
                     };
 
-                    // GPU path: single-stream, preview derived from encoder via GlPreviewScaler.
-                    // FrameProcessor overlay is already baked in, so PreviewProcessor is skipped.
-                    UseRecordingFramesForPreview = true;
+                    bool useDualStreamPreview = AndroidCameraExperimentalFlags.UseLegacyDualStreamPreviewDuringRecording;
 
-                    if (MirrorRecordingToPreview && _captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
+                    // GPU path normally mirrors preview from the encoder. The experimental dual-stream
+                    // mode keeps preview on the ImageReader path for recording comparisons.
+                    UseRecordingFramesForPreview = !useDualStreamPreview;
+
+                    if (!useDualStreamPreview && MirrorRecordingToPreview && _captureVideoEncoder is AndroidCaptureVideoEncoder _droidEncPrev)
                     {
                         _encoderPreviewInvalidateHandler = (s, e) =>
                         {
@@ -1081,7 +1169,10 @@ public partial class SkiaCamera
                         _droidEncPrev.PreviewAvailable += _encoderPreviewInvalidateHandler;
                     }
 
-                    Debug.WriteLine($"[StartRealtimeVideoProcessing] GPU camera session created (single-stream, UseRecordingFramesForPreview=true)");
+                    Debug.WriteLine(
+                        useDualStreamPreview
+                            ? "[StartRealtimeVideoProcessing] GPU camera session created (dual-stream test mode, UseRecordingFramesForPreview=false)"
+                            : "[StartRealtimeVideoProcessing] GPU camera session created (single-stream, UseRecordingFramesForPreview=true)");
                 }
                 else
                 {

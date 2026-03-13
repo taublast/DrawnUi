@@ -1280,44 +1280,52 @@ namespace DrawnUi.Camera
                 canvas.Flush();
                 _grContext.Flush();
 
-                // GPU-native preview generation (glBlitFramebuffer, mirrors MetalPreviewScaler).
-                // Downscale on GPU first, then read back only the small buffer (~900KB vs ~8MB).
-                // Throttled by _previewFrameInterval to limit glReadPixels stalls.
-                _previewFrameCounter++;
-                bool shouldGeneratePreview = _previewFrameCounter >= _previewFrameInterval;
-                if (shouldGeneratePreview)
-                    _previewFrameCounter = 0;
-
-                // Lazy-init scaler on first preview frame (EGL context is current here)
-                if (!_glPreviewScalerInitAttempted)
+                if (!AndroidCameraExperimentalFlags.IsLegacyDualStreamPreviewDuringRecordingEnabled())
                 {
-                    _glPreviewScalerInitAttempted = true;
-                    int maxPw = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
-                    int pw = Math.Min(_width, maxPw);
-                    int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
-                    _glPreviewScaler = new GlPreviewScaler();
-                    if (!_glPreviewScaler.Initialize(_width, _height, pw, ph))
-                    {
-                        _glPreviewScaler?.Dispose();
-                        _glPreviewScaler = null;
-                    }
-                }
+                    // GPU-native preview generation (glBlitFramebuffer, mirrors MetalPreviewScaler).
+                    // Downscale on GPU first, then read back only the small buffer (~900KB vs ~8MB).
+                    // Throttled by _previewFrameInterval to limit glReadPixels stalls.
+                    _previewFrameCounter++;
+                    bool shouldGeneratePreview = _previewFrameCounter >= _previewFrameInterval;
+                    if (shouldGeneratePreview)
+                        _previewFrameCounter = 0;
 
-                if (shouldGeneratePreview && _glPreviewScaler != null)
-                {
-                    // No ResetContext needed before/after: canvas was already flushed above,
-                    // ScaleAndReadback only touches FBO bindings and restores FBO 0 on exit,
-                    // and the next frame's ResetContext (after OES render) covers any residual state.
-                    var previewImage = _glPreviewScaler.ScaleAndReadback();
-                    if (previewImage != null)
+                    // Lazy-init scaler on first preview frame (EGL context is current here)
+                    if (!_glPreviewScalerInitAttempted)
                     {
-                        lock (_previewLock)
+                        _glPreviewScalerInitAttempted = true;
+                        int maxPw = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                        int pw = Math.Min(_width, maxPw);
+                        int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+                        _glPreviewScaler = new GlPreviewScaler();
+                        if (!_glPreviewScaler.Initialize(_width, _height, pw, ph))
                         {
-                            _latestPreviewImage?.Dispose();
-                            _latestPreviewImage = previewImage;
+                            _glPreviewScaler?.Dispose();
+                            _glPreviewScaler = null;
                         }
+                    }
 
-                        PreviewAvailable?.Invoke(this, EventArgs.Empty);
+                    if (shouldGeneratePreview && _glPreviewScaler != null)
+                    {
+                        // No ResetContext needed before/after: canvas was already flushed above,
+                        // ScaleAndReadback only touches FBO bindings and restores FBO 0 on exit,
+                        // and the next frame's ResetContext (after OES render) covers any residual state.
+                        var previewImage = _glPreviewScaler.ScaleAndReadback();
+                        if (previewImage != null)
+                        {
+                            Task.Run(() =>
+                            {
+
+                                lock (_previewLock)
+                                {
+                                    _latestPreviewImage?.Dispose();
+                                    _latestPreviewImage = previewImage;
+                                }
+
+                                PreviewAvailable?.Invoke(this, EventArgs.Empty);
+
+                            }).ConfigureAwait(false);
+                        }
                     }
                 }
 
@@ -1335,7 +1343,7 @@ namespace DrawnUi.Camera
                 EGL14.EglSwapBuffers(_eglDisplay, _eglSurface);
 
                 // 6. Drain encoder
-                bool bufferingMode = IsPreRecordingMode && _preRecordingBuffer != null;
+                bool prerecordingMode = IsPreRecordingMode && _preRecordingBuffer != null;
 
                 if (DateTime.Now - _lastKeyframeRequest >= _keyframeRequestInterval)
                 {
@@ -1343,7 +1351,7 @@ namespace DrawnUi.Camera
                     _lastKeyframeRequest = DateTime.Now;
                 }
 
-                if (bufferingMode)
+                if (prerecordingMode)
                 {
                     for (int i = 0; i < 5; i++)
                     {
