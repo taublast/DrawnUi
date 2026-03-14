@@ -2271,25 +2271,48 @@ namespace DrawnUi.Views
 
 #pragma warning disable NU1605, CS0108
 
-
-        public static readonly BindableProperty ChildrenProperty = BindableProperty.Create(
-            nameof(Children),
-            typeof(IList<SkiaControl>),
-            typeof(DrawnView),
-            defaultValueCreator: (instance) =>
-            {
-                var created = new ObservableCollection<SkiaControl>();
-                ChildrenPropertyChanged(instance, null, created);
-                return created;
-            },
-            validateValue: (bo, v) => v is IList<SkiaControl>,
-            propertyChanged: ChildrenPropertyChanged);
-
+        private IList<SkiaControl> _children;
 
         public IList<SkiaControl> Children
         {
-            get => (IList<SkiaControl>)GetValue(ChildrenProperty);
-            set => SetValue(ChildrenProperty, value);
+            get
+            {
+                if (_children == null)
+                {
+                    var created = new ObservableCollection<SkiaControl>();
+                    created.CollectionChanged += OnChildrenCollectionChanged;
+                    _children = created;
+                }
+                return _children;
+            }
+            set
+            {
+                if (_children == value)
+                    return;
+
+                var oldValue = _children;
+
+                if (oldValue is INotifyCollectionChanged oldCollection)
+                    oldCollection.CollectionChanged -= OnChildrenCollectionChanged;
+
+                if (oldValue != null)
+                {
+                    foreach (var subView in oldValue)
+                        AddOrRemoveView(subView, false);
+                }
+
+                _children = value;
+
+                SetChildren(value);
+
+                if (value is INotifyCollectionChanged newCollection)
+                {
+                    newCollection.CollectionChanged -= OnChildrenCollectionChanged;
+                    newCollection.CollectionChanged += OnChildrenCollectionChanged;
+                }
+
+                Update();
+            }
         }
 
 #pragma warning restore NU1605, CS0108
@@ -2313,43 +2336,6 @@ namespace DrawnUi.Views
             }
         }
 
-        private static void ChildrenPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (bindable is DrawnView skiaControl)
-            {
-                var enumerableChildren = (IEnumerable<SkiaControl>)newvalue;
-
-                if (oldvalue != null)
-                {
-                    var oldViews = (IEnumerable<SkiaControl>)oldvalue;
-
-                    if (oldvalue is INotifyCollectionChanged oldCollection)
-                    {
-                        oldCollection.CollectionChanged -= skiaControl.OnChildrenCollectionChanged;
-                    }
-
-                    foreach (var subView in oldViews)
-                    {
-                        skiaControl.AddOrRemoveView(subView, false);
-                    }
-                }
-
-                //foreach (var subView in enumerableChildren)
-                //{
-                //	skiaControl.SetChildren(enumerableChildren);
-                //}
-                skiaControl.SetChildren(enumerableChildren);
-
-                if (newvalue is INotifyCollectionChanged newCollection)
-                {
-                    newCollection.CollectionChanged += skiaControl.OnChildrenCollectionChanged;
-                }
-
-                skiaControl.Update();
-
-            }
-
-        }
 
         private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {

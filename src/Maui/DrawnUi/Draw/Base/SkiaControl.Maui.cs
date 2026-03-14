@@ -10,13 +10,12 @@ using IContainer = Microsoft.Maui.IContainer;
 
 namespace DrawnUi.Draw
 {
-    [ContentProperty(nameof(Children))]
     public partial class SkiaControl : VisualElement,
         //IHotReloadableView, IReloadHandler, // to support New HotReload
         IVisualTreeElement, // to support VS HotReload
         IContainer // to support VS HotReload full page reload mode
     {
-        #region IContainer
+        #region IContainer //used by xaml generator
 
         public IEnumerator<IView> GetEnumerator()
         {
