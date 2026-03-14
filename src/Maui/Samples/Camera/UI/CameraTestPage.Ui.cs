@@ -477,10 +477,7 @@ namespace CameraTests.Views
 
             if (CameraControl != null)
             {
-                // Configure camera for capture video flow testing
-                CameraControl.UseRealtimeVideoProcessing = true;
-                CameraControl.VideoQuality = VideoQuality.Standard;
-                CameraControl.EnableAudioRecording = true;
+
 
                 // Setup camera event handlers
                 AttachHardware(true);
