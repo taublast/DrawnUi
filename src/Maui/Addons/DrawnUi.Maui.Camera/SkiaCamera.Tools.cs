@@ -969,7 +969,8 @@ public partial class SkiaCamera : SkiaControl
 
         // Use the existing filename from the path (may have been renamed by caller)
         var fileName = Path.GetFileName(privateVideoPath);
-        var publicVideoFile = new Java.IO.File(appDir, fileName);
+    var publicVideoPath = GetUniqueFilePath(Path.Combine(appDir.AbsolutePath, fileName));
+    var publicVideoFile = new Java.IO.File(publicVideoPath);
         
         try
         {
@@ -1000,6 +1001,29 @@ public partial class SkiaCamera : SkiaControl
             Debug.WriteLine($"[SkiaCamera] Android DCIM move error: {ex.Message}");
             return null;
         }
+    }
+
+    private static string GetUniqueFilePath(string targetPath)
+    {
+        if (!File.Exists(targetPath))
+        {
+            return targetPath;
+        }
+
+        var directory = Path.GetDirectoryName(targetPath) ?? string.Empty;
+        var baseName = Path.GetFileNameWithoutExtension(targetPath);
+        var extension = Path.GetExtension(targetPath);
+
+        for (int suffix = 2; suffix < 10000; suffix++)
+        {
+            var candidatePath = Path.Combine(directory, $"{baseName}_{suffix}{extension}");
+            if (!File.Exists(candidatePath))
+            {
+                return candidatePath;
+            }
+        }
+
+        return Path.Combine(directory, $"{baseName}_{Guid.NewGuid():N}{extension}");
     }
 
     private class MediaScanCompleteListener : Java.Lang.Object, Android.Media.MediaScannerConnection.IOnScanCompletedListener

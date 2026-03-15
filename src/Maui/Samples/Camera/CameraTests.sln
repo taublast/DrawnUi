@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11527.330 d18.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraTests", "CameraTests.csproj", "{FE34BD9E-2E7F-208E-B786-DB05C1E6DFF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawnUi.Maui", "..\..\DrawnUi\DrawnUi.Maui.csproj", "{6B8757C2-8AFE-6759-52B9-9230BC296DE6}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DrawnUi.Shared", "..\..\..\Shared\DrawnUi.Shared.shproj", "{83974207-9636-48DD-BDB3-98EDECBB1107}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawnUi.Maui.Camera", "..\..\Addons\DrawnUi.Maui.Camera\DrawnUi.Maui.Camera.csproj", "{89F26821-93F0-9481-E7E5-2DAD22A49C4A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE34BD9E-2E7F-208E-B786-DB05C1E6DFF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE34BD9E-2E7F-208E-B786-DB05C1E6DFF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE34BD9E-2E7F-208E-B786-DB05C1E6DFF0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FE34BD9E-2E7F-208E-B786-DB05C1E6DFF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE34BD9E-2E7F-208E-B786-DB05C1E6DFF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B8757C2-8AFE-6759-52B9-9230BC296DE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B8757C2-8AFE-6759-52B9-9230BC296DE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B8757C2-8AFE-6759-52B9-9230BC296DE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B8757C2-8AFE-6759-52B9-9230BC296DE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89F26821-93F0-9481-E7E5-2DAD22A49C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89F26821-93F0-9481-E7E5-2DAD22A49C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89F26821-93F0-9481-E7E5-2DAD22A49C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89F26821-93F0-9481-E7E5-2DAD22A49C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BBFE56F0-4FD6-49A9-890F-AEE986CEDA28}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\..\Shared\Shared.projitems*{6b8757c2-8afe-6759-52b9-9230bc296de6}*SharedItemsImports = 5
+		..\..\..\Shared\Shared.projitems*{83974207-9636-48dd-bdb3-98edecbb1107}*SharedItemsImports = 13
+	EndGlobalSection
+EndGlobal

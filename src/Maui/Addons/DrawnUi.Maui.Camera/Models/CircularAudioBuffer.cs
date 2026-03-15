@@ -49,6 +49,61 @@ namespace DrawnUi.Camera
             }
         }
 
+        public AudioSample[] GetSamplesAfter(long timestampNs)
+        {
+            lock (_lock)
+            {
+                if (_samples.Count == 0)
+                {
+                    return Array.Empty<AudioSample>();
+                }
+
+                if (timestampNs == long.MinValue)
+                {
+                    return _samples.ToArray();
+                }
+
+                return _samples.Where(s => s.TimestampNs > timestampNs).ToArray();
+            }
+        }
+
+        public AudioSample[] GetSamplesInRange(long startTimestampNs, long endTimestampNs)
+        {
+            lock (_lock)
+            {
+                if (_samples.Count == 0)
+                {
+                    return Array.Empty<AudioSample>();
+                }
+
+                return _samples
+                    .Where(s => s.TimestampNs >= startTimestampNs && s.TimestampNs <= endTimestampNs)
+                    .ToArray();
+            }
+        }
+
+        public AudioSample[] GetTrailingSamples(TimeSpan duration)
+        {
+            lock (_lock)
+            {
+                if (_samples.Count == 0)
+                {
+                    return Array.Empty<AudioSample>();
+                }
+
+                if (duration <= TimeSpan.Zero)
+                {
+                    return _samples.ToArray();
+                }
+
+                long durationNs = duration.Ticks * 100;
+                long lastTimestampNs = _samples.Last().TimestampNs;
+                long thresholdNs = Math.Max(0, lastTimestampNs - durationNs);
+
+                return _samples.Where(s => s.TimestampNs >= thresholdNs).ToArray();
+            }
+        }
+
         public AudioSample[] DrainFrom(long cutPointNs)
         {
             lock (_lock)

@@ -7,6 +7,13 @@ namespace DrawnUi.Camera;
 
 public partial class SkiaCamera
 {
+    private IAudioOnlyEncoder _videoSessionAudioEncoder;
+    private string _videoSessionAudioPath;
+    private bool _useSeparatePrerecordAudioMux;
+    private long _separateAudioTransitionTimestampNs = long.MinValue;
+    private Task _videoSessionAudioStartTask;
+    private volatile bool _separateAudioTransitionInProgress;
+
     /// <summary>
     /// Pre-allocated shared buffer for pre-recording.
     /// Allocated once when EnablePreRecording=true, reused across recording sessions.
@@ -506,6 +513,426 @@ public partial class SkiaCamera
         }
     }
 
+    private async Task StartSeparateVideoAudioEncodingAsync(TimeSpan prerollDuration, long transitionTimestampNs)
+    {
+        if (_videoSessionAudioEncoder != null)
+        {
+            return;
+        }
+
+        var bufferedAudio = _audioBuffer;
+        AudioSample[] prerollSamples = Array.Empty<AudioSample>();
+        _separateAudioTransitionInProgress = true;
+        if (bufferedAudio != null)
+        {
+            if (transitionTimestampNs > 0)
+            {
+                long prerollStartTimestampNs = Math.Max(0, transitionTimestampNs - (prerollDuration.Ticks * 100));
+                prerollSamples = bufferedAudio.GetSamplesInRange(prerollStartTimestampNs, transitionTimestampNs);
+            }
+
+            if (prerollSamples.Length == 0)
+            {
+                prerollSamples = bufferedAudio.GetTrailingSamples(prerollDuration);
+            }
+        }
+
+        CreateAudioOnlyEncoder(out var encoder);
+        if (encoder == null)
+        {
+            throw new InvalidOperationException("Audio-only encoder is not available for Android prerecord remux path.");
+        }
+
+        var ctx = Android.App.Application.Context;
+        var cacheDir = ctx.CacheDir?.AbsolutePath ?? ctx.FilesDir?.AbsolutePath ?? ".";
+        Directory.CreateDirectory(cacheDir);
+        _videoSessionAudioPath = Path.Combine(cacheDir, $"prerecord_audio_{Guid.NewGuid():N}.m4a");
+
+        try
+        {
+            await encoder.InitializeAsync(_videoSessionAudioPath, AudioSampleRate, AudioChannels, AudioBitDepth);
+            await encoder.StartAsync();
+
+            long lastSeededTimestampNs = long.MinValue;
+            foreach (var sample in prerollSamples)
+            {
+                encoder.WriteAudio(sample);
+                lastSeededTimestampNs = sample.TimestampNs;
+            }
+
+            if (bufferedAudio != null)
+            {
+                var catchUpSamples = bufferedAudio.GetSamplesAfter(lastSeededTimestampNs);
+                foreach (var sample in catchUpSamples)
+                {
+                    encoder.WriteAudio(sample);
+                    lastSeededTimestampNs = sample.TimestampNs;
+                }
+            }
+
+            if (bufferedAudio != null)
+            {
+                var finalCatchUpSamples = bufferedAudio.GetSamplesAfter(lastSeededTimestampNs);
+                foreach (var sample in finalCatchUpSamples)
+                {
+                    encoder.WriteAudio(sample);
+                    lastSeededTimestampNs = sample.TimestampNs;
+                }
+
+                bufferedAudio.Clear();
+            }
+
+            _videoSessionAudioEncoder = encoder;
+            _audioBuffer = null;
+            _separateAudioTransitionInProgress = false;
+        }
+        catch
+        {
+            try
+            {
+                await encoder.AbortAsync();
+            }
+            catch
+            {
+            }
+
+            _separateAudioTransitionInProgress = false;
+            encoder.Dispose();
+            throw;
+        }
+    }
+
+    private async Task<CapturedAudio> StopSeparateVideoAudioEncodingAsync(bool abort)
+    {
+        if (_videoSessionAudioStartTask != null)
+        {
+            try
+            {
+                await _videoSessionAudioStartTask;
+            }
+            finally
+            {
+                _videoSessionAudioStartTask = null;
+            }
+        }
+
+        if (_videoSessionAudioEncoder == null)
+        {
+            return null;
+        }
+
+        try
+        {
+            if (abort)
+            {
+                await _videoSessionAudioEncoder.AbortAsync();
+                return null;
+            }
+
+            return await _videoSessionAudioEncoder.StopAsync();
+        }
+        finally
+        {
+            _videoSessionAudioEncoder.Dispose();
+            _videoSessionAudioEncoder = null;
+        }
+    }
+
+    private void CleanupSeparateVideoAudioArtifacts()
+    {
+        _useSeparatePrerecordAudioMux = false;
+        _separateAudioTransitionTimestampNs = long.MinValue;
+        _videoSessionAudioStartTask = null;
+        _separateAudioTransitionInProgress = false;
+
+        if (!string.IsNullOrEmpty(_videoSessionAudioPath) && File.Exists(_videoSessionAudioPath))
+        {
+            try
+            {
+                File.Delete(_videoSessionAudioPath);
+            }
+            catch
+            {
+            }
+        }
+
+        _videoSessionAudioPath = null;
+    }
+
+    private void CleanupStaleAndroidWorkingFiles(string outputPath)
+    {
+        if (string.IsNullOrEmpty(outputPath))
+        {
+            return;
+        }
+
+        TryDeleteWorkingFile(outputPath);
+
+        string remuxPath = Path.Combine(
+            Path.GetDirectoryName(outputPath) ?? string.Empty,
+            Path.GetFileNameWithoutExtension(outputPath) + "_remux.mp4");
+
+        if (!string.Equals(remuxPath, outputPath, StringComparison.OrdinalIgnoreCase))
+        {
+            TryDeleteWorkingFile(remuxPath);
+        }
+    }
+
+    private static void TryDeleteWorkingFile(string filePath)
+    {
+        if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+        {
+            return;
+        }
+
+        try
+        {
+            File.Delete(filePath);
+            Debug.WriteLine($"[SkiaCamera.Android] Deleted stale working file: {filePath}");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera.Android] Could not delete stale working file {filePath}: {ex.Message}");
+        }
+    }
+
+    private async Task<string> MuxVideoWithExternalAudioAsync(string videoPath, string audioPath, string outputPath, long maxAudioDurationUs)
+    {
+        Android.Media.MediaExtractor videoExtractor = null;
+        Android.Media.MediaExtractor audioExtractor = null;
+        Android.Media.MediaMuxer muxer = null;
+
+        try
+        {
+            await WaitForStableMediaFileAsync(videoPath, "video/");
+            await WaitForStableMediaFileAsync(audioPath, "audio/");
+
+            videoExtractor = new Android.Media.MediaExtractor();
+            videoExtractor.SetDataSource(videoPath);
+
+            audioExtractor = new Android.Media.MediaExtractor();
+            audioExtractor.SetDataSource(audioPath);
+
+            muxer = new Android.Media.MediaMuxer(outputPath, Android.Media.MuxerOutputType.Mpeg4);
+
+            int videoSourceTrack = -1;
+            int audioSourceTrack = -1;
+            int videoDestTrack = -1;
+            int audioDestTrack = -1;
+
+            for (int i = 0; i < videoExtractor.TrackCount; i++)
+            {
+                var format = videoExtractor.GetTrackFormat(i);
+                string mime = format.GetString(MediaFormat.KeyMime) ?? string.Empty;
+                if (mime.StartsWith("video/", StringComparison.OrdinalIgnoreCase))
+                {
+                    videoSourceTrack = i;
+                    videoDestTrack = muxer.AddTrack(format);
+                    break;
+                }
+            }
+
+            for (int i = 0; i < audioExtractor.TrackCount; i++)
+            {
+                var format = audioExtractor.GetTrackFormat(i);
+                string mime = format.GetString(MediaFormat.KeyMime) ?? string.Empty;
+                if (mime.StartsWith("audio/", StringComparison.OrdinalIgnoreCase))
+                {
+                    audioSourceTrack = i;
+                    audioDestTrack = muxer.AddTrack(format);
+                    break;
+                }
+            }
+
+            if (videoSourceTrack < 0 || audioSourceTrack < 0)
+            {
+                throw new InvalidOperationException("Could not find both video and audio tracks for final Android remux.");
+            }
+
+            muxer.Start();
+            WriteSelectedTrackToMuxer(muxer, videoExtractor, videoSourceTrack, videoDestTrack, 0, 0, long.MaxValue);
+            WriteSelectedTrackToMuxer(muxer, audioExtractor, audioSourceTrack, audioDestTrack, 0, 0, Math.Max(0, maxAudioDurationUs));
+            muxer.Stop();
+
+            return await Task.FromResult(outputPath);
+        }
+        finally
+        {
+            videoExtractor?.Release();
+            audioExtractor?.Release();
+            muxer?.Release();
+        }
+    }
+
+    private void WriteSelectedTrackToMuxer(Android.Media.MediaMuxer muxer, Android.Media.MediaExtractor extractor, int sourceTrack, int destinationTrack, long timeOffsetUs, long trimBeforeUs, long maxDurationUs)
+    {
+        extractor.SelectTrack(sourceTrack);
+        extractor.SeekTo(trimBeforeUs, Android.Media.MediaExtractorSeekTo.ClosestSync);
+
+        var sampleData = Java.Nio.ByteBuffer.Allocate(1024 * 1024);
+        var sampleInfo = new Android.Media.MediaCodec.BufferInfo();
+        long firstWrittenSourcePtsUs = -1;
+
+        try
+        {
+            while (true)
+            {
+                int trackIndex = extractor.SampleTrackIndex;
+                if (trackIndex != sourceTrack)
+                {
+                    if (trackIndex < 0)
+                    {
+                        break;
+                    }
+
+                    extractor.Advance();
+                    continue;
+                }
+
+                long sampleTimeUs = extractor.SampleTime;
+                if (sampleTimeUs < trimBeforeUs)
+                {
+                    extractor.Advance();
+                    continue;
+                }
+
+                sampleData.Clear();
+                sampleInfo.Offset = 0;
+                sampleInfo.Size = extractor.ReadSampleData(sampleData, 0);
+                if (sampleInfo.Size <= 0)
+                {
+                    extractor.Advance();
+                    continue;
+                }
+
+                if (firstWrittenSourcePtsUs < 0)
+                {
+                    firstWrittenSourcePtsUs = sampleTimeUs;
+                }
+
+                long normalizedPresentationTimeUs = (sampleTimeUs - firstWrittenSourcePtsUs) + timeOffsetUs;
+                if (normalizedPresentationTimeUs > maxDurationUs)
+                {
+                    break;
+                }
+
+                sampleInfo.PresentationTimeUs = normalizedPresentationTimeUs;
+                sampleInfo.Flags = (Android.Media.MediaCodecBufferFlags)(int)extractor.SampleFlags;
+                muxer.WriteSampleData(destinationTrack, sampleData, sampleInfo);
+                extractor.Advance();
+            }
+        }
+        finally
+        {
+            sampleData.Dispose();
+            extractor.UnselectTrack(sourceTrack);
+        }
+    }
+
+    private async Task WaitForMediaTrackAsync(string filePath, string mimePrefix, int attempts = 10, int delayMs = 100)
+    {
+        for (int attempt = 0; attempt < attempts; attempt++)
+        {
+            if (HasMediaTrack(filePath, mimePrefix))
+            {
+                return;
+            }
+
+            await Task.Delay(delayMs);
+        }
+
+        throw new InvalidOperationException($"Could not find a '{mimePrefix}' track in media file: {filePath}");
+    }
+
+    private async Task WaitForStableMediaFileAsync(string filePath, string mimePrefix, int attempts = 30, int delayMs = 100, int stablePassesRequired = 3)
+    {
+        long lastLength = -1;
+        int stablePasses = 0;
+
+        for (int attempt = 0; attempt < attempts; attempt++)
+        {
+            if (!File.Exists(filePath))
+            {
+                await Task.Delay(delayMs);
+                continue;
+            }
+
+            long currentLength = 0;
+            try
+            {
+                currentLength = new FileInfo(filePath).Length;
+            }
+            catch
+            {
+                await Task.Delay(delayMs);
+                continue;
+            }
+
+            bool hasTrack = HasMediaTrack(filePath, mimePrefix);
+            if (hasTrack && currentLength > 0)
+            {
+                if (currentLength == lastLength)
+                {
+                    stablePasses++;
+                    if (stablePasses >= stablePassesRequired)
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    stablePasses = 1;
+                    lastLength = currentLength;
+                }
+            }
+            else
+            {
+                stablePasses = 0;
+                lastLength = currentLength;
+            }
+
+            await Task.Delay(delayMs);
+        }
+
+        throw new InvalidOperationException($"Media file did not stabilize for '{mimePrefix}' track: {filePath}");
+    }
+
+    private bool HasMediaTrack(string filePath, string mimePrefix)
+    {
+        if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+        {
+            return false;
+        }
+
+        Android.Media.MediaExtractor extractor = null;
+        try
+        {
+            extractor = new Android.Media.MediaExtractor();
+            extractor.SetDataSource(filePath);
+
+            for (int i = 0; i < extractor.TrackCount; i++)
+            {
+                var format = extractor.GetTrackFormat(i);
+                string mime = format.GetString(MediaFormat.KeyMime) ?? string.Empty;
+                if (mime.StartsWith(mimePrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera.Android] Track probe failed for {filePath}: {ex.Message}");
+            return false;
+        }
+        finally
+        {
+            extractor?.Release();
+        }
+    }
+
     /// <summary>
     /// Write all samples from extractor to muxer with time offset
     /// CRITICAL: Normalizes timestamps to start from 0 before applying offset (prevents gaps!)
@@ -642,6 +1069,20 @@ public partial class SkiaCamera
 
     public virtual void WriteAudioSample(AudioSample e)
     {
+        if (_useSeparatePrerecordAudioMux)
+        {
+            if (_separateAudioTransitionInProgress || _videoSessionAudioEncoder?.IsRecording != true)
+            {
+                _audioBuffer?.Write(e);
+            }
+            else
+            {
+                _videoSessionAudioEncoder.WriteAudio(e);
+            }
+
+            return;
+        }
+
         if (_captureVideoEncoder is AndroidCaptureVideoEncoder droidEnc)
         {
             droidEnc.WriteAudio(e);
@@ -660,6 +1101,7 @@ public partial class SkiaCamera
         IsBusy = true;
 
         ICaptureVideoEncoder encoder = null;
+    CapturedAudio separateAudio = null;
 
         try
         {
@@ -682,6 +1124,16 @@ public partial class SkiaCamera
                 {
                     _audioCapture = null;
                 }
+            }
+
+                if (_videoSessionAudioStartTask != null)
+                {
+                    await _videoSessionAudioStartTask;
+                }
+
+            if (_videoSessionAudioEncoder != null)
+            {
+                separateAudio = await StopSeparateVideoAudioEncodingAsync(abort: false);
             }
 
             // CRITICAL: Stop frame capture timer FIRST before clearing encoder reference
@@ -719,11 +1171,37 @@ public partial class SkiaCamera
 
             // Stop encoder and get result
             CapturedVideo capturedVideo = await encoder?.StopAsync();
- 
-            // ANDROID: Single-file approach - no muxing needed!
-            // Encoder already wrote buffer + live frames to ONE file
-            Debug.WriteLine($"[StopRealtimeVideoProcessing] Android single-file approach - no muxing needed");
-            Debug.WriteLine($"[StopRealtimeVideoProcessing] Video file: {capturedVideo?.FilePath}");
+
+            if (_useSeparatePrerecordAudioMux && capturedVideo != null && separateAudio != null && File.Exists(separateAudio.FilePath))
+            {
+                long maxAudioDurationUs = GetMediaDurationMicroseconds(capturedVideo.FilePath);
+                string remuxedPath = Path.Combine(
+                    Path.GetDirectoryName(capturedVideo.FilePath) ?? string.Empty,
+                    Path.GetFileNameWithoutExtension(capturedVideo.FilePath) + "_remux.mp4");
+
+                Debug.WriteLine($"[StopRealtimeVideoProcessing] Android prerecord audio remux: video={capturedVideo.FilePath}, audio={separateAudio.FilePath}, maxAudioDurationUs={maxAudioDurationUs}");
+                string finalPath = await MuxVideoWithExternalAudioAsync(capturedVideo.FilePath, separateAudio.FilePath, remuxedPath, maxAudioDurationUs);
+
+                try
+                {
+                    File.Delete(capturedVideo.FilePath);
+                }
+                catch { }
+
+                File.Move(finalPath, capturedVideo.FilePath, true);
+                await WaitForStableMediaFileAsync(capturedVideo.FilePath, "video/");
+                Debug.WriteLine($"[StopRealtimeVideoProcessing] Android prerecord audio remux completed: {capturedVideo.FilePath}");
+            }
+            else
+            {
+                Debug.WriteLine($"[StopRealtimeVideoProcessing] Android single-file approach - no muxing needed");
+                Debug.WriteLine($"[StopRealtimeVideoProcessing] Video file: {capturedVideo?.FilePath}");
+
+                if (capturedVideo != null)
+                {
+                    await WaitForStableMediaFileAsync(capturedVideo.FilePath, "video/");
+                }
+            }
 
             // Clean up pre-recording file if it exists (shouldn't exist with new approach)
             if (!string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath))
@@ -737,6 +1215,8 @@ public partial class SkiaCamera
             }
             ClearPreRecordingBuffer();
 
+
+            CleanupSeparateVideoAudioArtifacts();
 
             if (capturedVideo != null)
             {
@@ -763,6 +1243,7 @@ public partial class SkiaCamera
 
             SetIsRecordingVideo(false);
             IsBusy = false; // Release busy state on error
+            CleanupSeparateVideoAudioArtifacts();
 
             // Restart preview audio if still enabled
             if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
@@ -805,6 +1286,16 @@ public partial class SkiaCamera
                 {
                     _audioCapture = null;
                 }
+            }
+
+                if (_videoSessionAudioStartTask != null)
+                {
+                    await _videoSessionAudioStartTask;
+                }
+
+            if (_videoSessionAudioEncoder != null)
+            {
+                await StopSeparateVideoAudioEncodingAsync(abort: true);
             }
 
             // CRITICAL: Stop frame capture timer FIRST before clearing encoder reference
@@ -854,6 +1345,7 @@ public partial class SkiaCamera
                 catch { }
             }
             ClearPreRecordingBuffer();
+            CleanupSeparateVideoAudioArtifacts();
 
             SetIsRecordingVideo(false);
 
@@ -934,6 +1426,8 @@ public partial class SkiaCamera
             Debug.WriteLine($"[StartRealtimeVideoProcessing] Android recording to file: {outputPath}");
         }
 
+        CleanupStaleAndroidWorkingFiles(outputPath);
+
         // Use camera-reported format if available; else fall back to preview size or 1280x720
         var currentFormat = NativeControl?.GetCurrentVideoFormat();
         var rawWidth =
@@ -974,10 +1468,18 @@ public partial class SkiaCamera
             }
         }
 
+        _useSeparatePrerecordAudioMux = IsPreRecording && audioEnabled;
+        var encoderAudioEnabled = audioEnabled && !_useSeparatePrerecordAudioMux;
+
+        if (_useSeparatePrerecordAudioMux)
+        {
+            Debug.WriteLine("[StartRealtimeVideoProcessing] Android prerecord audio will stay in bounded memory until record starts, then be remuxed at stop");
+        }
+
         bool useGpuCameraPath = false;
         if (_captureVideoEncoder is DrawnUi.Camera.AndroidCaptureVideoEncoder androidEncoder)
         {
-            await androidEncoder.InitializeAsync(outputPath, width, height, fps, audioEnabled, RecordingLockedRotation);
+            await androidEncoder.InitializeAsync(outputPath, width, height, fps, encoderAudioEnabled, RecordingLockedRotation);
 
             // Apply codec selection if set
             if (AudioCodecIndex >= 0)
@@ -1014,7 +1516,7 @@ public partial class SkiaCamera
         }
         else
         {
-            await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, audioEnabled);
+            await _captureVideoEncoder.InitializeAsync(outputPath, width, height, fps, encoderAudioEnabled);
         }
 
         if (audioEnabled)
@@ -1033,7 +1535,7 @@ public partial class SkiaCamera
                     _audioBuffer = new CircularAudioBuffer(PreRecordDuration);
                     if (_captureVideoEncoder is AndroidCaptureVideoEncoder enc)
                     {
-                        enc.SetAudioBuffer(_audioBuffer);
+                        enc.SetAudioBuffer(_useSeparatePrerecordAudioMux ? null : _audioBuffer);
                     }
                 }
                 else
@@ -1364,6 +1866,10 @@ public partial class SkiaCamera
             else if (IsPreRecording && !IsRecording)
             {
                 Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecording (file recording with mux)");
+                if (_useSeparatePrerecordAudioMux)
+                {
+                    _separateAudioTransitionTimestampNs = Android.OS.SystemClock.ElapsedRealtimeNanos();
+                }
 
                 // CRITICAL ANDROID FIX: Single-file approach - reuse existing encoder!
                 // Encoder was already initialized and warmed up during pre-recording phase
@@ -1387,6 +1893,14 @@ public partial class SkiaCamera
                     Debug.WriteLine("[StartVideoRecording] ========================================");
 
                     await _captureVideoEncoder.StartAsync();
+
+                    if (_useSeparatePrerecordAudioMux)
+                    {
+                        var prerollDuration = (_captureVideoEncoder as AndroidCaptureVideoEncoder)?.BufferedPreRecordingDuration ?? TimeSpan.Zero;
+                            _videoSessionAudioStartTask = StartSeparateVideoAudioEncodingAsync(prerollDuration, _separateAudioTransitionTimestampNs);
+                            await _videoSessionAudioStartTask;
+                            Debug.WriteLine($"[StartVideoRecording] Started separate audio encoder from bounded prerecord tail ({prerollDuration.TotalSeconds:F3}s)");
+                    }
 
                     Debug.WriteLine("[StartVideoRecording] Encoder transitioned to live recording mode");
                     Debug.WriteLine("[StartVideoRecording] Buffer written, live frames continuing in same muxer");

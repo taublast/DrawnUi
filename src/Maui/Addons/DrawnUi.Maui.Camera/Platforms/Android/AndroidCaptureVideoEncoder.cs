@@ -34,6 +34,10 @@ namespace DrawnUi.Camera
 
         private string _preferredAudioCodecName;
         private string _selectedAudioMimeType = MediaFormat.MimetypeAudioAac; // Default to AAC
+        private const int DefaultAudioSampleRate = 44100;
+        private const int DefaultAudioChannels = 1;
+        private const int DefaultAudioBitRate = 128000;
+        private const int DefaultAudioMaxInputSize = 16384 * 2;
 
         public void SetAudioBuffer(CircularAudioBuffer buffer)
         {
@@ -68,8 +72,8 @@ namespace DrawnUi.Camera
             {
                 _audioBuffer.Write(sample);
 
-                // Start background encoding if not already running
-                if (_backgroundEncodingTask == null || _backgroundEncodingTask.IsCompleted)
+                // Android 9 uses the PCM fallback path during transition.
+                if (SupportsPreEncodedAudioTransition && (_backgroundEncodingTask == null || _backgroundEncodingTask.IsCompleted))
                 {
                     StartBackgroundAudioEncoding();
                 }
@@ -102,6 +106,10 @@ namespace DrawnUi.Camera
         private long _audioPresentationTimeUs = 0;
         private long _audioPtsBaseNs = -1;
         private long _audioPtsOffsetUs = 0;
+        private long _videoPtsBaseNs = -1;
+        private long _lastVideoPtsNs = -1;
+        private long _backgroundAudioPtsBaseNs = -1;
+        private long _backgroundEncodedUpToTimestampNs = long.MinValue;
         private Task _backgroundEncodingTask;
         private CancellationTokenSource _encodingCancellation;
 
@@ -115,6 +123,10 @@ namespace DrawnUi.Camera
         private PrerecordingEncodedBuffer _preRecordingBuffer;
         private TimeSpan _preRecordingDuration = TimeSpan.Zero;
         private TimeSpan _firstEncodedFrameOffset = TimeSpan.MinValue;  // Offset to subtract from all frames
+        private TimeSpan _bufferedVideoStartOffset = TimeSpan.Zero;
+
+        public TimeSpan BufferedVideoStartOffset => _bufferedVideoStartOffset;
+        public TimeSpan BufferedPreRecordingDuration => _preRecordingDuration;
 
         /// <summary>
         /// Optional pre-allocated buffer provided by SkiaCamera.
@@ -321,9 +333,11 @@ namespace DrawnUi.Camera
             _recordAudio = recordAudio;
             _preRecordingDuration = TimeSpan.Zero;
             _firstEncodedFrameOffset = TimeSpan.MinValue;
+            _bufferedVideoStartOffset = TimeSpan.Zero;
             _skipFirstEncodedSample = true;  // Reset for new session
             _gpuFrameCounter = 0;  // Reset GPU purge counter
             ResetAudioTiming();
+            ResetVideoTiming();
 
             // Reset encoder readiness flags (new initialization)
             _encoderReady = false;
@@ -359,24 +373,10 @@ namespace DrawnUi.Camera
                 {
                     // Audio Setup - respect codec selection
                     // TODO: Get actual sample rate/channels from SkiaCamera properties if available
-                    int aSampleRate = 44100;
-                    int aChannels = 1;
+                    int aSampleRate = DefaultAudioSampleRate;
+                    int aChannels = DefaultAudioChannels;
 
-                    MediaFormat aFormat = MediaFormat.CreateAudioFormat(_selectedAudioMimeType, aSampleRate, aChannels);
-
-                    // Configure based on codec type
-                    if (_selectedAudioMimeType == MediaFormat.MimetypeAudioAac)
-                    {
-                        aFormat.SetInteger(MediaFormat.KeyAacProfile, (int)MediaCodecProfileType.Aacobjectlc);
-                    }
-                    // Add other codec configurations here as needed
-
-                    aFormat.SetInteger(MediaFormat.KeyBitRate, 128000);
-                    aFormat.SetInteger(MediaFormat.KeyMaxInputSize, 16384 * 2);
-
-                    _audioCodec = MediaCodec.CreateEncoderByType(_selectedAudioMimeType);
-                    _audioCodec.Configure(aFormat, null, null, MediaCodecConfigFlags.Encode);
-                    _audioCodec.Start();
+                    CreateAndStartAudioCodec(aSampleRate, aChannels);
 
                     System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Audio Codec initialized ({_selectedAudioMimeType} {aSampleRate}Hz)");
                 }
@@ -574,6 +574,10 @@ namespace DrawnUi.Camera
                 {
                     System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Buffer stats: {_preRecordingBuffer.GetStats()}");
 
+                    var bufferedFrames = _preRecordingBuffer.GetAllFrames();
+                    TimeSpan firstBufferedFrameTimestamp = bufferedFrames.Count > 0 ? bufferedFrames[0].Timestamp : TimeSpan.Zero;
+                    long firstBufferedFrameTimestampNs = firstBufferedFrameTimestamp.Ticks * 100;
+
                     // Step 2: Create MediaMuxer for final output
                     _muxer = new MediaMuxer(_outputPath, MuxerOutputType.Mpeg4);
                     _muxer.SetOrientationHint(_deviceRotation);
@@ -619,12 +623,10 @@ namespace DrawnUi.Camera
                         System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] MediaMuxer started (Audio={(_audioTrackIndex >= 0)}), writing {bufferFrameCount} buffered frames...");
 
                         // Step 3: Write all buffered frames to muxer (timestamps 0 → N)
-                        var bufferedFrames = _preRecordingBuffer.GetAllFrames();
                         int writtenCount = 0;
 
                         // CRITICAL: Renormalize buffered frames to start from 0 before writing to muxer
                         // This ensures live frames can continue from the last buffered frame timestamp
-                        TimeSpan firstBufferedFrameTimestamp = bufferedFrames.Count > 0 ? bufferedFrames[0].Timestamp : TimeSpan.Zero;
                         TimeSpan lastNormalizedTimestamp = TimeSpan.Zero;
                         System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Renormalizing buffered frames (first frame: {firstBufferedFrameTimestamp.TotalSeconds:F3}s -> 0s)");
 
@@ -659,7 +661,7 @@ namespace DrawnUi.Camera
                             bool usedPreEncoded = false;
 
                             // First, try to use pre-encoded AAC (zero lag!)
-                            if (_encodedAudioBuffer != null && _encodedAudioBuffer.FrameCount > 0)
+                            if (SupportsPreEncodedAudioTransition && _encodedAudioBuffer != null && _encodedAudioBuffer.FrameCount > 0)
                             {
                                 try
                                 {
@@ -669,13 +671,13 @@ namespace DrawnUi.Camera
                                     foreach (var (aacData, timestampUs, size) in encodedFrames)
                                     {
                                         // Renormalize timestamp to match video start (same logic as PCM)
-                                        long nTsUs = timestampUs - (long)(firstBufferedFrameTimestamp.Ticks * 100 / 1000000);
+                                        long nTsUs = timestampUs - (firstBufferedFrameTimestampNs / 1000);
                                         if (nTsUs < 0) nTsUs = 0;
 
                                         // Write AAC directly to muxer (no encoding needed!)
                                         var buffer = Java.Nio.ByteBuffer.Wrap(aacData);
                                         var info = new MediaCodec.BufferInfo();
-                                        info.Set(0, size, nTsUs * 1000, MediaCodecBufferFlags.KeyFrame); // AAC frames are typically keyframes
+                                        info.Set(0, size, nTsUs, MediaCodecBufferFlags.None);
 
                                         _muxer.WriteSampleData(_audioTrackIndex, buffer, info);
                                     }
@@ -695,7 +697,7 @@ namespace DrawnUi.Camera
                                 try
                                 {
                                     System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Falling back to PCM→AAC encoding (may cause lag)");
-                                    var firstVideoActionTimestampNs = (long)(firstBufferedFrameTimestamp.Ticks * 100);
+                                    var firstVideoActionTimestampNs = firstBufferedFrameTimestampNs;
                                     var audioSamples = _audioBuffer.DrainFrom(firstVideoActionTimestampNs);
 
                                     System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Draining {audioSamples.Length} PCM audio samples...");
@@ -1207,6 +1209,8 @@ namespace DrawnUi.Camera
                     return;
                 }
 
+                timestamp = CalculateVideoTimestamp(timestampNs, timestamp);
+
                 // 1. Render camera texture to the encoder's framebuffer
                 // CRITICAL: Reset GL state before rendering OES texture!
                 // Skia modifies many GL states (blend, depth, stencil, scissor, program, etc.)
@@ -1480,6 +1484,8 @@ namespace DrawnUi.Camera
                     // No frame available yet
                     return;
                 }
+
+                timestamp = CalculateVideoTimestamp(timestampNs, timestamp);
 
                 // 1. Render camera texture to the encoder's framebuffer
                 // CRITICAL: Reset GL state before rendering OES texture!
@@ -1939,6 +1945,7 @@ namespace DrawnUi.Camera
                                     if (_firstEncodedFrameOffset == TimeSpan.MinValue)
                                     {
                                         _firstEncodedFrameOffset = rawTimestamp;
+                                        _bufferedVideoStartOffset = rawTimestamp;
                                         System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] First buffered frame at {rawTimestamp.TotalSeconds:F3}s");
                                     }
 
@@ -1990,6 +1997,7 @@ namespace DrawnUi.Camera
                                 if (_muxerStarted)
                                 {
                                     long pts = bufferInfo.PresentationTimeUs;
+                                    bool shouldWriteFrame = true;
 
                                     // CRITICAL: Always normalize timestamps (both normal recording AND pre-rec+live)
                                     // For live frames after transition, wait for first keyframe to establish timestamp base
@@ -2003,33 +2011,37 @@ namespace DrawnUi.Camera
                                             _waitForFirstLiveKeyframe = false;
                                             System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] ✓ First live keyframe at {pts / 1000.0:F2}ms - established timestamp base");
                                         }
-                                        // Continue processing but don't set timestamp base until we see a keyframe
+                                        else
+                                        {
+                                            shouldWriteFrame = false;
+                                            System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Dropping live non-keyframe at {pts / 1000.0:F2}ms while waiting for transition keyframe");
+                                        }
                                     }
 
-                                    // If we haven't established a timestamp base yet, use current frame temporarily
-                                    // This will be corrected when the keyframe arrives
                                     if (_firstEncodedFrameOffset == TimeSpan.MinValue)
                                     {
                                         _firstEncodedFrameOffset = TimeSpan.FromMicroseconds(pts);
-                                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Using current frame as temporary timestamp base at {pts / 1000.0:F2}ms");
                                     }
 
-                                    // Normalize to start from 0, then add pre-recording offset (if any)
-                                    long normalizedPts = pts - (long)_firstEncodedFrameOffset.TotalMicroseconds;
-                                    long finalPts = normalizedPts + (long)_preRecordingDuration.TotalMicroseconds;
+                                    if (shouldWriteFrame)
+                                    {
+                                        // Normalize to start from 0, then add pre-recording offset (if any)
+                                        long normalizedPts = pts - (long)_firstEncodedFrameOffset.TotalMicroseconds;
+                                        long finalPts = normalizedPts + (long)_preRecordingDuration.TotalMicroseconds;
 
-                                    // Reuse cached BufferInfo to avoid per-frame Java allocations
-                                    _muxerBufferInfo ??= new MediaCodec.BufferInfo();
-                                    _muxerBufferInfo.Set(bufferInfo.Offset, bufferInfo.Size, finalPts, bufferInfo.Flags);
+                                        // Reuse cached BufferInfo to avoid per-frame Java allocations
+                                        _muxerBufferInfo ??= new MediaCodec.BufferInfo();
+                                        _muxerBufferInfo.Set(bufferInfo.Offset, bufferInfo.Size, finalPts, bufferInfo.Flags);
 
-                                    encodedData.Position(bufferInfo.Offset);
-                                    encodedData.Limit(bufferInfo.Offset + bufferInfo.Size);
-                                    _muxer.WriteSampleData(_videoTrackIndex, encodedData, _muxerBufferInfo);
+                                        encodedData.Position(bufferInfo.Offset);
+                                        encodedData.Limit(bufferInfo.Offset + bufferInfo.Size);
+                                        _muxer.WriteSampleData(_videoTrackIndex, encodedData, _muxerBufferInfo);
 
-                                    EncodedFrameCount++;
-                                    EncodedDataSize += bufferInfo.Size;
-                                    EncodingDuration = DateTime.Now - _startTime;
-                                    EncodingStatus = "Encoding";
+                                        EncodedFrameCount++;
+                                        EncodedDataSize += bufferInfo.Size;
+                                        EncodingDuration = DateTime.Now - _startTime;
+                                        EncodingStatus = "Encoding";
+                                    }
                                 }
                             }
                         }
@@ -2165,6 +2177,39 @@ namespace DrawnUi.Camera
             _audioPresentationTimeUs = 0;
         }
 
+        private void ResetVideoTiming()
+        {
+            _videoPtsBaseNs = -1;
+            _lastVideoPtsNs = -1;
+        }
+
+        private TimeSpan CalculateVideoTimestamp(long timestampNs, TimeSpan fallbackTimestamp)
+        {
+            if (timestampNs <= 0)
+            {
+                return fallbackTimestamp;
+            }
+
+            if (_videoPtsBaseNs < 0)
+            {
+                _videoPtsBaseNs = timestampNs;
+            }
+
+            long relativeNs = timestampNs - _videoPtsBaseNs;
+            if (relativeNs < 0)
+            {
+                relativeNs = 0;
+            }
+
+            if (relativeNs <= _lastVideoPtsNs)
+            {
+                relativeNs = _lastVideoPtsNs + 1;
+            }
+
+            _lastVideoPtsNs = relativeNs;
+            return TimeSpan.FromTicks(relativeNs / 100);
+        }
+
         private long CalculateAudioPts(long timestampNs)
         {
             if (timestampNs < 0)
@@ -2235,35 +2280,72 @@ namespace DrawnUi.Camera
 
         private void FeedAudioEncoder(AudioSample sample)
         {
-            if (_audioCodec == null) return;
+            if (_audioCodec == null || sample.Data == null || sample.Data.Length == 0) return;
 
             try
             {
                 // Lock audio semaphore
                 _audioSemaphore.Wait();
 
-                int index = _audioCodec.DequeueInputBuffer(1000); // 1ms wait
-                if (index >= 0)
-                {
-                    var buffer = _audioCodec.GetInputBuffer(index);
-                    buffer.Clear();
+                int bytesPerFrame = Math.Max(1, Math.Max(1, sample.Channels) * Math.Max(1, sample.BytesPerSample));
+                int sampleRate = sample.SampleRate > 0 ? sample.SampleRate : DefaultAudioSampleRate;
+                int dataOffset = 0;
+                int audioFrameOffset = 0;
 
-                    var data = sample.Data;
-                    if (data.Length > buffer.Remaining())
+                while (dataOffset < sample.Data.Length)
+                {
+                    int index = _audioCodec.DequeueInputBuffer(10000);
+                    if (index < 0)
                     {
-                        // Truncate if too large (shouldn't happen if sized correctly)
-                        // data = data.Take(buffer.Remaining()).ToArray(); // Need using System.Linq
-                        // Better use Array.Copy for perf and no linq allocations
-                        var newData = new byte[buffer.Remaining()];
-                        Array.Copy(data, newData, newData.Length);
-                        data = newData;
+                        DrainAudioEncoder();
+                        index = _audioCodec.DequeueInputBuffer(10000);
+                        if (index < 0)
+                        {
+                            break;
+                        }
                     }
 
-                    buffer.Put(data);
+                    var buffer = _audioCodec.GetInputBuffer(index);
+                    if (buffer == null)
+                    {
+                        break;
+                    }
 
-                    long ptsUs = CalculateAudioPts(sample.TimestampNs);
+                    buffer.Clear();
 
-                    _audioCodec.QueueInputBuffer(index, 0, data.Length, ptsUs, 0);
+                    int availableBytes = buffer.Remaining();
+                    if (availableBytes < bytesPerFrame)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] FeedAudio skipped: input buffer too small ({availableBytes} bytes, frame size {bytesPerFrame})");
+                        break;
+                    }
+
+                    int bytesRemaining = sample.Data.Length - dataOffset;
+                    int chunkSize = Math.Min(bytesRemaining, availableBytes);
+                    chunkSize -= chunkSize % bytesPerFrame;
+
+                    if (chunkSize <= 0)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] FeedAudio skipped: could not align {bytesRemaining} bytes to frame size {bytesPerFrame}");
+                        break;
+                    }
+
+                    buffer.Put(sample.Data, dataOffset, chunkSize);
+
+                    long chunkTimestampNs = sample.TimestampNs + ((long)audioFrameOffset * 1_000_000_000L / sampleRate);
+                    long ptsUs = CalculateAudioPts(chunkTimestampNs);
+
+                    _audioCodec.QueueInputBuffer(index, 0, chunkSize, ptsUs, 0);
+
+                    dataOffset += chunkSize;
+                    audioFrameOffset += chunkSize / bytesPerFrame;
+
+                    DrainAudioEncoder();
+                }
+
+                if (dataOffset < sample.Data.Length)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] FeedAudio dropped {sample.Data.Length - dataOffset} trailing bytes after chunked submit");
                 }
 
                 DrainAudioEncoder();
@@ -2341,6 +2423,23 @@ namespace DrawnUi.Camera
             }
         }
 
+        private void CreateAndStartAudioCodec(int sampleRate, int channels)
+        {
+            MediaFormat aFormat = MediaFormat.CreateAudioFormat(_selectedAudioMimeType, sampleRate, channels);
+
+            if (_selectedAudioMimeType == MediaFormat.MimetypeAudioAac)
+            {
+                aFormat.SetInteger(MediaFormat.KeyAacProfile, (int)MediaCodecProfileType.Aacobjectlc);
+            }
+
+            aFormat.SetInteger(MediaFormat.KeyBitRate, DefaultAudioBitRate);
+            aFormat.SetInteger(MediaFormat.KeyMaxInputSize, DefaultAudioMaxInputSize);
+
+            _audioCodec = MediaCodec.CreateEncoderByType(_selectedAudioMimeType);
+            _audioCodec.Configure(aFormat, null, null, MediaCodecConfigFlags.Encode);
+            _audioCodec.Start();
+        }
+
         /// <summary>
         /// Starts background encoding of PCM to AAC to eliminate transition lag
         /// </summary>
@@ -2351,6 +2450,8 @@ namespace DrawnUi.Camera
 
             _encodingCancellation = new CancellationTokenSource();
             _encodedAudioBuffer = new CircularEncodedAudioBuffer(TimeSpan.FromSeconds(10)); // Longer buffer for encoded data
+            _backgroundAudioPtsBaseNs = -1;
+            _backgroundEncodedUpToTimestampNs = long.MinValue;
 
             _backgroundEncodingTask = Task.Run(async () =>
             {
@@ -2363,7 +2464,7 @@ namespace DrawnUi.Camera
                         try
                         {
                             // Get latest PCM samples that haven't been encoded yet
-                            var pcmSamples = _audioBuffer?.GetAllSamples();
+                            var pcmSamples = _audioBuffer?.GetSamplesAfter(_backgroundEncodedUpToTimestampNs);
                             if (pcmSamples == null || pcmSamples.Length == 0)
                             {
                                 await Task.Delay(50, _encodingCancellation.Token); // Wait for more PCM
@@ -2378,10 +2479,17 @@ namespace DrawnUi.Camera
 
                                 // Use same timestamp normalization as transition encoding
                                 var aacData = await EncodePcmToAacAsync(pcmSample);
+                                _backgroundEncodedUpToTimestampNs = pcmSample.TimestampNs;
+
                                 if (aacData.Length > 0)
                                 {
                                     // Normalize timestamp to video timeline (same logic as transition)
-                                    long normalizedTimestampUs = (pcmSample.TimestampNs - (_audioPtsBaseNs > 0 ? _audioPtsBaseNs : pcmSample.TimestampNs)) / 1000;
+                                    if (_backgroundAudioPtsBaseNs < 0)
+                                    {
+                                        _backgroundAudioPtsBaseNs = pcmSample.TimestampNs;
+                                    }
+
+                                    long normalizedTimestampUs = (pcmSample.TimestampNs - _backgroundAudioPtsBaseNs) / 1000;
 
                                     _encodedAudioBuffer?.AppendEncodedFrame(aacData, aacData.Length, normalizedTimestampUs);
                                 }
@@ -2428,10 +2536,10 @@ namespace DrawnUi.Camera
 
                     var audioFormat = new MediaFormat();
                     audioFormat.SetString(MediaFormat.KeyMime, _selectedAudioMimeType);
-                    audioFormat.SetInteger(MediaFormat.KeySampleRate, 44100);
-                    audioFormat.SetInteger(MediaFormat.KeyChannelCount, 1);
-                    audioFormat.SetInteger(MediaFormat.KeyBitRate, 128000);
-                    audioFormat.SetInteger(MediaFormat.KeyMaxInputSize, 16384 * 2);
+                    audioFormat.SetInteger(MediaFormat.KeySampleRate, pcmSample.SampleRate > 0 ? pcmSample.SampleRate : DefaultAudioSampleRate);
+                    audioFormat.SetInteger(MediaFormat.KeyChannelCount, pcmSample.Channels > 0 ? pcmSample.Channels : DefaultAudioChannels);
+                    audioFormat.SetInteger(MediaFormat.KeyBitRate, DefaultAudioBitRate);
+                    audioFormat.SetInteger(MediaFormat.KeyMaxInputSize, DefaultAudioMaxInputSize);
 
                     // Configure based on codec type
                     if (_selectedAudioMimeType == MediaFormat.MimetypeAudioAac)
@@ -2505,10 +2613,14 @@ namespace DrawnUi.Camera
                 _encodingCancellation?.Dispose();
                 _encodingCancellation = null;
                 _backgroundEncodingTask = null;
+                _backgroundAudioPtsBaseNs = -1;
+                _backgroundEncodedUpToTimestampNs = long.MinValue;
                 _encodedAudioBuffer?.Clear();
                 _encodedAudioBuffer = null;
             }
         }
+
+        private static bool SupportsPreEncodedAudioTransition => Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Q;
 
         public void Dispose()
         {
