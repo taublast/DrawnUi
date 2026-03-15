@@ -2862,6 +2862,8 @@ public partial class SkiaCamera : SkiaControl
     private DateTime _diagStartTime;
     private int _diagEncWidth = 0, _diagEncHeight = 0;
     private long _diagBitrate = 0;
+    private long _diagHardwareDrops = 0;   // true drops: raw camera − cam delivered, accumulated
+    private long _diagCamInputFrames = 0;  // frames that reached CalculateCameraInputFps()
 
     #endregion
 
@@ -4101,6 +4103,7 @@ public partial class SkiaCamera : SkiaControl
 
     private void CalculateCameraInputFps()
     {
+        System.Threading.Interlocked.Increment(ref _diagCamInputFrames);
         long now = Super.GetCurrentTimeNanos();
         if (_diagLastInputFrameTimestamp == 0) { _diagLastInputFrameTimestamp = now; return; }
         double elapsed = (now - _diagLastInputFrameTimestamp) / 1_000_000_000.0;
@@ -4116,6 +4119,8 @@ public partial class SkiaCamera : SkiaControl
         _diagReportFps = 0;
         _diagLastInputFrameTimestamp = 0;
         _diagInputReportFps = 0;
+        _diagHardwareDrops = 0;
+        _diagCamInputFrames = 0;
     }
 
     private DateTime _captureVideoTotalStartTime;
@@ -4150,6 +4155,11 @@ public partial class SkiaCamera : SkiaControl
         {
             backpressureDrops = appleEnc.BackpressureDroppedFrames;
         }
+#elif ANDROID
+        if (NativeControl is NativeCamera androidCam)
+        {
+            rawCamFps = androidCam.RawCameraFps;
+        }
 #elif WINDOWS
         if (NativeControl is NativeCamera winCam)
         {
@@ -4174,6 +4184,8 @@ public partial class SkiaCamera : SkiaControl
         string line2;
 #if IOS || MACCATALYST
         line2 = $"submit: {_diagLastSubmitMs:F1} ms";
+#elif ANDROID
+        line2 = $"drop: {_diagHardwareDrops}  submit: {_diagLastSubmitMs:F1} ms";
 #else
         line2 = $"dropped: {_diagDroppedFrames}  submit: {_diagLastSubmitMs:F1} ms";
 #endif

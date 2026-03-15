@@ -785,7 +785,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     bool lockProcessing;
 
     // Raw frame arrival diagnostics (counts ALL frames before filtering)
-    private long _rawFrameCount = 0;
+    private long _rawFrameCount = 0;        // resets every second for FPS calculation
+    private long _rawFrameCountTotal = 0;   // monotonically increasing — used for drop delta tracking
     private long _rawFrameLastReportTime = 0;
     private double _rawFrameFps = 0;
 
@@ -793,6 +794,12 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// Raw camera frame delivery rate (all frames before any filtering/processing)
     /// </summary>
     public double RawCameraFps => _rawFrameFps;
+
+    /// <summary>
+    /// Monotonically increasing count of all raw camera frames received.
+    /// Use together with SkiaCamera's cam-input counter to compute true drop count.
+    /// </summary>
+    public long RawFrameCount => _rawFrameCountTotal;
 
     // Async frame processing (iOS-style 2-buffer ping-pong)
     private Image _currentImage;

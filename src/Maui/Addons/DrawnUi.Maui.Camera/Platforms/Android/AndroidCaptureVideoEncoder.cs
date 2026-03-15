@@ -71,6 +71,7 @@ namespace DrawnUi.Camera
             if (IsPreRecordingMode && _audioBuffer != null)
             {
                 _audioBuffer.Write(sample);
+                _backgroundEncodeSignal?.Release(1);
 
                 // Android 9 uses the PCM fallback path during transition.
                 if (SupportsPreEncodedAudioTransition && (_backgroundEncodingTask == null || _backgroundEncodingTask.IsCompleted))
@@ -112,6 +113,7 @@ namespace DrawnUi.Camera
         private long _backgroundEncodedUpToTimestampNs = long.MinValue;
         private Task _backgroundEncodingTask;
         private CancellationTokenSource _encodingCancellation;
+        private SemaphoreSlim _backgroundEncodeSignal;
 
         private MediaMuxer _muxer;
         private int _videoTrackIndex = -1;
@@ -214,6 +216,7 @@ namespace DrawnUi.Camera
         private System.Threading.ManualResetEventSlim _gpuFrameSignal;
         private volatile bool _stopGpuThread = false;
         private volatile bool _gpuFrameReady = false;
+        private long _gpuDroppedFrameCount;
 
         // Frame context passed from callback to encoding thread
         private TimeSpan _pendingGpuFrameTimestamp;
@@ -227,6 +230,7 @@ namespace DrawnUi.Camera
         /// Used by SkiaCamera to track recording FPS.
         /// </summary>
         public event Action OnGpuFrameProcessed;
+        public long GpuDroppedFrameCount => System.Threading.Volatile.Read(ref _gpuDroppedFrameCount);
 
         public bool IsRecording => _isRecording;
         public event EventHandler<TimeSpan> ProgressReported;
@@ -1056,6 +1060,7 @@ namespace DrawnUi.Camera
             _gpuFrameSignal = new System.Threading.ManualResetEventSlim(false);
             _stopGpuThread = false;
             _gpuFrameReady = false;
+            _gpuDroppedFrameCount = 0;
             _gpuEncodingThread = new System.Threading.Thread(GpuEncodingLoop)
             {
                 IsBackground = true,
@@ -1156,6 +1161,8 @@ namespace DrawnUi.Camera
             // Store frame context for background thread
             lock (_gpuFrameLock)
             {
+                if (_gpuFrameReady)
+                    System.Threading.Interlocked.Increment(ref _gpuDroppedFrameCount);
                 _pendingGpuFrameTimestamp = timestamp;
                 _pendingFrameProcessor = frameProcessor;
                 _pendingDiagnosticsOn = videoDiagnosticsOn;
@@ -2294,11 +2301,11 @@ namespace DrawnUi.Camera
 
                 while (dataOffset < sample.Data.Length)
                 {
-                    int index = _audioCodec.DequeueInputBuffer(10000);
+                    int index = _audioCodec.DequeueInputBuffer(2000); // 2ms
                     if (index < 0)
                     {
                         DrainAudioEncoder();
-                        index = _audioCodec.DequeueInputBuffer(10000);
+                        index = _audioCodec.DequeueInputBuffer(2000);
                         if (index < 0)
                         {
                             break;
@@ -2452,6 +2459,8 @@ namespace DrawnUi.Camera
             _encodedAudioBuffer = new CircularEncodedAudioBuffer(TimeSpan.FromSeconds(10)); // Longer buffer for encoded data
             _backgroundAudioPtsBaseNs = -1;
             _backgroundEncodedUpToTimestampNs = long.MinValue;
+            _backgroundEncodeSignal?.Dispose();
+            _backgroundEncodeSignal = new SemaphoreSlim(0, int.MaxValue);
 
             _backgroundEncodingTask = Task.Run(async () =>
             {
@@ -2463,11 +2472,13 @@ namespace DrawnUi.Camera
                     {
                         try
                         {
+                            // Wait for new PCM samples (event-driven, falls back to 200ms poll)
+                            await _backgroundEncodeSignal.WaitAsync(TimeSpan.FromMilliseconds(200), _encodingCancellation.Token);
+
                             // Get latest PCM samples that haven't been encoded yet
                             var pcmSamples = _audioBuffer?.GetSamplesAfter(_backgroundEncodedUpToTimestampNs);
                             if (pcmSamples == null || pcmSamples.Length == 0)
                             {
-                                await Task.Delay(50, _encodingCancellation.Token); // Wait for more PCM
                                 continue;
                             }
 
@@ -2495,11 +2506,6 @@ namespace DrawnUi.Camera
                                 }
                             }
 
-                            // Small delay to prevent busy looping
-                            if (_encodingCancellation != null)
-                            {
-                                await Task.Delay(10, _encodingCancellation.Token);
-                            }
                         }
                         catch (Exception ex)
                         {
@@ -2617,6 +2623,8 @@ namespace DrawnUi.Camera
                 _backgroundEncodedUpToTimestampNs = long.MinValue;
                 _encodedAudioBuffer?.Clear();
                 _encodedAudioBuffer = null;
+                _backgroundEncodeSignal?.Dispose();
+                _backgroundEncodeSignal = null;
             }
         }
 

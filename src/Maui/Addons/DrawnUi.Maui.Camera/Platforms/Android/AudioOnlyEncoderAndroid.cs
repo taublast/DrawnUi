@@ -116,11 +116,11 @@ public class AudioOnlyEncoderAndroid : IAudioOnlyEncoder
 
                 while (dataOffset < sample.Data.Length)
                 {
-                    int inputBufferIndex = _audioEncoder.DequeueInputBuffer(10000);
+                    int inputBufferIndex = _audioEncoder.DequeueInputBuffer(2000); // 2ms
                     if (inputBufferIndex < 0)
                     {
                         DrainEncoder(false);
-                        inputBufferIndex = _audioEncoder.DequeueInputBuffer(10000);
+                        inputBufferIndex = _audioEncoder.DequeueInputBuffer(2000);
                         if (inputBufferIndex < 0)
                         {
                             Debug.WriteLine("[AudioOnlyEncoderAndroid] No input buffer available");
