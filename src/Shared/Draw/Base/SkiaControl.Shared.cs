@@ -6657,7 +6657,8 @@ namespace DrawnUi.Draw
             {
                 return
                     LinkTransforms != null ||
-                    Rotation != 0 || ScaleY != 1f || ScaleX != 1f
+                    (Rotation != 0 && Rotation != 90 && Rotation != 180 && Rotation != 270 && Rotation != -90 && Rotation != -180 && Rotation != -270) ||
+                    ScaleY != 1f || ScaleX != 1f
                     || Perspective1 != 0f || Perspective2 != 0f
                     || SkewX != 0 || SkewY != 0 || TranslationZ != 0
                     || RotationX != 0 || RotationY != 0 || RotationZ != 0;
@@ -6682,7 +6683,8 @@ namespace DrawnUi.Draw
                 _paintWithOpacity.Color = SKColors.White;
                 _paintWithOpacity.IsAntialias = true;
                 _paintWithOpacity.IsDither = IsDistorted;
-                _paintWithOpacity.FilterQuality = SKFilterQuality.Medium;
+                //todo check this for operations, lines etc
+                _paintWithOpacity.FilterQuality = IsDistorted ? SKFilterQuality.Medium : SKFilterQuality.None;
 
                 if (EffectPostRenderers.Count == 0)
                 {
