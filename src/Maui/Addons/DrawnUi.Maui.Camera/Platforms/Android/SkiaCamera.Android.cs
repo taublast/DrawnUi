@@ -1251,26 +1251,37 @@ public partial class SkiaCamera
 
                                 if (FrameProcessor != null || VideoDiagnosticsOn)
                                 {
-                                    // Apply rotation based on device orientation
                                     var rotation = GetActiveRecordingRotation();
-                                    canvas.Save();
-                                    ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+                                    var needsCheckpoint = FrameProcessor != null || (VideoDiagnosticsOn && rotation != 0);
+                                    var checkpoint = 0;
 
-                                    var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
-                                    var frame = new DrawableFrame
+                                    if (needsCheckpoint)
                                     {
-                                        Width = frameWidth,
-                                        Height = frameHeight,
-                                        Canvas = canvas,
-                                        Time = elapsedLocal,
-                                        Scale = 1f
-                                    };
-                                    FrameProcessor?.Invoke(frame);
+                                        // Keep one isolated scope for callback and diagnostics, while avoiding work
+                                        // for diagnostics-only frames when no rotation transform is needed.
+                                        checkpoint = canvas.Save();
+                                        ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+                                    }
+
+                                    if (FrameProcessor != null)
+                                    {
+                                        var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                                        var frame = new DrawableFrame
+                                        {
+                                            Width = frameWidth,
+                                            Height = frameHeight,
+                                            Canvas = canvas,
+                                            Time = elapsedLocal,
+                                            Scale = 1f
+                                        };
+                                        FrameProcessor.Invoke(frame);
+                                    }
 
                                     if (VideoDiagnosticsOn)
                                         DrawDiagnostics(canvas, info.Width, info.Height);
 
-                                    canvas.Restore();
+                                    if (needsCheckpoint)
+                                        canvas.RestoreToCount(checkpoint);
                                 }
                             }
 
