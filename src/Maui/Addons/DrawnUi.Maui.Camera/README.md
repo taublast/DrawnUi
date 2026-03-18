@@ -886,7 +886,7 @@ camera.FrameProcessor = (frame) =>
 
 #### PreviewProcessor (Live Preview Overlay)
 
-Draws on each preview frame before it is displayed to the user. Uses `PreviewScale` so overlay sizing matches the recording. When `UseRecordingFramesForPreview = true` (default) and recording is active, `PreviewProcessor` is **automatically skipped** because the encoder's processed frames (with `FrameProcessor` overlay already baked in) are used as preview.
+Draws on each preview frame before it is displayed to the user. Uses `PreviewScale` so overlay sizing matches the recording. When `EnableCaptureDiagnostics` is enabled outside recording, SkiaCamera also draws a lightweight preview diagnostics overlay before `PreviewProcessor` runs, showing raw camera FPS, preview FPS, and preview size/scale. When `UseRecordingFramesForPreview = true` (default) and recording is active, `PreviewProcessor` is **automatically skipped** because the encoder's processed frames (with `FrameProcessor` overlay already baked in) are used as preview.
 
 ```csharp
 camera.PreviewProcessor = (frame) =>
