@@ -191,6 +191,18 @@ namespace DrawnUi.Camera
         private GlPreviewScaler _glPreviewScaler;
         private bool _glPreviewScalerInitAttempted;
 
+        // Dedicated preview dispatch thread — avoids Task.Run/ThreadPool churn and GC pressure per preview frame
+        private System.Threading.Thread _previewThread;
+        private System.Threading.ManualResetEventSlim _previewSignal;
+        private volatile bool _stopPreviewThread = false;
+        private SKImage _pendingPreviewImage;
+        private readonly object _pendingPreviewLock = new();
+
+        // Dedicated mux drain thread — moves MediaMuxer.WriteSampleData (disk I/O) off the GPU encoding thread
+        private System.Threading.Thread _muxDrainThread;
+        private System.Threading.ManualResetEventSlim _muxDrainSignal;
+        private volatile bool _stopMuxDrainThread = false;
+
         // ML scaler — dedicated scaler at ML dimensions, lazily created on GPU thread
         private GlPreviewScaler _mlGlScaler;
         private int _mlGlScalerTargetWidth;
@@ -365,6 +377,13 @@ namespace DrawnUi.Camera
             format.SetInteger(MediaFormat.KeyBitRate, Math.Max(_width * _height * 4, 2_000_000));
             format.SetInteger(MediaFormat.KeyFrameRate, _frameRate);
             format.SetInteger(MediaFormat.KeyIFrameInterval, 1); // 1 sec GOP
+
+            // Realtime encoding hints — Android equivalents of iOS RealTime=true / AllowFrameReordering=false
+            format.SetInteger("priority", 0);                    // KEY_PRIORITY: realtime scheduler hint (API 23)
+            format.SetFloat("operating-rate", (float)_frameRate); // KEY_OPERATING_RATE: fps hint to encoder pipeline (API 23)
+            format.SetInteger(MediaFormat.KeyBitrateMode, 2);    // BITRATE_MODE_CBR: consistent per-frame encode time (API 19)
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.R)
+                format.SetInteger("latency", 0);                 // KEY_LATENCY: disable output buffering/B-frames (API 30)
 
             _videoCodec = MediaCodec.CreateEncoderByType(MediaFormat.MimetypeVideoAvc);
             _videoCodec.Configure(format, null, null, MediaCodecConfigFlags.Encode);
@@ -761,6 +780,8 @@ namespace DrawnUi.Camera
                 // CRITICAL: Disable pre-recording mode so live frames go to muxer, not buffer!
                 IsPreRecordingMode = false;
 
+                //_lastKeyframeRequest = DateTime.MinValue; // force immediate RequestKeyFrame() on first live GPU frame
+
                 // Stop background audio encoding since we're transitioning to live
                 StopBackgroundAudioEncoding();
 
@@ -1003,7 +1024,7 @@ namespace DrawnUi.Camera
             }
             else
             {
-                DrainEncoder(endOfStream: false, bufferingMode: false);
+                _muxDrainSignal?.Set(); // Signal mux drain thread — avoids disk I/O on GPU encoding thread
             }
 
             // Unbind context
@@ -1068,6 +1089,8 @@ namespace DrawnUi.Camera
                 Priority = System.Threading.ThreadPriority.AboveNormal
             };
             _gpuEncodingThread.Start();
+            StartPreviewThread();
+            StartMuxDrainThread();
             System.Diagnostics.Debug.WriteLine("[AndroidEncoder] GPU encoding thread started");
         }
 
@@ -1087,6 +1110,108 @@ namespace DrawnUi.Camera
             _gpuFrameSignal = null;
             _gpuFrameReady = false;
             System.Diagnostics.Debug.WriteLine("[AndroidEncoder] GPU encoding thread stopped");
+            StopPreviewThread();
+            StopMuxDrainThread();
+        }
+
+        private void StartPreviewThread()
+        {
+            if (_previewThread != null) return;
+            _previewSignal = new System.Threading.ManualResetEventSlim(false);
+            _stopPreviewThread = false;
+            _previewThread = new System.Threading.Thread(PreviewLoop)
+            {
+                IsBackground = true,
+                Name = "AndroidGpuPreview",
+                Priority = System.Threading.ThreadPriority.BelowNormal
+            };
+            _previewThread.Start();
+        }
+
+        private void StopPreviewThread()
+        {
+            if (_previewThread == null) return;
+            _stopPreviewThread = true;
+            _previewSignal?.Set();
+            _previewThread?.Join(500);
+            _previewThread = null;
+            _previewSignal?.Dispose();
+            _previewSignal = null;
+            lock (_pendingPreviewLock)
+            {
+                _pendingPreviewImage?.Dispose();
+                _pendingPreviewImage = null;
+            }
+        }
+
+        private void PreviewLoop()
+        {
+            while (!_stopPreviewThread)
+            {
+                try { _previewSignal?.Wait(200); }
+                catch (ObjectDisposedException) { break; }
+
+                if (_stopPreviewThread) break;
+
+                _previewSignal?.Reset();
+
+                SKImage image;
+                lock (_pendingPreviewLock)
+                {
+                    image = _pendingPreviewImage;
+                    _pendingPreviewImage = null;
+                }
+
+                if (image == null) continue;
+
+                lock (_previewLock)
+                {
+                    _latestPreviewImage?.Dispose();
+                    _latestPreviewImage = image;
+                }
+                PreviewAvailable?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        private void StartMuxDrainThread()
+        {
+            if (_muxDrainThread != null) return;
+            _muxDrainSignal = new System.Threading.ManualResetEventSlim(false);
+            _stopMuxDrainThread = false;
+            _muxDrainThread = new System.Threading.Thread(MuxDrainLoop)
+            {
+                IsBackground = true,
+                Name = "AndroidMuxDrain",
+                Priority = System.Threading.ThreadPriority.Normal
+            };
+            _muxDrainThread.Start();
+        }
+
+        private void StopMuxDrainThread()
+        {
+            if (_muxDrainThread == null) return;
+            _stopMuxDrainThread = true;
+            _muxDrainSignal?.Set();
+            _muxDrainThread?.Join(1000);
+            _muxDrainThread = null;
+            _muxDrainSignal?.Dispose();
+            _muxDrainSignal = null;
+        }
+
+        private void MuxDrainLoop()
+        {
+            while (!_stopMuxDrainThread)
+            {
+                try { _muxDrainSignal?.Wait(100); }
+                catch (ObjectDisposedException) { break; }
+
+                if (_stopMuxDrainThread) break;
+
+                _muxDrainSignal?.Reset();
+
+                if (_isRecording && !IsPreRecordingMode)
+                    DrainEncoder(endOfStream: false, bufferingMode: false);
+            }
         }
 
         /// <summary>
@@ -1243,7 +1368,7 @@ namespace DrawnUi.Camera
                 else
                 {
                     // Full reset required - OES rendering touches many GL states
-                    _grContext.ResetContext();
+                    _grContext.ResetContext(); //GPU path
                 }
 
                 if (_skSurface == null || _skInfo.Width != _width || _skInfo.Height != _height)
@@ -1324,18 +1449,12 @@ namespace DrawnUi.Camera
                         var previewImage = _glPreviewScaler.ScaleAndReadback();
                         if (previewImage != null)
                         {
-                            Task.Run(() =>
+                            lock (_pendingPreviewLock)
                             {
-
-                                lock (_previewLock)
-                                {
-                                    _latestPreviewImage?.Dispose();
-                                    _latestPreviewImage = previewImage;
-                                }
-
-                                PreviewAvailable?.Invoke(this, EventArgs.Empty);
-
-                            }).ConfigureAwait(false);
+                                _pendingPreviewImage?.Dispose();
+                                _pendingPreviewImage = previewImage;
+                            }
+                            _previewSignal?.Set();
                         }
                     }
                 }
@@ -1371,7 +1490,7 @@ namespace DrawnUi.Camera
                 }
                 else
                 {
-                    DrainEncoder(endOfStream: false, bufferingMode: false);
+                    _muxDrainSignal?.Set(); // Signal mux drain thread — avoids disk I/O on GPU encoding thread
                 }
 
                 EncodedFrameCount++;
@@ -1638,7 +1757,7 @@ namespace DrawnUi.Camera
                 }
                 else
                 {
-                    DrainEncoder(endOfStream: false, bufferingMode: false);
+                    _muxDrainSignal?.Set(); // Signal mux drain thread — avoids disk I/O on GPU encoding thread
                 }
 
                 EncodedFrameCount++;
@@ -2038,22 +2157,42 @@ namespace DrawnUi.Camera
 
                                         // Reuse cached BufferInfo to avoid per-frame Java allocations
                                         _muxerBufferInfo ??= new MediaCodec.BufferInfo();
-                                        _muxerBufferInfo.Set(bufferInfo.Offset, bufferInfo.Size, finalPts, bufferInfo.Flags);
+                                        // Offset is 0 because we copy starting at index 0 into frameData below
+                                        _muxerBufferInfo.Set(0, bufferInfo.Size, finalPts, bufferInfo.Flags);
 
-                                        encodedData.Position(bufferInfo.Offset);
-                                        encodedData.Limit(bufferInfo.Offset + bufferInfo.Size);
-                                        _muxer.WriteSampleData(_videoTrackIndex, encodedData, _muxerBufferInfo);
+                                        // Copy frame data out of the codec buffer and release the codec output slot
+                                        // immediately — frees the encoder regardless of muxer timing.
+                                        // Video writes use no shared lock with the audio thread: sharing _muxerLock
+                                        // caused the audio thread to block video writes for hundreds of ms at the
+                                        // pre-rec → live transition (audio burst + lock convoy = frozen frame in file).
+                                        byte[] frameData = ArrayPool<byte>.Shared.Rent(bufferInfo.Size);
+                                        try
+                                        {
+                                            encodedData.Position(bufferInfo.Offset);
+                                            encodedData.Get(frameData, 0, bufferInfo.Size);
 
-                                        EncodedFrameCount++;
-                                        EncodedDataSize += bufferInfo.Size;
-                                        EncodingDuration = DateTime.Now - _startTime;
-                                        EncodingStatus = "Encoding";
+                                            _videoCodec.ReleaseOutputBuffer(outIndex, false);
+                                            outIndex = -1; // mark released — outer ReleaseOutputBuffer will be skipped
+
+                                            var writeBuf = Java.Nio.ByteBuffer.Wrap(frameData, 0, bufferInfo.Size);
+                                            _muxer.WriteSampleData(_videoTrackIndex, writeBuf, _muxerBufferInfo);
+
+                                            EncodedFrameCount++;
+                                            EncodedDataSize += bufferInfo.Size;
+                                            EncodingDuration = DateTime.Now - _startTime;
+                                            EncodingStatus = "Encoding";
+                                        }
+                                        finally
+                                        {
+                                            ArrayPool<byte>.Shared.Return(frameData);
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                    _videoCodec.ReleaseOutputBuffer(outIndex, false);
+                    if (outIndex >= 0)
+                        _videoCodec.ReleaseOutputBuffer(outIndex, false);
 
                     if ((bufferInfo.Flags & MediaCodecBufferFlags.EndOfStream) != 0)
                         break;
@@ -2411,9 +2550,7 @@ namespace DrawnUi.Camera
 
                     if (info.Size > 0 && _muxerStarted && _audioTrackIndex >= 0)
                     {
-                        // Write to muxer. Muxer is shared resource.
-                        // Use a lock. _warmupLock is used for warmup, maybe not best.
-                        // Use new lock object
+                        // Write to muxer. Audio thread is the sole writer for the audio track.
                         lock (_warmupLock)
                         {
                             _muxer.WriteSampleData(_audioTrackIndex, encodedData, info);
@@ -2632,8 +2769,10 @@ namespace DrawnUi.Camera
 
         public void Dispose()
         {
-            // Ensure GPU encoding thread is stopped
+            // Ensure GPU encoding thread, preview thread and mux drain thread are stopped
             StopGpuEncodingThread();
+            StopPreviewThread();
+            StopMuxDrainThread();
 
             if (_isRecording)
             {

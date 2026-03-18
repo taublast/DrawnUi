@@ -1915,6 +1915,11 @@ public partial class SkiaCamera : SkiaControl
         _captureVideoEncoder?.Dispose();
         _captureVideoEncoder = null;
 
+        _diagBgPaint?.Dispose();
+        _diagBgPaint = null;
+        _diagTextPaint?.Dispose();
+        _diagTextPaint = null;
+
         NativeControl?.Dispose();
         NativeControl = null;
 
@@ -2865,6 +2870,17 @@ public partial class SkiaCamera : SkiaControl
     private long _diagHardwareDrops = 0;   // true drops: raw camera − cam delivered, accumulated
     private long _diagCamInputFrames = 0;  // frames that reached CalculateCameraInputFps()
 
+    // Pre-allocated diagnostic overlay paints — reused across frames to avoid per-frame GC pressure
+    private SKPaint _diagBgPaint;
+    private SKPaint _diagTextPaint;
+
+    // Cached diagnostic strings — rebuilt every N frames (values change at ~2Hz, no need to rebuild at 30fps)
+    private string _diagLine1;
+    private string _diagLine2;
+    private string _diagLine3;
+    private int _diagStringCounter = 0;
+    private const int DiagStringRebuildEvery = 15;
+
     #endregion
 
     private TimeSpan _preRecordingDurationTracked = TimeSpan.Zero;  // Track pre-rec duration for timestamp offset in live recording
@@ -3374,6 +3390,7 @@ public partial class SkiaCamera : SkiaControl
                     var processed = ApplyPreviewProcessor(image);
                     if (processed != null)
                     {
+                        image.Dispose();   // source consumed, processed copy is the owner now
                         finalImage = processed;
                     }
                 }
@@ -4121,6 +4138,7 @@ public partial class SkiaCamera : SkiaControl
         _diagInputReportFps = 0;
         _diagHardwareDrops = 0;
         _diagCamInputFrames = 0;
+        _diagStringCounter = 0;
     }
 
     private DateTime _captureVideoTotalStartTime;
@@ -4167,42 +4185,44 @@ public partial class SkiaCamera : SkiaControl
         }
 #endif
 
-        // Format diagnostic text based on platform
-        string line1;
+        // Rebuild diagnostic strings only every N frames — values change at ~2Hz, rebuilding at 30fps wastes GC budget
+        if (_diagStringCounter++ % DiagStringRebuildEvery == 0)
+        {
 #if IOS || MACCATALYST
-        // Apple format: show raw, encoder FPS, and both drop counters
-        line1 = rawCamFps > 0
-            ? $"raw: {rawCamFps:F1}  enc: {outputFps:F1} / {_targetFps}  drop: {_diagDroppedFrames} bp: {backpressureDrops}"
-            : $"FPS: {outputFps:F1} / {_targetFps}  drop: {_diagDroppedFrames} bp: {backpressureDrops}";
-#else
-        // Windows/Android format: show raw, camera input, and encoder output FPS
-        line1 = rawCamFps > 0
-            ? $"raw: {rawCamFps:F1}  cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}"
-            : $"cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}";
-#endif
-
-        string line2;
-#if IOS || MACCATALYST
-        line2 = $"submit: {_diagLastSubmitMs:F1} ms";
+            // Apple format: show raw, encoder FPS, and both drop counters
+            _diagLine1 = rawCamFps > 0
+                ? $"raw: {rawCamFps:F1}  enc: {outputFps:F1} / {_targetFps}  drop: {_diagDroppedFrames} bp: {backpressureDrops}"
+                : $"FPS: {outputFps:F1} / {_targetFps}  drop: {_diagDroppedFrames} bp: {backpressureDrops}";
+            _diagLine2 = $"submit: {_diagLastSubmitMs:F1} ms";
 #elif ANDROID
-        line2 = $"drop: {_diagHardwareDrops}  submit: {_diagLastSubmitMs:F1} ms";
+            // Windows/Android format: show raw, camera input, and encoder output FPS
+            _diagLine1 = rawCamFps > 0
+                ? $"raw: {rawCamFps:F1}  cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}"
+                : $"cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}";
+            _diagLine2 = $"drop: {_diagHardwareDrops}  submit: {_diagLastSubmitMs:F1} ms";
 #else
-        line2 = $"dropped: {_diagDroppedFrames}  submit: {_diagLastSubmitMs:F1} ms";
+            _diagLine1 = rawCamFps > 0
+                ? $"raw: {rawCamFps:F1}  cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}"
+                : $"cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}";
+            _diagLine2 = $"dropped: {_diagDroppedFrames}  submit: {_diagLastSubmitMs:F1} ms";
 #endif
 
-        double mbps = _diagBitrate > 0 ? _diagBitrate / 1_000_000.0 : 0.0;
-        string line3 = _diagEncWidth > 0 && _diagEncHeight > 0
-            ? $"rec: {_diagEncWidth}x{_diagEncHeight}@{_targetFps}  bitrate: {mbps:F1} Mbps"
-            : $"bitrate: {mbps:F1} Mbps";
+            double mbps = _diagBitrate > 0 ? _diagBitrate / 1_000_000.0 : 0.0;
+            _diagLine3 = _diagEncWidth > 0 && _diagEncHeight > 0
+                ? $"rec: {_diagEncWidth}x{_diagEncHeight}@{_targetFps}  bitrate: {mbps:F1} Mbps"
+                : $"bitrate: {mbps:F1} Mbps";
+        }
+
+        string line1 = _diagLine1 ?? string.Empty;
+        string line2 = _diagLine2 ?? string.Empty;
+        string line3 = _diagLine3 ?? string.Empty;
 
         // Common drawing code for all platforms
-        using var bgPaint = new SKPaint { Color = new SKColor(0, 0, 0, 140), IsAntialias = true };
-        using var textPaint = new SKPaint
-        {
-            Color = SKColors.White,
-            IsAntialias = true,
-            TextSize = Math.Max(14, width / 60f)
-        };
+        _diagBgPaint ??= new SKPaint { Color = new SKColor(0, 0, 0, 140), IsAntialias = true };
+        _diagTextPaint ??= new SKPaint { Color = SKColors.White, IsAntialias = true };
+        _diagTextPaint.TextSize = Math.Max(14, width / 60f);
+        var bgPaint = _diagBgPaint;
+        var textPaint = _diagTextPaint;
 
         var pad = 8f;
         var y1 = pad + textPaint.TextSize;
