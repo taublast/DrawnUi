@@ -533,41 +533,62 @@ namespace CameraTests.Views
                 Spacing = 0,
                 Children =
                 {
-                    new SkiaLabel("📸 Capture")
+                    new SkiaLayer
                     {
-                        FontSize = 13,
-                        FontAttributes = FontAttributes.Bold,
-                        TextColor = Colors.White,
-                        HorizontalOptions = LayoutOptions.Fill,
-                        HorizontalTextAlignment = DrawTextAlignment.Center,
-                        VerticalOptions = LayoutOptions.Center,
-                        UseCache = SkiaCacheType.Operations,
+                        VerticalOptions = LayoutOptions.Fill,
+                        Children=
+                        {
+                            new SkiaLabel("📸 Capture")
+                            {
+                                FontSize = 13,
+                                FontAttributes = FontAttributes.Bold,
+                                TextColor = Colors.White,
+                                HorizontalOptions = LayoutOptions.Fill,
+                                HorizontalTextAlignment = DrawTextAlignment.Center,
+                                VerticalOptions = LayoutOptions.Center,
+                                UseCache = SkiaCacheType.Operations,
+                            }
+                            .Assign(out _tabLabels[0])
+                        }
                     }
-                    .Assign(out _tabLabels[0])
                     .OnTapped(me => SelectTab(0)),
 
-                    new SkiaLabel("🎤 Processing")
+                    new SkiaLayer
                     {
-                        FontSize = 13,
-                        TextColor = Color.FromArgb("#888888"),
-                        HorizontalOptions = LayoutOptions.Fill,
-                        HorizontalTextAlignment = DrawTextAlignment.Center,
-                        VerticalOptions = LayoutOptions.Center,
-                        UseCache = SkiaCacheType.Operations,
+                        VerticalOptions = LayoutOptions.Fill,
+                        Children=
+                        {
+                            new SkiaLabel("🎤 Processing")
+                            {
+                                FontSize = 13,
+                                TextColor = Color.FromArgb("#888888"),
+                                HorizontalOptions = LayoutOptions.Fill,
+                                HorizontalTextAlignment = DrawTextAlignment.Center,
+                                VerticalOptions = LayoutOptions.Center,
+                                UseCache = SkiaCacheType.Operations,
+                            }
+                            .Assign(out _tabLabels[1])
+                        }
                     }
-                    .Assign(out _tabLabels[1])
                     .OnTapped(me => SelectTab(1)),
 
-                    new SkiaLabel("🎬 Export")
+                    new SkiaLayer
                     {
-                        FontSize = 13,
-                        TextColor = Color.FromArgb("#888888"),
-                        HorizontalOptions = LayoutOptions.Fill,
-                        HorizontalTextAlignment = DrawTextAlignment.Center,
-                        VerticalOptions = LayoutOptions.Center,
-                        UseCache = SkiaCacheType.Operations,
+                        VerticalOptions = LayoutOptions.Fill,
+                        Children=
+                        {
+                            new SkiaLabel("🎬 Export")
+                            {
+                                FontSize = 13,
+                                TextColor = Color.FromArgb("#888888"),
+                                HorizontalOptions = LayoutOptions.Fill,
+                                HorizontalTextAlignment = DrawTextAlignment.Center,
+                                VerticalOptions = LayoutOptions.Center,
+                                UseCache = SkiaCacheType.Operations,
+                            }
+                            .Assign(out _tabLabels[2])
+                        }
                     }
-                    .Assign(out _tabLabels[2])
                     .OnTapped(me => SelectTab(2)),
                 }
             };
