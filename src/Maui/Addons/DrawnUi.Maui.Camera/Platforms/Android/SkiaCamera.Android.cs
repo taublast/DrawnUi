@@ -766,14 +766,14 @@ public partial class SkiaCamera
 
             if (!string.IsNullOrEmpty(_liveRecordingFilePath) && !string.IsNullOrEmpty(_pendingFinalOutputPath))
             {
-                // 2-encoder path: mux pre-rec buffer file + live file → final output
+                // Deferred-finalization path: mux pre-record temp file + live temp file → final output.
                 string liveFile = capturedVideo?.FilePath ?? _liveRecordingFilePath;
                 bool hasPreRec = !string.IsNullOrEmpty(_preRecordingFilePath) &&
                                  File.Exists(_preRecordingFilePath) &&
                                  new FileInfo(_preRecordingFilePath).Length > 0;
                 bool hasLive   = File.Exists(liveFile) && new FileInfo(liveFile).Length > 0;
 
-                Debug.WriteLine($"[StopRealtimeVideoProcessing] 2-encoder mux: pre-rec={hasPreRec} live={hasLive}");
+                Debug.WriteLine($"[StopRealtimeVideoProcessing] Final mux inputs: pre-rec={hasPreRec} live={hasLive}");
 
                 if (hasPreRec && hasLive)
                 {

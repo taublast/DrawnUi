@@ -992,8 +992,6 @@ namespace DrawnUi.Camera
         /// </summary>
         public async Task StartLiveRecordingOnlyAsync(string liveOutputPath)
         {
-            System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] StartLiveRecordingOnlyAsync CALLED: liveOutputPath={liveOutputPath}");
-
             _outputPath = liveOutputPath;
             Directory.CreateDirectory(Path.GetDirectoryName(_outputPath));
             if (File.Exists(_outputPath))
@@ -1037,7 +1035,7 @@ namespace DrawnUi.Camera
             }
 
             IsPreRecordingMode = false;
-            StopBackgroundAudioEncoding();
+            StopBackgroundAudioEncoding(clearEncodedBuffer: false);
             _waitForFirstLiveKeyframe = true;
             _deferredPreRecordingFirstFrameOffset = _firstEncodedFrameOffset;
             _firstEncodedFrameOffset = TimeSpan.MinValue;
@@ -1992,8 +1990,6 @@ namespace DrawnUi.Camera
         /// </summary>
         public async Task<CapturedVideo> WriteBufferedPreRecordingToFileAsync(string outputPath)
         {
-            System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] WriteBufferedPreRecordingToFileAsync: {_preRecordingBuffer?.GetFrameCount() ?? 0} buffered frames → {outputPath}");
-
             if (_preRecordingBuffer == null || _preRecordingBuffer.GetFrameCount() == 0)
             {
                 return new CapturedVideo { FilePath = outputPath };
@@ -2006,9 +2002,11 @@ namespace DrawnUi.Camera
                 return new CapturedVideo { FilePath = outputPath };
             }
 
+            TimeSpan firstBufferedFrameTimestamp = bufferedFrames[0].Timestamp;
+
             if (_videoFormat == null)
             {
-                System.Diagnostics.Debug.WriteLine("[AndroidEncoder] WriteBufferedPreRecordingToFileAsync: no video format available");
+                System.Diagnostics.Debug.WriteLine("[AndroidEncoder] Deferred pre-record write skipped: no video format available");
                 return new CapturedVideo { FilePath = outputPath };
             }
 
@@ -2022,33 +2020,20 @@ namespace DrawnUi.Camera
             muxer.SetOrientationHint(_deviceRotation);
             int videoTrack = muxer.AddTrack(_videoFormat);
             int audioTrack = -1;
-            if (_recordAudio && _audioFormat != null)
-            {
-                audioTrack = muxer.AddTrack(_audioFormat);
-            }
-            muxer.Start();
 
-            _muxerBufferInfo ??= new MediaCodec.BufferInfo();
-            foreach (var (data, timestamp, isKeyFrame) in bufferedFrames)
-            {
-                if (data == null || data.Length == 0)
-                    continue;
-
-                var buf = Java.Nio.ByteBuffer.Wrap(data);
-                var flags = isKeyFrame ? MediaCodecBufferFlags.KeyFrame : MediaCodecBufferFlags.None;
-                _muxerBufferInfo.Set(0, data.Length, (long)timestamp.TotalMicroseconds, flags);
-                muxer.WriteSampleData(videoTrack, buf, _muxerBufferInfo);
-            }
-
-            if (audioTrack >= 0 &&
+            List<(byte[] Data, long TimestampUs, int Size)> encodedAudioFramesToWrite = null;
+            if (_recordAudio &&
+                _audioFormat != null &&
                 _encodedAudioBuffer != null &&
                 _encodedAudioBuffer.FrameCount > 0 &&
                 CaptureStartAbsoluteNs > 0 &&
                 _deferredPreRecordingFirstFrameOffset != TimeSpan.MinValue)
             {
                 long absoluteFirstVideoFrameUs = (CaptureStartAbsoluteNs / 1000L)
-                    + (long)_deferredPreRecordingFirstFrameOffset.TotalMicroseconds;
+                    + (long)_deferredPreRecordingFirstFrameOffset.TotalMicroseconds
+                    + (long)firstBufferedFrameTimestamp.TotalMicroseconds;
                 long lastWrittenAudioPtsUs = -1;
+                encodedAudioFramesToWrite = new List<(byte[] Data, long TimestampUs, int Size)>();
 
                 foreach (var (aacData, timestampUs, size) in _encodedAudioBuffer.GetAllFrames())
                 {
@@ -2064,14 +2049,40 @@ namespace DrawnUi.Camera
                     }
 
                     lastWrittenAudioPtsUs = normalizedPtsUs;
+                    encodedAudioFramesToWrite.Add((aacData, normalizedPtsUs, size));
+                }
+
+                if (encodedAudioFramesToWrite.Count > 0)
+                {
+                    audioTrack = muxer.AddTrack(_audioFormat);
+                }
+            }
+            muxer.Start();
+
+            _muxerBufferInfo ??= new MediaCodec.BufferInfo();
+            foreach (var (data, timestamp, isKeyFrame) in bufferedFrames)
+            {
+                if (data == null || data.Length == 0)
+                    continue;
+
+                var buf = Java.Nio.ByteBuffer.Wrap(data);
+                var flags = isKeyFrame ? MediaCodecBufferFlags.KeyFrame : MediaCodecBufferFlags.None;
+                long normalizedVideoPtsUs = (long)(timestamp - firstBufferedFrameTimestamp).TotalMicroseconds;
+                _muxerBufferInfo.Set(0, data.Length, normalizedVideoPtsUs, flags);
+                muxer.WriteSampleData(videoTrack, buf, _muxerBufferInfo);
+            }
+
+            if (audioTrack >= 0 && encodedAudioFramesToWrite != null)
+            {
+                foreach (var (aacData, normalizedPtsUs, size) in encodedAudioFramesToWrite)
+                {
                     var audioBuffer = Java.Nio.ByteBuffer.Wrap(aacData);
-                    _muxerBufferInfo.Set(0, size, normalizedPtsUs, MediaCodecBufferFlags.KeyFrame);
+                    _muxerBufferInfo.Set(0, size, normalizedPtsUs, MediaCodecBufferFlags.None);
                     muxer.WriteSampleData(audioTrack, audioBuffer, _muxerBufferInfo);
                 }
             }
 
             muxer.Stop();
-            System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] WriteBufferedPreRecordingToFileAsync: wrote {bufferedFrames.Count} frames");
             return new CapturedVideo { FilePath = outputPath };
         }
 
@@ -2947,7 +2958,7 @@ namespace DrawnUi.Camera
         /// <summary>
         /// Stops background encoding
         /// </summary>
-        private void StopBackgroundAudioEncoding()
+        private void StopBackgroundAudioEncoding(bool clearEncodedBuffer = true)
         {
             try
             {
@@ -2963,8 +2974,11 @@ namespace DrawnUi.Camera
                 _encodingCancellation?.Dispose();
                 _encodingCancellation = null;
                 _backgroundEncodingTask = null;
-                _encodedAudioBuffer?.Clear();
-                _encodedAudioBuffer = null;
+                if (clearEncodedBuffer)
+                {
+                    _encodedAudioBuffer?.Clear();
+                    _encodedAudioBuffer = null;
+                }
             }
         }
 
