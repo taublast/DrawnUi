@@ -68,10 +68,11 @@ namespace DrawnUi.Camera
         private bool _disposed;
 
         /// <summary>
-        /// Dev flag: Use glBlitFramebuffer path (recording-style) instead of direct render + CPU Y-flip.
+        /// Use glBlitFramebuffer path instead of direct render + CPU Y-flip.
         /// Renders OES at camera resolution to a source FBO, then blits downscaled + Y-flipped to the
         /// readback FBO via glBlitFramebuffer. Eliminates CPU Y-flip and uses GPU bilinear filtering.
-        /// Toggle to compare preview FPS between approaches.
+        /// Auto-enabled on GLES 3.0+ devices (virtually all Android 4.3+ hardware) during Initialize().
+        /// Can be forced off for debugging or low-end device fallback.
         /// </summary>
         internal static bool UseBlitPreview { get; set; } = false;
 
@@ -114,6 +115,17 @@ namespace DrawnUi.Camera
                 {
                     SetupEgl();
                     MakeCurrent();
+
+                    // Auto-enable GPU blit path on GLES 3.0+ (glBlitFramebuffer + conditional Y-flip in dst coords).
+                    // Eliminates the CPU row-copy Y-flip loop in ProcessPreviewFrameDirect().
+                    // GLES 3.0 is available on all Android 4.3+ devices (API 18+, released 2013).
+                    // Must be checked after MakeCurrent() so the GL context is active for GlGetString.
+                    if (!UseBlitPreview)
+                    {
+                        var glVersion = GLES20.GlGetString(GLES20.GlVersion); // e.g. "OpenGL ES 3.2 NVIDIA ..."
+                        UseBlitPreview = glVersion != null && glVersion.Contains("OpenGL ES 3");
+                        System.Diagnostics.Debug.WriteLine($"[GlPreviewRenderer] GLES version: '{glVersion}' → UseBlitPreview={UseBlitPreview}");
+                    }
 
                     // Create GPU camera frame provider (creates SurfaceTexture + OES shader)
                     _gpuFrameProvider = new GpuCameraFrameProvider();

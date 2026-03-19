@@ -14,6 +14,27 @@ public partial class SkiaCamera
     /// </summary>
     private PrerecordingEncodedBuffer _sharedPreRecordingBuffer;
 
+    // ── 2-encoder overlap fields (pre-recording → live transition) ─────────────
+    // When pre-recording transitions to live, we create a FRESH live encoder while
+    // the old pre-rec encoder flushes its buffer to disk in the background.
+    // A fresh codec always produces an IDR as its first output → zero keyframe wait.
+
+    /// <summary>Background task that stops the old pre-rec encoder and writes its buffer to disk.</summary>
+    private Task _preRecFlushTask;
+
+    /// <summary>Temp output path for the live encoder (muxed with pre-rec file at stop time).</summary>
+    private string _liveRecordingFilePath;
+
+    /// <summary>Desired final output path. Set before 2-encoder handoff; used at mux time.</summary>
+    private string _pendingFinalOutputPath;
+
+    /// <summary>Whether the GPU camera path (SurfaceTexture/EGL) was active for the current encoder.</summary>
+    private bool _usingGpuCameraPath;
+
+    /// <summary>Raw (pre-rotation) camera frame dimensions used to initialize the GPU path.</summary>
+    private int _cameraRawWidth, _cameraRawHeight;
+    // ──────────────────────────────────────────────────────────────────────────
+
     /// <summary>
     /// Android implementation: Pre-allocates the shared buffer for pre-recording.
     /// Called once when EnablePreRecording is set to true.
@@ -717,24 +738,79 @@ public partial class SkiaCamera
             encoder = _captureVideoEncoder;
             _captureVideoEncoder = null;
 
-            // Stop encoder and get result
+            // Stop the live encoder and get its result
             CapturedVideo capturedVideo = await encoder?.StopAsync();
- 
-            // ANDROID: Single-file approach - no muxing needed!
-            // Encoder already wrote buffer + live frames to ONE file
-            Debug.WriteLine($"[StopRealtimeVideoProcessing] Android single-file approach - no muxing needed");
-            Debug.WriteLine($"[StopRealtimeVideoProcessing] Video file: {capturedVideo?.FilePath}");
 
-            // Clean up pre-recording file if it exists (shouldn't exist with new approach)
-            if (!string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath))
+            // ── Deferred pre-rec flush path: wait for background flush or serialize buffer now, then mux ──
+            if (_preRecFlushTask != null)
+            {
+                Debug.WriteLine($"[StopRealtimeVideoProcessing] Waiting for pre-rec background flush...");
+                try { await _preRecFlushTask; }
+                catch (Exception ex) { Debug.WriteLine($"[StopRealtimeVideoProcessing] Pre-rec flush error: {ex.Message}"); }
+                _preRecFlushTask = null;
+            }
+            else if (!string.IsNullOrEmpty(_liveRecordingFilePath) &&
+                     encoder is AndroidCaptureVideoEncoder deferredEncoder &&
+                     !string.IsNullOrEmpty(_preRecordingFilePath))
             {
                 try
                 {
-                    File.Delete(_preRecordingFilePath);
-                    Debug.WriteLine($"[StopRealtimeVideoProcessing] Deleted old pre-recording temp file");
+                    Debug.WriteLine($"[StopRealtimeVideoProcessing] Serializing pre-record buffer at stop time → {_preRecordingFilePath}");
+                    await deferredEncoder.WriteBufferedPreRecordingToFileAsync(_preRecordingFilePath);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[StopRealtimeVideoProcessing] Pre-record stop-time serialization error: {ex.Message}");
+                }
+            }
+
+            if (!string.IsNullOrEmpty(_liveRecordingFilePath) && !string.IsNullOrEmpty(_pendingFinalOutputPath))
+            {
+                // 2-encoder path: mux pre-rec buffer file + live file → final output
+                string liveFile = capturedVideo?.FilePath ?? _liveRecordingFilePath;
+                bool hasPreRec = !string.IsNullOrEmpty(_preRecordingFilePath) &&
+                                 File.Exists(_preRecordingFilePath) &&
+                                 new FileInfo(_preRecordingFilePath).Length > 0;
+                bool hasLive   = File.Exists(liveFile) && new FileInfo(liveFile).Length > 0;
+
+                Debug.WriteLine($"[StopRealtimeVideoProcessing] 2-encoder mux: pre-rec={hasPreRec} live={hasLive}");
+
+                if (hasPreRec && hasLive)
+                {
+                    Debug.WriteLine($"[StopRealtimeVideoProcessing] Muxing: {_preRecordingFilePath} + {liveFile} → {_pendingFinalOutputPath}");
+                    string muxedPath = await MuxVideosInternal(_preRecordingFilePath, liveFile, _pendingFinalOutputPath);
+                    capturedVideo = new CapturedVideo { FilePath = muxedPath };
+                }
+                else if (hasLive)
+                {
+                    Debug.WriteLine($"[StopRealtimeVideoProcessing] Pre-rec flush empty/missing — using live file only");
+                    System.IO.File.Move(liveFile, _pendingFinalOutputPath, overwrite: true);
+                    capturedVideo = new CapturedVideo { FilePath = _pendingFinalOutputPath };
+                }
+                else if (hasPreRec)
+                {
+                    Debug.WriteLine($"[StopRealtimeVideoProcessing] Live file empty — using pre-rec only");
+                    System.IO.File.Move(_preRecordingFilePath, _pendingFinalOutputPath, overwrite: true);
+                    capturedVideo = new CapturedVideo { FilePath = _pendingFinalOutputPath };
+                }
+
+                // Clean up temp live file (pre-rec file is cleaned up below by ClearPreRecordingBuffer)
+                try
+                {
+                    if (liveFile != capturedVideo?.FilePath && File.Exists(liveFile))
+                        File.Delete(liveFile);
                 }
                 catch { }
+
+                _liveRecordingFilePath = null;
+                _pendingFinalOutputPath = null;
             }
+            else
+            {
+                // Single-encoder path: live encoder wrote everything to one file
+                Debug.WriteLine($"[StopRealtimeVideoProcessing] Single-encoder path: {capturedVideo?.FilePath}");
+            }
+
             ClearPreRecordingBuffer();
 
 
@@ -844,15 +920,15 @@ public partial class SkiaCamera
             // Stop encoder
             await encoder?.AbortAsync();
 
-            if (!string.IsNullOrEmpty(_preRecordingFilePath) && File.Exists(_preRecordingFilePath))
+            // Clean up 2-encoder transition resources (if abort happens mid-handoff)
+            if (_liveRecordingFilePath != null)
             {
-                try
-                {
-                    File.Delete(_preRecordingFilePath);
-                    Debug.WriteLine($"[StopRealtimeVideoProcessing] Deleted old pre-recording temp file");
-                }
-                catch { }
+                try { if (File.Exists(_liveRecordingFilePath)) File.Delete(_liveRecordingFilePath); } catch { }
+                _liveRecordingFilePath = null;
             }
+            _pendingFinalOutputPath = null;
+            // Note: _preRecFlushTask runs in background and self-disposes; no need to await on abort
+
             ClearPreRecordingBuffer();
 
             SetIsRecordingVideo(false);
@@ -895,6 +971,14 @@ public partial class SkiaCamera
 
         // Stop preview audio - recording will take over with its own audio capture
         StopPreviewAudioCapture();
+
+        // Reset the recording clock immediately — before anything async can yield the thread.
+        // Any frame callback that fires after this point (from a new or lingering GPU session)
+        // will compute elapsedLocal against this fresh base, showing 0:00 at session start.
+        _captureVideoStartTime = DateTime.Now;
+        if (_captureVideoEncoder is AndroidCaptureVideoEncoder _prevEncBridge)
+            _prevEncBridge.CaptureStartAbsoluteNs = 0; // invalidate old encoder's clock
+        _capturePtsBaseTime = null;
 
         // Create Android encoder (GPU path via MediaCodec Surface + EGL + Skia GL)
         var newEncoder = new AndroidCaptureVideoEncoder();
@@ -961,6 +1045,8 @@ public partial class SkiaCamera
         _diagEncWidth = width;
         _diagEncHeight = height;
         _diagBitrate = Math.Max((long)width * height * 4, 2_000_000L);
+        _cameraRawWidth = rawWidth;
+        _cameraRawHeight = rawHeight;
         SetSourceFrameDimensions(width, height);
 
         // Pass locked rotation to encoder for proper video orientation metadata (Android-specific)
@@ -991,7 +1077,7 @@ public partial class SkiaCamera
                 }
             }
 
-            // Try to initialize GPU camera path for zero-copy frame capture
+            // Try to initialize GPU camera path for zero-copy frame capture.
             if (GpuCameraFrameProvider.IsSupported())
             {
                 bool isFrontCamera = false;
@@ -1009,7 +1095,7 @@ public partial class SkiaCamera
             }
             else
             {
-                Debug.WriteLine($"[StartRealtimeVideoProcessing] GPU camera path not supported, using legacy SKBitmap path");
+                Debug.WriteLine("[StartRealtimeVideoProcessing] GPU camera path not supported, using legacy SKBitmap path");
             }
         }
         else
@@ -1075,11 +1161,16 @@ public partial class SkiaCamera
             Debug.WriteLine($"[StartRealtimeVideoProcessing] Skipping StartAsync - pre-recording mode will buffer frames in memory");
         }
 
+        // Track which frame-delivery path is active (GPU or legacy CPU), needed for 2-encoder handoff
+        _usingGpuCameraPath = useGpuCameraPath;
+
         // Drop the first camera frame to avoid occasional corrupted first frame from the camera/RenderScript pipeline
         _androidWarmupDropRemaining = 1;
 
-        _captureVideoStartTime = DateTime.Now;
-        _capturePtsBaseTime = null;
+        // Stamp the new encoder's audio/video clock bridge (CaptureStartAbsoluteNs must be set
+        // as late as possible — after all initialization — for accurate CLOCK_MONOTONIC alignment).
+        if (_captureVideoEncoder is AndroidCaptureVideoEncoder droidEncBridge)
+            droidEncBridge.CaptureStartAbsoluteNs = Super.GetCurrentTimeNanos();
 
         // Diagnostics
         _diagStartTime = DateTime.Now;
@@ -1319,6 +1410,184 @@ public partial class SkiaCamera
     }
 
     /// <summary>
+    /// Transitions from pre-recording to live recording using the 2-encoder overlap pattern.
+    ///
+    /// The key insight: a FRESH MediaCodec/muxer session always produces an IDR as its very first
+    /// encoded output. By creating a new live encoder instead of reusing the pre-rec encoder, we
+    /// guarantee an IDR on the first live frame with zero keyframe wait (~0 ms gap).
+    ///
+    /// Old pre-rec encoder: redirected to write its buffer to _preRecordingFilePath in background.
+    /// New live encoder:    initialized with a temp live path (_liveRecordingFilePath).
+    /// At stop time: MuxVideosInternal concatenates both files into the final output.
+    /// </summary>
+    private async Task TransitionFromPreRecToLiveRecording()
+    {
+        Debug.WriteLine("[TransitionFromPreRecToLiveRecording] Starting 2-encoder handoff...");
+
+        var oldEncoder = _captureVideoEncoder as AndroidCaptureVideoEncoder;
+        if (oldEncoder == null)
+        {
+            Debug.WriteLine("[TransitionFromPreRecToLiveRecording] ERROR: No old encoder - falling back to StartAsync");
+            await _captureVideoEncoder.StartAsync();
+            return;
+        }
+
+        // ── Save final output path and redirect old encoder to pre-rec temp file ──
+        _pendingFinalOutputPath = oldEncoder.OutputPath;
+
+        if (!string.IsNullOrEmpty(_preRecordingFilePath))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(_preRecordingFilePath)!);
+            if (File.Exists(_preRecordingFilePath))
+            {
+                try { File.Delete(_preRecordingFilePath); } catch { }
+            }
+            oldEncoder.OverrideOutputPath(_preRecordingFilePath);
+            Debug.WriteLine($"[TransitionFromPreRecToLiveRecording] Old encoder redirected → {_preRecordingFilePath}");
+        }
+
+        // ── Compute live temp output path for new encoder ──
+        var ctx = Android.App.Application.Context;
+        var cacheDir = ctx.CacheDir?.AbsolutePath ?? FileSystem.CacheDirectory;
+        _liveRecordingFilePath = Path.Combine(cacheDir, $"live_rec_{Guid.NewGuid()}.mp4");
+
+        // ── Create and initialize new live encoder ──
+        var newEncoder = new AndroidCaptureVideoEncoder();
+        newEncoder.ParentCamera = this;
+        newEncoder.IsPreRecordingMode = false;  // live mode → StartAsync creates muxer directly
+
+        var audioEnabled = EnableAudioRecording;
+        await newEncoder.InitializeAsync(_liveRecordingFilePath, _diagEncWidth, _diagEncHeight, _targetFps, audioEnabled, RecordingLockedRotation);
+
+        // Audio: live encoder accepts samples directly (no circular pre-rec buffer)
+        _audioBuffer = null;
+        newEncoder.SetAudioBuffer(null);
+
+        // ── Wire frame pipeline to new encoder ──
+        if (_usingGpuCameraPath && NativeControl is NativeCamera androidCam)
+        {
+            // GPU path: camera surface physically bound to old encoder's EGL context.
+            // We must stop the old GPU session, init a new EGL context on the new encoder,
+            // then create a new GPU camera session targeting the new encoder's surface.
+            bool isFrontCamera = false;
+            bool newGpuOk = newEncoder.InitializeGpuCameraPath(isFrontCamera, _cameraRawWidth, _cameraRawHeight);
+            var newGpuSurface = newGpuOk ? newEncoder.GpuFrameProvider?.GetCameraOutputSurface() : null;
+
+            if (newGpuOk && newGpuSurface != null)
+            {
+                // Subscribe frame-available callback for new encoder BEFORE swapping camera session
+                newEncoder.GpuFrameProvider.Renderer.OnFrameAvailable += (sender, surfaceTexture) =>
+                {
+                    CalculateCameraInputFps();
+                    if ((!IsPreRecording && !IsRecording) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
+                        return;
+                    var elapsed = DateTime.Now - _captureVideoStartTime;
+                    if (elapsed.Ticks < 0) elapsed = TimeSpan.Zero;
+                    droidEnc.SignalGpuFrame(elapsed, FrameProcessor, VideoDiagnosticsOn, DrawDiagnostics);
+                };
+
+                newEncoder.OnGpuFrameProcessed += () =>
+                {
+                    System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
+                    CalculateRecordingFps();
+                };
+
+                if (MirrorRecordingToPreview)
+                {
+                    _encoderPreviewInvalidateHandler = (s, e) =>
+                    {
+                        try { SafeAction(() => UpdatePreview()); }
+                        catch { }
+                    };
+                    newEncoder.PreviewAvailable += _encoderPreviewInvalidateHandler;
+                }
+
+                // Start new encoder's muxer (fast – no pre-rec buffer to flush)
+                await newEncoder.StartAsync();
+
+                // Swap _captureVideoEncoder so frame/audio callbacks route to new encoder
+                _captureVideoEncoder = newEncoder;
+                _usingGpuCameraPath = true;
+
+                // Disconnect camera from old encoder, reconnect to new encoder's surface
+                androidCam.StopGpuCameraSession();
+                newEncoder.GpuFrameProvider.Start();
+                androidCam.CreateGpuCameraSession(newGpuSurface, _targetFps);
+
+                Debug.WriteLine("[TransitionFromPreRecToLiveRecording] GPU path: camera re-routed to new encoder");
+            }
+            else
+            {
+                // GPU init failed on new encoder – fall back to legacy path
+                Debug.WriteLine("[TransitionFromPreRecToLiveRecording] GPU init failed on new encoder, switching to legacy path");
+                newEncoder.DisposeGpuCameraPath();
+                androidCam.StopGpuCameraSession();
+                _usingGpuCameraPath = false;
+
+                // Start new encoder on legacy path
+                _captureVideoEncoder = newEncoder;
+                await newEncoder.StartAsync();
+            }
+        }
+        else
+        {
+            // Legacy CPU path: _captureVideoEncoder field is read by the frame callback each call.
+            // Start the muxer BEFORE swapping so audio samples don't get dropped during the handoff window
+            // (WriteAudio returns early while !_isRecording && !IsPreRecordingMode).
+            // StartAsync on a fresh encoder (no pre-rec buffer) is very fast (< 10ms).
+            await newEncoder.StartAsync();
+
+            // Now swap: next frame callback call routes video+audio to new encoder.
+            // Since no frames have been submitted to newEncoder yet, the codec still produces
+            // an IDR as its very first output – no _waitForFirstLiveKeyframe needed.
+            _captureVideoEncoder = newEncoder;
+            _androidWarmupDropRemaining = 1;  // drop first frame to avoid warmup artifacts
+
+            Debug.WriteLine("[TransitionFromPreRecToLiveRecording] Legacy path: new encoder active");
+        }
+
+        // Do NOT reset _captureVideoStartTime — it keeps counting from when pre-recording started.
+        // This ensures frame.Time / DrawableFrame.Time shows accumulated time (e.g. 3s pre-rec → 3s at transition start).
+        // CaptureStartAbsoluteNs is updated for the new encoder's audio/video clock alignment only.
+        if (_captureVideoEncoder is AndroidCaptureVideoEncoder droidEncBridge)
+            droidEncBridge.CaptureStartAbsoluteNs = Super.GetCurrentTimeNanos();
+        _capturePtsBaseTime = null;
+
+        // Progress reporting for new encoder
+        _captureVideoEncoder.ProgressReported += (sender, duration) =>
+        {
+            OnRecordingProgress(duration);
+        };
+
+        // ── Flush old pre-rec encoder's buffered segment to disk in background ──
+        // FlushPreRecBufferAsync now drains any already-submitted tail frames before writing the
+        // temp file. That preserves continuity at the seam without blocking the live encoder start.
+        _preRecFlushTask = Task.Run(async () =>
+        {
+            try
+            {
+                // Give the old encoder a brief head start so the first tail outputs are available
+                // when the drain loop begins on slower devices.
+                await Task.Delay(150);
+                Debug.WriteLine("[TransitionFromPreRecToLiveRecording] BkTask: flushing pre-rec buffer with tail drain...");
+                await oldEncoder.FlushPreRecBufferAsync();
+                Debug.WriteLine($"[TransitionFromPreRecToLiveRecording] BkTask: buffer written to {_preRecordingFilePath}");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[TransitionFromPreRecToLiveRecording] BkTask: error flushing buffer: {ex.Message}");
+            }
+            finally
+            {
+                try { oldEncoder.Dispose(); }
+                catch { }
+            }
+        });
+
+        Debug.WriteLine("[TransitionFromPreRecToLiveRecording] Handoff complete – old encoder flushing in background");
+    }
+
+    /// <summary>
     /// Start video recording. Run this in background thread!
     /// Locks the device rotation for the entire recording session.
     /// Uses either native video recording or capture video flow depending on UseRealtimeVideoProcessing setting.
@@ -1371,42 +1640,59 @@ public partial class SkiaCamera
                     await StartNativeVideoRecording();
                 }
             }
-            // State 2 -> State 3: If in pre-recording phase, transition to file recording with muxing
+            // State 2 -> State 3: Transition from pre-recording to live recording
             else if (IsPreRecording && !IsRecording)
             {
-                Debug.WriteLine("[StartVideoRecording] Transitioning from IsPreRecording to IsRecording (file recording with mux)");
+                bool useTwoEncoderTransition = AndroidCameraExperimentalFlags.IsTwoEncoderPrerecordTransitionEnabled();
+                Debug.WriteLine(
+                    useTwoEncoderTransition
+                        ? "[StartVideoRecording] Transitioning from IsPreRecording to IsRecording (2-encoder handoff)"
+                        : "[StartVideoRecording] Transitioning from IsPreRecording to IsRecording (single-encoder deferred-flush transition)");
 
-                // CRITICAL ANDROID FIX: Single-file approach - reuse existing encoder!
-                // Encoder was already initialized and warmed up during pre-recording phase
-                // Just call StartAsync() to write buffer + continue with live frames in same muxer session
- 
-                // Change states
+                // Change states before switching the encoder mode so frame callbacks continue to accept
+                // frames throughout the transition window.
                 SetIsPreRecording(false);
                 SetIsRecordingVideo(true);
                 RecordingLockedRotation = DeviceRotation;
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
-                // CRITICAL: Reuse existing encoder (single-file pattern)
-                // This will write buffer to muxer, then continue with live frames in same session
                 if (_captureVideoEncoder != null)
                 {
-                    Debug.WriteLine("[StartVideoRecording] ========================================");
-                    Debug.WriteLine("[StartVideoRecording] SINGLE-FILE PATTERN (professional)");
-                    Debug.WriteLine("[StartVideoRecording] Reusing pre-warmed encoder for live recording");
-                    Debug.WriteLine("[StartVideoRecording] No encoder recreation = zero frame loss!");
-                    Debug.WriteLine("[StartVideoRecording] Buffer already has keyframes from periodic requests");
-                    Debug.WriteLine("[StartVideoRecording] ========================================");
+                    if (useTwoEncoderTransition)
+                    {
+                        // Experimental path: creates a fresh live encoder while the old pre-rec encoder
+                        // flushes in the background. This is faster on some devices but can create a seam
+                        // when the GPU camera session takes too long to rebind.
+                        await TransitionFromPreRecToLiveRecording();
+                        Debug.WriteLine("[StartVideoRecording] 2-encoder handoff complete");
+                    }
+                    else
+                    {
+                        // Default Android path: keep the same warmed encoder and current GPU camera session.
+                        // Start writing only live frames to a temp file now, and defer serializing the
+                        // pre-record buffer until stop time to avoid the transition spike.
+                        _pendingFinalOutputPath = (_captureVideoEncoder as AndroidCaptureVideoEncoder)?.OutputPath;
+                        var ctx = Android.App.Application.Context;
+                        var cacheDir = ctx.CacheDir?.AbsolutePath ?? FileSystem.CacheDirectory;
+                        _liveRecordingFilePath = Path.Combine(cacheDir, $"live_rec_{Guid.NewGuid()}.mp4");
 
-                    await _captureVideoEncoder.StartAsync();
-
-                    Debug.WriteLine("[StartVideoRecording] Encoder transitioned to live recording mode");
-                    Debug.WriteLine("[StartVideoRecording] Buffer written, live frames continuing in same muxer");
+                        if (_captureVideoEncoder is AndroidCaptureVideoEncoder androidEncoder)
+                        {
+                            await androidEncoder.StartLiveRecordingOnlyAsync(_liveRecordingFilePath);
+                            Debug.WriteLine("[StartVideoRecording] Single-encoder deferred-flush transition complete");
+                        }
+                        else
+                        {
+                            await _captureVideoEncoder.StartAsync();
+                            Debug.WriteLine("[StartVideoRecording] Single-encoder fallback transition complete");
+                        }
+                    }
                 }
                 else
                 {
                     Debug.WriteLine("[StartVideoRecording] ERROR: No encoder found for transition!");
                 }
- 
+
             }
             // Normal recording (no pre-recording)
             else if (!IsRecording)
