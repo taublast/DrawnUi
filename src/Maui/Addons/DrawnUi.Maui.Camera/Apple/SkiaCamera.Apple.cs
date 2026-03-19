@@ -2456,12 +2456,42 @@ public partial class SkiaCamera
                 {
                     Debug.WriteLine("[StartVideoRecording] Spawning background task to stop/flush old encoder");
 
+                    // Capture the live encoder reference now (before the lambda) so it's stable inside the task
+                    var liveEncoderForHandoff = _captureVideoEncoder as AppleVideoToolboxEncoder;
+
                     _preRecFlushTask = Task.Run(async () =>
                     {
                         try
                         {
-                            // Pre-rec already stopped accepting frames (StopAcceptingFrames called earlier)
-                            // Just flush the buffer to file
+                            // SEAMLESS HANDOFF: Wait for the live encoder to receive its first frame,
+                            // then set the exact cutoff on the pre-rec buffer so it ends precisely where live begins.
+                            // This replaces the blind PruneToMaxDuration fallback which could strip up to 1 GOP (~0.8s).
+                            if (oldEncoderToStop is AppleVideoToolboxEncoder oldAppleEnc && liveEncoderForHandoff != null)
+                            {
+                                const int maxWaitMs = 500;
+                                const int pollIntervalMs = 10;
+                                int waited = 0;
+                                while (waited < maxWaitMs)
+                                {
+                                    double firstLiveTs = liveEncoderForHandoff.GetFirstLiveFrameTimestamp();
+                                    if (firstLiveTs >= 0)
+                                    {
+                                        oldAppleEnc.SetPreRecordingCutoffTimestamp(firstLiveTs);
+                                        oldAppleEnc.StopAcceptingFrames();
+                                        Debug.WriteLine($"[StartVideoRecording] BkTask: Seamless handoff - pre-rec cutoff at {firstLiveTs:F3}s");
+                                        break;
+                                    }
+                                    await Task.Delay(pollIntervalMs);
+                                    waited += pollIntervalMs;
+                                }
+                                if (liveEncoderForHandoff.GetFirstLiveFrameTimestamp() < 0)
+                                {
+                                    // Timeout: freeze the buffer anyway so StopAsync doesn't write unbounded content
+                                    oldAppleEnc.StopAcceptingFrames();
+                                    Debug.WriteLine("[StartVideoRecording] BkTask: Warning - no live frame within 500ms, falling back to PruneToMaxDuration");
+                                }
+                            }
+
                             var preRecResult = await oldEncoderToStop.StopAsync();
                             Debug.WriteLine("[StartVideoRecording] BkTask: Old encoder stopped");
 
