@@ -3,6 +3,7 @@ using Android.Opengl;
 using Android.Views;
 using Java.Nio;
 using SkiaSharp;
+using System.Runtime.InteropServices;
 
 namespace DrawnUi.Camera
 {
@@ -631,7 +632,15 @@ namespace DrawnUi.Camera
             if (mappedBuffer != null)
             {
                 mappedBuffer.Rewind();
-                mappedBuffer.Get(_managedBuffer, 0, _pboBytesSize);
+                var mappedPtr = mappedBuffer.GetDirectBufferAddress();
+                if (mappedPtr != IntPtr.Zero)
+                {
+                    Marshal.Copy(mappedPtr, _managedBuffer, 0, _pboBytesSize);
+                }
+                else
+                {
+                    mappedBuffer.Get(_managedBuffer, 0, _pboBytesSize);
+                }
                 GLES30.GlUnmapBuffer(GLES30.GlPixelPackBuffer);
                 hasData = true;
             }
