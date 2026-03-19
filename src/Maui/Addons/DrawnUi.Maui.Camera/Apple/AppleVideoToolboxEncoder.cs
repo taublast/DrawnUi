@@ -1416,15 +1416,17 @@ namespace DrawnUi.Camera
                 {
                     // SEAMLESS HANDOFF: If cutoff timestamp is set (from first live frame),
                     // prune buffer to only include frames up to that timestamp
-                    // Always prune to max duration first (trims old content from head, strips leading P-frames)
-                    _preRecordingBuffer.PruneToMaxDuration();
-
-                    // If seamless handoff cutoff is set, also trim the tail to exactly where live recording begins.
-                    // This prevents pre-rec from overlapping into live territory and eliminates duplicate frames at the seam.
                     if (_preRecordingCutoffTimestamp > 0)
                     {
-                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] SEAMLESS HANDOFF: Trimming pre-rec tail to cutoff {_preRecordingCutoffTimestamp:F3}s");
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] SEAMLESS HANDOFF: Pruning buffer to cutoff timestamp {_preRecordingCutoffTimestamp:F3}s");
                         _preRecordingBuffer.PruneToCutoffTimestamp(TimeSpan.FromSeconds(_preRecordingCutoffTimestamp));
+                    }
+                    else
+                    {
+                        // Fallback: Prune buffer to max duration BEFORE writing to file
+                        // This ensures we never write more than PreRecordDuration seconds
+                        System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Pruning buffer to max duration before writing...");
+                        _preRecordingBuffer.PruneToMaxDuration();
                     }
 
                     System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Writing buffer to: {_preRecordingFilePath}");
