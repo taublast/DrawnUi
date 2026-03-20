@@ -2146,9 +2146,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 surfaces.Add(mImageReaderPreview.Surface);
             }
 
-            // Still need photo surface for photo capture during recording
-            if (mImageReaderPhoto != null)
-                surfaces.Add(mImageReaderPhoto.Surface);
+            // Do NOT include the photo surface — same ISP throttle issue as the preview session.
+            // Photo-during-video uses CreateStillCaptureSession() when the shutter fires.
 
             // Recording always targets the GPU surface.
             mPreviewRequestBuilder.AddTarget(_gpuCameraSurface);
