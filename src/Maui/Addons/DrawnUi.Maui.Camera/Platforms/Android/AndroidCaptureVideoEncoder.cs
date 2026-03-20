@@ -1142,43 +1142,10 @@ namespace DrawnUi.Camera
                 (System.Threading.Interlocked.Increment(ref _previewFrameCounter) % _previewFrameInterval) == 0;
             if (shouldGeneratePreview)
             {
-                SKImage keepAlive = null;
-                try
+                if (!TryPublishPreviewFromScaler())
                 {
-                    using var gpuSnap = _skSurface?.Snapshot();
-                    if (gpuSnap != null)
-                    {
-                        int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
-
-                        int pw = Math.Min(_width, maxPreviewWidth);
-                        int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
-
-                        // Reuse cached surface to avoid GC pressure (was allocating ~2MB per frame)
-                        if (_previewRasterSurface == null || _previewWidth != pw || _previewHeight != ph)
-                        {
-                            _previewRasterSurface?.Dispose();
-                            var pInfo = new SKImageInfo(pw, ph, SKColorType.Bgra8888, SKAlphaType.Premul);
-                            _previewRasterSurface = SKSurface.Create(pInfo);
-                            _previewWidth = pw;
-                            _previewHeight = ph;
-                        }
-
-                        var pCanvas = _previewRasterSurface.Canvas;
-                        pCanvas.Clear(SKColors.Transparent);
-                        pCanvas.DrawImage(gpuSnap, new SKRect(0, 0, pw, ph));
-
-                        keepAlive = _previewRasterSurface.Snapshot();
-                        lock (_previewLock)
-                        {
-                            _latestPreviewImage?.Dispose();
-                            _latestPreviewImage = keepAlive;
-                            keepAlive = null;
-                        }
-                        PreviewAvailable?.Invoke(this, EventArgs.Empty);
-                    }
+                    PublishPreviewFromSnapshotFallback();
                 }
-                catch { keepAlive?.Dispose(); keepAlive = null; }
-                finally { keepAlive?.Dispose(); }
             }
 
             long ptsNanos = (long)(_pendingTimestamp.TotalMilliseconds * 1_000_000.0);
@@ -1222,6 +1189,89 @@ namespace DrawnUi.Camera
                 image = _latestPreviewImage;
                 _latestPreviewImage = null;
                 return image != null;
+            }
+        }
+
+        private bool TryPublishPreviewFromScaler()
+        {
+            if (_skSurface == null)
+                return false;
+
+            if (!_glPreviewScalerInitAttempted)
+            {
+                _glPreviewScalerInitAttempted = true;
+                int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                int previewWidth = Math.Min(_width, maxPreviewWidth);
+                int previewHeight = Math.Max(1, (int)Math.Round(_height * (previewWidth / (double)_width)));
+                _glPreviewScaler = new GlPreviewScaler();
+                if (!_glPreviewScaler.Initialize(_width, _height, previewWidth, previewHeight))
+                {
+                    _glPreviewScaler?.Dispose();
+                    _glPreviewScaler = null;
+                }
+            }
+
+            if (_glPreviewScaler == null)
+                return false;
+
+            var previewImage = _glPreviewScaler.ScaleAndReadback();
+            if (previewImage == null)
+                return false;
+
+            lock (_previewLock)
+            {
+                _latestPreviewImage?.Dispose();
+                _latestPreviewImage = previewImage;
+            }
+
+            PreviewAvailable?.Invoke(this, EventArgs.Empty);
+            return true;
+        }
+
+        private void PublishPreviewFromSnapshotFallback()
+        {
+            SKImage keepAlive = null;
+            try
+            {
+                using var gpuSnap = _skSurface?.Snapshot();
+                if (gpuSnap == null)
+                    return;
+
+                int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                int previewWidth = Math.Min(_width, maxPreviewWidth);
+                int previewHeight = Math.Max(1, (int)Math.Round(_height * (previewWidth / (double)_width)));
+
+                if (_previewRasterSurface == null || _previewWidth != previewWidth || _previewHeight != previewHeight)
+                {
+                    _previewRasterSurface?.Dispose();
+                    var previewInfo = new SKImageInfo(previewWidth, previewHeight, SKColorType.Bgra8888, SKAlphaType.Premul);
+                    _previewRasterSurface = SKSurface.Create(previewInfo);
+                    _previewWidth = previewWidth;
+                    _previewHeight = previewHeight;
+                }
+
+                var previewCanvas = _previewRasterSurface.Canvas;
+                previewCanvas.Clear(SKColors.Transparent);
+                previewCanvas.DrawImage(gpuSnap, new SKRect(0, 0, previewWidth, previewHeight));
+
+                keepAlive = _previewRasterSurface.Snapshot();
+                lock (_previewLock)
+                {
+                    _latestPreviewImage?.Dispose();
+                    _latestPreviewImage = keepAlive;
+                    keepAlive = null;
+                }
+
+                PreviewAvailable?.Invoke(this, EventArgs.Empty);
+            }
+            catch
+            {
+                keepAlive?.Dispose();
+                keepAlive = null;
+            }
+            finally
+            {
+                keepAlive?.Dispose();
             }
         }
 

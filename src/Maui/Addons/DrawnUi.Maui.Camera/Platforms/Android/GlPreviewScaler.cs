@@ -2,6 +2,8 @@
 using Android.Opengl;
 using Java.Nio;
 using SkiaSharp;
+using System;
+using System.Runtime.InteropServices;
 
 namespace DrawnUi.Camera
 {
@@ -28,6 +30,7 @@ namespace DrawnUi.Camera
 
         // Pre-allocated readback buffer (PBO map destination — no per-frame allocations)
         private byte[] _managedBuffer;
+        private ByteBuffer _syncReadbackBuffer;
 
         // Double-buffered PBOs for async glReadPixels (mirrors GlPreviewRenderer pattern)
         private int[] _pbos = new int[2];
@@ -190,7 +193,7 @@ namespace DrawnUi.Camera
                 if (mapped != null)
                 {
                     mapped.Rewind();
-                    mapped.Get(_managedBuffer, 0, _managedBuffer.Length);
+                    CopyBufferToManaged(mapped, _managedBuffer, _managedBuffer.Length);
                     GLES30.GlUnmapBuffer(GLES30.GlPixelPackBuffer);
 
                     var info = new SKImageInfo(_outputWidth, _outputHeight,
@@ -237,16 +240,21 @@ namespace DrawnUi.Camera
                     GLES20.GlColorBufferBit,
                     GLES20.GlLinear);
 
-                // ML readback path: synchronous glReadPixels into a direct ByteBuffer, then copy.
+                // ML readback path: synchronous glReadPixels into a reusable direct ByteBuffer, then copy.
                 // ML inference is throttled upstream so sync stall here is acceptable.
                 GLES30.GlBindFramebuffer(GLES30.GlReadFramebuffer, _previewFbo);
-                var tempBuf = ByteBuffer.AllocateDirect(required);
-                tempBuf.Order(ByteOrder.NativeOrder());
+                if (_syncReadbackBuffer == null || _syncReadbackBuffer.Capacity() < required)
+                {
+                    _syncReadbackBuffer?.Dispose();
+                    _syncReadbackBuffer = ByteBuffer.AllocateDirect(required);
+                    _syncReadbackBuffer.Order(ByteOrder.NativeOrder());
+                }
+
+                _syncReadbackBuffer.Rewind();
                 GLES20.GlReadPixels(0, 0, _outputWidth, _outputHeight,
-                    GLES20.GlRgba, GLES20.GlUnsignedByte, tempBuf);
-                tempBuf.Rewind();
-                tempBuf.Get(outputBuffer, 0, required);
-                tempBuf.Dispose();
+                    GLES20.GlRgba, GLES20.GlUnsignedByte, _syncReadbackBuffer);
+                _syncReadbackBuffer.Rewind();
+                CopyBufferToManaged(_syncReadbackBuffer, outputBuffer, required);
 
                 GLES20.GlBindFramebuffer(GLES20.GlFramebuffer, 0);
                 return true;
@@ -286,6 +294,9 @@ namespace DrawnUi.Camera
                     _pbosInitialized = false;
                 }
 
+                _syncReadbackBuffer?.Dispose();
+                _syncReadbackBuffer = null;
+
                 _gpuSemaphore?.Dispose();
                 _gpuSemaphore = null;
                 _managedBuffer = null;
@@ -296,6 +307,19 @@ namespace DrawnUi.Camera
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"[GlPreviewScaler] Dispose error: {ex.Message}");
+            }
+        }
+
+        private static void CopyBufferToManaged(ByteBuffer source, byte[] destination, int length)
+        {
+            var directPtr = source.GetDirectBufferAddress();
+            if (directPtr != IntPtr.Zero)
+            {
+                Marshal.Copy(directPtr, destination, 0, length);
+            }
+            else
+            {
+                source.Get(destination, 0, length);
             }
         }
     }
