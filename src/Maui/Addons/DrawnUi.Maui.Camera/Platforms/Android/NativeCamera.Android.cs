@@ -3189,6 +3189,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         try
         {
+            FormsControl?.OnAndroidNativeRecordingWillStart();
+
             // Note: Android's MediaRecorder does not support injecting pre-recorded frames
             // like AVAssetWriter on iOS. The pre-recording buffer is maintained for future
             // enhancement with custom MediaCodec integration. For now, clear the buffer
@@ -3304,6 +3306,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             Log.Error(TAG, $"Failed to start video recording: {ex.Message}");
             _isRecordingVideo = false;
             CleanupMediaRecorder();
+            FormsControl?.OnAndroidNativeRecordingDidEnd();
             RecordingFailed?.Invoke(ex);
         }
     }
@@ -3356,6 +3359,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             // Restart preview
             CreateCameraPreviewSession();
 
+            FormsControl?.OnAndroidNativeRecordingDidEnd();
+
             // Fire success event
             RecordingSuccess?.Invoke(capturedVideo);
 
@@ -3366,6 +3371,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             Log.Error(TAG, $"Failed to stop video recording: {ex.Message}");
             _isRecordingVideo = false;
             CleanupMediaRecorder();
+            FormsControl?.OnAndroidNativeRecordingDidEnd();
             RecordingFailed?.Invoke(ex);
         }
     }
@@ -3684,6 +3690,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             catch (Exception ex)
             {
                 Log.Error(NativeCamera.TAG, $"Failed to configure video capture session: {ex.Message}");
+                _owner.FormsControl?.OnAndroidNativeRecordingDidEnd();
                 _owner.RecordingFailed?.Invoke(ex);
             }
         }
@@ -3693,6 +3700,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             Log.Error(NativeCamera.TAG, "Video capture session configuration failed");
             _owner._isRecordingVideo = false;
             _owner.CleanupMediaRecorder();
+            _owner.FormsControl?.OnAndroidNativeRecordingDidEnd();
             _owner.RecordingFailed?.Invoke(new Exception("Video capture session configuration failed"));
         }
     }

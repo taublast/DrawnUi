@@ -1788,6 +1788,31 @@ public partial class SkiaCamera
 
     #region Preview Audio Capture
 
+    private bool _resumePreviewAudioAfterNativeRecording;
+
+    internal void OnAndroidNativeRecordingWillStart()
+    {
+        _resumePreviewAudioAfterNativeRecording = _previewAudioCapture != null;
+
+        if (_resumePreviewAudioAfterNativeRecording)
+        {
+            StopPreviewAudioCapture();
+        }
+    }
+
+    internal void OnAndroidNativeRecordingDidEnd()
+    {
+        if (!_resumePreviewAudioAfterNativeRecording)
+            return;
+
+        _resumePreviewAudioAfterNativeRecording = false;
+
+        if (State == HardwareState.On && ((CaptureMode == CaptureModeType.Video && EnableAudioRecording) || EnableAudioMonitoring))
+        {
+            StartPreviewAudioCapture();
+        }
+    }
+
     private void OnPreviewAudioSampleAvailable(object sender, AudioSample sample)
     {
         OnAudioSampleAvailable(sample);
