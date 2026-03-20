@@ -1910,7 +1910,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// </summary>
     public void SetPreviewOptions(CaptureRequest.Builder requestBuilder)
     {
-        requestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
+        requestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousVideo);
         // Note: Flash settings are NOT applied here as they're already set in CreateCameraPreviewSession()
         // This prevents conflicts between preview flash (torch) and capture flash (single) modes
     }
@@ -1997,6 +1997,37 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                         _isTorchOn = true;
                         break;
                 }
+            }
+
+            // Set FPS range to prevent camera defaulting to [5,30] and settling at 15-17fps.
+            // Variable [15, 30] lets AE raise ISO before dropping frames in low light.
+            try
+            {
+                var activity = Platform.CurrentActivity;
+                var manager = (CameraManager)activity.GetSystemService(Context.CameraService);
+                var characteristics = manager.GetCameraCharacteristics(CameraId);
+                var ranges = characteristics.Get(CameraCharacteristics.ControlAeAvailableTargetFpsRanges)
+                    .ToArray<Android.Util.Range>();
+
+                int targetFps = 30;
+                int fpsFloor = targetFps / 2; // [15, 30]
+
+                var bestRange = ranges.FirstOrDefault(r => (int)r.Lower == fpsFloor && (int)r.Upper == targetFps)
+                    ?? ranges.FirstOrDefault(r => (int)r.Upper == targetFps);
+
+                if (bestRange != null)
+                {
+                    mPreviewRequestBuilder.Set(CaptureRequest.ControlAeTargetFpsRange, bestRange);
+                    Debug.WriteLine($"[NativeCamera] Set preview FPS range: {bestRange}");
+                }
+                else
+                {
+                    Debug.WriteLine($"[NativeCamera] No matching FPS range found for {targetFps}fps");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[NativeCamera] Error setting preview FPS range: {ex.Message}");
             }
 
             // Choose preview surface: GPU renderer or ImageReader

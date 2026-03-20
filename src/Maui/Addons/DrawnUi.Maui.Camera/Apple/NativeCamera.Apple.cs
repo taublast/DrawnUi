@@ -394,6 +394,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 NSError error;
                 if (videoDevice.LockForConfiguration(out error))
                 {
+                    if (videoDevice.IsFocusModeSupported(AVCaptureFocusMode.ContinuousAutoFocus))
+                        videoDevice.FocusMode = AVCaptureFocusMode.ContinuousAutoFocus;
+
                     if (videoDevice.SmoothAutoFocusSupported)
                         videoDevice.SmoothAutoFocusEnabled = true;
 
