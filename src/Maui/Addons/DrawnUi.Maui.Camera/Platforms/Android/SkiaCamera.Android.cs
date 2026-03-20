@@ -1179,6 +1179,8 @@ public partial class SkiaCamera
         _diagLastSubmitMs = 0;
         ResetRecordingFps();
         _targetFps = fps;
+        if (NativeControl is NativeCamera diagSnapCam)
+            _diagRawFrameCountAtStart = diagSnapCam.RawFrameCount;
 
         // Event-driven capture on Android: drive encoder from camera preview callback
         int diagCounter = 0;

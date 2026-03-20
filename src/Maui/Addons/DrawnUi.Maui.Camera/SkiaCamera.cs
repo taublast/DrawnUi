@@ -2867,8 +2867,9 @@ public partial class SkiaCamera : SkiaControl
     private DateTime _diagStartTime;
     private int _diagEncWidth = 0, _diagEncHeight = 0;
     private long _diagBitrate = 0;
-    private long _diagHardwareDrops = 0;   // true drops: raw camera − cam delivered, accumulated
-    private long _diagCamInputFrames = 0;  // frames that reached CalculateCameraInputFps()
+    private long _diagHardwareDrops = 0;        // true drops: raw camera − cam delivered, accumulated
+    private long _diagRawFrameCountAtStart = 0; // snapshot of NativeCamera.RawFrameCount when recording started
+    private long _diagCamInputFrames = 0;       // frames that reached CalculateCameraInputFps()
 
     // Pre-allocated diagnostic overlay paints — reused across frames to avoid per-frame GC pressure
     private SKPaint _diagBgPaint;
@@ -4177,6 +4178,7 @@ public partial class SkiaCamera : SkiaControl
         _diagLastPreviewTimestamp = 0;
         _diagPreviewFps = 0;
         _diagHardwareDrops = 0;
+        _diagRawFrameCountAtStart = 0;
         _diagCamInputFrames = 0;
         _diagStringCounter = 0;
         _previewDiagLine1 = null;
@@ -4235,6 +4237,8 @@ public partial class SkiaCamera : SkiaControl
         if (NativeControl is NativeCamera androidCam)
         {
             rawCamFps = androidCam.RawCameraFps;
+            // hw drops = raw frames since start − frames that reached our callback
+            _diagHardwareDrops = Math.Max(0, (androidCam.RawFrameCount - _diagRawFrameCountAtStart) - _diagCamInputFrames);
         }
 #elif WINDOWS
         if (NativeControl is NativeCamera winCam)
@@ -4253,7 +4257,8 @@ public partial class SkiaCamera : SkiaControl
                 : $"FPS: {outputFps:F1} / {_targetFps}  drop: {_diagDroppedFrames} bp: {backpressureDrops}";
             _diagLine2 = $"submit: {_diagLastSubmitMs:F1} ms";
 #elif ANDROID
-            // Windows/Android format: show raw, camera input, and encoder output FPS
+            // Android format: show raw, camera input, and encoder output FPS
+            // drop = frames lost in ImageReader before our callback (raw − cam)
             _diagLine1 = rawCamFps > 0
                 ? $"raw: {rawCamFps:F1}  cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}"
                 : $"cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}";
