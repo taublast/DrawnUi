@@ -1920,43 +1920,58 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         if (CapturingStill)
             return;
 
+        if (mImageReaderPhoto == null || mCameraDevice == null)
+        {
+            OnImageTakingFailed?.Invoke(this, null);
+            return;
+        }
+
+        CapturingStill = true;
+        PlaySound();
+
+        // The preview session never includes the photo surface (it throttles ISP to ~17fps).
+        // Create a temporary session with the photo surface just for this one capture,
+        // then restore the lean preview session in StopCapturingStillImage().
+        CreateStillCaptureSession();
+    }
+
+    public void CreateStillCaptureSession()
+    {
         try
         {
-            CapturingStill = true;
+            var previewSurface = GetActivePreviewSurface();
+            var surfaces = new List<Surface> { previewSurface, mImageReaderPhoto.Surface };
 
-            PlaySound();
-
-            var activity = Platform.AppContext;
-            if (null == activity || null == mCameraDevice)
-            {
-                OnImageTakingFailed?.Invoke(this, null);
-                CapturingStill = false;
-                return;
-            }
-
-            var stillCaptureBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.StillCapture);
-            stillCaptureBuilder.AddTarget(mImageReaderPhoto.Surface);
-
-            // Use the same AE and AF modes as the preview.
-            SetCapturingStillOptions(stillCaptureBuilder);
-
-            // Orientation
-            int rotation = 0; //int)activity.WindowManager.DefaultDisplay.Rotation;
-            stillCaptureBuilder.Set(CaptureRequest.JpegOrientation, SensorOrientation);
-
-            CaptureSession.StopRepeating();
-
-            CaptureSession
-                .Capture(stillCaptureBuilder.Build(), new StillPhotoCaptureFinishedCallback(this),
-                    mBackgroundHandler);
+            mCameraDevice.CreateCaptureSession(
+                surfaces,
+                new StillCaptureCameraSessionCallback(this),
+                mBackgroundHandler);
         }
         catch (Exception e)
         {
             Trace.WriteLine(e);
             OnCaptureError(e);
         }
-        finally
+    }
+
+    internal void DoActualStillCapture()
+    {
+        try
         {
+            var stillCaptureBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.StillCapture);
+            stillCaptureBuilder.AddTarget(mImageReaderPhoto.Surface);
+
+            SetCapturingStillOptions(stillCaptureBuilder);
+            stillCaptureBuilder.Set(CaptureRequest.JpegOrientation, SensorOrientation);
+
+            CaptureSession.Capture(stillCaptureBuilder.Build(),
+                new StillPhotoCaptureFinishedCallback(this),
+                mBackgroundHandler);
+        }
+        catch (Exception e)
+        {
+            Trace.WriteLine(e);
+            OnCaptureError(e);
         }
     }
 
@@ -1999,8 +2014,9 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 }
             }
 
-            // Set FPS range to prevent camera defaulting to [5,30] and settling at 15-17fps.
-            // Variable [15, 30] lets AE raise ISO before dropping frames in low light.
+            // Set FPS range. Prefer fixed [30, 30] so AE compensates via ISO instead of
+            // dropping frame rate. Without a fixed range the anti-banding algorithm can
+            // settle at ~16.7fps (3 × 1/50Hz) even in daylight.
             try
             {
                 var activity = Platform.CurrentActivity;
@@ -2009,10 +2025,13 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 var ranges = characteristics.Get(CameraCharacteristics.ControlAeAvailableTargetFpsRanges)
                     .ToArray<Android.Util.Range>();
 
-                int targetFps = 30;
-                int fpsFloor = targetFps / 2; // [15, 30]
+                Debug.WriteLine($"[NativeCamera] Available FPS ranges: {string.Join(", ", ranges.Select(r => $"[{r.Lower},{r.Upper}]"))}");
 
-                var bestRange = ranges.FirstOrDefault(r => (int)r.Lower == fpsFloor && (int)r.Upper == targetFps)
+                int targetFps = 30;
+
+                // Prefer fixed [fps, fps]; fall back to variable [floor, fps]
+                var bestRange = ranges.FirstOrDefault(r => (int)r.Lower == targetFps && (int)r.Upper == targetFps)
+                    ?? ranges.FirstOrDefault(r => (int)r.Lower == targetFps / 2 && (int)r.Upper == targetFps)
                     ?? ranges.FirstOrDefault(r => (int)r.Upper == targetFps);
 
                 if (bestRange != null)
@@ -2034,8 +2053,11 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             var previewSurface = GetActivePreviewSurface();
 
             var surfaces = new List<Surface> { previewSurface };
-            if (mImageReaderPhoto != null)
-                surfaces.Add(mImageReaderPhoto.Surface);
+            // Never include the still-capture surface in the preview session.
+            // Having a full-resolution ImageReader in the session forces the ISP to maintain
+            // its full-res pipeline on every frame, throttling preview FPS to ~17fps even when
+            // [30,30] FPS range is explicitly set. The photo surface is added only at capture time
+            // via a temporary session (CreateStillCaptureSession), then restored here afterwards.
 
             mCameraDevice.CreateCaptureSession(
                 surfaces,
@@ -2135,10 +2157,9 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 mPreviewRequestBuilder.AddTarget(mImageReaderPreview.Surface);
             }
 
-            // Set FPS range.
-            // Use variable [half, fps] so AE can raise ISO first and then open the shutter
-            // (drop fps) if the scene is still too dark. This prevents throttling all the way
-            // to 5fps while still allowing proper exposure in low light.
+            // Set FPS range. Prefer fixed [fps, fps] so AE compensates via ISO instead of
+            // dropping frame rate. Anti-banding with a variable range can settle at ~16.7fps
+            // (3 × 1/50Hz) even in good light. Fall back to variable only if fixed unavailable.
             try
             {
                 var activity = Platform.CurrentActivity;
@@ -2147,10 +2168,9 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 var ranges = characteristics.Get(CameraCharacteristics.ControlAeAvailableTargetFpsRanges)
                     .ToArray<Android.Util.Range>();
 
-                int fpsFloor = targetFps / 2;  // e.g. 15 for 30fps, 30 for 60fps
-
-                // Prefer variable range [floor, fps]; fall back to any range ending at fps
-                var bestRange = ranges.FirstOrDefault(r => (int)r.Lower == fpsFloor && (int)r.Upper == targetFps)
+                // Prefer fixed [fps, fps]; fall back to variable [floor, fps]
+                var bestRange = ranges.FirstOrDefault(r => (int)r.Lower == targetFps && (int)r.Upper == targetFps)
+                    ?? ranges.FirstOrDefault(r => (int)r.Lower == targetFps / 2 && (int)r.Upper == targetFps)
                     ?? ranges.FirstOrDefault(r => (int)r.Upper == targetFps);
 
                 if (bestRange != null)
@@ -2375,15 +2395,11 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     {
         try
         {
-            mPreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Cancel);
-            SetPreviewOptions(mPreviewRequestBuilder);
-            CaptureSession.Capture(mPreviewRequestBuilder.Build(), mCaptureCallback,
-                mBackgroundHandler);
             mState = STATE_PREVIEW;
-            CaptureSession.SetRepeatingRequest(
-                mPreviewRequest,
-                mCaptureCallback,
-                mBackgroundHandler);
+            // Restore the lean preview session (no photo surface → 30fps preview).
+            // The new session's OnConfigured sets continuous-video AF, so no explicit
+            // AF trigger cancel is needed — the fresh session resets AF state.
+            CreateCameraPreviewSession();
         }
         catch (Exception e)
         {

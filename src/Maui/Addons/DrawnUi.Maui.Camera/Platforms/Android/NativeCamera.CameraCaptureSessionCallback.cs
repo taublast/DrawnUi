@@ -4,6 +4,39 @@ namespace DrawnUi.Camera
 {
     public partial class NativeCamera
     {
+        /// <summary>
+        /// Session callback for the temporary still-capture session.
+        /// Once configured, immediately fires the single still capture,
+        /// then StopCapturingStillImage() restores the lean preview session.
+        /// </summary>
+        public class StillCaptureCameraSessionCallback : CameraCaptureSession.StateCallback
+        {
+            private readonly NativeCamera owner;
+
+            public StillCaptureCameraSessionCallback(NativeCamera owner)
+            {
+                this.owner = owner ?? throw new System.ArgumentNullException("owner");
+            }
+
+            public override void OnConfigured(CameraCaptureSession session)
+            {
+                if (owner.mCameraDevice == null)
+                {
+                    owner.CapturingStill = false;
+                    return;
+                }
+                owner.CaptureSession = session;
+                owner.DoActualStillCapture();
+            }
+
+            public override void OnConfigureFailed(CameraCaptureSession session)
+            {
+                System.Diagnostics.Debug.WriteLine("[StillCapture] Session configuration FAILED");
+                owner.CapturingStill = false;
+                owner.OnCaptureError(new System.Exception("Still capture session configuration failed"));
+            }
+        }
+
         public class CameraCaptureSessionCallback : CameraCaptureSession.StateCallback
         {
             private readonly NativeCamera owner;
