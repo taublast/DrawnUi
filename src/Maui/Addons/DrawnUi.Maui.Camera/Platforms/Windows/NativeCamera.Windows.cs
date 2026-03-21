@@ -598,6 +598,15 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         _flashSupported = _mediaCapture.VideoDeviceController.FlashControl.Supported;
         Debug.WriteLine($"[NativeCameraWindows] Flash supported: {_flashSupported}");
 
+        // Apply optical image stabilization if supported
+        var oisControl = _mediaCapture.VideoDeviceController.OpticalImageStabilizationControl;
+        if (oisControl.Supported)
+        {
+            oisControl.Mode = FormsControl.VideoStabilization
+                ? Windows.Media.Devices.OpticalImageStabilizationMode.On
+                : Windows.Media.Devices.OpticalImageStabilizationMode.Off;
+        }
+
         //Debug.WriteLine("[NativeCameraWindows] Setting up frame reader...");
         await SetupFrameReader();
         Debug.WriteLine("[NativeCameraWindows] Frame reader setup completed");

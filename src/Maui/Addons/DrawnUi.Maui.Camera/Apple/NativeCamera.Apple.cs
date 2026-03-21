@@ -552,6 +552,14 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         _videoOrientation = videoConnection.VideoOrientation;
                         System.Diagnostics.Debug.WriteLine($"[CAMERA SETUP] Initial video orientation: {_videoOrientation}");
                     }
+
+                    // Apply video stabilization
+                    if (videoConnection != null && videoConnection.SupportsVideoStabilization)
+                    {
+                        videoConnection.PreferredVideoStabilizationMode = FormsControl.VideoStabilization
+                            ? AVCaptureVideoStabilizationMode.Auto
+                            : AVCaptureVideoStabilizationMode.Off;
+                    }
                 }
                 else
                 {

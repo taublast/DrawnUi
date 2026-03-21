@@ -286,6 +286,24 @@ public partial class SkiaCamera : SkiaControl
         set { SetValue(AudioCodecIndexProperty, value); }
     }
 
+    public static readonly BindableProperty VideoStabilizationProperty = BindableProperty.Create(
+        nameof(VideoStabilization),
+        typeof(bool),
+        typeof(SkiaCamera),
+        false);
+
+    /// <summary>
+    /// Whether to enable hardware/platform video stabilization. Default is false.
+    /// On iOS uses AVCaptureVideoStabilizationMode.Auto, on Android uses ControlVideoStabilizationMode.On,
+    /// on Windows uses OpticalImageStabilizationControl if supported.
+    /// Note: stabilization may slightly crop the field of view.
+    /// </summary>
+    public bool VideoStabilization
+    {
+        get { return (bool)GetValue(VideoStabilizationProperty); }
+        set { SetValue(VideoStabilizationProperty, value); }
+    }
+
     public static readonly BindableProperty EnableAudioRecordingProperty = BindableProperty.Create(
         nameof(EnableAudioRecording),
         typeof(bool),

@@ -1983,8 +1983,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         try
         {
             mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
-            // Ensure consistent FOV: disable video stabilization for preview
-            // try { mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode, (int)ControlVideoStabilizationMode.Off); } catch { }
+            try { mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode, FormsControl.VideoStabilization ? (int)ControlVideoStabilizationMode.On : (int)ControlVideoStabilizationMode.Off); } catch { }
 
             // Apply current flash mode to preview request builder
             if (mFlashSupported)
@@ -2110,9 +2109,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             // WE ARE RECORDING !!!
             mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
-
-            // Disable video stabilization for consistent FOV
-            //   try { mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode, (int)ControlVideoStabilizationMode.Off); } catch { }
+            try { mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode, FormsControl.VideoStabilization ? (int)ControlVideoStabilizationMode.On : (int)ControlVideoStabilizationMode.Off); } catch { }
 
             // Apply flash mode
             if (mFlashSupported)
@@ -3220,16 +3217,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             // Create capture request for video recording
             mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Record);
-            // Ensure consistent FOV during recording: explicitly disable video stabilization
-            //try
-            //{
-            //    mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode,
-            //        (int)ControlVideoStabilizationMode.Off);
-            //}
-            //catch
-            //{
-
-            //}
+            try { mPreviewRequestBuilder.Set(CaptureRequest.ControlVideoStabilizationMode, FormsControl.VideoStabilization ? (int)ControlVideoStabilizationMode.On : (int)ControlVideoStabilizationMode.Off); } catch { }
 
             mPreviewRequestBuilder.AddTarget(previewSurface);
             mPreviewRequestBuilder.AddTarget(recorderSurface);
