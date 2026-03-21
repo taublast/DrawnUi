@@ -1145,7 +1145,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
 
         connection.PreferredVideoStabilizationMode = FormsControl.VideoStabilization
-            ? AVCaptureVideoStabilizationMode.Auto
+              ? AVCaptureVideoStabilizationMode.Standard
             : AVCaptureVideoStabilizationMode.Off;
     }
 
