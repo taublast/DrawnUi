@@ -201,33 +201,13 @@ namespace DrawnUi.Views
 
         protected virtual void DisposePlatform()
         {
-            Super.OnFrame -= OnChoreographer;
+            Super.OnFrame -= OnFrame;
         }
-
-        object lockFrame = new();
-
-        private void OnChoreographer(object sender, EventArgs e)
-        {
-            //lock (lockFrame)
-            {
-                if (CheckCanDraw())
-                {
-                    if (NeedCheckParentVisibility)
-                        CheckElementVisibility(this);
-
-                    if (CanDraw)
-                    {
-                        CanvasView.Update();
-                    }
-                }
-            }
-        }
-
 
         public virtual void SetupRenderingLoop()
         {
-            Super.OnFrame -= OnChoreographer;
-            Super.OnFrame += OnChoreographer;
+            Super.OnFrame -= OnFrame;
+            Super.OnFrame += OnFrame;
         }
 
         protected virtual void PlatformHardwareAccelerationChanged()

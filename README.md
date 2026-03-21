@@ -36,12 +36,10 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 
 ---
 
-## 🆕 What's new for 1.9.4.1
+## 🆕 What's new for 1.9.5.1
 
-* Added virtual `CreateHitRect` for overriding hitboxes of all controls.
-* `AnimateRangeAsync` signature change, fix cancellation
-* `SkiaCamera`: fix Facing, add `OnRawFrameAcquired`, `TryGetMLFrame` methods.
-* Using next version of gestures nuget.
+* Fix for proper use of `IsHiddenInViewTree` to stop rendering hidden canvases along the App.
+* `SkiaCamera` optimizations and fixes for better performance and stability.
 * Minor fixes and optimizations.
 
 ## 💡 Hint of the Day

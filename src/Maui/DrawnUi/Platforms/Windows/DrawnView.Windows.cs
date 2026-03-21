@@ -191,8 +191,8 @@ namespace DrawnUi.Views
         public virtual void SetupRenderingLoop()
         {
 #if !LEGACY
-            Super.OnFrame -= OnSuperFrame;
-            Super.OnFrame += OnSuperFrame;
+            Super.OnFrame -= OnFrame;
+            Super.OnFrame += OnFrame;
 #endif
         }
 
@@ -245,26 +245,10 @@ namespace DrawnUi.Views
         }
 #endif
 
-        private void OnSuperFrame(object sender, EventArgs e)
-        {
-            if (NeedCheckParentVisibility)
-            {
-                CheckElementVisibility(this);
-            }
-
-            if (CheckCanDraw())
-            {
-                if (CanDraw && !IsHiddenInViewTree)
-                {
-                    CanvasView.Update();
-                }
-            }
-        }
-
         protected virtual void DisposePlatform()
         {
             InitFrameworkPlatform(false); // Unsubscribe from rendering
-            Super.OnFrame -= OnSuperFrame;
+            Super.OnFrame -= OnFrame;
         }
     }
 }

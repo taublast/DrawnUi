@@ -346,6 +346,15 @@ namespace DrawnUi.Views
 
         }
 
+        public override void MovedToWindow()
+        {
+            base.MovedToWindow();
+            if (Window == null)
+            {
+                _preRenderingAttempted = false;
+            }
+        }
+
         // ── Texture management ───────────────────────────────────────────────────
 
         /// <summary>

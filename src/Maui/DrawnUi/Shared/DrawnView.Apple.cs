@@ -208,24 +208,7 @@ public partial class DrawnView
     {
         Super.OnFrame -= OnFrame;
         Super.OnFrame += OnFrame;
-    }
-
-    private void OnFrame(object sender, EventArgs e)
-    {
-        if (CheckCanDraw())
-        {
-            if (NeedCheckParentVisibility)
-            {
-                CheckElementVisibility(this);
-            }
-
-            if (CanDraw)
-            {
-                CanvasView.Update();
-            }
-
-        }
-    }
+    } 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected void UpdatePlatform()

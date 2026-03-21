@@ -2117,21 +2117,39 @@ namespace DrawnUi.Views
         }
 
         /// <summary>
-        /// Indicates that it is allowed to be rendered by engine, internal use
+        /// Indicates that it is allowed to be rendered by engine, internal use. Will check IsHiddenInViewTree.
         /// </summary>
         /// <returns></returns>
         public bool CanDraw
         {
             get
             {
-                var canRenderOffScreen = true;// !IsHiddenInViewTree || CanRenderOffScreen;
+                var canRenderOffScreen = !IsHiddenInViewTree || CanRenderOffScreen;
                 return CanvasView != null && !IsDisposed && IsVisible && Handler != null && canRenderOffScreen;
             }
         }
 
+        private void OnFrame(object sender, EventArgs e)
+        {
+#if ONPLATFORM
+            if (NeedCheckParentVisibility)
+            {
+                CheckElementVisibility(this);
+            }
+
+            if (CheckCanDraw())
+            {
+                if (CanDraw)
+                {
+                    CanvasView.Update();
+                }
+            }
+#endif
+        }
+
         /// <summary>
         /// Indicates that view is either hidden or offscreen.
-        /// This disables rendering if you don't set CanRenderOffScreen to true
+        /// This disables rendering. If you don't set CanRenderOffScreen to true
         /// </summary>
         public bool IsHiddenInViewTree
         {
@@ -2140,18 +2158,37 @@ namespace DrawnUi.Views
             {
                 if (value != _stopRendering)
                 {
-                    _stopRendering = value;
-                    OnCanRenderChanged(!value);
-                    if (value)
-                    {
-                        Debug.WriteLine($"[DrawnView] INactive {Tag}");
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"[DrawnView] ACTIVE {Tag}");
-                    }
+                    var final = OnChangingtIsHiddenInViewTree(value);
+                    _stopRendering = final;
+                    OnCanRenderChanged(!final);
                 }
             }
+        }
+
+        /// <summary>
+        /// WIll set value, indicates that view is either hidden or offscreen.
+        /// This disables rendering if CanRenderOffScreen is false.
+        /// You can override this for a specific view to not stop rendering
+        /// even if it is hidden in view tree, for example for debugging purposes
+        /// or if you want to render something only on screen shot or something like that.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        protected virtual bool OnChangingtIsHiddenInViewTree(bool value)
+        {
+            if (value)
+            {
+                Debug.WriteLine($"[DrawnView] INactive {Tag}");
+            }
+            else
+            {
+                Debug.WriteLine($"[DrawnView] ACTIVE {Tag}");
+                if (IsUsingHardwareAcceleration)
+                {
+                    Update(); //need rebuild as GPU memory was corrupt maybe
+                }
+            }
+            return value;
         }
 
         bool _stopRendering;
