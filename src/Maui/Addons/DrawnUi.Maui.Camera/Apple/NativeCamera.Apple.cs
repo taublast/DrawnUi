@@ -528,6 +528,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 if (_session.CanAddOutput(_stillImageOutput))
                 {
                     _session.AddOutput(_stillImageOutput);
+                    ApplyStillImageStabilization();
                 }
                 else
                 {
@@ -553,13 +554,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         System.Diagnostics.Debug.WriteLine($"[CAMERA SETUP] Initial video orientation: {_videoOrientation}");
                     }
 
-                    // Apply video stabilization
-                    if (videoConnection != null && videoConnection.SupportsVideoStabilization)
-                    {
-                        videoConnection.PreferredVideoStabilizationMode = FormsControl.VideoStabilization
-                            ? AVCaptureVideoStabilizationMode.Auto
-                            : AVCaptureVideoStabilizationMode.Off;
-                    }
+                    ApplyVideoStabilization(videoConnection, "preview");
                 }
                 else
                 {
@@ -1120,6 +1115,40 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
     }
 
+    private void ApplyStillImageStabilization()
+    {
+        if (_stillImageOutput == null)
+            return;
+
+        try
+        {
+            _stillImageOutput.AutomaticallyEnablesStillImageStabilizationWhenAvailable = FormsControl.VideoStabilization;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[NativeCamera.Apple] Failed to apply still image stabilization: {ex.Message}");
+        }
+    }
+
+    private void ApplyVideoStabilization(AVCaptureConnection connection, string target)
+    {
+        if (connection == null)
+        {
+            Debug.WriteLine($"[NativeCamera.Apple] No {target} connection available for stabilization");
+            return;
+        }
+
+        if (!connection.SupportsVideoStabilization)
+        {
+            Debug.WriteLine($"[NativeCamera.Apple] {target} connection does not support video stabilization");
+            return;
+        }
+
+        connection.PreferredVideoStabilizationMode = FormsControl.VideoStabilization
+            ? AVCaptureVideoStabilizationMode.Auto
+            : AVCaptureVideoStabilizationMode.Off;
+    }
+
     public void SetZoom(float zoom)
     {
         if (_deviceInput?.Device == null)
@@ -1419,6 +1448,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 var deviceRotation = FormsControl.DeviceRotation;
 
                 var videoConnection = _stillImageOutput.ConnectionFromMediaType(AVMediaTypes.Video.GetConstant());
+                ApplyStillImageStabilization();
                 var sampleBuffer = await _stillImageOutput.CaptureStillImageTaskAsync(videoConnection);
                 var jpegData = AVCaptureStillImageOutput.JpegStillToNSData(sampleBuffer);
 
@@ -3028,8 +3058,11 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         if (videoDataConnection != null)
         {
             videoDataConnection.Enabled = true;
+            ApplyVideoStabilization(videoDataConnection, "preview");
             Debug.WriteLine($"[NativeCamera.Apple] Video data output connection enabled: {videoDataConnection.Enabled}, active: {videoDataConnection.Active}");
         }
+
+        ApplyVideoStabilization(_movieFileOutput.ConnectionFromMediaType(AVMediaTypes.Video.GetConstant()), "movie");
 
         _session.CommitConfiguration();
 
@@ -3523,6 +3556,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 videoConnection.VideoOrientation = orientation;
                 Debug.WriteLine($"[NativeCamera.Apple] Set video orientation to: {orientation} (DeviceRotation: {FormsControl.DeviceRotation})");
             }
+
+            ApplyVideoStabilization(videoConnection, "movie");
 
             // Start recording
             _movieFileOutput.StartRecordingToOutputFile(_currentVideoUrl, this);

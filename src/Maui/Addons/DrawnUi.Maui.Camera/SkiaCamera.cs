@@ -290,7 +290,8 @@ public partial class SkiaCamera : SkiaControl
         nameof(VideoStabilization),
         typeof(bool),
         typeof(SkiaCamera),
-        false);
+            false,
+            propertyChanged: NeedRestart);
 
     /// <summary>
     /// Whether to enable hardware/platform video stabilization. Default is false.
