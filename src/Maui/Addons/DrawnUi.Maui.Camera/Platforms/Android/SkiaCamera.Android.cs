@@ -469,20 +469,39 @@ public partial class SkiaCamera
             System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Pre-recorded file has {preExtractor.TrackCount} tracks");
             System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Live recording file has {liveExtractor.TrackCount} tracks");
 
-            // CRITICAL: Use original format directly - duration metadata doesn't cause issues with sequential writes
-            int sharedVideoTrackIndex = -1;
+            // Add tracks from pre-recorded file first, keyed by MIME type for live dedup.
+            var mimeToOutputTrack = new Dictionary<string, int>();
             for (int i = 0; i < preExtractor.TrackCount; i++)
             {
                 var sourceFormat = preExtractor.GetTrackFormat(i);
-
-                sharedVideoTrackIndex = muxer.AddTrack(sourceFormat);
-                preTrackMap[i] = sharedVideoTrackIndex;
-                liveTrackMap[i] = sharedVideoTrackIndex;  // Both files write to same track
-
+                string mime = sourceFormat.GetString(Android.Media.MediaFormat.KeyMime) ?? "";
+                int outTrack = muxer.AddTrack(sourceFormat);
+                preTrackMap[i] = outTrack;
+                mimeToOutputTrack[mime] = outTrack;
                 preExtractor.SelectTrack(i);
-                liveExtractor.SelectTrack(i);
+                System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Pre-rec track {i} ('{mime}') → output track {outTrack}");
+            }
 
-                System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Added track {sharedVideoTrackIndex} - both pre-rec and live will write to same track");
+            // Map live tracks to existing output tracks by MIME type.
+            // If the live file has a track type absent from the pre-rec file (e.g. audio when
+            // pre-rec had no audio), add it as a new output track so it isn't silently dropped.
+            for (int i = 0; i < liveExtractor.TrackCount; i++)
+            {
+                var liveFormat = liveExtractor.GetTrackFormat(i);
+                string mime = liveFormat.GetString(Android.Media.MediaFormat.KeyMime) ?? "";
+                if (mimeToOutputTrack.TryGetValue(mime, out int existingTrack))
+                {
+                    liveTrackMap[i] = existingTrack;
+                }
+                else
+                {
+                    int outTrack = muxer.AddTrack(liveFormat);
+                    liveTrackMap[i] = outTrack;
+                    mimeToOutputTrack[mime] = outTrack;
+                    System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Live-only track {i} ('{mime}') → new output track {outTrack}");
+                }
+                liveExtractor.SelectTrack(i);
+                System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Live track {i} ('{mime}') → output track {liveTrackMap[i]}");
             }
 
             // CRITICAL: Seek both extractors to the beginning before reading!
