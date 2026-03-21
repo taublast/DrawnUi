@@ -598,14 +598,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         _flashSupported = _mediaCapture.VideoDeviceController.FlashControl.Supported;
         Debug.WriteLine($"[NativeCameraWindows] Flash supported: {_flashSupported}");
 
-        // Apply optical image stabilization if supported
-        var oisControl = _mediaCapture.VideoDeviceController.OpticalImageStabilizationControl;
-        if (oisControl.Supported)
-        {
-            oisControl.Mode = FormsControl.VideoStabilization
-                ? Windows.Media.Devices.OpticalImageStabilizationMode.On
-                : Windows.Media.Devices.OpticalImageStabilizationMode.Off;
-        }
+            ApplyOpticalImageStabilization("camera initialization");
 
         //Debug.WriteLine("[NativeCameraWindows] Setting up frame reader...");
         await SetupFrameReader();
@@ -2005,6 +1998,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             // Set flash mode for capture
             SetFlashModeForCapture();
 
+                ApplyOpticalImageStabilization("still capture");
+
             // Create image encoding properties using camera's actual capabilities
             var imageProperties = ImageEncodingProperties.CreateJpeg();
 
@@ -2390,7 +2385,15 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         {
             // Fallback to standard quality
             var fallbackProfile = MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p);
-                ApplyOpticalImageStabilization("camera initialization");
+
+                if (!FormsControl.EnableAudioRecording)
+                {
+                    fallbackProfile.Audio = null;
+                }
+
+                return fallbackProfile;
+            }
+
     /// <summary>
     /// Timer callback for video recording progress updates
     /// </summary>
@@ -2401,7 +2404,6 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
         var elapsed = DateTime.Now - _recordingStartTime;
         RecordingProgress?.Invoke(elapsed);
-            ApplyOpticalImageStabilization("still capture");
     }
 
 
