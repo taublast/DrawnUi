@@ -2393,6 +2393,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
                 return fallbackProfile;
             }
+    }
 
     /// <summary>
     /// Timer callback for video recording progress updates
