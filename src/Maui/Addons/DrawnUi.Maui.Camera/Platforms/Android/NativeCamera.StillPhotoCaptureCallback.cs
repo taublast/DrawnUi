@@ -29,6 +29,25 @@ namespace DrawnUi.Camera
 
             public override void OnCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result)
             {
+                // Count every hardware frame — fires on camera system thread regardless of surface (GPU or ImageReader)
+                _camera._rawFrameCount++;
+                _camera._rawFrameCountTotal++;
+                var now = System.Diagnostics.Stopwatch.GetTimestamp();
+                if (_camera._rawFrameLastReportTime == 0)
+                {
+                    _camera._rawFrameLastReportTime = now;
+                }
+                else
+                {
+                    var elapsedTicks = now - _camera._rawFrameLastReportTime;
+                    var elapsedSeconds = (double)elapsedTicks / System.Diagnostics.Stopwatch.Frequency;
+                    if (elapsedSeconds >= 1.0)
+                    {
+                        _camera._rawFrameFps = _camera._rawFrameCount / elapsedSeconds;
+                        _camera._rawFrameCount = 0;
+                        _camera._rawFrameLastReportTime = now;
+                    }
+                }
                 Process(result);
             }
 

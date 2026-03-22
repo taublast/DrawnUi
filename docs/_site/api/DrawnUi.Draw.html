@@ -461,6 +461,14 @@ Similar to SliderTrail but optimized for progress display.</p>
       <dd></dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="DrawnUi.Draw.SKPaintExtensions.html">SKPaintExtensions</a></dt>
+      <dd><p>Guarded setters for SKPaint properties. Each method compares a managed shadow value
+before calling the native P/Invoke setter, eliminating redundant interop when the
+value has not changed between frames.
+Methods are prefixed with &quot;Guard&quot; to avoid conflicts with SkiaSharp's own instance methods.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="DrawnUi.Draw.SaturationEffect.html">SaturationEffect</a></dt>
       <dd></dd>
     </dl>

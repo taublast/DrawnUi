@@ -286,6 +286,25 @@ public partial class SkiaCamera : SkiaControl
         set { SetValue(AudioCodecIndexProperty, value); }
     }
 
+    public static readonly BindableProperty VideoStabilizationProperty = BindableProperty.Create(
+        nameof(VideoStabilization),
+        typeof(bool),
+        typeof(SkiaCamera),
+            false,
+            propertyChanged: NeedRestart);
+
+    /// <summary>
+    /// Whether to enable hardware/platform video stabilization. Default is false.
+    /// On iOS uses AVCaptureVideoStabilizationMode.Auto, on Android uses ControlVideoStabilizationMode.On,
+    /// on Windows uses OpticalImageStabilizationControl if supported.
+    /// Note: stabilization may slightly crop the field of view.
+    /// </summary>
+    public bool VideoStabilization
+    {
+        get { return (bool)GetValue(VideoStabilizationProperty); }
+        set { SetValue(VideoStabilizationProperty, value); }
+    }
+
     public static readonly BindableProperty EnableAudioRecordingProperty = BindableProperty.Create(
         nameof(EnableAudioRecording),
         typeof(bool),
@@ -1915,6 +1934,11 @@ public partial class SkiaCamera : SkiaControl
         _captureVideoEncoder?.Dispose();
         _captureVideoEncoder = null;
 
+        _diagBgPaint?.Dispose();
+        _diagBgPaint = null;
+        _diagTextPaint?.Dispose();
+        _diagTextPaint = null;
+
         NativeControl?.Dispose();
         NativeControl = null;
 
@@ -2862,6 +2886,22 @@ public partial class SkiaCamera : SkiaControl
     private DateTime _diagStartTime;
     private int _diagEncWidth = 0, _diagEncHeight = 0;
     private long _diagBitrate = 0;
+    private long _diagHardwareDrops = 0;        // true drops: raw camera − cam delivered, accumulated
+    private long _diagRawFrameCountAtStart = 0; // snapshot of NativeCamera.RawFrameCount when recording started
+    private long _diagCamInputFrames = 0;       // frames that reached CalculateCameraInputFps()
+
+    // Pre-allocated diagnostic overlay paints — reused across frames to avoid per-frame GC pressure
+    private SKPaint _diagBgPaint;
+    private SKPaint _diagTextPaint;
+
+    // Cached diagnostic strings — rebuilt every N frames (values change at ~2Hz, no need to rebuild at 30fps)
+    private string _diagLine1;
+    private string _diagLine2;
+    private string _diagLine3;
+    private string _previewDiagLine1;
+    private string _previewDiagLine2;
+    private int _diagStringCounter = 0;
+    private const int DiagStringRebuildEvery = 15;
 
     #endregion
 
@@ -3166,26 +3206,35 @@ public partial class SkiaCamera : SkiaControl
 
                                 if (FrameProcessor != null || VideoDiagnosticsOn)
                                 {
-                                    // Apply rotation based on device orientation
                                     var rotation = GetActiveRecordingRotation();
-                                    canvas.Save();
-                                    ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+                                    var needsCheckpoint = FrameProcessor != null || (VideoDiagnosticsOn && rotation != 0);
+                                    var checkpoint = 0;
 
-                                    var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
-                                    var frame = new DrawableFrame
+                                    if (needsCheckpoint)
                                     {
-                                        Width = frameWidth,
-                                        Height = frameHeight,
-                                        Canvas = canvas,
-                                        Time = elapsed,
-                                        Scale = 1f
-                                    };
-                                    FrameProcessor?.Invoke(frame);
+                                        checkpoint = canvas.Save();
+                                        ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
+                                    }
+
+                                    if (FrameProcessor != null)
+                                    {
+                                        var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
+                                        var frame = new DrawableFrame
+                                        {
+                                            Width = frameWidth,
+                                            Height = frameHeight,
+                                            Canvas = canvas,
+                                            Time = elapsed,
+                                            Scale = 1f
+                                        };
+                                        FrameProcessor.Invoke(frame);
+                                    }
 
                                     if (VideoDiagnosticsOn)
                                         DrawDiagnostics(canvas, info.Width, info.Height);
 
-                                    canvas.Restore();
+                                    if (needsCheckpoint)
+                                        canvas.RestoreToCount(checkpoint);
                                 }
 
                                 var sw = System.Diagnostics.Stopwatch.StartNew();
@@ -3364,14 +3413,15 @@ public partial class SkiaCamera : SkiaControl
                     OnRawFrameAcquired(image, DeviceRotation);
                 }
 
-                // Apply PreviewProcessor if set — but skip when UseRecordingFramesForPreview is active
+                // Apply preview compositing when needed — but skip when UseRecordingFramesForPreview is active
                 // because the encoder preview already has FrameProcessor overlay baked in.
                 SKImage finalImage = image;
-                if (PreviewProcessor != null && !(UseRecordingFramesForPreview && (IsRecording || IsPreRecording)))
+                if (ShouldApplyPreviewEffects())
                 {
-                    var processed = ApplyPreviewProcessor(image);
+                    var processed = ApplyPreviewEffects(image);
                     if (processed != null)
                     {
+                        image.Dispose();   // source consumed, processed copy is the owner now
                         finalImage = processed;
                     }
                 }
@@ -3384,12 +3434,24 @@ public partial class SkiaCamera : SkiaControl
         }
     }
 
-    /// <summary>
-    /// Applies PreviewProcessor to the preview image and returns the composited result.
-    /// </summary>
-    private SKImage ApplyPreviewProcessor(SKImage source)
+    private bool ShouldApplyPreviewEffects()
     {
-        if (source == null || PreviewProcessor == null)
+        return UseRealtimeVideoProcessing
+               && !(UseRecordingFramesForPreview && (IsRecording || IsPreRecording))
+               && (PreviewProcessor != null || ShouldDrawPreviewDiagnostics());
+    }
+
+    private bool ShouldDrawPreviewDiagnostics()
+    {
+        return EnableCaptureDiagnostics && !IsRecording && !IsPreRecording;
+    }
+
+    /// <summary>
+    /// Applies lightweight preview diagnostics and PreviewProcessor to the preview image and returns the composited result.
+    /// </summary>
+    private SKImage ApplyPreviewEffects(SKImage source)
+    {
+        if (source == null)
             return null;
 
         try
@@ -3412,24 +3474,37 @@ public partial class SkiaCamera : SkiaControl
                 ? DateTime.Now - _captureVideoStartTime
                 : TimeSpan.Zero;
 
-            // Call PreviewProcessor with preview frame info
-            var frame = new DrawableFrame
+            if (PreviewProcessor != null)
             {
-                Width = width,
-                Height = height,
-                Canvas = canvas,
-                Time = elapsed,
-                IsPreview = true,
-                Scale = PreviewScale  // Use PreviewScale so user can match recording overlay
-            };
-            PreviewProcessor.Invoke(frame);
+                var checkpoint = canvas.Save();
+
+                // Call PreviewProcessor with preview frame info
+                var frame = new DrawableFrame
+                {
+                    Width = width,
+                    Height = height,
+                    Canvas = canvas,
+                    Time = elapsed,
+                    IsPreview = true,
+                    Scale = PreviewScale  // Use PreviewScale so user can match recording overlay
+                };
+                PreviewProcessor.Invoke(frame);
+
+                canvas.RestoreToCount(checkpoint);
+            }
+
+            if (ShouldDrawPreviewDiagnostics())
+            {
+                CalculatePreviewFps();
+                DrawPreviewDiagnostics(canvas, width, height);
+            }
 
             // Return composited image
             return surface.Snapshot();
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"[SkiaCamera] ApplyPreviewProcessor error: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"[SkiaCamera] ApplyPreviewEffects error: {ex.Message}");
             return null;
         }
     }
@@ -4083,8 +4158,10 @@ public partial class SkiaCamera : SkiaControl
 
     private double _diagReportFps;
     private double _diagInputReportFps;
+    private double _diagPreviewFps;
     private long _diagLastFrameTimestamp;
     private long _diagLastInputFrameTimestamp;
+    private long _diagLastPreviewTimestamp;
 
     private const double DiagFpsAlpha = 0.1; // EMA smoothing factor
 
@@ -4101,6 +4178,7 @@ public partial class SkiaCamera : SkiaControl
 
     private void CalculateCameraInputFps()
     {
+        System.Threading.Interlocked.Increment(ref _diagCamInputFrames);
         long now = Super.GetCurrentTimeNanos();
         if (_diagLastInputFrameTimestamp == 0) { _diagLastInputFrameTimestamp = now; return; }
         double elapsed = (now - _diagLastInputFrameTimestamp) / 1_000_000_000.0;
@@ -4116,6 +4194,30 @@ public partial class SkiaCamera : SkiaControl
         _diagReportFps = 0;
         _diagLastInputFrameTimestamp = 0;
         _diagInputReportFps = 0;
+        _diagLastPreviewTimestamp = 0;
+        _diagPreviewFps = 0;
+        _diagHardwareDrops = 0;
+        _diagRawFrameCountAtStart = 0;
+        _diagCamInputFrames = 0;
+        _diagStringCounter = 0;
+        _previewDiagLine1 = null;
+        _previewDiagLine2 = null;
+    }
+
+    private void CalculatePreviewFps()
+    {
+        long now = Super.GetCurrentTimeNanos();
+        if (_diagLastPreviewTimestamp == 0) { _diagLastPreviewTimestamp = now; return; }
+        double elapsed = (now - _diagLastPreviewTimestamp) / 1_000_000_000.0;
+        _diagLastPreviewTimestamp = now;
+        if (elapsed <= 0 || elapsed > 1.0)
+        {
+            _diagPreviewFps = 0;
+            return;
+        }
+
+        double fps = 1.0 / elapsed;
+        _diagPreviewFps = _diagPreviewFps <= 0 ? fps : DiagFpsAlpha * fps + (1.0 - DiagFpsAlpha) * _diagPreviewFps;
     }
 
     private DateTime _captureVideoTotalStartTime;
@@ -4124,7 +4226,7 @@ public partial class SkiaCamera : SkiaControl
     /// Draws diagnostic overlay on video frames showing FPS, dropped frames, encoder settings.
     /// Unified implementation with platform-specific data sources.
     /// </summary>
-    private void DrawDiagnostics(SKCanvas canvas, int width, int height)
+    protected virtual void DrawDiagnostics(SKCanvas canvas, int width, int height)
     {
         if (!EnableCaptureDiagnostics || canvas == null)
             return;
@@ -4150,6 +4252,13 @@ public partial class SkiaCamera : SkiaControl
         {
             backpressureDrops = appleEnc.BackpressureDroppedFrames;
         }
+#elif ANDROID
+        if (NativeControl is NativeCamera androidCam)
+        {
+            rawCamFps = androidCam.RawCameraFps;
+            // hw drops = raw frames since start − frames that reached our callback
+            _diagHardwareDrops = Math.Max(0, (androidCam.RawFrameCount - _diagRawFrameCountAtStart) - _diagCamInputFrames);
+        }
 #elif WINDOWS
         if (NativeControl is NativeCamera winCam)
         {
@@ -4157,54 +4266,111 @@ public partial class SkiaCamera : SkiaControl
         }
 #endif
 
-        // Format diagnostic text based on platform
-        string line1;
-#if IOS || MACCATALYST
-        // Apple format: show raw, encoder FPS, and both drop counters
-        line1 = rawCamFps > 0
-            ? $"raw: {rawCamFps:F1}  enc: {outputFps:F1} / {_targetFps}  drop: {_diagDroppedFrames} bp: {backpressureDrops}"
-            : $"FPS: {outputFps:F1} / {_targetFps}  drop: {_diagDroppedFrames} bp: {backpressureDrops}";
-#else
-        // Windows/Android format: show raw, camera input, and encoder output FPS
-        line1 = rawCamFps > 0
-            ? $"raw: {rawCamFps:F1}  cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}"
-            : $"cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}";
-#endif
-
-        string line2;
-#if IOS || MACCATALYST
-        line2 = $"submit: {_diagLastSubmitMs:F1} ms";
-#else
-        line2 = $"dropped: {_diagDroppedFrames}  submit: {_diagLastSubmitMs:F1} ms";
-#endif
-
-        double mbps = _diagBitrate > 0 ? _diagBitrate / 1_000_000.0 : 0.0;
-        string line3 = _diagEncWidth > 0 && _diagEncHeight > 0
-            ? $"rec: {_diagEncWidth}x{_diagEncHeight}@{_targetFps}  bitrate: {mbps:F1} Mbps"
-            : $"bitrate: {mbps:F1} Mbps";
-
-        // Common drawing code for all platforms
-        using var bgPaint = new SKPaint { Color = new SKColor(0, 0, 0, 140), IsAntialias = true };
-        using var textPaint = new SKPaint
+        // Rebuild diagnostic strings only every N frames — values change at ~2Hz, rebuilding at 30fps wastes GC budget
+        if (_diagStringCounter++ % DiagStringRebuildEvery == 0)
         {
-            Color = SKColors.White,
-            IsAntialias = true,
-            TextSize = Math.Max(14, width / 60f)
-        };
+#if IOS || MACCATALYST
+            // Apple format: show raw, encoder FPS, and both drop counters
+            _diagLine1 = rawCamFps > 0
+                ? $"raw: {rawCamFps:F1}  enc: {outputFps:F1} / {_targetFps}  drop: {_diagDroppedFrames} bp: {backpressureDrops}"
+                : $"FPS: {outputFps:F1} / {_targetFps}  drop: {_diagDroppedFrames} bp: {backpressureDrops}";
+            _diagLine2 = $"submit: {_diagLastSubmitMs:F1} ms";
+#elif ANDROID
+            // Android format: show raw, camera input, and encoder output FPS
+            // drop = frames lost in ImageReader before our callback (raw − cam)
+            _diagLine1 = rawCamFps > 0
+                ? $"raw: {rawCamFps:F1}  cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}"
+                : $"cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}";
+            _diagLine2 = $"drop: {_diagHardwareDrops}  submit: {_diagLastSubmitMs:F1} ms";
+#else
+            _diagLine1 = rawCamFps > 0
+                ? $"raw: {rawCamFps:F1}  cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}"
+                : $"cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}";
+            _diagLine2 = $"dropped: {_diagDroppedFrames}  submit: {_diagLastSubmitMs:F1} ms";
+#endif
+
+            double mbps = _diagBitrate > 0 ? _diagBitrate / 1_000_000.0 : 0.0;
+            _diagLine3 = _diagEncWidth > 0 && _diagEncHeight > 0
+                ? $"rec: {_diagEncWidth}x{_diagEncHeight}@{_targetFps}  bitrate: {mbps:F1} Mbps"
+                : $"bitrate: {mbps:F1} Mbps";
+        }
+
+        string line1 = _diagLine1 ?? string.Empty;
+        string line2 = _diagLine2 ?? string.Empty;
+        string line3 = _diagLine3 ?? string.Empty;
+
+        DrawDiagnosticsOverlay(canvas, width, line1, line2, line3);
+    }
+
+    protected virtual void DrawPreviewDiagnostics(SKCanvas canvas, int width, int height)
+    {
+        if (!ShouldDrawPreviewDiagnostics() || canvas == null)
+            return;
+
+        double rawCamFps = 0;
+
+#if IOS || MACCATALYST
+        if (NativeControl is NativeCamera nativeCam)
+        {
+            rawCamFps = nativeCam.RawCameraFps;
+        }
+#elif ANDROID
+        if (NativeControl is NativeCamera androidCam)
+        {
+            rawCamFps = androidCam.RawCameraFps;
+        }
+#elif WINDOWS
+        if (NativeControl is NativeCamera winCam)
+        {
+            rawCamFps = winCam.RawCameraFps;
+        }
+#endif
+
+        if (_diagStringCounter++ % DiagStringRebuildEvery == 0)
+        {
+            _previewDiagLine1 = rawCamFps > 0
+                ? $"raw: {rawCamFps:F1}  prev: {_diagPreviewFps:F1}"
+                : $"prev: {_diagPreviewFps:F1}";
+            _previewDiagLine2 = $"preview: {width}x{height}  scale: {PreviewScale:F2}";
+        }
+
+        DrawDiagnosticsOverlay(canvas, width, _previewDiagLine1 ?? string.Empty, _previewDiagLine2 ?? string.Empty);
+    }
+
+    private void DrawDiagnosticsOverlay(SKCanvas canvas, int width, params string[] lines)
+    {
+        if (canvas == null || lines == null || lines.Length == 0)
+            return;
+
+        _diagBgPaint ??= new SKPaint { Color = new SKColor(0, 0, 0, 140), IsAntialias = true };
+        _diagTextPaint ??= new SKPaint { Color = SKColors.White, IsAntialias = true };
+        _diagTextPaint.TextSize = Math.Max(14, width / 60f);
+        var bgPaint = _diagBgPaint;
+        var textPaint = _diagTextPaint;
+
+        var visibleLines = lines.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+        if (visibleLines.Length == 0)
+            return;
 
         var pad = 8f;
-        var y1 = pad + textPaint.TextSize;
-        var y2 = y1 + textPaint.TextSize + 4f;
-        var y3 = y2 + textPaint.TextSize + 4f;
-        var maxTextWidth = Math.Max(textPaint.MeasureText(line1),
-            Math.Max(textPaint.MeasureText(line2), textPaint.MeasureText(line3)));
-        var rect = new SKRect(pad, pad, pad + maxTextWidth + pad, y3 + pad);
+        var lineHeight = textPaint.TextSize + 4f;
+        var maxTextWidth = 0f;
+        for (int i = 0; i < visibleLines.Length; i++)
+        {
+            maxTextWidth = Math.Max(maxTextWidth, textPaint.MeasureText(visibleLines[i]));
+        }
+
+        var bottom = pad + visibleLines.Length * textPaint.TextSize + Math.Max(0, visibleLines.Length - 1) * 4f + pad;
+        var rect = new SKRect(pad, pad, pad + maxTextWidth + pad, bottom);
 
         canvas.Save();
         canvas.DrawRoundRect(rect, 6, 6, bgPaint);
-        canvas.DrawText(line1, pad * 1.5f, y1, textPaint);
-        canvas.DrawText(line2, pad * 1.5f, y2, textPaint);
-        canvas.DrawText(line3, pad * 1.5f, y3, textPaint);
+        for (int i = 0; i < visibleLines.Length; i++)
+        {
+            var y = pad + textPaint.TextSize + i * lineHeight;
+            canvas.DrawText(visibleLines[i], pad * 1.5f, y, textPaint);
+        }
+
         canvas.Restore();
     }
 

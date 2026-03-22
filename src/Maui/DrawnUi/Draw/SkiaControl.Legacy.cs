@@ -4100,21 +4100,14 @@ namespace AppoMobi.Maui.DrawnUi.Draw
 
                 _paintWithOpacity ??= new SKPaint();
 
-                if (IsDistorted)
-                {
-                    _paintWithOpacity.IsAntialias = true;
-                    _paintWithOpacity.FilterQuality = SKFilterQuality.Medium;
-                }
-                else
-                {
-                    _paintWithOpacity.IsAntialias = false;
-                    _paintWithOpacity.FilterQuality = SKFilterQuality.None;
-                }
+                _paintWithOpacity.GuardIsAntialias(ref _paintWithOpacityIsAntialias, IsDistorted);
+                _paintWithOpacity.GuardFilterQuality(ref _paintWithOpacityFilterQuality,
+                    IsDistorted ? SKFilterQuality.Medium : SKFilterQuality.None);
 
                 if (applyOpacity || CustomizeLayerPaint != null)
                 {
                     var alpha = (byte)(0xFF / 1.0 * Opacity);
-                    _paintWithOpacity.Color = SKColors.White.WithAlpha(alpha);
+                    _paintWithOpacity.GuardColor(ref _paintWithOpacityColor, SKColors.White.WithAlpha(alpha));
 
                     if (CustomizeLayerPaint != null)
                     {
@@ -4618,9 +4611,9 @@ namespace AppoMobi.Maui.DrawnUi.Draw
                         _paintWithOpacity = new SKPaint();
                     }
 
-                    _paintWithOpacity.Color = SKColors.White;
-                    _paintWithOpacity.IsAntialias = true;
-                    _paintWithOpacity.FilterQuality = SKFilterQuality.Medium;
+                    _paintWithOpacity.GuardColor(ref _paintWithOpacityColor, SKColors.White);
+                    _paintWithOpacity.GuardIsAntialias(ref _paintWithOpacityIsAntialias, true);
+                    _paintWithOpacity.GuardFilterQuality(ref _paintWithOpacityFilterQuality, SKFilterQuality.Medium);
 
                     cache.Draw(ctx.Canvas, destination, _paintWithOpacity);
                 });

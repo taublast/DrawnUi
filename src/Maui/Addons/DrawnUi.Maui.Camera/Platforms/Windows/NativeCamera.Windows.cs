@@ -598,6 +598,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         _flashSupported = _mediaCapture.VideoDeviceController.FlashControl.Supported;
         Debug.WriteLine($"[NativeCameraWindows] Flash supported: {_flashSupported}");
 
+            ApplyOpticalImageStabilization("camera initialization");
+
         //Debug.WriteLine("[NativeCameraWindows] Setting up frame reader...");
         await SetupFrameReader();
         Debug.WriteLine("[NativeCameraWindows] Frame reader setup completed");
@@ -1522,6 +1524,33 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         return _flashSupported; // Windows supports auto flash when flash is available
     }
 
+    private void ApplyOpticalImageStabilization(string target)
+    {
+        if (_mediaCapture == null)
+            return;
+
+        try
+        {
+            var oisControl = _mediaCapture.VideoDeviceController.OpticalImageStabilizationControl;
+            if (oisControl != null && oisControl.Supported)
+            {
+                oisControl.Mode = FormsControl.VideoStabilization
+                    ? Windows.Media.Devices.OpticalImageStabilizationMode.On
+                    : Windows.Media.Devices.OpticalImageStabilizationMode.Off;
+
+                Debug.WriteLine($"[NativeCameraWindows] Applied optical image stabilization {(FormsControl.VideoStabilization ? "On" : "Off")} for {target}");
+            }
+            else if (FormsControl.VideoStabilization)
+            {
+                Debug.WriteLine($"[NativeCameraWindows] Optical image stabilization is not supported for {target}");
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] ApplyOpticalImageStabilization error for {target}: {e}");
+        }
+    }
+
     private void SetFlashModeForCapture()
     {
         if (!_flashSupported || _mediaCapture == null)
@@ -1969,6 +1998,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             // Set flash mode for capture
             SetFlashModeForCapture();
 
+                ApplyOpticalImageStabilization("still capture");
+
             // Create image encoding properties using camera's actual capabilities
             var imageProperties = ImageEncodingProperties.CreateJpeg();
 
@@ -2354,12 +2385,14 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         {
             // Fallback to standard quality
             var fallbackProfile = MediaEncodingProfile.CreateMp4(VideoEncodingQuality.HD1080p);
-            if (!FormsControl.EnableAudioRecording)
-            {
-                fallbackProfile.Audio = null;
+
+                if (!FormsControl.EnableAudioRecording)
+                {
+                    fallbackProfile.Audio = null;
+                }
+
+                return fallbackProfile;
             }
-            return fallbackProfile;
-        }
     }
 
     /// <summary>
@@ -2405,6 +2438,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
             _currentVideoFile = await cacheFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
             Debug.WriteLine($"[NativeCameraWindows] Starting video recording to: {_currentVideoFile.Path}");
+
+            ApplyOpticalImageStabilization("video recording");
 
             // Start recording to storage file
             await _mediaCapture.StartRecordToStorageFileAsync(profile, _currentVideoFile);

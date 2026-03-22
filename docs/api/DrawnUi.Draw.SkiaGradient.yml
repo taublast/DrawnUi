@@ -33,6 +33,7 @@ items:
   - DrawnUi.Draw.SkiaGradient.TileModeProperty
   - DrawnUi.Draw.SkiaGradient.Type
   - DrawnUi.Draw.SkiaGradient.TypeProperty
+  - DrawnUi.Draw.SkiaGradient.Version
   langs:
   - csharp
   - vb
@@ -220,6 +221,40 @@ items:
   nameWithType.vb: SkiaGradient.LinearGradientAngleToPoints(Double)
   fullName.vb: DrawnUi.Draw.SkiaGradient.LinearGradientAngleToPoints(Double)
   name.vb: LinearGradientAngleToPoints(Double)
+- uid: DrawnUi.Draw.SkiaGradient.Version
+  commentId: P:DrawnUi.Draw.SkiaGradient.Version
+  id: Version
+  parent: DrawnUi.Draw.SkiaGradient
+  langs:
+  - csharp
+  - vb
+  name: Version
+  nameWithType: SkiaGradient.Version
+  fullName: DrawnUi.Draw.SkiaGradient.Version
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Internals/Models/SkiaGradient.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Version
+    path: ../src/Shared/Internals/Models/SkiaGradient.cs
+    startLine: 108
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Incremented whenever any gradient property changes. Consumers can cache shaders
+
+    keyed on this version to avoid rebuilding native objects every frame.
+  example: []
+  syntax:
+    content: public int Version { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Version As Integer
+  overload: DrawnUi.Draw.SkiaGradient.Version*
 - uid: DrawnUi.Draw.SkiaGradient.AngleProperty
   commentId: F:DrawnUi.Draw.SkiaGradient.AngleProperty
   id: AngleProperty
@@ -238,7 +273,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AngleProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 112
+    startLine: 120
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -265,7 +300,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Angle
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 119
+    startLine: 127
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -294,7 +329,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TypeProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 137
+    startLine: 145
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -321,7 +356,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Type
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 140
+    startLine: 148
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -350,7 +385,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BlendModeProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 146
+    startLine: 154
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -377,7 +412,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BlendMode
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 150
+    startLine: 158
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -406,7 +441,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TileModeProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 156
+    startLine: 164
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -433,7 +468,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TileMode
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 159
+    startLine: 167
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -462,7 +497,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LightProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 166
+    startLine: 174
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -489,7 +524,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Light
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 168
+    startLine: 176
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -518,7 +553,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OpacityProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 174
+    startLine: 182
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -545,7 +580,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Opacity
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 178
+    startLine: 186
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -574,7 +609,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StartXRatioProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 184
+    startLine: 192
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -601,7 +636,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StartXRatio
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 186
+    startLine: 194
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -630,7 +665,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StartYRatioProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 192
+    startLine: 200
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -657,7 +692,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StartYRatio
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 194
+    startLine: 202
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -686,7 +721,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EndXRatioProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 200
+    startLine: 208
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -713,7 +748,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EndXRatio
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 202
+    startLine: 210
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -742,7 +777,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EndYRatioProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 208
+    startLine: 216
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -769,7 +804,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EndYRatio
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 210
+    startLine: 218
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -798,7 +833,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorsProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 219
+    startLine: 227
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -825,7 +860,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Colors
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 234
+    startLine: 242
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -854,7 +889,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorPositionsProperty
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 279
+    startLine: 289
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -881,7 +916,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorPositions
     path: ../src/Shared/Internals/Models/SkiaGradient.cs
-    startLine: 294
+    startLine: 304
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2338,6 +2373,23 @@ references:
   - name: " "
   - name: T4
   - name: )
+- uid: DrawnUi.Draw.SkiaGradient.Version*
+  commentId: Overload:DrawnUi.Draw.SkiaGradient.Version
+  href: DrawnUi.Draw.SkiaGradient.html#DrawnUi_Draw_SkiaGradient_Version
+  name: Version
+  nameWithType: SkiaGradient.Version
+  fullName: DrawnUi.Draw.SkiaGradient.Version
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
 - uid: Microsoft.Maui.Controls.BindableProperty
   commentId: T:Microsoft.Maui.Controls.BindableProperty
   parent: Microsoft.Maui.Controls

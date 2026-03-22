@@ -311,14 +311,11 @@ public static partial class DrawnExtensions
                 apple.FinishedLaunching((application, launchOptions) =>
                 {
                     Super.App = Super.Services.GetRequiredService<IApplication>();
-                    var appWindow = Super.App.Windows.First() as Microsoft.Maui.Controls.Window;
-                    var view = appWindow.Handler?.PlatformView as UIKit.UIView;
-                    //var check = UIKit.UIApplication.SharedApplication.KeyWindow;
 
                     Super.Init();
 
-
 #if MACCATALYST
+                    var appWindow = Super.App.Windows.FirstOrDefault() as Microsoft.Maui.Controls.Window;
 
                     Foundation.NSNotificationCenter.DefaultCenter.AddObserver("NSWindowDidBecomeMainNotification", null, null,
                               (h) =>

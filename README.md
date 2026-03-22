@@ -36,13 +36,11 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 
 ---
 
-## 🆕 What's new for 1.9.4.1
+## 🆕 What's new for 1.9.5.1
 
-* Added virtual `CreateHitRect` for overriding hitboxes of all controls.
-* `AnimateRangeAsync` signature change, fix cancellation
-* `SkiaCamera`: fix Facing, add `OnRawFrameAcquired`, `TryGetMLFrame` methods.
-* Using next version of gestures nuget.
-* Minor fixes and optimizations.
+* Fix for use of `IsHiddenInViewTree` to stop rendering hidden canvases among the App.
+* `SkiaCamera` performance optimizations and fixes.
+* Optimized interop calls and other improvements.
 
 ## 💡 Hint of the Day
 
@@ -65,6 +63,11 @@ public override SKRect CreateHitRect()
 
 ---
 
+## 👍 Latest Showcase
+
+* [SolTempo](https://github.com/taublast/SolTempo)  - Audio Processing App with SKSL Shaders, read the [blog article](https://taublast.github.io/posts/SolTempo/).
+
+---
 
 ## Quick Start
 

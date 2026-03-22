@@ -160,12 +160,13 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         Debug.WriteLine($"[WindowsCaptureVideoEncoder] Native encoder not initialized, dropping audio sample");
     }
 
-    // Pre-recording circular buffer files (2-file swap pattern like iOS)
-    private string _preRecBufferA;           // First buffer file
-    private string _preRecBufferB;           // Second buffer file
-    private string _currentPreRecBuffer;     // Which buffer is active (A or B)
+    // Pre-recording temp file(s). Windows now keeps a single continuous prerecord file
+    // and trims it at handoff/stop to avoid recurring SinkWriter/audio encoder rebuilds.
+    private string _preRecBufferA;           // Active prerecord temp file
+    private string _preRecBufferB;           // Legacy second temp file (unused in single-file mode)
+    private string _currentPreRecBuffer;     // Current prerecord temp file
     private string _outputPath;              // Final output path
-    private TimeSpan _preRecordDuration;     // Max duration per buffer (e.g., 5 seconds)
+    private TimeSpan _preRecordDuration;     // Look-back trim window (e.g., 5 seconds)
     private DateTime _currentBufferStartTime; // When current buffer started writing
     private bool _isBufferA = true;          // Track which buffer is active
     private TimeSpan _preRecordingDuration;   // Offset for live recording timestamps
@@ -333,27 +334,29 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         // Initialize based on mode
         if (IsPreRecordingMode && ParentCamera != null)
         {
-            // PRE-RECORDING MODE: Use IMFSinkWriter with 2-file circular buffer (iOS-like)
+            // PRE-RECORDING MODE: Keep a single continuous prerecord file open and
+            // trim it to the last N seconds at handoff/stop. This avoids the recurring
+            // SinkWriter/audio encoder teardown that caused visible stalls every swap.
             // NOTE: This encoder handles ONLY pre-recording. Live recording is handled by a separate encoder instance.
             var guid = Guid.NewGuid().ToString("N");
 
-            // Create two temp buffer files for circular buffering
+            // Create one temp prerecord file. Buffer B is intentionally unused so the
+            // finalization path falls back to the single-buffer trim flow.
             _preRecBufferA = Path.Combine(outputDir, $"pre_rec_a_{guid}.mp4");
-            _preRecBufferB = Path.Combine(outputDir, $"pre_rec_b_{guid}.mp4");
+            _preRecBufferB = null;
             _outputPath = outputPath;
             _preRecordDuration = ParentCamera.PreRecordDuration;
             _isBufferA = true;
             _currentPreRecBuffer = _preRecBufferA;
             _currentBufferStartTime = DateTime.UtcNow;
 
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Pre-recording mode (2-encoder pattern):");
-            Debug.WriteLine($"  Buffer A: {_preRecBufferA}");
-            Debug.WriteLine($"  Buffer B: {_preRecBufferB}");
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Pre-recording mode (single temp file):");
+            Debug.WriteLine($"  Temp file: {_preRecBufferA}");
             Debug.WriteLine($"  Output path: {_outputPath}");
-            Debug.WriteLine($"  Max duration per buffer: {_preRecordDuration.TotalSeconds}s");
+            Debug.WriteLine($"  Look-back trim window: {_preRecordDuration.TotalSeconds}s");
             Debug.WriteLine($"  NOTE: Live recording will be handled by separate encoder instance");
 
-            // Create IMFSinkWriter for first buffer (Buffer A)
+            // Create IMFSinkWriter for the prerecord temp file.
             var folder = await StorageFolder.GetFolderFromPathAsync(Path.GetDirectoryName(_currentPreRecBuffer));
             var fileName = Path.GetFileName(_currentPreRecBuffer);
             _outputFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
@@ -369,7 +372,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
 
             _isRecording = true;
 
-            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Pre-recording started to buffer A");
+            Debug.WriteLine($"[WindowsCaptureVideoEncoder #{_instanceId}] Pre-recording started to temp file");
             return;
         }
         else
@@ -623,12 +626,13 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
         await _sinkWriterSemaphore.WaitAsync();
         try
         {
-            // PRE-RECORDING MODE: Check if we need to swap buffers
+            // PRE-RECORDING MODE: legacy rolling-buffer swap path.
+            // In single-file prerecord mode we keep writing continuously and trim on stop.
             if (IsPreRecordingMode && _sinkWriter != null)
             {
-                // Check if current buffer duration exceeded
+                // Only the legacy two-buffer mode should ever swap.
                 var elapsed = DateTime.UtcNow - _currentBufferStartTime;
-                if (elapsed >= _preRecordDuration)
+                if (!string.IsNullOrEmpty(_preRecBufferB) && elapsed >= _preRecordDuration)
                 {
                     await SwapPreRecordingBuffer();
 

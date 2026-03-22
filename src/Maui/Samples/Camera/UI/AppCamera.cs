@@ -14,7 +14,12 @@ namespace CameraTests.Views
             this.InjectGpsLocation = true;
 
             //audio 
-            this.EnableAudioMonitoring = true;
+            //this.EnableAudioMonitoring = true;
+
+            // Configure camera for capture video flow testing
+            UseRealtimeVideoProcessing = true;
+            VideoQuality = VideoQuality.Standard;
+            EnableAudioRecording = true;
 
             FrameProcessor = OnFrameProcessing;
             PreviewProcessor = OnFrameProcessing;

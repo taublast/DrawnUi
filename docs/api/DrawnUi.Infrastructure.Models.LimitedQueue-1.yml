@@ -73,7 +73,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Count
     path: ../src/Shared/Internals/Models/LimitedQueue.cs
-    startLine: 8
+    startLine: 9
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure.Models
@@ -104,7 +104,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ToArray
     path: ../src/Shared/Internals/Models/LimitedQueue.cs
-    startLine: 10
+    startLine: 20
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure.Models
@@ -134,7 +134,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ToList
     path: ../src/Shared/Internals/Models/LimitedQueue.cs
-    startLine: 15
+    startLine: 28
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure.Models
@@ -164,7 +164,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/LimitedQueue.cs
-    startLine: 20
+    startLine: 36
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure.Models
@@ -193,7 +193,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAutoRemovingItem
     path: ../src/Shared/Internals/Models/LimitedQueue.cs
-    startLine: 24
+    startLine: 40
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure.Models
@@ -224,7 +224,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
     path: ../src/Shared/Internals/Models/LimitedQueue.cs
-    startLine: 29
+    startLine: 45
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure.Models
@@ -256,7 +256,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Push
     path: ../src/Shared/Internals/Models/LimitedQueue.cs
-    startLine: 34
+    startLine: 50
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure.Models
@@ -287,7 +287,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLocked
     path: ../src/Shared/Internals/Models/LimitedQueue.cs
-    startLine: 47
+    startLine: 66
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure.Models
@@ -318,7 +318,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Lock
     path: ../src/Shared/Internals/Models/LimitedQueue.cs
-    startLine: 55
+    startLine: 77
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure.Models
@@ -346,7 +346,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Unlock
     path: ../src/Shared/Internals/Models/LimitedQueue.cs
-    startLine: 60
+    startLine: 85
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure.Models
@@ -374,7 +374,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Pop
     path: ../src/Shared/Internals/Models/LimitedQueue.cs
-    startLine: 65
+    startLine: 93
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure.Models
@@ -404,7 +404,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
     path: ../src/Shared/Internals/Models/LimitedQueue.cs
-    startLine: 72
+    startLine: 103
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Infrastructure.Models

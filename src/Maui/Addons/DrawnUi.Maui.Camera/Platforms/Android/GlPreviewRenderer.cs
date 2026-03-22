@@ -3,6 +3,7 @@ using Android.Opengl;
 using Android.Views;
 using Java.Nio;
 using SkiaSharp;
+using System.Runtime.InteropServices;
 
 namespace DrawnUi.Camera
 {
@@ -30,13 +31,19 @@ namespace DrawnUi.Camera
         private int _sourceFbo;
         private int _sourceRbo;
 
+        // Double-buffered PBOs for async glReadPixels (eliminates GPU pipeline stall)
+        private int[] _pbos = new int[2];
+        private int _currentPbo = 0;
+        private bool _pbosInitialized = false;
+        private bool _firstPboFrame = true;
+        private int _pboBytesSize;
+
         private int _previewWidth;
         private int _previewHeight;
 
-        // Pre-allocated readback buffers (same pattern as GlPreviewScaler)
-        private ByteBuffer _readbackBuffer;
+        // Pre-allocated readback buffers
         private byte[] _managedBuffer;
-        private byte[] _flipRowBuffer; // Pre-allocated row buffer for Y-flip
+        private byte[] _flipRowBuffer; // Pre-allocated row buffer for Y-flip (direct path only)
 
         // GL thread (same pattern as AndroidCaptureVideoEncoder.GpuEncodingLoop)
         private System.Threading.Thread _glThread;
@@ -62,10 +69,11 @@ namespace DrawnUi.Camera
         private bool _disposed;
 
         /// <summary>
-        /// Dev flag: Use glBlitFramebuffer path (recording-style) instead of direct render + CPU Y-flip.
+        /// Use glBlitFramebuffer path instead of direct render + CPU Y-flip.
         /// Renders OES at camera resolution to a source FBO, then blits downscaled + Y-flipped to the
         /// readback FBO via glBlitFramebuffer. Eliminates CPU Y-flip and uses GPU bilinear filtering.
-        /// Toggle to compare preview FPS between approaches.
+        /// Auto-enabled on GLES 3.0+ devices (virtually all Android 4.3+ hardware) during Initialize().
+        /// Can be forced off for debugging or low-end device fallback.
         /// </summary>
         internal static bool UseBlitPreview { get; set; } = false;
 
@@ -109,6 +117,17 @@ namespace DrawnUi.Camera
                     SetupEgl();
                     MakeCurrent();
 
+                    // Auto-enable GPU blit path on GLES 3.0+ (glBlitFramebuffer + conditional Y-flip in dst coords).
+                    // Eliminates the CPU row-copy Y-flip loop in ProcessPreviewFrameDirect().
+                    // GLES 3.0 is available on all Android 4.3+ devices (API 18+, released 2013).
+                    // Must be checked after MakeCurrent() so the GL context is active for GlGetString.
+                    if (!UseBlitPreview)
+                    {
+                        var glVersion = GLES20.GlGetString(GLES20.GlVersion); // e.g. "OpenGL ES 3.2 NVIDIA ..."
+                        UseBlitPreview = glVersion != null && glVersion.Contains("OpenGL ES 3");
+                        System.Diagnostics.Debug.WriteLine($"[GlPreviewRenderer] GLES version: '{glVersion}' → UseBlitPreview={UseBlitPreview}");
+                    }
+
                     // Create GPU camera frame provider (creates SurfaceTexture + OES shader)
                     _gpuFrameProvider = new GpuCameraFrameProvider();
                     if (!_gpuFrameProvider.Initialize(cameraWidth, cameraHeight))
@@ -125,10 +144,11 @@ namespace DrawnUi.Camera
                         SetupSourceFbo(cameraWidth, cameraHeight);
                     }
 
-                    // Pre-allocate readback buffers
+                    // Double-buffered PBOs for async glReadPixels — no GPU stall
+                    SetupPbos(previewWidth, previewHeight);
+
+                    // Pre-allocate managed pixel buffer (reused for every PBO map)
                     int bufferSize = previewWidth * previewHeight * 4;
-                    _readbackBuffer = ByteBuffer.AllocateDirect(bufferSize);
-                    _readbackBuffer.Order(ByteOrder.NativeOrder());
                     _managedBuffer = new byte[bufferSize];
 
                     // CPU Y-flip buffer only needed for non-blit (direct) path
@@ -256,6 +276,15 @@ namespace DrawnUi.Camera
         /// </summary>
         private void GlPreviewLoop()
         {
+            // Bind EGL context once for the lifetime of this thread instead of per-frame.
+            // Per-frame MakeCurrent() is redundant (context stays current between waits) and
+            // the EGL driver call has measurable overhead at camera frame rate.
+            try { MakeCurrent(); } catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[GlPreviewRenderer] MakeCurrent failed: {ex.Message}");
+                return;
+            }
+
             while (!_stopThread)
             {
                 try
@@ -296,10 +325,7 @@ namespace DrawnUi.Camera
             if (_eglDisplay == EGL14.EglNoDisplay || _eglContext == EGL14.EglNoContext)
                 return;
 
-            // 1. Make EGL context current
-            MakeCurrent();
-
-            // 2. Update SurfaceTexture (MUST be on EGL context thread)
+            // 1. Update SurfaceTexture (MUST be on EGL context thread — context bound once in GlPreviewLoop)
             if (!_gpuFrameProvider.TryProcessFrameNoWait(out long timestampNs))
                 return;
 
@@ -325,15 +351,14 @@ namespace DrawnUi.Camera
             // 5. Restore default FBO
             GLES20.GlBindFramebuffer(GLES20.GlFramebuffer, 0);
 
-            // 6. Deliver preview — event consumer owns the SKImage lifecycle
+            // 6. Deliver preview — event consumer owns the SKImage lifecycle.
+            // Fire directly on the GL thread: UpdatePreview() only posts an async invalidate to the
+            // main thread (< 1µs), so the GL loop is not blocked. Task.Run was causing unpredictable
+            // thread-pool scheduling delays (5-50ms) and back-to-back delivery races that disposed
+            // frames before the UI thread could display them.
             if (image != null)
             {
-                // Decouple preview delivery from the GL loop (like the recording path does)
-                // This prevents the UI update from throttling the camera/GL loop
-                System.Threading.Tasks.Task.Run(() =>
-                {
-                    PreviewFrameReady?.Invoke(image, timestampNs);
-                });
+                PreviewFrameReady?.Invoke(image, timestampNs);
             }
         }
 
@@ -350,14 +375,9 @@ namespace DrawnUi.Camera
             // Render OES texture — GPU driver does YUV→RGB automatically via samplerExternalOES
             _gpuFrameProvider.RenderToFramebuffer(_previewWidth, _previewHeight, _isFrontCamera);
 
-            // Read pixels from the FBO (already at preview resolution)
-            _readbackBuffer.Clear();
-            GLES20.GlReadPixels(0, 0, _previewWidth, _previewHeight,
-                GLES20.GlRgba, GLES20.GlUnsignedByte, _readbackBuffer);
-
-            // Copy to managed buffer
-            _readbackBuffer.Rewind();
-            _readbackBuffer.Get(_managedBuffer, 0, _managedBuffer.Length);
+            // Async PBO readback: issue read into current PBO (non-blocking), map previous PBO
+            if (!ReadPixelsViaPbo(_previewWidth, _previewHeight))
+                return null;
 
             // glReadPixels returns bottom-to-top data. For 90°/0° sensor orientations the
             // SurfaceTexture transform leaves the image inverted in the FBO, so we must flip.
@@ -411,16 +431,12 @@ namespace DrawnUi.Camera
                 GLES20.GlColorBufferBit,
                 GLES20.GlLinear);                             // GPU bilinear filtering
 
-            // 3. Read pixels from readback FBO (small preview buffer only)
+            // 3. Async PBO readback from readback FBO — no GPU stall
             GLES30.GlBindFramebuffer(GLES30.GlReadFramebuffer, _readbackFbo);
-            _readbackBuffer.Clear();
-            GLES20.GlReadPixels(0, 0, _previewWidth, _previewHeight,
-                GLES20.GlRgba, GLES20.GlUnsignedByte, _readbackBuffer);
+            if (!ReadPixelsViaPbo(_previewWidth, _previewHeight))
+                return null;
 
-            // 4. Copy to managed buffer — NO Y-flip needed, blit already flipped on GPU
-            _readbackBuffer.Rewind();
-            _readbackBuffer.Get(_managedBuffer, 0, _managedBuffer.Length);
-
+            // 4. _managedBuffer filled by PBO map — NO Y-flip needed, blit already flipped on GPU
             var info = new SKImageInfo(_previewWidth, _previewHeight,
                 SKColorType.Rgba8888, SKAlphaType.Premul);
             return SKImage.FromPixelCopy(info, _managedBuffer);
@@ -550,6 +566,89 @@ namespace DrawnUi.Camera
             System.Diagnostics.Debug.WriteLine($"[GlPreviewRenderer] Source FBO created: {width}x{height}");
         }
 
+        /// <summary>
+        /// Allocate two PBOs for double-buffered async pixel readback.
+        /// Must be called on the GL thread with EGL context current.
+        /// </summary>
+        private void SetupPbos(int width, int height)
+        {
+            _pboBytesSize = width * height * 4;
+            GLES30.GlGenBuffers(2, _pbos, 0);
+            for (int i = 0; i < 2; i++)
+            {
+                GLES30.GlBindBuffer(GLES30.GlPixelPackBuffer, _pbos[i]);
+                GLES30.GlBufferData(GLES30.GlPixelPackBuffer, _pboBytesSize, null, GLES30.GlStreamRead);
+            }
+            GLES30.GlBindBuffer(GLES30.GlPixelPackBuffer, 0);
+            _pbosInitialized = true;
+            _firstPboFrame = true;
+            System.Diagnostics.Debug.WriteLine($"[GlPreviewRenderer] PBOs created: 2 × {_pboBytesSize} bytes");
+        }
+
+        /// <summary>
+        /// Delete PBOs. Must be called on the GL thread with EGL context current.
+        /// </summary>
+        private void DisposePbos()
+        {
+            if (_pbosInitialized && _pbos[0] != 0)
+            {
+                GLES30.GlDeleteBuffers(2, _pbos, 0);
+                _pbos[0] = _pbos[1] = 0;
+                _pbosInitialized = false;
+            }
+        }
+
+        /// <summary>
+        /// Issues async glReadPixels into PBO[current] (non-blocking — GPU writes in background),
+        /// then maps PBO[previous] to fill _managedBuffer with the prior frame's pixels.
+        /// Returns false on the first frame (previous PBO not yet populated) — caller should skip.
+        /// Must be called on the GL thread with the readback FBO bound as GL_READ_FRAMEBUFFER.
+        /// </summary>
+        private bool ReadPixelsViaPbo(int width, int height)
+        {
+            int current = _currentPbo;
+            int previous = 1 - current;
+
+            // Kick off async readback into current PBO — returns immediately, no GPU stall
+            // GLES30 overload with int offset (not Buffer) is the PBO-path signature
+            GLES30.GlBindBuffer(GLES30.GlPixelPackBuffer, _pbos[current]);
+            GLES30.GlReadPixels(0, 0, width, height, GLES20.GlRgba, GLES20.GlUnsignedByte, 0);
+            GLES30.GlBindBuffer(GLES30.GlPixelPackBuffer, 0);
+
+            _currentPbo = previous; // swap for next call
+
+            // First frame: previous PBO has no data yet
+            if (_firstPboFrame)
+            {
+                _firstPboFrame = false;
+                return false;
+            }
+
+            // Map previous PBO — GPU finished writing it during the last frame's render work
+            GLES30.GlBindBuffer(GLES30.GlPixelPackBuffer, _pbos[previous]);
+            var mappedBuffer = GLES30.GlMapBufferRange(GLES30.GlPixelPackBuffer, 0, _pboBytesSize, GLES30.GlMapReadBit) as Java.Nio.ByteBuffer;
+
+            bool hasData = false;
+            if (mappedBuffer != null)
+            {
+                mappedBuffer.Rewind();
+                var mappedPtr = mappedBuffer.GetDirectBufferAddress();
+                if (mappedPtr != IntPtr.Zero)
+                {
+                    Marshal.Copy(mappedPtr, _managedBuffer, 0, _pboBytesSize);
+                }
+                else
+                {
+                    mappedBuffer.Get(_managedBuffer, 0, _pboBytesSize);
+                }
+                GLES30.GlUnmapBuffer(GLES30.GlPixelPackBuffer);
+                hasData = true;
+            }
+
+            GLES30.GlBindBuffer(GLES30.GlPixelPackBuffer, 0);
+            return hasData;
+        }
+
         #endregion
 
         #region Cleanup
@@ -559,8 +658,6 @@ namespace DrawnUi.Camera
             _gpuFrameProvider?.Dispose();
             _gpuFrameProvider = null;
 
-            _readbackBuffer?.Dispose();
-            _readbackBuffer = null;
             _managedBuffer = null;
             _flipRowBuffer = null;
 
@@ -601,6 +698,7 @@ namespace DrawnUi.Camera
                         GLES20.GlDeleteRenderbuffers(1, new int[] { _sourceRbo }, 0);
                         _sourceRbo = 0;
                     }
+                    DisposePbos();
                 }
                 catch (Exception ex)
                 {

@@ -565,6 +565,9 @@ namespace DrawnUi.Draw
         }
 
         protected SKPaint RenderingPaint { get; set; }
+        private SKColor _renderingPaintColor;
+        private SKPaintStyle _renderingPaintStyle;
+        private bool _renderingPaintIsDither;
 
         /// <summary>
         /// Gets or sets the parsed SKPath object created from the PathData property.
@@ -595,10 +598,26 @@ namespace DrawnUi.Draw
 
         SKPath ClipContentPath { get; set; } = new();
 
+        // Stroke gradient shader cache
+        private SKShader _strokeGradientShader;
+        private int _strokeGradientVersion = -1;
+        private SKRect _strokeGradientRect;
+
+        // Dash PathEffect cache
+        private SKPathEffect _cachedDashEffect;
+        private double[] _cachedDashPath;
+        private float _cachedDashScale = -1f;
+
         public override void OnDisposing()
         {
             RenderingPaint?.Dispose();
             RenderingPaint = null;
+
+            _strokeGradientShader?.Dispose();
+            _strokeGradientShader = null;
+
+            _cachedDashEffect?.Dispose();
+            _cachedDashEffect = null;
 
             DrawPath?.Dispose();
             DrawPathResized?.Dispose();
@@ -914,18 +933,12 @@ namespace DrawnUi.Draw
 
             RenderingPaint ??= new SKPaint() { IsAntialias = true, };
 
-            RenderingPaint.IsDither = IsDistorted;
+            RenderingPaint.GuardIsDither(ref _renderingPaintIsDither, IsDistorted);
 
-            if (BackgroundColor != null)
-            {
-                RenderingPaint.Color = BackgroundColor.ToSKColor();
-            }
-            else
-            {
-                RenderingPaint.Color = SKColors.Transparent;
-            }
+            var bgColor = BackgroundColor != null ? BackgroundColor.ToSKColor() : SKColors.Transparent;
+            RenderingPaint.GuardColor(ref _renderingPaintColor, bgColor);
 
-            RenderingPaint.Style = SKPaintStyle.Fill;
+            RenderingPaint.GuardStyle(ref _renderingPaintStyle, SKPaintStyle.Fill);
 
             var minSize = Math.Min(strokeAwareSize.Height, strokeAwareSize.Width);
 
@@ -961,7 +974,8 @@ namespace DrawnUi.Draw
             {
                 paint.BlendMode = this.StrokeBlendMode;
 
-                SetupGradient(paint, StrokeGradient, outRect);
+                SetupGradient(paint, StrokeGradient, outRect,
+                    ref _strokeGradientShader, ref _strokeGradientVersion, ref _strokeGradientRect);
 
                 paint.ImageFilter = null;
 
@@ -971,8 +985,14 @@ namespace DrawnUi.Draw
 
                 if (this.StrokePath != null && StrokePath.Length > 0)
                 {
-                    var array = GetDashArray(StrokePath, scale);
-                    paint.PathEffect = SKPathEffect.CreateDash(array, 0);
+                    if (!ReferenceEquals(_cachedDashPath, StrokePath) || _cachedDashScale != scale)
+                    {
+                        _cachedDashEffect?.Dispose();
+                        _cachedDashEffect = SKPathEffect.CreateDash(GetDashArray(StrokePath, scale), 0);
+                        _cachedDashPath = StrokePath;
+                        _cachedDashScale = scale;
+                    }
+                    paint.PathEffect = _cachedDashEffect;
                 }
                 else
                 {

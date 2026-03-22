@@ -969,7 +969,8 @@ public partial class SkiaCamera : SkiaControl
 
         // Use the existing filename from the path (may have been renamed by caller)
         var fileName = Path.GetFileName(privateVideoPath);
-        var publicVideoFile = new Java.IO.File(appDir, fileName);
+    var publicVideoPath = GetUniqueFilePath(Path.Combine(appDir.AbsolutePath, fileName));
+    var publicVideoFile = new Java.IO.File(publicVideoPath);
         
         try
         {
@@ -1000,6 +1001,29 @@ public partial class SkiaCamera : SkiaControl
             Debug.WriteLine($"[SkiaCamera] Android DCIM move error: {ex.Message}");
             return null;
         }
+    }
+
+    private static string GetUniqueFilePath(string targetPath)
+    {
+        if (!File.Exists(targetPath))
+        {
+            return targetPath;
+        }
+
+        var directory = Path.GetDirectoryName(targetPath) ?? string.Empty;
+        var baseName = Path.GetFileNameWithoutExtension(targetPath);
+        var extension = Path.GetExtension(targetPath);
+
+        for (int suffix = 2; suffix < 10000; suffix++)
+        {
+            var candidatePath = Path.Combine(directory, $"{baseName}_{suffix}{extension}");
+            if (!File.Exists(candidatePath))
+            {
+                return candidatePath;
+            }
+        }
+
+        return Path.Combine(directory, $"{baseName}_{Guid.NewGuid():N}{extension}");
     }
 
     private class MediaScanCompleteListener : Java.Lang.Object, Android.Media.MediaScannerConnection.IOnScanCompletedListener
@@ -1350,59 +1374,6 @@ public partial class SkiaCamera : SkiaControl
         {
             Debug.WriteLine($"[SkiaCamera] AddAssetToAlbum exception: {ex.Message}");
         }
-    }
-
-    /// <summary>
-    /// Invoke from Main thread only
-    /// </summary>
-    /// <param name="localIdentifier"></param>
-    /// <returns></returns>
-    public static async Task PlayVideoFromPhotosAsync(string localIdentifier)
-    {
-        if (string.IsNullOrEmpty(localIdentifier))
-            return;
-
-        // 1. Fetch the PHAsset
-        var fetchResult = PHAsset.FetchAssetsUsingLocalIdentifiers(new[] { localIdentifier }, null);
-
-        if (fetchResult.Count == 0)
-        {
-            Debug.WriteLine("Video no longer exists in Photos library");
-            // → maybe user deleted it manually
-            return;
-        }
-
-        var asset = fetchResult[0] as PHAsset;
-
-        // Option A – Most elegant: play directly using AVPlayer (recommended)
-        var playerVC = new AVPlayerViewController();
-
-        PHImageManager.DefaultManager.RequestAVAsset(asset, null, (avAsset, audioMix, info) =>
-        {
-            if (avAsset != null)
-            {
-                var player = AVPlayer.FromPlayerItem(new AVPlayerItem(avAsset));
-                playerVC.Player = player;
-
-                player.Play();
-                // Very important: run on main thread!
-                //InvokeOnMainThread(() =>
-                //{
-                //    PresentViewController(playerVC, true, () =>
-                //    {
-                //        player.Play();
-                //    });
-                //});
-            }
-            else
-            {
-                Debug.WriteLine("Could not get AVAsset");
-            }
-        });
-
-        // Option B – If you really need a temporary file (less recommended)
-        // PHImageManager.DefaultManager.RequestExportSessionForVideo(...)
-        // then export to temp folder and play with normal video player
     }
 
 #endif

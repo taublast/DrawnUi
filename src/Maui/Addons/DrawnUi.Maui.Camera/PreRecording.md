@@ -95,10 +95,10 @@ Return final video to user
 #### Windows
 
 - **Status:** ✅ **Complete**
-- **Method:** FFmpeg `-c copy` for efficient stream concatenation
-- **Location:** `Platforms/Windows/SkiaCamera.Windows.cs` - `MuxVideosInternal()`
-- **Note:** Requires FFmpeg installed or bundled
-- **Memory:** Minimal - uses ffmpeg subprocess
+- **Method:** Media Foundation prerecord temp file trimmed to the last N seconds, then native muxing for prerecord + live output
+- **Location:** `Platforms/Windows/WindowsCaptureVideoEncoder.cs`, `Platforms/Windows/SkiaCamera.Windows.cs`
+- **Note:** Avoids rolling 5-second MP4 segment swaps during prerecording; Windows keeps one prerecord temp file open and trims at handoff/stop
+- **Memory:** Minimal working-set overhead; prerecord is file-backed on Windows
 
 ## Performance Characteristics
 
@@ -109,7 +109,7 @@ Return final video to user
 - **CPU:** H.264 encoding delegated to hardware accelerators
 - **Muxing:**
   - iOS: AVAssetExportSession with Passthrough (no re-encoding)
-  - Windows: FFmpeg stream copy
+    - Windows: native Media Foundation / Windows composition path
   - Android: MediaMuxer stream copy
 
 ## When Pre-Recording is Disabled

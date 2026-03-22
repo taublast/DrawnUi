@@ -10,13 +10,12 @@ using IContainer = Microsoft.Maui.IContainer;
 
 namespace DrawnUi.Draw
 {
-    [ContentProperty(nameof(Children))]
     public partial class SkiaControl : VisualElement,
         //IHotReloadableView, IReloadHandler, // to support New HotReload
         IVisualTreeElement, // to support VS HotReload
         IContainer // to support VS HotReload full page reload mode
     {
-        #region IContainer
+        #region IContainer //used by xaml generator
 
         public IEnumerator<IView> GetEnumerator()
         {
@@ -426,6 +425,44 @@ namespace DrawnUi.Draw
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Caching overload: rebuilds the shader only when the gradient version or destination rect
+        /// has changed since the last call. The caller owns the cached shader and must dispose it
+        /// in their OnDisposing(). Passing gradient=null disposes and clears the cache.
+        /// </summary>
+        public bool SetupGradient(SKPaint paint, SkiaGradient gradient, SKRect destination,
+            ref SKShader cachedShader, ref int cachedVersion, ref SKRect cachedRect)
+        {
+            if (paint == null) return false;
+
+            if (gradient != null)
+            {
+                if (cachedShader == null || cachedVersion != gradient.Version || cachedRect != destination)
+                {
+                    cachedShader?.Dispose();
+                    cachedShader = CreateGradient(destination, gradient);
+                    cachedVersion = gradient.Version;
+                    cachedRect = destination;
+                }
+
+                paint.Color = SKColors.White;
+                paint.BlendMode = gradient.BlendMode;
+                paint.Shader = cachedShader;
+                return true;
+            }
+            else
+            {
+                if (cachedShader != null)
+                {
+                    cachedShader.Dispose();
+                    cachedShader = null;
+                    cachedVersion = -1;
+                }
+                paint.Shader = null;
+                return false;
+            }
         }
 
         public static SKImageFilter CreateShadow(SkiaShadow shadow, float scale)

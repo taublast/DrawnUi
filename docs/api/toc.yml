@@ -700,6 +700,9 @@ items:
   - uid: DrawnUi.Draw.RippleAnimator
     name: RippleAnimator
     type: Class
+  - uid: DrawnUi.Draw.SKPaintExtensions
+    name: SKPaintExtensions
+    type: Class
   - uid: DrawnUi.Draw.SaturationEffect
     name: SaturationEffect
     type: Class

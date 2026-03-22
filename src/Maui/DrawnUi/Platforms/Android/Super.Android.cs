@@ -6,6 +6,7 @@ using Android.Views;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using static DrawnUi.Views.SkiaViewAccelerated;
 using Canvas = Android.Graphics.Canvas;
+using Color = Android.Graphics.Color;
 using Context = Android.Content.Context;
 using Platform = Microsoft.Maui.ApplicationModel.Platform;
 
@@ -174,6 +175,16 @@ public partial class Super
             var contentView = activity.FindViewById(Android.Resource.Id.Content);
             if (contentView != null)
                 contentView.SetOnApplyWindowInsetsListener(_insetsListener);
+        }
+    }
+
+    public static void SetStatusBarColor(Color color)
+    {
+        if (Build.VERSION.SdkInt >= BuildVersionCodes.Kitkat)
+        {
+            Android.App.Activity activity = Platform.CurrentActivity;
+
+            activity.Window.SetStatusBarColor(color);
         }
     }
 

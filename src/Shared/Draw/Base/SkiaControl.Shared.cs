@@ -6185,7 +6185,13 @@ namespace DrawnUi.Draw
         }
 
         protected SKPaint _paintWithEffects = null;
+        private SKImageFilter _paintWithEffectsImageFilter;
+        private SKColorFilter _paintWithEffectsColorFilter;
         protected SKPaint _paintWithOpacity = null;
+        private SKColor _paintWithOpacityColor;
+        private bool _paintWithOpacityIsAntialias;
+        private bool _paintWithOpacityIsDither;
+        private SKFilterQuality _paintWithOpacityFilterQuality;
         SKPath _preparedClipBounds = null;
         private IAnimatorsManager _lastAnimatorManager;
         private Func<List<SkiaControl>> _createChildren;
@@ -6239,7 +6245,7 @@ namespace DrawnUi.Draw
                     FilterQuality = IsDistorted ? SKFilterQuality.Medium : SKFilterQuality.None
                 };
 
-                _paintWithOpacity.Color = SKColors.White.WithAlpha((byte)(0xFF * Opacity));
+                _paintWithOpacity.GuardColor(ref _paintWithOpacityColor, SKColors.White.WithAlpha((byte)(0xFF * Opacity)));
 
                 var restore = 0;
 
@@ -6500,14 +6506,18 @@ namespace DrawnUi.Draw
                     }
 
                     if (effectImage != null)
-                        _paintWithEffects.ImageFilter = effectImage.CreateFilter(ctx.Destination);
+                        _paintWithEffects.GuardImageFilter(ref _paintWithEffectsImageFilter, effectImage.CreateFilter(ctx.Destination));
                     else
-                        _paintWithEffects.ImageFilter = null; //will be disposed internally by effect
+                    {
+                        _paintWithEffects.GuardImageFilter(ref _paintWithEffectsImageFilter, null); //will be disposed internally by effect
+                    }
 
                     if (effectColor != null)
-                        _paintWithEffects.ColorFilter = effectColor.CreateFilter(ctx.Destination);
+                        _paintWithEffects.GuardColorFilter(ref _paintWithEffectsColorFilter, effectColor.CreateFilter(ctx.Destination));
                     else
-                        _paintWithEffects.ColorFilter = null;
+                    {
+                        _paintWithEffects.GuardColorFilter(ref _paintWithEffectsColorFilter, null);
+                    }
 
                     var restore = ctx.Context.Canvas.SaveLayer(_paintWithEffects);
 
@@ -6657,7 +6667,8 @@ namespace DrawnUi.Draw
             {
                 return
                     LinkTransforms != null ||
-                    Rotation != 0 || ScaleY != 1f || ScaleX != 1f
+                    (Rotation != 0 && Rotation != 90 && Rotation != 180 && Rotation != 270 && Rotation != -90 && Rotation != -180 && Rotation != -270) ||
+                    ScaleY != 1f || ScaleX != 1f
                     || Perspective1 != 0f || Perspective2 != 0f
                     || SkewX != 0 || SkewY != 0 || TranslationZ != 0
                     || RotationX != 0 || RotationY != 0 || RotationZ != 0;
@@ -6679,10 +6690,11 @@ namespace DrawnUi.Draw
                     _paintWithOpacity = new SKPaint();
                 }
 
-                _paintWithOpacity.Color = SKColors.White;
-                _paintWithOpacity.IsAntialias = true;
-                _paintWithOpacity.IsDither = IsDistorted;
-                _paintWithOpacity.FilterQuality = SKFilterQuality.Medium;
+                _paintWithOpacity.GuardColor(ref _paintWithOpacityColor, SKColors.White);
+                _paintWithOpacity.GuardIsAntialias(ref _paintWithOpacityIsAntialias, true);
+                _paintWithOpacity.GuardIsDither(ref _paintWithOpacityIsDither, IsDistorted);
+                //todo check this for operations, lines etc
+                _paintWithOpacity.GuardFilterQuality(ref _paintWithOpacityFilterQuality, IsDistorted ? SKFilterQuality.Medium : SKFilterQuality.None);
 
                 if (EffectPostRenderers.Count == 0)
                 {

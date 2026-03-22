@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DrawnUi.Camera
 {
@@ -8,10 +7,11 @@ namespace DrawnUi.Camera
     /// Thread-safe audio buffer for audio samples.
     /// When maxDuration > 0: Circular mode - automatically trims old samples beyond MaxDuration.
     /// When maxDuration = 0: Linear mode - keeps ALL samples (for full session recording).
+    /// Backed by List for O(log n) binary-search timestamp queries.
     /// </summary>
     public class CircularAudioBuffer
     {
-        private readonly Queue<AudioSample> _samples = new();
+        private readonly List<AudioSample> _samples = new();
         private readonly object _lock = new();
         private readonly TimeSpan _maxDuration;
         private readonly bool _isLinearMode;
@@ -36,7 +36,7 @@ namespace DrawnUi.Camera
         {
             lock (_lock)
             {
-                _samples.Enqueue(sample);
+                _samples.Add(sample);
                 Trim();
             }
         }
@@ -49,17 +49,77 @@ namespace DrawnUi.Camera
             }
         }
 
+        /// <summary>
+        /// Returns all samples with TimestampNs strictly after the given timestamp.
+        /// Uses binary search — O(log n) find, O(k) copy.
+        /// </summary>
+        public AudioSample[] GetSamplesAfter(long timestampNs)
+        {
+            lock (_lock)
+            {
+                if (_samples.Count == 0)
+                    return Array.Empty<AudioSample>();
+
+                if (timestampNs == long.MinValue)
+                    return _samples.ToArray();
+
+                int idx = FindFirstIndexAfter(timestampNs);
+                return CopyFromIndex(idx);
+            }
+        }
+
+        /// <summary>
+        /// Returns all samples with TimestampNs in [startTimestampNs, endTimestampNs].
+        /// Uses binary search — O(log n) find, O(k) copy.
+        /// </summary>
+        public AudioSample[] GetSamplesInRange(long startTimestampNs, long endTimestampNs)
+        {
+            lock (_lock)
+            {
+                if (_samples.Count == 0)
+                    return Array.Empty<AudioSample>();
+
+                int startIdx = FindFirstIndexAtOrAfter(startTimestampNs);
+                int endIdx = FindFirstIndexAfter(endTimestampNs); // exclusive upper bound
+                if (startIdx >= endIdx)
+                    return Array.Empty<AudioSample>();
+
+                int count = endIdx - startIdx;
+                var result = new AudioSample[count];
+                _samples.CopyTo(startIdx, result, 0, count);
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Returns the trailing samples covering at most the given duration from the latest sample.
+        /// Uses binary search — O(log n) find, O(k) copy.
+        /// </summary>
+        public AudioSample[] GetTrailingSamples(TimeSpan duration)
+        {
+            lock (_lock)
+            {
+                if (_samples.Count == 0)
+                    return Array.Empty<AudioSample>();
+
+                if (duration <= TimeSpan.Zero)
+                    return _samples.ToArray();
+
+                long durationNs = duration.Ticks * 100;
+                long lastTimestampNs = _samples[_samples.Count - 1].TimestampNs;
+                long thresholdNs = Math.Max(0, lastTimestampNs - durationNs);
+
+                int idx = FindFirstIndexAtOrAfter(thresholdNs);
+                return CopyFromIndex(idx);
+            }
+        }
+
         public AudioSample[] DrainFrom(long cutPointNs)
         {
             lock (_lock)
             {
-                // Find samples that started at or after cutPointNs
-                // Or maybe just samples that contain data after cutPointNs?
-                // Simplest strategy: Take all samples where TimestampNs >= cutPointNs.
-                // Or maybe include the one just before if it overlaps?
-                // Audio frames are short (~23ms), strict cut is fine for now.
-                
-                var result = _samples.Where(s => s.TimestampNs >= cutPointNs).ToArray();
+                int idx = FindFirstIndexAtOrAfter(cutPointNs);
+                var result = CopyFromIndex(idx);
                 _samples.Clear();
                 return result;
             }
@@ -80,8 +140,8 @@ namespace DrawnUi.Camera
                 lock (_lock)
                 {
                     if (_samples.Count == 0) return TimeSpan.Zero;
-                    var first = _samples.Peek();
-                    var last = _samples.Last();
+                    var first = _samples[0];
+                    var last = _samples[_samples.Count - 1];
                     return TimeSpan.FromTicks((last.TimestampNs - first.TimestampNs) / 100);
                 }
             }
@@ -100,28 +160,64 @@ namespace DrawnUi.Camera
 
         private void Trim()
         {
-            // In linear mode, never trim - keep ALL samples
             if (_isLinearMode) return;
-
             if (_samples.Count == 0) return;
 
-            var last = _samples.Last();
-            var thresholdNs = last.TimestampNs - (_maxDuration.Ticks * 100);
+            long thresholdNs = _samples[_samples.Count - 1].TimestampNs - (_maxDuration.Ticks * 100);
+            int firstKeep = FindFirstIndexAtOrAfter(thresholdNs);
+            if (firstKeep > 0)
+                _samples.RemoveRange(0, firstKeep);
+        }
 
-            while (_samples.Count > 0)
+        // Binary search: first index where TimestampNs > timestampNs
+        private int FindFirstIndexAfter(long timestampNs)
+        {
+            int lo = 0, hi = _samples.Count - 1, result = _samples.Count;
+            while (lo <= hi)
             {
-                var first = _samples.Peek();
-                if (first.TimestampNs < thresholdNs)
+                int mid = (lo + hi) >> 1;
+                if (_samples[mid].TimestampNs > timestampNs)
                 {
-                    _samples.Dequeue();
+                    result = mid;
+                    hi = mid - 1;
                 }
                 else
                 {
-                    break;
+                    lo = mid + 1;
                 }
             }
+            return result;
         }
-        
+
+        // Binary search: first index where TimestampNs >= timestampNs
+        private int FindFirstIndexAtOrAfter(long timestampNs)
+        {
+            int lo = 0, hi = _samples.Count - 1, result = _samples.Count;
+            while (lo <= hi)
+            {
+                int mid = (lo + hi) >> 1;
+                if (_samples[mid].TimestampNs >= timestampNs)
+                {
+                    result = mid;
+                    hi = mid - 1;
+                }
+                else
+                {
+                    lo = mid + 1;
+                }
+            }
+            return result;
+        }
+
+        private AudioSample[] CopyFromIndex(int idx)
+        {
+            int count = _samples.Count - idx;
+            if (count <= 0) return Array.Empty<AudioSample>();
+            var result = new AudioSample[count];
+            _samples.CopyTo(idx, result, 0, count);
+            return result;
+        }
+
         /// <summary>
         /// Finds the timestamp of the audio sample that is closest to the given video timestamp.
         /// </summary>
@@ -131,22 +227,23 @@ namespace DrawnUi.Camera
             {
                 if (_samples.Count == 0) return 0;
 
-                long closestDiff = long.MaxValue;
-                long closestTimestamp = 0;
+                // Binary search to find the nearest insertion point, then check neighbours
+                int idx = FindFirstIndexAtOrAfter(videoKeyframeNs);
 
-                foreach (var sample in _samples)
+                long bestTs = 0;
+                long bestDiff = long.MaxValue;
+
+                for (int i = Math.Max(0, idx - 1); i <= Math.Min(_samples.Count - 1, idx); i++)
                 {
-                    long diff = Math.Abs(sample.TimestampNs - videoKeyframeNs);
-                    if (diff < closestDiff)
+                    long diff = Math.Abs(_samples[i].TimestampNs - videoKeyframeNs);
+                    if (diff < bestDiff)
                     {
-                        closestDiff = diff;
-                        closestTimestamp = sample.TimestampNs;
+                        bestDiff = diff;
+                        bestTs = _samples[i].TimestampNs;
                     }
                 }
-                
-                // If we didn't find a close match within reason (e.g. empty buffer logic handled above), return closest.
-                // If the buffer is totally desynced, this might return something far off, but that is detected elsewhere.
-                return closestTimestamp;
+
+                return bestTs;
             }
         }
     }

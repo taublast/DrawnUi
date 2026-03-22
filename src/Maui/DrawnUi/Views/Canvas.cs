@@ -880,10 +880,6 @@ public class Canvas : DrawnView, IGestureListener
     {
     }
 
-    public void Clear()
-    {
-        ClearChildren();
-    }
 
     public void PlayRippleAnimation(Color color, double x, double y, bool removePrevious = true)
     {

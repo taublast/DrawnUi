@@ -3243,6 +3243,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Draw.SKPaintExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Draw.SKPaintExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Draw.SKPaintExtensions",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SKPaintExtensions.yml\" sourcestartlinenumber=\"1\">Guarded setters for SKPaint properties. Each method compares a managed shadow value\nbefore calling the native P/Invoke setter, eliminating redundant interop when the\nvalue has not changed between frames.\nMethods are prefixed with &quot;Guard&quot; to avoid conflicts with SkiaSharp's own instance methods.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Draw.SaturationEffect.yml",
       "output": {
         ".html": {

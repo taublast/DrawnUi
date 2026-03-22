@@ -15,26 +15,6 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// <param name="reader"></param>
     public void OnImageAvailable(ImageReader reader)
     {
-        // Count ALL incoming frames for raw FPS calculation (before any filtering)
-        _rawFrameCount++;
-        var now = System.Diagnostics.Stopwatch.GetTimestamp();
-        if (_rawFrameLastReportTime == 0)
-        {
-            _rawFrameLastReportTime = now;
-        }
-        else
-        {
-            var elapsedTicks = now - _rawFrameLastReportTime;
-            var elapsedSeconds = (double)elapsedTicks / System.Diagnostics.Stopwatch.Frequency;
-            if (elapsedSeconds >= 1.0) // Report every second
-            {
-                _rawFrameFps = _rawFrameCount / elapsedSeconds;
-                System.Diagnostics.Debug.WriteLine($"[NativeCameraAndroid] RAW camera FPS: {_rawFrameFps:F1} (frames: {_rawFrameCount} in {elapsedSeconds:F2}s)");
-                _rawFrameCount = 0;
-                _rawFrameLastReportTime = now;
-            }
-        }
-
         // Skip if not ready
         if (FormsControl.Height <= 0 || FormsControl.Width <= 0 || CapturingStill)
             return;
@@ -48,22 +28,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             return;
         }
 
-        try
-        {
-            ProcessFrameOnBackgroundThread(newImage);
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"[NativeCamera] Error processing frame: {ex.Message}");
-        }
-        finally
-        {
-            newImage.Close();   // Return to ImageReader pool
-        }
-
-        return;
-
-        // Swap into current slot (lock held for ~10ns - just pointer swap)
+        // Swap into current slot — fast pointer swap, drops previous unprocessed frame
         Android.Media.Image oldImage = null;
         lock (_imageLock)
         {
@@ -75,9 +40,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         oldImage?.Close();
 
         // Signal processing thread (non-blocking)
+        // All heavy work (RenderScript, SKImage, callbacks) happens on FrameProcessingLoop background thread
         _frameAvailable?.Set();
-
-        // All heavy work (RenderScript, SKImage, callbacks) happens on background thread
-        // FrameProcessingLoop inside NativeCamera.Android.cs
     }
 }

@@ -261,6 +261,9 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
     {
         // Surface will be destroyed when we return
         glThread.OnSurfaceDestroyed();
+
+        _preRenderingAttempted = false; // Reset pre-rendering flag to allow attempt on next surface creation
+
         return true;
     }
 

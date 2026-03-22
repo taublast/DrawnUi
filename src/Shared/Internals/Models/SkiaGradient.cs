@@ -102,11 +102,19 @@ public partial class SkiaGradient : BindableObject, ICloneable
     }
 
 
+    /// <summary>
+    /// Incremented whenever any gradient property changes. Consumers can cache shaders
+    /// keyed on this version to avoid rebuilding native objects every frame.
+    /// </summary>
+    public int Version => _version;
+    private int _version;
+
     private static void RedrawCanvas(BindableObject bindable, object oldvalue, object newvalue)
     {
-        if (bindable is SkiaGradient shadow)
+        if (bindable is SkiaGradient gradient)
         {
-            shadow.Parent?.Update();
+            gradient._version++;
+            gradient.Parent?.Update();
         }
     }
 
@@ -263,12 +271,14 @@ public partial class SkiaGradient : BindableObject, ICloneable
                 newCollection.CollectionChanged += gradient.OnSkiaPropertyColorCollectionChanged;
             }
 
+            gradient._version++;
             gradient.Parent?.Update();
         }
     }
 
     private void OnSkiaPropertyColorCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
+        _version++;
         this.Parent?.Update();
     }
 
@@ -324,6 +334,7 @@ public partial class SkiaGradient : BindableObject, ICloneable
                 newCollection.CollectionChanged += gradient.OnColorPositionsCollectionChanged;
             }
 
+            gradient._version++;
             gradient.Parent?.Update();
         }
 
@@ -331,6 +342,7 @@ public partial class SkiaGradient : BindableObject, ICloneable
 
     private void OnColorPositionsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
+        _version++;
         this.Parent?.Update();
     }
 
