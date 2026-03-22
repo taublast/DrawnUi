@@ -39,8 +39,8 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 ## 🆕 What's new for 1.9.5.1
 
 * Fix for use of `IsHiddenInViewTree` to stop rendering hidden canvases among the App.
-* Optimized interop calls.
 * `SkiaCamera` performance optimizations and fixes.
+* Optimized interop calls and other improvements.
 
 ## 💡 Hint of the Day
 
