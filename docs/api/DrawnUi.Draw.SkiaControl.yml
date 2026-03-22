@@ -519,6 +519,7 @@ items:
   - DrawnUi.Draw.SkiaControl.SetVisualTransform(DrawnUi.Infrastructure.VisualTransform)
   - DrawnUi.Draw.SkiaControl.SetupBackgroundPaint(SkiaSharp.SKPaint,SkiaSharp.SKRect)
   - DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@)
   - DrawnUi.Draw.SkiaControl.SetupShadow(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaShadow,System.Single)
   - DrawnUi.Draw.SkiaControl.ShouldClipAntialiased
   - DrawnUi.Draw.SkiaControl.ShouldInvalidateByChildren
@@ -655,14 +656,8 @@ items:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: >-
-      [ContentProperty("Children")]
-
-      public class SkiaControl : VisualElement, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList<IView>, ICollection<IView>, IEnumerable<IView>, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ISkiaDisposable, IDisposable
-    content.vb: >-
-      <ContentProperty("Children")>
-
-      Public Class SkiaControl Inherits VisualElement Implements INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList(Of IView), ICollection(Of IView), IEnumerable(Of IView), IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ISkiaDisposable, IDisposable
+    content: 'public class SkiaControl : VisualElement, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList<IView>, ICollection<IView>, IEnumerable<IView>, IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ISkiaDisposable, IDisposable'
+    content.vb: Public Class SkiaControl Inherits VisualElement Implements INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IVisualElementController, IElementController, IView, ITransform, IElement, IVisualTreeElement, IContainer, IList(Of IView), ICollection(Of IView), IEnumerable(Of IView), IEnumerable, ISkiaGestureListener, IHasAfterEffects, ISkiaControl, IDrawnBase, ICanBeUpdatedWithContext, ICanBeUpdated, ISkiaDisposable, IDisposable
   inheritance:
   - System.Object
   - Microsoft.Maui.Controls.BindableObject
@@ -941,12 +936,6 @@ items:
   - Microsoft.Maui.Controls.VisualElement.DrawnUi.Draw.StaticResourcesExtensions.GetAllWithMyselfParents
   - Microsoft.Maui.IView.DrawnUi.Extensions.InternalExtensions.DisposeControlAndChildren
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
-  attributes:
-  - type: Microsoft.Maui.Controls.ContentPropertyAttribute
-    ctor: Microsoft.Maui.Controls.ContentPropertyAttribute.#ctor(System.String)
-    arguments:
-    - type: System.String
-      value: Children
 - uid: DrawnUi.Draw.SkiaControl.GetEnumerator
   commentId: M:DrawnUi.Draw.SkiaControl.GetEnumerator
   id: GetEnumerator
@@ -965,7 +954,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetEnumerator
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 20
+    startLine: 19
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -998,7 +987,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Add
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 30
+    startLine: 29
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1036,7 +1025,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 38
+    startLine: 37
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1070,7 +1059,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Contains
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 43
+    startLine: 42
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1107,7 +1096,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CopyTo
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 48
+    startLine: 47
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1157,7 +1146,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Remove
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 65
+    startLine: 64
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1198,7 +1187,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Count
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 80
+    startLine: 79
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1232,7 +1221,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsReadOnly
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 85
+    startLine: 84
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1266,7 +1255,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IndexOf
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 87
+    startLine: 86
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1303,7 +1292,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Insert
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 98
+    startLine: 97
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1350,7 +1339,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RemoveAt
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 106
+    startLine: 105
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1394,7 +1383,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: this[]
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 111
+    startLine: 110
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1441,7 +1430,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetVisualChildren
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 131
+    startLine: 130
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1475,7 +1464,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetVisualParent
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 136
+    startLine: 135
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1508,7 +1497,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReportHotreloadChildAdded
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 141
+    startLine: 140
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1537,7 +1526,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReportHotreloadChildRemoved
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 155
+    startLine: 154
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1566,7 +1555,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TransparentColor
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 171
+    startLine: 170
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1593,7 +1582,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: WhiteColor
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 172
+    startLine: 171
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1620,7 +1609,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: BlackColor
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 173
+    startLine: 172
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1647,7 +1636,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RedColor
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 174
+    startLine: 173
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1674,7 +1663,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetRandomColor
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 176
+    startLine: 175
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1702,7 +1691,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UsingControlStyle
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 185
+    startLine: 184
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1731,7 +1720,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ClearColorProperty
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 204
+    startLine: 203
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1758,7 +1747,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ClearColor
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 212
+    startLine: 211
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1787,7 +1776,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPropertyChanged
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 218
+    startLine: 217
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1823,7 +1812,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPaddingSet
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 311
+    startLine: 310
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1858,7 +1847,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddSubView
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 327
+    startLine: 326
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1891,7 +1880,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RemoveSubView
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 346
+    startLine: 345
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1927,7 +1916,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutChanged
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 368
+    startLine: 367
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1955,7 +1944,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutPositionChanged
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 388
+    startLine: 387
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1983,7 +1972,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupGradient
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 399
+    startLine: 398
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2005,6 +1994,57 @@ items:
       type: System.Boolean
     content.vb: Public Function SetupGradient(paint As SKPaint, gradient As SkiaGradient, destination As SKRect) As Boolean
   overload: DrawnUi.Draw.SkiaControl.SetupGradient*
+- uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@)
+  id: SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@)
+  parent: DrawnUi.Draw.SkiaControl
+  langs:
+  - csharp
+  - vb
+  name: SetupGradient(SKPaint, SkiaGradient, SKRect, ref SKShader, ref int, ref SKRect)
+  nameWithType: SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect, ref SKShader, ref int, ref SKRect)
+  fullName: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint, DrawnUi.Draw.SkiaGradient, SkiaSharp.SKRect, ref SkiaSharp.SKShader, ref int, ref SkiaSharp.SKRect)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SetupGradient
+    path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
+    startLine: 434
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Caching overload: rebuilds the shader only when the gradient version or destination rect
+
+    has changed since the last call. The caller owns the cached shader and must dispose it
+
+    in their OnDisposing(). Passing gradient=null disposes and clears the cache.
+  example: []
+  syntax:
+    content: public bool SetupGradient(SKPaint paint, SkiaGradient gradient, SKRect destination, ref SKShader cachedShader, ref int cachedVersion, ref SKRect cachedRect)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: gradient
+      type: DrawnUi.Draw.SkiaGradient
+    - id: destination
+      type: SkiaSharp.SKRect
+    - id: cachedShader
+      type: SkiaSharp.SKShader
+    - id: cachedVersion
+      type: System.Int32
+    - id: cachedRect
+      type: SkiaSharp.SKRect
+    return:
+      type: System.Boolean
+    content.vb: Public Function SetupGradient(paint As SKPaint, gradient As SkiaGradient, destination As SKRect, cachedShader As SKShader, cachedVersion As Integer, cachedRect As SKRect) As Boolean
+  overload: DrawnUi.Draw.SkiaControl.SetupGradient*
+  nameWithType.vb: SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect, SKShader, Integer, SKRect)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint, DrawnUi.Draw.SkiaGradient, SkiaSharp.SKRect, SkiaSharp.SKShader, Integer, SkiaSharp.SKRect)
+  name.vb: SetupGradient(SKPaint, SkiaGradient, SKRect, SKShader, Integer, SKRect)
 - uid: DrawnUi.Draw.SkiaControl.CreateShadow(DrawnUi.Draw.SkiaShadow,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.CreateShadow(DrawnUi.Draw.SkiaShadow,System.Single)
   id: CreateShadow(DrawnUi.Draw.SkiaShadow,System.Single)
@@ -2023,7 +2063,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateShadow
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 430
+    startLine: 467
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2059,7 +2099,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdatePlatformShadow
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 454
+    startLine: 491
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2085,7 +2125,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PlatformShadow
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 467
+    startLine: 504
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2114,7 +2154,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HasPlatformClip
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 488
+    startLine: 525
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2142,7 +2182,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetDensity
     path: ../src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs
-    startLine: 493
+    startLine: 530
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16654,7 +16694,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _paintWithOpacity
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6187
+    startLine: 6189
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16681,7 +16721,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CustomizeLayerPaint
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6195
+    startLine: 6201
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16712,7 +16752,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Helper3d
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6197
+    startLine: 6203
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16739,7 +16779,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawWithClipAndTransforms
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6199
+    startLine: 6205
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16779,7 +16819,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsSimpleRectangle
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6313
+    startLine: 6319
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16810,7 +16850,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ClipSmart
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6366
+    startLine: 6372
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16850,7 +16890,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ShouldClipAntialiased
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6376
+    startLine: 6382
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16884,7 +16924,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedMeasure
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6378
+    startLine: 6384
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16913,7 +16953,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SafeAction
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6402
+    startLine: 6408
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16953,7 +16993,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PostDrawAction
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6425
+    startLine: 6431
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16985,7 +17025,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedRemeasuring
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6441
+    startLine: 6447
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17012,7 +17052,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateShadowPaint
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6445
+    startLine: 6451
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17038,7 +17078,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintWithShadows
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6452
+    startLine: 6458
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17069,7 +17109,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintWithEffects
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6471
+    startLine: 6477
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17098,7 +17138,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6552
+    startLine: 6562
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17135,7 +17175,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnFirstDrawn
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6593
+    startLine: 6603
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17161,7 +17201,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: WasFirstTimeDrawn
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6598
+    startLine: 6608
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17188,7 +17228,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateClip
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6606
+    startLine: 6616
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17235,7 +17275,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DebugRenderingColor
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6622
+    startLine: 6632
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17262,7 +17302,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UseTranslationY
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6624
+    startLine: 6634
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17291,7 +17331,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UseTranslationX
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6629
+    startLine: 6639
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17320,7 +17360,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LinkTransforms
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6650
+    startLine: 6660
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17349,7 +17389,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawRenderObject
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6672
+    startLine: 6683
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17384,7 +17424,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderViewsList
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6708
+    startLine: 6720
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17427,7 +17467,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateHitRect
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6772
+    startLine: 6784
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17458,7 +17498,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _measuredStamp
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6783
+    startLine: 6795
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17485,7 +17525,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _builtRenderTreeStamp
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6784
+    startLine: 6796
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17512,7 +17552,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderTree
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6789
+    startLine: 6801
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17543,7 +17583,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetRenderingTree
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6791
+    startLine: 6803
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17575,7 +17615,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Invalidated
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6799
+    startLine: 6811
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17604,7 +17644,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedUpdate
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6804
+    startLine: 6816
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17635,7 +17675,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Superview
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6826
+    startLine: 6838
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17666,7 +17706,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetSuperview
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6857
+    startLine: 6869
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17697,7 +17737,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DelegateGetOnScreenVisibleArea
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6866
+    startLine: 6878
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17724,7 +17764,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOnScreenVisibleArea
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6876
+    startLine: 6888
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17768,7 +17808,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsParentIndependent
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6937
+    startLine: 6949
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17797,7 +17837,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: WillNotUpdateParent
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6974
+    startLine: 6986
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17828,7 +17868,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateInternal
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6976
+    startLine: 6988
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17854,7 +17894,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdatedRendering
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7007
+    startLine: 7019
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17881,7 +17921,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdatedInvalidation
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7008
+    startLine: 7020
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17908,7 +17948,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Update
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7013
+    startLine: 7025
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17938,7 +17978,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Updated
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7044
+    startLine: 7056
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17967,7 +18007,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StreamFromString
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7046
+    startLine: 7058
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18001,7 +18041,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DeviceUnitsToPixels
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7051
+    startLine: 7063
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18035,7 +18075,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PixelsToDeviceUnits
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7056
+    startLine: 7068
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18069,7 +18109,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintSystem
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7067
+    startLine: 7079
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18098,7 +18138,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupBackgroundPaint
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7095
+    startLine: 7107
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18136,7 +18176,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintTintBackground
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7146
+    startLine: 7158
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18171,7 +18211,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CombineClipping
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7187
+    startLine: 7199
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18204,7 +18244,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ActionWithClipping
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7196
+    startLine: 7208
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18237,7 +18277,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateMargins
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7220
+    startLine: 7232
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18265,7 +18305,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetAllMarginsInPixels
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7235
+    startLine: 7247
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18299,7 +18339,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetMarginsInPixels
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7244
+    startLine: 7256
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18333,7 +18373,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateMeasureInternal
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7270
+    startLine: 7282
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18359,7 +18399,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateSizeRequest
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7295
+    startLine: 7307
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18385,7 +18425,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateChildrenTree
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7304
+    startLine: 7316
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18417,7 +18457,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateChildrenTree
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7317
+    startLine: 7329
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18443,7 +18483,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OutputDebug
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7328
+    startLine: 7340
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18474,7 +18514,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateWithChildren
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7330
+    startLine: 7342
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18500,7 +18540,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateChildren
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7358
+    startLine: 7370
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18532,7 +18572,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: WillInvalidateMeasure
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7371
+    startLine: 7383
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18561,7 +18601,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedInvalidateMeasure
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7379
+    startLine: 7391
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18602,7 +18642,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedDraw
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7394
+    startLine: 7406
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18643,7 +18683,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedRepaint
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7406
+    startLine: 7418
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18681,7 +18721,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateMeasure
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7415
+    startLine: 7427
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18710,7 +18750,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedInvalidateViewport
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7437
+    startLine: 7449
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18746,7 +18786,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnItemTemplateChanged
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7457
+    startLine: 7469
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18772,7 +18812,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateContentFromTemplate
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7461
+    startLine: 7473
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18800,7 +18840,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemTemplateChanged
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7489
+    startLine: 7501
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18836,7 +18876,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CommitInvalidations
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7509
+    startLine: 7521
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18873,7 +18913,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SuperViewChanged
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7519
+    startLine: 7531
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18899,7 +18939,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PendingUnattachedAnimators
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7543
+    startLine: 7555
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18926,7 +18966,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetAnimatorsManager
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7559
+    startLine: 7571
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18954,7 +18994,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RegisterAnimator
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7564
+    startLine: 7576
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18988,7 +19028,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RegisterAnimator
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7577
+    startLine: 7589
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19019,7 +19059,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UnregisterAnimator
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7584
+    startLine: 7596
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19051,7 +19091,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UnregisterAllAnimatorsByType
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7595
+    startLine: 7607
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19085,7 +19125,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayRippleAnimation
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7610
+    startLine: 7622
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19131,7 +19171,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayShimmerAnimation
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7622
+    startLine: 7634
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19174,7 +19214,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateGradient
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7645
+    startLine: 7657
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19207,7 +19247,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LastGradient
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7733
+    startLine: 7745
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19234,7 +19274,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LastShadow
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7734
+    startLine: 7746
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19261,7 +19301,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupShadow
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7741
+    startLine: 7753
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19303,7 +19343,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetOrderedSubviews
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7768
+    startLine: 7780
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19337,7 +19377,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetUnorderedSubviews
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7778
+    startLine: 7790
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19371,7 +19411,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Views
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7786
+    startLine: 7798
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19404,7 +19444,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeChildren
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7788
+    startLine: 7800
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19430,7 +19470,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnWillDisposeWithChildren
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7804
+    startLine: 7816
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19461,7 +19501,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ClearChildren
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7821
+    startLine: 7833
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19487,7 +19527,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InvalidateViewsList
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7836
+    startLine: 7848
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19516,7 +19556,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnChildRemoved
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7847
+    startLine: 7859
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19555,7 +19595,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnChildAdded
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7856
+    startLine: 7868
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19588,7 +19628,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ClearDirtyChildren
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7861
+    startLine: 7873
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19614,7 +19654,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TrackChildAsDirty
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7866
+    startLine: 7878
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19643,7 +19683,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnChildAdded
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7871
+    startLine: 7883
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19672,7 +19712,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnChildRemoved
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7881
+    startLine: 7893
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19701,7 +19741,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnChildrenChanged
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7894
+    startLine: 7906
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19729,7 +19769,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnViewAttached
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7906
+    startLine: 7918
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19755,7 +19795,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnViewDetached
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7910
+    startLine: 7922
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19781,7 +19821,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GestureListenerRegistrationTime
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7914
+    startLine: 7926
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19813,7 +19853,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RegisterGestureListener
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7916
+    startLine: 7928
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19845,7 +19885,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UnregisterGestureListener
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7926
+    startLine: 7938
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19877,7 +19917,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GestureListeners
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7940
+    startLine: 7952
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19908,7 +19948,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnParentChanged
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7942
+    startLine: 7954
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19939,7 +19979,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ClearParent
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7961
+    startLine: 7973
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19970,7 +20010,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StopAnimations
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7967
+    startLine: 7979
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19996,7 +20036,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetParent
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7973
+    startLine: 7985
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20028,7 +20068,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RegisterGestureListenersTree
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8033
+    startLine: 8045
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20057,7 +20097,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UnregisterGestureListenersTree
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8049
+    startLine: 8061
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20086,7 +20126,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemTemplateProperty
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8067
+    startLine: 8079
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20113,7 +20153,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemTemplate
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8075
+    startLine: 8087
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20144,7 +20184,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemTemplateTypeProperty
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8081
+    startLine: 8093
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20171,7 +20211,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ItemTemplateType
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8091
+    startLine: 8103
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20202,7 +20242,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddOrRemoveView
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8097
+    startLine: 8109
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20236,7 +20276,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetChildrenAsParameters
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8123
+    startLine: 8135
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20271,7 +20311,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetChildren
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8128
+    startLine: 8140
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20306,7 +20346,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: HasItemTemplate
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8182
+    startLine: 8194
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20335,7 +20375,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GesturesEffect
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8217
+    startLine: 8229
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20364,7 +20404,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RescaleAspect
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8219
+    startLine: 8231
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20404,7 +20444,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetWidthRequestPixelsWIthMargins
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8296
+    startLine: 8308
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20438,7 +20478,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetHeightRequestPixelsWIthMargins
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8313
+    startLine: 8325
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20472,7 +20512,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Random
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8331
+    startLine: 8343
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20499,7 +20539,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LastArrangedInside
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8332
+    startLine: 8344
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20526,7 +20566,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _arrangedViewportHeightLimit
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8333
+    startLine: 8345
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20553,7 +20593,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _arrangedViewportWidthLimit
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8334
+    startLine: 8346
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20580,7 +20620,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: _lastMeasuredForScale
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8335
+    startLine: 8347
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20607,7 +20647,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RoundToPixels
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8345
+    startLine: 8357
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20640,7 +20680,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RoundToPixels
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8359
+    startLine: 8371
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20682,7 +20722,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CompareFloats
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8370
+    startLine: 8382
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20720,7 +20760,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CompareDoubles
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8376
+    startLine: 8388
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20758,7 +20798,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CompareRects
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8382
+    startLine: 8394
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20796,7 +20836,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CompareRectsSize
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8404
+    startLine: 8416
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20834,7 +20874,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CompareSize
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8419
+    startLine: 8431
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20872,7 +20912,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CompareVectors
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8434
+    startLine: 8446
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20910,7 +20950,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AreEqual
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8448
+    startLine: 8460
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20948,7 +20988,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AreEqual
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8459
+    startLine: 8471
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20986,7 +21026,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AreVectorsEqual
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8470
+    startLine: 8482
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21024,7 +21064,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetDirectionType
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8484
+    startLine: 8496
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21062,7 +21102,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetDirectionType
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8505
+    startLine: 8517
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21100,7 +21140,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AreClose
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8535
+    startLine: 8547
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21143,7 +21183,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AreClose
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8550
+    startLine: 8562
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21186,7 +21226,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsOne
     path: ../src/Shared/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8564
+    startLine: 8576
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -35186,6 +35226,14 @@ references:
   name: SkiaSharp
   nameWithType: SkiaSharp
   fullName: SkiaSharp
+- uid: SkiaSharp.SKShader
+  commentId: T:SkiaSharp.SKShader
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skshader
+  name: SKShader
+  nameWithType: SKShader
+  fullName: SkiaSharp.SKShader
 - uid: DrawnUi.Draw.SkiaControl.CreateShadow*
   commentId: Overload:DrawnUi.Draw.SkiaControl.CreateShadow
   href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateShadow_DrawnUi_Draw_SkiaShadow_System_Single_
@@ -41066,14 +41114,6 @@ references:
   name: CreateGradient
   nameWithType: SkiaControl.CreateGradient
   fullName: DrawnUi.Draw.SkiaControl.CreateGradient
-- uid: SkiaSharp.SKShader
-  commentId: T:SkiaSharp.SKShader
-  parent: SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp.skshader
-  name: SKShader
-  nameWithType: SKShader
-  fullName: SkiaSharp.SKShader
 - uid: DrawnUi.Draw.CachedGradient
   commentId: T:DrawnUi.Draw.CachedGradient
   parent: DrawnUi.Draw

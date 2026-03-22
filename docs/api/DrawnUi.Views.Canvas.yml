@@ -15,7 +15,6 @@ items:
   - DrawnUi.Views.Canvas.ArrangeOverride(Microsoft.Maui.Graphics.Rect)
   - DrawnUi.Views.Canvas.AttachedTouchEffect
   - DrawnUi.Views.Canvas.BreakLine
-  - DrawnUi.Views.Canvas.Clear
   - DrawnUi.Views.Canvas.CollectGarbage(System.Int64)
   - DrawnUi.Views.Canvas.Content
   - DrawnUi.Views.Canvas.ContentProperty
@@ -96,11 +95,11 @@ items:
     content: >-
       [ContentProperty("Content")]
 
-      public class Canvas : DrawnView, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IViewController, IVisualElementController, IElementController, IGestureController, IGestureRecognizers, IPropertyMapperView, IHotReloadableView, IReplaceableView, ILayout, ILayoutController, IContentView, IView, IElement, ITransform, IPadding, ICrossPlatformLayout, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated, IAnimatorsManager, IVisualTreeElement, IDisposeManager, IGestureListener
+      public class Canvas : DrawnView, INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IViewController, IVisualElementController, IElementController, IGestureController, IGestureRecognizers, IPropertyMapperView, IHotReloadableView, IReplaceableView, ILayout, ILayoutController, IContentView, IView, IElement, ITransform, IPadding, ICrossPlatformLayout, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated, IAnimatorsManager, IVisualTreeElement, IDisposeManager, IContainer, IList<IView>, ICollection<IView>, IEnumerable<IView>, IEnumerable, IGestureListener
     content.vb: >-
       <ContentProperty("Content")>
 
-      Public Class Canvas Inherits DrawnView Implements INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IViewController, IVisualElementController, IElementController, IGestureController, IGestureRecognizers, IPropertyMapperView, IHotReloadableView, IReplaceableView, ILayout, ILayoutController, IContentView, IView, IElement, ITransform, IPadding, ICrossPlatformLayout, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated, IAnimatorsManager, IVisualTreeElement, IDisposeManager, IGestureListener
+      Public Class Canvas Inherits DrawnView Implements INotifyPropertyChanged, IEffectControlProvider, IToolTipElement, IContextFlyoutElement, IAnimatable, IViewController, IVisualElementController, IElementController, IGestureController, IGestureRecognizers, IPropertyMapperView, IHotReloadableView, IReplaceableView, ILayout, ILayoutController, IContentView, IView, IElement, ITransform, IPadding, ICrossPlatformLayout, IDrawnBase, IDisposable, ICanBeUpdatedWithContext, ICanBeUpdated, IAnimatorsManager, IVisualTreeElement, IDisposeManager, IContainer, IList(Of IView), ICollection(Of IView), IEnumerable(Of IView), IEnumerable, IGestureListener
   inheritance:
   - System.Object
   - Microsoft.Maui.Controls.BindableObject
@@ -142,6 +141,11 @@ items:
   - DrawnUi.Draw.IAnimatorsManager
   - Microsoft.Maui.IVisualTreeElement
   - DrawnUi.Views.IDisposeManager
+  - Microsoft.Maui.IContainer
+  - System.Collections.Generic.IList{Microsoft.Maui.IView}
+  - System.Collections.Generic.ICollection{Microsoft.Maui.IView}
+  - System.Collections.Generic.IEnumerable{Microsoft.Maui.IView}
+  - System.Collections.IEnumerable
   - AppoMobi.Maui.Gestures.IGestureListener
   inheritedMembers:
   - DrawnUi.Views.DrawnView.DumpLayersTree(DrawnUi.Draw.VisualLayer,System.String,System.Boolean,System.Int32)
@@ -291,6 +295,7 @@ items:
   - DrawnUi.Views.DrawnView.CanRenderOffScreen
   - DrawnUi.Views.DrawnView.CanDraw
   - DrawnUi.Views.DrawnView.IsHiddenInViewTree
+  - DrawnUi.Views.DrawnView.OnChangingtIsHiddenInViewTree(System.Boolean)
   - DrawnUi.Views.DrawnView.NeedCheckParentVisibility
   - DrawnUi.Views.DrawnView.StreamFromString(System.String)
   - DrawnUi.Views.DrawnView.PaintSystem
@@ -305,7 +310,6 @@ items:
   - DrawnUi.Views.DrawnView.RemoveSubView(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Views.DrawnView.ReportHotreloadChildRemoved(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Views.DrawnView.OnChildRemoved(DrawnUi.Draw.SkiaControl)
-  - DrawnUi.Views.DrawnView.ChildrenProperty
   - DrawnUi.Views.DrawnView.Children
   - DrawnUi.Views.DrawnView.AddOrRemoveView(DrawnUi.Draw.SkiaControl,System.Boolean)
   - DrawnUi.Views.DrawnView.UpdateModeProperty
@@ -330,6 +334,18 @@ items:
   - DrawnUi.Views.DrawnView.GetIsVisibleWithParent(Microsoft.Maui.Controls.VisualElement)
   - DrawnUi.Views.DrawnView.CheckElementVisibility(Microsoft.Maui.Controls.VisualElement)
   - DrawnUi.Views.DrawnView.ClipSmart(SkiaSharp.SKCanvas,SkiaSharp.SKPath,SkiaSharp.SKClipOperation)
+  - DrawnUi.Views.DrawnView.GetEnumerator
+  - DrawnUi.Views.DrawnView.Add(Microsoft.Maui.IView)
+  - DrawnUi.Views.DrawnView.Clear
+  - DrawnUi.Views.DrawnView.Contains(Microsoft.Maui.IView)
+  - DrawnUi.Views.DrawnView.CopyTo(Microsoft.Maui.IView[],System.Int32)
+  - DrawnUi.Views.DrawnView.Remove(Microsoft.Maui.IView)
+  - DrawnUi.Views.DrawnView.Count
+  - DrawnUi.Views.DrawnView.IsReadOnly
+  - DrawnUi.Views.DrawnView.IndexOf(Microsoft.Maui.IView)
+  - DrawnUi.Views.DrawnView.Insert(System.Int32,Microsoft.Maui.IView)
+  - DrawnUi.Views.DrawnView.RemoveAt(System.Int32)
+  - DrawnUi.Views.DrawnView.Item(System.Int32)
   - DrawnUi.Views.DrawnView.OnHotReload
   - DrawnUi.Views.DrawnView.InitFramework(System.Boolean)
   - Microsoft.Maui.Controls.TemplatedView.ControlTemplateProperty
@@ -1868,32 +1884,6 @@ items:
   nameWithType.vb: Canvas.New()
   fullName.vb: DrawnUi.Views.Canvas.New()
   name.vb: New()
-- uid: DrawnUi.Views.Canvas.Clear
-  commentId: M:DrawnUi.Views.Canvas.Clear
-  id: Clear
-  parent: DrawnUi.Views.Canvas
-  langs:
-  - csharp
-  - vb
-  name: Clear()
-  nameWithType: Canvas.Clear()
-  fullName: DrawnUi.Views.Canvas.Clear()
-  type: Method
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Views/Canvas.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: Clear
-    path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 882
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Views
-  syntax:
-    content: public void Clear()
-    content.vb: Public Sub Clear()
-  overload: DrawnUi.Views.Canvas.Clear*
 - uid: DrawnUi.Views.Canvas.PlayRippleAnimation(Microsoft.Maui.Graphics.Color,System.Double,System.Double,System.Boolean)
   commentId: M:DrawnUi.Views.Canvas.PlayRippleAnimation(Microsoft.Maui.Graphics.Color,System.Double,System.Double,System.Boolean)
   id: PlayRippleAnimation(Microsoft.Maui.Graphics.Color,System.Double,System.Double,System.Boolean)
@@ -1912,7 +1902,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayRippleAnimation
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 887
+    startLine: 883
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1950,7 +1940,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PlayShimmerAnimation
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 893
+    startLine: 889
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -1990,7 +1980,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: TimeLastGC
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 906
+    startLine: 902
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2019,7 +2009,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DelayNanosBetweenGC
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 907
+    startLine: 903
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2048,7 +2038,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CollectGarbage
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 909
+    startLine: 905
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2080,7 +2070,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPropertyChanged
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 926
+    startLine: 922
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2116,7 +2106,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GesturesDebugColorProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 939
+    startLine: 935
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2143,7 +2133,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GesturesDebugColor
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 945
+    startLine: 941
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2172,7 +2162,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReserveSpaceAroundProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 951
+    startLine: 947
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2199,7 +2189,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReserveSpaceAround
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 957
+    startLine: 953
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2228,7 +2218,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GesturesProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 971
+    startLine: 967
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2255,7 +2245,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Gestures
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 977
+    startLine: 973
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2284,7 +2274,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ContentProperty
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 985
+    startLine: 981
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2311,7 +2301,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Content
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1001
+    startLine: 997
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2340,7 +2330,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnParentChanged
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1011
+    startLine: 1007
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2370,7 +2360,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EnableUpdates
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1021
+    startLine: 1017
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2398,7 +2388,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DisableUpdates
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1031
+    startLine: 1027
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2426,7 +2416,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1036
+    startLine: 1032
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2457,7 +2447,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetGesturePositionInsideControl
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1141
+    startLine: 1137
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2504,7 +2494,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FindViewCoordinatesRecursive
     path: ../src/Maui/DrawnUi/Views/Canvas.cs
-    startLine: 1186
+    startLine: 1182
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -2859,6 +2849,127 @@ references:
   name: IDisposeManager
   nameWithType: IDisposeManager
   fullName: DrawnUi.Views.IDisposeManager
+- uid: Microsoft.Maui.IContainer
+  commentId: T:Microsoft.Maui.IContainer
+  parent: Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.icontainer
+  name: IContainer
+  nameWithType: IContainer
+  fullName: Microsoft.Maui.IContainer
+- uid: System.Collections.Generic.IList{Microsoft.Maui.IView}
+  commentId: T:System.Collections.Generic.IList{Microsoft.Maui.IView}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  name: IList<IView>
+  nameWithType: IList<IView>
+  fullName: System.Collections.Generic.IList<Microsoft.Maui.IView>
+  nameWithType.vb: IList(Of IView)
+  fullName.vb: System.Collections.Generic.IList(Of Microsoft.Maui.IView)
+  name.vb: IList(Of IView)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: <
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: System.Collections.Generic.ICollection{Microsoft.Maui.IView}
+  commentId: T:System.Collections.Generic.ICollection{Microsoft.Maui.IView}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.ICollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  name: ICollection<IView>
+  nameWithType: ICollection<IView>
+  fullName: System.Collections.Generic.ICollection<Microsoft.Maui.IView>
+  nameWithType.vb: ICollection(Of IView)
+  fullName.vb: System.Collections.Generic.ICollection(Of Microsoft.Maui.IView)
+  name.vb: ICollection(Of IView)
+  spec.csharp:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: <
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: System.Collections.Generic.IEnumerable{Microsoft.Maui.IView}
+  commentId: T:System.Collections.Generic.IEnumerable{Microsoft.Maui.IView}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<IView>
+  nameWithType: IEnumerable<IView>
+  fullName: System.Collections.Generic.IEnumerable<Microsoft.Maui.IView>
+  nameWithType.vb: IEnumerable(Of IView)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Microsoft.Maui.IView)
+  name.vb: IEnumerable(Of IView)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: System.Collections.IEnumerable
+  commentId: T:System.Collections.IEnumerable
+  parent: System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerable
+  name: IEnumerable
+  nameWithType: IEnumerable
+  fullName: System.Collections.IEnumerable
 - uid: AppoMobi.Maui.Gestures.IGestureListener
   commentId: T:AppoMobi.Maui.Gestures.IGestureListener
   parent: AppoMobi.Maui.Gestures
@@ -5448,6 +5559,37 @@ references:
   name: IsHiddenInViewTree
   nameWithType: DrawnView.IsHiddenInViewTree
   fullName: DrawnUi.Views.DrawnView.IsHiddenInViewTree
+- uid: DrawnUi.Views.DrawnView.OnChangingtIsHiddenInViewTree(System.Boolean)
+  commentId: M:DrawnUi.Views.DrawnView.OnChangingtIsHiddenInViewTree(System.Boolean)
+  parent: DrawnUi.Views.DrawnView
+  isExternal: true
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnChangingtIsHiddenInViewTree_System_Boolean_
+  name: OnChangingtIsHiddenInViewTree(bool)
+  nameWithType: DrawnView.OnChangingtIsHiddenInViewTree(bool)
+  fullName: DrawnUi.Views.DrawnView.OnChangingtIsHiddenInViewTree(bool)
+  nameWithType.vb: DrawnView.OnChangingtIsHiddenInViewTree(Boolean)
+  fullName.vb: DrawnUi.Views.DrawnView.OnChangingtIsHiddenInViewTree(Boolean)
+  name.vb: OnChangingtIsHiddenInViewTree(Boolean)
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView.OnChangingtIsHiddenInViewTree(System.Boolean)
+    name: OnChangingtIsHiddenInViewTree
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnChangingtIsHiddenInViewTree_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView.OnChangingtIsHiddenInViewTree(System.Boolean)
+    name: OnChangingtIsHiddenInViewTree
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_OnChangingtIsHiddenInViewTree_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
 - uid: DrawnUi.Views.DrawnView.NeedCheckParentVisibility
   commentId: P:DrawnUi.Views.DrawnView.NeedCheckParentVisibility
   parent: DrawnUi.Views.DrawnView
@@ -5753,13 +5895,6 @@ references:
     name: SkiaControl
     href: DrawnUi.Draw.SkiaControl.html
   - name: )
-- uid: DrawnUi.Views.DrawnView.ChildrenProperty
-  commentId: F:DrawnUi.Views.DrawnView.ChildrenProperty
-  parent: DrawnUi.Views.DrawnView
-  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_ChildrenProperty
-  name: ChildrenProperty
-  nameWithType: DrawnView.ChildrenProperty
-  fullName: DrawnUi.Views.DrawnView.ChildrenProperty
 - uid: DrawnUi.Views.DrawnView.Children
   commentId: P:DrawnUi.Views.DrawnView.Children
   parent: DrawnUi.Views.DrawnView
@@ -6124,6 +6259,320 @@ references:
     name: SKClipOperation
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skclipoperation
+  - name: )
+- uid: DrawnUi.Views.DrawnView.GetEnumerator
+  commentId: M:DrawnUi.Views.DrawnView.GetEnumerator
+  parent: DrawnUi.Views.DrawnView
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_GetEnumerator
+  name: GetEnumerator()
+  nameWithType: DrawnView.GetEnumerator()
+  fullName: DrawnUi.Views.DrawnView.GetEnumerator()
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView.GetEnumerator
+    name: GetEnumerator
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_GetEnumerator
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView.GetEnumerator
+    name: GetEnumerator
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_GetEnumerator
+  - name: (
+  - name: )
+- uid: DrawnUi.Views.DrawnView.Add(Microsoft.Maui.IView)
+  commentId: M:DrawnUi.Views.DrawnView.Add(Microsoft.Maui.IView)
+  parent: DrawnUi.Views.DrawnView
+  isExternal: true
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Add_Microsoft_Maui_IView_
+  name: Add(IView)
+  nameWithType: DrawnView.Add(IView)
+  fullName: DrawnUi.Views.DrawnView.Add(Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView.Add(Microsoft.Maui.IView)
+    name: Add
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Add_Microsoft_Maui_IView_
+  - name: (
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView.Add(Microsoft.Maui.IView)
+    name: Add
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Add_Microsoft_Maui_IView_
+  - name: (
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: DrawnUi.Views.DrawnView.Clear
+  commentId: M:DrawnUi.Views.DrawnView.Clear
+  parent: DrawnUi.Views.DrawnView
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Clear
+  name: Clear()
+  nameWithType: DrawnView.Clear()
+  fullName: DrawnUi.Views.DrawnView.Clear()
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView.Clear
+    name: Clear
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Clear
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView.Clear
+    name: Clear
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Clear
+  - name: (
+  - name: )
+- uid: DrawnUi.Views.DrawnView.Contains(Microsoft.Maui.IView)
+  commentId: M:DrawnUi.Views.DrawnView.Contains(Microsoft.Maui.IView)
+  parent: DrawnUi.Views.DrawnView
+  isExternal: true
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Contains_Microsoft_Maui_IView_
+  name: Contains(IView)
+  nameWithType: DrawnView.Contains(IView)
+  fullName: DrawnUi.Views.DrawnView.Contains(Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView.Contains(Microsoft.Maui.IView)
+    name: Contains
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Contains_Microsoft_Maui_IView_
+  - name: (
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView.Contains(Microsoft.Maui.IView)
+    name: Contains
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Contains_Microsoft_Maui_IView_
+  - name: (
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: DrawnUi.Views.DrawnView.CopyTo(Microsoft.Maui.IView[],System.Int32)
+  commentId: M:DrawnUi.Views.DrawnView.CopyTo(Microsoft.Maui.IView[],System.Int32)
+  parent: DrawnUi.Views.DrawnView
+  isExternal: true
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CopyTo_Microsoft_Maui_IView___System_Int32_
+  name: CopyTo(IView[], int)
+  nameWithType: DrawnView.CopyTo(IView[], int)
+  fullName: DrawnUi.Views.DrawnView.CopyTo(Microsoft.Maui.IView[], int)
+  nameWithType.vb: DrawnView.CopyTo(IView(), Integer)
+  fullName.vb: DrawnUi.Views.DrawnView.CopyTo(Microsoft.Maui.IView(), Integer)
+  name.vb: CopyTo(IView(), Integer)
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView.CopyTo(Microsoft.Maui.IView[],System.Int32)
+    name: CopyTo
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CopyTo_Microsoft_Maui_IView___System_Int32_
+  - name: (
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: '['
+  - name: ']'
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView.CopyTo(Microsoft.Maui.IView[],System.Int32)
+    name: CopyTo
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_CopyTo_Microsoft_Maui_IView___System_Int32_
+  - name: (
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: (
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: DrawnUi.Views.DrawnView.Remove(Microsoft.Maui.IView)
+  commentId: M:DrawnUi.Views.DrawnView.Remove(Microsoft.Maui.IView)
+  parent: DrawnUi.Views.DrawnView
+  isExternal: true
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Remove_Microsoft_Maui_IView_
+  name: Remove(IView)
+  nameWithType: DrawnView.Remove(IView)
+  fullName: DrawnUi.Views.DrawnView.Remove(Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView.Remove(Microsoft.Maui.IView)
+    name: Remove
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Remove_Microsoft_Maui_IView_
+  - name: (
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView.Remove(Microsoft.Maui.IView)
+    name: Remove
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Remove_Microsoft_Maui_IView_
+  - name: (
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: DrawnUi.Views.DrawnView.Count
+  commentId: P:DrawnUi.Views.DrawnView.Count
+  parent: DrawnUi.Views.DrawnView
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Count
+  name: Count
+  nameWithType: DrawnView.Count
+  fullName: DrawnUi.Views.DrawnView.Count
+- uid: DrawnUi.Views.DrawnView.IsReadOnly
+  commentId: P:DrawnUi.Views.DrawnView.IsReadOnly
+  parent: DrawnUi.Views.DrawnView
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_IsReadOnly
+  name: IsReadOnly
+  nameWithType: DrawnView.IsReadOnly
+  fullName: DrawnUi.Views.DrawnView.IsReadOnly
+- uid: DrawnUi.Views.DrawnView.IndexOf(Microsoft.Maui.IView)
+  commentId: M:DrawnUi.Views.DrawnView.IndexOf(Microsoft.Maui.IView)
+  parent: DrawnUi.Views.DrawnView
+  isExternal: true
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_IndexOf_Microsoft_Maui_IView_
+  name: IndexOf(IView)
+  nameWithType: DrawnView.IndexOf(IView)
+  fullName: DrawnUi.Views.DrawnView.IndexOf(Microsoft.Maui.IView)
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView.IndexOf(Microsoft.Maui.IView)
+    name: IndexOf
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_IndexOf_Microsoft_Maui_IView_
+  - name: (
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView.IndexOf(Microsoft.Maui.IView)
+    name: IndexOf
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_IndexOf_Microsoft_Maui_IView_
+  - name: (
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: DrawnUi.Views.DrawnView.Insert(System.Int32,Microsoft.Maui.IView)
+  commentId: M:DrawnUi.Views.DrawnView.Insert(System.Int32,Microsoft.Maui.IView)
+  parent: DrawnUi.Views.DrawnView
+  isExternal: true
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Insert_System_Int32_Microsoft_Maui_IView_
+  name: Insert(int, IView)
+  nameWithType: DrawnView.Insert(int, IView)
+  fullName: DrawnUi.Views.DrawnView.Insert(int, Microsoft.Maui.IView)
+  nameWithType.vb: DrawnView.Insert(Integer, IView)
+  fullName.vb: DrawnUi.Views.DrawnView.Insert(Integer, Microsoft.Maui.IView)
+  name.vb: Insert(Integer, IView)
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView.Insert(System.Int32,Microsoft.Maui.IView)
+    name: Insert
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Insert_System_Int32_Microsoft_Maui_IView_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView.Insert(System.Int32,Microsoft.Maui.IView)
+    name: Insert
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Insert_System_Int32_Microsoft_Maui_IView_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.IView
+    name: IView
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.iview
+  - name: )
+- uid: DrawnUi.Views.DrawnView.RemoveAt(System.Int32)
+  commentId: M:DrawnUi.Views.DrawnView.RemoveAt(System.Int32)
+  parent: DrawnUi.Views.DrawnView
+  isExternal: true
+  href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_RemoveAt_System_Int32_
+  name: RemoveAt(int)
+  nameWithType: DrawnView.RemoveAt(int)
+  fullName: DrawnUi.Views.DrawnView.RemoveAt(int)
+  nameWithType.vb: DrawnView.RemoveAt(Integer)
+  fullName.vb: DrawnUi.Views.DrawnView.RemoveAt(Integer)
+  name.vb: RemoveAt(Integer)
+  spec.csharp:
+  - uid: DrawnUi.Views.DrawnView.RemoveAt(System.Int32)
+    name: RemoveAt
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_RemoveAt_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView.RemoveAt(System.Int32)
+    name: RemoveAt
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_RemoveAt_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: DrawnUi.Views.DrawnView.Item(System.Int32)
+  commentId: P:DrawnUi.Views.DrawnView.Item(System.Int32)
+  parent: DrawnUi.Views.DrawnView
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: this[int]
+  nameWithType: DrawnView.this[int]
+  fullName: DrawnUi.Views.DrawnView.this[int]
+  nameWithType.vb: DrawnView.this[](Integer)
+  fullName.vb: DrawnUi.Views.DrawnView.this[](Integer)
+  name.vb: this[](Integer)
+  spec.csharp:
+  - name: this
+  - name: '['
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ']'
+  spec.vb:
+  - uid: DrawnUi.Views.DrawnView.Item(System.Int32)
+    name: this[]
+    href: DrawnUi.Views.DrawnView.html#DrawnUi_Views_DrawnView_Item_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
   - name: )
 - uid: DrawnUi.Views.DrawnView.OnHotReload
   commentId: M:DrawnUi.Views.DrawnView.OnHotReload
@@ -10092,6 +10541,154 @@ references:
   - uid: DrawnUi.Draw
     name: Draw
     href: DrawnUi.Draw.html
+- uid: System.Collections.Generic.IList`1
+  commentId: T:System.Collections.Generic.IList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  name: IList<T>
+  nameWithType: IList<T>
+  fullName: System.Collections.Generic.IList<T>
+  nameWithType.vb: IList(Of T)
+  fullName.vb: System.Collections.Generic.IList(Of T)
+  name.vb: IList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: System.Collections.Generic.ICollection`1
+  commentId: T:System.Collections.Generic.ICollection`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  name: ICollection<T>
+  nameWithType: ICollection<T>
+  fullName: System.Collections.Generic.ICollection<T>
+  nameWithType.vb: ICollection(Of T)
+  fullName.vb: System.Collections.Generic.ICollection(Of T)
+  name.vb: ICollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections
+  commentId: N:System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections
+  nameWithType: System.Collections
+  fullName: System.Collections
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
 - uid: AppoMobi.Maui.Gestures
   commentId: N:AppoMobi.Maui.Gestures
   isExternal: true
@@ -10650,71 +11247,6 @@ references:
     name: SkiaControl
     href: DrawnUi.Draw.SkiaControl.html
   - name: )
-- uid: System.Collections.Generic.IEnumerable`1
-  commentId: T:System.Collections.Generic.IEnumerable`1
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
-  name: IEnumerable<T>
-  nameWithType: IEnumerable<T>
-  fullName: System.Collections.Generic.IEnumerable<T>
-  nameWithType.vb: IEnumerable(Of T)
-  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
-  name.vb: IEnumerable(Of T)
-  spec.csharp:
-  - uid: System.Collections.Generic.IEnumerable`1
-    name: IEnumerable
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
-  - name: <
-  - name: T
-  - name: '>'
-  spec.vb:
-  - uid: System.Collections.Generic.IEnumerable`1
-    name: IEnumerable
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
-  - name: (
-  - name: Of
-  - name: " "
-  - name: T
-  - name: )
-- uid: System.Collections.Generic
-  commentId: N:System.Collections.Generic
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system
-  name: System.Collections.Generic
-  nameWithType: System.Collections.Generic
-  fullName: System.Collections.Generic
-  spec.csharp:
-  - uid: System
-    name: System
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system
-  - name: .
-  - uid: System.Collections
-    name: Collections
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections
-  - name: .
-  - uid: System.Collections.Generic
-    name: Generic
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
-  spec.vb:
-  - uid: System
-    name: System
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system
-  - name: .
-  - uid: System.Collections
-    name: Collections
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections
-  - name: .
-  - uid: System.Collections.Generic
-    name: Generic
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
 - uid: DrawnUi.Views.Canvas.DumpDebug*
   commentId: Overload:DrawnUi.Views.Canvas.DumpDebug
   href: DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_DumpDebug
@@ -11657,12 +12189,6 @@ references:
   nameWithType.vb: Canvas.New
   fullName.vb: DrawnUi.Views.Canvas.New
   name.vb: New
-- uid: DrawnUi.Views.Canvas.Clear*
-  commentId: Overload:DrawnUi.Views.Canvas.Clear
-  href: DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_Clear
-  name: Clear
-  nameWithType: Canvas.Clear
-  fullName: DrawnUi.Views.Canvas.Clear
 - uid: DrawnUi.Views.Canvas.PlayRippleAnimation*
   commentId: Overload:DrawnUi.Views.Canvas.PlayRippleAnimation
   href: DrawnUi.Views.Canvas.html#DrawnUi_Views_Canvas_PlayRippleAnimation_Microsoft_Maui_Graphics_Color_System_Double_System_Double_System_Boolean_

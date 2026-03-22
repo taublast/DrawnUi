@@ -1,0 +1,884 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Draw.SKPaintExtensions
+  commentId: T:DrawnUi.Draw.SKPaintExtensions
+  id: SKPaintExtensions
+  parent: DrawnUi.Draw
+  children:
+  - DrawnUi.Draw.SKPaintExtensions.GuardBlendMode(SkiaSharp.SKPaint,SkiaSharp.SKBlendMode@,SkiaSharp.SKBlendMode)
+  - DrawnUi.Draw.SKPaintExtensions.GuardColor(SkiaSharp.SKPaint,SkiaSharp.SKColor@,SkiaSharp.SKColor)
+  - DrawnUi.Draw.SKPaintExtensions.GuardColorFilter(SkiaSharp.SKPaint,SkiaSharp.SKColorFilter@,SkiaSharp.SKColorFilter)
+  - DrawnUi.Draw.SKPaintExtensions.GuardFilterQuality(SkiaSharp.SKPaint,SkiaSharp.SKFilterQuality@,SkiaSharp.SKFilterQuality)
+  - DrawnUi.Draw.SKPaintExtensions.GuardImageFilter(SkiaSharp.SKPaint,SkiaSharp.SKImageFilter@,SkiaSharp.SKImageFilter)
+  - DrawnUi.Draw.SKPaintExtensions.GuardIsAntialias(SkiaSharp.SKPaint,System.Boolean@,System.Boolean)
+  - DrawnUi.Draw.SKPaintExtensions.GuardIsDither(SkiaSharp.SKPaint,System.Boolean@,System.Boolean)
+  - DrawnUi.Draw.SKPaintExtensions.GuardStrokeWidth(SkiaSharp.SKPaint,System.Single@,System.Single)
+  - DrawnUi.Draw.SKPaintExtensions.GuardStyle(SkiaSharp.SKPaint,SkiaSharp.SKPaintStyle@,SkiaSharp.SKPaintStyle)
+  - DrawnUi.Draw.SKPaintExtensions.GuardTextSize(SkiaSharp.SKPaint,System.Single@,System.Single)
+  - DrawnUi.Draw.SKPaintExtensions.GuardTypeface(SkiaSharp.SKPaint,SkiaSharp.SKTypeface@,SkiaSharp.SKTypeface)
+  langs:
+  - csharp
+  - vb
+  name: SKPaintExtensions
+  nameWithType: SKPaintExtensions
+  fullName: DrawnUi.Draw.SKPaintExtensions
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SKPaintExtensions.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SKPaintExtensions
+    path: ../src/Shared/Draw/Base/SKPaintExtensions.cs
+    startLine: 11
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Guarded setters for SKPaint properties. Each method compares a managed shadow value
+
+    before calling the native P/Invoke setter, eliminating redundant interop when the
+
+    value has not changed between frames.
+
+    Methods are prefixed with "Guard" to avoid conflicts with SkiaSharp's own instance methods.
+  example: []
+  syntax:
+    content: public static class SKPaintExtensions
+    content.vb: Public Module SKPaintExtensions
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardColor(SkiaSharp.SKPaint,SkiaSharp.SKColor@,SkiaSharp.SKColor)
+  commentId: M:DrawnUi.Draw.SKPaintExtensions.GuardColor(SkiaSharp.SKPaint,SkiaSharp.SKColor@,SkiaSharp.SKColor)
+  id: GuardColor(SkiaSharp.SKPaint,SkiaSharp.SKColor@,SkiaSharp.SKColor)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.SKPaintExtensions
+  langs:
+  - csharp
+  - vb
+  name: GuardColor(SKPaint, ref SKColor, SKColor)
+  nameWithType: SKPaintExtensions.GuardColor(SKPaint, ref SKColor, SKColor)
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardColor(SkiaSharp.SKPaint, ref SkiaSharp.SKColor, SkiaSharp.SKColor)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SKPaintExtensions.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GuardColor
+    path: ../src/Shared/Draw/Base/SKPaintExtensions.cs
+    startLine: 13
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void GuardColor(this SKPaint paint, ref SKColor cache, SKColor value)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: cache
+      type: SkiaSharp.SKColor
+    - id: value
+      type: SkiaSharp.SKColor
+    content.vb: Public Shared Sub GuardColor(paint As SKPaint, cache As SKColor, value As SKColor)
+  overload: DrawnUi.Draw.SKPaintExtensions.GuardColor*
+  nameWithType.vb: SKPaintExtensions.GuardColor(SKPaint, SKColor, SKColor)
+  fullName.vb: DrawnUi.Draw.SKPaintExtensions.GuardColor(SkiaSharp.SKPaint, SkiaSharp.SKColor, SkiaSharp.SKColor)
+  name.vb: GuardColor(SKPaint, SKColor, SKColor)
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardStyle(SkiaSharp.SKPaint,SkiaSharp.SKPaintStyle@,SkiaSharp.SKPaintStyle)
+  commentId: M:DrawnUi.Draw.SKPaintExtensions.GuardStyle(SkiaSharp.SKPaint,SkiaSharp.SKPaintStyle@,SkiaSharp.SKPaintStyle)
+  id: GuardStyle(SkiaSharp.SKPaint,SkiaSharp.SKPaintStyle@,SkiaSharp.SKPaintStyle)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.SKPaintExtensions
+  langs:
+  - csharp
+  - vb
+  name: GuardStyle(SKPaint, ref SKPaintStyle, SKPaintStyle)
+  nameWithType: SKPaintExtensions.GuardStyle(SKPaint, ref SKPaintStyle, SKPaintStyle)
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardStyle(SkiaSharp.SKPaint, ref SkiaSharp.SKPaintStyle, SkiaSharp.SKPaintStyle)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SKPaintExtensions.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GuardStyle
+    path: ../src/Shared/Draw/Base/SKPaintExtensions.cs
+    startLine: 19
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void GuardStyle(this SKPaint paint, ref SKPaintStyle cache, SKPaintStyle value)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: cache
+      type: SkiaSharp.SKPaintStyle
+    - id: value
+      type: SkiaSharp.SKPaintStyle
+    content.vb: Public Shared Sub GuardStyle(paint As SKPaint, cache As SKPaintStyle, value As SKPaintStyle)
+  overload: DrawnUi.Draw.SKPaintExtensions.GuardStyle*
+  nameWithType.vb: SKPaintExtensions.GuardStyle(SKPaint, SKPaintStyle, SKPaintStyle)
+  fullName.vb: DrawnUi.Draw.SKPaintExtensions.GuardStyle(SkiaSharp.SKPaint, SkiaSharp.SKPaintStyle, SkiaSharp.SKPaintStyle)
+  name.vb: GuardStyle(SKPaint, SKPaintStyle, SKPaintStyle)
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardIsDither(SkiaSharp.SKPaint,System.Boolean@,System.Boolean)
+  commentId: M:DrawnUi.Draw.SKPaintExtensions.GuardIsDither(SkiaSharp.SKPaint,System.Boolean@,System.Boolean)
+  id: GuardIsDither(SkiaSharp.SKPaint,System.Boolean@,System.Boolean)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.SKPaintExtensions
+  langs:
+  - csharp
+  - vb
+  name: GuardIsDither(SKPaint, ref bool, bool)
+  nameWithType: SKPaintExtensions.GuardIsDither(SKPaint, ref bool, bool)
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardIsDither(SkiaSharp.SKPaint, ref bool, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SKPaintExtensions.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GuardIsDither
+    path: ../src/Shared/Draw/Base/SKPaintExtensions.cs
+    startLine: 25
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void GuardIsDither(this SKPaint paint, ref bool cache, bool value)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: cache
+      type: System.Boolean
+    - id: value
+      type: System.Boolean
+    content.vb: Public Shared Sub GuardIsDither(paint As SKPaint, cache As Boolean, value As Boolean)
+  overload: DrawnUi.Draw.SKPaintExtensions.GuardIsDither*
+  nameWithType.vb: SKPaintExtensions.GuardIsDither(SKPaint, Boolean, Boolean)
+  fullName.vb: DrawnUi.Draw.SKPaintExtensions.GuardIsDither(SkiaSharp.SKPaint, Boolean, Boolean)
+  name.vb: GuardIsDither(SKPaint, Boolean, Boolean)
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardIsAntialias(SkiaSharp.SKPaint,System.Boolean@,System.Boolean)
+  commentId: M:DrawnUi.Draw.SKPaintExtensions.GuardIsAntialias(SkiaSharp.SKPaint,System.Boolean@,System.Boolean)
+  id: GuardIsAntialias(SkiaSharp.SKPaint,System.Boolean@,System.Boolean)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.SKPaintExtensions
+  langs:
+  - csharp
+  - vb
+  name: GuardIsAntialias(SKPaint, ref bool, bool)
+  nameWithType: SKPaintExtensions.GuardIsAntialias(SKPaint, ref bool, bool)
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardIsAntialias(SkiaSharp.SKPaint, ref bool, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SKPaintExtensions.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GuardIsAntialias
+    path: ../src/Shared/Draw/Base/SKPaintExtensions.cs
+    startLine: 31
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void GuardIsAntialias(this SKPaint paint, ref bool cache, bool value)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: cache
+      type: System.Boolean
+    - id: value
+      type: System.Boolean
+    content.vb: Public Shared Sub GuardIsAntialias(paint As SKPaint, cache As Boolean, value As Boolean)
+  overload: DrawnUi.Draw.SKPaintExtensions.GuardIsAntialias*
+  nameWithType.vb: SKPaintExtensions.GuardIsAntialias(SKPaint, Boolean, Boolean)
+  fullName.vb: DrawnUi.Draw.SKPaintExtensions.GuardIsAntialias(SkiaSharp.SKPaint, Boolean, Boolean)
+  name.vb: GuardIsAntialias(SKPaint, Boolean, Boolean)
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardTextSize(SkiaSharp.SKPaint,System.Single@,System.Single)
+  commentId: M:DrawnUi.Draw.SKPaintExtensions.GuardTextSize(SkiaSharp.SKPaint,System.Single@,System.Single)
+  id: GuardTextSize(SkiaSharp.SKPaint,System.Single@,System.Single)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.SKPaintExtensions
+  langs:
+  - csharp
+  - vb
+  name: GuardTextSize(SKPaint, ref float, float)
+  nameWithType: SKPaintExtensions.GuardTextSize(SKPaint, ref float, float)
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardTextSize(SkiaSharp.SKPaint, ref float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SKPaintExtensions.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GuardTextSize
+    path: ../src/Shared/Draw/Base/SKPaintExtensions.cs
+    startLine: 37
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void GuardTextSize(this SKPaint paint, ref float cache, float value)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: cache
+      type: System.Single
+    - id: value
+      type: System.Single
+    content.vb: Public Shared Sub GuardTextSize(paint As SKPaint, cache As Single, value As Single)
+  overload: DrawnUi.Draw.SKPaintExtensions.GuardTextSize*
+  nameWithType.vb: SKPaintExtensions.GuardTextSize(SKPaint, Single, Single)
+  fullName.vb: DrawnUi.Draw.SKPaintExtensions.GuardTextSize(SkiaSharp.SKPaint, Single, Single)
+  name.vb: GuardTextSize(SKPaint, Single, Single)
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardStrokeWidth(SkiaSharp.SKPaint,System.Single@,System.Single)
+  commentId: M:DrawnUi.Draw.SKPaintExtensions.GuardStrokeWidth(SkiaSharp.SKPaint,System.Single@,System.Single)
+  id: GuardStrokeWidth(SkiaSharp.SKPaint,System.Single@,System.Single)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.SKPaintExtensions
+  langs:
+  - csharp
+  - vb
+  name: GuardStrokeWidth(SKPaint, ref float, float)
+  nameWithType: SKPaintExtensions.GuardStrokeWidth(SKPaint, ref float, float)
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardStrokeWidth(SkiaSharp.SKPaint, ref float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SKPaintExtensions.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GuardStrokeWidth
+    path: ../src/Shared/Draw/Base/SKPaintExtensions.cs
+    startLine: 43
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void GuardStrokeWidth(this SKPaint paint, ref float cache, float value)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: cache
+      type: System.Single
+    - id: value
+      type: System.Single
+    content.vb: Public Shared Sub GuardStrokeWidth(paint As SKPaint, cache As Single, value As Single)
+  overload: DrawnUi.Draw.SKPaintExtensions.GuardStrokeWidth*
+  nameWithType.vb: SKPaintExtensions.GuardStrokeWidth(SKPaint, Single, Single)
+  fullName.vb: DrawnUi.Draw.SKPaintExtensions.GuardStrokeWidth(SkiaSharp.SKPaint, Single, Single)
+  name.vb: GuardStrokeWidth(SKPaint, Single, Single)
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardBlendMode(SkiaSharp.SKPaint,SkiaSharp.SKBlendMode@,SkiaSharp.SKBlendMode)
+  commentId: M:DrawnUi.Draw.SKPaintExtensions.GuardBlendMode(SkiaSharp.SKPaint,SkiaSharp.SKBlendMode@,SkiaSharp.SKBlendMode)
+  id: GuardBlendMode(SkiaSharp.SKPaint,SkiaSharp.SKBlendMode@,SkiaSharp.SKBlendMode)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.SKPaintExtensions
+  langs:
+  - csharp
+  - vb
+  name: GuardBlendMode(SKPaint, ref SKBlendMode, SKBlendMode)
+  nameWithType: SKPaintExtensions.GuardBlendMode(SKPaint, ref SKBlendMode, SKBlendMode)
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardBlendMode(SkiaSharp.SKPaint, ref SkiaSharp.SKBlendMode, SkiaSharp.SKBlendMode)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SKPaintExtensions.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GuardBlendMode
+    path: ../src/Shared/Draw/Base/SKPaintExtensions.cs
+    startLine: 49
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void GuardBlendMode(this SKPaint paint, ref SKBlendMode cache, SKBlendMode value)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: cache
+      type: SkiaSharp.SKBlendMode
+    - id: value
+      type: SkiaSharp.SKBlendMode
+    content.vb: Public Shared Sub GuardBlendMode(paint As SKPaint, cache As SKBlendMode, value As SKBlendMode)
+  overload: DrawnUi.Draw.SKPaintExtensions.GuardBlendMode*
+  nameWithType.vb: SKPaintExtensions.GuardBlendMode(SKPaint, SKBlendMode, SKBlendMode)
+  fullName.vb: DrawnUi.Draw.SKPaintExtensions.GuardBlendMode(SkiaSharp.SKPaint, SkiaSharp.SKBlendMode, SkiaSharp.SKBlendMode)
+  name.vb: GuardBlendMode(SKPaint, SKBlendMode, SKBlendMode)
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardTypeface(SkiaSharp.SKPaint,SkiaSharp.SKTypeface@,SkiaSharp.SKTypeface)
+  commentId: M:DrawnUi.Draw.SKPaintExtensions.GuardTypeface(SkiaSharp.SKPaint,SkiaSharp.SKTypeface@,SkiaSharp.SKTypeface)
+  id: GuardTypeface(SkiaSharp.SKPaint,SkiaSharp.SKTypeface@,SkiaSharp.SKTypeface)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.SKPaintExtensions
+  langs:
+  - csharp
+  - vb
+  name: GuardTypeface(SKPaint, ref SKTypeface, SKTypeface)
+  nameWithType: SKPaintExtensions.GuardTypeface(SKPaint, ref SKTypeface, SKTypeface)
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardTypeface(SkiaSharp.SKPaint, ref SkiaSharp.SKTypeface, SkiaSharp.SKTypeface)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SKPaintExtensions.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GuardTypeface
+    path: ../src/Shared/Draw/Base/SKPaintExtensions.cs
+    startLine: 55
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void GuardTypeface(this SKPaint paint, ref SKTypeface cache, SKTypeface value)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: cache
+      type: SkiaSharp.SKTypeface
+    - id: value
+      type: SkiaSharp.SKTypeface
+    content.vb: Public Shared Sub GuardTypeface(paint As SKPaint, cache As SKTypeface, value As SKTypeface)
+  overload: DrawnUi.Draw.SKPaintExtensions.GuardTypeface*
+  nameWithType.vb: SKPaintExtensions.GuardTypeface(SKPaint, SKTypeface, SKTypeface)
+  fullName.vb: DrawnUi.Draw.SKPaintExtensions.GuardTypeface(SkiaSharp.SKPaint, SkiaSharp.SKTypeface, SkiaSharp.SKTypeface)
+  name.vb: GuardTypeface(SKPaint, SKTypeface, SKTypeface)
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardFilterQuality(SkiaSharp.SKPaint,SkiaSharp.SKFilterQuality@,SkiaSharp.SKFilterQuality)
+  commentId: M:DrawnUi.Draw.SKPaintExtensions.GuardFilterQuality(SkiaSharp.SKPaint,SkiaSharp.SKFilterQuality@,SkiaSharp.SKFilterQuality)
+  id: GuardFilterQuality(SkiaSharp.SKPaint,SkiaSharp.SKFilterQuality@,SkiaSharp.SKFilterQuality)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.SKPaintExtensions
+  langs:
+  - csharp
+  - vb
+  name: GuardFilterQuality(SKPaint, ref SKFilterQuality, SKFilterQuality)
+  nameWithType: SKPaintExtensions.GuardFilterQuality(SKPaint, ref SKFilterQuality, SKFilterQuality)
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardFilterQuality(SkiaSharp.SKPaint, ref SkiaSharp.SKFilterQuality, SkiaSharp.SKFilterQuality)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SKPaintExtensions.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GuardFilterQuality
+    path: ../src/Shared/Draw/Base/SKPaintExtensions.cs
+    startLine: 61
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void GuardFilterQuality(this SKPaint paint, ref SKFilterQuality cache, SKFilterQuality value)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: cache
+      type: SkiaSharp.SKFilterQuality
+    - id: value
+      type: SkiaSharp.SKFilterQuality
+    content.vb: Public Shared Sub GuardFilterQuality(paint As SKPaint, cache As SKFilterQuality, value As SKFilterQuality)
+  overload: DrawnUi.Draw.SKPaintExtensions.GuardFilterQuality*
+  nameWithType.vb: SKPaintExtensions.GuardFilterQuality(SKPaint, SKFilterQuality, SKFilterQuality)
+  fullName.vb: DrawnUi.Draw.SKPaintExtensions.GuardFilterQuality(SkiaSharp.SKPaint, SkiaSharp.SKFilterQuality, SkiaSharp.SKFilterQuality)
+  name.vb: GuardFilterQuality(SKPaint, SKFilterQuality, SKFilterQuality)
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardImageFilter(SkiaSharp.SKPaint,SkiaSharp.SKImageFilter@,SkiaSharp.SKImageFilter)
+  commentId: M:DrawnUi.Draw.SKPaintExtensions.GuardImageFilter(SkiaSharp.SKPaint,SkiaSharp.SKImageFilter@,SkiaSharp.SKImageFilter)
+  id: GuardImageFilter(SkiaSharp.SKPaint,SkiaSharp.SKImageFilter@,SkiaSharp.SKImageFilter)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.SKPaintExtensions
+  langs:
+  - csharp
+  - vb
+  name: GuardImageFilter(SKPaint, ref SKImageFilter, SKImageFilter)
+  nameWithType: SKPaintExtensions.GuardImageFilter(SKPaint, ref SKImageFilter, SKImageFilter)
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardImageFilter(SkiaSharp.SKPaint, ref SkiaSharp.SKImageFilter, SkiaSharp.SKImageFilter)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SKPaintExtensions.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GuardImageFilter
+    path: ../src/Shared/Draw/Base/SKPaintExtensions.cs
+    startLine: 67
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void GuardImageFilter(this SKPaint paint, ref SKImageFilter cache, SKImageFilter value)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: cache
+      type: SkiaSharp.SKImageFilter
+    - id: value
+      type: SkiaSharp.SKImageFilter
+    content.vb: Public Shared Sub GuardImageFilter(paint As SKPaint, cache As SKImageFilter, value As SKImageFilter)
+  overload: DrawnUi.Draw.SKPaintExtensions.GuardImageFilter*
+  nameWithType.vb: SKPaintExtensions.GuardImageFilter(SKPaint, SKImageFilter, SKImageFilter)
+  fullName.vb: DrawnUi.Draw.SKPaintExtensions.GuardImageFilter(SkiaSharp.SKPaint, SkiaSharp.SKImageFilter, SkiaSharp.SKImageFilter)
+  name.vb: GuardImageFilter(SKPaint, SKImageFilter, SKImageFilter)
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardColorFilter(SkiaSharp.SKPaint,SkiaSharp.SKColorFilter@,SkiaSharp.SKColorFilter)
+  commentId: M:DrawnUi.Draw.SKPaintExtensions.GuardColorFilter(SkiaSharp.SKPaint,SkiaSharp.SKColorFilter@,SkiaSharp.SKColorFilter)
+  id: GuardColorFilter(SkiaSharp.SKPaint,SkiaSharp.SKColorFilter@,SkiaSharp.SKColorFilter)
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.SKPaintExtensions
+  langs:
+  - csharp
+  - vb
+  name: GuardColorFilter(SKPaint, ref SKColorFilter, SKColorFilter)
+  nameWithType: SKPaintExtensions.GuardColorFilter(SKPaint, ref SKColorFilter, SKColorFilter)
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardColorFilter(SkiaSharp.SKPaint, ref SkiaSharp.SKColorFilter, SkiaSharp.SKColorFilter)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Base/SKPaintExtensions.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GuardColorFilter
+    path: ../src/Shared/Draw/Base/SKPaintExtensions.cs
+    startLine: 73
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static void GuardColorFilter(this SKPaint paint, ref SKColorFilter cache, SKColorFilter value)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: cache
+      type: SkiaSharp.SKColorFilter
+    - id: value
+      type: SkiaSharp.SKColorFilter
+    content.vb: Public Shared Sub GuardColorFilter(paint As SKPaint, cache As SKColorFilter, value As SKColorFilter)
+  overload: DrawnUi.Draw.SKPaintExtensions.GuardColorFilter*
+  nameWithType.vb: SKPaintExtensions.GuardColorFilter(SKPaint, SKColorFilter, SKColorFilter)
+  fullName.vb: DrawnUi.Draw.SKPaintExtensions.GuardColorFilter(SkiaSharp.SKPaint, SkiaSharp.SKColorFilter, SkiaSharp.SKColorFilter)
+  name.vb: GuardColorFilter(SKPaint, SKColorFilter, SKColorFilter)
+references:
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardColor*
+  commentId: Overload:DrawnUi.Draw.SKPaintExtensions.GuardColor
+  href: DrawnUi.Draw.SKPaintExtensions.html#DrawnUi_Draw_SKPaintExtensions_GuardColor_SkiaSharp_SKPaint_SkiaSharp_SKColor__SkiaSharp_SKColor_
+  name: GuardColor
+  nameWithType: SKPaintExtensions.GuardColor
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardColor
+- uid: SkiaSharp.SKPaint
+  commentId: T:SkiaSharp.SKPaint
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
+  name: SKPaint
+  nameWithType: SKPaint
+  fullName: SkiaSharp.SKPaint
+- uid: SkiaSharp.SKColor
+  commentId: T:SkiaSharp.SKColor
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skcolor
+  name: SKColor
+  nameWithType: SKColor
+  fullName: SkiaSharp.SKColor
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardStyle*
+  commentId: Overload:DrawnUi.Draw.SKPaintExtensions.GuardStyle
+  href: DrawnUi.Draw.SKPaintExtensions.html#DrawnUi_Draw_SKPaintExtensions_GuardStyle_SkiaSharp_SKPaint_SkiaSharp_SKPaintStyle__SkiaSharp_SKPaintStyle_
+  name: GuardStyle
+  nameWithType: SKPaintExtensions.GuardStyle
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardStyle
+- uid: SkiaSharp.SKPaintStyle
+  commentId: T:SkiaSharp.SKPaintStyle
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaintstyle
+  name: SKPaintStyle
+  nameWithType: SKPaintStyle
+  fullName: SkiaSharp.SKPaintStyle
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardIsDither*
+  commentId: Overload:DrawnUi.Draw.SKPaintExtensions.GuardIsDither
+  href: DrawnUi.Draw.SKPaintExtensions.html#DrawnUi_Draw_SKPaintExtensions_GuardIsDither_SkiaSharp_SKPaint_System_Boolean__System_Boolean_
+  name: GuardIsDither
+  nameWithType: SKPaintExtensions.GuardIsDither
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardIsDither
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardIsAntialias*
+  commentId: Overload:DrawnUi.Draw.SKPaintExtensions.GuardIsAntialias
+  href: DrawnUi.Draw.SKPaintExtensions.html#DrawnUi_Draw_SKPaintExtensions_GuardIsAntialias_SkiaSharp_SKPaint_System_Boolean__System_Boolean_
+  name: GuardIsAntialias
+  nameWithType: SKPaintExtensions.GuardIsAntialias
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardIsAntialias
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardTextSize*
+  commentId: Overload:DrawnUi.Draw.SKPaintExtensions.GuardTextSize
+  href: DrawnUi.Draw.SKPaintExtensions.html#DrawnUi_Draw_SKPaintExtensions_GuardTextSize_SkiaSharp_SKPaint_System_Single__System_Single_
+  name: GuardTextSize
+  nameWithType: SKPaintExtensions.GuardTextSize
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardTextSize
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardStrokeWidth*
+  commentId: Overload:DrawnUi.Draw.SKPaintExtensions.GuardStrokeWidth
+  href: DrawnUi.Draw.SKPaintExtensions.html#DrawnUi_Draw_SKPaintExtensions_GuardStrokeWidth_SkiaSharp_SKPaint_System_Single__System_Single_
+  name: GuardStrokeWidth
+  nameWithType: SKPaintExtensions.GuardStrokeWidth
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardStrokeWidth
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardBlendMode*
+  commentId: Overload:DrawnUi.Draw.SKPaintExtensions.GuardBlendMode
+  href: DrawnUi.Draw.SKPaintExtensions.html#DrawnUi_Draw_SKPaintExtensions_GuardBlendMode_SkiaSharp_SKPaint_SkiaSharp_SKBlendMode__SkiaSharp_SKBlendMode_
+  name: GuardBlendMode
+  nameWithType: SKPaintExtensions.GuardBlendMode
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardBlendMode
+- uid: SkiaSharp.SKBlendMode
+  commentId: T:SkiaSharp.SKBlendMode
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skblendmode
+  name: SKBlendMode
+  nameWithType: SKBlendMode
+  fullName: SkiaSharp.SKBlendMode
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardTypeface*
+  commentId: Overload:DrawnUi.Draw.SKPaintExtensions.GuardTypeface
+  href: DrawnUi.Draw.SKPaintExtensions.html#DrawnUi_Draw_SKPaintExtensions_GuardTypeface_SkiaSharp_SKPaint_SkiaSharp_SKTypeface__SkiaSharp_SKTypeface_
+  name: GuardTypeface
+  nameWithType: SKPaintExtensions.GuardTypeface
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardTypeface
+- uid: SkiaSharp.SKTypeface
+  commentId: T:SkiaSharp.SKTypeface
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.sktypeface
+  name: SKTypeface
+  nameWithType: SKTypeface
+  fullName: SkiaSharp.SKTypeface
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardFilterQuality*
+  commentId: Overload:DrawnUi.Draw.SKPaintExtensions.GuardFilterQuality
+  href: DrawnUi.Draw.SKPaintExtensions.html#DrawnUi_Draw_SKPaintExtensions_GuardFilterQuality_SkiaSharp_SKPaint_SkiaSharp_SKFilterQuality__SkiaSharp_SKFilterQuality_
+  name: GuardFilterQuality
+  nameWithType: SKPaintExtensions.GuardFilterQuality
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardFilterQuality
+- uid: SkiaSharp.SKFilterQuality
+  commentId: T:SkiaSharp.SKFilterQuality
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skfilterquality
+  name: SKFilterQuality
+  nameWithType: SKFilterQuality
+  fullName: SkiaSharp.SKFilterQuality
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardImageFilter*
+  commentId: Overload:DrawnUi.Draw.SKPaintExtensions.GuardImageFilter
+  href: DrawnUi.Draw.SKPaintExtensions.html#DrawnUi_Draw_SKPaintExtensions_GuardImageFilter_SkiaSharp_SKPaint_SkiaSharp_SKImageFilter__SkiaSharp_SKImageFilter_
+  name: GuardImageFilter
+  nameWithType: SKPaintExtensions.GuardImageFilter
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardImageFilter
+- uid: SkiaSharp.SKImageFilter
+  commentId: T:SkiaSharp.SKImageFilter
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skimagefilter
+  name: SKImageFilter
+  nameWithType: SKImageFilter
+  fullName: SkiaSharp.SKImageFilter
+- uid: DrawnUi.Draw.SKPaintExtensions.GuardColorFilter*
+  commentId: Overload:DrawnUi.Draw.SKPaintExtensions.GuardColorFilter
+  href: DrawnUi.Draw.SKPaintExtensions.html#DrawnUi_Draw_SKPaintExtensions_GuardColorFilter_SkiaSharp_SKPaint_SkiaSharp_SKColorFilter__SkiaSharp_SKColorFilter_
+  name: GuardColorFilter
+  nameWithType: SKPaintExtensions.GuardColorFilter
+  fullName: DrawnUi.Draw.SKPaintExtensions.GuardColorFilter
+- uid: SkiaSharp.SKColorFilter
+  commentId: T:SkiaSharp.SKColorFilter
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skcolorfilter
+  name: SKColorFilter
+  nameWithType: SKColorFilter
+  fullName: SkiaSharp.SKColorFilter

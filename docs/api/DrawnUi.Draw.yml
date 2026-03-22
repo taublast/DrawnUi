@@ -171,6 +171,7 @@ items:
   - DrawnUi.Draw.RenderingAnimator
   - DrawnUi.Draw.RenderingModeType
   - DrawnUi.Draw.RippleAnimator
+  - DrawnUi.Draw.SKPaintExtensions
   - DrawnUi.Draw.SaturationEffect
   - DrawnUi.Draw.ScaledPoint
   - DrawnUi.Draw.ScaledRect
@@ -1769,6 +1770,12 @@ references:
   name: Super
   nameWithType: Super
   fullName: DrawnUi.Draw.Super
+- uid: DrawnUi.Draw.SKPaintExtensions
+  commentId: T:DrawnUi.Draw.SKPaintExtensions
+  href: DrawnUi.Draw.SKPaintExtensions.html
+  name: SKPaintExtensions
+  nameWithType: SKPaintExtensions
+  fullName: DrawnUi.Draw.SKPaintExtensions
 - uid: DrawnUi.Draw.ControlTappedEventArgs
   commentId: T:DrawnUi.Draw.ControlTappedEventArgs
   href: DrawnUi.Draw.ControlTappedEventArgs.html
