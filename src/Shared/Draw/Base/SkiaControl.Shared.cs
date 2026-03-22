@@ -6185,6 +6185,8 @@ namespace DrawnUi.Draw
         }
 
         protected SKPaint _paintWithEffects = null;
+        private SKImageFilter _paintWithEffectsImageFilter;
+        private SKColorFilter _paintWithEffectsColorFilter;
         protected SKPaint _paintWithOpacity = null;
         private SKColor _paintWithOpacityColor;
         private bool _paintWithOpacityIsAntialias;
@@ -6504,14 +6506,18 @@ namespace DrawnUi.Draw
                     }
 
                     if (effectImage != null)
-                        _paintWithEffects.ImageFilter = effectImage.CreateFilter(ctx.Destination);
+                        _paintWithEffects.GuardImageFilter(ref _paintWithEffectsImageFilter, effectImage.CreateFilter(ctx.Destination));
                     else
-                        _paintWithEffects.ImageFilter = null; //will be disposed internally by effect
+                    {
+                        _paintWithEffects.GuardImageFilter(ref _paintWithEffectsImageFilter, null); //will be disposed internally by effect
+                    }
 
                     if (effectColor != null)
-                        _paintWithEffects.ColorFilter = effectColor.CreateFilter(ctx.Destination);
+                        _paintWithEffects.GuardColorFilter(ref _paintWithEffectsColorFilter, effectColor.CreateFilter(ctx.Destination));
                     else
-                        _paintWithEffects.ColorFilter = null;
+                    {
+                        _paintWithEffects.GuardColorFilter(ref _paintWithEffectsColorFilter, null);
+                    }
 
                     var restore = ctx.Context.Canvas.SaveLayer(_paintWithEffects);
 

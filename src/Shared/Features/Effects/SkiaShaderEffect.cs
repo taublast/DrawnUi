@@ -6,6 +6,7 @@ namespace DrawnUi.Draw;
 public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
 {
     protected SKPaint PaintWithShader;
+    private SKBlendMode _paintWithShaderBlendMode;
 
     // ─── IPostRendererEffect ────────────────────────────────────────────────
 
@@ -170,7 +171,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
             shader = CreateShader(ctx, image);
             if (shader != null)
             {
-                PaintWithShader.BlendMode = BlendMode;
+                PaintWithShader.GuardBlendMode(ref _paintWithShaderBlendMode, BlendMode);
                 PaintWithShader.Shader = shader;
                 ctx.Context.Canvas.DrawRect(ctx.Destination, PaintWithShader);
             }
