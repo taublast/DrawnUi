@@ -565,6 +565,9 @@ namespace DrawnUi.Draw
         }
 
         protected SKPaint RenderingPaint { get; set; }
+        private SKColor _renderingPaintColor;
+        private SKPaintStyle _renderingPaintStyle;
+        private bool _renderingPaintIsDither;
 
         /// <summary>
         /// Gets or sets the parsed SKPath object created from the PathData property.
@@ -914,18 +917,12 @@ namespace DrawnUi.Draw
 
             RenderingPaint ??= new SKPaint() { IsAntialias = true, };
 
-            RenderingPaint.IsDither = IsDistorted;
+            RenderingPaint.GuardIsDither(ref _renderingPaintIsDither, IsDistorted);
 
-            if (BackgroundColor != null)
-            {
-                RenderingPaint.Color = BackgroundColor.ToSKColor();
-            }
-            else
-            {
-                RenderingPaint.Color = SKColors.Transparent;
-            }
+            var bgColor = BackgroundColor != null ? BackgroundColor.ToSKColor() : SKColors.Transparent;
+            RenderingPaint.GuardColor(ref _renderingPaintColor, bgColor);
 
-            RenderingPaint.Style = SKPaintStyle.Fill;
+            RenderingPaint.GuardStyle(ref _renderingPaintStyle, SKPaintStyle.Fill);
 
             var minSize = Math.Min(strokeAwareSize.Height, strokeAwareSize.Width);
 

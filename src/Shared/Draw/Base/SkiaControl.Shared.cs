@@ -6186,6 +6186,10 @@ namespace DrawnUi.Draw
 
         protected SKPaint _paintWithEffects = null;
         protected SKPaint _paintWithOpacity = null;
+        private SKColor _paintWithOpacityColor;
+        private bool _paintWithOpacityIsAntialias;
+        private bool _paintWithOpacityIsDither;
+        private SKFilterQuality _paintWithOpacityFilterQuality;
         SKPath _preparedClipBounds = null;
         private IAnimatorsManager _lastAnimatorManager;
         private Func<List<SkiaControl>> _createChildren;
@@ -6239,7 +6243,7 @@ namespace DrawnUi.Draw
                     FilterQuality = IsDistorted ? SKFilterQuality.Medium : SKFilterQuality.None
                 };
 
-                _paintWithOpacity.Color = SKColors.White.WithAlpha((byte)(0xFF * Opacity));
+                _paintWithOpacity.GuardColor(ref _paintWithOpacityColor, SKColors.White.WithAlpha((byte)(0xFF * Opacity)));
 
                 var restore = 0;
 
@@ -6680,11 +6684,11 @@ namespace DrawnUi.Draw
                     _paintWithOpacity = new SKPaint();
                 }
 
-                _paintWithOpacity.Color = SKColors.White;
-                _paintWithOpacity.IsAntialias = true;
-                _paintWithOpacity.IsDither = IsDistorted;
+                _paintWithOpacity.GuardColor(ref _paintWithOpacityColor, SKColors.White);
+                _paintWithOpacity.GuardIsAntialias(ref _paintWithOpacityIsAntialias, true);
+                _paintWithOpacity.GuardIsDither(ref _paintWithOpacityIsDither, IsDistorted);
                 //todo check this for operations, lines etc
-                _paintWithOpacity.FilterQuality = IsDistorted ? SKFilterQuality.Medium : SKFilterQuality.None;
+                _paintWithOpacity.GuardFilterQuality(ref _paintWithOpacityFilterQuality, IsDistorted ? SKFilterQuality.Medium : SKFilterQuality.None);
 
                 if (EffectPostRenderers.Count == 0)
                 {

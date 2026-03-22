@@ -328,12 +328,14 @@ namespace DrawnUi.Draw
                 PaintDefault = new SKPaint { IsAntialias = true, IsDither = true };
             }
 
-            PaintDefault.StrokeWidth = 0;
+            PaintDefault.GuardStrokeWidth(ref _paintDefaultStrokeWidth, 0);
             //todo refactor obsolete
-            PaintDefault.TextSize = (float)Math.Round(FontSize * scale);
-            PaintDefault.Typeface = this.TypeFace ?? SkiaFontManager.DefaultTypeface;
-            PaintDefault.FakeBoldText = (this.FontAttributes & FontAttributes.Bold) != 0;
-            PaintDefault.TextSkewX = (this.FontAttributes & FontAttributes.Italic) != 0 ? -0.25f : 0;
+            PaintDefault.GuardTextSize(ref _paintDefaultTextSize, (float)Math.Round(FontSize * scale));
+            PaintDefault.GuardTypeface(ref _paintDefaultTypeface, this.TypeFace ?? SkiaFontManager.DefaultTypeface);
+            var fakeBold = (this.FontAttributes & FontAttributes.Bold) != 0;
+            var textSkewX = (this.FontAttributes & FontAttributes.Italic) != 0 ? -0.25f : 0f;
+            if (_paintDefaultFakeBold != fakeBold) { _paintDefaultFakeBold = fakeBold; PaintDefault.FakeBoldText = fakeBold; }
+            if (_paintDefaultTextSkewX != textSkewX) { _paintDefaultTextSkewX = textSkewX; PaintDefault.TextSkewX = textSkewX; }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2679,6 +2681,11 @@ namespace DrawnUi.Draw
         }
 
         public SKPaint PaintDefault = new SKPaint { IsAntialias = true, IsDither = true };
+        private float _paintDefaultStrokeWidth = -1f;
+        private float _paintDefaultTextSize = -1f;
+        private SKTypeface _paintDefaultTypeface;
+        private bool _paintDefaultFakeBold;
+        private float _paintDefaultTextSkewX = float.NaN;
 
         public SKPaint PaintStroke = new SKPaint { IsAntialias = true, IsDither = true };
 
