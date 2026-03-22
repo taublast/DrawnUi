@@ -598,10 +598,26 @@ namespace DrawnUi.Draw
 
         SKPath ClipContentPath { get; set; } = new();
 
+        // Stroke gradient shader cache
+        private SKShader _strokeGradientShader;
+        private int _strokeGradientVersion = -1;
+        private SKRect _strokeGradientRect;
+
+        // Dash PathEffect cache
+        private SKPathEffect _cachedDashEffect;
+        private double[] _cachedDashPath;
+        private float _cachedDashScale = -1f;
+
         public override void OnDisposing()
         {
             RenderingPaint?.Dispose();
             RenderingPaint = null;
+
+            _strokeGradientShader?.Dispose();
+            _strokeGradientShader = null;
+
+            _cachedDashEffect?.Dispose();
+            _cachedDashEffect = null;
 
             DrawPath?.Dispose();
             DrawPathResized?.Dispose();
@@ -958,7 +974,8 @@ namespace DrawnUi.Draw
             {
                 paint.BlendMode = this.StrokeBlendMode;
 
-                SetupGradient(paint, StrokeGradient, outRect);
+                SetupGradient(paint, StrokeGradient, outRect,
+                    ref _strokeGradientShader, ref _strokeGradientVersion, ref _strokeGradientRect);
 
                 paint.ImageFilter = null;
 
@@ -968,8 +985,14 @@ namespace DrawnUi.Draw
 
                 if (this.StrokePath != null && StrokePath.Length > 0)
                 {
-                    var array = GetDashArray(StrokePath, scale);
-                    paint.PathEffect = SKPathEffect.CreateDash(array, 0);
+                    if (!ReferenceEquals(_cachedDashPath, StrokePath) || _cachedDashScale != scale)
+                    {
+                        _cachedDashEffect?.Dispose();
+                        _cachedDashEffect = SKPathEffect.CreateDash(GetDashArray(StrokePath, scale), 0);
+                        _cachedDashPath = StrokePath;
+                        _cachedDashScale = scale;
+                    }
+                    paint.PathEffect = _cachedDashEffect;
                 }
                 else
                 {

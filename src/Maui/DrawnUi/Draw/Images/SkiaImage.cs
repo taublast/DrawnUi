@@ -1112,6 +1112,7 @@ public class SkiaImage : SkiaControl
     /// Reusing this
     /// </summary>
     public SKImageFilter PaintImageFilter;
+    private SKImageFilter _lastImagePaintImageFilter;
 
     //will reuse
     SKPath _preparedClipBounds = null;
@@ -1120,6 +1121,7 @@ public class SkiaImage : SkiaControl
     /// Reusing this
     /// </summary>
     protected SKColorFilter PaintColorFilter;
+    private SKColorFilter _lastImagePaintColorFilter;
 
     protected bool NeedInvalidateImageFilter { get; set; }
 
@@ -1156,6 +1158,7 @@ public class SkiaImage : SkiaControl
             NeedInvalidateImageFilter = false;
             //var d = PaintImageFilter;
             PaintImageFilter = null;
+            _lastImagePaintImageFilter = null; // force guard to fire
             //d?.Dispose(); //might be used in double buffered!
         }
 
@@ -1164,21 +1167,19 @@ public class SkiaImage : SkiaControl
             NeedInvalidateColorFilter = false;
             //var d = PaintColorFilter;
             PaintColorFilter = null;
+            _lastImagePaintColorFilter = null; // force guard to fire
             //d?.Dispose(); //might be used in double buffered!
         }
 
         if (source != null && !CheckIsGhost())
         {
-            ImagePaint.ImageFilter = PaintImageFilter;
-            ImagePaint.ColorFilter = PaintColorFilter;
-
             //ImageFilter
             if (PaintImageFilter == null && Blur > 0)
             {
                 PaintImageFilter = SKImageFilter.CreateBlur((float)Blur, (float)Blur, SKShaderTileMode.Mirror);
             }
 
-            ImagePaint.ImageFilter = PaintImageFilter;
+            ImagePaint.GuardImageFilter(ref _lastImagePaintImageFilter, PaintImageFilter);
 
 
             //ColorFilter
@@ -1231,7 +1232,7 @@ public class SkiaImage : SkiaControl
                 };
             }
 
-            ImagePaint.ColorFilter = PaintColorFilter;
+            ImagePaint.GuardColorFilter(ref _lastImagePaintColorFilter, PaintColorFilter);
 
             TransformAspect stretch = Aspect;
             DrawImageAlignment horizontal = HorizontalAlignment;

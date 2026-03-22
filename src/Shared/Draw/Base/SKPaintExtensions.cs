@@ -64,4 +64,16 @@ public static class SKPaintExtensions
     {
         if (cache != value) { cache = value; paint.FilterQuality = value; }
     }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void GuardImageFilter(this SKPaint paint, ref SKImageFilter cache, SKImageFilter value)
+    {
+        if (!ReferenceEquals(cache, value)) { cache = value; paint.ImageFilter = value; }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void GuardColorFilter(this SKPaint paint, ref SKColorFilter cache, SKColorFilter value)
+    {
+        if (!ReferenceEquals(cache, value)) { cache = value; paint.ColorFilter = value; }
+    }
 }
