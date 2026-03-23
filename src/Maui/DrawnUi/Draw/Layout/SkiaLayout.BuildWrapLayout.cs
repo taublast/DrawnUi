@@ -370,11 +370,6 @@ public partial class SkiaLayout
                 FinalizeRow(maxHeight);
             }
 
-            if (row > 1)
-            {
-                stackHeight += (float)Math.Round(_layout.Spacing * scale);
-            }
-
             _layout.StackStructureMeasured = structure;
 
             if (_layout.HorizontalOptions.Alignment == LayoutAlignment.Fill && _layout.WidthRequest < 0)

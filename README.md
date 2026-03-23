@@ -40,8 +40,6 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 
 * Fix `SkiaLottie` AutoPlay `false` was ignored when source was set first.
 * Add `StopAtCurrentFrame` property to `SkiaLottie` to pause animation at current frame when stopped instead of reqinding to default frame (set via DefaultFrameWhenOn).
-* Fix `Wrap` layout not accounting for vertical spacing when measuring children.
-
 
 ## 💡 Hint of the Day
 
