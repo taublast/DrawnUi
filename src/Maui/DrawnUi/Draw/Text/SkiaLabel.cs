@@ -717,11 +717,14 @@ namespace DrawnUi.Draw
                                 // Reset charIndex after precomputation
                                 charIndex = 0;
 
+                                float bgHeight = lineSpan.Size.Height;
+                                float bgBottom = baselineY + FontMetrics.Descent;
+                                float bgTop = bgBottom - bgHeight;
                                 rectPrecalculatedSpanBounds = new SKRect(
                                     alignedLineDrawingStartX + offsetX,
-                                    line.Bounds.Top,
+                                    bgTop,
                                     alignedLineDrawingStartX + offsetX + lineSpan.Size.Width + x,
-                                    line.Bounds.Top + lineSpan.Size.Height);
+                                    bgBottom);
 
                                 PaintDeco.Color = lineSpan.Span.BackgroundColor.ToSKColor();
                                 PaintDeco.Style = SKPaintStyle.StrokeAndFill;
@@ -766,11 +769,14 @@ namespace DrawnUi.Draw
 
                         if (lineSpan.Span != null)
                         {
+                            float srHeight = lineSpan.Size.Height;
+                            float srBottom = baselineY + FontMetrics.Descent;
+                            float srTop = srBottom - srHeight;
                             var lineSpanRect = new SKRect(
                                 alignedLineDrawingStartX + offsetX - (lineSpan.Size.Width + offsetAdjustmentX),
-                                line.Bounds.Top,
+                                srTop,
                                 alignedLineDrawingStartX + offsetX,
-                                line.Bounds.Top + lineSpan.Size.Height);
+                                srBottom);
 
                             lineSpan.Span.Rects.Add(lineSpanRect);
                             SpanPostDraw(canvas, lineSpan.Span, lineSpanRect, baselineY);
