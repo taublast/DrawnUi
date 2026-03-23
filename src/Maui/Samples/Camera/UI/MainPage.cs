@@ -19,7 +19,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
     private SettingsButton _speechButton;
     private IRealtimeTranscriptionService _realtimeTranscriptionService;
     private SkiaShape _cameraSelectButton;
- 
+
     private SettingsButton _audioCodecButton;
     private SkiaLayer _previewOverlay;
     private SkiaImage _previewImage;
@@ -28,15 +28,37 @@ public partial class MainPage : BasePageReloadable, IDisposable
     private SettingsButton _preRecordingDurationButton;
     private SkiaLabel _captionsLabel;
     private SkiaLabel _captionHintLabel;
-    private SkiaLabel _liveBadgeLabel;
     private RealtimeCaptionsEngine _captionsEngine;
     private SkiaDrawer _settingsDrawer;
     private SkiaViewSwitcher _settingsTabs;
     private SkiaLabel[] _tabLabels;
+    private FrameOverlay _previewFrameOverlay;
+    private FrameOverlay _recordingFrameOverlay;
     AudioVisualizer _audioVisualizer;
     Canvas Canvas;
+    private int _lastAudioRate;
+    private int _lastAudioBits;
+    private int _lastAudioChannels;
+    private bool _audioMonitoringEnabled;
+    private bool _speechEnabled;
+    bool _isTranscribing;
+    private System.Timers.Timer? _delayHideTimer;
 
+    public MainPage(IRealtimeTranscriptionService realtimeTranscriptionService)
+    {
+        Title = "SkiaCamera";
 
+        //iOS statusbar and bottom insets color
+        BackgroundColor = Colors.Black;
+
+        _realtimeTranscriptionService = realtimeTranscriptionService;
+        if (_realtimeTranscriptionService != null)
+        {
+            _realtimeTranscriptionService.TranscriptionDelta += OnTranscriptionDelta;
+            _realtimeTranscriptionService.TranscriptionCompleted += OnTranscriptionCompleted;
+            _realtimeTranscriptionService.SendingData += OnTranscriptionWorking;
+        }
+    }
 
     protected override void Dispose(bool isDisposing)
     {
@@ -83,25 +105,12 @@ public partial class MainPage : BasePageReloadable, IDisposable
 
         CreateContent();
 
-        CameraControl.InitializeOverlayLayouts(new FrameOverlay(), new FrameOverlay());
-
+        _previewFrameOverlay = new FrameOverlay();
+        _recordingFrameOverlay = new FrameOverlay();
+        CameraControl.InitializeOverlayLayouts(_previewFrameOverlay, _recordingFrameOverlay);
+        UpdateAudioMonitoringVisibility();
     }
 
-    public MainPage(IRealtimeTranscriptionService realtimeTranscriptionService)
-    {
-        Title = "SkiaCamera";
-
-        //iOS statusbar and bottom insets color
-        BackgroundColor = Colors.Black;
-
-        _realtimeTranscriptionService = realtimeTranscriptionService;
-        if (_realtimeTranscriptionService != null)
-        {
-            _realtimeTranscriptionService.TranscriptionDelta += OnTranscriptionDelta;
-            _realtimeTranscriptionService.TranscriptionCompleted += OnTranscriptionCompleted;
-            _realtimeTranscriptionService.SendingData += OnTranscriptionWorking;
-        }
-    }
     private void AttachHardware(bool subscribe)
     {
         if (subscribe)
@@ -122,7 +131,6 @@ public partial class MainPage : BasePageReloadable, IDisposable
             CameraControl.IsPreRecordingVideoChanged += OnIsPreRecordingStateChanged;
 
             //CameraControl.OnAudioSample += HUD.AddAudioSample;
-
         }
         else
         {
@@ -135,9 +143,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
                 CameraControl.OnError -= OnCameraError;
                 CameraControl.RecordingSuccess -= OnVideoRecordingSuccess;
                 CameraControl.RecordingProgress -= OnVideoRecordingProgress;
-
                 CameraControl.AudioSampleAvailable -= OnAudioCaptured;
-
                 CameraControl.IsRecordingVideoChanged -= OnIsRecordingStateChanged;
                 CameraControl.IsPreRecordingVideoChanged -= OnIsPreRecordingStateChanged;
 
@@ -175,10 +181,38 @@ public partial class MainPage : BasePageReloadable, IDisposable
         }
     }
 
-    private int _lastAudioRate;
-    private int _lastAudioBits;
-    private int _lastAudioChannels;
-    private bool _speechEnabled;
+    private void UpdateAudioMonitoringVisibility()
+    {
+        if (_previewFrameOverlay != null)
+        {
+            _previewFrameOverlay.IsVisible = IsAudioMonitoringEnabled;
+        }
+
+        if (_recordingFrameOverlay != null)
+        {
+            _recordingFrameOverlay.IsVisible = IsAudioMonitoringEnabled;
+        }
+    }
+
+    public bool IsAudioMonitoringEnabled
+    {
+        get => CameraControl?.EnableAudioMonitoring ?? _audioMonitoringEnabled;
+        set
+        {
+            if (_audioMonitoringEnabled != value)
+            {
+                _audioMonitoringEnabled = value;
+
+                if (CameraControl != null)
+                {
+                    CameraControl.EnableAudioMonitoring = value;
+                }
+
+                UpdateAudioMonitoringVisibility();
+                OnPropertyChanged();
+            }
+        }
+    }
 
     public bool IsSpeechEnabled
     {
@@ -193,7 +227,6 @@ public partial class MainPage : BasePageReloadable, IDisposable
         }
     }
 
-    bool _isTranscribing;
     public bool IsTranscribing
     {
         get => _isTranscribing;
@@ -206,10 +239,6 @@ public partial class MainPage : BasePageReloadable, IDisposable
             }
         }
     }
-
-
-
-    private System.Timers.Timer? _delayHideTimer;
 
     private void OnTranscriptionWorking(bool state)
     {
