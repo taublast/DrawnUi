@@ -43,6 +43,8 @@ public partial class MainPage : BasePageReloadable, IDisposable
     private bool _speechEnabled;
     bool _isTranscribing;
     private System.Timers.Timer? _delayHideTimer;
+    private RealtimeTranscriptionSessionState _transcriptionState;
+    private string _transcriptionStatusMessage;
 
     public MainPage(IRealtimeTranscriptionService realtimeTranscriptionService)
     {
@@ -57,6 +59,8 @@ public partial class MainPage : BasePageReloadable, IDisposable
             _realtimeTranscriptionService.TranscriptionDelta += OnTranscriptionDelta;
             _realtimeTranscriptionService.TranscriptionCompleted += OnTranscriptionCompleted;
             _realtimeTranscriptionService.SendingData += OnTranscriptionWorking;
+            _realtimeTranscriptionService.SessionStateChanged += OnTranscriptionSessionStateChanged;
+            _realtimeTranscriptionService.SessionError += OnTranscriptionSessionError;
         }
     }
 
@@ -81,6 +85,8 @@ public partial class MainPage : BasePageReloadable, IDisposable
                 _realtimeTranscriptionService.TranscriptionDelta -= OnTranscriptionDelta;
                 _realtimeTranscriptionService.TranscriptionCompleted -= OnTranscriptionCompleted;
                 _realtimeTranscriptionService.SendingData -= OnTranscriptionWorking;
+                _realtimeTranscriptionService.SessionStateChanged -= OnTranscriptionSessionStateChanged;
+                _realtimeTranscriptionService.SessionError -= OnTranscriptionSessionError;
                 _realtimeTranscriptionService.Dispose();
                 _realtimeTranscriptionService = null;
             }
@@ -240,6 +246,112 @@ public partial class MainPage : BasePageReloadable, IDisposable
         }
     }
 
+    public RealtimeTranscriptionSessionState TranscriptionState
+    {
+        get => _transcriptionState;
+        set
+        {
+            if (_transcriptionState != value)
+            {
+                _transcriptionState = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsTranscriptionFailed));
+            }
+        }
+    }
+
+    public bool IsTranscriptionFailed => TranscriptionState == RealtimeTranscriptionSessionState.Failed;
+
+    public string TranscriptionStatusMessage
+    {
+        get => _transcriptionStatusMessage;
+        set
+        {
+            if (_transcriptionStatusMessage != value)
+            {
+                _transcriptionStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    private void OnTranscriptionSessionStateChanged(RealtimeTranscriptionSessionState state)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            TranscriptionState = state;
+
+            switch (state)
+            {
+                case RealtimeTranscriptionSessionState.Off:
+                    IsTranscribing = false;
+                    TranscriptionStatusMessage = null;
+                    break;
+                case RealtimeTranscriptionSessionState.Connecting:
+                    IsTranscribing = false;
+                    TranscriptionStatusMessage = "Connecting to transcription service...";
+                    break;
+                case RealtimeTranscriptionSessionState.Ready:
+                    TranscriptionStatusMessage = null;
+                    break;
+                case RealtimeTranscriptionSessionState.Failed:
+                    IsTranscribing = false;
+                    break;
+            }
+
+            UpdateSpeechButtonState();
+        });
+    }
+
+    private void OnTranscriptionSessionError(string message)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            TranscriptionStatusMessage = NormalizeTranscriptionErrorMessage(message);
+            TranscriptionState = RealtimeTranscriptionSessionState.Failed;
+            IsTranscribing = false;
+            _captionsEngine?.Clear();
+            UpdateSpeechButtonState();
+        });
+    }
+
+    private string NormalizeTranscriptionErrorMessage(string message)
+    {
+        if (string.IsNullOrWhiteSpace(message))
+        {
+            return "Transcription unavailable. Tap SPEECH to retry.";
+        }
+
+        if (message.Contains("503", StringComparison.OrdinalIgnoreCase))
+        {
+            return "Transcription unavailable (503). Tap SPEECH to retry.";
+        }
+
+        return "Transcription unavailable. Tap SPEECH to retry.";
+    }
+
+    private void UpdateSpeechButtonState()
+    {
+        if (_speechButton != null)
+        {
+            if (!IsSpeechEnabled)
+            {
+                _speechButton.Text = "Speech: OFF";
+                _speechButton.TintColor = Color.FromArgb("#475569");
+            }
+            else if (IsTranscriptionFailed)
+            {
+                _speechButton.Text = "Speech: RETRY";
+                _speechButton.TintColor = Color.FromArgb("#F97316");
+            }
+            else
+            {
+                _speechButton.Text = "Speech: ON";
+                _speechButton.TintColor = Color.FromArgb("#10B981");
+            }
+        }
+    }
+
     private void OnTranscriptionWorking(bool state)
     {
         if (state)
@@ -305,6 +417,17 @@ public partial class MainPage : BasePageReloadable, IDisposable
 
     private void StartTranscription()
     {
+        if (_realtimeTranscriptionService == null)
+        {
+            TranscriptionState = RealtimeTranscriptionSessionState.Failed;
+            TranscriptionStatusMessage = "Transcription service is not available.";
+            UpdateSpeechButtonState();
+            return;
+        }
+
+        IsTranscribing = false;
+        TranscriptionStatusMessage = "Connecting to transcription service...";
+        TranscriptionState = RealtimeTranscriptionSessionState.Connecting;
         _realtimeTranscriptionService?.Start();
     }
 
@@ -312,6 +435,10 @@ public partial class MainPage : BasePageReloadable, IDisposable
     {
         _realtimeTranscriptionService?.Stop();
         _captionsEngine?.Clear();
+        IsTranscribing = false;
+        TranscriptionStatusMessage = null;
+        TranscriptionState = RealtimeTranscriptionSessionState.Off;
+        UpdateSpeechButtonState();
     }
 
     private void UpdateStatusText()
@@ -961,13 +1088,14 @@ public partial class MainPage : BasePageReloadable, IDisposable
 
     private void ToggleSpeech()
     {
-        IsSpeechEnabled = !IsSpeechEnabled;
-
-        if (_speechButton != null)
+        if (IsSpeechEnabled && IsTranscriptionFailed)
         {
-            _speechButton.Text = IsSpeechEnabled ? "Speech: ON" : "Speech: OFF";
-            _speechButton.TintColor = IsSpeechEnabled ? Color.FromArgb("#10B981") : Color.FromArgb("#475569");
+            StartTranscription();
+            return;
         }
+
+        IsSpeechEnabled = !IsSpeechEnabled;
+        UpdateSpeechButtonState();
 
         if (IsSpeechEnabled)
         {

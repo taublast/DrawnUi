@@ -186,62 +186,195 @@ namespace CameraTests.Views
             };
         }
 
-        private SkiaShape CreateHeaderPanel()
+        private SkiaLayer CreateHeaderPanel()
         {
             SkiaLottie aiAnimation = null;
+            var failureEffect = new SaturationEffect() { Value = 1f };
             SkiaLabel modeButtonLabel = null;
             SkiaLabel speechButtonLabel = null;
             SkiaLabel monitorButtonLabel = null;
 
-            return new SkiaShape()
+            return new SkiaLayer()
             {
-                UseCache = SkiaCacheType.Image,
-                Type = ShapeType.Rectangle,
-                CornerRadius = 28,
-                Margin = new Thickness(18, 18, 18, 0),
-                Padding = new Thickness(18, 16, 18, 16),
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Start,
-                BackgroundColor = Color.FromArgb("#B30B1220"),
-                StrokeWidth = 1,
-                StrokeColor = Color.FromArgb("#3311C5BF"),
                 Children =
                 {
-                    new SkiaLabel("SKIACAMERA")
+                    new SkiaShape()
                     {
-                        FontSize = 12,
-                        CharacterSpacing = 2,
-                        TextColor = Color.FromArgb("#7DEAE5"),
-                        UseCache = SkiaCacheType.Operations,
-                        HorizontalOptions = LayoutOptions.Start,
+                        UseCache = SkiaCacheType.Image,
+                        Type = ShapeType.Rectangle,
+                        CornerRadius = 28,
+                        Margin = new Thickness(18, 18, 18, 0),
+                        Padding = new Thickness(18, 16, 18, 16),
+                        HorizontalOptions = LayoutOptions.Fill,
                         VerticalOptions = LayoutOptions.Start,
-                    },
-
-                    //Camera Status
-                    new SkiaLabel("Off")
+                        BackgroundColor = Color.FromArgb("#B30B1220"),
+                        StrokeWidth = 1,
+                        StrokeColor = Color.FromArgb("#3311C5BF"),
+                        Children =
                         {
-                            Margin = new Thickness(0, 22, 0, 0),
-                            FontSize = 13,
-                            TextColor = Color.FromArgb("#A7B5C6"),
-                            UseCache = SkiaCacheType.Operations,
-                            HorizontalOptions = LayoutOptions.Start,
-                            VerticalOptions = LayoutOptions.Start,
+                            new SkiaLabel("SKIACAMERA")
+                            {
+                                FontSize = 12,
+                                CharacterSpacing = 2,
+                                TextColor = Color.FromArgb("#7DEAE5"),
+                                UseCache = SkiaCacheType.Operations,
+                                HorizontalOptions = LayoutOptions.Start,
+                                VerticalOptions = LayoutOptions.Start,
+                            },
+
+                            //Camera Status
+                            new SkiaLabel("Off")
+                                {
+                                    Margin = new Thickness(0, 22, 0, 0),
+                                    FontSize = 13,
+                                    TextColor = Color.FromArgb("#A7B5C6"),
+                                    UseCache = SkiaCacheType.Operations,
+                                    HorizontalOptions = LayoutOptions.Start,
+                                    VerticalOptions = LayoutOptions.Start,
+                                }
+                                .Assign(out _statusLabel),
+
+                            new SkiaLayout()
+                            {
+                                Type = LayoutType.Wrap,
+                                Spacing = 8,
+                                Margin = new Thickness(0, 48, 0, 0),
+                                HorizontalOptions = LayoutOptions.Start,
+                                VerticalOptions = LayoutOptions.Start,
+                                Children =
+                                {
+
+                                    new SkiaShape()
+                                        {
+                                            Type = ShapeType.Rectangle,
+                                            CornerRadius = 16,
+                                            BackgroundColor = Color.FromArgb("#2D0891B2"),
+                                            StrokeColor = Color.FromArgb("#660891B2"),
+                                            StrokeWidth = 1,
+                                            Padding = new Thickness(12, 8),
+                                            Children =
+                                            {
+                                                new SkiaLabel("PHOTO MODE")
+                                                    {
+                                                        LineBreakMode = LineBreakMode.NoWrap,
+                                                        FontSize = 12,
+                                                        FontAttributes = FontAttributes.Bold,
+                                                        TextColor = Colors.White,
+                                                        UseCache = SkiaCacheType.Operations,
+                                                    }
+                                                    .Assign(out modeButtonLabel)
+                                            }
+                                        }
+                                        .OnTapped(me => ToggleCaptureMode())
+                                        .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
+                                        {
+                                            var isVideo = CameraControl.CaptureMode == CaptureModeType.Video;
+                                            me.BackgroundColor =
+                                                isVideo ? Color.FromArgb("#2D7C3AED") : Color.FromArgb("#2D0891B2");
+                                            me.StrokeColor =
+                                                isVideo ? Color.FromArgb("#667C3AED") : Color.FromArgb("#660891B2");
+                                            modeButtonLabel.Text = isVideo ? "VIDEO MODE" : "PHOTO MODE";
+                                        })
+                                        .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording),
+                                            me => { me.IsVisible = !CameraControl.IsRecording; }),
+
+                                    new SkiaShape()
+                                        {
+                                            Type = ShapeType.Rectangle,
+                                            CornerRadius = 16,
+                                            BackgroundColor = Color.FromArgb("#260F172A"),
+                                            StrokeColor = Color.FromArgb("#33233445"),
+                                            StrokeWidth = 1,
+                                            Padding = new Thickness(12, 8),
+                                            Children =
+                                            {
+                                                new SkiaLabel("SPEECH OFF")
+                                                    {
+                                                        LineBreakMode = LineBreakMode.NoWrap,
+                                                        FontSize = 12,
+                                                        FontAttributes = FontAttributes.Bold,
+                                                        TextColor = Color.FromArgb("#8FA3B7"),
+                                                        UseCache = SkiaCacheType.Operations,
+                                                    }
+                                                    .Assign(out speechButtonLabel)
+                                            }
+                                        }
+                                        .OnTapped(me => ToggleSpeech())
+                                        .ObserveProperties(this, new[] { nameof(IsSpeechEnabled), nameof(IsTranscriptionFailed) }, me =>
+                                        {
+                                            me.BackgroundColor = !IsSpeechEnabled
+                                                ? Color.FromArgb("#260F172A")
+                                                : IsTranscriptionFailed
+                                                    ? Color.FromArgb("#2DF97316")
+                                                    : Color.FromArgb("#2D10B981");
+                                            me.StrokeColor = !IsSpeechEnabled
+                                                ? Color.FromArgb("#33233445")
+                                                : IsTranscriptionFailed
+                                                    ? Color.FromArgb("#66F97316")
+                                                    : Color.FromArgb("#6610B981");
+                                            speechButtonLabel.Text = !IsSpeechEnabled ? "SPEECH OFF" : IsTranscriptionFailed ? "RETRY" : "SPEECH ON";
+                                            speechButtonLabel.TextColor =
+                                                IsSpeechEnabled ? Colors.White : Color.FromArgb("#8FA3B7");
+                                        }),
+
+                                    new SkiaShape()
+                                        {
+                                            Type = ShapeType.Rectangle,
+                                            CornerRadius = 16,
+                                            BackgroundColor = Color.FromArgb("#260F172A"),
+                                            StrokeColor = Color.FromArgb("#33233445"),
+                                            StrokeWidth = 1,
+                                            Padding = new Thickness(12, 8),
+                                            Children =
+                                            {
+                                                new SkiaLabel("MONITOR OFF")
+                                                    {
+                                                        LineBreakMode = LineBreakMode.NoWrap,
+                                                        FontSize = 12,
+                                                        FontAttributes = FontAttributes.Bold,
+                                                        TextColor = Color.FromArgb("#8FA3B7"),
+                                                        UseCache = SkiaCacheType.Operations,
+                                                    }
+                                                    .Assign(out monitorButtonLabel)
+                                            }
+                                        }
+                                        .OnTapped(me => { IsAudioMonitoringEnabled = !IsAudioMonitoringEnabled; })
+                                        .ObserveProperty(this, nameof(IsAudioMonitoringEnabled), me =>
+                                        {
+                                            me.BackgroundColor = IsAudioMonitoringEnabled
+                                                ? Color.FromArgb("#2D38BDF8")
+                                                : Color.FromArgb("#260F172A");
+                                            me.StrokeColor = IsAudioMonitoringEnabled
+                                                ? Color.FromArgb("#6638BDF8")
+                                                : Color.FromArgb("#33233445");
+                                            monitorButtonLabel.Text = IsAudioMonitoringEnabled ? "MONITOR ON" : "MONITOR OFF";
+                                            monitorButtonLabel.TextColor = IsAudioMonitoringEnabled
+                                                ? Colors.White
+                                                : Color.FromArgb("#8FA3B7");
+                                        })
+                                }
+                            }
                         }
-                        .Assign(out _statusLabel),
+                    },
 
                     new SkiaLottie()
                     {
+                        Margin = new Thickness(0, 30, 30, 0),
                         HorizontalOptions = LayoutOptions.End,
                         Source = @"Lottie\ai.json",
                         AutoPlay = false,
                         Repeat = -1,
                         StopAtCurrentFrame = true,
-                        SpeedRatio = 1.5,
+                        SpeedRatio = 1.75,
                         WidthRequest = 50,
                         LockRatio = 1,
-                        VerticalOptions = LayoutOptions.Center,
+                        VerticalOptions = LayoutOptions.Start,
+                        VisualEffects = new List<SkiaEffect>()
+                        {
+                            failureEffect
+                        }
                     }.Assign(out aiAnimation)
-                    .ObserveProperties(this, new[] { nameof(IsSpeechEnabled), nameof(IsTranscribing) }, me =>
+                    .ObserveProperties(this, new[] { nameof(IsSpeechEnabled), nameof(IsTranscribing), nameof(IsTranscriptionFailed) }, me =>
                     {
                         var opacity = 1f;
                         if (IsTranscribing)
@@ -258,130 +391,23 @@ namespace CameraTests.Views
                             {
                                 me.Stop();
                             }
-                            opacity = IsSpeechEnabled ? 0.66f : 0.33f;
+                            opacity = IsTranscriptionFailed ? 0.45f : IsSpeechEnabled ? 0.66f : 0.33f;
                         }
 
+                        failureEffect.Value = IsTranscriptionFailed ? 0.2f : 1f;
                         me.Opacity = opacity;
 
                     }),
-                    new SkiaLayout()
-                    {
-                        Type = LayoutType.Row,
-                        Spacing = 8,
-                        Margin = new Thickness(0, 48, 0, 0),
-                        HorizontalOptions = LayoutOptions.Start,
-                        VerticalOptions = LayoutOptions.Start,
-                        Children =
-                        {
-                            new SkiaShape()
-                                {
-                                    Type = ShapeType.Rectangle,
-                                    CornerRadius = 16,
-                                    BackgroundColor = Color.FromArgb("#2D0891B2"),
-                                    StrokeColor = Color.FromArgb("#660891B2"),
-                                    StrokeWidth = 1,
-                                    Padding = new Thickness(12, 8),
-                                    Children =
-                                    {
-                                        new SkiaLabel("PHOTO MODE")
-                                            {
-                                                FontSize = 12,
-                                                FontAttributes = FontAttributes.Bold,
-                                                TextColor = Colors.White,
-                                                UseCache = SkiaCacheType.Operations,
-                                            }
-                                            .Assign(out modeButtonLabel)
-                                    }
-                                }
-                                .OnTapped(me => ToggleCaptureMode())
-                                .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode), me =>
-                                {
-                                    var isVideo = CameraControl.CaptureMode == CaptureModeType.Video;
-                                    me.BackgroundColor =
-                                        isVideo ? Color.FromArgb("#2D7C3AED") : Color.FromArgb("#2D0891B2");
-                                    me.StrokeColor =
-                                        isVideo ? Color.FromArgb("#667C3AED") : Color.FromArgb("#660891B2");
-                                    modeButtonLabel.Text = isVideo ? "VIDEO MODE" : "PHOTO MODE";
-                                })
-                                .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording),
-                                    me => { me.IsVisible = !CameraControl.IsRecording; }),
-                            new SkiaShape()
-                                {
-                                    Type = ShapeType.Rectangle,
-                                    CornerRadius = 16,
-                                    BackgroundColor = Color.FromArgb("#260F172A"),
-                                    StrokeColor = Color.FromArgb("#33233445"),
-                                    StrokeWidth = 1,
-                                    Padding = new Thickness(12, 8),
-                                    Children =
-                                    {
-                                        new SkiaLabel("SPEECH OFF")
-                                            {
-                                                FontSize = 12,
-                                                FontAttributes = FontAttributes.Bold,
-                                                TextColor = Color.FromArgb("#8FA3B7"),
-                                                UseCache = SkiaCacheType.Operations,
-                                            }
-                                            .Assign(out speechButtonLabel)
-                                    }
-                                }
-                                .OnTapped(me => ToggleSpeech())
-                                .ObserveProperty(this, nameof(IsSpeechEnabled), me =>
-                                {
-                                    me.BackgroundColor = IsSpeechEnabled
-                                        ? Color.FromArgb("#2D10B981")
-                                        : Color.FromArgb("#260F172A");
-                                    me.StrokeColor = IsSpeechEnabled
-                                        ? Color.FromArgb("#6610B981")
-                                        : Color.FromArgb("#33233445");
-                                    speechButtonLabel.Text = IsSpeechEnabled ? "SPEECH ON" : "SPEECH OFF";
-                                    speechButtonLabel.TextColor =
-                                        IsSpeechEnabled ? Colors.White : Color.FromArgb("#8FA3B7");
-                                }),
-                            new SkiaShape()
-                                {
-                                    Type = ShapeType.Rectangle,
-                                    CornerRadius = 16,
-                                    BackgroundColor = Color.FromArgb("#260F172A"),
-                                    StrokeColor = Color.FromArgb("#33233445"),
-                                    StrokeWidth = 1,
-                                    Padding = new Thickness(12, 8),
-                                    Children =
-                                    {
-                                        new SkiaLabel("MONITOR OFF")
-                                            {
-                                                FontSize = 12,
-                                                FontAttributes = FontAttributes.Bold,
-                                                TextColor = Color.FromArgb("#8FA3B7"),
-                                                UseCache = SkiaCacheType.Operations,
-                                            }
-                                            .Assign(out monitorButtonLabel)
-                                    }
-                                }
-                                .OnTapped(me => { IsAudioMonitoringEnabled = !IsAudioMonitoringEnabled; })
-                                .ObserveProperty(this, nameof(IsAudioMonitoringEnabled), me =>
-                                {
-                                    me.BackgroundColor = IsAudioMonitoringEnabled
-                                        ? Color.FromArgb("#2D38BDF8")
-                                        : Color.FromArgb("#260F172A");
-                                    me.StrokeColor = IsAudioMonitoringEnabled
-                                        ? Color.FromArgb("#6638BDF8")
-                                        : Color.FromArgb("#33233445");
-                                    monitorButtonLabel.Text = IsAudioMonitoringEnabled ? "MONITOR ON" : "MONITOR OFF";
-                                    monitorButtonLabel.TextColor = IsAudioMonitoringEnabled
-                                        ? Colors.White
-                                        : Color.FromArgb("#8FA3B7");
-                                })
-                        }
-                    }
                 }
             };
+
         }
 
         private SkiaShape CreateCaptionsPanel()
         {
             return new SkiaShape()
                 {
+                    UseCache = SkiaCacheType.Image,
                     IsVisible = false,
                     Type = ShapeType.Rectangle,
                     CornerRadius = 26,
@@ -403,6 +429,7 @@ namespace CameraTests.Views
                             HorizontalOptions = LayoutOptions.Start,
                             VerticalOptions = LayoutOptions.Start,
                         },
+
                         new SkiaLabel("Turn on speech recognition to start captioning live audio")
                             {
                                 Margin = new Thickness(0, 20, 0, 0),
@@ -417,18 +444,28 @@ namespace CameraTests.Views
                                 new[]
                                 {
                                     nameof(IsSpeechEnabled), nameof(IsAudioMonitoringEnabled),
-                                    nameof(IsTranscribing)
+                                    nameof(IsTranscribing), nameof(TranscriptionState), nameof(TranscriptionStatusMessage)
                                 }, me =>
                                 {
-                                    me.Text = IsTranscribing
-                                        ? "Listening and building captions in real time"
-                                        : IsSpeechEnabled
-                                            ? "Speak naturally to generate live captions"
-                                            : "Turn on speech recognition to start captioning live audio";
-                                    me.TextColor = IsTranscribing
-                                        ? Color.FromArgb("#D9F6FF")
-                                        : Color.FromArgb("#A7B5C6");
+                                    me.Text = !IsSpeechEnabled
+                                        ? "Turn on speech recognition to start captioning live audio"
+                                        : TranscriptionState == RealtimeTranscriptionSessionState.Connecting
+                                            ? "Connecting..."
+                                            : IsTranscriptionFailed
+                                                ? (string.IsNullOrWhiteSpace(TranscriptionStatusMessage)
+                                                    ? "Network error. Tap SPEECH to retry."
+                                                    : TranscriptionStatusMessage)
+                                                : IsTranscribing
+                                                    ? "Listening.."
+                                                    : "Speak to generate live captions with AI";
+                                    me.TextColor = IsTranscriptionFailed
+                                        ? Color.FromArgb("#FDBA74")
+                                        : IsTranscribing
+                                            ? Color.FromArgb("#D9F6FF")
+                                            : Color.FromArgb("#A7B5C6");
                                 }),
+
+                        //CAPTIONS
                         new SkiaRichLabel()
                             {
                                 UseCache = SkiaCacheType.Operations,
