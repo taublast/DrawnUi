@@ -789,7 +789,7 @@ namespace DrawnUi.Controls
                                 }
 
                                 _pushModalWasOpen = false;
-                                drawer.Scrolled += OnModalDrawerScrolled;
+                                drawer.StateTransitionComplete += OnModalDrawerStateTransitionComplete;
 
                                 control.IsOpen = true;
                             });
@@ -866,6 +866,14 @@ namespace DrawnUi.Controls
                 {
                     FinalizeTransition(control);
                 }
+            }
+        }
+
+        void OnModalDrawerStateTransitionComplete(object sender, bool isOpen)
+        {
+            if (sender is SkiaDrawer control)
+            {
+                FinalizeTransition(control);
             }
         }
 
@@ -1036,7 +1044,7 @@ namespace DrawnUi.Controls
 
                             try
                             {
-                                modalWrapper.Drawer.Scrolled -= OnModalDrawerScrolled;
+                                modalWrapper.Drawer.StateTransitionComplete -= OnModalDrawerStateTransitionComplete;
                                 if (removed is IVisibilityAware aware)
                                 {
                                     aware.OnDisappearing();
@@ -1068,7 +1076,10 @@ namespace DrawnUi.Controls
                     OnLayersChanged(control);
 
                     control.SetParent(null); //unregister gestures etc
-                    Tasks.StartDelayed(TimeSpan.FromMilliseconds(1500), () => { ShellLayout?.DisposeObject(control); });
+                    Tasks.StartDelayed(TimeSpan.FromMilliseconds(1500), () =>
+                    {
+                        ShellLayout?.DisposeObject(control);
+                    });
                 }
             }
             catch (Exception e)

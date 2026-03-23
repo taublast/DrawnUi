@@ -1654,10 +1654,14 @@ public partial class SkiaCamera : SkiaControl
     /// </summary>
     public static void StopAll()
     {
-        foreach (var renderer in Instances)
+        //separate thread at all times for internal stop
+        Tasks.StartDelayed(TimeSpan.FromMilliseconds(16), () => 
         {
-            renderer.StopInternal(true);
-        }
+            foreach (var renderer in Instances)
+            {
+                renderer.StopInternal(true);
+            }
+        }); 
     }
 
     /// <summary>
@@ -1704,15 +1708,19 @@ public partial class SkiaCamera : SkiaControl
     {
         if (bindable is SkiaCamera control)
         {
-            control.StopInternal(true);
-            if (control.IsOn)
+            //separate thread at all times for internal stop
+            Tasks.StartDelayed(TimeSpan.FromMilliseconds(16), () =>
             {
-                control.StartWithPermissionsInternal();
-            }
-            else
-            {
-                Debug.WriteLine("CAMERA TURNED OFF");
-            }
+                control.StopInternal(true);
+                if ((bool)newvalue)
+                {
+                    control.StartWithPermissionsInternal();
+                }
+                else
+                {
+                    Debug.WriteLine("CAMERA TURNED OFF");
+                }
+            });
         }
     }
 
@@ -1822,21 +1830,27 @@ public partial class SkiaCamera : SkiaControl
 
     public void DisableOtherCameras(bool all = false)
     {
-        foreach (var renderer in Instances)
+        //separate thread at all times for internal stop
+        Tasks.StartDelayed(TimeSpan.FromMilliseconds(16), () =>
         {
-            System.Diagnostics.Debug.WriteLine($"[CAMERA] DisableOtherCameras..");
-            bool disable = false;
-            if (all || renderer != this)
+            foreach (var renderer in Instances)
             {
-                disable = true;
-            }
+                System.Diagnostics.Debug.WriteLine($"[CAMERA] DisableOtherCameras..");
+                bool disable = false;
+                if (all || renderer != this)
+                {
+                    disable = true;
+                }
 
-            if (disable)
-            {
-                renderer.StopInternal(true);
-                System.Diagnostics.Debug.WriteLine($"[CAMERA] Stopped {renderer.Uid} {renderer.Tag}");
+                if (disable)
+                {
+                    renderer.StopInternal(true);
+                    System.Diagnostics.Debug.WriteLine($"[CAMERA] Stopped {renderer.Uid} {renderer.Tag}");
+                }
             }
-        }
+        });
+
+       
     }
 
     /// <summary>
@@ -4017,19 +4031,17 @@ public partial class SkiaCamera : SkiaControl
         if (IsDisposing || IsDisposed)
             return;
 
-        System.Diagnostics.Debug.WriteLine($"[CAMERA] Stopped {Uid} {Tag}");
+        System.Diagnostics.Debug.WriteLine($"[CAMERA] Stopping {Uid} {Tag}");
 
         //_ = StopVideoRecording(true);
 
         NativeControl?.Stop(force);
-        
-        // Stop audio capture if running in pure audio-only mode (no camera hardware)
-        if (!EnableVideoPreview && !EnableVideoRecording)
-        {
-            StopPreviewAudioCapture();
-        }
-        
+
+        StopPreviewAudioCapture();
+
         State = HardwareState.Off;
+
+        System.Diagnostics.Debug.WriteLine($"[CAMERA] Stopped {Uid} {Tag}");
     }
 
     /// <summary>
