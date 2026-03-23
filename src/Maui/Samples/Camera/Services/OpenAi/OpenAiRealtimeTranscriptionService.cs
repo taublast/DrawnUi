@@ -29,12 +29,15 @@ namespace CameraTests.Services
         private readonly SemaphoreSlim _sendSignal = new(0);
 
         private int _feedCount;
+        private RealtimeTranscriptionSessionState _sessionState = RealtimeTranscriptionSessionState.Off;
 
         public string Language { get; set; }
         public string Model { get; set; } = "gpt-4o-mini-transcribe";
 
         public event Action<string> TranscriptionDelta;
         public event Action<string> TranscriptionCompleted;
+        public event Action<RealtimeTranscriptionSessionState> SessionStateChanged;
+        public event Action<string> SessionError;
 
         public OpenAiRealtimeTranscriptionService(string apiKey = null)
         {
@@ -55,6 +58,7 @@ namespace CameraTests.Services
             _sessionConfigured = false;
             _feedCount = 0;
             _preprocessor.Reset();
+            SetSessionState(RealtimeTranscriptionSessionState.Connecting);
 
             while (_sendQueue.TryDequeue(out _)) { }
 
@@ -66,15 +70,17 @@ namespace CameraTests.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[RealtimeTranscription] Connect failed: {ex.Message}");
-                _isRunning = false;
+                await HandleFailureAsync($"Connect failed: {ex.Message}");
             }
         }
 
         public void Stop()
         {
-            if (!_isRunning) return;
+            if (!_isRunning && _sessionState == RealtimeTranscriptionSessionState.Off) return;
             _isRunning = false;
+            _sessionConfigured = false;
+            NotifyIsSendingData(false);
+            SetSessionState(RealtimeTranscriptionSessionState.Off);
 
             _cts?.Cancel();
             _sendSignal.Release();
@@ -215,6 +221,64 @@ namespace CameraTests.Services
             SendingData?.Invoke(state);
         }
 
+        private void SetSessionState(RealtimeTranscriptionSessionState state)
+        {
+            if (_sessionState != state)
+            {
+                _sessionState = state;
+                SessionStateChanged?.Invoke(state);
+            }
+        }
+
+        private void NotifySessionError(string message)
+        {
+            if (!string.IsNullOrWhiteSpace(message))
+            {
+                SessionError?.Invoke(message);
+            }
+        }
+
+        private async Task HandleFailureAsync(string message)
+        {
+            Debug.WriteLine($"[RealtimeTranscription] Failure: {message}");
+
+            _isRunning = false;
+            _sessionConfigured = false;
+            NotifyIsSendingData(false);
+            NotifySessionError(message);
+            SetSessionState(RealtimeTranscriptionSessionState.Failed);
+
+            try
+            {
+                _cts?.Cancel();
+            }
+            catch
+            {
+            }
+
+            var socket = _webSocket;
+            _webSocket = null;
+
+            if (socket != null)
+            {
+                try
+                {
+                    if (socket.State == WebSocketState.Open)
+                    {
+                        using var closeCts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+                        await socket.CloseAsync(WebSocketCloseStatus.InternalServerError, "failed", closeCts.Token);
+                    }
+                }
+                catch
+                {
+                }
+                finally
+                {
+                    socket.Dispose();
+                }
+            }
+        }
+
         private async Task SendLoopAsync(CancellationToken ct)
         {
             try
@@ -237,7 +301,7 @@ namespace CameraTests.Services
                         }
                         catch (Exception ex)
                         {
-                            Debug.WriteLine($"[RealtimeTranscription] Send error: {ex.Message}");
+                            await HandleFailureAsync($"Send failed: {ex.Message}");
                             return;
                         }
                         finally
@@ -267,7 +331,7 @@ namespace CameraTests.Services
                         result = await _webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), ct);
                         if (result.MessageType == WebSocketMessageType.Close)
                         {
-                            Debug.WriteLine("[RealtimeTranscription] Server closed connection");
+                            await HandleFailureAsync("Server closed the transcription connection.");
                             return;
                         }
                         messageBuffer.Append(Encoding.UTF8.GetString(buffer, 0, result.Count));
@@ -280,11 +344,11 @@ namespace CameraTests.Services
             catch (OperationCanceledException) { }
             catch (WebSocketException ex)
             {
-                Debug.WriteLine($"[RealtimeTranscription] WebSocket error: {ex.Message}");
+                await HandleFailureAsync($"WebSocket error: {ex.Message}");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[RealtimeTranscription] Receive error: {ex.Message}");
+                await HandleFailureAsync($"Receive error: {ex.Message}");
             }
         }
 
@@ -305,6 +369,7 @@ namespace CameraTests.Services
                     case "transcription_session.created":
                     case "transcription_session.updated":
                         _sessionConfigured = true;
+                        SetSessionState(RealtimeTranscriptionSessionState.Ready);
                         Debug.WriteLine($"[RealtimeTranscription] Session configured: {eventType}");
                         break;
 
@@ -347,7 +412,7 @@ namespace CameraTests.Services
                         if (root.TryGetProperty("error", out var error))
                         {
                             var msg = error.TryGetProperty("message", out var m) ? m.GetString() : "unknown";
-                            Debug.WriteLine($"[RealtimeTranscription] ERROR: {msg}");
+                            _ = HandleFailureAsync($"Transcription service error: {msg}");
                         }
                         break;
 

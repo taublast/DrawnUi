@@ -1,5 +1,13 @@
 namespace CameraTests.Services
 {
+    public enum RealtimeTranscriptionSessionState
+    {
+        Off,
+        Connecting,
+        Ready,
+        Failed
+    }
+
     /// <summary>
     /// Interface for real-time audio transcription services.
     /// Accepts raw PCM audio, handles format conversion internally,
@@ -47,5 +55,15 @@ namespace CameraTests.Services
         /// Fired when the service is sending audio data to the API. Parameter is true when starting to send, false when done.
         /// </summary>
         event Action<bool> SendingData;
+
+        /// <summary>
+        /// Fired when the session connection state changes.
+        /// </summary>
+        event Action<RealtimeTranscriptionSessionState> SessionStateChanged;
+
+        /// <summary>
+        /// Fired when the service encounters an error that should be shown in the UI.
+        /// </summary>
+        event Action<string> SessionError;
     }
 }
