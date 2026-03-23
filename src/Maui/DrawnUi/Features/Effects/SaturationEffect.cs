@@ -2,47 +2,28 @@
 
 public class SaturationEffect : BaseColorFilterEffect
 {
-    public static readonly BindableProperty SaturationProperty = BindableProperty.Create(
-        nameof(Saturation),
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create(
+        nameof(Value),
         typeof(float),
         typeof(SkiaImage),
-        1f, // Default to no change
+        1f,
         propertyChanged: NeedUpdate);
 
-    public float Saturation
+    public float Value
     {
-        get => (float)GetValue(SaturationProperty);
-        set => SetValue(SaturationProperty, value);
+        get => (float)GetValue(ValueProperty);
+        set => SetValue(ValueProperty, value);
     }
 
     public override SKColorFilter CreateFilter(SKRect destination)
     {
-        if (NeedApply)
+        if (NeedApply && Filter == null)
         {
-            if (Filter == null)
-            {
-                Filter = CreateSaturationFilter(Saturation);
-            }
+            Filter = SkiaImageEffects.Saturation(Value);
         }
+
         return Filter;
     }
 
-    private SKColorFilter CreateSaturationFilter(float saturation)
-    {
-        float invSat = 1 - saturation;
-        float R = 0.213f * invSat;
-        float G = 0.715f * invSat;
-        float B = 0.072f * invSat;
-
-        float[] colorMatrix = {
-            R + saturation, G, B, 0, 0,
-            R, G + saturation, B, 0, 0,
-            R, G, B + saturation, 0, 0,
-            0, 0, 0, 1, 0
-        };
-
-        return SKColorFilter.CreateColorMatrix(colorMatrix);
-    }
-
-    public override bool NeedApply => base.NeedApply && Saturation != 1f;
+    public override bool NeedApply => base.NeedApply && Value != 1f;
 }
