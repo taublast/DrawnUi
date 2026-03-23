@@ -606,7 +606,7 @@ namespace CameraTests.Views
                     {
                         UseCache = SkiaCacheType.Operations,
                         Spacing = 8,
-                        Padding = new Thickness(16),
+                        Padding = new Thickness(16, 16, 16, 16),
                         HorizontalOptions = LayoutOptions.Fill,
                         VerticalOptions = LayoutOptions.Start,
                         Children =
@@ -791,7 +791,7 @@ namespace CameraTests.Views
                     {
                         Spacing = 8,
                         UseCache = SkiaCacheType.Operations,
-                        Padding = new Thickness(16),
+                        Padding = new Thickness(16, 16, 16, 24),
                         HorizontalOptions = LayoutOptions.Fill,
                         VerticalOptions = LayoutOptions.Start,
                         Children =
@@ -877,7 +877,7 @@ namespace CameraTests.Views
                     {
                         Spacing = 8,
                         UseCache = SkiaCacheType.Operations,
-                        Padding = new Thickness(16),
+                        Padding = new Thickness(16, 16, 16, 24),
                         HorizontalOptions = LayoutOptions.Fill,
                         VerticalOptions = LayoutOptions.Start,
                         Children =

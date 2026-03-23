@@ -1292,8 +1292,8 @@ public partial class SkiaCamera : SkiaControl
 
     private void OnPreviewAudioSampleAvailable(object sender, AudioSample sample)
     {
-        // Lightweight - just fire the event, no recording logic
-        OnAudioSampleAvailable(sample);
+        // Keep preview capture alive for warm-up, but only surface samples when monitoring is enabled.
+        OnPreviewAudioSampleAvailable(sample);
     }
 
     private SemaphoreSlim _audioSemaphore = new(1, 1);

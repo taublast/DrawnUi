@@ -41,8 +41,8 @@ public partial class SkiaCamera : SkiaControl
     public event EventHandler<bool> IsRecordingAudioOnlyChanged;
 
     /// <summary>
-    /// Fired when audio sample is captured - both during preview and recording.
-    /// Active when EnableAudioRecording=true and camera is running.
+        /// Fired when audio sample is captured for recording, or during preview when EnableAudioMonitoring is enabled.
+        /// Active during recording and optional live monitoring.
     /// Parameters: (byte[] data, int sampleRate, int bitsPerSample, int channels)
     /// </summary>
     public event Action<byte[], int, int, int> AudioSampleAvailable;
@@ -59,6 +59,20 @@ public partial class SkiaCamera : SkiaControl
             sample.Channels);
 
         return sample;
+    }
+
+    /// <summary>
+    /// Audio is available from preview capture. Preview samples are exposed only when live monitoring is enabled.
+    /// This keeps video-mode audio warm-up independent from monitoring UI.
+    /// </summary>
+    protected virtual AudioSample OnPreviewAudioSampleAvailable(AudioSample sample)
+    {
+        if (!EnableAudioMonitoring)
+        {
+            return sample;
+        }
+
+        return OnAudioSampleAvailable(sample);
     }
 
     protected virtual void SetIsRecordingVideo(bool isRecording)
@@ -3026,7 +3040,7 @@ public partial class SkiaCamera : SkiaControl
     private System.Threading.Timer _audioOnlyProgressTimer;
 
     /// <summary>
-    /// Starts preview audio capture. Called when EnableAudioRecording=true and camera starts (not recording).
+    /// Starts preview audio capture. Used both for live monitoring and to warm up audio capture in video mode before recording starts.
     /// Implemented per platform.
     /// </summary>
     partial void StartPreviewAudioCapture();

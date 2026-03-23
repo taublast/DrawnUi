@@ -1836,7 +1836,7 @@ public partial class SkiaCamera
 
     private void OnPreviewAudioSampleAvailable(object sender, AudioSample sample)
     {
-        OnAudioSampleAvailable(sample);
+        OnPreviewAudioSampleAvailable(sample);
     }
 
     private SemaphoreSlim _audioSemaphore = new(1, 1);

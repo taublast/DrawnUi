@@ -1485,7 +1485,7 @@ public double ZoomLimitMin { get; set; }          // Minimum zoom
 public double ZoomLimitMax { get; set; }          // Maximum zoom
 
 // Audio Recording
-public bool EnableAudioRecording { get; set; }             // Include audio in video recordings (default: false)
+public bool EnableAudioRecording { get; set; }             // Include audio in video recordings (default: true)
 ```
 
 ### Core Methods
@@ -1891,7 +1891,7 @@ SkiaCamera provides **granular control over video preview, recording, and audio*
 // Core control properties
 camera.EnableVideoPreview = true;        // Initialize camera hardware, show video preview (default: true)
 camera.EnableVideoRecording = true;               // Record video frames to output file (default: true)
-camera.EnableAudioRecording = true;               // Capture audio to output file (default: false)
+camera.EnableAudioRecording = true;               // Capture audio to output file (default: true)
 camera.EnableAudioMonitoring = false;    // Enable live audio preview/feedback (default: false)
 ```
 
@@ -1901,8 +1901,10 @@ camera.EnableAudioMonitoring = false;    // Enable live audio preview/feedback (
 |----------|------|---------|-------------|
 | `EnableVideoPreview` | `bool` | `true` | Display video preview UI (camera initializes if EnableVideoRecording=true regardless) |
 | `EnableVideoRecording` | `bool` | `true` | Capture and encode video frames to file |
-| `EnableAudioRecording` | `bool` | `false` | Capture and encode audio to file |
+| `EnableAudioRecording` | `bool` | `true` | Capture and encode audio to file |
 | `EnableAudioMonitoring` | `bool` | `false` | Enable live audio preview/feedback (e.g., for audio level meters) |
+
+When `CaptureMode=Video` and `EnableAudioRecording=true`, SkiaCamera may start preview audio capture before recording begins to warm up the audio path. Preview samples are only surfaced to `AudioSampleAvailable` and monitoring UI when `EnableAudioMonitoring=true`.
 
 **Usage Scenarios:**
 
@@ -2074,7 +2076,7 @@ The `FrameProcessor` and `PreviewProcessor` callbacks receive a `DrawableFrame` 
 |----------|------|---------|-------------|
 | `UseRealtimeVideoProcessing` | `bool` | `false` | Enable frame-by-frame capture mode |
 | `FrameProcessor` | `Action<DrawableFrame>` | `null` | Callback for processing each frame |
-| `EnableAudioRecording` | `bool` | `false` | Include audio in recording |
+| `EnableAudioRecording` | `bool` | `true` | Include audio in recording |
 | `VideoQuality` | `VideoQuality` | `Standard` | Video quality preset |
 | `VideoFormatIndex` | `int` | `0` | Manual format selection (when VideoQuality = Manual) |
 
@@ -2318,7 +2320,7 @@ public class CameraWithOscillograph : SkiaCamera
 - Processing happens **before encoding** - your changes affect the final video
 - Works in both **live recording and pre-recording modes**
 - Thread-safe access required when sharing audio data with other threads
-- `EnableAudioRecording = true` must be set to receive audio samples
+- Recording callbacks require `EnableAudioRecording = true`; preview callbacks are also surfaced when `EnableAudioMonitoring = true`
 
 #### Video Recording UI Integration
 
