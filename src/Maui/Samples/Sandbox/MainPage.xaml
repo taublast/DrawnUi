@@ -144,7 +144,7 @@
 
 
                                     <draw:SkiaLayout
-                                        Padding="16"
+                                        Padding="8, 16"
                                         HorizontalOptions="Start"
                                         Tag="Button"
                                         UseCache="Image">
