@@ -48,18 +48,56 @@ namespace CameraTests.UI
 
         public FrameOverlay()
         {
-            UseCache = SkiaCacheType.Operations;
+            UseCache = SkiaCacheType.Image;
             VerticalOptions = LayoutOptions.Fill;
             Children = new List<SkiaControl>()
             {
-                new AudioVisualizer()
+                new SkiaShape()
                 {
-                    Margin=16,
-                    WidthRequest = 150,
-                    HeightRequest = 80,
+                    Type = ShapeType.Rectangle,
+                    Margin = 16,
+                    Padding = new Thickness(12, 10, 12, 12),
+                    WidthRequest = 220,
+                    HeightRequest = 128,
+                    CornerRadius = 22,
+                    BackgroundColor = Color.FromArgb("#A60B1220"),
+                    StrokeWidth = 1,
+                    StrokeColor = Color.FromArgb("#3311C5BF"),
                     VerticalOptions = LayoutOptions.Start,
                     HorizontalOptions = LayoutOptions.End,
-                }.Assign(out Visualizer)
+                    Children =
+                    {
+                        new SkiaLabel("Audio Monitor")
+                        {
+                            FontSize = 12,
+                            CharacterSpacing = 1,
+                            TextColor = Color.FromArgb("#7DEAE5"),
+                            UseCache = SkiaCacheType.Operations,
+                            HorizontalOptions = LayoutOptions.Start,
+                            VerticalOptions = LayoutOptions.Start,
+                        },
+                        new SkiaLabel()
+                        {
+                            Margin = new Thickness(0, 18, 0, 0),
+                            FontSize = 12,
+                            TextColor = Color.FromArgb("#A7B5C6"),
+                            UseCache = SkiaCacheType.Operations,
+                            HorizontalOptions = LayoutOptions.Start,
+                            VerticalOptions = LayoutOptions.Start,
+                        }
+                        .ObserveProperty(() => Visualizer, nameof(Visualizer.VisualizerName), me =>
+                        {
+                            me.Text = Visualizer?.VisualizerName ?? "None";
+                        }),
+                        new AudioVisualizer()
+                        {
+                            Margin = new Thickness(0, 42, 0, 0),
+                            HorizontalOptions = LayoutOptions.Fill,
+                            VerticalOptions = LayoutOptions.Fill,
+                        }
+                        .Assign(out Visualizer)
+                    }
+                }
             };
         }
 

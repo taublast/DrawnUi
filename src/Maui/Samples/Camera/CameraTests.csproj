@@ -66,18 +66,6 @@
 
   <ItemGroup>
 
-    <None Remove="Resources\Fonts\Orbitron-Black.ttf" />
-
-    <None Remove="Resources\Fonts\Orbitron-Bold.ttf" />
-
-    <None Remove="Resources\Fonts\Orbitron-ExtraBold.ttf" />
-
-    <None Remove="Resources\Fonts\Orbitron-Medium.ttf" />
-
-    <None Remove="Resources\Fonts\Orbitron-Regular.ttf" />
-
-    <None Remove="Resources\Fonts\Orbitron-SemiBold.ttf" />
-
     <None Remove="Resources\Images\" />
 
     <None Remove="Resources\Raw\baboon.jpg" />
@@ -109,6 +97,11 @@
     <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
+
+
+  <ItemGroup>
+    <MauiFont Remove="Resources\Fonts\IconFont.cs" />
+  </ItemGroup>
 
 
   <ItemGroup>

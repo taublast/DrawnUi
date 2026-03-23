@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using CameraTests.Services;
+using CameraTests.Views;
 
 namespace CameraTests
 {
@@ -10,18 +12,17 @@ namespace CameraTests
 
             InitializeComponent();
 
-            MainPage = new AppShell();
+#if ANDROID
+            Super.SetNavigationBarColor(Colors.Black, Colors.Black, false);
+#endif
+
         }
 
-
-
-        public void SetMainPage(Page page)
+        protected override Window CreateWindow(IActivationState activationState)
         {
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                MainPage = page;
-            });
+            return new Window(new MainPage(Super.Services.GetService<IRealtimeTranscriptionService>()));
         }
+
 
         public static App Instance => App.Current as App;
     }

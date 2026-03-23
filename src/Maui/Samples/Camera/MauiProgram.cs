@@ -22,21 +22,12 @@ namespace CameraTests
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
-                    fonts.AddFont("NotoColorEmoji-Regular.ttf", "FontEmoji");
+                    fonts.AddFont("material.ttf", "FontIcons");
 
                     fonts.AddFont("OpenSans-Regular.ttf", "FontText");
                     fonts.AddFont("OpenSans-Semibold.ttf", "FontTextBol");
                     fonts.AddFont("OpenSans-Semibold.ttf", "FontTextTitle");
-
-                    fonts.AddFont("DOM.TTF", "FontBrand");
-                    fonts.AddFont("DOMB.TTF", "FontBrandBold");
-
-                    fonts.AddFont("Orbitron-Regular.ttf", "FontGame"); //400
-                    fonts.AddFont("Orbitron-Medium.ttf", "FontGameMedium"); //500
-                    fonts.AddFont("Orbitron-SemiBold.ttf", "FontGameSemiBold"); //600
-                    fonts.AddFont("Orbitron-Bold.ttf", "FontGameBold"); //700
-                    fonts.AddFont("Orbitron-ExtraBold.ttf", "FontGameExtraBold"); //800
-                });
+                 });
 
             builder.UseDrawnUi(new()
             {

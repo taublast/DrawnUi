@@ -53,7 +53,18 @@ public class SettingsButton : SkiaLayout, ISkiaGestureListener
     {
         if (_shape != null)
         {
-            _shape.BackgroundColor = TintColor;
+            _shape.BackgroundColor = Color.FromRgba(TintColor.Red, TintColor.Green, TintColor.Blue, 0.18f);
+            _shape.StrokeColor = Color.FromRgba(TintColor.Red, TintColor.Green, TintColor.Blue, 0.7f);
+        }
+
+        if (_iconLabel != null)
+        {
+            _iconLabel.TextColor = Colors.White;
+        }
+
+        if (_label != null)
+        {
+            _label.TextColor = Colors.White;
         }
     }
 
@@ -63,28 +74,29 @@ public class SettingsButton : SkiaLayout, ISkiaGestureListener
 
         if (propertyName.IsEither(nameof(IsHovered), nameof(BindingContext)) && _shape != null)
         {
-            //_shape.VisualEffects = IsHovered ? _hoverEffects : _normalEffects;
-            _label.StrokeColor = IsHovered ? Color.FromArgb("#66FFFFFF") : Color.FromArgb("#01ffffff");
-            _shape.StrokeColor = IsHovered ? Color.FromArgb("#CCFFFFFF") : TintColor;
-            _iconLabel.FontSize = IsHovered ? 16 : 14;
+            _label.StrokeColor = IsHovered ? Color.FromArgb("#22FFFFFF") : Color.FromArgb("#01FFFFFF");
+            _shape.StrokeColor = IsHovered
+                ? Color.FromArgb("#88D9F6FF")
+                : Color.FromRgba(TintColor.Red, TintColor.Green, TintColor.Blue, 0.7f);
+            _iconLabel.FontSize = IsHovered ? 17 : 15;
         }
     }
 
     protected virtual SkiaShape CreateView()
     {
-        var shadowHover = new DropShadowEffect { Blur = 2, X = 2, Y = 2, Color = Color.FromArgb("#CCFFFFFF") };
-        var shadowNormal = new DropShadowEffect { Blur = 2, X = 2, Y = 2, Color = Color.FromArgb("#44222222") };
-        var shadowPressed = new DropShadowEffect { Blur = 2, X = 1, Y = 1, Color = Color.FromArgb("#01222222") };
+        var shadowHover = new DropShadowEffect { Blur = 8, X = 0, Y = 3, Color = Color.FromArgb("#3311C5BF") };
+        var shadowNormal = new DropShadowEffect { Blur = 6, X = 0, Y = 3, Color = Color.FromArgb("#33000000") };
+        var shadowPressed = new DropShadowEffect { Blur = 3, X = 0, Y = 1, Color = Color.FromArgb("#22000000") };
         _normalEffects = new List<SkiaEffect> { shadowNormal };
         _pressedEffects = new List<SkiaEffect> { shadowPressed };
         _hoverEffects = new List<SkiaEffect> { shadowHover };
 
         return new SkiaShape()
         {
-            BackgroundColor = TintColor,
-            CornerRadius = 4,
-            StrokeWidth = 2,
-            StrokeColor = TintColor,
+            BackgroundColor = Color.FromRgba(TintColor.Red, TintColor.Green, TintColor.Blue, 0.18f),
+            CornerRadius = 18,
+            StrokeWidth = 1,
+            StrokeColor = Color.FromRgba(TintColor.Red, TintColor.Green, TintColor.Blue, 0.7f),
             VisualEffects = _normalEffects,
             Children =
             {
@@ -99,15 +111,14 @@ public class SettingsButton : SkiaLayout, ISkiaGestureListener
                     {
                         new SkiaLayout()
                         {
-                            WidthRequest=24,
+                            WidthRequest = 24,
                             LockRatio = 1,
-                            //BackgroundColor = Colors.YellowGreen,
                             Children =
                             {
                                 new SkiaRichLabel()
                                     {
                                         Text = this.AccessoryIcon,
-                                        FontSize=14,
+                                        FontSize = 15,
                                         IsVisible = !string.IsNullOrEmpty(this.AccessoryIcon),
                                         UseCache = SkiaCacheType.Operations,
                                         VerticalOptions = LayoutOptions.Center,
@@ -129,7 +140,7 @@ public class SettingsButton : SkiaLayout, ISkiaGestureListener
                         new SkiaRichLabel()
                         {
                             Text = this.Text,
-                            StrokeColor = Color.FromArgb("#01ffffff"),
+                            StrokeColor = Color.FromArgb("#01FFFFFF"),
                             StrokeWidth = 1,
                             UseCache = SkiaCacheType.Operations,
                             VerticalOptions = LayoutOptions.Center,
@@ -156,7 +167,6 @@ public class SettingsButton : SkiaLayout, ISkiaGestureListener
 
         if (args.Type == TouchActionResult.Down)
         {
-            _shape.TranslationX = 1;
             _shape.TranslationY = 1;
             _shape.VisualEffects = _pressedEffects;
             _hadDown = true;
@@ -165,7 +175,6 @@ public class SettingsButton : SkiaLayout, ISkiaGestureListener
 
         if (args.Type == TouchActionResult.Up)
         {
-            _shape.TranslationX = 0;
             _shape.TranslationY = 0;
             _shape.VisualEffects = _normalEffects;
             _hadDown = false;

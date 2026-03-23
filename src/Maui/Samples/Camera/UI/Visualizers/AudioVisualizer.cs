@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DrawnUi.Camera;
-using static CameraTests.Views.CameraTestPage;
+using static CameraTests.Views.MainPage;
 
 namespace CameraTests.Visualizers
 {

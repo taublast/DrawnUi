@@ -112,7 +112,7 @@ namespace CameraTests.Services
                 {
                     Text = $" {_lines[i].Text} ",
                     TextColor = Colors.White,
-                    BackgroundColor = Color.FromArgb("#CC000000"),
+                    BackgroundColor = Colors.Transparent,
                     FontSize = _fontSize
                 });
                 first = false;
@@ -125,8 +125,8 @@ namespace CameraTests.Services
                 _label.Spans.Add(new TextSpan
                 {
                     Text = $" {_partialText} ",
-                    TextColor = Color.FromArgb("#CCFFFFFF"),
-                    BackgroundColor = Color.FromArgb("#99000000"),
+                    TextColor = Color.FromArgb("#D9F6FF"),
+                    BackgroundColor = Colors.Transparent,
                     FontSize = _fontSize
                 });
             }
