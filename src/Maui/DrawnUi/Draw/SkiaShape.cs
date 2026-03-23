@@ -602,6 +602,10 @@ namespace DrawnUi.Draw
         private SKShader _strokeGradientShader;
         private int _strokeGradientVersion = -1;
         private SKRect _strokeGradientRect;
+        private SkiaGradient _strokeGradientRef;
+
+        // Stroke paint property guards (only for properties never touched outside PaintStroke)
+        private SKStrokeCap _strokePaintCap;
 
         // Dash PathEffect cache
         private SKPathEffect _cachedDashEffect;
@@ -975,12 +979,13 @@ namespace DrawnUi.Draw
                 paint.BlendMode = this.StrokeBlendMode;
 
                 SetupGradient(paint, StrokeGradient, outRect,
-                    ref _strokeGradientShader, ref _strokeGradientVersion, ref _strokeGradientRect);
+                    ref _strokeGradientShader, ref _strokeGradientVersion, ref _strokeGradientRect,
+                    ref _strokeGradientRef);
 
                 paint.ImageFilter = null;
 
                 paint.Style = SKPaintStyle.Stroke;
-                paint.StrokeCap = this.StrokeCap;
+                paint.GuardStrokeCap(ref _strokePaintCap, this.StrokeCap);
                 paint.StrokeJoin = MapStrokeCapToStrokeJoin(this.StrokeCap);
 
                 if (this.StrokePath != null && StrokePath.Length > 0)
@@ -1123,6 +1128,12 @@ namespace DrawnUi.Draw
 
                         break;
                 }
+
+                // Clear the cached stroke shader from the shared RenderingPaint so that
+                // SetupBackgroundPaint (non-cached SetupGradient) on the next frame does not
+                // grab it via paint.Shader, then dispose it while _strokeGradientShader still
+                // holds the reference — which would cause the stroke to render solid black.
+                paint.Shader = null;
             }
 
             void PaintWithShadowsInternal(Action render)

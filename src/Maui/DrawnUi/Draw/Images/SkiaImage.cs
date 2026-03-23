@@ -1158,7 +1158,7 @@ public class SkiaImage : SkiaControl
             NeedInvalidateImageFilter = false;
             //var d = PaintImageFilter;
             PaintImageFilter = null;
-            _lastImagePaintImageFilter = null; // force guard to fire
+            // do NOT reset _lastImagePaintImageFilter — guard detects (oldRef != null) and fires correctly
             //d?.Dispose(); //might be used in double buffered!
         }
 
@@ -1167,7 +1167,7 @@ public class SkiaImage : SkiaControl
             NeedInvalidateColorFilter = false;
             //var d = PaintColorFilter;
             PaintColorFilter = null;
-            _lastImagePaintColorFilter = null; // force guard to fire
+            // do NOT reset _lastImagePaintColorFilter — guard detects (oldRef != null) and fires correctly
             //d?.Dispose(); //might be used in double buffered!
         }
 

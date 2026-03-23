@@ -36,11 +36,11 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 
 ---
 
-## 🆕 What's new for 1.9.5.1
+## 🆕 What's new for 1.9.5.2
 
-* Fix for use of `IsHiddenInViewTree` to stop rendering hidden canvases among the App.
-* `SkiaCamera` performance optimizations and fixes.
-* Optimized interop calls and other improvements.
+* Fix `SkiaShell` modals due to SkiaDrawer API changed.
+* Fix Y-position drawing text span color backgrounds, including markdown, with `SkiaLabel`.
+* Hotfixes for latest interop optimizations.
 
 ## 💡 Hint of the Day
 

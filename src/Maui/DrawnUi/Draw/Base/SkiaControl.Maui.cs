@@ -428,21 +428,27 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
-        /// Caching overload: rebuilds the shader only when the gradient version or destination rect
-        /// has changed since the last call. The caller owns the cached shader and must dispose it
-        /// in their OnDisposing(). Passing gradient=null disposes and clears the cache.
+        /// Caching overload: rebuilds the shader only when the gradient object, its version,
+        /// or the destination rect has changed since the last call. The caller owns the cached
+        /// shader and must dispose it in their OnDisposing(). Passing gradient=null disposes
+        /// and clears the cache.
         /// </summary>
         public bool SetupGradient(SKPaint paint, SkiaGradient gradient, SKRect destination,
-            ref SKShader cachedShader, ref int cachedVersion, ref SKRect cachedRect)
+            ref SKShader cachedShader, ref int cachedVersion, ref SKRect cachedRect,
+            ref SkiaGradient cachedGradient)
         {
             if (paint == null) return false;
 
             if (gradient != null)
             {
-                if (cachedShader == null || cachedVersion != gradient.Version || cachedRect != destination)
+                if (cachedShader == null
+                    || !ReferenceEquals(cachedGradient, gradient)
+                    || cachedVersion != gradient.Version
+                    || cachedRect != destination)
                 {
                     cachedShader?.Dispose();
                     cachedShader = CreateGradient(destination, gradient);
+                    cachedGradient = gradient;
                     cachedVersion = gradient.Version;
                     cachedRect = destination;
                 }
@@ -458,6 +464,7 @@ namespace DrawnUi.Draw
                 {
                     cachedShader.Dispose();
                     cachedShader = null;
+                    cachedGradient = null;
                     cachedVersion = -1;
                 }
                 paint.Shader = null;

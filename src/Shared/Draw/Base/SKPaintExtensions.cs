@@ -66,6 +66,12 @@ public static class SKPaintExtensions
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void GuardStrokeCap(this SKPaint paint, ref SKStrokeCap cache, SKStrokeCap value)
+    {
+        if (cache != value) { cache = value; paint.StrokeCap = value; }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void GuardImageFilter(this SKPaint paint, ref SKImageFilter cache, SKImageFilter value)
     {
         if (!ReferenceEquals(cache, value)) { cache = value; paint.ImageFilter = value; }
