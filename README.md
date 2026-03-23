@@ -36,12 +36,12 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 
 ---
 
-## 🆕 What's new for 1.9.5.2
+## 🆕 What's new for 1.9.5.3
 
-* Fix `SkiaCamera` manual stop freezing main thread on Android.
-* Fix `SkiaShell` modals due to SkiaDrawer API changed.
-* Fix Y-position drawing text span color backgrounds, including markdown, with `SkiaLabel`.
-* Hotfixes for latest interop optimizations.
+* Fix `SkiaLottie` AutoPlay `false` was ignored when source was set first.
+* Add `StopAtCurrentFrame` property to `SkiaLottie` to pause animation at current frame when stopped instead of reqinding to default frame (set via DefaultFrameWhenOn).
+* Fix `Wrap` layout not accounting for vertical spacing when measuring children.
+
 
 ## 💡 Hint of the Day
 
