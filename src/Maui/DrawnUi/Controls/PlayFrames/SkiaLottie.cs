@@ -23,18 +23,36 @@ public class SkiaLottie : AnimatedFramesRenderer
     /// </summary>
     public static ConcurrentDictionary<string, string> CachedAnimations = new();
 
+    public static readonly BindableProperty StopAtCurrentFrameProperty = BindableProperty.Create(
+        nameof(StopAtCurrentFrame),
+        typeof(bool),
+        typeof(SkiaLottie),
+        false);
+
+    /// <summary>
+    /// When true, Stop() and OnFinished() will leave the animation at the current frame instead of seeking to DefaultFrame.
+    /// Start() will then resume from that same frame rather than restarting from the beginning.
+    /// </summary>
+    public bool StopAtCurrentFrame
+    {
+        get => (bool)GetValue(StopAtCurrentFrameProperty);
+        set => SetValue(StopAtCurrentFrameProperty, value);
+    }
+
     public override void Stop()
     {
         base.Stop();
 
-        SeekToDefaultFrame();
+        if (!StopAtCurrentFrame)
+            SeekToDefaultFrame();
     }
 
     protected override void OnFinished()
     {
         base.OnFinished();
 
-        SeekToDefaultFrame();
+        if (!StopAtCurrentFrame)
+            SeekToDefaultFrame();
     }
 
     public virtual void SeekToDefaultFrame()
@@ -186,7 +204,7 @@ public class SkiaLottie : AnimatedFramesRenderer
     );
 
     /// <summary>
-    /// For the case IsOn = True. What frame should we display at start or when stopped. 0 (START) is default, can specify other number. if value is less than 0 then will seek to the last available frame (END).
+    /// For the case IsOn = True. What frame should we display at start or when stopped. 0 (START) is default, can specify other number. if value is less than 0 then will seek to the last available frame (END). You can also set `StopAtCurrentFrame` to true to never rewind to this value.
     /// </summary>
     public int DefaultFrameWhenOn
     {
@@ -601,7 +619,8 @@ public class SkiaLottie : AnimatedFramesRenderer
 
     protected override void OnAnimatorStarting()
     {
-        Animator.SetValue(Animation.InPoint);
+        if (!StopAtCurrentFrame)
+            Animator.SetValue(Animation.InPoint);
     }
 
     public virtual void GoToStart()
