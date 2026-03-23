@@ -679,6 +679,7 @@ namespace CameraTests.Views
                                 _flashButton.Source = CameraControl.FlashMode == FlashMode.Off ? "Svg/icon_flash_off.svg" :
                                                       CameraControl.FlashMode == FlashMode.On ? "Svg/icon_flash_on.svg" : "Svg/icon_flash_auto.svg";
                             }),
+
                             new SkiaShape()
                             {
                                 VerticalOptions = LayoutOptions.Center,
@@ -1331,7 +1332,7 @@ namespace CameraTests.Views
                             VerticalOptions = LayoutOptions.Start,
                         },
 
-                        new SkiaLabel("Review it before saving to your gallery")
+                        new SkiaLabel("Review before saving to gallery")
                         {
                             Margin = new Thickness(0, 18, 0, 0),
                             FontSize = 13,
@@ -1344,31 +1345,20 @@ namespace CameraTests.Views
                         new SkiaShape
                         {
                             Type = ShapeType.Rectangle,
-                            BackgroundColor = Color.FromArgb("#FFEEF4F7"),
-                            StrokeColor = Color.FromArgb("#22000000"),
-                            StrokeWidth = 1,
-                            CornerRadius = 18,
-                            Padding = 10,
-                            Margin = new Thickness(0, 56, 0, 74),
+                            StrokeColor = Color.FromArgb("#FF101825"),
+                            StrokeWidth = 8,
+                            CornerRadius = 14,
+                            Margin = new Thickness(0, 64, 0, 74),
+                            IsClippedToBounds = true,
                             Children =
                             {
-                                new SkiaShape()
-                                {
-                                    Type = ShapeType.Rectangle,
-                                    CornerRadius = 12,
-                                    BackgroundColor = Color.FromArgb("#FF101825"),
-                                    Padding = 4,
-                                    Children =
+                                new SkiaImage()
                                     {
-                                        new SkiaImage()
-                                        {
-                                            Aspect = TransformAspect.AspectFit,
-                                            MaximumWidthRequest = 420,
-                                            MaximumHeightRequest = 620,
-                                        }
-                                        .Assign(out _previewImage)
+                                        Aspect = TransformAspect.AspectFit,
+                                        MaximumWidthRequest = 420,
+                                        MaximumHeightRequest = 620,
                                     }
-                                }
+                                    .Assign(out _previewImage)
                             }
                         },
 
