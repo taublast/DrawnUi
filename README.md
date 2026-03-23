@@ -38,6 +38,7 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 
 ## 🆕 What's new for 1.9.5.2
 
+* Fix `SkiaCamera` manual stop freezing main thread on Android.
 * Fix `SkiaShell` modals due to SkiaDrawer API changed.
 * Fix Y-position drawing text span color backgrounds, including markdown, with `SkiaLabel`.
 * Hotfixes for latest interop optimizations.
