@@ -273,7 +273,7 @@ namespace CameraTests.Views
                 }
 
                 var k = _overlayScale;
-                var overlayScale = 3 * frame.Scale * k;
+                var overlayScale = 1.5f * frame.Scale * k;
 
                 if (_rectOrientation != _orientation && !LockOrientation)
                 {

@@ -146,9 +146,30 @@ public partial class MainPage : BasePageReloadable, IDisposable
         CreateContent();
 
         _previewFrameOverlay = new CameraDataOverlay();
+        _captionsLabel = _previewFrameOverlay.CaptionsLabel;
         CameraControl.InitializeOverlayLayouts(_previewFrameOverlay); // null recording = reuse preview overlay
+        InitializeCaptionsEngine();
+        UpdateOverlayCaptionsVisibility();
         UpdateAudioMonitoringVisibility();
         OnRecordingStateChanged();
+    }
+
+    private void InitializeCaptionsEngine()
+    {
+        if (_captionsEngine != null)
+        {
+            _captionsEngine.CaptionsChanged -= OnCaptionsChanged;
+        }
+
+        _captionsEngine?.Dispose();
+        _captionsEngine = null;
+
+        if (_captionsLabel != null)
+        {
+            _captionsEngine = new RealtimeCaptionsEngine(maxLines: 3, expirySeconds: 4.0);
+            _captionsEngine.CaptionsChanged += OnCaptionsChanged;
+            UpdateOverlayCaptionsVisibility();
+        }
     }
 
     private void AttachHardware(bool subscribe)
@@ -226,6 +247,14 @@ public partial class MainPage : BasePageReloadable, IDisposable
         }
     }
 
+    private void UpdateOverlayCaptionsVisibility()
+    {
+        if (_previewFrameOverlay != null)
+        {
+            _previewFrameOverlay.SetCaptionsVisible(IsSpeechEnabled && IsAudioMonitoringEnabled);
+        }
+    }
+
     public bool IsAudioMonitoringEnabled
     {
         get => CameraControl?.EnableAudioMonitoring ?? _audioMonitoringEnabled;
@@ -241,6 +270,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
                 }
 
                 UpdateAudioMonitoringVisibility();
+                UpdateOverlayCaptionsVisibility();
                 OnPropertyChanged();
             }
         }
@@ -254,6 +284,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
             if (_speechEnabled != value)
             {
                 _speechEnabled = value;
+                UpdateOverlayCaptionsVisibility();
                 OnPropertyChanged();
             }
         }
@@ -301,22 +332,12 @@ public partial class MainPage : BasePageReloadable, IDisposable
         }
     }
 
-    public bool HasVisibleCaptions
+    private void OnCaptionsChanged(IList<string> spans)
     {
-        get => _hasVisibleCaptions;
-        set
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            if (_hasVisibleCaptions != value)
-            {
-                _hasVisibleCaptions = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-
-    private void OnVisibleCaptionsChanged(bool hasVisibleCaptions)
-    {
-        MainThread.BeginInvokeOnMainThread(() => { HasVisibleCaptions = hasVisibleCaptions; });
+            _previewFrameOverlay.SetCaptions(spans);
+        });
     }
 
     private void OnTranscriptionSessionStateChanged(RealtimeTranscriptionSessionState state)
@@ -493,7 +514,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
     {
         _realtimeTranscriptionService?.Stop();
         _captionsEngine?.Clear();
-        HasVisibleCaptions = false;
+        UpdateOverlayCaptionsVisibility();
         IsTranscribing = false;
         TranscriptionStatusMessage = null;
         TranscriptionState = RealtimeTranscriptionSessionState.Off;

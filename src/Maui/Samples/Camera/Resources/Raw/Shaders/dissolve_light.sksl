@@ -1,0 +1,65 @@
+﻿// Telegram-style Sand Crack + Vaporize Effect
+// Starts breaking into sandy grains immediately, then falls apart
+
+uniform float4 iMouse;
+uniform float2 iOrigin;
+uniform float2 iCenter;
+uniform float  iTime;
+uniform float2 iResolution;
+uniform float2 iImageResolution;
+uniform shader iImage1;
+uniform float2 iOffset;
+uniform float  progress;   // 0.0 = fully visible, 1.0 = completely gone
+
+half4 main(float2 fragCoord) {
+    float2 inputCoord = fragCoord - iOffset;
+    float2 uv         = inputCoord / iImageResolution;
+
+    float t = clamp(progress, 0.0, 1.0);
+    if (t < 0.01) {
+        return iImage1.eval(inputCoord);
+    }
+
+    // Large sandy chunks with just a trace of fine grit
+    float n1 = fract(sin(dot(uv * 16.0, float2(12.9898, 78.233))) * 43758.5453);
+    float n2 = fract(sin(dot(uv * 28.0, float2(12.9898, 78.233))) * 43758.5453);
+    float noise = n1 * 0.91 + n2 * 0.09;
+
+    // === CRACKING PHASE (starts immediately) ===
+    // Makes it break apart into grains very early and aggressively
+    float crack = smoothstep(t * 0.56 - 0.34, t * 0.96, noise);
+
+    // === FALLING SAND PHASE ===
+    float fall = smoothstep(t - 0.15, t + 0.25, noise);
+
+    // Combine: strong cracking at start, then full dissolve
+    float dissolve = min(crack * (1.0 + t * 1.3), fall);
+
+    if (dissolve < 0.075) {
+        return half4(0.0);
+    }
+
+    // Sand grain scattering - starts fast, then continues
+    float speed = t * 5.5;                    // faster initial movement
+
+    float chaos = sin(iTime * 25.0 + uv.x * 55.0) * 0.025 * t;
+
+    float2 dir = normalize(uv - 0.5 + float2(chaos, chaos * 0.5 + 0.28)); // stronger downward bias
+
+    float scatter = 0.32 + noise * 0.55 * t;
+
+    // Small but noticeable movement for sandy crack/fall feel
+    float2 offset = dir * speed * scatter * 0.012;
+
+    float2 sampleUV = clamp(uv + offset, 0.0, 1.0);
+
+    half4 col = iImage1.eval(sampleUV * iImageResolution);
+
+    // Alpha: strong at beginning, then fades naturally
+    float alpha = dissolve * (1.0 - t * 1.1);
+    alpha = clamp(alpha * smoothstep(0.02, 0.45, dissolve), 0.0, 1.0);
+
+    col.a *= alpha;
+
+    return col;
+}

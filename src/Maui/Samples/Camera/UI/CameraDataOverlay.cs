@@ -13,6 +13,8 @@ namespace CameraTests.UI;
 /// </summary>
 public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
 {
+    public SkiaLabel CaptionsLabel => _captionsLabel;
+
     public AudioVisualizer Visualizer
     {
         get => visualizer;
@@ -28,6 +30,8 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
     }
 
     private SkiaLabel _labelVisualizerName;
+    private SkiaLabel _captionsLabel;
+    private SkiaShape _captionsPanel;
     private AudioVisualizer visualizer;
     private SkiaShape panelVisualizer;
 
@@ -46,6 +50,7 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
                 UseCache = SkiaCacheType.ImageDoubleBuffered,
                 Children =
                 {
+                    //EQ
                     new SkiaShape()
                     {
                         Type = ShapeType.Rectangle,
@@ -89,7 +94,34 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
                             }
                             .Assign(out visualizer)
                         }
-                    }.Assign(out panelVisualizer)
+                    }.Assign(out panelVisualizer),
+
+                    new SkiaShape()
+                    {
+                        UseCache = SkiaCacheType.Image,
+                        Type = ShapeType.Rectangle,
+                        CornerRadius = 26,
+                        Margin = new Thickness(20, 0, 20, 20),
+                        Padding = new Thickness(20, 16, 20, 18),
+                        HorizontalOptions = LayoutOptions.Center,
+                        VerticalOptions = LayoutOptions.End,
+                        BackgroundColor = Color.FromArgb("#B30A101A"),
+                        StrokeColor = Color.FromArgb("#3342D9F6"),
+                        StrokeWidth = 1,
+                        Children =
+                        {
+                            new SkiaRichLabel()
+                                {
+                                    FontFamily = "FontText",
+                                    LineHeight = 1.1,
+                                    UseCache = SkiaCacheType.Operations,
+                                    Margin = new Thickness(0, 0, 0, 0),
+                                    HorizontalTextAlignment = DrawTextAlignment.Start,
+                                    TextColor = Colors.White,
+                                }
+                                .Assign(out _captionsLabel)
+                        }
+                    }.Assign(out _captionsPanel),
                 }
             }
         };
@@ -119,4 +151,88 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
         panelVisualizer.IsVisible = isAudioMonitoringEnabled;
     }
 
+    private bool initialCaption = false;
+
+    /// <summary>
+    /// Call this on main thread only
+    /// </summary>
+    /// <param name="spans"></param>
+    public void SetCaptions(IList<string> spans)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            var hide = spans.Count < 1;
+            if (hide)
+            {
+                if (!string.IsNullOrEmpty(CaptionsLabel.Text))
+                {
+                    SetCaptionsVisible(false); //animated
+                }
+                else
+                {
+                    CaptionsLabel.Text = string.Empty;
+                }
+            }
+            else
+            {
+                SetCaptionsVisible(true);
+                CaptionsLabel.Text = string.Join(Environment.NewLine, spans);
+            }
+        });
+    }
+
+    private void SetCaptionsVisibleInternal(bool isVisible)
+    {
+        if (isVisible)
+        {
+            isVisible = !string.IsNullOrEmpty(CaptionsLabel.Text) && _canShowCaptions;
+        }
+
+        if (!isVisible)
+        {
+            if (!string.IsNullOrEmpty(CaptionsLabel.Text))
+            {
+                AnimateOut(_captionsPanel);
+                return;
+            }
+        }
+
+        _captionsPanel.IsGhost = !isVisible;
+    }
+
+    private bool _canShowCaptions;
+
+    public void SetCaptionsVisible(bool isVisible)
+    {
+        _canShowCaptions = isVisible;
+        SetCaptionsVisibleInternal(isVisible);
+    }
+
+
+    void AnimateOut(SkiaControl control)
+    {
+        var animExit = new AnimatedShaderEffect()
+        {
+            UseBackground = PostRendererEffectUseBackgroud.Once,
+            ShaderSource = MauiProgram.ShaderRemoveCaption,
+            DurationMs = 400
+        };
+
+        animExit.Completed += (sender, args) =>
+        {
+            control.IsGhost = true;
+            control.VisualEffects.Remove(animExit);
+            CaptionsLabel.Text = string.Empty;
+            control.DisposeObject(animExit);
+        };
+
+        if (!control.VisualEffects.Contains(animExit))
+        {
+            control.VisualEffects.Add(animExit);
+        }
+
+        animExit.Play();
+    }
+
 }
+

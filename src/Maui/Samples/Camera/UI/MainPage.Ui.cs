@@ -1,9 +1,11 @@
+using System.Text;
 using AppoMobi.Specials;
 using CameraTests.Services;
 using CameraTests.UI;
 using DrawnUi.Camera;
 using DrawnUi.Controls;
 using DrawnUi.Draw;
+using DrawnUi.Infrastructure;
 using DrawnUi.Views;
 using SolTempo.UI;
 
@@ -62,7 +64,6 @@ namespace CameraTests.Views
                         //CreateStageEdgeOverlay(false),
                         CreateHeaderPanel()
                             .Assign(out _headerPanel),
-                        CreateCaptionsPanel(),
 
                         //new CameraOverlayLayout()
                         //{
@@ -166,23 +167,17 @@ namespace CameraTests.Views
                 HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Fill, Children = { Canvas }
             };
 
-            // Initialize captions engine (disposes previous on hot reload)
-            if (_captionsEngine != null)
-            {
-                _captionsEngine.VisibleCaptionsChanged -= OnVisibleCaptionsChanged;
-            }
-
-            _captionsEngine?.Dispose();
-            _captionsEngine =
-                new RealtimeCaptionsEngine(_captionsLabel, fontSize: 20f, maxLines: 3, expirySeconds: 8.0);
-            _captionsEngine.VisibleCaptionsChanged += OnVisibleCaptionsChanged;
-            HasVisibleCaptions = _captionsEngine.HasVisibleCaptions;
-
             if (CameraControl != null)
             {
                 // Setup camera event handlers
                 AttachHardware(true);
             }
+
+            Tasks.StartDelayed(TimeSpan.FromMilliseconds(500), () =>
+            {
+                //for fast use in transitions
+                SkSl.Precompile(MauiProgram.ShaderRemoveCaption);
+            });
         }
 
         private SkiaShape CreateStageEdgeOverlay(bool top)
@@ -277,10 +272,10 @@ namespace CameraTests.Views
                                     {
                                         nameof(IsSpeechEnabled), nameof(IsAudioMonitoringEnabled),
                                         nameof(IsTranscribing), nameof(TranscriptionState),
-                                        nameof(TranscriptionStatusMessage), nameof(HasVisibleCaptions)
+                                        //nameof(TranscriptionStatusMessage), nameof(HasVisibleCaptions)
                                     }, me =>
                                     {
-                                        me.IsVisible = !HasVisibleCaptions;
+                                        //me.IsVisible = !HasVisibleCaptions;
                                         me.Text = !IsSpeechEnabled
                                             ? "Turn on speech recognition with AI"
                                             : TranscriptionState == RealtimeTranscriptionSessionState.Connecting
@@ -424,60 +419,6 @@ namespace CameraTests.Views
                             }),
                 }
             };
-        }
-
-        private SkiaShape CreateCaptionsPanel()
-        {
-            return new SkiaShape()
-                {
-                    UseCache = SkiaCacheType.Image,
-                    IsVisible = false,
-                    Type = ShapeType.Rectangle,
-                    CornerRadius = 26,
-                    Margin = new Thickness(20, 0, 20, 150),
-                    Padding = new Thickness(20, 16, 20, 18),
-                    HorizontalOptions = LayoutOptions.Fill,
-                    VerticalOptions = LayoutOptions.End,
-                    BackgroundColor = Color.FromArgb("#B30A101A"),
-                    StrokeColor = Color.FromArgb("#3342D9F6"),
-                    StrokeWidth = 1,
-                    Children =
-                    {
-                        new SkiaStack()
-                        {
-                            MinimumHeightRequest = 48,
-                            Spacing = 8,
-                            Children =
-                            {
-                                new SkiaLabel("Realtime Captions")
-                                {
-                                    FontSize = 12,
-                                    CharacterSpacing = 1,
-                                    TextColor = Color.FromArgb("#7DEAE5"),
-                                    UseCache = SkiaCacheType.Operations,
-                                    HorizontalOptions = LayoutOptions.Start,
-                                    VerticalOptions = LayoutOptions.Start,
-                                },
-
-                                //CAPTIONS
-                                new SkiaRichLabel()
-                                    {
-                                        FontFamily = "FontText",
-                                        LineHeight = 1.1,
-                                        UseCache = SkiaCacheType.Operations,
-                                        Margin = new Thickness(0, 0, 0, 0),
-                                        HorizontalTextAlignment = DrawTextAlignment.Start,
-                                        VerticalOptions = LayoutOptions.Start,
-                                        HorizontalOptions = LayoutOptions.Fill,
-                                        TextColor = Colors.White,
-                                    }
-                                    .Assign(out _captionsLabel)
-                            }
-                        }
-                    }
-                }
-                .ObserveProperties(this, new[] { nameof(IsSpeechEnabled), nameof(IsAudioMonitoringEnabled) },
-                    me => { me.IsVisible = IsSpeechEnabled && IsAudioMonitoringEnabled; });
         }
 
         /// <summary>
