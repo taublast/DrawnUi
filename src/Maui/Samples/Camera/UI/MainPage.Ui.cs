@@ -14,6 +14,7 @@ namespace CameraTests.Views
     public partial class MainPage
     {
         private SkiaShape _captureButtonOuter;
+        private CameraOverlayLayout _insideCamera;
 
         private SkiaShape[] _tabPills;
         private static Color ColorPanel = Color.FromArgb("#F3101825");//AA101825
@@ -63,7 +64,12 @@ namespace CameraTests.Views
                         //CreateStageEdgeOverlay(false),
                         CreateHeaderPanel(),
                         CreateCaptionsPanel(),
-                        CreateCameraControlsPanel(),
+                        new CameraOverlayLayout()
+                        {
+                            VerticalOptions = LayoutOptions.Fill,
+                            HorizontalOptions = LayoutOptions.Fill,
+                            Children = { CreateCameraControlsPanel() }
+                        }.Assign(out _insideCamera),
 
 
                         // Settings Drawer (slides up from bottom)
@@ -526,17 +532,7 @@ namespace CameraTests.Views
                                             .Assign(out _previewThumbnail)
                                     }
                                 }
-                                .OnTapped(me =>
-                                {
-                                    if (CameraControl.IsPreRecording || CameraControl.IsRecording)
-                                    {
-                                        _ = AbortVideoRecording();
-                                    }
-                                    else
-                                    {
-                                        ShowLastCapturedPreview();
-                                    }
-                                }),
+                                .OnTapped(me => OnThumbnailTapped()),
                             new SkiaShape()
                                 {
                                     VerticalOptions = LayoutOptions.Center,

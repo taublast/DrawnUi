@@ -10,9 +10,12 @@ namespace CameraTests.UI
         /// <summary>
         /// Return the name of the visualizer switched to, or null if no visualizer was switched to
         /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
         public string SwitchVisualizer(int index = -1);
+
+        /// <summary>
+        /// The audio visualizer component, if any.
+        /// </summary>
+        AudioVisualizer Visualizer { get; }
     }
 
     //public class HUD
@@ -44,7 +47,22 @@ namespace CameraTests.UI
 
     public class FrameOverlay : SkiaLayer, IAppOverlay
     {
-        public AudioVisualizer Visualizer;
+        private AudioVisualizer visualizer;
+
+        public AudioVisualizer Visualizer
+        {
+            get => visualizer;
+            private set
+            {
+                if (Equals(value, visualizer))
+                {
+                    return;
+                }
+
+                visualizer = value;
+                OnPropertyChanged();
+            }
+        }
 
         public FrameOverlay()
         {
@@ -95,7 +113,7 @@ namespace CameraTests.UI
                             HorizontalOptions = LayoutOptions.Fill,
                             VerticalOptions = LayoutOptions.Fill,
                         }
-                        .Assign(out Visualizer)
+                        .Assign(out visualizer)
                     }
                 }
             };

@@ -32,8 +32,8 @@ public partial class MainPage : BasePageReloadable, IDisposable
     private SkiaDrawer _settingsDrawer;
     private SkiaViewSwitcher _settingsTabs;
     private SkiaLabel[] _tabLabels;
-    private FrameOverlay _previewFrameOverlay;
-    private FrameOverlay _recordingFrameOverlay;
+    private CameraDataOverlay _previewFrameOverlay;
+    private DeviceOrientation _orientation;
     AudioVisualizer _audioVisualizer;
     Canvas Canvas;
     private int _lastAudioRate;
@@ -53,6 +53,8 @@ public partial class MainPage : BasePageReloadable, IDisposable
         //iOS statusbar and bottom insets color
         BackgroundColor = Colors.Black;
 
+        Super.OrientationChanged += OnOrientationChanged;
+
         _realtimeTranscriptionService = realtimeTranscriptionService;
         if (_realtimeTranscriptionService != null)
         {
@@ -64,10 +66,38 @@ public partial class MainPage : BasePageReloadable, IDisposable
         }
     }
 
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        base.OnSizeAllocated(width, height);
+        UpdateLayout();
+    }
+
+    private void OnOrientationChanged(object sender, DeviceOrientation e)
+    {
+        _orientation = e;
+        UpdateLayout();
+    }
+
+    private void UpdateLayout()
+    {
+        _orientation = Super.DeviceOrientation;
+
+        if (CameraControl != null)
+            CameraControl.Orientation = _orientation;
+
+        if (Canvas != null)
+        {
+            var videoWidth = CameraControl?.CurrentVideoFormat?.Width ?? 0;
+            var videoHeight = CameraControl?.CurrentVideoFormat?.Height ?? 0;
+            _insideCamera?.Layout(Canvas.Content.DrawingRect, _orientation, videoWidth, videoHeight);
+        }
+    }
+
     protected override void Dispose(bool isDisposing)
     {
         if (isDisposing)
         {
+            Super.OrientationChanged -= OnOrientationChanged;
             _captionsEngine?.Dispose();
             _captionsEngine = null;
             if (CameraControl != null)
@@ -111,9 +141,8 @@ public partial class MainPage : BasePageReloadable, IDisposable
 
         CreateContent();
 
-        _previewFrameOverlay = new FrameOverlay();
-        _recordingFrameOverlay = new FrameOverlay();
-        CameraControl.InitializeOverlayLayouts(_previewFrameOverlay, _recordingFrameOverlay);
+        _previewFrameOverlay = new CameraDataOverlay();
+        CameraControl.InitializeOverlayLayouts(_previewFrameOverlay); // null recording = reuse preview overlay
         UpdateAudioMonitoringVisibility();
     }
 
@@ -172,10 +201,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
     {
         if (CameraControl.InjectGpsLocation)
         {
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                _ = CameraControl.RefreshGpsLocation();
-            });
+            MainThread.BeginInvokeOnMainThread(() => { _ = CameraControl.RefreshGpsLocation(); });
         }
     }
 
@@ -192,11 +218,6 @@ public partial class MainPage : BasePageReloadable, IDisposable
         if (_previewFrameOverlay != null)
         {
             _previewFrameOverlay.IsVisible = IsAudioMonitoringEnabled;
-        }
-
-        if (_recordingFrameOverlay != null)
-        {
-            _recordingFrameOverlay.IsVisible = IsAudioMonitoringEnabled;
         }
     }
 
@@ -478,9 +499,9 @@ public partial class MainPage : BasePageReloadable, IDisposable
             return;
 
         _btnStateIsRecording = isRecording;
-        
+
         bool animated = _takePictureButton.DrawingRect != SkiaSharp.SKRect.Empty;
-        
+
         if (animated)
         {
             if (isRecording)
@@ -491,7 +512,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
                     _takePictureButton.CornerRadius = 30 - (30 - 4) * value; // 30 to 4
                     _takePictureButton.WidthRequest = 60 - (60 - 42) * value; // 60 to 42
                 }, 0, 1, (uint)_morphSpeed, Easing.SinOut);
-                
+
                 // Change color to red
                 if (CameraControl.IsPreRecording)
                 {
@@ -510,7 +531,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
                     _takePictureButton.CornerRadius = 4 + (30 - 4) * value; // 4 to 30
                     _takePictureButton.WidthRequest = 42 + (60 - 42) * value; // 42 to 60
                 }, 0, 1, (uint)_morphSpeed, Easing.SinIn);
-                
+
                 // Change color back to light gray
                 _takePictureButton.BackgroundColor = Color.FromArgb("#CECECE");
             }
@@ -584,14 +605,16 @@ public partial class MainPage : BasePageReloadable, IDisposable
     }
 
     private CapturedImage _currentCapturedImage;
+    private string _lastSavedPhotoPath;
+    private string _lastSavedVideoPath;
+    private bool _lastMediaWasVideo;
 
     private void OnCaptureSuccess(object sender, CapturedImage e)
     {
-        MainThread.BeginInvokeOnMainThread(() =>
+        MainThread.BeginInvokeOnMainThread(async () =>
         {
             try
             {
-                // Store the captured image for potential saving later
                 _currentCapturedImage = e;
 
                 // Update preview thumbnail in bottom control bar
@@ -600,12 +623,18 @@ public partial class MainPage : BasePageReloadable, IDisposable
                     _previewThumbnail.SetImageInternal(e.Image, false);
                 }
 
-                // Show the image in preview overlay
-                ShowPreviewOverlay(e.Image);
+                _lastMediaWasVideo = false;
+
+                // Auto-save and open via OS on thumbnail tap
+                var path = await CameraControl.SaveToGalleryAsync(e, MauiProgram.Album);
+                if (!string.IsNullOrEmpty(path))
+                {
+                    _lastSavedPhotoPath = path;
+                }
             }
             catch (Exception ex)
             {
-                DisplayAlert("Error", $"Error displaying photo: {ex.Message}", "OK");
+                DisplayAlert("Error", $"Error saving photo: {ex.Message}", "OK");
             }
         });
     }
@@ -622,28 +651,137 @@ public partial class MainPage : BasePageReloadable, IDisposable
 
     private async void OnVideoRecordingSuccess(object sender, CapturedVideo capturedVideo)
     {
-        try
+        MainThread.BeginInvokeOnMainThread(async () =>
         {
-            Debug.WriteLine($"✅ Video recorded at: {capturedVideo.FilePath}");
-
-            // Use SkiaCamera's built-in MoveVideoToGalleryAsync method (consistent with SaveToGalleryAsync for photos)
-            var publicPath = await CameraControl.MoveVideoToGalleryAsync(capturedVideo, "FastRepro");
-
-            if (!string.IsNullOrEmpty(publicPath))
+            try
             {
-                Debug.WriteLine($"✅ Video moved to gallery: {publicPath}");
-                ShowAlert("Success", "Video saved to gallery!");
+                Debug.WriteLine($"✅ Video recorded at: {capturedVideo.FilePath}");
+
+                using var clone = CameraControl.Display.LoadedSource.Clone();
+                using var previewImage = clone.Image.ToRasterImage();
+
+                var publicPath = await CameraControl.MoveVideoToGalleryAsync(capturedVideo, MauiProgram.Album);
+
+                if (!string.IsNullOrEmpty(publicPath))
+                {
+                    Debug.WriteLine($"✅ Video moved to gallery: {publicPath}");
+                    _lastSavedVideoPath = publicPath;
+
+                    if (previewImage != null)
+                    {
+                        try
+                        {
+                            // Convert to bitmap for rotation
+                            using var bitmap = SKBitmap.FromImage(previewImage);
+
+                            // Apply rotation using SkiaCamera's Reorient method
+                            // This physically rotates the image based on device rotation
+                            using var rotatedBitmap = SkiaCamera.Reorient(bitmap, CameraControl.DeviceRotation);
+
+                            if (_previewThumbnail != null)
+                            {
+                                var thumbImage = SKImage.FromBitmap(rotatedBitmap);
+                                _previewThumbnail.SetImageInternal(thumbImage, false);
+
+                                /*
+                                var thumbnailsDir = Path.Combine(FileSystem.AppDataDirectory, "Thumbnails");
+                                Directory.CreateDirectory(thumbnailsDir);
+                                var thumbnailFilename = "debug.jpg";
+                                var thumbnailPath = Path.Combine(thumbnailsDir, thumbnailFilename);
+                                using (var data = rotatedBitmap.Encode(SKEncodedImageFormat.Jpeg, 80))
+                                using (var stream = File.OpenWrite(thumbnailPath))
+                                {
+                                    data.SaveTo(stream);
+                                }
+                                */
+                            }
+
+                            _lastMediaWasVideo = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"❌ Thumbnail error: {ex}");
+                        }
+                    }
+
+                }
+                else
+                {
+                    Debug.WriteLine($"❌ Video not saved, path null");
+                    ShowAlert("Error", "Failed to save video to gallery");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Debug.WriteLine($"❌ Video not saved, path null");
-                ShowAlert("Error", "Failed to save video to gallery");
+                ShowAlert("Error", $"Video save error: {ex.Message}");
+                Debug.WriteLine($"❌ Video save error: {ex}");
             }
+        });
+    }
+
+    private void OpenLastSavedPhoto()
+    {
+        if (string.IsNullOrEmpty(_lastSavedPhotoPath))
+            return;
+
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            try
+            {
+                SkiaCamera.OpenFileInGallery(_lastSavedPhotoPath);
+                
+//#if WINDOWS
+//                await Launcher.OpenAsync(new OpenFileRequest { File = new ReadOnlyFile(_lastSavedPhotoPath) });
+//#else
+//                SkiaCamera.OpenFileInGallery(_lastSavedPhotoPath);
+//#endif
+            }
+            catch (Exception ex)
+            {
+                ShowAlert("Error", $"Cannot open photo: {ex.Message}");
+                Debug.WriteLine($"[PhotoOpen] {ex}");
+            }
+        });
+    }
+
+    private void OpenLastSavedVideo()
+    {
+        if (string.IsNullOrEmpty(_lastSavedVideoPath))
+            return;
+
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            try
+            {
+#if WINDOWS
+                await Launcher.OpenAsync(new OpenFileRequest { File = new ReadOnlyFile(_lastSavedVideoPath) });
+#elif ANDROID
+                await SkiaCamera.PlayVideoDirectly(_lastSavedVideoPath);
+#else
+                SkiaCamera.PlayVideoDirectly(_lastSavedVideoPath);
+#endif
+            }
+            catch (Exception ex)
+            {
+                ShowAlert("Error", $"Cannot open video: {ex.Message}");
+                Debug.WriteLine($"[VideoOpen] {ex}");
+            }
+        });
+    }
+
+    private void OnThumbnailTapped()
+    {
+        if (CameraControl.IsPreRecording || CameraControl.IsRecording)
+        {
+            _ = AbortVideoRecording();
         }
-        catch (Exception ex)
+        else if (_lastMediaWasVideo)
         {
-            ShowAlert("Error", $"Video save error: {ex.Message}");
-            Debug.WriteLine($"❌ Video save error: {ex}");
+            OpenLastSavedVideo();
+        }
+        else
+        {
+            OpenLastSavedPhoto();
         }
     }
 
@@ -675,9 +813,8 @@ public partial class MainPage : BasePageReloadable, IDisposable
         {
             _previewOverlay.IsVisible = false;
         }
-
-        // Clear the current captured image
-        _currentCapturedImage = null;
+        // _currentCapturedImage is intentionally kept so the thumbnail tap can re-open the preview.
+        // It is replaced naturally when the next photo is taken.
     }
 
     private void ShowLastCapturedPreview()
@@ -1037,7 +1174,9 @@ public partial class MainPage : BasePageReloadable, IDisposable
         if (_preRecordingToggleButton != null)
         {
             _preRecordingToggleButton.Text = CameraControl.EnablePreRecording ? "Pre-Record: ON" : "Pre-Record: OFF";
-            _preRecordingToggleButton.TintColor = CameraControl.EnablePreRecording ? Color.FromArgb("#10B981") : Color.FromArgb("#6B7280");
+            _preRecordingToggleButton.TintColor = CameraControl.EnablePreRecording
+                ? Color.FromArgb("#10B981")
+                : Color.FromArgb("#6B7280");
         }
 
         UpdatePreRecordingStatus();
@@ -1105,6 +1244,4 @@ public partial class MainPage : BasePageReloadable, IDisposable
             StopTranscription();
         }
     }
-
- 
 }

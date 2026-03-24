@@ -8,7 +8,8 @@ namespace CameraTests
     public static class MauiProgram
     {
 
-        //LOTTIE anims for permissions are by https://lottiefiles.com/madhu
+        public static readonly string ShadersFolder = "Shaders";
+        public static readonly string Album = "FastRepro";
 
         public static MauiApp CreateMauiApp()
         {
@@ -63,6 +64,5 @@ namespace CameraTests
             return builder.Build();
         }
 
-        public static readonly string ShadersFolder = "Shaders";
     }
 }

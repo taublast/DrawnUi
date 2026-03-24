@@ -192,6 +192,23 @@ namespace CameraTests.Views
         private SKPaint _paintRec;
 
         private DeviceOrientation _orientation;
+
+        /// <summary>
+        /// Current device orientation used by the frame overlay renderer.
+        /// Set this from the page whenever the device orientation changes.
+        /// </summary>
+        public DeviceOrientation Orientation
+        {
+            get => _orientation;
+            set
+            {
+                if (_orientation != value)
+                {
+                    _orientation = value;
+                    InvalidateOverlays();
+                }
+            }
+        }
         private float _previewScale;
         private float _renderedScale;
         private SKRect _rectFramePreview;
@@ -280,7 +297,52 @@ namespace CameraTests.Views
                     orientation = _rectOrientationLocked;
                 }
 
-                var frameRect = new SKRect(0, 0, frame.Width, frame.Height); ;
+                var frameRect = new SKRect(0, 0, frame.Width, frame.Height);
+
+                if (layout is CameraOverlayLayout overlayLayout)
+                {
+                    // CameraOverlayLayout manages its own orientation transforms.
+                    // Call Layout() whenever the frame rect or orientation changes so it
+                    // updates RectLimits and schedules a remeasure.
+                    bool frameRectChanged = (frame.IsPreview && _rectFramePreview == SKRect.Empty) ||
+                                           (!frame.IsPreview && _rectFrameRecording == SKRect.Empty);
+
+                    if (frameRectChanged)
+                    {
+                        if (frame.IsPreview) _rectFramePreview = frameRect;
+                        else _rectFrameRecording = frameRect;
+
+                        overlayLayout.Layout(frameRect, orientation);
+                    }
+
+                    bool wasMeasured = false;
+                    if (layout.NeedMeasure)
+                    {
+                        layout.Measure(frameRect.Width, frameRect.Height, overlayScale);
+                        layout.Arrange(
+                            new SKRect(0, 0, layout.MeasuredSize.Pixels.Width, layout.MeasuredSize.Pixels.Height),
+                            layout.MeasuredSize.Pixels.Width, layout.MeasuredSize.Pixels.Height, overlayScale);
+                        wasMeasured = true;
+                    }
+
+                    var ctx = new SkiaDrawingContext()
+                    {
+                        Canvas = frame.Canvas,
+                        Width = frame.Width,
+                        Height = frame.Height,
+                        Superview = this.Superview
+                    };
+
+                    if (!skipRendering)
+                    {
+                        layout.Render(new DrawingContext(ctx, frameRect, overlayScale));
+                        _renderedScale = overlayScale;
+                    }
+
+                    return wasMeasured;
+                }
+
+                // Fallback for non-CameraOverlayLayout: apply orientation transforms manually.
                 var rectLimits = frameRect;
 
                 if (frame.IsPreview && _rectFramePreview == SKRect.Empty)
@@ -290,17 +352,15 @@ namespace CameraTests.Views
                     {
                         layout.Invalidate();
                     }
-
                 }
-                else
-                    if (!frame.IsPreview && _rectFrameRecording == SKRect.Empty)
+                else if (!frame.IsPreview && _rectFrameRecording == SKRect.Empty)
+                {
+                    _rectFrameRecording = frameRect;
+                    if (!layout.NeedMeasure)
                     {
-                        _rectFrameRecording = frameRect;
-                        if (!layout.NeedMeasure)
-                        {
-                            layout.Invalidate();
-                        }
+                        layout.Invalidate();
                     }
+                }
 
                 if (orientation == DeviceOrientation.LandscapeLeft || orientation == DeviceOrientation.LandscapeRight)
                 {
@@ -321,10 +381,7 @@ namespace CameraTests.Views
                     layout.Rotation = 0;
                 }
 
-                //tune up a bit
-                //overlayScale *= 0.9f;
-
-                bool wasMeasured = false;
+                bool wasMeasured2 = false;
 
                 if (layout.NeedMeasure)
                 {
@@ -353,24 +410,24 @@ namespace CameraTests.Views
                         new SKRect(0, 0, layout.MeasuredSize.Pixels.Width, layout.MeasuredSize.Pixels.Height),
                         layout.MeasuredSize.Pixels.Width, layout.MeasuredSize.Pixels.Height, overlayScale);
 
-                    wasMeasured = true;
+                    wasMeasured2 = true;
                 }
 
-                var ctx = new SkiaDrawingContext()
+                var ctx2 = new SkiaDrawingContext()
                 {
                     Canvas = frame.Canvas,
                     Width = frame.Width,
                     Height = frame.Height,
-                    Superview = this.Superview  //to enable animations and use disposal manager
+                    Superview = this.Superview
                 };
 
                 if (!skipRendering)
                 {
-                    layout.Render(new DrawingContext(ctx, rectLimits, overlayScale));
+                    layout.Render(new DrawingContext(ctx2, rectLimits, overlayScale));
                     _renderedScale = overlayScale;
                 }
 
-                return wasMeasured;
+                return wasMeasured2;
             }
 
             // Simple text overlay for testing
@@ -428,9 +485,16 @@ namespace CameraTests.Views
                 DrawOverlay(OverlayPreview, false);
             }
             else
-            if (OverlayRecording != null && !frame.IsPreview) //RAW frame being recorded
+            if (!frame.IsPreview) //RAW frame being recorded
             {
-                DrawOverlay(OverlayRecording, false);
+                if (OverlayRecording != null)
+                {
+                    DrawOverlay(OverlayRecording, false);
+                }
+                else if (OverlayPreview != null) // single-overlay mode: reuse preview overlay
+                {
+                    DrawOverlay(OverlayPreview, false);
+                }
             }
 
             //if (frame.IsPreview)
@@ -470,28 +534,32 @@ namespace CameraTests.Views
         /// <summary>
         /// Set layouts to be rendered over preview and recording frames.
         /// Different instances are needed to avoid remeasuring when switching between preview and recording.
-        /// This must be two copies of *same* layout, if you specify different layouts for preview and recording on some platforms only recording layout will be displayed while recording .
+        /// Pass <c>null</c> for <paramref name="recordingLayout"/> to use a single overlay instance
+        /// for both preview and recording frames (the preview layout will be reused).
         /// </summary>
-        /// <param name="previewLayout"></param>
-        /// <param name="recordingLayout"></param>
-        public void InitializeOverlayLayouts(SkiaLayout previewLayout, SkiaLayout recordingLayout)
+        /// <param name="previewLayout">Overlay rendered on preview frames. Required.</param>
+        /// <param name="recordingLayout">Overlay rendered on recording frames. Pass <c>null</c> to reuse <paramref name="previewLayout"/>.</param>
+        public void InitializeOverlayLayouts(SkiaLayout previewLayout, SkiaLayout recordingLayout = null)
         {
-            if (previewLayout != null && recordingLayout != null)
+            if (previewLayout != null)
             {
                 this.OverlayPreview = previewLayout;
-                this.OverlayRecording = recordingLayout;
+                this.OverlayRecording = recordingLayout; // null = single-overlay mode
 
                 previewLayout.UseCache = SkiaCacheType.Operations;
                 previewLayout.Tag = "Preview";
 
-                recordingLayout.UseCache = SkiaCacheType.Operations;
-                recordingLayout.Tag = "Recording";
- 
+                if (recordingLayout != null)
+                {
+                    recordingLayout.UseCache = SkiaCacheType.Operations;
+                    recordingLayout.Tag = "Recording";
+                }
+
                 InvalidateOverlays();
 
-                if (previewLayout is FrameOverlay overlay)
+                if (previewLayout is IAppOverlay appOverlayInit)
                 {
-                    VisualizerName = overlay.Visualizer.VisualizerName;
+                    VisualizerName = appOverlayInit.Visualizer?.VisualizerName ?? "None";
                 }
             }
         }
