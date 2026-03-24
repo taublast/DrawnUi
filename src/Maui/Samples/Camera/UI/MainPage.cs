@@ -15,6 +15,10 @@ public partial class MainPage : BasePageReloadable, IDisposable
     private SkiaShape _takePictureButton;
     private SkiaSvg _flashButton;
     private SkiaLabel _statusLabel;
+    private SkiaLayer _headerPanel;
+    private SkiaShape _cameraControlsPanel;
+    private SkiaShape _recordingStopButton;
+    private SkiaLabel _recordingStopLabel;
     private SettingsButton _videoRecordButton;
     private SettingsButton _speechButton;
     private IRealtimeTranscriptionService _realtimeTranscriptionService;
@@ -144,6 +148,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
         _previewFrameOverlay = new CameraDataOverlay();
         CameraControl.InitializeOverlayLayouts(_previewFrameOverlay); // null recording = reuse preview overlay
         UpdateAudioMonitoringVisibility();
+        OnRecordingStateChanged();
     }
 
     private void AttachHardware(bool subscribe)
@@ -429,7 +434,43 @@ public partial class MainPage : BasePageReloadable, IDisposable
 
     private void OnRecordingStateChanged()
     {
-        // Recording state changes are handled independently of speech transcription
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            if (CameraControl == null)
+                return;
+
+            var isRecordingVideo = CameraControl.CaptureMode == CaptureModeType.Video && CameraControl.IsRecording;
+
+            if (_settingsDrawer != null)
+            {
+                if (isRecordingVideo)
+                {
+                    _settingsDrawer.IsOpen = false;
+                }
+
+                _settingsDrawer.IsVisible = !isRecordingVideo;
+            }
+
+            if (_headerPanel != null)
+            {
+                _headerPanel.IsVisible = !isRecordingVideo;
+            }
+
+            if (_cameraControlsPanel != null)
+            {
+                _cameraControlsPanel.IsVisible = !isRecordingVideo;
+            }
+
+            if (_recordingStopButton != null)
+            {
+                _recordingStopButton.IsVisible = isRecordingVideo;
+            }
+
+            if (_recordingStopLabel != null && !isRecordingVideo)
+            {
+                _recordingStopLabel.Text = "Stop (00:00)";
+            }
+        });
     }
 
     private void StartTranscription()
@@ -792,6 +833,11 @@ public partial class MainPage : BasePageReloadable, IDisposable
             // Update button text with timer in MM:SS format
             _videoRecordButton.AccessoryIcon = $"🛑";
             _videoRecordButton.Text = $"Stop ({duration:mm\\:ss})";
+        }
+
+        if (_recordingStopLabel != null && CameraControl.IsRecording)
+        {
+            _recordingStopLabel.Text = $"Stop ({duration:mm\\:ss})";
         }
     }
 

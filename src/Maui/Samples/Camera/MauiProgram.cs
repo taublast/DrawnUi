@@ -56,7 +56,7 @@ namespace CameraTests
 #endif
 
 #if ANDROID
-            Super.MaxFps = 50;
+            Super.MaxFps = 60;
 #elif IOS
             Super.MaxFps = 30;
 #endif

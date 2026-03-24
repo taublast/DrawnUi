@@ -176,10 +176,10 @@ namespace CameraTests.Services
             bool first = true;
             for (int i = skip; i < _lines.Count; i++)
             {
-                if (!first)
-                {
-                    _label.Spans.Add(new TextSpan { Text = "\n", FontSize = 6 });
-                }
+                //if (!first)
+                //{
+                //    _label.Spans.Add(new TextSpan { Text = "\n", FontSize = 6 });
+                //}
 
                 _label.Spans.Add(new TextSpan
                 {
