@@ -54,6 +54,12 @@ namespace CameraTests
             builder.Logging.AddDebug();
 #endif
 
+#if ANDROID
+            Super.MaxFps = 50;
+#elif IOS
+            Super.MaxFps = 30;
+#endif
+
             return builder.Build();
         }
 

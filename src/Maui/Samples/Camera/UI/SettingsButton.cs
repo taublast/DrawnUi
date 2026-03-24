@@ -140,6 +140,8 @@ public class SettingsButton : SkiaLayout, ISkiaGestureListener
                         new SkiaRichLabel()
                         {
                             Text = this.Text,
+                            LineBreakMode = LineBreakMode.NoWrap,
+                            MaxLines = 1,
                             StrokeColor = Color.FromArgb("#01FFFFFF"),
                             StrokeWidth = 1,
                             UseCache = SkiaCacheType.Operations,
@@ -147,7 +149,10 @@ public class SettingsButton : SkiaLayout, ISkiaGestureListener
                             TextColor = Colors.White,
                         }
                         .Assign(out _label)
-                        .ObserveProperty(this, nameof(Text), me => { me.Text = this.Text; })
+                        .ObserveProperty(this, nameof(Text), me =>
+                        {
+                            me.Text = this.Text;
+                        })
                     }
                 }
             }

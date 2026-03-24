@@ -42,9 +42,9 @@ public partial class MainPage : BasePageReloadable, IDisposable
     private bool _audioMonitoringEnabled;
     private bool _speechEnabled;
     bool _isTranscribing;
-    private System.Timers.Timer? _delayHideTimer;
     private RealtimeTranscriptionSessionState _transcriptionState;
     private string _transcriptionStatusMessage;
+    private bool _hasVisibleCaptions;
 
     public MainPage(IRealtimeTranscriptionService realtimeTranscriptionService)
     {
@@ -58,7 +58,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
         {
             _realtimeTranscriptionService.TranscriptionDelta += OnTranscriptionDelta;
             _realtimeTranscriptionService.TranscriptionCompleted += OnTranscriptionCompleted;
-            _realtimeTranscriptionService.SendingData += OnTranscriptionWorking;
+            _realtimeTranscriptionService.SpeechActivityChanged += OnSpeechActivityChanged;
             _realtimeTranscriptionService.SessionStateChanged += OnTranscriptionSessionStateChanged;
             _realtimeTranscriptionService.SessionError += OnTranscriptionSessionError;
         }
@@ -84,7 +84,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
             {
                 _realtimeTranscriptionService.TranscriptionDelta -= OnTranscriptionDelta;
                 _realtimeTranscriptionService.TranscriptionCompleted -= OnTranscriptionCompleted;
-                _realtimeTranscriptionService.SendingData -= OnTranscriptionWorking;
+                _realtimeTranscriptionService.SpeechActivityChanged -= OnSpeechActivityChanged;
                 _realtimeTranscriptionService.SessionStateChanged -= OnTranscriptionSessionStateChanged;
                 _realtimeTranscriptionService.SessionError -= OnTranscriptionSessionError;
                 _realtimeTranscriptionService.Dispose();
@@ -275,6 +275,24 @@ public partial class MainPage : BasePageReloadable, IDisposable
         }
     }
 
+    public bool HasVisibleCaptions
+    {
+        get => _hasVisibleCaptions;
+        set
+        {
+            if (_hasVisibleCaptions != value)
+            {
+                _hasVisibleCaptions = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    private void OnVisibleCaptionsChanged(bool hasVisibleCaptions)
+    {
+        MainThread.BeginInvokeOnMainThread(() => { HasVisibleCaptions = hasVisibleCaptions; });
+    }
+
     private void OnTranscriptionSessionStateChanged(RealtimeTranscriptionSessionState state)
     {
         MainThread.BeginInvokeOnMainThread(() =>
@@ -352,31 +370,9 @@ public partial class MainPage : BasePageReloadable, IDisposable
         }
     }
 
-    private void OnTranscriptionWorking(bool state)
+    private void OnSpeechActivityChanged(bool state)
     {
-        if (state)
-        {
-            _delayHideTimer?.Stop();
-            IsTranscribing = true;
-        }
-        else
-        {
-            if (_delayHideTimer == null)
-            {
-                _delayHideTimer = new System.Timers.Timer(500);
-                _delayHideTimer.AutoReset = false;
-                _delayHideTimer.Elapsed += (s, e) =>
-                {
-                    MainThread.BeginInvokeOnMainThread(() =>
-                    {
-                        IsTranscribing = false;
-                    });
-                };
-            }
-
-            _delayHideTimer.Stop();    // reset if already counting
-            _delayHideTimer.Start();
-        }
+        MainThread.BeginInvokeOnMainThread(() => { IsTranscribing = state; });
     }
 
     private void OnTranscriptionDelta(string delta)
@@ -435,6 +431,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
     {
         _realtimeTranscriptionService?.Stop();
         _captionsEngine?.Clear();
+        HasVisibleCaptions = false;
         IsTranscribing = false;
         TranscriptionStatusMessage = null;
         TranscriptionState = RealtimeTranscriptionSessionState.Off;
@@ -1078,18 +1075,15 @@ public partial class MainPage : BasePageReloadable, IDisposable
         });
     }
 
-    private void UpdatePreRecordingStatus()
-    {
-        if (_preRecordingDurationButton != null)
-        {
-            _preRecordingDurationButton.Text = $"{CameraControl.PreRecordDuration.TotalSeconds:F0}s";
-        }
-    }
-
     private void ToggleSpeech()
     {
         if (IsSpeechEnabled && IsTranscriptionFailed)
         {
+            if (!IsAudioMonitoringEnabled)
+            {
+                IsAudioMonitoringEnabled = true;
+            }
+
             StartTranscription();
             return;
         }
@@ -1099,6 +1093,11 @@ public partial class MainPage : BasePageReloadable, IDisposable
 
         if (IsSpeechEnabled)
         {
+            if (!IsAudioMonitoringEnabled)
+            {
+                IsAudioMonitoringEnabled = true;
+            }
+
             StartTranscription();
         }
         else

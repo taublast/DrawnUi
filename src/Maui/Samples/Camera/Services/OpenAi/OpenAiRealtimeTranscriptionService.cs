@@ -1,3 +1,5 @@
+using System.Buffers;
+using System.Buffers.Text;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Net.WebSockets;
@@ -16,6 +18,8 @@ namespace CameraTests.Services
     {
         private const string WebSocketUrl = "wss://api.openai.com/v1/realtime?intent=transcription";
         private const int TargetSampleRate = 24000;
+        private static readonly byte[] AudioAppendPrefix = Encoding.UTF8.GetBytes("{\"type\":\"input_audio_buffer.append\",\"audio\":\"");
+        private static readonly byte[] AudioAppendSuffix = Encoding.UTF8.GetBytes("\"}");
 
         private readonly string _apiKey;
         private readonly AudioSampleConverter _preprocessor;
@@ -23,12 +27,14 @@ namespace CameraTests.Services
         private CancellationTokenSource _cts;
         private bool _isRunning;
         private bool _sessionConfigured;
+        private bool _speechActivityActive;
 
         // Send queue for serialized WebSocket writes
-        private readonly ConcurrentQueue<byte[]> _sendQueue = new();
+        private readonly ConcurrentQueue<PooledBufferSegment> _sendQueue = new();
         private readonly SemaphoreSlim _sendSignal = new(0);
 
         private int _feedCount;
+        private int _queuedPayloadCount;
         private RealtimeTranscriptionSessionState _sessionState = RealtimeTranscriptionSessionState.Off;
 
         public string Language { get; set; }
@@ -36,8 +42,21 @@ namespace CameraTests.Services
 
         public event Action<string> TranscriptionDelta;
         public event Action<string> TranscriptionCompleted;
+        public event Action<bool> SpeechActivityChanged;
         public event Action<RealtimeTranscriptionSessionState> SessionStateChanged;
         public event Action<string> SessionError;
+
+        private readonly struct PooledBufferSegment
+        {
+            public PooledBufferSegment(byte[] buffer, int length)
+            {
+                Buffer = buffer;
+                Length = length;
+            }
+
+            public byte[] Buffer { get; }
+            public int Length { get; }
+        }
 
         public OpenAiRealtimeTranscriptionService(string apiKey = null)
         {
@@ -58,9 +77,10 @@ namespace CameraTests.Services
             _sessionConfigured = false;
             _feedCount = 0;
             _preprocessor.Reset();
+            NotifySpeechActivity(false);
             SetSessionState(RealtimeTranscriptionSessionState.Connecting);
 
-            while (_sendQueue.TryDequeue(out _)) { }
+            ClearSendQueue();
 
             _cts = new CancellationTokenSource();
 
@@ -80,10 +100,12 @@ namespace CameraTests.Services
             _isRunning = false;
             _sessionConfigured = false;
             NotifyIsSendingData(false);
+            NotifySpeechActivity(false);
             SetSessionState(RealtimeTranscriptionSessionState.Off);
 
             _cts?.Cancel();
             _sendSignal.Release();
+            ClearSendQueue();
 
             Task.Run(async () =>
             {
@@ -122,14 +144,9 @@ namespace CameraTests.Services
                     return;
                 }
 
-                var base64Audio = Convert.ToBase64String(processed);
-                var message = JsonSerializer.Serialize(new
-                {
-                    type = "input_audio_buffer.append",
-                    audio = base64Audio
-                });
-
-                _sendQueue.Enqueue(Encoding.UTF8.GetBytes(message));
+                var payload = BuildAudioAppendPayload(processed);
+                _sendQueue.Enqueue(payload);
+                Interlocked.Increment(ref _queuedPayloadCount);
                 _sendSignal.Release();
 
                 _feedCount++;
@@ -212,6 +229,25 @@ namespace CameraTests.Services
             await _webSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, ct);
         }
 
+        private PooledBufferSegment BuildAudioAppendPayload(byte[] processed)
+        {
+            var base64Length = ((processed.Length + 2) / 3) * 4;
+            var totalLength = AudioAppendPrefix.Length + base64Length + AudioAppendSuffix.Length;
+            var buffer = ArrayPool<byte>.Shared.Rent(totalLength);
+
+            AudioAppendPrefix.CopyTo(buffer, 0);
+
+            var destination = buffer.AsSpan(AudioAppendPrefix.Length, base64Length);
+            if (Base64.EncodeToUtf8(processed, destination, out _, out var bytesWritten) != OperationStatus.Done)
+            {
+                ArrayPool<byte>.Shared.Return(buffer);
+                throw new InvalidOperationException("Failed to encode audio payload.");
+            }
+
+            AudioAppendSuffix.CopyTo(buffer, AudioAppendPrefix.Length + bytesWritten);
+            return new PooledBufferSegment(buffer, AudioAppendPrefix.Length + bytesWritten + AudioAppendSuffix.Length);
+        }
+
         private bool IsSendingData;
         public event Action<bool> SendingData;
 
@@ -219,6 +255,24 @@ namespace CameraTests.Services
         {
             IsSendingData = state;
             SendingData?.Invoke(state);
+        }
+
+        private void NotifySpeechActivity(bool state)
+        {
+            if (_speechActivityActive != state)
+            {
+                _speechActivityActive = state;
+                SpeechActivityChanged?.Invoke(state);
+            }
+        }
+
+        private void ClearSendQueue()
+        {
+            while (_sendQueue.TryDequeue(out var queued))
+            {
+                ArrayPool<byte>.Shared.Return(queued.Buffer);
+                Interlocked.Decrement(ref _queuedPayloadCount);
+            }
         }
 
         private void SetSessionState(RealtimeTranscriptionSessionState state)
@@ -245,6 +299,7 @@ namespace CameraTests.Services
             _isRunning = false;
             _sessionConfigured = false;
             NotifyIsSendingData(false);
+            NotifySpeechActivity(false);
             NotifySessionError(message);
             SetSessionState(RealtimeTranscriptionSessionState.Failed);
 
@@ -287,16 +342,21 @@ namespace CameraTests.Services
                 {
                     await _sendSignal.WaitAsync(ct);
 
-                    while (_sendQueue.TryDequeue(out var data))
+                    while (_sendQueue.TryDequeue(out var payload))
                     {
+                        Interlocked.Decrement(ref _queuedPayloadCount);
+
                         if (_webSocket?.State != WebSocketState.Open)
+                        {
+                            ArrayPool<byte>.Shared.Return(payload.Buffer);
                             return;
+                        }
 
                         try
                         {
                             NotifyIsSendingData(true);
 
-                            await _webSocket.SendAsync(new ArraySegment<byte>(data), WebSocketMessageType.Text, true,
+                            await _webSocket.SendAsync(new ArraySegment<byte>(payload.Buffer, 0, payload.Length), WebSocketMessageType.Text, true,
                                 ct);
                         }
                         catch (Exception ex)
@@ -307,6 +367,7 @@ namespace CameraTests.Services
                         finally
                         {
                             NotifyIsSendingData(false);
+                            ArrayPool<byte>.Shared.Return(payload.Buffer);
                         }
                     }
                 }
@@ -394,17 +455,21 @@ namespace CameraTests.Services
                                 TranscriptionCompleted?.Invoke(text);
                             }
                         }
+                        NotifySpeechActivity(false);
                         break;
 
                     case "input_audio_buffer.speech_started":
+                        NotifySpeechActivity(true);
                         Debug.WriteLine("[RealtimeTranscription] Speech started");
                         break;
 
                     case "input_audio_buffer.speech_stopped":
+                        NotifySpeechActivity(false);
                         Debug.WriteLine("[RealtimeTranscription] Speech stopped");
                         break;
 
                     case "input_audio_buffer.committed":
+                        NotifySpeechActivity(false);
                         Debug.WriteLine("[RealtimeTranscription] Audio committed");
                         break;
 

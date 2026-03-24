@@ -1,3 +1,4 @@
+using System.Text;
 using DrawnUi.Draw;
 
 namespace CameraTests.Services
@@ -10,14 +11,23 @@ namespace CameraTests.Services
     /// </summary>
     public class RealtimeCaptionsEngine : IDisposable
     {
+        private const int PartialRenderIntervalMs = 66;
+        private static readonly long PartialRenderIntervalTicks = TimeSpan.FromMilliseconds(PartialRenderIntervalMs).Ticks;
+
         private readonly SkiaLabel _label;
         private readonly float _fontSize;
         private readonly int _maxLines;
         private readonly double _expirySeconds;
         private readonly List<CaptionLine> _lines = new();
-        private string _partialText = "";
+        private readonly StringBuilder _partialText = new();
         private readonly object _sync = new();
         private Timer _timer;
+        private Timer _partialRenderTimer;
+        private bool _partialRenderScheduled;
+        private long _lastRenderTicks;
+        private bool _hasVisibleCaptions;
+
+        public event Action<bool> VisibleCaptionsChanged;
 
         private struct CaptionLine
         {
@@ -35,7 +45,21 @@ namespace CameraTests.Services
             _fontSize = fontSize;
             _maxLines = maxLines;
             _expirySeconds = expirySeconds;
+            _lastRenderTicks = DateTime.UtcNow.Ticks;
+
             _timer = new Timer(_ => PruneExpired(), null, 1000, 1000);
+            _partialRenderTimer = new Timer(_ => FlushPartialRender(), null, Timeout.Infinite, Timeout.Infinite);
+        }
+
+        public bool HasVisibleCaptions
+        {
+            get
+            {
+                lock (_sync)
+                {
+                    return HasVisibleCaptionsLocked();
+                }
+            }
         }
 
         /// <summary>
@@ -45,8 +69,8 @@ namespace CameraTests.Services
         {
             lock (_sync)
             {
-                _partialText += delta;
-                RenderLocked();
+                _partialText.Append(delta);
+                SchedulePartialRenderLocked();
             }
         }
 
@@ -62,7 +86,8 @@ namespace CameraTests.Services
                 {
                     _lines.Add(new CaptionLine { Text = text.Trim(), CreatedUtc = DateTime.UtcNow });
                 }
-                _partialText = "";
+                _partialText.Clear();
+                CancelScheduledPartialRenderLocked();
                 RenderLocked();
             }
         }
@@ -75,7 +100,8 @@ namespace CameraTests.Services
             lock (_sync)
             {
                 _lines.Clear();
-                _partialText = "";
+                _partialText.Clear();
+                CancelScheduledPartialRenderLocked();
                 RenderLocked();
             }
         }
@@ -92,12 +118,56 @@ namespace CameraTests.Services
             }
         }
 
+        private void SchedulePartialRenderLocked()
+        {
+            var now = DateTime.UtcNow.Ticks;
+            var dueAt = _lastRenderTicks + PartialRenderIntervalTicks;
+            if (now >= dueAt)
+            {
+                RenderLocked(now);
+                return;
+            }
+
+            if (_partialRenderScheduled)
+            {
+                return;
+            }
+
+            var remainingTicks = dueAt - now;
+            var dueMs = (int)Math.Max(1, TimeSpan.FromTicks(remainingTicks).TotalMilliseconds);
+            _partialRenderScheduled = true;
+            _partialRenderTimer?.Change(dueMs, Timeout.Infinite);
+        }
+
+        private void CancelScheduledPartialRenderLocked()
+        {
+            _partialRenderScheduled = false;
+            _partialRenderTimer?.Change(Timeout.Infinite, Timeout.Infinite);
+        }
+
+        private void FlushPartialRender()
+        {
+            lock (_sync)
+            {
+                if (!_partialRenderScheduled)
+                {
+                    return;
+                }
+
+                _partialRenderScheduled = false;
+                RenderLocked();
+            }
+        }
+
         /// <summary>
         /// Rebuild label spans from current state. Must be called under _sync lock.
         /// </summary>
-        private void RenderLocked()
+        private void RenderLocked(long nowTicks = 0)
         {
-            bool hasPartial = !string.IsNullOrEmpty(_partialText);
+            _partialRenderScheduled = false;
+            _lastRenderTicks = nowTicks == 0 ? DateTime.UtcNow.Ticks : nowTicks;
+
+            bool hasPartial = _partialText.Length > 0;
             int finalSlots = hasPartial ? Math.Max(0, _maxLines - 1) : _maxLines;
             int skip = Math.Max(0, _lines.Count - finalSlots);
 
@@ -107,7 +177,10 @@ namespace CameraTests.Services
             for (int i = skip; i < _lines.Count; i++)
             {
                 if (!first)
+                {
                     _label.Spans.Add(new TextSpan { Text = "\n", FontSize = 6 });
+                }
+
                 _label.Spans.Add(new TextSpan
                 {
                     Text = $" {_lines[i].Text} ",
@@ -120,8 +193,11 @@ namespace CameraTests.Services
 
             if (hasPartial)
             {
-                if (!first)
-                    _label.Spans.Add(new TextSpan { Text = "\n", FontSize = 6 });
+                //if (!first)
+                //{
+                //    _label.Spans.Add(new TextSpan { Text = "\n", FontSize = 6 });
+                //}
+
                 _label.Spans.Add(new TextSpan
                 {
                     Text = $" {_partialText} ",
@@ -130,12 +206,31 @@ namespace CameraTests.Services
                     FontSize = _fontSize
                 });
             }
+
+            UpdateVisibleCaptionsStateLocked();
+        }
+
+        private bool HasVisibleCaptionsLocked()
+        {
+            return _partialText.Length > 0 || _lines.Count > 0;
+        }
+
+        private void UpdateVisibleCaptionsStateLocked()
+        {
+            var hasVisibleCaptions = HasVisibleCaptionsLocked();
+            if (_hasVisibleCaptions != hasVisibleCaptions)
+            {
+                _hasVisibleCaptions = hasVisibleCaptions;
+                VisibleCaptionsChanged?.Invoke(hasVisibleCaptions);
+            }
         }
 
         public void Dispose()
         {
             _timer?.Dispose();
             _timer = null;
+            _partialRenderTimer?.Dispose();
+            _partialRenderTimer = null;
         }
     }
 }

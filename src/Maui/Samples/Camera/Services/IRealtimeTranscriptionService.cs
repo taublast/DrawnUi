@@ -57,6 +57,11 @@ namespace CameraTests.Services
         event Action<bool> SendingData;
 
         /// <summary>
+        /// Fired when server-side speech activity starts or stops.
+        /// </summary>
+        event Action<bool> SpeechActivityChanged;
+
+        /// <summary>
         /// Fired when the session connection state changes.
         /// </summary>
         event Action<RealtimeTranscriptionSessionState> SessionStateChanged;
