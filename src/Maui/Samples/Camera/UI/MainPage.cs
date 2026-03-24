@@ -217,7 +217,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
     {
         if (_previewFrameOverlay != null)
         {
-            _previewFrameOverlay.IsVisible = IsAudioMonitoringEnabled;
+            _previewFrameOverlay.SetAudioMonitoring(IsAudioMonitoringEnabled);
         }
     }
 

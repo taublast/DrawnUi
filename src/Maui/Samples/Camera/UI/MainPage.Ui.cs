@@ -64,13 +64,18 @@ namespace CameraTests.Views
                         //CreateStageEdgeOverlay(false),
                         CreateHeaderPanel(),
                         CreateCaptionsPanel(),
-                        new CameraOverlayLayout()
-                        {
-                            VerticalOptions = LayoutOptions.Fill,
-                            HorizontalOptions = LayoutOptions.Fill,
-                            Children = { CreateCameraControlsPanel() }
-                        }.Assign(out _insideCamera),
 
+                        //new CameraOverlayLayout()
+                        //{
+                        //    VerticalOptions = LayoutOptions.Fill,
+                        //    HorizontalOptions = LayoutOptions.Fill,
+                        //    Children =
+                        //    {
+                                
+                        //    }
+                        //}.Assign(out _insideCamera),
+
+                        CreateCameraControlsPanel(),
 
                         // Settings Drawer (slides up from bottom)
                         new SkiaDrawer()
@@ -1345,19 +1350,6 @@ namespace CameraTests.Views
             if (_preRecordingDurationButton != null)
             {
                 _preRecordingDurationButton.Text = $"Pre-Record: {CameraControl.PreRecordDuration.TotalSeconds:F0}s";
-            }
-        }
-
-        private bool _isLayoutLandscape;
-
-        public bool IsLayoutLandscape
-        {
-            get => _isLayoutLandscape;
-            set
-            {
-                if (value == _isLayoutLandscape) return;
-                _isLayoutLandscape = value;
-                OnPropertyChanged();
             }
         }
 

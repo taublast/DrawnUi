@@ -29,6 +29,7 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
 
     private SkiaLabel _labelVisualizerName;
     private AudioVisualizer visualizer;
+    private SkiaShape panelVisualizer;
 
     public CameraDataOverlay()
     {
@@ -88,7 +89,7 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
                             }
                             .Assign(out visualizer)
                         }
-                    }
+                    }.Assign(out panelVisualizer)
                 }
             }
         };
@@ -102,7 +103,7 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
 
     public void AddAudioSample(AudioSample sample)
     {
-        if (Visualizer != null && Visualizer.IsVisible)
+        if (Visualizer != null  && panelVisualizer.IsVisible && Visualizer.IsVisible)
         {
             Visualizer.AddSample(sample);
         }
@@ -112,4 +113,10 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
     {
         return Visualizer?.SwitchVisualizer(index);
     }
+
+    public void SetAudioMonitoring(bool isAudioMonitoringEnabled)
+    {
+        panelVisualizer.IsVisible = isAudioMonitoringEnabled;
+    }
+
 }
