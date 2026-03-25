@@ -26,7 +26,6 @@ namespace CameraTests.Views
 
 #if DEBUG
             VideoDiagnosticsOn = true;
-            //ConstantUpdate = true;
 #endif
         }
 
