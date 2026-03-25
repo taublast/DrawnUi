@@ -108,6 +108,7 @@ namespace DrawnUi.Camera
         private long _audioPtsBaseNs = -1;
         private long _audioPtsOffsetUs = 0;
         private TimeSpan _deferredPreRecordingFirstFrameOffset = TimeSpan.MinValue;
+        public bool UseAudioClockForLiveGpuSync { get; set; } = false;
 
         // AAC codec constants (matches audio codec config: 44100 Hz mono 16-bit)
         private const long AacFrameDurationUs = 23220; // 1024 samples @ 44100 Hz
@@ -366,6 +367,7 @@ namespace DrawnUi.Camera
             _previewFrameInterval = Math.Max(1, _frameRate / 30); // Legacy SubmitFrameAsync throttle
             _deviceRotation = deviceRotation;
             _recordAudio = recordAudio;
+            UseAudioClockForLiveGpuSync = false;
             _preRecordingDuration = TimeSpan.Zero;
             _firstEncodedFrameOffset = TimeSpan.MinValue;
             _skipFirstEncodedSample = true;  // Reset for new session
@@ -1041,6 +1043,7 @@ namespace DrawnUi.Camera
             // in _encodedAudioBuffer (not the live muxer).
             DrainAudioEncoder();
 
+            UseAudioClockForLiveGpuSync = false;
             _audioPtsBaseNs = -1;
             _audioPtsOffsetUs = 0;
             _audioPresentationTimeUs = 0;
@@ -1513,6 +1516,14 @@ namespace DrawnUi.Camera
                     return;
                 }
 
+                long ptsNanos = ResolveLiveGpuVideoPtsNanos(timestamp, timestampNs, out var frameTimestamp);
+                if (ptsNanos < 0)
+                {
+                    // Wait for the first audio acquisition timestamp in normal live recording so
+                    // the video track starts on the same monotonic timeline.
+                    return;
+                }
+
                 // 1. Render camera texture to the encoder's framebuffer
                 // CRITICAL: Reset GL state before rendering OES texture!
                 // Skia modifies many GL states (blend, depth, stencil, scissor, program, etc.)
@@ -1570,7 +1581,7 @@ namespace DrawnUi.Camera
                         Width = _width,
                         Height = _height,
                         Canvas = canvas,
-                        Time = timestamp,
+                        Time = frameTimestamp,
                         Scale = 1f  // Recording frame - full size
                     };
 
@@ -1636,7 +1647,6 @@ namespace DrawnUi.Camera
                 // }
 
                 // 5. Set presentation timestamp and swap to encoder
-                long ptsNanos = (long)(timestamp.TotalMilliseconds * 1_000_000.0);
                 EGLExt.EglPresentationTimeANDROID(_eglDisplay, _eglSurface, ptsNanos);
                 EGL14.EglSwapBuffers(_eglDisplay, _eglSurface);
 
@@ -1779,6 +1789,12 @@ namespace DrawnUi.Camera
                     return;
                 }
 
+                long ptsNanos = ResolveLiveGpuVideoPtsNanos(timestamp, timestampNs, out var frameTimestamp);
+                if (ptsNanos < 0)
+                {
+                    return;
+                }
+
                 // 1. Render camera texture to the encoder's framebuffer
                 // CRITICAL: Reset GL state before rendering OES texture!
                 // Skia modifies many GL states (blend, depth, stencil, scissor, program, etc.)
@@ -1832,7 +1848,7 @@ namespace DrawnUi.Camera
                         Width = _width,
                         Height = _height,
                         Canvas = canvas,
-                        Time = timestamp,
+                        Time = frameTimestamp,
                         Scale = 1f  // Recording frame - full size
                     };
 
@@ -1901,7 +1917,6 @@ namespace DrawnUi.Camera
                 */
 
                 // 5. Set presentation timestamp and swap to encoder
-                long ptsNanos = (long)(timestamp.TotalMilliseconds * 1_000_000.0);
                 EGLExt.EglPresentationTimeANDROID(_eglDisplay, _eglSurface, ptsNanos);
                 EGL14.EglSwapBuffers(_eglDisplay, _eglSurface);
 
@@ -2817,6 +2832,42 @@ namespace DrawnUi.Camera
             _maxExpectedEncoderOutputPtsUs = 0;
         }
 
+        private long ResolveLiveGpuVideoPtsNanos(TimeSpan fallbackTimestamp, long cameraTimestampNs, out TimeSpan frameTimestamp)
+        {
+            if (!UseAudioClockForLiveGpuSync)
+            {
+                long fallbackPtsNs = fallbackTimestamp.Ticks * 100L;
+                frameTimestamp = fallbackTimestamp;
+                return fallbackPtsNs;
+            }
+
+            long audioBaseNs = System.Threading.Interlocked.Read(ref _audioPtsBaseNs);
+            if (audioBaseNs < 0)
+            {
+                frameTimestamp = TimeSpan.Zero;
+                return -1;
+            }
+
+            long relativeNs = cameraTimestampNs - audioBaseNs;
+            if (relativeNs < 0)
+            {
+                relativeNs = 0;
+            }
+
+            frameTimestamp = TimeSpanFromNanoseconds(relativeNs);
+            return relativeNs;
+        }
+
+        private static TimeSpan TimeSpanFromNanoseconds(long timestampNs)
+        {
+            if (timestampNs <= 0)
+            {
+                return TimeSpan.Zero;
+            }
+
+            return new TimeSpan(timestampNs / 100L);
+        }
+
         private long CalculateAudioPts(long timestampNs)
         {
             if (timestampNs < 0)
@@ -2833,6 +2884,15 @@ namespace DrawnUi.Camera
             if (relativeUs < 0)
             {
                 relativeUs = 0;
+            }
+
+            if (UseAudioClockForLiveGpuSync)
+            {
+                relativeUs -= AacFrameDurationUs;
+                if (relativeUs < 0)
+                {
+                    relativeUs = 0;
+                }
             }
 
             long finalPtsUs = relativeUs + _audioPtsOffsetUs;

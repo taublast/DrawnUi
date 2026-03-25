@@ -1186,10 +1186,13 @@ public partial class SkiaCamera
         // Drop the first camera frame to avoid occasional corrupted first frame from the camera/RenderScript pipeline
         _androidWarmupDropRemaining = 1;
 
-        // Stamp the new encoder's audio/video clock bridge (CaptureStartAbsoluteNs must be set
-        // as late as possible — after all initialization — for accurate CLOCK_MONOTONIC alignment).
+        // Normal live GPU recording should align video to the first captured audio timestamp.
+        // Keep prerecord/live-transition on the existing timing path.
         if (_captureVideoEncoder is AndroidCaptureVideoEncoder droidEncBridge)
+        {
+            droidEncBridge.UseAudioClockForLiveGpuSync = !IsPreRecording && audioEnabled;
             droidEncBridge.CaptureStartAbsoluteNs = Super.GetCurrentTimeNanos();
+        }
 
         // Diagnostics
         _diagStartTime = DateTime.Now;

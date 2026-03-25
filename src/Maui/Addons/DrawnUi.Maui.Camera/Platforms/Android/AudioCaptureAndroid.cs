@@ -16,6 +16,7 @@ public class AudioCaptureAndroid : IAudioCapture
     private int _bufferSize;
     private AudioTimestamp _audioTimestamp;
     private Android.Media.AudioDeviceInfo[] _availableDevices;
+    private long _framesReadTotal;
 
     public bool IsCapturing => _isCapturing;
     public int SampleRate { get; private set; }
@@ -165,6 +166,7 @@ public class AudioCaptureAndroid : IAudioCapture
             }
 
             _audioTimestamp = new AudioTimestamp();
+            _framesReadTotal = 0;
             _isCapturing = true; // Set flag before starting thread
             _audioRecord.StartRecording();
 
@@ -231,17 +233,49 @@ public class AudioCaptureAndroid : IAudioCapture
                 if (val > 0)
                 {
                     long timeNs = 0;
+                    bool hasTimestamp = false;
+                    int bytesPerFrame = Math.Max(1, Math.Max(1, Channels) * Math.Max(1, BitDepth switch
+                    {
+                        AudioBitDepth.Pcm8Bit => 1,
+                        AudioBitDepth.Pcm16Bit => 2,
+                        AudioBitDepth.Pcm24Bit => 3,
+                        AudioBitDepth.Float32Bit => 4,
+                        _ => 2
+                    }));
+                    long framesRead = Math.Max(0, val / bytesPerFrame);
+                    long chunkStartFrame = _framesReadTotal;
                     
                     // Try to get precise timestamp
                     if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.N &&
                         _audioRecord.GetTimestamp(_audioTimestamp,   AudioTimebase.Monotonic) ==  0)//AudioApi.Success)
                     {
-                        timeNs = _audioTimestamp.NanoTime;
+                        long timestampFrame = _audioTimestamp.FramePosition;
+                        long timestampNs = _audioTimestamp.NanoTime;
+
+                        long deltaFrames = timestampFrame - chunkStartFrame;
+                        if (deltaFrames < 0)
+                        {
+                            deltaFrames = 0;
+                        }
+
+                        long deltaNs = (deltaFrames * 1_000_000_000L) / Math.Max(1, SampleRate);
+                        timeNs = timestampNs - deltaNs;
+                        hasTimestamp = true;
                     }
-                    else
+
+                    if (!hasTimestamp)
                     {
-                        timeNs = Android.OS.SystemClock.ElapsedRealtimeNanos();
+                        long fallbackNowNs = Android.OS.SystemClock.ElapsedRealtimeNanos();
+                        long chunkDurationNs = (framesRead * 1_000_000_000L) / Math.Max(1, SampleRate);
+                        timeNs = fallbackNowNs - chunkDurationNs;
                     }
+
+                    if (timeNs < 0)
+                    {
+                        timeNs = 0;
+                    }
+
+                    _framesReadTotal += framesRead;
 
                     // Copy data to avoid buffer overwrites if passed by reference (AudioSample structs hold ref usually?)
                     // AudioSample defined Data as byte[]. So we need a copy.
