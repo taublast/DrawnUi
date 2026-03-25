@@ -53,7 +53,7 @@ A: Use the `BlockGesturesBelow="True"` property on the top control. Note that `I
 **Q: How do I internally rebuild the ItemsSource?**  
 A: Directly call `layout.ApplyItemsSource()`.
 
-** Q: How to make images to Fade-In when loaded?**
+**Q: How to make images to Fade-In when loaded?**
 A: Subclass `SkiaImage` to define your animation:
 
 ```csharp
@@ -66,6 +66,19 @@ public class BannerImage : SkiaImage
         this.Opacity = 0.01;
         _ = this.FadeToAsync(1, 300, Easing.SinIn);
     }
+}
+```
+
+**Q: How to expand button hitbox?**
+
+A: Every drawn control can do that:
+
+```csharp
+public override SKRect CreateHitRect()
+{
+    var ret = base.CreateHitRect();
+    ret.Inflate(10*RenderingScale, 10*RenderingScale);
+    return ret;
 }
 ```
 

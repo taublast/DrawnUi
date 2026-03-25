@@ -113,11 +113,11 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
                             new SkiaRichLabel()
                                 {
                                     FontFamily = "FontText",
+                                    FontSize = 20,
                                     LineHeight = 1.1,
+                                    TextColor = Colors.White,
                                     UseCache = SkiaCacheType.Operations,
                                     Margin = new Thickness(0, 0, 0, 0),
-                                    HorizontalTextAlignment = DrawTextAlignment.Start,
-                                    TextColor = Colors.White,
                                 }
                                 .Assign(out _captionsLabel)
                         }
@@ -151,34 +151,26 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
         panelVisualizer.IsVisible = isAudioMonitoringEnabled;
     }
 
-    private bool initialCaption = false;
 
-    /// <summary>
-    /// Call this on main thread only
-    /// </summary>
-    /// <param name="spans"></param>
     public void SetCaptions(IList<string> spans)
     {
-        MainThread.BeginInvokeOnMainThread(() =>
+        var hide = spans.Count < 1;
+        if (hide)
         {
-            var hide = spans.Count < 1;
-            if (hide)
+            if (!string.IsNullOrEmpty(CaptionsLabel.Text))
             {
-                if (!string.IsNullOrEmpty(CaptionsLabel.Text))
-                {
-                    SetCaptionsVisible(false); //animated
-                }
-                else
-                {
-                    CaptionsLabel.Text = string.Empty;
-                }
+                SetCaptionsVisible(false); //animated
             }
             else
             {
-                SetCaptionsVisible(true);
-                CaptionsLabel.Text = string.Join(Environment.NewLine, spans);
+                CaptionsLabel.Text = string.Empty;
             }
-        });
+        }
+        else
+        {
+            SetCaptionsVisible(true);
+            CaptionsLabel.Text = string.Join(Environment.NewLine, spans);
+        }
     }
 
     private void SetCaptionsVisibleInternal(bool isVisible)
@@ -197,7 +189,7 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
             }
         }
 
-        _captionsPanel.IsGhost = !isVisible;
+        _captionsPanel.IsVisible = isVisible;
     }
 
     private bool _canShowCaptions;
@@ -220,7 +212,7 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
 
         animExit.Completed += (sender, args) =>
         {
-            control.IsGhost = true;
+            control.IsVisible = false;
             control.VisualEffects.Remove(animExit);
             CaptionsLabel.Text = string.Empty;
             control.DisposeObject(animExit);
