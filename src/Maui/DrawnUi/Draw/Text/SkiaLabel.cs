@@ -52,6 +52,22 @@ namespace DrawnUi.Draw
 
         #region INFRASTRUCTURE
 
+        /// <summary>
+        /// Use main thread to handle spans collection changes properly
+        /// </summary>
+        /// <param name="spans"></param>
+        protected virtual void ReplaceSpans(IEnumerable<TextSpan> spans)
+        {
+            lock (LockSetup)
+            {
+                if (_spans != null)
+                {
+                    _spans.Clear();
+                    _spans.AddRange(spans);
+                }
+            }
+        }
+
         public override void OnDisposing()
         {
             if (_spans != null)
