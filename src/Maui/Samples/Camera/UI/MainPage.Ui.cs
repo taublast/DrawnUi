@@ -215,6 +215,7 @@ namespace CameraTests.Views
 
             return new SkiaLayer()
             {
+                Rotation = 10,
                 Children =
                 {
                     new SkiaShape()
@@ -495,6 +496,7 @@ namespace CameraTests.Views
                                             VerticalOptions = LayoutOptions.Center,
                                             HorizontalOptions = LayoutOptions.Center,
                                         }
+                                        .Assign(out _settingsButtonIcon)
                                     }
                                 }
                                 .OnTapped(me => { ToggleSettingsDrawer(); }),
@@ -601,6 +603,7 @@ namespace CameraTests.Views
                                             VerticalOptions = LayoutOptions.Center,
                                             HorizontalOptions = LayoutOptions.Center,
                                         }
+                                        .Assign(out _cameraSelectButtonIcon)
                                     }
                                 }
                                 .Assign(out _cameraSelectButton)

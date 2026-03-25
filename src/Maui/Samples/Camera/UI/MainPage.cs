@@ -5,6 +5,7 @@ using CameraTests.UI;
 using CameraTests.Visualizers;
 using DrawnUi.Camera;
 using DrawnUi.Controls;
+using DrawnUi.Draw;
 using DrawnUi.Views;
 
 namespace CameraTests.Views;
@@ -12,6 +13,7 @@ namespace CameraTests.Views;
 public partial class MainPage : BasePageReloadable, IDisposable
 {
     private AppCamera CameraControl;
+    private SkiaSvg _settingsButtonIcon;
     private SkiaShape _takePictureButton;
     private SkiaSvg _flashButton;
     private SkiaLabel _statusLabel;
@@ -23,6 +25,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
     private SettingsButton _speechButton;
     private IRealtimeTranscriptionService _realtimeTranscriptionService;
     private SkiaShape _cameraSelectButton;
+    private SkiaSvg _cameraSelectButtonIcon;
 
     private SettingsButton _audioCodecButton;
     private SkiaLayer _previewOverlay;
@@ -57,6 +60,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
         //iOS statusbar and bottom insets color
         BackgroundColor = Colors.Black;
 
+        Super.RotationChanged += OnRotationChanged;
         Super.OrientationChanged += OnOrientationChanged;
 
         _realtimeTranscriptionService = realtimeTranscriptionService;
@@ -82,6 +86,11 @@ public partial class MainPage : BasePageReloadable, IDisposable
         UpdateLayout();
     }
 
+    private void OnRotationChanged(object sender, int rotation)
+    {
+        UpdateCameraControlsRotation(rotation);
+    }
+
     private void UpdateLayout()
     {
         _orientation = Super.DeviceOrientation;
@@ -97,10 +106,42 @@ public partial class MainPage : BasePageReloadable, IDisposable
         }
     }
 
+    private void UpdateCameraControlsRotation(int rotation)
+    {
+        var iconRotation = -NormalizeIconRotation(rotation);
+        ApplyRotation(_settingsButtonIcon, iconRotation);
+        ApplyRotation(_flashButton, iconRotation);
+        ApplyRotation(_cameraSelectButtonIcon, iconRotation);
+    }
+
+    private static void ApplyRotation(SkiaControl control, double rotation)
+    {
+        if (control != null)
+        {
+            control.Rotation = rotation;
+        }
+    }
+
+    private static int NormalizeIconRotation(int rotation)
+    {
+        var normalized = rotation % 360;
+        if (normalized < 0)
+        {
+            normalized += 360;
+        }
+
+        return normalized switch
+        {
+            270 => -90,
+            _ => normalized,
+        };
+    }
+
     protected override void Dispose(bool isDisposing)
     {
         if (isDisposing)
         {
+            Super.RotationChanged -= OnRotationChanged;
             Super.OrientationChanged -= OnOrientationChanged;
             _captionsEngine?.Dispose();
             _captionsEngine = null;
@@ -144,6 +185,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
         Canvas?.Dispose();
 
         CreateContent();
+        UpdateCameraControlsRotation(Super.DeviceRotation);
 
         _previewFrameOverlay = new CameraDataOverlay();
         _captionsLabel = _previewFrameOverlay.CaptionsLabel;
