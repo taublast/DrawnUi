@@ -1486,6 +1486,7 @@ public double ZoomLimitMax { get; set; }          // Maximum zoom
 
 // Audio Recording
 public bool EnableAudioRecording { get; set; }             // Include audio in video recordings (default: true)
+public CameraAudioMode AudioMode { get; set; }            // Audio processing mode (default: Default)
 ```
 
 ### Core Methods
@@ -1613,7 +1614,17 @@ public enum VideoQuality { Low, Standard, High, Ultra, Manual }
 public enum FlashMode { Off, On, Strobe }
 public enum CaptureFlashMode { Off, Auto, On }
 public enum SkiaImageEffect { None, Sepia, BlackAndWhite, Pastel }
+public enum CameraAudioMode { Baseline, VideoRecording, Voice, Flat }
 ```
+
+**CameraAudioMode Details:**
+
+| Value | Description | iOS | Android |
+|-------|-------------|-----|---------|
+| `Default` | **Default.** Standard system audio processing, light baseline filtering | `AVAudioSessionModeDefault` | `AudioSource.Mic` |
+| `VideoRecording` | Optimized for video capture, matches native Camera app. No voice-specific processing. | `AVAudioSessionModeVideoRecording` | `AudioSource.Camcorder` |
+| `Voice` | Applied AGC, echo cancellation, and noise suppression. Best for voice memos or interviews. | `AVAudioEngine SetVoiceProcessingEnabled` | `AudioSource.VoiceCommunication` |
+| `Flat` | Minimal signal processing, flat frequency response. For audio analysis or measurement tools. | `AVAudioSessionModeMeasurement` | `AudioSource.Unprocessed` (API 29+), fallback to `Mic` |
 
 ## Troubleshooting
 

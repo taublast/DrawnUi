@@ -831,6 +831,11 @@ namespace CameraTests.Views
                                 })
                                 .OnTapped(async me => { await SelectAudioSource(); }),
 
+                            new SettingsButton("🔊", "Audio Mode") { TintColor = Color.FromArgb("#B45309"), }
+                                .ObserveProperty(CameraControl, nameof(CameraControl.AudioMode),
+                                    me => { me.Text = CameraControl.AudioMode.ToString(); })
+                                .OnTapped(async me => { await SelectAudioMode(); }),
+
                             //CreateDrawerSectionTitle("Formats", "Choose how the feed is captured"),
 
                             new SettingsButton("🗂️", "Formats") { TintColor = Color.FromArgb("#4F46E5"), }

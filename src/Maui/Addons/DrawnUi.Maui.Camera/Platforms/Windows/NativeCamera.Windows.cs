@@ -2718,6 +2718,14 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         System.Diagnostics.Debug.WriteLine($"[NativeCamera.Windows] SetRecordAudio: {recordAudio}");
     }
 
+    /// <summary>
+    /// Sets the audio mode for recording. Stored for future Windows audio graph implementation.
+    /// </summary>
+    public void SetAudioMode(CameraAudioMode mode)
+    {
+        System.Diagnostics.Debug.WriteLine($"[NativeCamera.Windows] SetAudioMode: {mode} (pending implementation)");
+    }
+
     #endregion
 
     #region Audio

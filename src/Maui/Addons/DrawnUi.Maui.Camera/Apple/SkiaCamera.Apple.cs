@@ -493,7 +493,11 @@ public partial class SkiaCamera
                 {
                     _audioCapture = CreateAudioCapturePlatform();
                     if (_audioCapture != null)
+                    {
+                        _audioCapture.AudioMode = AudioMode;
                         _audioCapture.SampleAvailable += OnAudioSampleAvailable;
+                        Debug.WriteLine($"[SkiaCamera.Apple] Recording audio capture created with AudioMode={AudioMode}");
+                    }
                 }
 
                 // AUDIO HANDLING MODE (OOM-SAFE):
@@ -3486,6 +3490,7 @@ public partial class SkiaCamera
                 StopPreviewAudioCapture();
 
                 _previewAudioCapture = new AudioCaptureApple();
+                _previewAudioCapture.AudioMode = AudioMode;
                 _previewAudioCapture.SampleAvailable += OnPreviewAudioSampleAvailable;
                 var started = await _previewAudioCapture.StartAsync(AudioSampleRate, AudioChannels, AudioBitDepth,
                     AudioDeviceIndex);
@@ -3570,6 +3575,7 @@ public partial class SkiaCamera
                 StopPreviewAudioCapture();
 
                 _audioOnlyCapture = new AudioCaptureApple();
+                _audioOnlyCapture.AudioMode = AudioMode;
                 _audioOnlyCapture.SampleAvailable += OnAudioOnlySampleAvailable;
                 var started = await _audioOnlyCapture.StartAsync(sampleRate, channels, AudioBitDepth, AudioDeviceIndex);
                 if (started)

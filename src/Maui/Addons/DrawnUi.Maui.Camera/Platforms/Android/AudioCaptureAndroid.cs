@@ -22,6 +22,8 @@ public class AudioCaptureAndroid : IAudioCapture
     public int Channels { get; private set; }
     public AudioBitDepth BitDepth { get; private set; }
 
+    public CameraAudioMode AudioMode { get; set; } = CameraAudioMode.Default;
+
     public event EventHandler<AudioSample> SampleAvailable;
 
     string _lastError;
@@ -126,9 +128,21 @@ public class AudioCaptureAndroid : IAudioCapture
             // Increase buffer size for safety
             _bufferSize *= 2; 
 
+            // Select AudioSource based on AudioMode
+            var audioSource = AudioMode switch
+            {
+                CameraAudioMode.VideoRecording => AudioSource.Camcorder,
+                CameraAudioMode.Voice          => AudioSource.VoiceCommunication,
+                CameraAudioMode.Flat           => Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Q
+                                                  ? AudioSource.Unprocessed
+                                                  : AudioSource.Mic,
+                _                              => AudioSource.Mic, // Default
+            };
+
             // Initialize AudioRecord
             // Requires RECORD_AUDIO permission
-            _audioRecord = new AudioRecord(AudioSource.Mic, sampleRate, channelConfig, audioFormat, _bufferSize);
+            _audioRecord = new AudioRecord(audioSource, sampleRate, channelConfig, audioFormat, _bufferSize);
+            Debug.WriteLine($"[AudioCaptureAndroid] AudioSource={audioSource} for AudioMode={AudioMode}");
 
             if (_audioRecord.State != State.Initialized)
             {

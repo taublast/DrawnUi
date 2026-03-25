@@ -112,6 +112,13 @@ public interface INativeCamera : IDisposable
     void SetRecordAudio(bool recordAudio);
 
     /// <summary>
+    /// Sets the audio session mode used during video recording.
+    /// Must be called before starting video recording.
+    /// </summary>
+    /// <param name="mode">Audio mode controlling signal processing applied to the microphone</param>
+    void SetAudioMode(CameraAudioMode mode);
+
+    /// <summary>
     /// Starts video recording
     /// </summary>
     Task StartVideoRecording();

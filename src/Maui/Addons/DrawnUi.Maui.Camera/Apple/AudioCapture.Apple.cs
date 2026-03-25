@@ -24,6 +24,7 @@ public class AudioCaptureApple : IAudioCapture
     public int SampleRate { get; private set; }
     public int Channels { get; private set; }
     public AudioBitDepth BitDepth { get; private set; }
+    public CameraAudioMode AudioMode { get; set; } = CameraAudioMode.VideoRecording;
 
     public event EventHandler<AudioSample> SampleAvailable;
 
@@ -115,6 +116,19 @@ public class AudioCaptureApple : IAudioCapture
                 return false;
             }
 
+            // Apply audio session mode based on AudioMode
+            var avMode = AudioMode switch
+            {
+                CameraAudioMode.VideoRecording => AVAudioSession.ModeVideoRecording,
+                CameraAudioMode.Flat           => AVAudioSession.ModeMeasurement,
+                _                              => AVAudioSession.ModeDefault,
+            };
+            audioSession.SetMode(avMode, out sessionError);
+            if (sessionError != null)
+            {
+                Debug.WriteLine($"[AudioCaptureApple] Audio session mode error: {sessionError}");
+            }
+
             if (deviceIndex < 0)
             {
                 deviceIndex = 0;
@@ -159,17 +173,18 @@ public class AudioCaptureApple : IAudioCapture
             _audioEngine = new AVAudioEngine();
             var inputNode = _audioEngine.InputNode;
 
-            // Enable voice processing for AGC, echo cancellation, and noise suppression (iOS 13+)
+            // Enable voice processing only in Voice mode (iOS 13+)
+            bool enableVoiceProcessing = AudioMode == CameraAudioMode.Voice;
             try
             {
                 NSError vpError;
-                if (inputNode.SetVoiceProcessingEnabled(true, out vpError))
+                if (inputNode.SetVoiceProcessingEnabled(enableVoiceProcessing, out vpError))
                 {
-                    Debug.WriteLine("[AudioCaptureApple] Voice processing enabled (AGC, echo cancellation, noise suppression)");
+                    Debug.WriteLine($"[AudioCaptureApple] Voice processing {(enableVoiceProcessing ? "enabled" : "disabled")} for mode {AudioMode}");
                 }
                 else
                 {
-                    Debug.WriteLine($"[AudioCaptureApple] Voice processing not available: {vpError?.LocalizedDescription}");
+                    Debug.WriteLine($"[AudioCaptureApple] Voice processing set failed: {vpError?.LocalizedDescription}");
                 }
             }
             catch (Exception vpEx)
