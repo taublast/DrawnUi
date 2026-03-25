@@ -109,23 +109,23 @@ public class AudioCaptureAndroid : IAudioCapture
             // Usually 16-bit is safe. 
             if (bitDepth == AudioBitDepth.Pcm24Bit)
             {
-                 // Fallback to 16bit or Float? Plan says "Android does not natively support 24-bit; use 32-bit float and convert if needed."
-                 // For now let's stick to 16-bit if requested 24-bit or use Float if supported.
-                 // Ideally checking AudioRecord.GetMinBufferSize would tell us validation.
-                 audioFormat = Encoding.PcmFloat; // Try float for high quality
-                 BitDepth = AudioBitDepth.Float32Bit; // Adjust property
+                // Fallback to 16bit or Float? Plan says "Android does not natively support 24-bit; use 32-bit float and convert if needed."
+                // For now let's stick to 16-bit if requested 24-bit or use Float if supported.
+                // Ideally checking AudioRecord.GetMinBufferSize would tell us validation.
+                audioFormat = Encoding.PcmFloat; // Try float for high quality
+                BitDepth = AudioBitDepth.Float32Bit; // Adjust property
             }
 
             _bufferSize = AudioRecord.GetMinBufferSize(sampleRate, channelConfig, audioFormat);
-            
+
             if (_bufferSize == (int)TrackStatus.Error || _bufferSize == (int)TrackStatus.ErrorBadValue)
             {
-                 LastError= $"Invalid audio parameters. Rate: {sampleRate}, Ch: {channels}, Fmt: {audioFormat}";
-                 return false;
+                LastError = $"Invalid audio parameters. Rate: {sampleRate}, Ch: {channels}, Fmt: {audioFormat}";
+                return false;
             }
 
             // Increase buffer size for safety
-            _bufferSize *= 2; 
+            _bufferSize *= 2;
 
             // Initialize AudioRecord
             // Requires RECORD_AUDIO permission
@@ -133,7 +133,7 @@ public class AudioCaptureAndroid : IAudioCapture
 
             if (_audioRecord.State != State.Initialized)
             {
-                LastError="AudioRecord failed to initialize.";
+                LastError = "AudioRecord failed to initialize.";
                 return false;
             }
 
@@ -170,10 +170,10 @@ public class AudioCaptureAndroid : IAudioCapture
             _isCapturing = true; // Set flag before starting thread
             _audioRecord.StartRecording();
 
-            _audioThread = new Thread(AudioCaptureLoop) 
-            { 
+            _audioThread = new Thread(AudioCaptureLoop)
+            {
                 IsBackground = true,
-                Name = "AudioCaptureThread" 
+                Name = "AudioCaptureThread"
             };
             _audioThread.Start();
 
@@ -182,7 +182,7 @@ public class AudioCaptureAndroid : IAudioCapture
         }
         catch (Exception ex)
         {
-            LastError=$"Start failed: {ex}";
+            LastError = $"Start failed: {ex}";
             StopCaptureInternal();
             return false;
         }
@@ -211,7 +211,7 @@ public class AudioCaptureAndroid : IAudioCapture
         }
         catch (Exception ex)
         {
-             Debug.WriteLine($"[AudioCaptureAndroid] Stop error: {ex.Message}");
+            Debug.WriteLine($"[AudioCaptureAndroid] Stop error: {ex.Message}");
         }
     }
 
@@ -221,15 +221,15 @@ public class AudioCaptureAndroid : IAudioCapture
         // Note: For PcmFloat, we need float[], for Pcm16bit short[], etc. 
         // byte[] works for Read(byte[], ...) but for Float we should use Read(float[], ...) for better performance/correctness if supported.
         // However AudioSample expects byte[] currently.
-        
-        byte[] buffer = new byte[_bufferSize]; 
+
+        byte[] buffer = new byte[_bufferSize];
 
         while (_isCapturing && _audioRecord != null)
         {
             try
             {
                 int val = _audioRecord.Read(buffer, 0, _bufferSize);
-                
+
                 if (val > 0)
                 {
                     long timeNs = 0;
@@ -244,10 +244,10 @@ public class AudioCaptureAndroid : IAudioCapture
                     }));
                     long framesRead = Math.Max(0, val / bytesPerFrame);
                     long chunkStartFrame = _framesReadTotal;
-                    
+
                     // Try to get precise timestamp
                     if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.N &&
-                        _audioRecord.GetTimestamp(_audioTimestamp,   AudioTimebase.Monotonic) ==  0)//AudioApi.Success)
+                        _audioRecord.GetTimestamp(_audioTimestamp, AudioTimebase.Monotonic) == 0)//AudioApi.Success)
                     {
                         long timestampFrame = _audioTimestamp.FramePosition;
                         long timestampNs = _audioTimestamp.NanoTime;

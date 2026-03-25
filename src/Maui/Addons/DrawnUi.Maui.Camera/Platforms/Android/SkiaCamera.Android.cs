@@ -65,7 +65,7 @@ public partial class SkiaCamera
     }
 
     private bool orderedRestart = false;
-    
+
     /// <summary>
     /// Updates preview format to match current capture format aspect ratio.
     /// Android implementation: Restarts camera session to apply new format selection.
@@ -76,11 +76,11 @@ public partial class SkiaCamera
         {
             if (orderedRestart)
                 return;
-            
+
             System.Diagnostics.Debug.WriteLine("[SkiaCameraAndroid] Updating preview format for aspect ratio match");
 
             orderedRestart = true;
-                
+
             // Android's ChooseOptimalSize() automatically matches aspect ratios during setup
             // We need to restart the camera session to apply the new capture format
             Task.Run(async () =>
@@ -465,6 +465,7 @@ public partial class SkiaCamera
             // CRITICAL FIX: Create clean format WITHOUT duration constraints
             var preTrackMap = new Dictionary<int, int>();
             var liveTrackMap = new Dictionary<int, int>();
+            int liveAudioTrackIndex = -1;
 
             System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Pre-recorded file has {preExtractor.TrackCount} tracks");
             System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Live recording file has {liveExtractor.TrackCount} tracks");
@@ -489,6 +490,10 @@ public partial class SkiaCamera
             {
                 var liveFormat = liveExtractor.GetTrackFormat(i);
                 string mime = liveFormat.GetString(Android.Media.MediaFormat.KeyMime) ?? "";
+                if (liveAudioTrackIndex < 0 && mime.StartsWith("audio/"))
+                {
+                    liveAudioTrackIndex = i;
+                }
                 if (mimeToOutputTrack.TryGetValue(mime, out int existingTrack))
                 {
                     liveTrackMap[i] = existingTrack;
@@ -521,8 +526,20 @@ public partial class SkiaCamera
             // This ensures seamless continuation with no gaps
             long liveOffsetUs = preLastPts + 33333;  // Add one frame duration (~33ms @ 30fps) to avoid overlap
 
+            long liveNormalizationBaseUs = GetEarliestSampleTimeUs(liveRecordingPath);
+            long liveEarliestSampleUs = GetEarliestSampleTimeUs(liveRecordingPath);
+            bool liveSegmentUsesContinuousPts = liveEarliestSampleUs >= 0 && preLastPts >= 0 && liveEarliestSampleUs >= (preLastPts - 250_000);
+            if (liveSegmentUsesContinuousPts)
+            {
+                System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Live segment uses continuous source timestamps: first sample {liveEarliestSampleUs / 1000.0:F2}ms, pre-rec end {preLastPts / 1000.0:F2}ms. Re-basing live segment for final output.");
+            }
+            else if (liveNormalizationBaseUs >= 0)
+            {
+                System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Live segment normalization anchored to earliest sample at {liveNormalizationBaseUs / 1000.0:F2}ms");
+            }
+
             // Write samples from live recording (timeOffset = last pre-rec frame + 1 frame)
-            var (liveFrameCount, liveFirstPts, liveLastPts) = WriteSamplesToMuxer(muxer, liveExtractor, liveTrackMap, timeOffsetUs: liveOffsetUs);
+            var (liveFrameCount, liveFirstPts, liveLastPts) = WriteSamplesToMuxer(muxer, liveExtractor, liveTrackMap, timeOffsetUs: liveOffsetUs, normalizationBaseUs: liveNormalizationBaseUs);
             System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] LIVE: {liveFrameCount} frames, timestamps {liveFirstPts / 1000.0:F2}ms → {liveLastPts / 1000.0:F2}ms");
 
             // Stop muxer
@@ -550,7 +567,7 @@ public partial class SkiaCamera
     /// Write all samples from extractor to muxer with time offset
     /// CRITICAL: Normalizes timestamps to start from 0 before applying offset (prevents gaps!)
     /// </summary>
-    private (long frameCount, long firstPtsUs, long lastPtsUs) WriteSamplesToMuxer(Android.Media.MediaMuxer muxer, Android.Media.MediaExtractor extractor, Dictionary<int, int> trackIndexMap, long timeOffsetUs)
+    private (long frameCount, long firstPtsUs, long lastPtsUs) WriteSamplesToMuxer(Android.Media.MediaMuxer muxer, Android.Media.MediaExtractor extractor, Dictionary<int, int> trackIndexMap, long timeOffsetUs, long normalizationBaseUs = -1)
     {
         long frameCount = 0;
         long firstFrameTimeUs = -1;  // Track first frame timestamp for normalization
@@ -580,10 +597,16 @@ public partial class SkiaCamera
 
                 // CRITICAL: Capture first frame timestamp for normalization
                 if (firstFrameTimeUs == -1)
-                    firstFrameTimeUs = extractor.SampleTime;
+                {
+                    firstFrameTimeUs = normalizationBaseUs >= 0 ? normalizationBaseUs : extractor.SampleTime;
+                }
 
                 // CRITICAL: Normalize timestamp to start from 0, THEN add offset
                 long normalizedTimeUs = extractor.SampleTime - firstFrameTimeUs;
+                if (normalizedTimeUs < 0)
+                {
+                    normalizedTimeUs = 0;
+                }
                 sampleInfo.PresentationTimeUs = normalizedTimeUs + timeOffsetUs;
                 sampleInfo.Flags = (Android.Media.MediaCodecBufferFlags)(int)extractor.SampleFlags;
 
@@ -607,6 +630,72 @@ public partial class SkiaCamera
         }
 
         return (frameCount, firstWrittenPtsUs, lastWrittenPtsUs);
+    }
+
+    private long GetTrackFirstSampleTimeUs(string inputPath, int trackIndex)
+    {
+        if (trackIndex < 0)
+        {
+            return -1;
+        }
+
+        Android.Media.MediaExtractor extractor = null;
+        try
+        {
+            extractor = new Android.Media.MediaExtractor();
+            extractor.SetDataSource(inputPath);
+            extractor.SelectTrack(trackIndex);
+            extractor.SeekTo(0, Android.Media.MediaExtractorSeekTo.PreviousSync);
+            return extractor.SampleTime;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[MuxVideosAndroid] Failed to get first sample time for track {trackIndex}: {ex.Message}");
+            return -1;
+        }
+        finally
+        {
+            extractor?.Release();
+        }
+    }
+
+    private long GetEarliestSampleTimeUs(string inputPath)
+    {
+        Android.Media.MediaExtractor extractor = null;
+        try
+        {
+            extractor = new Android.Media.MediaExtractor();
+            extractor.SetDataSource(inputPath);
+
+            long earliestSampleUs = -1;
+            for (int i = 0; i < extractor.TrackCount; i++)
+            {
+                extractor.UnselectTrack(i);
+            }
+
+            for (int i = 0; i < extractor.TrackCount; i++)
+            {
+                extractor.SelectTrack(i);
+                extractor.SeekTo(0, Android.Media.MediaExtractorSeekTo.PreviousSync);
+                long sampleTimeUs = extractor.SampleTime;
+                if (sampleTimeUs >= 0 && (earliestSampleUs < 0 || sampleTimeUs < earliestSampleUs))
+                {
+                    earliestSampleUs = sampleTimeUs;
+                }
+                extractor.UnselectTrack(i);
+            }
+
+            return earliestSampleUs;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[MuxVideosAndroid] Failed to get earliest sample time: {ex.Message}");
+            return -1;
+        }
+        finally
+        {
+            extractor?.Release();
+        }
     }
 
     // DELETE OLD BROKEN METHOD
@@ -703,7 +792,7 @@ public partial class SkiaCamera
 
         try
         {
-             if (_audioCapture != null)
+            if (_audioCapture != null)
             {
                 try
                 {
@@ -790,7 +879,7 @@ public partial class SkiaCamera
                 bool hasPreRec = !string.IsNullOrEmpty(_preRecordingFilePath) &&
                                  File.Exists(_preRecordingFilePath) &&
                                  new FileInfo(_preRecordingFilePath).Length > 0;
-                bool hasLive   = File.Exists(liveFile) && new FileInfo(liveFile).Length > 0;
+                bool hasLive = File.Exists(liveFile) && new FileInfo(liveFile).Length > 0;
 
                 Debug.WriteLine($"[StopRealtimeVideoProcessing] Final mux inputs: pre-rec={hasPreRec} live={hasLive}");
 
@@ -881,7 +970,7 @@ public partial class SkiaCamera
 
         try
         {
-             if (_audioCapture != null)
+            if (_audioCapture != null)
             {
                 try
                 {
@@ -1167,6 +1256,12 @@ public partial class SkiaCamera
             }
         }
 
+        if (_captureVideoEncoder is AndroidCaptureVideoEncoder droidEncBridge)
+        {
+            droidEncBridge.UseSharedMediaOriginForLiveSync = !IsPreRecording && audioEnabled;
+            droidEncBridge.CaptureStartAbsoluteNs = Super.GetCurrentTimeNanos();
+        }
+
         // CRITICAL: In pre-recording mode, do NOT call StartAsync during initialization
         // Pre-recording mode should just buffer frames in memory without starting file writing
         // StartAsync will be called later when transitioning to live recording
@@ -1185,14 +1280,6 @@ public partial class SkiaCamera
 
         // Drop the first camera frame to avoid occasional corrupted first frame from the camera/RenderScript pipeline
         _androidWarmupDropRemaining = 1;
-
-        // Normal live GPU recording should align video to the first captured audio timestamp.
-        // Keep prerecord/live-transition on the existing timing path.
-        if (_captureVideoEncoder is AndroidCaptureVideoEncoder droidEncBridge)
-        {
-            droidEncBridge.UseAudioClockForLiveGpuSync = !IsPreRecording && audioEnabled;
-            droidEncBridge.CaptureStartAbsoluteNs = Super.GetCurrentTimeNanos();
-        }
 
         // Diagnostics
         _diagStartTime = DateTime.Now;
@@ -1239,10 +1326,7 @@ public partial class SkiaCamera
                             return;
                         }
 
-                        // Calculate timestamp
-                        var elapsedLocal = DateTime.Now - _captureVideoStartTime;
-                        if (elapsedLocal.Ticks < 0)
-                            elapsedLocal = TimeSpan.Zero;
+                        var elapsedLocal = GetCurrentCaptureSegmentTime();
 
                         // JUST SIGNAL - no await, no heavy work, no frame gate needed
                         // Background thread handles serialization via single-slot pattern
@@ -1330,9 +1414,7 @@ public partial class SkiaCamera
                         // captured.Time is a monotonic timestamp that continues from camera session start
                         // If camera ran in preview mode before recording, captured.Time is already at high value
                         // We need PTS relative to when recording STARTED (wall clock), not first frame arrival
-                        var elapsedLocal = DateTime.Now - _captureVideoStartTime;
-                        if (elapsedLocal.Ticks < 0)
-                            elapsedLocal = TimeSpan.Zero;
+                        var elapsedLocal = GetCurrentCaptureSegmentTime();
 
                         try
                         {
@@ -1505,8 +1587,7 @@ public partial class SkiaCamera
                     CalculateCameraInputFps();
                     if ((!IsPreRecording && !IsRecording) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
                         return;
-                    var elapsed = DateTime.Now - _captureVideoStartTime;
-                    if (elapsed.Ticks < 0) elapsed = TimeSpan.Zero;
+                    var elapsed = GetCurrentCaptureSegmentTime();
                     droidEnc.SignalGpuFrame(elapsed, FrameProcessor, VideoDiagnosticsOn, DrawDiagnostics);
                 };
 
@@ -1575,7 +1656,7 @@ public partial class SkiaCamera
         // CaptureStartAbsoluteNs is updated for the new encoder's audio/video clock alignment only.
         if (_captureVideoEncoder is AndroidCaptureVideoEncoder droidEncBridge)
             droidEncBridge.CaptureStartAbsoluteNs = Super.GetCurrentTimeNanos();
-        _capturePtsBaseTime = null;
+        _capturePtsBaseTime = DateTime.Now;
 
         // Progress reporting for new encoder
         _captureVideoEncoder.ProgressReported += (sender, duration) =>
@@ -1609,6 +1690,18 @@ public partial class SkiaCamera
         });
 
         Debug.WriteLine("[TransitionFromPreRecToLiveRecording] Handoff complete – old encoder flushing in background");
+    }
+
+    private TimeSpan GetCurrentCaptureSegmentTime()
+    {
+        var baseTime = _capturePtsBaseTime ?? _captureVideoStartTime;
+        var elapsed = DateTime.Now - baseTime;
+        if (elapsed.Ticks < 0)
+        {
+            return TimeSpan.Zero;
+        }
+
+        return elapsed;
     }
 
     /// <summary>
@@ -1764,12 +1857,12 @@ public partial class SkiaCamera
         // Enumerating devices requires API 23+ (Marshmallow).
         if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.M)
         {
-             var audioManager = (AudioManager)Android.App.Application.Context.GetSystemService(Context.AudioService);
-             var inputs = audioManager.GetDevices(GetDevicesTargets.Inputs);
-             foreach(var device in inputs)
-             {
-                 devices.Add($"{device.ProductName} ({device.Type})");
-             }
+            var audioManager = (AudioManager)Android.App.Application.Context.GetSystemService(Context.AudioService);
+            var inputs = audioManager.GetDevices(GetDevicesTargets.Inputs);
+            foreach (var device in inputs)
+            {
+                devices.Add($"{device.ProductName} ({device.Type})");
+            }
         }
         else
         {
@@ -1780,7 +1873,7 @@ public partial class SkiaCamera
 
     protected async Task<List<string>> GetAvailableAudioCodecsPlatform()
     {
-        return await Task.Run(() => 
+        return await Task.Run(() =>
         {
             var codecs = new List<string>();
             try
@@ -1788,17 +1881,17 @@ public partial class SkiaCamera
                 // Using MediaCodecList to find encoders
                 var list = new MediaCodecList(MediaCodecListKind.RegularCodecs);
                 var formats = list.GetCodecInfos();
-                foreach(var info in formats)
+                foreach (var info in formats)
                 {
-                    if (info.IsEncoder) 
+                    if (info.IsEncoder)
                     {
-                         foreach(var type in info.GetSupportedTypes())
-                         {
-                             if (type.StartsWith("audio/"))
-                             {
-                                 codecs.Add($"{info.Name} ({type})");
-                             }
-                         }
+                        foreach (var type in info.GetSupportedTypes())
+                        {
+                            if (type.StartsWith("audio/"))
+                            {
+                                codecs.Add($"{info.Name} ({type})");
+                            }
+                        }
                     }
                 }
             }
@@ -2017,7 +2110,10 @@ public partial class SkiaCamera
         if (surface == null)
             return false;
 
-        using var paint = new SKPaint { FilterQuality = SKFilterQuality.Low };
+        using var paint = new SKPaint //todo reuse this!!!
+        {
+            FilterQuality = SKFilterQuality.Low
+        };
         var dst = new SKRect(0, 0, targetWidth, targetHeight);
         surface.Canvas.DrawImage(rawImage, dst, paint);
         surface.Canvas.Flush();

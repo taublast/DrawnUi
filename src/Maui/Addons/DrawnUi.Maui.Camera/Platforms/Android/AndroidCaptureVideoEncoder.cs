@@ -106,9 +106,12 @@ namespace DrawnUi.Camera
         private long _lastMuxerAudioPtsUs = 0; // last PTS actually written to muxer
         private long _maxExpectedEncoderOutputPtsUs = 0; // max PTS still pending in encoder pipeline
         private long _audioPtsBaseNs = -1;
+        private long _sharedMediaPtsOriginNs = -1;
+        private long _liveVideoStartTimestampNs = -1;
         private long _audioPtsOffsetUs = 0;
         private TimeSpan _deferredPreRecordingFirstFrameOffset = TimeSpan.MinValue;
-        public bool UseAudioClockForLiveGpuSync { get; set; } = false;
+        public bool UseSharedMediaOriginForLiveSync { get; set; } = false;
+        private bool _useDeferredPreRecordingSeamSync = false;
 
         // AAC codec constants (matches audio codec config: 44100 Hz mono 16-bit)
         private const long AacFrameDurationUs = 23220; // 1024 samples @ 44100 Hz
@@ -301,48 +304,6 @@ namespace DrawnUi.Camera
             }
         }
 
-        /// <summary>
-        /// Wait for next keyframe to arrive in buffer (with timeout)
-        /// Returns true if keyframe arrived, false if timeout
-        /// </summary>
-        public async Task<bool> WaitForKeyFrameAsync(TimeSpan timeout)
-        {
-            if (_preRecordingBuffer == null)
-                return false;
-
-            var startTime = DateTime.Now;
-            int initialFrameCount = _preRecordingBuffer.GetFrameCount();
-
-            System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Waiting for keyframe to arrive in buffer... (timeout: {timeout.TotalMilliseconds}ms)");
-
-            while (DateTime.Now - startTime < timeout)
-            {
-                // Check if buffer has any keyframes now
-                var frames = _preRecordingBuffer.GetAllFrames();
-                int currentFrameCount = frames.Count;
-                bool hasKeyframe = frames.Any(f => f.IsKeyFrame);
-
-                if (hasKeyframe)
-                {
-                    var keyframeTimestamp = frames.First(f => f.IsKeyFrame).Timestamp;
-                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] ✓ Keyframe arrived! PTS={keyframeTimestamp.TotalSeconds:F3}s (waited {(DateTime.Now - startTime).TotalMilliseconds:F0}ms)");
-                    return true;
-                }
-
-                // Still waiting, check frame count progress
-                if (currentFrameCount > initialFrameCount)
-                {
-                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Buffer now has {currentFrameCount} frames, still waiting for keyframe...");
-                    initialFrameCount = currentFrameCount;
-                }
-
-                await Task.Delay(16); // ~1 frame @ 60fps
-            }
-
-            System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] ⚠️ Timeout waiting for keyframe after {timeout.TotalMilliseconds}ms");
-            return false;
-        }
-
         /// <summary>Gets the current output file path for this encoder.</summary>
         public string OutputPath => _outputPath;
 
@@ -367,7 +328,8 @@ namespace DrawnUi.Camera
             _previewFrameInterval = Math.Max(1, _frameRate / 30); // Legacy SubmitFrameAsync throttle
             _deviceRotation = deviceRotation;
             _recordAudio = recordAudio;
-            UseAudioClockForLiveGpuSync = false;
+            UseSharedMediaOriginForLiveSync = false;
+            _useDeferredPreRecordingSeamSync = false;
             _preRecordingDuration = TimeSpan.Zero;
             _firstEncodedFrameOffset = TimeSpan.MinValue;
             _skipFirstEncodedSample = true;  // Reset for new session
@@ -743,6 +705,8 @@ namespace DrawnUi.Camera
                             }
                         }
 
+                        long maxBufferedVideoPtsUs = (long)(lastNormalizedTimestamp + TimeSpan.FromMilliseconds(1000.0 / Math.Max(1, _frameRate))).TotalMicroseconds;
+
                         // Flush pre-recorded audio - prefer pre-encoded AAC for zero lag
                         if (_recordAudio)
                         {
@@ -771,7 +735,7 @@ namespace DrawnUi.Camera
                             {
                                 var allAudio = _audioBuffer.GetAllSamples();
                                 long firstAudioNs = allAudio.Length > 0 ? allAudio[0].TimestampNs : -1;
-                                long lastAudioNs  = allAudio.Length > 0 ? allAudio[allAudio.Length - 1].TimestampNs : -1;
+                                long lastAudioNs = allAudio.Length > 0 ? allAudio[allAudio.Length - 1].TimestampNs : -1;
                                 System.Diagnostics.Debug.WriteLine($"[AndroidEncoder-DIAG] audio buffer: {allAudio.Length} samples, first={firstAudioNs / 1_000_000:F0}ms, last={lastAudioNs / 1_000_000:F0}ms absolute");
                                 System.Diagnostics.Debug.WriteLine($"[AndroidEncoder-DIAG] audio-video cut offset: {(firstAudioNs - absoluteFirstVideoFrameNs) / 1_000_000:F0}ms (should be ~0-100ms)");
                             }
@@ -787,6 +751,7 @@ namespace DrawnUi.Camera
                                     var encodedFrames = _encodedAudioBuffer.GetAllFrames();
 
                                     int skippedCount = 0;
+                                    int trimmedTailCount = 0;
                                     long lastWrittenPtsUs = -1;
                                     foreach (var (aacData, timestampUs, size) in encodedFrames)
                                     {
@@ -800,6 +765,12 @@ namespace DrawnUi.Camera
                                         if (nTsUs < 0)
                                         {
                                             skippedCount++;
+                                            continue;
+                                        }
+
+                                        if (nTsUs > maxBufferedVideoPtsUs)
+                                        {
+                                            trimmedTailCount++;
                                             continue;
                                         }
 
@@ -817,6 +788,8 @@ namespace DrawnUi.Camera
                                     }
                                     if (skippedCount > 0)
                                         System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Skipped {skippedCount} pre-encoded AAC frames before video start");
+                                    if (trimmedTailCount > 0)
+                                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Trimmed {trimmedTailCount} pre-encoded AAC frames past buffered video end ({maxBufferedVideoPtsUs / 1000.0:F1}ms)");
 
                                     usedPreEncoded = true;
                                     System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Wrote {encodedFrames.Count} pre-encoded AAC frames");
@@ -834,6 +807,7 @@ namespace DrawnUi.Camera
                                 {
                                     System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Falling back to PCM→AAC encoding");
                                     // Use ABSOLUTE clock reference so audio aligns with video
+                                    long absoluteLastVideoFrameNs = absoluteFirstVideoFrameNs + (maxBufferedVideoPtsUs * 1000L);
                                     var audioSamples = _audioBuffer.DrainFrom(absoluteFirstVideoFrameNs);
 
                                     System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Draining {audioSamples.Length} PCM audio samples (cut at {absoluteFirstVideoFrameNs / 1_000_000:F0}ms absolute)");
@@ -844,6 +818,11 @@ namespace DrawnUi.Camera
 
                                     foreach (var sample in audioSamples)
                                     {
+                                        if (sample.TimestampNs > absoluteLastVideoFrameNs)
+                                        {
+                                            continue;
+                                        }
+
                                         // Pass with original absolute CLOCK_MONOTONIC timestamp.
                                         // CalculateAudioPts normalizes from the first sample it sees,
                                         // so audio PTS 0 aligns with the first audio sample after the
@@ -1043,7 +1022,8 @@ namespace DrawnUi.Camera
             // in _encodedAudioBuffer (not the live muxer).
             DrainAudioEncoder();
 
-            UseAudioClockForLiveGpuSync = false;
+            UseSharedMediaOriginForLiveSync = false;
+            _useDeferredPreRecordingSeamSync = false;
             _audioPtsBaseNs = -1;
             _audioPtsOffsetUs = 0;
             _audioPresentationTimeUs = 0;
@@ -1086,9 +1066,10 @@ namespace DrawnUi.Camera
                 IsPreRecordingMode = false;
                 System.Diagnostics.Debug.WriteLine("[AndroidEncoder] Warning: live-only deferred flush start is waiting for media formats");
             }
-            _waitForFirstLiveKeyframe = true;
+            _useDeferredPreRecordingSeamSync = false;
+            _waitForFirstLiveKeyframe = false;
             _deferredPreRecordingFirstFrameOffset = _firstEncodedFrameOffset;
-            _firstEncodedFrameOffset = TimeSpan.MinValue;
+            _firstEncodedFrameOffset = _deferredPreRecordingFirstFrameOffset;
 
             _isRecording = true;
             _startTime = DateTime.Now;
@@ -1516,13 +1497,7 @@ namespace DrawnUi.Camera
                     return;
                 }
 
-                long ptsNanos = ResolveLiveGpuVideoPtsNanos(timestamp, timestampNs, out var frameTimestamp);
-                if (ptsNanos < 0)
-                {
-                    // Wait for the first audio acquisition timestamp in normal live recording so
-                    // the video track starts on the same monotonic timeline.
-                    return;
-                }
+                long ptsNanos = ResolveVideoPtsNanos(timestamp, timestampNs, out var frameTimestamp);
 
                 // 1. Render camera texture to the encoder's framebuffer
                 // CRITICAL: Reset GL state before rendering OES texture!
@@ -1789,11 +1764,7 @@ namespace DrawnUi.Camera
                     return;
                 }
 
-                long ptsNanos = ResolveLiveGpuVideoPtsNanos(timestamp, timestampNs, out var frameTimestamp);
-                if (ptsNanos < 0)
-                {
-                    return;
-                }
+                long ptsNanos = ResolveVideoPtsNanos(timestamp, timestampNs, out var frameTimestamp);
 
                 // 1. Render camera texture to the encoder's framebuffer
                 // CRITICAL: Reset GL state before rendering OES texture!
@@ -2118,6 +2089,7 @@ namespace DrawnUi.Camera
             }
 
             TimeSpan firstBufferedFrameTimestamp = bufferedFrames[0].Timestamp;
+            long maxBufferedVideoPtsUs = GetBufferedVideoDurationUs(bufferedFrames, firstBufferedFrameTimestamp);
 
             if (_videoFormat == null)
             {
@@ -2154,6 +2126,11 @@ namespace DrawnUi.Camera
                 {
                     long normalizedPtsUs = timestampUs - absoluteFirstVideoFrameUs;
                     if (normalizedPtsUs < 0)
+                    {
+                        continue;
+                    }
+
+                    if (normalizedPtsUs > maxBufferedVideoPtsUs)
                     {
                         continue;
                     }
@@ -2201,12 +2178,39 @@ namespace DrawnUi.Camera
             return new CapturedVideo { FilePath = outputPath };
         }
 
+        private long GetBufferedVideoDurationUs(List<(byte[] Data, TimeSpan Timestamp, bool IsKeyFrame)> bufferedFrames, TimeSpan firstBufferedFrameTimestamp)
+        {
+            if (bufferedFrames == null || bufferedFrames.Count == 0)
+            {
+                return 0;
+            }
+
+            long lastBufferedPtsUs = (long)(bufferedFrames[bufferedFrames.Count - 1].Timestamp - firstBufferedFrameTimestamp).TotalMicroseconds;
+            long trailingFrameDurationUs;
+
+            if (bufferedFrames.Count > 1)
+            {
+                trailingFrameDurationUs = (long)(bufferedFrames[bufferedFrames.Count - 1].Timestamp - bufferedFrames[bufferedFrames.Count - 2].Timestamp).TotalMicroseconds;
+            }
+            else
+            {
+                trailingFrameDurationUs = (long)TimeSpan.FromSeconds(1.0 / Math.Max(1, _frameRate)).TotalMicroseconds;
+            }
+
+            if (trailingFrameDurationUs <= 0)
+            {
+                trailingFrameDurationUs = (long)TimeSpan.FromSeconds(1.0 / Math.Max(1, _frameRate)).TotalMicroseconds;
+            }
+
+            return lastBufferedPtsUs + trailingFrameDurationUs;
+        }
+
         private async Task<int> DrainBufferedTailFramesAsync(int maxWaitMs = 1500, int quietPeriodMs = 200)
         {
             if (_preRecordingBuffer == null || _videoCodec == null)
                 return 0;
 
-                var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
             int totalAddedFrames = 0;
             long lastGrowthMs = 0;
 
@@ -2534,65 +2538,106 @@ namespace DrawnUi.Camera
                                 {
                                     long pts = bufferInfo.PresentationTimeUs;
 
-                                    // For live frames after transition, prefer the first keyframe as the seam marker,
-                                    // but do not drop earlier frames. Dropping them creates visible dead gaps on
-                                    // slower devices while the fresh encoder is still spinning up.
-                                    if (_waitForFirstLiveKeyframe)
+                                    if (UseSharedMediaOriginForLiveSync)
                                     {
-                                        bool isKeyFrame = (bufferInfo.Flags & MediaCodecBufferFlags.KeyFrame) != 0;
-                                        if (isKeyFrame)
+                                        long finalPts = pts + (long)_preRecordingDuration.TotalMicroseconds;
+                                        if (finalPts < 0)
                                         {
-                                            // If no live samples were written yet, anchor the timeline to this keyframe.
-                                            // Otherwise keep the existing base so timestamps stay monotonic.
-                                            if (_firstEncodedFrameOffset == TimeSpan.MinValue)
-                                            {
-                                                _firstEncodedFrameOffset = TimeSpan.FromMicroseconds(pts);
-                                            }
-                                            _waitForFirstLiveKeyframe = false;
-                                            System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] ✓ First live keyframe at {pts / 1000.0:F2}ms - established timestamp base");
+                                            finalPts = 0;
+                                        }
+
+                                        _muxerBufferInfo ??= new MediaCodec.BufferInfo();
+                                        _muxerBufferInfo.Set(0, bufferInfo.Size, finalPts, bufferInfo.Flags);
+
+                                        byte[] frameData = ArrayPool<byte>.Shared.Rent(bufferInfo.Size);
+                                        bool frameEnqueued = false;
+                                        try
+                                        {
+                                            encodedData.Position(bufferInfo.Offset);
+                                            encodedData.Get(frameData, 0, bufferInfo.Size);
+
+                                            _videoCodec.ReleaseOutputBuffer(outIndex, false);
+                                            outIndex = -1; // mark released — outer ReleaseOutputBuffer will be skipped
+
+                                            frameEnqueued = TryEnqueueMuxerSample(_videoTrackIndex, frameData, bufferInfo.Size, finalPts, bufferInfo.Flags);
+
+                                            EncodedFrameCount++;
+                                            EncodedDataSize += bufferInfo.Size;
+                                            EncodingDuration = DateTime.Now - _startTime;
+                                            EncodingStatus = "Encoding";
+                                        }
+                                        finally
+                                        {
+                                            if (!frameEnqueued) ArrayPool<byte>.Shared.Return(frameData);
                                         }
                                     }
-
-                                    if (_firstEncodedFrameOffset == TimeSpan.MinValue)
+                                    else
                                     {
-                                        _firstEncodedFrameOffset = TimeSpan.FromMicroseconds(pts);
-                                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Using current live frame as timestamp base at {pts / 1000.0:F2}ms");
-                                    }
+                                        if (_useDeferredPreRecordingSeamSync && _waitForFirstLiveKeyframe)
+                                        {
+                                            bool isKeyFrame = (bufferInfo.Flags & MediaCodecBufferFlags.KeyFrame) != 0;
+                                            if (!isKeyFrame)
+                                            {
+                                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Deferred prerec seam: dropping pre-keyframe live frame at {pts / 1000.0:F2}ms");
+                                                _videoCodec.ReleaseOutputBuffer(outIndex, false);
+                                                outIndex = -1;
+                                                continue;
+                                            }
 
-                                    // Normalize to start from 0, then add pre-recording offset (if any)
-                                    long normalizedPts = pts - (long)_firstEncodedFrameOffset.TotalMicroseconds;
-                                    long finalPts = normalizedPts + (long)_preRecordingDuration.TotalMicroseconds;
+                                            _firstEncodedFrameOffset = TimeSpan.FromMicroseconds(pts);
+                                            _waitForFirstLiveKeyframe = false;
+                                            System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Deferred prerec seam: first live keyframe at {pts / 1000.0:F2}ms anchored to live audio start");
+                                        }
+                                        else if (_waitForFirstLiveKeyframe)
+                                        {
+                                            bool isKeyFrame = (bufferInfo.Flags & MediaCodecBufferFlags.KeyFrame) != 0;
+                                            if (isKeyFrame)
+                                            {
+                                                // If no live samples were written yet, anchor the timeline to this keyframe.
+                                                // Otherwise keep the existing base so timestamps stay monotonic.
+                                                if (_firstEncodedFrameOffset == TimeSpan.MinValue)
+                                                {
+                                                    _firstEncodedFrameOffset = TimeSpan.FromMicroseconds(pts);
+                                                }
+                                                _waitForFirstLiveKeyframe = false;
+                                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] ✓ First live keyframe at {pts / 1000.0:F2}ms - established timestamp base");
+                                            }
+                                        }
 
-                                    // Reuse cached BufferInfo to avoid per-frame Java allocations
-                                    _muxerBufferInfo ??= new MediaCodec.BufferInfo();
-                                    _muxerBufferInfo.Set(0, bufferInfo.Size, finalPts, bufferInfo.Flags);
+                                        if (_firstEncodedFrameOffset == TimeSpan.MinValue)
+                                        {
+                                            _firstEncodedFrameOffset = TimeSpan.FromMicroseconds(pts);
+                                            System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Using current live frame as timestamp base at {pts / 1000.0:F2}ms");
+                                        }
 
-                                    // Copy frame data out of the codec buffer and release the codec output slot
-                                    // immediately — frees the encoder regardless of muxer timing.
-                                    // Copy frame data out of the codec buffer and release the codec output slot
-                                    // immediately — frees the encoder regardless of muxer timing.
-                                    // Ownership of frameData transfers to the muxer writer queue on success;
-                                    // MuxerWriterLoop returns it to the pool after the write completes.
-                                    byte[] frameData = ArrayPool<byte>.Shared.Rent(bufferInfo.Size);
-                                    bool frameEnqueued = false;
-                                    try
-                                    {
-                                        encodedData.Position(bufferInfo.Offset);
-                                        encodedData.Get(frameData, 0, bufferInfo.Size);
+                                        // Normalize to start from 0, then add pre-recording offset (if any)
+                                        long normalizedPts = pts - (long)_firstEncodedFrameOffset.TotalMicroseconds;
+                                        long finalPts = normalizedPts + (long)_preRecordingDuration.TotalMicroseconds;
 
-                                        _videoCodec.ReleaseOutputBuffer(outIndex, false);
-                                        outIndex = -1; // mark released — outer ReleaseOutputBuffer will be skipped
+                                        _muxerBufferInfo ??= new MediaCodec.BufferInfo();
+                                        _muxerBufferInfo.Set(0, bufferInfo.Size, finalPts, bufferInfo.Flags);
 
-                                        frameEnqueued = TryEnqueueMuxerSample(_videoTrackIndex, frameData, bufferInfo.Size, finalPts, bufferInfo.Flags);
+                                        byte[] frameData = ArrayPool<byte>.Shared.Rent(bufferInfo.Size);
+                                        bool frameEnqueued = false;
+                                        try
+                                        {
+                                            encodedData.Position(bufferInfo.Offset);
+                                            encodedData.Get(frameData, 0, bufferInfo.Size);
 
-                                        EncodedFrameCount++;
-                                        EncodedDataSize += bufferInfo.Size;
-                                        EncodingDuration = DateTime.Now - _startTime;
-                                        EncodingStatus = "Encoding";
-                                    }
-                                    finally
-                                    {
-                                        if (!frameEnqueued) ArrayPool<byte>.Shared.Return(frameData);
+                                            _videoCodec.ReleaseOutputBuffer(outIndex, false);
+                                            outIndex = -1; // mark released — outer ReleaseOutputBuffer will be skipped
+
+                                            frameEnqueued = TryEnqueueMuxerSample(_videoTrackIndex, frameData, bufferInfo.Size, finalPts, bufferInfo.Flags);
+
+                                            EncodedFrameCount++;
+                                            EncodedDataSize += bufferInfo.Size;
+                                            EncodingDuration = DateTime.Now - _startTime;
+                                            EncodingStatus = "Encoding";
+                                        }
+                                        finally
+                                        {
+                                            if (!frameEnqueued) ArrayPool<byte>.Shared.Return(frameData);
+                                        }
                                     }
                                 }
                             }
@@ -2826,29 +2871,25 @@ namespace DrawnUi.Camera
         private void ResetAudioTiming()
         {
             _audioPtsBaseNs = -1;
+            _sharedMediaPtsOriginNs = -1;
+            _liveVideoStartTimestampNs = -1;
             _audioPtsOffsetUs = 0;
             _audioPresentationTimeUs = 0;
             _lastMuxerAudioPtsUs = 0;
             _maxExpectedEncoderOutputPtsUs = 0;
         }
 
-        private long ResolveLiveGpuVideoPtsNanos(TimeSpan fallbackTimestamp, long cameraTimestampNs, out TimeSpan frameTimestamp)
+        private long ResolveVideoPtsNanos(TimeSpan fallbackTimestamp, long absoluteVideoTimestampNs, out TimeSpan frameTimestamp)
         {
-            if (!UseAudioClockForLiveGpuSync)
+            if (!UseSharedMediaOriginForLiveSync)
             {
                 long fallbackPtsNs = fallbackTimestamp.Ticks * 100L;
                 frameTimestamp = fallbackTimestamp;
                 return fallbackPtsNs;
             }
 
-            long audioBaseNs = System.Threading.Interlocked.Read(ref _audioPtsBaseNs);
-            if (audioBaseNs < 0)
-            {
-                frameTimestamp = TimeSpan.Zero;
-                return -1;
-            }
-
-            long relativeNs = cameraTimestampNs - audioBaseNs;
+            long originNs = GetOrInitializeLiveVideoStartNs(absoluteVideoTimestampNs);
+            long relativeNs = absoluteVideoTimestampNs - originNs;
             if (relativeNs < 0)
             {
                 relativeNs = 0;
@@ -2856,6 +2897,53 @@ namespace DrawnUi.Camera
 
             frameTimestamp = TimeSpanFromNanoseconds(relativeNs);
             return relativeNs;
+        }
+
+        private long GetOrInitializeSharedMediaOrigin(long absoluteTimestampNs)
+        {
+            if (absoluteTimestampNs < 0)
+            {
+                absoluteTimestampNs = 0;
+            }
+
+            long originNs = System.Threading.Interlocked.Read(ref _sharedMediaPtsOriginNs);
+            if (originNs >= 0)
+            {
+                return originNs;
+            }
+
+            long initialized = System.Threading.Interlocked.CompareExchange(ref _sharedMediaPtsOriginNs, absoluteTimestampNs, -1);
+            return initialized >= 0 ? initialized : absoluteTimestampNs;
+        }
+
+        private long GetLiveSyncOriginNs(long absoluteTimestampNs)
+        {
+            if (CaptureStartAbsoluteNs > 0)
+            {
+                return CaptureStartAbsoluteNs;
+            }
+
+            return GetOrInitializeSharedMediaOrigin(absoluteTimestampNs);
+        }
+
+        private long GetOrInitializeLiveVideoStartNs(long absoluteVideoTimestampNs)
+        {
+            if (absoluteVideoTimestampNs < 0)
+            {
+                absoluteVideoTimestampNs = 0;
+            }
+
+            long currentOrigin = System.Threading.Interlocked.Read(ref _liveVideoStartTimestampNs);
+            if (currentOrigin >= 0)
+            {
+                return currentOrigin;
+            }
+
+            long initialized = System.Threading.Interlocked.CompareExchange(ref _liveVideoStartTimestampNs, absoluteVideoTimestampNs, -1);
+            long videoOrigin = initialized >= 0 ? initialized : absoluteVideoTimestampNs;
+
+            System.Threading.Interlocked.CompareExchange(ref _sharedMediaPtsOriginNs, videoOrigin, -1);
+            return videoOrigin;
         }
 
         private static TimeSpan TimeSpanFromNanoseconds(long timestampNs)
@@ -2875,6 +2963,32 @@ namespace DrawnUi.Camera
                 timestampNs = 0;
             }
 
+            if (UseSharedMediaOriginForLiveSync)
+            {
+                long originNs = System.Threading.Interlocked.Read(ref _liveVideoStartTimestampNs);
+                if (originNs < 0 || timestampNs < originNs)
+                {
+                    return -1;
+                }
+
+                long sharedRelativeUs = (timestampNs - originNs) / 1000;
+                if (sharedRelativeUs < 0)
+                {
+                    sharedRelativeUs = 0;
+                }
+
+                long sharedFinalPtsUs = sharedRelativeUs + _audioPtsOffsetUs;
+                long sharedMinNextPtsUs = Math.Max(_audioPresentationTimeUs,
+                    Math.Max(_lastMuxerAudioPtsUs, _maxExpectedEncoderOutputPtsUs));
+                if (sharedFinalPtsUs <= sharedMinNextPtsUs)
+                {
+                    sharedFinalPtsUs = sharedMinNextPtsUs + 1;
+                }
+
+                _audioPresentationTimeUs = sharedFinalPtsUs;
+                return sharedFinalPtsUs;
+            }
+
             if (_audioPtsBaseNs < 0)
             {
                 _audioPtsBaseNs = timestampNs;
@@ -2884,15 +2998,6 @@ namespace DrawnUi.Camera
             if (relativeUs < 0)
             {
                 relativeUs = 0;
-            }
-
-            if (UseAudioClockForLiveGpuSync)
-            {
-                relativeUs -= AacFrameDurationUs;
-                if (relativeUs < 0)
-                {
-                    relativeUs = 0;
-                }
             }
 
             long finalPtsUs = relativeUs + _audioPtsOffsetUs;
@@ -2915,34 +3020,48 @@ namespace DrawnUi.Camera
 
         private void TearDownEgl()
         {
-            try { MakeCurrent(); } catch { }
-            try { _skSurface?.Dispose(); } catch { }
+            _skSurface?.Dispose();
             _skSurface = null;
-            try { _grContext?.Dispose(); } catch { }
+
+            _grContext?.Dispose();
             _grContext = null;
 
-            if (_eglDisplay != EGL14.EglNoDisplay)
+            try
             {
-                EGL14.EglMakeCurrent(_eglDisplay, EGL14.EglNoSurface, EGL14.EglNoSurface, EGL14.EglNoContext);
-                if (_eglSurface != EGL14.EglNoSurface) EGL14.EglDestroySurface(_eglDisplay, _eglSurface);
-                if (_eglContext != EGL14.EglNoContext) EGL14.EglDestroyContext(_eglDisplay, _eglContext);
-                // NOTE: Do NOT call EglTerminate — it destroys the process-wide default display,
-                // which invalidates EGL contexts used by other components (e.g. GlPreviewRenderer).
-                // EglReleaseThread is sufficient to clean up per-thread EGL state.
-                EGL14.EglReleaseThread();
+                if (_eglDisplay != EGL14.EglNoDisplay)
+                {
+                    try
+                    {
+                        EGL14.EglMakeCurrent(_eglDisplay, EGL14.EglNoSurface, EGL14.EglNoSurface, EGL14.EglNoContext);
+                    }
+                    catch { }
+
+                    if (_eglSurface != EGL14.EglNoSurface)
+                    {
+                        try { EGL14.EglDestroySurface(_eglDisplay, _eglSurface); } catch { }
+                    }
+
+                    if (_eglContext != EGL14.EglNoContext)
+                    {
+                        try { EGL14.EglDestroyContext(_eglDisplay, _eglContext); } catch { }
+                    }
+
+                    try { EGL14.EglReleaseThread(); } catch { }
+                    try { EGL14.EglTerminate(_eglDisplay); } catch { }
+                }
             }
-            _eglDisplay = EGL14.EglNoDisplay;
-            _eglSurface = EGL14.EglNoSurface;
-            _eglContext = EGL14.EglNoContext;
+            finally
+            {
+                _eglSurface = EGL14.EglNoSurface;
+                _eglContext = EGL14.EglNoContext;
+                _eglDisplay = EGL14.EglNoDisplay;
+            }
 
             lock (_previewLock)
             {
                 _latestPreviewImage?.Dispose();
                 _latestPreviewImage = null;
             }
-
-            _previewRasterSurface?.Dispose();
-            _previewRasterSurface = null;
 
             _glPreviewScaler?.Dispose();
             _glPreviewScaler = null;
@@ -2956,10 +3075,19 @@ namespace DrawnUi.Camera
         {
             if (_audioCodec == null) return;
 
+            bool audioLockTaken = false;
+
             try
             {
+                long ptsUs = CalculateAudioPts(sample.TimestampNs);
+                if (ptsUs < 0)
+                {
+                    return;
+                }
+
                 // Lock audio semaphore
                 _audioSemaphore.Wait();
+                audioLockTaken = true;
 
                 int index = _audioCodec.DequeueInputBuffer(1000); // 1ms wait
                 if (index >= 0)
@@ -2979,8 +3107,6 @@ namespace DrawnUi.Camera
                     }
 
                     buffer.Put(data);
-
-                    long ptsUs = CalculateAudioPts(sample.TimestampNs);
 
                     _audioCodec.QueueInputBuffer(index, 0, data.Length, ptsUs, 0);
 
@@ -3002,7 +3128,10 @@ namespace DrawnUi.Camera
             }
             finally
             {
-                _audioSemaphore.Release();
+                if (audioLockTaken)
+                {
+                    _audioSemaphore.Release();
+                }
             }
         }
 
