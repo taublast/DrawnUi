@@ -712,6 +712,11 @@ public partial class Super
 
         public override void OnOrientationChanged(int degrees)
         {
+            if (degrees >= 0)
+            {
+                DeviceRotation = degrees % 360;
+            }
+
             var rotation = ((degrees + 45) / 90) % 4;
 
             var deviceOrientation = rotation * 90;

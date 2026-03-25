@@ -292,10 +292,13 @@ public static partial class DrawnExtensions
                     });
 
                 Super.DeviceOrientation = (DeviceOrientation)(int)UIKit.UIDevice.CurrentDevice.Orientation;
+                Super.DeviceRotation = Super.DeviceRotationSnap;
+
                 Foundation.NSNotificationCenter.DefaultCenter.AddObserver(
                     UIKit.UIDevice.OrientationDidChangeNotification, (obj) =>
                     {
                         Super.DeviceOrientation = (DeviceOrientation)(int)UIKit.UIDevice.CurrentDevice.Orientation;
+                        Super.DeviceRotation = Super.DeviceRotationSnap;
                     });
 
                 bool onceApple = false;
