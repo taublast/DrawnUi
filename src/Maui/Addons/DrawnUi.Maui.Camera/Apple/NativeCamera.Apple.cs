@@ -2985,7 +2985,6 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 var audioSession = AVAudioSession.SharedInstance();
                 NSError sessionError;
 
-                // Use VideoRecording mode for system-level AGC and voice processing
                 audioSession.SetCategory(AVAudioSessionCategory.PlayAndRecord,
                     AVAudioSessionCategoryOptions.DefaultToSpeaker | AVAudioSessionCategoryOptions.AllowBluetooth,
                     out sessionError);
@@ -2995,15 +2994,20 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     // Category error is often recoverable, continue trying
                 }
 
-                // VideoRecording mode enables system-level AGC and echo cancellation
-                audioSession.SetMode(AVAudioSession.ModeVideoRecording, out sessionError);
+                var avMode = _audioMode switch
+                {
+                    CameraAudioMode.VideoRecording => AVAudioSession.ModeVideoRecording,
+                    CameraAudioMode.Flat           => AVAudioSession.ModeMeasurement,
+                    _                              => AVAudioSession.ModeDefault,
+                };
+                audioSession.SetMode(avMode, out sessionError);
                 if (sessionError != null)
                 {
                     Debug.WriteLine($"[NativeCamera.Apple] Audio session mode error: {sessionError}");
                 }
                 else
                 {
-                    Debug.WriteLine("[NativeCamera.Apple] Audio session set to VideoRecording mode (AGC enabled)");
+                    Debug.WriteLine($"[NativeCamera.Apple] Audio session mode set to {_audioMode} ({avMode})");
                 }
 
                 // SetActive is the critical call - if mic is in use by phone call, this will fail
@@ -3077,6 +3081,13 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     public int SampleRate { get; private set; }
     public int Channels { get; private set; }
     public AudioBitDepth BitDepth { get; private set; } = AudioBitDepth.Pcm16Bit;
+
+    // IAudioCapture.AudioMode backed by the same field used by INativeCamera.SetAudioMode
+    CameraAudioMode IAudioCapture.AudioMode
+    {
+        get => _audioMode;
+        set => _audioMode = value;
+    }
 
     public event EventHandler<AudioSample> SampleAvailable;
 
@@ -3665,6 +3676,17 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     {
         _recordAudio = recordAudio;
         System.Diagnostics.Debug.WriteLine($"[NativeCamera.Apple] SetRecordAudio: {recordAudio}");
+    }
+
+    private CameraAudioMode _audioMode = CameraAudioMode.VideoRecording;
+
+    /// <summary>
+    /// Set the audio session mode used during video recording
+    /// </summary>
+    public void SetAudioMode(CameraAudioMode mode)
+    {
+        _audioMode = mode;
+        System.Diagnostics.Debug.WriteLine($"[NativeCamera.Apple] SetAudioMode: {mode}");
     }
 
     /// <summary>

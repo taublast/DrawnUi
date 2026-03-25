@@ -1194,6 +1194,29 @@ public partial class MainPage : BasePageReloadable, IDisposable
         });
     }
 
+    private async Task SelectAudioMode()
+    {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            var modes = new[]
+            {
+                (CameraAudioMode.Default,        "Default — standard system processing"),
+                (CameraAudioMode.VideoRecording, "VideoRecording — native Camera app style"),
+                (CameraAudioMode.Voice,          "Voice — AGC, echo cancel, noise suppress"),
+                (CameraAudioMode.Flat,           "Flat — minimal processing, raw signal"),
+            };
+
+            var options = modes.Select(m => m.Item2).ToArray();
+            var result = await DisplayActionSheet("Select Audio Mode", "Cancel", null, options);
+
+            if (!string.IsNullOrEmpty(result) && result != "Cancel")
+            {
+                var selected = modes.FirstOrDefault(m => m.Item2 == result);
+                CameraControl.AudioMode = selected.Item1;
+            }
+        });
+    }
+
     private async Task SelectAudioCodec()
     {
         MainThread.BeginInvokeOnMainThread(async () =>

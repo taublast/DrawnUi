@@ -32,6 +32,9 @@ namespace DrawnUi.Camera.Platforms.Windows
         public int SampleRate { get; private set; }
         public int Channels { get; private set; }
 
+        // TODO: apply AudioMode when implementing Windows audio mode support
+        public CameraAudioMode AudioMode { get; set; } = CameraAudioMode.VideoRecording;
+
         private AudioBitDepth _bitDepth;
         private bool _disposed;
 

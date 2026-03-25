@@ -3599,6 +3599,15 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         System.Diagnostics.Debug.WriteLine($"[NativeCamera.Android] SetRecordAudio: {recordAudio}");
     }
 
+    /// <summary>
+    /// Sets the audio mode for recording. Stored for use by AudioCaptureAndroid via AudioSource selection.
+    /// TODO: pass to AudioCaptureAndroid when syncing from other machine.
+    /// </summary>
+    public void SetAudioMode(CameraAudioMode mode)
+    {
+        System.Diagnostics.Debug.WriteLine($"[NativeCamera.Android] SetAudioMode: {mode} (pending implementation)");
+    }
+
     #endregion
 
     /// <summary>

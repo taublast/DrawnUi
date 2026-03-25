@@ -22,6 +22,12 @@ namespace DrawnUi.Camera
         int SampleRate { get; }
         int Channels { get; }
 
+        /// <summary>
+        /// Audio session mode applied when StartAsync is called.
+        /// Must be set before calling StartAsync.
+        /// </summary>
+        CameraAudioMode AudioMode { get; set; }
+
         event EventHandler<AudioSample> SampleAvailable;
 
         /// <summary>

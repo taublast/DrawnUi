@@ -335,6 +335,23 @@ public partial class SkiaCamera : SkiaControl
         set { SetValue(EnableAudioRecordingProperty, value); }
     }
 
+    public static readonly BindableProperty AudioModeProperty = BindableProperty.Create(
+        nameof(AudioMode),
+        typeof(CameraAudioMode),
+        typeof(SkiaCamera),
+        CameraAudioMode.Default);
+
+    /// <summary>
+    /// Controls audio session signal processing for recording and preview capture.
+    /// Default is Default, which uses standard system audio processing.
+    /// Must be set before starting recording.
+    /// </summary>
+    public CameraAudioMode AudioMode
+    {
+        get { return (CameraAudioMode)GetValue(AudioModeProperty); }
+        set { SetValue(AudioModeProperty, value); }
+    }
+
     public static readonly BindableProperty EnableVideoRecordingProperty = BindableProperty.Create(
         nameof(EnableVideoRecording),
         typeof(bool),
@@ -2744,8 +2761,9 @@ public partial class SkiaCamera : SkiaControl
     {
 #if ONPLATFORM
 
-        // Tell native camera whether to record audio
+        // Tell native camera whether to record audio and which audio mode to use
         NativeControl.SetRecordAudio(EnableAudioRecording);
+        NativeControl.SetAudioMode(AudioMode);
 
         // Set up video recording callbacks to handle state synchronization
         NativeControl.RecordingFailed = ex =>
