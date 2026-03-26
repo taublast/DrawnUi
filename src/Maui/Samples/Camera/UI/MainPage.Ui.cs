@@ -215,7 +215,6 @@ namespace CameraTests.Views
 
             return new SkiaLayer()
             {
-                Rotation = 10,
                 Children =
                 {
                     new SkiaShape()
