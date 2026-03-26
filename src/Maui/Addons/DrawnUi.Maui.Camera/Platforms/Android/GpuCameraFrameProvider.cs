@@ -29,9 +29,9 @@ namespace DrawnUi.Camera
         public static bool IsSupported()
         {
             // Require API 26+ for reliable SurfaceTexture behavior
-            if (Android.OS.Build.VERSION.SdkInt < Android.OS.BuildVersionCodes.O)
+            if (Android.OS.Build.VERSION.SdkInt < Android.OS.BuildVersionCodes.O || DeviceInfo.Current.DeviceType == DeviceType.Virtual)
             {
-                System.Diagnostics.Debug.WriteLine("[GpuCameraFrameProvider] API < 26, not supported");
+                System.Diagnostics.Debug.WriteLine("[GpuCameraFrameProvider] GPU preview rendering unsupported on emulator or API < 26.");
                 return false;
             }
 

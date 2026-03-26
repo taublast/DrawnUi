@@ -10,7 +10,6 @@ namespace DrawnUi.Draw;
 
 public static partial class DrawnExtensions
 {
-
     #region STARTUP
 
     static bool windowAdapted = false;
@@ -22,10 +21,7 @@ public static partial class DrawnExtensions
         StartupSettings = settings;
 
 #if ONPLATFORM
-        builder.ConfigureMauiHandlers(handlers =>
-        {
-            ConfigureHandlers(handlers);
-        });
+        builder.ConfigureMauiHandlers(handlers => { ConfigureHandlers(handlers); });
 #endif
 
         builder
@@ -37,14 +33,13 @@ public static partial class DrawnExtensions
 
 #if WINDOWS || MACCATALYST
         // on mobile removed IHttpClientFactory for faster app startup
-        builder.Services.AddUriImageSourceHttpClient(); 
+        builder.Services.AddUriImageSourceHttpClient();
 #endif
 
         //In-Memory Caching of bitmaps
-        builder.Services  //Important step for In-Memory Caching
+        builder.Services //Important step for In-Memory Caching
             .AddEasyCaching(options =>
             {
-
                 // use memory cache with your own configuration
                 options.UseInMemory(config =>
                 {
@@ -76,13 +71,12 @@ public static partial class DrawnExtensions
         {
             Super.App = Super.Services.GetRequiredService<IApplication>();
 
-#if  MACCATALYST || WINDOWS
+#if MACCATALYST || WINDOWS
             DeviceDisplay.MainDisplayInfoChanged += (s, e) =>
             {
                 Super.Screen.Density = DeviceDisplay.Current.MainDisplayInfo.Density;
             };
 #endif
-
         };
 
         Super.OnMauiAppCreated += () =>
@@ -95,7 +89,7 @@ public static partial class DrawnExtensions
         };
 
         void InvokeLifecycleEvents<TDelegate>(Action<TDelegate> action)
-           where TDelegate : Delegate
+            where TDelegate : Delegate
         {
             if (Super.Services == null)
                 return;
@@ -123,12 +117,10 @@ public static partial class DrawnExtensions
 
         builder.ConfigureLifecycleEvents(AppLifecycle =>
         {
-
             //todo
             // 1 every platform sets density
 
 #if WINDOWS
-
             AppLifecycle.AddEvent<WindowsLifecycle.OnLaunching>("OnLaunching", (application, args) =>  
                 {
                     Super.Init();
@@ -188,7 +180,6 @@ public static partial class DrawnExtensions
                 });
 
 
-
 #elif ANDROID
 
             AppLifecycle.AddAndroid((android) =>
@@ -197,13 +188,13 @@ public static partial class DrawnExtensions
 
                 void AttachActivity(Android.App.Activity activity)
                 {
-
                     if (StartupSettings != null && StartupSettings.MobileIsFullscreen.HasValue)
                     {
                         if (StartupSettings.MobileIsFullscreen.Value)
                         {
                             Super.SetFullScreen(activity);
                         }
+
                         if (StartupSettings.UseDesktopKeyboard)
                         {
                             KeyboardManager.AttachToKeyboard(activity);
@@ -225,10 +216,7 @@ public static partial class DrawnExtensions
                     }
                 });
 
-                android.OnApplicationCreate((app) =>
-                {
-                    Super.OnCreated();
-                });
+                android.OnApplicationCreate((app) => { Super.OnCreated(); });
 
 
                 ActivityState activityState = ActivityState.Destroyed;
@@ -242,16 +230,19 @@ public static partial class DrawnExtensions
                         {
                             AttachActivity(args.Activity);
 
-                            //Console.WriteLine("[APP] OnResumed");
+                            Debug.WriteLine("[APP] OnResumed");
                             Super.OnWentForeground();
                         }
-                        else
-                        if ((args.State == ActivityState.Paused || args.State == ActivityState.Stopped)
-                            && activityState != ActivityState.Paused && args.State != ActivityState.Stopped)
+                        else if ((args.State == ActivityState.Paused || args.State == ActivityState.Stopped)
+                                 && activityState != ActivityState.Paused && args.State != ActivityState.Stopped)
                         {
-                            //Console.WriteLine("[APP] OnPause");
-                            Super.OnWentBackground();
+                            Debug.WriteLine("[APP] OnPause");
+                            if (!(Debugger.IsAttached && DeviceInfo.Current.DeviceType == DeviceType.Virtual)) //prevent bugged case of attached emulator
+                            {
+                                Super.OnWentBackground();
+                            }
                         }
+
                         activityState = args.State;
                     }
                 };
@@ -275,7 +266,6 @@ public static partial class DrawnExtensions
 
 
 #elif IOS || MACCATALYST
-
             AppLifecycle.AddiOS((apple) =>
             {
 
@@ -329,7 +319,7 @@ public static partial class DrawnExtensions
                                           StartupSettings.DesktopWindow.Value.Width,
                                           StartupSettings.DesktopWindow.Value.Height,
                                           StartupSettings.DesktopWindow.Value.IsFixedSize);
-                                      windowAdapted=true;
+                                      windowAdapted = true;
                                   }
 
                                   if (UIKit.UIApplication.SharedApplication.KeyWindow.RootViewController is Microsoft.Maui.Platform.ContainerViewController container)
@@ -433,7 +423,6 @@ public static partial class DrawnExtensions
             });
 
 #endif
-
         });
 
         // Microsoft.Maui.Handlers.ViewHandler.ViewMapper.AppendToMapping(nameof(Application.Resources), (handler, view) =>
@@ -478,14 +467,12 @@ public static partial class DrawnExtensions
         return fontCollection;
     }
 
-    public static Task AnimateRangeAsync(this SkiaControl owner, Action<double> callback, double start, double end, uint length = 250, Easing easing = null, CancellationTokenSource _cancelTranslate = default)
+    public static Task AnimateRangeAsync(this SkiaControl owner, Action<double> callback, double start, double end,
+        uint length = 250, Easing easing = null, CancellationTokenSource _cancelTranslate = default)
     {
         RangeAnimator animator = null;
         var tcs = new TaskCompletionSource<bool>(_cancelTranslate.Token);
-        tcs.Task.ContinueWith(task =>
-        {
-            animator?.Dispose();
-        });
+        tcs.Task.ContinueWith(task => { animator?.Dispose(); });
 
         animator = new RangeAnimator(owner)
         {
@@ -514,19 +501,17 @@ public static partial class DrawnExtensions
         return tcs.Task;
     }
 
-    public static Task BackgroundColorToAsync(this SkiaControl owner, Color end, uint length = 250, Easing easing = null, CancellationTokenSource cancel = default)
+    public static Task BackgroundColorToAsync(this SkiaControl owner, Color end, uint length = 250,
+        Easing easing = null, CancellationTokenSource cancel = default)
     {
         if (cancel == default)
             cancel = new CancellationTokenSource();
 
         var start = owner.BackgroundColor ?? Colors.Transparent;
-        
+
         ColorBlendAnimator animator = null;
         var tcs = new TaskCompletionSource<bool>(cancel.Token);
-        tcs.Task.ContinueWith(task =>
-        {
-            animator?.Dispose();
-        });
+        tcs.Task.ContinueWith(task => { animator?.Dispose(); });
 
         animator = new ColorBlendAnimator(owner)
         {
@@ -538,7 +523,7 @@ public static partial class DrawnExtensions
                 }
             }
         };
-        
+
         animator.Color1 = start;
         animator.Color2 = end;
         animator.Speed = length;
@@ -554,25 +539,23 @@ public static partial class DrawnExtensions
                 animator.Stop();
             }
         };
-        
+
         animator.Start();
 
         return tcs.Task;
     }
 
-    public static Task TextColorToAsync(this SkiaLabel owner, Color end, uint length = 250, Easing easing = null, CancellationTokenSource cancel = default)
+    public static Task TextColorToAsync(this SkiaLabel owner, Color end, uint length = 250, Easing easing = null,
+        CancellationTokenSource cancel = default)
     {
         if (cancel == default)
             cancel = new CancellationTokenSource();
 
         var start = owner.TextColor ?? Colors.Transparent;
-        
+
         ColorBlendAnimator animator = null;
         var tcs = new TaskCompletionSource<bool>(cancel.Token);
-        tcs.Task.ContinueWith(task =>
-        {
-            animator?.Dispose();
-        });
+        tcs.Task.ContinueWith(task => { animator?.Dispose(); });
 
         animator = new ColorBlendAnimator(owner)
         {
@@ -584,7 +567,7 @@ public static partial class DrawnExtensions
                 }
             }
         };
-        
+
         animator.Color1 = start;
         animator.Color2 = end;
         animator.Speed = length;
@@ -600,7 +583,7 @@ public static partial class DrawnExtensions
                 animator.Stop();
             }
         };
-        
+
         animator.Start();
 
         return tcs.Task;
@@ -627,6 +610,7 @@ public static partial class DrawnExtensions
         {
             velocityRatoY = 1;
         }
+
         if (float.IsNaN(velocityRatoX) || velocityRatoX == 0)
         {
             velocityRatoX = 1;
