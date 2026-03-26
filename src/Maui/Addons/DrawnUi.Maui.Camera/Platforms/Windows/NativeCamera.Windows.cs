@@ -2726,6 +2726,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         System.Diagnostics.Debug.WriteLine($"[NativeCamera.Windows] SetAudioMode: {mode} (pending implementation)");
     }
 
+    public CameraAudioMode AudioMode { get; set; }
+
     #endregion
 
     #region Audio
