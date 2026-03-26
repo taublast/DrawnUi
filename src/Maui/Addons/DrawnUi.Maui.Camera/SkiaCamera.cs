@@ -3178,7 +3178,7 @@ public partial class SkiaCamera : SkiaControl
     private int _DeviceRotation = -1;
 
     /// <summary>
-    /// Gets or sets the current device rotation in degrees (0, 90, 180, 270).
+    /// Gets or sets the current device SNAPPED rotation in degrees (0, 90, 180, 270). To obtain row unsnapped (platforms limitations apply) rotation use `Super.DeviceRotation`.
     /// Automatically applies the orientation to the native camera when changed.
     /// </summary>
     public int DeviceRotation
