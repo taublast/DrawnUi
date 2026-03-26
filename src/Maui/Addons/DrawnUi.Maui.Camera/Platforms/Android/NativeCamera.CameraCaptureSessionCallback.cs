@@ -60,7 +60,7 @@ namespace DrawnUi.Camera
             public override void OnConfigured(CameraCaptureSession session)
             {
                 // The camera is already closed
-                if (null == owner.mCameraDevice)
+                if (null == owner.mCameraDevice || session  ==  null)
                     return;
 
                 // When the session is ready, we start displaying the preview.
