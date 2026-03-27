@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using Android.Opengl;
+using DrawnUi.Views;
 using SKPaintGLSurfaceEventArgs = SkiaSharp.Views.Android.SKPaintGLSurfaceEventArgs;
 
 namespace DrawnUi
@@ -8,6 +9,7 @@ namespace DrawnUi
     {
         private SKSurface _retainedSurface;
         private SKSurface _framebufferSurface; // Reuse instead of creating each frame
+        private SKPaintGLSurfaceEventArgs _paintArgs; // Cached, recreated only on size change
         private bool _needsFullRedraw = true;
         private readonly ConcurrentBag<SurfaceTrashItem> _trashBag = new();
         private bool _cleanupRunning;
@@ -92,6 +94,7 @@ namespace DrawnUi
                         FrameCount = _frameCounter
                     });
                     _retainedSurface = null;
+                    _paintArgs = null;
                 }
 
                 if (_framebufferSurface != null)
@@ -115,6 +118,7 @@ namespace DrawnUi
             if (_retainedSurface == null)
             {
                 _retainedSurface = SKSurface.Create(Context, renderTarget, surfaceOrigin, colorType);
+                _paintArgs = new SKPaintGLSurfaceEventArgs(_retainedSurface, renderTarget, surfaceOrigin, colorType);
                 _needsFullRedraw = true;
             }
 
@@ -167,18 +171,13 @@ namespace DrawnUi
 
             try
             {
-                using (new SKAutoCanvasRestoreFixed(_retainedSurface.Canvas, true))
+                using (new CanvasRestoreScope(_retainedSurface.Canvas))
                 {
-                    var e = new SKPaintGLSurfaceEventArgs(_retainedSurface, renderTarget, surfaceOrigin, colorType);
-                    OnPaintSurface(e);
+                    OnPaintSurface(_paintArgs);
                 }
 
-                // Reuse framebuffer surface instead of creating new one each frame
-                using var image = _retainedSurface.Snapshot();
-                _framebufferSurface.Canvas.DrawImage(image, 0, 0);
-
-                _framebufferSurface.Canvas.Flush();
-                _framebufferSurface.Flush();
+                _retainedSurface.Canvas.Flush();
+                _retainedSurface.Flush();
 
                 Context.Flush();
 

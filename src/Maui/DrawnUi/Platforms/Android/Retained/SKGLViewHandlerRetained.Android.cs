@@ -16,6 +16,7 @@ public partial class SKGLViewHandlerRetained : ViewHandler<ISKGLView, SkiaGLText
 
     private SKSizeI lastCanvasSize;
     private GRContext? lastGRContext;
+    private SkiaSharp.Views.Maui.SKPaintGLSurfaceEventArgs _cachedVirtualViewArgs;
     
     protected override SkiaGLTexture CreatePlatformView()
     {
@@ -87,6 +88,7 @@ public partial class SKGLViewHandlerRetained : ViewHandler<ISKGLView, SkiaGLText
         if (lastCanvasSize != newCanvasSize)
         {
             lastCanvasSize = newCanvasSize;
+            _cachedVirtualViewArgs = null;
             VirtualView?.OnCanvasSizeChanged(newCanvasSize);
         }
 
@@ -96,12 +98,13 @@ public partial class SKGLViewHandlerRetained : ViewHandler<ISKGLView, SkiaGLText
             if (lastGRContext != newGRContext)
             {
                 lastGRContext = newGRContext;
+                _cachedVirtualViewArgs = null;
                 VirtualView?.OnGRContextChanged(newGRContext);
             }
         }
 
-        VirtualView?.OnPaintSurface(new (e.Surface, e.BackendRenderTarget, e.Origin, e.Info,
-            e.RawInfo));
+        _cachedVirtualViewArgs ??= new SkiaSharp.Views.Maui.SKPaintGLSurfaceEventArgs(e.Surface, e.BackendRenderTarget, e.Origin, e.Info, e.RawInfo);
+        VirtualView?.OnPaintSurface(_cachedVirtualViewArgs);
     }
 
     private SKPoint OnGetScaledCoord(double x, double y)
