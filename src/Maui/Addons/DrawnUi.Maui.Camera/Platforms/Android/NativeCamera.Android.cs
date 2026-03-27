@@ -671,6 +671,30 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     //}
 
     object _lockPreview = new();
+    int _previewUpdatePosted;
+
+    void RequestPreviewUpdate()
+    {
+        var formsControl = FormsControl;
+        if (formsControl == null)
+        {
+            return;
+        }
+
+        if (System.Threading.Interlocked.CompareExchange(ref _previewUpdatePosted, 1, 0) != 0)
+        {
+            return;
+        }
+
+        try
+        {
+            formsControl.UpdatePreview();
+        }
+        finally
+        {
+            System.Threading.Volatile.Write(ref _previewUpdatePosted, 0);
+        }
+    }
 
 
     /// <summary>
@@ -2021,7 +2045,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         }
         else
         {
-            requestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.Auto);
+            requestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
         }
     }
 
