@@ -2245,8 +2245,8 @@ public partial class SkiaCamera : SkiaControl
             RescalingQuality = SKFilterQuality.None, //reduce power consumption
 #endif
             CacheRescaledSource = false,
-            HorizontalOptions = this.NeedAutoWidth ? LayoutOptions.Start : LayoutOptions.Fill,
-            VerticalOptions = this.NeedAutoHeight ? LayoutOptions.Start : LayoutOptions.Fill,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
             Aspect = this.Aspect,
         };
     }
@@ -2268,8 +2268,7 @@ public partial class SkiaCamera : SkiaControl
 
     protected virtual void LayoutDisplay()
     {
-        Display.HorizontalOptions = this.NeedAutoWidth ? LayoutOptions.Start : LayoutOptions.Fill;
-        Display.VerticalOptions = this.NeedAutoHeight ? LayoutOptions.Start : LayoutOptions.Fill;
+
     }
 
     protected override void CreateDefaultContent()
