@@ -2243,7 +2243,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             }
 
             // WE ARE RECORDING !!!
-            mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Preview);
+            mPreviewRequestBuilder = mCameraDevice.CreateCaptureRequest(CameraTemplate.Record);
             ApplyPreviewVideoStabilization(mPreviewRequestBuilder);
 
             // Apply flash mode
