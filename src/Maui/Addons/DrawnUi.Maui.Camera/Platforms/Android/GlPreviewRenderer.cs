@@ -41,9 +41,11 @@ namespace DrawnUi.Camera
         private int _previewWidth;
         private int _previewHeight;
 
-        // Pre-allocated readback buffers
-        private byte[] _managedBuffer;
-        private byte[] _flipRowBuffer; // Pre-allocated row buffer for Y-flip (direct path only)
+        // Pre-allocated row swap buffer for in-place Y-flip (direct path only)
+        private byte[] _flipRowBuffer;
+
+        // Double-buffered pinned image pool — zero per-frame allocation for pixel data
+        private SkiaCpuImagePool _imagePool;
 
         // GL thread (same pattern as AndroidCaptureVideoEncoder.GpuEncodingLoop)
         private System.Threading.Thread _glThread;
@@ -147,9 +149,8 @@ namespace DrawnUi.Camera
                     // Double-buffered PBOs for async glReadPixels — no GPU stall
                     SetupPbos(previewWidth, previewHeight);
 
-                    // Pre-allocate managed pixel buffer (reused for every PBO map)
-                    int bufferSize = previewWidth * previewHeight * 4;
-                    _managedBuffer = new byte[bufferSize];
+                    // Pool owns the two pinned pixel buffers — PBO maps directly into them
+                    _imagePool = new SkiaCpuImagePool(previewWidth, previewHeight);
 
                     // CPU Y-flip buffer only needed for non-blit (direct) path
                     if (!UseBlitPreview)
@@ -375,8 +376,9 @@ namespace DrawnUi.Camera
             // Render OES texture — GPU driver does YUV→RGB automatically via samplerExternalOES
             _gpuFrameProvider.RenderToFramebuffer(_previewWidth, _previewHeight, _isFrontCamera);
 
-            // Async PBO readback: issue read into current PBO (non-blocking), map previous PBO
-            if (!ReadPixelsViaPbo(_previewWidth, _previewHeight))
+            // Async PBO readback directly into the pool's write slot — no intermediate buffer
+            var dest = _imagePool.GetWriteBuffer();
+            if (!ReadPixelsViaPbo(_previewWidth, _previewHeight, dest))
                 return null;
 
             // glReadPixels returns bottom-to-top data. For 90°/0° sensor orientations the
@@ -391,15 +393,13 @@ namespace DrawnUi.Camera
                 {
                     int topOffset = y * rowBytes;
                     int bottomOffset = (_previewHeight - 1 - y) * rowBytes;
-                    System.Buffer.BlockCopy(_managedBuffer, topOffset, _flipRowBuffer, 0, rowBytes);
-                    System.Buffer.BlockCopy(_managedBuffer, bottomOffset, _managedBuffer, topOffset, rowBytes);
-                    System.Buffer.BlockCopy(_flipRowBuffer, 0, _managedBuffer, bottomOffset, rowBytes);
+                    System.Buffer.BlockCopy(dest, topOffset, _flipRowBuffer, 0, rowBytes);
+                    System.Buffer.BlockCopy(dest, bottomOffset, dest, topOffset, rowBytes);
+                    System.Buffer.BlockCopy(_flipRowBuffer, 0, dest, bottomOffset, rowBytes);
                 }
             }
 
-            var info = new SKImageInfo(_previewWidth, _previewHeight,
-                SKColorType.Rgba8888, SKAlphaType.Premul);
-            return SKImage.FromPixelCopy(info, _managedBuffer);
+            return _imagePool.CommitAndGetImage();
         }
 
         /// <summary>
@@ -431,15 +431,13 @@ namespace DrawnUi.Camera
                 GLES20.GlColorBufferBit,
                 GLES20.GlLinear);                             // GPU bilinear filtering
 
-            // 3. Async PBO readback from readback FBO — no GPU stall
+            // 3. Async PBO readback directly into pool's write slot — no intermediate buffer
             GLES30.GlBindFramebuffer(GLES30.GlReadFramebuffer, _readbackFbo);
-            if (!ReadPixelsViaPbo(_previewWidth, _previewHeight))
+            if (!ReadPixelsViaPbo(_previewWidth, _previewHeight, _imagePool.GetWriteBuffer()))
                 return null;
 
-            // 4. _managedBuffer filled by PBO map — NO Y-flip needed, blit already flipped on GPU
-            var info = new SKImageInfo(_previewWidth, _previewHeight,
-                SKColorType.Rgba8888, SKAlphaType.Premul);
-            return SKImage.FromPixelCopy(info, _managedBuffer);
+            // 4. No Y-flip needed — blit already flipped on GPU; commit the pool slot
+            return _imagePool.CommitAndGetImage();
         }
 
         #region EGL Setup
@@ -600,11 +598,11 @@ namespace DrawnUi.Camera
 
         /// <summary>
         /// Issues async glReadPixels into PBO[current] (non-blocking — GPU writes in background),
-        /// then maps PBO[previous] to fill _managedBuffer with the prior frame's pixels.
+        /// then maps PBO[previous] and copies pixels directly into <paramref name="dest"/>.
         /// Returns false on the first frame (previous PBO not yet populated) — caller should skip.
         /// Must be called on the GL thread with the readback FBO bound as GL_READ_FRAMEBUFFER.
         /// </summary>
-        private bool ReadPixelsViaPbo(int width, int height)
+        private bool ReadPixelsViaPbo(int width, int height, byte[] dest)
         {
             int current = _currentPbo;
             int previous = 1 - current;
@@ -635,13 +633,14 @@ namespace DrawnUi.Camera
                 var mappedPtr = mappedBuffer.GetDirectBufferAddress();
                 if (mappedPtr != IntPtr.Zero)
                 {
-                    Marshal.Copy(mappedPtr, _managedBuffer, 0, _pboBytesSize);
+                    Marshal.Copy(mappedPtr, dest, 0, _pboBytesSize);
                 }
                 else
                 {
-                    mappedBuffer.Get(_managedBuffer, 0, _pboBytesSize);
+                    mappedBuffer.Get(dest, 0, _pboBytesSize);
                 }
                 GLES30.GlUnmapBuffer(GLES30.GlPixelPackBuffer);
+                mappedBuffer.Dispose(); // release JNI wrapper immediately; don't wait for GC
                 hasData = true;
             }
 
@@ -658,8 +657,9 @@ namespace DrawnUi.Camera
             _gpuFrameProvider?.Dispose();
             _gpuFrameProvider = null;
 
-            _managedBuffer = null;
             _flipRowBuffer = null;
+            _imagePool?.Dispose();
+            _imagePool = null;
 
             // GL resources must be cleaned up with EGL context current
             // If we can't make current, skip GL cleanup (context may already be destroyed)

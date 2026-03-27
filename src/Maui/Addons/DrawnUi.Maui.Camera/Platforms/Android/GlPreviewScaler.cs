@@ -28,9 +28,10 @@ namespace DrawnUi.Camera
         private int _inputWidth, _inputHeight;
         private int _outputWidth, _outputHeight;
 
-        // Pre-allocated readback buffer (PBO map destination — no per-frame allocations)
-        private byte[] _managedBuffer;
         private ByteBuffer _syncReadbackBuffer;
+
+        // Double-buffered pinned image pool — zero per-frame allocation for pixel data
+        private SkiaCpuImagePool _imagePool;
 
         // Double-buffered PBOs for async glReadPixels (mirrors GlPreviewRenderer pattern)
         private int[] _pbos = new int[2];
@@ -90,16 +91,15 @@ namespace DrawnUi.Camera
                     return false;
                 }
 
-                // Pre-allocate managed readback buffer (destination for PBO map)
-                int bufferSize = outputWidth * outputHeight * 4;
-                _managedBuffer = new byte[bufferSize];
+                // Pool owns the two pinned pixel buffers — PBO maps directly into them
+                _imagePool = new SkiaCpuImagePool(outputWidth, outputHeight);
 
                 // Restore default FBO
                 GLES20.GlBindFramebuffer(GLES20.GlFramebuffer, 0);
                 GLES20.GlBindRenderbuffer(GLES20.GlRenderbuffer, 0);
 
                 // Async PBO double-buffer setup (must happen after EGL context is current)
-                SetupPbos(bufferSize);
+                SetupPbos(outputWidth * outputHeight * 4);
 
                 _isInitialized = true;
                 System.Diagnostics.Debug.WriteLine(
@@ -183,22 +183,22 @@ namespace DrawnUi.Camera
                     return null;
                 }
 
-                // 5. Map previous PBO — GPU finished writing it while we rendered the current frame
+                // 5. Map previous PBO — GPU finished writing it while we rendered the current frame.
+                // Write directly into the pool's write slot — no intermediate buffer.
+                var writeBuffer = _imagePool.GetWriteBuffer();
                 GLES30.GlBindBuffer(GLES30.GlPixelPackBuffer, _pbos[previous]);
                 var mapped = GLES30.GlMapBufferRange(
-                    GLES30.GlPixelPackBuffer, 0, _managedBuffer.Length,
+                    GLES30.GlPixelPackBuffer, 0, writeBuffer.Length,
                     GLES30.GlMapReadBit) as Java.Nio.ByteBuffer;
 
                 SKImage image = null;
                 if (mapped != null)
                 {
                     mapped.Rewind();
-                    CopyBufferToManaged(mapped, _managedBuffer, _managedBuffer.Length);
+                    CopyBufferToManaged(mapped, writeBuffer, writeBuffer.Length);
                     GLES30.GlUnmapBuffer(GLES30.GlPixelPackBuffer);
-
-                    var info = new SKImageInfo(_outputWidth, _outputHeight,
-                        SKColorType.Rgba8888, SKAlphaType.Premul);
-                    image = SKImage.FromPixelCopy(info, _managedBuffer);
+                    mapped.Dispose(); // release JNI wrapper immediately; don't wait for GC
+                    image = _imagePool.CommitAndGetImage();
                 }
 
                 GLES30.GlBindBuffer(GLES30.GlPixelPackBuffer, 0);
@@ -299,7 +299,8 @@ namespace DrawnUi.Camera
 
                 _gpuSemaphore?.Dispose();
                 _gpuSemaphore = null;
-                _managedBuffer = null;
+                _imagePool?.Dispose();
+                _imagePool = null;
                 _isInitialized = false;
 
                 System.Diagnostics.Debug.WriteLine("[GlPreviewScaler] Disposed");

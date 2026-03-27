@@ -44,8 +44,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     // Camera configuration constants
 
     // Max preview dimensions
-    public int MaxPreviewWidth = 1280;
-    public int MaxPreviewHeight = 1280;
+    public static int MaxPreviewWidth = 1280;
+    public static int MaxPreviewHeight = 1280;
 
     // Still capture formats - same pattern as Apple implementation
     public List<CaptureFormat> StillFormats { get; protected set; } = new List<CaptureFormat>();
