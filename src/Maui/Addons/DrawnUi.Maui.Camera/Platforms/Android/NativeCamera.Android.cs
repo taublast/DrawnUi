@@ -1,6 +1,7 @@
 ﻿using System.Buffers;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.Win32.Graphics.Direct3D11;
 using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
@@ -524,25 +525,20 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         _frameProcessingThread?.Join(1000);
         _frameProcessingThread = null;
 
-        lock (_imageLock)
-        {
-            _currentImage?.Close();
-            _currentImage = null;
-        }
-
         _frameAvailable?.Dispose();
         _frameAvailable = null;
         System.Diagnostics.Debug.WriteLine("[NativeCamera] Frame processing thread stopped");
     }
 
     /// <summary>
-    /// Background thread loop for processing camera frames
+    /// Background thread loop for processing camera frames.
+    /// Acquires directly from FramesReader so at most 1 image is ever
+    /// outstanding — the ImageReader maxImages overflow is structurally impossible.
     /// </summary>
     private void FrameProcessingLoop()
     {
         while (!_stopProcessingThread)
         {
-            // Wait for new frame signal
             try
             {
                 _frameAvailable?.Wait(100);
@@ -554,22 +550,21 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             if (_stopProcessingThread) break;
 
-            // Grab current frame (atomic swap to null)
-            Image image;
-            lock (_imageLock)
-            {
-                image = _currentImage;
-                _currentImage = null;
-            }
-
+            // Reset before acquiring: any frame that arrives during processing
+            // will re-arm the signal and wake us immediately on the next iteration.
             _frameAvailable?.Reset();
 
+            var reader = FramesReader;
+            if (reader == null)
+                continue;
+
+            Image image = reader.AcquireLatestImage();
             if (image == null)
                 continue;
 
             try
             {
-                ProcessFrameOnBackgroundThread(image);
+                ProcessFrameWithRenderScript(image);
             }
             catch (Exception ex)
             {
@@ -585,7 +580,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// <summary>
     /// Process a camera frame on the background thread (all heavy work happens here)
     /// </summary>
-    private void ProcessFrameOnBackgroundThread(Image image)
+    private void ProcessFrameWithRenderScript(Image image)
     {
         var allocated = Output;
         if (allocated?.Allocation == null || allocated.Bitmap == null)
@@ -606,8 +601,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             allocated.Update();
         }
 
-        // During capture video flow recording, avoid any UI preview work
-        bool inCaptureRecording = FormsControl.UseRealtimeVideoProcessing && FormsControl.IsRecording;
+
 
         // Convert to SKImage
         var sk = allocated.Bitmap.ToSKImage();
@@ -631,7 +625,13 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             Rotation = rotation
         };
 
-        // Callbacks
+        SetPreview(outImage);
+    }
+
+    void SetPreview(CapturedImage outImage)
+    {
+        bool inCaptureRecording = FormsControl.UseRealtimeVideoProcessing && FormsControl.IsRecording;
+
         if (!inCaptureRecording)
         {
             OnPreviewCaptureSuccess(outImage);
@@ -639,7 +639,6 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         Preview = outImage;
         FormsControl.UpdatePreview();
-        
     }
 
     #endregion
@@ -669,6 +668,9 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     object _lockPreview = new();
 
 
+    /// <summary>
+    /// Will be requested via GetPreviewImage()
+    /// </summary>
     public CapturedImage Preview
     {
         get => _preview;
@@ -678,7 +680,14 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             {
                 var kill = _preview;
                 _preview = value;
-                kill?.Dispose();
+                if (FormsControl != null && kill != null)
+                {
+                    FormsControl.DisposeObject(kill);
+                }
+                else
+                {
+                    kill?.Dispose();
+                }
             }
         }
     }
@@ -801,9 +810,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// </summary>
     public long RawFrameCount => _rawFrameCountTotal;
 
-    // Async frame processing (iOS-style 2-buffer ping-pong)
-    private Image _currentImage;
-    private readonly object _imageLock = new();
+    // Async frame processing
     private ManualResetEventSlim _frameAvailable;
     private volatile bool _stopProcessingThread = false;
     private System.Threading.Thread _frameProcessingThread;
@@ -1999,9 +2006,16 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// </summary>
     public void SetPreviewOptions(CaptureRequest.Builder requestBuilder)
     {
-        requestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousVideo);
         // Note: Flash settings are NOT applied here as they're already set in CreateCameraPreviewSession()
         // This prevents conflicts between preview flash (torch) and capture flash (single) modes
+        if (FormsControl.CaptureMode == CaptureModeType.Video)
+        {
+            requestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousVideo);
+        }
+        else
+        {
+            requestBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.Auto);
+        }
     }
 
     public void StartCapturingStill()
@@ -2194,6 +2208,9 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     ImageReader.NewInstance(PreviewWidth, PreviewHeight, ImageFormatType.Yuv420888, 3);
                 mImageReaderPreview.SetOnImageAvailableListener(this, mBackgroundHandler);
                 AllocateOutSurface();
+                // Camera started in GL-preview mode so FrameProcessingLoop was never started.
+                // Start it now so OnImageAvailable signals have a consumer.
+                StartFrameProcessingThread();
             }
 
             // WE ARE RECORDING !!!
@@ -2437,8 +2454,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     {
         if (skImage == null) return;
 
-        bool inCaptureRecording = FormsControl.UseRealtimeVideoProcessing && FormsControl.IsRecording;
-
+ 
         var meta = FormsControl.CameraDevice.Meta;
         var rotation = FormsControl.DeviceRotation;
         Metadata.ApplyRotation(meta, rotation);
@@ -2455,13 +2471,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             Rotation = rotation
         };
 
-        if (!inCaptureRecording)
-        {
-            OnPreviewCaptureSuccess(outImage);
-        }
-
-        Preview = outImage;
-        FormsControl.UpdatePreview();
+        SetPreview(outImage);
     }
 
     /// <summary>
