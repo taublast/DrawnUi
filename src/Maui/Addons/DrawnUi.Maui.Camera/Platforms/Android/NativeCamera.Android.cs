@@ -28,6 +28,7 @@ using Point = Android.Graphics.Point;
 using Semaphore = Java.Util.Concurrent.Semaphore;
 using Size = Android.Util.Size;
 using StringBuilder = System.Text.StringBuilder;
+using ThreadPriority = Android.OS.ThreadPriority;
 using Trace = System.Diagnostics.Trace;
 
 namespace DrawnUi.Camera;
@@ -1313,8 +1314,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
                     if (selectedSize.Width > 1 && selectedSize.Height > 1)
                     {
-                        mImageReaderPhoto =
-                            ImageReader.NewInstance(CaptureWidth, CaptureHeight, ImageFormatType.Yuv420888, 2);
+                        mImageReaderPhoto = ImageReader.NewInstance(CaptureWidth, CaptureHeight, ImageFormatType.Yuv420888, 1);
                         mImageReaderPhoto.SetOnImageAvailableListener(mCaptureCallback, mBackgroundHandler);
 
                         FormsControl.CapturePhotoSize = new(CaptureWidth, CaptureHeight);
@@ -1395,8 +1395,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     if (!_useGlPreview)
                     {
                         EnsureRenderScriptInitialized();
-                        mImageReaderPreview =
-                            ImageReader.NewInstance(PreviewWidth, PreviewHeight, ImageFormatType.Yuv420888, 3);
+                        mImageReaderPreview = ImageReader.NewInstance(PreviewWidth, PreviewHeight, ImageFormatType.Yuv420888, 3);
                         mImageReaderPreview.SetOnImageAvailableListener(this, mBackgroundHandler);
                         AllocateOutSurface();
                     }
@@ -1784,7 +1783,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     // Starts a background thread and its {@link Handler}.
     private void StartBackgroundThread()
     {
-        mBackgroundThread = new HandlerThread("CameraBackground");
+        mBackgroundThread = new HandlerThread("CameraBackground", (int)ThreadPriority.Default);
         mBackgroundThread.Start();
         mBackgroundHandler = new Handler(mBackgroundThread.Looper);
     }
@@ -2235,8 +2234,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             if (useDualStreamPreview && mImageReaderPreview == null)
             {
                 EnsureRenderScriptInitialized();
-                mImageReaderPreview =
-                    ImageReader.NewInstance(PreviewWidth, PreviewHeight, ImageFormatType.Yuv420888, 3);
+                mImageReaderPreview = ImageReader.NewInstance(PreviewWidth, PreviewHeight, ImageFormatType.Yuv420888, 3);
                 mImageReaderPreview.SetOnImageAvailableListener(this, mBackgroundHandler);
                 AllocateOutSurface();
                 // Camera started in GL-preview mode so FrameProcessingLoop was never started.
