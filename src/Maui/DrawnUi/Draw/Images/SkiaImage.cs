@@ -456,7 +456,7 @@ public class SkiaImage : SkiaControl
         });
     }
 
-    public LoadedImageSource SetImageInternal(SKImage image, bool protectFromDispose = false)
+    public virtual LoadedImageSource SetImageInternal(SKImage image, bool protectFromDispose = false)
     {
         return SetImage(new LoadedImageSource(image)
         {
