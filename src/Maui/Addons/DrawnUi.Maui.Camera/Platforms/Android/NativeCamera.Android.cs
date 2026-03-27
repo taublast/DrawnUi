@@ -525,6 +525,12 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         _frameProcessingThread?.Join(1000);
         _frameProcessingThread = null;
 
+        lock (_imageLock)
+        {
+            _currentImage?.Close();
+            _currentImage = null;
+        }
+
         _frameAvailable?.Dispose();
         _frameAvailable = null;
         System.Diagnostics.Debug.WriteLine("[NativeCamera] Frame processing thread stopped");
@@ -550,15 +556,14 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
             if (_stopProcessingThread) break;
 
-            // Reset before acquiring: any frame that arrives during processing
-            // will re-arm the signal and wake us immediately on the next iteration.
+            Image image;
+            lock (_imageLock)
+            {
+                image = _currentImage;
+                _currentImage = null;
+            }
+
             _frameAvailable?.Reset();
-
-            var reader = FramesReader;
-            if (reader == null)
-                continue;
-
-            Image image = reader.AcquireLatestImage();
             if (image == null)
                 continue;
 
@@ -810,7 +815,9 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// </summary>
     public long RawFrameCount => _rawFrameCountTotal;
 
-    // Async frame processing
+    // Async frame processing: callback acquires immediately, worker consumes latest slot.
+    private Image _currentImage;
+    private readonly object _imageLock = new();
     private ManualResetEventSlim _frameAvailable;
     private volatile bool _stopProcessingThread = false;
     private System.Threading.Thread _frameProcessingThread;

@@ -9,9 +9,8 @@ namespace DrawnUi.Camera;
 public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvailableListener, INativeCamera
 {
     /// <summary>
-    /// IOnImageAvailableListener - signals the processing thread only.
-    /// Acquisition happens inside FrameProcessingLoop so at most 1 image
-    /// is ever outstanding, making the maxImages overflow structurally impossible.
+    /// IOnImageAvailableListener - acquire immediately and hand off only the latest image
+    /// to the processing thread so ImageReader is drained as soon as frames arrive.
     /// </summary>
     public void OnImageAvailable(ImageReader reader)
     {
@@ -28,7 +27,20 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         FramesReader = reader;
 
-        // Signal the processing thread — acquisition happens there, not here.
+        var newImage = reader.AcquireLatestImage();
+        if (newImage == null)
+            return;
+
+        Android.Media.Image oldImage = null;
+        lock (_imageLock)
+        {
+            oldImage = _currentImage;
+            _currentImage = newImage;
+        }
+
+        oldImage?.Close();
+
+        // Signal the processing thread after publishing the latest frame.
         _frameAvailable?.Set();
     }
 }
