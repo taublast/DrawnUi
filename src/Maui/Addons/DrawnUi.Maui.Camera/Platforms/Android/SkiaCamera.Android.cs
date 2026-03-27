@@ -462,6 +462,17 @@ public partial class SkiaCamera
             // Create muxer
             muxer = new Android.Media.MediaMuxer(outputPath, Android.Media.MuxerOutputType.Mpeg4);
 
+            var rotationHint = GetVideoRotationDegrees(preRecordedPath);
+            if (rotationHint == 0)
+            {
+                rotationHint = GetVideoRotationDegrees(liveRecordingPath);
+            }
+            if (rotationHint != 0)
+            {
+                muxer.SetOrientationHint(rotationHint);
+                System.Diagnostics.Debug.WriteLine($"[MuxVideosAndroid] Applied orientation hint to final mux: {rotationHint}°");
+            }
+
             // CRITICAL FIX: Create clean format WITHOUT duration constraints
             var preTrackMap = new Dictionary<int, int>();
             var liveTrackMap = new Dictionary<int, int>();
@@ -760,6 +771,27 @@ public partial class SkiaCamera
                 return durationMs * 1000; // Convert ms to microseconds
             return 0;
         }
+    }
+
+    private int GetVideoRotationDegrees(string filePath)
+    {
+        if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+            return 0;
+
+        try
+        {
+            using var retriever = new Android.Media.MediaMetadataRetriever();
+            retriever.SetDataSource(filePath);
+            string rotation = retriever.ExtractMetadata(Android.Media.MetadataKey.VideoRotation);
+            if (int.TryParse(rotation, out int rotationDegrees))
+                return ((rotationDegrees % 360) + 360) % 360;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[MuxVideosAndroid] Failed reading rotation metadata from {filePath}: {ex.Message}");
+        }
+
+        return 0;
     }
 
     private void OnAudioSampleAvailable(object sender, AudioSample sample)
