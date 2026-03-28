@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DrawnUi.Draw;
 
-public partial class SkiaGradient : BindableObject, ICloneable
+public partial class SkiaGradient : BindableObject, ICloneable, IComparable, IComparable<SkiaGradient>, IEquatable<SkiaGradient>
 {
     public ISkiaControl Parent { get; set; }
 
@@ -108,6 +108,241 @@ public partial class SkiaGradient : BindableObject, ICloneable
     /// </summary>
     public int Version => _version;
     private int _version;
+
+    public int CompareTo(object obj)
+    {
+        if (obj is null)
+        {
+            return 1;
+        }
+
+        if (obj is not SkiaGradient other)
+        {
+            return 0;
+        }
+
+        return CompareTo(other);
+    }
+
+    public int CompareTo(SkiaGradient other)
+    {
+        if (ReferenceEquals(this, other))
+        {
+            return 0;
+        }
+
+        if (other is null)
+        {
+            return 1;
+        }
+
+        var result = Type.CompareTo(other.Type);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = BlendMode.CompareTo(other.BlendMode);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = TileMode.CompareTo(other.TileMode);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = Light.CompareTo(other.Light);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = Opacity.CompareTo(other.Opacity);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = StartXRatio.CompareTo(other.StartXRatio);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = StartYRatio.CompareTo(other.StartYRatio);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = EndXRatio.CompareTo(other.EndXRatio);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = EndYRatio.CompareTo(other.EndYRatio);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = CompareColorLists(Colors, other.Colors);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        return CompareDoubleLists(ColorPositions, other.ColorPositions);
+    }
+
+    public bool Equals(SkiaGradient other)
+    {
+        return CompareTo(other) == 0;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is SkiaGradient other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        var hash = new HashCode();
+        hash.Add(Type);
+        hash.Add(BlendMode);
+        hash.Add(TileMode);
+        hash.Add(Light);
+        hash.Add(Opacity);
+        hash.Add(StartXRatio);
+        hash.Add(StartYRatio);
+        hash.Add(EndXRatio);
+        hash.Add(EndYRatio);
+
+        if (Colors != null)
+        {
+            foreach (var color in Colors)
+            {
+                hash.Add(color);
+            }
+        }
+
+        if (ColorPositions != null)
+        {
+            foreach (var position in ColorPositions)
+            {
+                hash.Add(position);
+            }
+        }
+
+        return hash.ToHashCode();
+    }
+
+    public static bool operator ==(SkiaGradient left, SkiaGradient right)
+    {
+        return Equals(left, right);
+    }
+
+    public static bool operator !=(SkiaGradient left, SkiaGradient right)
+    {
+        return !Equals(left, right);
+    }
+
+    private static int CompareColorLists(IList<Color> left, IList<Color> right)
+    {
+        if (ReferenceEquals(left, right))
+        {
+            return 0;
+        }
+
+        if (left is null)
+        {
+            return right is null ? 0 : -1;
+        }
+
+        if (right is null)
+        {
+            return 1;
+        }
+
+        var countResult = left.Count.CompareTo(right.Count);
+        if (countResult != 0)
+        {
+            return countResult;
+        }
+
+        for (int i = 0; i < left.Count; i++)
+        {
+            countResult = CompareColor(left[i], right[i]);
+            if (countResult != 0)
+            {
+                return countResult;
+            }
+        }
+
+        return 0;
+    }
+
+    private static int CompareDoubleLists(IList<double> left, IList<double> right)
+    {
+        if (ReferenceEquals(left, right))
+        {
+            return 0;
+        }
+
+        if (left is null)
+        {
+            return right is null ? 0 : -1;
+        }
+
+        if (right is null)
+        {
+            return 1;
+        }
+
+        var countResult = left.Count.CompareTo(right.Count);
+        if (countResult != 0)
+        {
+            return countResult;
+        }
+
+        for (int i = 0; i < left.Count; i++)
+        {
+            countResult = left[i].CompareTo(right[i]);
+            if (countResult != 0)
+            {
+                return countResult;
+            }
+        }
+
+        return 0;
+    }
+
+    private static int CompareColor(Color left, Color right)
+    {
+        var result = left.Red.CompareTo(right.Red);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = left.Green.CompareTo(right.Green);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = left.Blue.CompareTo(right.Blue);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        return left.Alpha.CompareTo(right.Alpha);
+    }
 
     private static void RedrawCanvas(BindableObject bindable, object oldvalue, object newvalue)
     {

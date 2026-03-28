@@ -3,10 +3,164 @@ namespace DrawnUi.Draw;
 /// <summary>
 /// IPostRendererEffect
 /// </summary>
-public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect
+public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IComparable<SkiaShaderEffect>, IEquatable<SkiaShaderEffect>
 {
     protected SKPaint PaintWithShader;
     private SKBlendMode _paintWithShaderBlendMode;
+
+    public int CompareTo(object obj)
+    {
+        if (obj is null)
+        {
+            return 1;
+        }
+
+        if (obj is not SkiaShaderEffect other)
+        {
+            return 0;
+        }
+
+        return CompareTo(other);
+    }
+
+    public int CompareTo(SkiaShaderEffect other)
+    {
+        if (ReferenceEquals(this, other))
+        {
+            return 0;
+        }
+
+        if (other is null)
+        {
+            return 1;
+        }
+
+        var result = UseBackground.CompareTo(other.UseBackground);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = UseContext.CompareTo(other.UseContext);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = AutoCreateInputTexture.CompareTo(other.AutoCreateInputTexture);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = BlendMode.CompareTo(other.BlendMode);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = string.CompareOrdinal(ShaderCode, other.ShaderCode);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = string.CompareOrdinal(ShaderSource, other.ShaderSource);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = string.CompareOrdinal(ShaderTemplate, other.ShaderTemplate);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = FilterMode.CompareTo(other.FilterMode);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = MipmapMode.CompareTo(other.MipmapMode);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = TileMode.CompareTo(other.TileMode);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = TimeSeconds.CompareTo(other.TimeSeconds);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = ComparePointF(MouseCurrent, other.MouseCurrent);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        return ComparePointF(MouseInitial, other.MouseInitial);
+    }
+
+    public bool Equals(SkiaShaderEffect other)
+    {
+        return CompareTo(other) == 0;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is SkiaShaderEffect other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        var hash = new HashCode();
+        hash.Add(UseBackground);
+        hash.Add(UseContext);
+        hash.Add(AutoCreateInputTexture);
+        hash.Add(BlendMode);
+        hash.Add(ShaderCode);
+        hash.Add(ShaderSource);
+        hash.Add(ShaderTemplate);
+        hash.Add(FilterMode);
+        hash.Add(MipmapMode);
+        hash.Add(TileMode);
+        hash.Add(TimeSeconds);
+        hash.Add(MouseCurrent.X);
+        hash.Add(MouseCurrent.Y);
+        hash.Add(MouseInitial.X);
+        hash.Add(MouseInitial.Y);
+        return hash.ToHashCode();
+    }
+
+    public static bool operator ==(SkiaShaderEffect left, SkiaShaderEffect right)
+    {
+        return Equals(left, right);
+    }
+
+    public static bool operator !=(SkiaShaderEffect left, SkiaShaderEffect right)
+    {
+        return !Equals(left, right);
+    }
+
+    private static int ComparePointF(PointF left, PointF right)
+    {
+        var result = left.X.CompareTo(right.X);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        return left.Y.CompareTo(right.Y);
+    }
 
     // ─── IPostRendererEffect ────────────────────────────────────────────────
 

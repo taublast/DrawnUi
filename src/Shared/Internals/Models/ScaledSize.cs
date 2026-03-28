@@ -1,7 +1,7 @@
 ﻿namespace DrawnUi.Draw;
 
 [DebuggerDisplay("{ToString()}")]
-public class ScaledSize
+public class ScaledSize : IComparable, IComparable<ScaledSize>, IEquatable<ScaledSize>
 {
     public ScaledSize()
     {
@@ -43,6 +43,67 @@ public class ScaledSize
     public SKSize Pixels { get; set; }
     public bool WidthCut { get; set; }
     public bool HeightCut { get; set; }
+
+    public int CompareTo(object obj)
+    {
+        if (obj is null)
+        {
+            return 1;
+        }
+
+        if (obj is not ScaledSize other)
+        {
+            return 0;
+        }
+
+        return CompareTo(other);
+    }
+
+    public int CompareTo(ScaledSize other)
+    {
+        if (ReferenceEquals(this, other))
+        {
+            return 0;
+        }
+
+        if (other is null)
+        {
+            return 1;
+        }
+
+        var result = Pixels.Width.CompareTo(other.Pixels.Width);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        return Pixels.Height.CompareTo(other.Pixels.Height);
+    }
+
+    public bool Equals(ScaledSize other)
+    {
+        return CompareTo(other) == 0;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is ScaledSize other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Pixels.Width, Pixels.Height);
+    }
+
+    public static bool operator ==(ScaledSize left, ScaledSize right)
+    {
+        return Equals(left, right);
+    }
+
+    public static bool operator !=(ScaledSize left, ScaledSize right)
+    {
+        return !Equals(left, right);
+    }
 
     public ScaledSize Clone()
     {
