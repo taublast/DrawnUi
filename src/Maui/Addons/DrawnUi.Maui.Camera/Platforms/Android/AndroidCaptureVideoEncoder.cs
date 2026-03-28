@@ -2903,13 +2903,12 @@ namespace DrawnUi.Camera
         private long ResolveVideoPtsNanos(TimeSpan fallbackTimestamp, long absoluteVideoTimestampNs, out TimeSpan frameTimestamp)
         {
             // PATH 1 — Live-only recording (UseSharedMediaOriginForLiveSync = true):
-            // Use shared media origin (first video frame's hw timestamp as base).
-            // Audio's CalculateAudioPts also reads _liveVideoStartTimestampNs set here,
-            // keeping both tracks on the same origin. PTS starts from 0.
-            if (UseSharedMediaOriginForLiveSync)
+            // Use CaptureStartAbsoluteNs as base (same as prerecording PATH 2).
+            // This keeps DrawableFrame.Time aligned with wall-clock elapsed from session init,
+            // matching the prerecording path behavior. Audio also uses CaptureStartAbsoluteNs.
+            if (UseSharedMediaOriginForLiveSync && CaptureStartAbsoluteNs > 0 && absoluteVideoTimestampNs > 0)
             {
-                long originNs = GetOrInitializeLiveVideoStartNs(absoluteVideoTimestampNs);
-                long relativeNs = absoluteVideoTimestampNs - originNs;
+                long relativeNs = absoluteVideoTimestampNs - CaptureStartAbsoluteNs;
                 if (relativeNs < 0)
                 {
                     relativeNs = 0;
@@ -3007,8 +3006,8 @@ namespace DrawnUi.Camera
 
             if (UseSharedMediaOriginForLiveSync)
             {
-                long originNs = System.Threading.Interlocked.Read(ref _liveVideoStartTimestampNs);
-                if (originNs < 0 || timestampNs < originNs)
+                long originNs = CaptureStartAbsoluteNs;
+                if (originNs <= 0 || timestampNs < originNs)
                 {
                     return -1;
                 }
