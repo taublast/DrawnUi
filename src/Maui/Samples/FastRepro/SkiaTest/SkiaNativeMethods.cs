@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Sandbox
 {
-    internal static partial class SkiaNativeMethods
+    internal static unsafe partial class SkiaNativeMethods
     {
         private const string LibraryName = "libSkiaSharp";
 
@@ -20,9 +20,9 @@ namespace Sandbox
         internal static partial void CanvasScale(IntPtr canvas, float sx, float sy);
 
         [LibraryImport(LibraryName, EntryPoint = "sk_canvas_clip_rect_with_operation")]
-        internal static partial void CanvasClipRectWithOperation(
+        internal static unsafe partial void CanvasClipRectWithOperation(
             IntPtr canvas,
-            ref SkRectNative rect,
+            SkRectNative* rect,
             SKClipOperation operation,
             [MarshalAs(UnmanagedType.I1)] bool doAA);
 
@@ -79,6 +79,26 @@ namespace Sandbox
 
         [LibraryImport(LibraryName, EntryPoint = "sk_paint_set_stroke_join")]
         internal static partial void PaintSetStrokeJoin(IntPtr paint, SKStrokeJoin join);
+
+        [LibraryImport(LibraryName, EntryPoint = "sk_paint_can_compute_fast_bounds")]
+        [return: MarshalAs(UnmanagedType.I1)]
+        internal static partial bool PaintCanComputeFastBounds(IntPtr paint);
+
+        [LibraryImport(LibraryName, EntryPoint = "sk_paint_compute_fast_bounds")]
+        internal static unsafe partial SkRectNative* PaintComputeFastBounds(IntPtr paint, SkRectNative* orig, SkRectNative* storage);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static bool CanComputeFastBounds(SKPaint paint) =>
+            PaintCanComputeFastBounds(paint.Handle);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static unsafe SKRect ComputeFastBounds(SKPaint paint)
+        {
+            SkRectNative orig = default;
+            SkRectNative storage;
+            SkRectNative* result = PaintComputeFastBounds(paint.Handle, &orig, &storage);
+            return new SKRect(result->Left, result->Top, result->Right, result->Bottom);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static uint PackColor(byte a, byte r, byte g, byte b)

@@ -12,46 +12,23 @@
                 throw new InvalidOperationException("Failed to allocate Skia paint.");
         }
 
-        public void SetAntialias(bool value)
-        {
-            EnsureNotDisposed();
+        public void SetAntialias(bool value) =>
             SkiaNativeMethods.PaintSetAntialias(Handle, value);
-        }
 
-        public void SetStyle(SKPaintStyle style)
-        {
-            EnsureNotDisposed();
+        public void SetStyle(SKPaintStyle style) =>
             SkiaNativeMethods.PaintSetStyle(Handle, style);
-        }
 
-        public void SetColor(uint color)
-        {
-            EnsureNotDisposed();
+        public void SetColor(uint color) =>
             SkiaNativeMethods.PaintSetColor(Handle, color);
-        }
 
-        public void SetStrokeWidth(float width)
-        {
-            EnsureNotDisposed();
+        public void SetStrokeWidth(float width) =>
             SkiaNativeMethods.PaintSetStrokeWidth(Handle, width);
-        }
 
-        public void SetStrokeCap(SKStrokeCap cap)
-        {
-            EnsureNotDisposed();
+        public void SetStrokeCap(SKStrokeCap cap) =>
             SkiaNativeMethods.PaintSetStrokeCap(Handle, cap);
-        }
 
-        public void SetStrokeJoin(SKStrokeJoin join)
-        {
-            EnsureNotDisposed();
+        public void SetStrokeJoin(SKStrokeJoin join) =>
             SkiaNativeMethods.PaintSetStrokeJoin(Handle, join);
-        }
-
-        private void EnsureNotDisposed()
-        {
-            ObjectDisposedException.ThrowIf(_disposed, this);
-        }
 
         public void Dispose()
         {
