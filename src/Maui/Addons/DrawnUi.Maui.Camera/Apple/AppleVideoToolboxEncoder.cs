@@ -443,8 +443,10 @@ namespace DrawnUi.Camera
 
         AVVideoSettingsCompressed CreateSettingsCompressed()
         {
-            // Bitrate scaled by resolution for real-time single-pass H.264:
-            // 720p30 ~5Mbps, 1080p30 ~10Mbps, 4K30 ~35Mbps
+            // Bitrate scaled by resolution for real-time single-pass H.264.
+            // Current formula: bitrate = width * height * frameRate * bpp, capped at 35 Mbps.
+            // Approximate outputs with the current bpp tiers:
+            // 720p30 ~3.3 Mbps, 1080p30 ~6.2 Mbps, 4K30 ~22.4 Mbps.
             int pixels = _width * _height;
             double bpp;
             if (pixels <= 921_600)       // up to 720p (1280x720)
