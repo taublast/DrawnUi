@@ -1033,7 +1033,12 @@ namespace DrawnUi.Camera
             DrainAudioEncoder();
 
             UseSharedMediaOriginForLiveSync = false;
-            UseMonotonicVideoPts = false;
+            // NOTE: UseMonotonicVideoPts intentionally stays true here.
+            // After the prerecording→live transition, video must keep using hw timestamps
+            // (hwTimestamp - CaptureStartAbsoluteNs) to stay in the same CLOCK_MONOTONIC
+            // domain as audio (_audioPtsBaseNs = CaptureStartAbsoluteNs).
+            // Resetting to false would fall through to DateTime.Now-based PATH 3, creating
+            // a clock-domain mismatch that drifts under load and jumps during GC/IO spikes.
             _useDeferredPreRecordingSeamSync = false;
             _audioPtsBaseNs = -1;
             _audioPtsOffsetUs = 0;
