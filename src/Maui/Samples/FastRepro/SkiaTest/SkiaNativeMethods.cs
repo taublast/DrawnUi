@@ -80,6 +80,13 @@ namespace Sandbox
         [LibraryImport(LibraryName, EntryPoint = "sk_paint_set_stroke_join")]
         internal static partial void PaintSetStrokeJoin(IntPtr paint, SKStrokeJoin join);
 
+        [LibraryImport(LibraryName, EntryPoint = "sk_paint_can_compute_fast_bounds")]
+        [return: MarshalAs(UnmanagedType.I1)]
+        internal static partial bool PaintCanComputeFastBounds(IntPtr paint);
+
+        [LibraryImport(LibraryName, EntryPoint = "sk_paint_compute_fast_bounds")]
+        internal static partial IntPtr PaintComputeFastBounds(IntPtr paint, ref SkRectNative orig, ref SkRectNative storage);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static uint PackColor(byte a, byte r, byte g, byte b)
             => (uint)(a << 24 | r << 16 | g << 8 | b);

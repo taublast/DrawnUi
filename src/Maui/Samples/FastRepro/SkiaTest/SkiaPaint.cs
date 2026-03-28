@@ -1,4 +1,6 @@
-﻿namespace Sandbox
+﻿using System.Runtime.InteropServices;
+
+namespace Sandbox
 {
     internal sealed class SkiaPaint : IDisposable
     {
@@ -46,6 +48,22 @@
         {
             EnsureNotDisposed();
             SkiaNativeMethods.PaintSetStrokeJoin(Handle, join);
+        }
+
+        public bool CanComputeFastBounds()
+        {
+            EnsureNotDisposed();
+            return SkiaNativeMethods.PaintCanComputeFastBounds(Handle);
+        }
+
+        public SkRectNative ComputeFastBounds(SkRectNative orig)
+        {
+            EnsureNotDisposed();
+            var storage = new SkRectNative();
+            var resultPtr = SkiaNativeMethods.PaintComputeFastBounds(Handle, ref orig, ref storage);
+            if (resultPtr == IntPtr.Zero)
+                return orig;
+            return Marshal.PtrToStructure<SkRectNative>(resultPtr);
         }
 
         private void EnsureNotDisposed()
