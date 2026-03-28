@@ -88,6 +88,19 @@ namespace Sandbox
         internal static unsafe partial SkRectNative* PaintComputeFastBounds(IntPtr paint, SkRectNative* orig, SkRectNative* storage);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static bool CanComputeFastBounds(SKPaint paint) =>
+            PaintCanComputeFastBounds(paint.Handle);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static unsafe SKRect ComputeFastBounds(SKPaint paint)
+        {
+            SkRectNative orig = default;
+            SkRectNative storage;
+            SkRectNative* result = PaintComputeFastBounds(paint.Handle, &orig, &storage);
+            return new SKRect(result->Left, result->Top, result->Right, result->Bottom);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static uint PackColor(byte a, byte r, byte g, byte b)
             => (uint)(a << 24 | r << 16 | g << 8 | b);
     }

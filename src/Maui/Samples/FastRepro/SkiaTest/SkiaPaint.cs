@@ -30,15 +30,6 @@
         public void SetStrokeJoin(SKStrokeJoin join) =>
             SkiaNativeMethods.PaintSetStrokeJoin(Handle, join);
 
-        public bool CanComputeFastBounds() =>
-            SkiaNativeMethods.PaintCanComputeFastBounds(Handle);
-
-        public unsafe SkRectNative ComputeFastBounds(SkRectNative orig)
-        {
-            SkRectNative storage;
-            return *SkiaNativeMethods.PaintComputeFastBounds(Handle, &orig, &storage);
-        }
-
         public void Dispose()
         {
             if (_disposed)
