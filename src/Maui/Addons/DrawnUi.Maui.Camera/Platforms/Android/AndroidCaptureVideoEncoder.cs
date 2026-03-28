@@ -267,11 +267,12 @@ namespace DrawnUi.Camera
         // eliminating per-frame write lag spikes on the AndroidGpuEncoder thread.
         private System.Threading.Thread _muxerWriterThread;
         private BlockingCollection<MuxerSample> _muxerQueue;
+        private MuxerDirectBufferPool _muxerBufferPool;
 
         private struct MuxerSample
         {
             public int TrackIndex;
-            public byte[] Data;          // rented from ArrayPool<byte>.Shared; returned by MuxerWriterLoop
+            public MuxerDirectBufferLease BufferLease;
             public int Size;
             public long PresentationTimeUs;
             public MediaCodecBufferFlags Flags;
@@ -2750,12 +2751,18 @@ namespace DrawnUi.Camera
                                         _muxerBufferInfo ??= new MediaCodec.BufferInfo();
                                         _muxerBufferInfo.Set(0, bufferInfo.Size, finalPts, bufferInfo.Flags);
 
-                                        byte[] frameData = ArrayPool<byte>.Shared.Rent(bufferInfo.Size);
+                                        var frameData = _muxerBufferPool?.Rent(bufferInfo.Size);
                                         bool frameEnqueued = false;
                                         try
                                         {
-                                            encodedData.Position(bufferInfo.Offset);
-                                            encodedData.Get(frameData, 0, bufferInfo.Size);
+                                            if (frameData == null)
+                                            {
+                                                _videoCodec.ReleaseOutputBuffer(outIndex, false);
+                                                outIndex = -1;
+                                                break;
+                                            }
+
+                                            CopyEncodedSampleToDirectBuffer(encodedData, bufferInfo.Offset, bufferInfo.Size, frameData);
 
                                             _videoCodec.ReleaseOutputBuffer(outIndex, false);
                                             outIndex = -1; // mark released — outer ReleaseOutputBuffer will be skipped
@@ -2769,7 +2776,10 @@ namespace DrawnUi.Camera
                                         }
                                         finally
                                         {
-                                            if (!frameEnqueued) ArrayPool<byte>.Shared.Return(frameData);
+                                            if (!frameEnqueued)
+                                            {
+                                                _muxerBufferPool?.Return(frameData);
+                                            }
                                         }
                                     }
                                     else
@@ -2818,12 +2828,18 @@ namespace DrawnUi.Camera
                                         _muxerBufferInfo ??= new MediaCodec.BufferInfo();
                                         _muxerBufferInfo.Set(0, bufferInfo.Size, finalPts, bufferInfo.Flags);
 
-                                        byte[] frameData = ArrayPool<byte>.Shared.Rent(bufferInfo.Size);
+                                        var frameData = _muxerBufferPool?.Rent(bufferInfo.Size);
                                         bool frameEnqueued = false;
                                         try
                                         {
-                                            encodedData.Position(bufferInfo.Offset);
-                                            encodedData.Get(frameData, 0, bufferInfo.Size);
+                                            if (frameData == null)
+                                            {
+                                                _videoCodec.ReleaseOutputBuffer(outIndex, false);
+                                                outIndex = -1;
+                                                break;
+                                            }
+
+                                            CopyEncodedSampleToDirectBuffer(encodedData, bufferInfo.Offset, bufferInfo.Size, frameData);
 
                                             _videoCodec.ReleaseOutputBuffer(outIndex, false);
                                             outIndex = -1; // mark released — outer ReleaseOutputBuffer will be skipped
@@ -2837,7 +2853,10 @@ namespace DrawnUi.Camera
                                         }
                                         finally
                                         {
-                                            if (!frameEnqueued) ArrayPool<byte>.Shared.Return(frameData);
+                                            if (!frameEnqueued)
+                                            {
+                                                _muxerBufferPool?.Return(frameData);
+                                            }
                                         }
                                     }
                                 }
@@ -2984,6 +3003,7 @@ namespace DrawnUi.Camera
 
             // 120 slots ≈ 4 seconds at 30fps — provides backpressure if disk is very slow
             _muxerQueue = new BlockingCollection<MuxerSample>(120);
+            _muxerBufferPool ??= new MuxerDirectBufferPool();
             _muxerWriterThread = new System.Threading.Thread(MuxerWriterLoop)
             {
                 IsBackground = true,
@@ -3006,6 +3026,8 @@ namespace DrawnUi.Camera
             _muxerWriterThread = null;
             _muxerQueue?.Dispose();
             _muxerQueue = null;
+            _muxerBufferPool?.Dispose();
+            _muxerBufferPool = null;
             System.Diagnostics.Debug.WriteLine("[MuxerWriter] Thread stopped");
         }
 
@@ -3019,7 +3041,12 @@ namespace DrawnUi.Camera
                 {
                     try
                     {
-                        var buf = Java.Nio.ByteBuffer.Wrap(sample.Data, 0, sample.Size);
+                        var buf = sample.BufferLease?.PrepareForRead(sample.Size);
+                        if (buf == null)
+                        {
+                            continue;
+                        }
+
                         bufInfo.Set(0, sample.Size, sample.PresentationTimeUs, sample.Flags);
                         lock (_muxerLock)
                         {
@@ -3032,7 +3059,7 @@ namespace DrawnUi.Camera
                     }
                     finally
                     {
-                        ArrayPool<byte>.Shared.Return(sample.Data);
+                        _muxerBufferPool?.Return(sample.BufferLease);
                     }
                 }
             }
@@ -3045,18 +3072,18 @@ namespace DrawnUi.Camera
 
         /// <summary>
         /// Enqueues an encoded video sample for writing by the muxer writer thread.
-        /// On success, ownership of rentedData transfers to the queue; MuxerWriterLoop returns it to the pool.
-        /// Returns false if the queue is unavailable or full — caller must then return rentedData to pool.
+        /// On success, ownership of bufferLease transfers to the queue; MuxerWriterLoop returns it to the pool.
+        /// Returns false if the queue is unavailable or full — caller must then return bufferLease to the pool.
         /// </summary>
-        private bool TryEnqueueMuxerSample(int trackIndex, byte[] rentedData, int size, long ptsUs, MediaCodecBufferFlags flags)
+        private bool TryEnqueueMuxerSample(int trackIndex, MuxerDirectBufferLease bufferLease, int size, long ptsUs, MediaCodecBufferFlags flags)
         {
-            if (_muxerQueue == null || _muxerQueue.IsAddingCompleted)
+            if (_muxerQueue == null || _muxerQueue.IsAddingCompleted || bufferLease == null)
                 return false;
 
             var sample = new MuxerSample
             {
                 TrackIndex = trackIndex,
-                Data = rentedData,
+                BufferLease = bufferLease,
                 Size = size,
                 PresentationTimeUs = ptsUs,
                 Flags = flags
@@ -3069,7 +3096,151 @@ namespace DrawnUi.Camera
                 System.Diagnostics.Debug.WriteLine("[MuxerWriter] Queue full — frame dropped (disk too slow)");
                 return false;
             }
+
             return true;
+        }
+
+        private static void CopyEncodedSampleToDirectBuffer(ByteBuffer encodedData, int offset, int size, MuxerDirectBufferLease bufferLease)
+        {
+            var destination = bufferLease.PrepareForWrite(size);
+            int originalPosition = encodedData.Position();
+            int originalLimit = encodedData.Limit();
+
+            try
+            {
+                encodedData.Position(offset);
+                encodedData.Limit(offset + size);
+                destination.Put(encodedData);
+                destination.Flip();
+            }
+            finally
+            {
+                encodedData.Position(originalPosition);
+                encodedData.Limit(originalLimit);
+            }
+        }
+
+        private sealed class MuxerDirectBufferLease : IDisposable
+        {
+            public MuxerDirectBufferLease(ByteBuffer buffer, int capacity)
+            {
+                Buffer = buffer;
+                Capacity = capacity;
+            }
+
+            public ByteBuffer Buffer { get; }
+            public int Capacity { get; }
+            private bool _disposed;
+
+            public ByteBuffer PrepareForWrite(int size)
+            {
+                if (_disposed)
+                {
+                    return null;
+                }
+
+                Buffer.Clear();
+                Buffer.Limit(size);
+                return Buffer;
+            }
+
+            public ByteBuffer PrepareForRead(int size)
+            {
+                if (_disposed)
+                {
+                    return null;
+                }
+
+                Buffer.Position(0);
+                Buffer.Limit(size);
+                return Buffer;
+            }
+
+            public void Dispose()
+            {
+                if (_disposed)
+                {
+                    return;
+                }
+
+                _disposed = true;
+                Buffer?.Dispose();
+            }
+        }
+
+        private sealed class MuxerDirectBufferPool : IDisposable
+        {
+            private readonly ConcurrentDictionary<int, ConcurrentBag<MuxerDirectBufferLease>> _buckets = new();
+            private readonly ConcurrentBag<MuxerDirectBufferLease> _allocated = new();
+            private volatile bool _disposed;
+
+            public MuxerDirectBufferLease Rent(int requiredSize)
+            {
+                if (_disposed)
+                {
+                    return null;
+                }
+
+                int bucketSize = GetBucketSize(requiredSize);
+                var bucket = _buckets.GetOrAdd(bucketSize, static _ => new ConcurrentBag<MuxerDirectBufferLease>());
+                if (bucket.TryTake(out var lease))
+                {
+                    return lease;
+                }
+
+                var buffer = ByteBuffer.AllocateDirect(bucketSize);
+                buffer.Order(ByteOrder.NativeOrder());
+
+                lease = new MuxerDirectBufferLease(buffer, bucketSize);
+                _allocated.Add(lease);
+                return lease;
+            }
+
+            public void Return(MuxerDirectBufferLease lease)
+            {
+                if (lease == null)
+                {
+                    return;
+                }
+
+                if (_disposed)
+                {
+                    lease.Dispose();
+                    return;
+                }
+
+                lease.Buffer.Clear();
+                var bucket = _buckets.GetOrAdd(lease.Capacity, static _ => new ConcurrentBag<MuxerDirectBufferLease>());
+                bucket.Add(lease);
+            }
+
+            public void Dispose()
+            {
+                if (_disposed)
+                {
+                    return;
+                }
+
+                _disposed = true;
+                foreach (var lease in _allocated)
+                {
+                    try { lease.Dispose(); } catch { }
+                }
+
+                _buckets.Clear();
+            }
+
+            private static int GetBucketSize(int requiredSize)
+            {
+                const int minBucketSize = 4 * 1024;
+                int bucketSize = minBucketSize;
+                while (bucketSize < requiredSize && bucketSize < int.MaxValue / 2)
+                {
+                    bucketSize <<= 1;
+                }
+
+                return Math.Max(bucketSize, requiredSize);
+            }
         }
 
         private void TryReleaseMuxer()
