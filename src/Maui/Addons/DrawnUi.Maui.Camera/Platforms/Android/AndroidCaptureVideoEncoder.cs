@@ -134,6 +134,8 @@ namespace DrawnUi.Camera
         private long _liveVideoStartTimestampNs = -1;
         private long _audioPtsOffsetUs = 0;
         private TimeSpan _deferredPreRecordingFirstFrameOffset = TimeSpan.MinValue;
+        private long _firstBufferedVideoAbsoluteUs = -1;
+        private long _deferredPreRecordingFirstBufferedVideoAbsoluteUs = -1;
         public bool UseSharedMediaOriginForLiveSync { get; set; } = false;
         private bool _useDeferredPreRecordingSeamSync = false;
 
@@ -500,6 +502,9 @@ namespace DrawnUi.Camera
             _useDeferredPreRecordingSeamSync = false;
             _preRecordingDuration = TimeSpan.Zero;
             _firstEncodedFrameOffset = TimeSpan.MinValue;
+            _deferredPreRecordingFirstFrameOffset = TimeSpan.MinValue;
+            _firstBufferedVideoAbsoluteUs = -1;
+            _deferredPreRecordingFirstBufferedVideoAbsoluteUs = -1;
             _skipFirstEncodedSample = true;  // Reset for new session
             _gpuFrameCounter = 0;  // Reset GPU purge counter
             ResetAudioTiming();
@@ -896,22 +901,11 @@ namespace DrawnUi.Camera
                         // Flush pre-recorded audio - prefer pre-encoded AAC for zero lag
                         if (_recordAudio)
                         {
-                            // CLOCK ALIGNMENT:
-                            // Video PTS = DateTime.Now - _captureVideoStartTime (wall-clock elapsed, ~0-based).
-                            // Audio TimestampNs = absolute CLOCK_MONOTONIC from AudioRecord.GetTimestamp (~device uptime).
-                            // Bridge: CaptureStartAbsoluteNs = ElapsedRealtimeNanos() captured at the same instant
-                            // as _captureVideoStartTime = DateTime.Now in SkiaCamera.
-                            //
-                            // Absolute ns of the oldest buffered video frame (muxer PTS=0):
-                            //   CaptureStartAbsoluteNs = UptimeMillis at camera start (CLOCK_MONOTONIC)
-                            //   _firstEncodedFrameOffset = elapsed from camera start to first encoded frame
-                            //     (frames are normalized by subtracting this, so muxer PTS=0 corresponds to
-                            //      the actual time of the first encoded frame, not camera start)
-                            //   firstBufferedFrameTimestamp = normalized PTS of oldest buffered frame (= 0ms)
-                            long absoluteFirstVideoFrameNs = CaptureStartAbsoluteNs
-                                + (long)(_firstEncodedFrameOffset.Ticks * 100L) // TotalNanoseconds
-                                + (long)(firstBufferedFrameTimestamp.TotalMilliseconds * 1_000_000.0);
-                            long absoluteFirstVideoFrameUs = absoluteFirstVideoFrameNs / 1000L;
+                            long absoluteFirstVideoFrameUs = GetBufferedVideoAbsoluteStartUs(
+                                firstBufferedFrameTimestamp,
+                                _firstEncodedFrameOffset,
+                                _firstBufferedVideoAbsoluteUs);
+                            long absoluteFirstVideoFrameNs = absoluteFirstVideoFrameUs * 1000L;
 
                             // Diagnostics
                             System.Diagnostics.Debug.WriteLine($"[AndroidEncoder-DIAG] CaptureStartAbsoluteNs={CaptureStartAbsoluteNs / 1_000_000:F0}ms");
@@ -1261,6 +1255,7 @@ namespace DrawnUi.Camera
             _useDeferredPreRecordingSeamSync = false;
             _waitForFirstLiveKeyframe = false;
             _deferredPreRecordingFirstFrameOffset = _firstEncodedFrameOffset;
+            _deferredPreRecordingFirstBufferedVideoAbsoluteUs = _firstBufferedVideoAbsoluteUs;
             // CRITICAL FIX: Set _firstEncodedFrameOffset to Zero so live video PTS passes through
             // as raw encoder PTS (= hwTimestamp - CaptureStartAbsoluteNs). Combined with setting
             // _audioPtsBaseNs = CaptureStartAbsoluteNs below, both audio and video in the live file
@@ -2315,12 +2310,13 @@ namespace DrawnUi.Camera
                 _audioFormat != null &&
                 _encodedAudioBuffer != null &&
                 _encodedAudioBuffer.FrameCount > 0 &&
-                CaptureStartAbsoluteNs > 0 &&
-                _deferredPreRecordingFirstFrameOffset != TimeSpan.MinValue)
+                (_deferredPreRecordingFirstBufferedVideoAbsoluteUs >= 0 ||
+                 (CaptureStartAbsoluteNs > 0 && _deferredPreRecordingFirstFrameOffset != TimeSpan.MinValue)))
             {
-                long absoluteFirstVideoFrameUs = (CaptureStartAbsoluteNs / 1000L)
-                    + (long)_deferredPreRecordingFirstFrameOffset.TotalMicroseconds
-                    + (long)firstBufferedFrameTimestamp.TotalMicroseconds;
+                long absoluteFirstVideoFrameUs = GetBufferedVideoAbsoluteStartUs(
+                    firstBufferedFrameTimestamp,
+                    _deferredPreRecordingFirstFrameOffset,
+                    _deferredPreRecordingFirstBufferedVideoAbsoluteUs);
                 long lastWrittenAudioPtsUs = -1;
                 encodedAudioFramesToWrite = new List<(byte[] Data, long TimestampUs, int Size)>();
 
@@ -2687,6 +2683,11 @@ namespace DrawnUi.Camera
                                     if (_firstEncodedFrameOffset == TimeSpan.MinValue)
                                     {
                                         _firstEncodedFrameOffset = rawTimestamp;
+                                        if (_firstBufferedVideoAbsoluteUs < 0 && CaptureStartAbsoluteNs > 0)
+                                        {
+                                            _firstBufferedVideoAbsoluteUs = (CaptureStartAbsoluteNs / 1000L)
+                                                + (long)rawTimestamp.TotalMicroseconds;
+                                        }
                                         System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] First buffered frame at {rawTimestamp.TotalSeconds:F3}s");
                                     }
 
@@ -3261,6 +3262,24 @@ namespace DrawnUi.Camera
             _audioPresentationTimeUs = 0;
             _lastMuxerAudioPtsUs = 0;
             _maxExpectedEncoderOutputPtsUs = 0;
+        }
+
+        private long GetBufferedVideoAbsoluteStartUs(TimeSpan firstBufferedFrameTimestamp, TimeSpan initialFrameOffset, long initialFrameAbsoluteUs)
+        {
+            long firstBufferedFrameOffsetUs = (long)firstBufferedFrameTimestamp.TotalMicroseconds;
+            if (initialFrameAbsoluteUs >= 0)
+            {
+                return initialFrameAbsoluteUs + firstBufferedFrameOffsetUs;
+            }
+
+            if (CaptureStartAbsoluteNs > 0 && initialFrameOffset != TimeSpan.MinValue)
+            {
+                return (CaptureStartAbsoluteNs / 1000L)
+                    + (long)initialFrameOffset.TotalMicroseconds
+                    + firstBufferedFrameOffsetUs;
+            }
+
+            return Math.Max(0, firstBufferedFrameOffsetUs);
         }
 
         private long ResolveVideoPtsNanos(TimeSpan fallbackTimestamp, long absoluteVideoTimestampNs, out TimeSpan frameTimestamp)
