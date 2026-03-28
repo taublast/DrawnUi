@@ -3474,14 +3474,15 @@ namespace DrawnUi.Camera
                     // Using GetAllSamples() would re-encode every buffered sample every 10ms, producing
                     // thousands of duplicate frames and wasting CPU/JVM objects.
                     long lastEncodedTimestampNs = long.MinValue;
+                    var pendingPcmSamples = new List<AudioSample>(256);
 
                     while (!token.IsCancellationRequested && IsPreRecordingMode)
                     {
                         try
                         {
                             // Only fetch samples that arrived after the last encoded one
-                            var pcmSamples = _audioBuffer?.GetSamplesAfter(lastEncodedTimestampNs);
-                            if (pcmSamples == null || pcmSamples.Length == 0)
+                            int sampleCount = _audioBuffer?.CopySamplesAfter(lastEncodedTimestampNs, pendingPcmSamples) ?? 0;
+                            if (sampleCount == 0)
                             {
                                 await Task.Delay(50, token);
                                 continue;
@@ -3490,11 +3491,12 @@ namespace DrawnUi.Camera
                             // Encode PCM chunks to AAC using the main audio codec.
                             // FeedAudioEncoder feeds the codec and drains its output; DrainAudioEncoder
                             // stores each encoded frame to _encodedAudioBuffer (muxer not started yet).
-                            foreach (var pcmSample in pcmSamples)
+                            for (int i = 0; i < sampleCount; i++)
                             {
                                 if (token.IsCancellationRequested)
                                     break;
 
+                                var pcmSample = pendingPcmSamples[i];
                                 FeedAudioEncoder(pcmSample);
                                 lastEncodedTimestampNs = pcmSample.TimestampNs;
                             }

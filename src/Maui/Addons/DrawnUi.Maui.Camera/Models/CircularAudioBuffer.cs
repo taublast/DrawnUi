@@ -69,6 +69,36 @@ namespace DrawnUi.Camera
         }
 
         /// <summary>
+        /// Copies all samples with TimestampNs strictly after the given timestamp into a reusable destination list.
+        /// Uses binary search for the start index and reuses the destination list capacity across calls.
+        /// </summary>
+        public int CopySamplesAfter(long timestampNs, List<AudioSample> destination)
+        {
+            ArgumentNullException.ThrowIfNull(destination);
+
+            lock (_lock)
+            {
+                destination.Clear();
+
+                if (_samples.Count == 0)
+                    return 0;
+
+                int idx = timestampNs == long.MinValue ? 0 : FindFirstIndexAfter(timestampNs);
+                int count = _samples.Count - idx;
+                if (count <= 0)
+                    return 0;
+
+                destination.EnsureCapacity(count);
+                for (int i = idx; i < _samples.Count; i++)
+                {
+                    destination.Add(_samples[i]);
+                }
+
+                return count;
+            }
+        }
+
+        /// <summary>
         /// Returns all samples with TimestampNs in [startTimestampNs, endTimestampNs].
         /// Uses binary search — O(log n) find, O(k) copy.
         /// </summary>
