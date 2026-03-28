@@ -502,7 +502,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
             if (CameraControl == null)
                 return;
 
-            var isRecordingVideo = CameraControl.CaptureMode == CaptureModeType.Video && CameraControl.IsRecording;
+            var isRecordingVideo = CameraControl.CaptureMode == CaptureModeType.Video && (CameraControl.IsRecording || CameraControl.IsPreRecording);
 
             if (_settingsDrawer != null)
             {
