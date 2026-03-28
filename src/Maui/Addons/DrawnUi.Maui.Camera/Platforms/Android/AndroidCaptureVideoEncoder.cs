@@ -125,6 +125,15 @@ namespace DrawnUi.Camera
         /// Set by SkiaCamera right after _captureVideoStartTime = DateTime.Now.
         /// </summary>
         public long CaptureStartAbsoluteNs { get; set; } = 0;
+
+        /// <summary>
+        /// When true, ResolveVideoPtsNanos uses CLOCK_MONOTONIC hardware timestamps
+        /// instead of DateTime.Now-based fallback. Only enabled for prerecording and
+        /// deferred-live paths where audio also uses CLOCK_MONOTONIC via CaptureStartAbsoluteNs.
+        /// Live-only recording keeps the original shared-origin or fallback timestamp paths.
+        /// </summary>
+        public bool UseMonotonicVideoPts { get; set; } = false;
+
         private Task _backgroundEncodingTask;
         private CancellationTokenSource _encodingCancellation;
 
@@ -329,6 +338,7 @@ namespace DrawnUi.Camera
             _deviceRotation = deviceRotation;
             _recordAudio = recordAudio;
             UseSharedMediaOriginForLiveSync = false;
+            UseMonotonicVideoPts = false;
             _useDeferredPreRecordingSeamSync = false;
             _preRecordingDuration = TimeSpan.Zero;
             _firstEncodedFrameOffset = TimeSpan.MinValue;
@@ -1023,6 +1033,7 @@ namespace DrawnUi.Camera
             DrainAudioEncoder();
 
             UseSharedMediaOriginForLiveSync = false;
+            UseMonotonicVideoPts = false;
             _useDeferredPreRecordingSeamSync = false;
             _audioPtsBaseNs = -1;
             _audioPtsOffsetUs = 0;
@@ -2912,7 +2923,7 @@ namespace DrawnUi.Camera
             // Use hardware timestamp with CaptureStartAbsoluteNs as base.
             // This keeps video on CLOCK_MONOTONIC, same clock domain as audio timestamps,
             // eliminating drift from DateTime.Now which was the old fallback.
-            if (CaptureStartAbsoluteNs > 0 && absoluteVideoTimestampNs > 0)
+            if (UseMonotonicVideoPts && CaptureStartAbsoluteNs > 0 && absoluteVideoTimestampNs > 0)
             {
                 long relativeNs = absoluteVideoTimestampNs - CaptureStartAbsoluteNs;
                 if (relativeNs < 0)

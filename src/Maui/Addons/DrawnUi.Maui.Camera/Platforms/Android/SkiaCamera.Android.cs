@@ -1291,6 +1291,7 @@ public partial class SkiaCamera
         if (_captureVideoEncoder is AndroidCaptureVideoEncoder droidEncBridge)
         {
             droidEncBridge.UseSharedMediaOriginForLiveSync = !IsPreRecording && audioEnabled;
+            droidEncBridge.UseMonotonicVideoPts = IsPreRecording;
             droidEncBridge.CaptureStartAbsoluteNs = Super.GetCurrentTimeNanos();
         }
 
