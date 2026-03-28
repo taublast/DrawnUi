@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Sandbox
 {
-    internal static partial class SkiaNativeMethods
+    internal static unsafe partial class SkiaNativeMethods
     {
         private const string LibraryName = "libSkiaSharp";
 
@@ -85,7 +85,7 @@ namespace Sandbox
         internal static partial bool PaintCanComputeFastBounds(IntPtr paint);
 
         [LibraryImport(LibraryName, EntryPoint = "sk_paint_compute_fast_bounds")]
-        internal static partial IntPtr PaintComputeFastBounds(IntPtr paint, ref SkRectNative orig, ref SkRectNative storage);
+        internal static unsafe partial SkRectNative* PaintComputeFastBounds(IntPtr paint, SkRectNative* orig, SkRectNative* storage);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static uint PackColor(byte a, byte r, byte g, byte b)

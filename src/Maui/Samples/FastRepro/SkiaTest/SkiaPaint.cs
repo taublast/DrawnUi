@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace Sandbox
+﻿namespace Sandbox
 {
     internal sealed class SkiaPaint : IDisposable
     {
@@ -56,14 +54,11 @@ namespace Sandbox
             return SkiaNativeMethods.PaintCanComputeFastBounds(Handle);
         }
 
-        public SkRectNative ComputeFastBounds(SkRectNative orig)
+        public unsafe SkRectNative ComputeFastBounds(SkRectNative orig)
         {
             EnsureNotDisposed();
-            var storage = new SkRectNative();
-            var resultPtr = SkiaNativeMethods.PaintComputeFastBounds(Handle, ref orig, ref storage);
-            if (resultPtr == IntPtr.Zero)
-                return orig;
-            return Marshal.PtrToStructure<SkRectNative>(resultPtr);
+            SkRectNative storage;
+            return *SkiaNativeMethods.PaintComputeFastBounds(Handle, &orig, &storage);
         }
 
         private void EnsureNotDisposed()
