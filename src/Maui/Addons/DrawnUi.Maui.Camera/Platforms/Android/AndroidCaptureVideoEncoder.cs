@@ -1069,7 +1069,17 @@ namespace DrawnUi.Camera
             _useDeferredPreRecordingSeamSync = false;
             _waitForFirstLiveKeyframe = false;
             _deferredPreRecordingFirstFrameOffset = _firstEncodedFrameOffset;
-            _firstEncodedFrameOffset = _deferredPreRecordingFirstFrameOffset;
+            // CRITICAL FIX: Set _firstEncodedFrameOffset to Zero so live video PTS passes through
+            // as raw encoder PTS (= hwTimestamp - CaptureStartAbsoluteNs). Combined with setting
+            // _audioPtsBaseNs = CaptureStartAbsoluteNs below, both audio and video in the live file
+            // use the same CLOCK_MONOTONIC base. The final mux normalizes both tracks together.
+            // Previously this kept the prerecording value, causing live video PTS to start at
+            // ~preRecDuration while live audio started at 0 — desync equal to prerecording duration.
+            _firstEncodedFrameOffset = TimeSpan.Zero;
+            // Anchor audio to the same CLOCK_MONOTONIC base as video (CaptureStartAbsoluteNs).
+            // This eliminates the A/V base-time mismatch where audio PTS=0 and video PTS=0
+            // corresponded to different wall-clock moments.
+            _audioPtsBaseNs = CaptureStartAbsoluteNs;
 
             _isRecording = true;
             _startTime = DateTime.Now;
@@ -2881,6 +2891,23 @@ namespace DrawnUi.Camera
 
         private long ResolveVideoPtsNanos(TimeSpan fallbackTimestamp, long absoluteVideoTimestampNs, out TimeSpan frameTimestamp)
         {
+            // CRITICAL: When hardware timestamp and CLOCK_MONOTONIC capture-start are available,
+            // always use them. This keeps video on the same clock domain as audio (CLOCK_MONOTONIC)
+            // and eliminates drift from DateTime.Now which is wall-clock time.
+            // Previously, the prerecording path used DateTime.Now-based fallback timestamps while
+            // audio used CLOCK_MONOTONIC, causing A/V desync proportional to clock domain drift.
+            if (CaptureStartAbsoluteNs > 0 && absoluteVideoTimestampNs > 0)
+            {
+                long relativeNs = absoluteVideoTimestampNs - CaptureStartAbsoluteNs;
+                if (relativeNs < 0)
+                {
+                    relativeNs = 0;
+                }
+
+                frameTimestamp = TimeSpanFromNanoseconds(relativeNs);
+                return relativeNs;
+            }
+
             if (!UseSharedMediaOriginForLiveSync)
             {
                 long fallbackPtsNs = fallbackTimestamp.Ticks * 100L;
@@ -2889,14 +2916,14 @@ namespace DrawnUi.Camera
             }
 
             long originNs = GetOrInitializeLiveVideoStartNs(absoluteVideoTimestampNs);
-            long relativeNs = absoluteVideoTimestampNs - originNs;
-            if (relativeNs < 0)
+            long relNs = absoluteVideoTimestampNs - originNs;
+            if (relNs < 0)
             {
-                relativeNs = 0;
+                relNs = 0;
             }
 
-            frameTimestamp = TimeSpanFromNanoseconds(relativeNs);
-            return relativeNs;
+            frameTimestamp = TimeSpanFromNanoseconds(relNs);
+            return relNs;
         }
 
         private long GetOrInitializeSharedMediaOrigin(long absoluteTimestampNs)
