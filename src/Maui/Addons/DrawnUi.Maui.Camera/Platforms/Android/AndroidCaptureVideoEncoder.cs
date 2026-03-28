@@ -31,7 +31,31 @@ namespace DrawnUi.Camera
     /// </summary>
     public class AndroidCaptureVideoEncoder : ICaptureVideoEncoder
     {
+        private const int BitrateModeCq = 0;
+        private const int BitrateModeVbr = 1;
+        private const int BitrateModeCbr = 2;
+        private const string MediaFormatKeyBitrateMode = "bitrate-mode";
+        private const string MediaFormatKeyComplexity = "complexity";
+        private const string MediaFormatKeyPriority = "priority";
+        private const string MediaFormatKeyOperatingRate = "operating-rate";
+        private const string MediaFormatKeyLatency = "latency";
+        private const string MediaFormatKeyMaxBFrames = "max-bframes";
+
+
+        /*
+            for 1080p
+            0.1 -> "like on iOS" about 8 Mbps (varies by scene complexity, but good baseline for real-time)
+            0.193 -> about 12.0 Mbps
+            0.200 -> about 12.4 Mbps
+            0.225 -> about 14.0 Mbps
+            0.241 -> about 15.0 Mbps
+            0.250 -> about 15.6 Mbps
+         */
+
+        const double PreferSizeOverSpeedBy = 0.175;
+
         public bool SupportsAudio => true;
+        public bool PreferFastRealtimeEncoding { get; set; } = true;
 
         private string _preferredAudioCodecName;
         private string _selectedAudioMimeType = MediaFormat.MimetypeAudioAac; // Default to AAC
@@ -328,6 +352,139 @@ namespace DrawnUi.Camera
             return InitializeAsync(outputPath, width, height, frameRate, recordAudio, 0);
         }
 
+        private int CalculateTargetVideoBitrate(bool preferFastRealtimeEncoding)
+        {
+            long baseBitrate = Math.Max((long)_width * _height * 4L, 2_000_000L);
+            if (!preferFastRealtimeEncoding)
+            {
+                return (int)Math.Min(baseBitrate, int.MaxValue);
+            }
+
+
+            long fastBitrate = (long)Math.Round(_width * (double)_height * _frameRate * PreferSizeOverSpeedBy);
+            fastBitrate = Math.Min(fastBitrate, 80_000_000L);
+            return (int)Math.Min(fastBitrate, int.MaxValue);
+        }
+
+        private MediaFormat CreateVideoMediaFormat(int targetBitrate)
+        {
+            var format = MediaFormat.CreateVideoFormat(MediaFormat.MimetypeVideoAvc, _width, _height);
+            format.SetInteger(MediaFormat.KeyColorFormat, (int)MediaCodecCapabilities.Formatsurface);
+            format.SetInteger(MediaFormat.KeyBitRate, targetBitrate);
+            format.SetInteger(MediaFormat.KeyFrameRate, _frameRate);
+            format.SetInteger(MediaFormat.KeyIFrameInterval, 1);
+            return format;
+        }
+
+        private static int? GetComplexityLowerBound(MediaCodecInfo.EncoderCapabilities encoderCapabilities)
+        {
+            try
+            {
+                var complexityRange = encoderCapabilities?.ComplexityRange;
+                if (complexityRange == null)
+                {
+                    return null;
+                }
+
+                var lowerProperty = complexityRange.GetType().GetProperty("Lower");
+                var lowerValue = lowerProperty?.GetValue(complexityRange);
+
+                if (lowerValue is int intValue)
+                {
+                    return intValue;
+                }
+
+                if (lowerValue is Java.Lang.Integer javaInt)
+                {
+                    return javaInt.IntValue();
+                }
+            }
+            catch
+            {
+            }
+
+            return null;
+        }
+
+        private static int? GetPreferredRealtimeBitrateMode(MediaCodecInfo.EncoderCapabilities encoderCapabilities)
+        {
+            if (encoderCapabilities == null)
+            {
+                return null;
+            }
+
+            if (encoderCapabilities.IsBitrateModeSupported((Android.Media.BitrateMode)BitrateModeVbr))
+            {
+                return BitrateModeVbr;
+            }
+
+            if (encoderCapabilities.IsBitrateModeSupported((Android.Media.BitrateMode)BitrateModeCbr))
+            {
+                return BitrateModeCbr;
+            }
+
+            return null;
+        }
+
+        private static string DescribeBitrateMode(int? bitrateMode)
+        {
+            return bitrateMode switch
+            {
+                BitrateModeCbr => "CBR",
+                BitrateModeVbr => "VBR",
+                BitrateModeCq => "CQ",
+                _ => "default"
+            };
+        }
+
+        private bool TryApplyFastRealtimeVideoHints(MediaCodec codec, MediaFormat format)
+        {
+            try
+            {
+                var encoderCapabilities = codec.CodecInfo?
+                    .GetCapabilitiesForType(MediaFormat.MimetypeVideoAvc)?
+                    .EncoderCapabilities;
+
+                var bitrateMode = GetPreferredRealtimeBitrateMode(encoderCapabilities);
+                if (bitrateMode.HasValue)
+                {
+                    format.SetInteger(MediaFormatKeyBitrateMode, bitrateMode.Value);
+                }
+
+                var minComplexity = GetComplexityLowerBound(encoderCapabilities);
+                if (minComplexity.HasValue)
+                {
+                    format.SetInteger(MediaFormatKeyComplexity, minComplexity.Value);
+                }
+
+                //if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.M)
+                //{
+                //    format.SetInteger(MediaFormatKeyPriority, 0);
+                //    format.SetInteger(MediaFormatKeyOperatingRate, Math.Max(_frameRate, 30));
+                //}
+
+                if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
+                {
+                    format.SetInteger(MediaFormatKeyLatency, 1);
+                }
+
+                if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Q)
+                {
+                    format.SetInteger(MediaFormatKeyMaxBFrames, 0);
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"[AndroidEncoder] Fast realtime hints prepared: bitrate={format.GetInteger(MediaFormat.KeyBitRate)} mode={DescribeBitrateMode(bitrateMode)} complexity={(minComplexity?.ToString() ?? "default")}");
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Failed to prepare fast realtime hints: {ex.Message}");
+                return false;
+            }
+        }
+
         public async Task InitializeAsync(string outputPath, int width, int height, int frameRate, bool recordAudio, int deviceRotation)
         {
             _outputPath = outputPath;
@@ -362,15 +519,33 @@ namespace DrawnUi.Camera
                 try { File.Delete(_outputPath); } catch { }
             }
 
-            // Prepare MediaCodec H.264 encoder with Surface input
-            var format = MediaFormat.CreateVideoFormat(MediaFormat.MimetypeVideoAvc, _width, _height);
-            format.SetInteger(MediaFormat.KeyColorFormat, (int)MediaCodecCapabilities.Formatsurface);
-            format.SetInteger(MediaFormat.KeyBitRate, Math.Max(_width * _height * 4, 2_000_000));
-            format.SetInteger(MediaFormat.KeyFrameRate, _frameRate);
-            format.SetInteger(MediaFormat.KeyIFrameInterval, 1); // 1 sec GOP
+            int targetBitrate = CalculateTargetVideoBitrate(PreferFastRealtimeEncoding);
 
             _videoCodec = MediaCodec.CreateEncoderByType(MediaFormat.MimetypeVideoAvc);
-            _videoCodec.Configure(format, null, null, MediaCodecConfigFlags.Encode);
+            var format = CreateVideoMediaFormat(targetBitrate);
+            bool appliedFastHints = PreferFastRealtimeEncoding && TryApplyFastRealtimeVideoHints(_videoCodec, format);
+
+            try
+            {
+                _videoCodec.Configure(format, null, null, MediaCodecConfigFlags.Encode);
+            }
+            catch (Exception ex) when (appliedFastHints)
+            {
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Fast realtime configure failed, retrying baseline settings: {ex.Message}");
+
+                try
+                {
+                    _videoCodec.Release();
+                }
+                catch
+                {
+                }
+
+                _videoCodec = MediaCodec.CreateEncoderByType(MediaFormat.MimetypeVideoAvc);
+                format = CreateVideoMediaFormat(CalculateTargetVideoBitrate(false));
+                _videoCodec.Configure(format, null, null, MediaCodecConfigFlags.Encode);
+            }
+
             _inputSurface = _videoCodec.CreateInputSurface();
             _videoCodec.Start();
 
