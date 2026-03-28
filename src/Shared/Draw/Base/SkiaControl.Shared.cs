@@ -4910,6 +4910,10 @@ namespace DrawnUi.Draw
             return SetMeasuredAdaptToContentSize(constraints, request.Scale);
         }
 
+        private float measuredForWidthConstraint = -1;
+        private float measuredForHeightConstraint = -1;
+        private float measuredForScale = -1;
+
         /// <summary>
         /// Main method for measuring, override OnMeasuring to plug-in.
         /// </summary>
@@ -4926,6 +4930,15 @@ namespace DrawnUi.Draw
             {
                 UpdateSizeRequest();
             }
+            else
+            if (!NeedMeasure && widthConstraint == measuredForWidthConstraint && heightConstraint == measuredForHeightConstraint && scale == measuredForScale)
+            {
+                return  MeasuredSize;
+            }
+
+            measuredForWidthConstraint = widthConstraint;
+            measuredForHeightConstraint = heightConstraint;
+            measuredForScale = scale;
 
             return OnMeasuring(widthConstraint, heightConstraint, scale);
         }
