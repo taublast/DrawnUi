@@ -27,8 +27,8 @@ namespace Sandbox
         ];
 
         private readonly List<Element> _elements = new();
-        private readonly SkiaPath _path = new();
-        private readonly SkiaPaint _strokePaint = new();
+        private IntPtr _pathHandle;
+        private IntPtr _strokePaintHandle;
         private readonly Random _random = new();
         private GridPoint _lastGridPoint = new(GridWidth / 2, GridHeight / 2);
         private int _complexity = 8;
@@ -36,11 +36,18 @@ namespace Sandbox
 
         public MotionMarkNativeScene()
         {
-            _strokePaint.SetAntialias(true);
-            _strokePaint.SetStyle(SKPaintStyle.Stroke);
-            _strokePaint.SetStrokeCap(SKStrokeCap.Round);
-            _strokePaint.SetStrokeJoin(SKStrokeJoin.Round);
+            _pathHandle = SkiaNativeMethods.PathNew();
+            if (_pathHandle == IntPtr.Zero)
+                throw new InvalidOperationException("Failed to allocate Skia path.");
 
+            _strokePaintHandle = SkiaNativeMethods.PaintNew();
+            if (_strokePaintHandle == IntPtr.Zero)
+                throw new InvalidOperationException("Failed to allocate Skia paint.");
+
+            SkiaNativeMethods.PaintSetAntialias(_strokePaintHandle, true);
+            SkiaNativeMethods.PaintSetStyle(_strokePaintHandle, SKPaintStyle.Stroke);
+            SkiaNativeMethods.PaintSetStrokeCap(_strokePaintHandle, SKStrokeCap.Round);
+            SkiaNativeMethods.PaintSetStrokeJoin(_strokePaintHandle, SKStrokeJoin.Round);
         }
 
         public int Complexity => _complexity;
@@ -73,7 +80,7 @@ namespace Sandbox
 
             Span<Element> elements = CollectionsMarshal.AsSpan(_elements);
             if (resetPath)
-                _path.Reset();
+                SkiaNativeMethods.PathReset(_pathHandle);
             bool pathStarted = false;
 
             for (int i = 0; i < elements.Length; i++)
@@ -82,7 +89,7 @@ namespace Sandbox
                 if (!pathStarted)
                 {
                     Point start = element.Start.ToPoint(uniformScale, offsetX, offsetY);
-                    _path.MoveTo(start.X, start.Y);
+                    SkiaNativeMethods.PathMoveTo(_pathHandle, start.X, start.Y);
                     pathStarted = true;
                 }
 
@@ -91,7 +98,7 @@ namespace Sandbox
                     case SegmentKind.Line:
                     {
                         Point end = element.End.ToPoint(uniformScale, offsetX, offsetY);
-                        _path.LineTo(end.X, end.Y);
+                        SkiaNativeMethods.PathLineTo(_pathHandle, end.X, end.Y);
                         break;
                     }
 
@@ -99,7 +106,7 @@ namespace Sandbox
                     {
                         Point c1 = element.Control1.ToPoint(uniformScale, offsetX, offsetY);
                         Point end = element.End.ToPoint(uniformScale, offsetX, offsetY);
-                        _path.QuadTo(c1.X, c1.Y, end.X, end.Y);
+                        SkiaNativeMethods.PathQuadTo(_pathHandle, c1.X, c1.Y, end.X, end.Y);
                         break;
                     }
 
@@ -108,7 +115,7 @@ namespace Sandbox
                         Point c1 = element.Control1.ToPoint(uniformScale, offsetX, offsetY);
                         Point c2 = element.Control2.ToPoint(uniformScale, offsetX, offsetY);
                         Point end = element.End.ToPoint(uniformScale, offsetX, offsetY);
-                        _path.CubicTo(c1.X, c1.Y, c2.X, c2.Y, end.X, end.Y);
+                        SkiaNativeMethods.PathCubicTo(_pathHandle, c1.X, c1.Y, c2.X, c2.Y, end.X, end.Y);
                         break;
                     }
                 }
@@ -116,10 +123,10 @@ namespace Sandbox
                 bool finalize = element.Split || i == elements.Length - 1;
                 if (finalize)
                 {
-                    _strokePaint.SetColor(element.Color);
-                    _strokePaint.SetStrokeWidth(element.Width);
-                    SkiaNativeMethods.CanvasDrawPath(canvas, _path.Handle, _strokePaint.Handle);
-                    _path.Reset();
+                    SkiaNativeMethods.PaintSetColor(_strokePaintHandle, element.Color);
+                    SkiaNativeMethods.PaintSetStrokeWidth(_strokePaintHandle, element.Width);
+                    SkiaNativeMethods.CanvasDrawPath(canvas, _pathHandle, _strokePaintHandle);
+                    SkiaNativeMethods.PathReset(_pathHandle);
                     pathStarted = false;
                 }
 
@@ -135,8 +142,18 @@ namespace Sandbox
             if (_disposed)
                 return;
 
-            _path.Dispose();
-            _strokePaint.Dispose();
+            if (_pathHandle != IntPtr.Zero)
+            {
+                SkiaNativeMethods.PathDelete(_pathHandle);
+                _pathHandle = IntPtr.Zero;
+            }
+
+            if (_strokePaintHandle != IntPtr.Zero)
+            {
+                SkiaNativeMethods.PaintDelete(_strokePaintHandle);
+                _strokePaintHandle = IntPtr.Zero;
+            }
+
             _disposed = true;
         }
 
