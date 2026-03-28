@@ -12,40 +12,20 @@
                 throw new InvalidOperationException("Failed to allocate Skia path.");
         }
 
-        public void MoveTo(float x, float y)
-        {
-            EnsureNotDisposed();
+        public void MoveTo(float x, float y) =>
             SkiaNativeMethods.PathMoveTo(Handle, x, y);
-        }
 
-        public void LineTo(float x, float y)
-        {
-            EnsureNotDisposed();
+        public void LineTo(float x, float y) =>
             SkiaNativeMethods.PathLineTo(Handle, x, y);
-        }
 
-        public void QuadTo(float x0, float y0, float x1, float y1)
-        {
-            EnsureNotDisposed();
+        public void QuadTo(float x0, float y0, float x1, float y1) =>
             SkiaNativeMethods.PathQuadTo(Handle, x0, y0, x1, y1);
-        }
 
-        public void CubicTo(float x0, float y0, float x1, float y1, float x2, float y2)
-        {
-            EnsureNotDisposed();
+        public void CubicTo(float x0, float y0, float x1, float y1, float x2, float y2) =>
             SkiaNativeMethods.PathCubicTo(Handle, x0, y0, x1, y1, x2, y2);
-        }
 
-        public void Reset()
-        {
-            EnsureNotDisposed();
+        public void Reset() =>
             SkiaNativeMethods.PathReset(Handle);
-        }
-
-        private void EnsureNotDisposed()
-        {
-            ObjectDisposedException.ThrowIf(_disposed, this);
-        }
 
         public void Dispose()
         {

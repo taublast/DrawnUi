@@ -12,58 +12,31 @@
                 throw new InvalidOperationException("Failed to allocate Skia paint.");
         }
 
-        public void SetAntialias(bool value)
-        {
-            EnsureNotDisposed();
+        public void SetAntialias(bool value) =>
             SkiaNativeMethods.PaintSetAntialias(Handle, value);
-        }
 
-        public void SetStyle(SKPaintStyle style)
-        {
-            EnsureNotDisposed();
+        public void SetStyle(SKPaintStyle style) =>
             SkiaNativeMethods.PaintSetStyle(Handle, style);
-        }
 
-        public void SetColor(uint color)
-        {
-            EnsureNotDisposed();
+        public void SetColor(uint color) =>
             SkiaNativeMethods.PaintSetColor(Handle, color);
-        }
 
-        public void SetStrokeWidth(float width)
-        {
-            EnsureNotDisposed();
+        public void SetStrokeWidth(float width) =>
             SkiaNativeMethods.PaintSetStrokeWidth(Handle, width);
-        }
 
-        public void SetStrokeCap(SKStrokeCap cap)
-        {
-            EnsureNotDisposed();
+        public void SetStrokeCap(SKStrokeCap cap) =>
             SkiaNativeMethods.PaintSetStrokeCap(Handle, cap);
-        }
 
-        public void SetStrokeJoin(SKStrokeJoin join)
-        {
-            EnsureNotDisposed();
+        public void SetStrokeJoin(SKStrokeJoin join) =>
             SkiaNativeMethods.PaintSetStrokeJoin(Handle, join);
-        }
 
-        public bool CanComputeFastBounds()
-        {
-            EnsureNotDisposed();
-            return SkiaNativeMethods.PaintCanComputeFastBounds(Handle);
-        }
+        public bool CanComputeFastBounds() =>
+            SkiaNativeMethods.PaintCanComputeFastBounds(Handle);
 
         public unsafe SkRectNative ComputeFastBounds(SkRectNative orig)
         {
-            EnsureNotDisposed();
             SkRectNative storage;
             return *SkiaNativeMethods.PaintComputeFastBounds(Handle, &orig, &storage);
-        }
-
-        private void EnsureNotDisposed()
-        {
-            ObjectDisposedException.ThrowIf(_disposed, this);
         }
 
         public void Dispose()

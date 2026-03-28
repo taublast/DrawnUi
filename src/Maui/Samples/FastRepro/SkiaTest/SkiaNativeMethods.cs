@@ -20,9 +20,9 @@ namespace Sandbox
         internal static partial void CanvasScale(IntPtr canvas, float sx, float sy);
 
         [LibraryImport(LibraryName, EntryPoint = "sk_canvas_clip_rect_with_operation")]
-        internal static partial void CanvasClipRectWithOperation(
+        internal static unsafe partial void CanvasClipRectWithOperation(
             IntPtr canvas,
-            ref SkRectNative rect,
+            SkRectNative* rect,
             SKClipOperation operation,
             [MarshalAs(UnmanagedType.I1)] bool doAA);
 
