@@ -2891,11 +2891,27 @@ namespace DrawnUi.Camera
 
         private long ResolveVideoPtsNanos(TimeSpan fallbackTimestamp, long absoluteVideoTimestampNs, out TimeSpan frameTimestamp)
         {
-            // CRITICAL: When hardware timestamp and CLOCK_MONOTONIC capture-start are available,
-            // always use them. This keeps video on the same clock domain as audio (CLOCK_MONOTONIC)
-            // and eliminates drift from DateTime.Now which is wall-clock time.
-            // Previously, the prerecording path used DateTime.Now-based fallback timestamps while
-            // audio used CLOCK_MONOTONIC, causing A/V desync proportional to clock domain drift.
+            // PATH 1 — Live-only recording (UseSharedMediaOriginForLiveSync = true):
+            // Use shared media origin (first video frame's hw timestamp as base).
+            // Audio's CalculateAudioPts also reads _liveVideoStartTimestampNs set here,
+            // keeping both tracks on the same origin. PTS starts from 0.
+            if (UseSharedMediaOriginForLiveSync)
+            {
+                long originNs = GetOrInitializeLiveVideoStartNs(absoluteVideoTimestampNs);
+                long relativeNs = absoluteVideoTimestampNs - originNs;
+                if (relativeNs < 0)
+                {
+                    relativeNs = 0;
+                }
+
+                frameTimestamp = TimeSpanFromNanoseconds(relativeNs);
+                return relativeNs;
+            }
+
+            // PATH 2 — Prerecording / deferred-live (UseSharedMediaOriginForLiveSync = false):
+            // Use hardware timestamp with CaptureStartAbsoluteNs as base.
+            // This keeps video on CLOCK_MONOTONIC, same clock domain as audio timestamps,
+            // eliminating drift from DateTime.Now which was the old fallback.
             if (CaptureStartAbsoluteNs > 0 && absoluteVideoTimestampNs > 0)
             {
                 long relativeNs = absoluteVideoTimestampNs - CaptureStartAbsoluteNs;
@@ -2908,22 +2924,10 @@ namespace DrawnUi.Camera
                 return relativeNs;
             }
 
-            if (!UseSharedMediaOriginForLiveSync)
-            {
-                long fallbackPtsNs = fallbackTimestamp.Ticks * 100L;
-                frameTimestamp = fallbackTimestamp;
-                return fallbackPtsNs;
-            }
-
-            long originNs = GetOrInitializeLiveVideoStartNs(absoluteVideoTimestampNs);
-            long relNs = absoluteVideoTimestampNs - originNs;
-            if (relNs < 0)
-            {
-                relNs = 0;
-            }
-
-            frameTimestamp = TimeSpanFromNanoseconds(relNs);
-            return relNs;
+            // PATH 3 — Fallback: DateTime.Now-based timestamp (no hardware timestamp available)
+            long fallbackPtsNs = fallbackTimestamp.Ticks * 100L;
+            frameTimestamp = fallbackTimestamp;
+            return fallbackPtsNs;
         }
 
         private long GetOrInitializeSharedMediaOrigin(long absoluteTimestampNs)
