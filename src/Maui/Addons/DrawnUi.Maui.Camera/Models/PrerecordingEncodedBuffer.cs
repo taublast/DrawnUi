@@ -22,12 +22,16 @@ namespace DrawnUi.Camera;
 /// </summary>
 public class PrerecordingEncodedBuffer : IDisposable
 {
+    public readonly record struct BufferedFrameView(byte[] Buffer, int Offset, int Size, TimeSpan Timestamp, bool IsKeyFrame);
+
     /// <summary>
     /// Stores a single encoded frame with timing information
     /// </summary>
     private class EncodedFrame
     {
-        public byte[] Data;
+        public int BufferIndex;
+        public int Offset;
+        public int Size;
         public TimeSpan Timestamp;
         public DateTime AddedAt;
         public bool IsKeyFrame;  // Critical for pruning: must start with keyframe for valid H.264
@@ -189,11 +193,12 @@ public class PrerecordingEncodedBuffer : IDisposable
             {
                 var oldestFrame = _frames[0];
                 _frames.RemoveAt(0);
-                currentState.BytesUsed -= oldestFrame.Data.Length;
-                currentState.FrameCount--;
+                ref BufferState oldestState = ref oldestFrame.BufferIndex == 0 ? ref _stateA : ref _stateB;
+                oldestState.BytesUsed -= oldestFrame.Size;
+                oldestState.FrameCount--;
                 System.Diagnostics.Debug.WriteLine(
                     $"[PreRecording] CIRCULAR: Removed oldest frame at {oldestFrame.Timestamp.TotalSeconds:F3}s " +
-                    $"({oldestFrame.Data.Length} bytes) to make room for new frame");
+                    $"({oldestFrame.Size} bytes) to make room for new frame");
             }
 
             // Final safety check (should never happen now)
@@ -207,19 +212,20 @@ public class PrerecordingEncodedBuffer : IDisposable
 
             // APPEND: Copy frame bytes to buffer (no lock held during copy)
             // This happens outside the lock in a production implementation
-            Buffer.BlockCopy(nalUnits, 0, currentBuffer, currentState.BytesUsed, size);
+            int frameOffset = currentState.BytesUsed;
+            Buffer.BlockCopy(nalUnits, 0, currentBuffer, frameOffset, size);
             currentState.BytesUsed += size;
             currentState.FrameCount++;
 
             // Detect if this is a keyframe (IDR frame)
             bool isKeyFrame = IsKeyFrame(nalUnits, size);
 
-            // Store frame metadata
-            byte[] frameCopy = new byte[size];
-            Buffer.BlockCopy(nalUnits, 0, frameCopy, 0, size);
+            // Store only the slice written into the preallocated backing buffers.
             _frames.Add(new EncodedFrame
             {
-                Data = frameCopy,
+                BufferIndex = _currentBuffer,
+                Offset = frameOffset,
+                Size = size,
                 Timestamp = timestamp,
                 AddedAt = DateTime.UtcNow,
                 IsKeyFrame = isKeyFrame
@@ -321,11 +327,12 @@ public class PrerecordingEncodedBuffer : IDisposable
             {
                 var oldestFrame = _frames[0];
                 _frames.RemoveAt(0);
-                currentState.BytesUsed -= oldestFrame.Data.Length;
-                currentState.FrameCount--;
+                ref BufferState oldestState = ref oldestFrame.BufferIndex == 0 ? ref _stateA : ref _stateB;
+                oldestState.BytesUsed -= oldestFrame.Size;
+                oldestState.FrameCount--;
                 System.Diagnostics.Debug.WriteLine(
                     $"[PreRecording] CIRCULAR: Removed oldest frame at {oldestFrame.Timestamp.TotalSeconds:F3}s " +
-                    $"({oldestFrame.Data.Length} bytes) to make room for new frame");
+                    $"({oldestFrame.Size} bytes) to make room for new frame");
             }
 
             // Final safety check (should never happen now)
@@ -338,7 +345,8 @@ public class PrerecordingEncodedBuffer : IDisposable
             }
 
             // APPEND: Copy frame bytes to buffer
-            Buffer.BlockCopy(nalUnits, 0, currentBuffer, currentState.BytesUsed, size);
+            int frameOffset = currentState.BytesUsed;
+            Buffer.BlockCopy(nalUnits, 0, currentBuffer, frameOffset, size);
             currentState.BytesUsed += size;
             currentState.FrameCount++;
 
@@ -346,14 +354,13 @@ public class PrerecordingEncodedBuffer : IDisposable
             // NAL unit type is in bits 0-4 of first byte: type 5 = IDR (keyframe)
             bool isKeyFrame = IsKeyFrame(nalUnits, size);
 
-            // Store frame metadata with timing
-            byte[] frameCopy = new byte[size];
-            Buffer.BlockCopy(nalUnits, 0, frameCopy, 0, size);
-
+            // Store only the slice written into the preallocated backing buffers.
             int beforeAdd = _frames.Count;
             _frames.Add(new EncodedFrame
             {
-                Data = frameCopy,
+                BufferIndex = _currentBuffer,
+                Offset = frameOffset,
+                Size = size,
                 Timestamp = timestamp,
                 PresentationTime = presentationTime,
                 Duration = duration,
@@ -484,23 +491,30 @@ public class PrerecordingEncodedBuffer : IDisposable
             var result = new List<(byte[], CMTime, CMTime)>(_frames.Count);
             foreach (var frame in _frames)
             {
-                result.Add((frame.Data, frame.PresentationTime, frame.Duration));
+                byte[] data = new byte[frame.Size];
+                Buffer.BlockCopy(GetBackingBuffer(frame.BufferIndex), frame.Offset, data, 0, frame.Size);
+                result.Add((data, frame.PresentationTime, frame.Duration));
             }
             return result;
         }
     }
 #else
     /// <summary>
-    /// Gets all frames with timing information for writing to MP4 (Android/Windows)
+    /// Gets all frame slices for writing to MP4 (Android/Windows) without allocating per-frame copies.
     /// </summary>
-    public List<(byte[] Data, TimeSpan Timestamp, bool IsKeyFrame)> GetAllFrames()
+    public List<BufferedFrameView> GetAllFrames()
     {
         lock (_swapLock)
         {
-            var result = new List<(byte[], TimeSpan, bool)>(_frames.Count);
+            var result = new List<BufferedFrameView>(_frames.Count);
             foreach (var frame in _frames)
             {
-                result.Add((frame.Data, frame.Timestamp, frame.IsKeyFrame));
+                result.Add(new BufferedFrameView(
+                    GetBackingBuffer(frame.BufferIndex),
+                    frame.Offset,
+                    frame.Size,
+                    frame.Timestamp,
+                    frame.IsKeyFrame));
             }
             return result;
         }
@@ -652,6 +666,8 @@ public class PrerecordingEncodedBuffer : IDisposable
 
         return false;
     }
+
+    private byte[] GetBackingBuffer(int bufferIndex) => bufferIndex == 0 ? _bufferA : _bufferB;
 
     public void Dispose()
     {

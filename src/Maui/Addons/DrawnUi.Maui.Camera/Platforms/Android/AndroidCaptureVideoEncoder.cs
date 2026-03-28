@@ -52,7 +52,7 @@ namespace DrawnUi.Camera
             0.250 -> about 15.6 Mbps
          */
 
-        const double PreferSizeOverSpeedBy = 0.175;
+        const double PreferSizeOverSpeedBy = 0.15;
 
         public bool SupportsAudio => true;
         public bool PreferFastRealtimeEncoding { get; set; } = true;
@@ -865,20 +865,20 @@ namespace DrawnUi.Camera
                         TimeSpan lastNormalizedTimestamp = TimeSpan.Zero;
                         System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Renormalizing buffered frames (first frame: {firstBufferedFrameTimestamp.TotalSeconds:F3}s -> 0s)");
 
-                        foreach (var (data, timestamp, isKeyFrame) in bufferedFrames)
+                        foreach (var (frameBuffer, frameOffset, frameSize, timestamp, isKeyFrame) in bufferedFrames)
                         {
-                            if (data == null || data.Length == 0)
+                            if (frameBuffer == null || frameSize == 0)
                                 continue;
 
                             // Renormalize: subtract first frame's timestamp so buffer starts from 0
                             var normalizedTimestamp = timestamp - firstBufferedFrameTimestamp;
                             lastNormalizedTimestamp = normalizedTimestamp;  // Track last frame for duration calculation
 
-                            var buffer = ByteBuffer.Wrap(data);
+                            var buffer = ByteBuffer.Wrap(CopyFrameSlice(frameBuffer, frameOffset, frameSize));
                             var flags = isKeyFrame ? MediaCodecBufferFlags.KeyFrame : MediaCodecBufferFlags.None;
                             // Reuse cached BufferInfo to avoid per-frame Java allocations
                             _muxerBufferInfo ??= new MediaCodec.BufferInfo();
-                            _muxerBufferInfo.Set(0, data.Length, (long)normalizedTimestamp.TotalMicroseconds, flags);
+                            _muxerBufferInfo.Set(0, frameSize, (long)normalizedTimestamp.TotalMicroseconds, flags);
 
                             _muxer.WriteSampleData(_videoTrackIndex, buffer, _muxerBufferInfo);
                             writtenCount++;
@@ -886,7 +886,7 @@ namespace DrawnUi.Camera
                             // Log first/last frame
                             if (writtenCount == 1 || writtenCount == bufferedFrames.Count)
                             {
-                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Buffered frame {writtenCount}: PTS={normalizedTimestamp.TotalSeconds:F3}s (was {timestamp.TotalSeconds:F3}s), Size={data.Length}, KeyFrame={isKeyFrame}");
+                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Buffered frame {writtenCount}: PTS={normalizedTimestamp.TotalSeconds:F3}s (was {timestamp.TotalSeconds:F3}s), Size={frameSize}, KeyFrame={isKeyFrame}");
                             }
                         }
 
@@ -2254,12 +2254,12 @@ namespace DrawnUi.Camera
             muxer.Start();
 
             _muxerBufferInfo ??= new MediaCodec.BufferInfo();
-            foreach (var (data, timestamp, isKeyFrame) in bufferedFrames)
+            foreach (var (frameBuffer, frameOffset, frameSize, timestamp, isKeyFrame) in bufferedFrames)
             {
-                if (data == null || data.Length == 0) continue;
-                var buf = Java.Nio.ByteBuffer.Wrap(data);
+                if (frameBuffer == null || frameSize == 0) continue;
+                var buf = Java.Nio.ByteBuffer.Wrap(CopyFrameSlice(frameBuffer, frameOffset, frameSize));
                 var flags = isKeyFrame ? MediaCodecBufferFlags.KeyFrame : MediaCodecBufferFlags.None;
-                _muxerBufferInfo.Set(0, data.Length, (long)timestamp.TotalMicroseconds, flags);
+                _muxerBufferInfo.Set(0, frameSize, (long)timestamp.TotalMicroseconds, flags);
                 muxer.WriteSampleData(videoTrack, buf, _muxerBufferInfo);
             }
 
@@ -2353,15 +2353,15 @@ namespace DrawnUi.Camera
             muxer.Start();
 
             _muxerBufferInfo ??= new MediaCodec.BufferInfo();
-            foreach (var (data, timestamp, isKeyFrame) in bufferedFrames)
+            foreach (var (frameBuffer, frameOffset, frameSize, timestamp, isKeyFrame) in bufferedFrames)
             {
-                if (data == null || data.Length == 0)
+                if (frameBuffer == null || frameSize == 0)
                     continue;
 
-                var buf = Java.Nio.ByteBuffer.Wrap(data);
+                var buf = Java.Nio.ByteBuffer.Wrap(CopyFrameSlice(frameBuffer, frameOffset, frameSize));
                 var flags = isKeyFrame ? MediaCodecBufferFlags.KeyFrame : MediaCodecBufferFlags.None;
                 long normalizedVideoPtsUs = (long)(timestamp - firstBufferedFrameTimestamp).TotalMicroseconds;
-                _muxerBufferInfo.Set(0, data.Length, normalizedVideoPtsUs, flags);
+                _muxerBufferInfo.Set(0, frameSize, normalizedVideoPtsUs, flags);
                 muxer.WriteSampleData(videoTrack, buf, _muxerBufferInfo);
             }
 
@@ -2379,7 +2379,7 @@ namespace DrawnUi.Camera
             return new CapturedVideo { FilePath = outputPath };
         }
 
-        private long GetBufferedVideoDurationUs(List<(byte[] Data, TimeSpan Timestamp, bool IsKeyFrame)> bufferedFrames, TimeSpan firstBufferedFrameTimestamp)
+        private long GetBufferedVideoDurationUs(List<PrerecordingEncodedBuffer.BufferedFrameView> bufferedFrames, TimeSpan firstBufferedFrameTimestamp)
         {
             if (bufferedFrames == null || bufferedFrames.Count == 0)
             {
@@ -2488,15 +2488,15 @@ namespace DrawnUi.Camera
                         StartMuxerWriter();
 
                         var bufferedFrames = _preRecordingBuffer.GetAllFrames();
-                        foreach (var (data, timestamp, isKeyFrame) in bufferedFrames)
+                        foreach (var (frameBuffer, frameOffset, frameSize, timestamp, isKeyFrame) in bufferedFrames)
                         {
-                            if (data == null || data.Length == 0) continue;
+                            if (frameBuffer == null || frameSize == 0) continue;
 
-                            var buffer = ByteBuffer.Wrap(data);
+                            var buffer = ByteBuffer.Wrap(CopyFrameSlice(frameBuffer, frameOffset, frameSize));
                             var flags = isKeyFrame ? MediaCodecBufferFlags.KeyFrame : MediaCodecBufferFlags.None;
                             // Reuse cached BufferInfo to avoid per-frame Java allocations
                             _muxerBufferInfo ??= new MediaCodec.BufferInfo();
-                            _muxerBufferInfo.Set(0, data.Length, (long)timestamp.TotalMicroseconds, flags);
+                            _muxerBufferInfo.Set(0, frameSize, (long)timestamp.TotalMicroseconds, flags);
                             _muxer.WriteSampleData(_videoTrackIndex, buffer, _muxerBufferInfo);
                         }
 
@@ -2856,6 +2856,18 @@ namespace DrawnUi.Camera
                     break;
                 }
             }
+        }
+
+        private static byte[] CopyFrameSlice(byte[] frameBuffer, int frameOffset, int frameSize)
+        {
+            if (frameOffset == 0 && frameSize == frameBuffer.Length)
+            {
+                return frameBuffer;
+            }
+
+            byte[] frameCopy = new byte[frameSize];
+            System.Buffer.BlockCopy(frameBuffer, frameOffset, frameCopy, 0, frameSize);
+            return frameCopy;
         }
 
         private void SetupEglForCodecSurface()
