@@ -1,12 +1,38 @@
+using DrawnUi.Infrastructure;
+
 namespace DrawnUi.Draw;
 
 /// <summary>
-/// IPostRendererEffect
+/// IPostRendererEffect — XAML-bindable shader effect that uses SkiaShader as its engine.
 /// </summary>
 public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IComparable<SkiaShaderEffect>, IEquatable<SkiaShaderEffect>
 {
-    protected SKPaint PaintWithShader;
-    private SKBlendMode _paintWithShaderBlendMode;
+    /// <summary>
+    /// The shader engine. Override CreateEngine() to provide a subclassed SkiaShader
+    /// with custom uniforms or children.
+    /// </summary>
+    protected SkiaShader Engine { get; set; }
+
+    /// <summary>
+    /// Backward-compatible access to the compiled shader.
+    /// </summary>
+    protected SKRuntimeEffect CompiledShader => Engine?.Compiled;
+
+    /// <summary>
+    /// Override to return a subclassed SkiaShader with custom uniforms/children.
+    /// </summary>
+    protected virtual SkiaShader CreateEngine()
+    {
+        return new SkiaShader();
+    }
+
+    protected SkiaShader GetEngine()
+    {
+        Engine ??= CreateEngine();
+        return Engine;
+    }
+
+    // ─── IComparable / IEquatable ───────────────────────────────────────────
 
     public int CompareTo(object obj)
     {
@@ -304,15 +330,30 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
         }
     }
 
+    // ─── Rendering ──────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Syncs Effect properties to the engine before uniform creation.
+    /// </summary>
+    protected virtual void SyncEngineState(SKRect destination)
+    {
+        var engine = GetEngine();
+        engine.Time = TimeSeconds;
+        engine.Mouse = new(MouseCurrent.X, MouseCurrent.Y);
+        engine.MouseInitial = new(MouseInitial.X, MouseInitial.Y);
+        engine.Offset = new(destination.Left, destination.Top);
+        engine.FilterMode = FilterMode;
+        engine.MipmapMode = MipmapMode;
+        engine.TileMode = TileMode;
+    }
+
     /// <summary>
     /// EffectPostRenderer
     /// </summary>
     public virtual void Render(DrawingContext ctx)
     {
-        if (PaintWithShader == null)
-        {
-            PaintWithShader = new SKPaint();
-        }
+        var engine = GetEngine();
+        var paint = engine.GetPaint();
 
         TimeSeconds = ctx.Context.FrameTimeNanos * NanosecondsToSeconds;
 
@@ -325,9 +366,9 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
             shader = CreateShader(ctx, image);
             if (shader != null)
             {
-                PaintWithShader.GuardBlendMode(ref _paintWithShaderBlendMode, BlendMode);
-                PaintWithShader.Shader = shader;
-                ctx.Context.Canvas.DrawRect(ctx.Destination, PaintWithShader);
+                paint.BlendMode = BlendMode;
+                paint.Shader = shader;
+                ctx.Context.Canvas.DrawRect(ctx.Destination, paint);
             }
             else
             {
@@ -346,8 +387,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
             shader?.Dispose();
 
             // Clear shader from paint to avoid holding reference
-            if (PaintWithShader != null)
-                PaintWithShader.Shader = null;
+            paint.Shader = null;
         }
     }
 
@@ -368,11 +408,12 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
     /// </summary>
     public virtual SKShader CreateShader(DrawingContext ctx, SKImage source)
     {
+        var engine = GetEngine();
         SKRect destination = ctx.Destination;
         SKImage sourceToDispose = null;
 
-        // Step 1: Ensure shader is compiled (only CPU-side compilation is cached)
-        if (CompiledShader == null || _hasNewShader)
+        // Step 1: Ensure shader is compiled
+        if (!engine.IsCompiled || _hasNewShader)
         {
             try
             {
@@ -394,7 +435,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
             _hasNewShader = false;
         }
 
-        if (CompiledShader == null)
+        if (!engine.IsCompiled)
             return null;
 
         try
@@ -412,8 +453,10 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
                     return null;
             }
 
-            // Step 3: Create everything fresh (no caching)
-            SKShader primaryTextureShader = CreatePrimaryTextureShader(source);
+            // Step 3: Sync state and create everything fresh
+            SyncEngineState(destination);
+
+            SKShader primaryTextureShader = engine.CreateTextureShader(source);
 
             using (primaryTextureShader)
             {
@@ -421,7 +464,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
                 using var uniforms = CreateUniforms(destination);
 
                 // Step 4: Create final shader
-                return CompiledShader.ToShader(uniforms, textureUniforms);
+                return engine.Compiled.ToShader(uniforms, textureUniforms);
             }
         }
         finally
@@ -434,34 +477,12 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
         }
     }
 
-    protected virtual SKShader CreatePrimaryTextureShader(SKImage source)
-    {
-        if (source == null) return null;
-        var samplingOptions = new SKSamplingOptions(FilterMode, MipmapMode);
-        return source.ToShader(TileMode, TileMode, samplingOptions);
-    }
-
-    // Pre-allocated uniform value buffers — reused every frame to avoid per-frame heap alloc
-    private readonly float[] _uniformMouse = new float[4];
-    private readonly float[] _uniformOffset = new float[2];
-    private readonly float[] _uniformResolution = new float[2];
-    protected readonly float[] _uniformImageResolution = new float[2];
-
-    // ✅ KEEP: Only CPU-side compiled shader
-    protected SKRuntimeEffect CompiledShader;
-    private bool _hasNewShader;
-    private bool _ownCompiledShader; // true only when compiled without cache (custom ShaderCode)
-    private string _customCode;
-    private string _lastSource;
+    // ─── Uniforms (virtual override points) ─────────────────────────────────
 
     public override bool NeedApply
     {
-        get { return base.NeedApply && CompiledShader != null; }
+        get { return base.NeedApply && GetEngine().IsCompiled; }
     }
-
-
-    #region STANDART UNIFORMS
-
 
     /// <summary>
     /// Normally will be automatically set in Render method from context FrameTimeNanos
@@ -481,61 +502,40 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
     public PointF MouseInitial { get; set; }
 
     /// <summary>
-    /// Creates uniforms fresh each time
+    /// Creates standard uniforms via engine. Override to add custom uniforms.
     /// </summary>
     protected virtual SKRuntimeEffectUniforms CreateUniforms(SKRect destination)
     {
-        var viewport = destination;
-
-        SKSize iResolution = new(viewport.Width, viewport.Height);
-        SKSize iImageResolution = iResolution;
-        var uniforms = new SKRuntimeEffectUniforms(CompiledShader);
-
-        _uniformMouse[0] = MouseCurrent.X; _uniformMouse[1] = MouseCurrent.Y;
-        _uniformMouse[2] = MouseInitial.X; _uniformMouse[3] = MouseInitial.Y;
-        uniforms["iMouse"] = _uniformMouse;
-        uniforms["iTime"] = TimeSeconds;
-        _uniformOffset[0] = viewport.Left; _uniformOffset[1] = viewport.Top;
-        uniforms["iOffset"] = _uniformOffset;
-
-        // Viewport size in pixels, can be different from size of images passed as sources
-        _uniformResolution[0] = iResolution.Width; _uniformResolution[1] = iResolution.Height;
-        uniforms["iResolution"] = _uniformResolution;
-
-        _uniformImageResolution[0] = iImageResolution.Width; _uniformImageResolution[1] = iImageResolution.Height;
-        uniforms["iImageResolution"] = _uniformImageResolution;
-
-        return uniforms;
+        var engine = GetEngine();
+        return engine.CreateUniforms(destination.Width, destination.Height, destination.Width, destination.Height);
     }
 
     /// <summary>
-    /// Creates texture uniforms fresh each time
+    /// Creates texture children via engine. Override to add additional textures.
     /// </summary>
     protected virtual SKRuntimeEffectChildren CreateTexturesUniforms(SkiaDrawingContext ctx, SKRect destination,
         SKShader primaryTexture)
     {
-        if (primaryTexture != null)
-        {
-            return new SKRuntimeEffectChildren(CompiledShader) { { "iImage1", primaryTexture } };
-        }
-        else
-        {
-            return new SKRuntimeEffectChildren(CompiledShader);
-        }
+        return GetEngine().CreateChildren(primaryTexture);
     }
 
-    #endregion
+    // ─── Compilation ────────────────────────────────────────────────────────
 
+    private bool _hasNewShader;
+    private string _customCode;
+    private string _lastSource;
     protected string _template = null;
     protected string _templatePlacehodler = "//script-goes-here";
 
+    public string LoadedCode { get; set; }
+
     /// <summary>
-    /// Compiles the shader code - only CPU-side compilation
+    /// Compiles the shader code from resource
     /// </summary>
     protected virtual void CompileShader()
     {
         string shaderCode = SkSl.LoadFromResources(ShaderSource);
-        CompileShader(shaderCode,true, SendError);
+        CompileShader(shaderCode, true, SendError);
     }
 
     public event EventHandler<string> OnCompilationError;
@@ -549,15 +549,14 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
         OnCompilationError?.Invoke(this, error);
     }
 
-    public string NormalizeShaderCode(string shaderText)
-    {
-        return shaderText.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n");
-    }
-
     protected virtual void CompileShader(string shaderCode, bool useCache = true, Action<string> onError = null)
     {
-        shaderCode = NormalizeShaderCode(shaderCode);
+        var engine = GetEngine();
+
+        shaderCode = SkiaShader.NormalizeLineEndings(shaderCode);
         LoadedCode = shaderCode;
+
+        // Template handling
         if (!string.IsNullOrEmpty(ShaderTemplate))
         {
             if (string.IsNullOrEmpty(_template))
@@ -569,11 +568,9 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
             shaderCode = _template.Replace(_templatePlacehodler, shaderCode);
         }
 
-        CompiledShader = SkSl.Compile(shaderCode, ShaderSource, useCache, onError);
-        _ownCompiledShader = !useCache; // cache owns it when useCache=true
+        // Delegate compilation to engine
+        engine.CompileFromCode(shaderCode, useCache ? ShaderSource : null, useCache, onError);
     }
-
-    public string LoadedCode { get; set; }
 
     protected virtual void ApplyShaderSource()
     {
@@ -598,6 +595,8 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
             control.ApplyShaderSource();
         }
     }
+
+    // ─── Bindable Properties ────────────────────────────────────────────────
 
     public static readonly BindableProperty ShaderCodeProperty = BindableProperty.Create(nameof(ShaderCode),
         typeof(string),
@@ -678,22 +677,12 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
         set { SetValue(TileModeProperty, value); }
     }
 
-    /// <summary>
-    /// Simplified dispose - only CPU-side resources
-    /// </summary>
+    // ─── Disposal ───────────────────────────────────────────────────────────
+
     protected override void OnDisposing()
     {
-        //ReleaseFrozenSnapshot();
-
-        // Only dispose CompiledShader if this instance owns it (not from cache)
-        if (_ownCompiledShader)
-            CompiledShader?.Dispose();
-
-        CompiledShader = null;
-        _ownCompiledShader = false;
-
-        PaintWithShader?.Dispose();
-        PaintWithShader = null;
+        Engine?.Dispose();
+        Engine = null;
 
         base.OnDisposing();
     }
