@@ -93,7 +93,9 @@ namespace Sandbox
                         {
                             //new RenderSceneOptimized(),
 
-                         new FinalStack()
+                            new TestComputeFastBounds(),
+
+                         /*new FinalStack()
                         {
                             BackgroundColor = Color.Parse("#66000000"),
                             HorizontalOptions = LayoutOptions.Fill,
@@ -186,7 +188,7 @@ namespace Sandbox
                                     }
 
                                 },
-                            }},
+                            }},*/
 
 
 #if DEBUG

@@ -10,17 +10,15 @@ Rendering engine for .NET MAUI with gestures and animations and much more, power
 
 Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware acceleration.
 
-Please note this is a .NET9 library, entry controls are not yet fully compatible with .NET10 due to MAUI changes.
-
 * To use inside a usual MAUI app, by wrapping drawn controls into `Canvas` views.
 * To create a totally drawn apps with just one `Canvas` as root view.
 * Drawn controls are totally virtual, no native views/handlers.
 * Design in XAML or [code-behind](https://drawnui.net/articles/first-app-code.html)
 * Free to use under the MIT license, nuget package available.
 
-
 ## Features
 
+* __Create visuals totally matching designer's image__, no more compromises with native controls
 * __Use virtual controls to draw your UI__
 * __Create your own animated pixel-perfect controls__
 * __Port existing native controls to drawn__
@@ -34,13 +32,16 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 * __Keyboard support__, track any key
 * __Navigate__ on the canvas with MAUI Shell-like techniques 
 
+## To Note
+
+* Still targeting .NET9 library: entry controls not fully compatible with .NET10.
+ 
 ---
 
-## 🆕 What's new for 1.9.5.3
+## 🆕 What's new for 1.9.6.1
 
-* Fix `SkiaLottie` AutoPlay `false` was ignored when source was set first.
-* Add `StopAtCurrentFrame` property to `SkiaLottie` to pause animation at current frame when stopped instead of reqinding to default frame (set via DefaultFrameWhenOn).
-* Fix `Warp` layout available space
+* `SkiaControl` will return last measured result in same conditions and not invalidated
+* `SkiaCamera` on Android performance optimizations
  
 ## 💡 Hint of the Day
 
