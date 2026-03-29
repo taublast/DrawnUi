@@ -1365,7 +1365,7 @@ public partial class SkiaCamera
                         // Background thread handles serialization via single-slot pattern
                         droidEnc.SignalGpuFrame(
                             elapsedLocal,
-                            FrameProcessor,
+                            ProcessFrame,
                             VideoDiagnosticsOn,
                             DrawDiagnostics
                         );
@@ -1451,7 +1451,7 @@ public partial class SkiaCamera
 
                         try
                         {
-                            // Fire ML hook — raw SKImage before BeginFrame / FrameProcessor overlays
+                            // Fire ML hook — raw SKImage before BeginFrame / ProcessFrame overlays
                             var rawImg = captured?.Image;
                             if (rawImg != null)
                                 OnRawFrameAcquired(rawImg, DeviceRotation);
@@ -1472,17 +1472,18 @@ public partial class SkiaCamera
                                     canvas.Scale(-1, -1, info.Width / 2f, info.Height / 2f);
                                 }
 
-                                canvas.DrawImage(img, rects.src, rects.dst);
+                                RenderFrameForRecording(canvas, img, rects.src, rects.dst);
+                                //canvas.DrawImage(img, rects.src, rects.dst);
 
                                 if (isSelfieInLandscape)
                                 {
                                     canvas.Restore();
                                 }
 
-                                if (FrameProcessor != null || VideoDiagnosticsOn)
+                                if (ProcessFrame != null || VideoDiagnosticsOn)
                                 {
                                     var rotation = GetActiveRecordingRotation();
-                                    var needsCheckpoint = FrameProcessor != null || (VideoDiagnosticsOn && rotation != 0);
+                                    var needsCheckpoint = ProcessFrame != null || (VideoDiagnosticsOn && rotation != 0);
                                     var checkpoint = 0;
 
                                     if (needsCheckpoint)
@@ -1493,7 +1494,7 @@ public partial class SkiaCamera
                                         ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
                                     }
 
-                                    if (FrameProcessor != null)
+                                    if (ProcessFrame != null)
                                     {
                                         var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
                                         var frame = new DrawableFrame
@@ -1504,7 +1505,7 @@ public partial class SkiaCamera
                                             Time = elapsedLocal,
                                             Scale = 1f
                                         };
-                                        FrameProcessor.Invoke(frame);
+                                        ProcessFrame.Invoke(frame);
                                     }
 
                                     if (VideoDiagnosticsOn)
@@ -1621,7 +1622,7 @@ public partial class SkiaCamera
                     if ((!IsPreRecording && !IsRecording) || _captureVideoEncoder is not AndroidCaptureVideoEncoder droidEnc)
                         return;
                     var elapsed = GetCurrentCaptureSegmentTime();
-                    droidEnc.SignalGpuFrame(elapsed, FrameProcessor, VideoDiagnosticsOn, DrawDiagnostics);
+                    droidEnc.SignalGpuFrame(elapsed, ProcessFrame, VideoDiagnosticsOn, DrawDiagnostics);
                 };
 
                 newEncoder.OnGpuFrameProcessed += () =>
@@ -1781,7 +1782,7 @@ public partial class SkiaCamera
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
                 // Start recording in memory-only mode
-                if (UseRealtimeVideoProcessing && FrameProcessor != null)
+                if (UseRealtimeVideoProcessing && ProcessFrame != null)
                 {
                     await StartRealtimeVideoProcessing();
                 }
@@ -1854,7 +1855,7 @@ public partial class SkiaCamera
                 RecordingLockedRotation = DeviceRotation;
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
-                if (UseRealtimeVideoProcessing && FrameProcessor != null)
+                if (UseRealtimeVideoProcessing && ProcessFrame != null)
                 {
                     await StartRealtimeVideoProcessing();
                 }

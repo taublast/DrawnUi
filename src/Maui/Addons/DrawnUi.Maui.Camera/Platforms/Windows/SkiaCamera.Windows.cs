@@ -953,8 +953,8 @@ public partial class SkiaCamera : SkiaControl
         // Don't use preview-driven capture - use callback like Android
         _useWindowsPreviewDrivenCapture = false;
 
-        // Use encoder's processed frames for preview — FrameProcessor overlay is already baked in,
-        // so PreviewProcessor can be skipped, eliminating duplicate GPU overlay work.
+        // Use encoder's processed frames for preview — ProcessFrame overlay is already baked in,
+        // so ProcessPreview can be skipped, eliminating duplicate GPU overlay work.
         UseRecordingFramesForPreview = true;
 
         // Set up progress reporting
@@ -1018,7 +1018,7 @@ public partial class SkiaCamera : SkiaControl
                     return;
                 }
 
-                // Fire ML hook — raw frame before FrameProcessor overlays, synchronous call expected
+                // Fire ML hook — raw frame before ProcessFrame overlays, synchronous call expected
                 OnRawFrameAcquired(imgCopy, DeviceRotation);
 
                 var elapsed = DateTime.Now - _captureVideoStartTime;
@@ -1034,12 +1034,13 @@ public partial class SkiaCamera : SkiaControl
                             if (canvas != null)
                             {
                                 var rects = GetAspectFillRects(imgCopy.Width, imgCopy.Height, info.Width, info.Height);
-                                canvas.DrawImage(imgCopy, rects.src, rects.dst);
+                                //canvas.DrawImage(imgCopy, rects.src, rects.dst);
+                                RenderFrameForRecording(canvas, imgCopy, rects.src, rects.dst);
 
-                                if (FrameProcessor != null || VideoDiagnosticsOn)
+                                if (ProcessFrame != null || VideoDiagnosticsOn)
                                 {
                                     var rotation = GetActiveRecordingRotation();
-                                    var needsCheckpoint = FrameProcessor != null || (VideoDiagnosticsOn && rotation != 0);
+                                    var needsCheckpoint = ProcessFrame != null || (VideoDiagnosticsOn && rotation != 0);
                                     var checkpoint = 0;
 
                                     if (needsCheckpoint)
@@ -1050,7 +1051,7 @@ public partial class SkiaCamera : SkiaControl
                                         ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
                                     }
 
-                                    if (FrameProcessor != null)
+                                    if (ProcessFrame != null)
                                     {
                                         var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
                                         var frame = new DrawableFrame
@@ -1061,7 +1062,7 @@ public partial class SkiaCamera : SkiaControl
                                             Time = elapsed,
                                             Scale = 1f
                                         };
-                                        FrameProcessor.Invoke(frame);
+                                        ProcessFrame.Invoke(frame);
                                     }
 
                                     if (VideoDiagnosticsOn)
@@ -1139,7 +1140,7 @@ public partial class SkiaCamera : SkiaControl
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}�");
 
                 // Start recording in memory-only mode
-                if (UseRealtimeVideoProcessing && FrameProcessor != null)
+                if (UseRealtimeVideoProcessing && ProcessFrame != null)
                 {
                     await StartRealtimeVideoProcessing();
                 }
@@ -1186,7 +1187,7 @@ public partial class SkiaCamera : SkiaControl
                 RecordingLockedRotation = DeviceRotation;
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
-                if (UseRealtimeVideoProcessing && FrameProcessor != null)
+                if (UseRealtimeVideoProcessing && ProcessFrame != null)
                 {
                     // Create new encoder - this ATOMICALLY swaps _captureVideoEncoder to the new instance
                     // StartRealtimeVideoProcessing() will create NEW AudioGraphCapture and subscribe to it
@@ -1255,7 +1256,7 @@ public partial class SkiaCamera : SkiaControl
                 RecordingLockedRotation = DeviceRotation;
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}�");
 
-                if (UseRealtimeVideoProcessing && FrameProcessor != null)
+                if (UseRealtimeVideoProcessing && ProcessFrame != null)
                 {
                     await StartRealtimeVideoProcessing();
                 }

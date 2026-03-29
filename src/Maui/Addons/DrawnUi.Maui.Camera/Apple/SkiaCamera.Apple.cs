@@ -293,7 +293,7 @@ public partial class SkiaCamera
                     return;
                 }
 
-                // Fire ML hook — raw frame before FrameProcessor overlays are composited
+                // Fire ML hook — raw frame before ProcessFrame overlays are composited
                 OnRawFrameAcquired(imageToDraw, imageRotation);
 
                 try
@@ -370,10 +370,10 @@ public partial class SkiaCamera
                             canvas.DrawImage(imageToDraw, __rectsA.src, __rectsA.dst);
                         }
 
-                        if (FrameProcessor != null || VideoDiagnosticsOn)
+                        if (ProcessFrame != null || VideoDiagnosticsOn)
                         {
                             int checkpoint = 0;
-                            if (FrameProcessor != null)
+                            if (ProcessFrame != null)
                             {
                                 checkpoint = canvas.Save();
                             }
@@ -386,12 +386,12 @@ public partial class SkiaCamera
                                 Time = elapsed,
                                 Scale = 1f
                             };
-                            FrameProcessor?.Invoke(frame);
+                            ProcessFrame?.Invoke(frame);
 
                             if (VideoDiagnosticsOn)
                                 DrawDiagnostics(canvas, info.Width, info.Height);
 
-                            if (FrameProcessor != null)
+                            if (ProcessFrame != null)
                             {
                                 canvas.RestoreToCount(checkpoint);
                             }
@@ -563,8 +563,8 @@ public partial class SkiaCamera
 
         Debug.WriteLine($"[StartRealtimeVideoProcessing] iOS encoder initialized with IsPreRecordingMode={IsPreRecording}");
 
-        // Use encoder's processed frames for preview — FrameProcessor overlay is already baked in,
-        // so PreviewProcessor can be skipped, eliminating duplicate GPU overlay work.
+        // Use encoder's processed frames for preview — ProcessFrame overlay is already baked in,
+        // so ProcessPreview can be skipped, eliminating duplicate GPU overlay work.
         UseRecordingFramesForPreview = true;
         
         if (MirrorRecordingToPreview)
@@ -2362,7 +2362,7 @@ public partial class SkiaCamera
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
                 // Start recording in memory-only mode
-                if (UseRealtimeVideoProcessing && FrameProcessor != null)
+                if (UseRealtimeVideoProcessing && ProcessFrame != null)
                 {
                     await StartRealtimeVideoProcessing(false);
                 }
@@ -2433,7 +2433,7 @@ public partial class SkiaCamera
                 // 4. Start Live Recording (Overlap)
                 ICaptureVideoEncoder oldEncoderToStop = null;
 
-                if (UseRealtimeVideoProcessing && FrameProcessor != null)
+                if (UseRealtimeVideoProcessing && ProcessFrame != null)
                 {
                     oldEncoderToStop = await StartRealtimeVideoProcessing(preserveCurrentEncoder: true);
                 }
@@ -2539,7 +2539,7 @@ public partial class SkiaCamera
                 RecordingLockedRotation = DeviceRotation;
                 Debug.WriteLine($"[StartVideoRecording] Locked rotation at {RecordingLockedRotation}°");
 
-                if (UseRealtimeVideoProcessing && FrameProcessor != null)
+                if (UseRealtimeVideoProcessing && ProcessFrame != null)
                 {
                     await StartRealtimeVideoProcessing();
                 }
