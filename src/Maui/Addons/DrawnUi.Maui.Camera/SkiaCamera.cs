@@ -735,7 +735,7 @@ public partial class SkiaCamera : SkiaControl
         nameof(PhotoQuality),
         typeof(CaptureQuality),
         typeof(SkiaCamera),
-        CaptureQuality.Max,
+        CaptureQuality.High,
         propertyChanged: NeedRestart);
 
     public CaptureQuality PhotoQuality
@@ -2294,7 +2294,7 @@ public partial class SkiaCamera : SkiaControl
     #region Capture Photo / Take Picture
 
     /// <summary>
-    /// Take camera picture. Run this in background thread!
+    /// Take camera picture. Run this on background thread!
     /// </summary>
     /// <returns></returns>
     public async Task TakePicture()
@@ -2306,30 +2306,24 @@ public partial class SkiaCamera : SkiaControl
 
         IsBusy = true;
 
-        IsTakingPhoto = true;
+        var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
         NativeControl.StillImageCaptureFailed = ex =>
         {
             OnCaptureFailed(ex);
-
-            IsTakingPhoto = false;
+            tcs.TrySetResult(false);
         };
 
         NativeControl.StillImageCaptureSuccess = captured =>
         {
             CapturedStillImage = captured;
-
             OnCaptureSuccess(captured);
-
-            IsTakingPhoto = false;
+            tcs.TrySetResult(true);
         };
 
         NativeControl.TakePicture();
 
-        while (IsTakingPhoto)
-        {
-            await Task.Delay(60);
-        }
+        await tcs.Task;
 
         IsBusy = false;
     }
@@ -2396,13 +2390,15 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
-    /// Save captured bitmap to native gallery
+    /// Save captured bitmap to native gallery as JPEG with injected EXIF metadata.
+    /// Returns the gallery path if successful.
     /// </summary>
     /// <param name="captured"></param>
     /// <param name="reorient"></param>
     /// <param name="album"></param>
+    /// <param name="quality">JPEG quality (0-100)</param>
     /// <returns></returns>
-    public async Task<string> SaveToGalleryAsync(CapturedImage captured, string album = null)
+    public async Task<string> SaveToGalleryAsync(CapturedImage captured, string album = null, int quality=100)
     {
         var filename = GenerateJpgFileName();
 
@@ -2412,7 +2408,7 @@ public partial class SkiaCamera : SkiaControl
             Metadata.ApplyGpsCoordinates(captured.Meta, LocationLat, LocationLon);
         }
 
-        await using var stream = CreateOutputStreamRotated(captured, false);
+        await using var stream = CreateOutputStreamRotated(captured, false, SKEncodedImageFormat.Jpeg, quality);
 
         using var exifStream = await JpegExifInjector.InjectExifMetadata(stream, captured.Meta);
 

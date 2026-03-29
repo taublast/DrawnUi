@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using AppoMobi.Specials;
 using CameraTests.Services;
 using CameraTests.UI;
 using CameraTests.Visualizers;
@@ -715,7 +716,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
 
     private void OnCaptureSuccess(object sender, CapturedImage e)
     {
-        MainThread.BeginInvokeOnMainThread(async () =>
+        Tasks.StartDelayed(TimeSpan.FromMilliseconds(16), async () =>
         {
             try
             {
