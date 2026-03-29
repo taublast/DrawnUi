@@ -1,6 +1,10 @@
+using System.Diagnostics.Metrics;
+using AppoMobi.Specials;
 using CameraTests.Views;
 using CameraTests.Visualizers;
 using DrawnUi.Camera;
+using DrawnUi.Controls;
+using TerraFX.Interop.Windows;
 
 namespace CameraTests.UI;
 
@@ -24,6 +28,7 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
             {
                 return;
             }
+
             visualizer = value;
             OnPropertyChanged();
         }
@@ -41,6 +46,10 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
 
         Children = new List<SkiaControl>
         {
+            //can place dimmer whatever here
+
+            //then..
+
             // Double-buffered wrapper: caches transformed content so each frame encoder
             // thread gets a fast snapshot without stalling on layout work.
             new SkiaLayer()
@@ -50,81 +59,12 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
                 UseCache = SkiaCacheType.ImageDoubleBuffered,
                 Children =
                 {
-                    //EQ
-                    new SkiaShape()
-                    {
-                        Type = ShapeType.Rectangle,
-                        Margin = 16,
-                        Padding = new Thickness(12, 10, 12, 12),
-                        WidthRequest = 220,
-                        HeightRequest = 138,
-                        CornerRadius = 22,
-                        BackgroundColor = Color.FromArgb("#A60B1220"),
-                        StrokeWidth = 1,
-                        StrokeColor = Color.FromArgb("#3311C5BF"),
-                        VerticalOptions = LayoutOptions.Start,
-                        HorizontalOptions = LayoutOptions.End,
-                        Children =
-                        {
-                            new SkiaLabel("AUDIO EQ")
-                            {
-                                FontSize = 12,
-                                CharacterSpacing = 1,
-                                TextColor = Color.FromArgb("#7DEAE5"),
-                                UseCache = SkiaCacheType.Operations,
-                                HorizontalOptions = LayoutOptions.Start,
-                                VerticalOptions = LayoutOptions.Start,
-                            },
-                            new SkiaLabel()
-                            {
-                                Margin = new Thickness(0, 18, 0, 0),
-                                FontSize = 11,
-                                TextColor = Color.FromArgb("#A7B5C6"),
-                                UseCache = SkiaCacheType.Operations,
-                                HorizontalOptions = LayoutOptions.Start,
-                                VerticalOptions = LayoutOptions.Start,
-                            }
-                            .Assign(out _labelVisualizerName),
-
-                            new AudioVisualizer()
-                            {
-                                Margin = new Thickness(0, 42, 0, 0),
-                                HorizontalOptions = LayoutOptions.Fill,
-                                VerticalOptions = LayoutOptions.Fill,
-                            }
-                            .Assign(out visualizer)
-                        }
-                    }.Assign(out panelVisualizer),
-
-                    new SkiaShape()
-                    {
-                        UseCache = SkiaCacheType.Image,
-                        Type = ShapeType.Rectangle,
-                        CornerRadius = 26,
-                        Margin = new Thickness(20, 0, 20, 20),
-                        Padding = new Thickness(20, 16, 20, 18),
-                        HorizontalOptions = LayoutOptions.Center,
-                        VerticalOptions = LayoutOptions.End,
-                        BackgroundColor = Color.FromArgb("#B30A101A"),
-                        StrokeColor = Color.FromArgb("#3342D9F6"),
-                        StrokeWidth = 1,
-                        Children =
-                        {
-                            new SkiaRichLabel()
-                                {
-                                    FontFamily = "FontText",
-                                    FontSize = 20,
-                                    LineHeight = 1.1,
-                                    TextColor = Colors.White,
-                                    UseCache = SkiaCacheType.Operations,
-                                    Margin = new Thickness(0, 0, 0, 0),
-                                }
-                                .Assign(out _captionsLabel)
-                        }
-                    }.Assign(out _captionsPanel),
+                    new CameraOverlayContent().Assign(out Content)
                 }
             }
         };
+
+        CreateChildren(Content);
 
         // Keep the label in sync with the current visualizer name
         _labelVisualizerName.ObserveProperty(
@@ -133,9 +73,86 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
             me => me.Text = Visualizer?.VisualizerName ?? string.Empty);
     }
 
+    private void CreateChildren(SkiaControl parent)
+    {
+        parent.Children = new List<SkiaControl>
+        {
+            //EQ
+            new SkiaShape()
+            {
+                Type = ShapeType.Rectangle,
+                Margin = 16,
+                Padding = new Thickness(12, 10, 12, 12),
+                WidthRequest = 220,
+                HeightRequest = 138,
+                CornerRadius = 22,
+                BackgroundColor = Color.FromArgb("#A60B1220"),
+                StrokeWidth = 1,
+                StrokeColor = Color.FromArgb("#3311C5BF"),
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.End,
+                Children =
+                {
+                    new SkiaLabel("AUDIO EQ")
+                    {
+                        FontSize = 12,
+                        CharacterSpacing = 1,
+                        TextColor = Color.FromArgb("#7DEAE5"),
+                        UseCache = SkiaCacheType.Operations,
+                        HorizontalOptions = LayoutOptions.Start,
+                        VerticalOptions = LayoutOptions.Start,
+                    },
+                    new SkiaLabel()
+                        {
+                            Margin = new Thickness(0, 18, 0, 0),
+                            FontSize = 11,
+                            TextColor = Color.FromArgb("#A7B5C6"),
+                            UseCache = SkiaCacheType.Operations,
+                            HorizontalOptions = LayoutOptions.Start,
+                            VerticalOptions = LayoutOptions.Start,
+                        }
+                        .Assign(out _labelVisualizerName),
+                    new AudioVisualizer()
+                        {
+                            Margin = new Thickness(0, 42, 0, 0),
+                            HorizontalOptions = LayoutOptions.Fill,
+                            VerticalOptions = LayoutOptions.Fill,
+                        }
+                        .Assign(out visualizer)
+                }
+            }.Assign(out panelVisualizer),
+            new SkiaShape()
+            {
+                UseCache = SkiaCacheType.Image,
+                Type = ShapeType.Rectangle,
+                CornerRadius = 26,
+                Margin = new Thickness(20, 0, 20, 20),
+                Padding = new Thickness(20, 16, 20, 18),
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.End,
+                BackgroundColor = Color.FromArgb("#B30A101A"),
+                StrokeColor = Color.FromArgb("#3342D9F6"),
+                StrokeWidth = 1,
+                Children =
+                {
+                    new SkiaRichLabel()
+                        {
+                            FontFamily = "FontText",
+                            FontSize = 20,
+                            LineHeight = 1.1,
+                            TextColor = Colors.White,
+                            UseCache = SkiaCacheType.Operations,
+                            Margin = new Thickness(0, 0, 0, 0),
+                        }
+                        .Assign(out _captionsLabel)
+                }
+            }.Assign(out _captionsPanel),
+        };
+    }
+
     public void AddAudioSample(AudioSample sample)
     {
-        if (Visualizer != null  && panelVisualizer.IsVisible && Visualizer.IsVisible)
+        if (Visualizer != null && panelVisualizer.IsVisible && Visualizer.IsVisible)
         {
             Visualizer.AddSample(sample);
         }
@@ -225,6 +242,4 @@ public class CameraDataOverlay : CameraOverlayLayout, IAppOverlay
 
         animExit.Play();
     }
-
 }
-
