@@ -4,8 +4,6 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using AppoMobi.Specials;
-using DrawnUi.Views;
-using static DrawnUi.Camera.SkiaCamera;
 using Color = Microsoft.Maui.Graphics.Color;
 
 #if WINDOWS
@@ -413,7 +411,7 @@ public partial class SkiaCamera : SkiaControl
 
     /// <summary>
     /// Whether to use capture video flow (frame-by-frame processing) instead of native video recording.
-    /// When true, individual camera frames are captured and processed through FrameProcessor callback before encoding.
+    /// When true, individual camera frames are captured and processed through ProcessFrame callback before encoding.
     /// Default is false (use native video recording).
     /// </summary>
     public bool UseRealtimeVideoProcessing
@@ -3019,13 +3017,13 @@ public partial class SkiaCamera : SkiaControl
     /// Custom frame processor for video capture (recording frames).
     /// Called for each frame being encoded to video. Scale is always 1.0.
     /// </summary>
-    public Action<DrawableFrame> FrameProcessor { get; set; }
+    public Action<DrawableFrame> ProcessFrame { get; set; }
 
     /// <summary>
     /// Custom frame processor for preview display.
     /// Called for each preview frame before display. Use PreviewScale to match recording overlay sizing.
     /// </summary>
-    public Action<DrawableFrame> PreviewProcessor { get; set; }
+    public Action<DrawableFrame> ProcessPreview { get; set; }
 
     /// <summary>
     /// Whether to mirror recording frames to preview
@@ -3245,10 +3243,10 @@ public partial class SkiaCamera : SkiaControl
                                     GetAspectFillRects(previewImage.Width, previewImage.Height, info.Width, info.Height);
                                 canvas.DrawImage(previewImage, __rects3.src, __rects3.dst);
 
-                                if (FrameProcessor != null || VideoDiagnosticsOn)
+                                if (ProcessFrame != null || VideoDiagnosticsOn)
                                 {
                                     var rotation = GetActiveRecordingRotation();
-                                    var needsCheckpoint = FrameProcessor != null || (VideoDiagnosticsOn && rotation != 0);
+                                    var needsCheckpoint = ProcessFrame != null || (VideoDiagnosticsOn && rotation != 0);
                                     var checkpoint = 0;
 
                                     if (needsCheckpoint)
@@ -3257,7 +3255,7 @@ public partial class SkiaCamera : SkiaControl
                                         ApplyCanvasRotation(canvas, info.Width, info.Height, rotation);
                                     }
 
-                                    if (FrameProcessor != null)
+                                    if (ProcessFrame != null)
                                     {
                                         var (frameWidth, frameHeight) = GetRotatedDimensions(info.Width, info.Height, rotation);
                                         var frame = new DrawableFrame
@@ -3268,7 +3266,7 @@ public partial class SkiaCamera : SkiaControl
                                             Time = elapsed,
                                             Scale = 1f
                                         };
-                                        FrameProcessor.Invoke(frame);
+                                        ProcessFrame.Invoke(frame);
                                     }
 
                                     if (VideoDiagnosticsOn)
@@ -3402,7 +3400,7 @@ public partial class SkiaCamera : SkiaControl
 
     /// <summary>
     /// Called on every camera frame before any compositing, overlay or preview downscaling.
-    /// During recording this fires with the raw camera input before FrameProcessor draws overlays
+    /// During recording this fires with the raw camera input before ProcessFrame draws overlays
     /// (via platform recording loops). During preview-only this fires with the raw preview frame.
     /// Override to implement ML/AI processing. Call TryGetMLFrame() inside to get GPU-scaled pixel data.
     /// Must not block — copy pixels synchronously into a pre-allocated buffer and hand off to a background thread.
@@ -3446,7 +3444,7 @@ public partial class SkiaCamera : SkiaControl
                 }
 
                 // Fire ML hook for non-recording path (preview-only).
-                // Recording paths fire their own hook earlier (before FrameProcessor overlays) in
+                // Recording paths fire their own hook earlier (before ProcessFrame overlays) in
                 // CaptureFrameCore (Apple), ProcessGpuFrameOnThread (Android GPU), and
                 // PreviewCaptureSuccess (Windows) — so we skip here to avoid double-firing.
                 if (!(UseRecordingFramesForPreview && (IsRecording || IsPreRecording)))
@@ -3455,7 +3453,7 @@ public partial class SkiaCamera : SkiaControl
                 }
 
                 // Apply preview compositing when needed — but skip when UseRecordingFramesForPreview is active
-                // because the encoder preview already has FrameProcessor overlay baked in.
+                // because the encoder preview already has ProcessFrame overlay baked in.
                 SKImage finalImage = image;
                 if (ShouldApplyPreviewEffects())
                 {
@@ -3479,7 +3477,7 @@ public partial class SkiaCamera : SkiaControl
     {
         return UseRealtimeVideoProcessing
                && !(UseRecordingFramesForPreview && (IsRecording || IsPreRecording))
-               && (PreviewProcessor != null || ShouldDrawPreviewDiagnostics());
+               && (ProcessPreview != null || ShouldDrawPreviewDiagnostics());
     }
 
     private bool ShouldDrawPreviewDiagnostics()
@@ -3488,7 +3486,31 @@ public partial class SkiaCamera : SkiaControl
     }
 
     /// <summary>
-    /// Applies lightweight preview diagnostics and PreviewProcessor to the preview image and returns the composited result.
+    /// Draws the camera frame into the video encoder frame canvas that will be encoded to video during recording with processing.
+    /// </summary>
+    /// <param name="canvas"></param>
+    /// <param name="frame"></param>
+    /// <param name="src"></param>
+    /// <param name="dst"></param>
+    protected internal virtual void RenderFrameForRecording(SKCanvas canvas, SKImage frame, SKRect src, SKRect dst)
+    {
+        canvas.DrawImage(frame, src, dst);
+    }
+
+    /// <summary>
+    /// Draws preview camera frame as background into the canvas that will be used by ProcessPreview
+    /// and preview diagnostics.
+    /// Override this method to customize the raw preview rendering before any overlays or scaling is applied.
+    /// </summary>
+    /// <param name="canvas"></param>
+    /// <param name="frame"></param>
+    protected virtual void RenderPreviewForProcessing(SKCanvas canvas, SKImage frame)
+    {
+        canvas.DrawImage(frame, 0, 0);
+    }
+
+    /// <summary>
+    /// Applies lightweight preview diagnostics and ProcessPreview to the preview image and returns the composited result.
     /// </summary>
     private SKImage ApplyPreviewEffects(SKImage source)
     {
@@ -3501,25 +3523,25 @@ public partial class SkiaCamera : SkiaControl
             var height = source.Height;
 
             var info = new SKImageInfo(width, height, SKColorType.Rgba8888, SKAlphaType.Premul);
-            using var surface = SKSurface.Create(info);
+            using var surface = Superview.CreateSurface(width, height, true);// SKSurface.Create(info);
             if (surface == null)
                 return null;
 
             var canvas = surface.Canvas;
 
             // Draw raw preview image
-            canvas.DrawImage(source, 0, 0);
+            RenderPreviewForProcessing(canvas, source);
 
             // Calculate elapsed time (for animation sync with recording)
             var elapsed = (IsRecording || IsPreRecording)
                 ? DateTime.Now - _captureVideoStartTime
                 : TimeSpan.Zero;
 
-            if (PreviewProcessor != null)
+            if (ProcessPreview != null)
             {
                 var checkpoint = canvas.Save();
 
-                // Call PreviewProcessor with preview frame info
+                // Call ProcessPreview with preview frame info
                 var frame = new DrawableFrame
                 {
                     Width = width,
@@ -3529,7 +3551,7 @@ public partial class SkiaCamera : SkiaControl
                     IsPreview = true,
                     Scale = PreviewScale  // Use PreviewScale so user can match recording overlay
                 };
-                PreviewProcessor.Invoke(frame);
+                ProcessPreview.Invoke(frame);
 
                 canvas.RestoreToCount(checkpoint);
             }
