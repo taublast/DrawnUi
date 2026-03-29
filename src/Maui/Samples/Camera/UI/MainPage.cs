@@ -531,7 +531,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
 
             if (_recordingStopLabel != null && !isRecordingVideo)
             {
-                _recordingStopLabel.Text = "Stop (00:00)";
+                _recordingStopLabel.Text = "Abort";
             }
         });
     }
