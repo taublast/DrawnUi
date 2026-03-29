@@ -1708,11 +1708,7 @@ namespace DrawnUi.Camera
                 // Render OES texture from SurfaceTexture
                 _gpuFrameProvider.RenderToFramebuffer(_width, _height, _isFrontCamera);
 
-                // Fire ML hook — raw camera frame in FBO 0, EGL current, before FrameProcessor overlays
-                // Override OnRawFrameAcquired and call TryGetMLFrame synchronously (EGL context must be current)
-                ParentCamera?.OnRawFrameAcquired(null, ParentCamera.DeviceRotation);
-
-                // 2. Ensure Skia surface is ready for overlays
+                // 2. Ensure Skia surface is ready (wraps the GL framebuffer)
                 if (_grContext == null)
                 {
                     var glInterface = GRGlInterface.Create();
@@ -1742,9 +1738,25 @@ namespace DrawnUi.Camera
                     _skSurface = SKSurface.Create(_grContext, backendRT, GRSurfaceOrigin.BottomLeft, SKColorType.Rgba8888);
                 }
 
-                // 3. Apply FrameProcessor overlays (user can draw on top of camera frame)
                 var canvas = _skSurface.Canvas;
-                // Note: Camera frame is already rendered to framebuffer, don't clear!
+
+                // 3. Snapshot the raw camera frame for RenderFrameForRecording and OnRawFrameAcquired hooks.
+                // GPU-backed snapshot — no CPU readback, stays on GPU (~0.2ms).
+                if (ParentCamera != null)
+                {
+                    _skSurface.Flush();
+                    using var rawFrame = _skSurface.Snapshot();
+
+                    // Fire ML hook with real SKImage (was null before)
+                    ParentCamera.OnRawFrameAcquired(rawFrame, ParentCamera.DeviceRotation);
+
+                    // Apply user shader/effect via RenderFrameForRecording override.
+                    // The frame fills the entire framebuffer so src == dst.
+                    var fullRect = new SKRect(0, 0, _width, _height);
+                    ParentCamera.RenderFrameForRecording(canvas, rawFrame, fullRect, fullRect);
+                }
+
+                // Note: Camera frame is now rendered (possibly with shader effect), don't clear!
 
                 if (frameProcessor != null || videoDiagnosticsOn)
                 {
@@ -1919,7 +1931,7 @@ namespace DrawnUi.Camera
 
         /// <summary>
         /// Process a frame from the GPU camera path.
-        /// Renders camera texture to encoder surface and applies FrameProcessor overlays.
+        /// Renders camera texture to encoder surface and applies ProcessFrame overlays.
         /// </summary>
         /// <param name="timestamp">Frame timestamp relative to recording start</param>
         /// <param name="frameProcessor">Optional frame processor for overlays</param>
@@ -2005,7 +2017,7 @@ namespace DrawnUi.Camera
                     _skSurface = SKSurface.Create(_grContext, backendRT, GRSurfaceOrigin.BottomLeft, SKColorType.Rgba8888);
                 }
 
-                // 3. Apply FrameProcessor overlays (user can draw on top of camera frame)
+                // 3. Apply ProcessFrame overlays (user can draw on top of camera frame)
                 var canvas = _skSurface.Canvas;
                 // Note: Camera frame is already rendered to framebuffer, don't clear!
 
