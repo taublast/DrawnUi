@@ -8,6 +8,7 @@ using DrawnUi.Camera;
 using DrawnUi.Controls;
 using DrawnUi.Draw;
 using DrawnUi.Views;
+using TerraFX.Interop.Windows;
 
 namespace CameraTests.Views;
 
@@ -936,6 +937,10 @@ public partial class MainPage : BasePageReloadable, IDisposable
         }
     }
 
+    /// <summary>
+    /// Saved already took image and presented inside popup confirmation
+    /// </summary>
+    /// <returns></returns>
     private async Task SaveCurrentImageToGallery()
     {
         if (_currentCapturedImage == null)
@@ -944,7 +949,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
         try
         {
             // Save to gallery, note we set reorient to false, because it should be handled by metadata in this case
-            var path = await CameraControl.SaveToGalleryAsync(_currentCapturedImage);
+            var path = await CameraControl.SaveToGalleryAsync(_currentCapturedImage, MauiProgram.Album);
             if (!string.IsNullOrEmpty(path))
             {
                 ShowAlert("Success", $"Photo saved successfully!\nPath: {path}");
