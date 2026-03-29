@@ -1242,7 +1242,18 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     else
                     {
                         // For other qualities, filter by orientation as before
-                        var allStillSizes = StillFormats.Select(f => new Size(f.Width, f.Height)).ToList();
+                        var allStillSizes = StillFormats.Where(w=>w.AspectRatioString=="4:3").Select(f => new Size(f.Width, f.Height)).ToList();
+
+                        if (!allStillSizes.Any())
+                        {
+                            allStillSizes = StillFormats.Select(f => new Size(f.Width, f.Height)).ToList();
+                        }
+
+                        if (!allStillSizes.Any())
+                        {
+                            Debug.WriteLine($"[NativeCameraAndroid] No still formats available for camera {CameraId}");
+                            return false;
+                        }
 
                         if (rotated)
                         {
@@ -1272,11 +1283,11 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     switch (FormsControl.PhotoQuality)
                     {
                         case CaptureQuality.Max:
-                            selectedSize = validSizes.First();
+                            selectedSize = validSizes[0];
                             break;
 
                         case CaptureQuality.High:
-                            selectedSize = SelectFormatByQuality(validSizes, 0.2);
+                            selectedSize = validSizes[1];
                             break;
 
                         case CaptureQuality.Medium:
@@ -2388,10 +2399,11 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     {
         try
         {
-            mPreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Start);
-            mState = STATE_WAITING_LOCK;
-            CaptureSession.Capture(mPreviewRequestBuilder.Build(), mCaptureCallback,
-                mBackgroundHandler);
+            // Preview runs ContinuousPicture AF — focus is already tracking.
+            // Skip the AF trigger/lock + AE precapture state machine entirely
+            // to avoid 500ms-2s of unnecessary waiting.
+            mState = STATE_PICTURE_TAKEN;
+            StartCapturingStill();
         }
         catch (Exception e)
         {
