@@ -598,6 +598,9 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             BufferPreRecordingFrame(image, image.Timestamp);
         }
 
+        if (!ShouldGeneratePreviewFrame())
+            return;
+
         // RenderScript YUV→RGB conversion.
         // In the experimental dual-stream recording mode we temporarily process ImageReader preview
         // frames even if GL preview is enabled for non-recording preview sessions.
@@ -645,6 +648,21 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
         Preview = outImage;
         FormsControl.UpdatePreview();
+    }
+
+    private bool ShouldGeneratePreviewFrame()
+    {
+        var formsControl = FormsControl;
+        if (formsControl == null)
+            return false;
+
+        if (formsControl.IsRecording || formsControl.IsPreRecording)
+            return true;
+
+        lock (_lockPreview)
+        {
+            return _preview == null;
+        }
     }
 
     #endregion
@@ -1382,6 +1400,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                                 PreviewSize = new SkiaSharp.SKSize(gpw, gph);
                                 FormsControl.SetRotatedContentSize(PreviewSize, SensorOrientation);
 
+                                _glPreviewRenderer.ShouldGeneratePreviewFrame = ShouldGeneratePreviewFrame;
+
                                 // Wire preview delivery
                                 _glPreviewRenderer.PreviewFrameReady += OnGlPreviewFrameReady;
 
@@ -1461,6 +1481,8 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                     _useGlPreview = true;
                     PreviewSize = new SkiaSharp.SKSize(gpw, gph);
                     FormsControl.SetRotatedContentSize(PreviewSize, SensorOrientation);
+
+                    _glPreviewRenderer.ShouldGeneratePreviewFrame = ShouldGeneratePreviewFrame;
 
                     // Wire preview delivery
                     _glPreviewRenderer.PreviewFrameReady += OnGlPreviewFrameReady;

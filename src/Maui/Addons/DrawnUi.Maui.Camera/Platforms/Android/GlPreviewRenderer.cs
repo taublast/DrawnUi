@@ -85,6 +85,12 @@ namespace DrawnUi.Camera
         /// </summary>
         public event Action<SKImage, long> PreviewFrameReady;
 
+        /// <summary>
+        /// Optional pull-driven gate. When provided and returns false, the current camera frame is
+        /// consumed but no preview image is rendered or read back.
+        /// </summary>
+        public Func<bool> ShouldGeneratePreviewFrame { get; set; }
+
         public bool IsInitialized => _initialized;
         public int PreviewWidth => _previewWidth;
         public int PreviewHeight => _previewHeight;
@@ -328,6 +334,9 @@ namespace DrawnUi.Camera
 
             // 1. Update SurfaceTexture (MUST be on EGL context thread — context bound once in GlPreviewLoop)
             if (!_gpuFrameProvider.TryProcessFrameNoWait(out long timestampNs))
+                return;
+
+            if (ShouldGeneratePreviewFrame != null && !ShouldGeneratePreviewFrame())
                 return;
 
             // 3. Reset GL state to clean defaults

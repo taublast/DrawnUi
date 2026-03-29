@@ -231,8 +231,7 @@ namespace DrawnUi.Camera
         private SKImage _latestPreviewImage;
         private SKSurface _previewRasterSurface;  // Cached to avoid allocation every frame
         private int _previewWidth, _previewHeight;
-        private int _previewFrameCounter = 0;    // Used by legacy SubmitFrameAsync path
-        private int _previewFrameInterval = 1;  // Legacy path throttle: 1-of-N frames → ~30fps preview
+        private int _previewRequested = 1;      // Pull-driven preview: 1 = consumer asked for next frame
         public event EventHandler PreviewAvailable;
 
         // GPU preview scaler (glBlitFramebuffer-based, mirrors MetalPreviewScaler)
@@ -494,7 +493,6 @@ namespace DrawnUi.Camera
             _width = Math.Max(16, width);
             _height = Math.Max(16, height);
             _frameRate = Math.Max(1, frameRate);
-            _previewFrameInterval = Math.Max(1, _frameRate / 30); // Legacy SubmitFrameAsync throttle
             _deviceRotation = deviceRotation;
             _recordAudio = recordAudio;
             UseSharedMediaOriginForLiveSync = false;
@@ -515,6 +513,13 @@ namespace DrawnUi.Camera
             {
                 _warmupCompleted = false;
             }
+
+            lock (_previewLock)
+            {
+                _latestPreviewImage?.Dispose();
+                _latestPreviewImage = null;
+            }
+            System.Threading.Interlocked.Exchange(ref _previewRequested, 1);
 
             System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] InitializeAsync: {_width}x{_height}@{_frameRate} rotation={_deviceRotation}° IsPreRecordingMode={IsPreRecordingMode}");
 
@@ -1365,9 +1370,9 @@ namespace DrawnUi.Camera
             _skSurface?.Canvas?.Flush();
             _grContext?.Flush();
 
-            // Publish preview snapshot (throttled to ~30fps, skipped entirely if nobody is listening)
-            bool shouldGeneratePreview = PreviewAvailable != null &&
-                (System.Threading.Interlocked.Increment(ref _previewFrameCounter) % _previewFrameInterval) == 0;
+            // Pull-driven preview generation: only produce the next preview after the previous
+            // one was consumed and TryAcquirePreviewImage() requested another.
+            bool shouldGeneratePreview = ShouldGeneratePreview();
             if (shouldGeneratePreview)
             {
                 if (!TryPublishPreviewFromScaler())
@@ -1416,7 +1421,22 @@ namespace DrawnUi.Camera
             {
                 image = _latestPreviewImage;
                 _latestPreviewImage = null;
+                System.Threading.Interlocked.Exchange(ref _previewRequested, 1);
                 return image != null;
+            }
+        }
+
+        private bool ShouldGeneratePreview()
+        {
+            if (PreviewAvailable == null)
+                return false;
+
+            if (System.Threading.Volatile.Read(ref _previewRequested) == 0)
+                return false;
+
+            lock (_previewLock)
+            {
+                return _latestPreviewImage == null;
             }
         }
 
@@ -1451,6 +1471,8 @@ namespace DrawnUi.Camera
                 _latestPreviewImage?.Dispose();
                 _latestPreviewImage = previewImage;
             }
+
+            System.Threading.Interlocked.Exchange(ref _previewRequested, 0);
 
             PreviewAvailable?.Invoke(this, EventArgs.Empty);
             return true;
@@ -1489,6 +1511,8 @@ namespace DrawnUi.Camera
                     _latestPreviewImage = keepAlive;
                     keepAlive = null;
                 }
+
+                System.Threading.Interlocked.Exchange(ref _previewRequested, 0);
 
                 PreviewAvailable?.Invoke(this, EventArgs.Empty);
             }
@@ -1781,7 +1805,8 @@ namespace DrawnUi.Camera
                 canvas.Flush();
                 _grContext.Flush();
 
-                if (!AndroidCameraExperimentalFlags.IsLegacyDualStreamPreviewDuringRecordingEnabled())
+                if (!AndroidCameraExperimentalFlags.IsLegacyDualStreamPreviewDuringRecordingEnabled()
+                    && ShouldGeneratePreview())
                 {
                     // GPU-native preview generation (glBlitFramebuffer + async PBO, mirrors MetalPreviewScaler).
                     // Downscale on GPU first, then read back only the small buffer (~900KB vs ~8MB).
