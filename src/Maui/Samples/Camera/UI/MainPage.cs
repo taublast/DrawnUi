@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics;
 using AppoMobi.Specials;
 using CameraTests.Services;
@@ -6,9 +5,7 @@ using CameraTests.UI;
 using CameraTests.Visualizers;
 using DrawnUi.Camera;
 using DrawnUi.Controls;
-using DrawnUi.Draw;
 using DrawnUi.Views;
-using TerraFX.Interop.Windows;
 
 namespace CameraTests.Views;
 
