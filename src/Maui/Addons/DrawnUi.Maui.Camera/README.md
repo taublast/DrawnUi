@@ -157,7 +157,7 @@ You can use additional methods to building your own permissions flows, pass appr
 | 7 | Real-Time Effects & Custom Shaders | Built-in effects, SKSL shaders |
 | 8 | Zoom Control | Manual zoom, pinch-to-zoom |
 | 9 | Camera State Management | `StateChanged` event, `HardwareState` |
-| 10 | **Live Processing: FrameProcessor & PreviewProcessor** | Drawing overlays on preview and recorded video, `NewPreviewSet` for AI/ML |
+| 10 | **Live Processing: ProcessFrame & ProcessPreview** | Drawing overlays on preview and recorded video, `NewPreviewSet` for AI/ML |
 | 10a | **Raw Frame ML Hook: OnRawFrameAcquired & TryGetMLFrame** | Zero-overhead GPU-accelerated raw frame access for ML/AI inference |
 | 11 | Permission Handling | `NeedPermissions` flags, `CheckPermissions()`, `CheckPermissionsGranted()`, async helpers |
 | 12 | Complete MVVM Example | Full ViewModel + Page example |
@@ -850,28 +850,28 @@ if (camera.State == HardwareState.On)
 }
 ```
 
-### 10. Live Processing: FrameProcessor & PreviewProcessor
+### 10. Live Processing: ProcessFrame & ProcessPreview
 
 SkiaCamera provides **two drawing callbacks** for real-time overlay rendering, plus an **event** for read-only frame analysis:
 
 | Callback / Event | Type | When It Fires | Use Case |
 |------------------|------|---------------|----------|
-| `FrameProcessor` | `Action<DrawableFrame>` | Each frame being **encoded to video** | Watermarks, telemetry, overlays baked into recorded video |
-| `PreviewProcessor` | `Action<DrawableFrame>` | Each **preview** frame before display | Show overlays on live preview (e.g., gauges, guides) |
+| `ProcessFrame` | `Action<DrawableFrame>` | Each frame being **encoded to video** | Watermarks, telemetry, overlays baked into recorded video |
+| `ProcessPreview` | `Action<DrawableFrame>` | Each **preview** frame before display | Show overlays on live preview (e.g., gauges, guides) |
 | `NewPreviewSet` | `EventHandler<LoadedImageSource>` | Each preview frame after display | Read-only AI/ML analysis, face detection, QR scanning |
 
-> **Key Insight**: `FrameProcessor` draws on what gets **recorded**. 
-`PreviewProcessor` draws on what the user **sees**. 
+> **Key Insight**: `ProcessFrame` draws on what gets **recorded**. 
+`ProcessPreview` draws on what the user **sees**. 
 `NewPreviewSet` lets you **read** already processed preview frames.
 All three are independent.
 
-#### FrameProcessor (Video Recording Overlay)
+#### ProcessFrame (Video Recording Overlay)
 
 Draws on each frame being encoded to the video file. Requires `UseRealtimeVideoProcessing = true`. Scale is always 1.0 (full recording resolution).
 
 ```csharp
 camera.UseRealtimeVideoProcessing = true;
-camera.FrameProcessor = (frame) =>
+camera.ProcessFrame = (frame) =>
 {
     // This draws on the RECORDED video
     using var paint = new SKPaint
@@ -884,12 +884,12 @@ camera.FrameProcessor = (frame) =>
 };
 ```
 
-#### PreviewProcessor (Live Preview Overlay)
+#### ProcessPreview (Live Preview Overlay)
 
-Draws on each preview frame before it is displayed to the user. Uses `PreviewScale` so overlay sizing matches the recording. When `EnableCaptureDiagnostics` is enabled outside recording, SkiaCamera also draws a lightweight preview diagnostics overlay before `PreviewProcessor` runs, showing raw camera FPS, preview FPS, and preview size/scale. When `UseRecordingFramesForPreview = true` (default) and recording is active, `PreviewProcessor` is **automatically skipped** because the encoder's processed frames (with `FrameProcessor` overlay already baked in) are used as preview.
+Draws on each preview frame before it is displayed to the user. Uses `PreviewScale` so overlay sizing matches the recording. When `EnableCaptureDiagnostics` is enabled outside recording, SkiaCamera also draws a lightweight preview diagnostics overlay before `ProcessPreview` runs, showing raw camera FPS, preview FPS, and preview size/scale. When `UseRecordingFramesForPreview = true` (default) and recording is active, `ProcessPreview` is **automatically skipped** because the encoder's processed frames (with `ProcessFrame` overlay already baked in) are used as preview.
 
 ```csharp
-camera.PreviewProcessor = (frame) =>
+camera.ProcessPreview = (frame) =>
 {
     // This draws on the LIVE PREVIEW the user sees
     // frame.Scale = PreviewScale (e.g., 0.3 if preview is smaller than recording)
@@ -931,8 +931,8 @@ void DrawOverlay(DrawableFrame frame)
 
 // Assign both callbacks
 camera.UseRealtimeVideoProcessing = true;
-camera.FrameProcessor = DrawOverlay;
-camera.PreviewProcessor = DrawOverlay;
+camera.ProcessFrame = DrawOverlay;
+camera.ProcessPreview = DrawOverlay;
 ```
 
 #### DrawableFrame Properties
@@ -950,10 +950,10 @@ camera.PreviewProcessor = DrawOverlay;
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `UseRealtimeVideoProcessing` | `bool` | `false` | Enable frame-by-frame capture mode (required for `FrameProcessor`) |
-| `FrameProcessor` | `Action<DrawableFrame>` | `null` | Callback for processing each recorded video frame |
-| `PreviewProcessor` | `Action<DrawableFrame>` | `null` | Callback for processing each preview frame before display |
-| `UseRecordingFramesForPreview` | `bool` | `true` | Use encoder output as preview during recording (skips `PreviewProcessor`) |
+| `UseRealtimeVideoProcessing` | `bool` | `false` | Enable frame-by-frame capture mode (required for `ProcessFrame`) |
+| `ProcessFrame` | `Action<DrawableFrame>` | `null` | Callback for processing each recorded video frame |
+| `ProcessPreview` | `Action<DrawableFrame>` | `null` | Callback for processing each preview frame before display |
+| `UseRecordingFramesForPreview` | `bool` | `true` | Use encoder output as preview during recording (skips `ProcessPreview`) |
 | `PreviewScale` | `float` | `1.0` | Scale of preview relative to recording resolution (read-only) |
 
 #### NewPreviewSet Event (Read-Only Analysis)
@@ -1004,10 +1004,10 @@ private void ProcessPreviewFrameForAI(LoadedImageSource source)
 
 ### 10a. Raw Frame ML Hook: OnRawFrameAcquired & TryGetMLFrame
 
-When you need to run ML/AI inference on **raw camera frames** — before any `FrameProcessor` overlay is composited — use the `OnRawFrameAcquired` + `TryGetMLFrame` API.
+When you need to run ML/AI inference on **raw camera frames** — before any `ProcessFrame` overlay is composited — use the `OnRawFrameAcquired` + `TryGetMLFrame` API.
 
 > **Why not `NewPreviewSet`?**
-> `NewPreviewSet` fires *after* the preview image has been composited. During recording with `UseRecordingFramesForPreview = true` (the default), the preview already has `FrameProcessor` overlays baked in. For true raw-frame ML inference you need `OnRawFrameAcquired`.
+> `NewPreviewSet` fires *after* the preview image has been composited. During recording with `UseRecordingFramesForPreview = true` (the default), the preview already has `ProcessFrame` overlays baked in. For true raw-frame ML inference you need `OnRawFrameAcquired`.
 
 #### Overview
 
@@ -1087,7 +1087,7 @@ The internal GPU scaler is created lazily on first call and **reused** across fr
 | API | Fires when | Has overlays? | GPU path? | Zero-alloc? |
 |-----|-----------|---------------|-----------|-------------|
 | `NewPreviewSet` | After preview display | Yes (when recording) | No | No |
-| `PreviewProcessor` callback | Preview compositing | Partial | No | No |
+| `ProcessPreview` callback | Preview compositing | Partial | No | No |
 | **`OnRawFrameAcquired` + `TryGetMLFrame`** | Before any compositing | **Never** | **Yes** | **Yes** |
 
 ### 11. Permission Handling
@@ -1468,8 +1468,8 @@ public bool IsRecording { get; }             // Recording state (read-only)
 public VideoQuality VideoQuality { get; set; }   // Video quality preset
 public int VideoFormatIndex { get; set; }         // Manual format index
 public bool UseRealtimeVideoProcessing { get; set; }     // Enable frame-by-frame capture mode
-public Action<DrawableFrame> FrameProcessor { get; set; } // Draw on each recorded video frame
-public Action<DrawableFrame> PreviewProcessor { get; set; } // Draw on each preview frame before display
+public Action<DrawableFrame> ProcessFrame { get; set; } // Draw on each recorded video frame
+public Action<DrawableFrame> ProcessPreview { get; set; } // Draw on each preview frame before display
 public bool UseRecordingFramesForPreview { get; set; }   // Use encoder output as preview during recording (default: true)
 public float PreviewScale { get; }                       // Preview-to-recording scale factor (read-only)
 
@@ -2024,7 +2024,7 @@ SkiaCamera provides a **frame-by-frame video recording system** with real-time p
 
 **Key Features:**
 - **Real-time frame processing** with GPU acceleration
-- **Custom drawing** on each frame via `FrameProcessor` callback
+- **Custom drawing** on each frame via `ProcessFrame` callback
 - **Dual recording modes**: Native recording (default) vs. Capture flow (frame-by-frame)
 - **Cross-platform support** (Windows, Android, iOS/macOS)
 - **Hardware encoding** when available
@@ -2043,7 +2043,7 @@ var camera = new SkiaCamera
     EnableAudioRecording = true,
 
     // Frame processor callback for custom rendering
-    FrameProcessor = (frame) =>
+    ProcessFrame = (frame) =>
     {
         // Draw watermark on each video frame
         using var paint = new SKPaint
@@ -2070,7 +2070,7 @@ await camera.StopVideoRecording();
 
 **DrawableFrame Properties:**
 
-The `FrameProcessor` and `PreviewProcessor` callbacks receive a `DrawableFrame` object with:
+The `ProcessFrame` and `ProcessPreview` callbacks receive a `DrawableFrame` object with:
 
 | Property | Type | Description |
 |----------|------|-------------|
@@ -2078,7 +2078,7 @@ The `FrameProcessor` and `PreviewProcessor` callbacks receive a `DrawableFrame` 
 | `Width` | `int` | Frame width in pixels |
 | `Height` | `int` | Frame height in pixels |
 | `Time` | `TimeSpan` | Elapsed time since recording started |
-| `IsPreview` | `bool` | `true` for preview frames (`PreviewProcessor`), `false` for recording frames (`FrameProcessor`) |
+| `IsPreview` | `bool` | `true` for preview frames (`ProcessPreview`), `false` for recording frames (`ProcessFrame`) |
 | `Scale` | `float` | 1.0 for recording frames; `PreviewScale` for preview frames — multiply your drawing coordinates/sizes by this |
 
 **Capture Video Flow Properties:**
@@ -2086,7 +2086,7 @@ The `FrameProcessor` and `PreviewProcessor` callbacks receive a `DrawableFrame` 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
 | `UseRealtimeVideoProcessing` | `bool` | `false` | Enable frame-by-frame capture mode |
-| `FrameProcessor` | `Action<DrawableFrame>` | `null` | Callback for processing each frame |
+| `ProcessFrame` | `Action<DrawableFrame>` | `null` | Callback for processing each frame |
 | `EnableAudioRecording` | `bool` | `true` | Include audio in recording |
 | `VideoQuality` | `VideoQuality` | `Standard` | Video quality preset |
 | `VideoFormatIndex` | `int` | `0` | Manual format selection (when VideoQuality = Manual) |
@@ -2094,7 +2094,7 @@ The `FrameProcessor` and `PreviewProcessor` callbacks receive a `DrawableFrame` 
 **Advanced Example: Multi-Layer Overlay**
 
 ```csharp
-camera.FrameProcessor = (frame) =>
+camera.ProcessFrame = (frame) =>
 {
     var canvas = frame.Canvas;
     var width = frame.Width;
@@ -2161,7 +2161,7 @@ camera.FrameProcessor = (frame) =>
 
 - When `UseRealtimeVideoProcessing = true`, the frame processor MUST be set for recording to work
 - Frame processing happens in real-time at the target video FPS (typically 30fps)
-- Keep `FrameProcessor` code efficient to avoid frame drops
+- Keep `ProcessFrame` code efficient to avoid frame drops
 - The same `StartVideoRecording()` / `StopVideoRecording()` API works for both modes
 - All existing video events (`RecordingSuccess`, `RecordingFailed`, `RecordingProgress`) work the same
 - Preview continues uninterrupted during recording in both modes
@@ -2189,7 +2189,7 @@ public class MyCamera : SkiaCamera
         UseRealtimeVideoProcessing = true;
         EnableAudioRecording = true;
         
-        FrameProcessor = (frame) =>
+        ProcessFrame = (frame) =>
         {
             // Your video frame processing
         };
@@ -2241,7 +2241,7 @@ public class CameraWithOscillograph : SkiaCamera
         EnableAudioRecording = true;
         
         // Video frame processor - draw oscillograph overlay
-        FrameProcessor = (frame) =>
+        ProcessFrame = (frame) =>
         {
             DrawOscillograph(frame.Canvas, 50, frame.Height - 150, 
                            frame.Width - 100, 100);
