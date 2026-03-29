@@ -23,7 +23,18 @@ public class LoadedImageSource : IDisposable
         else if (Image != null)
         {
             // Clone the SKImage
-            var imageClone = SKImage.FromBitmap(SKBitmap.FromImage(Image));
+            SKImage imageClone;
+
+            if (Image.IsTextureBacked)  
+            {
+                // Force a CPU raster copy from GPU
+                imageClone = SafeCloneToRaster(Image);
+            }
+            else
+            {
+                imageClone = SKImage.FromBitmap(SKBitmap.FromImage(Image));
+            }
+
             return new LoadedImageSource(imageClone)
             {
                 ProtectFromDispose = this.ProtectFromDispose
@@ -37,6 +48,27 @@ public class LoadedImageSource : IDisposable
                 ProtectFromDispose = this.ProtectFromDispose
             };
         }
+    }
+
+    SKImage SafeCloneToRaster(SKImage source)
+    {
+        if (source == null) return null;
+
+        var info = new SKImageInfo(source.Width, source.Height, source.ColorType, source.AlphaType, source.ColorSpace);
+
+        using var bitmap = new SKBitmap(info);
+
+        // This reads from GPU → CPU if necessary
+        if (!source.ReadPixels(info, bitmap.GetPixels(), bitmap.RowBytes, 0, 0))
+        {
+            // Fallback or error handling
+            throw new InvalidOperationException("Failed to read pixels from image");
+        }
+
+        // Optional: mark immutable if you don't plan to modify
+        bitmap.SetImmutable();
+
+        return SKImage.FromBitmap(bitmap);  // Now this is safe
     }
 
     public Guid Id { get; } = Guid.NewGuid();
