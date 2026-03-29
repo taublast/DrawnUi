@@ -451,7 +451,7 @@ public class WindowsCaptureVideoEncoder : ICaptureVideoEncoder
     /// <summary>
     /// Submits current GPU frame to encoder. Temporary: performs CPU readback into existing AddFrame pipeline.
     /// Preview is downscaled from the full-res GPU surface to avoid double processing
-    /// (FrameProcessor overlay is already baked in, so PreviewProcessor can be skipped).
+    /// (ProcessFrame overlay is already baked in, so ProcessPreview can be skipped).
     /// </summary>
     public async Task SubmitFrameAsync()
     {
