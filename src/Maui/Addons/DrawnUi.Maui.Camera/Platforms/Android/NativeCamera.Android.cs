@@ -2399,11 +2399,10 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     {
         try
         {
-            // Preview runs ContinuousPicture AF — focus is already tracking.
-            // Skip the AF trigger/lock + AE precapture state machine entirely
-            // to avoid 500ms-2s of unnecessary waiting.
-            mState = STATE_PICTURE_TAKEN;
-            StartCapturingStill();
+            mPreviewRequestBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Start);
+            mState = STATE_WAITING_LOCK;
+            CaptureSession.Capture(mPreviewRequestBuilder.Build(), mCaptureCallback,
+                mBackgroundHandler);
         }
         catch (Exception e)
         {
