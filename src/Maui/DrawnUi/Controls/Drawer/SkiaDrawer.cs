@@ -307,10 +307,7 @@ namespace DrawnUi.Controls
                     {
                         ApplyPosition(value);
                     },
-                    OnStop = () =>
-                    {
-                        Stopped?.Invoke(this, CurrentPosition);
-                    }
+                    OnStop = () => { Stopped?.Invoke(this, CurrentPosition); }
                 };
             }
 
@@ -477,7 +474,6 @@ namespace DrawnUi.Controls
             }
             else
             {
-                
                 if (Direction == DrawerDirection.FromLeft || Direction == DrawerDirection.FromRight)
                 {
                     SnapPoints = new List<Vector2>() { new(0, hideContent.Y), hideContent };
@@ -616,27 +612,29 @@ namespace DrawnUi.Controls
 
             var consumedDefault = BlockGesturesBelow ? this : null;
 
-            SKRect hitbox;
-            if (Super.UseFrozenVisualLayers)
+            bool hitContent = false;
+            if (Content != null)
             {
-                hitbox = Content.VisualLayer.HitBoxWithTransforms.Pixels;
-            }
-            else
-            {
-                var legacy = this.Content.GetPositionOnCanvas();
-                hitbox = new SKRect(legacy.X, legacy.Y, legacy.X + DrawingRect.Width, legacy.Y + DrawingRect.Height);
+                if (Super.UseFrozenVisualLayers && Content.VisualLayer != null)
+                {
+                    var hitbox = Content.VisualLayer.HitBoxWithTransforms.Pixels;
+                    hitContent = hitbox.ContainsInclusive(args.Event.Location.X, args.Event.Location.Y);
+                }
+                else
+                {
+                    hitContent = CheckChildGestureHit(Content, args, apply);
+                }
             }
 
             //check we are inside the content
             if (!_inContact && args.Type != TouchActionResult.Up)
             {
-                if (!hitbox.ContainsInclusive(args.Event.Location.X, args.Event.Location.Y))
+                if (!hitContent)
                 {
                     if (AutoClose && IsOpen && !InTransition)
                     {
                         IsOpen = false;
                     }
-
                     return null;
                 }
             }
