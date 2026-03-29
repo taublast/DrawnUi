@@ -21,8 +21,8 @@ namespace CameraTests.Views
 
             VideoQuality = VideoQuality.Standard;
 
-            FrameProcessor = OnFrameProcessing;
-            PreviewProcessor = OnFrameProcessing;
+            ProcessFrame = OnFrameProcessing;
+            ProcessPreview = OnFrameProcessing;
 
 #if DEBUG
             VideoDiagnosticsOn = true;
@@ -63,13 +63,9 @@ namespace CameraTests.Views
 
         public void SwitchVisualizer(int index = -1)
         {
-            if (OverlayPreview is IAppOverlay appOverlay)
+            if (VideoDataOverlay is IAppOverlay appOverlay)
             {
                 VisualizerName = appOverlay.SwitchVisualizer(index);
-            }
-            if (OverlayRecording is IAppOverlay appOverlayRecording)
-            {
-                VisualizerName = appOverlayRecording.SwitchVisualizer(index);
             }
         }
 
@@ -84,13 +80,9 @@ namespace CameraTests.Views
 
             OnAudioSample?.Invoke(sample);
 
-            if (OverlayPreview is IAppOverlay appOverlay)
+            if (VideoDataOverlay is IAppOverlay appOverlay)
             {
                 appOverlay.AddAudioSample(sample);
-            }
-            if (OverlayRecording is IAppOverlay appOverlayRecording)
-            {
-                appOverlayRecording.AddAudioSample(sample);
             }
 
             return base.OnAudioSampleAvailable(sample);
@@ -190,6 +182,16 @@ namespace CameraTests.Views
 
         private SKPaint _paintPreview;
         private SKPaint _paintRec;
+        private SKPaint _paint;
+        private CameraDataOverlay VideoDataOverlay;
+        private SKColor _paintColor;
+        private SKColor _paintPreviewColor;
+        private float _paintStrokeWidth = -1f;
+        private float _paintPreviewStrokeWidth = -1f;
+        private float _paintTextSize = -1f;
+        private float _paintPreviewTextSize = -1f;
+        private SKPaintStyle _paintStyle;       // default(SKPaintStyle) == Fill == 0
+        private SKPaintStyle _paintPreviewStyle;
 
         private DeviceOrientation _orientation;
 
@@ -212,7 +214,6 @@ namespace CameraTests.Views
         private float _previewScale;
         private float _renderedScale;
         private SKRect _rectFramePreview;
-        private SKRect _rectFrameRecording;
         private float _overlayScale = 1;
         private float _overlayScaleChanged = -1;
         private VideoFormat _adaptedToFormat;
@@ -248,14 +249,27 @@ namespace CameraTests.Views
             _overlayScaleChanged = Math.Max(formatWidth, formatHeight) / baseDivider;
         }
 
+        /// <summary>
+        /// ProcessFrame + ProcessPreview events
+        /// </summary>
+        /// <param name="frame"></param>
         void OnFrameProcessing(DrawableFrame frame)
         {
-            bool DrawOverlay(SkiaLayout layout, bool skipRendering)
+            bool DrawOverlay(CameraDataOverlay layout, bool skipRendering)
             {
+                /*
+                    for 1080:
+                    | Format    | Min Dimension | k value |
+                    |-----------|---------------|---------|
+                    | 1920×1080 | 1080          | 1.0     |
+                    | 1280×720  | 720           | 0.667   |
+                    | 3840×2160 | 2160          | 2.0     |
+                    | 1280×768  | 768           | 0.711   |
+                 */
 
-                if (this.CurrentVideoFormat != _adaptedToFormat)
+                if (CurrentVideoFormat != _adaptedToFormat)
                 {
-                    _adaptedToFormat = this.CurrentVideoFormat;
+                    _adaptedToFormat = CurrentVideoFormat;
                     AdjustOverlayScale();
                 }
 
@@ -263,7 +277,6 @@ namespace CameraTests.Views
                 {
                     _overlayScale = _overlayScaleChanged;
                     _rectFramePreview = SKRect.Empty;
-                    _rectFrameRecording = SKRect.Empty;
                 }
 
                 if (frame.IsPreview && frame.Scale != _previewScale)
@@ -273,77 +286,19 @@ namespace CameraTests.Views
                 }
 
                 var k = _overlayScale;
-                var overlayScale = 1.5f * frame.Scale * k;
+                var overlayScale = 1.5f * frame.Scale * k; //magic number
 
-                if (_rectOrientation != _orientation && !LockOrientation)
+                if (_rectOrientation != _orientation && !IsRecording && !IsPreRecording) //lock overlay orientation when recording
                 {
                     _rectFramePreview = SKRect.Empty;
-                    _rectFrameRecording = SKRect.Empty;
                     _rectOrientation = _orientation;
                 }
 
                 var orientation = _rectOrientation;
-                if (!LockOrientation)
-                {
-                    _rectOrientationLocked = DeviceOrientation.Unknown;
-                }
-                else
-                {
-                    if (_rectOrientationLocked == DeviceOrientation.Unknown)
-                    {
-                        //LOCK
-                        _rectOrientationLocked = _rectOrientation;
-                    }
-                    orientation = _rectOrientationLocked;
-                }
 
                 var frameRect = new SKRect(0, 0, frame.Width, frame.Height);
-
-                if (layout is CameraOverlayLayout overlayLayout)
-                {
-                    // CameraOverlayLayout manages its own orientation transforms.
-                    // Call Layout() whenever the frame rect or orientation changes so it
-                    // updates RectLimits and schedules a remeasure.
-                    bool frameRectChanged = (frame.IsPreview && _rectFramePreview == SKRect.Empty) ||
-                                           (!frame.IsPreview && _rectFrameRecording == SKRect.Empty);
-
-                    if (frameRectChanged)
-                    {
-                        if (frame.IsPreview) _rectFramePreview = frameRect;
-                        else _rectFrameRecording = frameRect;
-
-                        overlayLayout.Layout(frameRect, orientation);
-                    }
-
-                    bool wasMeasured = false;
-                    if (layout.NeedMeasure)
-                    {
-                        layout.Measure(frameRect.Width, frameRect.Height, overlayScale);
-                        layout.Arrange(
-                            new SKRect(0, 0, layout.MeasuredSize.Pixels.Width, layout.MeasuredSize.Pixels.Height),
-                            layout.MeasuredSize.Pixels.Width, layout.MeasuredSize.Pixels.Height, overlayScale);
-                        wasMeasured = true;
-                    }
-
-                    var ctx = new SkiaDrawingContext()
-                    {
-                        Canvas = frame.Canvas,
-                        Width = frame.Width,
-                        Height = frame.Height,
-                        Superview = this.Superview
-                    };
-
-                    if (!skipRendering)
-                    {
-                        layout.Render(new DrawingContext(ctx, frameRect, overlayScale));
-                        _renderedScale = overlayScale;
-                    }
-
-                    return wasMeasured;
-                }
-
-                // Fallback for non-CameraOverlayLayout: apply orientation transforms manually.
-                var rectLimits = frameRect;
+                ;
+                //var rectLimits = frameRect;
 
                 if (frame.IsPreview && _rectFramePreview == SKRect.Empty)
                 {
@@ -353,91 +308,52 @@ namespace CameraTests.Views
                         layout.Invalidate();
                     }
                 }
-                else if (!frame.IsPreview && _rectFrameRecording == SKRect.Empty)
+
+                if (this.Orientation == DeviceOrientation.LandscapeLeft || this.Orientation == DeviceOrientation.LandscapeRight)
                 {
-                    _rectFrameRecording = frameRect;
-                    if (!layout.NeedMeasure)
-                    {
-                        layout.Invalidate();
-                    }
+                    overlayScale *= 0.8f; //smaller in landscape
                 }
 
-                if (orientation == DeviceOrientation.LandscapeLeft || orientation == DeviceOrientation.LandscapeRight)
-                {
-                    layout.AnchorX = 0;
-                    layout.AnchorY = 0;
-
-                    rectLimits = new SKRect(
-                        rectLimits.Top,
-                        rectLimits.Left,
-                        rectLimits.Top + rectLimits.Height,
-                        rectLimits.Left + rectLimits.Width
-                    );
-                }
-                else
-                {
-                    layout.TranslationX = 0;
-                    layout.TranslationY = 0;
-                    layout.Rotation = 0;
-                }
-
-                bool wasMeasured2 = false;
+                bool wasMeasured = false;
 
                 if (layout.NeedMeasure)
                 {
-                    if (orientation == DeviceOrientation.LandscapeLeft || orientation == DeviceOrientation.LandscapeRight)
-                    {
-                        if (orientation == DeviceOrientation.LandscapeLeft)
-                        {
-                            layout.TranslationX = frameRect.Width / overlayScale - rectLimits.Left / overlayScale;
-                            layout.TranslationY = rectLimits.Left / overlayScale; //rotated side offset
-                            layout.Rotation = 90;
-                        }
-                        else // LandscapeRight
-                        {
-                            layout.TranslationX = -rectLimits.Left / overlayScale;
-                            layout.TranslationY = frameRect.Height / overlayScale - rectLimits.Left / overlayScale;
-                            layout.Rotation = -90;
-                        }
+                    layout.SetOrientation(orientation, frameRect, overlayScale);
+                    var measured = layout.Measure(frameRect.Width, frameRect.Height, overlayScale);
 
-                        var measured = layout.Measure(frameRect.Height, frameRect.Width, overlayScale);
-                    }
-                    else
-                    {
-                        var measured = layout.Measure(frameRect.Width, frameRect.Height, overlayScale);
-                    }
                     layout.Arrange(
                         new SKRect(0, 0, layout.MeasuredSize.Pixels.Width, layout.MeasuredSize.Pixels.Height),
                         layout.MeasuredSize.Pixels.Width, layout.MeasuredSize.Pixels.Height, overlayScale);
 
-                    wasMeasured2 = true;
+                    wasMeasured = true;
                 }
 
-                var ctx2 = new SkiaDrawingContext()
+                var ctx = new SkiaDrawingContext()
                 {
                     Canvas = frame.Canvas,
                     Width = frame.Width,
                     Height = frame.Height,
-                    Superview = this.Superview
+                    Superview = Superview //to enable animations and use of disposal manager
                 };
 
                 if (!skipRendering)
                 {
-                    layout.Render(new DrawingContext(ctx2, rectLimits, overlayScale));
+                    layout.Render(new DrawingContext(ctx, frameRect, overlayScale));
                     _renderedScale = overlayScale;
                 }
 
-                return wasMeasured2;
+                return wasMeasured;
             }
 
             // Simple text overlay for testing
-            if (_paintRec == null)
+            if (_paint == null)
             {
-                _paintRec = new SKPaint
+                _paint = new SKPaint
                 {
                     IsAntialias = true,
                 };
             }
+
             if (_paintPreview == null)
             {
                 _paintPreview = new SKPaint
@@ -447,113 +363,101 @@ namespace CameraTests.Views
                 };
             }
 
-            var paint = frame.IsPreview ? _paintPreview : _paintRec;
-            paint.TextSize = 32 * frame.Scale;
-            paint.Style = SKPaintStyle.Fill;
+            var paint = frame.IsPreview ? _paintPreview : _paint;
+
+            // Ref aliases into the correct shadow fields — one branch, zero per-property duplication
+            ref var cachedColor = ref (frame.IsPreview ? ref _paintPreviewColor : ref _paintColor);
+            ref var cachedTextSize = ref (frame.IsPreview ? ref _paintPreviewTextSize : ref _paintTextSize);
+            ref var cachedStyle = ref (frame.IsPreview ? ref _paintPreviewStyle : ref _paintStyle);
+            ref var cachedStrokeWidth = ref (frame.IsPreview ? ref _paintPreviewStrokeWidth : ref _paintStrokeWidth);
+
+            var newTextSize = 32 * frame.Scale;
+            if (cachedTextSize != newTextSize)
+            {
+                cachedTextSize = newTextSize; paint.TextSize = newTextSize;
+            }
+
+            if (cachedStyle != SKPaintStyle.Fill)
+            {
+                cachedStyle = SKPaintStyle.Fill; paint.Style = SKPaintStyle.Fill;
+            }
 
             // text at top left
             var text = string.Empty;
             var text2 = string.Empty;
+            SKColor newColor;
 
-            if (this.IsPreRecording)
+            if (IsPreRecording)
             {
-                text = "PRE";
+                //_labelRec.Text = "PRE";
                 text2 = $"{frame.Time:mm\\:ss}";
-                paint.Color = SKColors.White;
+                newColor = SKColors.White;
             }
-            else
-            if (this.IsRecording)
+            else if (IsRecording)
             {
-                text = "LIVE";
+                //_labelRec.Text = "REC";
                 text2 = $"{frame.Time:mm\\:ss}";
-                paint.Color = SKColors.Red;
+                newColor = SKColors.Red;
             }
             else
             {
-                paint.Color = SKColors.Transparent;
-                //text = $"{this.CurrentVideoFormat.Width}x{this.CurrentVideoFormat.Height} ({frame.Width}x{frame.Height}) x{_renderedScale:0.00}";
-                //text = $"{frame.Width}x{frame.Height}";
+                //_labelRec.Text = string.Empty;
+                newColor = SKColors.Transparent;
+                text = $"{CurrentVideoFormat.Width}x{CurrentVideoFormat.Height} ({frame.Width}x{frame.Height}) x{_renderedScale:0.00}";
             }
 
-            //if (_labelRec != null)
-            //{
-            //    _labelRec.Text = CameraControl.IsPreRecording ? "PRE" : "REC";
-            //}
-
-            if (OverlayPreview != null && frame.IsPreview) //PREVIEW small frame
+            if (cachedColor != newColor)
             {
-                DrawOverlay(OverlayPreview, false);
+                cachedColor = newColor; paint.Color = newColor;
+            }
+
+
+            //PREVIEW - NOT RECORDING BY DESIGN
+            if (frame.IsPreview)
+            {
+                if (VideoDataOverlay != null)
+                {
+                    DrawOverlay(VideoDataOverlay, false);
+                }
             }
             else
-            if (!frame.IsPreview) //RAW frame being recorded
+            //RECORDING
             {
-                if (OverlayRecording != null)
+                if (VideoDataOverlay != null)// && !Model.IsRecording)
                 {
-                    DrawOverlay(OverlayRecording, false);
-                }
-                else if (OverlayPreview != null) // single-overlay mode: reuse preview overlay
-                {
-                    DrawOverlay(OverlayPreview, false);
+                    DrawOverlay(VideoDataOverlay, false);
                 }
             }
 
-            //if (frame.IsPreview)
+            if (VideoDiagnosticsOn && cachedColor != SKColors.Transparent)
             {
-                // draw frame indicator
-                if (paint.Color != SKColors.Transparent)
-                {
-                    paint.Style = SKPaintStyle.Stroke;
-                    paint.StrokeWidth = 2 * frame.Scale;
-                    frame.Canvas.DrawRect(10 * frame.Scale, 10 * frame.Scale, frame.Width - 20 * frame.Scale, frame.Height - 20 * frame.Scale, paint);
-                }
-
-                if (!string.IsNullOrEmpty(text))
-                {
-                    paint.TextSize = 48 * frame.Scale;
-                    paint.Color = IsPreRecording ? SKColors.White : SKColors.Red;
-                    paint.Style = SKPaintStyle.Fill;
-
-                    if (IsRecording || IsPreRecording)
-                    {
-                        // text at top left
-                        frame.Canvas.DrawText(text, 50 * frame.Scale, 100 * frame.Scale, paint);
-                        frame.Canvas.DrawText(text2, 50 * frame.Scale, 160 * frame.Scale, paint);
-                    }
-                    else
-                    {
-                        paint.Color = SKColors.White;
-                        frame.Canvas.DrawText(text, 50 * frame.Scale, 100 * frame.Scale, paint);
-                    }
-                }
+                var newStrokeWidth = 2 * frame.Scale;
+                if (cachedStyle != SKPaintStyle.Stroke) { cachedStyle = SKPaintStyle.Stroke; paint.Style = SKPaintStyle.Stroke; }
+                if (cachedStrokeWidth != newStrokeWidth) { cachedStrokeWidth = newStrokeWidth; paint.StrokeWidth = newStrokeWidth; }
+                frame.Canvas.DrawRect(10 * frame.Scale, 10 * frame.Scale, frame.Width - 20 * frame.Scale,
+                    frame.Height - 20 * frame.Scale, paint);
             }
         }
 
-        protected SkiaLayout OverlayPreview;
-        protected SkiaLayout OverlayRecording;
+        protected override void Dispose(bool isDisposing)
+        {
+            if (isDisposing)
+            {
+                _paint?.Dispose();
+                _paintPreview?.Dispose();
+            }
 
-        /// <summary>
-        /// Set layouts to be rendered over preview and recording frames.
-        /// Different instances are needed to avoid remeasuring when switching between preview and recording.
-        /// Pass <c>null</c> for <paramref name="recordingLayout"/> to use a single overlay instance
-        /// for both preview and recording frames (the preview layout will be reused).
-        /// </summary>
-        /// <param name="previewLayout">Overlay rendered on preview frames. Required.</param>
-        /// <param name="recordingLayout">Overlay rendered on recording frames. Pass <c>null</c> to reuse <paramref name="previewLayout"/>.</param>
-        public void InitializeOverlayLayouts(SkiaLayout previewLayout, SkiaLayout recordingLayout = null)
+            base.Dispose(isDisposing);
+        }
+
+        public void InitializeOverlayLayouts(CameraDataOverlay previewLayout)
         {
             if (previewLayout != null)
             {
-                this.OverlayPreview = previewLayout;
-                this.OverlayRecording = recordingLayout; // null = single-overlay mode
+                this.VideoDataOverlay = previewLayout;
 
                 previewLayout.UseCache = SkiaCacheType.Operations;
                 previewLayout.Tag = "Preview";
-
-                if (recordingLayout != null)
-                {
-                    recordingLayout.UseCache = SkiaCacheType.Operations;
-                    recordingLayout.Tag = "Recording";
-                }
 
                 InvalidateOverlays();
 
@@ -571,7 +475,6 @@ namespace CameraTests.Views
         {
             _overlayScaleChanged = -1;
             _rectFramePreview = SKRect.Empty;
-            _rectFrameRecording = SKRect.Empty;
         }
 
         #endregion

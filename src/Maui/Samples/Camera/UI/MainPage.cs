@@ -5,7 +5,9 @@ using CameraTests.UI;
 using CameraTests.Visualizers;
 using DrawnUi.Camera;
 using DrawnUi.Controls;
+using DrawnUi.Infrastructure;
 using DrawnUi.Views;
+using Microsoft.Maui.Platform;
 
 namespace CameraTests.Views;
 
@@ -73,16 +75,9 @@ public partial class MainPage : BasePageReloadable, IDisposable
         }
     }
 
-    protected override void OnSizeAllocated(double width, double height)
-    {
-        base.OnSizeAllocated(width, height);
-        UpdateLayout();
-    }
-
     private void OnOrientationChanged(object sender, DeviceOrientation e)
     {
         _orientation = e;
-        UpdateLayout();
     }
 
     private void OnRotationChanged(object sender, int rotation)
@@ -90,20 +85,6 @@ public partial class MainPage : BasePageReloadable, IDisposable
         UpdateCameraControlsRotation(rotation);
     }
 
-    private void UpdateLayout()
-    {
-        _orientation = Super.DeviceOrientation;
-
-        if (CameraControl != null)
-            CameraControl.Orientation = _orientation;
-
-        if (Canvas != null)
-        {
-            var videoWidth = CameraControl?.CurrentVideoFormat?.Width ?? 0;
-            var videoHeight = CameraControl?.CurrentVideoFormat?.Height ?? 0;
-            _insideCamera?.Layout(Canvas.Content.DrawingRect, _orientation, videoWidth, videoHeight);
-        }
-    }
 
     private void UpdateCameraControlsRotation(int rotation)
     {
@@ -174,25 +155,68 @@ public partial class MainPage : BasePageReloadable, IDisposable
     /// </summary>
     public override void Build()
     {
-        if (CameraControl != null)
+        bool hotreload = false;
+        if (Canvas != null)
         {
-            CameraControl?.Stop();
-            AttachHardware(false);
-            CameraControl = null;
+            OnClosed();
+            Canvas?.Dispose();
+            _previewFrameOverlay?.Dispose();
+            hotreload = true;
         }
 
-        Canvas?.Dispose();
+        if (!hotreload)
+        {
+            //ONCE per app launch
+            Tasks.StartDelayed(TimeSpan.FromMilliseconds(500), () =>
+            {
+                //for fast use in transitions
+                SkSl.Precompile(MauiProgram.ShaderRemoveCaption);
+            });
+        }
 
-        CreateContent();
-        UpdateCameraControlsRotation(Super.DeviceRotation);
+        Canvas = CreateCanvas();
+
+        this.Content = Canvas;
 
         _previewFrameOverlay = new CameraDataOverlay();
         _captionsLabel = _previewFrameOverlay.CaptionsLabel;
         CameraControl.InitializeOverlayLayouts(_previewFrameOverlay); // null recording = reuse preview overlay
+
+        UpdateCameraControlsRotation(Super.DeviceRotation);
         InitializeCaptionsEngine();
         UpdateOverlayCaptionsVisibility();
         UpdateAudioMonitoringVisibility();
         OnRecordingStateChanged();
+
+        if (hotreload)
+        {
+            OnOpen();
+        }
+
+    }
+
+    void OnClosed()
+    {
+        CameraControl?.Stop();
+        AttachHardware(false);
+        CameraControl = null;
+        _previewFrameOverlay?.Dispose();
+        _previewFrameOverlay = null;
+    }
+
+    void OnOpen()
+    {
+
+#if IOS
+        Super.MaxFps = 30;
+#elif ANDROID
+        Super.SetNavigationBarColor(Colors.Black, Colors.Black, true);
+        Super.SetStatusBarColor(Colors.Black.ToPlatform());
+#endif
+
+        AttachHardware(true);
+
+        UpdateCameraControlsRotation(Super.DeviceRotation);
     }
 
     private void InitializeCaptionsEngine()
@@ -501,7 +525,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
             if (CameraControl == null)
                 return;
 
-            var isRecordingVideo = CameraControl.CaptureMode == CaptureModeType.Video && (CameraControl.IsRecording || CameraControl.IsPreRecording);
+           var isRecordingVideo = CameraControl.CaptureMode == CaptureModeType.Video && (CameraControl.IsRecording || CameraControl.IsPreRecording);
 
             if (_settingsDrawer != null)
             {

@@ -14,13 +14,13 @@ namespace CameraTests.Views
     public partial class MainPage
     {
         private SkiaShape _captureButtonOuter;
-        private CameraOverlayLayout _insideCamera;
+
 
         private SkiaShape[] _tabPills;
         private static Color ColorPanel = Color.FromArgb("#F3101825"); //AA101825
         private static Color ColorDrawer = Color.FromArgb("#66D9F6FF"); //AA101825
 
-        private void CreateContent()
+        private Canvas CreateCanvas()
         {
             bool isSimulator = false;
             SkiaLayout mainStack = null;
@@ -33,124 +33,111 @@ namespace CameraTests.Views
             }
 #endif
 
-            if (mainStack == null)
-            {
-                mainStack = new SkiaLayout
-                {
-                    HorizontalOptions = LayoutOptions.Fill,
-                    VerticalOptions = LayoutOptions.Fill,
-                    Children =
-                    {
-                        // Fullscreen Camera preview
-                        new AppCamera()
-                            {
-                                HorizontalOptions = LayoutOptions.Fill,
-                                VerticalOptions = LayoutOptions.Fill,
-                                BackgroundColor = Colors.Black,
-                                Aspect = TransformAspect.AspectFit
-                            }
-                            .Assign(out CameraControl)
-                            .ObserveSelf((me, prop) =>
-                            {
-                                if (prop == nameof(BindingContext) || prop == nameof(me.State) ||
-                                    prop == nameof(me.Facing) || prop == nameof(me.CameraIndex) ||
-                                    prop == nameof(me.CaptureMode))
-                                {
-                                    UpdateStatusText();
-                                }
-                            }),
-
-                        //CreateStageEdgeOverlay(true),
-                        //CreateStageEdgeOverlay(false),
-                        CreateHeaderPanel()
-                            .Assign(out _headerPanel),
-
-                        //new CameraOverlayLayout()
-                        //{
-                        //    VerticalOptions = LayoutOptions.Fill,
-                        //    HorizontalOptions = LayoutOptions.Fill,
-                        //    Children =
-                        //    {
-
-                        //    }
-                        //}.Assign(out _insideCamera),
-
-                        CreateCameraControlsPanel()
-                            .Assign(out _cameraControlsPanel),
-                        CreateRecordingStopButton(),
-
-                        // Settings Drawer (slides up from bottom)
-                        new SkiaDrawer()
-                            {
-                                Margin = new Thickness(2, 0, 2, 0),
-                                HeaderSize = 40,
-                                Direction = DrawerDirection.FromBottom,
-                                VerticalOptions = LayoutOptions.End,
-                                HorizontalOptions = LayoutOptions.Fill,
-                                MaximumHeightRequest = 300,
-                                IsOpen = false,
-                                BlockGesturesBelow = true,
-                                IgnoreWrongDirection = true,
-                                ZIndex = 60,
-                                UseCache = SkiaCacheType.GPU,
-                                Content = new SkiaShape()
-                                {
-                                    Type = ShapeType.Rectangle,
-                                    CornerRadius = new CornerRadius(26, 26, 0, 0),
-                                    HorizontalOptions = LayoutOptions.Fill,
-                                    VerticalOptions = LayoutOptions.Fill,
-                                    BackgroundColor = ColorPanel, // Color.FromArgb("#FE0A101A"),
-                                    StrokeWidth = 1,
-                                    StrokeColor = Color.FromArgb("#3311C5BF"),
-                                    Children =
-                                    {
-                                        new SkiaLayout()
-                                        {
-                                            HorizontalOptions = LayoutOptions.Fill,
-                                            VerticalOptions = LayoutOptions.Fill,
-                                            Children = { CreateDrawerHeader(), CreateDrawerContent() }
-                                        }
-                                    }
-                                }
-                            }
-                            .Assign(out _settingsDrawer),
-                    }
-                };
-            }
-
 
             // Create preview overlay (initially hidden)
             _previewOverlay = CreateTakenPhotoPreviewPopup();
 
-            // Main layer that contains both the main stack and preview overlay
-            var rootLayer = new SkiaLayer
+            var canvas = new Canvas
             {
+                RenderingMode = RenderingModeType.Accelerated,
+                Gestures = GesturesMode.Lock,
                 VerticalOptions = LayoutOptions.Fill,
-                Children =
-                {
-                    mainStack,
-                    _previewOverlay,
-#if DEBUG
-                    new SkiaLabelFps()
+                HorizontalOptions = LayoutOptions.Fill,
+                BackgroundColor = Colors.Black,
+                Content =
+
+                    //wrapper
+                    new SkiaLayer
                     {
-                        Margin = new(0, 0, 4, 24),
-                        VerticalOptions = LayoutOptions.End,
-                        HorizontalOptions = LayoutOptions.End,
-                        Rotation = -45,
-                        BackgroundColor = Colors.DarkRed,
-                        TextColor = Colors.White,
-                        ZIndex = 110,
-                    }
+                        VerticalOptions = LayoutOptions.Fill,
+                        Children =
+                        {
+
+                            // Fullscreen Camera preview
+                            new AppCamera()
+                                {
+                                    HorizontalOptions = LayoutOptions.Fill,
+                                    VerticalOptions = LayoutOptions.Fill,
+                                    BackgroundColor = Colors.Black,
+                                    Aspect = TransformAspect.AspectFit
+                                }
+                                .Assign(out CameraControl)
+                                .ObserveSelf((me, prop) =>
+                                {
+                                    if (prop == nameof(BindingContext) || prop == nameof(me.State) ||
+                                        prop == nameof(me.Facing) || prop == nameof(me.CameraIndex) ||
+                                        prop == nameof(me.CaptureMode))
+                                    {
+                                        UpdateStatusText();
+                                    }
+                                }),
+
+#if WINDOWS || MACCATALYST
+                            CreateStageEdgeOverlay(true),
+                            CreateStageEdgeOverlay(false),
 #endif
-                }
+                            CreateHeaderPanel()
+                                .Assign(out _headerPanel),
+
+
+                            CreateCameraControlsPanel()
+                                .Assign(out _cameraControlsPanel),
+                            CreateRecordingStopButton(),
+
+                            // Settings Drawer (slides up from bottom)
+                            new SkiaDrawer()
+                                {
+                                    Margin = new Thickness(2, 0, 2, 0),
+                                    HeaderSize = 40,
+                                    Direction = DrawerDirection.FromBottom,
+                                    VerticalOptions = LayoutOptions.End,
+                                    HorizontalOptions = LayoutOptions.Fill,
+                                    MaximumHeightRequest = 300,
+                                    IsOpen = false,
+                                    BlockGesturesBelow = true,
+                                    IgnoreWrongDirection = true,
+                                    ZIndex = 60,
+                                    Content = new SkiaShape()
+                                    {
+                                        Type = ShapeType.Rectangle,
+                                        CornerRadius = new CornerRadius(26, 26, 0, 0),
+                                        HorizontalOptions = LayoutOptions.Fill,
+                                        VerticalOptions = LayoutOptions.Fill,
+                                        BackgroundColor = ColorPanel, // Color.FromArgb("#FE0A101A"),
+                                        StrokeWidth = 1,
+                                        StrokeColor = Color.FromArgb("#3311C5BF"),
+                                        Children =
+                                        {
+                                            new SkiaLayout()
+                                            {
+                                                HorizontalOptions = LayoutOptions.Fill,
+                                                VerticalOptions = LayoutOptions.Fill,
+                                                Children = { CreateDrawerHeader(), CreateDrawerContent() }
+                                            }
+                                        }
+                                    }
+                                }
+                                .Assign(out _settingsDrawer),
+
+                            _previewOverlay,
+#if DEBUG
+                            new SkiaLabelFps()
+                            {
+                                Margin = new(0, 0, 4, 24),
+                                VerticalOptions = LayoutOptions.End,
+                                HorizontalOptions = LayoutOptions.End,
+                                Rotation = -45,
+                                BackgroundColor = Colors.DarkRed,
+                                TextColor = Colors.White,
+                                ZIndex = 110,
+                                UseCache = SkiaCacheType.GPU
+                            }
+#endif
+                        }
+                    }
             };
 
-            Canvas = new Canvas
-            {
-                RenderingMode = RenderingModeType.Accelerated, Gestures = GesturesMode.Enabled, Content = rootLayer,
-            };
-
-            Canvas.WillFirstTimeDraw += (sender, context) =>
+            canvas.WillFirstTimeDraw += (sender, context) =>
             {
                 if (CameraControl != null)
                 {
@@ -162,22 +149,7 @@ namespace CameraTests.Views
                 }
             };
 
-            Content = new Grid() //due to maui layout specifics we are forced to use a Grid as root wrapper
-            {
-                HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Fill, Children = { Canvas }
-            };
-
-            if (CameraControl != null)
-            {
-                // Setup camera event handlers
-                AttachHardware(true);
-            }
-
-            Tasks.StartDelayed(TimeSpan.FromMilliseconds(500), () =>
-            {
-                //for fast use in transitions
-                SkSl.Precompile(MauiProgram.ShaderRemoveCaption);
-            });
+            return canvas;
         }
 
         private SkiaShape CreateStageEdgeOverlay(bool top)
@@ -186,7 +158,7 @@ namespace CameraTests.Views
             {
                 Type = ShapeType.Rectangle,
                 InputTransparent = true,
-                UseCache = SkiaCacheType.Image,
+                UseCache = SkiaCacheType.GPU,
                 HeightRequest = top ? 220 : 260,
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = top ? LayoutOptions.Start : LayoutOptions.End,
@@ -257,7 +229,7 @@ namespace CameraTests.Views
                             //AI hint/status
                             new SkiaLabel()
                                 {
-                                    Margin = new(150,0,0,0),
+                                    Margin = new(150, 0, 0, 0),
                                     FontFamily = "FontText",
                                     FontSize = 13,
                                     Opacity = 0.33,
@@ -487,15 +459,15 @@ namespace CameraTests.Views
                                     Children =
                                     {
                                         new SkiaSvg()
-                                        {
-                                            Source = "Svg/icon_settings.svg",
-                                            TintColor = Colors.White.WithAlpha(0.9f),
-                                            HeightRequest = 24,
-                                            WidthRequest = 24,
-                                            VerticalOptions = LayoutOptions.Center,
-                                            HorizontalOptions = LayoutOptions.Center,
-                                        }
-                                        .Assign(out _settingsButtonIcon)
+                                            {
+                                                Source = "Svg/icon_settings.svg",
+                                                TintColor = Colors.White.WithAlpha(0.9f),
+                                                HeightRequest = 24,
+                                                WidthRequest = 24,
+                                                VerticalOptions = LayoutOptions.Center,
+                                                HorizontalOptions = LayoutOptions.Center,
+                                            }
+                                            .Assign(out _settingsButtonIcon)
                                     }
                                 }
                                 .OnTapped(me => { ToggleSettingsDrawer(); }),
@@ -594,15 +566,15 @@ namespace CameraTests.Views
                                     Children =
                                     {
                                         new SkiaSvg()
-                                        {
-                                            Source = "Svg/icon_camera_flip.svg",
-                                            TintColor = Colors.White.WithAlpha(0.85f),
-                                            HeightRequest = 24,
-                                            WidthRequest = 24,
-                                            VerticalOptions = LayoutOptions.Center,
-                                            HorizontalOptions = LayoutOptions.Center,
-                                        }
-                                        .Assign(out _cameraSelectButtonIcon)
+                                            {
+                                                Source = "Svg/icon_camera_flip.svg",
+                                                TintColor = Colors.White.WithAlpha(0.85f),
+                                                HeightRequest = 24,
+                                                WidthRequest = 24,
+                                                VerticalOptions = LayoutOptions.Center,
+                                                HorizontalOptions = LayoutOptions.Center,
+                                            }
+                                            .Assign(out _cameraSelectButtonIcon)
                                     }
                                 }
                                 .Assign(out _cameraSelectButton)
@@ -665,7 +637,14 @@ namespace CameraTests.Views
                 {
                     await me.ScaleToAsync(1.04, 1.04, 90);
                     await me.ScaleToAsync(1.0, 1.0, 90);
-                    ToggleVideoRecording();
+                    if (CameraControl.IsPreRecording)
+                    {
+                        _ = AbortVideoRecording();
+                    }
+                    else
+                    {
+                        ToggleVideoRecording();
+                    }
                 })
                 .ObserveProperty(CameraControl, nameof(CameraControl.State), me =>
                 {
@@ -678,7 +657,7 @@ namespace CameraTests.Views
         {
             return new SkiaShape()
                 {
-                    UseCache = SkiaCacheType.Operations,
+                    UseCache = SkiaCacheType.GPU,
                     HorizontalOptions = LayoutOptions.Fill,
                     Type = ShapeType.Rectangle,
                     BackgroundColor = Colors.Transparent,
@@ -716,7 +695,7 @@ namespace CameraTests.Views
 
             var tabBar = new SkiaShape()
             {
-                UseCache = SkiaCacheType.Image,
+                UseCache = SkiaCacheType.GPU,
                 Type = ShapeType.Rectangle,
                 CornerRadius = 22,
                 BackgroundColor = Color.FromArgb("#101825"),
@@ -832,7 +811,6 @@ namespace CameraTests.Views
                                     }
                                 })
                                 .OnTapped(async me => { await SelectAudioSource(); }),
-
                             new SettingsButton("🔊", "Audio Mode") { TintColor = Color.FromArgb("#B45309"), }
                                 .ObserveProperty(CameraControl, nameof(CameraControl.AudioMode),
                                     me => { me.Text = CameraControl.AudioMode.ToString(); })
@@ -1075,7 +1053,6 @@ namespace CameraTests.Views
             return new SkiaStack()
             {
                 Spacing = 4,
-                UseCache = SkiaCacheType.Operations,
                 Margin = new Thickness(0, 40, 0, 0),
                 Children =
                 {
