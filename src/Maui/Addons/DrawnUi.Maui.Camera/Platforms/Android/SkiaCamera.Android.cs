@@ -2,11 +2,14 @@
 using Android.Content;
 using Android.Media;
 using DrawnUi.Camera.Platforms.Android;
+using DrawnUi.Views;
 
 namespace DrawnUi.Camera;
 
 public partial class SkiaCamera
 {
+    private int _androidAwaitingPostStopPreviewFrame;
+
     /// <summary>
     /// Pre-allocated shared buffer for pre-recording.
     /// Allocated once when EnablePreRecording=true, reused across recording sessions.
@@ -809,6 +812,39 @@ public partial class SkiaCamera
         }
     }
 
+    internal void OnAndroidNativePreviewFrameBuffered()
+    {
+        if (System.Threading.Volatile.Read(ref _androidAwaitingPostStopPreviewFrame) == 0)
+            return;
+
+        if (IsRecording || IsPreRecording)
+            return;
+
+        System.Threading.Interlocked.Exchange(ref _androidAwaitingPostStopPreviewFrame, 0);
+    }
+
+    private void ResumeAndroidPreviewAfterStop()
+    {
+        UseRecordingFramesForPreview = false;
+
+        if (NativeControl is not NativeCamera androidCam)
+        {
+            SafeAction(() => UpdatePreview());
+            return;
+        }
+
+        FrameAquired = false;
+
+        if (androidCam.HasBufferedPreviewFrame())
+        {
+            System.Threading.Interlocked.Exchange(ref _androidAwaitingPostStopPreviewFrame, 0);
+            SafeAction(() => UpdatePreview());
+            return;
+        }
+
+        System.Threading.Interlocked.Exchange(ref _androidAwaitingPostStopPreviewFrame, 1);
+    }
+
     private async Task StopRealtimeVideoProcessingInternal()
     {
         if (_captureVideoEncoder.LiveRecordingDuration < TimeSpan.FromSeconds(1))
@@ -961,6 +997,7 @@ public partial class SkiaCamera
 
             // Update state and notify success
             SetIsRecordingVideo(false);
+            ResumeAndroidPreviewAfterStop();
 
             IsBusy = false; // Release busy state after successful processing
 
@@ -978,6 +1015,7 @@ public partial class SkiaCamera
             _captureVideoEncoder = null;
 
             SetIsRecordingVideo(false);
+            ResumeAndroidPreviewAfterStop();
             IsBusy = false; // Release busy state on error
 
             // Restart preview audio if still enabled
@@ -1072,6 +1110,7 @@ public partial class SkiaCamera
             ClearPreRecordingBuffer();
 
             SetIsRecordingVideo(false);
+            ResumeAndroidPreviewAfterStop();
 
             // Restart preview audio if still enabled
             if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
@@ -1087,6 +1126,7 @@ public partial class SkiaCamera
             _captureVideoEncoder = null;
 
             SetIsRecordingVideo(false);
+            ResumeAndroidPreviewAfterStop();
 
             // Restart preview audio if still enabled
             if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
@@ -1102,6 +1142,25 @@ public partial class SkiaCamera
             // Clean up encoder after StopAsync completes
             encoder?.Dispose();
         }
+    }
+
+    /// <summary>
+    /// Get the GRContext from the accelerated SkiaSharp canvas
+    /// </summary>
+    private GRContext GetExistingGRContext()
+    {
+        try
+        {
+            if (Superview?.CanvasView is SkiaViewAccelerated accelerated)
+            {
+                return accelerated.GRContext;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"[NativeCameraWindows] GetExistingGRContext error: {e}");
+        }
+        return null;
     }
 
     private async Task StartRealtimeVideoProcessing()  
@@ -1121,7 +1180,7 @@ public partial class SkiaCamera
         _capturePtsBaseTime = null;
 
         // Create Android encoder (GPU path via MediaCodec Surface + EGL + Skia GL)
-        var newEncoder = new AndroidCaptureVideoEncoder();
+        var newEncoder = new AndroidCaptureVideoEncoder(GetExistingGRContext());
         _captureVideoEncoder = newEncoder;
 
         // Set parent reference and pre-recording mode
@@ -1380,7 +1439,7 @@ public partial class SkiaCamera
                         CalculateRecordingFps();
                     };
 
-                    bool useDualStreamPreview = AndroidCameraExperimentalFlags.UseLegacyDualStreamPreviewDuringRecording;
+                    bool useDualStreamPreview = AndroidCameraProcessingFlags.UseLegacyDualStreamPreviewDuringRecording;
 
                     // GPU path normally mirrors preview from the encoder. The experimental dual-stream
                     // mode keeps preview on the ImageReader path for recording comparisons.
@@ -1592,7 +1651,7 @@ public partial class SkiaCamera
         _liveRecordingFilePath = Path.Combine(cacheDir, $"live_rec_{Guid.NewGuid()}.mp4");
 
         // ── Create and initialize new live encoder ──
-        var newEncoder = new AndroidCaptureVideoEncoder();
+        var newEncoder = new AndroidCaptureVideoEncoder(GetExistingGRContext());
         newEncoder.ParentCamera = this;
         newEncoder.IsPreRecordingMode = false;  // live mode → StartAsync creates muxer directly
 
@@ -1794,7 +1853,7 @@ public partial class SkiaCamera
             // State 2 -> State 3: Transition from pre-recording to live recording
             else if (IsPreRecording && !IsRecording)
             {
-                bool useTwoEncoderTransition = AndroidCameraExperimentalFlags.IsTwoEncoderPrerecordTransitionEnabled();
+                bool useTwoEncoderTransition = AndroidCameraProcessingFlags.IsTwoEncoderPrerecordTransitionEnabled();
                 Debug.WriteLine(
                     useTwoEncoderTransition
                         ? "[StartVideoRecording] Transitioning from IsPreRecording to IsRecording (2-encoder handoff)"

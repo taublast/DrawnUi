@@ -604,7 +604,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         // RenderScript YUV→RGB conversion.
         // In the experimental dual-stream recording mode we temporarily process ImageReader preview
         // frames even if GL preview is enabled for non-recording preview sessions.
-        if (!_useGlPreview || (_useGpuCameraPath && AndroidCameraExperimentalFlags.UseLegacyDualStreamPreviewDuringRecording))
+        if (!_useGlPreview || (_useGpuCameraPath && AndroidCameraProcessingFlags.UseLegacyDualStreamPreviewDuringRecording))
         {
             ProcessImage(image, allocated.Allocation, false, false);
             allocated.Update();
@@ -647,6 +647,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         }
 
         Preview = outImage;
+        FormsControl.OnAndroidNativePreviewFrameBuffered();
         FormsControl.UpdatePreview();
     }
 
@@ -757,6 +758,14 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             }
 
             return preview;
+        }
+    }
+
+    internal bool HasBufferedPreviewFrame()
+    {
+        lock (_lockPreview)
+        {
+            return _preview != null && _preview.Image != null;
         }
     }
 
@@ -2262,7 +2271,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         {
             _gpuCameraSurface = gpuSurface;
             _useGpuCameraPath = true;
-            bool useDualStreamPreview = AndroidCameraExperimentalFlags.UseLegacyDualStreamPreviewDuringRecording;
+            bool useDualStreamPreview = AndroidCameraProcessingFlags.UseLegacyDualStreamPreviewDuringRecording;
 
             if (useDualStreamPreview && mImageReaderPreview == null)
             {

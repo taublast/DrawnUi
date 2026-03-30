@@ -1,16 +1,19 @@
 #if ANDROID
 using System;
 using System.Buffers;
-using System.IO;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using Android.Hardware.Lights;
 using Android.Media;
 using Android.Opengl;
 using Android.Views;
 using Java.Nio;
 using SkiaSharp;
 using SkiaSharp.Views.Android;
+using static Android.Icu.Text.ListFormatter;
+using static AndroidX.Core.Content.PM.ShortcutInfoCompat;
 
 namespace DrawnUi.Camera
 {
@@ -41,6 +44,12 @@ namespace DrawnUi.Camera
         private const string MediaFormatKeyLatency = "latency";
         private const string MediaFormatKeyMaxBFrames = "max-bframes";
 
+        private GRContext _CanvasGrContext;
+
+        public AndroidCaptureVideoEncoder(GRContext existingGrContext)
+        {
+            _CanvasGrContext = existingGrContext;
+        }
 
         /*
             for 1080p
@@ -237,6 +246,14 @@ namespace DrawnUi.Camera
         // GPU preview scaler (glBlitFramebuffer-based, mirrors MetalPreviewScaler)
         private GlPreviewScaler _glPreviewScaler;
         private bool _glPreviewScalerInitAttempted;
+
+        // Synchronous GL readback fallback used when the async preview scaler is unavailable or busy.
+        // This preserves the exact composed encoder framebuffer without taking a second Skia snapshot
+        // of the same surface after RenderFrameForRecording has already sampled from it.
+        private GlPreviewScaler _glPreviewFallbackScaler;
+        private SkiaCpuImagePool _previewFallbackImagePool;
+        private int _previewFallbackWidth;
+        private int _previewFallbackHeight;
 
         // ML scaler — dedicated scaler at ML dimensions, lazily created on GPU thread
         private GlPreviewScaler _mlGlScaler;
@@ -1344,6 +1361,7 @@ namespace DrawnUi.Camera
         }
 
         /// <summary>
+        /// Path for using RS, not GPU
         /// Flush Skia, set EGL presentation time, swap buffers, and drain encoder output.
         /// </summary>
         public async Task SubmitFrameAsync()
@@ -1377,7 +1395,7 @@ namespace DrawnUi.Camera
             {
                 if (!TryPublishPreviewFromScaler())
                 {
-                    PublishPreviewFromSnapshotFallback();
+                    TryPublishPreviewFromGlReadbackFallback();
                 }
             }
 
@@ -1478,6 +1496,63 @@ namespace DrawnUi.Camera
             return true;
         }
 
+        /// <summary>
+        /// Path for using RS, not GPU
+        /// </summary>
+        /// <returns></returns>
+        private bool TryPublishPreviewFromGlReadbackFallback()
+        {
+            if (_skSurface == null)
+                return false;
+
+            int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+            int previewWidth = Math.Min(_width, maxPreviewWidth);
+            int previewHeight = Math.Max(1, (int)Math.Round(_height * (previewWidth / (double)_width)));
+
+            if (_glPreviewFallbackScaler == null || _previewFallbackWidth != previewWidth || _previewFallbackHeight != previewHeight)
+            {
+                _glPreviewFallbackScaler?.Dispose();
+                _glPreviewFallbackScaler = null;
+
+                _previewFallbackImagePool?.Dispose();
+                _previewFallbackImagePool = null;
+
+                var scaler = new GlPreviewScaler();
+                if (!scaler.Initialize(_width, _height, previewWidth, previewHeight, readbackOnly: true))
+                {
+                    scaler.Dispose();
+                    return false;
+                }
+
+                _glPreviewFallbackScaler = scaler;
+                _previewFallbackImagePool = new SkiaCpuImagePool(previewWidth, previewHeight);
+                _previewFallbackWidth = previewWidth;
+                _previewFallbackHeight = previewHeight;
+            }
+
+            var imagePool = _previewFallbackImagePool;
+            if (imagePool == null)
+                return false;
+
+            var writeBuffer = imagePool.GetWriteBuffer();
+            if (!_glPreviewFallbackScaler.ScaleAndReadbackTo(writeBuffer))
+                return false;
+
+            var previewImage = imagePool.CommitAndGetImage();
+            if (previewImage == null)
+                return false;
+
+            lock (_previewLock)
+            {
+                _latestPreviewImage?.Dispose();
+                _latestPreviewImage = previewImage;
+            }
+
+            System.Threading.Interlocked.Exchange(ref _previewRequested, 0);
+            PreviewAvailable?.Invoke(this, EventArgs.Empty);
+            return true;
+        }
+
         private void PublishPreviewFromSnapshotFallback()
         {
             SKImage keepAlive = null;
@@ -1494,8 +1569,13 @@ namespace DrawnUi.Camera
                 if (_previewRasterSurface == null || _previewWidth != previewWidth || _previewHeight != previewHeight)
                 {
                     _previewRasterSurface?.Dispose();
+
+
+
                     var previewInfo = new SKImageInfo(previewWidth, previewHeight, SKColorType.Bgra8888, SKAlphaType.Premul);
                     _previewRasterSurface = SKSurface.Create(previewInfo);
+                    //_previewRasterSurface = SKSurface.Create(_CanvasGrContext, true, previewInfo);
+
                     _previewWidth = previewWidth;
                     _previewHeight = previewHeight;
                 }
@@ -1539,7 +1619,7 @@ namespace DrawnUi.Camera
             {
                 _mlGlScaler?.Dispose();
                 _mlGlScaler = new GlPreviewScaler();
-                if (!_mlGlScaler.Initialize(_width, _height, targetWidth, targetHeight))
+                if (!_mlGlScaler.Initialize(_width, _height, targetWidth, targetHeight, readbackOnly: true))
                 {
                     _mlGlScaler.Dispose();
                     _mlGlScaler = null;
@@ -1805,46 +1885,59 @@ namespace DrawnUi.Camera
                 canvas.Flush();
                 _grContext.Flush();
 
-                if (!AndroidCameraExperimentalFlags.IsLegacyDualStreamPreviewDuringRecordingEnabled()
+                if (!AndroidCameraProcessingFlags.IsLegacyDualStreamPreviewDuringRecordingEnabled()
                     && ShouldGeneratePreview())
                 {
-                    // GPU-native preview generation (glBlitFramebuffer + async PBO, mirrors MetalPreviewScaler).
-                    // Downscale on GPU first, then read back only the small buffer (~900KB vs ~8MB).
-                    // Backpressure is handled by GlPreviewScaler's internal semaphore (MaxFramesInFlight=2):
-                    // ScaleAndReadback returns null immediately when GPU is busy — no counter needed.
-
-                    // Lazy-init scaler on first preview frame (EGL context is current here)
-                    if (!_glPreviewScalerInitAttempted)
+                    // Avoid taking a second Skia snapshot of the composed encoder surface here.
+                    // A synchronous GL readback preserves the final frame without the snapshot aliasing
+                    // that can make RenderFrameForRecording look like it is feeding back into itself.
+                    
+                    if (AndroidCameraProcessingFlags.UsePreviewGlScalerOnGpuPathWhenRecording)
                     {
-                        _glPreviewScalerInitAttempted = true;
-                        int maxPw = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
-                        int pw = Math.Min(_width, maxPw);
-                        int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
-                        _glPreviewScaler = new GlPreviewScaler();
-                        if (!_glPreviewScaler.Initialize(_width, _height, pw, ph))
-                        {
-                            _glPreviewScaler?.Dispose();
-                            _glPreviewScaler = null;
-                        }
-                    }
+                        // GPU-native preview generation (glBlitFramebuffer + async PBO, mirrors MetalPreviewScaler).
+                        // Downscale on GPU first, then read back only the small buffer (~900KB vs ~8MB).
+                        // Backpressure is handled by GlPreviewScaler's internal semaphore (MaxFramesInFlight=2):
+                        // ScaleAndReadback returns null immediately when GPU is busy — no counter needed.
 
-                    if (_glPreviewScaler != null)
-                    {
-                        // No ResetContext needed before/after: canvas was already flushed above,
-                        // ScaleAndReadback only touches FBO bindings and restores FBO 0 on exit,
-                        // and the next frame's ResetContext (after OES render) covers any residual state.
-                        var previewImage = _glPreviewScaler.ScaleAndReadback();
-                        if (previewImage != null)
+                        // Lazy-init scaler on first preview frame (EGL context is current here)
+                        if (!_glPreviewScalerInitAttempted)
                         {
-                            lock (_previewLock)
+                            _glPreviewScalerInitAttempted = true;
+                            int maxPw = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                            int pw = Math.Min(_width, maxPw);
+                            int ph = Math.Max(1, (int)Math.Round(_height * (pw / (double)_width)));
+                            _glPreviewScaler = new GlPreviewScaler();
+                            if (!_glPreviewScaler.Initialize(_width, _height, pw, ph))
                             {
-                                _latestPreviewImage?.Dispose();
-                                _latestPreviewImage = previewImage;
+                                _glPreviewScaler?.Dispose();
+                                _glPreviewScaler = null;
                             }
-
-                            PreviewAvailable?.Invoke(this, EventArgs.Empty);
                         }
+
+                        if (_glPreviewScaler != null)
+                        {
+                            // No ResetContext needed before/after: canvas was already flushed above,
+                            // ScaleAndReadback only touches FBO bindings and restores FBO 0 on exit,
+                            // and the next frame's ResetContext (after OES render) covers any residual state.
+                            var previewImage = _glPreviewScaler.ScaleAndReadback();
+                            if (previewImage != null)
+                            {
+                                lock (_previewLock)
+                                {
+                                    _latestPreviewImage?.Dispose();
+                                    _latestPreviewImage = previewImage;
+                                }
+
+                                PreviewAvailable?.Invoke(this, EventArgs.Empty);
+                            }
+                        }
+
                     }
+                    else
+                    {
+                        TryPublishPreviewFromGlReadbackFallback();
+                    }
+
                 }
 
                 // Periodic GPU resource cleanup to prevent memory accumulation during long recordings
@@ -3526,6 +3619,14 @@ namespace DrawnUi.Camera
             _glPreviewScaler?.Dispose();
             _glPreviewScaler = null;
             _glPreviewScalerInitAttempted = false;
+
+            _glPreviewFallbackScaler?.Dispose();
+            _glPreviewFallbackScaler = null;
+
+            _previewFallbackImagePool?.Dispose();
+            _previewFallbackImagePool = null;
+            _previewFallbackWidth = 0;
+            _previewFallbackHeight = 0;
 
             _mlGlScaler?.Dispose();
             _mlGlScaler = null;

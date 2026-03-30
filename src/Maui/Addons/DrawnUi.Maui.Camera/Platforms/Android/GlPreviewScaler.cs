@@ -24,6 +24,7 @@ namespace DrawnUi.Camera
     {
         private int _previewFbo;
         private int _previewRbo;
+        private bool _readbackOnly;
 
         private int _inputWidth, _inputHeight;
         private int _outputWidth, _outputHeight;
@@ -53,13 +54,14 @@ namespace DrawnUi.Camera
         /// <summary>
         /// Initialize GL resources. Must be called on GL thread with active EGL context.
         /// </summary>
-        public bool Initialize(int inputWidth, int inputHeight, int outputWidth, int outputHeight)
+        public bool Initialize(int inputWidth, int inputHeight, int outputWidth, int outputHeight, bool readbackOnly = false)
         {
             if (_isInitialized)
                 return true;
 
             try
             {
+                _readbackOnly = readbackOnly;
                 _inputWidth = inputWidth;
                 _inputHeight = inputHeight;
                 _outputWidth = outputWidth;
@@ -91,19 +93,22 @@ namespace DrawnUi.Camera
                     return false;
                 }
 
-                // Pool owns the two pinned pixel buffers — PBO maps directly into them
-                _imagePool = new SkiaCpuImagePool(outputWidth, outputHeight);
-
                 // Restore default FBO
                 GLES20.GlBindFramebuffer(GLES20.GlFramebuffer, 0);
                 GLES20.GlBindRenderbuffer(GLES20.GlRenderbuffer, 0);
 
-                // Async PBO double-buffer setup (must happen after EGL context is current)
-                SetupPbos(outputWidth * outputHeight * 4);
+                if (!_readbackOnly)
+                {
+                    // Pool owns the two pinned pixel buffers — PBO maps directly into them.
+                    _imagePool = new SkiaCpuImagePool(outputWidth, outputHeight);
+
+                    // Async PBO double-buffer setup (must happen after EGL context is current).
+                    SetupPbos(outputWidth * outputHeight * 4);
+                }
 
                 _isInitialized = true;
                 System.Diagnostics.Debug.WriteLine(
-                    $"[GlPreviewScaler] Initialized: {inputWidth}x{inputHeight} → {outputWidth}x{outputHeight}");
+                    $"[GlPreviewScaler] Initialized: {inputWidth}x{inputHeight} → {outputWidth}x{outputHeight}, readbackOnly={_readbackOnly}");
                 return true;
             }
             catch (Exception ex)
@@ -140,7 +145,7 @@ namespace DrawnUi.Camera
         /// </summary>
         public SKImage ScaleAndReadback(int sourceFbo = 0)
         {
-            if (!_isInitialized || !_pbosInitialized)
+            if (!_isInitialized || _readbackOnly || !_pbosInitialized)
                 return null;
 
             // Non-blocking semaphore check: drop frame if GPU already has 2 in flight.
@@ -302,6 +307,7 @@ namespace DrawnUi.Camera
                 _imagePool?.Dispose();
                 _imagePool = null;
                 _isInitialized = false;
+                _readbackOnly = false;
 
                 System.Diagnostics.Debug.WriteLine("[GlPreviewScaler] Disposed");
             }
