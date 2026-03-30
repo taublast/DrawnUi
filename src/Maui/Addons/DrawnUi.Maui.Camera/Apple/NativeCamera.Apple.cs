@@ -79,6 +79,11 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             _metalScaler?.Dispose();
             _metalScaler = null;
 
+            // Clean up preview texture cache
+            _previewTexture = null;
+            _previewTextureCache?.Dispose();
+            _previewTextureCache = null;
+
             // Clean up pooled rotation surfaces
             _pooledPreviewSurface?.Dispose();
             _pooledPreviewSurface = null;
@@ -2315,6 +2320,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         _previewTextureWidth = (int)width;
                         _previewTextureHeight = (int)height;
                     }
+                    // NOTE: cvTexture (CVMetalTexture wrapper) is intentionally NOT disposed here.
+                    // The CVMetalTextureRef must stay alive to keep the IMTLTexture's IOSurface
+                    // backing valid. This is a one-time allocation (first frame only), not per-frame.
 
                     System.Diagnostics.Debug.WriteLine($"[NativeCameraiOS] Metal texture created ONCE: {width}x{height}");
 
@@ -2360,8 +2368,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
         finally
         {
+            // pixelBuffer is a BORROWED reference from sampleBuffer.GetImageBuffer() — no extra retain.
+            // Disposing sampleBuffer releases the underlying CVImageBuffer, so calling
+            // pixelBuffer.Dispose() here would over-release (potential double-free / crash).
             sampleBuffer?.Dispose();
-            pixelBuffer?.Dispose();
         }
     }
 

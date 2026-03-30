@@ -3319,7 +3319,7 @@ public partial class SkiaCamera
                 return null;
             }
 
-            var formatDesc = CoreMedia.CMFormatDescription.Create(formatDescPtr, true);
+            using var formatDesc = CoreMedia.CMFormatDescription.Create(formatDescPtr, true);
 
             // Allocate unmanaged memory for audio data
             // CRITICAL: Caller must free this AFTER AppendSampleBuffer completes!
@@ -3327,7 +3327,7 @@ public partial class SkiaCamera
             System.Runtime.InteropServices.Marshal.Copy(sample.Data, 0, memoryPtr, sample.Data.Length);
 
             // Create block buffer - NOTE: This does NOT copy the data, just references memoryPtr!
-            var blockBuffer = CoreMedia.CMBlockBuffer.FromMemoryBlock(
+            using var blockBuffer = CoreMedia.CMBlockBuffer.FromMemoryBlock(
                 memoryPtr,
                 (nuint)sample.Data.Length,
                 null,

@@ -642,7 +642,7 @@ namespace DrawnUi.Camera
             }
 
             // Extract H.264 data from sample buffer
-            var blockBuffer = sampleBuffer.GetDataBuffer();
+            using var blockBuffer = sampleBuffer.GetDataBuffer();
             if (blockBuffer == null || blockBuffer.DataLength == 0)
                 return;
 
