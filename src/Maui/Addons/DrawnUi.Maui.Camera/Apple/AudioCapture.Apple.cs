@@ -24,7 +24,7 @@ public class AudioCaptureApple : IAudioCapture
     public int SampleRate { get; private set; }
     public int Channels { get; private set; }
     public AudioBitDepth BitDepth { get; private set; }
-    public CameraAudioMode AudioMode { get; set; } = CameraAudioMode.VideoRecording;
+    public CameraAudioMode AudioMode { get; set; } = CameraAudioMode.Default;
 
     public event EventHandler<AudioSample> SampleAvailable;
 

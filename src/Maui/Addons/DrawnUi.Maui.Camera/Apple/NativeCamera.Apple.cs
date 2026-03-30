@@ -3717,7 +3717,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         System.Diagnostics.Debug.WriteLine($"[NativeCamera.Apple] SetRecordAudio: {recordAudio}");
     }
 
-    private CameraAudioMode _audioMode = CameraAudioMode.VideoRecording;
+    private CameraAudioMode _audioMode = CameraAudioMode.Default;
 
     /// <summary>
     /// Set the audio session mode used during video recording
