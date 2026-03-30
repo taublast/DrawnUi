@@ -6,7 +6,7 @@ public class LoadedImageSource : IDisposable
     {
         if (IsDisposed)
         {
-            throw new ObjectDisposedException("Cannot clone a disposed LoadedImageSource");
+            return null;//throw new ObjectDisposedException("Cannot clone a disposed LoadedImageSource");
         }
 
         if (Bitmap != null)
@@ -28,7 +28,7 @@ public class LoadedImageSource : IDisposable
             if (Image.IsTextureBacked)  
             {
                 // Force a CPU raster copy from GPU
-                imageClone = SafeCloneToRaster(Image);
+                imageClone = DrawImageOnCpuSurface(Image);
             }
             else
             {
@@ -50,25 +50,44 @@ public class LoadedImageSource : IDisposable
         }
     }
 
-    SKImage SafeCloneToRaster(SKImage source)
+    /// <summary>
+    /// Forces a GPU-backed (texture-backed) SKImage to be rasterized into CPU memory
+    /// by drawing it onto a new raster (CPU) SKSurface. 
+    /// Returns the resulting SKSurface (caller is responsible for disposing it).
+    /// </summary>
+    public static SKImage DrawImageOnCpuSurface(SKImage image)
     {
-        if (source == null) return null;
+        if (image == null)
+            throw new ArgumentNullException(nameof(image));
 
-        var info = new SKImageInfo(source.Width, source.Height, source.ColorType, source.AlphaType, source.ColorSpace);
-
-        using var bitmap = new SKBitmap(info);
-
-        // This reads from GPU → CPU if necessary
-        if (!source.ReadPixels(info, bitmap.GetPixels(), bitmap.RowBytes, 0, 0))
+        if (!image.IsTextureBacked)
         {
-            // Fallback or error handling
-            throw new InvalidOperationException("Failed to read pixels from image");
+            // Already raster — just create a surface and draw it (or you could optimize to return a snapshot surface, but for consistency we draw)
+            var info = new SKImageInfo(image.Width, image.Height, image.ColorType, image.AlphaType, image.ColorSpace);
+            using var surface = SKSurface.Create(info);
+            surface.Canvas.DrawImage(image, 0, 0);
+            surface.Canvas.Flush(); // ensure drawing is complete
+            return surface.Snapshot();
         }
 
-        // Optional: mark immutable if you don't plan to modify
-        bitmap.SetImmutable();
+        // Texture-backed case → force CPU copy via raster surface
+        var rasterInfo = new SKImageInfo(
+            image.Width,
+            image.Height,
+            SKColorType.Rgba8888,           // safe default, or use image.ColorType if known to be compatible
+            image.AlphaType,
+            image.ColorSpace);
 
-        return SKImage.FromBitmap(bitmap);  // Now this is safe
+        using var cpuSurface = SKSurface.Create(rasterInfo);
+
+        using (var canvas = cpuSurface.Canvas) // or directly cpuSurface.Canvas
+        {
+            canvas.Clear(SKColors.Transparent); // optional, but safe
+            canvas.DrawImage(image, 0, 0);      // this triggers GPU → CPU transfer
+            canvas.Flush();                     // important for GPU flush before ToImage()
+        }
+
+        return cpuSurface.Snapshot();
     }
 
     public Guid Id { get; } = Guid.NewGuid();
