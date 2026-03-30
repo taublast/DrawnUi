@@ -4334,8 +4334,8 @@ public partial class SkiaCamera : SkiaControl
 #if IOS || MACCATALYST
             // Apple format: show raw, encoder FPS, and both drop counters
             _diagLine1 = rawCamFps > 0
-                ? $"raw: {rawCamFps:F1}  enc: {outputFps:F1} / {_targetFps}  drop: {_diagDroppedFrames} bp: {backpressureDrops}"
-                : $"FPS: {outputFps:F1} / {_targetFps}  drop: {_diagDroppedFrames} bp: {backpressureDrops}";
+                ? $"fps {outputFps:F1} / {rawCamFps:F1}  drop: {_diagDroppedFrames} bp: {backpressureDrops}"//{_targetFps}
+                : $"fps: {outputFps:F1} / {_targetFps}  drop: {_diagDroppedFrames} bp: {backpressureDrops}";
             _diagLine2 = $"submit: {_diagLastSubmitMs:F1} ms";
 #elif ANDROID
             // Android format: show raw, camera input, and encoder output FPS
