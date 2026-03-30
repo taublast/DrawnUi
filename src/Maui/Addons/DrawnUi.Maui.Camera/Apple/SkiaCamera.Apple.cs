@@ -1,7 +1,6 @@
 ﻿#if IOS || MACCATALYST
 
 using System.Diagnostics;
-using ARKit;
 using AVFoundation;
 using AVFoundation;
 using AVKit;
