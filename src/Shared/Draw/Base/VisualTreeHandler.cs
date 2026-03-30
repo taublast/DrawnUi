@@ -100,8 +100,17 @@ namespace DrawnUi.Draw
             // Build visual tree with transforms and caches
             var node = root.PrepareNode(context, widthRequest, heightRequest);
 
+            var previousPrepared = PreparedTree;
+
             // Push new tree
             PreparedTree = node;
+
+            if (previousPrepared != null
+                && !ReferenceEquals(previousPrepared, ActiveTree)
+                && !ReferenceEquals(previousPrepared, PreparedTree))
+            {
+                DisposeDetachedTree(previousPrepared);
+            }
         }
 
         /// <summary>
@@ -112,12 +121,51 @@ namespace DrawnUi.Draw
         public void Render(DrawingContext context)
         {
             var prepared = PreparedTree;
-            if (prepared != null)
+            if (prepared != null && !ReferenceEquals(prepared, ActiveTree))
             {
+                var previousActive = ActiveTree;
                 ActiveTree = prepared;
+
+                if (previousActive != null && !ReferenceEquals(previousActive, PreparedTree))
+                {
+                    DisposeDetachedTree(previousActive);
+                }
             }
 
             RenderTreeInternal(context, ActiveTree);
+        }
+
+        private static void DisposeDetachedTree(VisualLayer node)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            if (node.Children != null)
+            {
+                foreach (var child in node.Children)
+                {
+                    DisposeDetachedTree(child);
+                }
+
+                node.Children.Clear();
+            }
+
+            if (node.Cache != null)
+            {
+                var cache = node.Cache;
+                node.Cache = null;
+
+                if (node.Control != null)
+                {
+                    node.Control.DisposeObject(cache);
+                }
+                else
+                {
+                    cache.Dispose();
+                }
+            }
         }
 
         /// <summary>
