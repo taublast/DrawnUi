@@ -111,7 +111,7 @@ namespace DrawnUi.Views
 
                 lock (_surfaceLock)
                 {
-                    using (new SKAutoCanvasRestoreFixed(_retainedSurface.Canvas, true))
+                    using (new CanvasRestoreScope(_retainedSurface.Canvas))
                     {
                         OnPaintSurface(new(_retainedSurface, _renderTarget, SurfaceOrigin, ColorType));
                     }
