@@ -1660,6 +1660,35 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
     }
 
+    public bool HasBufferedPreviewFrame()
+    {
+        lock (_lockPreview)
+        {
+            if (_preview != null && _preview.Image != null)
+            {
+                return true;
+            }
+        }
+
+        lock (_lockRawFrame)
+        {
+            return _latestRawFrame != null;
+        }
+    }
+
+    private bool ShouldGeneratePreviewFrame()
+    {
+        if (FormsControl.IsRecording || FormsControl.IsPreRecording)
+        {
+            return true;
+        }
+
+        lock (_lockPreview)
+        {
+            return _preview == null;
+        }
+    }
+
     public SKImage GetRecordingImage()
     {
         int width, height, bytesPerRow;
@@ -2344,6 +2373,11 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     }
                 }
 
+                if (!ShouldGeneratePreviewFrame())
+                {
+                    continue;
+                }
+
                 int previewWidth = width;
                 int previewHeight = height;
                 byte[] pixelData = null;
@@ -2579,6 +2613,11 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             _kill?.Dispose();
             _kill = _preview;
             _preview = capturedImage;
+        }
+
+        if (capturedImage != null)
+        {
+            FormsControl.OnAppleNativePreviewFrameBuffered();
         }
     }
 

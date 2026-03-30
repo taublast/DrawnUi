@@ -265,6 +265,7 @@ namespace DrawnUi.Camera
         // Mirror-to-preview support
         private readonly object _previewLock = new();
         private SKImage _latestPreviewImage;
+        private int _previewRequested = 1;
         public event EventHandler PreviewAvailable;
 
         // Cached preview surface to avoid allocating every frame
@@ -333,11 +334,11 @@ namespace DrawnUi.Camera
             _width = Math.Max(16, width);
             _height = Math.Max(16, height);
             _frameRate = Math.Max(1, frameRate);
-            _previewFrameInterval = Math.Max(1, _frameRate / 30);
             _recordAudio = recordAudio;
             _deviceRotation = deviceRotation;
             _preRecordingDuration = TimeSpan.Zero;
             _stopAcceptingPreRecFrames = false;  // Reset for new recording session
+            System.Threading.Interlocked.Exchange(ref _previewRequested, 1);
             _preRecordingCutoffTimestamp = -1;   // Reset cutoff for new recording session
 
             // Prepare output directory
@@ -1039,8 +1040,10 @@ namespace DrawnUi.Camera
             }
         }
 
-        private int _previewFrameCounter = 0;
-        private int _previewFrameInterval = 1; // Computed: generate 1 out of N frames to target ~30fps preview
+        private bool ShouldGeneratePreview()
+        {
+            return System.Threading.Volatile.Read(ref _previewRequested) != 0;
+        }
 
         /// <summary>
         /// Submit the composed frame for encoding
@@ -1052,8 +1055,7 @@ namespace DrawnUi.Camera
                 return;
 
             SKImage snapshot = null;
-            CVPixelBuffer pixelBuffer = null;
-            bool shouldGeneratePreview = (System.Threading.Interlocked.Increment(ref _previewFrameCounter) % _previewFrameInterval) == 0;
+            bool shouldGeneratePreview = ShouldGeneratePreview();
 
             try
             {
@@ -1095,6 +1097,7 @@ namespace DrawnUi.Camera
                                 _latestPreviewImage?.Dispose();
                                 _latestPreviewImage = snapshot;
                                 snapshot = null; // Transfer ownership
+                                System.Threading.Interlocked.Exchange(ref _previewRequested, 0);
                             }
 
                             PreviewAvailable?.Invoke(this, EventArgs.Empty);
@@ -1619,6 +1622,7 @@ namespace DrawnUi.Camera
             {
                 image = _latestPreviewImage;
                 _latestPreviewImage = null;
+                System.Threading.Interlocked.Exchange(ref _previewRequested, 1);
                 return image != null;
             }
         }

@@ -19,6 +19,7 @@ namespace DrawnUi.Camera;
 public partial class SkiaCamera
 {
     private const bool ShouldOptimizeForNetworkUse = false; //might reduce heat and throttling
+    private int _appleAwaitingPostStopPreviewFrame;
 
     private Task _preRecFlushTask;
     private AudioSample[] _preRecordedAudioSamples;  // Saved at pre-rec → live transition
@@ -1910,6 +1911,39 @@ public partial class SkiaCamera
 
 
 
+    internal void OnAppleNativePreviewFrameBuffered()
+    {
+        if (System.Threading.Volatile.Read(ref _appleAwaitingPostStopPreviewFrame) == 0)
+            return;
+
+        if (IsRecording || IsPreRecording)
+            return;
+
+        System.Threading.Interlocked.Exchange(ref _appleAwaitingPostStopPreviewFrame, 0);
+    }
+
+    private void ResumeApplePreviewAfterStop()
+    {
+        UseRecordingFramesForPreview = false;
+
+        if (NativeControl is not NativeCamera appleCam)
+        {
+            SafeAction(() => UpdatePreview());
+            return;
+        }
+
+        FrameAquired = false;
+
+        if (appleCam.HasBufferedPreviewFrame())
+        {
+            System.Threading.Interlocked.Exchange(ref _appleAwaitingPostStopPreviewFrame, 0);
+            SafeAction(() => UpdatePreview());
+            return;
+        }
+
+        System.Threading.Interlocked.Exchange(ref _appleAwaitingPostStopPreviewFrame, 1);
+    }
+
     private async Task StopRealtimeVideoProcessingInternal()
     {
         ICaptureVideoEncoder encoder = null;
@@ -2133,6 +2167,7 @@ public partial class SkiaCamera
             Debug.WriteLine($"[StopRealtimeVideoProcessing] TIMING: TOTAL stop time {stopwatchTotal.ElapsedMilliseconds}ms");
 
             SetIsRecordingVideo(false);
+            ResumeApplePreviewAfterStop();
             if (capturedVideo != null)
             {
                 OnRecordingSuccess(capturedVideo);
@@ -2179,6 +2214,7 @@ public partial class SkiaCamera
             _captureVideoEncoder = null;
 
             SetIsRecordingVideo(false);
+            ResumeApplePreviewAfterStop();
             IsBusy = false; // Release busy state on error
 
             // Restart preview audio if still enabled
@@ -2266,6 +2302,7 @@ public partial class SkiaCamera
 
             // Update state - recording is now aborted
             SetIsRecordingVideo(false);
+            ResumeApplePreviewAfterStop();
             SetIsPreRecording(false);
 
             Debug.WriteLine($"[AbortRealtimeVideoProcessing] Capture video flow aborted successfully");
@@ -2289,6 +2326,7 @@ public partial class SkiaCamera
             _captureVideoEncoder = null;
 
             SetIsRecordingVideo(false);
+            ResumeApplePreviewAfterStop();
             SetIsPreRecording(false);
 
             // Restart preview audio if still enabled
