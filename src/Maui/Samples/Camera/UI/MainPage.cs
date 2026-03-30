@@ -778,13 +778,18 @@ public partial class MainPage : BasePageReloadable, IDisposable
 
     private async void OnVideoRecordingSuccess(object sender, CapturedVideo capturedVideo)
     {
-        MainThread.BeginInvokeOnMainThread(async () =>
+        // since the display image is on the GPU surface we must access it on the GPU thread
+        CameraControl.SafeAction(() => //wil be invoked when rendering canvas on GPU thread
+        {
+            var clone = CameraControl.Display.LoadedSource.Clone();
+
+            //now can avoid blocking we work on CPU only
+            Tasks.StartDelayed(TimeSpan.FromMilliseconds(16), async () =>
         {
             try
             {
                 Debug.WriteLine($"✅ Video recorded at: {capturedVideo.FilePath}");
 
-                using var clone = CameraControl.Display.LoadedSource.Clone();
                 using var previewImage = clone.Image.ToRasterImage();
 
                 var publicPath = await CameraControl.MoveVideoToGalleryAsync(capturedVideo, MauiProgram.Album);
@@ -843,7 +848,12 @@ public partial class MainPage : BasePageReloadable, IDisposable
                 ShowAlert("Error", $"Video save error: {ex.Message}");
                 Debug.WriteLine($"❌ Video save error: {ex}");
             }
+            finally
+            {
+                clone?.Dispose();
+            }
         });
+            });
     }
 
     private void OpenLastSavedPhoto()
