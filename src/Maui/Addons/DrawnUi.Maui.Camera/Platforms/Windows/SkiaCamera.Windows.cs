@@ -8,6 +8,7 @@ namespace DrawnUi.Camera;
 
 public partial class SkiaCamera : SkiaControl
 {
+    private int _windowsAwaitingPostStopPreviewFrame;
 
     public virtual void SetZoom(double value)
     {
@@ -48,6 +49,39 @@ public partial class SkiaCamera : SkiaControl
                 Debug.WriteLine($"[SkiaCamera Windows] Error opening file in gallery: {ex.Message}");
             }
         });
+    }
+
+    internal void OnWindowsNativePreviewFrameBuffered()
+    {
+        if (System.Threading.Volatile.Read(ref _windowsAwaitingPostStopPreviewFrame) == 0)
+            return;
+
+        if (IsRecording || IsPreRecording)
+            return;
+
+        System.Threading.Interlocked.Exchange(ref _windowsAwaitingPostStopPreviewFrame, 0);
+    }
+
+    private void ResumeWindowsPreviewAfterStop()
+    {
+        UseRecordingFramesForPreview = false;
+
+        if (NativeControl is not NativeCamera winCam)
+        {
+            SafeAction(() => UpdatePreview());
+            return;
+        }
+
+        FrameAquired = false;
+
+        if (winCam.HasBufferedPreviewFrame())
+        {
+            System.Threading.Interlocked.Exchange(ref _windowsAwaitingPostStopPreviewFrame, 0);
+            SafeAction(() => UpdatePreview());
+            return;
+        }
+
+        System.Threading.Interlocked.Exchange(ref _windowsAwaitingPostStopPreviewFrame, 1);
     }
 
     public virtual Metadata CreateMetadata()
@@ -688,6 +722,7 @@ public partial class SkiaCamera : SkiaControl
 
             // Update state and notify success
             SetIsRecordingVideo(false);
+            ResumeWindowsPreviewAfterStop();
             IsBusy = false; // Release busy state after successful muxing
 
             // Restart preview audio if still enabled
@@ -704,6 +739,7 @@ public partial class SkiaCamera : SkiaControl
             _captureVideoEncoder = null;
 
             SetIsRecordingVideo(false);
+            ResumeWindowsPreviewAfterStop();
             IsBusy = false; // Release busy state on error
 
             // Restart preview audio if still enabled
@@ -766,6 +802,7 @@ public partial class SkiaCamera : SkiaControl
             await encoder?.AbortAsync();
 
             SetIsRecordingVideo(false);
+            ResumeWindowsPreviewAfterStop();
 
             // Restart preview audio if still enabled
             if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
@@ -781,6 +818,7 @@ public partial class SkiaCamera : SkiaControl
             _captureVideoEncoder = null;
 
             SetIsRecordingVideo(false);
+            ResumeWindowsPreviewAfterStop();
 
             // Restart preview audio if still enabled
             if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))

@@ -1075,6 +1075,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                     // Invoke capture callback for encoder (same pattern as Android)
                     PreviewCaptureSuccess?.Invoke(capturedImage);
 
+                    FormsControl.OnWindowsNativePreviewFrameBuffered();
+
                     //PREVIEW FRAME READY
                     FormsControl.UpdatePreview();
                 }
@@ -1112,6 +1114,9 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         if (_isProcessingFrame)
             return;
 
+        if (!ShouldGeneratePreviewFrame())
+            return;
+
         try
         {
             using var frame = sender.TryAcquireLatestFrame();
@@ -1143,6 +1148,19 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         catch (Exception e)
         {
             Debug.WriteLine($"[NativeCameraWindows] Frame processing error: {e}");
+        }
+    }
+
+    private bool ShouldGeneratePreviewFrame()
+    {
+        if (FormsControl.IsRecording || FormsControl.IsPreRecording)
+        {
+            return true;
+        }
+
+        lock (_lockPreview)
+        {
+            return _preview == null;
         }
     }
 
@@ -1192,6 +1210,8 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
 
                 // Invoke capture callback for encoder (same pattern as Android)
                 PreviewCaptureSuccess?.Invoke(capturedImage);
+
+                FormsControl.OnWindowsNativePreviewFrameBuffered();
 
                 //PREVIEW FRAME READY
                 FormsControl.UpdatePreview();
@@ -1744,6 +1764,14 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
                 _preview = null; // Transfer ownership - renderer will dispose the SKImage
             }
             return preview;
+        }
+    }
+
+    public bool HasBufferedPreviewFrame()
+    {
+        lock (_lockPreview)
+        {
+            return _preview != null && _preview.Image != null;
         }
     }
 
