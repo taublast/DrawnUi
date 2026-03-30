@@ -398,7 +398,7 @@ public partial class SkiaControl
 
                     action(recordingContext);
 
-                    var skPicture = recorder.EndRecording();
+                    SKPicture skPicture = recorder.EndRecording();
                     renderObject = new(UsingCacheType, skPicture, context.Destination, cacheRecordingArea);
                 }
             }
@@ -658,11 +658,15 @@ public partial class SkiaControl
                     PushToOffscreenRendering(() =>
                     {
                         //will be executed on background thread in parallel
-                        var oldObject = RenderObjectPreparing;
-                        RenderObjectPreparing = CreateRenderingObject(clone, recordArea, oldObject, UsingCacheType,
+                        var prepared = CreateRenderingObject(clone, recordArea, RenderObjectPreparing, UsingCacheType,
                             (ctx) => { PaintWithEffects(ctx); });
-                        RenderObject = RenderObjectPreparing;
-                        _renderObjectPreparing = null;
+
+                        RenderObjectPreparing = prepared;
+                        if (prepared != null)
+                        {
+                            RenderObject = prepared;
+                            _renderObjectPreparing = null;
+                        }
 
                         if (Parent != null && Parent.UpdateLocks < 1)
                         {
@@ -772,7 +776,15 @@ public partial class SkiaControl
             RenderObjectNeedsUpdate = false;
             if (_renderObjectPreparing != value)
             {
+                var previous = _renderObjectPreparing;
                 _renderObjectPreparing = value;
+
+                if (previous != null
+                    && !ReferenceEquals(previous, RenderObject)
+                    && !ReferenceEquals(previous, RenderObjectPrevious))
+                {
+                    DisposeObject(previous);
+                }
             }
         }
     }
@@ -914,14 +926,18 @@ public partial class SkiaControl
                         PushToOffscreenRendering(() =>
                         {
                             //will be executed on background thread in parallel
-                            var oldObject = RenderObjectPreparing;
-                            RenderObjectPreparing = CreateRenderingObject(clone, recordArea, oldObject, UsingCacheType,
+                            var prepared = CreateRenderingObject(clone, recordArea, RenderObjectPreparing, UsingCacheType,
                                 (ctx) =>
                                 {
                                     PaintWithEffects(ctx);
                                 });
-                            RenderObject = RenderObjectPreparing;
-                            _renderObjectPreparing = null;
+
+                            RenderObjectPreparing = prepared;
+                            if (prepared != null)
+                            {
+                                RenderObject = prepared;
+                                _renderObjectPreparing = null;
+                            }
 
                             if (Parent != null && Parent.UpdateLocks < 1)
                             {
