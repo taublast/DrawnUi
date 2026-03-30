@@ -1593,7 +1593,8 @@ namespace DrawnUi.Views
                 if (CanvasView is SkiaViewAccelerated accelerated
                     && accelerated.GRContext != null)
                 {
-                    var cacheSurfaceInfo = new SKImageInfo(width, height);
+                    //var cacheSurfaceInfo = new SKImageInfo(width, height);
+                    var cacheSurfaceInfo = new SKImageInfo(width, height, SKColorType.Rgba8888, SKAlphaType.Premul);
                     surface = SKSurface.Create(accelerated.GRContext, true, cacheSurfaceInfo);
                 }
             }
