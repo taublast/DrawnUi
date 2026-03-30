@@ -433,7 +433,7 @@ namespace DrawnUi.Views
                 {
                     Console.WriteLine($"[SKMetalView] TryCpuPreRendering - CPU pre-rendering ({_canvasSize.Width}x{_canvasSize.Height})");
 
-                    using (new SKAutoCanvasRestoreFixed(softSurface.Canvas, true))
+                    using (new CanvasRestoreScope(softSurface.Canvas))
                     {
                         // Create dummy renderTarget for CPU rendering (won't be used but required by constructor)
                         // Use a fake Metal texture info

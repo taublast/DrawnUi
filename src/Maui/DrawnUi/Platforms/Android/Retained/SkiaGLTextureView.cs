@@ -152,7 +152,7 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
             {
                 LogDebug($"TryCpuPreRendering - CPU pre-rendering ({_width}x{_height})");
 
-                using (new SKAutoCanvasRestoreFixed(softSurface.Canvas, true))
+                using (new CanvasRestoreScope(softSurface.Canvas))
                 {
                     // Create dummy renderTarget for CPU rendering (won't be used but required by constructor)
                     var glInfo = new GRGlFramebufferInfo(0, SKColorType.Rgba8888.ToGlSizedFormat());

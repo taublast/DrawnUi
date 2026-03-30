@@ -2,7 +2,7 @@ namespace DrawnUi.Views
 {
     /// <summary>
     /// Zero-allocation canvas save/restore scope for use in hot rendering paths.
-    /// Struct equivalent of SKAutoCanvasRestoreFixed — no heap allocation in using statements.
+    /// Struct equivalent of SKAutoCanvasRestore — no heap allocation in using statements.
     /// </summary>
     public struct CanvasRestoreScope : IDisposable
     {
