@@ -2922,6 +2922,7 @@ public partial class SkiaCamera : SkiaControl
     private long _diagDroppedFrames = 0;
     private long _diagSubmittedFrames = 0;
     private double _diagLastSubmitMs = 0;
+    private readonly System.Diagnostics.Stopwatch _diagSubmitSw = new();
     private DateTime _diagStartTime;
     private int _diagEncWidth = 0, _diagEncHeight = 0;
     private long _diagBitrate = 0;
@@ -3276,10 +3277,10 @@ public partial class SkiaCamera : SkiaControl
                                         canvas.RestoreToCount(checkpoint);
                                 }
 
-                                var sw = System.Diagnostics.Stopwatch.StartNew();
+                                _diagSubmitSw.Restart();
                                 await winEnc.SubmitFrameAsync();
-                                sw.Stop();
-                                _diagLastSubmitMs = sw.Elapsed.TotalMilliseconds;
+                                _diagSubmitSw.Stop();
+                                _diagLastSubmitMs = _diagSubmitSw.Elapsed.TotalMilliseconds;
                                 System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
 
                                 // Track encoder output fps

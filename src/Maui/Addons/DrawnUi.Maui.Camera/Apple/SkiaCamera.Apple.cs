@@ -402,10 +402,10 @@ public partial class SkiaCamera
                         }
                     }
 
-                    var __swA = System.Diagnostics.Stopwatch.StartNew();
+                    _diagSubmitSw.Restart();
                     await appleEnc.SubmitFrameAsync();
-                    __swA.Stop();
-                    _diagLastSubmitMs = __swA.Elapsed.TotalMilliseconds;
+                    _diagSubmitSw.Stop();
+                    _diagLastSubmitMs = _diagSubmitSw.Elapsed.TotalMilliseconds;
                     System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
                     CalculateRecordingFps();
                 }
