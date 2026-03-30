@@ -2182,6 +2182,12 @@ public partial class SkiaCamera
 
     #region ML Frame Helper
 
+    // Cached resources for TryGetMLFrame legacy (CPU) path — avoids per-call allocations
+    private SKPaint _mlPaint;
+    private SKSurface _mlSurface;
+    private int _mlSurfaceWidth;
+    private int _mlSurfaceHeight;
+
     protected partial bool TryGetMLFrame(SKImage rawImage, int targetWidth, int targetHeight, byte[] outputBuffer)
     {
         // GPU path: rawImage is null, raw frame is in GL FBO 0 — delegate to encoder's GPU scaler.
@@ -2199,19 +2205,26 @@ public partial class SkiaCamera
             return false;
 
         var info = new SKImageInfo(targetWidth, targetHeight, SKColorType.Rgba8888, SKAlphaType.Premul);
-        using var surface = SKSurface.Create(info);
-        if (surface == null)
+
+        if (_mlSurface == null || _mlSurfaceWidth != targetWidth || _mlSurfaceHeight != targetHeight)
+        {
+            _mlSurface?.Dispose();
+            _mlSurface = SKSurface.Create(info);
+            _mlSurfaceWidth = targetWidth;
+            _mlSurfaceHeight = targetHeight;
+        }
+        if (_mlSurface == null)
             return false;
 
-        using var paint = new SKPaint //todo reuse this!!!
+        _mlPaint ??= new SKPaint
         {
             FilterQuality = SKFilterQuality.Low
         };
         var dst = new SKRect(0, 0, targetWidth, targetHeight);
-        surface.Canvas.DrawImage(rawImage, dst, paint);
-        surface.Canvas.Flush();
+        _mlSurface.Canvas.DrawImage(rawImage, dst, _mlPaint);
+        _mlSurface.Canvas.Flush();
 
-        using var snapshot = surface.Snapshot();
+        using var snapshot = _mlSurface.Snapshot();
         if (snapshot == null)
             return false;
 
