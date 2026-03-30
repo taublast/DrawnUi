@@ -269,7 +269,12 @@ namespace DrawnUi.Camera
 
         // Cached BufferInfo objects to avoid per-frame Java allocations (reduces GC pressure)
         private MediaCodec.BufferInfo _drainBufferInfo;
+        private MediaCodec.BufferInfo _drainAudioBufferInfo;
         private MediaCodec.BufferInfo _muxerBufferInfo;
+
+        // Cached dummy canvas returned when EGL is torn down (avoids per-call leak of SKBitmap+SKCanvas)
+        private SKBitmap _dummyBitmap;
+        private SKCanvas _dummyCanvas;
 
         // GPU resource management (prevent Skia GPU memory accumulation during long recordings)
         private int _gpuFrameCounter = 0;
@@ -1322,7 +1327,12 @@ namespace DrawnUi.Camera
             {
                 System.Diagnostics.Debug.WriteLine("[AndroidEncoder] BeginFrame: EGL torn down, returning dummy canvas");
                 info = new SKImageInfo(1, 1);
-                canvas = new SKCanvas(new SKBitmap(1, 1));
+                if (_dummyCanvas == null)
+                {
+                    _dummyBitmap = new SKBitmap(1, 1);
+                    _dummyCanvas = new SKCanvas(_dummyBitmap);
+                }
+                canvas = _dummyCanvas;
                 return new FrameScope();
             }
 
@@ -1942,11 +1952,11 @@ namespace DrawnUi.Camera
 
                 // Periodic GPU resource cleanup to prevent memory accumulation during long recordings
                 _gpuFrameCounter++;
-                // if (_gpuFrameCounter >= GpuPurgeInterval)
-                // {
-                //     _gpuFrameCounter = 0;
-                //     _grContext.PurgeUnlockedResources(false);  // false = don't scratchResourcesOnly
-                // }
+                if (_gpuFrameCounter >= GpuPurgeInterval)
+                {
+                    _gpuFrameCounter = 0;
+                    _grContext.PurgeUnlockedResources(false);  // false = don't scratchResourcesOnly
+                }
 
                 // 5. Set presentation timestamp and swap to encoder
                 EGLExt.EglPresentationTimeANDROID(_eglDisplay, _eglSurface, ptsNanos);
@@ -3579,6 +3589,11 @@ namespace DrawnUi.Camera
             _grContext?.Dispose();
             _grContext = null;
 
+            _dummyCanvas?.Dispose();
+            _dummyCanvas = null;
+            _dummyBitmap?.Dispose();
+            _dummyBitmap = null;
+
             try
             {
                 if (_eglDisplay != EGL14.EglNoDisplay)
@@ -3700,7 +3715,8 @@ namespace DrawnUi.Camera
         {
             if (_audioCodec == null) return;
 
-            var info = new MediaCodec.BufferInfo();
+            _drainAudioBufferInfo ??= new MediaCodec.BufferInfo();
+            var info = _drainAudioBufferInfo;
             while (true)
             {
                 int encoderStatus = _audioCodec.DequeueOutputBuffer(info, 0); // No wait
@@ -3760,10 +3776,17 @@ namespace DrawnUi.Camera
                             // info.PresentationTimeUs is relative to _audioPtsBaseNs (set by CalculateAudioPts on first feed).
                             // Restore absolute time so WriteBufferedPreRecordingToFileAsync can align with video.
                             long absoluteTimestampUs = info.PresentationTimeUs + (_audioPtsBaseNs / 1000L);
-                            byte[] aacData = new byte[info.Size];
-                            encodedData.Position(info.Offset);
-                            encodedData.Get(aacData, 0, info.Size);
-                            _encodedAudioBuffer.AppendEncodedFrame(aacData, aacData.Length, absoluteTimestampUs);
+                            byte[] aacData = ArrayPool<byte>.Shared.Rent(info.Size);
+                            try
+                            {
+                                encodedData.Position(info.Offset);
+                                encodedData.Get(aacData, 0, info.Size);
+                                _encodedAudioBuffer.AppendEncodedFrame(aacData, info.Size, absoluteTimestampUs);
+                            }
+                            finally
+                            {
+                                ArrayPool<byte>.Shared.Return(aacData);
+                            }
                         }
                     }
 
@@ -3900,6 +3923,8 @@ namespace DrawnUi.Camera
             // Dispose cached Java objects to avoid native memory leaks
             _drainBufferInfo?.Dispose();
             _drainBufferInfo = null;
+            _drainAudioBufferInfo?.Dispose();
+            _drainAudioBufferInfo = null;
             _muxerBufferInfo?.Dispose();
             _muxerBufferInfo = null;
 

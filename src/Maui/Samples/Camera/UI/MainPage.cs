@@ -188,10 +188,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
         UpdateAudioMonitoringVisibility();
         OnRecordingStateChanged();
 
-        if (hotreload)
-        {
-            OnOpen();
-        }
+        OnOpen();
 
     }
 
@@ -554,7 +551,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
 
             if (_recordingStopLabel != null && !isRecordingVideo)
             {
-                _recordingStopLabel.Text = "Abort";
+                _recordingStopLabel.Text = "Stop";
             }
         });
     }

@@ -161,9 +161,10 @@ public class CachedObject : ISkiaDisposable
             if (!PreserveSourceFromDispose)
             {
                 Surface?.Dispose();
-                Picture?.Dispose();
-                Image?.Dispose(); // todo crash was here
             }
+
+            Picture?.Dispose();
+            Image?.Dispose(); // todo crash was here
  
             Surface = null;
             Picture = null;
