@@ -79,6 +79,12 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             _metalScaler?.Dispose();
             _metalScaler = null;
 
+            // Clean up pooled rotation surfaces
+            _pooledPreviewSurface?.Dispose();
+            _pooledPreviewSurface = null;
+            _pooledRecordingSurface?.Dispose();
+            _pooledRecordingSurface = null;
+
             // Clear callback
             lock (_lockFullResCallback)
             {
@@ -150,6 +156,112 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
     // Metal-based scaling (zero ObjC allocation per frame)
     private MetalPreviewScaler _metalScaler;
+
+    // Pooled rotation surfaces — reused across frames to avoid per-frame SKBitmap/SKCanvas allocations.
+    // Preview and recording use separate pools to avoid cross-thread contention.
+    private SKSurface _pooledPreviewSurface;
+    private int _pooledPreviewW, _pooledPreviewH;
+
+    private SKSurface _pooledRecordingSurface;
+    private int _pooledRecordingW, _pooledRecordingH;
+
+    /// <summary>
+    /// Rotates raw pixel data into a pooled SKSurface and returns an SKImage snapshot.
+    /// Reuses the surface across frames when dimensions are stable (the common case).
+    /// </summary>
+    private SKImage RotateIntoPooledImage(
+        byte[] pixelData, int width, int height, int bytesPerRow,
+        double rotation, bool flip,
+        ref SKSurface pooledSurface, ref int pooledW, ref int pooledH)
+    {
+        // Determine output dimensions (rotation swaps width/height for 90/270)
+        int outW, outH;
+        var intRotation = (int)rotation;
+        if (intRotation == 90 || intRotation == 270)
+        {
+            outW = height;
+            outH = width;
+        }
+        else
+        {
+            outW = width;
+            outH = height;
+        }
+
+        // Reuse or recreate the pooled surface only when dimensions change
+        if (pooledSurface == null || pooledW != outW || pooledH != outH)
+        {
+            pooledSurface?.Dispose();
+            var info = new SKImageInfo(outW, outH, SKColorType.Bgra8888, SKAlphaType.Premul);
+            pooledSurface = SKSurface.Create(info);
+            pooledW = outW;
+            pooledH = outH;
+        }
+
+        var canvas = pooledSurface.Canvas;
+        canvas.Clear(SKColors.Transparent);
+
+        // Pin the raw pixel data and wrap as SKImage (no copy — points to pinned managed array)
+        var gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(pixelData, System.Runtime.InteropServices.GCHandleType.Pinned);
+        try
+        {
+            var pinnedPtr = gcHandle.AddrOfPinnedObject();
+            var srcInfo = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
+            using var rawImage = SKImage.FromPixels(srcInfo, pinnedPtr, bytesPerRow);
+
+            // Apply rotation + optional flip directly onto the pooled canvas
+            canvas.Save();
+            switch (intRotation)
+            {
+                case 90:
+                    canvas.Translate(outW, 0);
+                    canvas.RotateDegrees(90);
+                    if (flip)
+                    {
+                        canvas.Scale(1, -1);
+                        canvas.Translate(0, -height);
+                    }
+                    break;
+
+                case 180:
+                    canvas.Translate(outW / 2.0f, outH / 2.0f);
+                    canvas.RotateDegrees(180);
+                    if (flip)
+                    {
+                        canvas.Scale(1, -1);
+                    }
+                    canvas.Translate(-width / 2.0f, -height / 2.0f);
+                    break;
+
+                case 270:
+                    canvas.Translate(0, outH);
+                    canvas.RotateDegrees(270);
+                    if (flip)
+                    {
+                        canvas.Scale(1, -1);
+                        canvas.Translate(0, -height);
+                    }
+                    break;
+
+                default:
+                    if (flip)
+                    {
+                        canvas.Translate(0, outH);
+                        canvas.Scale(1, -1);
+                    }
+                    break;
+            }
+            canvas.DrawImage(rawImage, 0, 0);
+            canvas.Restore();
+        }
+        finally
+        {
+            gcHandle.Free();
+        }
+
+        // Snapshot copies pixels out of the surface (required — surface will be reused next frame)
+        return pooledSurface.Snapshot();
+    }
 
     // ARTOFFOTO PATTERN: Metal texture cache - create texture ONCE, it auto-updates!
     // Camera writes to IOSurface pool, our texture view shows new frames automatically
@@ -1633,25 +1745,11 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
         try
         {
-            // All expensive operations happen OUTSIDE the lock
-            var info = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
-
-            // Pin the byte array and create SKImage
-            var gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(pixelData, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
-            {
-                var pinnedPtr = gcHandle.AddrOfPinnedObject();
-                using var rawImage = SKImage.FromPixels(info, pinnedPtr, bytesPerRow);
-
-                // Apply rotation if needed
-                using var bitmap = SKBitmap.FromImage(rawImage);
-                using var rotatedBitmap = HandleOrientationForPreview(bitmap, rotation, flip);
-                return SKImage.FromBitmap(rotatedBitmap);
-            }
-            finally
-            {
-                gcHandle.Free();
-            }
+            // Uses pooled surface to avoid per-frame SKBitmap/SKCanvas allocations.
+            return RotateIntoPooledImage(
+                pixelData, width, height, bytesPerRow,
+                rotation, flip,
+                ref _pooledPreviewSurface, ref _pooledPreviewW, ref _pooledPreviewH);
         }
         catch (Exception e)
         {
@@ -1712,24 +1810,11 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
         try
         {
-            var info = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
-
-            var gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(pixelData, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
-            {
-                var pinnedPtr = gcHandle.AddrOfPinnedObject();
-                using var rawImage = SKImage.FromPixels(info, pinnedPtr, bytesPerRow);
-
-                // Apply rotation if needed
-                using var bitmap = SKBitmap.FromImage(rawImage);
-                // Use the same rotation logic as preview
-                using var rotatedBitmap = HandleOrientationForPreview(bitmap, rotation, flip);
-                return SKImage.FromBitmap(rotatedBitmap);
-            }
-            finally
-            {
-                gcHandle.Free();
-            }
+            // Uses pooled surface to avoid per-frame SKBitmap/SKCanvas allocations.
+            return RotateIntoPooledImage(
+                pixelData, width, height, bytesPerRow,
+                rotation, flip,
+                ref _pooledRecordingSurface, ref _pooledRecordingW, ref _pooledRecordingH);
         }
         catch (Exception e)
         {
@@ -2513,21 +2598,18 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                 // Build the rotated preview image here on the background thread so that
                 // GetPreviewImage() on the UI/Paint thread is a cheap lock+swap with no CPU work.
-                var info = new SKImageInfo(previewWidth, previewHeight, SKColorType.Bgra8888, SKAlphaType.Premul);
+                // Uses pooled surface to avoid per-frame SKBitmap/SKCanvas allocations (~24MB/frame churn eliminated).
                 SKImage rotatedImage = null;
-                var gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(pixelData, System.Runtime.InteropServices.GCHandleType.Pinned);
                 try
                 {
-                    var pinnedPtr = gcHandle.AddrOfPinnedObject();
-                    using var rawImage = SKImage.FromPixels(info, pinnedPtr, bytesPerRow);
-                    using var bitmap = SKBitmap.FromImage(rawImage);
-                    using var rotatedBitmap = HandleOrientationForPreview(bitmap, (double)frameRotation, frameFacing == CameraPosition.Selfie);
-                    rotatedImage = SKImage.FromBitmap(rotatedBitmap);
+                    rotatedImage = RotateIntoPooledImage(
+                        pixelData, previewWidth, previewHeight, bytesPerRow,
+                        (double)frameRotation, frameFacing == CameraPosition.Selfie,
+                        ref _pooledPreviewSurface, ref _pooledPreviewW, ref _pooledPreviewH);
                 }
                 finally
                 {
-                    gcHandle.Free();
-                    // Pixel data is no longer needed — SKImage.FromBitmap copied the pixels; return buffer to pool.
+                    // Pixel data is no longer needed — snapshot copied the pixels; return buffer to pool.
                     _pixelBufferPool.Enqueue(pixelData);
                 }
 
