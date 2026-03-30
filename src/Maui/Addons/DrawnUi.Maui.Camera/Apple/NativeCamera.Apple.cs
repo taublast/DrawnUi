@@ -2445,6 +2445,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             _processedFrameCount++;
             bool hasFrame = false;
 
+            // Drain ObjC autoreleased objects each iteration (Metal API objects, CVMetalTexture wrappers, etc.)
+            // Without this, autoreleased objects accumulate for the lifetime of the .NET thread.
+            using var pool = new NSAutoreleasePool();
+
             try
             {
                 // Signal recording thread — CaptureFrameCore uses zero-copy Metal texture

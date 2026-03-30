@@ -161,6 +161,10 @@ namespace DrawnUi.Camera
 
             try
             {
+                // Drain ObjC autoreleased objects (CommandBuffer, ComputeCommandEncoder, etc.)
+                // created by Metal API calls on this .NET background thread.
+                using var pool = new NSAutoreleasePool();
+
                 // Create Metal texture from input CVPixelBuffer (zero-copy, reuses buffer memory)
                 var inputTexture = _textureCache.TextureFromImage(
                     inputBuffer,
@@ -251,6 +255,9 @@ namespace DrawnUi.Camera
 
             try
             {
+                // Drain ObjC autoreleased objects created by Metal API calls on this .NET background thread.
+                using var pool = new NSAutoreleasePool();
+
                 // Create command buffer
                 var commandBuffer = _commandQueue.CommandBuffer();
                 var computeEncoder = commandBuffer.ComputeCommandEncoder;
