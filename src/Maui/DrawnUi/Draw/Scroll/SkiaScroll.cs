@@ -28,6 +28,8 @@ namespace DrawnUi.Draw
             ScrollingEnded = null;
             Scrolled = null;
 
+            DisposeVirtualPlanes();
+
             Content?.Dispose();
             Header?.Dispose();
             Footer?.Dispose();
