@@ -3523,6 +3523,7 @@ public partial class SkiaCamera : SkiaControl
             var height = source.Height;
 
             var info = new SKImageInfo(width, height, SKColorType.Rgba8888, SKAlphaType.Premul);
+            // exprerimental use GPU
             using var surface = Superview.CreateSurface(width, height, true);// SKSurface.Create(info);
             if (surface == null)
                 return null;
@@ -4340,9 +4341,9 @@ public partial class SkiaCamera : SkiaControl
             // Android format: show raw, camera input, and encoder output FPS
             // drop = frames lost in ImageReader before our callback (raw − cam)
             _diagLine1 = rawCamFps > 0
-                ? $"raw: {rawCamFps:F1}  cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}"
-                : $"cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}";
-            _diagLine2 = $"drop: {_diagHardwareDrops}  submit: {_diagLastSubmitMs:F1} ms";
+                ? $"fps: {inputFps:F1} / {rawCamFps:F1}  enc: {outputFps:F1} / {_targetFps}"
+                : $"fps: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}";
+            _diagLine2 = $"drop: {_diagHardwareDrops}";
 #else
             _diagLine1 = rawCamFps > 0
                 ? $"raw: {rawCamFps:F1}  cam: {inputFps:F1}  enc: {outputFps:F1} / {_targetFps}"
@@ -4352,7 +4353,7 @@ public partial class SkiaCamera : SkiaControl
 
             double mbps = _diagBitrate > 0 ? _diagBitrate / 1_000_000.0 : 0.0;
             _diagLine3 = _diagEncWidth > 0 && _diagEncHeight > 0
-                ? $"rec: {_diagEncWidth}x{_diagEncHeight}@{_targetFps}  bitrate: {mbps:F1} Mbps"
+                ? $"rec: {_diagEncWidth}x{_diagEncHeight}@{_targetFps}  br: {mbps:F1} Mbps"
                 : $"bitrate: {mbps:F1} Mbps";
         }
 
@@ -4390,8 +4391,8 @@ public partial class SkiaCamera : SkiaControl
         if (_diagStringCounter++ % DiagStringRebuildEvery == 0)
         {
             _previewDiagLine1 = rawCamFps > 0
-                ? $"raw: {rawCamFps:F1}  prev: {_diagPreviewFps:F1}"
-                : $"prev: {_diagPreviewFps:F1}";
+                ? $"fps: {_diagPreviewFps:F1} / {rawCamFps:F1}"
+                : $"fps: {_diagPreviewFps:F1}";
             _previewDiagLine2 = $"preview: {width}x{height}  scale: {PreviewScale:F2}";
         }
 
