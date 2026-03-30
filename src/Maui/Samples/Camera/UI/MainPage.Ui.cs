@@ -637,11 +637,11 @@ namespace CameraTests.Views
                 {
                     await me.ScaleToAsync(1.04, 1.04, 90);
                     await me.ScaleToAsync(1.0, 1.0, 90);
-                    if (CameraControl.IsPreRecording)
-                    {
-                        _ = AbortVideoRecording();
-                    }
-                    else
+                    //if (CameraControl.IsPreRecording)
+                    //{
+                    //    _ = AbortVideoRecording();
+                    //}
+                    //else
                     {
                         ToggleVideoRecording();
                     }
@@ -887,7 +887,10 @@ namespace CameraTests.Views
                                     TintColor = Color.FromArgb("#E11D48"), IsVisible = false
                                 }
                                 .Assign(out _videoRecordButton)
-                                .OnTapped(async me => { await AbortVideoRecording(); })
+                                .OnTapped(async me =>
+                                {
+                                    await AbortVideoRecording();
+                                })
                                 .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording),
                                     me =>
                                     {
