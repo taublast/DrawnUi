@@ -1,6 +1,7 @@
 ﻿#if IOS || MACCATALYST
 
 using System.Diagnostics;
+using ARKit;
 using AVFoundation;
 using AVFoundation;
 using AVKit;
@@ -360,7 +361,8 @@ public partial class SkiaCamera
 
                             var __rectsA = GetAspectFillRects(imageToDraw.Width, imageToDraw.Height, virtualW,
                                 virtualH);
-                            canvas.DrawImage(imageToDraw, __rectsA.src, __rectsA.dst);
+                            //canvas.DrawImage(imageToDraw, __rectsA.src, __rectsA.dst);
+                            RenderFrameForRecording(canvas, imageToDraw, __rectsA.src, __rectsA.dst);
 
                             canvas.Restore();
                         }
@@ -368,7 +370,8 @@ public partial class SkiaCamera
                         {
                             var __rectsA = GetAspectFillRects(imageToDraw.Width, imageToDraw.Height, info.Width,
                                 info.Height);
-                            canvas.DrawImage(imageToDraw, __rectsA.src, __rectsA.dst);
+                            //canvas.DrawImage(imageToDraw, __rectsA.src, __rectsA.dst);
+                            RenderFrameForRecording(canvas, imageToDraw, __rectsA.src, __rectsA.dst);
                         }
 
                         if (ProcessFrame != null || VideoDiagnosticsOn)
