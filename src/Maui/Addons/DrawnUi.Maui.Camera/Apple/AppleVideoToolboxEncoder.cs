@@ -989,14 +989,14 @@ namespace DrawnUi.Camera
                             // 4. Create Skia Surface wrapping the Metal texture
                             // Note: Skia will draw directly into the CVPixelBuffer via GPU
                             var textureInfo = new GRMtlTextureInfo(cvTexture.Texture.Handle);
-                            var backendTexture = new GRBackendTexture(_width, _height, false, textureInfo);
+                            using var backendTexture = new GRBackendTexture(_width, _height, false, textureInfo);
 
                             _surface = SKSurface.Create(_encodingContext, backendTexture, GRSurfaceOrigin.TopLeft, SKColorType.Bgra8888);
 
-                            // cvTexture can be let go, underlying texture is kept by backendTexture/pixelBuffer interaction scope
-                            // but generally explicit dispose of CVMetalTextureRef is safer? 
-                            // usage: using (cvTexture) { ... } but we need it for the life of surface.
-                            // The CVPixelBuffer is the root owner.
+                            // CVMetalTexture is a managed wrapper holding a ref to the texture cache entry.
+                            // The underlying Metal texture stays alive via the CVPixelBuffer's IOSurface ownership.
+                            // Dispose the wrapper promptly to avoid accumulating native refs until GC.
+                            cvTexture.Dispose();
                         }
                     }
                     catch (Exception ex)
