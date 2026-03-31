@@ -966,6 +966,16 @@ namespace CameraTests.Views
                             new SettingsButton("🎙️", "Speech: OFF") { TintColor = Color.FromArgb("#475569"), }
                                 .Assign(out _speechButton)
                                 .OnTapped(me => { ToggleSpeech(); }),
+                            new SettingsButton("🎨", $"Effect: {ShaderEffectHelper.GetTitle(ShaderEffect.None)}") { TintColor = Color.FromArgb("#6B7280"), }
+                                .OnTapped(me => { CycleEffect(); })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.VideoEffect), me =>
+                                {
+                                    var title = ShaderEffectHelper.GetTitle(CameraControl.VideoEffect);
+                                    me.Text = $"Effect: {title}";
+                                    me.TintColor = CameraControl.VideoEffect != ShaderEffect.None
+                                        ? Color.FromArgb("#10B981")
+                                        : Color.FromArgb("#6B7280");
+                                }),
                         }
                     }
                 };

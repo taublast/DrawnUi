@@ -1,0 +1,61 @@
+﻿uniform float4 iMouse;           // Mouse drag pos=.xy Click pos=.zw (pixels)
+uniform float  iTime;            // Shader playback time (s)
+uniform float2 iResolution;      // Viewport resolution (pixels)
+uniform float2 iImageResolution; // iImage1 resolution (pixels)
+uniform shader iImage1;          // Texture
+uniform float2 iOffset;          // Top-left corner of DrawingRect
+uniform float2 iOrigin;          // Mouse drag started here
+
+// Generates organic film grain pattern
+float filmGrain(float2 coord) {
+    float2 noise1 = fract(sin(coord * 127.1) * 43758.5453);
+    float2 noise2 = fract(sin(coord * 269.5) * 17951.3421);
+    return (noise1.x + noise2.y - 1.0) * 0.025;
+}
+
+// Applies Kodak Tri-X style black and white conversion
+float triXConversion(half3 color) {
+    // Tri-X has enhanced red sensitivity, good green response
+    float luminance = dot(color, half3(0.35, 0.45, 0.2));
+    
+    // Film characteristic S-curve
+    luminance = luminance * luminance * (3.0 - 2.0 * luminance);
+    
+    // Boost contrast typical of Tri-X
+    luminance = (luminance - 0.5) * 1.3 + 0.5;
+    
+    return clamp(luminance, 0.0, 1.0);
+}
+
+// Creates subtle vignette effect like real film
+float filmVignette(float2 uv) {
+    float2 centered = uv - 0.5;
+    float distance = length(centered);
+    return 1.0 - smoothstep(0.5, 1.2, distance);
+}
+
+half4 main(float2 fragCoord) 
+{	
+    float2 renderingScale = iImageResolution.xy / iResolution.xy;
+    float2 inputCoord = (fragCoord - iOffset) * renderingScale;
+    float2 uv = inputCoord / iImageResolution.xy;
+    
+    half3 originalColor = iImage1.eval(inputCoord).rgb;
+    
+    float bwValue = triXConversion(originalColor);
+    
+    // Add film grain
+    float grain = filmGrain(inputCoord * 0.5);
+    bwValue += grain;
+    
+    // Apply vignette
+    float vignette = filmVignette(uv);
+    bwValue *= vignette * 0.95 + 0.05;
+    
+    // Slightly lift blacks for film characteristic
+    bwValue = max(bwValue, 0.02);
+    
+    bwValue = clamp(bwValue, 0.0, 1.0);
+    
+    return half4(bwValue, bwValue, bwValue, 1.0);
+}

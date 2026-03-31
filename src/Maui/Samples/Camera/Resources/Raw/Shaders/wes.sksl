@@ -1,0 +1,54 @@
+﻿uniform float4 iMouse;           // Mouse drag pos=.xy Click pos=.zw (pixels)
+uniform float  iTime;            // Shader playback time (s)
+uniform float2 iResolution;      // Viewport resolution (pixels)
+uniform float2 iImageResolution; // iImage1 resolution (pixels)
+uniform shader iImage1;          // Texture
+uniform float2 iOffset;          // Top-left corner of DrawingRect
+uniform float2 iOrigin;          // Mouse drag started here
+
+/// <summary>
+/// Applies symmetrical, pastel color palette for cinematic look with improved contrast
+/// </summary>
+half3 wesAndersonGrade(half3 color) {
+    float luminance = dot(color, half3(0.299, 0.587, 0.114));
+    
+    half3 liftedColor = color + 0.12;
+    
+    // Subtle S-curve for better contrast while maintaining pastel feel
+    half3 contrastedColor = half3(
+        smoothstep(0.0, 1.0, liftedColor.r),
+        smoothstep(0.0, 1.0, liftedColor.g),
+        smoothstep(0.0, 1.0, liftedColor.b)
+    );
+    contrastedColor = mix(liftedColor, contrastedColor, 0.5);
+    
+    half3 pastelColor = mix(half3(luminance), contrastedColor, 0.7);
+    
+    float greenMask = smoothstep(0.3, 0.8, pastelColor.g / max(pastelColor.r + pastelColor.b + 0.001, 0.001));
+    pastelColor.g *= mix(1.0, 1.3, greenMask);
+    pastelColor.b *= mix(1.0, 1.15, greenMask);
+    
+    float warmMask = smoothstep(0.5, 1.5, (pastelColor.r + pastelColor.g) / max(pastelColor.b + 0.001, 0.001));
+    pastelColor.r *= mix(1.0, 1.2, warmMask);
+    pastelColor.g *= mix(1.0, 1.1, warmMask);
+    
+    pastelColor.r *= 1.05;
+    pastelColor.g *= 1.02;
+    pastelColor.b *= 0.98;
+    
+    float highlightMask = smoothstep(0.7, 1.0, luminance);
+    pastelColor = mix(pastelColor, pastelColor * 0.9 + 0.1, highlightMask * 0.5);
+    
+    return clamp(pastelColor, 0.0, 1.0);
+}
+
+half4 main(float2 fragCoord) 
+{	
+    float2 renderingScale = iImageResolution.xy / iResolution.xy;
+    float2 inputCoord = (fragCoord - iOffset) * renderingScale;
+    
+    half4 originalColor = iImage1.eval(inputCoord);
+    half3 gradedColor = wesAndersonGrade(originalColor.rgb);
+    
+    return half4(gradedColor, originalColor.a);
+}

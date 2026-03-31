@@ -1,0 +1,66 @@
+﻿uniform float4 iMouse;           // Mouse drag pos=.xy Click pos=.zw (pixels)
+uniform float  iTime;            // Shader playback time (s)
+uniform float2 iResolution;      // Viewport resolution (pixels)
+uniform float2 iImageResolution; // iImage1 resolution (pixels)
+uniform shader iImage1;          // Texture
+uniform float2 iOffset;          // Top-left corner of DrawingRect
+uniform float2 iOrigin;          // Mouse drag started here
+
+// Detects highly saturated colors for selective enhancement
+float detectSaturatedColor(half3 color) {
+    float maxChannel = max(color.r, max(color.g, color.b));
+    float minChannel = min(color.r, min(color.g, color.b));
+    float saturation = maxChannel - minChannel;
+    return smoothstep(0.2, 0.6, saturation);
+}
+
+// Applies heavily desaturated look with selective color pops
+half3 snyderGrade(half3 color) {
+    float luminance = dot(color, half3(0.299, 0.587, 0.114));
+    
+    // Heavy desaturation for that washed-out look
+    half3 desaturatedColor = mix(color, half3(luminance), 0.7);
+    
+    // Detect areas with strong color for selective enhancement
+    float colorPop = detectSaturatedColor(color);
+    
+    // Enhanced saturated version for color pops
+    half3 enhancedColor = color;
+    enhancedColor = mix(half3(luminance), enhancedColor, 1.8);
+    
+    // Blend between desaturated and enhanced based on original saturation
+    half3 gradedColor = mix(desaturatedColor, enhancedColor, colorPop * 0.6);
+    
+    // Zack Snyder's signature contrast boost
+    gradedColor = (gradedColor - 0.5) * 1.4 + 0.5;
+    
+    // Crush blacks heavily
+    gradedColor = max(gradedColor - 0.1, 0.0) * 1.1;
+    
+    // Slightly warm the highlights
+    float highlightMask = smoothstep(0.7, 1.0, luminance);
+    gradedColor.r += highlightMask * 0.05;
+    gradedColor.g += highlightMask * 0.03;
+    
+    // Cool the shadows slightly
+    float shadowMask = 1.0 - smoothstep(0.0, 0.4, luminance);
+    gradedColor.b += shadowMask * 0.03;
+    
+    // Overall slight sepia tint
+    gradedColor.r *= 1.05;
+    gradedColor.g *= 1.02;
+    gradedColor.b *= 0.98;
+    
+    return clamp(gradedColor, 0.0, 1.0);
+}
+
+half4 main(float2 fragCoord) 
+{	
+    float2 renderingScale = iImageResolution.xy / iResolution.xy;
+    float2 inputCoord = (fragCoord - iOffset) * renderingScale;
+    
+    half4 originalColor = iImage1.eval(inputCoord);
+    half3 gradedColor = snyderGrade(originalColor.rgb);
+    
+    return half4(gradedColor, originalColor.a);
+}

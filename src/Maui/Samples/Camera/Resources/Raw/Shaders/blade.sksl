@@ -1,0 +1,52 @@
+﻿uniform float4 iMouse;           // Mouse drag pos=.xy Click pos=.zw (pixels)
+uniform float  iTime;            // Shader playback time (s)
+uniform float2 iResolution;      // Viewport resolution (pixels)
+uniform float2 iImageResolution; // iImage1 resolution (pixels)
+uniform shader iImage1;          // Texture
+uniform float2 iOffset;          // Top-left corner of DrawingRect
+uniform float2 iOrigin;          // Mouse drag started here
+
+// Applies deep amber and cyan color grading for cinematic look
+half3 bladeRunnerGrade(half3 color) {
+    float luminance = dot(color, half3(0.299, 0.587, 0.114));
+    
+    // Split into highlights and shadows
+    float highlightMask = smoothstep(0.4, 0.8, luminance);
+    float shadowMask = 1.0 - highlightMask;
+    
+    // Deep amber for highlights and warm areas
+    half3 amberTone = half3(1.4, 1.0, 0.4);
+    
+    // Cool cyan for shadows and cool areas
+    half3 cyanTone = half3(0.3, 0.7, 1.2);
+    
+    // Apply tones based on luminance
+    half3 highlights = color * amberTone * highlightMask;
+    half3 shadows = color * cyanTone * shadowMask;
+    half3 gradedColor = highlights + shadows;
+    
+    // Preserve original luminance relationship
+    float newLuminance = dot(gradedColor, half3(0.299, 0.587, 0.114));
+    gradedColor *= luminance / max(newLuminance, 0.001);
+    
+    // Increase contrast for that cinematic drama
+    gradedColor = (gradedColor - 0.5) * 1.25 + 0.5;
+    
+    // Slight desaturation in midtones for realism
+    float midtoneMask = 1.0 - abs(luminance - 0.5) * 2.0;
+    gradedColor = mix(gradedColor, half3(luminance), midtoneMask * 0.2);
+    
+    return clamp(gradedColor, 0.0, 1.0);
+}
+
+half4 main(float2 fragCoord) 
+{	
+    float2 renderingScale = iImageResolution.xy / iResolution.xy;
+    float2 inputCoord = (fragCoord - iOffset) * renderingScale;
+    
+    half4 originalColor = iImage1.eval(inputCoord);
+    
+    half3 gradedColor = bladeRunnerGrade(originalColor.rgb);
+    
+    return half4(gradedColor, originalColor.a);
+}

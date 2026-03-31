@@ -1,10 +1,27 @@
 using CameraTests.UI;
 using DrawnUi.Camera;
+using DrawnUi.Infrastructure;
+using SkiaSharp;
 
 namespace CameraTests.Views
 {
     public partial class AppCamera : SkiaCamera
     {
+        private SkiaShader _effectShader;
+        private ShaderEffect _loadedEffect;
+
+        public static readonly BindableProperty VideoEffectProperty = BindableProperty.Create(
+            nameof(VideoEffect),
+            typeof(ShaderEffect),
+            typeof(AppCamera),
+            ShaderEffect.None);
+
+        public ShaderEffect VideoEffect
+        {
+            get => (ShaderEffect)GetValue(VideoEffectProperty);
+            set => SetValue(VideoEffectProperty, value);
+        }
+
         public AppCamera()
         {
             //set defaults for this camera
@@ -107,8 +124,69 @@ namespace CameraTests.Views
             }
         }
 
+        protected override void RenderPreviewForProcessing(SKCanvas canvas, SKImage frame)
+        {
+            var shader = GetEffectShader();
+            if (shader == null)
+            {
+                base.RenderPreviewForProcessing(canvas, frame);
+                return;
+            }
+
+            shader.DrawImage(canvas, frame, 0, 0);
+        }
+
+        protected override void RenderFrameForRecording(SKCanvas canvas, SKImage frame, SKRect src, SKRect dst)
+        {
+            var shader = GetEffectShader();
+            if (shader == null)
+            {
+                base.RenderFrameForRecording(canvas, frame, src, dst);
+                return;
+            }
+
+            shader.DrawRect(canvas, frame, dst);
+        }
+
+        private SkiaShader GetEffectShader()
+        {
+            var effect = VideoEffect;
+            if (effect == ShaderEffect.None)
+            {
+                ReleaseEffectShader();
+                return null;
+            }
+
+            if (_effectShader != null && _loadedEffect == effect)
+            {
+                return _effectShader;
+            }
+
+            ReleaseEffectShader();
+
+            var filename = ShaderEffectHelper.GetFilename(effect);
+            if (string.IsNullOrWhiteSpace(filename))
+            {
+                return null;
+            }
+
+            _effectShader = SkiaShader.FromResource(filename);
+            _loadedEffect = effect;
+
+            return _effectShader;
+        }
+
+        private void ReleaseEffectShader()
+        {
+            _effectShader?.Dispose();
+            _effectShader = null;
+            _loadedEffect = ShaderEffect.None;
+        }
+
         public override void OnWillDisposeWithChildren()
         {
+            ReleaseEffectShader();
+
             base.OnWillDisposeWithChildren();
 
             _paintRec?.Dispose();
@@ -183,7 +261,7 @@ namespace CameraTests.Views
         private SKPaint _paintPreview;
         private SKPaint _paintRec;
         private SKPaint _paint;
-        private CameraDataOverlay VideoDataOverlay;
+        private FrameOverlay VideoDataOverlay;
         private SKColor _paintColor;
         private SKColor _paintPreviewColor;
         private float _paintStrokeWidth = -1f;
@@ -255,7 +333,7 @@ namespace CameraTests.Views
         /// <param name="frame"></param>
         void OnFrameProcessing(DrawableFrame frame)
         {
-            bool DrawOverlay(CameraDataOverlay layout, bool skipRendering)
+            bool DrawOverlay(FrameOverlay layout, bool skipRendering)
             {
                 /*
                     for 1080:
@@ -450,7 +528,7 @@ namespace CameraTests.Views
             base.Dispose(isDisposing);
         }
 
-        public void InitializeOverlayLayouts(CameraDataOverlay previewLayout)
+        public void InitializeOverlayLayouts(FrameOverlay previewLayout)
         {
             if (previewLayout != null)
             {

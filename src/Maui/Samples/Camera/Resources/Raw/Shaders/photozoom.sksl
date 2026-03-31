@@ -1,0 +1,172 @@
+﻿uniform float4 iMouse;           // Mouse drag pos=.xy Click pos=.zw (pixels)
+uniform float  iTime;            // Shader playback time (s)
+uniform float2 iResolution;      // Viewport resolution (pixels)
+uniform float2 iImageResolution; // iImage1 resolution (pixels)
+uniform shader iImage1;          // Texture
+uniform float2 iOffset;          // Top-left corner of DrawingRect
+uniform float2 iOrigin;          // Mouse drag started here
+
+// ===============================================
+// INJECTED 200MM LENS FUNCTIONS
+// ===============================================
+
+/// <summary>
+/// Creates perspective compression typical of 200mm telephoto lenses
+/// </summary>
+/// <param name="uv">Original UV coordinates</param>
+/// <returns>Compressed perspective coordinates</returns>
+float2 telephotoCompression(float2 uv) {
+    float2 centered = uv - 0.5;
+    float distance = length(centered);
+    
+    // Compress TOWARDS center (pulls outer pixels inward - makes noses smaller!)
+    float compressionStrength = 0.05;
+
+    float compressionFactor = 1.0 + distance * compressionStrength;
+    float2 compressed = centered / compressionFactor;
+    
+    // Calculate zoom needed to fill frame after compression
+    // Maximum compression happens at corners (distance ~0.707)
+    float maxDistance = 0.707; // sqrt(0.5^2 + 0.5^2)
+    float maxCompressionFactor = 1.0 + maxDistance * compressionStrength;
+    
+    // Calculate zoom needed to fill frame after compression (cut in half)
+    float zoomToFill = 1.0 + (maxCompressionFactor - 1.0) * 0.5; // Half way between no zoom and full zoom
+    
+    // Apply gentle zoom IN to partially fill black borders
+    compressed /= zoomToFill;  // DIVIDE to zoom IN (magnify center area)
+    
+    return 0.5 + compressed;
+}
+
+/// <summary>
+/// Simulates shallow depth of field from 200mm lens
+/// </summary>
+/// <param name="coord">Screen coordinate</param>
+/// <param name="uv">UV coordinates</param>
+/// <returns>Focus-blurred color</returns>
+half3 shallowDepthOfField(float2 coord, float2 uv) {
+
+    float blurStrength = 0.5;
+
+
+    float2 focusCenter = float2(0.5, 0.5);
+    float distanceFromFocus = length(uv - focusCenter);
+    
+    float blurRadius = smoothstep(0.15, 0.45, distanceFromFocus) * blurStrength;
+    
+    if (blurRadius < 0.5) {
+        return iImage1.eval(coord).rgb;
+    }
+    
+    half3 blurred = half3(0.0);
+    float totalWeight = 0.0;
+    
+    for (int i = -2; i <= 2; i++) {
+        for (int j = -2; j <= 2; j++) {
+            float2 offset = float2(float(i), float(j)) * blurRadius;
+            float weight = exp(-dot(offset, offset) * 0.1);
+            blurred += iImage1.eval(coord + offset).rgb * weight;
+            totalWeight += weight;
+        }
+    }
+    
+    return blurred / totalWeight;
+}
+
+// ===============================================
+// PORTRAIT BEAUTY FUNCTIONS
+// ===============================================
+
+/// <summary>
+/// Generates subtle film grain suitable for portraits
+/// </summary>
+/// <param name="coord">Screen coordinate</param>
+/// <returns>Subtle grain intensity</returns>
+float subtleFilmGrain(float2 coord) {
+    float2 grainCoord = coord * 0.8;
+    float noise1 = fract(sin(dot(grainCoord, float2(127.1, 311.7))) * 43758.5453);
+    float noise2 = fract(sin(dot(grainCoord * 1.3, float2(269.5, 183.3))) * 17951.3421);
+    return (noise1 + noise2 - 1.0) * 0.015; // Much more subtle than original
+}
+
+/// <summary>
+/// Applies portrait beauty color grading and enhancement
+/// </summary>
+/// <param name="color">Input RGB color</param>
+/// <returns>Enhanced portrait color</returns>
+half3 portraitBeautyGrading(half3 color) {
+    // Gentle contrast enhancement
+    half3 enhanced = pow(color, half3(0.9, 0.9, 0.9));
+    enhanced = (enhanced - 0.5) * 1.15 + 0.5;
+    
+    // Warm skin tone enhancement - boost reds and yellows slightly
+    enhanced.r = enhanced.r * 1.02;  // Reduced from 1.05
+    enhanced.g = enhanced.g * 1.02;
+    
+    // Gentle saturation boost
+    float luminance = dot(enhanced, half3(0.299, 0.587, 0.114));
+    enhanced = mix(half3(luminance), enhanced, 1.2);
+    
+    // Enhanced whites and soft highlight glow
+    float brightness = (enhanced.r + enhanced.g + enhanced.b) / 3.0;
+    float highlight = smoothstep(0.6, 1.0, brightness) * 0.08;
+    enhanced += half3(highlight * 0.8, highlight * 0.9, highlight);
+    
+    // White enhancement - boost bright areas
+    float whiteness = smoothstep(0.7, 0.95, brightness);
+    enhanced = mix(enhanced, enhanced * 1.1, whiteness * 0.3);
+    
+    // Lift shadows slightly for softer look
+    enhanced = max(enhanced + 0.02, 0.0) * 0.98 + 0.02;
+    
+    return clamp(enhanced, 0.0, 1.0);
+}
+
+/// <summary>
+/// Creates soft portrait vignette for focus draw
+/// </summary>
+/// <param name="uv">UV coordinates</param>
+/// <returns>Soft vignette multiplier</returns>
+float softPortraitVignette(float2 uv) {
+    float2 centered = uv - 0.5;
+    float distance = length(centered);
+    return 1.0 - smoothstep(0.5, 1.2, distance * 0.8);
+}
+
+half4 main(float2 fragCoord) 
+{	
+    float2 renderingScale = iImageResolution.xy / iResolution.xy;
+    float2 inputCoord = (fragCoord - iOffset) * renderingScale;
+    float2 uv = inputCoord / iImageResolution.xy;
+    
+    // ===============================================
+    // INJECTED LENS PROCESSING (APPLIED FIRST)
+    // ===============================================
+    
+    // Apply 200mm perspective compression
+    float2 compressedUV = telephotoCompression(uv);
+    float2 compressedCoord = compressedUV * iImageResolution.xy;
+    
+    // Get color with shallow depth of field
+    half3 originalColor = shallowDepthOfField(compressedCoord, compressedUV);
+    
+    // ===============================================
+    // PORTRAIT BEAUTY PROCESSING
+    // ===============================================
+    
+    // Apply portrait beauty color grading
+    half3 enhancedColor = portraitBeautyGrading(originalColor);
+    
+    // Add subtle film grain (using compressed coordinates)
+    float grain = subtleFilmGrain(compressedCoord);
+    enhancedColor += half3(grain);
+    
+    // Apply soft portrait vignette (using ORIGINAL UV - vignette stays centered!)
+    float vignette = softPortraitVignette(uv);
+    enhancedColor *= vignette * 0.9 + 0.1;
+    
+    enhancedColor = clamp(enhancedColor, 0.0, 1.0);
+    
+    return half4(enhancedColor, 1.0);
+}

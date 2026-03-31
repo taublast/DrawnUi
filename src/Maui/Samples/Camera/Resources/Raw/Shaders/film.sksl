@@ -1,0 +1,70 @@
+﻿uniform float4 iMouse;           // Mouse drag pos=.xy Click pos=.zw (pixels)
+uniform float  iTime;            // Shader playback time (s)
+uniform float2 iResolution;      // Viewport resolution (pixels)
+uniform float2 iImageResolution; // iImage1 resolution (pixels)
+uniform shader iImage1;          // Texture
+uniform float2 iOffset;          // Top-left corner of DrawingRect
+uniform float2 iOrigin;          // Mouse drag started here
+
+// Creates a subtle vignette effect
+float vignette(float2 uv) {
+    float2 centered = uv - 0.5;
+    float distance = length(centered);
+    return 1.0 - smoothstep(0.4, 0.9, distance);
+}
+
+// Applies Instagram-style vintage film emulation
+half3 instagramGrade(half3 color) {
+    float luminance = dot(color, half3(0.299, 0.587, 0.114));
+    
+    // Lift shadows for that faded film look
+    half3 fadedColor = color + 0.06;
+    
+    // Film-style S-curve but gentler
+    fadedColor = fadedColor * fadedColor * (3.0 - 2.0 * fadedColor);
+    
+    // Vintage warm color cast
+    fadedColor.r *= 1.15;
+    fadedColor.g *= 1.08;
+    fadedColor.b *= 0.92;
+    
+    // Reduce contrast slightly for that soft film feel
+    fadedColor = (fadedColor - 0.5) * 0.9 + 0.5;
+    
+    // Split toning: warm highlights, cool shadows
+    float highlightMask = smoothstep(0.5, 1.0, luminance);
+    float shadowMask = 1.0 - smoothstep(0.0, 0.5, luminance);
+    
+    // Warm highlights
+    fadedColor.r += highlightMask * 0.03;
+    fadedColor.g += highlightMask * 0.02;
+    
+    // Slightly cool shadows
+    fadedColor.b += shadowMask * 0.02;
+    
+    // Boost saturation like vintage film
+    half3 finalColor = mix(half3(dot(fadedColor, half3(0.299, 0.587, 0.114))), fadedColor, 1.2);
+    
+    // Compress highlights to avoid blown areas
+    float compressedLum = dot(finalColor, half3(0.299, 0.587, 0.114));
+    float highlightCompress = smoothstep(0.8, 1.0, compressedLum);
+    finalColor = mix(finalColor, finalColor * 0.9 + 0.1, highlightCompress);
+    
+    return clamp(finalColor, 0.0, 1.0);
+}
+
+half4 main(float2 fragCoord) 
+{	
+    float2 renderingScale = iImageResolution.xy / iResolution.xy;
+    float2 inputCoord = (fragCoord - iOffset) * renderingScale;
+    float2 uv = inputCoord / iImageResolution.xy;
+    
+    half4 originalColor = iImage1.eval(inputCoord);
+    half3 gradedColor = instagramGrade(originalColor.rgb);
+    
+    // Apply subtle vignette
+    float vignetteEffect = vignette(uv);
+    gradedColor *= vignetteEffect * 0.9 + 0.1;
+    
+    return half4(gradedColor, originalColor.a);
+}
