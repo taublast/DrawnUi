@@ -22,7 +22,9 @@ public partial class SkiaCamera : SkiaControl
     /// This will run on rendering thread and return the task result making possible GPU usage.
     /// Overlays any SkiaLayout over the captured photo and returns a new bitmap.
     /// Remember to dispose the old bitmap if not needed anymore.
-    /// Can modify the created SkiaImage used for rendering by passing a callback `createdImage` to add effects etc.    /// </summary>
+    /// Can modify the created SkiaImage used for rendering by passing a callback `createdImage` to add effects etc.
+    /// Will resolve EXIF orientation and will return a CPU-backed image even if processed on GPU.
+    /// </summary>
     /// <param name="captured"></param>
     /// <param name="overlay"></param>
     /// <param name="createdImage"></param>
@@ -43,6 +45,8 @@ public partial class SkiaCamera : SkiaControl
         {
             try
             {
+                captured.SolveExifOrientation();
+
                 var scaleOverlay = GetRenderingScaleFor(captured.Image.Width, captured.Image.Height);
                 double zoomCapturedPhotoX = TextureScale;
                 double zoomCapturedPhotoY = TextureScale;
@@ -56,7 +60,6 @@ public partial class SkiaCamera : SkiaControl
 
                 var width = captured.Image.Width;
                 var height = captured.Image.Height;
-
 
                 if (rotation == 90 || rotation == 270)
                 {
@@ -122,7 +125,20 @@ public partial class SkiaCamera : SkiaControl
 
                     surface.Canvas.Flush();
 
-                    tcs.SetResult(surface.Snapshot());
+                    if (!useGpu)
+                    {
+                        tcs.SetResult(surface.Snapshot());
+                    }
+                    else
+                    {
+                        using var cpuSurface = SKSurface.Create(info);
+                        using (var cpu = cpuSurface.Canvas)
+                        {
+                            cpu.DrawSurface(surface, 0, 0);
+                            cpu.Flush();   
+                        }
+                        tcs.SetResult(cpuSurface.Snapshot());
+                    }
                 }
                 finally
                 {
