@@ -83,8 +83,8 @@ public class PrerecordingEncodedBuffer : IDisposable
         _maxDuration = maxDuration == TimeSpan.Zero ? TimeSpan.FromSeconds(5) : maxDuration;
 
         // Pre-allocate both buffers (no GC during recording)
-        // 13.5 MB = 11.25 MB (5s @ 75KB/frame) + 20% IDR headroom
-        const int bufferSize = (int)(11.25 * 1024 * 1024 * 1.2);
+        // ~75 KB/frame @ 30fps = ~2.25 MB/s, plus 20% IDR headroom
+        int bufferSize = (int)(_maxDuration.TotalSeconds * 2.25 * 1024 * 1024 * 1.2);
         
         _bufferA = new byte[bufferSize];
         _bufferB = new byte[bufferSize];
