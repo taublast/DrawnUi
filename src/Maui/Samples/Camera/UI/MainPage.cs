@@ -690,14 +690,13 @@ public partial class MainPage : BasePageReloadable, IDisposable
         try
         {
             _takePictureButton.IsEnabled = false;
-            _takePictureButton.Opacity = 0.5;
-
+            _takePictureButton.BackgroundColor = Colors.DarkRed;
             await Task.Run(async () => { await CameraControl.TakePicture(); });
         }
         finally
         {
             _takePictureButton.IsEnabled = true;
-            _takePictureButton.Opacity = 1.0;
+            _takePictureButton.BackgroundColor = Color.FromArgb("#CECECE");
         }
     }
 
