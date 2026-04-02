@@ -17,6 +17,12 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         if (reader == null)
             return;
 
+        if (_suspendFrameProcessing)
+        {
+            reader.AcquireLatestImage()?.Close();
+            return;
+        }
+
         // When skipping frames (not ready / still capture in progress) we must
         // still drain the ImageReader queue so the HAL ring buffer never stalls.
         if (FormsControl.Height <= 0 || FormsControl.Width <= 0 || CapturingStill)

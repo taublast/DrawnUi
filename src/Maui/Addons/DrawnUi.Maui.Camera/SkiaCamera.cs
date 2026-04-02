@@ -1444,8 +1444,6 @@ public partial class SkiaCamera : SkiaControl
         {
             Debug.WriteLine($"[StopVideoRecording] IsMainThread {MainThread.IsMainThread}, IsPreRecording={IsPreRecording}, IsRecording={IsRecording}");
 
-            SetIsRecordingVideo(false);
-
             // Reset locked rotation
             RecordingLockedRotation = -1;
             Debug.WriteLine($"[StopVideoRecording] Reset locked rotation");
@@ -1456,6 +1454,7 @@ public partial class SkiaCamera : SkiaControl
             {
                 if (NativeControl is NativeCamera androidCam)
                 {
+                    androidCam.PauseFrameProcessingForRecordingStop();
                     androidCam.PreviewCaptureSuccess = null;
                 }
             }
@@ -1465,6 +1464,8 @@ public partial class SkiaCamera : SkiaControl
 
             UseRecordingFramesForPreview = false;
 #endif
+
+            SetIsRecordingVideo(false);
 
 #if ONPLATFORM
             try
@@ -2072,10 +2073,22 @@ public partial class SkiaCamera : SkiaControl
             try
             {
                 AutoFillVideoMetadata(capturedVideo);
-                var atoms = Mp4MetadataInjector.MetadataToAtoms(capturedVideo.Meta);
-                Debug.WriteLine($"[SkiaCamera] Injecting {atoms.Count} metadata atoms: {string.Join(", ", atoms.Keys)}");
-                var injected = await Mp4MetadataInjector.InjectMetadataAsync(currentPath, capturedVideo.Meta);
-                Debug.WriteLine($"[SkiaCamera] Metadata injected: {injected}");
+                var shouldInjectMetadata = true;
+#if ANDROID
+                shouldInjectMetadata = DeviceInfo.Current.DeviceType != DeviceType.Virtual;
+#endif
+
+                if (shouldInjectMetadata)
+                {
+                    var atoms = Mp4MetadataInjector.MetadataToAtoms(capturedVideo.Meta);
+                    Debug.WriteLine($"[SkiaCamera] Injecting {atoms.Count} metadata atoms: {string.Join(", ", atoms.Keys)}");
+                    var injected = await Mp4MetadataInjector.InjectMetadataAsync(currentPath, capturedVideo.Meta);
+                    Debug.WriteLine($"[SkiaCamera] Metadata injected: {injected}");
+                }
+                else
+                {
+                    Debug.WriteLine("[SkiaCamera] Skipping MP4 metadata injection on Android emulator.");
+                }
             }
             catch (Exception ex)
             {

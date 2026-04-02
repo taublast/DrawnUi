@@ -43,6 +43,7 @@ namespace DrawnUi.Camera
         private const string MediaFormatKeyOperatingRate = "operating-rate";
         private const string MediaFormatKeyLatency = "latency";
         private const string MediaFormatKeyMaxBFrames = "max-bframes";
+        private const int ColorFormatYuv420SemiPlanar = 21;
 
         private GRContext _CanvasGrContext;
 
@@ -190,6 +191,14 @@ namespace DrawnUi.Camera
         /// </summary>
         public PrerecordingEncodedBuffer SharedPreRecordingBuffer { get; set; }
 
+        // Byte-buffer input mode for emulator (software GL can't push frames through EGL Surface → codec)
+        private bool _useByteBufferInput;
+        private SKBitmap _cpuBitmap;
+        private SKSurface _cpuSurface;
+        private byte[] _nv12Buffer;
+        private int _byteBufferSubmittedFrameCount;
+        private int _byteBufferEncodedFrameCount;
+
         // EGL / GL / Skia
         private EGLDisplay _eglDisplay = EGL14.EglNoDisplay;
         private EGLContext _eglContext = EGL14.EglNoContext;
@@ -242,6 +251,7 @@ namespace DrawnUi.Camera
         private int _previewWidth, _previewHeight;
         private int _previewRequested = 1;      // Pull-driven preview: 1 = consumer asked for next frame
         public event EventHandler PreviewAvailable;
+        public bool UsesByteBufferInput => _useByteBufferInput;
 
         // GPU preview scaler (glBlitFramebuffer-based, mirrors MetalPreviewScaler)
         private GlPreviewScaler _glPreviewScaler;
@@ -393,7 +403,15 @@ namespace DrawnUi.Camera
         private MediaFormat CreateVideoMediaFormat(int targetBitrate)
         {
             var format = MediaFormat.CreateVideoFormat(MediaFormat.MimetypeVideoAvc, _width, _height);
-            format.SetInteger(MediaFormat.KeyColorFormat, (int)MediaCodecCapabilities.Formatsurface);
+            if (_useByteBufferInput)
+            {
+                // Emulator byte-buffer mode: use YUV420SemiPlanar (NV12) instead of Surface input
+                format.SetInteger(MediaFormat.KeyColorFormat, ColorFormatYuv420SemiPlanar);
+            }
+            else
+            {
+                format.SetInteger(MediaFormat.KeyColorFormat, (int)MediaCodecCapabilities.Formatsurface);
+            }
             format.SetInteger(MediaFormat.KeyBitRate, targetBitrate);
             format.SetInteger(MediaFormat.KeyFrameRate, _frameRate);
             format.SetInteger(MediaFormat.KeyIFrameInterval, 1);
@@ -516,6 +534,9 @@ namespace DrawnUi.Camera
             _height = Math.Max(16, height);
             _frameRate = Math.Max(1, frameRate);
             _deviceRotation = deviceRotation;
+
+            // Emulator: use byte-buffer input because software GL doesn't push frames through EGL Surface → MediaCodec
+            _useByteBufferInput = DeviceInfo.Current.DeviceType == DeviceType.Virtual;
             _recordAudio = recordAudio;
             UseSharedMediaOriginForLiveSync = false;
             UseMonotonicVideoPts = false;
@@ -527,6 +548,8 @@ namespace DrawnUi.Camera
             _deferredPreRecordingFirstBufferedVideoAbsoluteUs = -1;
             _skipFirstEncodedSample = true;  // Reset for new session
             _gpuFrameCounter = 0;  // Reset GPU purge counter
+            _byteBufferSubmittedFrameCount = 0;
+            _byteBufferEncodedFrameCount = 0;
             ResetAudioTiming();
 
             // Reset encoder readiness flags (new initialization)
@@ -579,8 +602,17 @@ namespace DrawnUi.Camera
                 _videoCodec.Configure(format, null, null, MediaCodecConfigFlags.Encode);
             }
 
-            _inputSurface = _videoCodec.CreateInputSurface();
-            _videoCodec.Start();
+            if (_useByteBufferInput)
+            {
+                // Emulator: no Surface input, codec uses byte-buffer input
+                _videoCodec.Start();
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Byte-buffer input mode (emulator)");
+            }
+            else
+            {
+                _inputSurface = _videoCodec.CreateInputSurface();
+                _videoCodec.Start();
+            }
 
             if (_recordAudio)
             {
@@ -616,11 +648,23 @@ namespace DrawnUi.Camera
                 }
             }
 
-            // Set up EGL context bound to the codec surface
-            SetupEglForCodecSurface();
+            if (_useByteBufferInput)
+            {
+                // Emulator: set up CPU-backed Skia surface for rendering, no EGL needed
+                _skInfo = new SKImageInfo(_width, _height, SKColorType.Rgba8888, SKAlphaType.Premul);
+                _cpuBitmap = new SKBitmap(_width, _height, SKColorType.Rgba8888, SKAlphaType.Premul);
+                _cpuSurface = SKSurface.Create(_skInfo, _cpuBitmap.GetPixels(), _cpuBitmap.RowBytes);
+                _nv12Buffer = new byte[_width * _height * 3 / 2]; // NV12: Y plane + interleaved UV plane
+                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] CPU surface ready for byte-buffer mode ({_width}x{_height}) created={(_cpuSurface != null)} rowBytes={_cpuBitmap.RowBytes}");
+            }
+            else
+            {
+                // Set up EGL context bound to the codec surface
+                SetupEglForCodecSurface();
 
-            // Start GPU encoding thread for async frame processing (decouples camera from encoding)
-            StartGpuEncodingThread();
+                // Start GPU encoding thread for async frame processing (decouples camera from encoding)
+                StartGpuEncodingThread();
+            }
 
             // CRITICAL: Warm up encoder BEFORE accepting any frames (professional pattern)
             // This ensures MediaCodec is ready and no frames are dropped
@@ -700,10 +744,45 @@ namespace DrawnUi.Camera
             }
 
             var warmupStart = DateTime.Now;
+            int drainAttempts = 0;
             System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Starting encoder warm-up...");
 
             try
             {
+                if (_useByteBufferInput)
+                {
+                    // Byte-buffer warm-up: submit a black NV12 frame directly to input buffer
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Byte-buffer warm-up: submitting dummy NV12 frame...");
+                    int inputIndex = _videoCodec.DequeueInputBuffer(10_000);
+                    if (inputIndex >= 0)
+                    {
+                        var inputBuffer = _videoCodec.GetInputBuffer(inputIndex);
+                        inputBuffer.Clear();
+                        // Black NV12: Y=0x00 for all pixels, UV plane = 0x80 (neutral chroma)
+                        int ySize = _width * _height;
+                        int uvSize = ySize / 2;
+                        var blackFrame = new byte[ySize + uvSize];
+                        // Y plane already 0x00 (black luma)
+                        // Fill UV plane with 0x80 (no color)
+                        for (int i = ySize; i < blackFrame.Length; i++)
+                            blackFrame[i] = 0x80;
+                        inputBuffer.Put(blackFrame);
+                        _videoCodec.QueueInputBuffer(inputIndex, 0, blackFrame.Length, 0, 0);
+                    }
+
+                    // Drain until FORMAT_CHANGED
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Waiting for FORMAT_CHANGED event...");
+                    var timeout = DateTime.Now.AddSeconds(10);
+                    while (!_encoderReady && DateTime.Now < timeout)
+                    {
+                        DrainEncoder(endOfStream: false, bufferingMode: true);
+                        drainAttempts++;
+                        if (!_encoderReady)
+                            await Task.Delay(50);
+                    }
+                }
+                else
+                {
                 // Step 1: Make EGL context current and set up Skia
                 MakeCurrent();
 
@@ -739,7 +818,6 @@ namespace DrawnUi.Camera
 
                 // Step 3: Aggressively drain until FORMAT_CHANGED event fires
                 System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Waiting for FORMAT_CHANGED event (encoder ready signal)...");
-                int drainAttempts = 0;
                 var timeout = DateTime.Now.AddSeconds(10);  // 10 second timeout (generous)
 
                 while (!_encoderReady && DateTime.Now < timeout)
@@ -755,6 +833,7 @@ namespace DrawnUi.Camera
 
                 // Unbind context
                 try { EGL14.EglMakeCurrent(_eglDisplay, EGL14.EglNoSurface, EGL14.EglNoSurface, EGL14.EglNoContext); } catch { }
+                } // end else (GPU path)
 
                 if (_encoderReady)
                 {
@@ -1322,6 +1401,26 @@ namespace DrawnUi.Camera
         {
             _pendingTimestamp = timestamp;
 
+            // Byte-buffer mode (emulator): use CPU-backed Skia surface
+            if (_useByteBufferInput)
+            {
+                if (_cpuSurface == null)
+                {
+                    info = new SKImageInfo(1, 1);
+                    if (_dummyCanvas == null)
+                    {
+                        _dummyBitmap = new SKBitmap(1, 1);
+                        _dummyCanvas = new SKCanvas(_dummyBitmap);
+                    }
+                    canvas = _dummyCanvas;
+                    return new FrameScope();
+                }
+                canvas = _cpuSurface.Canvas;
+                canvas.Clear(SKColors.Transparent);
+                info = _skInfo;
+                return new FrameScope();
+            }
+
             // Defensive check: If EGL is torn down, return empty canvas
             if (_eglDisplay == EGL14.EglNoDisplay || _eglSurface == EGL14.EglNoSurface || _eglContext == EGL14.EglNoContext)
             {
@@ -1377,6 +1476,80 @@ namespace DrawnUi.Camera
         public async Task SubmitFrameAsync()
         {
             if (!_isRecording) return;
+
+            // Byte-buffer mode (emulator): read pixels from CPU surface, convert to NV12, queue to codec
+            if (_useByteBufferInput)
+            {
+                if (!_encoderReady)
+                    return;
+
+                if (_cpuSurface == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("[AndroidEncoder] Byte-buffer submit skipped: CPU surface is null");
+                    return;
+                }
+
+                // Flush Skia drawing
+                _cpuSurface.Canvas.Flush();
+
+                if (ShouldGeneratePreview())
+                {
+                    TryPublishPreviewFromCpuSurface();
+                }
+
+                // Read RGBA pixels from the Skia surface
+                using var pixmap = _cpuSurface.PeekPixels();
+                if (pixmap == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("[AndroidEncoder] Byte-buffer submit skipped: PeekPixels returned null");
+                    return;
+                }
+
+                // Convert RGBA → NV12 for the codec
+                ConvertRgbaToNv12(pixmap, _nv12Buffer, _width, _height);
+
+                // Queue to MediaCodec input buffer
+                long ptsUs = (long)(_pendingTimestamp.TotalMilliseconds * 1_000.0);
+                int inputIndex = _videoCodec.DequeueInputBuffer(5_000);
+                if (inputIndex >= 0)
+                {
+                    var inputBuffer = _videoCodec.GetInputBuffer(inputIndex);
+                    inputBuffer.Clear();
+                    inputBuffer.Put(_nv12Buffer);
+                    _videoCodec.QueueInputBuffer(inputIndex, 0, _nv12Buffer.Length, ptsUs, 0);
+                    _byteBufferSubmittedFrameCount++;
+                    if ((_byteBufferSubmittedFrameCount % 30) == 0)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Byte-buffer queued {_byteBufferSubmittedFrameCount} frames, pts={ptsUs / 1000.0:F2}ms");
+                    }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Byte-buffer submit skipped: no input buffer available at pts={ptsUs / 1000.0:F2}ms");
+                }
+
+                // Drain encoder
+                bool isBufferingMode = IsPreRecordingMode && _preRecordingBuffer != null;
+
+                if (DateTime.Now - _lastKeyframeRequest >= _keyframeRequestInterval)
+                {
+                    RequestKeyFrame();
+                    _lastKeyframeRequest = DateTime.Now;
+                }
+
+                if (isBufferingMode)
+                {
+                    for (int i = 0; i < 5; i++)
+                        DrainEncoder(endOfStream: false, bufferingMode: true);
+                }
+                else
+                {
+                    DrainEncoder(endOfStream: false, bufferingMode: false);
+                }
+
+                await Task.CompletedTask;
+                return;
+            }
 
             // Defensive check: If EGL is torn down, return early
             if (_eglDisplay == EGL14.EglNoDisplay || _eglSurface == EGL14.EglNoSurface || _eglContext == EGL14.EglNoContext)
@@ -1610,6 +1783,59 @@ namespace DrawnUi.Camera
             {
                 keepAlive?.Dispose();
                 keepAlive = null;
+            }
+            finally
+            {
+                keepAlive?.Dispose();
+            }
+        }
+
+        private bool TryPublishPreviewFromCpuSurface()
+        {
+            if (_cpuSurface == null)
+                return false;
+
+            SKImage keepAlive = null;
+            try
+            {
+                using var cpuSnapshot = _cpuSurface.Snapshot();
+                if (cpuSnapshot == null)
+                    return false;
+
+                int maxPreviewWidth = ParentCamera?.NativeControl?.PreviewWidth ?? 800;
+                int previewWidth = Math.Min(_width, maxPreviewWidth);
+                int previewHeight = Math.Max(1, (int)Math.Round(_height * (previewWidth / (double)_width)));
+
+                if (_previewRasterSurface == null || _previewWidth != previewWidth || _previewHeight != previewHeight)
+                {
+                    _previewRasterSurface?.Dispose();
+
+                    var previewInfo = new SKImageInfo(previewWidth, previewHeight, SKColorType.Bgra8888, SKAlphaType.Premul);
+                    _previewRasterSurface = SKSurface.Create(previewInfo);
+                    _previewWidth = previewWidth;
+                    _previewHeight = previewHeight;
+                }
+
+                var previewCanvas = _previewRasterSurface.Canvas;
+                previewCanvas.Clear(SKColors.Transparent);
+                previewCanvas.DrawImage(cpuSnapshot, new SKRect(0, 0, previewWidth, previewHeight));
+
+                keepAlive = _previewRasterSurface.Snapshot();
+                lock (_previewLock)
+                {
+                    _latestPreviewImage?.Dispose();
+                    _latestPreviewImage = keepAlive;
+                    keepAlive = null;
+                }
+
+                System.Threading.Interlocked.Exchange(ref _previewRequested, 0);
+                PreviewAvailable?.Invoke(this, EventArgs.Empty);
+                return true;
+            }
+            catch
+            {
+                keepAlive?.Dispose();
+                return false;
             }
             finally
             {
@@ -2309,7 +2535,7 @@ namespace DrawnUi.Camera
 
             try
             {
-                _videoCodec?.SignalEndOfInputStream();
+                SignalEndOfStream();
                 DrainEncoder(endOfStream: true, bufferingMode: false);
 
                 // Flush all queued muxer writes before stopping the muxer.
@@ -2652,7 +2878,7 @@ namespace DrawnUi.Camera
 
             try
             {
-                _videoCodec?.SignalEndOfInputStream();
+                SignalEndOfStream();
                 DrainEncoder(endOfStream: true, bufferingMode: false);
 
                 // Flush all queued muxer writes before stopping the muxer.
@@ -2794,13 +3020,21 @@ namespace DrawnUi.Camera
                     }
                     if (bufferInfo.Size != 0)
                     {
-                        bool skipWarmupSample = _skipFirstEncodedSample && !_isRecording;
-                        if (_skipFirstEncodedSample && _isRecording)
+                        if (_useByteBufferInput)
                         {
-                            _skipFirstEncodedSample = false;
+                            _byteBufferEncodedFrameCount++;
+                            if ((_byteBufferEncodedFrameCount % 30) == 0)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Byte-buffer encoded {_byteBufferEncodedFrameCount} frames, size={bufferInfo.Size}, pts={bufferInfo.PresentationTimeUs / 1000.0:F2}ms flags={bufferInfo.Flags}");
+                            }
                         }
 
-                        // Skip the warm-up sample only while recording has not started yet.
+                        bool skipWarmupSample = _skipFirstEncodedSample;
+
+                        // Skip exactly one encoded sample from the encoder warm-up dummy frame.
+                        // That sample can surface either before recording starts or just after the
+                        // muxer is opened, depending on codec scheduling. If it slips into the file,
+                        // the video begins with a black frame.
                         if (skipWarmupSample)
                         {
                             _skipFirstEncodedSample = false;
@@ -3583,6 +3817,14 @@ namespace DrawnUi.Camera
 
         private void TearDownEgl()
         {
+            _cpuSurface?.Dispose();
+            _cpuSurface = null;
+
+            _cpuBitmap?.Dispose();
+            _cpuBitmap = null;
+
+            _nv12Buffer = null;
+
             _skSurface?.Dispose();
             _skSurface = null;
 
@@ -3645,6 +3887,98 @@ namespace DrawnUi.Camera
 
             _mlGlScaler?.Dispose();
             _mlGlScaler = null;
+        }
+
+        private void SignalEndOfStream()
+        {
+            if (_videoCodec == null)
+            {
+                return;
+            }
+
+            if (!_useByteBufferInput)
+            {
+                _videoCodec.SignalEndOfInputStream();
+                return;
+            }
+
+            int inputIndex = _videoCodec.DequeueInputBuffer(10_000);
+            if (inputIndex < 0)
+            {
+                System.Diagnostics.Debug.WriteLine("[AndroidEncoder] Byte-buffer EOS skipped: no input buffer available");
+                return;
+            }
+
+            var inputBuffer = _videoCodec.GetInputBuffer(inputIndex);
+            inputBuffer?.Clear();
+            long ptsUs = Math.Max(0L, (long)(_pendingTimestamp.TotalMilliseconds * 1_000.0));
+            _videoCodec.QueueInputBuffer(inputIndex, 0, 0, ptsUs, MediaCodecBufferFlags.EndOfStream);
+        }
+
+        private static void ConvertRgbaToNv12(SKPixmap pixmap, byte[] destination, int width, int height)
+        {
+            int yPlaneSize = width * height;
+            int uvOffset = yPlaneSize;
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    var color = pixmap.GetPixelColor(x, y);
+                    int r = color.Red;
+                    int g = color.Green;
+                    int b = color.Blue;
+
+                    int yValue = ((66 * r) + (129 * g) + (25 * b) + 128 >> 8) + 16;
+                    if (yValue < 0) yValue = 0;
+                    else if (yValue > 255) yValue = 255;
+
+                    destination[(y * width) + x] = (byte)yValue;
+                }
+            }
+
+            for (int y = 0; y < height; y += 2)
+            {
+                for (int x = 0; x < width; x += 2)
+                {
+                    int rSum = 0;
+                    int gSum = 0;
+                    int bSum = 0;
+                    int sampleCount = 0;
+
+                    for (int blockY = 0; blockY < 2 && y + blockY < height; blockY++)
+                    {
+                        for (int blockX = 0; blockX < 2 && x + blockX < width; blockX++)
+                        {
+                            var color = pixmap.GetPixelColor(x + blockX, y + blockY);
+                            rSum += color.Red;
+                            gSum += color.Green;
+                            bSum += color.Blue;
+                            sampleCount++;
+                        }
+                    }
+
+                    int r = rSum / Math.Max(sampleCount, 1);
+                    int g = gSum / Math.Max(sampleCount, 1);
+                    int b = bSum / Math.Max(sampleCount, 1);
+
+                    int uValue = ((-38 * r) - (74 * g) + (112 * b) + 128 >> 8) + 128;
+                    int vValue = ((112 * r) - (94 * g) - (18 * b) + 128 >> 8) + 128;
+
+                    if (uValue < 0) uValue = 0;
+                    else if (uValue > 255) uValue = 255;
+
+                    if (vValue < 0) vValue = 0;
+                    else if (vValue > 255) vValue = 255;
+
+                    int uvIndex = uvOffset + ((y / 2) * width) + x;
+                    if (uvIndex + 1 < destination.Length)
+                    {
+                        destination[uvIndex] = (byte)uValue;
+                        destination[uvIndex + 1] = (byte)vValue;
+                    }
+                }
+            }
         }
 
         private void FeedAudioEncoder(AudioSample sample)

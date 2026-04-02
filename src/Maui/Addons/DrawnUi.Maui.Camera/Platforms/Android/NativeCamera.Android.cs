@@ -537,6 +537,38 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         System.Diagnostics.Debug.WriteLine("[NativeCamera] Frame processing thread stopped");
     }
 
+    public void SetFrameProcessingSuspended(bool suspended)
+    {
+        _suspendFrameProcessing = suspended;
+
+        if (!suspended)
+            return;
+
+        lock (_imageLock)
+        {
+            _currentImage?.Close();
+            _currentImage = null;
+        }
+
+        _frameAvailable?.Reset();
+    }
+
+    public void PauseFrameProcessingForRecordingStop()
+    {
+        SetFrameProcessingSuspended(true);
+        StopFrameProcessingThread();
+    }
+
+    public void ResumeFrameProcessingAfterRecordingStop()
+    {
+        SetFrameProcessingSuspended(false);
+
+        if (_useGpuCameraPath || mImageReaderPreview == null)
+            return;
+
+        StartFrameProcessingThread();
+    }
+
     /// <summary>
     /// Background thread loop for processing camera frames.
     /// Acquires directly from FramesReader so at most 1 image is ever
@@ -588,6 +620,9 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     /// </summary>
     private void ProcessFrameWithRenderScript(Image image)
     {
+        if (_suspendFrameProcessing)
+            return;
+
         var allocated = Output;
         if (allocated?.Allocation == null || allocated.Bitmap == null)
             return;
@@ -639,11 +674,18 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
     void SetPreview(CapturedImage outImage)
     {
-        bool inCaptureRecording = FormsControl.UseRealtimeVideoProcessing && FormsControl.IsRecording;
+        bool isCaptureRecording = FormsControl.UseRealtimeVideoProcessing
+                                 && (FormsControl.IsRecording || FormsControl.IsPreRecording);
+        bool inCaptureRecording = isCaptureRecording && FormsControl.UseRecordingFramesForPreview;
 
-        if (!inCaptureRecording)
+        if (isCaptureRecording)
         {
             OnPreviewCaptureSuccess(outImage);
+        }
+
+        if (inCaptureRecording)
+        {
+            return;
         }
 
         Preview = outImage;
@@ -872,6 +914,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
     private readonly object _imageLock = new();
     private ManualResetEventSlim _frameAvailable;
     private volatile bool _stopProcessingThread = false;
+    private volatile bool _suspendFrameProcessing = false;
     private System.Threading.Thread _frameProcessingThread;
 
     //volatile bool lockAllocation;

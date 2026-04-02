@@ -917,6 +917,7 @@ public partial class SkiaCamera : SkiaControl
     {
         var context = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity ?? Android.App.Application.Context;
         var resolver = context.ContentResolver;
+        const string IsPendingColumn = "is_pending";
 
         var albumName = album;// string.IsNullOrEmpty(album) ? DefaultAlbum : album;
 
@@ -946,6 +947,11 @@ public partial class SkiaCamera : SkiaControl
                 Java.Lang.JavaSystem.CurrentTimeMillis() / 1000);
         }
 
+        if ((int)Android.OS.Build.VERSION.SdkInt >= 29)
+        {
+            contentValues.Put(IsPendingColumn, 1);
+        }
+
         var externalUri = isAudio
             ? Android.Provider.MediaStore.Audio.Media.ExternalContentUri
             : Android.Provider.MediaStore.Video.Media.ExternalContentUri;
@@ -956,6 +962,13 @@ public partial class SkiaCamera : SkiaControl
             using var outputStream = resolver.OpenOutputStream(uri);
             using var inputStream = File.OpenRead(privateVideoPath);
             await inputStream.CopyToAsync(outputStream);
+
+            if ((int)Android.OS.Build.VERSION.SdkInt >= 29)
+            {
+                var publishValues = new Android.Content.ContentValues();
+                publishValues.Put(IsPendingColumn, 0);
+                resolver.Update(uri, publishValues, null, null);
+            }
             
             if (deleteOriginal)
             {
@@ -967,7 +980,8 @@ public partial class SkiaCamera : SkiaControl
                 Debug.WriteLine($"[SkiaCamera] Android: COPIED video to MediaStore: {fileName}");
             }
             
-            return fileName; // Return the public filename
+            Debug.WriteLine($"[SkiaCamera] Android: MediaStore URI: {uri}");
+            return uri.ToString();
         }
 
         return null;
