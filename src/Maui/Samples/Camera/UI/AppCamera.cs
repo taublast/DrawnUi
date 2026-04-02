@@ -1,3 +1,4 @@
+using Android.Icu.Number;
 using CameraTests.UI;
 using DrawnUi.Camera;
 using DrawnUi.Infrastructure;
@@ -514,6 +515,8 @@ namespace CameraTests.Views
                 if (cachedStrokeWidth != newStrokeWidth) { cachedStrokeWidth = newStrokeWidth; paint.StrokeWidth = newStrokeWidth; }
                 frame.Canvas.DrawRect(10 * frame.Scale, 10 * frame.Scale, frame.Width - 20 * frame.Scale,
                     frame.Height - 20 * frame.Scale, paint);
+
+                frame.Canvas.DrawText($"{frame.Time:mm\\:ss}", 50 * frame.Scale, 160 * frame.Scale, paint);
             }
         }
 

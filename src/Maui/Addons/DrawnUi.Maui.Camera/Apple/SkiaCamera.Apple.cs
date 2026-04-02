@@ -55,6 +55,14 @@ public partial class SkiaCamera
     /// </summary>
     partial void EnsurePreRecordingBufferPreAllocated()
     {
+        if (_sharedPreRecordingBuffer != null && _sharedPreRecordingBuffer.MaxDuration != PreRecordDuration)
+        {
+            Debug.WriteLine(
+                $"[SkiaCamera.Apple] PreRecordDuration changed ({_sharedPreRecordingBuffer.MaxDuration.TotalSeconds}s -> {PreRecordDuration.TotalSeconds}s), recreating buffer");
+            _sharedPreRecordingBuffer.Dispose();
+            _sharedPreRecordingBuffer = null;
+        }
+
         if (_sharedPreRecordingBuffer == null)
         {
             // Default to 12 Mbps if we don't have encoder bitrate yet

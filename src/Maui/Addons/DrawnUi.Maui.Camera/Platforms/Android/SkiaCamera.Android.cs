@@ -44,6 +44,14 @@ public partial class SkiaCamera
     /// </summary>
     partial void EnsurePreRecordingBufferPreAllocated()
     {
+        if (_sharedPreRecordingBuffer != null && _sharedPreRecordingBuffer.MaxDuration != PreRecordDuration)
+        {
+            System.Diagnostics.Debug.WriteLine(
+                $"[SkiaCameraAndroid] PreRecordDuration changed ({_sharedPreRecordingBuffer.MaxDuration.TotalSeconds}s -> {PreRecordDuration.TotalSeconds}s), recreating buffer");
+            _sharedPreRecordingBuffer.Dispose();
+            _sharedPreRecordingBuffer = null;
+        }
+
         if (_sharedPreRecordingBuffer == null)
         {
             _sharedPreRecordingBuffer = new PrerecordingEncodedBuffer(PreRecordDuration);

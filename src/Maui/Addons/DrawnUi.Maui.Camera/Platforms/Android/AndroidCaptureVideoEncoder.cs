@@ -1316,7 +1316,11 @@ namespace DrawnUi.Camera
             // Resetting to false would fall through to DateTime.Now-based PATH 3, creating
             // a clock-domain mismatch that drifts under load and jumps during GC/IO spikes.
             _useDeferredPreRecordingSeamSync = false;
-            _audioPtsBaseNs = -1;
+            // Set audio base BEFORE muxer start to prevent a race where the audio capture
+            // thread calls FeedAudioEncoder between _muxerStarted=true and _audioPtsBaseNs
+            // assignment, which would auto-set _audioPtsBaseNs to the sample timestamp
+            // instead of CaptureStartAbsoluteNs, creating a clock-domain mismatch.
+            _audioPtsBaseNs = CaptureStartAbsoluteNs;
             _audioPtsOffsetUs = 0;
             _audioPresentationTimeUs = 0;
             _lastMuxerAudioPtsUs = 0;
@@ -1359,7 +1363,9 @@ namespace DrawnUi.Camera
                 System.Diagnostics.Debug.WriteLine("[AndroidEncoder] Warning: live-only deferred flush start is waiting for media formats");
             }
             _useDeferredPreRecordingSeamSync = false;
-            _waitForFirstLiveKeyframe = false;
+            // Gate: drop pipeline P-frames until first IDR so the live MP4 starts valid.
+            // RequestKeyFrame() was called above; keyframe arrives within ~1-3 frames.
+            _waitForFirstLiveKeyframe = true;
             _deferredPreRecordingFirstFrameOffset = _firstEncodedFrameOffset;
             _deferredPreRecordingFirstBufferedVideoAbsoluteUs = _firstBufferedVideoAbsoluteUs;
             // CRITICAL FIX: Set _firstEncodedFrameOffset to Zero so live video PTS passes through
@@ -1369,10 +1375,8 @@ namespace DrawnUi.Camera
             // Previously this kept the prerecording value, causing live video PTS to start at
             // ~preRecDuration while live audio started at 0 — desync equal to prerecording duration.
             _firstEncodedFrameOffset = TimeSpan.Zero;
-            // Anchor audio to the same CLOCK_MONOTONIC base as video (CaptureStartAbsoluteNs).
-            // This eliminates the A/V base-time mismatch where audio PTS=0 and video PTS=0
-            // corresponded to different wall-clock moments.
-            _audioPtsBaseNs = CaptureStartAbsoluteNs;
+            // _audioPtsBaseNs already set to CaptureStartAbsoluteNs above (before muxer start)
+            // to anchor audio to the same CLOCK_MONOTONIC base as video.
 
             _isRecording = true;
             _startTime = DateTime.Now;
@@ -3187,6 +3191,16 @@ namespace DrawnUi.Camera
                                                 }
                                                 _waitForFirstLiveKeyframe = false;
                                                 System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] ✓ First live keyframe at {pts / 1000.0:F2}ms - established timestamp base");
+                                            }
+                                            else
+                                            {
+                                                // Drop pipeline P/B-frames that were queued in the encoder before the
+                                                // prerecord→live transition. Writing them as the first frames of the live
+                                                // MP4 would make it structurally invalid (no leading IDR).
+                                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Dropping pre-keyframe pipeline frame at {pts / 1000.0:F2}ms");
+                                                _videoCodec.ReleaseOutputBuffer(outIndex, false);
+                                                outIndex = -1;
+                                                continue;
                                             }
                                         }
 

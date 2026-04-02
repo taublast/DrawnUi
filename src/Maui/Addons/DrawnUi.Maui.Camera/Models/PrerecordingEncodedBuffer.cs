@@ -75,6 +75,11 @@ public class PrerecordingEncodedBuffer : IDisposable
     private bool _isDisposed;
 
     /// <summary>
+    /// The maximum duration this buffer was configured with.
+    /// </summary>
+    public TimeSpan MaxDuration => _maxDuration;
+
+    /// <summary>
     /// Initializes the two-buffer system with pre-allocated buffers.
     /// </summary>
     /// <param name="maxDuration">Maximum duration to maintain in buffer (e.g., 5 seconds)</param>
