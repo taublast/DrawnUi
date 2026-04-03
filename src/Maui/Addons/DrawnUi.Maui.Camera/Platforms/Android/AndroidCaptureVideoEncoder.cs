@@ -146,6 +146,8 @@ namespace DrawnUi.Camera
         private long _audioPtsBaseNs = -1;
         private long _sharedMediaPtsOriginNs = -1;
         private long _liveVideoStartTimestampNs = -1;
+        private long _videoTimestampBaseNs = -1;
+        private bool _videoClockMismatchDetected;
         private long _audioPtsOffsetUs = 0;
         private TimeSpan _deferredPreRecordingFirstFrameOffset = TimeSpan.MinValue;
         private long _firstBufferedVideoAbsoluteUs = -1;
@@ -1038,6 +1040,7 @@ namespace DrawnUi.Camera
                             }
 
                             bool usedPreEncoded = false;
+                            long lastPreRecAudioPtsUs = -1;
 
                             // First, try to use pre-encoded AAC (zero lag!)
                             if (_encodedAudioBuffer != null && _encodedAudioBuffer.FrameCount > 0)
@@ -1089,7 +1092,8 @@ namespace DrawnUi.Camera
                                         System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Trimmed {trimmedTailCount} pre-encoded AAC frames past buffered video end ({maxBufferedVideoPtsUs / 1000.0:F1}ms)");
 
                                     usedPreEncoded = true;
-                                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Wrote {encodedFrames.Count} pre-encoded AAC frames");
+                                    lastPreRecAudioPtsUs = lastWrittenPtsUs;
+                                    System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Wrote {encodedFrames.Count} pre-encoded AAC frames, lastPts={lastWrittenPtsUs}µs");
                                 }
                                 catch (Exception ex)
                                 {
@@ -1138,19 +1142,38 @@ namespace DrawnUi.Camera
                             // The AAC encoder holds ~1024 samples internally; without this drain, the last
                             // ~23ms of pre-recorded audio is lost and _lastMuxerAudioPtsUs lags behind.
                             DrainAudioEncoder();
+
+                            // Audio-aligned PTS offset for seamless splice.
+                            // Video-based offset can lag the last AAC frame by up to one frame duration
+                            // (~23ms), creating a PTS gap decoded as silence → audible click.
+                            if (usedPreEncoded && lastPreRecAudioPtsUs >= 0)
+                            {
+                                int sampleRate = 44100;
+                                try { if (_audioFormat != null) sampleRate = _audioFormat.GetInteger(MediaFormat.KeySampleRate); } catch { }
+                                long aacFrameUs = 1024L * 1_000_000L / sampleRate;
+                                _audioPtsOffsetUs = lastPreRecAudioPtsUs + aacFrameUs;
+                                // Pre-encoded path: codec wasn't fed new PCM during the flush,
+                                // so deferred-frame guards should match the audio-aligned offset.
+                                _lastMuxerAudioPtsUs = lastPreRecAudioPtsUs;
+                                _maxExpectedEncoderOutputPtsUs = _audioPtsOffsetUs;
+                                System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Audio-aligned offset: {_audioPtsOffsetUs}µs (lastPreRec={lastPreRecAudioPtsUs}µs + aacFrame={aacFrameUs}µs)");
+                            }
                         }
 
                         // CRITICAL: Use actual last frame timestamp + one frame duration for live frame offset
                         // This ensures live frames start AFTER the last buffered frame (no overlap)
                         double frameDurationMs = 1000.0 / _frameRate;  // e.g., 33.33ms @ 30fps
                         _preRecordingDuration = lastNormalizedTimestamp + TimeSpan.FromMilliseconds(frameDurationMs);
-                        _audioPtsOffsetUs = (long)_preRecordingDuration.TotalMicroseconds;
+                        // Use video-based offset only if audio-aligned offset wasn't already computed
+                        if (_audioPtsOffsetUs <= 0)
+                            _audioPtsOffsetUs = (long)_preRecordingDuration.TotalMicroseconds;
                         if (_audioPresentationTimeUs < _audioPtsOffsetUs)
                         {
                             _audioPresentationTimeUs = _audioPtsOffsetUs;
                         }
                         _audioPtsBaseNs = -1;
-                        // NOTE: _maxExpectedEncoderOutputPtsUs is intentionally NOT reset here.
+                        // NOTE: _maxExpectedEncoderOutputPtsUs is intentionally NOT reset here
+                        // when using the PCM fallback path (usedPreEncoded = false).
                         // The last pre-rec PCM input may have left deferred AAC frames in the encoder
                         // pipeline (encoder delay: one 4096-sample input can yield 4 AAC frames but
                         // DrainAudioEncoder(timeout=0) only captures ~3 immediately). The ceiling value
@@ -3659,6 +3682,8 @@ namespace DrawnUi.Camera
             _audioPtsBaseNs = -1;
             _sharedMediaPtsOriginNs = -1;
             _liveVideoStartTimestampNs = -1;
+            _videoTimestampBaseNs = -1;
+            _videoClockMismatchDetected = false;
             _audioPtsOffsetUs = 0;
             _audioPresentationTimeUs = 0;
             _lastMuxerAudioPtsUs = 0;
@@ -3691,7 +3716,15 @@ namespace DrawnUi.Camera
             // matching the prerecording path behavior. Audio also uses CaptureStartAbsoluteNs.
             if (UseSharedMediaOriginForLiveSync && CaptureStartAbsoluteNs > 0 && absoluteVideoTimestampNs > 0)
             {
-                long relativeNs = absoluteVideoTimestampNs - CaptureStartAbsoluteNs;
+                if (_videoTimestampBaseNs < 0)
+                {
+                    _videoTimestampBaseNs = absoluteVideoTimestampNs;
+                    // Detect clock domain mismatch: SurfaceTexture.Timestamp may use CLOCK_BOOTTIME
+                    // on devices with SENSOR_INFO_TIMESTAMP_SOURCE_REALTIME while CaptureStartAbsoluteNs
+                    // uses CLOCK_MONOTONIC. The delta includes total device suspend time (hours).
+                    _videoClockMismatchDetected = Math.Abs(absoluteVideoTimestampNs - CaptureStartAbsoluteNs) > 5_000_000_000L;
+                }
+                long relativeNs = absoluteVideoTimestampNs - (_videoClockMismatchDetected ? _videoTimestampBaseNs : CaptureStartAbsoluteNs);
                 if (relativeNs < 0)
                 {
                     relativeNs = 0;
@@ -3707,7 +3740,12 @@ namespace DrawnUi.Camera
             // eliminating drift from DateTime.Now which was the old fallback.
             if (UseMonotonicVideoPts && CaptureStartAbsoluteNs > 0 && absoluteVideoTimestampNs > 0)
             {
-                long relativeNs = absoluteVideoTimestampNs - CaptureStartAbsoluteNs;
+                if (_videoTimestampBaseNs < 0)
+                {
+                    _videoTimestampBaseNs = absoluteVideoTimestampNs;
+                    _videoClockMismatchDetected = Math.Abs(absoluteVideoTimestampNs - CaptureStartAbsoluteNs) > 5_000_000_000L;
+                }
+                long relativeNs = absoluteVideoTimestampNs - (_videoClockMismatchDetected ? _videoTimestampBaseNs : CaptureStartAbsoluteNs);
                 if (relativeNs < 0)
                 {
                     relativeNs = 0;

@@ -2231,35 +2231,15 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 }
             }
 
-            // Set FPS range. Prefer fixed [30, 30] so AE compensates via ISO instead of
-            // dropping frame rate. Without a fixed range the anti-banding algorithm can
-            // settle at ~16.7fps (3 × 1/50Hz) even in daylight.
+            // Prefer a variable AE FPS range so the device can trade frame rate for
+            // exposure time in low light instead of forcing a dark fixed-30fps preview.
             try
             {
                 var activity = Platform.CurrentActivity;
                 var manager = (CameraManager)activity.GetSystemService(Context.CameraService);
                 var characteristics = manager.GetCameraCharacteristics(CameraId);
-                var ranges = characteristics.Get(CameraCharacteristics.ControlAeAvailableTargetFpsRanges)
-                    .ToArray<Android.Util.Range>();
-
-                Debug.WriteLine($"[NativeCamera] Available FPS ranges: {string.Join(", ", ranges.Select(r => $"[{r.Lower},{r.Upper}]"))}");
-
                 int targetFps = 30;
-
-                // Prefer fixed [fps, fps]; fall back to variable [floor, fps]
-                var bestRange = ranges.FirstOrDefault(r => (int)r.Lower == targetFps && (int)r.Upper == targetFps)
-                    ?? ranges.FirstOrDefault(r => (int)r.Lower == targetFps / 2 && (int)r.Upper == targetFps)
-                    ?? ranges.FirstOrDefault(r => (int)r.Upper == targetFps);
-
-                if (bestRange != null)
-                {
-                    mPreviewRequestBuilder.Set(CaptureRequest.ControlAeTargetFpsRange, bestRange);
-                    Debug.WriteLine($"[NativeCamera] Set preview FPS range: {bestRange}");
-                }
-                else
-                {
-                    Debug.WriteLine($"[NativeCamera] No matching FPS range found for {targetFps}fps");
-                }
+                ApplyExposureFriendlyAeFpsRange(mPreviewRequestBuilder, characteristics, targetFps, "NativeCamera Preview");
             }
             catch (Exception ex)
             {
@@ -2373,31 +2353,14 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
                 mPreviewRequestBuilder.AddTarget(mImageReaderPreview.Surface);
             }
 
-            // Set FPS range. Prefer fixed [fps, fps] so AE compensates via ISO instead of
-            // dropping frame rate. Anti-banding with a variable range can settle at ~16.7fps
-            // (3 × 1/50Hz) even in good light. Fall back to variable only if fixed unavailable.
+            // Prefer a variable AE FPS range so video preview/recording can keep the image
+            // exposed in low light instead of pinning shutter to a fixed cadence.
             try
             {
                 var activity = Platform.CurrentActivity;
                 var manager = (CameraManager)activity.GetSystemService(Context.CameraService);
                 var characteristics = manager.GetCameraCharacteristics(CameraId);
-                var ranges = characteristics.Get(CameraCharacteristics.ControlAeAvailableTargetFpsRanges)
-                    .ToArray<Android.Util.Range>();
-
-                // Prefer fixed [fps, fps]; fall back to variable [floor, fps]
-                var bestRange = ranges.FirstOrDefault(r => (int)r.Lower == targetFps && (int)r.Upper == targetFps)
-                    ?? ranges.FirstOrDefault(r => (int)r.Lower == targetFps / 2 && (int)r.Upper == targetFps)
-                    ?? ranges.FirstOrDefault(r => (int)r.Upper == targetFps);
-
-                if (bestRange != null)
-                {
-                    mPreviewRequestBuilder.Set(CaptureRequest.ControlAeTargetFpsRange, bestRange);
-                    Debug.WriteLine($"[NativeCamera GPU] Set FPS range: {bestRange}");
-                }
-                else
-                {
-                    Debug.WriteLine($"[NativeCamera GPU] No matching FPS range found for {targetFps}fps");
-                }
+                ApplyExposureFriendlyAeFpsRange(mPreviewRequestBuilder, characteristics, targetFps, "NativeCamera GPU");
             }
             catch (Exception ex)
             {
@@ -3243,6 +3206,107 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
         }
     }
 
+    private static int NormalizeAeFpsValue(int fps)
+    {
+        return fps > 1000 ? (int)Math.Round(fps / 1000.0) : fps;
+    }
+
+    private Android.Util.Range SelectExposureFriendlyAeFpsRange(CameraCharacteristics characteristics, int targetFps, string logTag)
+    {
+        int minimumPreviewFpsFloor = Math.Min(20, targetFps);
+
+        var ranges = characteristics.Get(CameraCharacteristics.ControlAeAvailableTargetFpsRanges)
+            .ToArray<Android.Util.Range>();
+
+        if (ranges == null || ranges.Length == 0)
+        {
+            Debug.WriteLine($"[{logTag}] No AE FPS ranges reported by the camera");
+            return null;
+        }
+
+        Debug.WriteLine($"[{logTag}] Available FPS ranges: {string.Join(", ", ranges.Select(r => $"[{r.Lower},{r.Upper}]"))}");
+
+        // Keep preview fluid: prefer ranges that stay above our soft floor, but if the
+        // device only exposes a wider variable range like [5,30], prefer that over
+        // forcing [30,30] and underexposing the scene.
+        var variableExactUpper = ranges
+            .Where(r => NormalizeAeFpsValue((int)r.Upper) == targetFps
+                && NormalizeAeFpsValue((int)r.Lower) >= minimumPreviewFpsFloor
+                && NormalizeAeFpsValue((int)r.Lower) < NormalizeAeFpsValue((int)r.Upper))
+            .OrderBy(r => NormalizeAeFpsValue((int)r.Lower))
+            .FirstOrDefault();
+
+        if (variableExactUpper != null)
+        {
+            Debug.WriteLine($"[{logTag}] Using variable AE FPS range {variableExactUpper} with {minimumPreviewFpsFloor}fps floor");
+            return variableExactUpper;
+        }
+
+        var variableContainingTarget = ranges
+            .Where(r => NormalizeAeFpsValue((int)r.Lower) >= minimumPreviewFpsFloor
+                && NormalizeAeFpsValue((int)r.Lower) < NormalizeAeFpsValue((int)r.Upper)
+                && NormalizeAeFpsValue((int)r.Lower) <= targetFps
+                && NormalizeAeFpsValue((int)r.Upper) >= targetFps)
+            .OrderBy(r => Math.Abs(NormalizeAeFpsValue((int)r.Upper) - targetFps))
+            .ThenBy(r => NormalizeAeFpsValue((int)r.Lower))
+            .FirstOrDefault();
+
+        if (variableContainingTarget != null)
+        {
+            Debug.WriteLine($"[{logTag}] Using containing AE FPS range {variableContainingTarget} with {minimumPreviewFpsFloor}fps floor");
+            return variableContainingTarget;
+        }
+
+        var bestAvailableVariable = ranges
+            .Where(r => NormalizeAeFpsValue((int)r.Upper) == targetFps
+                && NormalizeAeFpsValue((int)r.Lower) < NormalizeAeFpsValue((int)r.Upper))
+            .OrderByDescending(r => NormalizeAeFpsValue((int)r.Lower))
+            .FirstOrDefault();
+
+        if (bestAvailableVariable != null)
+        {
+            Debug.WriteLine($"[{logTag}] Using best available variable AE FPS range {bestAvailableVariable}; no range met the preferred {minimumPreviewFpsFloor}fps floor");
+            return bestAvailableVariable;
+        }
+
+        var bestContainingVariable = ranges
+            .Where(r => NormalizeAeFpsValue((int)r.Lower) < NormalizeAeFpsValue((int)r.Upper)
+                && NormalizeAeFpsValue((int)r.Lower) <= targetFps
+                && NormalizeAeFpsValue((int)r.Upper) >= targetFps)
+            .OrderByDescending(r => NormalizeAeFpsValue((int)r.Lower))
+            .ThenBy(r => Math.Abs(NormalizeAeFpsValue((int)r.Upper) - targetFps))
+            .FirstOrDefault();
+
+        if (bestContainingVariable != null)
+        {
+            Debug.WriteLine($"[{logTag}] Using best available containing AE FPS range {bestContainingVariable}; no range met the preferred {minimumPreviewFpsFloor}fps floor");
+            return bestContainingVariable;
+        }
+
+        var fixedExact = ranges.FirstOrDefault(r => NormalizeAeFpsValue((int)r.Lower) == targetFps && NormalizeAeFpsValue((int)r.Upper) == targetFps);
+        if (fixedExact != null)
+        {
+            Debug.WriteLine($"[{logTag}] Falling back to fixed AE FPS range {fixedExact}; no variable range was available for target {targetFps}fps");
+            return fixedExact;
+        }
+
+        Debug.WriteLine($"[{logTag}] No AE FPS range matched target {targetFps}fps with {minimumPreviewFpsFloor}fps floor; leaving AE FPS range unset");
+        return null;
+    }
+
+    private void ApplyExposureFriendlyAeFpsRange(CaptureRequest.Builder requestBuilder, CameraCharacteristics characteristics, int targetFps, string logTag)
+    {
+        if (requestBuilder == null || characteristics == null || targetFps <= 0)
+            return;
+
+        var bestRange = SelectExposureFriendlyAeFpsRange(characteristics, targetFps, logTag);
+        if (bestRange != null)
+        {
+            requestBuilder.Set(CaptureRequest.ControlAeTargetFpsRange, bestRange);
+            Debug.WriteLine($"[{logTag}] Applied AE FPS range: {bestRange}");
+        }
+    }
+
     /// <summary>
     /// Get manual video recording profile based on exact selected entry
     /// </summary>
@@ -3439,25 +3503,11 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
             var manager = (CameraManager)activity.GetSystemService(Context.CameraService);
             var characteristics = manager.GetCameraCharacteristics(CameraId);
 
-            // Set FPS range
+            // Prefer a variable AE FPS range so recording can lengthen exposure in dim
+            // scenes instead of forcing a dark fixed-fps request.
             try
             {
-                var ranges = characteristics.Get(CameraCharacteristics.ControlAeAvailableTargetFpsRanges).ToArray<Android.Util.Range>();
-
-                // Find best range for _recordingFps
-                // Prefer fixed range [fps, fps]
-                var bestRange = ranges.FirstOrDefault(r => (int)r.Lower == _recordingFps && (int)r.Upper == _recordingFps);
-                if (bestRange == null)
-                {
-                    // Fallback to variable range ending at fps
-                    bestRange = ranges.FirstOrDefault(r => (int)r.Upper == _recordingFps);
-                }
-
-                if (bestRange != null)
-                {
-                    mPreviewRequestBuilder.Set(CaptureRequest.ControlAeTargetFpsRange, bestRange);
-                    Debug.WriteLine($"[NativeCameraAndroid] Set recording FPS range: {bestRange}");
-                }
+                ApplyExposureFriendlyAeFpsRange(mPreviewRequestBuilder, characteristics, _recordingFps, "NativeCamera Recorder");
             }
             catch (Exception ex)
             {
