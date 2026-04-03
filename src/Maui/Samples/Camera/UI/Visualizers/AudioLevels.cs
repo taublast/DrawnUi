@@ -27,6 +27,7 @@ namespace CameraTests
 
         private SKPaint _paintBar;
         private SKPaint _paintText;
+        private SKPaint _paintBg;
 
         public void AddSample(AudioSample sample)
         {
@@ -156,10 +157,12 @@ namespace CameraTests
             //}
 
             // Background fills viewport
-            using (var paintBg = new SKPaint { Color = SKColors.Black.WithAlpha(128), Style = SKPaintStyle.Fill })
+            if (_paintBg == null)
             {
-                canvas.DrawRect(viewport, paintBg);
+                _paintBg = new SKPaint { Color = SKColors.Black.WithAlpha(128), Style = SKPaintStyle.Fill };
             }
+
+            canvas.DrawRect(viewport, _paintBg);
 
             for (int i = 0; i < BandCount; i++)
             {
@@ -211,6 +214,8 @@ namespace CameraTests
             _paintBar = null;
             _paintText?.Dispose();
             _paintText = null;
-        }
+            _paintBg?.Dispose();
+            _paintBg = null;
+    }
     }
 }
