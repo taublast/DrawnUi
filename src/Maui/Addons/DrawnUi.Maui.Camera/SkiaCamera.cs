@@ -1508,10 +1508,7 @@ public partial class SkiaCamera : SkiaControl
         }
         finally
         {
-            if (abort)
-            {
-                IsBusy = false;
-            }
+            IsBusy = false;
         }
     }
 

@@ -71,11 +71,16 @@ public class PrerecordingEncodedBuffer : IDisposable
     private readonly object _swapLock = new();
 
     // Configuration
-    private TimeSpan _maxDuration;      // Maximum duration per buffer (typically 5 seconds)
+    private TimeSpan _maxDuration;      // User-facing requested duration
+    private TimeSpan _internalDuration; // _maxDuration + keyframe margin (used for buffer sizing, swap, prune)
     private bool _isDisposed;
 
+    // Extra headroom so that after keyframe-snap pruning the result is still >= _maxDuration.
+    // Must be >= the keyframe request interval (900ms). Using 1s for a small safety margin.
+    private static readonly TimeSpan KeyframeMargin = TimeSpan.FromSeconds(1.0);
+
     /// <summary>
-    /// The maximum duration this buffer was configured with.
+    /// The maximum duration this buffer was configured with (user-facing value).
     /// </summary>
     public TimeSpan MaxDuration => _maxDuration;
 
@@ -86,10 +91,11 @@ public class PrerecordingEncodedBuffer : IDisposable
     public PrerecordingEncodedBuffer(TimeSpan maxDuration)
     {
         _maxDuration = maxDuration == TimeSpan.Zero ? TimeSpan.FromSeconds(5) : maxDuration;
+        _internalDuration = _maxDuration + KeyframeMargin;
 
         // Pre-allocate both buffers (no GC during recording)
         // ~75 KB/frame @ 30fps = ~2.25 MB/s, plus 20% IDR headroom
-        int bufferSize = (int)(_maxDuration.TotalSeconds * 2.25 * 1024 * 1024 * 1.2);
+        int bufferSize = (int)(_internalDuration.TotalSeconds * 2.25 * 1024 * 1024 * 1.2);
         
         _bufferA = new byte[bufferSize];
         _bufferB = new byte[bufferSize];
@@ -280,7 +286,7 @@ public class PrerecordingEncodedBuffer : IDisposable
 
             // Check if current buffer duration exceeded
             TimeSpan elapsed = DateTime.UtcNow - currentState.StartTime;
-            if (elapsed > _maxDuration)
+            if (elapsed > _internalDuration)
             {
                 // SWAP BUFFERS: Toggle to other buffer (atomic int toggle)
                 _currentBuffer = 1 - _currentBuffer;
@@ -294,11 +300,11 @@ public class PrerecordingEncodedBuffer : IDisposable
                 nextState.StartTime = DateTime.UtcNow;
                 nextState.IsLocked = false;
 
-                // Prune frames to keep only the last _maxDuration seconds based on video PTS timestamps
+                // Prune frames to keep only the last _internalDuration seconds based on video PTS timestamps
                 if (_frames.Count > 0)
                 {
                     var lastFrameTimestamp = _frames[_frames.Count - 1].Timestamp;
-                    var cutoffTimestamp = lastFrameTimestamp - _maxDuration;
+                    var cutoffTimestamp = lastFrameTimestamp - _internalDuration;
                     int beforePrune = _frames.Count;
                     _frames.RemoveAll(f => f.Timestamp < cutoffTimestamp);
 
@@ -313,7 +319,7 @@ public class PrerecordingEncodedBuffer : IDisposable
                     System.Diagnostics.Debug.WriteLine(
                         $"[PreRecording] Swapped buffers. Active={(char)('A' + _currentBuffer)}, " +
                         $"ElapsedInOldBuffer={elapsed.TotalSeconds:F2}s, " +
-                        $"Pruned frames: {beforePrune} -> {afterPrune} (cutoff={cutoffTimestamp.TotalSeconds:F3}s, kept last {_maxDuration.TotalSeconds:F1}s, first is KEYFRAME)");
+                        $"Pruned frames: {beforePrune} -> {afterPrune} (cutoff={cutoffTimestamp.TotalSeconds:F3}s, kept last {_internalDuration.TotalSeconds:F1}s, first is KEYFRAME)");
                 }
                 else
                 {
@@ -547,7 +553,9 @@ public class PrerecordingEncodedBuffer : IDisposable
     }
 
     /// <summary>
-    /// Prunes buffer to contain only the last _maxDuration seconds of video based on PTS timestamps.
+    /// Prunes buffer to contain only the last _internalDuration seconds of video based on PTS timestamps.
+    /// Uses _internalDuration (= _maxDuration + keyframe margin) so that after keyframe-snap
+    /// the result is still >= _maxDuration.
     /// CRITICAL: Ensures the first remaining frame is a keyframe for valid H.264 decoding.
     /// Call this before writing buffer to file to ensure we never exceed max duration.
     /// </summary>
@@ -562,8 +570,9 @@ public class PrerecordingEncodedBuffer : IDisposable
             }
 
             // Calculate cutoff based on video PTS timestamps (not wall-clock time)
+            // Use _internalDuration so keyframe-snap still leaves >= _maxDuration of video
             var lastFrameTimestamp = _frames[_frames.Count - 1].Timestamp;
-            var cutoffTimestamp = lastFrameTimestamp - _maxDuration;
+            var cutoffTimestamp = lastFrameTimestamp - _internalDuration;
             int beforePrune = _frames.Count;
 
             _frames.RemoveAll(f => f.Timestamp < cutoffTimestamp);

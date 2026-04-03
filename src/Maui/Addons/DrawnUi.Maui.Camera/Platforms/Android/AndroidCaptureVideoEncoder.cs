@@ -103,8 +103,12 @@ namespace DrawnUi.Camera
             {
                 _audioBuffer.Write(sample);
 
-                // Start background encoding if not already running
-                if (_backgroundEncodingTask == null || _backgroundEncodingTask.IsCompleted)
+                // Start background encoding if not already running.
+                // _backgroundEncodingShuttingDown prevents re-spawn during the transition
+                // window where StopBackgroundAudioEncoding already nulled the task but
+                // IsPreRecordingMode hasn't been flipped to false yet.
+                if (!_backgroundEncodingShuttingDown
+                    && (_backgroundEncodingTask == null || _backgroundEncodingTask.IsCompleted))
                 {
                     StartBackgroundAudioEncoding();
                 }
@@ -211,6 +215,13 @@ namespace DrawnUi.Camera
         private DateTime _startTime;
         private System.Threading.Timer _progressTimer;
         private TimeSpan _pendingTimestamp;
+
+        // Guards against WriteAudio re-spawning the background encoding task during
+        // the pre-recording → live transition window (between StopBackgroundAudioEncoding
+        // and IsPreRecordingMode = false). Without this, the audio capture thread sees
+        // _backgroundEncodingTask == null + IsPreRecordingMode == true and spawns a rogue
+        // task that re-encodes old PCM into the live muxer, causing out-of-order PTS.
+        private volatile bool _backgroundEncodingShuttingDown;
 
         // Encoder readiness (professional pattern: warm up before recording starts)
         private volatile bool _encoderReady = false;
@@ -1353,6 +1364,7 @@ namespace DrawnUi.Camera
                 // from buffering (IsPreRecordingMode=true) to live (IsPreRecordingMode=false) and
                 // DrainEncoder will write directly to the already-running muxer — no lazy-start race.
                 IsPreRecordingMode = false;
+                _backgroundEncodingShuttingDown = false;
                 System.Diagnostics.Debug.WriteLine($"[AndroidEncoder] Live-only muxer started for deferred pre-record flush (Audio={(_audioTrackIndex >= 0)})");
             }
             else
@@ -1360,6 +1372,7 @@ namespace DrawnUi.Camera
                 // Formats not ready yet — still set IsPreRecordingMode=false so GPU thread stops
                 // buffering. DrainEncoder's lazy-muxer-start will start the muxer once formats arrive.
                 IsPreRecordingMode = false;
+                _backgroundEncodingShuttingDown = false;
                 System.Diagnostics.Debug.WriteLine("[AndroidEncoder] Warning: live-only deferred flush start is waiting for media formats");
             }
             _useDeferredPreRecordingSeamSync = false;
@@ -4224,6 +4237,10 @@ namespace DrawnUi.Camera
         /// </summary>
         private void StopBackgroundAudioEncoding(bool clearEncodedBuffer = true)
         {
+            // Set BEFORE cancel/wait so WriteAudio on the audio capture thread
+            // cannot re-spawn the background task in the gap between
+            // _backgroundEncodingTask = null and IsPreRecordingMode = false.
+            _backgroundEncodingShuttingDown = true;
             try
             {
                 _encodingCancellation?.Cancel();
