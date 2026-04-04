@@ -478,11 +478,27 @@ public partial class SkiaCamera : SkiaControl
     {
         if (bindable is SkiaCamera camera)
         {
+            bool enabled = (bool)newValue;
+            bool needsStop = camera.IsRecording || camera.IsPreRecording;
+
             Task.Run(async () =>
             {
-                await camera.StopVideoRecording(true);
+                // Only call StopVideoRecording if recording/prerecording is actually active
+                if (needsStop)
+                {
+                    await camera.StopVideoRecording(true);
+                }
 
-                bool enabled = (bool)newValue;
+                // Wait for any in-progress stop (e.g. muxing from a previous recording)
+                // before initializing buffers — otherwise ClearPreRecordingBuffer from the
+                // ongoing stop would nuke what we just set up
+                int waitRetries = 0;
+                while (camera.IsBusy && waitRetries < 200) // up to 2s
+                {
+                    await Task.Delay(10);
+                    waitRetries++;
+                }
+
                 if (enabled && !camera.IsRecording)
                 {
                     camera.InitializePreRecordingBuffer();
