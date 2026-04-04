@@ -84,11 +84,11 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             _previewTextureCache?.Dispose();
             _previewTextureCache = null;
 
-            // Clean up pooled rotation surfaces
-            _pooledPreviewSurface?.Dispose();
-            _pooledPreviewSurface = null;
-            _pooledRecordingSurface?.Dispose();
-            _pooledRecordingSurface = null;
+            // Clean up snapshot buffer pool
+            CleanupSnapshotBufferPool();
+
+            // Clean up pixel buffer pool
+            CleanupPixelBufferPool();
 
             // Clear callback
             lock (_lockFullResCallback)
@@ -162,22 +162,152 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
     // Metal-based scaling (zero ObjC allocation per frame)
     private MetalPreviewScaler _metalScaler;
 
-    // Pooled rotation surfaces — reused across frames to avoid per-frame SKBitmap/SKCanvas allocations.
-    // Preview and recording use separate pools to avoid cross-thread contention.
-    private SKSurface _pooledPreviewSurface;
-    private int _pooledPreviewW, _pooledPreviewH;
+    // Snapshot buffer pool — eliminates per-frame LOH allocation from SKSurface.Snapshot().
+    // Pinned byte[] buffers are reused across frames; the SKImage release delegate returns them to the pool.
+    private readonly System.Collections.Concurrent.ConcurrentQueue<SnapshotBuffer> _snapshotBufferPool = new();
+    private int _outstandingSnapshotRefs;
 
-    private SKSurface _pooledRecordingSurface;
-    private int _pooledRecordingW, _pooledRecordingH;
+    private sealed class SnapshotBuffer
+    {
+        public byte[] Data;
+        public System.Runtime.InteropServices.GCHandle Pin;
+        public IntPtr Address;
+        public int Size;
+        public System.Collections.Concurrent.ConcurrentQueue<SnapshotBuffer> Pool;
+
+        public static SnapshotBuffer Create(int size, System.Collections.Concurrent.ConcurrentQueue<SnapshotBuffer> pool)
+        {
+            var buf = new SnapshotBuffer
+            {
+                Data = new byte[size],
+                Size = size,
+                Pool = pool
+            };
+            buf.Pin = System.Runtime.InteropServices.GCHandle.Alloc(buf.Data, System.Runtime.InteropServices.GCHandleType.Pinned);
+            buf.Address = buf.Pin.AddrOfPinnedObject();
+            return buf;
+        }
+
+        public void Free()
+        {
+            if (Pin.IsAllocated) Pin.Free();
+            Data = null;
+            Pool = null;
+        }
+    }
+
+    private SnapshotBuffer AcquireSnapshotBuffer(int requiredSize)
+    {
+        int attempts = 0;
+        while (_snapshotBufferPool.TryDequeue(out var buffer))
+        {
+            if (buffer.Size == requiredSize)
+                return buffer;
+
+            // Wrong size — free and try next (resolution changed)
+            Interlocked.Decrement(ref _outstandingSnapshotRefs);
+            buffer.Free();
+            if (++attempts > 3) break;
+        }
+
+        // Pool miss — allocate new pinned buffer (LOH, but allocated once and reused)
+        Interlocked.Increment(ref _outstandingSnapshotRefs);
+        return SnapshotBuffer.Create(requiredSize, _snapshotBufferPool);
+    }
 
     /// <summary>
-    /// Rotates raw pixel data into a pooled SKSurface and returns an SKImage snapshot.
-    /// Reuses the surface across frames when dimensions are stable (the common case).
+    /// Called by Skia when an SKImage wrapping a pooled buffer is disposed.
+    /// Returns the buffer to the pool for reuse on the next frame.
+    /// </summary>
+    private void OnSnapshotBufferReleased(IntPtr addr, object ctx)
+    {
+        if (ctx is SnapshotBuffer buffer && buffer.Pool != null)
+        {
+            buffer.Pool.Enqueue(buffer);
+        }
+    }
+
+    private void CleanupSnapshotBufferPool()
+    {
+        while (_snapshotBufferPool.TryDequeue(out var buffer))
+        {
+            buffer.Free();
+        }
+    }
+
+    // PixelBuffer: pre-pinned byte[] for Metal texture readback.
+    // Pin is held for the buffer's lifetime — no per-frame GCHandle.Alloc/Free needed.
+    private sealed class PixelBuffer
+    {
+        public byte[] Data;
+        public System.Runtime.InteropServices.GCHandle Pin;
+        public IntPtr Address;
+        public int Size;
+
+        public static PixelBuffer Create(int size)
+        {
+            var buf = new PixelBuffer
+            {
+                Data = new byte[size],
+                Size = size
+            };
+            buf.Pin = System.Runtime.InteropServices.GCHandle.Alloc(buf.Data, System.Runtime.InteropServices.GCHandleType.Pinned);
+            buf.Address = buf.Pin.AddrOfPinnedObject();
+            return buf;
+        }
+
+        public void Free()
+        {
+            if (Pin.IsAllocated) Pin.Free();
+            Data = null;
+        }
+    }
+
+    private PixelBuffer AcquirePixelBuffer(int requiredSize)
+    {
+        while (_pixelBufferPool.TryDequeue(out var buffer))
+        {
+            if (buffer.Size == requiredSize)
+                return buffer;
+
+            // Wrong size — free and discard (resolution changed)
+            buffer.Free();
+        }
+
+        // Pool miss — allocate new pinned buffer (LOH, but reused once warmed up)
+        return PixelBuffer.Create(requiredSize);
+    }
+
+    private void ReturnPixelBuffer(PixelBuffer buffer)
+    {
+        if (buffer == null) return;
+
+        // Cap pool to prevent unbounded growth
+        if (_pixelBufferPool.Count >= MaxPixelBuffers)
+        {
+            buffer.Free();
+            return;
+        }
+        _pixelBufferPool.Enqueue(buffer);
+    }
+
+    private void CleanupPixelBufferPool()
+    {
+        while (_pixelBufferPool.TryDequeue(out var buffer))
+        {
+            buffer.Free();
+        }
+    }
+
+    /// <summary>
+    /// Rotates raw pixel data and returns an SKImage wrapping a pooled pinned buffer.
+    /// The surface is created per-call backed by the pooled buffer — NO Snapshot() copy needed.
+    /// When the returned SKImage is disposed, the release delegate returns the buffer to the pool.
+    /// This overload accepts a pre-pinned pixel address (hot path — no GCHandle overhead).
     /// </summary>
     private SKImage RotateIntoPooledImage(
-        byte[] pixelData, int width, int height, int bytesPerRow,
-        double rotation, bool flip,
-        ref SKSurface pooledSurface, ref int pooledW, ref int pooledH)
+        IntPtr pixelAddress, int width, int height, int bytesPerRow,
+        double rotation, bool flip)
     {
         // Determine output dimensions (rotation swaps width/height for 90/270)
         int outW, outH;
@@ -193,79 +323,99 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             outH = height;
         }
 
-        // Reuse or recreate the pooled surface only when dimensions change
-        if (pooledSurface == null || pooledW != outW || pooledH != outH)
+        var outInfo = new SKImageInfo(outW, outH, SKColorType.Bgra8888, SKAlphaType.Premul);
+        int outRowBytes = outW * 4;
+        int outDataSize = outH * outRowBytes;
+
+        // Acquire a pooled pinned buffer — eliminates the per-frame LOH allocation from Snapshot()
+        var snapshotBuffer = AcquireSnapshotBuffer(outDataSize);
+
+        // Create a temporary surface that draws directly into the pooled buffer (no intermediate allocation)
+        using var surface = SKSurface.Create(outInfo, snapshotBuffer.Address, outRowBytes);
+        if (surface == null)
         {
-            pooledSurface?.Dispose();
-            var info = new SKImageInfo(outW, outH, SKColorType.Bgra8888, SKAlphaType.Premul);
-            pooledSurface = SKSurface.Create(info);
-            pooledW = outW;
-            pooledH = outH;
+            _snapshotBufferPool.Enqueue(snapshotBuffer);
+            return null;
         }
 
-        var canvas = pooledSurface.Canvas;
+        var canvas = surface.Canvas;
         canvas.Clear(SKColors.Transparent);
 
-        // Pin the raw pixel data and wrap as SKImage (no copy — points to pinned managed array)
+        // Wrap pre-pinned pixel data as SKImage (no copy, no GCHandle — address already stable)
+        var srcInfo = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
+        using var rawImage = SKImage.FromPixels(srcInfo, pixelAddress, bytesPerRow);
+
+        // Apply rotation + optional flip directly onto the canvas
+        canvas.Save();
+        switch (intRotation)
+        {
+            case 90:
+                canvas.Translate(outW, 0);
+                canvas.RotateDegrees(90);
+                if (flip)
+                {
+                    canvas.Scale(1, -1);
+                    canvas.Translate(0, -height);
+                }
+                break;
+
+            case 180:
+                canvas.Translate(outW / 2.0f, outH / 2.0f);
+                canvas.RotateDegrees(180);
+                if (flip)
+                {
+                    canvas.Scale(1, -1);
+                }
+                canvas.Translate(-width / 2.0f, -height / 2.0f);
+                break;
+
+            case 270:
+                canvas.Translate(0, outH);
+                canvas.RotateDegrees(270);
+                if (flip)
+                {
+                    canvas.Scale(1, -1);
+                    canvas.Translate(0, -height);
+                }
+                break;
+
+            default:
+                if (flip)
+                {
+                    canvas.Translate(0, outH);
+                    canvas.Scale(1, -1);
+                }
+                break;
+        }
+        canvas.DrawImage(rawImage, 0, 0);
+        canvas.Restore();
+
+        // Flush ensures all raster drawing is committed to the buffer
+        canvas.Flush();
+
+        // Create SKImage wrapping the pooled buffer — zero copy from surface to image!
+        // When the image is disposed, OnSnapshotBufferReleased returns the buffer to the pool.
+        using var pixmap = new SKPixmap(outInfo, snapshotBuffer.Address, outRowBytes);
+        return SKImage.FromPixels(pixmap, OnSnapshotBufferReleased, snapshotBuffer);
+    }
+
+    /// <summary>
+    /// byte[] overload: pins the data temporarily and forwards to the IntPtr overload.
+    /// Used by cold paths (GetPreviewImage/GetRecordingImage fallbacks).
+    /// </summary>
+    private SKImage RotateIntoPooledImage(
+        byte[] pixelData, int width, int height, int bytesPerRow,
+        double rotation, bool flip)
+    {
         var gcHandle = System.Runtime.InteropServices.GCHandle.Alloc(pixelData, System.Runtime.InteropServices.GCHandleType.Pinned);
         try
         {
-            var pinnedPtr = gcHandle.AddrOfPinnedObject();
-            var srcInfo = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
-            using var rawImage = SKImage.FromPixels(srcInfo, pinnedPtr, bytesPerRow);
-
-            // Apply rotation + optional flip directly onto the pooled canvas
-            canvas.Save();
-            switch (intRotation)
-            {
-                case 90:
-                    canvas.Translate(outW, 0);
-                    canvas.RotateDegrees(90);
-                    if (flip)
-                    {
-                        canvas.Scale(1, -1);
-                        canvas.Translate(0, -height);
-                    }
-                    break;
-
-                case 180:
-                    canvas.Translate(outW / 2.0f, outH / 2.0f);
-                    canvas.RotateDegrees(180);
-                    if (flip)
-                    {
-                        canvas.Scale(1, -1);
-                    }
-                    canvas.Translate(-width / 2.0f, -height / 2.0f);
-                    break;
-
-                case 270:
-                    canvas.Translate(0, outH);
-                    canvas.RotateDegrees(270);
-                    if (flip)
-                    {
-                        canvas.Scale(1, -1);
-                        canvas.Translate(0, -height);
-                    }
-                    break;
-
-                default:
-                    if (flip)
-                    {
-                        canvas.Translate(0, outH);
-                        canvas.Scale(1, -1);
-                    }
-                    break;
-            }
-            canvas.DrawImage(rawImage, 0, 0);
-            canvas.Restore();
+            return RotateIntoPooledImage(gcHandle.AddrOfPinnedObject(), width, height, bytesPerRow, rotation, flip);
         }
         finally
         {
             gcHandle.Free();
         }
-
-        // Snapshot copies pixels out of the surface (required — surface will be reused next frame)
-        return pooledSurface.Snapshot();
     }
 
     // ARTOFFOTO PATTERN: Metal texture cache - create texture ONCE, it auto-updates!
@@ -1762,11 +1912,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
         try
         {
-            // Uses pooled surface to avoid per-frame SKBitmap/SKCanvas allocations.
             return RotateIntoPooledImage(
                 pixelData, width, height, bytesPerRow,
-                rotation, flip,
-                ref _pooledPreviewSurface, ref _pooledPreviewW, ref _pooledPreviewH);
+                rotation, flip);
         }
         catch (Exception e)
         {
@@ -1827,11 +1975,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
         try
         {
-            // Uses pooled surface to avoid per-frame SKBitmap/SKCanvas allocations.
             return RotateIntoPooledImage(
                 pixelData, width, height, bytesPerRow,
-                rotation, flip,
-                ref _pooledRecordingSurface, ref _pooledRecordingW, ref _pooledRecordingH);
+                rotation, flip);
         }
         catch (Exception e)
         {
@@ -2075,8 +2221,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
     }
 
-    // Buffer pool to reduce GC pressure
-    private readonly System.Collections.Concurrent.ConcurrentQueue<byte[]> _pixelBufferPool = new();
+    // Pixel buffer pool — pre-pinned buffers for Metal texture readback (see PixelBuffer class)
+    private readonly System.Collections.Concurrent.ConcurrentQueue<PixelBuffer> _pixelBufferPool = new();
+    private const int MaxPixelBuffers = 4;
 
     // CFRetain to keep CVPixelBuffer alive after camera callback returns
     [System.Runtime.InteropServices.DllImport("/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation")]
@@ -2491,7 +2638,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                 int previewWidth = width;
                 int previewHeight = height;
-                byte[] pixelData = null;
+                PixelBuffer pixelBuffer = null;
                 int bytesPerRow = 0;
                 bool scalingSucceeded = false;
 
@@ -2527,16 +2674,9 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         previewHeight = _metalScaler.OutputHeight;
                         int dataSize = previewWidth * previewHeight * 4;
 
-                        if (_pixelBufferPool.TryDequeue(out var pooledBuffer) && pooledBuffer.Length == dataSize)
-                        {
-                            pixelData = pooledBuffer;
-                        }
-                        else
-                        {
-                            pixelData = new byte[dataSize];
-                        }
+                        pixelBuffer = AcquirePixelBuffer(dataSize);
 
-                        if (_metalScaler.ScaleFromTexture(texture, pixelData, out bytesPerRow))
+                        if (_metalScaler.ScaleFromTexture(texture, pixelBuffer.Data, out bytesPerRow))
                         {
                             scalingSucceeded = true;
                         }
@@ -2551,14 +2691,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     bytesPerRow = width * 4;
                     int dataSize = height * bytesPerRow;
 
-                    if (_pixelBufferPool.TryDequeue(out var pooledBuffer) && pooledBuffer.Length == dataSize)
-                    {
-                        pixelData = pooledBuffer;
-                    }
-                    else
-                    {
-                        pixelData = new byte[dataSize];
-                    }
+                    pixelBuffer = AcquirePixelBuffer(dataSize);
 
                     var region = new MTLRegion
                     {
@@ -2566,13 +2699,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         Size = new MTLSize(width, height, 1)
                     };
 
-                    unsafe
-                    {
-                        fixed (byte* ptr = pixelData)
-                        {
-                            texture.GetBytes((IntPtr)ptr, (nuint)bytesPerRow, region, 0);
-                        }
-                    }
+                    texture.GetBytes(pixelBuffer.Address, (nuint)bytesPerRow, region, 0);
                 }
 
                 // Update camera metadata occasionally
@@ -2624,19 +2751,18 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                 // Build the rotated preview image here on the background thread so that
                 // GetPreviewImage() on the UI/Paint thread is a cheap lock+swap with no CPU work.
-                // Uses pooled surface to avoid per-frame SKBitmap/SKCanvas allocations (~24MB/frame churn eliminated).
+                // Uses pooled pinned buffers — zero per-frame LOH allocation.
                 SKImage rotatedImage = null;
                 try
                 {
                     rotatedImage = RotateIntoPooledImage(
-                        pixelData, previewWidth, previewHeight, bytesPerRow,
-                        (double)frameRotation, frameFacing == CameraPosition.Selfie,
-                        ref _pooledPreviewSurface, ref _pooledPreviewW, ref _pooledPreviewH);
+                        pixelBuffer.Address, previewWidth, previewHeight, bytesPerRow,
+                        (double)frameRotation, frameFacing == CameraPosition.Selfie);
                 }
                 finally
                 {
-                    // Pixel data is no longer needed — snapshot copied the pixels; return buffer to pool.
-                    _pixelBufferPool.Enqueue(pixelData);
+                    // Pixel data is no longer needed; return buffer to pool.
+                    ReturnPixelBuffer(pixelBuffer);
                 }
 
                 if (rotatedImage != null)
@@ -2674,10 +2800,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             // Recycle old buffer if it exists
             if (_latestRawFrame != null)
             {
-                if (_latestRawFrame.PixelData != null)
-                {
-                    _pixelBufferPool.Enqueue(_latestRawFrame.PixelData);
-                }
+                // PixelData is a raw byte[] — not pooled as PixelBuffer
                 // Return RawFrameData to pool instead of disposing
                 _latestRawFrame.PixelData = null; // Clear reference before pooling
                 _rawFrameDataPool.Enqueue(_latestRawFrame);
