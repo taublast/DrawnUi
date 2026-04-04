@@ -1941,6 +1941,8 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
     private bool ShouldGeneratePreviewFrame()
     {
+        return true;
+
         if (FormsControl.IsRecording || FormsControl.IsPreRecording)
         {
             return true;

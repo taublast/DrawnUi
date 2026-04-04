@@ -1497,7 +1497,7 @@ public partial class SkiaCamera
                 // This saves one AVAssetExportSession call (faster muxing)
 
                 bool hasAnyAudio = false;
-                var preRecVideoDuration = preAsset.Duration;  // Where live audio should start
+                var preRecVideoDuration = preAsset.Duration;  // Where live audio should start (matches live video start)
 
                 // Add pre-rec audio at the start (time 0)
                 if (!string.IsNullOrEmpty(preRecAudioFilePath) && File.Exists(preRecAudioFilePath))
@@ -1529,7 +1529,7 @@ public partial class SkiaCamera
                     }
                 }
 
-                // Add live audio starting after pre-rec video
+                // Add live audio starting after pre-rec video (A/V sync: live audio must start where live video starts)
                 if (!string.IsNullOrEmpty(audioFilePath) && File.Exists(audioFilePath))
                 {
                     using var liveAudioAsset = AVFoundation.AVAsset.FromUrl(Foundation.NSUrl.FromFilename(audioFilePath));
@@ -1565,7 +1565,8 @@ public partial class SkiaCamera
                                 Duration = CoreMedia.CMTime.FromSeconds(insertSeconds, 600)
                             };
 
-                            // Insert at the end of pre-rec video
+                            // Insert at the end of pre-rec VIDEO to maintain A/V sync
+                            // (live audio timestamps are normalized to 0 matching live video timestamps)
                             audioTrack.InsertTimeRange(audioRange, liveAudioTracks[0], preRecVideoDuration, out var audioError);
 
                             if (audioError != null)
@@ -2044,8 +2045,7 @@ public partial class SkiaCamera
         ICaptureVideoEncoder encoder = null;
         string tempAudioFilePath = null;
 
-        // Set busy while muxing - prevents user actions during file processing
-        IsBusy = true;
+        // NOTE: IsBusy is managed by the caller (StopVideoRecording)
 
         try
         {
@@ -2268,7 +2268,7 @@ public partial class SkiaCamera
                 OnRecordingSuccess(capturedVideo);
             }
 
-            IsBusy = false; // Release busy state after successful muxing
+            // NOTE: IsBusy is managed by the caller (StopVideoRecording)
 
             // Restart preview audio if still enabled
             if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
@@ -2310,7 +2310,7 @@ public partial class SkiaCamera
 
             SetIsRecordingVideo(false);
             ResumeApplePreviewAfterStop();
-            IsBusy = false; // Release busy state on error
+            // NOTE: IsBusy is managed by the caller (StopVideoRecording)
 
             // Restart preview audio if still enabled
             if (State == HardwareState.On && (CaptureMode == CaptureModeType.Video && EnableAudioRecording || EnableAudioMonitoring))
@@ -2523,26 +2523,20 @@ public partial class SkiaCamera
                 }
                 
                 // 2. Process Audio (Save buffer, start writer)
-                // SAVE PRE-REC AUDIO before transition - DON'T TRIM YET
-                // Audio will be trimmed in background task AFTER video is finalized (for correct sync)
+                // CRITICAL ORDER to eliminate audio gap at splice point:
+                //   a) Activate live writer (gets it into Writing state)
+                //   b) Flip state flags (routes new samples to the now-active live writer)
+                //   c) Snapshot & clear buffer (no new writes to buffer after flag flip)
+                // This ensures zero-drop handoff: buffer accepts samples until flags change,
+                // then live writer (already in Writing state) takes over immediately.
                 if (_audioBuffer != null && EnableAudioRecording)
                 {
-                    var allAudioSamples = _audioBuffer.GetAllSamples();
-                    Debug.WriteLine($"[StartVideoRecording] Saving ALL {allAudioSamples?.Length ?? 0} audio samples (will trim after video is finalized)");
-
-                    // Save ALL samples - trimming happens in background task after we know actual video duration
-                    _preRecordedAudioSamples = allAudioSamples;
-
-                    // OOM-SAFE: Start streaming audio to file instead of linear buffer
-                    // Try to activate pre-allocated writer first (avoids lag spike), fall back to creating new one
-                    var firstSample = _preRecordedAudioSamples?.FirstOrDefault();
-                    int sampleRate = firstSample?.SampleRate ?? AudioSampleRate;
-                    int channels = firstSample?.Channels ?? AudioChannels;
+                    // 2a. Activate live audio writer FIRST (must be in Writing state before flag flip)
                     if (ActivateLiveAudioWriter())
                     {
                         Debug.WriteLine("[StartVideoRecording] Activated PRE-ALLOCATED audio writer for live phase (no lag spike)");
                     }
-                    else if (StartLiveAudioWriter(sampleRate, channels))
+                    else if (StartLiveAudioWriter(AudioSampleRate, AudioChannels))
                     {
                         Debug.WriteLine("[StartVideoRecording] Started NEW audio writer for live phase (fallback)");
                     }
@@ -2551,13 +2545,22 @@ public partial class SkiaCamera
                         Debug.WriteLine("[StartVideoRecording] Warning: Failed to start streaming audio writer");
                     }
 
-                    // Clear the pre-rec buffer
+                    // 2b. Flip state flags — new audio samples now route to live writer
+                    SetIsPreRecording(false);
+                    SetIsRecordingVideo(true);
+
+                    // 2c. Snapshot and clear buffer (no new writes since flags changed above)
+                    var allAudioSamples = _audioBuffer.GetAllSamples();
+                    Debug.WriteLine($"[StartVideoRecording] Saving ALL {allAudioSamples?.Length ?? 0} audio samples (will trim after video is finalized)");
+                    _preRecordedAudioSamples = allAudioSamples;
                     _audioBuffer = null;
                 }
-
-                // 3. Update State Flags
-                SetIsPreRecording(false);
-                SetIsRecordingVideo(true);
+                else
+                {
+                    // No audio buffer — just flip flags
+                    SetIsPreRecording(false);
+                    SetIsRecordingVideo(true);
+                }
 
                 // Lock the current device rotation for the entire recording session
                 RecordingLockedRotation = DeviceRotation;
