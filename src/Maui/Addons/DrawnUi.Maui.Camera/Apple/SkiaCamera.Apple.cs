@@ -1,9 +1,11 @@
 ﻿#if IOS || MACCATALYST
 
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using AVFoundation;
 using AVFoundation;
 using AVKit;
+using CoreVideo;
 using DrawnUi.Maui.Navigation;
 using Foundation;
 using Foundation;
@@ -27,6 +29,15 @@ public partial class SkiaCamera
     // Pre-allocated buffer for pre-recording (avoids lag spike on record button press)
     // Allocated once when EnablePreRecording=true, reused across recording sessions
     private PrerecordingEncodedBufferApple _sharedPreRecordingBuffer;
+
+    // Shared Metal context for encoder — pre-warmed once during pre-recording start
+    // to avoid shader compilation lag when transitioning to live recording.
+    // Owned by SkiaCamera, passed to each encoder via SetSharedMetalContext().
+    private IMTLDevice _sharedMetalDevice;
+    private IMTLCommandQueue _sharedMetalCommandQueue;
+    private GRContext _sharedEncodingContext;
+    private CVMetalTextureCache _sharedMetalCache;
+    private GCHandle _sharedQueuePin;
 
     // Cached zero-copy SKImage to avoid per-frame GPU allocations during recording.
     // The image wraps the live Metal texture — Skia reads current texture data at draw time.
@@ -74,6 +85,69 @@ public partial class SkiaCamera
         {
             Debug.WriteLine("[SkiaCamera.Apple] Shared pre-recording buffer already allocated, reusing");
         }
+    }
+
+    /// <summary>
+    /// Pre-warms the shared Metal context (device, command queue, GRContext, texture cache)
+    /// so that encoder instances can skip shader compilation entirely.
+    /// Called once during pre-recording start — all subsequent encoders reuse these resources.
+    /// </summary>
+    private void EnsureSharedMetalContextPreWarmed()
+    {
+        if (_sharedEncodingContext != null)
+        {
+            Debug.WriteLine("[SkiaCamera.Apple] Shared Metal context already pre-warmed, reusing");
+            return;
+        }
+
+        try
+        {
+            _sharedMetalDevice = MTLDevice.SystemDefault;
+            if (_sharedMetalDevice == null)
+            {
+                Debug.WriteLine("[SkiaCamera.Apple] WARNING: No Metal device available, encoders will create own contexts");
+                return;
+            }
+
+            _sharedMetalCommandQueue = _sharedMetalDevice.CreateCommandQueue();
+
+            var backend = new GRMtlBackendContext
+            {
+                Device = _sharedMetalDevice,
+                Queue = _sharedMetalCommandQueue
+            };
+
+            _sharedEncodingContext = GRContext.CreateMetal(backend);
+            _sharedMetalCache = new CVMetalTextureCache(_sharedMetalDevice);
+            _sharedQueuePin = GCHandle.Alloc(backend.Queue, GCHandleType.Pinned);
+
+            Debug.WriteLine("[SkiaCamera.Apple] Shared Metal context pre-warmed (shaders compiled early)");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera.Apple] Failed to pre-warm Metal context: {ex.Message}");
+            // Encoders will fall back to creating their own context
+            _sharedEncodingContext = null;
+            _sharedMetalDevice = null;
+            _sharedMetalCommandQueue = null;
+        }
+    }
+
+    /// <summary>
+    /// Disposes the shared Metal context. Called when the camera is being torn down.
+    /// </summary>
+    private void DisposeSharedMetalContext()
+    {
+        _sharedMetalCache?.Dispose();
+        _sharedMetalCache = null;
+
+        _sharedEncodingContext?.Dispose();
+        _sharedEncodingContext = null;
+
+        _sharedMetalCommandQueue = null;
+        _sharedMetalDevice = null;
+
+        Debug.WriteLine("[SkiaCamera.Apple] Shared Metal context disposed");
     }
 
     /// <summary>
@@ -486,10 +560,21 @@ public partial class SkiaCamera
         // Stop preview audio - recording will take over with its own audio capture
         StopPreviewAudioCapture();
 
+        // Pre-warm shared Metal context (compiles shaders) on first call.
+        // Subsequent encoders reuse it — no shader compilation at transition time.
+        EnsureSharedMetalContextPreWarmed();
+
         // 1. Create Apple encoder using VideoToolbox for hardware H.264 encoding
         // Note: We create and configure the NEW encoder first, before touching the old one
         // This allows for seamless transition/overlap
         var appleEncoder = new AppleVideoToolboxEncoder();
+
+        // Pass shared Metal context if available (avoids shader compilation per-encoder)
+        if (_sharedEncodingContext != null)
+        {
+            appleEncoder.SetSharedMetalContext(_sharedMetalDevice, _sharedMetalCommandQueue, _sharedEncodingContext, _sharedMetalCache, _sharedQueuePin);
+            Debug.WriteLine("[StartRealtimeVideoProcessing] Passed shared Metal context to encoder (no shader compilation)");
+        }
 
         ICaptureVideoEncoder oldEncoderToReturn = null;
         
@@ -2362,7 +2447,7 @@ public partial class SkiaCamera
                 }
             }
 
-            IsBusy = false;
+            // NOTE: IsBusy is managed by the caller (StopVideoRecording)
         }
     }
 

@@ -252,9 +252,25 @@ namespace DrawnUi.Camera
         private IMTLDevice _metalDevice;
         private IMTLCommandQueue _commandQueue;
         private GRContext _encodingContext;
+        private bool _ownsMetalContext = true; // false when using shared (pre-warmed) Metal context
         private CVPixelBuffer _currentPixelBuffer; // The buffer backing the current _surface
         public GRContext Context { get; set; }     // Public Context (usually UI) - deprecated/unused for encoding logic now
         public GRContext EncodingContext => _encodingContext; // Read-only access to dedicated encoding context
+
+        /// <summary>
+        /// Accept a pre-warmed Metal context from SkiaCamera to avoid shader compilation on encoder creation.
+        /// When set, EnsureMetalContext() will reuse these resources instead of creating new ones.
+        /// The encoder will NOT dispose these resources — the caller retains ownership.
+        /// </summary>
+        public void SetSharedMetalContext(IMTLDevice device, IMTLCommandQueue queue, GRContext context, CVMetalTextureCache cache, GCHandle queuePin)
+        {
+            _metalDevice = device;
+            _commandQueue = queue;
+            _encodingContext = context;
+            _metalCache = cache;
+            _queuePin = queuePin;
+            _ownsMetalContext = false;
+        }
 
         // VTCompressionSession for pre-recording buffer
         private VTCompressionSession _compressionSession;
@@ -431,7 +447,8 @@ namespace DrawnUi.Camera
                             //fix GC crash
                             _queuePin = GCHandle.Alloc(backend.Queue, GCHandleType.Pinned);
 
-                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Dedicated Metal GRContext initialized.");
+                            _ownsMetalContext = true;
+                            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] Dedicated Metal GRContext initialized (owns=true).");
                         }
                     }
                     catch (Exception ex)
@@ -2474,8 +2491,29 @@ namespace DrawnUi.Camera
                 }
                 _preRecordingBuffer = null;
 
-                _metalCache?.Dispose();
-                _metalCache = null;
+                // Only dispose Metal resources if we own them (not shared from SkiaCamera)
+                if (_ownsMetalContext)
+                {
+                    _metalCache?.Dispose();
+                    _metalCache = null;
+
+                    _commandQueue = null;
+
+                    //if (_queuePin.IsAllocated) //will crash upon GC if we uncomment this
+                    //{
+                    //    _queuePin.Free();
+                    //}
+
+                    _encodingContext?.Dispose();
+                    _encodingContext = null;
+                }
+                else
+                {
+                    // Shared context: just null out references, don't dispose
+                    _metalCache = null;
+                    _commandQueue = null;
+                    _encodingContext = null;
+                }
 
                 // Dispose AVAssetWriter resources if still allocated
                 _videoInput?.Dispose();
@@ -2486,8 +2524,6 @@ namespace DrawnUi.Camera
                 _pixelBufferAdaptor?.Dispose();
                 _pixelBufferAdaptor = null;
 
-                _commandQueue = null;
-
                 _previewSurface?.Dispose();
                 _previewSurface = null;
 
@@ -2496,14 +2532,6 @@ namespace DrawnUi.Camera
 
                 _currentPixelBuffer?.Dispose();
                 _currentPixelBuffer = null;
-
-                //if (_queuePin.IsAllocated) //will crash upon GC if we uncomment this
-                //{
-                //    _queuePin.Free();
-                //}
-
-                _encodingContext?.Dispose();
-                _encodingContext = null;
             }
         }
 

@@ -603,6 +603,12 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                         System.Diagnostics.Debug.WriteLine($"[SkiaCamera SETUP] Set initial exposure mode to ContinuousAutoExposure");
                     }
 
+                    if (videoDevice.LowLightBoostSupported)
+                    {
+                        videoDevice.AutomaticallyEnablesLowLightBoostWhenAvailable = true;
+                        System.Diagnostics.Debug.WriteLine("[SkiaCamera SETUP] Enabled automatic low-light boost");
+                    }
+
                     // Reset exposure bias to neutral
                     if (videoDevice.MinExposureTargetBias != videoDevice.MaxExposureTargetBias)
                     {
@@ -1348,6 +1354,12 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                 else
                 {
                     System.Diagnostics.Debug.WriteLine("[iOS AUTO] ContinuousAutoExposure mode not supported");
+                }
+
+                if (_deviceInput.Device.LowLightBoostSupported)
+                {
+                    _deviceInput.Device.AutomaticallyEnablesLowLightBoostWhenAvailable = true;
+                    System.Diagnostics.Debug.WriteLine("[iOS AUTO] Enabled automatic low-light boost");
                 }
             }
             finally

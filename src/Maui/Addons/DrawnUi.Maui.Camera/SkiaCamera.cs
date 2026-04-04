@@ -458,9 +458,18 @@ public partial class SkiaCamera : SkiaControl
     {
         if (bindable is SkiaCamera camera && (camera.IsRecording || camera.IsPreRecording))
         {
+            var wasPreRecording = camera.IsPreRecording && !camera.IsRecording;
             Task.Run(async () =>
             {
                 await camera.StopVideoRecording(true);
+
+#if ONPLATFORM
+                // Restart prerecording with the new duration if it was active
+                if (wasPreRecording && camera.EnablePreRecording && camera.State == HardwareState.On)
+                {
+                    await camera.StartVideoRecording();
+                }
+#endif
             });
         }
     }
@@ -1965,6 +1974,7 @@ public partial class SkiaCamera : SkiaControl
         {
             nativeCam.RecordingFrameAvailable -= OnRecordingFrameAvailable;
         }
+        DisposeSharedMetalContext();
 #endif
 
         _frameCaptureTimer?.Dispose();
