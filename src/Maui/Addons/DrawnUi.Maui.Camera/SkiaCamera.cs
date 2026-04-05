@@ -173,7 +173,7 @@ public partial class SkiaCamera : SkiaControl
         nameof(VideoFormatIndex),
         typeof(int),
         typeof(SkiaCamera),
-        0,
+        -1,
         propertyChanged: OnCaptureVideoFormatChanged);
 
     /// <summary>
@@ -771,7 +771,7 @@ public partial class SkiaCamera : SkiaControl
         nameof(PhotoFormatIndex),
         typeof(int),
         typeof(SkiaCamera),
-        0,
+        -1,
         propertyChanged: NeedRestart);
 
     /// <summary>
