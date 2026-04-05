@@ -9,7 +9,7 @@ namespace CameraTests
     {
 
         public static readonly string ShadersFolder = "Shaders";
-        public static readonly string Album = "FastRepro";
+        public static readonly string Album = "SkiaCamera";
         public static readonly string ShaderRemoveCaption = @"Shaders\dissolve_light.sksl";
 
         public static MauiApp CreateMauiApp()

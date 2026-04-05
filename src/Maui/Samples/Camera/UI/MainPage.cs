@@ -17,24 +17,25 @@ public partial class MainPage : BasePageReloadable, IDisposable
     private AppCamera CameraControl;
     private SkiaSvg _settingsButtonIcon;
     private SkiaShape _takePictureButton;
-    private SkiaSvg _flashButton;
+    private SkiaSvg _iconButtonFlash;
+    private SkiaControl _buttonFlash;
+    private SkiaControl _buttonSettings;
     private SkiaLabel _statusLabel;
     private SkiaLayer _headerPanel;
-    private SkiaShape _cameraControlsPanel;
+    private SkiaLayout _cameraControlsPanel;
     private SkiaShape _recordingStopButton;
     private SkiaLabel _recordingStopLabel;
     private SettingsButton _videoRecordButton;
     private SettingsButton _speechButton;
     private IRealtimeTranscriptionService _realtimeTranscriptionService;
-    private SkiaShape _cameraSelectButton;
+    private SkiaShape _buttonSelectCamera;
     private SkiaSvg _cameraSelectButtonIcon;
 
     private SettingsButton _audioCodecButton;
     private SkiaLayer _previewOverlay;
     private SkiaImage _previewImage;
     private SkiaImage _previewThumbnail;
-    private SettingsButton _preRecordingToggleButton;
-    private SettingsButton _preRecordingDurationButton;
+    private SettingsButton _preRecordingButton;
     private SkiaLabel _captionsLabel;
     private SkiaLabel _captionHintLabel;
     private RealtimeCaptionsEngine _captionsEngine;
@@ -90,9 +91,9 @@ public partial class MainPage : BasePageReloadable, IDisposable
     private void UpdateCameraControlsRotation(int rotation)
     {
         var iconRotation = -NormalizeIconRotation(rotation);
-        ApplyRotation(_settingsButtonIcon, iconRotation);
-        ApplyRotation(_flashButton, iconRotation);
-        ApplyRotation(_cameraSelectButtonIcon, iconRotation);
+        ApplyRotation(_buttonSettings, iconRotation);
+        ApplyRotation(_buttonFlash, iconRotation);
+        ApplyRotation(_buttonSelectCamera, iconRotation);
     }
 
     private static void ApplyRotation(SkiaControl control, double rotation)
@@ -177,7 +178,11 @@ public partial class MainPage : BasePageReloadable, IDisposable
 
         Canvas = CreateCanvas();
 
-        this.Content = Canvas;
+        this.Content =
+            new Grid() //maui needs this for safeinsets on ios
+            {
+                Children = { Canvas }
+            };
 
         _previewFrameOverlay = new FrameOverlay();
         _captionsLabel = _previewFrameOverlay.CaptionsLabel;
@@ -736,7 +741,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
     /// <param name="captured"></param>
     private async void OnCaptureSuccess(object sender, CapturedImage captured)
     {
-        if (CameraControl.VideoEffect != ShaderEffect.None)
+        if (CameraControl.UseRealtimeVideoProcessing && CameraControl.VideoEffect != ShaderEffect.None)
         {
             //need process
             var imageWithEffect = await CameraControl.RenderCapturedPhotoAsync(captured, null, image =>
@@ -1072,189 +1077,149 @@ public partial class MainPage : BasePageReloadable, IDisposable
         }
     }
 
-    private async Task ShowPhotoFormatPicker()
+    private void ShowIndexedPicker<T>(
+        string title,
+        Func<Task<List<T>>> getItems,
+        Func<T, int, string> describe,
+        Action<int, T> onSelected,
+        string emptyMessage)
     {
         MainThread.BeginInvokeOnMainThread(async () =>
         {
             try
             {
-                var formats = await CameraControl.GetAvailableCaptureFormatsAsync();
-
-                if (formats?.Count > 0)
+                var items = await getItems();
+                if (items?.Count > 0)
                 {
-                    var options = formats.Select((format, index) =>
-                        $"[{index}] {format.Description}"
-                    ).ToArray();
-
-                    var result = await DisplayActionSheet("Select Photo Format", "Cancel", null, options);
+                    var options = items.Select((item, i) => describe(item, i)).ToArray();
+                    var result = await DisplayActionSheet(title, "Cancel", null, options);
 
                     if (!string.IsNullOrEmpty(result) && result != "Cancel")
                     {
-                        var selectedIndex = Array.FindIndex(options, opt => opt == result);
-                        if (selectedIndex >= 0)
-                        {
-                            CameraControl.PhotoQuality = CaptureQuality.Manual;
-                            CameraControl.PhotoFormatIndex = selectedIndex;
-
-                            ShowAlert("Format Selected",
-                                $"Selected: {formats[selectedIndex].Description}");
-                        }
+                        var idx = Array.FindIndex(options, o => o == result);
+                        if (idx >= 0)
+                            onSelected(idx, items[idx]);
                     }
                 }
                 else
                 {
-                    ShowAlert("No Formats", "No photo formats available");
+                    ShowAlert(title, emptyMessage);
                 }
             }
             catch (Exception ex)
             {
-                ShowAlert("Error", $"Error getting photo formats: {ex.Message}");
+                ShowAlert("Error", $"Error: {ex.Message}");
             }
         });
     }
 
-    private async Task ShowVideoFormatPicker()
+    private void ShowDefaultablePicker(
+        string title,
+        Func<Task<List<string>>> getItems,
+        Action<int, string> onSelected,
+        string emptyMessage)
     {
         MainThread.BeginInvokeOnMainThread(async () =>
         {
             try
             {
-                var formats = await CameraControl.GetAvailableVideoFormatsAsync();
-
-                if (formats?.Count > 0)
+                var items = await getItems();
+                if (items?.Count > 0)
                 {
-                    var options = formats.Select((format, index) =>
-                        $"[{index}] {format.Description}"
-                    ).ToArray();
-
-                    var result = await DisplayActionSheet("Select Video Format", "Cancel", null, options);
-
-                    if (!string.IsNullOrEmpty(result) && result != "Cancel")
-                    {
-                        var selectedIndex = Array.FindIndex(options, opt => opt == result);
-                        if (selectedIndex >= 0)
-                        {
-                            CameraControl.VideoQuality = VideoQuality.Manual;
-                            CameraControl.VideoFormatIndex = selectedIndex;
-
-                            ShowAlert("Format Selected",
-                                $"Selected: {formats[selectedIndex].Description}");
-                        }
-                    }
-                }
-                else
-                {
-                    ShowAlert("No Formats", "No video formats available");
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowAlert("Error", $"Error getting video formats: {ex.Message}");
-            }
-        });
-    }
-
-    private async Task SelectCamera()
-    {
-        MainThread.BeginInvokeOnMainThread(async () =>
-        {
-            try
-            {
-                var cameras = await CameraControl.GetAvailableCamerasAsync();
-
-                if (cameras?.Count > 0)
-                {
-                    var options = cameras.Select((camera, index) =>
-                        $"[{index}] {camera.Name} ({camera.Position})"
-                    ).ToArray();
-
-                    var result = await DisplayActionSheet("Select Camera", "Cancel", null, options);
-
-                    if (!string.IsNullOrEmpty(result) && result != "Cancel")
-                    {
-                        var selectedIndex = Array.FindIndex(options, opt => opt == result);
-                        if (selectedIndex >= 0)
-                        {
-                            var selectedCamera = cameras[selectedIndex];
-
-                            // Set camera selection - this will automatically trigger restart if camera is running
-                            CameraControl.CameraIndex = selectedCamera.Index;
-                            CameraControl.Facing = CameraPosition.Manual;
-
-                            Debug.WriteLine(
-                                $"Selected: {selectedCamera.Name} ({selectedCamera.Position})\nId: {selectedCamera.Id} Index: {selectedCamera.Index}");
-                        }
-                    }
-                }
-                else
-                {
-                    ShowAlert("No Cameras", "No cameras available");
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowAlert("Error", $"Error getting cameras: {ex.Message}");
-            }
-        });
-    }
-
-    private async Task SelectAudioSource()
-    {
-        MainThread.BeginInvokeOnMainThread(async () =>
-        {
-            try
-            {
-                var inputDevices = await CameraControl.GetAvailableAudioDevicesAsync();
-
-                if (inputDevices?.Count > 0)
-                {
-                    // Prefix the list with "System Default" option
-                    var options = new string[inputDevices.Count + 1];
+                    var options = new string[items.Count + 1];
                     options[0] = "System Default";
-                    for (int i = 0; i < inputDevices.Count; i++)
-                    {
-                        options[i + 1] = inputDevices[i];
-                    }
+                    for (int i = 0; i < items.Count; i++)
+                        options[i + 1] = items[i];
 
-                    var result = await DisplayActionSheet("Select Audio Source", "Cancel", null, options);
+                    var result = await DisplayActionSheet(title, "Cancel", null, options);
 
                     if (!string.IsNullOrEmpty(result) && result != "Cancel")
                     {
                         if (result == "System Default")
                         {
-                            CameraControl.AudioDeviceIndex = -1;
+                            onSelected(-1, null);
                         }
                         else
                         {
-                            // Find the index in our original list
-                            // Careful: option list was shifted by 1
-                            int selectedIndex = -1;
-                            for (int i = 0; i < inputDevices.Count; i++)
+                            for (int i = 0; i < items.Count; i++)
                             {
-                                if (inputDevices[i] == result)
+                                if (items[i] == result)
                                 {
-                                    selectedIndex = i;
+                                    onSelected(i, items[i]);
                                     break;
                                 }
-                            }
-
-                            if (selectedIndex >= 0)
-                            {
-                                CameraControl.AudioDeviceIndex = selectedIndex;
                             }
                         }
                     }
                 }
                 else
                 {
-                    ShowAlert("No Input Devices", "No audio input devices found.");
+                    ShowAlert(title, emptyMessage);
                 }
             }
             catch (Exception ex)
             {
-                ShowAlert("Error", $"Error getting audio devices: {ex.Message}");
+                ShowAlert("Error", $"Error: {ex.Message}");
             }
         });
+    }
+
+    private Task ShowPhotoFormatPicker()
+    {
+        ShowIndexedPicker<CaptureFormat>(
+            "Select Photo Format",
+            () => CameraControl.GetAvailableCaptureFormatsAsync(),
+            (f, i) => $"[{i}] {f.Description}",
+            (i, f) =>
+            {
+                CameraControl.PhotoQuality = CaptureQuality.Manual;
+                CameraControl.PhotoFormatIndex = i;
+                ShowAlert("Format Selected", $"Selected: {f.Description}");
+            },
+            "No photo formats available");
+        return Task.CompletedTask;
+    }
+
+    private Task ShowVideoFormatPicker()
+    {
+        ShowIndexedPicker<VideoFormat>(
+            "Select Video Format",
+            () => CameraControl.GetAvailableVideoFormatsAsync(),
+            (f, i) => $"[{i}] {f.Description}",
+            (i, f) =>
+            {
+                CameraControl.VideoQuality = VideoQuality.Manual;
+                CameraControl.VideoFormatIndex = i;
+                ShowAlert("Format Selected", $"Selected: {f.Description}");
+            },
+            "No video formats available");
+        return Task.CompletedTask;
+    }
+
+    private Task SelectCamera()
+    {
+        ShowIndexedPicker<CameraInfo>(
+            "Select Camera",
+            () => CameraControl.GetAvailableCamerasAsync(),
+            (c, i) => $"[{i}] {c.Name} ({c.Position})",
+            (i, c) =>
+            {
+                CameraControl.CameraIndex = c.Index;
+                CameraControl.Facing = CameraPosition.Manual;
+                Debug.WriteLine($"Selected: {c.Name} ({c.Position})\nId: {c.Id} Index: {c.Index}");
+            },
+            "No cameras available");
+        return Task.CompletedTask;
+    }
+
+    private Task SelectAudioSource()
+    {
+        ShowDefaultablePicker(
+            "Select Audio Source",
+            () => CameraControl.GetAvailableAudioDevicesAsync(),
+            (i, _) => CameraControl.AudioDeviceIndex = i,
+            "No audio input devices found.");
+        return Task.CompletedTask;
     }
 
     private async Task SelectAudioMode()
@@ -1280,65 +1245,18 @@ public partial class MainPage : BasePageReloadable, IDisposable
         });
     }
 
-    private async Task SelectAudioCodec()
+    private Task SelectAudioCodec()
     {
-        MainThread.BeginInvokeOnMainThread(async () =>
-        {
-            try
+        ShowDefaultablePicker(
+            "Select Audio Codec",
+            () => CameraControl.GetAvailableAudioCodecsAsync(),
+            (i, name) =>
             {
-                var codecs = await CameraControl.GetAvailableAudioCodecsAsync();
-
-                if (codecs?.Count > 0)
-                {
-                    // Prefix the list with "System Default" option
-                    var options = new string[codecs.Count + 1];
-                    options[0] = "System Default";
-                    for (int i = 0; i < codecs.Count; i++)
-                    {
-                        options[i + 1] = codecs[i];
-                    }
-
-                    var result = await DisplayActionSheet("Select Audio Codec", "Cancel", null, options);
-
-                    if (!string.IsNullOrEmpty(result) && result != "Cancel")
-                    {
-                        if (result == "System Default")
-                        {
-                            CameraControl.AudioCodecIndex = -1;
-                            _audioCodecButton.Text = "Codec: Default";
-                        }
-                        else
-                        {
-                            // Find the index in our original list
-                            // Careful: option list was shifted by 1
-                            int selectedIndex = -1;
-                            for (int i = 0; i < codecs.Count; i++)
-                            {
-                                if (codecs[i] == result)
-                                {
-                                    selectedIndex = i;
-                                    break;
-                                }
-                            }
-
-                            if (selectedIndex >= 0)
-                            {
-                                CameraControl.AudioCodecIndex = selectedIndex;
-                                _audioCodecButton.Text = $"{CodecsHelper.GetShortName(result)}";
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    ShowAlert("No Audio Codecs", "No audio codecs available.");
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowAlert("Error", $"Error getting audio codecs: {ex.Message}");
-            }
-        });
+                CameraControl.AudioCodecIndex = i;
+                _audioCodecButton.Text = i < 0 ? "Codec: Default" : CodecsHelper.GetShortName(name);
+            },
+            "No audio codecs available.");
+        return Task.CompletedTask;
     }
 
     public static class CodecsHelper
@@ -1362,49 +1280,37 @@ public partial class MainPage : BasePageReloadable, IDisposable
         CameraControl?.Stop();
     }
 
-    private void TogglePreRecording()
+    private async Task ShowPreRecordPicker()
     {
-        CameraControl.EnablePreRecording = !CameraControl.EnablePreRecording;
-
-        if (_preRecordingToggleButton != null)
+        var durations = new (string Label, int Seconds)[]
         {
-            _preRecordingToggleButton.Text = CameraControl.EnablePreRecording ? "Pre-Record: ON" : "Pre-Record: OFF";
-            _preRecordingToggleButton.TintColor = CameraControl.EnablePreRecording
-                ? Color.FromArgb("#10B981")
-                : Color.FromArgb("#6B7280");
-        }
+            ("Off", 0),
+            ("3 seconds", 3),
+            ("5 seconds", 5),
+            ("10 seconds", 10),
+        };
 
-        UpdatePreRecordingStatus();
-
-        Debug.WriteLine($"Pre-Recording: {(CameraControl.EnablePreRecording ? "ENABLED" : "DISABLED")}");
-    }
-
-    private async Task ShowPreRecordingDurationPicker()
-    {
         MainThread.BeginInvokeOnMainThread(async () =>
         {
             try
             {
-                var durations = new[] { "2 seconds", "5 seconds", "10 seconds", "15 seconds" };
-                var values = new[] { 2, 5, 10, 15 };
-
-                var result = await DisplayActionSheet("Pre-Recording Duration", "Cancel", null, durations);
+                var result = await DisplayActionSheet("Pre-Recording", "Cancel", null,
+                    durations.Select(d => d.Label).ToArray());
 
                 if (!string.IsNullOrEmpty(result) && result != "Cancel")
                 {
-                    var selectedIndex = Array.IndexOf(durations, result);
-                    if (selectedIndex >= 0)
-                    {
-                        CameraControl.PreRecordDuration = TimeSpan.FromSeconds(values[selectedIndex]);
-                        UpdatePreRecordingStatus();
+                    var selected = durations.First(d => d.Label == result);
+                    CameraControl.EnablePreRecording = selected.Seconds > 0;
+                    if (selected.Seconds > 0)
+                        CameraControl.PreRecordDuration = TimeSpan.FromSeconds(selected.Seconds);
 
-                        Debug.WriteLine($"Pre-Recording Duration set to: {values[selectedIndex]} seconds");
-                    }
+                    UpdatePreRecordingStatus();
+                    Debug.WriteLine($"Pre-Recording: {(CameraControl.EnablePreRecording ? $"{CameraControl.PreRecordDuration.TotalSeconds}s" : "OFF")}");
                 }
             }
             catch (Exception ex)
             {
-                ShowAlert("Error", $"Error setting pre-recording duration: {ex.Message}");
+                ShowAlert("Error", $"Error setting pre-recording: {ex.Message}");
             }
         });
     }

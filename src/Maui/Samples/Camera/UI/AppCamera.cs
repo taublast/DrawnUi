@@ -1,8 +1,6 @@
-using Android.Icu.Number;
 using CameraTests.UI;
 using DrawnUi.Camera;
 using DrawnUi.Infrastructure;
-using SkiaSharp;
 
 namespace CameraTests.Views
 {

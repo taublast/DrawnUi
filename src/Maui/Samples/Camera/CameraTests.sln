@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.3.11527.330 d18.3
+VisualStudioVersion = 18.3.11527.330
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraTests", "CameraTests.csproj", "{FE34BD9E-2E7F-208E-B786-DB05C1E6DFF0}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DrawnUi.Shared", "..\..\..\Shared\DrawnUi.Shared.shproj", "{83974207-9636-48DD-BDB3-98EDECBB1107}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawnUi.Maui.Camera", "..\..\Addons\DrawnUi.Maui.Camera\DrawnUi.Maui.Camera.csproj", "{89F26821-93F0-9481-E7E5-2DAD22A49C4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadersCamera", "..\..\..\..\..\ShadersCamera\src\app\ShadersCamera.csproj", "{BC330B10-C024-0FA3-D4A8-AB5823106560}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,10 @@ Global
 		{89F26821-93F0-9481-E7E5-2DAD22A49C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89F26821-93F0-9481-E7E5-2DAD22A49C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89F26821-93F0-9481-E7E5-2DAD22A49C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC330B10-C024-0FA3-D4A8-AB5823106560}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC330B10-C024-0FA3-D4A8-AB5823106560}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC330B10-C024-0FA3-D4A8-AB5823106560}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC330B10-C024-0FA3-D4A8-AB5823106560}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

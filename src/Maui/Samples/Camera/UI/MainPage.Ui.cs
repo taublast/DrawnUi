@@ -422,6 +422,7 @@ namespace CameraTests.Views
                         VerticalOptions = LayoutOptions.Center,
                         Children =
                         {
+                            //thumbnail preview (opens last taken photo/video or current recording if video mode)
                             new SkiaShape()
                                 {
                                     VerticalOptions = LayoutOptions.Center,
@@ -446,12 +447,14 @@ namespace CameraTests.Views
                                     }
                                 }
                                 .OnTapped(me => OnThumbnailTapped()),
+
+                            // Settings button
                             new SkiaShape()
                                 {
                                     VerticalOptions = LayoutOptions.Center,
                                     StrokeColor = Color.FromArgb("#3342D9F6"),
                                     StrokeWidth = 1,
-                                    UseCache = SkiaCacheType.Image,
+                                    UseCache = SkiaCacheType.Operations,
                                     Type = ShapeType.Circle,
                                     HeightRequest = 52,
                                     LockRatio = 1,
@@ -470,13 +473,18 @@ namespace CameraTests.Views
                                             .Assign(out _settingsButtonIcon)
                                     }
                                 }
-                                .OnTapped(me => { ToggleSettingsDrawer(); }),
+                                .OnTapped(me =>
+                                {
+                                    ToggleSettingsDrawer();
+                                }),
+
+                            // Flash button
                             new SkiaShape()
                                 {
                                     VerticalOptions = LayoutOptions.Center,
                                     StrokeColor = Color.FromArgb("#3342D9F6"),
                                     StrokeWidth = 1,
-                                    UseCache = SkiaCacheType.Image,
+                                    UseCache = SkiaCacheType.Operations,
                                     Type = ShapeType.Circle,
                                     HeightRequest = 52,
                                     LockRatio = 1,
@@ -492,18 +500,24 @@ namespace CameraTests.Views
                                                 VerticalOptions = LayoutOptions.Center,
                                                 HorizontalOptions = LayoutOptions.Center,
                                             }
-                                            .Assign(out _flashButton)
+                                            .Assign(out _iconButtonFlash)
                                     }
                                 }
-                                .OnTapped(me => { ToggleFlash(); })
+                                .Assign(out _buttonFlash)
+                                .OnTapped(me =>
+                                {
+                                    ToggleFlash();
+                                })
                                 .ObserveProperty(CameraControl, nameof(CameraControl.FlashMode), me =>
                                 {
-                                    _flashButton.Source = CameraControl.FlashMode == FlashMode.Off
+                                    _iconButtonFlash.Source = CameraControl.FlashMode == FlashMode.Off
                                         ? "Svg/icon_flash_off.svg"
                                         : CameraControl.FlashMode == FlashMode.On
                                             ? "Svg/icon_flash_on.svg"
                                             : "Svg/icon_flash_auto.svg";
                                 }),
+
+                            // Capture button 
                             new SkiaShape()
                                 {
                                     VerticalOptions = LayoutOptions.Center,
@@ -553,6 +567,8 @@ namespace CameraTests.Views
                                 .ObserveProperties(CameraControl,
                                     new[] { nameof(CameraControl.IsRecording), nameof(CameraControl.IsPreRecording) },
                                     me => { UpdateCaptureButtonShape(); }),
+
+                            // Camera select button
                             new SkiaShape()
                                 {
                                     VerticalOptions = LayoutOptions.Center,
@@ -577,8 +593,9 @@ namespace CameraTests.Views
                                             .Assign(out _cameraSelectButtonIcon)
                                     }
                                 }
-                                .Assign(out _cameraSelectButton)
+                                .Assign(out _buttonSelectCamera)
                                 .OnTapped(async me => { await SelectCamera(); })
+
                         }
                     }
                 }
@@ -941,6 +958,23 @@ namespace CameraTests.Views
                                             ? Color.FromArgb("#10B981")
                                             : Color.FromArgb("#6B7280");
                                     }),
+
+                            new SettingsButton("🎨", $"Effect: {ShaderEffectHelper.GetTitle(ShaderEffect.None)}") { TintColor = Color.FromArgb("#6B7280"), }
+                                .OnTapped(me => { CycleEffect(); })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.UseRealtimeVideoProcessing), me =>
+                                {
+                                    me.IsVisible = CameraControl.UseRealtimeVideoProcessing;
+                                })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.VideoEffect), me =>
+                                {
+                                    var title = ShaderEffectHelper.GetTitle(CameraControl.VideoEffect);
+                                    me.Text = $"Effect: {title}";
+                                    me.TintColor = CameraControl.VideoEffect != ShaderEffect.None
+                                        ? Color.FromArgb("#10B981")
+                                        : Color.FromArgb("#6B7280");
+                                }),
+
+
                             new SettingsButton("🎧", "Audio Monitor: OFF") { TintColor = Color.FromArgb("#6B7280"), }
                                 .OnTapped(me => { IsAudioMonitoringEnabled = !IsAudioMonitoringEnabled; })
                                 .ObserveProperty(this, nameof(IsAudioMonitoringEnabled), me =>
@@ -950,6 +984,7 @@ namespace CameraTests.Views
                                         ? Color.FromArgb("#10B981")
                                         : Color.FromArgb("#6B7280");
                                 }),
+
                             new SettingsButton("📊", "Visualizer") { TintColor = Color.FromArgb("#65A30D"), }
                                 .OnTapped(me => { CameraControl.SwitchVisualizer(); })
                                 .ObserveProperty(() => CameraControl, nameof(CameraControl.VisualizerName),
@@ -966,16 +1001,7 @@ namespace CameraTests.Views
                             new SettingsButton("🎙️", "Speech: OFF") { TintColor = Color.FromArgb("#475569"), }
                                 .Assign(out _speechButton)
                                 .OnTapped(me => { ToggleSpeech(); }),
-                            new SettingsButton("🎨", $"Effect: {ShaderEffectHelper.GetTitle(ShaderEffect.None)}") { TintColor = Color.FromArgb("#6B7280"), }
-                                .OnTapped(me => { CycleEffect(); })
-                                .ObserveProperty(CameraControl, nameof(CameraControl.VideoEffect), me =>
-                                {
-                                    var title = ShaderEffectHelper.GetTitle(CameraControl.VideoEffect);
-                                    me.Text = $"Effect: {title}";
-                                    me.TintColor = CameraControl.VideoEffect != ShaderEffect.None
-                                        ? Color.FromArgb("#10B981")
-                                        : Color.FromArgb("#6B7280");
-                                }),
+
                         }
                     }
                 };
@@ -1032,20 +1058,11 @@ namespace CameraTests.Views
                                 })
                                 .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode),
                                     me => { me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video; }),
-                            new SettingsButton("⏱️", "Pre-Record: OFF") { TintColor = Color.FromArgb("#6B7280"), }
-                                .Assign(out _preRecordingToggleButton)
-                                .OnTapped(me => { TogglePreRecording(); })
+                            new SettingsButton("⏳", "Pre-Record: OFF") { TintColor = Color.FromArgb("#6B7280"), }
+                                .Assign(out _preRecordingButton)
+                                .OnTapped(async me => { await ShowPreRecordPicker(); })
                                 .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode),
                                     me => { me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video; }),
-                            new SettingsButton("⏰", "Pre-Record Limit") { TintColor = Color.FromArgb("#475569"), }
-                                .Assign(out _preRecordingDurationButton)
-                                .OnTapped(async me => { await ShowPreRecordingDurationPicker(); })
-                                .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode),
-                                    me =>
-                                    {
-                                        me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Video;
-                                        UpdatePreRecordingStatus();
-                                    }),
                             new SettingsButton("📍", "Geotag: OFF") { TintColor = Color.FromArgb("#6B7280"), }
                                 .OnTapped(me =>
                                 {
@@ -1330,9 +1347,18 @@ namespace CameraTests.Views
 
         private void UpdatePreRecordingStatus()
         {
-            if (_preRecordingDurationButton != null)
+            if (_preRecordingButton != null)
             {
-                _preRecordingDurationButton.Text = $"Pre-Record: {CameraControl.PreRecordDuration.TotalSeconds:F0}s";
+                if (CameraControl.EnablePreRecording)
+                {
+                    _preRecordingButton.Text = $"Pre-Record: {CameraControl.PreRecordDuration.TotalSeconds:F0}s";
+                    _preRecordingButton.TintColor = Color.FromArgb("#10B981");
+                }
+                else
+                {
+                    _preRecordingButton.Text = "Pre-Record: OFF";
+                    _preRecordingButton.TintColor = Color.FromArgb("#6B7280");
+                }
             }
         }
 
