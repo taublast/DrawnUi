@@ -4,6 +4,7 @@ using Metal;
 using MetalKit;
 using SkiaSharp.Views.iOS;
 using UIKit;
+using DrawnUi.Draw;
 
 namespace DrawnUi.Views
 {
@@ -178,6 +179,8 @@ namespace DrawnUi.Views
             Device = _device;
             Queue = _sharedQueue; // MTKView uses the shared queue for drawable presentation
             Delegate = this;
+
+            Super.RegisterMetalView(this);
         }
 
         // ── MTKView delegate ─────────────────────────────────────────────────────
@@ -506,6 +509,7 @@ namespace DrawnUi.Views
         protected override void Dispose(bool disposing)
         {
             stopped = true;
+            Super.UnregisterMetalView(this);
 
             if (disposing)
             {
