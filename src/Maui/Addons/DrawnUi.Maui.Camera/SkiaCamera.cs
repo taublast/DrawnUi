@@ -4226,6 +4226,10 @@ public partial class SkiaCamera : SkiaControl
 
     #endregion
 
+    /// <summary>
+    /// Used for auto-exposure
+    /// </summary>
+    public static int MinFps = 20;
     private static (SKRect src, SKRect dst) GetAspectFillRects(int srcW, int srcH, int dstW, int dstH)
     {
         var dst = new SKRect(0, 0, dstW, dstH);

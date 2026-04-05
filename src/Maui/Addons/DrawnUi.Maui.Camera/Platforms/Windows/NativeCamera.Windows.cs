@@ -1683,7 +1683,7 @@ public partial class NativeCamera : IDisposable, INativeCamera, INotifyPropertyC
         const int minHeight = 480;
         const int maxPreviewWidth = 1920;  // Cap preview resolution for performance
         const int maxPreviewHeight = 1080;
-        const double minFps = 24.0;        // Minimum acceptable FPS for smooth preview
+        int minFps = SkiaCamera.MinFps;        // Minimum acceptable FPS for smooth preview
         const double preferredFps = 30.0;  // Preferred FPS
 
         // First, filter formats that are suitable for preview with good FPS

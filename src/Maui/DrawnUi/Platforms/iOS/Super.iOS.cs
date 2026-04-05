@@ -140,6 +140,7 @@ namespace DrawnUi.Draw
             // Display link callback reads MaxFps dynamically, no action needed there.
             // Update looper fps if it's being used instead of CADisplayLink.
             Looper?.SetTargetFps(fps > 0 ? fps : RefreshRate);
+            UpdateRegisteredMetalViewsPreferredFramesPerSecond(fps);
         }
 
 

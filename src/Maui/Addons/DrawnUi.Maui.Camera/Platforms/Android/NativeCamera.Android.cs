@@ -3213,7 +3213,7 @@ public partial class NativeCamera : Java.Lang.Object, ImageReader.IOnImageAvaila
 
     private Android.Util.Range SelectExposureFriendlyAeFpsRange(CameraCharacteristics characteristics, int targetFps, string logTag)
     {
-        int minimumPreviewFpsFloor = Math.Min(24, targetFps);
+        int minimumPreviewFpsFloor = Math.Min(SkiaCamera.MinFps, targetFps);
 
         var ranges = characteristics.Get(CameraCharacteristics.ControlAeAvailableTargetFpsRanges)
             .ToArray<Android.Util.Range>();

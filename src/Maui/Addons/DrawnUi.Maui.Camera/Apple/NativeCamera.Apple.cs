@@ -1163,7 +1163,7 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         }
 
         // Compute the low-light floor FPS — never below to keep preview smooth.
-        int floorFps = 24;
+        int floorFps = SkiaCamera.MinFps;
 
         // Clamp floor to the range supported by the format
         double actualFloor = Math.Max(floorFps, bestRange.MinFrameRate);
