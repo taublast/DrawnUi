@@ -602,11 +602,15 @@ public partial class SkiaCamera
                 // Buffer/writer is switched at pre-rec → live transition (see StartVideoRecording)
                 if (EnablePreRecording && !IsRecording)
                 {
-                    // Pre-recording phase: Circular buffer matching video duration
+                    // Pre-recording phase: Circular buffer matching video internal duration
+                    // MUST include KeyframeMargin so audio covers the same temporal window as video.
+                    // Without this, video keeps (duration + margin) but audio keeps only duration,
+                    // causing desync after both streams are independently normalized to 0.
                     if (_audioBuffer == null)
                     {
-                        _audioBuffer = new CircularAudioBuffer(PreRecordDuration);
-                        Debug.WriteLine($"[StartRealtimeVideoProcessing] Created CIRCULAR audio buffer ({PreRecordDuration.TotalSeconds:F1}s)");
+                        var audioBufferDuration = PreRecordDuration + PrerecordingEncodedBufferApple.KeyframeMargin;
+                        _audioBuffer = new CircularAudioBuffer(audioBufferDuration);
+                        Debug.WriteLine($"[StartRealtimeVideoProcessing] Created CIRCULAR audio buffer ({audioBufferDuration.TotalSeconds:F1}s, includes {PrerecordingEncodedBufferApple.KeyframeMargin.TotalSeconds:F1}s keyframe margin)");
                     }
 
                     // Pre-allocate live audio writer to avoid lag spike at pre-rec → live transition

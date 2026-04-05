@@ -79,7 +79,8 @@ namespace DrawnUi.Camera
 
         // Extra headroom so that after keyframe-snap pruning the result is still >= _maxDuration.
         // Must be >= the keyframe request interval (900ms). Using 1s for a small safety margin.
-        private static readonly TimeSpan KeyframeMargin = TimeSpan.FromSeconds(1.0);
+        // Public so audio buffers can use the same margin to stay in sync with video.
+        public static readonly TimeSpan KeyframeMargin = TimeSpan.FromSeconds(1.0);
 
         /// <summary>
         /// The maximum duration this buffer was configured with (user-facing value).
