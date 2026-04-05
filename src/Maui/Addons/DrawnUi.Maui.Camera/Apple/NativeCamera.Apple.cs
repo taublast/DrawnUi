@@ -570,19 +570,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             {
                 _cameraUnitInitialized = false;
 
-#if MACCATALYST
-            _session.SessionPreset = AVCaptureSession.PresetHigh;
-#else
-                // Set session preset
-                if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
-                {
-                    _session.SessionPreset = AVCaptureSession.PresetHigh;
-                }
-                else
-                {
-                    _session.SessionPreset = AVCaptureSession.PresetInputPriority;
-                }
-#endif
+                // InputPriority lets us control ActiveFormat and ActiveVideoMin/MaxFrameDuration
+                // directly. Any other preset causes iOS to override those values,
+                // which prevents low-light auto-exposure from lowering FPS.
+                _session.SessionPreset = AVCaptureSession.PresetInputPriority;
 
                 AVCaptureDevice videoDevice = null;
 
@@ -669,82 +660,12 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
 
                     videoDevice.ActiveFormat = format;
 
-                    // Set FPS if video mode
-                    if (FormsControl.CaptureMode == CaptureModeType.Video && FormsControl.VideoQuality != VideoQuality.Manual)
-                    {
-                        double targetFps = 30.0;
-                        if (FormsControl.VideoQuality == VideoQuality.Ultra)
-                        {
-                            targetFps = 60.0;
-                        }
-
-                        // Check if format supports this FPS
-                        bool supported = false;
-                        foreach (var range in format.VideoSupportedFrameRateRanges)
-                        {
-                            if (Math.Abs(range.MaxFrameRate - targetFps) < 0.1)
-                            {
-                                supported = true;
-                                break;
-                            }
-                        }
-
-                        if (supported)
-                        {
-                            try
-                            {
-                                videoDevice.ActiveVideoMinFrameDuration = new CMTime(1, (int)targetFps);
-                                videoDevice.ActiveVideoMaxFrameDuration = new CMTime(1, (int)targetFps);
-                                Console.WriteLine($"[NativeCameraiOS] Set FPS to {targetFps}");
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine($"[NativeCameraiOS] Failed to set FPS: {e.Message}");
-                            }
-                        }
-                    }
-
-                    /*
-                                         // Set FPS if video mode
-                       if (FormsControl.CaptureMode == CaptureModeType.Video)
-                       {
-                           double targetFps = 30.0;
-                           if (FormsControl.VideoQuality == VideoQuality.Ultra)
-                           {
-                               targetFps = 60.0;
-                           }
-
-                           // Try to find the supported range that matches targetFps with tolerance
-                           AVFrameRateRange bestRange = null;
-                           foreach (var range in videoDevice.ActiveFormat.VideoSupportedFrameRateRanges)
-                           {
-                               if (Math.Abs(range.MaxFrameRate - targetFps) < 1.0)
-                               {
-                                   bestRange = range;
-                                   break;
-                               }
-                           }
-
-                           if (bestRange != null)
-                           {
-                               try
-                               {
-                                   // We must use the exact duration from the supported range to avoid "fake formats" issues
-                                   videoDevice.ActiveVideoMinFrameDuration = bestRange.MinFrameDuration;
-                                   videoDevice.ActiveVideoMaxFrameDuration = bestRange.MinFrameDuration;
-                                   //Console.WriteLine($"[NativeCameraiOS] Set FPS to {bestRange.MaxFrameRate} (Target: {targetFps})");
-                               }
-                               catch (Exception e)
-                               {
-                                   Console.WriteLine($"[NativeCameraiOS] Failed to set FPS: {e.Message}");
-                               }
-                           }
-                           else
-                           {
-                               Console.WriteLine($"[NativeCameraiOS] Warning: Desired FPS {targetFps} not found in active format. Ranges: {string.Join(", ", videoDevice.ActiveFormat.VideoSupportedFrameRateRanges.Select(r => r.MaxFrameRate))}");
-                           }
-                       }
-                     */
+                    // Configure frame duration to allow low-light auto-exposure adaptation.
+                    // ActiveVideoMinFrameDuration = shortest frame = fastest FPS (ceiling).
+                    // ActiveVideoMaxFrameDuration = longest frame  = slowest FPS (floor).
+                    // By setting Max > Min the camera can slow down FPS in dim scenes
+                    // to use a longer shutter speed, matching Android behaviour.
+                    ApplyExposureFriendlyFrameDuration(videoDevice, format);
 
                     // Ensure exposure is set to continuous auto exposure during setup
                     if (videoDevice.IsExposureModeSupported(AVCaptureExposureMode.ContinuousAutoExposure))
@@ -869,6 +790,17 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
                     PreviewWidth = (int)dimensions.Width;
                     PreviewHeight = (int)dimensions.Height;
                     FormsControl.SetRotatedContentSize(new SKSize(dimensions.Width, dimensions.Height), 0);
+                }
+
+                // Re-apply frame durations AFTER all inputs/outputs are added.
+                // Adding outputs can cause the session to reset device frame durations
+                // even with PresetInputPriority. This final pass ensures our
+                // low-light-friendly variable FPS range survives CommitConfiguration.
+                NSError fpsError;
+                if (videoDevice.LockForConfiguration(out fpsError))
+                {
+                    ApplyExposureFriendlyFrameDuration(videoDevice, format);
+                    videoDevice.UnlockForConfiguration();
                 }
             }
             finally
@@ -1168,6 +1100,86 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
             if (range.MaxFrameRate > max) max = range.MaxFrameRate;
         }
         return max;
+    }
+
+    /// <summary>
+    /// Configures ActiveVideoMinFrameDuration / ActiveVideoMaxFrameDuration on the device
+    /// so that auto-exposure can lower FPS in low-light conditions instead of underexposing.
+    /// Must be called while the device is locked for configuration.
+    /// </summary>
+    private void ApplyExposureFriendlyFrameDuration(AVCaptureDevice device, AVCaptureDeviceFormat format)
+    {
+        // Determine target (ceiling) FPS based on mode and quality settings
+        double targetFps;
+
+        if (FormsControl.CaptureMode == CaptureModeType.Video)
+        {
+            if (FormsControl.VideoQuality == VideoQuality.Ultra)
+            {
+                targetFps = 60.0;
+            }
+            else if (FormsControl.VideoQuality == VideoQuality.Manual)
+            {
+                // Manual: derive FPS from the selected predefined format
+                var predefined = GetPredefinedVideoFormats();
+                var idx = FormsControl.VideoFormatIndex;
+                if (idx >= 0 && idx < predefined.Count)
+                {
+                    targetFps = predefined[idx].FrameRate;
+                }
+                else
+                {
+                    targetFps = 30.0;
+                }
+            }
+            else
+            {
+                targetFps = 30.0;
+            }
+        }
+        else
+        {
+            // Photo/Still mode: cap at 30fps, allow generous slow-down for exposure
+            targetFps = 30.0;
+        }
+
+        // Find a supported range whose MaxFrameRate covers our target
+        AVFrameRateRange bestRange = null;
+        foreach (var range in format.VideoSupportedFrameRateRanges)
+        {
+            if (range.MaxFrameRate >= targetFps - 0.1)
+            {
+                if (bestRange == null || Math.Abs(range.MaxFrameRate - targetFps) < Math.Abs(bestRange.MaxFrameRate - targetFps))
+                {
+                    bestRange = range;
+                }
+            }
+        }
+
+        if (bestRange == null)
+        {
+            Console.WriteLine($"[NativeCameraiOS] No frame-rate range covers {targetFps}fps; leaving defaults. Ranges: {string.Join(", ", format.VideoSupportedFrameRateRanges.Select(r => $"[{r.MinFrameRate}-{r.MaxFrameRate}]"))}");
+            return;
+        }
+
+        // Compute the low-light floor FPS — never below to keep preview smooth.
+        int floorFps = 24;
+
+        // Clamp floor to the range supported by the format
+        double actualFloor = Math.Max(floorFps, bestRange.MinFrameRate);
+
+        try
+        {
+            // MinFrameDuration = shortest frame = fastest FPS (ceiling)
+            device.ActiveVideoMinFrameDuration = new CMTime(1, (int)targetFps);
+            // MaxFrameDuration = longest frame  = slowest FPS (floor, allows longer exposure)
+            device.ActiveVideoMaxFrameDuration = new CMTime(1, (int)actualFloor);
+            Debug.WriteLine($"[NativeCameraiOS] Set FPS range: {actualFloor}-{targetFps}fps (mode={FormsControl.CaptureMode}, quality={FormsControl.VideoQuality})");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"[NativeCameraiOS] Failed to set FPS range: {e.Message}");
+        }
     }
 
     /// <summary>
@@ -3807,19 +3819,10 @@ public partial class NativeCamera : NSObject, IDisposable, INativeCamera, INotif
         {
             Debug.WriteLine("[NativeCamera.Apple] Starting video recording...");
 
-            // Apply target session preset based on VideoQuality (with fallbacks)
-            try
-            {
-                var (preset, _) = GetVideoPresetAndSettings(FormsControl.VideoQuality);
-                if (preset != null && _session.CanSetSessionPreset(preset))
-                {
-                    _session.BeginConfiguration();
-                    _session.SessionPreset = preset;
-                    _session.CommitConfiguration();
-                    Debug.WriteLine($"[NativeCamera.Apple] Using session preset: {preset}");
-                }
-            }
-            catch { }
+            // We use PresetInputPriority with manual format/FPS configuration,
+            // so we must NOT switch to a specific session preset here — doing so
+            // would override ActiveFormat and ActiveVideoMin/MaxFrameDuration,
+            // locking the camera to a fixed FPS and breaking low-light exposure.
 
             // Setup movie file output if not already created
             await SetupMovieFileOutput();
