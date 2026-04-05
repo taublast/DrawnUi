@@ -23,7 +23,7 @@ public partial class SkiaCamera
     private const bool ShouldOptimizeForNetworkUse = false; //might reduce heat and throttling
     private int _appleAwaitingPostStopPreviewFrame;
 
-    private Task _preRecFlushTask;
+    private AppleVideoToolboxEncoder _deferredPreRecordingEncoder;
     private AudioSample[] _preRecordedAudioSamples;  // Saved at pre-rec → live transition
 
     // Pre-allocated buffer for pre-recording (avoids lag spike on record button press)
@@ -58,6 +58,8 @@ public partial class SkiaCamera
     private readonly object _liveAudioWriterLock = new object();
     private List<IntPtr> _liveAudioMemoryToFree;  // Memory to free after writer finishes
     private bool _liveAudioWriterPreAllocated;  // True if writer is created but not yet started
+    private string _liveVideoWriterWarmupSignature;
+    private Task _liveVideoWriterWarmupTask;
 
     // Monotonic timestamp (ns) of the last successfully submitted pre-recording video frame.
     // Used to end-trim audio samples that arrived AFTER the last video frame (e.g. during a lag spike)
@@ -143,6 +145,8 @@ public partial class SkiaCamera
     /// </summary>
     private void DisposeSharedMetalContext()
     {
+        DisposeDeferredPreRecordingEncoder();
+
         _sharedMetalCache?.Dispose();
         _sharedMetalCache = null;
 
@@ -151,8 +155,95 @@ public partial class SkiaCamera
 
         _sharedMetalCommandQueue = null;
         _sharedMetalDevice = null;
+        _liveVideoWriterWarmupSignature = null;
+        _liveVideoWriterWarmupTask = null;
 
         Debug.WriteLine("[SkiaCamera.Apple] Shared Metal context disposed");
+    }
+
+    /// <summary>
+    /// Warms the live AVAssetWriter path ahead of the first prerecord → live transition.
+    /// This shifts the first-use writer/adaptor/pixel-buffer cost earlier so the seam does not stall.
+    /// </summary>
+    private async Task EnsureLiveVideoWriterPathWarmedAsync(int width, int height, int fps, int rotation)
+    {
+        var signature = $"{width}x{height}@{fps}:{rotation}";
+
+        if (_liveVideoWriterWarmupSignature == signature)
+        {
+            return;
+        }
+
+        if (_liveVideoWriterWarmupTask != null)
+        {
+            await _liveVideoWriterWarmupTask;
+            if (_liveVideoWriterWarmupSignature == signature)
+            {
+                return;
+            }
+        }
+
+        _liveVideoWriterWarmupTask = WarmLiveVideoWriterPathCoreAsync(width, height, fps, rotation, signature);
+        await _liveVideoWriterWarmupTask;
+    }
+
+    private async Task WarmLiveVideoWriterPathCoreAsync(int width, int height, int fps, int rotation, string signature)
+    {
+        string tempOutputPath = null;
+        AppleVideoToolboxEncoder warmEncoder = null;
+
+        try
+        {
+            warmEncoder = new AppleVideoToolboxEncoder();
+            warmEncoder.ParentCamera = this;
+            warmEncoder.IsPreRecordingMode = false;
+
+            if (_sharedEncodingContext != null)
+            {
+                warmEncoder.SetSharedMetalContext(_sharedMetalDevice, _sharedMetalCommandQueue, _sharedEncodingContext, _sharedMetalCache, _sharedQueuePin);
+            }
+
+            tempOutputPath = Path.Combine(Path.GetTempPath(), $"live_writer_warmup_{Guid.NewGuid():N}.mp4");
+
+            await warmEncoder.InitializeAsync(tempOutputPath, width, height, fps, false, rotation);
+            await warmEncoder.StartAsync();
+
+            using (warmEncoder.BeginFrame(TimeSpan.Zero, out var canvas, out _, rotation))
+            {
+                canvas.Clear(SKColors.Black);
+            }
+
+            await warmEncoder.SubmitFrameAsync();
+            await warmEncoder.StopAsync();
+
+            _liveVideoWriterWarmupSignature = signature;
+            Debug.WriteLine($"[SkiaCamera.Apple] Live video writer warm-up completed for {signature}");
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera.Apple] Live video writer warm-up failed: {ex.Message}");
+        }
+        finally
+        {
+            try
+            {
+                warmEncoder?.Dispose();
+            }
+            catch
+            {
+            }
+
+            if (!string.IsNullOrEmpty(tempOutputPath) && File.Exists(tempOutputPath))
+            {
+                try
+                {
+                    File.Delete(tempOutputPath);
+                }
+                catch
+                {
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -386,7 +477,7 @@ public partial class SkiaCamera
 
                 try
                 {
-                    using (appleEnc.BeginFrame(elapsed, out var canvas, out var info, DeviceRotation))
+                    using (appleEnc.BeginFrame(elapsed, out var canvas, out var info, DeviceRotation)) 
                     {
                         // If we have raw image, we need to handle rotation here
                         if (imageRotation != 0 || imageFlip)
@@ -738,6 +829,11 @@ public partial class SkiaCamera
         _diagEncHeight = (int)height;
         _diagBitrate = (long)Math.Max((long)width * height * 4, 2_000_000L);
         SetSourceFrameDimensions(width, height);
+
+        if (IsPreRecording && !preserveCurrentEncoder)
+        {
+            await EnsureLiveVideoWriterPathWarmedAsync(width, height, fps, RecordingLockedRotation);
+        }
 
         // Pass locked rotation to encoder for proper video orientation metadata (iOS-specific)
         // Initialize the NEW encoder
@@ -2056,6 +2152,129 @@ public partial class SkiaCamera
         System.Threading.Interlocked.Exchange(ref _appleAwaitingPostStopPreviewFrame, 1);
     }
 
+    private void DisposeDeferredPreRecordingEncoder()
+    {
+        if (_deferredPreRecordingEncoder == null)
+            return;
+
+        try
+        {
+            _deferredPreRecordingEncoder.Dispose();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera.Apple] Deferred pre-recording encoder disposal failed: {ex.Message}");
+        }
+        finally
+        {
+            _deferredPreRecordingEncoder = null;
+        }
+    }
+
+    private void TrimPreRecordedAudioToVideoDuration()
+    {
+        if (_preRecordedAudioSamples == null || _preRecordedAudioSamples.Length == 0)
+            return;
+
+        if (_lastPreRecVideoFrameMonoNs > 0)
+        {
+            long endCutoffNs = _lastPreRecVideoFrameMonoNs + 25_000_000;
+            int endTrimIndex = _preRecordedAudioSamples.Length;
+            for (int i = _preRecordedAudioSamples.Length - 1; i >= 0; i--)
+            {
+                if (_preRecordedAudioSamples[i].TimestampNs <= endCutoffNs)
+                {
+                    endTrimIndex = i + 1;
+                    break;
+                }
+            }
+
+            if (endTrimIndex < _preRecordedAudioSamples.Length)
+            {
+                int removed = _preRecordedAudioSamples.Length - endTrimIndex;
+                var endTrimmed = new AudioSample[endTrimIndex];
+                Array.Copy(_preRecordedAudioSamples, 0, endTrimmed, 0, endTrimIndex);
+                _preRecordedAudioSamples = endTrimmed;
+                Debug.WriteLine($"[SkiaCamera.Apple] Deferred pre-rec audio end-trim removed {removed} trailing samples past last video frame");
+            }
+        }
+
+        if (_preRecordedAudioSamples.Length == 0)
+            return;
+
+        double videoDurationMs = _preRecordingDurationTracked.TotalMilliseconds;
+        long lastSampleTimestamp = _preRecordedAudioSamples[_preRecordedAudioSamples.Length - 1].TimestampNs;
+        long firstSampleTimestamp = _preRecordedAudioSamples[0].TimestampNs;
+        double audioDurationMs = (lastSampleTimestamp - firstSampleTimestamp) / 1_000_000.0;
+
+        Debug.WriteLine($"[SkiaCamera.Apple] Deferred pre-rec audio sync - Video: {videoDurationMs:F0}ms, Audio: {audioDurationMs:F0}ms");
+
+        if (audioDurationMs <= videoDurationMs + 50)
+            return;
+
+        long cutoffTimestampNs = lastSampleTimestamp - (long)(videoDurationMs * 1_000_000);
+        int startIndex = 0;
+        for (int i = 0; i < _preRecordedAudioSamples.Length; i++)
+        {
+            if (_preRecordedAudioSamples[i].TimestampNs >= cutoffTimestampNs)
+            {
+                startIndex = i;
+                break;
+            }
+        }
+
+        if (startIndex <= 0)
+            return;
+
+        int trimmedLength = _preRecordedAudioSamples.Length - startIndex;
+        var trimmedSamples = new AudioSample[trimmedLength];
+        Array.Copy(_preRecordedAudioSamples, startIndex, trimmedSamples, 0, trimmedLength);
+        _preRecordedAudioSamples = trimmedSamples;
+        Debug.WriteLine($"[SkiaCamera.Apple] Deferred pre-rec audio start-trim removed {startIndex} samples, keeping {trimmedLength}");
+    }
+
+    private async Task FinalizeDeferredPreRecordingEncoderAsync()
+    {
+        if (_deferredPreRecordingEncoder == null)
+            return;
+
+        var deferredEncoder = _deferredPreRecordingEncoder;
+        _deferredPreRecordingEncoder = null;
+
+        try
+        {
+            Debug.WriteLine("[SkiaCamera.Apple] Finalizing deferred pre-recording encoder at stop");
+            var preRecResult = await deferredEncoder.StopAsync();
+            if (preRecResult != null && !string.IsNullOrEmpty(preRecResult.FilePath))
+            {
+                _preRecordingFilePath = preRecResult.FilePath;
+                _preRecordingDurationTracked = deferredEncoder.EncodingDuration;
+                Debug.WriteLine($"[SkiaCamera.Apple] Deferred pre-recording file ready: {_preRecordingFilePath}");
+                Debug.WriteLine($"[SkiaCamera.Apple] Deferred pre-recording duration: {_preRecordingDurationTracked.TotalSeconds:F3}s");
+                TrimPreRecordedAudioToVideoDuration();
+            }
+            else
+            {
+                Debug.WriteLine("[SkiaCamera.Apple] Deferred pre-recording flush produced no file");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[SkiaCamera.Apple] Deferred pre-recording flush failed: {ex}");
+        }
+        finally
+        {
+            try
+            {
+                deferredEncoder.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[SkiaCamera.Apple] Deferred pre-recording encoder final dispose failed: {ex.Message}");
+            }
+        }
+    }
+
     private async Task StopRealtimeVideoProcessingInternal()
     {
         ICaptureVideoEncoder encoder = null;
@@ -2109,22 +2328,6 @@ public partial class SkiaCamera
                     Debug.WriteLine($"[StopRealtimeVideoProcessing] TIMING: StopLiveAudioWriter took {stopwatchStep.ElapsedMilliseconds}ms, file: {liveAudioSize:F1} KB");
                 }
 
-                // Write pre-recorded audio samples to file if present (small, ~5 sec max)
-                if (_preRecordedAudioSamples != null && _preRecordedAudioSamples.Length > 0)
-                {
-                    stopwatchStep.Restart();
-                    Debug.WriteLine($"[StopRealtimeVideoProcessing] Writing {_preRecordedAudioSamples.Length} pre-rec audio samples");
-                    preRecAudioFilePath = Path.Combine(
-                        Path.GetTempPath(),
-                        $"prerec_audio_{Guid.NewGuid():N}.m4a"
-                    );
-                    preRecAudioFilePath = await WriteAudioSamplesToM4AAsync(_preRecordedAudioSamples, preRecAudioFilePath);
-                    stopwatchStep.Stop();
-                    var preRecAudioSize = File.Exists(preRecAudioFilePath) ? new FileInfo(preRecAudioFilePath).Length / 1024.0 : 0;
-                    Debug.WriteLine($"[StopRealtimeVideoProcessing] TIMING: WritePreRecAudio took {stopwatchStep.ElapsedMilliseconds}ms, file: {preRecAudioSize:F1} KB");
-                    _preRecordedAudioSamples = null;  // Clean up
-                }
-
                 // Clear any remaining buffer
                 _audioBuffer = null;
             }
@@ -2155,13 +2358,35 @@ public partial class SkiaCamera
             stopwatchStep.Stop();
             Debug.WriteLine($"[StopRealtimeVideoProcessing] TIMING: StopEncoder took {stopwatchStep.ElapsedMilliseconds}ms");
 
-            // Wait for overlap background flush if pending
-            if (_preRecFlushTask != null)
+            if (_deferredPreRecordingEncoder != null)
             {
-                Debug.WriteLine("[StopRealtimeVideoProcessing] Waiting for background pre-recording flush to complete...");
-                await _preRecFlushTask;
-                _preRecFlushTask = null;
-                Debug.WriteLine("[StopRealtimeVideoProcessing] Pre-recording flush completed.");
+                stopwatchStep.Restart();
+                await FinalizeDeferredPreRecordingEncoderAsync();
+                stopwatchStep.Stop();
+                Debug.WriteLine($"[StopRealtimeVideoProcessing] TIMING: FinalizeDeferredPreRec took {stopwatchStep.ElapsedMilliseconds}ms");
+            }
+
+            if (_preRecordedAudioSamples != null && _preRecordedAudioSamples.Length > 0)
+            {
+                if (!string.IsNullOrEmpty(_preRecordingFilePath))
+                {
+                    stopwatchStep.Restart();
+                    Debug.WriteLine($"[StopRealtimeVideoProcessing] Writing {_preRecordedAudioSamples.Length} pre-rec audio samples");
+                    preRecAudioFilePath = Path.Combine(
+                        Path.GetTempPath(),
+                        $"prerec_audio_{Guid.NewGuid():N}.m4a"
+                    );
+                    preRecAudioFilePath = await WriteAudioSamplesToM4AAsync(_preRecordedAudioSamples, preRecAudioFilePath);
+                    stopwatchStep.Stop();
+                    var preRecAudioSize = File.Exists(preRecAudioFilePath) ? new FileInfo(preRecAudioFilePath).Length / 1024.0 : 0;
+                    Debug.WriteLine($"[StopRealtimeVideoProcessing] TIMING: WritePreRecAudio took {stopwatchStep.ElapsedMilliseconds}ms, file: {preRecAudioSize:F1} KB");
+                }
+                else
+                {
+                    Debug.WriteLine("[StopRealtimeVideoProcessing] Skipping pre-rec audio export because no pre-recording video file was produced");
+                }
+
+                _preRecordedAudioSamples = null;
             }
 
             // OPTIMIZED: Skip audio concatenation - pass both files directly to MuxVideosInternal
@@ -2323,6 +2548,7 @@ public partial class SkiaCamera
             // so OS will clean them up eventually.
 
             _captureVideoEncoder = null;
+            DisposeDeferredPreRecordingEncoder();
 
             SetIsRecordingVideo(false);
             ResumeApplePreviewAfterStop();
@@ -2367,6 +2593,7 @@ public partial class SkiaCamera
             encoder = _captureVideoEncoder;
             _captureVideoEncoder = null;
             await encoder?.StopAsync();
+            DisposeDeferredPreRecordingEncoder();
 
             // Give any in-flight CaptureFrame calls time to complete
             await Task.Delay(50);
@@ -2462,6 +2689,8 @@ public partial class SkiaCamera
                     // Ignore disposal errors
                 }
             }
+
+            DisposeDeferredPreRecordingEncoder();
 
             // NOTE: IsBusy is managed by the caller (StopVideoRecording)
         }
@@ -2608,115 +2837,12 @@ public partial class SkiaCamera
                     await StartNativeVideoRecording();
                 }
                 
-                // 5. Background Stop of Old Encoder (if overlap used)
-                if (oldEncoderToStop != null)
+                if (oldEncoderToStop is AppleVideoToolboxEncoder oldAppleEncoder)
                 {
-                    Debug.WriteLine("[StartVideoRecording] Spawning background task to stop/flush old encoder");
-
-                    _preRecFlushTask = Task.Run(async () =>
-                    {
-                        try
-                        {
-                            // Pre-rec already stopped accepting frames (StopAcceptingFrames called earlier)
-                            // Just flush the buffer to file
-                            var preRecResult = await oldEncoderToStop.StopAsync();
-                            Debug.WriteLine("[StartVideoRecording] BkTask: Old encoder stopped");
-
-                            // Capture result
-                            if (preRecResult != null && !string.IsNullOrEmpty(preRecResult.FilePath))
-                            {
-                                _preRecordingFilePath = preRecResult.FilePath;
-                                // Update with FINAL duration for muxer (from actual frame timestamps, not wall-clock)
-                                _preRecordingDurationTracked = oldEncoderToStop.EncodingDuration;
-                                Debug.WriteLine($"[StartVideoRecording] BkTask: Captured pre-recording file: {_preRecordingFilePath}");
-                                Debug.WriteLine($"[StartVideoRecording] BkTask: Final video duration: {_preRecordingDurationTracked.TotalSeconds:F3}s");
-
-                                // AUDIO SYNC FIX: Trim audio to match ACTUAL video time window.
-                                // Two-phase trim:
-                                //   Phase 1 (END-TRIM): Remove audio samples that arrived AFTER the last
-                                //     pre-rec video frame. During a lag spike, audio (AVAudioEngine, own thread)
-                                //     keeps flowing while video frames stall, creating trailing audio with no
-                                //     corresponding video. Uses monotonic clock (same as audio timestamps).
-                                //   Phase 2 (START-TRIM): Existing logic — trim from start so total audio
-                                //     duration matches video duration.
-                                if (_preRecordedAudioSamples != null && _preRecordedAudioSamples.Length > 0)
-                                {
-                                    // Phase 1: END-TRIM — cut audio samples past last video frame
-                                    if (_lastPreRecVideoFrameMonoNs > 0)
-                                    {
-                                        // Allow ~1 audio buffer tolerance (~23ms at 44.1kHz/1024 frames)
-                                        long endCutoffNs = _lastPreRecVideoFrameMonoNs + 25_000_000;
-                                        int endTrimIndex = _preRecordedAudioSamples.Length;
-                                        for (int i = _preRecordedAudioSamples.Length - 1; i >= 0; i--)
-                                        {
-                                            if (_preRecordedAudioSamples[i].TimestampNs <= endCutoffNs)
-                                            {
-                                                endTrimIndex = i + 1;
-                                                break;
-                                            }
-                                        }
-
-                                        if (endTrimIndex < _preRecordedAudioSamples.Length)
-                                        {
-                                            int removed = _preRecordedAudioSamples.Length - endTrimIndex;
-                                            var endTrimmed = new AudioSample[endTrimIndex];
-                                            Array.Copy(_preRecordedAudioSamples, 0, endTrimmed, 0, endTrimIndex);
-                                            _preRecordedAudioSamples = endTrimmed;
-                                            Debug.WriteLine($"[StartVideoRecording] BkTask: AUDIO END-TRIM - Removed {removed} trailing samples past last video frame (lag spike compensation)");
-                                        }
-                                        else
-                                        {
-                                            Debug.WriteLine($"[StartVideoRecording] BkTask: AUDIO END-TRIM - No trailing samples to remove");
-                                        }
-                                    }
-
-                                    // Phase 2: START-TRIM — match total duration to video
-                                    var videoDurationMs = _preRecordingDurationTracked.TotalMilliseconds;
-                                    var lastSampleTimestamp = _preRecordedAudioSamples[_preRecordedAudioSamples.Length - 1].TimestampNs;
-                                    var firstSampleTimestamp = _preRecordedAudioSamples[0].TimestampNs;
-                                    var audioDurationMs = (lastSampleTimestamp - firstSampleTimestamp) / 1_000_000.0;
-
-                                    Debug.WriteLine($"[StartVideoRecording] BkTask: Audio sync - Video: {videoDurationMs:F0}ms, Audio: {audioDurationMs:F0}ms");
-
-                                    if (audioDurationMs > videoDurationMs + 50)
-                                    {
-                                        // Trim audio from START to match video duration
-                                        var cutoffTimestampNs = lastSampleTimestamp - (long)(videoDurationMs * 1_000_000);
-                                        int startIndex = 0;
-                                        for (int i = 0; i < _preRecordedAudioSamples.Length; i++)
-                                        {
-                                            if (_preRecordedAudioSamples[i].TimestampNs >= cutoffTimestampNs)
-                                            {
-                                                startIndex = i;
-                                                break;
-                                            }
-                                        }
-
-                                        if (startIndex > 0)
-                                        {
-                                            var trimmedLength = _preRecordedAudioSamples.Length - startIndex;
-                                            var trimmedSamples = new AudioSample[trimmedLength];
-                                            Array.Copy(_preRecordedAudioSamples, startIndex, trimmedSamples, 0, trimmedLength);
-                                            _preRecordedAudioSamples = trimmedSamples;
-                                            Debug.WriteLine($"[StartVideoRecording] BkTask: AUDIO START-TRIM - Trimmed {startIndex} samples, keeping {trimmedLength} to match video");
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                Debug.WriteLine($"[StartVideoRecording] BkTask WARNING: No file path returned!");
-                            }
-
-                            // Dispose
-                            oldEncoderToStop.Dispose();
-                            Debug.WriteLine("[StartVideoRecording] BkTask: Old encoder disposed");
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine($"[StartVideoRecording] BkTask Error: {ex}");
-                        }
-                    });
+                    DisposeDeferredPreRecordingEncoder();
+                    oldAppleEncoder.PrepareForDeferredPreRecordingFlush();
+                    _deferredPreRecordingEncoder = oldAppleEncoder;
+                    Debug.WriteLine("[StartVideoRecording] Deferred pre-recording flush until final stop");
                 }
             }
             // Normal recording (no pre-recording)
@@ -2745,6 +2871,7 @@ public partial class SkiaCamera
             SetIsPreRecording(false);
             IsBusy = false;
             RecordingLockedRotation = -1; // Reset on error
+            DisposeDeferredPreRecordingEncoder();
             ClearPreRecordingBuffer();
             RecordingFailed?.Invoke(this, ex);
             throw;

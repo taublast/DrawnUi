@@ -914,6 +914,19 @@ namespace DrawnUi.Camera
             System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder] StopAcceptingFrames called - pre-recording frozen at {EncodingDuration.TotalSeconds:F3}s");
         }
 
+        public void PrepareForDeferredPreRecordingFlush()
+        {
+            if (!IsPreRecordingMode)
+                return;
+
+            StopAcceptingFrames();
+            _isRecording = false;
+            _progressTimer?.Dispose();
+            _progressTimer = null;
+            EncodingStatus = "BufferedPrerecordPendingFlush";
+            System.Diagnostics.Debug.WriteLine($"[AppleVideoToolboxEncoder #{_instanceId}] Deferred pre-recording flush armed");
+        }
+
         /// <summary>
         /// Gets the timestamp of the first live frame received (used for seamless handoff).
         /// Returns -1 if no live frame has been received yet.
