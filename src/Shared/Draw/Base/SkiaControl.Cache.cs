@@ -154,7 +154,7 @@ public partial class SkiaControl
                     {
                         if (UsesCacheDoubleBuffering
                             //|| UsingCacheType == SkiaCacheType.Image //to just reuse same surface
-                            || UsingCacheType == SkiaCacheType.ImageComposite)
+                            || IsCacheComposite)
                         {
                             RenderObjectPrevious = _renderObject; //send it to back for special cases
                         }
@@ -341,12 +341,15 @@ public partial class SkiaControl
                 if (UseCache == SkiaCacheType.ImageDoubleBuffered || UseCache == SkiaCacheType.GPU)
                     return SkiaCacheType.Image;
 
-                if (UseCache == SkiaCacheType.ImageComposite)
+                if (UseCache == SkiaCacheType.ImageComposite || UseCache == SkiaCacheType.ImageCompositeGPU)
                     return SkiaCacheType.Operations;
             }
 
             if (UseCache == SkiaCacheType.GPU && !Super.GpuCacheEnabled)
                 return SkiaCacheType.Image;
+
+            if (UseCache == SkiaCacheType.ImageCompositeGPU && !Super.GpuCacheEnabled)
+                return SkiaCacheType.ImageComposite;
 
             //if (EffectPostRenderer != null 
             //    && (UseCache == SkiaCacheType.None || UseCache == SkiaCacheType.Operations))
@@ -357,6 +360,14 @@ public partial class SkiaControl
                 return SkiaCacheType.Operations;
 
             return UseCache;
+        }
+    }
+
+    public bool IsCacheComposite
+    {
+        get
+        {
+            return UsingCacheType == SkiaCacheType.ImageComposite || UsingCacheType == SkiaCacheType.ImageCompositeGPU;
         }
     }
 
@@ -424,12 +435,12 @@ public partial class SkiaControl
 
                     reuseSurfaceFrom.PreserveSourceFromDispose = true; //we will dispose that source in this new object
 
-                    if (usingCacheType != SkiaCacheType.ImageComposite)
+                    if (!IsCacheComposite)
                         surface.Canvas.Clear();
                 }
                 else
                 {
-                    bool isGpu = usingCacheType == SkiaCacheType.GPU;
+                    bool isGpu = usingCacheType == SkiaCacheType.GPU || usingCacheType == SkiaCacheType.ImageCompositeGPU;
                     surface = CreateSurface(width, height, isGpu);
                 }
 
@@ -518,6 +529,7 @@ public partial class SkiaControl
             return cache == SkiaCacheType.Image
                    || cache == SkiaCacheType.GPU
                    || cache == SkiaCacheType.ImageComposite
+                   || cache == SkiaCacheType.ImageCompositeGPU
                    || cache == SkiaCacheType.ImageDoubleBuffered;
         }
     }
@@ -540,7 +552,7 @@ public partial class SkiaControl
             var cacheOffscreen = RenderObjectPrevious;
             var needBuild = false;
 
-            if (UsingCacheType == SkiaCacheType.ImageComposite)
+            if (IsCacheComposite)
             {
                 if (RenderObjectPreviousNeedsUpdate)
                 {
@@ -848,7 +860,7 @@ public partial class SkiaControl
     {
         InvalidateCache();
 
-        if (UsingCacheType == SkiaCacheType.ImageComposite)
+        if (IsCacheComposite)
         {
             RenderObjectPreviousNeedsUpdate = true;
         }
@@ -1078,7 +1090,7 @@ public partial class SkiaControl
         //tried to reuse surface for image SkiaCacheType.Image
         //but is seems to be GCed after GC hits randomly  along with some other object, like shader or something unsure
         //so safer not to reusage at this stage
-        if (UsingCacheType == SkiaCacheType.ImageComposite)//_ || UsingCacheType == SkiaCacheType.Image)
+        if (IsCacheComposite)//_ || UsingCacheType == SkiaCacheType.Image)
         {
             oldObject = RenderObjectPrevious;
         }

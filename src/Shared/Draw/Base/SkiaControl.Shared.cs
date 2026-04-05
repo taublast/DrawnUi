@@ -7301,7 +7301,7 @@ namespace DrawnUi.Draw
                 {
                     Update();
                 }
-                if (UsingCacheType == SkiaCacheType.ImageComposite)
+                if (IsCacheComposite)
                 {
                     DestroyRenderingObject();
                 }
@@ -7445,7 +7445,7 @@ namespace DrawnUi.Draw
 
             if (!WasMeasured || UpdateLocks > 0)
             {
-                if (UsingCacheType == SkiaCacheType.ImageComposite)
+                if (IsCacheComposite)
                 {
                     DestroyRenderingObject();
                 }
@@ -7896,7 +7896,7 @@ namespace DrawnUi.Draw
 
         public virtual void OnChildAdded(SkiaControl child)
         {
-            if (UsingCacheType == SkiaCacheType.ImageComposite)
+            if (IsCacheComposite)
             {
                 TrackChildAsDirty(child);
             }
@@ -7906,7 +7906,7 @@ namespace DrawnUi.Draw
 
         public virtual void OnChildRemoved(SkiaControl child)
         {
-            if (UsingCacheType == SkiaCacheType.ImageComposite)
+            if (IsCacheComposite)
             {
                 TrackChildAsDirty(child);
             }

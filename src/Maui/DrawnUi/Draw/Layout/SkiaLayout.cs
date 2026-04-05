@@ -1143,7 +1143,7 @@ namespace DrawnUi.Draw
         /// <param name="destination"></param>
         void SetupRenderingWithComposition(DrawingContext ctx)
         {
-            if (UsingCacheType == SkiaCacheType.ImageComposite)
+            if (IsCacheComposite)
             {
                 DirtyChildrenInternal.Clear();
 
