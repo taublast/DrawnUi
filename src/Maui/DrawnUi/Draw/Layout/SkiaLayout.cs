@@ -1170,12 +1170,11 @@ namespace DrawnUi.Draw
                     var asSpan = CollectionsMarshal.AsSpan(RenderTree);
                     foreach (var cell in asSpan)
                     {
-                        //adjust by Left,Top,TranslateX,TranslateY
-                        //todo maybe others
+                        //use full transform-aware bounds (handles rotation, scale, skew, perspective)
                         if (!DirtyChildrenInternal.Contains(cell.Control) &&
                             DirtyChildrenInternal.Any(dirtyChild =>
-                                dirtyChild.ApplyTransforms(dirtyChild.DirtyRegion)
-                                    .IntersectsWith(cell.Control.ApplyTransforms(cell.Control.DirtyRegion))))
+                                dirtyChild.GetTransformedDirtyBounds()
+                                    .IntersectsWith(cell.Control.GetTransformedDirtyBounds())))
                         {
                             DirtyChildrenInternal.Add(cell.Control);
                         }
@@ -1221,7 +1220,7 @@ namespace DrawnUi.Draw
                     var count = 0;
                     foreach (var dirtyChild in DirtyChildrenInternal)
                     {
-                        var clip = dirtyChild.ApplyTransforms(dirtyChild.DirtyRegion);
+                        var clip = dirtyChild.GetTransformedDirtyBounds();
                         clip.Offset(offset);
                         //clip.Inflate(0.4f, 0.4f);
 

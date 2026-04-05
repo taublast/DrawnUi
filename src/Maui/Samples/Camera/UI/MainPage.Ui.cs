@@ -73,7 +73,7 @@ namespace CameraTests.Views
 
                             new SkiaLayer()
                             {
-                                UseCache = SkiaCacheType.GPU,
+                                UseCache = SkiaCacheType.ImageCompositeGPU,
                                 VerticalOptions = LayoutOptions.Fill,
                                 Children =
                                 {
