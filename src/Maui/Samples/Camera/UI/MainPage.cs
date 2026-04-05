@@ -245,7 +245,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
             AttachHardware(false);
 
             CameraControl.PermissionsResult += OnPermissionsResultChanged;
-            CameraControl.StateChanged += CameraControlOnStateChanged;
+            CameraControl.StateChanged += OnCameraStateChanged;
             CameraControl.CaptureSuccess += OnCaptureSuccess;
             CameraControl.CaptureFailed += OnCaptureFailed;
             CameraControl.OnError += OnCameraError;
@@ -264,7 +264,7 @@ public partial class MainPage : BasePageReloadable, IDisposable
             if (CameraControl != null)
             {
                 CameraControl.PermissionsResult -= OnPermissionsResultChanged;
-                CameraControl.StateChanged -= CameraControlOnStateChanged;
+                CameraControl.StateChanged -= OnCameraStateChanged;
                 CameraControl.CaptureSuccess -= OnCaptureSuccess;
                 CameraControl.CaptureFailed -= OnCaptureFailed;
                 CameraControl.OnError -= OnCameraError;
@@ -297,11 +297,22 @@ public partial class MainPage : BasePageReloadable, IDisposable
         }
     }
 
-    private void CameraControlOnStateChanged(object sender, HardwareState e)
+    private void OnCameraStateChanged(object sender, HardwareState e)
     {
         if (e == HardwareState.On)
         {
+            if (CameraControl.Display != null)
+            {
+                CameraControl.Display.Blur = 0;
+            }
             RefreshGpsLocationIfNeeded();
+        }
+        else
+        {
+            if (CameraControl.Display != null)
+            {
+                CameraControl.Display.Blur = 10;
+            }
         }
     }
 
@@ -526,6 +537,8 @@ public partial class MainPage : BasePageReloadable, IDisposable
             var isRecordingVideo = CameraControl.CaptureMode == CaptureModeType.Video &&
                                    (CameraControl.IsRecording || CameraControl.IsPreRecording);
 
+            bool showAppUi = !isRecordingVideo;
+
             if (_settingsDrawer != null)
             {
                 if (isRecordingVideo)
@@ -533,17 +546,17 @@ public partial class MainPage : BasePageReloadable, IDisposable
                     _settingsDrawer.IsOpen = false;
                 }
 
-                _settingsDrawer.IsVisible = !isRecordingVideo;
+                _settingsDrawer.IsVisible = showAppUi;
             }
 
             if (_headerPanel != null)
             {
-                _headerPanel.IsVisible = !isRecordingVideo;
+                _headerPanel.IsVisible = showAppUi;
             }
 
             if (_cameraControlsPanel != null)
             {
-                _cameraControlsPanel.IsVisible = !isRecordingVideo;
+                _cameraControlsPanel.IsVisible = showAppUi;
             }
 
             if (_recordingStopButton != null)
