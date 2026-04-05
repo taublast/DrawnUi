@@ -52,7 +52,6 @@ namespace CameraTests.Views
                         VerticalOptions = LayoutOptions.Fill,
                         Children =
                         {
-
                             // Fullscreen Camera preview
                             new AppCamera()
                                 {
@@ -72,54 +71,63 @@ namespace CameraTests.Views
                                     }
                                 }),
 
+                            new SkiaLayer()
+                            {
+                                UseCache = SkiaCacheType.GPU,
+                                VerticalOptions = LayoutOptions.Fill,
+                                Children =
+                                {
 #if WINDOWS || MACCATALYST
                             CreateStageEdgeOverlay(true),
                             CreateStageEdgeOverlay(false),
 #endif
-                            CreateHeaderPanel()
-                                .Assign(out _headerPanel),
+                                    CreateHeaderPanel()
+                                        .Assign(out _headerPanel),
+                                    CreateCameraControlsPanel()
+                                        .Assign(out _cameraControlsPanel),
+                                    CreateRecordingStopButton(),
 
-
-                            CreateCameraControlsPanel()
-                                .Assign(out _cameraControlsPanel),
-                            CreateRecordingStopButton(),
-
-                            // Settings Drawer (slides up from bottom)
-                            new SkiaDrawer()
-                                {
-                                    Margin = new Thickness(2, 0, 2, 0),
-                                    HeaderSize = 40,
-                                    Direction = DrawerDirection.FromBottom,
-                                    VerticalOptions = LayoutOptions.End,
-                                    HorizontalOptions = LayoutOptions.Fill,
-                                    MaximumHeightRequest = 300,
-                                    IsOpen = false,
-                                    BlockGesturesBelow = true,
-                                    IgnoreWrongDirection = true,
-                                    ZIndex = 60,
-                                    Content = new SkiaShape()
-                                    {
-                                        Type = ShapeType.Rectangle,
-                                        CornerRadius = new CornerRadius(26, 26, 0, 0),
-                                        HorizontalOptions = LayoutOptions.Fill,
-                                        VerticalOptions = LayoutOptions.Fill,
-                                        BackgroundColor = ColorPanel, // Color.FromArgb("#FE0A101A"),
-                                        StrokeWidth = 1,
-                                        StrokeColor = Color.FromArgb("#3311C5BF"),
-                                        Children =
+                                    // Settings Drawer (slides up from bottom)
+                                    new SkiaDrawer()
                                         {
-                                            new SkiaLayout()
+                                            Margin = new Thickness(2, 0, 2, 0),
+                                            HeaderSize = 40,
+                                            Direction = DrawerDirection.FromBottom,
+                                            VerticalOptions = LayoutOptions.End,
+                                            HorizontalOptions = LayoutOptions.Fill,
+                                            MaximumHeightRequest = 300,
+                                            IsOpen = false,
+                                            BlockGesturesBelow = true,
+                                            IgnoreWrongDirection = true,
+                                            ZIndex = 60,
+                                            Content = new SkiaShape()
                                             {
+                                                Type = ShapeType.Rectangle,
+                                                CornerRadius = new CornerRadius(26, 26, 0, 0),
                                                 HorizontalOptions = LayoutOptions.Fill,
                                                 VerticalOptions = LayoutOptions.Fill,
-                                                Children = { CreateDrawerHeader(), CreateDrawerContent() }
+                                                BackgroundColor = ColorPanel, // Color.FromArgb("#FE0A101A"),
+                                                StrokeWidth = 1,
+                                                StrokeColor = Color.FromArgb("#3311C5BF"),
+                                                Children =
+                                                {
+                                                    new SkiaLayout()
+                                                    {
+                                                        HorizontalOptions = LayoutOptions.Fill,
+                                                        VerticalOptions = LayoutOptions.Fill,
+                                                        Children =
+                                                        {
+                                                            CreateDrawerHeader(), CreateDrawerContent()
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
-                                    }
+                                        .Assign(out _settingsDrawer),
+                                    _previewOverlay,
                                 }
-                                .Assign(out _settingsDrawer),
+                            },
 
-                            _previewOverlay,
 #if DEBUG
                             new SkiaLabelFps()
                             {
@@ -158,7 +166,7 @@ namespace CameraTests.Views
             {
                 Type = ShapeType.Rectangle,
                 InputTransparent = true,
-                UseCache = SkiaCacheType.GPU,
+                UseCache = SkiaCacheType.Image,
                 HeightRequest = top ? 220 : 260,
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = top ? LayoutOptions.Start : LayoutOptions.End,
@@ -191,7 +199,7 @@ namespace CameraTests.Views
                 {
                     new SkiaShape()
                     {
-                        UseCache = SkiaCacheType.GPU,
+                        UseCache = SkiaCacheType.Image,
                         Type = ShapeType.Rectangle,
                         CornerRadius = 28,
                         Margin = new Thickness(18, 18, 18, 0),
@@ -402,7 +410,7 @@ namespace CameraTests.Views
         {
             return new SkiaShape()
             {
-                UseCache = SkiaCacheType.GPU,
+                UseCache = SkiaCacheType.Image,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.End,
                 Margin = new Thickness(0, 0, 0, 50),
@@ -473,10 +481,7 @@ namespace CameraTests.Views
                                             .Assign(out _settingsButtonIcon)
                                     }
                                 }
-                                .OnTapped(me =>
-                                {
-                                    ToggleSettingsDrawer();
-                                }),
+                                .OnTapped(me => { ToggleSettingsDrawer(); }),
 
                             // Flash button
                             new SkiaShape()
@@ -504,10 +509,7 @@ namespace CameraTests.Views
                                     }
                                 }
                                 .Assign(out _buttonFlash)
-                                .OnTapped(me =>
-                                {
-                                    ToggleFlash();
-                                })
+                                .OnTapped(me => { ToggleFlash(); })
                                 .ObserveProperty(CameraControl, nameof(CameraControl.FlashMode), me =>
                                 {
                                     _iconButtonFlash.Source = CameraControl.FlashMode == FlashMode.Off
@@ -595,7 +597,6 @@ namespace CameraTests.Views
                                 }
                                 .Assign(out _buttonSelectCamera)
                                 .OnTapped(async me => { await SelectCamera(); })
-
                         }
                     }
                 }
@@ -606,7 +607,7 @@ namespace CameraTests.Views
         {
             return new SkiaShape()
                 {
-                    UseCache = SkiaCacheType.GPU,
+                    UseCache = SkiaCacheType.Image,
                     IsVisible = false,
                     ZIndex = 70,
                     HorizontalOptions = LayoutOptions.Center,
@@ -674,7 +675,7 @@ namespace CameraTests.Views
         {
             return new SkiaShape()
                 {
-                    UseCache = SkiaCacheType.GPU,
+                    UseCache = SkiaCacheType.Image,
                     HorizontalOptions = LayoutOptions.Fill,
                     Type = ShapeType.Rectangle,
                     BackgroundColor = Colors.Transparent,
@@ -712,7 +713,7 @@ namespace CameraTests.Views
 
             var tabBar = new SkiaShape()
             {
-                UseCache = SkiaCacheType.GPU,
+                UseCache = SkiaCacheType.Image,
                 Type = ShapeType.Rectangle,
                 CornerRadius = 22,
                 BackgroundColor = Color.FromArgb("#101825"),
@@ -828,15 +829,24 @@ namespace CameraTests.Views
                                     }
                                 })
                                 .OnTapped(async me => { await SelectAudioSource(); }),
-                            new SettingsButton("🔊", "Audio Mode") { TintColor = Color.FromArgb("#B45309"), }
+                            new SettingsButton("🔊", "Audio Mode")
+                                {
+                                    TintColor = Color.FromArgb("#B45309"),
+                                }
                                 .ObserveProperty(CameraControl, nameof(CameraControl.AudioMode),
                                     me => { me.Text = CameraControl.AudioMode.ToString(); })
                                 .OnTapped(async me => { await SelectAudioMode(); }),
 
                             //CreateDrawerSectionTitle("Formats", "Choose how the feed is captured"),
 
-                            new SettingsButton("🗂️", "Formats") { TintColor = Color.FromArgb("#4F46E5"), }
-                                .OnTapped(async me => { await ShowPhotoFormatPicker(); })
+                            new SettingsButton("🗂️", "Formats")
+                                {
+                                    TintColor = Color.FromArgb("#4F46E5"),
+                                }
+                                .OnTapped(async me =>
+                                {
+                                    await ShowPhotoFormatPicker();
+                                })
                                 .ObserveProperties(CameraControl,
                                     new[]
                                     {
@@ -846,17 +856,24 @@ namespace CameraTests.Views
                                     {
                                         try
                                         {
-                                            var formats = await CameraControl.GetAvailableCaptureFormatsAsync();
-                                            if (formats.Count > 0)
+                                            if (CameraControl.PhotoQuality == CaptureQuality.Manual)
                                             {
-                                                var index = CameraControl.PhotoFormatIndex;
-                                                if (index < 0)
+                                                var formats = await CameraControl.GetAvailableCaptureFormatsAsync();
+                                                if (formats.Count > 0)
                                                 {
-                                                    index = 0;
-                                                }
+                                                    var index = CameraControl.PhotoFormatIndex;
+                                                    if (index < 0)
+                                                    {
+                                                        index = 0;
+                                                    }
 
-                                                var format = formats.First(c => c.Index == index);
-                                                me.Text = $"{format.Description}";
+                                                    var format = formats.First(c => c.Index == index);
+                                                    me.Text = $"{format.Description}";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                me.Text = $"{CameraControl.PhotoQuality}";
                                             }
                                         }
                                         catch (Exception e)
@@ -867,6 +884,7 @@ namespace CameraTests.Views
                                     })
                                 .ObserveProperty(CameraControl, nameof(CameraControl.CaptureMode),
                                     me => { me.IsVisible = CameraControl.CaptureMode == CaptureModeType.Still; }),
+
                             new SettingsButton("🗂️", "Formats") { TintColor = Color.FromArgb("#4F46E5"), }
                                 .OnTapped(async me => { await ShowVideoFormatPicker(); })
                                 .ObserveProperties(CameraControl,
@@ -878,17 +896,24 @@ namespace CameraTests.Views
                                     {
                                         try
                                         {
-                                            var formats = await CameraControl.GetAvailableVideoFormatsAsync();
-                                            if (formats.Count > 0)
+                                            if (CameraControl.VideoQuality == VideoQuality.Manual)
                                             {
-                                                var index = CameraControl.VideoFormatIndex;
-                                                if (index < 0)
+                                                var formats = await CameraControl.GetAvailableVideoFormatsAsync();
+                                                if (formats.Count > 0)
                                                 {
-                                                    index = 0;
-                                                }
+                                                    var index = CameraControl.VideoFormatIndex;
+                                                    if (index < 0)
+                                                    {
+                                                        index = 0;
+                                                    }
 
-                                                var format = formats.First(c => c.Index == index);
-                                                me.Text = $"{format.Description}";
+                                                    var format = formats.First(c => c.Index == index);
+                                                    me.Text = $"{format.Description}";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                me.Text = $"{CameraControl.VideoQuality}";
                                             }
                                         }
                                         catch (Exception e)
@@ -904,10 +929,7 @@ namespace CameraTests.Views
                                     TintColor = Color.FromArgb("#E11D48"), IsVisible = false
                                 }
                                 .Assign(out _videoRecordButton)
-                                .OnTapped(async me =>
-                                {
-                                    await AbortVideoRecording();
-                                })
+                                .OnTapped(async me => { await AbortVideoRecording(); })
                                 .ObserveProperty(CameraControl, nameof(CameraControl.IsRecording),
                                     me =>
                                     {
@@ -958,13 +980,13 @@ namespace CameraTests.Views
                                             ? Color.FromArgb("#10B981")
                                             : Color.FromArgb("#6B7280");
                                     }),
-
-                            new SettingsButton("🎨", $"Effect: {ShaderEffectHelper.GetTitle(ShaderEffect.None)}") { TintColor = Color.FromArgb("#6B7280"), }
-                                .OnTapped(me => { CycleEffect(); })
-                                .ObserveProperty(CameraControl, nameof(CameraControl.UseRealtimeVideoProcessing), me =>
+                            new SettingsButton("🎨", $"Effect: {ShaderEffectHelper.GetTitle(ShaderEffect.None)}")
                                 {
-                                    me.IsVisible = CameraControl.UseRealtimeVideoProcessing;
-                                })
+                                    TintColor = Color.FromArgb("#6B7280"),
+                                }
+                                .OnTapped(me => { CycleEffect(); })
+                                .ObserveProperty(CameraControl, nameof(CameraControl.UseRealtimeVideoProcessing),
+                                    me => { me.IsVisible = CameraControl.UseRealtimeVideoProcessing; })
                                 .ObserveProperty(CameraControl, nameof(CameraControl.VideoEffect), me =>
                                 {
                                     var title = ShaderEffectHelper.GetTitle(CameraControl.VideoEffect);
@@ -973,8 +995,6 @@ namespace CameraTests.Views
                                         ? Color.FromArgb("#10B981")
                                         : Color.FromArgb("#6B7280");
                                 }),
-
-
                             new SettingsButton("🎧", "Audio Monitor: OFF") { TintColor = Color.FromArgb("#6B7280"), }
                                 .OnTapped(me => { IsAudioMonitoringEnabled = !IsAudioMonitoringEnabled; })
                                 .ObserveProperty(this, nameof(IsAudioMonitoringEnabled), me =>
@@ -984,7 +1004,6 @@ namespace CameraTests.Views
                                         ? Color.FromArgb("#10B981")
                                         : Color.FromArgb("#6B7280");
                                 }),
-
                             new SettingsButton("📊", "Visualizer") { TintColor = Color.FromArgb("#65A30D"), }
                                 .OnTapped(me => { CameraControl.SwitchVisualizer(); })
                                 .ObserveProperty(() => CameraControl, nameof(CameraControl.VisualizerName),
@@ -1001,7 +1020,6 @@ namespace CameraTests.Views
                             new SettingsButton("🎙️", "Speech: OFF") { TintColor = Color.FromArgb("#475569"), }
                                 .Assign(out _speechButton)
                                 .OnTapped(me => { ToggleSpeech(); }),
-
                         }
                     }
                 };
