@@ -59,6 +59,11 @@ public partial class SkiaCamera
     private List<IntPtr> _liveAudioMemoryToFree;  // Memory to free after writer finishes
     private bool _liveAudioWriterPreAllocated;  // True if writer is created but not yet started
 
+    // Monotonic timestamp (ns) of the last successfully submitted pre-recording video frame.
+    // Used to end-trim audio samples that arrived AFTER the last video frame (e.g. during a lag spike)
+    // so that audio and video buffers cover the same time window before muxing.
+    private long _lastPreRecVideoFrameMonoNs;
+
     /// <summary>
     /// iOS/MacCatalyst implementation: Pre-allocates the circular buffer for pre-recording.
     /// Called when EnablePreRecording is set to true, before user presses record.
@@ -489,6 +494,13 @@ public partial class SkiaCamera
                     _diagLastSubmitMs = _diagSubmitSw.Elapsed.TotalMilliseconds;
                     System.Threading.Interlocked.Increment(ref _diagSubmittedFrames);
                     CalculateRecordingFps();
+
+                    // Track monotonic time of last pre-rec frame (same clock as audio timestamps)
+                    // so we can end-trim audio that arrived after the last video frame during lag spikes
+                    if (IsPreRecording)
+                    {
+                        _lastPreRecVideoFrameMonoNs = (long)(Foundation.NSProcessInfo.ProcessInfo.SystemUptime * 1_000_000_000);
+                    }
                 }
                 finally
                 {
@@ -2493,6 +2505,7 @@ public partial class SkiaCamera
                 Debug.WriteLine("[StartVideoRecording] Transitioning to IsPreRecording (memory-only recording)");
                 SetIsPreRecording(true);
                 InitializePreRecordingBuffer();
+                _lastPreRecVideoFrameMonoNs = 0;
 
                 // Lock the current device rotation for the entire recording session
                 RecordingLockedRotation = DeviceRotation;
@@ -2618,9 +2631,46 @@ public partial class SkiaCamera
                                 Debug.WriteLine($"[StartVideoRecording] BkTask: Captured pre-recording file: {_preRecordingFilePath}");
                                 Debug.WriteLine($"[StartVideoRecording] BkTask: Final video duration: {_preRecordingDurationTracked.TotalSeconds:F3}s");
 
-                                // AUDIO SYNC FIX: Now trim audio to match ACTUAL video duration
+                                // AUDIO SYNC FIX: Trim audio to match ACTUAL video time window.
+                                // Two-phase trim:
+                                //   Phase 1 (END-TRIM): Remove audio samples that arrived AFTER the last
+                                //     pre-rec video frame. During a lag spike, audio (AVAudioEngine, own thread)
+                                //     keeps flowing while video frames stall, creating trailing audio with no
+                                //     corresponding video. Uses monotonic clock (same as audio timestamps).
+                                //   Phase 2 (START-TRIM): Existing logic — trim from start so total audio
+                                //     duration matches video duration.
                                 if (_preRecordedAudioSamples != null && _preRecordedAudioSamples.Length > 0)
                                 {
+                                    // Phase 1: END-TRIM — cut audio samples past last video frame
+                                    if (_lastPreRecVideoFrameMonoNs > 0)
+                                    {
+                                        // Allow ~1 audio buffer tolerance (~23ms at 44.1kHz/1024 frames)
+                                        long endCutoffNs = _lastPreRecVideoFrameMonoNs + 25_000_000;
+                                        int endTrimIndex = _preRecordedAudioSamples.Length;
+                                        for (int i = _preRecordedAudioSamples.Length - 1; i >= 0; i--)
+                                        {
+                                            if (_preRecordedAudioSamples[i].TimestampNs <= endCutoffNs)
+                                            {
+                                                endTrimIndex = i + 1;
+                                                break;
+                                            }
+                                        }
+
+                                        if (endTrimIndex < _preRecordedAudioSamples.Length)
+                                        {
+                                            int removed = _preRecordedAudioSamples.Length - endTrimIndex;
+                                            var endTrimmed = new AudioSample[endTrimIndex];
+                                            Array.Copy(_preRecordedAudioSamples, 0, endTrimmed, 0, endTrimIndex);
+                                            _preRecordedAudioSamples = endTrimmed;
+                                            Debug.WriteLine($"[StartVideoRecording] BkTask: AUDIO END-TRIM - Removed {removed} trailing samples past last video frame (lag spike compensation)");
+                                        }
+                                        else
+                                        {
+                                            Debug.WriteLine($"[StartVideoRecording] BkTask: AUDIO END-TRIM - No trailing samples to remove");
+                                        }
+                                    }
+
+                                    // Phase 2: START-TRIM — match total duration to video
                                     var videoDurationMs = _preRecordingDurationTracked.TotalMilliseconds;
                                     var lastSampleTimestamp = _preRecordedAudioSamples[_preRecordedAudioSamples.Length - 1].TimestampNs;
                                     var firstSampleTimestamp = _preRecordedAudioSamples[0].TimestampNs;
@@ -2648,7 +2698,7 @@ public partial class SkiaCamera
                                             var trimmedSamples = new AudioSample[trimmedLength];
                                             Array.Copy(_preRecordedAudioSamples, startIndex, trimmedSamples, 0, trimmedLength);
                                             _preRecordedAudioSamples = trimmedSamples;
-                                            Debug.WriteLine($"[StartVideoRecording] BkTask: AUDIO SYNC - Trimmed {startIndex} samples, keeping {trimmedLength} to match video");
+                                            Debug.WriteLine($"[StartVideoRecording] BkTask: AUDIO START-TRIM - Trimmed {startIndex} samples, keeping {trimmedLength} to match video");
                                         }
                                     }
                                 }
