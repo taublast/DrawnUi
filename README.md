@@ -38,16 +38,12 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
  
 ---
 
-## 🆕 What's new for 1.9.6.1
+## 🆕 What's new for 1.9.7.1
 
-* Android `Super` now provides thermal info and device rotation info to match iOS.
-* Create `SaturationEffect`.
-* Add `StopAtCurrentFrame` property to `SkiaLottie` to pause animation at current frame when stopped instead of reqinding to default frame (set via DefaultFrameWhenOn).
-* Fix `SkiaLottie` AutoPlay `false` was ignored when source was set first.
-* Fix `Warp` layout available space.
-* Fix Android reacting to MainActivity paused by Debugger when running on emulator.
-* `SkiaControl` will return last measured result in same conditions and not invalidated.
-* `SkiaCamera` on Android performance optimizations.
+* Optimized composite cache and added new `SkiaCacheType.ImageCompositeGPU` type.
+* Fix memory leak for the `SkiaCacheType.ImageDoubleBuffered` flow.
+* `SkiaCamera` auto-exposure fix for low light, record video on Android emulator and more.
+* Various optimizations and fixes.
  
 ## 💡 Hint of the Day
 
