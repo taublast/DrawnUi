@@ -408,7 +408,7 @@ public partial class SkiaControl
             }
 
             //check hardware context maybe changed
-            if (UsingCacheType == SkiaCacheType.GPU && cache.Surface != null &&
+            if (IsCacheGPU && cache.Surface != null &&
                 cache.Surface.Context != null &&
                 context.Superview?.CanvasView is SkiaViewAccelerated hardware)
             {
@@ -427,6 +427,14 @@ public partial class SkiaControl
 
         CacheValidity = CacheValidityType.Missing;
         return false;
+    }
+
+    public bool IsCacheGPU
+    {
+        get
+        {
+            return UsingCacheType == SkiaCacheType.GPU || UsingCacheType == SkiaCacheType.ImageCompositeGPU;
+        }
     }
 
     public virtual SkiaCacheType UsingCacheType
@@ -548,8 +556,7 @@ public partial class SkiaControl
                 }
                 else
                 {
-                    bool isGpu = usingCacheType == SkiaCacheType.GPU || usingCacheType == SkiaCacheType.ImageCompositeGPU;
-                    surface = CreateSurface(width, height, isGpu);
+                    surface = CreateSurface(width, height, IsCacheGPU);
                 }
 
                 if (surface == null)

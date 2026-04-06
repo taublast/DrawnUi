@@ -2316,9 +2316,9 @@ namespace DrawnUi.Draw
 
             if (!newvalue)
             {
-                if (this.UsingCacheType == SkiaCacheType.GPU)
+                if (IsCacheGPU)
                 {
-                    RenderObject = null;
+                    DestroyRenderingObject();
                 }
             }
 
@@ -2365,9 +2365,9 @@ namespace DrawnUi.Draw
         {
             if (!newvalue)
             {
-                if (this.UsingCacheType == SkiaCacheType.GPU)
+                if (IsCacheGPU)
                 {
-                    RenderObject = null;
+                    DestroyRenderingObject();
                 }
             }
 
