@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Draw\" />
     <Folder Include="Controls\" />
   </ItemGroup>
 

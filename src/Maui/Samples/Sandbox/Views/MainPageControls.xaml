@@ -33,7 +33,7 @@
                     HorizontalOptions="Fill"
                     Tag="Wrapper"
                     Type="Column"
-                    UseCache="ImageComposite">
+                    UseCache="ImageCompositeGPU">
 
                     <draw:SkiaLayout
                         Margin="16,20,16,16"
@@ -44,11 +44,10 @@
                         Split="0"
                         Tag="Radio1"
                         Type="Wrap"
-                        UseCache="ImageComposite">
+                        ExpandDirtyRegion="1"
+                        UseCache="ImageCompositeGPU">
 
-
-
-                        <controls:DrawnRadioButton Text="Flowers" />
+                        <controls:DrawnRadioButton Text="Roses" />
 
                         <controls:DrawnRadioButton HorizontalOptions="Start" Text="Food" />
 
@@ -70,7 +69,7 @@
                         Spacing="24"
                         Tag="Content"
                         Type="Wrap"
-                        UseCache="ImageComposite"
+                        UseCache="ImageCompositeGPU"
                         WidthRequest="-1">
 
                         <!--  Controls inside frame  -->
@@ -99,7 +98,8 @@
                                 SplitAlign="True"
                                 Tag="Radio2"
                                 Type="Wrap"
-                                UseCache="ImageComposite">
+                                ExpandDirtyRegion="1"
+                                UseCache="ImageCompositeGPU">
 
                                 <controls:DrawnRadioButton Text="Flowers" />
 

@@ -43,24 +43,55 @@ src/
 
 ---
 
-## Current State (as of 2026-04-05)
+## Current State (as of 2026-04-06, after full migration)
 
 | Location | Files | Description |
 |---|---|---|
-| `src/Shared/` | ~185 .cs | Enums, interfaces, models, animations, animators, effects interfaces, cache logic, shared SkiaControl partials |
-| `src/Maui/DrawnUi/` | ~283 .cs | Controls, layouts, scroll, text, shapes, images, gestures, effects, platform code |
+| `src/Shared/` | 241 .cs | Framework-agnostic: enums, interfaces, models, animations, animators, effects, cache, text system, gesture types, shaders, views utilities, SkiaControl/TextSpan partials |
+| `src/Maui/DrawnUi/` (non-platform) | 155 .cs | Controls, layouts, scroll, shapes, images, Color-dependent effects, XAML infrastructure |
+| `src/Maui/DrawnUi/` (platform) | 74 .cs | Android, iOS, Mac, Windows platform-specific code |
 | `src/Blazor/DrawnUi/` | ~10 .cs | Early stage: polyfills for MAUI types (LayoutOptions, Point, Size, Thickness), Super.Blazor.cs, DrawnView.cs |
 
-### What's already in Shared
-- `SkiaControl.Shared.cs`, `SkiaControl.Cache.cs`, `SkiaControl.Effects.cs`, `SkiaControl.Invalidation.cs`
-- All enums (SkiaCacheType, LayoutType, ShapeType, etc.)
-- All interfaces (ISkiaControl, ISkiaGestureListener, ISkiaLayout, etc.)
-- All models (CachedObject, DrawingContext, ScaledRect, ControlInStack, etc.)
-- All animators (AnimatorBase, ScrollFlingAnimator, etc.)
-- All animation infrastructure
-- Effect interfaces + base classes (SkiaEffect, SkiaShaderEffect)
-- Helpers (VelocityTracker, IntersectionUtils, RubberBandUtils, etc.)
-- Fluent layout helpers (SkiaFrame, SkiaGrid, SkiaRow, etc.)
+### What's in Shared
+- **SkiaControl partials**: `.Shared.cs`, `.Cache.cs`, `.Effects.cs`, `.Invalidation.cs`
+- **TextSpan.Shared.cs**: core text span logic (glyph handling, font management, decorations, events)
+- **Text types**: UsedGlyph, LineGlyph, StringReference, IDrawnTextSpan, ApplySpan, LineSpan, TextLine
+- **SkiaLabel partials**: EmojiData, ObjectPools, GlyphMeasurementCache, SpanMeasurement, Line (TextMetrics/DecomposedText)
+- **All enums** (~40): SkiaCacheType, LayoutType, ShapeType, DrawerDirection, GesturesMode, LoadPriority, NavigationSource, etc.
+- **All interfaces** (~25): ISkiaControl, ISkiaGestureListener, ISkiaLayout, IHasBanner, IWheelPickerCell, ISkiaRadioButton, etc.
+- **All models** (~40): CachedObject, DrawingContext, ScaledRect, ControlInStack, FileDescriptor, WheelCellInfo, SkiaShellNavigatedArgs, SkiaShellNavigatingArgs, etc.
+- **All animators**: AnimatorBase, ScrollFlingAnimator, etc.
+- **All animation infrastructure**: parameters, interfaces, extensions
+- **Effects**: interfaces + bases (SkiaEffect, SkiaShaderEffect, BaseColorFilterEffect, BaseImageFilterEffect, BaseChainedEffect) + non-Color implementations (BlurEffect, SaturationEffect, ContrastEffect, ColorPresetEffect, AdjustRGBEffect, all Chain*Effect variants without Color)
+- **Gesture types**: SkiaGesturesParameters, GestureEventProcessingInfo, ZoomEventArgs
+- **Shaders**: SkiaShader (runtime effect wrapper)
+- **Images**: LoadedImageSource
+- **Helpers**: VelocityTracker, IntersectionUtils, RubberBandUtils, 3D helpers, etc.
+- **Fluent layout helpers**: SkiaFrame, SkiaGrid, SkiaRow, etc.
+- **Layout**: LayoutStructure
+- **Scroll**: ScrollToIndexOrder, VelocityAccumulator, ScrollToPointOrder
+- **Views utilities**: CanvasRestoreScope, SKAutoCanvasRestoreFixed, DisposableManager
+- **Controls**: GifAnimation
+- **Pdf**: PaperFormat, PdfPagePosition, Pdf utilities
+
+### What remains in Maui (non-platform, 155 files)
+These stay because they use MAUI `Color` type, inherit from MAUI `Element`/`ContentPage`, use XAML infrastructure, or are deeply coupled to the MAUI control hierarchy:
+- **Controls** (~60): SkiaButton, SkiaCarousel, SkiaDrawer, SkiaShell, SkiaSlider, SkiaSwitch, etc.
+- **Draw/Layout** (~15): SkiaLayout partials, StackLayoutStructure, BuildRowLayout, ContentLayout, etc.
+- **Draw/Scroll** (~10): SkiaScroll partials, VirtualScroll, PlanesScroll, Plane
+- **Draw/Text** (~5): SkiaLabel.cs (main), SkiaLabel.Maui.cs, TextSpan.Maui.cs, SvgSpan
+- **Draw** (~10): SkiaShape partials, SkiaBackdrop, SkiaHotspot, SkiaHotspotZoom
+- **Effects** (~7): TintEffect, DropShadowEffect, OuterGlowEffect, TintWithAlphaEffect, ChainTintWithAlphaEffect, ChainDropShadowsEffect, ShaderDoubleTexturesEffect
+- **Features** (~15): SkiaImageManager, SkiaFontManager, SKSL, ColorExtensions, AddGestures, ImagesExtensions, KeyboardManager
+- **Internals** (~15): XAML converters, markup extensions, StaticResourcesExtensions, ConditionalStyle, SkiaSetter
+- **Views** (~10): Canvas, DrawnView, SkiaView, SkiaViewAccelerated, SurfaceCacheManager
+
+### Remaining blockers for further migration
+1. **MAUI `Color` type**: Used by ~30 files (effects, shapes, controls). Would require a shared Color abstraction or converting everything to SKColor internally
+2. **MAUI `Element` inheritance**: TextSpan.Maui.cs, controls hierarchy. Needed for XAML binding support
+3. **MAUI `FileSystem`**: SKSL.cs resource loading
+4. **MAUI `FontRegistrar`**: SkiaFontManager font discovery
+5. **Layout coupling**: StackLayoutStructure/BuildRowLayout reference SkiaLayout which is a deeply split partial class
 
 ---
 
