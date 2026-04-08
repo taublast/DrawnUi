@@ -165,10 +165,10 @@ public enum SkiaCacheType
 
 **Choosing the Right Cache Type:**
 - **None** - Do not cache scrolls, drawers etc, native views and their containers.
-- **Operations** - For anything, but maybe best for static vector content like text, icons, SVG.
+- **Operations** - For anything, but maybe best for static vector content like text, icons, SVG. **PROHIBITED for controls with GPU-surface shaders** — SKPicture cannot replay shader programs. **PROHIBITED as parent cache for children using GPU-backed cache types** (`GPU`, `ImageCompositeGPU`).
 - **Image** - Rasterize anything once and then just draw the bitmap on every frame.
 - **ImageDoubleBuffered** - Perfect for recycled cells of same size
-- **GPU** - Use GPU memory for storing overlays, avoid large sizes.
+- **GPU** - Use GPU memory for storing overlays, avoid large sizes. **PROHIBITED for controls with GPU-surface shaders** — the GPU cache surface conflicts with the shader's own surface requirements.
 
 ##### Render Object Pipeline
 

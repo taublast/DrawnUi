@@ -13,13 +13,13 @@ DrawnUI caches rendered output of controls to avoid re-executing paint logic eve
 | Type | Backing | Description |
 |------|---------|-------------|
 | `None` | — | No caching. Control is re-painted every frame. Default for most controls. |
-| `Operations` | `SKPicture` | Records draw commands into an `SKPictureRecorder`. Replayed on each frame. Lightweight, no extra bitmap allocation. Best for shapes, SVGs, text. **Cannot capture shadow/blur effects** (those need rasterized output). |
+| `Operations` | `SKPicture` | Records draw commands into an `SKPictureRecorder`. Replayed on each frame. Lightweight, no extra bitmap allocation. Best for shapes, SVGs, text. **Cannot capture shadow/blur effects** (those need rasterized output). **PROHIBITED for controls with GPU-surface shaders** — SKPicture cannot replay shader programs that require a live GPU surface. **PROHIBITED as parent cache for children using GPU-backed cache types** (`GPU`, `ImageCompositeGPU`) — SKPicture recording cannot capture GPU-surface output. |
 | `OperationsFull` | `SKPicture` | Same as `Operations` but records from the full canvas bounds, not just the control's drawing area. Used internally when double-buffering promotes `None` → `OperationsFull` so the cache can be offset (e.g., during scroll animation). |
 | `Image` | `SKSurface` → `SKImage` | Renders into a CPU-backed `SKSurface`, then snapshots to `SKImage`. Works for any size including larger-than-VRAM. Supports opacity, shadows, effects. Good for static controls that are expensive to paint. |
 | `ImageDoubleBuffered` | `SKSurface` → `SKImage` × 2 | Same as `Image` but with double-buffering: shows the previous cached frame while the new one renders on a background thread. Prevents visual stutter during updates. Best for animated controls (sliders, lottie, progress bars). |
 | `ImageComposite` | `SKSurface` (reused) | Partial redraw: tracks which children changed ("dirty"), erases their regions on the existing cached surface, and repaints only those children. The surface is **not cleared** between frames — old content persists. Best for large scroll content layouts with many mostly-static children (PDF pages, forms, markdown). |
 | `ImageCompositeGPU` | `SKSurface` (GPU-backed, reused) | GPU-accelerated version of `ImageComposite`. Same partial-redraw dirty-tracking logic but the backing surface uses the canvas `GRContext`. Combines the partial-redraw benefit of composite with zero CPU→GPU upload cost. Falls back to `ImageComposite` if `!Super.GpuCacheEnabled`. Best for large GPU-accelerated layouts with many mostly-static children. |
-| `GPU` | `SKSurface` (GPU-backed) | Creates a surface on the same `GRContext` as the accelerated canvas. Zero CPU→GPU upload cost. **Does NOT apply opacity.** Falls back to `Image` if no hardware acceleration or `Super.GpuCacheEnabled = false`. Best for high-perf game elements. |
+| `GPU` | `SKSurface` (GPU-backed) | Creates a surface on the same `GRContext` as the accelerated canvas. Zero CPU→GPU upload cost. **Does NOT apply opacity.** Falls back to `Image` if no hardware acceleration or `Super.GpuCacheEnabled = false`. Best for high-perf game elements. **PROHIBITED for controls with GPU-surface shaders** — the GPU cache surface conflicts with the shader's own surface requirements. |
 
 ---
 
@@ -370,6 +370,8 @@ Applied during dirty region calculation (SkiaControl.Shared.cs) and cache region
 | Game sprite (complex, animated) | `ImageDoubleBuffered` | Smooth frame updates |
 | Container holding animated children | `None` | Container must re-render to reflect child changes |
 | Container holding scroll/drawer/carousel | `None` | Dynamic content must not be frozen |
+| Control with GPU-surface shader effect | `Image` or `ImageDoubleBuffered` | **PROHIBITED** with `Operations` or `GPU` — shader programs require a live rasterized surface, not command recording or a conflicting GPU surface |
+| Parent of children using `GPU`/`ImageCompositeGPU` cache | `Image`, `ImageComposite`, or `None` | **PROHIBITED** with `Operations` — SKPicture cannot capture GPU-surface output from children |
 
 ### Architecture Pattern for Large Scrolls
 

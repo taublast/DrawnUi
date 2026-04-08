@@ -1,0 +1,20 @@
+wing: drawnui
+rooms:
+- name: aidocs
+  description: Files from aidocs/
+- name: dev
+  description: Files from dev/
+- name: documentation
+  description: Files from docs/
+- name: nugets
+  description: Files from nugets/
+- name: src
+  description: Files from src/
+- name: testing
+  description: Files from Tests/
+- name: tmp
+  description: Files from tmp/
+- name: backend
+  description: Files from api/
+- name: general
+  description: Files that don't fit other rooms

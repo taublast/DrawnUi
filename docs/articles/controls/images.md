@@ -620,6 +620,8 @@ timer.Start();
    - Use `UseCache="ImageDoubleBuffered"` for images that change occasionally
    - Use `UseCache="Operations"` for images with effects but static content
    - Use `UseCache="None"` only for frequently changing images
+   - **PROHIBITED:** Never use `Operations` or `GPU` cache for images with GPU-surface shader effects — use `Image`, `ImageDoubleBuffered`, or `ImageComposite` instead
+   - **PROHIBITED:** Never nest children that use GPU-backed cache types (`GPU`, `ImageCompositeGPU`) inside a parent cached with `Operations`
 
 3. **Loading Strategy**
    - Use `LoadSourceOnFirstDraw="True"` for off-screen images
