@@ -23,6 +23,10 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
     /// </summary>
     protected virtual SkiaShader CreateEngine()
     {
+        if (Parent == null)
+        {
+            return null;
+        }
         return new SkiaShader();
     }
 
@@ -369,6 +373,7 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
                 paint.BlendMode = BlendMode;
                 paint.Shader = shader;
                 ctx.Context.Canvas.DrawRect(ctx.Destination, paint);
+                ctx.Context.Canvas.Flush();
             }
             else
             {
@@ -453,19 +458,17 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
                     return null;
             }
 
-            // Step 3: Sync state and create everything fresh
+            // Step 3: Sync state and build uniforms/children. The engine caches these
+            // instances — do NOT dispose them here. Only the final SKShader returned
+            // below is per-frame and owned by the caller.
             SyncEngineState(destination);
 
             SKShader primaryTextureShader = engine.CreateTextureShader(source);
+            var textureUniforms = CreateTexturesUniforms(ctx.Context, destination, primaryTextureShader);
+            var uniforms = CreateUniforms(destination);
 
-            using (primaryTextureShader)
-            {
-                using var textureUniforms = CreateTexturesUniforms(ctx.Context, destination, primaryTextureShader);
-                using var uniforms = CreateUniforms(destination);
-
-                // Step 4: Create final shader
-                return engine.Compiled.ToShader(uniforms, textureUniforms);
-            }
+            // Step 4: Create final shader (this is the only unavoidable per-frame alloc)
+            return engine.Compiled.ToShader(uniforms, textureUniforms);
         }
         finally
         {

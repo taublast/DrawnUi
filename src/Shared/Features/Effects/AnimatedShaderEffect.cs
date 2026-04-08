@@ -38,6 +38,9 @@ public class AnimatedShaderEffect : SkiaShaderEffect
 
     protected RangeAnimator Animator;
 
+    // Pre-allocated uniform buffer — reused every frame to avoid per-frame heap alloc
+    private readonly float[] _bufCenter = new float[2];
+
     /// <summary>
     /// Starts the celebration animation on the given parent control.
     /// Safe to call multiple times — restarts from zero each time.
@@ -92,7 +95,10 @@ public class AnimatedShaderEffect : SkiaShaderEffect
     {
         var uniforms = base.CreateUniforms(destination);
         uniforms["progress"] = (float)Progress;
-        uniforms["iCenter"] = new float[] { Center.X, Center.Y };
+
+        _bufCenter[0] = Center.X;
+        _bufCenter[1] = Center.Y;
+        uniforms["iCenter"] = _bufCenter;
 
         return uniforms;
     }

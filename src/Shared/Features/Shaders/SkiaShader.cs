@@ -19,6 +19,16 @@ public class SkiaShader : IDisposable
     protected readonly float[] _bufMouse = new float[4];
     protected readonly float[] _bufOffset = new float[2];
 
+    // Cached native objects reused across frames. All are bound to _compiled and
+    // must be disposed+nulled whenever _compiled changes (see DisposeCompiled).
+    private SKRuntimeEffectUniforms _cachedUniforms;
+    private SKRuntimeEffectChildren _cachedChildren;
+    private SKShader _cachedTextureShader;
+    private IntPtr _cachedTextureSourceHandle;
+    private SKFilterMode _cachedTextureFilter;
+    private SKMipmapMode _cachedTextureMipmap;
+    private SKShaderTileMode _cachedTextureTile;
+
     /// <summary>
     /// Elapsed time in seconds, typically fed from a frame timer.
     /// </summary>
@@ -121,6 +131,18 @@ public class SkiaShader : IDisposable
 
     public void DisposeCompiled()
     {
+        // Cached uniforms/children/texture shader are all bound to _compiled.
+        // They MUST be torn down before the effect handle changes.
+        _cachedUniforms?.Dispose();
+        _cachedUniforms = null;
+
+        _cachedChildren?.Dispose();
+        _cachedChildren = null;
+
+        _cachedTextureShader?.Dispose();
+        _cachedTextureShader = null;
+        _cachedTextureSourceHandle = IntPtr.Zero;
+
         if (_ownCompiled)
         {
             _compiled?.Dispose();
@@ -134,14 +156,16 @@ public class SkiaShader : IDisposable
     /// <summary>
     /// Apply the shader to a paint using an image as the primary input texture (iImage1).
     /// Returns the created SKShader so caller can dispose it, or null if not compiled.
+    /// The uniforms, children, and texture shader objects are cached on the instance
+    /// and reused across frames — callers must NOT dispose them.
     /// </summary>
     public SKShader ApplyTo(SKPaint paint, SKImage source, float width, float height)
     {
         if (_compiled == null) return null;
 
-        using var textureShader = CreateTextureShader(source);
-        using var uniforms = CreateUniforms(width, height, source?.Width ?? width, source?.Height ?? height);
-        using var children = CreateChildren(textureShader);
+        var textureShader = CreateTextureShader(source); // cached, do not dispose
+        var uniforms = CreateUniforms(width, height, source?.Width ?? width, source?.Height ?? height);
+        var children = CreateChildren(textureShader);
 
         var shader = _compiled.ToShader(uniforms, children);
         paint.Shader = shader;
@@ -156,8 +180,8 @@ public class SkiaShader : IDisposable
     {
         if (_compiled == null) return null;
 
-        using var uniforms = CreateUniforms(width, height, width, height);
-        using var children = new SKRuntimeEffectChildren(_compiled);
+        var uniforms = CreateUniforms(width, height, width, height);
+        var children = CreateChildren(null);
 
         var shader = _compiled.ToShader(uniforms, children);
         paint.Shader = shader;
@@ -180,6 +204,7 @@ public class SkiaShader : IDisposable
             if (shader != null)
             {
                 canvas.DrawRect(destination, paint);
+                canvas.Flush(); //without this next draw might not use this gpu result
             }
         }
         finally
@@ -204,6 +229,7 @@ public class SkiaShader : IDisposable
             if (shader != null)
             {
                 canvas.DrawRect(destination, paint);
+                canvas.Flush();//without this next draw might not use this gpu result
             }
         }
         finally
@@ -230,6 +256,7 @@ public class SkiaShader : IDisposable
             if (shader != null)
             {
                 canvas.DrawRect(SKRect.Create(x, y, source.Width, source.Height), paint);
+                canvas.Flush(); //without this next draw might not use this gpu result
             }
         }
         finally
@@ -243,13 +270,21 @@ public class SkiaShader : IDisposable
 
     /// <summary>
     /// Creates standard uniforms: iResolution, iImageResolution, iTime, iOffset, iMouse.
-    /// Override to add custom uniforms for specialized shaders.
+    /// Override to add custom uniforms for specialized shaders — the typical pattern is
+    /// to call <c>base.CreateUniforms(...)</c> and then set extra keys on the returned
+    /// instance.
+    /// <para>
+    /// IMPORTANT: the returned <see cref="SKRuntimeEffectUniforms"/> is OWNED by this
+    /// <see cref="SkiaShader"/> and reused every frame. Do not dispose it and do not
+    /// return a different instance from an override — mutate and return the same one.
+    /// It is invalidated automatically when the compiled effect changes.
+    /// </para>
     /// </summary>
     public virtual SKRuntimeEffectUniforms CreateUniforms(
         float viewportWidth, float viewportHeight,
         float imageWidth, float imageHeight)
     {
-        var uniforms = new SKRuntimeEffectUniforms(_compiled);
+        var uniforms = _cachedUniforms ??= new SKRuntimeEffectUniforms(_compiled);
 
         _bufResolution[0] = viewportWidth;
         _bufResolution[1] = viewportHeight;
@@ -276,26 +311,55 @@ public class SkiaShader : IDisposable
 
     /// <summary>
     /// Creates texture children with the primary texture as iImage1.
-    /// Override to add additional textures (iImage2, etc.).
+    /// Override to add additional textures (iImage2, etc.) by setting extra keys on the
+    /// returned instance.
+    /// <para>
+    /// IMPORTANT: the returned <see cref="SKRuntimeEffectChildren"/> is OWNED by this
+    /// <see cref="SkiaShader"/> and reused every frame. Do not dispose it and do not
+    /// return a different instance from an override. It is invalidated automatically
+    /// when the compiled effect changes.
+    /// </para>
     /// </summary>
     public virtual SKRuntimeEffectChildren CreateChildren(SKShader primaryTexture)
     {
-        var children = new SKRuntimeEffectChildren(_compiled);
+        var children = _cachedChildren ??= new SKRuntimeEffectChildren(_compiled);
         if (primaryTexture != null)
         {
-            children.Add("iImage1", primaryTexture);
+            children["iImage1"] = primaryTexture;
         }
         return children;
     }
 
     /// <summary>
-    /// Creates a shader from an SKImage for use as a texture uniform.
+    /// Creates (or reuses) a shader from an <see cref="SKImage"/> for use as a texture
+    /// uniform. The returned <see cref="SKShader"/> is cached on the instance and reused
+    /// while the source image handle and sampling options are unchanged — callers must
+    /// NOT dispose it. It is disposed automatically when the source, sampling options, or
+    /// compiled effect change, and in <see cref="Dispose"/>.
     /// </summary>
     public SKShader CreateTextureShader(SKImage source)
     {
         if (source == null) return null;
+
+        var handle = source.Handle;
+        if (_cachedTextureShader != null
+            && _cachedTextureSourceHandle == handle
+            && _cachedTextureFilter == FilterMode
+            && _cachedTextureMipmap == MipmapMode
+            && _cachedTextureTile == TileMode)
+        {
+            return _cachedTextureShader;
+        }
+
+        _cachedTextureShader?.Dispose();
+
         var sampling = new SKSamplingOptions(FilterMode, MipmapMode);
-        return source.ToShader(TileMode, TileMode, sampling);
+        _cachedTextureShader = source.ToShader(TileMode, TileMode, sampling);
+        _cachedTextureSourceHandle = handle;
+        _cachedTextureFilter = FilterMode;
+        _cachedTextureMipmap = MipmapMode;
+        _cachedTextureTile = TileMode;
+        return _cachedTextureShader;
     }
 
     // ─── Internals ──────────────────────────────────────────────────────────
