@@ -38,11 +38,11 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
  
 ---
 
-## 🆕 What's new for 1.9.7.1
+## 🆕 What's new for 1.9.7.2
 
 * Optimized composite cache and added new `SkiaCacheType.ImageCompositeGPU` type.
 * Fix memory leak for the `SkiaCacheType.ImageDoubleBuffered` flow.
-* `SkiaCamera` auto-exposure fix for low light, record video on Android emulator and more.
+* `SkiaCamera` auto-exposure fix for low light, record video on Android emulator and more. 
 * Various optimizations and fixes.
  
 ## 💡 Hint of the Day

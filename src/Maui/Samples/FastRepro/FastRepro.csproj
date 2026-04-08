@@ -126,7 +126,7 @@
 	</ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Addons\DrawnUi.Maui.Camera\DrawnUi.Maui.Camera.csproj" />
+        <ProjectReference Include="..\..\..\..\..\DrawnUi.Maui.Camera\src\Lib\DrawnUi.Maui.Camera.csproj" />
 	</ItemGroup>
 
     <ItemGroup>

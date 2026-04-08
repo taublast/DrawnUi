@@ -375,6 +375,7 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
     {
         if (EnableLogging)
         {
+            Debug.WriteLine(message);
             Log.Debug("SkiaGLTextureView", message);
         }
     }
@@ -382,6 +383,7 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
     [Conditional("DEBUG")]
     private static void LogError(string message)
     {
+        Debug.WriteLine(message);
         Log.Error("SkiaGLTextureView", message);
     }
 
@@ -1647,6 +1649,19 @@ public class SkiaGLTextureView : TextureView, TextureView.ISurfaceTextureListene
 
         public int Swap()
         {
+            if (eglContext.IsNullOrDisposed())
+            {
+                return IEGL11.EglContextLost;
+            }
+
+            // Before we can issue IGL commands, we need to make sure the context is 
+            // current and bound to a surface.
+            if (!EGL14.EglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext))
+            {
+                // Could not make the context current, probably because the underlying
+                return EGL14.EglGetError();
+            }
+
             if (!EGL14.EglSwapBuffers(eglDisplay, eglSurface))
             {
                 return EGL14.EglGetError();
