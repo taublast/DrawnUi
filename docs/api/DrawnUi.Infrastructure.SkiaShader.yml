@@ -1,0 +1,1968 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.Infrastructure.SkiaShader
+  commentId: T:DrawnUi.Infrastructure.SkiaShader
+  id: SkiaShader
+  parent: DrawnUi.Infrastructure
+  children:
+  - DrawnUi.Infrastructure.SkiaShader.#ctor
+  - DrawnUi.Infrastructure.SkiaShader.ApplyTo(SkiaSharp.SKPaint,SkiaSharp.SKImage,System.Single,System.Single)
+  - DrawnUi.Infrastructure.SkiaShader.ApplyTo(SkiaSharp.SKPaint,System.Single,System.Single)
+  - DrawnUi.Infrastructure.SkiaShader.BlendMode
+  - DrawnUi.Infrastructure.SkiaShader.CompileFromCode(System.String,System.String,System.Boolean,System.Action{System.String})
+  - DrawnUi.Infrastructure.SkiaShader.CompileFromResource(System.String,System.Boolean,System.Action{System.String})
+  - DrawnUi.Infrastructure.SkiaShader.Compiled
+  - DrawnUi.Infrastructure.SkiaShader.CreateChildren(SkiaSharp.SKShader)
+  - DrawnUi.Infrastructure.SkiaShader.CreateTextureShader(SkiaSharp.SKImage)
+  - DrawnUi.Infrastructure.SkiaShader.CreateUniforms(System.Single,System.Single,System.Single,System.Single)
+  - DrawnUi.Infrastructure.SkiaShader.Dispose
+  - DrawnUi.Infrastructure.SkiaShader.DisposeCompiled
+  - DrawnUi.Infrastructure.SkiaShader.DrawImage(SkiaSharp.SKCanvas,SkiaSharp.SKImage,System.Single,System.Single)
+  - DrawnUi.Infrastructure.SkiaShader.DrawRect(SkiaSharp.SKCanvas,SkiaSharp.SKImage,SkiaSharp.SKRect)
+  - DrawnUi.Infrastructure.SkiaShader.DrawRect(SkiaSharp.SKCanvas,SkiaSharp.SKRect)
+  - DrawnUi.Infrastructure.SkiaShader.FilterMode
+  - DrawnUi.Infrastructure.SkiaShader.FromCode(System.String)
+  - DrawnUi.Infrastructure.SkiaShader.FromResource(System.String,System.Boolean)
+  - DrawnUi.Infrastructure.SkiaShader.GetPaint
+  - DrawnUi.Infrastructure.SkiaShader.IsCompiled
+  - DrawnUi.Infrastructure.SkiaShader.MipmapMode
+  - DrawnUi.Infrastructure.SkiaShader.Mouse
+  - DrawnUi.Infrastructure.SkiaShader.MouseInitial
+  - DrawnUi.Infrastructure.SkiaShader.NormalizeLineEndings(System.String)
+  - DrawnUi.Infrastructure.SkiaShader.Offset
+  - DrawnUi.Infrastructure.SkiaShader.TileMode
+  - DrawnUi.Infrastructure.SkiaShader.Time
+  - DrawnUi.Infrastructure.SkiaShader._bufImageResolution
+  - DrawnUi.Infrastructure.SkiaShader._bufMouse
+  - DrawnUi.Infrastructure.SkiaShader._bufOffset
+  - DrawnUi.Infrastructure.SkiaShader._bufResolution
+  - DrawnUi.Infrastructure.SkiaShader._compiled
+  langs:
+  - csharp
+  - vb
+  name: SkiaShader
+  nameWithType: SkiaShader
+  fullName: DrawnUi.Infrastructure.SkiaShader
+  type: Class
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: SkiaShader
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: >-
+    Lightweight reusable shader wrapper for applying SKSL shaders directly to an SKPaint.
+
+    Used standalone for direct rendering, or as the engine inside SkiaShaderEffect.
+
+    Subclass and override CreateUniforms/CreateChildren for custom uniforms.
+  example: []
+  syntax:
+    content: 'public class SkiaShader : IDisposable'
+    content.vb: Public Class SkiaShader Implements IDisposable
+  inheritance:
+  - System.Object
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.Infrastructure.SkiaShader._compiled
+  commentId: F:DrawnUi.Infrastructure.SkiaShader._compiled
+  id: _compiled
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: _compiled
+  nameWithType: SkiaShader._compiled
+  fullName: DrawnUi.Infrastructure.SkiaShader._compiled
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: _compiled
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 9
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: protected SKRuntimeEffect _compiled
+    return:
+      type: SkiaSharp.SKRuntimeEffect
+    content.vb: Protected _compiled As SKRuntimeEffect
+- uid: DrawnUi.Infrastructure.SkiaShader._bufResolution
+  commentId: F:DrawnUi.Infrastructure.SkiaShader._bufResolution
+  id: _bufResolution
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: _bufResolution
+  nameWithType: SkiaShader._bufResolution
+  fullName: DrawnUi.Infrastructure.SkiaShader._bufResolution
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: _bufResolution
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 16
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: protected readonly float[] _bufResolution
+    return:
+      type: System.Single[]
+    content.vb: Protected ReadOnly _bufResolution As Single()
+- uid: DrawnUi.Infrastructure.SkiaShader._bufImageResolution
+  commentId: F:DrawnUi.Infrastructure.SkiaShader._bufImageResolution
+  id: _bufImageResolution
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: _bufImageResolution
+  nameWithType: SkiaShader._bufImageResolution
+  fullName: DrawnUi.Infrastructure.SkiaShader._bufImageResolution
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: _bufImageResolution
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 17
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: protected readonly float[] _bufImageResolution
+    return:
+      type: System.Single[]
+    content.vb: Protected ReadOnly _bufImageResolution As Single()
+- uid: DrawnUi.Infrastructure.SkiaShader._bufMouse
+  commentId: F:DrawnUi.Infrastructure.SkiaShader._bufMouse
+  id: _bufMouse
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: _bufMouse
+  nameWithType: SkiaShader._bufMouse
+  fullName: DrawnUi.Infrastructure.SkiaShader._bufMouse
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: _bufMouse
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 18
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: protected readonly float[] _bufMouse
+    return:
+      type: System.Single[]
+    content.vb: Protected ReadOnly _bufMouse As Single()
+- uid: DrawnUi.Infrastructure.SkiaShader._bufOffset
+  commentId: F:DrawnUi.Infrastructure.SkiaShader._bufOffset
+  id: _bufOffset
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: _bufOffset
+  nameWithType: SkiaShader._bufOffset
+  fullName: DrawnUi.Infrastructure.SkiaShader._bufOffset
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: _bufOffset
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 19
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: protected readonly float[] _bufOffset
+    return:
+      type: System.Single[]
+    content.vb: Protected ReadOnly _bufOffset As Single()
+- uid: DrawnUi.Infrastructure.SkiaShader.Time
+  commentId: P:DrawnUi.Infrastructure.SkiaShader.Time
+  id: Time
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: Time
+  nameWithType: SkiaShader.Time
+  fullName: DrawnUi.Infrastructure.SkiaShader.Time
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Time
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 34
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Elapsed time in seconds, typically fed from a frame timer.
+  example: []
+  syntax:
+    content: public float Time { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property Time As Single
+  overload: DrawnUi.Infrastructure.SkiaShader.Time*
+- uid: DrawnUi.Infrastructure.SkiaShader.Mouse
+  commentId: P:DrawnUi.Infrastructure.SkiaShader.Mouse
+  id: Mouse
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: Mouse
+  nameWithType: SkiaShader.Mouse
+  fullName: DrawnUi.Infrastructure.SkiaShader.Mouse
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Mouse
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 39
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Current mouse/touch position (Shadertoy convention).
+  example: []
+  syntax:
+    content: public SKPoint Mouse { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKPoint
+    content.vb: Public Property Mouse As SKPoint
+  overload: DrawnUi.Infrastructure.SkiaShader.Mouse*
+- uid: DrawnUi.Infrastructure.SkiaShader.MouseInitial
+  commentId: P:DrawnUi.Infrastructure.SkiaShader.MouseInitial
+  id: MouseInitial
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: MouseInitial
+  nameWithType: SkiaShader.MouseInitial
+  fullName: DrawnUi.Infrastructure.SkiaShader.MouseInitial
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MouseInitial
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 44
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Where click/drag started. If zero, means not dragging.
+  example: []
+  syntax:
+    content: public SKPoint MouseInitial { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKPoint
+    content.vb: Public Property MouseInitial As SKPoint
+  overload: DrawnUi.Infrastructure.SkiaShader.MouseInitial*
+- uid: DrawnUi.Infrastructure.SkiaShader.Offset
+  commentId: P:DrawnUi.Infrastructure.SkiaShader.Offset
+  id: Offset
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: Offset
+  nameWithType: SkiaShader.Offset
+  fullName: DrawnUi.Infrastructure.SkiaShader.Offset
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Offset
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 49
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Top-left offset of the drawing rect. Default (0,0).
+  example: []
+  syntax:
+    content: public SKPoint Offset { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKPoint
+    content.vb: Public Property Offset As SKPoint
+  overload: DrawnUi.Infrastructure.SkiaShader.Offset*
+- uid: DrawnUi.Infrastructure.SkiaShader.FilterMode
+  commentId: P:DrawnUi.Infrastructure.SkiaShader.FilterMode
+  id: FilterMode
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: FilterMode
+  nameWithType: SkiaShader.FilterMode
+  fullName: DrawnUi.Infrastructure.SkiaShader.FilterMode
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FilterMode
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 54
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Filter mode for the primary input texture. Default is Linear.
+  example: []
+  syntax:
+    content: public SKFilterMode FilterMode { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKFilterMode
+    content.vb: Public Property FilterMode As SKFilterMode
+  overload: DrawnUi.Infrastructure.SkiaShader.FilterMode*
+- uid: DrawnUi.Infrastructure.SkiaShader.MipmapMode
+  commentId: P:DrawnUi.Infrastructure.SkiaShader.MipmapMode
+  id: MipmapMode
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: MipmapMode
+  nameWithType: SkiaShader.MipmapMode
+  fullName: DrawnUi.Infrastructure.SkiaShader.MipmapMode
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: MipmapMode
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 59
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Mipmap mode for the primary input texture. Default is None.
+  example: []
+  syntax:
+    content: public SKMipmapMode MipmapMode { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKMipmapMode
+    content.vb: Public Property MipmapMode As SKMipmapMode
+  overload: DrawnUi.Infrastructure.SkiaShader.MipmapMode*
+- uid: DrawnUi.Infrastructure.SkiaShader.TileMode
+  commentId: P:DrawnUi.Infrastructure.SkiaShader.TileMode
+  id: TileMode
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: TileMode
+  nameWithType: SkiaShader.TileMode
+  fullName: DrawnUi.Infrastructure.SkiaShader.TileMode
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TileMode
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 64
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Tile mode for input textures. Default is Clamp.
+  example: []
+  syntax:
+    content: public SKShaderTileMode TileMode { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKShaderTileMode
+    content.vb: Public Property TileMode As SKShaderTileMode
+  overload: DrawnUi.Infrastructure.SkiaShader.TileMode*
+- uid: DrawnUi.Infrastructure.SkiaShader.BlendMode
+  commentId: P:DrawnUi.Infrastructure.SkiaShader.BlendMode
+  id: BlendMode
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: BlendMode
+  nameWithType: SkiaShader.BlendMode
+  fullName: DrawnUi.Infrastructure.SkiaShader.BlendMode
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: BlendMode
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 69
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Blend mode used when drawing. Default is SrcOver.
+  example: []
+  syntax:
+    content: public SKBlendMode BlendMode { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKBlendMode
+    content.vb: Public Property BlendMode As SKBlendMode
+  overload: DrawnUi.Infrastructure.SkiaShader.BlendMode*
+- uid: DrawnUi.Infrastructure.SkiaShader.IsCompiled
+  commentId: P:DrawnUi.Infrastructure.SkiaShader.IsCompiled
+  id: IsCompiled
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: IsCompiled
+  nameWithType: SkiaShader.IsCompiled
+  fullName: DrawnUi.Infrastructure.SkiaShader.IsCompiled
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IsCompiled
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 74
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Whether the shader is compiled and ready to use.
+  example: []
+  syntax:
+    content: public bool IsCompiled { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsCompiled As Boolean
+  overload: DrawnUi.Infrastructure.SkiaShader.IsCompiled*
+- uid: DrawnUi.Infrastructure.SkiaShader.Compiled
+  commentId: P:DrawnUi.Infrastructure.SkiaShader.Compiled
+  id: Compiled
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: Compiled
+  nameWithType: SkiaShader.Compiled
+  fullName: DrawnUi.Infrastructure.SkiaShader.Compiled
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Compiled
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 79
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: The compiled SKRuntimeEffect, if available.
+  example: []
+  syntax:
+    content: public SKRuntimeEffect Compiled { get; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKRuntimeEffect
+    content.vb: Public ReadOnly Property Compiled As SKRuntimeEffect
+  overload: DrawnUi.Infrastructure.SkiaShader.Compiled*
+- uid: DrawnUi.Infrastructure.SkiaShader.#ctor
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.#ctor
+  id: '#ctor'
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: SkiaShader()
+  nameWithType: SkiaShader.SkiaShader()
+  fullName: DrawnUi.Infrastructure.SkiaShader.SkiaShader()
+  type: Constructor
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: .ctor
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 83
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public SkiaShader()
+    content.vb: Public Sub New()
+  overload: DrawnUi.Infrastructure.SkiaShader.#ctor*
+  nameWithType.vb: SkiaShader.New()
+  fullName.vb: DrawnUi.Infrastructure.SkiaShader.New()
+  name.vb: New()
+- uid: DrawnUi.Infrastructure.SkiaShader.FromResource(System.String,System.Boolean)
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.FromResource(System.String,System.Boolean)
+  id: FromResource(System.String,System.Boolean)
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: FromResource(string, bool)
+  nameWithType: SkiaShader.FromResource(string, bool)
+  fullName: DrawnUi.Infrastructure.SkiaShader.FromResource(string, bool)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FromResource
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 90
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Create and compile from a resource file path (e.g. "Shaders/myeffect.sksl").
+  example: []
+  syntax:
+    content: public static SkiaShader FromResource(string resourcePath, bool useCache = true)
+    parameters:
+    - id: resourcePath
+      type: System.String
+    - id: useCache
+      type: System.Boolean
+    return:
+      type: DrawnUi.Infrastructure.SkiaShader
+    content.vb: Public Shared Function FromResource(resourcePath As String, useCache As Boolean = True) As SkiaShader
+  overload: DrawnUi.Infrastructure.SkiaShader.FromResource*
+  nameWithType.vb: SkiaShader.FromResource(String, Boolean)
+  fullName.vb: DrawnUi.Infrastructure.SkiaShader.FromResource(String, Boolean)
+  name.vb: FromResource(String, Boolean)
+- uid: DrawnUi.Infrastructure.SkiaShader.FromCode(System.String)
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.FromCode(System.String)
+  id: FromCode(System.String)
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: FromCode(string)
+  nameWithType: SkiaShader.FromCode(string)
+  fullName: DrawnUi.Infrastructure.SkiaShader.FromCode(string)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FromCode
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 100
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Create and compile from inline SKSL code.
+  example: []
+  syntax:
+    content: public static SkiaShader FromCode(string skslCode)
+    parameters:
+    - id: skslCode
+      type: System.String
+    return:
+      type: DrawnUi.Infrastructure.SkiaShader
+    content.vb: Public Shared Function FromCode(skslCode As String) As SkiaShader
+  overload: DrawnUi.Infrastructure.SkiaShader.FromCode*
+  nameWithType.vb: SkiaShader.FromCode(String)
+  fullName.vb: DrawnUi.Infrastructure.SkiaShader.FromCode(String)
+  name.vb: FromCode(String)
+- uid: DrawnUi.Infrastructure.SkiaShader.CompileFromResource(System.String,System.Boolean,System.Action{System.String})
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.CompileFromResource(System.String,System.Boolean,System.Action{System.String})
+  id: CompileFromResource(System.String,System.Boolean,System.Action{System.String})
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: CompileFromResource(string, bool, Action<string>)
+  nameWithType: SkiaShader.CompileFromResource(string, bool, Action<string>)
+  fullName: DrawnUi.Infrastructure.SkiaShader.CompileFromResource(string, bool, System.Action<string>)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CompileFromResource
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 112
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Compile shader from an embedded resource file.
+  example: []
+  syntax:
+    content: public void CompileFromResource(string resourcePath, bool useCache = true, Action<string> onError = null)
+    parameters:
+    - id: resourcePath
+      type: System.String
+    - id: useCache
+      type: System.Boolean
+    - id: onError
+      type: System.Action{System.String}
+    content.vb: Public Sub CompileFromResource(resourcePath As String, useCache As Boolean = True, onError As Action(Of String) = Nothing)
+  overload: DrawnUi.Infrastructure.SkiaShader.CompileFromResource*
+  nameWithType.vb: SkiaShader.CompileFromResource(String, Boolean, Action(Of String))
+  fullName.vb: DrawnUi.Infrastructure.SkiaShader.CompileFromResource(String, Boolean, System.Action(Of String))
+  name.vb: CompileFromResource(String, Boolean, Action(Of String))
+- uid: DrawnUi.Infrastructure.SkiaShader.CompileFromCode(System.String,System.String,System.Boolean,System.Action{System.String})
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.CompileFromCode(System.String,System.String,System.Boolean,System.Action{System.String})
+  id: CompileFromCode(System.String,System.String,System.Boolean,System.Action{System.String})
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: CompileFromCode(string, string, bool, Action<string>)
+  nameWithType: SkiaShader.CompileFromCode(string, string, bool, Action<string>)
+  fullName: DrawnUi.Infrastructure.SkiaShader.CompileFromCode(string, string, bool, System.Action<string>)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CompileFromCode
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 123
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Compile shader from an SKSL code string.
+  example: []
+  syntax:
+    content: public void CompileFromCode(string skslCode, string cacheKey = null, bool useCache = false, Action<string> onError = null)
+    parameters:
+    - id: skslCode
+      type: System.String
+    - id: cacheKey
+      type: System.String
+    - id: useCache
+      type: System.Boolean
+    - id: onError
+      type: System.Action{System.String}
+    content.vb: Public Sub CompileFromCode(skslCode As String, cacheKey As String = Nothing, useCache As Boolean = False, onError As Action(Of String) = Nothing)
+  overload: DrawnUi.Infrastructure.SkiaShader.CompileFromCode*
+  nameWithType.vb: SkiaShader.CompileFromCode(String, String, Boolean, Action(Of String))
+  fullName.vb: DrawnUi.Infrastructure.SkiaShader.CompileFromCode(String, String, Boolean, System.Action(Of String))
+  name.vb: CompileFromCode(String, String, Boolean, Action(Of String))
+- uid: DrawnUi.Infrastructure.SkiaShader.DisposeCompiled
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.DisposeCompiled
+  id: DisposeCompiled
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: DisposeCompiled()
+  nameWithType: SkiaShader.DisposeCompiled()
+  fullName: DrawnUi.Infrastructure.SkiaShader.DisposeCompiled()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DisposeCompiled
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 131
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public void DisposeCompiled()
+    content.vb: Public Sub DisposeCompiled()
+  overload: DrawnUi.Infrastructure.SkiaShader.DisposeCompiled*
+- uid: DrawnUi.Infrastructure.SkiaShader.ApplyTo(SkiaSharp.SKPaint,SkiaSharp.SKImage,System.Single,System.Single)
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.ApplyTo(SkiaSharp.SKPaint,SkiaSharp.SKImage,System.Single,System.Single)
+  id: ApplyTo(SkiaSharp.SKPaint,SkiaSharp.SKImage,System.Single,System.Single)
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: ApplyTo(SKPaint, SKImage, float, float)
+  nameWithType: SkiaShader.ApplyTo(SKPaint, SKImage, float, float)
+  fullName: DrawnUi.Infrastructure.SkiaShader.ApplyTo(SkiaSharp.SKPaint, SkiaSharp.SKImage, float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ApplyTo
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 161
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: >-
+    Apply the shader to a paint using an image as the primary input texture (iImage1).
+
+    Returns the created SKShader so caller can dispose it, or null if not compiled.
+
+    The uniforms, children, and texture shader objects are cached on the instance
+
+    and reused across frames — callers must NOT dispose them.
+  example: []
+  syntax:
+    content: public SKShader ApplyTo(SKPaint paint, SKImage source, float width, float height)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: source
+      type: SkiaSharp.SKImage
+    - id: width
+      type: System.Single
+    - id: height
+      type: System.Single
+    return:
+      type: SkiaSharp.SKShader
+    content.vb: Public Function ApplyTo(paint As SKPaint, source As SKImage, width As Single, height As Single) As SKShader
+  overload: DrawnUi.Infrastructure.SkiaShader.ApplyTo*
+  nameWithType.vb: SkiaShader.ApplyTo(SKPaint, SKImage, Single, Single)
+  fullName.vb: DrawnUi.Infrastructure.SkiaShader.ApplyTo(SkiaSharp.SKPaint, SkiaSharp.SKImage, Single, Single)
+  name.vb: ApplyTo(SKPaint, SKImage, Single, Single)
+- uid: DrawnUi.Infrastructure.SkiaShader.ApplyTo(SkiaSharp.SKPaint,System.Single,System.Single)
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.ApplyTo(SkiaSharp.SKPaint,System.Single,System.Single)
+  id: ApplyTo(SkiaSharp.SKPaint,System.Single,System.Single)
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: ApplyTo(SKPaint, float, float)
+  nameWithType: SkiaShader.ApplyTo(SKPaint, float, float)
+  fullName: DrawnUi.Infrastructure.SkiaShader.ApplyTo(SkiaSharp.SKPaint, float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ApplyTo
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 178
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Apply the shader without an input texture (generative/output-only shaders).
+  example: []
+  syntax:
+    content: public SKShader ApplyTo(SKPaint paint, float width, float height)
+    parameters:
+    - id: paint
+      type: SkiaSharp.SKPaint
+    - id: width
+      type: System.Single
+    - id: height
+      type: System.Single
+    return:
+      type: SkiaSharp.SKShader
+    content.vb: Public Function ApplyTo(paint As SKPaint, width As Single, height As Single) As SKShader
+  overload: DrawnUi.Infrastructure.SkiaShader.ApplyTo*
+  nameWithType.vb: SkiaShader.ApplyTo(SKPaint, Single, Single)
+  fullName.vb: DrawnUi.Infrastructure.SkiaShader.ApplyTo(SkiaSharp.SKPaint, Single, Single)
+  name.vb: ApplyTo(SKPaint, Single, Single)
+- uid: DrawnUi.Infrastructure.SkiaShader.DrawRect(SkiaSharp.SKCanvas,SkiaSharp.SKImage,SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.DrawRect(SkiaSharp.SKCanvas,SkiaSharp.SKImage,SkiaSharp.SKRect)
+  id: DrawRect(SkiaSharp.SKCanvas,SkiaSharp.SKImage,SkiaSharp.SKRect)
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: DrawRect(SKCanvas, SKImage, SKRect)
+  nameWithType: SkiaShader.DrawRect(SKCanvas, SKImage, SKRect)
+  fullName: DrawnUi.Infrastructure.SkiaShader.DrawRect(SkiaSharp.SKCanvas, SkiaSharp.SKImage, SkiaSharp.SKRect)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DrawRect
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 194
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: 'Full render: apply the shader and draw a rect on the canvas.'
+  example: []
+  syntax:
+    content: public void DrawRect(SKCanvas canvas, SKImage source, SKRect destination)
+    parameters:
+    - id: canvas
+      type: SkiaSharp.SKCanvas
+    - id: source
+      type: SkiaSharp.SKImage
+    - id: destination
+      type: SkiaSharp.SKRect
+    content.vb: Public Sub DrawRect(canvas As SKCanvas, source As SKImage, destination As SKRect)
+  overload: DrawnUi.Infrastructure.SkiaShader.DrawRect*
+- uid: DrawnUi.Infrastructure.SkiaShader.DrawRect(SkiaSharp.SKCanvas,SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.DrawRect(SkiaSharp.SKCanvas,SkiaSharp.SKRect)
+  id: DrawRect(SkiaSharp.SKCanvas,SkiaSharp.SKRect)
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: DrawRect(SKCanvas, SKRect)
+  nameWithType: SkiaShader.DrawRect(SKCanvas, SKRect)
+  fullName: DrawnUi.Infrastructure.SkiaShader.DrawRect(SkiaSharp.SKCanvas, SkiaSharp.SKRect)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DrawRect
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 219
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Full render without input texture (generative shaders).
+  example: []
+  syntax:
+    content: public void DrawRect(SKCanvas canvas, SKRect destination)
+    parameters:
+    - id: canvas
+      type: SkiaSharp.SKCanvas
+    - id: destination
+      type: SkiaSharp.SKRect
+    content.vb: Public Sub DrawRect(canvas As SKCanvas, destination As SKRect)
+  overload: DrawnUi.Infrastructure.SkiaShader.DrawRect*
+- uid: DrawnUi.Infrastructure.SkiaShader.DrawImage(SkiaSharp.SKCanvas,SkiaSharp.SKImage,System.Single,System.Single)
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.DrawImage(SkiaSharp.SKCanvas,SkiaSharp.SKImage,System.Single,System.Single)
+  id: DrawImage(SkiaSharp.SKCanvas,SkiaSharp.SKImage,System.Single,System.Single)
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: DrawImage(SKCanvas, SKImage, float, float)
+  nameWithType: SkiaShader.DrawImage(SKCanvas, SKImage, float, float)
+  fullName: DrawnUi.Infrastructure.SkiaShader.DrawImage(SkiaSharp.SKCanvas, SkiaSharp.SKImage, float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DrawImage
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 246
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: >-
+    Full render: apply the shader and draw the result on the canvas.
+
+    The source image is passed to the shader as iImage1 texture;
+
+    actual drawing uses DrawRect because the shader generates all pixels itself.
+  example: []
+  syntax:
+    content: public void DrawImage(SKCanvas canvas, SKImage source, float x, float y)
+    parameters:
+    - id: canvas
+      type: SkiaSharp.SKCanvas
+    - id: source
+      type: SkiaSharp.SKImage
+    - id: x
+      type: System.Single
+    - id: y
+      type: System.Single
+    content.vb: Public Sub DrawImage(canvas As SKCanvas, source As SKImage, x As Single, y As Single)
+  overload: DrawnUi.Infrastructure.SkiaShader.DrawImage*
+  nameWithType.vb: SkiaShader.DrawImage(SKCanvas, SKImage, Single, Single)
+  fullName.vb: DrawnUi.Infrastructure.SkiaShader.DrawImage(SkiaSharp.SKCanvas, SkiaSharp.SKImage, Single, Single)
+  name.vb: DrawImage(SKCanvas, SKImage, Single, Single)
+- uid: DrawnUi.Infrastructure.SkiaShader.CreateUniforms(System.Single,System.Single,System.Single,System.Single)
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.CreateUniforms(System.Single,System.Single,System.Single,System.Single)
+  id: CreateUniforms(System.Single,System.Single,System.Single,System.Single)
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: CreateUniforms(float, float, float, float)
+  nameWithType: SkiaShader.CreateUniforms(float, float, float, float)
+  fullName: DrawnUi.Infrastructure.SkiaShader.CreateUniforms(float, float, float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CreateUniforms
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 282
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: >-
+    Creates standard uniforms: iResolution, iImageResolution, iTime, iOffset, iMouse.
+
+    Override to add custom uniforms for specialized shaders — the typical pattern is
+
+    to call <code>base.CreateUniforms(...)</code> and then set extra keys on the returned
+
+    instance.
+
+    <p>
+
+    IMPORTANT: the returned <xref href="SkiaSharp.SKRuntimeEffectUniforms" data-throw-if-not-resolved="false"></xref> is OWNED by this
+
+    <xref href="DrawnUi.Infrastructure.SkiaShader" data-throw-if-not-resolved="false"></xref> and reused every frame. Do not dispose it and do not
+
+    return a different instance from an override — mutate and return the same one.
+
+    It is invalidated automatically when the compiled effect changes.
+
+    </p>
+  example: []
+  syntax:
+    content: public virtual SKRuntimeEffectUniforms CreateUniforms(float viewportWidth, float viewportHeight, float imageWidth, float imageHeight)
+    parameters:
+    - id: viewportWidth
+      type: System.Single
+    - id: viewportHeight
+      type: System.Single
+    - id: imageWidth
+      type: System.Single
+    - id: imageHeight
+      type: System.Single
+    return:
+      type: SkiaSharp.SKRuntimeEffectUniforms
+    content.vb: Public Overridable Function CreateUniforms(viewportWidth As Single, viewportHeight As Single, imageWidth As Single, imageHeight As Single) As SKRuntimeEffectUniforms
+  overload: DrawnUi.Infrastructure.SkiaShader.CreateUniforms*
+  nameWithType.vb: SkiaShader.CreateUniforms(Single, Single, Single, Single)
+  fullName.vb: DrawnUi.Infrastructure.SkiaShader.CreateUniforms(Single, Single, Single, Single)
+  name.vb: CreateUniforms(Single, Single, Single, Single)
+- uid: DrawnUi.Infrastructure.SkiaShader.CreateChildren(SkiaSharp.SKShader)
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.CreateChildren(SkiaSharp.SKShader)
+  id: CreateChildren(SkiaSharp.SKShader)
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: CreateChildren(SKShader)
+  nameWithType: SkiaShader.CreateChildren(SKShader)
+  fullName: DrawnUi.Infrastructure.SkiaShader.CreateChildren(SkiaSharp.SKShader)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CreateChildren
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 322
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: >-
+    Creates texture children with the primary texture as iImage1.
+
+    Override to add additional textures (iImage2, etc.) by setting extra keys on the
+
+    returned instance.
+
+    <p>
+
+    IMPORTANT: the returned <xref href="SkiaSharp.SKRuntimeEffectChildren" data-throw-if-not-resolved="false"></xref> is OWNED by this
+
+    <xref href="DrawnUi.Infrastructure.SkiaShader" data-throw-if-not-resolved="false"></xref> and reused every frame. Do not dispose it and do not
+
+    return a different instance from an override. It is invalidated automatically
+
+    when the compiled effect changes.
+
+    </p>
+  example: []
+  syntax:
+    content: public virtual SKRuntimeEffectChildren CreateChildren(SKShader primaryTexture)
+    parameters:
+    - id: primaryTexture
+      type: SkiaSharp.SKShader
+    return:
+      type: SkiaSharp.SKRuntimeEffectChildren
+    content.vb: Public Overridable Function CreateChildren(primaryTexture As SKShader) As SKRuntimeEffectChildren
+  overload: DrawnUi.Infrastructure.SkiaShader.CreateChildren*
+- uid: DrawnUi.Infrastructure.SkiaShader.CreateTextureShader(SkiaSharp.SKImage)
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.CreateTextureShader(SkiaSharp.SKImage)
+  id: CreateTextureShader(SkiaSharp.SKImage)
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: CreateTextureShader(SKImage)
+  nameWithType: SkiaShader.CreateTextureShader(SKImage)
+  fullName: DrawnUi.Infrastructure.SkiaShader.CreateTextureShader(SkiaSharp.SKImage)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CreateTextureShader
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 339
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: >-
+    Creates (or reuses) a shader from an <xref href="SkiaSharp.SKImage" data-throw-if-not-resolved="false"></xref> for use as a texture
+
+    uniform. The returned <xref href="SkiaSharp.SKShader" data-throw-if-not-resolved="false"></xref> is cached on the instance and reused
+
+    while the source image handle and sampling options are unchanged — callers must
+
+    NOT dispose it. It is disposed automatically when the source, sampling options, or
+
+    compiled effect change, and in <xref href="DrawnUi.Infrastructure.SkiaShader.Dispose" data-throw-if-not-resolved="false"></xref>.
+  example: []
+  syntax:
+    content: public SKShader CreateTextureShader(SKImage source)
+    parameters:
+    - id: source
+      type: SkiaSharp.SKImage
+    return:
+      type: SkiaSharp.SKShader
+    content.vb: Public Function CreateTextureShader(source As SKImage) As SKShader
+  overload: DrawnUi.Infrastructure.SkiaShader.CreateTextureShader*
+- uid: DrawnUi.Infrastructure.SkiaShader.GetPaint
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.GetPaint
+  id: GetPaint
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: GetPaint()
+  nameWithType: SkiaShader.GetPaint()
+  fullName: DrawnUi.Infrastructure.SkiaShader.GetPaint()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetPaint
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 366
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public SKPaint GetPaint()
+    return:
+      type: SkiaSharp.SKPaint
+    content.vb: Public Function GetPaint() As SKPaint
+  overload: DrawnUi.Infrastructure.SkiaShader.GetPaint*
+- uid: DrawnUi.Infrastructure.SkiaShader.NormalizeLineEndings(System.String)
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.NormalizeLineEndings(System.String)
+  id: NormalizeLineEndings(System.String)
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: NormalizeLineEndings(string)
+  nameWithType: SkiaShader.NormalizeLineEndings(string)
+  fullName: DrawnUi.Infrastructure.SkiaShader.NormalizeLineEndings(string)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NormalizeLineEndings
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 376
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  syntax:
+    content: public static string NormalizeLineEndings(string text)
+    parameters:
+    - id: text
+      type: System.String
+    return:
+      type: System.String
+    content.vb: Public Shared Function NormalizeLineEndings(text As String) As String
+  overload: DrawnUi.Infrastructure.SkiaShader.NormalizeLineEndings*
+  nameWithType.vb: SkiaShader.NormalizeLineEndings(String)
+  fullName.vb: DrawnUi.Infrastructure.SkiaShader.NormalizeLineEndings(String)
+  name.vb: NormalizeLineEndings(String)
+- uid: DrawnUi.Infrastructure.SkiaShader.Dispose
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.Dispose
+  id: Dispose
+  parent: DrawnUi.Infrastructure.SkiaShader
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: SkiaShader.Dispose()
+  fullName: DrawnUi.Infrastructure.SkiaShader.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Features/Shaders/SkiaShader.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Dispose
+    path: ../src/Shared/Features/Shaders/SkiaShader.cs
+    startLine: 383
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Infrastructure
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: DrawnUi.Infrastructure.SkiaShader.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+references:
+- uid: DrawnUi.Infrastructure
+  commentId: N:DrawnUi.Infrastructure
+  href: DrawnUi.html
+  name: DrawnUi.Infrastructure
+  nameWithType: DrawnUi.Infrastructure
+  fullName: DrawnUi.Infrastructure
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Infrastructure
+    name: Infrastructure
+    href: DrawnUi.Infrastructure.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: SkiaSharp.SKRuntimeEffect
+  commentId: T:SkiaSharp.SKRuntimeEffect
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skruntimeeffect
+  name: SKRuntimeEffect
+  nameWithType: SKRuntimeEffect
+  fullName: SkiaSharp.SKRuntimeEffect
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: System.Single[]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float[]
+  nameWithType: float[]
+  fullName: float[]
+  nameWithType.vb: Single()
+  fullName.vb: Single()
+  name.vb: Single()
+  spec.csharp:
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: (
+  - name: )
+- uid: DrawnUi.Infrastructure.SkiaShader.Time*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.Time
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_Time
+  name: Time
+  nameWithType: SkiaShader.Time
+  fullName: DrawnUi.Infrastructure.SkiaShader.Time
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: DrawnUi.Infrastructure.SkiaShader.Mouse*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.Mouse
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_Mouse
+  name: Mouse
+  nameWithType: SkiaShader.Mouse
+  fullName: DrawnUi.Infrastructure.SkiaShader.Mouse
+- uid: SkiaSharp.SKPoint
+  commentId: T:SkiaSharp.SKPoint
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpoint
+  name: SKPoint
+  nameWithType: SKPoint
+  fullName: SkiaSharp.SKPoint
+- uid: DrawnUi.Infrastructure.SkiaShader.MouseInitial*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.MouseInitial
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_MouseInitial
+  name: MouseInitial
+  nameWithType: SkiaShader.MouseInitial
+  fullName: DrawnUi.Infrastructure.SkiaShader.MouseInitial
+- uid: DrawnUi.Infrastructure.SkiaShader.Offset*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.Offset
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_Offset
+  name: Offset
+  nameWithType: SkiaShader.Offset
+  fullName: DrawnUi.Infrastructure.SkiaShader.Offset
+- uid: DrawnUi.Infrastructure.SkiaShader.FilterMode*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.FilterMode
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_FilterMode
+  name: FilterMode
+  nameWithType: SkiaShader.FilterMode
+  fullName: DrawnUi.Infrastructure.SkiaShader.FilterMode
+- uid: SkiaSharp.SKFilterMode
+  commentId: T:SkiaSharp.SKFilterMode
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skfiltermode
+  name: SKFilterMode
+  nameWithType: SKFilterMode
+  fullName: SkiaSharp.SKFilterMode
+- uid: DrawnUi.Infrastructure.SkiaShader.MipmapMode*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.MipmapMode
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_MipmapMode
+  name: MipmapMode
+  nameWithType: SkiaShader.MipmapMode
+  fullName: DrawnUi.Infrastructure.SkiaShader.MipmapMode
+- uid: SkiaSharp.SKMipmapMode
+  commentId: T:SkiaSharp.SKMipmapMode
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skmipmapmode
+  name: SKMipmapMode
+  nameWithType: SKMipmapMode
+  fullName: SkiaSharp.SKMipmapMode
+- uid: DrawnUi.Infrastructure.SkiaShader.TileMode*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.TileMode
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_TileMode
+  name: TileMode
+  nameWithType: SkiaShader.TileMode
+  fullName: DrawnUi.Infrastructure.SkiaShader.TileMode
+- uid: SkiaSharp.SKShaderTileMode
+  commentId: T:SkiaSharp.SKShaderTileMode
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skshadertilemode
+  name: SKShaderTileMode
+  nameWithType: SKShaderTileMode
+  fullName: SkiaSharp.SKShaderTileMode
+- uid: DrawnUi.Infrastructure.SkiaShader.BlendMode*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.BlendMode
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_BlendMode
+  name: BlendMode
+  nameWithType: SkiaShader.BlendMode
+  fullName: DrawnUi.Infrastructure.SkiaShader.BlendMode
+- uid: SkiaSharp.SKBlendMode
+  commentId: T:SkiaSharp.SKBlendMode
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skblendmode
+  name: SKBlendMode
+  nameWithType: SKBlendMode
+  fullName: SkiaSharp.SKBlendMode
+- uid: DrawnUi.Infrastructure.SkiaShader.IsCompiled*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.IsCompiled
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_IsCompiled
+  name: IsCompiled
+  nameWithType: SkiaShader.IsCompiled
+  fullName: DrawnUi.Infrastructure.SkiaShader.IsCompiled
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Infrastructure.SkiaShader.Compiled*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.Compiled
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_Compiled
+  name: Compiled
+  nameWithType: SkiaShader.Compiled
+  fullName: DrawnUi.Infrastructure.SkiaShader.Compiled
+- uid: DrawnUi.Infrastructure.SkiaShader.#ctor*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.#ctor
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader__ctor
+  name: SkiaShader
+  nameWithType: SkiaShader.SkiaShader
+  fullName: DrawnUi.Infrastructure.SkiaShader.SkiaShader
+  nameWithType.vb: SkiaShader.New
+  fullName.vb: DrawnUi.Infrastructure.SkiaShader.New
+  name.vb: New
+- uid: DrawnUi.Infrastructure.SkiaShader.FromResource*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.FromResource
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_FromResource_System_String_System_Boolean_
+  name: FromResource
+  nameWithType: SkiaShader.FromResource
+  fullName: DrawnUi.Infrastructure.SkiaShader.FromResource
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: DrawnUi.Infrastructure.SkiaShader
+  commentId: T:DrawnUi.Infrastructure.SkiaShader
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.SkiaShader.html
+  name: SkiaShader
+  nameWithType: SkiaShader
+  fullName: DrawnUi.Infrastructure.SkiaShader
+- uid: DrawnUi.Infrastructure.SkiaShader.FromCode*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.FromCode
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_FromCode_System_String_
+  name: FromCode
+  nameWithType: SkiaShader.FromCode
+  fullName: DrawnUi.Infrastructure.SkiaShader.FromCode
+- uid: DrawnUi.Infrastructure.SkiaShader.CompileFromResource*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.CompileFromResource
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_CompileFromResource_System_String_System_Boolean_System_Action_System_String__
+  name: CompileFromResource
+  nameWithType: SkiaShader.CompileFromResource
+  fullName: DrawnUi.Infrastructure.SkiaShader.CompileFromResource
+- uid: System.Action{System.String}
+  commentId: T:System.Action{System.String}
+  parent: System
+  definition: System.Action`1
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<string>
+  nameWithType: Action<string>
+  fullName: System.Action<string>
+  nameWithType.vb: Action(Of String)
+  fullName.vb: System.Action(Of String)
+  name.vb: Action(Of String)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Infrastructure.SkiaShader.CompileFromCode*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.CompileFromCode
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_CompileFromCode_System_String_System_String_System_Boolean_System_Action_System_String__
+  name: CompileFromCode
+  nameWithType: SkiaShader.CompileFromCode
+  fullName: DrawnUi.Infrastructure.SkiaShader.CompileFromCode
+- uid: DrawnUi.Infrastructure.SkiaShader.DisposeCompiled*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.DisposeCompiled
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_DisposeCompiled
+  name: DisposeCompiled
+  nameWithType: SkiaShader.DisposeCompiled
+  fullName: DrawnUi.Infrastructure.SkiaShader.DisposeCompiled
+- uid: DrawnUi.Infrastructure.SkiaShader.ApplyTo*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.ApplyTo
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_ApplyTo_SkiaSharp_SKPaint_SkiaSharp_SKImage_System_Single_System_Single_
+  name: ApplyTo
+  nameWithType: SkiaShader.ApplyTo
+  fullName: DrawnUi.Infrastructure.SkiaShader.ApplyTo
+- uid: SkiaSharp.SKPaint
+  commentId: T:SkiaSharp.SKPaint
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
+  name: SKPaint
+  nameWithType: SKPaint
+  fullName: SkiaSharp.SKPaint
+- uid: SkiaSharp.SKImage
+  commentId: T:SkiaSharp.SKImage
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  name: SKImage
+  nameWithType: SKImage
+  fullName: SkiaSharp.SKImage
+- uid: SkiaSharp.SKShader
+  commentId: T:SkiaSharp.SKShader
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skshader
+  name: SKShader
+  nameWithType: SKShader
+  fullName: SkiaSharp.SKShader
+- uid: DrawnUi.Infrastructure.SkiaShader.DrawRect*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.DrawRect
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_DrawRect_SkiaSharp_SKCanvas_SkiaSharp_SKImage_SkiaSharp_SKRect_
+  name: DrawRect
+  nameWithType: SkiaShader.DrawRect
+  fullName: DrawnUi.Infrastructure.SkiaShader.DrawRect
+- uid: SkiaSharp.SKCanvas
+  commentId: T:SkiaSharp.SKCanvas
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skcanvas
+  name: SKCanvas
+  nameWithType: SKCanvas
+  fullName: SkiaSharp.SKCanvas
+- uid: SkiaSharp.SKRect
+  commentId: T:SkiaSharp.SKRect
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  name: SKRect
+  nameWithType: SKRect
+  fullName: SkiaSharp.SKRect
+- uid: DrawnUi.Infrastructure.SkiaShader.DrawImage*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.DrawImage
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_DrawImage_SkiaSharp_SKCanvas_SkiaSharp_SKImage_System_Single_System_Single_
+  name: DrawImage
+  nameWithType: SkiaShader.DrawImage
+  fullName: DrawnUi.Infrastructure.SkiaShader.DrawImage
+- uid: SkiaSharp.SKRuntimeEffectUniforms
+  commentId: T:SkiaSharp.SKRuntimeEffectUniforms
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skruntimeeffectuniforms
+  name: SKRuntimeEffectUniforms
+  nameWithType: SKRuntimeEffectUniforms
+  fullName: SkiaSharp.SKRuntimeEffectUniforms
+- uid: DrawnUi.Infrastructure.SkiaShader.CreateUniforms*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.CreateUniforms
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_CreateUniforms_System_Single_System_Single_System_Single_System_Single_
+  name: CreateUniforms
+  nameWithType: SkiaShader.CreateUniforms
+  fullName: DrawnUi.Infrastructure.SkiaShader.CreateUniforms
+- uid: SkiaSharp.SKRuntimeEffectChildren
+  commentId: T:SkiaSharp.SKRuntimeEffectChildren
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skruntimeeffectchildren
+  name: SKRuntimeEffectChildren
+  nameWithType: SKRuntimeEffectChildren
+  fullName: SkiaSharp.SKRuntimeEffectChildren
+- uid: DrawnUi.Infrastructure.SkiaShader.CreateChildren*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.CreateChildren
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_CreateChildren_SkiaSharp_SKShader_
+  name: CreateChildren
+  nameWithType: SkiaShader.CreateChildren
+  fullName: DrawnUi.Infrastructure.SkiaShader.CreateChildren
+- uid: DrawnUi.Infrastructure.SkiaShader.Dispose
+  commentId: M:DrawnUi.Infrastructure.SkiaShader.Dispose
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_Dispose
+  name: Dispose()
+  nameWithType: SkiaShader.Dispose()
+  fullName: DrawnUi.Infrastructure.SkiaShader.Dispose()
+  spec.csharp:
+  - uid: DrawnUi.Infrastructure.SkiaShader.Dispose
+    name: Dispose
+    href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Infrastructure.SkiaShader.Dispose
+    name: Dispose
+    href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_Dispose
+  - name: (
+  - name: )
+- uid: DrawnUi.Infrastructure.SkiaShader.CreateTextureShader*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.CreateTextureShader
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_CreateTextureShader_SkiaSharp_SKImage_
+  name: CreateTextureShader
+  nameWithType: SkiaShader.CreateTextureShader
+  fullName: DrawnUi.Infrastructure.SkiaShader.CreateTextureShader
+- uid: DrawnUi.Infrastructure.SkiaShader.GetPaint*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.GetPaint
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_GetPaint
+  name: GetPaint
+  nameWithType: SkiaShader.GetPaint
+  fullName: DrawnUi.Infrastructure.SkiaShader.GetPaint
+- uid: DrawnUi.Infrastructure.SkiaShader.NormalizeLineEndings*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.NormalizeLineEndings
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_NormalizeLineEndings_System_String_
+  name: NormalizeLineEndings
+  nameWithType: SkiaShader.NormalizeLineEndings
+  fullName: DrawnUi.Infrastructure.SkiaShader.NormalizeLineEndings
+- uid: DrawnUi.Infrastructure.SkiaShader.Dispose*
+  commentId: Overload:DrawnUi.Infrastructure.SkiaShader.Dispose
+  href: DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_Dispose
+  name: Dispose
+  nameWithType: SkiaShader.Dispose
+  fullName: DrawnUi.Infrastructure.SkiaShader.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )

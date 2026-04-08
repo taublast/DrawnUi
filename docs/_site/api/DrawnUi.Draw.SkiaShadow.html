@@ -101,7 +101,7 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SkiaShadow : BindableObject, INotifyPropertyChanged</code></pre>
+    <pre><code class="lang-csharp hljs">public class SkiaShadow : BindableObject, INotifyPropertyChanged, IComparable, IComparable&lt;SkiaShadow&gt;, IEquatable&lt;SkiaShadow&gt;</code></pre>
   </div>
 
 
@@ -120,6 +120,9 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
     <dt>Implements</dt>
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable">IComparable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable-1">IComparable</a>&lt;<a class="xref" href="DrawnUi.Draw.SkiaShadow.html">SkiaShadow</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="DrawnUi.Draw.SkiaShadow.html">SkiaShadow</a>&gt;</div>
     </dd>
   </dl>
 
@@ -191,13 +194,7 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.bindingcontextchanged">BindableObject.BindingContextChanged</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
-    </div>
-    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
@@ -238,7 +235,7 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaShadow_BlurProperty" data-uid="DrawnUi.Draw.SkiaShadow.BlurProperty">
   BlurProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L194"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -268,7 +265,7 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaShadow_ColorProperty" data-uid="DrawnUi.Draw.SkiaShadow.ColorProperty">
   ColorProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L167"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -298,7 +295,7 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaShadow_OpacityProperty" data-uid="DrawnUi.Draw.SkiaShadow.OpacityProperty">
   OpacityProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L153"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -328,7 +325,7 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaShadow_ShadowOnlyProperty" data-uid="DrawnUi.Draw.SkiaShadow.ShadowOnlyProperty">
   ShadowOnlyProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L203"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -358,7 +355,7 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaShadow_XProperty" data-uid="DrawnUi.Draw.SkiaShadow.XProperty">
   XProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L176"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -388,7 +385,7 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaShadow_YProperty" data-uid="DrawnUi.Draw.SkiaShadow.YProperty">
   YProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L62"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L185"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -423,7 +420,7 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaShadow_Blur" data-uid="DrawnUi.Draw.SkiaShadow.Blur">
   Blur
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L197"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -454,7 +451,7 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaShadow_Color" data-uid="DrawnUi.Draw.SkiaShadow.Color">
   Color
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L170"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -485,7 +482,7 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaShadow_Opacity" data-uid="DrawnUi.Draw.SkiaShadow.Opacity">
   Opacity
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L160"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -547,7 +544,7 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaShadow_ShadowOnly" data-uid="DrawnUi.Draw.SkiaShadow.ShadowOnly">
   ShadowOnly
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L206"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -609,7 +606,7 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaShadow_X" data-uid="DrawnUi.Draw.SkiaShadow.X">
   X
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L179"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -640,7 +637,7 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_SkiaShadow_Y" data-uid="DrawnUi.Draw.SkiaShadow.Y">
   Y
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L188"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -702,6 +699,92 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
 
 
 
+  <a id="DrawnUi_Draw_SkiaShadow_CompareTo_" data-uid="DrawnUi.Draw.SkiaShadow.CompareTo*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaShadow_CompareTo_DrawnUi_Draw_SkiaShadow_" data-uid="DrawnUi.Draw.SkiaShadow.CompareTo(DrawnUi.Draw.SkiaShadow)">
+  CompareTo(SkiaShadow)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int CompareTo(SkiaShadow other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="DrawnUi.Draw.SkiaShadow.html">SkiaShadow</a></dt>
+    <dd><p>An object to compare with this instance.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A value that indicates the relative order of the objects being compared. The return value has these meanings:</p>
+ <table><thead><tr><th class="term"> Value</th><th class="description"> Meaning</th></tr></thead><tbody><tr><td class="term"> Less than zero</td><td class="description"> This instance precedes <code class="paramref">other</code> in the sort order.</td></tr><tr><td class="term"> Zero</td><td class="description"> This instance occurs in the same position in the sort order as <code class="paramref">other</code>.</td></tr><tr><td class="term"> Greater than zero</td><td class="description"> This instance follows <code class="paramref">other</code> in the sort order.</td></tr></tbody></table>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaShadow_CompareTo_" data-uid="DrawnUi.Draw.SkiaShadow.CompareTo*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaShadow_CompareTo_System_Object_" data-uid="DrawnUi.Draw.SkiaShadow.CompareTo(System.Object)">
+  CompareTo(object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int CompareTo(object obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd><p>An object to compare with this instance.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A value that indicates the relative order of the objects being compared. The return value has these meanings:</p>
+ <table><thead><tr><th class="term"> Value</th><th class="description"> Meaning</th></tr></thead><tbody><tr><td class="term"> Less than zero</td><td class="description"> This instance precedes <code class="paramref">obj</code> in the sort order.</td></tr><tr><td class="term"> Zero</td><td class="description"> This instance occurs in the same position in the sort order as <code class="paramref">obj</code>.</td></tr><tr><td class="term"> Greater than zero</td><td class="description"> This instance follows <code class="paramref">obj</code> in the sort order.</td></tr></tbody></table>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p><code class="paramref">obj</code> is not the same type as this instance.</p>
+</dd>
+  </dl>
+
+
+
   <a id="DrawnUi_Draw_SkiaShadow_Dettach_" data-uid="DrawnUi.Draw.SkiaShadow.Dettach*"></a>
 
   <h3 id="DrawnUi_Draw_SkiaShadow_Dettach" data-uid="DrawnUi.Draw.SkiaShadow.Dettach">
@@ -717,6 +800,197 @@ Class SkiaShadow  <a class="header-action link-secondary" title="View source" hr
   </div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaShadow_Equals_" data-uid="DrawnUi.Draw.SkiaShadow.Equals*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaShadow_Equals_DrawnUi_Draw_SkiaShadow_" data-uid="DrawnUi.Draw.SkiaShadow.Equals(DrawnUi.Draw.SkiaShadow)">
+  Equals(SkiaShadow)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L82"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Indicates whether the current object is equal to another object of the same type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(SkiaShadow other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="DrawnUi.Draw.SkiaShadow.html">SkiaShadow</a></dt>
+    <dd><p>An object to compare with this object.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the current object is equal to the <code class="paramref">other</code> parameter; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaShadow_Equals_" data-uid="DrawnUi.Draw.SkiaShadow.Equals*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaShadow_Equals_System_Object_" data-uid="DrawnUi.Draw.SkiaShadow.Equals(System.Object)">
+  Equals(object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines whether the specified object is equal to the current object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd><p>The object to compare with the current object.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the specified object  is equal to the current object; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaShadow_GetHashCode_" data-uid="DrawnUi.Draw.SkiaShadow.GetHashCode*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaShadow_GetHashCode" data-uid="DrawnUi.Draw.SkiaShadow.GetHashCode">
+  GetHashCode()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L92"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Serves as the default hash function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A hash code for the current object.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="DrawnUi_Draw_SkiaShadow_op_Equality_" data-uid="DrawnUi.Draw.SkiaShadow.op_Equality*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaShadow_op_Equality_DrawnUi_Draw_SkiaShadow_DrawnUi_Draw_SkiaShadow_" data-uid="DrawnUi.Draw.SkiaShadow.op_Equality(DrawnUi.Draw.SkiaShadow,DrawnUi.Draw.SkiaShadow)">
+  operator ==(SkiaShadow, SkiaShadow)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(SkiaShadow left, SkiaShadow right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="DrawnUi.Draw.SkiaShadow.html">SkiaShadow</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="DrawnUi.Draw.SkiaShadow.html">SkiaShadow</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaShadow_op_Inequality_" data-uid="DrawnUi.Draw.SkiaShadow.op_Inequality*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaShadow_op_Inequality_DrawnUi_Draw_SkiaShadow_DrawnUi_Draw_SkiaShadow_" data-uid="DrawnUi.Draw.SkiaShadow.op_Inequality(DrawnUi.Draw.SkiaShadow,DrawnUi.Draw.SkiaShadow)">
+  operator !=(SkiaShadow, SkiaShadow)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaShadow.cs/#L102"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(SkiaShadow left, SkiaShadow right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="DrawnUi.Draw.SkiaShadow.html">SkiaShadow</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="DrawnUi.Draw.SkiaShadow.html">SkiaShadow</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
 
 
 

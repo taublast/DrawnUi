@@ -19,11 +19,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+      path: src/Shared/Draw/Text/SkiaLabel.EmojiData.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EmojiData
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.EmojiData.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -54,11 +54,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+      path: src/Shared/Draw/Text/SkiaLabel.EmojiData.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsEmojiModifierSequence
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.EmojiData.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -95,11 +95,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+      path: src/Shared/Draw/Text/SkiaLabel.EmojiData.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsModifier
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.EmojiData.cs
     startLine: 47
   assemblies:
   - DrawnUi.Maui
@@ -131,11 +131,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+      path: src/Shared/Draw/Text/SkiaLabel.EmojiData.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsZeroWidthJoiner
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.EmojiData.cs
     startLine: 72
   assemblies:
   - DrawnUi.Maui
@@ -167,11 +167,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+      path: src/Shared/Draw/Text/SkiaLabel.EmojiData.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: EmojiModifiers
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.EmojiData.cs
     startLine: 81
   assemblies:
   - DrawnUi.Maui
@@ -194,11 +194,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+      path: src/Shared/Draw/Text/SkiaLabel.EmojiData.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsEmoji
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.EmojiData.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.EmojiData.cs
     startLine: 132
   assemblies:
   - DrawnUi.Maui

@@ -101,7 +101,7 @@ Class ScaledSize  <a class="header-action link-secondary" title="View source" hr
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class ScaledSize</code></pre>
+    <pre><code class="lang-csharp hljs">public class ScaledSize : IComparable, IComparable&lt;ScaledSize&gt;, IEquatable&lt;ScaledSize&gt;</code></pre>
   </div>
 
 
@@ -115,19 +115,21 @@ Class ScaledSize  <a class="header-action link-secondary" title="View source" hr
     </dd>
   </dl>
 
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable">IComparable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable-1">IComparable</a>&lt;<a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a>&gt;</div>
+    </dd>
+  </dl>
 
 
   <dl class="typelist inheritedMembers">
     <dt>Inherited Members</dt>
     <dd>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
-    </div>
-    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
@@ -286,7 +288,7 @@ Class ScaledSize  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_ScaledSize_IsEmpty" data-uid="DrawnUi.Draw.ScaledSize.IsEmpty">
   IsEmpty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L69"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L130"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -445,7 +447,7 @@ Class ScaledSize  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_ScaledSize_Clone" data-uid="DrawnUi.Draw.ScaledSize.Clone">
   Clone()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L108"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -472,11 +474,97 @@ Class ScaledSize  <a class="header-action link-secondary" title="View source" hr
 
 
 
+  <a id="DrawnUi_Draw_ScaledSize_CompareTo_" data-uid="DrawnUi.Draw.ScaledSize.CompareTo*"></a>
+
+  <h3 id="DrawnUi_Draw_ScaledSize_CompareTo_DrawnUi_Draw_ScaledSize_" data-uid="DrawnUi.Draw.ScaledSize.CompareTo(DrawnUi.Draw.ScaledSize)">
+  CompareTo(ScaledSize)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L62"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int CompareTo(ScaledSize other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a></dt>
+    <dd><p>An object to compare with this instance.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A value that indicates the relative order of the objects being compared. The return value has these meanings:</p>
+ <table><thead><tr><th class="term"> Value</th><th class="description"> Meaning</th></tr></thead><tbody><tr><td class="term"> Less than zero</td><td class="description"> This instance precedes <code class="paramref">other</code> in the sort order.</td></tr><tr><td class="term"> Zero</td><td class="description"> This instance occurs in the same position in the sort order as <code class="paramref">other</code>.</td></tr><tr><td class="term"> Greater than zero</td><td class="description"> This instance follows <code class="paramref">other</code> in the sort order.</td></tr></tbody></table>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_ScaledSize_CompareTo_" data-uid="DrawnUi.Draw.ScaledSize.CompareTo*"></a>
+
+  <h3 id="DrawnUi_Draw_ScaledSize_CompareTo_System_Object_" data-uid="DrawnUi.Draw.ScaledSize.CompareTo(System.Object)">
+  CompareTo(object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int CompareTo(object obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd><p>An object to compare with this instance.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A value that indicates the relative order of the objects being compared. The return value has these meanings:</p>
+ <table><thead><tr><th class="term"> Value</th><th class="description"> Meaning</th></tr></thead><tbody><tr><td class="term"> Less than zero</td><td class="description"> This instance precedes <code class="paramref">obj</code> in the sort order.</td></tr><tr><td class="term"> Zero</td><td class="description"> This instance occurs in the same position in the sort order as <code class="paramref">obj</code>.</td></tr><tr><td class="term"> Greater than zero</td><td class="description"> This instance follows <code class="paramref">obj</code> in the sort order.</td></tr></tbody></table>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p><code class="paramref">obj</code> is not the same type as this instance.</p>
+</dd>
+  </dl>
+
+
+
   <a id="DrawnUi_Draw_ScaledSize_CreateEmpty_" data-uid="DrawnUi.Draw.ScaledSize.CreateEmpty*"></a>
 
   <h3 id="DrawnUi_Draw_ScaledSize_CreateEmpty_System_Single_" data-uid="DrawnUi.Draw.ScaledSize.CreateEmpty(System.Single)">
   CreateEmpty(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L120"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -508,11 +596,89 @@ Class ScaledSize  <a class="header-action link-secondary" title="View source" hr
 
 
 
+  <a id="DrawnUi_Draw_ScaledSize_Equals_" data-uid="DrawnUi.Draw.ScaledSize.Equals*"></a>
+
+  <h3 id="DrawnUi_Draw_ScaledSize_Equals_DrawnUi_Draw_ScaledSize_" data-uid="DrawnUi.Draw.ScaledSize.Equals(DrawnUi.Draw.ScaledSize)">
+  Equals(ScaledSize)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Indicates whether the current object is equal to another object of the same type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(ScaledSize other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a></dt>
+    <dd><p>An object to compare with this object.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the current object is equal to the <code class="paramref">other</code> parameter; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_ScaledSize_Equals_" data-uid="DrawnUi.Draw.ScaledSize.Equals*"></a>
+
+  <h3 id="DrawnUi_Draw_ScaledSize_Equals_System_Object_" data-uid="DrawnUi.Draw.ScaledSize.Equals(System.Object)">
+  Equals(object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L88"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines whether the specified object is equal to the current object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd><p>The object to compare with the current object.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the specified object  is equal to the current object; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Draw_ScaledSize_FromPixels_" data-uid="DrawnUi.Draw.ScaledSize.FromPixels*"></a>
 
   <h3 id="DrawnUi_Draw_ScaledSize_FromPixels_SkiaSharp_SKSize_System_Single_" data-uid="DrawnUi.Draw.ScaledSize.FromPixels(SkiaSharp.SKSize,System.Single)">
   FromPixels(SKSize, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L120"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L181"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -550,7 +716,7 @@ Class ScaledSize  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_ScaledSize_FromPixels_System_Single_System_Single_System_Boolean_System_Boolean_System_Single_" data-uid="DrawnUi.Draw.ScaledSize.FromPixels(System.Single,System.Single,System.Boolean,System.Boolean,System.Single)">
   FromPixels(float, float, bool, bool, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L130"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L191"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -594,7 +760,7 @@ Class ScaledSize  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_ScaledSize_FromPixels_System_Single_System_Single_System_Single_" data-uid="DrawnUi.Draw.ScaledSize.FromPixels(System.Single,System.Single,System.Single)">
   FromPixels(float, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L186"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -634,7 +800,7 @@ Class ScaledSize  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_ScaledSize_FromUnits_System_Single_System_Single_System_Single_" data-uid="DrawnUi.Draw.ScaledSize.FromUnits(System.Single,System.Single,System.Single)">
   FromUnits(float, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L88"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L149"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -670,11 +836,44 @@ Class ScaledSize  <a class="header-action link-secondary" title="View source" hr
 
 
 
+  <a id="DrawnUi_Draw_ScaledSize_GetHashCode_" data-uid="DrawnUi.Draw.ScaledSize.GetHashCode*"></a>
+
+  <h3 id="DrawnUi_Draw_ScaledSize_GetHashCode" data-uid="DrawnUi.Draw.ScaledSize.GetHashCode">
+  GetHashCode()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L93"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Serves as the default hash function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A hash code for the current object.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Draw_ScaledSize_SnapToPixel_" data-uid="DrawnUi.Draw.ScaledSize.SnapToPixel*"></a>
 
   <h3 id="DrawnUi_Draw_ScaledSize_SnapToPixel_System_Double_System_Double_" data-uid="DrawnUi.Draw.ScaledSize.SnapToPixel(System.Double,System.Double)">
   SnapToPixel(double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L82"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L143"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -712,7 +911,7 @@ Class ScaledSize  <a class="header-action link-secondary" title="View source" hr
 
   <h3 id="DrawnUi_Draw_ScaledSize_ToString" data-uid="DrawnUi.Draw.ScaledSize.ToString">
   ToString()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L77"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L138"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Returns a string that represents the current object.</p>
@@ -766,6 +965,86 @@ Class ScaledSize  <a class="header-action link-secondary" title="View source" hr
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="DrawnUi_Draw_ScaledSize_op_Equality_" data-uid="DrawnUi.Draw.ScaledSize.op_Equality*"></a>
+
+  <h3 id="DrawnUi_Draw_ScaledSize_op_Equality_DrawnUi_Draw_ScaledSize_DrawnUi_Draw_ScaledSize_" data-uid="DrawnUi.Draw.ScaledSize.op_Equality(DrawnUi.Draw.ScaledSize,DrawnUi.Draw.ScaledSize)">
+  operator ==(ScaledSize, ScaledSize)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L98"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(ScaledSize left, ScaledSize right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_ScaledSize_op_Inequality_" data-uid="DrawnUi.Draw.ScaledSize.op_Inequality*"></a>
+
+  <h3 id="DrawnUi_Draw_ScaledSize_op_Inequality_DrawnUi_Draw_ScaledSize_DrawnUi_Draw_ScaledSize_" data-uid="DrawnUi.Draw.ScaledSize.op_Inequality(DrawnUi.Draw.ScaledSize,DrawnUi.Draw.ScaledSize)">
+  operator !=(ScaledSize, ScaledSize)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/ScaledSize.cs/#L103"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(ScaledSize left, ScaledSize right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="DrawnUi.Draw.ScaledSize.html">ScaledSize</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
     <dd></dd>
   </dl>
 

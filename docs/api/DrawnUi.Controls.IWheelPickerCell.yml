@@ -15,11 +15,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PickerWheel/IWheelPickerCell.cs
+      path: src/Shared/Internals/Interfaces/IWheelPickerCell.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IWheelPickerCell
-    path: ../src/Maui/DrawnUi/Controls/PickerWheel/IWheelPickerCell.cs
+    path: ../src/Shared/Internals/Interfaces/IWheelPickerCell.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -42,11 +42,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PickerWheel/IWheelPickerCell.cs
+      path: src/Shared/Internals/Interfaces/IWheelPickerCell.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateContext
-    path: ../src/Maui/DrawnUi/Controls/PickerWheel/IWheelPickerCell.cs
+    path: ../src/Shared/Internals/Interfaces/IWheelPickerCell.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui

@@ -22,7 +22,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ParsedRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2291
+    startLine: 2302
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -61,7 +61,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Original
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2293
+    startLine: 2304
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -90,7 +90,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Parts
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2294
+    startLine: 2305
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -119,7 +119,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Arguments
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2295
+    startLine: 2306
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls

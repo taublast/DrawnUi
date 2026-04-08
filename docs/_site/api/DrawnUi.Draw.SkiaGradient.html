@@ -101,7 +101,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SkiaGradient : BindableObject, INotifyPropertyChanged, ICloneable</code></pre>
+    <pre><code class="lang-csharp hljs">public class SkiaGradient : BindableObject, INotifyPropertyChanged, ICloneable, IComparable, IComparable&lt;SkiaGradient&gt;, IEquatable&lt;SkiaGradient&gt;</code></pre>
   </div>
 
 
@@ -121,6 +121,9 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable">IComparable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable-1">IComparable</a>&lt;<a class="xref" href="DrawnUi.Draw.SkiaGradient.html">SkiaGradient</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="DrawnUi.Draw.SkiaGradient.html">SkiaGradient</a>&gt;</div>
     </dd>
   </dl>
 
@@ -192,13 +195,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.bindingcontextchanged">BindableObject.BindingContextChanged</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
-    </div>
-    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
@@ -239,7 +236,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_AngleProperty" data-uid="DrawnUi.Draw.SkiaGradient.AngleProperty">
   AngleProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L356"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -269,7 +266,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_BlendModeProperty" data-uid="DrawnUi.Draw.SkiaGradient.BlendModeProperty">
   BlendModeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L155"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L390"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -299,7 +296,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_ColorPositionsProperty" data-uid="DrawnUi.Draw.SkiaGradient.ColorPositionsProperty">
   ColorPositionsProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L290"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L525"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -329,7 +326,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_ColorsProperty" data-uid="DrawnUi.Draw.SkiaGradient.ColorsProperty">
   ColorsProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L228"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L463"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -359,7 +356,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_EndXRatioProperty" data-uid="DrawnUi.Draw.SkiaGradient.EndXRatioProperty">
   EndXRatioProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L209"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L444"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -389,7 +386,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_EndYRatioProperty" data-uid="DrawnUi.Draw.SkiaGradient.EndYRatioProperty">
   EndYRatioProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L217"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L452"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -419,7 +416,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_LightProperty" data-uid="DrawnUi.Draw.SkiaGradient.LightProperty">
   LightProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L175"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L410"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -449,7 +446,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_OpacityProperty" data-uid="DrawnUi.Draw.SkiaGradient.OpacityProperty">
   OpacityProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L183"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L418"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -479,7 +476,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_StartXRatioProperty" data-uid="DrawnUi.Draw.SkiaGradient.StartXRatioProperty">
   StartXRatioProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L193"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L428"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -509,7 +506,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_StartYRatioProperty" data-uid="DrawnUi.Draw.SkiaGradient.StartYRatioProperty">
   StartYRatioProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L201"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L436"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -539,7 +536,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_TileModeProperty" data-uid="DrawnUi.Draw.SkiaGradient.TileModeProperty">
   TileModeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L165"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L400"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -569,7 +566,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_TypeProperty" data-uid="DrawnUi.Draw.SkiaGradient.TypeProperty">
   TypeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L146"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L381"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -604,7 +601,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_Angle" data-uid="DrawnUi.Draw.SkiaGradient.Angle">
   Angle
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L128"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L363"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -635,7 +632,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_BlendMode" data-uid="DrawnUi.Draw.SkiaGradient.BlendMode">
   BlendMode
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L159"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L394"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -666,7 +663,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_ColorPositions" data-uid="DrawnUi.Draw.SkiaGradient.ColorPositions">
   ColorPositions
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L305"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L540"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -697,7 +694,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_Colors" data-uid="DrawnUi.Draw.SkiaGradient.Colors">
   Colors
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L243"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L478"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -728,7 +725,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_EndXRatio" data-uid="DrawnUi.Draw.SkiaGradient.EndXRatio">
   EndXRatio
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L211"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L446"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -759,7 +756,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_EndYRatio" data-uid="DrawnUi.Draw.SkiaGradient.EndYRatio">
   EndYRatio
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L219"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L454"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -790,7 +787,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_Light" data-uid="DrawnUi.Draw.SkiaGradient.Light">
   Light
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L177"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L412"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -821,7 +818,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_Opacity" data-uid="DrawnUi.Draw.SkiaGradient.Opacity">
   Opacity
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L187"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L422"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -883,7 +880,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_StartXRatio" data-uid="DrawnUi.Draw.SkiaGradient.StartXRatio">
   StartXRatio
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L195"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L430"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -914,7 +911,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_StartYRatio" data-uid="DrawnUi.Draw.SkiaGradient.StartYRatio">
   StartYRatio
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L203"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L438"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -945,7 +942,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_TileMode" data-uid="DrawnUi.Draw.SkiaGradient.TileMode">
   TileMode
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L168"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L403"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -976,7 +973,7 @@ Class SkiaGradient  <a class="header-action link-secondary" title="View source" 
 
   <h3 id="DrawnUi_Draw_SkiaGradient_Type" data-uid="DrawnUi.Draw.SkiaGradient.Type">
   Type
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L149"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L384"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1073,6 +1070,170 @@ keyed on this version to avoid rebuilding native objects every frame.</p>
 
 
 
+  <a id="DrawnUi_Draw_SkiaGradient_CompareTo_" data-uid="DrawnUi.Draw.SkiaGradient.CompareTo*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaGradient_CompareTo_DrawnUi_Draw_SkiaGradient_" data-uid="DrawnUi.Draw.SkiaGradient.CompareTo(DrawnUi.Draw.SkiaGradient)">
+  CompareTo(SkiaGradient)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L127"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int CompareTo(SkiaGradient other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="DrawnUi.Draw.SkiaGradient.html">SkiaGradient</a></dt>
+    <dd><p>An object to compare with this instance.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A value that indicates the relative order of the objects being compared. The return value has these meanings:</p>
+ <table><thead><tr><th class="term"> Value</th><th class="description"> Meaning</th></tr></thead><tbody><tr><td class="term"> Less than zero</td><td class="description"> This instance precedes <code class="paramref">other</code> in the sort order.</td></tr><tr><td class="term"> Zero</td><td class="description"> This instance occurs in the same position in the sort order as <code class="paramref">other</code>.</td></tr><tr><td class="term"> Greater than zero</td><td class="description"> This instance follows <code class="paramref">other</code> in the sort order.</td></tr></tbody></table>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaGradient_CompareTo_" data-uid="DrawnUi.Draw.SkiaGradient.CompareTo*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaGradient_CompareTo_System_Object_" data-uid="DrawnUi.Draw.SkiaGradient.CompareTo(System.Object)">
+  CompareTo(object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L112"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int CompareTo(object obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd><p>An object to compare with this instance.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A value that indicates the relative order of the objects being compared. The return value has these meanings:</p>
+ <table><thead><tr><th class="term"> Value</th><th class="description"> Meaning</th></tr></thead><tbody><tr><td class="term"> Less than zero</td><td class="description"> This instance precedes <code class="paramref">obj</code> in the sort order.</td></tr><tr><td class="term"> Zero</td><td class="description"> This instance occurs in the same position in the sort order as <code class="paramref">obj</code>.</td></tr><tr><td class="term"> Greater than zero</td><td class="description"> This instance follows <code class="paramref">obj</code> in the sort order.</td></tr></tbody></table>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p><code class="paramref">obj</code> is not the same type as this instance.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="DrawnUi_Draw_SkiaGradient_Equals_" data-uid="DrawnUi.Draw.SkiaGradient.Equals*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaGradient_Equals_DrawnUi_Draw_SkiaGradient_" data-uid="DrawnUi.Draw.SkiaGradient.Equals(DrawnUi.Draw.SkiaGradient)">
+  Equals(SkiaGradient)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L202"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Indicates whether the current object is equal to another object of the same type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(SkiaGradient other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="DrawnUi.Draw.SkiaGradient.html">SkiaGradient</a></dt>
+    <dd><p>An object to compare with this object.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the current object is equal to the <code class="paramref">other</code> parameter; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaGradient_Equals_" data-uid="DrawnUi.Draw.SkiaGradient.Equals*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaGradient_Equals_System_Object_" data-uid="DrawnUi.Draw.SkiaGradient.Equals(System.Object)">
+  Equals(object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L207"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines whether the specified object is equal to the current object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd><p>The object to compare with the current object.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the specified object  is equal to the current object; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Draw_SkiaGradient_FromBrush_" data-uid="DrawnUi.Draw.SkiaGradient.FromBrush*"></a>
 
   <h3 id="DrawnUi_Draw_SkiaGradient_FromBrush_Microsoft_Maui_Controls_GradientBrush_" data-uid="DrawnUi.Draw.SkiaGradient.FromBrush(Microsoft.Maui.Controls.GradientBrush)">
@@ -1109,6 +1270,39 @@ keyed on this version to avoid rebuilding native objects every frame.</p>
 
 
 
+  <a id="DrawnUi_Draw_SkiaGradient_GetHashCode_" data-uid="DrawnUi.Draw.SkiaGradient.GetHashCode*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaGradient_GetHashCode" data-uid="DrawnUi.Draw.SkiaGradient.GetHashCode">
+  GetHashCode()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L212"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Serves as the default hash function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>A hash code for the current object.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Draw_SkiaGradient_LinearGradientAngleToPoints_" data-uid="DrawnUi.Draw.SkiaGradient.LinearGradientAngleToPoints*"></a>
 
   <h3 id="DrawnUi_Draw_SkiaGradient_LinearGradientAngleToPoints_System_Double_" data-uid="DrawnUi.Draw.SkiaGradient.LinearGradientAngleToPoints(System.Double)">
@@ -1132,6 +1326,86 @@ keyed on this version to avoid rebuilding native objects every frame.</p>
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt>(<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double,system.double,system.double-.x1">X1</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double,system.double,system.double-.y1">Y1</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double,system.double,system.double-.x2">X2</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-system.double,system.double,system.double,system.double-.y2">Y2</a>)</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="DrawnUi_Draw_SkiaGradient_op_Equality_" data-uid="DrawnUi.Draw.SkiaGradient.op_Equality*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaGradient_op_Equality_DrawnUi_Draw_SkiaGradient_DrawnUi_Draw_SkiaGradient_" data-uid="DrawnUi.Draw.SkiaGradient.op_Equality(DrawnUi.Draw.SkiaGradient,DrawnUi.Draw.SkiaGradient)">
+  operator ==(SkiaGradient, SkiaGradient)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L244"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(SkiaGradient left, SkiaGradient right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="DrawnUi.Draw.SkiaGradient.html">SkiaGradient</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="DrawnUi.Draw.SkiaGradient.html">SkiaGradient</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Draw_SkiaGradient_op_Inequality_" data-uid="DrawnUi.Draw.SkiaGradient.op_Inequality*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaGradient_op_Inequality_DrawnUi_Draw_SkiaGradient_DrawnUi_Draw_SkiaGradient_" data-uid="DrawnUi.Draw.SkiaGradient.op_Inequality(DrawnUi.Draw.SkiaGradient,DrawnUi.Draw.SkiaGradient)">
+  operator !=(SkiaGradient, SkiaGradient)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Internals/Models/SkiaGradient.cs/#L249"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(SkiaGradient left, SkiaGradient right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="DrawnUi.Draw.SkiaGradient.html">SkiaGradient</a></dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="DrawnUi.Draw.SkiaGradient.html">SkiaGradient</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
     <dd></dd>
   </dl>
 

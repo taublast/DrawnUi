@@ -26,11 +26,11 @@ items:
   type: Struct
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      path: src/Shared/Draw/Text/LineGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineGlyph
-    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    path: ../src/Shared/Draw/Text/LineGlyph.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -60,11 +60,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      path: src/Shared/Draw/Text/LineGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromGlyph
-    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    path: ../src/Shared/Draw/Text/LineGlyph.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -98,11 +98,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      path: src/Shared/Draw/Text/LineGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
-    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    path: ../src/Shared/Draw/Text/LineGlyph.cs
     startLine: 21
   assemblies:
   - DrawnUi.Maui
@@ -127,11 +127,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      path: src/Shared/Draw/Text/LineGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartIndex
-    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    path: ../src/Shared/Draw/Text/LineGlyph.cs
     startLine: 26
   assemblies:
   - DrawnUi.Maui
@@ -158,11 +158,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      path: src/Shared/Draw/Text/LineGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Length
-    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    path: ../src/Shared/Draw/Text/LineGlyph.cs
     startLine: 31
   assemblies:
   - DrawnUi.Maui
@@ -189,11 +189,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      path: src/Shared/Draw/Text/LineGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsNumber
-    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    path: ../src/Shared/Draw/Text/LineGlyph.cs
     startLine: 33
   assemblies:
   - DrawnUi.Maui
@@ -217,11 +217,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      path: src/Shared/Draw/Text/LineGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetGlyphText
-    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    path: ../src/Shared/Draw/Text/LineGlyph.cs
     startLine: 39
   assemblies:
   - DrawnUi.Maui
@@ -245,11 +245,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      path: src/Shared/Draw/Text/LineGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Id
-    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    path: ../src/Shared/Draw/Text/LineGlyph.cs
     startLine: 44
   assemblies:
   - DrawnUi.Maui
@@ -274,11 +274,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      path: src/Shared/Draw/Text/LineGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Symbol
-    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    path: ../src/Shared/Draw/Text/LineGlyph.cs
     startLine: 46
   assemblies:
   - DrawnUi.Maui
@@ -303,11 +303,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      path: src/Shared/Draw/Text/LineGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Position
-    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    path: ../src/Shared/Draw/Text/LineGlyph.cs
     startLine: 48
   assemblies:
   - DrawnUi.Maui
@@ -332,11 +332,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      path: src/Shared/Draw/Text/LineGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
-    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    path: ../src/Shared/Draw/Text/LineGlyph.cs
     startLine: 53
   assemblies:
   - DrawnUi.Maui
@@ -363,11 +363,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      path: src/Shared/Draw/Text/LineGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Move
-    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    path: ../src/Shared/Draw/Text/LineGlyph.cs
     startLine: 55
   assemblies:
   - DrawnUi.Maui
@@ -399,11 +399,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+      path: src/Shared/Draw/Text/LineGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAvailable
-    path: ../src/Maui/DrawnUi/Draw/Text/LineGlyph.cs
+    path: ../src/Shared/Draw/Text/LineGlyph.cs
     startLine: 62
   assemblies:
   - DrawnUi.Maui

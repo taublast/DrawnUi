@@ -122,7 +122,7 @@ A: set directly: <code>mySkiaImage.SetImageInternal(skiaImage)</code>.</p>
 A: Use the <code>BlockGesturesBelow=&quot;True&quot;</code> property on the top control. Note that <code>InputTransparent</code> makes the control itself avoid gestures, not controls below.</p>
 <p><strong>Q: How do I internally rebuild the ItemsSource?</strong><br>
 A: Directly call <code>layout.ApplyItemsSource()</code>.</p>
-<p>** Q: How to make images to Fade-In when loaded?**
+<p><strong>Q: How to make images to Fade-In when loaded?</strong>
 A: Subclass <code>SkiaImage</code> to define your animation:</p>
 <pre><code class="lang-csharp">public class BannerImage : SkiaImage
 {
@@ -133,6 +133,15 @@ A: Subclass <code>SkiaImage</code> to define your animation:</p>
         this.Opacity = 0.01;
         _ = this.FadeToAsync(1, 300, Easing.SinIn);
     }
+}
+</code></pre>
+<p><strong>Q: How to expand button hitbox?</strong></p>
+<p>A: Every drawn control can do that:</p>
+<pre><code class="lang-csharp">public override SKRect CreateHitRect()
+{
+    var ret = base.CreateHitRect();
+    ret.Inflate(10*RenderingScale, 10*RenderingScale);
+    return ret;
 }
 </code></pre>
 <p><strong>Q: How to reduce battery drain/heat on iPhone in constant sceen updates scenarios?</strong>
@@ -153,6 +162,8 @@ A: Might be Apple Metal specifics, cap FPS:</p>
 <li><code>UseCache = SkiaCacheType.ImageComposite</code> for complex layouts where a region changes while others remain static, like a stack with different user-handled controls.</li>
 <li><code>UseCache = SkiaCacheType.ImageDoubleBuffered</code> for equally sized recycled cells. Will show old cache while preparing new one in background.</li>
 <li><code>UseCache = SkiaCacheType.GPU</code> for small static overlays like headers, navbars.</li>
+<li><strong>PROHIBITED:</strong> Never use <code>Operations</code> or <code>GPU</code> cache for controls with GPU-surface shaders — use <code>Image</code>, <code>ImageDoubleBuffered</code>, or <code>ImageComposite</code> instead.</li>
+<li><strong>PROHIBITED:</strong> Never nest children that use GPU-backed cache types (<code>GPU</code>, <code>ImageCompositeGPU</code>) inside a parent cached with <code>Operations</code>.</li>
 </ul>
 </li>
 <li>Check that you do not have some logging running for every rendering frame.</li>

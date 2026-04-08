@@ -18,11 +18,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
+      path: src/Shared/Views/SKAutoCanvasRestoreFixed.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SKAutoCanvasRestoreFixed
-    path: ../src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
+    path: ../src/Shared/Views/SKAutoCanvasRestoreFixed.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -57,11 +57,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
+      path: src/Shared/Views/SKAutoCanvasRestoreFixed.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
+    path: ../src/Shared/Views/SKAutoCanvasRestoreFixed.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -89,11 +89,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
+      path: src/Shared/Views/SKAutoCanvasRestoreFixed.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
+    path: ../src/Shared/Views/SKAutoCanvasRestoreFixed.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -123,11 +123,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
+      path: src/Shared/Views/SKAutoCanvasRestoreFixed.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
-    path: ../src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
+    path: ../src/Shared/Views/SKAutoCanvasRestoreFixed.cs
     startLine: 27
   assemblies:
   - DrawnUi.Maui
@@ -153,11 +153,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
+      path: src/Shared/Views/SKAutoCanvasRestoreFixed.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Restore
-    path: ../src/Maui/DrawnUi/Views/SKAutoCanvasRestoreFixed.cs
+    path: ../src/Shared/Views/SKAutoCanvasRestoreFixed.cs
     startLine: 39
   assemblies:
   - DrawnUi.Maui

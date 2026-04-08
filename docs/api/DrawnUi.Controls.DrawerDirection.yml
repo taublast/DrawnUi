@@ -18,11 +18,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
+      path: src/Shared/Internals/Enums/DrawerDirection.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawerDirection
-    path: ../src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
+    path: ../src/Shared/Internals/Enums/DrawerDirection.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -45,11 +45,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
+      path: src/Shared/Internals/Enums/DrawerDirection.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromBottom
-    path: ../src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
+    path: ../src/Shared/Internals/Enums/DrawerDirection.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -71,11 +71,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
+      path: src/Shared/Internals/Enums/DrawerDirection.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromTop
-    path: ../src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
+    path: ../src/Shared/Internals/Enums/DrawerDirection.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -97,11 +97,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
+      path: src/Shared/Internals/Enums/DrawerDirection.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromLeft
-    path: ../src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
+    path: ../src/Shared/Internals/Enums/DrawerDirection.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -123,11 +123,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
+      path: src/Shared/Internals/Enums/DrawerDirection.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FromRight
-    path: ../src/Maui/DrawnUi/Controls/Drawer/DrawerDirection.cs
+    path: ../src/Shared/Internals/Enums/DrawerDirection.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui

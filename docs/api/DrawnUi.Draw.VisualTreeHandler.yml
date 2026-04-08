@@ -313,7 +313,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Render
     path: ../src/Shared/Draw/Base/VisualTreeHandler.cs
-    startLine: 111
+    startLine: 120
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -345,7 +345,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderTreeInternal
     path: ../src/Shared/Draw/Base/VisualTreeHandler.cs
-    startLine: 127
+    startLine: 175
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

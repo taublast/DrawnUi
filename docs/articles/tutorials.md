@@ -25,7 +25,7 @@ Step-by-step tutorials to help you learn and master DrawnUI, from basic concepts
   - Performance optimization
   - UI patterns
 
-- **[Interactive Cards (C# Fluent)](interactive-cards-code.md)** 🔧 - Same cards built with fluent C# syntax:
+- **[Interactive Cards (C# Fluent)](interactive-cards.md)** 🔧 - Same cards built with fluent C# syntax:
   - Fluent API patterns
   - Method chaining
   - Code-based UI construction

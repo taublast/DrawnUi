@@ -17,11 +17,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+      path: src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: VelocityAccumulator
-    path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+    path: ../src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
     startLine: 24
   assemblies:
   - DrawnUi.Maui
@@ -54,11 +54,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+      path: src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clear
-    path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+    path: ../src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
     startLine: 31
   assemblies:
   - DrawnUi.Maui
@@ -80,11 +80,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+      path: src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CaptureVelocity
-    path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+    path: ../src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
     startLine: 36
   assemblies:
   - DrawnUi.Maui
@@ -109,11 +109,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+      path: src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateFinalVelocity
-    path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+    path: ../src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
     startLine: 43
   assemblies:
   - DrawnUi.Maui

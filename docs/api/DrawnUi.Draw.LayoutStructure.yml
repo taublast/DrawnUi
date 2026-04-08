@@ -19,11 +19,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
+      path: src/Shared/Draw/Layout/LayoutStructure.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LayoutStructure
-    path: ../src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
+    path: ../src/Shared/Draw/Layout/LayoutStructure.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -73,11 +73,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
+      path: src/Shared/Draw/Layout/LayoutStructure.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
+    path: ../src/Shared/Draw/Layout/LayoutStructure.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -102,11 +102,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
+      path: src/Shared/Draw/Layout/LayoutStructure.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clone
-    path: ../src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
+    path: ../src/Shared/Draw/Layout/LayoutStructure.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -135,11 +135,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
+      path: src/Shared/Draw/Layout/LayoutStructure.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetForIndex
-    path: ../src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
+    path: ../src/Shared/Draw/Layout/LayoutStructure.cs
     startLine: 24
   assemblies:
   - DrawnUi.Maui
@@ -169,11 +169,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
+      path: src/Shared/Draw/Layout/LayoutStructure.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
+    path: ../src/Shared/Draw/Layout/LayoutStructure.cs
     startLine: 29
   assemblies:
   - DrawnUi.Maui
@@ -201,11 +201,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
+      path: src/Shared/Draw/Layout/LayoutStructure.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Append
-    path: ../src/Maui/DrawnUi/Draw/Layout/LayoutStructure.cs
+    path: ../src/Shared/Draw/Layout/LayoutStructure.cs
     startLine: 47
   assemblies:
   - DrawnUi.Maui

@@ -22,11 +22,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+      path: src/Shared/Features/Effects/AdjustRGBEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ChainAdjustRGBEffect
-    path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+    path: ../src/Shared/Features/Effects/AdjustRGBEffect.cs
     startLine: 71
   assemblies:
   - DrawnUi.Maui
@@ -100,11 +100,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+      path: src/Shared/Features/Effects/AdjustRGBEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: RedProperty
-    path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+    path: ../src/Shared/Features/Effects/AdjustRGBEffect.cs
     startLine: 73
   assemblies:
   - DrawnUi.Maui
@@ -127,11 +127,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+      path: src/Shared/Features/Effects/AdjustRGBEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GreenProperty
-    path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+    path: ../src/Shared/Features/Effects/AdjustRGBEffect.cs
     startLine: 80
   assemblies:
   - DrawnUi.Maui
@@ -154,11 +154,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+      path: src/Shared/Features/Effects/AdjustRGBEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BlueProperty
-    path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+    path: ../src/Shared/Features/Effects/AdjustRGBEffect.cs
     startLine: 87
   assemblies:
   - DrawnUi.Maui
@@ -181,11 +181,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+      path: src/Shared/Features/Effects/AdjustRGBEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Red
-    path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+    path: ../src/Shared/Features/Effects/AdjustRGBEffect.cs
     startLine: 94
   assemblies:
   - DrawnUi.Maui
@@ -210,11 +210,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+      path: src/Shared/Features/Effects/AdjustRGBEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Green
-    path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+    path: ../src/Shared/Features/Effects/AdjustRGBEffect.cs
     startLine: 100
   assemblies:
   - DrawnUi.Maui
@@ -239,11 +239,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+      path: src/Shared/Features/Effects/AdjustRGBEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Blue
-    path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+    path: ../src/Shared/Features/Effects/AdjustRGBEffect.cs
     startLine: 106
   assemblies:
   - DrawnUi.Maui
@@ -268,11 +268,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+      path: src/Shared/Features/Effects/AdjustRGBEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
-    path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+    path: ../src/Shared/Features/Effects/AdjustRGBEffect.cs
     startLine: 112
   assemblies:
   - DrawnUi.Maui
@@ -310,11 +310,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+      path: src/Shared/Features/Effects/AdjustRGBEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
-    path: ../src/Maui/DrawnUi/Features/Effects/AdjustRGBEffect.cs
+    path: ../src/Shared/Features/Effects/AdjustRGBEffect.cs
     startLine: 144
   assemblies:
   - DrawnUi.Maui

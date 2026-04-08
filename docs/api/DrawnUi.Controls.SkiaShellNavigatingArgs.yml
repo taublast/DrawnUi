@@ -20,11 +20,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+      path: src/Shared/Internals/Models/SkiaShellNavigatingArgs.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaShellNavigatingArgs
-    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+    path: ../src/Shared/Internals/Models/SkiaShellNavigatingArgs.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -59,11 +59,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+      path: src/Shared/Internals/Models/SkiaShellNavigatingArgs.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+    path: ../src/Shared/Internals/Models/SkiaShellNavigatingArgs.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -97,11 +97,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+      path: src/Shared/Internals/Models/SkiaShellNavigatingArgs.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Cancel
-    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+    path: ../src/Shared/Internals/Models/SkiaShellNavigatingArgs.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui
@@ -128,11 +128,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+      path: src/Shared/Internals/Models/SkiaShellNavigatingArgs.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Route
-    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+    path: ../src/Shared/Internals/Models/SkiaShellNavigatingArgs.cs
     startLine: 20
   assemblies:
   - DrawnUi.Maui
@@ -159,11 +159,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+      path: src/Shared/Internals/Models/SkiaShellNavigatingArgs.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: View
-    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+    path: ../src/Shared/Internals/Models/SkiaShellNavigatingArgs.cs
     startLine: 25
   assemblies:
   - DrawnUi.Maui
@@ -190,11 +190,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+      path: src/Shared/Internals/Models/SkiaShellNavigatingArgs.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Previous
-    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+    path: ../src/Shared/Internals/Models/SkiaShellNavigatingArgs.cs
     startLine: 30
   assemblies:
   - DrawnUi.Maui
@@ -221,11 +221,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+      path: src/Shared/Internals/Models/SkiaShellNavigatingArgs.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
-    path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShellNavigatingArgs.cs
+    path: ../src/Shared/Internals/Models/SkiaShellNavigatingArgs.cs
     startLine: 32
   assemblies:
   - DrawnUi.Maui

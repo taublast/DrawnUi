@@ -30,7 +30,7 @@ There are controls that are aliases for other controls, te make porting existing
 
 ### Text Controls
 - [SkiaLabel](text.md#skialabel): High-performance text rendering, supports spans
-- [SkiaRichLabel](text.md#skiamarkdownlabel): Markdown-capable text, unicode friendly, autofinds font its text (auto-creates spans). Use for text with complex formatting, smileys, and different languages
+- [SkiaRichLabel](text.md#skiarichlabel): Markdown-capable text, unicode friendly, autofinds font its text (auto-creates spans). Use for text with complex formatting, smileys, and different languages
 
 ### Graphics Controls
 - [SkiaImage](images.md#skiaimage): Image rendering with many options and filters

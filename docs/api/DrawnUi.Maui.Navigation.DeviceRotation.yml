@@ -16,11 +16,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Navigation/DeviceRotation.cs
+      path: src/Shared/Internals/Enums/DeviceRotation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DeviceRotation
-    path: ../src/Maui/DrawnUi/Features/Navigation/DeviceRotation.cs
+    path: ../src/Shared/Internals/Enums/DeviceRotation.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -43,11 +43,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Navigation/DeviceRotation.cs
+      path: src/Shared/Internals/Enums/DeviceRotation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Portrait
-    path: ../src/Maui/DrawnUi/Features/Navigation/DeviceRotation.cs
+    path: ../src/Shared/Internals/Enums/DeviceRotation.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -69,11 +69,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Navigation/DeviceRotation.cs
+      path: src/Shared/Internals/Enums/DeviceRotation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Landscape
-    path: ../src/Maui/DrawnUi/Features/Navigation/DeviceRotation.cs
+    path: ../src/Shared/Internals/Enums/DeviceRotation.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui

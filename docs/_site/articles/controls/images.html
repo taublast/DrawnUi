@@ -951,6 +951,8 @@ timer.Start();
 <li>Use <code>UseCache=&quot;ImageDoubleBuffered&quot;</code> for images that change occasionally</li>
 <li>Use <code>UseCache=&quot;Operations&quot;</code> for images with effects but static content</li>
 <li>Use <code>UseCache=&quot;None&quot;</code> only for frequently changing images</li>
+<li><strong>PROHIBITED:</strong> Never use <code>Operations</code> or <code>GPU</code> cache for images with GPU-surface shader effects — use <code>Image</code>, <code>ImageDoubleBuffered</code>, or <code>ImageComposite</code> instead</li>
+<li><strong>PROHIBITED:</strong> Never nest children that use GPU-backed cache types (<code>GPU</code>, <code>ImageCompositeGPU</code>) inside a parent cached with <code>Operations</code></li>
 </ul>
 </li>
 <li><p><strong>Loading Strategy</strong></p>

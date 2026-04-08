@@ -89,7 +89,7 @@
 
 
   <h1 id="DrawnUi_Draw_SkiaDoubleAttachedTexturesEffect" data-uid="DrawnUi.Draw.SkiaDoubleAttachedTexturesEffect" class="text-break">
-Class SkiaDoubleAttachedTexturesEffect  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Features/Effects/SkiaDoubleAttachedTexturesEffect.cs/#L3"><i class="bi bi-code-slash"></i></a>
+Class SkiaDoubleAttachedTexturesEffect  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Effects/SkiaDoubleAttachedTexturesEffect.cs/#L3"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -101,7 +101,7 @@ Class SkiaDoubleAttachedTexturesEffect  <a class="header-action link-secondary" 
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SkiaDoubleAttachedTexturesEffect : SkiaShaderEffect, INotifyPropertyChanged, IDisposable, IPostRendererEffect, ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated</code></pre>
+    <pre><code class="lang-csharp hljs">public class SkiaDoubleAttachedTexturesEffect : SkiaShaderEffect, INotifyPropertyChanged, IDisposable, IPostRendererEffect, ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated, IComparable, IComparable&lt;SkiaShaderEffect&gt;, IEquatable&lt;SkiaShaderEffect&gt;</code></pre>
   </div>
 
 
@@ -127,6 +127,9 @@ Class SkiaDoubleAttachedTexturesEffect  <a class="header-action link-secondary" 
       <div><a class="xref" href="DrawnUi.Draw.ISkiaEffect.html">ISkiaEffect</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ICanBeUpdatedWithContext.html">ICanBeUpdatedWithContext</a></div>
       <div><a class="xref" href="DrawnUi.Draw.ICanBeUpdated.html">ICanBeUpdated</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable">IComparable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.icomparable-1">IComparable</a>&lt;<a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html">SkiaShaderEffect</a>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html">SkiaShaderEffect</a>&gt;</div>
     </dd>
   </dl>
 
@@ -135,7 +138,31 @@ Class SkiaDoubleAttachedTexturesEffect  <a class="header-action link-secondary" 
     <dt>Inherited Members</dt>
     <dd>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_PaintWithShader">SkiaShaderEffect.PaintWithShader</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Engine">SkiaShaderEffect.Engine</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompiledShader">SkiaShaderEffect.CompiledShader</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateEngine">SkiaShaderEffect.CreateEngine()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetEngine">SkiaShaderEffect.GetEngine()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompareTo_System_Object_">SkiaShaderEffect.CompareTo(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompareTo_DrawnUi_Draw_SkiaShaderEffect_">SkiaShaderEffect.CompareTo(SkiaShaderEffect)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Equals_DrawnUi_Draw_SkiaShaderEffect_">SkiaShaderEffect.Equals(SkiaShaderEffect)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Equals_System_Object_">SkiaShaderEffect.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetHashCode">SkiaShaderEffect.GetHashCode()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_UseBackground">SkiaShaderEffect.UseBackground</a>
@@ -171,6 +198,9 @@ Class SkiaDoubleAttachedTexturesEffect  <a class="header-action link-secondary" 
       <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetPrimaryTextureImage_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_">SkiaShaderEffect.GetPrimaryTextureImage(SkiaDrawingContext, SKRect)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SyncEngineState_SkiaSharp_SKRect_">SkiaShaderEffect.SyncEngineState(SKRect)</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Render_DrawnUi_Draw_DrawingContext_">SkiaShaderEffect.Render(DrawingContext)</a>
     </div>
     <div>
@@ -178,15 +208,6 @@ Class SkiaDoubleAttachedTexturesEffect  <a class="header-action link-secondary" 
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateShader_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_">SkiaShaderEffect.CreateShader(DrawingContext, SKImage)</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreatePrimaryTextureShader_SkiaSharp_SKImage_">SkiaShaderEffect.CreatePrimaryTextureShader(SKImage)</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect__uniformImageResolution">SkiaShaderEffect._uniformImageResolution</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompiledShader">SkiaShaderEffect.CompiledShader</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NeedApply">SkiaShaderEffect.NeedApply</a>
@@ -213,6 +234,9 @@ Class SkiaDoubleAttachedTexturesEffect  <a class="header-action link-secondary" 
       <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect__templatePlacehodler">SkiaShaderEffect._templatePlacehodler</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_LoadedCode">SkiaShaderEffect.LoadedCode</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader">SkiaShaderEffect.CompileShader()</a>
     </div>
     <div>
@@ -222,13 +246,7 @@ Class SkiaDoubleAttachedTexturesEffect  <a class="header-action link-secondary" 
       <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SendError_System_String_">SkiaShaderEffect.SendError(string)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NormalizeShaderCode_System_String_">SkiaShaderEffect.NormalizeShaderCode(string)</a>
-    </div>
-    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__">SkiaShaderEffect.CompileShader(string, bool, Action&lt;string&gt;)</a>
-    </div>
-    <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_LoadedCode">SkiaShaderEffect.LoadedCode</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ApplyShaderSource">SkiaShaderEffect.ApplyShaderSource()</a>
@@ -357,13 +375,7 @@ Class SkiaDoubleAttachedTexturesEffect  <a class="header-action link-secondary" 
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableobject.bindingcontextchanged">BindableObject.BindingContextChanged</a>
     </div>
     <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
-    </div>
-    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
@@ -401,7 +413,7 @@ Class SkiaDoubleAttachedTexturesEffect  <a class="header-action link-secondary" 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Features/Effects/SkiaDoubleAttachedTexturesEffect.cs/#L3" class="edit-link">Edit this page</a>
+          <a href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Effects/SkiaDoubleAttachedTexturesEffect.cs/#L3" class="edit-link">Edit this page</a>
         </div>
 
 

@@ -5,6 +5,7 @@ items:
   id: DrawnUi
   children:
   - DrawnUi.HotReloadService
+  - DrawnUi.IThermalStateService
   langs:
   - csharp
   - vb
@@ -21,3 +22,9 @@ references:
   name: HotReloadService
   nameWithType: HotReloadService
   fullName: DrawnUi.HotReloadService
+- uid: DrawnUi.IThermalStateService
+  commentId: T:DrawnUi.IThermalStateService
+  href: DrawnUi.IThermalStateService.html
+  name: IThermalStateService
+  nameWithType: IThermalStateService
+  fullName: DrawnUi.IThermalStateService

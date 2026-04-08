@@ -18,11 +18,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+      path: src/Shared/Features/Gestures/SkiaGesturesParameters.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaGesturesParameters
-    path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+    path: ../src/Shared/Features/Gestures/SkiaGesturesParameters.cs
     startLine: 18
   assemblies:
   - DrawnUi.Maui
@@ -55,11 +55,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+      path: src/Shared/Features/Gestures/SkiaGesturesParameters.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Type
-    path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+    path: ../src/Shared/Features/Gestures/SkiaGesturesParameters.cs
     startLine: 21
   assemblies:
   - DrawnUi.Maui
@@ -84,11 +84,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+      path: src/Shared/Features/Gestures/SkiaGesturesParameters.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Event
-    path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+    path: ../src/Shared/Features/Gestures/SkiaGesturesParameters.cs
     startLine: 22
   assemblies:
   - DrawnUi.Maui
@@ -113,11 +113,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+      path: src/Shared/Features/Gestures/SkiaGesturesParameters.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Create
-    path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+    path: ../src/Shared/Features/Gestures/SkiaGesturesParameters.cs
     startLine: 24
   assemblies:
   - DrawnUi.Maui
@@ -146,11 +146,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+      path: src/Shared/Features/Gestures/SkiaGesturesParameters.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Empty
-    path: ../src/Maui/DrawnUi/Features/Gestures/SkiaGesturesParameters.cs
+    path: ../src/Shared/Features/Gestures/SkiaGesturesParameters.cs
     startLine: 33
   assemblies:
   - DrawnUi.Maui

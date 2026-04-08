@@ -123,7 +123,7 @@ Enum SkiaCacheType  <a class="header-action link-secondary" title="View source" 
   <h2 id="fields">Fields
 </h2>
   <dl class="parameters">
-    <dt id="DrawnUi_Draw_SkiaCacheType_GPU"><code>GPU = 6</code></dt>
+    <dt id="DrawnUi_Draw_SkiaCacheType_GPU"><code>GPU = 7</code></dt>
   
   <dd><p>The cached surface will use the same graphic context as your hardware-accelerated canvas.
 This kind of cache will not apply Opacity as not all platforms support transparency for hardware accelerated layer.
@@ -137,6 +137,15 @@ Slower but will work for sizes bigger than graphics memory if needed.</p>
     <dt id="DrawnUi_Draw_SkiaCacheType_ImageComposite"><code>ImageComposite = 5</code></dt>
   
   <dd><p>Would receive the invalidated area rectangle, then redraw the previous cache
+but clipped to exclude the dirty area, then would re-create the dirty area and
+draw it clipped inside the dirty rectangle. This is useful for layouts with many children,
+like scroll content etc, but useless for non-containers.
+But will suffer from children that love to invalidate parent much!</p>
+</dd>
+    <dt id="DrawnUi_Draw_SkiaCacheType_ImageCompositeGPU"><code>ImageCompositeGPU = 6</code></dt>
+  
+  <dd><p>The cached surface will use the same graphic context as your hardware-accelerated canvas.
+Would receive the invalidated area rectangle, then redraw the previous cache
 but clipped to exclude the dirty area, then would re-create the dirty area and
 draw it clipped inside the dirty rectangle. This is useful for layouts with many children,
 like scroll content etc, but useless for non-containers.

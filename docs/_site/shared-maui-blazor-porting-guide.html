@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>DrawnUi Shared / MAUI / Blazor Code Separation Guide | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="DrawnUi Shared / MAUI / Blazor Code Separation Guide | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="images/draw.svg">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/main/docs/shared-maui-blazor-porting-guide.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/draw.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="drawnui-shared--maui--blazor-code-separation-guide">DrawnUi Shared / MAUI / Blazor Code Separation Guide</h1>
+
+<h2 id="architecture-overview">Architecture Overview</h2>
+<p>DrawnUi uses a <strong>three-tier code separation</strong> strategy:</p>
+<pre><code>src/
+  Shared/              ← Framework-agnostic code (SkiaSharp + System.* only)
+  Maui/DrawnUi/        ← MAUI-dependent code (BindableProperty, Element, Colors, etc.)
+  Blazor/DrawnUi/      ← Blazor-dependent code (Razor components, WebAssembly)
+</code></pre>
+<h3 id="how-it-works">How it works</h3>
+<ul>
+<li><strong>Shared</strong> is a <code>.shproj</code> (Shared Project) with a <code>Shared.projitems</code> file listing all included <code>.cs</code> files</li>
+<li>Both MAUI and Blazor <code>.csproj</code> files import Shared via:
+<pre><code class="lang-xml">&lt;Import Project=&quot;..\..\Shared\Shared.projitems&quot; Label=&quot;Shared&quot; /&gt;
+</code></pre>
+</li>
+<li>Shared code compiles into whichever project imports it, inheriting that project's package references</li>
+<li>Partial classes bridge Shared ↔ platform: e.g. <code>SkiaControl.Shared.cs</code> (Shared) + <code>SkiaControl.Maui.cs</code> (MAUI)</li>
+</ul>
+<h3 id="global-usings">Global Usings</h3>
+<p><strong>Shared</strong> (<code>Super.cs</code>): <code>SkiaSharp</code>, <code>System.Diagnostics</code></p>
+<p><strong>MAUI</strong> (<code>Super.Maui.cs</code>): All of Shared plus <code>Microsoft.Maui</code>, <code>Microsoft.Maui.Controls</code>, <code>Microsoft.Maui.Graphics</code>, <code>SkiaSharp.Views.Maui</code>, <code>AppoMobi.Maui.Gestures</code>, <code>AppoMobi.Specials</code></p>
+<p><strong>Blazor</strong> (<code>Super.Blazor.cs</code>): <code>SkiaSharp</code>, <code>AppoMobi.Specials</code>, <code>DrawnUi.*</code> namespaces</p>
+<h3 id="maui-specific-indicators-what-keeps-code-in-maui">MAUI-Specific Indicators (what keeps code in Maui/)</h3>
+<table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>Package/Namespace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BindableProperty</code>, <code>BindableObject</code>, <code>Element</code></td>
+<td><code>Microsoft.Maui.Controls</code></td>
+</tr>
+<tr>
+<td><code>Color</code>, <code>Colors</code>, <code>PointF</code>, <code>SizeF</code></td>
+<td><code>Microsoft.Maui.Graphics</code></td>
+</tr>
+<tr>
+<td><code>ContentPage</code>, <code>View</code>, <code>Handler</code></td>
+<td><code>Microsoft.Maui.Controls</code></td>
+</tr>
+<tr>
+<td><code>MainThread</code></td>
+<td><code>Microsoft.Maui.ApplicationModel</code></td>
+</tr>
+<tr>
+<td><code>LayoutOptions</code>, <code>LayoutAlignment</code></td>
+<td><code>Microsoft.Maui.Controls</code> (Blazor re-implements these)</td>
+</tr>
+<tr>
+<td><code>TouchActionResult</code>, <code>TouchActionEventArgs</code></td>
+<td><code>AppoMobi.Maui.Gestures</code></td>
+</tr>
+<tr>
+<td>XAML markup extensions, type converters</td>
+<td><code>Microsoft.Maui.Controls.Xaml</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="current-state-as-of-2026-04-06-after-full-migration">Current State (as of 2026-04-06, after full migration)</h2>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Files</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/Shared/</code></td>
+<td>241 .cs</td>
+<td>Framework-agnostic: enums, interfaces, models, animations, animators, effects, cache, text system, gesture types, shaders, views utilities, SkiaControl/TextSpan partials</td>
+</tr>
+<tr>
+<td><code>src/Maui/DrawnUi/</code> (non-platform)</td>
+<td>155 .cs</td>
+<td>Controls, layouts, scroll, shapes, images, Color-dependent effects, XAML infrastructure</td>
+</tr>
+<tr>
+<td><code>src/Maui/DrawnUi/</code> (platform)</td>
+<td>74 .cs</td>
+<td>Android, iOS, Mac, Windows platform-specific code</td>
+</tr>
+<tr>
+<td><code>src/Blazor/DrawnUi/</code></td>
+<td>~10 .cs</td>
+<td>Early stage: polyfills for MAUI types (LayoutOptions, Point, Size, Thickness), Super.Blazor.cs, DrawnView.cs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="whats-in-shared">What's in Shared</h3>
+<ul>
+<li><strong>SkiaControl partials</strong>: <code>.Shared.cs</code>, <code>.Cache.cs</code>, <code>.Effects.cs</code>, <code>.Invalidation.cs</code></li>
+<li><strong>TextSpan.Shared.cs</strong>: core text span logic (glyph handling, font management, decorations, events)</li>
+<li><strong>Text types</strong>: UsedGlyph, LineGlyph, StringReference, IDrawnTextSpan, ApplySpan, LineSpan, TextLine</li>
+<li><strong>SkiaLabel partials</strong>: EmojiData, ObjectPools, GlyphMeasurementCache, SpanMeasurement, Line (TextMetrics/DecomposedText)</li>
+<li><strong>All enums</strong> (~40): SkiaCacheType, LayoutType, ShapeType, DrawerDirection, GesturesMode, LoadPriority, NavigationSource, etc.</li>
+<li><strong>All interfaces</strong> (~25): ISkiaControl, ISkiaGestureListener, ISkiaLayout, IHasBanner, IWheelPickerCell, ISkiaRadioButton, etc.</li>
+<li><strong>All models</strong> (~40): CachedObject, DrawingContext, ScaledRect, ControlInStack, FileDescriptor, WheelCellInfo, SkiaShellNavigatedArgs, SkiaShellNavigatingArgs, etc.</li>
+<li><strong>All animators</strong>: AnimatorBase, ScrollFlingAnimator, etc.</li>
+<li><strong>All animation infrastructure</strong>: parameters, interfaces, extensions</li>
+<li><strong>Effects</strong>: interfaces + bases (SkiaEffect, SkiaShaderEffect, BaseColorFilterEffect, BaseImageFilterEffect, BaseChainedEffect) + non-Color implementations (BlurEffect, SaturationEffect, ContrastEffect, ColorPresetEffect, AdjustRGBEffect, all Chain*Effect variants without Color)</li>
+<li><strong>Gesture types</strong>: SkiaGesturesParameters, GestureEventProcessingInfo, ZoomEventArgs</li>
+<li><strong>Shaders</strong>: SkiaShader (runtime effect wrapper)</li>
+<li><strong>Images</strong>: LoadedImageSource</li>
+<li><strong>Helpers</strong>: VelocityTracker, IntersectionUtils, RubberBandUtils, 3D helpers, etc.</li>
+<li><strong>Fluent layout helpers</strong>: SkiaFrame, SkiaGrid, SkiaRow, etc.</li>
+<li><strong>Layout</strong>: LayoutStructure</li>
+<li><strong>Scroll</strong>: ScrollToIndexOrder, VelocityAccumulator, ScrollToPointOrder</li>
+<li><strong>Views utilities</strong>: CanvasRestoreScope, SKAutoCanvasRestoreFixed, DisposableManager</li>
+<li><strong>Controls</strong>: GifAnimation</li>
+<li><strong>Pdf</strong>: PaperFormat, PdfPagePosition, Pdf utilities</li>
+</ul>
+<h3 id="what-remains-in-maui-non-platform-155-files">What remains in Maui (non-platform, 155 files)</h3>
+<p>These stay because they use MAUI <code>Color</code> type, inherit from MAUI <code>Element</code>/<code>ContentPage</code>, use XAML infrastructure, or are deeply coupled to the MAUI control hierarchy:</p>
+<ul>
+<li><strong>Controls</strong> (~60): SkiaButton, SkiaCarousel, SkiaDrawer, SkiaShell, SkiaSlider, SkiaSwitch, etc.</li>
+<li><strong>Draw/Layout</strong> (~15): SkiaLayout partials, StackLayoutStructure, BuildRowLayout, ContentLayout, etc.</li>
+<li><strong>Draw/Scroll</strong> (~10): SkiaScroll partials, VirtualScroll, PlanesScroll, Plane</li>
+<li><strong>Draw/Text</strong> (~5): SkiaLabel.cs (main), SkiaLabel.Maui.cs, TextSpan.Maui.cs, SvgSpan</li>
+<li><strong>Draw</strong> (~10): SkiaShape partials, SkiaBackdrop, SkiaHotspot, SkiaHotspotZoom</li>
+<li><strong>Effects</strong> (~7): TintEffect, DropShadowEffect, OuterGlowEffect, TintWithAlphaEffect, ChainTintWithAlphaEffect, ChainDropShadowsEffect, ShaderDoubleTexturesEffect</li>
+<li><strong>Features</strong> (~15): SkiaImageManager, SkiaFontManager, SKSL, ColorExtensions, AddGestures, ImagesExtensions, KeyboardManager</li>
+<li><strong>Internals</strong> (~15): XAML converters, markup extensions, StaticResourcesExtensions, ConditionalStyle, SkiaSetter</li>
+<li><strong>Views</strong> (~10): Canvas, DrawnView, SkiaView, SkiaViewAccelerated, SurfaceCacheManager</li>
+</ul>
+<h3 id="remaining-blockers-for-further-migration">Remaining blockers for further migration</h3>
+<ol>
+<li><strong>MAUI <code>Color</code> type</strong>: Used by ~30 files (effects, shapes, controls). Would require a shared Color abstraction or converting everything to SKColor internally</li>
+<li><strong>MAUI <code>Element</code> inheritance</strong>: TextSpan.Maui.cs, controls hierarchy. Needed for XAML binding support</li>
+<li><strong>MAUI <code>FileSystem</code></strong>: SKSL.cs resource loading</li>
+<li><strong>MAUI <code>FontRegistrar</code></strong>: SkiaFontManager font discovery</li>
+<li><strong>Layout coupling</strong>: StackLayoutStructure/BuildRowLayout reference SkiaLayout which is a deeply split partial class</li>
+</ol>
+<hr>
+<h2 id="tier-1-safe-to-move-now-zero-maui-dependencies-verified">Tier 1: Safe to Move NOW (zero MAUI dependencies, verified)</h2>
+<p>These files have <strong>no MAUI imports, no BindableProperty, no MAUI types</strong>. They use only <code>System.*</code>, <code>SkiaSharp</code>, or types already in Shared.</p>
+<h3 id="pure-enums">Pure Enums</h3>
+<table>
+<thead>
+<tr>
+<th>File (in <code>src/Maui/DrawnUi/</code>)</th>
+<th>Namespace</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Controls/Drawer/DrawerDirection.cs</code></td>
+<td><code>DrawnUi.Controls</code></td>
+<td><code>FromBottom, FromTop, FromLeft, FromRight</code></td>
+</tr>
+<tr>
+<td><code>Controls/Switches/PrebuiltControlStyle.cs</code></td>
+<td><code>DrawnUi.Draw</code></td>
+<td><code>Unset, Platform, Cupertino, Material, Windows</code></td>
+</tr>
+<tr>
+<td><code>Features/Gestures/GesturesMode.cs</code></td>
+<td><code>DrawnUi.Draw</code></td>
+<td><code>Disabled, Enabled, SoftLock, Lock</code></td>
+</tr>
+<tr>
+<td><code>Features/Images/LoadPriority.cs</code></td>
+<td><code>DrawnUi.Draw</code></td>
+<td><code>Low, Normal, High</code></td>
+</tr>
+<tr>
+<td><code>Features/FileSystem/StorageType.cs</code></td>
+<td><code>DrawnUi.Infrastructure</code></td>
+<td><code>Cache, Internal, Public</code></td>
+</tr>
+<tr>
+<td><code>Features/Navigation/DeviceRotation.cs</code></td>
+<td><code>DrawnUi.Maui.Navigation</code></td>
+<td><code>Portrait, Landscape</code> - <strong>namespace needs changing</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="pure-interfaces">Pure Interfaces</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Features/Images/IHasBanner.cs</code></td>
+<td>Pure interface: <code>Banner</code>, <code>BannerPreloadOrdered</code></td>
+</tr>
+<tr>
+<td><code>Controls/PickerWheel/IWheelPickerCell.cs</code></td>
+<td>Depends on <code>WheelCellInfo</code> (move together)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pure-data-structures">Pure Data Structures</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Draw/Text/UsedGlyph.cs</code></td>
+<td>struct</td>
+<td>Glyph data: Id, Symbol, Position, Width</td>
+</tr>
+<tr>
+<td><code>Draw/Text/LineGlyph.cs</code></td>
+<td>struct</td>
+<td>Depends on UsedGlyph only</td>
+</tr>
+<tr>
+<td><code>Draw/Text/StringReference.cs</code></td>
+<td>struct</td>
+<td>String slicing: Source, StartIndex, Length</td>
+</tr>
+<tr>
+<td><code>Draw/Text/IDrawnTextSpan.cs</code></td>
+<td>interface</td>
+<td>Uses DrawingContext, ScaledSize (both in Shared)</td>
+</tr>
+<tr>
+<td><code>Features/FileSystem/FileDescriptor.cs</code></td>
+<td>class</td>
+<td>Uses only System.IO.FileStream</td>
+</tr>
+<tr>
+<td><code>Features/Navigation/IndexArgs.cs</code></td>
+<td>class</td>
+<td>Pure EventArgs subclass</td>
+</tr>
+<tr>
+<td><code>Features/Navigation/RotationEventArgs.cs</code></td>
+<td>class</td>
+<td>Depends on DeviceRotation (move together)</td>
+</tr>
+<tr>
+<td><code>Controls/PickerWheel/WheelCellInfo.cs</code></td>
+<td>class</td>
+<td>Uses SkiaControl, SKRect, SKMatrix (all available)</td>
+</tr>
+<tr>
+<td><code>Draw/Layout/LayoutStructure.cs</code></td>
+<td>class</td>
+<td>Uses DynamicGrid<controlinstack> (both in Shared)</controlinstack></td>
+</tr>
+<tr>
+<td><code>Draw/Scroll/ScrollToIndexOrder.cs</code></td>
+<td>file with 3 types</td>
+<td><code>ScrollToIndexOrder</code> struct, <code>VelocityAccumulator</code> class, <code>ScrollToPointOrder</code> struct - all use SKPoint, Vector2, enums from Shared</td>
+</tr>
+</tbody>
+</table>
+<h3 id="summary-tier-1">Summary: Tier 1</h3>
+<p><strong>~19 files, ~25 types</strong>. These can be moved by:</p>
+<ol>
+<li>Copying file to corresponding path under <code>src/Shared/</code></li>
+<li>Removing from MAUI project (if not auto-excluded)</li>
+<li>Adding <code>&lt;Compile Include=&quot;...&quot;/&gt;</code> entry to <code>Shared.projitems</code></li>
+<li>Fixing namespace if needed (e.g., <code>DrawnUi.Maui.Navigation</code> → <code>DrawnUi.Navigation</code> or keep as-is)</li>
+</ol>
+<hr>
+<h2 id="tier-2-movable-after-dependency-resolution">Tier 2: Movable After Dependency Resolution</h2>
+<p>These files are pure logic but reference types that are still in MAUI.</p>
+<h3 id="text-types-blocked-by-textspan">Text Types Blocked by TextSpan</h3>
+<p><code>TextSpan.cs</code> inherits <code>Element</code> (MAUI) and uses <code>BindableProperty</code>, <code>Color</code>, <code>Colors</code>. These files depend on TextSpan:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Dependency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Draw/Text/ApplySpan.cs</code></td>
+<td><code>TextSpan Span</code> property</td>
+</tr>
+<tr>
+<td><code>Draw/Text/LineSpan.cs</code></td>
+<td><code>TextSpan Span</code> property</td>
+</tr>
+<tr>
+<td><code>Draw/Text/TextLine.cs</code></td>
+<td><code>List&lt;LineSpan&gt; Spans</code> → LineSpan → TextSpan</td>
+</tr>
+<tr>
+<td><code>Draw/Text/SvgSpan.cs</code></td>
+<td>Inherits TextSpan</td>
+</tr>
+</tbody>
+</table>
+<p><strong>To unblock:</strong> Split TextSpan into:</p>
+<ul>
+<li><code>TextSpan.Shared.cs</code> - core properties (FontFamily, FontSize, IsBold, IsItalic, Paint, TypeFace, glyph logic)</li>
+<li><code>TextSpan.Maui.cs</code> - BindableProperty definitions, Color properties, Element inheritance</li>
+</ul>
+<p>This is a larger refactor since TextSpan currently inherits from <code>Element</code> for XAML support.</p>
+<h3 id="gesture-types-blocked-by-appomobimauigestures">Gesture Types Blocked by AppoMobi.Maui.Gestures</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Blocked by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Features/Gestures/SkiaGesturesParameters.cs</code></td>
+<td><code>TouchActionResult</code>, <code>TouchActionEventArgs</code> from AppoMobi.Maui.Gestures</td>
+</tr>
+<tr>
+<td><code>Features/Gestures/ZoomEventArgs.cs</code></td>
+<td><code>PointF</code> from Microsoft.Maui.Graphics</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> Some Shared files already use <code>TouchActionResult</code> (e.g., <code>SkiaTouchResultContext.cs</code>, <code>SkiaControl.Shared.cs</code>). This works because Shared is a <code>.shproj</code> that compiles with the host project's references. For Blazor, these types need polyfills.</p>
+<h3 id="layout-types-partial-class-nesting">Layout Types (partial class nesting)</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Issue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Draw/Layout/SkiaLayout.Grid.Cell.cs</code></td>
+<td>Nested class in <code>partial class SkiaLayout</code> - logic is pure but structurally coupled</td>
+</tr>
+<tr>
+<td><code>Draw/Layout/StackLayoutStructure.cs</code></td>
+<td>Pure logic but references <code>SkiaLayout</code> type directly</td>
+</tr>
+<tr>
+<td><code>Draw/Layout/BuildRowLayout.cs</code></td>
+<td>References StackLayoutStructure</td>
+</tr>
+</tbody>
+</table>
+<p><strong>To unblock:</strong> These can move once SkiaLayout has enough of its shared surface in <code>src/Shared/</code>.</p>
+<hr>
+<h2 id="tier-3-splittable-need-partial-class-extraction">Tier 3: Splittable (Need Partial Class Extraction)</h2>
+<p>These files mix framework-agnostic logic with MAUI-specific property definitions.</p>
+<h3 id="effects-17-files">Effects (17+ files)</h3>
+<p>All effect classes in <code>Features/Effects/</code> follow the same pattern:</p>
+<ul>
+<li>Inherit from <code>SkiaEffect</code> (already in Shared)</li>
+<li>Define <code>BindableProperty</code> for configuration</li>
+<li>Core <code>CreateFilter()</code> / <code>Draw()</code> logic is framework-agnostic</li>
+</ul>
+<p><strong>Example split for <code>BlurEffect.cs</code>:</strong></p>
+<pre><code>Shared:  BlurEffect.Shared.cs  → CreateFilter(), rendering logic
+Maui:    BlurEffect.Maui.cs    → BindableProperty definitions
+Blazor:  BlurEffect.Blazor.cs  → Blazor property system equivalent
+</code></pre>
+<p><strong>Files in this category:</strong></p>
+<ul>
+<li><code>AdjustRGBEffect.cs</code>, <code>BlurEffect.cs</code>, <code>ContrastEffect.cs</code>, <code>SaturationEffect.cs</code></li>
+<li><code>TintEffect.cs</code>, <code>TintWithAlphaEffect.cs</code>, <code>ColorPresetEffect.cs</code></li>
+<li><code>DropShadowEffect.cs</code>, <code>OuterGlowEffect.cs</code></li>
+<li><code>BaseColorFilterEffect.cs</code>, <code>BaseImageFilterEffect.cs</code>, <code>BaseRenderEffect.cs</code></li>
+<li>All <code>Chain*Effect.cs</code> files</li>
+<li><code>ShaderDoubleTexturesEffect.cs</code>, <code>SkiaDoubleAttachedTexturesEffect.cs</code></li>
+</ul>
+<h3 id="core-controls">Core Controls</h3>
+<p>Major controls like <code>SkiaShape.cs</code>, <code>SkiaLabel.cs</code>, <code>SkiaLayout.cs</code> already use partial classes. Their MAUI partials handle <code>BindableProperty</code> definitions. More logic could be extracted to Shared partials.</p>
+<h3 id="image-management">Image Management</h3>
+<p><code>SkiaImageManager.cs</code> has platform-specific partials (<code>.Android.cs</code>, <code>.Apple.cs</code>, <code>.Windows.cs</code>). Core image loading/caching logic could be extracted to Shared.</p>
+<hr>
+<h2 id="blazor-port-strategy">Blazor Port Strategy</h2>
+<h3 id="what-blazor-already-has-polyfills">What Blazor Already Has (polyfills)</h3>
+<p>The Blazor project re-implements these MAUI types:</p>
+<ul>
+<li><code>LayoutOptions</code> / <code>LayoutAlignment</code> (in <code>Internals/Core/</code>)</li>
+<li><code>Point</code>, <code>Size</code>, <code>Thickness</code> (in <code>Internals/Core/</code>)</li>
+<li><code>StackOrientation</code>, <code>ViewCell</code></li>
+</ul>
+<h3 id="what-blazor-still-needs">What Blazor Still Needs</h3>
+<p>For the Shared code to compile in Blazor context, the Blazor project must provide:</p>
+<ol>
+<li><p><strong>Binding system replacement</strong> - <code>BindableObject</code>, <code>BindableProperty</code>, <code>Element</code> equivalents</p>
+<ul>
+<li>Could use a lightweight observable property system</li>
+<li>Or define stub classes that mirror MAUI's API surface</li>
+</ul>
+</li>
+<li><p><strong>Color type</strong> - MAUI's <code>Color</code> class with <code>.ToSKColor()</code> extension</p>
+<ul>
+<li>Could use <code>SKColor</code> directly in Shared and convert at the MAUI/Blazor boundary</li>
+</ul>
+</li>
+<li><p><strong>Gesture types</strong> - <code>TouchActionResult</code>, <code>TouchActionEventArgs</code></p>
+<ul>
+<li>Already referenced in Shared files</li>
+<li>Blazor must provide implementations that translate browser events</li>
+</ul>
+</li>
+<li><p><strong>Graphics types</strong> - <code>PointF</code>, <code>SizeF</code>, <code>RectF</code></p>
+<ul>
+<li>Can be replaced with SkiaSharp equivalents (<code>SKPoint</code>, <code>SKSize</code>, <code>SKRect</code>)</li>
+<li>Or provide simple struct polyfills</li>
+</ul>
+</li>
+<li><p><strong>ICommand</strong> - <code>System.Windows.Input.ICommand</code> (this is in .NET Standard, available everywhere)</p>
+</li>
+<li><p><strong>Platform services</strong> - Font loading, image loading, file system access</p>
+</li>
+</ol>
+<h3 id="blazor-partial-class-pattern">Blazor Partial Class Pattern</h3>
+<p>For each Shared file using MAUI types, Blazor needs a matching partial:</p>
+<pre><code>src/Shared/Draw/Base/SkiaControl.Shared.cs       ← shared logic
+src/Maui/DrawnUi/Draw/Base/SkiaControl.Maui.cs   ← MAUI BindableProperty, Colors
+src/Blazor/DrawnUi/Draw/Base/SkiaControl.Blazor.cs ← Blazor property system
+</code></pre>
+<hr>
+<h2 id="working-with-this-codebase-task-reference">Working with This Codebase: Task Reference</h2>
+<h3 id="moving-a-file-to-shared">Moving a File to Shared</h3>
+<ol>
+<li>Verify zero MAUI deps: search for <code>BindableProperty</code>, <code>Microsoft.Maui</code>, <code>Colors.</code>, <code>Color </code>, <code>Element</code>, <code>PointF</code></li>
+<li>Check transitive deps: if file uses type X, verify X is in Shared or has no MAUI deps</li>
+<li>Copy file to mirror path under <code>src/Shared/</code> (keep same subfolder structure)</li>
+<li>Add <code>&lt;Compile Include=&quot;$(MSBuildThisFileDirectory)path\to\file.cs&quot; /&gt;</code> to <code>Shared.projitems</code></li>
+<li>Remove original from <code>src/Maui/DrawnUi/</code> (or exclude from MAUI .csproj if needed)</li>
+<li>Build both MAUI and Blazor to verify</li>
+</ol>
+<h3 id="splitting-a-file-into-shared--maui-partials">Splitting a File into Shared + Maui Partials</h3>
+<ol>
+<li>Make the class <code>partial</code> (if not already)</li>
+<li>Create <code>ClassName.Shared.cs</code> in Shared with framework-agnostic logic</li>
+<li>Keep <code>ClassName.Maui.cs</code> in Maui with BindableProperty definitions</li>
+<li>Use <code>partial void</code> or <code>partial</code> methods for platform hooks</li>
+<li>Add Shared file to <code>Shared.projitems</code></li>
+<li>For Blazor: create <code>ClassName.Blazor.cs</code> implementing the same partial surface</li>
+</ol>
+<h3 id="creating-a-blazor-partial">Creating a Blazor Partial</h3>
+<ol>
+<li>Check what MAUI types the Shared code expects (BindableProperty, Color, etc.)</li>
+<li>Ensure Blazor polyfills exist for those types</li>
+<li>Create <code>.Blazor.cs</code> file implementing the same partial members</li>
+<li>Replace MAUI-specific patterns:
+<ul>
+<li><code>BindableProperty.Create(...)</code> → Blazor-appropriate property notification</li>
+<li><code>Color</code> → SKColor or custom Color polyfill</li>
+<li><code>MainThread.InvokeOnMainThreadAsync</code> → <code>InvokeAsync</code> (Blazor dispatcher)</li>
+</ul>
+</li>
+</ol>
+<h3 id="verifying-a-move">Verifying a Move</h3>
+<pre><code class="lang-bash"># Build MAUI project
+dotnet build src/Maui/DrawnUi/DrawnUi.Maui.csproj --configuration Debug
+
+# Build Blazor project
+dotnet build src/Blazor/DrawnUi/DrawnUi.Blazor.csproj --configuration Debug
+</code></pre>
+<hr>
+<h2 id="file-reference-current-sharedprojitems-structure">File Reference: Current Shared.projitems Structure</h2>
+<p>The <code>Shared.projitems</code> file explicitly lists every file. Categories:</p>
+<ul>
+<li><code>Draw/Base/</code> - SkiaControl partials, VisualLayer, VisualTreeHandler</li>
+<li><code>Features/Effects/</code> - Effect interfaces and base classes</li>
+<li><code>Features/Animations/</code> - Animation infrastructure</li>
+<li><code>Features/Animators/</code> - All animator implementations</li>
+<li><code>Features/Fluent/</code> - Fluent layout helpers</li>
+<li><code>Internals/Enums/</code> - ~35 enum files</li>
+<li><code>Internals/Extensions/</code> - Shared extension methods</li>
+<li><code>Internals/Helpers/</code> - Utility classes (VelocityTracker, 3D helpers, etc.)</li>
+<li><code>Internals/Interfaces/</code> - ~20 interface files</li>
+<li><code>Internals/Models/</code> - ~35 model/struct files</li>
+<li><code>Super.cs</code> - Shared partial of the Super class</li>
+</ul>
+<hr>
+<h2 id="key-dependency-chains-to-watch">Key Dependency Chains to Watch</h2>
+<pre><code>TextSpan (MAUI: Element + BindableProperty)
+  ← ApplySpan, LineSpan
+    ← TextLine
+      ← SkiaLabel (MAUI)
+
+SkiaControl (partial: Shared + MAUI)
+  ← SkiaShape (MAUI)
+    ← SkiaLayout (partial: has .Maui.cs)
+      ← StackLayoutStructure, BuildRowLayout, etc.
+
+TouchActionResult (AppoMobi.Maui.Gestures)
+  ← SkiaGesturesParameters
+    ← SkiaControl.Shared.cs (already in Shared!)
+    ← Many gesture-handling controls
+
+Color / Colors (Microsoft.Maui.Graphics)
+  ← TextSpan, SkiaShape, many controls
+  ← Effects (via property definitions)
+</code></pre>
+<p>The biggest unlock for Blazor porting is providing a <code>BindableObject</code>/<code>BindableProperty</code> polyfill and a <code>Color</code> type, since these are the most pervasive MAUI dependencies.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/main/docs/shared-maui-blazor-porting-guide.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Made by <a href="https://taublast.github.io/about/">Nick Kovalsky aka AppoMobi (@taublast)</a><script>(function(){try{const fix=function(){const brand=document.querySelector('a.navbar-brand');if(brand){brand.setAttribute('href','/');}document.querySelectorAll('a[href]').forEach(function(a){var href=a.getAttribute('href');if(!href||href.startsWith('http'))return;if(href==='index.html'||href==='/index.html'||href==='../index.html'){a.setAttribute('href','/');return;}if(href.endsWith('/articles/index.html')||href==='articles/index.html'||href==='../articles/index.html'){a.setAttribute('href','/articles/');return;}var m=href.match(/^(?:\.?\.?\/)?articles\/.*\/index\.html(.*)$/);if(m){var p=href.replace(/\/index\.html(.*)$/,'/');if(!p.startsWith('/')){p='/' + p.replace(/^\/?/,'');}a.setAttribute('href',p);}});};if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fix);}else{fix();}}catch(e){})();</script>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

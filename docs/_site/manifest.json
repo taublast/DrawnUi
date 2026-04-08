@@ -4,7 +4,7 @@
     "changefreq": "weekly",
     "priority": 0.5
   },
-  "source_base_path": "C:/Dev/Cases/GitHub/DrawnUi.Maui/docs",
+  "source_base_path": "C:/Dev/Cases/GitHub/DrawnUi/docs",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -4457,7 +4457,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "DrawnUi.Draw.SkiaShaderEffect",
-      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaShaderEffect.yml\" sourcestartlinenumber=\"1\">IPostRendererEffect</p>\n"
+      "Summary": "<p sourcefile=\"api/DrawnUi.Draw.SkiaShaderEffect.yml\" sourcestartlinenumber=\"1\">IPostRendererEffect — XAML-bindable shader effect that uses SkiaShader as its engine.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -5455,6 +5455,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.IThermalStateService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.IThermalStateService.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.IThermalStateService",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/DrawnUi.Infrastructure.ClosedRange-1.yml",
       "output": {
         ".html": {
@@ -5816,6 +5830,20 @@
       "IsMRef": true,
       "Title": "DrawnUi.Infrastructure.SkSl",
       "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Infrastructure.SkiaShader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Infrastructure.SkiaShader.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Infrastructure.SkiaShader",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Infrastructure.SkiaShader.yml\" sourcestartlinenumber=\"1\">Lightweight reusable shader wrapper for applying SKSL shaders directly to an SKPaint.\nUsed standalone for direct rendering, or as the engine inside SkiaShaderEffect.\nSubclass and override CreateUniforms/CreateChildren for custom uniforms.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -6320,6 +6348,20 @@
       "IsMRef": true,
       "Title": "DrawnUi.Views.Canvas",
       "Summary": "<p sourcefile=\"api/DrawnUi.Views.Canvas.yml\" sourcestartlinenumber=\"1\">Optimized DrawnView having only one child inside Content property. Can autosize to to children size.\nFor all drawn app put this directly inside the ContentPage as root view.\nIf you put this inside some Maui control like Grid whatever expect more GC collections during animations making them somewhat less fluid.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/DrawnUi.Views.CanvasRestoreScope.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/DrawnUi.Views.CanvasRestoreScope.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "DrawnUi.Views.CanvasRestoreScope",
+      "Summary": "<p sourcefile=\"api/DrawnUi.Views.CanvasRestoreScope.yml\" sourcestartlinenumber=\"1\">Zero-allocation canvas save/restore scope for use in hot rendering paths.\nStruct equivalent of SKAutoCanvasRestore — no heap allocation in using statements.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -6974,6 +7016,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/shaders.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/shaders.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/startup-settings.md",
       "output": {
         ".html": {
@@ -7161,6 +7213,16 @@
       "output": {
         ".html": {
           "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "shared-maui-blazor-porting-guide.md",
+      "output": {
+        ".html": {
+          "relative_path": "shared-maui-blazor-porting-guide.html"
         }
       },
       "version": ""

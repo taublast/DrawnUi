@@ -18,11 +18,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
+      path: src/Shared/Features/Gestures/ZoomEventArgs.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ZoomEventArgs
-    path: ../src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
+    path: ../src/Shared/Features/Gestures/ZoomEventArgs.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -57,11 +57,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
+      path: src/Shared/Features/Gestures/ZoomEventArgs.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
+    path: ../src/Shared/Features/Gestures/ZoomEventArgs.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -86,11 +86,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
+      path: src/Shared/Features/Gestures/ZoomEventArgs.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
+    path: ../src/Shared/Features/Gestures/ZoomEventArgs.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -120,11 +120,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
+      path: src/Shared/Features/Gestures/ZoomEventArgs.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Center
-    path: ../src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
+    path: ../src/Shared/Features/Gestures/ZoomEventArgs.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -149,11 +149,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
+      path: src/Shared/Features/Gestures/ZoomEventArgs.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value
-    path: ../src/Maui/DrawnUi/Features/Gestures/ZoomEventArgs.cs
+    path: ../src/Shared/Features/Gestures/ZoomEventArgs.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui

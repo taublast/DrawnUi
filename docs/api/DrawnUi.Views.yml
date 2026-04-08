@@ -6,6 +6,7 @@ items:
   children:
   - DrawnUi.Views.BasePageReloadable
   - DrawnUi.Views.Canvas
+  - DrawnUi.Views.CanvasRestoreScope
   - DrawnUi.Views.DisposableManager
   - DrawnUi.Views.DrawnUiBasePage
   - DrawnUi.Views.DrawnView
@@ -45,20 +46,6 @@ references:
   name: Canvas
   nameWithType: Canvas
   fullName: DrawnUi.Views.Canvas
-- uid: DrawnUi.Views.IDisposeManager
-  commentId: T:DrawnUi.Views.IDisposeManager
-  parent: DrawnUi.Views
-  href: DrawnUi.Views.IDisposeManager.html
-  name: IDisposeManager
-  nameWithType: IDisposeManager
-  fullName: DrawnUi.Views.IDisposeManager
-- uid: DrawnUi.Views.DisposableManager
-  commentId: T:DrawnUi.Views.DisposableManager
-  parent: DrawnUi.Views
-  href: DrawnUi.Views.DisposableManager.html
-  name: DisposableManager
-  nameWithType: DisposableManager
-  fullName: DrawnUi.Views.DisposableManager
 - uid: DrawnUi.Views.DrawnUiBasePage
   commentId: T:DrawnUi.Views.DrawnUiBasePage
   parent: DrawnUi.Views
@@ -162,12 +149,6 @@ references:
   - uid: DrawnUi.Views.DrawnView.FocusedItemChangedArgs
     name: FocusedItemChangedArgs
     href: DrawnUi.Views.DrawnView.FocusedItemChangedArgs.html
-- uid: DrawnUi.Views.SKAutoCanvasRestoreFixed
-  commentId: T:DrawnUi.Views.SKAutoCanvasRestoreFixed
-  href: DrawnUi.Views.SKAutoCanvasRestoreFixed.html
-  name: SKAutoCanvasRestoreFixed
-  nameWithType: SKAutoCanvasRestoreFixed
-  fullName: DrawnUi.Views.SKAutoCanvasRestoreFixed
 - uid: DrawnUi.Views.SkiaView
   commentId: T:DrawnUi.Views.SkiaView
   href: DrawnUi.Views.SkiaView.html
@@ -206,6 +187,32 @@ references:
   name: SurfacePool
   nameWithType: SurfacePool
   fullName: DrawnUi.Views.SurfacePool
+- uid: DrawnUi.Views.CanvasRestoreScope
+  commentId: T:DrawnUi.Views.CanvasRestoreScope
+  href: DrawnUi.Views.CanvasRestoreScope.html
+  name: CanvasRestoreScope
+  nameWithType: CanvasRestoreScope
+  fullName: DrawnUi.Views.CanvasRestoreScope
+- uid: DrawnUi.Views.SKAutoCanvasRestoreFixed
+  commentId: T:DrawnUi.Views.SKAutoCanvasRestoreFixed
+  href: DrawnUi.Views.SKAutoCanvasRestoreFixed.html
+  name: SKAutoCanvasRestoreFixed
+  nameWithType: SKAutoCanvasRestoreFixed
+  fullName: DrawnUi.Views.SKAutoCanvasRestoreFixed
+- uid: DrawnUi.Views.IDisposeManager
+  commentId: T:DrawnUi.Views.IDisposeManager
+  parent: DrawnUi.Views
+  href: DrawnUi.Views.IDisposeManager.html
+  name: IDisposeManager
+  nameWithType: IDisposeManager
+  fullName: DrawnUi.Views.IDisposeManager
+- uid: DrawnUi.Views.DisposableManager
+  commentId: T:DrawnUi.Views.DisposableManager
+  parent: DrawnUi.Views
+  href: DrawnUi.Views.DisposableManager.html
+  name: DisposableManager
+  nameWithType: DisposableManager
+  fullName: DrawnUi.Views.DisposableManager
 - uid: DrawnUi.Views
   commentId: N:DrawnUi.Views
   href: DrawnUi.html

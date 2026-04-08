@@ -21,7 +21,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ShellStackChild
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2345
+    startLine: 2356
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -60,7 +60,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Part
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2347
+    startLine: 2358
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -89,7 +89,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Control
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2348
+    startLine: 2359
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls

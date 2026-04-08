@@ -66,6 +66,8 @@ items:
   - DrawnUi.Draw.Super.SkiaGeneration
   - DrawnUi.Draw.Super.StatusBarHeight
   - DrawnUi.Draw.Super.StopRenderingInBackground
+  - DrawnUi.Draw.Super.ThermalState
+  - DrawnUi.Draw.Super.ThermalStateChanged
   - DrawnUi.Draw.Super.UseFrozenVisualLayers
   - DrawnUi.Draw.Super.UserAgent
   langs:
@@ -1251,6 +1253,62 @@ items:
       type: System.Double
     content.vb: Public Shared Property MaxFrameLengthMs As Double
   overload: DrawnUi.Draw.Super.MaxFrameLengthMs*
+- uid: DrawnUi.Draw.Super.ThermalState
+  commentId: P:DrawnUi.Draw.Super.ThermalState
+  id: ThermalState
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: ThermalState
+  nameWithType: Super.ThermalState
+  fullName: DrawnUi.Draw.Super.ThermalState
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ThermalState
+    path: ../src/Shared/Super.cs
+    startLine: 248
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static ThermalState ThermalState { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.ThermalState
+    content.vb: Public Shared Property ThermalState As ThermalState
+  overload: DrawnUi.Draw.Super.ThermalState*
+- uid: DrawnUi.Draw.Super.ThermalStateChanged
+  commentId: E:DrawnUi.Draw.Super.ThermalStateChanged
+  id: ThermalStateChanged
+  parent: DrawnUi.Draw.Super
+  langs:
+  - csharp
+  - vb
+  name: ThermalStateChanged
+  nameWithType: Super.ThermalStateChanged
+  fullName: DrawnUi.Draw.Super.ThermalStateChanged
+  type: Event
+  source:
+    remote:
+      path: src/Shared/Super.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ThermalStateChanged
+    path: ../src/Shared/Super.cs
+    startLine: 250
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static event EventHandler<ThermalState> ThermalStateChanged
+    return:
+      type: System.EventHandler{DrawnUi.Draw.ThermalState}
+    content.vb: Public Shared Event ThermalStateChanged As EventHandler(Of ThermalState)
 - uid: DrawnUi.Draw.Super.OnNativeAppCreated
   commentId: E:DrawnUi.Draw.Super.OnNativeAppCreated
   id: OnNativeAppCreated
@@ -1269,7 +1327,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnNativeAppCreated
     path: ../src/Shared/Super.cs
-    startLine: 251
+    startLine: 266
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1298,7 +1356,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnNativeAppPaused
     path: ../src/Shared/Super.cs
-    startLine: 253
+    startLine: 268
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1325,7 +1383,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnNativeAppResumed
     path: ../src/Shared/Super.cs
-    startLine: 255
+    startLine: 270
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1352,7 +1410,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnNativeAppDestroyed
     path: ../src/Shared/Super.cs
-    startLine: 257
+    startLine: 272
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1379,7 +1437,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InitialWindowSize
     path: ../src/Shared/Super.cs
-    startLine: 259
+    startLine: 274
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1406,7 +1464,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnCreated
     path: ../src/Shared/Super.cs
-    startLine: 265
+    startLine: 280
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1432,7 +1490,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnWentBackground
     path: ../src/Shared/Super.cs
-    startLine: 272
+    startLine: 287
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1458,7 +1516,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnWentForeground
     path: ../src/Shared/Super.cs
-    startLine: 278
+    startLine: 293
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1484,7 +1542,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnMauiAppCreated
     path: ../src/Shared/Super.cs
-    startLine: 288
+    startLine: 303
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1513,7 +1571,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedGlobalRefresh
     path: ../src/Shared/Super.cs
-    startLine: 294
+    startLine: 309
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1542,7 +1600,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedGlobalUpdate
     path: ../src/Shared/Super.cs
-    startLine: 300
+    startLine: 315
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1570,7 +1628,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InBackground
     path: ../src/Shared/Super.cs
-    startLine: 311
+    startLine: 326
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1599,7 +1657,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StopRenderingInBackground
     path: ../src/Shared/Super.cs
-    startLine: 351
+    startLine: 366
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1628,7 +1686,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RunOnMainThreadAndWait
     path: ../src/Shared/Super.cs
-    startLine: 374
+    startLine: 389
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1659,7 +1717,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RunOnMainThreadAndWaitAsync
     path: ../src/Shared/Super.cs
-    startLine: 398
+    startLine: 413
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1695,7 +1753,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CacheEnabled
     path: ../src/Shared/Super.cs
-    startLine: 436
+    startLine: 451
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1724,7 +1782,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GpuCacheEnabled
     path: ../src/Shared/Super.cs
-    startLine: 438
+    startLine: 453
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1753,7 +1811,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: UserAgent
     path: ../src/Shared/Super.cs
-    startLine: 440
+    startLine: 455
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1782,7 +1840,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SkiaGeneration
     path: ../src/Shared/Super.cs
-    startLine: 442
+    startLine: 457
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1809,7 +1867,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: EnqueueBackgroundTask
     path: ../src/Shared/Super.cs
-    startLine: 449
+    startLine: 464
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1841,7 +1899,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessBackgroundQueue
     path: ../src/Shared/Super.cs
-    startLine: 454
+    startLine: 469
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1869,7 +1927,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RotationChanged
     path: ../src/Shared/Super.cs
-    startLine: 474
+    startLine: 489
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1896,7 +1954,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DeviceRotation
     path: ../src/Shared/Super.cs
-    startLine: 479
+    startLine: 494
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1927,7 +1985,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OrientationChanged
     path: ../src/Shared/Super.cs
-    startLine: 492
+    startLine: 507
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1954,7 +2012,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DeviceOrientation
     path: ../src/Shared/Super.cs
-    startLine: 494
+    startLine: 509
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1983,7 +2041,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DeviceRotationSnap
     path: ../src/Shared/Super.cs
-    startLine: 508
+    startLine: 523
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2947,6 +3005,80 @@ references:
   name: MaxFrameLengthMs
   nameWithType: Super.MaxFrameLengthMs
   fullName: DrawnUi.Draw.Super.MaxFrameLengthMs
+- uid: DrawnUi.Draw.Super.ThermalState*
+  commentId: Overload:DrawnUi.Draw.Super.ThermalState
+  href: DrawnUi.Draw.Super.html#DrawnUi_Draw_Super_ThermalState
+  name: ThermalState
+  nameWithType: Super.ThermalState
+  fullName: DrawnUi.Draw.Super.ThermalState
+- uid: DrawnUi.Draw.ThermalState
+  commentId: T:DrawnUi.Draw.ThermalState
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ThermalState.html
+  name: ThermalState
+  nameWithType: ThermalState
+  fullName: DrawnUi.Draw.ThermalState
+- uid: System.EventHandler{DrawnUi.Draw.ThermalState}
+  commentId: T:System.EventHandler{DrawnUi.Draw.ThermalState}
+  parent: System
+  definition: System.EventHandler`1
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  name: EventHandler<ThermalState>
+  nameWithType: EventHandler<ThermalState>
+  fullName: System.EventHandler<DrawnUi.Draw.ThermalState>
+  nameWithType.vb: EventHandler(Of ThermalState)
+  fullName.vb: System.EventHandler(Of DrawnUi.Draw.ThermalState)
+  name.vb: EventHandler(Of ThermalState)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: <
+  - uid: DrawnUi.Draw.ThermalState
+    name: ThermalState
+    href: DrawnUi.Draw.ThermalState.html
+  - name: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.ThermalState
+    name: ThermalState
+    href: DrawnUi.Draw.ThermalState.html
+  - name: )
+- uid: System.EventHandler`1
+  commentId: T:System.EventHandler`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  name: EventHandler<TEventArgs>
+  nameWithType: EventHandler<TEventArgs>
+  fullName: System.EventHandler<TEventArgs>
+  nameWithType.vb: EventHandler(Of TEventArgs)
+  fullName.vb: System.EventHandler(Of TEventArgs)
+  name.vb: EventHandler(Of TEventArgs)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: <
+  - name: TEventArgs
+  - name: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TEventArgs
+  - name: )
 - uid: Microsoft.Maui.Graphics.Size
   commentId: T:Microsoft.Maui.Graphics.Size
   parent: Microsoft.Maui.Graphics
@@ -3218,34 +3350,6 @@ references:
     name: Integer
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.int32
-  - name: )
-- uid: System.EventHandler`1
-  commentId: T:System.EventHandler`1
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
-  name: EventHandler<TEventArgs>
-  nameWithType: EventHandler<TEventArgs>
-  fullName: System.EventHandler<TEventArgs>
-  nameWithType.vb: EventHandler(Of TEventArgs)
-  fullName.vb: System.EventHandler(Of TEventArgs)
-  name.vb: EventHandler(Of TEventArgs)
-  spec.csharp:
-  - uid: System.EventHandler`1
-    name: EventHandler
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
-  - name: <
-  - name: TEventArgs
-  - name: '>'
-  spec.vb:
-  - uid: System.EventHandler`1
-    name: EventHandler
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
-  - name: (
-  - name: Of
-  - name: " "
-  - name: TEventArgs
   - name: )
 - uid: DrawnUi.Draw.Super.DeviceRotation*
   commentId: Overload:DrawnUi.Draw.Super.DeviceRotation

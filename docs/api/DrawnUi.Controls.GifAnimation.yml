@@ -27,11 +27,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+      path: src/Shared/Controls/PlayFrames/GifAnimation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GifAnimation
-    path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+    path: ../src/Shared/Controls/PlayFrames/GifAnimation.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -66,11 +66,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+      path: src/Shared/Controls/PlayFrames/GifAnimation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LockFrames
-    path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+    path: ../src/Shared/Controls/PlayFrames/GifAnimation.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -93,11 +93,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+      path: src/Shared/Controls/PlayFrames/GifAnimation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Frames
-    path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+    path: ../src/Shared/Controls/PlayFrames/GifAnimation.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -122,11 +122,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+      path: src/Shared/Controls/PlayFrames/GifAnimation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Frame
-    path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+    path: ../src/Shared/Controls/PlayFrames/GifAnimation.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui
@@ -153,11 +153,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+      path: src/Shared/Controls/PlayFrames/GifAnimation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SeekFrame
-    path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+    path: ../src/Shared/Controls/PlayFrames/GifAnimation.cs
     startLine: 20
   assemblies:
   - DrawnUi.Maui
@@ -188,11 +188,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+      path: src/Shared/Controls/PlayFrames/GifAnimation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetFrameNumber
-    path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+    path: ../src/Shared/Controls/PlayFrames/GifAnimation.cs
     startLine: 41
   assemblies:
   - DrawnUi.Maui
@@ -222,11 +222,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+      path: src/Shared/Controls/PlayFrames/GifAnimation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
-    path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+    path: ../src/Shared/Controls/PlayFrames/GifAnimation.cs
     startLine: 65
   assemblies:
   - DrawnUi.Maui
@@ -251,11 +251,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+      path: src/Shared/Controls/PlayFrames/GifAnimation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Height
-    path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+    path: ../src/Shared/Controls/PlayFrames/GifAnimation.cs
     startLine: 67
   assemblies:
   - DrawnUi.Maui
@@ -280,11 +280,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+      path: src/Shared/Controls/PlayFrames/GifAnimation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DurationMs
-    path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+    path: ../src/Shared/Controls/PlayFrames/GifAnimation.cs
     startLine: 69
   assemblies:
   - DrawnUi.Maui
@@ -309,11 +309,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+      path: src/Shared/Controls/PlayFrames/GifAnimation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TotalFrames
-    path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+    path: ../src/Shared/Controls/PlayFrames/GifAnimation.cs
     startLine: 71
   assemblies:
   - DrawnUi.Maui
@@ -338,11 +338,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+      path: src/Shared/Controls/PlayFrames/GifAnimation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FramesPositionsMs
-    path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+    path: ../src/Shared/Controls/PlayFrames/GifAnimation.cs
     startLine: 73
   assemblies:
   - DrawnUi.Maui
@@ -367,11 +367,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+      path: src/Shared/Controls/PlayFrames/GifAnimation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
-    path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+    path: ../src/Shared/Controls/PlayFrames/GifAnimation.cs
     startLine: 75
   assemblies:
   - DrawnUi.Maui
@@ -396,11 +396,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+      path: src/Shared/Controls/PlayFrames/GifAnimation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
-    path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+    path: ../src/Shared/Controls/PlayFrames/GifAnimation.cs
     startLine: 77
   assemblies:
   - DrawnUi.Maui
@@ -426,11 +426,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+      path: src/Shared/Controls/PlayFrames/GifAnimation.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadFromStream
-    path: ../src/Maui/DrawnUi/Controls/PlayFrames/GifAnimation.cs
+    path: ../src/Shared/Controls/PlayFrames/GifAnimation.cs
     startLine: 93
   assemblies:
   - DrawnUi.Maui

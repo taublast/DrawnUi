@@ -16,11 +16,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Images/IHasBanner.cs
+      path: src/Shared/Internals/Interfaces/IHasBanner.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IHasBanner
-    path: ../src/Maui/DrawnUi/Features/Images/IHasBanner.cs
+    path: ../src/Shared/Internals/Interfaces/IHasBanner.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -43,11 +43,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Images/IHasBanner.cs
+      path: src/Shared/Internals/Interfaces/IHasBanner.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Banner
-    path: ../src/Maui/DrawnUi/Features/Images/IHasBanner.cs
+    path: ../src/Shared/Internals/Interfaces/IHasBanner.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -74,11 +74,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Images/IHasBanner.cs
+      path: src/Shared/Internals/Interfaces/IHasBanner.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BannerPreloadOrdered
-    path: ../src/Maui/DrawnUi/Features/Images/IHasBanner.cs
+    path: ../src/Shared/Internals/Interfaces/IHasBanner.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui

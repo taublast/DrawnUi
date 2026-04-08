@@ -7,6 +7,9 @@ items:
   - uid: DrawnUi.HotReloadService
     name: HotReloadService
     type: Class
+  - uid: DrawnUi.IThermalStateService
+    name: IThermalStateService
+    type: Interface
 - uid: DrawnUi.Animate.Animators
   name: DrawnUi.Animate.Animators
   type: Namespace
@@ -1204,6 +1207,9 @@ items:
   - uid: DrawnUi.Infrastructure.SkSl
     name: SkSl
     type: Class
+  - uid: DrawnUi.Infrastructure.SkiaShader
+    name: SkiaShader
+    type: Class
   - uid: DrawnUi.Infrastructure.SkiaTouchResultContext
     name: SkiaTouchResultContext
     type: Struct
@@ -1366,6 +1372,9 @@ items:
   - uid: DrawnUi.Views.Canvas
     name: Canvas
     type: Class
+  - uid: DrawnUi.Views.CanvasRestoreScope
+    name: CanvasRestoreScope
+    type: Struct
   - uid: DrawnUi.Views.DisposableManager
     name: DisposableManager
     type: Class

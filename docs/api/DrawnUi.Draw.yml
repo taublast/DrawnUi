@@ -496,13 +496,6 @@ references:
   name: SliderValueDesc
   nameWithType: SliderValueDesc
   fullName: DrawnUi.Draw.SliderValueDesc
-- uid: DrawnUi.Draw.PrebuiltControlStyle
-  commentId: T:DrawnUi.Draw.PrebuiltControlStyle
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.PrebuiltControlStyle.html
-  name: PrebuiltControlStyle
-  nameWithType: PrebuiltControlStyle
-  fullName: DrawnUi.Draw.PrebuiltControlStyle
 - uid: DrawnUi.Draw.SkiaCheckbox
   commentId: T:DrawnUi.Draw.SkiaCheckbox
   href: DrawnUi.Draw.SkiaCheckbox.html
@@ -622,13 +615,6 @@ references:
   name: SkiaMauiElement
   nameWithType: SkiaMauiElement
   fullName: DrawnUi.Draw.SkiaMauiElement
-- uid: DrawnUi.Draw.LoadedImageSource
-  commentId: T:DrawnUi.Draw.LoadedImageSource
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.LoadedImageSource.html
-  name: LoadedImageSource
-  nameWithType: LoadedImageSource
-  fullName: DrawnUi.Draw.LoadedImageSource
 - uid: DrawnUi.Draw.SkiaImage
   commentId: T:DrawnUi.Draw.SkiaImage
   parent: DrawnUi.Draw
@@ -678,13 +664,6 @@ references:
   name: InfiniteLayout
   nameWithType: InfiniteLayout
   fullName: DrawnUi.Draw.InfiniteLayout
-- uid: DrawnUi.Draw.LayoutStructure
-  commentId: T:DrawnUi.Draw.LayoutStructure
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.LayoutStructure.html
-  name: LayoutStructure
-  nameWithType: LayoutStructure
-  fullName: DrawnUi.Draw.LayoutStructure
 - uid: DrawnUi.Draw.SkiaControlWithRect
   commentId: T:DrawnUi.Draw.SkiaControlWithRect
   parent: DrawnUi.Draw
@@ -1039,27 +1018,6 @@ references:
   - uid: DrawnUi.Draw.PlanesScroll.ViewLayoutInfo
     name: ViewLayoutInfo
     href: DrawnUi.Draw.PlanesScroll.ViewLayoutInfo.html
-- uid: DrawnUi.Draw.ScrollToIndexOrder
-  commentId: T:DrawnUi.Draw.ScrollToIndexOrder
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.ScrollToIndexOrder.html
-  name: ScrollToIndexOrder
-  nameWithType: ScrollToIndexOrder
-  fullName: DrawnUi.Draw.ScrollToIndexOrder
-- uid: DrawnUi.Draw.VelocityAccumulator
-  commentId: T:DrawnUi.Draw.VelocityAccumulator
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.VelocityAccumulator.html
-  name: VelocityAccumulator
-  nameWithType: VelocityAccumulator
-  fullName: DrawnUi.Draw.VelocityAccumulator
-- uid: DrawnUi.Draw.ScrollToPointOrder
-  commentId: T:DrawnUi.Draw.ScrollToPointOrder
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.ScrollToPointOrder.html
-  name: ScrollToPointOrder
-  nameWithType: ScrollToPointOrder
-  fullName: DrawnUi.Draw.ScrollToPointOrder
 - uid: DrawnUi.Draw.SkiaScroll
   commentId: T:DrawnUi.Draw.SkiaScroll
   parent: DrawnUi.Draw
@@ -1087,12 +1045,6 @@ references:
   name: SkiaBackdrop
   nameWithType: SkiaBackdrop
   fullName: DrawnUi.Draw.SkiaBackdrop
-- uid: DrawnUi.Draw.SkiaControlsObservable
-  commentId: T:DrawnUi.Draw.SkiaControlsObservable
-  href: DrawnUi.Draw.SkiaControlsObservable.html
-  name: SkiaControlsObservable
-  nameWithType: SkiaControlsObservable
-  fullName: DrawnUi.Draw.SkiaControlsObservable
 - uid: DrawnUi.Draw.SkiaHotspot
   commentId: T:DrawnUi.Draw.SkiaHotspot
   parent: DrawnUi.Draw
@@ -1142,34 +1094,6 @@ references:
   name: SkiaSvg
   nameWithType: SkiaSvg
   fullName: DrawnUi.Draw.SkiaSvg
-- uid: DrawnUi.Draw.ApplySpan
-  commentId: T:DrawnUi.Draw.ApplySpan
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.ApplySpan.html
-  name: ApplySpan
-  nameWithType: ApplySpan
-  fullName: DrawnUi.Draw.ApplySpan
-- uid: DrawnUi.Draw.IDrawnTextSpan
-  commentId: T:DrawnUi.Draw.IDrawnTextSpan
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.IDrawnTextSpan.html
-  name: IDrawnTextSpan
-  nameWithType: IDrawnTextSpan
-  fullName: DrawnUi.Draw.IDrawnTextSpan
-- uid: DrawnUi.Draw.LineGlyph
-  commentId: T:DrawnUi.Draw.LineGlyph
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.LineGlyph.html
-  name: LineGlyph
-  nameWithType: LineGlyph
-  fullName: DrawnUi.Draw.LineGlyph
-- uid: DrawnUi.Draw.LineSpan
-  commentId: T:DrawnUi.Draw.LineSpan
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.LineSpan.html
-  name: LineSpan
-  nameWithType: LineSpan
-  fullName: DrawnUi.Draw.LineSpan
 - uid: DrawnUi.Draw.SkiaLabel
   commentId: T:DrawnUi.Draw.SkiaLabel
   parent: DrawnUi.Draw
@@ -1222,51 +1146,6 @@ references:
   - uid: DrawnUi.Draw.SkiaLabel.EmojiData
     name: EmojiData
     href: DrawnUi.Draw.SkiaLabel.EmojiData.html
-- uid: DrawnUi.Draw.SkiaLabel.TextMetrics
-  commentId: T:DrawnUi.Draw.SkiaLabel.TextMetrics
-  href: DrawnUi.Draw.SkiaLabel.html
-  name: SkiaLabel.TextMetrics
-  nameWithType: SkiaLabel.TextMetrics
-  fullName: DrawnUi.Draw.SkiaLabel.TextMetrics
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaLabel
-    name: SkiaLabel
-    href: DrawnUi.Draw.SkiaLabel.html
-  - name: .
-  - uid: DrawnUi.Draw.SkiaLabel.TextMetrics
-    name: TextMetrics
-    href: DrawnUi.Draw.SkiaLabel.TextMetrics.html
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaLabel
-    name: SkiaLabel
-    href: DrawnUi.Draw.SkiaLabel.html
-  - name: .
-  - uid: DrawnUi.Draw.SkiaLabel.TextMetrics
-    name: TextMetrics
-    href: DrawnUi.Draw.SkiaLabel.TextMetrics.html
-- uid: DrawnUi.Draw.SkiaLabel.DecomposedText
-  commentId: T:DrawnUi.Draw.SkiaLabel.DecomposedText
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.SkiaLabel.html
-  name: SkiaLabel.DecomposedText
-  nameWithType: SkiaLabel.DecomposedText
-  fullName: DrawnUi.Draw.SkiaLabel.DecomposedText
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaLabel
-    name: SkiaLabel
-    href: DrawnUi.Draw.SkiaLabel.html
-  - name: .
-  - uid: DrawnUi.Draw.SkiaLabel.DecomposedText
-    name: DecomposedText
-    href: DrawnUi.Draw.SkiaLabel.DecomposedText.html
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaLabel
-    name: SkiaLabel
-    href: DrawnUi.Draw.SkiaLabel.html
-  - name: .
-  - uid: DrawnUi.Draw.SkiaLabel.DecomposedText
-    name: DecomposedText
-    href: DrawnUi.Draw.SkiaLabel.DecomposedText.html
 - uid: DrawnUi.Draw.SkiaLabel.ObjectPools
   commentId: T:DrawnUi.Draw.SkiaLabel.ObjectPools
   href: DrawnUi.Draw.SkiaLabel.html
@@ -1334,25 +1213,57 @@ references:
   - uid: DrawnUi.Draw.SkiaLabel.SpanMeasurement
     name: SpanMeasurement
     href: DrawnUi.Draw.SkiaLabel.SpanMeasurement.html
-- uid: DrawnUi.Draw.StringReference
-  commentId: T:DrawnUi.Draw.StringReference
-  href: DrawnUi.Draw.StringReference.html
-  name: StringReference
-  nameWithType: StringReference
-  fullName: DrawnUi.Draw.StringReference
+- uid: DrawnUi.Draw.SkiaLabel.TextMetrics
+  commentId: T:DrawnUi.Draw.SkiaLabel.TextMetrics
+  href: DrawnUi.Draw.SkiaLabel.html
+  name: SkiaLabel.TextMetrics
+  nameWithType: SkiaLabel.TextMetrics
+  fullName: DrawnUi.Draw.SkiaLabel.TextMetrics
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLabel
+    name: SkiaLabel
+    href: DrawnUi.Draw.SkiaLabel.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLabel.TextMetrics
+    name: TextMetrics
+    href: DrawnUi.Draw.SkiaLabel.TextMetrics.html
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLabel
+    name: SkiaLabel
+    href: DrawnUi.Draw.SkiaLabel.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLabel.TextMetrics
+    name: TextMetrics
+    href: DrawnUi.Draw.SkiaLabel.TextMetrics.html
+- uid: DrawnUi.Draw.SkiaLabel.DecomposedText
+  commentId: T:DrawnUi.Draw.SkiaLabel.DecomposedText
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaLabel.html
+  name: SkiaLabel.DecomposedText
+  nameWithType: SkiaLabel.DecomposedText
+  fullName: DrawnUi.Draw.SkiaLabel.DecomposedText
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLabel
+    name: SkiaLabel
+    href: DrawnUi.Draw.SkiaLabel.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLabel.DecomposedText
+    name: DecomposedText
+    href: DrawnUi.Draw.SkiaLabel.DecomposedText.html
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLabel
+    name: SkiaLabel
+    href: DrawnUi.Draw.SkiaLabel.html
+  - name: .
+  - uid: DrawnUi.Draw.SkiaLabel.DecomposedText
+    name: DecomposedText
+    href: DrawnUi.Draw.SkiaLabel.DecomposedText.html
 - uid: DrawnUi.Draw.SvgSpan
   commentId: T:DrawnUi.Draw.SvgSpan
   href: DrawnUi.Draw.SvgSpan.html
   name: SvgSpan
   nameWithType: SvgSpan
   fullName: DrawnUi.Draw.SvgSpan
-- uid: DrawnUi.Draw.TextLine
-  commentId: T:DrawnUi.Draw.TextLine
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.TextLine.html
-  name: TextLine
-  nameWithType: TextLine
-  fullName: DrawnUi.Draw.TextLine
 - uid: DrawnUi.Draw.TextSpan
   commentId: T:DrawnUi.Draw.TextSpan
   parent: DrawnUi.Draw
@@ -1360,125 +1271,24 @@ references:
   name: TextSpan
   nameWithType: TextSpan
   fullName: DrawnUi.Draw.TextSpan
-- uid: DrawnUi.Draw.UsedGlyph
-  commentId: T:DrawnUi.Draw.UsedGlyph
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.UsedGlyph.html
-  name: UsedGlyph
-  nameWithType: UsedGlyph
-  fullName: DrawnUi.Draw.UsedGlyph
 - uid: DrawnUi.Draw.DebugImage
   commentId: T:DrawnUi.Draw.DebugImage
   href: DrawnUi.Draw.DebugImage.html
   name: DebugImage
   nameWithType: DebugImage
   fullName: DrawnUi.Draw.DebugImage
-- uid: DrawnUi.Draw.AdjustRGBEffect
-  commentId: T:DrawnUi.Draw.AdjustRGBEffect
-  href: DrawnUi.Draw.AdjustRGBEffect.html
-  name: AdjustRGBEffect
-  nameWithType: AdjustRGBEffect
-  fullName: DrawnUi.Draw.AdjustRGBEffect
-- uid: DrawnUi.Draw.ChainAdjustRGBEffect
-  commentId: T:DrawnUi.Draw.ChainAdjustRGBEffect
-  href: DrawnUi.Draw.ChainAdjustRGBEffect.html
-  name: ChainAdjustRGBEffect
-  nameWithType: ChainAdjustRGBEffect
-  fullName: DrawnUi.Draw.ChainAdjustRGBEffect
-- uid: DrawnUi.Draw.BaseColorFilterEffect
-  commentId: T:DrawnUi.Draw.BaseColorFilterEffect
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.BaseColorFilterEffect.html
-  name: BaseColorFilterEffect
-  nameWithType: BaseColorFilterEffect
-  fullName: DrawnUi.Draw.BaseColorFilterEffect
-- uid: DrawnUi.Draw.BaseImageFilterEffect
-  commentId: T:DrawnUi.Draw.BaseImageFilterEffect
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.BaseImageFilterEffect.html
-  name: BaseImageFilterEffect
-  nameWithType: BaseImageFilterEffect
-  fullName: DrawnUi.Draw.BaseImageFilterEffect
-- uid: DrawnUi.Draw.BaseChainedEffect
-  commentId: T:DrawnUi.Draw.BaseChainedEffect
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.BaseChainedEffect.html
-  name: BaseChainedEffect
-  nameWithType: BaseChainedEffect
-  fullName: DrawnUi.Draw.BaseChainedEffect
-- uid: DrawnUi.Draw.BlurEffect
-  commentId: T:DrawnUi.Draw.BlurEffect
-  href: DrawnUi.Draw.BlurEffect.html
-  name: BlurEffect
-  nameWithType: BlurEffect
-  fullName: DrawnUi.Draw.BlurEffect
-- uid: DrawnUi.Draw.ChainAdjustBrightnessEffect
-  commentId: T:DrawnUi.Draw.ChainAdjustBrightnessEffect
-  href: DrawnUi.Draw.ChainAdjustBrightnessEffect.html
-  name: ChainAdjustBrightnessEffect
-  nameWithType: ChainAdjustBrightnessEffect
-  fullName: DrawnUi.Draw.ChainAdjustBrightnessEffect
-- uid: DrawnUi.Draw.ChainAdjustContrastEffect
-  commentId: T:DrawnUi.Draw.ChainAdjustContrastEffect
-  href: DrawnUi.Draw.ChainAdjustContrastEffect.html
-  name: ChainAdjustContrastEffect
-  nameWithType: ChainAdjustContrastEffect
-  fullName: DrawnUi.Draw.ChainAdjustContrastEffect
-- uid: DrawnUi.Draw.AdjustBrightnessEffect
-  commentId: T:DrawnUi.Draw.AdjustBrightnessEffect
-  href: DrawnUi.Draw.AdjustBrightnessEffect.html
-  name: AdjustBrightnessEffect
-  nameWithType: AdjustBrightnessEffect
-  fullName: DrawnUi.Draw.AdjustBrightnessEffect
-- uid: DrawnUi.Draw.ChainAdjustLightnessEffect
-  commentId: T:DrawnUi.Draw.ChainAdjustLightnessEffect
-  href: DrawnUi.Draw.ChainAdjustLightnessEffect.html
-  name: ChainAdjustLightnessEffect
-  nameWithType: ChainAdjustLightnessEffect
-  fullName: DrawnUi.Draw.ChainAdjustLightnessEffect
-- uid: DrawnUi.Draw.ChainColorPresetEffect
-  commentId: T:DrawnUi.Draw.ChainColorPresetEffect
-  href: DrawnUi.Draw.ChainColorPresetEffect.html
-  name: ChainColorPresetEffect
-  nameWithType: ChainColorPresetEffect
-  fullName: DrawnUi.Draw.ChainColorPresetEffect
 - uid: DrawnUi.Draw.ChainDropShadowsEffect
   commentId: T:DrawnUi.Draw.ChainDropShadowsEffect
   href: DrawnUi.Draw.ChainDropShadowsEffect.html
   name: ChainDropShadowsEffect
   nameWithType: ChainDropShadowsEffect
   fullName: DrawnUi.Draw.ChainDropShadowsEffect
-- uid: DrawnUi.Draw.ChainEffectResult
-  commentId: T:DrawnUi.Draw.ChainEffectResult
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.ChainEffectResult.html
-  name: ChainEffectResult
-  nameWithType: ChainEffectResult
-  fullName: DrawnUi.Draw.ChainEffectResult
-- uid: DrawnUi.Draw.ChainSaturationEffect
-  commentId: T:DrawnUi.Draw.ChainSaturationEffect
-  href: DrawnUi.Draw.ChainSaturationEffect.html
-  name: ChainSaturationEffect
-  nameWithType: ChainSaturationEffect
-  fullName: DrawnUi.Draw.ChainSaturationEffect
 - uid: DrawnUi.Draw.ChainTintWithAlphaEffect
   commentId: T:DrawnUi.Draw.ChainTintWithAlphaEffect
   href: DrawnUi.Draw.ChainTintWithAlphaEffect.html
   name: ChainTintWithAlphaEffect
   nameWithType: ChainTintWithAlphaEffect
   fullName: DrawnUi.Draw.ChainTintWithAlphaEffect
-- uid: DrawnUi.Draw.ColorPresetEffect
-  commentId: T:DrawnUi.Draw.ColorPresetEffect
-  href: DrawnUi.Draw.ColorPresetEffect.html
-  name: ColorPresetEffect
-  nameWithType: ColorPresetEffect
-  fullName: DrawnUi.Draw.ColorPresetEffect
-- uid: DrawnUi.Draw.ContrastEffect
-  commentId: T:DrawnUi.Draw.ContrastEffect
-  href: DrawnUi.Draw.ContrastEffect.html
-  name: ContrastEffect
-  nameWithType: ContrastEffect
-  fullName: DrawnUi.Draw.ContrastEffect
 - uid: DrawnUi.Draw.DropShadowEffect
   commentId: T:DrawnUi.Draw.DropShadowEffect
   parent: DrawnUi.Draw
@@ -1492,24 +1302,12 @@ references:
   name: OuterGlowEffect
   nameWithType: OuterGlowEffect
   fullName: DrawnUi.Draw.OuterGlowEffect
-- uid: DrawnUi.Draw.SaturationEffect
-  commentId: T:DrawnUi.Draw.SaturationEffect
-  href: DrawnUi.Draw.SaturationEffect.html
-  name: SaturationEffect
-  nameWithType: SaturationEffect
-  fullName: DrawnUi.Draw.SaturationEffect
 - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
   commentId: T:DrawnUi.Draw.ShaderDoubleTexturesEffect
   href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
   name: ShaderDoubleTexturesEffect
   nameWithType: ShaderDoubleTexturesEffect
   fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect
-- uid: DrawnUi.Draw.SkiaDoubleAttachedTexturesEffect
-  commentId: T:DrawnUi.Draw.SkiaDoubleAttachedTexturesEffect
-  href: DrawnUi.Draw.SkiaDoubleAttachedTexturesEffect.html
-  name: SkiaDoubleAttachedTexturesEffect
-  nameWithType: SkiaDoubleAttachedTexturesEffect
-  fullName: DrawnUi.Draw.SkiaDoubleAttachedTexturesEffect
 - uid: DrawnUi.Draw.TintEffect
   commentId: T:DrawnUi.Draw.TintEffect
   href: DrawnUi.Draw.TintEffect.html
@@ -1565,53 +1363,6 @@ references:
   - uid: DrawnUi.Draw.AddGestures.GestureListener
     name: GestureListener
     href: DrawnUi.Draw.AddGestures.GestureListener.html
-- uid: DrawnUi.Draw.GesturesMode
-  commentId: T:DrawnUi.Draw.GesturesMode
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.GesturesMode.html
-  name: GesturesMode
-  nameWithType: GesturesMode
-  fullName: DrawnUi.Draw.GesturesMode
-- uid: DrawnUi.Draw.SkiaGesturesInfo
-  commentId: T:DrawnUi.Draw.SkiaGesturesInfo
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.SkiaGesturesInfo.html
-  name: SkiaGesturesInfo
-  nameWithType: SkiaGesturesInfo
-  fullName: DrawnUi.Draw.SkiaGesturesInfo
-- uid: DrawnUi.Draw.SkiaGesturesParameters
-  commentId: T:DrawnUi.Draw.SkiaGesturesParameters
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.SkiaGesturesParameters.html
-  name: SkiaGesturesParameters
-  nameWithType: SkiaGesturesParameters
-  fullName: DrawnUi.Draw.SkiaGesturesParameters
-- uid: DrawnUi.Draw.GestureEventProcessingInfo
-  commentId: T:DrawnUi.Draw.GestureEventProcessingInfo
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.GestureEventProcessingInfo.html
-  name: GestureEventProcessingInfo
-  nameWithType: GestureEventProcessingInfo
-  fullName: DrawnUi.Draw.GestureEventProcessingInfo
-- uid: DrawnUi.Draw.ZoomEventArgs
-  commentId: T:DrawnUi.Draw.ZoomEventArgs
-  href: DrawnUi.Draw.ZoomEventArgs.html
-  name: ZoomEventArgs
-  nameWithType: ZoomEventArgs
-  fullName: DrawnUi.Draw.ZoomEventArgs
-- uid: DrawnUi.Draw.IHasBanner
-  commentId: T:DrawnUi.Draw.IHasBanner
-  href: DrawnUi.Draw.IHasBanner.html
-  name: IHasBanner
-  nameWithType: IHasBanner
-  fullName: DrawnUi.Draw.IHasBanner
-- uid: DrawnUi.Draw.LoadPriority
-  commentId: T:DrawnUi.Draw.LoadPriority
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.LoadPriority.html
-  name: LoadPriority
-  nameWithType: LoadPriority
-  fullName: DrawnUi.Draw.LoadPriority
 - uid: DrawnUi.Draw.SkiaImageManager
   commentId: T:DrawnUi.Draw.SkiaImageManager
   parent: DrawnUi.Draw
@@ -2523,6 +2274,7 @@ references:
   fullName: DrawnUi.Draw.SkiaGradient
 - uid: DrawnUi.Draw.SkiaPoint
   commentId: T:DrawnUi.Draw.SkiaPoint
+  parent: DrawnUi.Draw
   href: DrawnUi.Draw.SkiaPoint.html
   name: SkiaPoint
   nameWithType: SkiaPoint
@@ -2946,6 +2698,255 @@ references:
   - name: " "
   - name: T
   - name: )
+- uid: DrawnUi.Draw.PrebuiltControlStyle
+  commentId: T:DrawnUi.Draw.PrebuiltControlStyle
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.PrebuiltControlStyle.html
+  name: PrebuiltControlStyle
+  nameWithType: PrebuiltControlStyle
+  fullName: DrawnUi.Draw.PrebuiltControlStyle
+- uid: DrawnUi.Draw.GesturesMode
+  commentId: T:DrawnUi.Draw.GesturesMode
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.GesturesMode.html
+  name: GesturesMode
+  nameWithType: GesturesMode
+  fullName: DrawnUi.Draw.GesturesMode
+- uid: DrawnUi.Draw.LoadPriority
+  commentId: T:DrawnUi.Draw.LoadPriority
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.LoadPriority.html
+  name: LoadPriority
+  nameWithType: LoadPriority
+  fullName: DrawnUi.Draw.LoadPriority
+- uid: DrawnUi.Draw.IHasBanner
+  commentId: T:DrawnUi.Draw.IHasBanner
+  href: DrawnUi.Draw.IHasBanner.html
+  name: IHasBanner
+  nameWithType: IHasBanner
+  fullName: DrawnUi.Draw.IHasBanner
+- uid: DrawnUi.Draw.UsedGlyph
+  commentId: T:DrawnUi.Draw.UsedGlyph
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.UsedGlyph.html
+  name: UsedGlyph
+  nameWithType: UsedGlyph
+  fullName: DrawnUi.Draw.UsedGlyph
+- uid: DrawnUi.Draw.LineGlyph
+  commentId: T:DrawnUi.Draw.LineGlyph
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.LineGlyph.html
+  name: LineGlyph
+  nameWithType: LineGlyph
+  fullName: DrawnUi.Draw.LineGlyph
+- uid: DrawnUi.Draw.StringReference
+  commentId: T:DrawnUi.Draw.StringReference
+  href: DrawnUi.Draw.StringReference.html
+  name: StringReference
+  nameWithType: StringReference
+  fullName: DrawnUi.Draw.StringReference
+- uid: DrawnUi.Draw.IDrawnTextSpan
+  commentId: T:DrawnUi.Draw.IDrawnTextSpan
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.IDrawnTextSpan.html
+  name: IDrawnTextSpan
+  nameWithType: IDrawnTextSpan
+  fullName: DrawnUi.Draw.IDrawnTextSpan
+- uid: DrawnUi.Draw.ApplySpan
+  commentId: T:DrawnUi.Draw.ApplySpan
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ApplySpan.html
+  name: ApplySpan
+  nameWithType: ApplySpan
+  fullName: DrawnUi.Draw.ApplySpan
+- uid: DrawnUi.Draw.LineSpan
+  commentId: T:DrawnUi.Draw.LineSpan
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.LineSpan.html
+  name: LineSpan
+  nameWithType: LineSpan
+  fullName: DrawnUi.Draw.LineSpan
+- uid: DrawnUi.Draw.TextLine
+  commentId: T:DrawnUi.Draw.TextLine
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.TextLine.html
+  name: TextLine
+  nameWithType: TextLine
+  fullName: DrawnUi.Draw.TextLine
+- uid: DrawnUi.Draw.LayoutStructure
+  commentId: T:DrawnUi.Draw.LayoutStructure
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.LayoutStructure.html
+  name: LayoutStructure
+  nameWithType: LayoutStructure
+  fullName: DrawnUi.Draw.LayoutStructure
+- uid: DrawnUi.Draw.ScrollToIndexOrder
+  commentId: T:DrawnUi.Draw.ScrollToIndexOrder
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ScrollToIndexOrder.html
+  name: ScrollToIndexOrder
+  nameWithType: ScrollToIndexOrder
+  fullName: DrawnUi.Draw.ScrollToIndexOrder
+- uid: DrawnUi.Draw.VelocityAccumulator
+  commentId: T:DrawnUi.Draw.VelocityAccumulator
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.VelocityAccumulator.html
+  name: VelocityAccumulator
+  nameWithType: VelocityAccumulator
+  fullName: DrawnUi.Draw.VelocityAccumulator
+- uid: DrawnUi.Draw.ScrollToPointOrder
+  commentId: T:DrawnUi.Draw.ScrollToPointOrder
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ScrollToPointOrder.html
+  name: ScrollToPointOrder
+  nameWithType: ScrollToPointOrder
+  fullName: DrawnUi.Draw.ScrollToPointOrder
+- uid: DrawnUi.Draw.SkiaGesturesInfo
+  commentId: T:DrawnUi.Draw.SkiaGesturesInfo
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaGesturesInfo.html
+  name: SkiaGesturesInfo
+  nameWithType: SkiaGesturesInfo
+  fullName: DrawnUi.Draw.SkiaGesturesInfo
+- uid: DrawnUi.Draw.SkiaGesturesParameters
+  commentId: T:DrawnUi.Draw.SkiaGesturesParameters
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaGesturesParameters.html
+  name: SkiaGesturesParameters
+  nameWithType: SkiaGesturesParameters
+  fullName: DrawnUi.Draw.SkiaGesturesParameters
+- uid: DrawnUi.Draw.GestureEventProcessingInfo
+  commentId: T:DrawnUi.Draw.GestureEventProcessingInfo
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  name: GestureEventProcessingInfo
+  nameWithType: GestureEventProcessingInfo
+  fullName: DrawnUi.Draw.GestureEventProcessingInfo
+- uid: DrawnUi.Draw.ZoomEventArgs
+  commentId: T:DrawnUi.Draw.ZoomEventArgs
+  href: DrawnUi.Draw.ZoomEventArgs.html
+  name: ZoomEventArgs
+  nameWithType: ZoomEventArgs
+  fullName: DrawnUi.Draw.ZoomEventArgs
+- uid: DrawnUi.Draw.BaseColorFilterEffect
+  commentId: T:DrawnUi.Draw.BaseColorFilterEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.BaseColorFilterEffect.html
+  name: BaseColorFilterEffect
+  nameWithType: BaseColorFilterEffect
+  fullName: DrawnUi.Draw.BaseColorFilterEffect
+- uid: DrawnUi.Draw.BaseImageFilterEffect
+  commentId: T:DrawnUi.Draw.BaseImageFilterEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.BaseImageFilterEffect.html
+  name: BaseImageFilterEffect
+  nameWithType: BaseImageFilterEffect
+  fullName: DrawnUi.Draw.BaseImageFilterEffect
+- uid: DrawnUi.Draw.BaseChainedEffect
+  commentId: T:DrawnUi.Draw.BaseChainedEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.BaseChainedEffect.html
+  name: BaseChainedEffect
+  nameWithType: BaseChainedEffect
+  fullName: DrawnUi.Draw.BaseChainedEffect
+- uid: DrawnUi.Draw.ChainEffectResult
+  commentId: T:DrawnUi.Draw.ChainEffectResult
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ChainEffectResult.html
+  name: ChainEffectResult
+  nameWithType: ChainEffectResult
+  fullName: DrawnUi.Draw.ChainEffectResult
+- uid: DrawnUi.Draw.SkiaDoubleAttachedTexturesEffect
+  commentId: T:DrawnUi.Draw.SkiaDoubleAttachedTexturesEffect
+  href: DrawnUi.Draw.SkiaDoubleAttachedTexturesEffect.html
+  name: SkiaDoubleAttachedTexturesEffect
+  nameWithType: SkiaDoubleAttachedTexturesEffect
+  fullName: DrawnUi.Draw.SkiaDoubleAttachedTexturesEffect
+- uid: DrawnUi.Draw.BlurEffect
+  commentId: T:DrawnUi.Draw.BlurEffect
+  href: DrawnUi.Draw.BlurEffect.html
+  name: BlurEffect
+  nameWithType: BlurEffect
+  fullName: DrawnUi.Draw.BlurEffect
+- uid: DrawnUi.Draw.SaturationEffect
+  commentId: T:DrawnUi.Draw.SaturationEffect
+  href: DrawnUi.Draw.SaturationEffect.html
+  name: SaturationEffect
+  nameWithType: SaturationEffect
+  fullName: DrawnUi.Draw.SaturationEffect
+- uid: DrawnUi.Draw.ContrastEffect
+  commentId: T:DrawnUi.Draw.ContrastEffect
+  href: DrawnUi.Draw.ContrastEffect.html
+  name: ContrastEffect
+  nameWithType: ContrastEffect
+  fullName: DrawnUi.Draw.ContrastEffect
+- uid: DrawnUi.Draw.ColorPresetEffect
+  commentId: T:DrawnUi.Draw.ColorPresetEffect
+  href: DrawnUi.Draw.ColorPresetEffect.html
+  name: ColorPresetEffect
+  nameWithType: ColorPresetEffect
+  fullName: DrawnUi.Draw.ColorPresetEffect
+- uid: DrawnUi.Draw.AdjustRGBEffect
+  commentId: T:DrawnUi.Draw.AdjustRGBEffect
+  href: DrawnUi.Draw.AdjustRGBEffect.html
+  name: AdjustRGBEffect
+  nameWithType: AdjustRGBEffect
+  fullName: DrawnUi.Draw.AdjustRGBEffect
+- uid: DrawnUi.Draw.ChainAdjustRGBEffect
+  commentId: T:DrawnUi.Draw.ChainAdjustRGBEffect
+  href: DrawnUi.Draw.ChainAdjustRGBEffect.html
+  name: ChainAdjustRGBEffect
+  nameWithType: ChainAdjustRGBEffect
+  fullName: DrawnUi.Draw.ChainAdjustRGBEffect
+- uid: DrawnUi.Draw.ChainAdjustBrightnessEffect
+  commentId: T:DrawnUi.Draw.ChainAdjustBrightnessEffect
+  href: DrawnUi.Draw.ChainAdjustBrightnessEffect.html
+  name: ChainAdjustBrightnessEffect
+  nameWithType: ChainAdjustBrightnessEffect
+  fullName: DrawnUi.Draw.ChainAdjustBrightnessEffect
+- uid: DrawnUi.Draw.ChainAdjustContrastEffect
+  commentId: T:DrawnUi.Draw.ChainAdjustContrastEffect
+  href: DrawnUi.Draw.ChainAdjustContrastEffect.html
+  name: ChainAdjustContrastEffect
+  nameWithType: ChainAdjustContrastEffect
+  fullName: DrawnUi.Draw.ChainAdjustContrastEffect
+- uid: DrawnUi.Draw.AdjustBrightnessEffect
+  commentId: T:DrawnUi.Draw.AdjustBrightnessEffect
+  href: DrawnUi.Draw.AdjustBrightnessEffect.html
+  name: AdjustBrightnessEffect
+  nameWithType: AdjustBrightnessEffect
+  fullName: DrawnUi.Draw.AdjustBrightnessEffect
+- uid: DrawnUi.Draw.ChainAdjustLightnessEffect
+  commentId: T:DrawnUi.Draw.ChainAdjustLightnessEffect
+  href: DrawnUi.Draw.ChainAdjustLightnessEffect.html
+  name: ChainAdjustLightnessEffect
+  nameWithType: ChainAdjustLightnessEffect
+  fullName: DrawnUi.Draw.ChainAdjustLightnessEffect
+- uid: DrawnUi.Draw.ChainColorPresetEffect
+  commentId: T:DrawnUi.Draw.ChainColorPresetEffect
+  href: DrawnUi.Draw.ChainColorPresetEffect.html
+  name: ChainColorPresetEffect
+  nameWithType: ChainColorPresetEffect
+  fullName: DrawnUi.Draw.ChainColorPresetEffect
+- uid: DrawnUi.Draw.ChainSaturationEffect
+  commentId: T:DrawnUi.Draw.ChainSaturationEffect
+  href: DrawnUi.Draw.ChainSaturationEffect.html
+  name: ChainSaturationEffect
+  nameWithType: ChainSaturationEffect
+  fullName: DrawnUi.Draw.ChainSaturationEffect
+- uid: DrawnUi.Draw.LoadedImageSource
+  commentId: T:DrawnUi.Draw.LoadedImageSource
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.LoadedImageSource.html
+  name: LoadedImageSource
+  nameWithType: LoadedImageSource
+  fullName: DrawnUi.Draw.LoadedImageSource
+- uid: DrawnUi.Draw.SkiaControlsObservable
+  commentId: T:DrawnUi.Draw.SkiaControlsObservable
+  href: DrawnUi.Draw.SkiaControlsObservable.html
+  name: SkiaControlsObservable
+  nameWithType: SkiaControlsObservable
+  fullName: DrawnUi.Draw.SkiaControlsObservable
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
   href: DrawnUi.html

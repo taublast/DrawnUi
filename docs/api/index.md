@@ -32,9 +32,9 @@ Supporting infrastructure:
 
 ## Getting Started with the API
 
-For practical examples and usage patterns, see the [Articles section](../articles/) which provides:
+For practical examples and usage patterns, see the [Articles section](../articles/index.md) which provides:
 - [Getting Started Guide](../articles/getting-started.md)
-- [Control Documentation](../articles/controls/)
+- [Control Documentation](../articles/controls/index.md)
 - [Fluent Extensions](../articles/fluent-extensions.md)
 
 ## Browse the API

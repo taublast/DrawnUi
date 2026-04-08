@@ -22,11 +22,11 @@ items:
   type: Struct
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+      path: src/Shared/Draw/Text/UsedGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UsedGlyph
-    path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+    path: ../src/Shared/Draw/Text/UsedGlyph.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -56,11 +56,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+      path: src/Shared/Draw/Text/UsedGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Id
-    path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+    path: ../src/Shared/Draw/Text/UsedGlyph.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -85,11 +85,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+      path: src/Shared/Draw/Text/UsedGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
-    path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+    path: ../src/Shared/Draw/Text/UsedGlyph.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -114,11 +114,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+      path: src/Shared/Draw/Text/UsedGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Symbol
-    path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+    path: ../src/Shared/Draw/Text/UsedGlyph.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -143,11 +143,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+      path: src/Shared/Draw/Text/UsedGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsAvailable
-    path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+    path: ../src/Shared/Draw/Text/UsedGlyph.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -172,11 +172,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+      path: src/Shared/Draw/Text/UsedGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StartIndex
-    path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+    path: ../src/Shared/Draw/Text/UsedGlyph.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui
@@ -203,11 +203,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+      path: src/Shared/Draw/Text/UsedGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Length
-    path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+    path: ../src/Shared/Draw/Text/UsedGlyph.cs
     startLine: 20
   assemblies:
   - DrawnUi.Maui
@@ -234,11 +234,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+      path: src/Shared/Draw/Text/UsedGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsNumber
-    path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+    path: ../src/Shared/Draw/Text/UsedGlyph.cs
     startLine: 22
   assemblies:
   - DrawnUi.Maui
@@ -262,11 +262,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+      path: src/Shared/Draw/Text/UsedGlyph.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetGlyphText
-    path: ../src/Maui/DrawnUi/Draw/Text/UsedGlyph.cs
+    path: ../src/Shared/Draw/Text/UsedGlyph.cs
     startLine: 28
   assemblies:
   - DrawnUi.Maui

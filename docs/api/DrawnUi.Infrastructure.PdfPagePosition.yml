@@ -17,11 +17,11 @@ items:
   type: Struct
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+      path: src/Shared/Features/Pdf/Pdf.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PdfPagePosition
-    path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+    path: ../src/Shared/Features/Pdf/Pdf.cs
     startLine: 16
   assemblies:
   - DrawnUi.Maui
@@ -51,11 +51,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+      path: src/Shared/Features/Pdf/Pdf.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Index
-    path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+    path: ../src/Shared/Features/Pdf/Pdf.cs
     startLine: 21
   assemblies:
   - DrawnUi.Maui
@@ -82,11 +82,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+      path: src/Shared/Features/Pdf/Pdf.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Position
-    path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+    path: ../src/Shared/Features/Pdf/Pdf.cs
     startLine: 26
   assemblies:
   - DrawnUi.Maui
@@ -113,11 +113,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+      path: src/Shared/Features/Pdf/Pdf.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Height
-    path: ../src/Maui/DrawnUi/Features/Pdf/Pdf.cs
+    path: ../src/Shared/Features/Pdf/Pdf.cs
     startLine: 31
   assemblies:
   - DrawnUi.Maui

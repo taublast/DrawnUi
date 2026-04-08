@@ -46,8 +46,8 @@ items:
       fx.Play(_backgroundImage);
   example: []
   syntax:
-    content: 'public class AnimatedShaderEffect : SkiaShaderEffect, INotifyPropertyChanged, IDisposable, IPostRendererEffect, ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated'
-    content.vb: Public Class AnimatedShaderEffect Inherits SkiaShaderEffect Implements INotifyPropertyChanged, IDisposable, IPostRendererEffect, ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated
+    content: 'public class AnimatedShaderEffect : SkiaShaderEffect, INotifyPropertyChanged, IDisposable, IPostRendererEffect, ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated, IComparable, IComparable<SkiaShaderEffect>, IEquatable<SkiaShaderEffect>'
+    content.vb: Public Class AnimatedShaderEffect Inherits SkiaShaderEffect Implements INotifyPropertyChanged, IDisposable, IPostRendererEffect, ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated, IComparable, IComparable(Of SkiaShaderEffect), IEquatable(Of SkiaShaderEffect)
   inheritance:
   - System.Object
   - Microsoft.Maui.Controls.BindableObject
@@ -60,8 +60,19 @@ items:
   - DrawnUi.Draw.ISkiaEffect
   - DrawnUi.Draw.ICanBeUpdatedWithContext
   - DrawnUi.Draw.ICanBeUpdated
+  - System.IComparable
+  - System.IComparable{DrawnUi.Draw.SkiaShaderEffect}
+  - System.IEquatable{DrawnUi.Draw.SkiaShaderEffect}
   inheritedMembers:
-  - DrawnUi.Draw.SkiaShaderEffect.PaintWithShader
+  - DrawnUi.Draw.SkiaShaderEffect.Engine
+  - DrawnUi.Draw.SkiaShaderEffect.CompiledShader
+  - DrawnUi.Draw.SkiaShaderEffect.CreateEngine
+  - DrawnUi.Draw.SkiaShaderEffect.GetEngine
+  - DrawnUi.Draw.SkiaShaderEffect.CompareTo(System.Object)
+  - DrawnUi.Draw.SkiaShaderEffect.CompareTo(DrawnUi.Draw.SkiaShaderEffect)
+  - DrawnUi.Draw.SkiaShaderEffect.Equals(DrawnUi.Draw.SkiaShaderEffect)
+  - DrawnUi.Draw.SkiaShaderEffect.Equals(System.Object)
+  - DrawnUi.Draw.SkiaShaderEffect.GetHashCode
   - DrawnUi.Draw.SkiaShaderEffect.UseBackground
   - DrawnUi.Draw.SkiaShaderEffect.AquiredBackground
   - DrawnUi.Draw.SkiaShaderEffect.ReleaseFrozenSnapshot
@@ -73,12 +84,10 @@ items:
   - DrawnUi.Draw.SkiaShaderEffect.Flush(DrawnUi.Draw.SkiaDrawingContext)
   - DrawnUi.Draw.SkiaShaderEffect.CreateSnapshot(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
   - DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTextureImage(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect)
   - DrawnUi.Draw.SkiaShaderEffect.Render(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(SkiaSharp.SKImage)
   - DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage)
-  - DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
-  - DrawnUi.Draw.SkiaShaderEffect._uniformImageResolution
-  - DrawnUi.Draw.SkiaShaderEffect.CompiledShader
   - DrawnUi.Draw.SkiaShaderEffect.NeedApply
   - DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
   - DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
@@ -86,12 +95,11 @@ items:
   - DrawnUi.Draw.SkiaShaderEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
   - DrawnUi.Draw.SkiaShaderEffect._template
   - DrawnUi.Draw.SkiaShaderEffect._templatePlacehodler
+  - DrawnUi.Draw.SkiaShaderEffect.LoadedCode
   - DrawnUi.Draw.SkiaShaderEffect.CompileShader
   - DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
   - DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
-  - DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
   - DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
-  - DrawnUi.Draw.SkiaShaderEffect.LoadedCode
   - DrawnUi.Draw.SkiaShaderEffect.ApplyShaderSource
   - DrawnUi.Draw.SkiaShaderEffect.NeedChangeSource(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
   - DrawnUi.Draw.SkiaShaderEffect.ShaderCodeProperty
@@ -133,9 +141,7 @@ items:
   - Microsoft.Maui.Controls.BindableObject.PropertyChanged
   - Microsoft.Maui.Controls.BindableObject.PropertyChanging
   - Microsoft.Maui.Controls.BindableObject.BindingContextChanged
-  - System.Object.Equals(System.Object)
   - System.Object.Equals(System.Object,System.Object)
-  - System.Object.GetHashCode
   - System.Object.GetType
   - System.Object.MemberwiseClone
   - System.Object.ReferenceEquals(System.Object,System.Object)
@@ -338,7 +344,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Play
     path: ../src/Shared/Features/Effects/AnimatedShaderEffect.cs
-    startLine: 44
+    startLine: 47
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -369,7 +375,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
     path: ../src/Shared/Features/Effects/AnimatedShaderEffect.cs
-    startLine: 85
+    startLine: 88
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -397,11 +403,11 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateUniforms
     path: ../src/Shared/Features/Effects/AnimatedShaderEffect.cs
-    startLine: 90
+    startLine: 93
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
-  summary: Creates uniforms fresh each time
+  summary: Creates standard uniforms via engine. Override to add custom uniforms.
   example: []
   syntax:
     content: protected override SKRuntimeEffectUniforms CreateUniforms(SKRect destination)
@@ -431,11 +437,10 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Shared/Features/Effects/AnimatedShaderEffect.cs
-    startLine: 99
+    startLine: 105
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
-  summary: Simplified dispose - only CPU-side resources
   example: []
   syntax:
     content: protected override void OnDisposing()
@@ -542,13 +547,263 @@ references:
   name: ICanBeUpdated
   nameWithType: ICanBeUpdated
   fullName: DrawnUi.Draw.ICanBeUpdated
-- uid: DrawnUi.Draw.SkiaShaderEffect.PaintWithShader
-  commentId: F:DrawnUi.Draw.SkiaShaderEffect.PaintWithShader
+- uid: System.IComparable
+  commentId: T:System.IComparable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable
+  name: IComparable
+  nameWithType: IComparable
+  fullName: System.IComparable
+- uid: System.IComparable{DrawnUi.Draw.SkiaShaderEffect}
+  commentId: T:System.IComparable{DrawnUi.Draw.SkiaShaderEffect}
+  parent: System
+  definition: System.IComparable`1
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  name: IComparable<SkiaShaderEffect>
+  nameWithType: IComparable<SkiaShaderEffect>
+  fullName: System.IComparable<DrawnUi.Draw.SkiaShaderEffect>
+  nameWithType.vb: IComparable(Of SkiaShaderEffect)
+  fullName.vb: System.IComparable(Of DrawnUi.Draw.SkiaShaderEffect)
+  name.vb: IComparable(Of SkiaShaderEffect)
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaShaderEffect
+    name: SkiaShaderEffect
+    href: DrawnUi.Draw.SkiaShaderEffect.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaShaderEffect
+    name: SkiaShaderEffect
+    href: DrawnUi.Draw.SkiaShaderEffect.html
+  - name: )
+- uid: System.IEquatable{DrawnUi.Draw.SkiaShaderEffect}
+  commentId: T:System.IEquatable{DrawnUi.Draw.SkiaShaderEffect}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<SkiaShaderEffect>
+  nameWithType: IEquatable<SkiaShaderEffect>
+  fullName: System.IEquatable<DrawnUi.Draw.SkiaShaderEffect>
+  nameWithType.vb: IEquatable(Of SkiaShaderEffect)
+  fullName.vb: System.IEquatable(Of DrawnUi.Draw.SkiaShaderEffect)
+  name.vb: IEquatable(Of SkiaShaderEffect)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaShaderEffect
+    name: SkiaShaderEffect
+    href: DrawnUi.Draw.SkiaShaderEffect.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaShaderEffect
+    name: SkiaShaderEffect
+    href: DrawnUi.Draw.SkiaShaderEffect.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.Engine
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.Engine
   parent: DrawnUi.Draw.SkiaShaderEffect
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_PaintWithShader
-  name: PaintWithShader
-  nameWithType: SkiaShaderEffect.PaintWithShader
-  fullName: DrawnUi.Draw.SkiaShaderEffect.PaintWithShader
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Engine
+  name: Engine
+  nameWithType: SkiaShaderEffect.Engine
+  fullName: DrawnUi.Draw.SkiaShaderEffect.Engine
+- uid: DrawnUi.Draw.SkiaShaderEffect.CompiledShader
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.CompiledShader
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompiledShader
+  name: CompiledShader
+  nameWithType: SkiaShaderEffect.CompiledShader
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CompiledShader
+- uid: DrawnUi.Draw.SkiaShaderEffect.CreateEngine
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreateEngine
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateEngine
+  name: CreateEngine()
+  nameWithType: SkiaShaderEffect.CreateEngine()
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CreateEngine()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateEngine
+    name: CreateEngine
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateEngine
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateEngine
+    name: CreateEngine
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateEngine
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.GetEngine
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.GetEngine
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetEngine
+  name: GetEngine()
+  nameWithType: SkiaShaderEffect.GetEngine()
+  fullName: DrawnUi.Draw.SkiaShaderEffect.GetEngine()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.GetEngine
+    name: GetEngine
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetEngine
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.GetEngine
+    name: GetEngine
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetEngine
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.CompareTo(System.Object)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CompareTo(System.Object)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompareTo_System_Object_
+  name: CompareTo(object)
+  nameWithType: SkiaShaderEffect.CompareTo(object)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CompareTo(object)
+  nameWithType.vb: SkiaShaderEffect.CompareTo(Object)
+  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.CompareTo(Object)
+  name.vb: CompareTo(Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CompareTo(System.Object)
+    name: CompareTo
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompareTo_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CompareTo(System.Object)
+    name: CompareTo
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompareTo_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.CompareTo(DrawnUi.Draw.SkiaShaderEffect)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CompareTo(DrawnUi.Draw.SkiaShaderEffect)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompareTo_DrawnUi_Draw_SkiaShaderEffect_
+  name: CompareTo(SkiaShaderEffect)
+  nameWithType: SkiaShaderEffect.CompareTo(SkiaShaderEffect)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CompareTo(DrawnUi.Draw.SkiaShaderEffect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CompareTo(DrawnUi.Draw.SkiaShaderEffect)
+    name: CompareTo
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompareTo_DrawnUi_Draw_SkiaShaderEffect_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaShaderEffect
+    name: SkiaShaderEffect
+    href: DrawnUi.Draw.SkiaShaderEffect.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CompareTo(DrawnUi.Draw.SkiaShaderEffect)
+    name: CompareTo
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompareTo_DrawnUi_Draw_SkiaShaderEffect_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaShaderEffect
+    name: SkiaShaderEffect
+    href: DrawnUi.Draw.SkiaShaderEffect.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.Equals(DrawnUi.Draw.SkiaShaderEffect)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.Equals(DrawnUi.Draw.SkiaShaderEffect)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Equals_DrawnUi_Draw_SkiaShaderEffect_
+  name: Equals(SkiaShaderEffect)
+  nameWithType: SkiaShaderEffect.Equals(SkiaShaderEffect)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.Equals(DrawnUi.Draw.SkiaShaderEffect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.Equals(DrawnUi.Draw.SkiaShaderEffect)
+    name: Equals
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Equals_DrawnUi_Draw_SkiaShaderEffect_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaShaderEffect
+    name: SkiaShaderEffect
+    href: DrawnUi.Draw.SkiaShaderEffect.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.Equals(DrawnUi.Draw.SkiaShaderEffect)
+    name: Equals
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Equals_DrawnUi_Draw_SkiaShaderEffect_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaShaderEffect
+    name: SkiaShaderEffect
+    href: DrawnUi.Draw.SkiaShaderEffect.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.Equals(System.Object)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.Equals(System.Object)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Equals_System_Object_
+  name: Equals(object)
+  nameWithType: SkiaShaderEffect.Equals(object)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.Equals(object)
+  nameWithType.vb: SkiaShaderEffect.Equals(Object)
+  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.Equals(System.Object)
+    name: Equals
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Equals_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.Equals(System.Object)
+    name: Equals
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_Equals_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.GetHashCode
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.GetHashCode
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetHashCode
+  name: GetHashCode()
+  nameWithType: SkiaShaderEffect.GetHashCode()
+  fullName: DrawnUi.Draw.SkiaShaderEffect.GetHashCode()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.GetHashCode
+    name: GetHashCode
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetHashCode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.GetHashCode
+    name: GetHashCode
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetHashCode
+  - name: (
+  - name: )
 - uid: DrawnUi.Draw.SkiaShaderEffect.UseBackground
   commentId: P:DrawnUi.Draw.SkiaShaderEffect.UseBackground
   parent: DrawnUi.Draw.SkiaShaderEffect
@@ -718,6 +973,34 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
   - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SyncEngineState_SkiaSharp_SKRect_
+  name: SyncEngineState(SKRect)
+  nameWithType: SkiaShaderEffect.SyncEngineState(SKRect)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect)
+    name: SyncEngineState
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SyncEngineState_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect)
+    name: SyncEngineState
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SyncEngineState_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
 - uid: DrawnUi.Draw.SkiaShaderEffect.Render(DrawnUi.Draw.DrawingContext)
   commentId: M:DrawnUi.Draw.SkiaShaderEffect.Render(DrawnUi.Draw.DrawingContext)
   parent: DrawnUi.Draw.SkiaShaderEffect
@@ -809,48 +1092,6 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
   - name: )
-- uid: DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
-  parent: DrawnUi.Draw.SkiaShaderEffect
-  isExternal: true
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreatePrimaryTextureShader_SkiaSharp_SKImage_
-  name: CreatePrimaryTextureShader(SKImage)
-  nameWithType: SkiaShaderEffect.CreatePrimaryTextureShader(SKImage)
-  fullName: DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
-    name: CreatePrimaryTextureShader
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreatePrimaryTextureShader_SkiaSharp_SKImage_
-  - name: (
-  - uid: SkiaSharp.SKImage
-    name: SKImage
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.CreatePrimaryTextureShader(SkiaSharp.SKImage)
-    name: CreatePrimaryTextureShader
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreatePrimaryTextureShader_SkiaSharp_SKImage_
-  - name: (
-  - uid: SkiaSharp.SKImage
-    name: SKImage
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
-  - name: )
-- uid: DrawnUi.Draw.SkiaShaderEffect._uniformImageResolution
-  commentId: F:DrawnUi.Draw.SkiaShaderEffect._uniformImageResolution
-  parent: DrawnUi.Draw.SkiaShaderEffect
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect__uniformImageResolution
-  name: _uniformImageResolution
-  nameWithType: SkiaShaderEffect._uniformImageResolution
-  fullName: DrawnUi.Draw.SkiaShaderEffect._uniformImageResolution
-- uid: DrawnUi.Draw.SkiaShaderEffect.CompiledShader
-  commentId: F:DrawnUi.Draw.SkiaShaderEffect.CompiledShader
-  parent: DrawnUi.Draw.SkiaShaderEffect
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompiledShader
-  name: CompiledShader
-  nameWithType: SkiaShaderEffect.CompiledShader
-  fullName: DrawnUi.Draw.SkiaShaderEffect.CompiledShader
 - uid: DrawnUi.Draw.SkiaShaderEffect.NeedApply
   commentId: P:DrawnUi.Draw.SkiaShaderEffect.NeedApply
   parent: DrawnUi.Draw.SkiaShaderEffect
@@ -943,6 +1184,13 @@ references:
   name: _templatePlacehodler
   nameWithType: SkiaShaderEffect._templatePlacehodler
   fullName: DrawnUi.Draw.SkiaShaderEffect._templatePlacehodler
+- uid: DrawnUi.Draw.SkiaShaderEffect.LoadedCode
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.LoadedCode
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_LoadedCode
+  name: LoadedCode
+  nameWithType: SkiaShaderEffect.LoadedCode
+  fullName: DrawnUi.Draw.SkiaShaderEffect.LoadedCode
 - uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader
   commentId: M:DrawnUi.Draw.SkiaShaderEffect.CompileShader
   parent: DrawnUi.Draw.SkiaShaderEffect
@@ -994,37 +1242,6 @@ references:
   - uid: DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
     name: SendError
     href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SendError_System_String_
-  - name: (
-  - uid: System.String
-    name: String
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: )
-- uid: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
-  parent: DrawnUi.Draw.SkiaShaderEffect
-  isExternal: true
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NormalizeShaderCode_System_String_
-  name: NormalizeShaderCode(string)
-  nameWithType: SkiaShaderEffect.NormalizeShaderCode(string)
-  fullName: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(string)
-  nameWithType.vb: SkiaShaderEffect.NormalizeShaderCode(String)
-  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(String)
-  name.vb: NormalizeShaderCode(String)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
-    name: NormalizeShaderCode
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NormalizeShaderCode_System_String_
-  - name: (
-  - uid: System.String
-    name: string
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.NormalizeShaderCode(System.String)
-    name: NormalizeShaderCode
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_NormalizeShaderCode_System_String_
   - name: (
   - uid: System.String
     name: String
@@ -1100,13 +1317,6 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
   - name: )
-- uid: DrawnUi.Draw.SkiaShaderEffect.LoadedCode
-  commentId: P:DrawnUi.Draw.SkiaShaderEffect.LoadedCode
-  parent: DrawnUi.Draw.SkiaShaderEffect
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_LoadedCode
-  name: LoadedCode
-  nameWithType: SkiaShaderEffect.LoadedCode
-  fullName: DrawnUi.Draw.SkiaShaderEffect.LoadedCode
 - uid: DrawnUi.Draw.SkiaShaderEffect.ApplyShaderSource
   commentId: M:DrawnUi.Draw.SkiaShaderEffect.ApplyShaderSource
   parent: DrawnUi.Draw.SkiaShaderEffect
@@ -1931,39 +2141,6 @@ references:
   name: BindingContextChanged
   nameWithType: BindableObject.BindingContextChanged
   fullName: Microsoft.Maui.Controls.BindableObject.BindingContextChanged
-- uid: System.Object.Equals(System.Object)
-  commentId: M:System.Object.Equals(System.Object)
-  parent: System.Object
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
-  name: Equals(object)
-  nameWithType: object.Equals(object)
-  fullName: object.Equals(object)
-  nameWithType.vb: Object.Equals(Object)
-  fullName.vb: Object.Equals(Object)
-  name.vb: Equals(Object)
-  spec.csharp:
-  - uid: System.Object.Equals(System.Object)
-    name: Equals
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
-  - name: (
-  - uid: System.Object
-    name: object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: )
-  spec.vb:
-  - uid: System.Object.Equals(System.Object)
-    name: Equals
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
-  - name: (
-  - uid: System.Object
-    name: Object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: )
 - uid: System.Object.Equals(System.Object,System.Object)
   commentId: M:System.Object.Equals(System.Object,System.Object)
   parent: System.Object
@@ -2008,30 +2185,6 @@ references:
     name: Object
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: )
-- uid: System.Object.GetHashCode
-  commentId: M:System.Object.GetHashCode
-  parent: System.Object
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
-  name: GetHashCode()
-  nameWithType: object.GetHashCode()
-  fullName: object.GetHashCode()
-  nameWithType.vb: Object.GetHashCode()
-  fullName.vb: Object.GetHashCode()
-  spec.csharp:
-  - uid: System.Object.GetHashCode
-    name: GetHashCode
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: System.Object.GetHashCode
-    name: GetHashCode
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
-  - name: (
   - name: )
 - uid: System.Object.GetType
   commentId: M:System.Object.GetType
@@ -2394,6 +2547,62 @@ references:
     name: ComponentModel
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.componentmodel
+- uid: System.IComparable`1
+  commentId: T:System.IComparable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  name: IComparable<T>
+  nameWithType: IComparable<T>
+  fullName: System.IComparable<T>
+  nameWithType.vb: IComparable(Of T)
+  fullName.vb: System.IComparable(Of T)
+  name.vb: IComparable(Of T)
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
 - uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
   commentId: M:DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
   href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__

@@ -370,12 +370,13 @@ items:
   - DrawnUi.Draw.SkiaControl.RemoveSubView(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
   - DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect)
-  - DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@)
+  - DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@,DrawnUi.Draw.SkiaGradient@)
   - DrawnUi.Draw.SkiaControl.CreateShadow(DrawnUi.Draw.SkiaShadow,System.Single)
   - DrawnUi.Draw.SkiaControl.UpdatePlatformShadow
   - DrawnUi.Draw.SkiaControl.PlatformShadow
   - DrawnUi.Draw.SkiaControl.HasPlatformClip
   - DrawnUi.Draw.SkiaControl.GetDensity
+  - DrawnUi.Draw.SkiaControl.SetupRenderingWithComposition(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaControl.AutoCacheProperty
   - DrawnUi.Draw.SkiaControl.AutoCache
   - DrawnUi.Draw.SkiaControl.UseCacheProperty
@@ -394,7 +395,9 @@ items:
   - DrawnUi.Draw.SkiaControl.CreateRenderedObject(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect,System.Boolean)
   - DrawnUi.Draw.SkiaControl.RasterizeToCache(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaControl.CheckCachedObjectValid(DrawnUi.Draw.CachedObject,SkiaSharp.SKRect,DrawnUi.Draw.SkiaDrawingContext)
+  - DrawnUi.Draw.SkiaControl.IsCacheGPU
   - DrawnUi.Draw.SkiaControl.UsingCacheType
+  - DrawnUi.Draw.SkiaControl.IsCacheComposite
   - DrawnUi.Draw.SkiaControl.CreateRenderingObject(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect,DrawnUi.Draw.CachedObject,DrawnUi.Draw.SkiaCacheType,System.Action{DrawnUi.Draw.DrawingContext})
   - DrawnUi.Draw.SkiaControl.DelegateDrawCache
   - DrawnUi.Draw.SkiaControl.DrawRenderObjectInternal(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.CachedObject)
@@ -700,6 +703,7 @@ items:
   - DrawnUi.Draw.SkiaControl.IsGestureForChild(DrawnUi.Draw.ISkiaGestureListener,SkiaSharp.SKPoint)
   - DrawnUi.Draw.SkiaControl.IsGestureForChild(DrawnUi.Draw.ISkiaGestureListener,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.ApplyTransforms(SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaControl.GetTransformedDirtyBounds
   - DrawnUi.Draw.SkiaControl.RenderTransformMatrix
   - DrawnUi.Draw.SkiaControl.InverseRenderTransformMatrix
   - DrawnUi.Draw.SkiaControl.ApplyTransformationMatrix(DrawnUi.Draw.SkiaDrawingContext)
@@ -2810,7 +2814,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 610
+    startLine: 614
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2839,7 +2843,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateClip
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 631
+    startLine: 635
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2885,7 +2889,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCorrectedBackgroundRadii
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 767
+    startLine: 771
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2929,7 +2933,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintBackground
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 795
+    startLine: 799
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2969,7 +2973,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: MapStrokeCapToStrokeJoin
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 880
+    startLine: 884
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3000,7 +3004,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PaintWithShadows
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 894
+    startLine: 898
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3033,7 +3037,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: AddPaintArguments
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 899
+    startLine: 903
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3066,7 +3070,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Paint
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 910
+    startLine: 914
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3104,7 +3108,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ShadowsProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1284
+    startLine: 1295
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3131,7 +3135,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Shadows
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1300
+    startLine: 1311
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3160,7 +3164,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PointsProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1331
+    startLine: 1342
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3187,7 +3191,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Points
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1345
+    startLine: 1356
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3228,7 +3232,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: PolygonStar
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1352
+    startLine: 1363
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3257,7 +3261,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SmoothPointsProperty
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1417
+    startLine: 1428
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3284,7 +3288,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SmoothPoints
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1447
+    startLine: 1458
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3336,7 +3340,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateStarPoints
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1594
+    startLine: 1605
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3372,7 +3376,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateStarPointsCrossed
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1642
+    startLine: 1653
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3406,7 +3410,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GetCompensatedStrokeWidth
     path: ../src/Maui/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1700
+    startLine: 1711
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8595,21 +8599,21 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
   - name: )
-- uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@)
-  commentId: M:DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@)
+- uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@,DrawnUi.Draw.SkiaGradient@)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@,DrawnUi.Draw.SkiaGradient@)
   parent: DrawnUi.Draw.SkiaControl
   isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__
-  name: SetupGradient(SKPaint, SkiaGradient, SKRect, ref SKShader, ref int, ref SKRect)
-  nameWithType: SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect, ref SKShader, ref int, ref SKRect)
-  fullName: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint, DrawnUi.Draw.SkiaGradient, SkiaSharp.SKRect, ref SkiaSharp.SKShader, ref int, ref SkiaSharp.SKRect)
-  nameWithType.vb: SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect, SKShader, Integer, SKRect)
-  fullName.vb: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint, DrawnUi.Draw.SkiaGradient, SkiaSharp.SKRect, SkiaSharp.SKShader, Integer, SkiaSharp.SKRect)
-  name.vb: SetupGradient(SKPaint, SkiaGradient, SKRect, SKShader, Integer, SKRect)
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__DrawnUi_Draw_SkiaGradient__
+  name: SetupGradient(SKPaint, SkiaGradient, SKRect, ref SKShader, ref int, ref SKRect, ref SkiaGradient)
+  nameWithType: SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect, ref SKShader, ref int, ref SKRect, ref SkiaGradient)
+  fullName: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint, DrawnUi.Draw.SkiaGradient, SkiaSharp.SKRect, ref SkiaSharp.SKShader, ref int, ref SkiaSharp.SKRect, ref DrawnUi.Draw.SkiaGradient)
+  nameWithType.vb: SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect, SKShader, Integer, SKRect, SkiaGradient)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint, DrawnUi.Draw.SkiaGradient, SkiaSharp.SKRect, SkiaSharp.SKShader, Integer, SkiaSharp.SKRect, DrawnUi.Draw.SkiaGradient)
+  name.vb: SetupGradient(SKPaint, SkiaGradient, SKRect, SKShader, Integer, SKRect, SkiaGradient)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@)
+  - uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@,DrawnUi.Draw.SkiaGradient@)
     name: SetupGradient
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__DrawnUi_Draw_SkiaGradient__
   - name: (
   - uid: SkiaSharp.SKPaint
     name: SKPaint
@@ -8650,11 +8654,18 @@ references:
     name: SKRect
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - name: ref
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGradient
+    name: SkiaGradient
+    href: DrawnUi.Draw.SkiaGradient.html
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@)
+  - uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@,DrawnUi.Draw.SkiaGradient@)
     name: SetupGradient
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__DrawnUi_Draw_SkiaGradient__
   - name: (
   - uid: SkiaSharp.SKPaint
     name: SKPaint
@@ -8689,6 +8700,11 @@ references:
     name: SKRect
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGradient
+    name: SkiaGradient
+    href: DrawnUi.Draw.SkiaGradient.html
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.CreateShadow(DrawnUi.Draw.SkiaShadow,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.CreateShadow(DrawnUi.Draw.SkiaShadow,System.Single)
@@ -8794,6 +8810,31 @@ references:
     name: GetDensity
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetDensity
   - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.SetupRenderingWithComposition(DrawnUi.Draw.DrawingContext)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetupRenderingWithComposition(DrawnUi.Draw.DrawingContext)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupRenderingWithComposition_DrawnUi_Draw_DrawingContext_
+  name: SetupRenderingWithComposition(DrawingContext)
+  nameWithType: SkiaControl.SetupRenderingWithComposition(DrawingContext)
+  fullName: DrawnUi.Draw.SkiaControl.SetupRenderingWithComposition(DrawnUi.Draw.DrawingContext)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SetupRenderingWithComposition(DrawnUi.Draw.DrawingContext)
+    name: SetupRenderingWithComposition
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupRenderingWithComposition_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SetupRenderingWithComposition(DrawnUi.Draw.DrawingContext)
+    name: SetupRenderingWithComposition
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupRenderingWithComposition_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.AutoCacheProperty
   commentId: F:DrawnUi.Draw.SkiaControl.AutoCacheProperty
@@ -9218,6 +9259,13 @@ references:
     name: SkiaDrawingContext
     href: DrawnUi.Draw.SkiaDrawingContext.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.IsCacheGPU
+  commentId: P:DrawnUi.Draw.SkiaControl.IsCacheGPU
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsCacheGPU
+  name: IsCacheGPU
+  nameWithType: SkiaControl.IsCacheGPU
+  fullName: DrawnUi.Draw.SkiaControl.IsCacheGPU
 - uid: DrawnUi.Draw.SkiaControl.UsingCacheType
   commentId: P:DrawnUi.Draw.SkiaControl.UsingCacheType
   parent: DrawnUi.Draw.SkiaControl
@@ -9225,6 +9273,13 @@ references:
   name: UsingCacheType
   nameWithType: SkiaControl.UsingCacheType
   fullName: DrawnUi.Draw.SkiaControl.UsingCacheType
+- uid: DrawnUi.Draw.SkiaControl.IsCacheComposite
+  commentId: P:DrawnUi.Draw.SkiaControl.IsCacheComposite
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsCacheComposite
+  name: IsCacheComposite
+  nameWithType: SkiaControl.IsCacheComposite
+  fullName: DrawnUi.Draw.SkiaControl.IsCacheComposite
 - uid: DrawnUi.Draw.SkiaControl.CreateRenderingObject(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect,DrawnUi.Draw.CachedObject,DrawnUi.Draw.SkiaCacheType,System.Action{DrawnUi.Draw.DrawingContext})
   commentId: M:DrawnUi.Draw.SkiaControl.CreateRenderingObject(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect,DrawnUi.Draw.CachedObject,DrawnUi.Draw.SkiaCacheType,System.Action{DrawnUi.Draw.DrawingContext})
   parent: DrawnUi.Draw.SkiaControl
@@ -15197,6 +15252,25 @@ references:
     name: SKRect
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.GetTransformedDirtyBounds
+  commentId: M:DrawnUi.Draw.SkiaControl.GetTransformedDirtyBounds
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetTransformedDirtyBounds
+  name: GetTransformedDirtyBounds()
+  nameWithType: SkiaControl.GetTransformedDirtyBounds()
+  fullName: DrawnUi.Draw.SkiaControl.GetTransformedDirtyBounds()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.GetTransformedDirtyBounds
+    name: GetTransformedDirtyBounds
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetTransformedDirtyBounds
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.GetTransformedDirtyBounds
+    name: GetTransformedDirtyBounds
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetTransformedDirtyBounds
+  - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.RenderTransformMatrix
   commentId: P:DrawnUi.Draw.SkiaControl.RenderTransformMatrix

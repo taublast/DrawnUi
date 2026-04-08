@@ -19,11 +19,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+      path: src/Shared/Internals/Models/FileDescriptor.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FileDescriptor
-    path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+    path: ../src/Shared/Internals/Models/FileDescriptor.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -56,11 +56,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+      path: src/Shared/Internals/Models/FileDescriptor.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Filename
-    path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+    path: ../src/Shared/Internals/Models/FileDescriptor.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -85,11 +85,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+      path: src/Shared/Internals/Models/FileDescriptor.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Path
-    path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+    path: ../src/Shared/Internals/Models/FileDescriptor.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -114,11 +114,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+      path: src/Shared/Internals/Models/FileDescriptor.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FullFilename
-    path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+    path: ../src/Shared/Internals/Models/FileDescriptor.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -143,11 +143,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+      path: src/Shared/Internals/Models/FileDescriptor.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Handler
-    path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+    path: ../src/Shared/Internals/Models/FileDescriptor.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -172,11 +172,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+      path: src/Shared/Internals/Models/FileDescriptor.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
-    path: ../src/Maui/DrawnUi/Features/FileSystem/FileDescriptor.cs
+    path: ../src/Shared/Internals/Models/FileDescriptor.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
