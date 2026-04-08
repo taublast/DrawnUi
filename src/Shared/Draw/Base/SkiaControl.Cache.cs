@@ -557,6 +557,11 @@ public partial class SkiaControl
                 else
                 {
                     surface = CreateSurface(width, height, IsCacheGPU);
+
+                    if (IsCacheComposite && RenderObjectPrevious != null)
+                    {
+                        InvalidateMeasure();
+                    }
                 }
 
                 if (surface == null)

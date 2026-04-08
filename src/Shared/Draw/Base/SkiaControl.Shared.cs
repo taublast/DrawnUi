@@ -6058,8 +6058,7 @@ namespace DrawnUi.Draw
                     InvalidateMeasure();
                 }
             }
-            else if (UsingCacheType == SkiaCacheType.ImageComposite
-                     && RenderObjectPrevious != null)
+            else if (IsCacheComposite && RenderObjectPrevious != null)
             {
                 if (!CompareRectsSize(DrawingRect, RenderObjectPrevious.Bounds, 0.5f))
                 {
