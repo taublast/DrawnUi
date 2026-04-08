@@ -1500,6 +1500,18 @@ public class SkiaImage : SkiaControl
 
             TextureScale = new(dest.Width / display.Width, dest.Height / display.Height);
 
+            void DrawAsIs()
+            {
+                if (source.Bitmap != null)
+                {
+                    DrawSourceBitmap(ctx, source.Bitmap, display, paint, RescalingQuality);
+                }
+                else if (source.Image != null)
+                {
+                    DrawSourceImage(ctx, source.Image, display, paint, RescalingQuality);
+                }
+            }
+
             if (this.RescalingQuality != SKFilterQuality.None && CacheRescaledSource)
             {
                 var targetWidth = (int)Math.Round(display.Width);
@@ -1510,15 +1522,7 @@ public class SkiaImage : SkiaControl
                 if (sizeRatio < 0.05f) // Less than 5% difference
                 {
                     // Skip rescaling for minimal size changes
-                    if (source.Bitmap != null)
-                    {
-                        DrawSourceBitmap(ctx, source.Bitmap, display, paint);
-                    }
-                    else if (source.Image != null)
-                    {
-                        DrawSourceImage(ctx, source.Image, display, paint);
-                    }
-
+                    DrawAsIs();
                     return;
                 }
 
@@ -1573,14 +1577,7 @@ public class SkiaImage : SkiaControl
             }
             else
             {
-                if (source.Bitmap != null)
-                {
-                    DrawSourceBitmap(ctx, source.Bitmap, display, paint, RescalingQuality);
-                }
-                else if (source.Image != null)
-                {
-                    DrawSourceImage(ctx, source.Image, display, paint, RescalingQuality);
-                }
+                DrawAsIs();
             }
         }
         catch (Exception e)
