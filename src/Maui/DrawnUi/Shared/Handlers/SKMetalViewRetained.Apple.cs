@@ -4,6 +4,7 @@ using Metal;
 using MetalKit;
 using SkiaSharp.Views.iOS;
 using UIKit;
+using DrawnUi.Draw;
 
 namespace DrawnUi.Views
 {
@@ -178,6 +179,8 @@ namespace DrawnUi.Views
             Device = _device;
             Queue = _sharedQueue; // MTKView uses the shared queue for drawable presentation
             Delegate = this;
+
+            Super.RegisterMetalView(this);
         }
 
         // ── MTKView delegate ─────────────────────────────────────────────────────
@@ -433,7 +436,7 @@ namespace DrawnUi.Views
                 {
                     Console.WriteLine($"[SKMetalView] TryCpuPreRendering - CPU pre-rendering ({_canvasSize.Width}x{_canvasSize.Height})");
 
-                    using (new SKAutoCanvasRestoreFixed(softSurface.Canvas, true))
+                    using (new CanvasRestoreScope(softSurface.Canvas))
                     {
                         // Create dummy renderTarget for CPU rendering (won't be used but required by constructor)
                         // Use a fake Metal texture info
@@ -506,6 +509,7 @@ namespace DrawnUi.Views
         protected override void Dispose(bool disposing)
         {
             stopped = true;
+            Super.UnregisterMetalView(this);
 
             if (disposing)
             {

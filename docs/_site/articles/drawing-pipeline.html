@@ -230,10 +230,10 @@ control.Parent?.Invalidate() // When the above doesn't work if parent refuses to
 <p><strong>Choosing the Right Cache Type:</strong></p>
 <ul>
 <li><strong>None</strong> - Do not cache scrolls, drawers etc, native views and their containers.</li>
-<li><strong>Operations</strong> - For anything, but maybe best for static vector content like text, icons, SVG.</li>
+<li><strong>Operations</strong> - For anything, but maybe best for static vector content like text, icons, SVG. <strong>PROHIBITED for controls with GPU-surface shaders</strong> — SKPicture cannot replay shader programs. <strong>PROHIBITED as parent cache for children using GPU-backed cache types</strong> (<code>GPU</code>, <code>ImageCompositeGPU</code>).</li>
 <li><strong>Image</strong> - Rasterize anything once and then just draw the bitmap on every frame.</li>
 <li><strong>ImageDoubleBuffered</strong> - Perfect for recycled cells of same size</li>
-<li><strong>GPU</strong> - Use GPU memory for storing overlays, avoid large sizes.</li>
+<li><strong>GPU</strong> - Use GPU memory for storing overlays, avoid large sizes. <strong>PROHIBITED for controls with GPU-surface shaders</strong> — the GPU cache surface conflicts with the shader's own surface requirements.</li>
 </ul>
 <h5 id="render-object-pipeline">Render Object Pipeline</h5>
 <pre><code class="lang-csharp">public virtual bool DrawUsingRenderObject(DrawingContext context,

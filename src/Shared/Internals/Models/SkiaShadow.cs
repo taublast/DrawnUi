@@ -1,6 +1,6 @@
 ﻿namespace DrawnUi.Draw;
 
-public class SkiaShadow : BindableObject
+public class SkiaShadow : BindableObject, IComparable, IComparable<SkiaShadow>, IEquatable<SkiaShadow>
 {
 
     public ICanBeUpdatedWithContext Parent { get; set; }
@@ -18,6 +18,129 @@ public class SkiaShadow : BindableObject
     }
 
     public string Tag { get; set; }
+
+    public int CompareTo(object obj)
+    {
+        if (obj is null)
+        {
+            return 1;
+        }
+
+        if (obj is not SkiaShadow other)
+        {
+            return 0;
+        }
+
+        return CompareTo(other);
+    }
+
+    public int CompareTo(SkiaShadow other)
+    {
+        if (ReferenceEquals(this, other))
+        {
+            return 0;
+        }
+
+        if (other is null)
+        {
+            return 1;
+        }
+
+        var result = Opacity.CompareTo(other.Opacity);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = CompareColor(Color, other.Color);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = X.CompareTo(other.X);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = Y.CompareTo(other.Y);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = Blur.CompareTo(other.Blur);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        return ShadowOnly.CompareTo(other.ShadowOnly);
+    }
+
+    public bool Equals(SkiaShadow other)
+    {
+        return CompareTo(other) == 0;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is SkiaShadow other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Opacity, Color, X, Y, Blur, ShadowOnly);
+    }
+
+    public static bool operator ==(SkiaShadow left, SkiaShadow right)
+    {
+        return Equals(left, right);
+    }
+
+    public static bool operator !=(SkiaShadow left, SkiaShadow right)
+    {
+        return !Equals(left, right);
+    }
+
+    private static int CompareColor(Color left, Color right)
+    {
+        if (ReferenceEquals(left, right))
+        {
+            return 0;
+        }
+
+        if (left is null)
+        {
+            return right is null ? 0 : -1;
+        }
+
+        if (right is null)
+        {
+            return 1;
+        }
+
+        var result = left.Red.CompareTo(right.Red);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = left.Green.CompareTo(right.Green);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = left.Blue.CompareTo(right.Blue);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        return left.Alpha.CompareTo(right.Alpha);
+    }
 
     private static void RedrawCanvas(BindableObject bindable, object oldvalue, object newvalue)
     {

@@ -194,5 +194,78 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Helpers\KeyedActionQueue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Helpers\TrackedObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Super.cs" />
+    <!-- Enums moved from Maui -->
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\DrawerDirection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\PrebuiltControlStyle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\GesturesMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\LoadPriority.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\StorageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\DeviceRotation.cs" />
+    <!-- Interfaces moved from Maui -->
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Interfaces\IHasBanner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Interfaces\IWheelPickerCell.cs" />
+    <!-- Text types moved from Maui -->
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\UsedGlyph.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\LineGlyph.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\StringReference.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\IDrawnTextSpan.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\TextSpan.Shared.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\ApplySpan.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\LineSpan.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\TextLine.cs" />
+    <!-- Models moved from Maui -->
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Models\FileDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Models\IndexArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Models\RotationEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Models\WheelCellInfo.cs" />
+    <!-- Layout types moved from Maui -->
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Layout\LayoutStructure.cs" />
+    <!-- Scroll types moved from Maui -->
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Scroll\ScrollToIndexOrder.cs" />
+    <!-- Gesture types moved from Maui -->
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Gestures\SkiaGesturesParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Gestures\ZoomEventArgs.cs" />
+    <!-- Effect implementations moved from Maui (no Color dependency) -->
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\BaseColorFilterEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\BaseImageFilterEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\BaseRenderEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\ChainEffectResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\SkiaDoubleAttachedTexturesEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\BlurEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\SaturationEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\ContrastEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\ColorPresetEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\AdjustRGBEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\ChainAdjustBrightnessEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\ChainAdjustContrastEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\ChainAdjustLightnessEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\ChainColorPresetEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\ChainSaturationEffect.cs" />
+    <!-- Images -->
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Images\LoadedImageSource.cs" />
+    <!-- SkiaLabel partials (pure logic, no MAUI deps) -->
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\SkiaLabel.EmojiData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\SkiaLabel.ObjectPools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\SkiaLabel.GlyphMeasurementCache.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\SkiaLabel.SpanMeasurement.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\SkiaLabel.Line.cs" />
+    <!-- Base -->
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\SkiaControlsObservable.cs" />
+    <!-- Enums -->
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\NavigationSource.cs" />
+    <!-- Navigation models -->
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Models\SkiaShellNavigatedArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Models\SkiaShellNavigatingArgs.cs" />
+    <!-- Shaders -->
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Shaders\SkiaShader.cs" />
+    <!-- Pdf -->
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Pdf\Pdf.cs" />
+    <!-- Views utilities -->
+    <Compile Include="$(MSBuildThisFileDirectory)Views\CanvasRestoreScope.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SKAutoCanvasRestoreFixed.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DisposableManager.cs" />
+    <!-- Controls -->
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\PlayFrames\GifAnimation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Interfaces\ISkiaRadioButton.cs" />
   </ItemGroup>
 </Project>

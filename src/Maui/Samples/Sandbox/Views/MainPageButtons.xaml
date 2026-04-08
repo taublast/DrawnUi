@@ -40,7 +40,7 @@
                         HorizontalOptions="Fill"
                         Tag="Cached"
                         Type="Wrap"
-                        UseCache="ImageComposite">
+                        UseCache="ImageCompositeGPU">
 
                         <!--  SECTION: CONTROL STYLES  -->
                         <draw:SkiaLayout

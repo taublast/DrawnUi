@@ -15,11 +15,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Navigation/IndexArgs.cs
+      path: src/Shared/Internals/Models/IndexArgs.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IndexArgs
-    path: ../src/Maui/DrawnUi/Features/Navigation/IndexArgs.cs
+    path: ../src/Shared/Internals/Models/IndexArgs.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -54,11 +54,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Navigation/IndexArgs.cs
+      path: src/Shared/Internals/Models/IndexArgs.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Index
-    path: ../src/Maui/DrawnUi/Features/Navigation/IndexArgs.cs
+    path: ../src/Shared/Internals/Models/IndexArgs.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui

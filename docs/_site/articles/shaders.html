@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Shaders | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Shaders | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../images/draw.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/blob/main/docs/articles/shaders.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/draw.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="shaders">Shaders</h1>
+
+<p>DrawnUI ships with a thin, reusable SKSL shader layer on top of SkiaSharp's
+<code>SKRuntimeEffect</code>. It is designed for <strong>hot-path rendering</strong> — applying custom
+fragment shaders every frame at 60+ FPS without generating garbage or churning
+GPU handles.</p>
+<p>There are two entry points:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Namespace</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SkiaShader</code></td>
+<td><code>DrawnUi.Infrastructure</code></td>
+<td>Lightweight reusable engine. Use directly for manual rendering or as a building block.</td>
+</tr>
+<tr>
+<td><code>SkiaShaderEffect</code></td>
+<td><code>DrawnUi.Draw</code></td>
+<td>XAML-bindable <code>IPostRendererEffect</code> that wraps <code>SkiaShader</code>. Attach to any <code>SkiaControl</code> via <code>.FX</code> or the <code>Effects</code> collection.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="quick-start--effect-on-a-control">Quick start — effect on a control</h2>
+<pre><code class="lang-xml">&lt;draw:SkiaImage Source=&quot;photo.jpg&quot;
+                Aspect=&quot;AspectCover&quot;
+                UseCache=&quot;ImageComposite&quot;&gt;
+    &lt;draw:SkiaImage.VisualEffects&gt;
+        &lt;draw:SkiaShaderEffect ShaderSource=&quot;Shaders/ripples.sksl&quot; /&gt;
+    &lt;/draw:SkiaImage.VisualEffects&gt;
+&lt;/draw:SkiaImage&gt;
+</code></pre>
+<p>The shader receives the control's rendered output as <code>iImage1</code> and draws the
+result back onto the canvas. No code-behind required.</p>
+<h2 id="standard-uniforms">Standard uniforms</h2>
+<p><code>SkiaShader</code> provides the Shadertoy-style uniform set out of the box. Declare
+the ones you need in your <code>.sksl</code> file:</p>
+<pre><code class="lang-glsl">uniform shader iImage1;          // input texture (the control's output)
+uniform float2 iResolution;      // viewport size in pixels
+uniform float2 iImageResolution; // texture size in pixels
+uniform float  iTime;            // elapsed seconds
+uniform float2 iOffset;          // top-left of the draw rect
+uniform float4 iMouse;           // xy = current, zw = down position
+</code></pre>
+<p>You do not need to populate them manually — the base class handles it every
+frame.</p>
+<h2 id="resource-loading">Resource loading</h2>
+<p>Shader files go in <code>Resources/Raw/Shaders/</code> (lowercase filenames — iOS is
+case-sensitive). Load with <code>ShaderSource=&quot;Shaders/myeffect.sksl&quot;</code>. Compiled
+effects are cached by filename, so the same <code>.sksl</code> file is only compiled once
+per process even if used on many controls.</p>
+<p>For inline code use <code>ShaderCode=&quot;...&quot;</code> instead.</p>
+<h2 id="code-behind-rendering">Code-behind rendering</h2>
+<p><code>SkiaShader</code> can be used directly inside any control's <code>Paint</code> override:</p>
+<pre><code class="lang-csharp">private readonly SkiaShader _shader =
+    SkiaShader.FromResource(&quot;Shaders/noise.sksl&quot;);
+
+protected override void Paint(DrawingContext ctx)
+{
+    base.Paint(ctx);
+
+    _shader.Time = (float)(ctx.Context.FrameTimeNanos * 1e-9);
+    _shader.DrawRect(ctx.Context.Canvas, ctx.Destination);
+}
+
+protected override void OnDisposing()
+{
+    _shader.Dispose();
+    base.OnDisposing();
+}
+</code></pre>
+<h2 id="custom-uniforms--subclass-pattern">Custom uniforms — subclass pattern</h2>
+<p>Subclass either <code>SkiaShader</code> (engine-level) or <code>SkiaShaderEffect</code> (XAML-level).
+Override <code>CreateUniforms</code> and set extra keys on the returned instance:</p>
+<pre><code class="lang-csharp">public class RippleEffect : SkiaShaderEffect
+{
+    public float Intensity { get; set; } = 1f;
+
+    // Pre-allocated buffer — see &quot;Performance contract&quot; below
+    private readonly float[] _bufCenter = new float[2];
+    public SKPoint Center { get; set; } = new(0.5f, 0.5f);
+
+    protected override SKRuntimeEffectUniforms CreateUniforms(SKRect destination)
+    {
+        var uniforms = base.CreateUniforms(destination);
+
+        uniforms[&quot;intensity&quot;] = Intensity;
+
+        _bufCenter[0] = Center.X;
+        _bufCenter[1] = Center.Y;
+        uniforms[&quot;iCenter&quot;] = _bufCenter;
+
+        return uniforms;
+    }
+}
+</code></pre>
+<p>Additional input textures work the same way via <code>CreateTexturesUniforms</code> /
+<code>SkiaShader.CreateChildren</code>:</p>
+<pre><code class="lang-csharp">protected override SKRuntimeEffectChildren CreateTexturesUniforms(
+    SkiaDrawingContext ctx, SKRect destination, SKShader primaryTexture)
+{
+    var children = base.CreateTexturesUniforms(ctx, destination, primaryTexture);
+    children[&quot;iImage2&quot;] = _secondaryTextureShader;
+    return children;
+}
+</code></pre>
+<h2 id="usebackground-modes"><code>UseBackground</code> modes</h2>
+<p><code>SkiaShaderEffect.UseBackground</code> controls how the input texture (<code>iImage1</code>) is
+sourced:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Behavior</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Always</code></td>
+<td>Captures a fresh snapshot of the parent every frame (or reuses the parent's cached image if present).</td>
+<td>Live effects over animated content.</td>
+</tr>
+<tr>
+<td><code>Once</code></td>
+<td>Snapshots on first render, freezes, and keeps feeding the same image. Reset with <code>AquiredBackground = false</code>.</td>
+<td>One-shot transitions, reveal animations.</td>
+</tr>
+<tr>
+<td><code>Never</code></td>
+<td>Passes no texture. Your shader must not declare <code>iImage1</code>.</td>
+<td>Generative shaders (noise, gradients, procedural patterns).</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Tip:</strong> For <code>Always</code> mode, set a cache type on the parent (<code>ImageComposite</code>
+works well) so the snapshot path reuses the already-rasterised parent image
+instead of re-snapshotting the canvas every frame.</p>
+</blockquote>
+<h2 id="performance-contract">Performance contract</h2>
+<p>Shaders run on the hot path — every frame, on the render thread. <code>SkiaShader</code>
+is carefully allocation-free in steady state:</p>
+<ul>
+<li><code>SKRuntimeEffectUniforms</code>, <code>SKRuntimeEffectChildren</code>, and the texture
+<code>SKShader</code> are <strong>cached on the instance</strong> and reused across frames. They are
+rebuilt automatically only when the compiled effect changes, the source
+image handle changes, or sampling options change.</li>
+<li>The only unavoidable per-frame allocation is the final <code>SKShader</code> returned
+by <code>SKRuntimeEffect.ToShader(...)</code> — SkiaSharp snapshots uniforms at that
+call, so it has to be recreated each frame.</li>
+<li>All standard uniform float arrays (<code>iResolution</code>, <code>iMouse</code>, <code>iOffset</code>, …)
+are stored in pre-allocated <code>float[]</code> fields on the base class.</li>
+</ul>
+<p><strong>Rules when subclassing:</strong></p>
+<ol>
+<li><strong>Do not dispose</strong> the object returned from <code>base.CreateUniforms(...)</code> or
+<code>base.CreateChildren(...)</code>. It is owned by the engine and reused.</li>
+<li><strong>Do not return a different instance</strong> — mutate the one returned by <code>base</code>
+and return it.</li>
+<li><strong>Do not allocate per frame inside <code>CreateUniforms</code>.</strong> If you need a
+<code>float[]</code> uniform, store it as a field and overwrite its slots each call
+(see <code>_bufCenter</code> above).</li>
+<li><strong>Do not dispose</strong> the shader returned by
+<code>SkiaShader.CreateTextureShader(source)</code> — it is cached per source handle.</li>
+<li><strong>Never cache</strong> a layer that hosts a shader effect in <code>SkiaScroll</code>,
+<code>SkiaDrawer</code>, <code>SkiaCarousel</code>, or any layout that virtualizes — follow the
+standard DrawnUI caching rules for dynamic content.</li>
+<li><strong>PROHIBITED: Do NOT cache controls with GPU-surface shaders using
+<code>Operations</code> or <code>GPU</code> cache types.</strong> <code>Operations</code> records draw commands into
+an <code>SKPicture</code> which cannot replay GPU-surface shader programs. <code>GPU</code> cache
+creates its own GPU surface that conflicts with the shader's surface
+requirements. Use <code>Image</code>, <code>ImageDoubleBuffered</code>, or <code>ImageComposite</code>
+instead.</li>
+<li><strong>PROHIBITED: Do NOT nest children that use GPU-backed cache types (<code>GPU</code>,
+<code>ImageCompositeGPU</code>) inside a parent cached with <code>Operations</code></strong> —
+<code>SKPicture</code> recording cannot capture GPU-surface output from children.</li>
+</ol>
+<p>Breaking these rules turns a 60 FPS render loop into a GC-thrashing one —
+every disposed-then-rebuilt uniforms/children pair is a native handle round
+trip and a managed allocation.</p>
+<h2 id="lifecycle-and-disposal">Lifecycle and disposal</h2>
+<ul>
+<li><p><code>SkiaShader.DisposeCompiled()</code> tears down the compiled effect <strong>and</strong> its
+cached uniforms/children/texture shader (they are all bound to the effect).
+Call this before recompiling.</p>
+</li>
+<li><p><code>SkiaShader.Dispose()</code> releases everything including the owned paint.</p>
+</li>
+<li><p><code>SkiaShaderEffect.OnDisposing()</code> disposes the engine automatically. If you
+attach an effect and later remove it, dispose it explicitly:</p>
+<pre><code class="lang-csharp">_image.VisualEffects.Remove(_effect);
+_effect.Dispose();
+</code></pre>
+</li>
+</ul>
+<h2 id="debugging">Debugging</h2>
+<ul>
+<li>Hook <code>SkiaShaderEffect.OnCompilationError</code> to surface SKSL compile errors
+instead of letting them throw.</li>
+<li>If the effect renders black, check <code>IsCompiled</code> on the engine and verify
+your shader declares <code>iImage1</code> when <code>UseBackground != Never</code>.</li>
+<li>Line endings in <code>.sksl</code> files are normalised automatically via
+<code>SkiaShader.NormalizeLineEndings</code> — no need to worry about CRLF/LF mixing.</li>
+</ul>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="drawing-pipeline.html">Drawing Pipeline</a> — where effects fit in the render loop</li>
+<li><a href="fluent-extensions.html">Fluent C# Extensions</a> — attaching effects from code</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/drawnui/blob/main/docs/articles/shaders.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Made by <a href="https://taublast.github.io/about/">Nick Kovalsky aka AppoMobi (@taublast)</a><script>(function(){try{const fix=function(){const brand=document.querySelector('a.navbar-brand');if(brand){brand.setAttribute('href','/');}document.querySelectorAll('a[href]').forEach(function(a){var href=a.getAttribute('href');if(!href||href.startsWith('http'))return;if(href==='index.html'||href==='/index.html'||href==='../index.html'){a.setAttribute('href','/');return;}if(href.endsWith('/articles/index.html')||href==='articles/index.html'||href==='../articles/index.html'){a.setAttribute('href','/articles/');return;}var m=href.match(/^(?:\.?\.?\/)?articles\/.*\/index\.html(.*)$/);if(m){var p=href.replace(/\/index\.html(.*)$/,'/');if(!p.startsWith('/')){p='/' + p.replace(/^\/?/,'');}a.setAttribute('href',p);}});};if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fix);}else{fix();}}catch(e){})();</script>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

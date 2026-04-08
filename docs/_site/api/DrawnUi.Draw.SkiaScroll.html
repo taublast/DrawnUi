@@ -256,7 +256,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_">SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__">SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect, ref SKShader, ref int, ref SKRect)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__DrawnUi_Draw_SkiaGradient__">SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect, ref SKShader, ref int, ref SKRect, ref SkiaGradient)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateShadow_DrawnUi_Draw_SkiaShadow_System_Single_">SkiaControl.CreateShadow(SkiaShadow, float)</a>
@@ -272,6 +272,9 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetDensity">SkiaControl.GetDensity()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupRenderingWithComposition_DrawnUi_Draw_DrawingContext_">SkiaControl.SetupRenderingWithComposition(DrawingContext)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AutoCacheProperty">SkiaControl.AutoCacheProperty</a>
@@ -328,7 +331,13 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckCachedObjectValid_DrawnUi_Draw_CachedObject_SkiaSharp_SKRect_DrawnUi_Draw_SkiaDrawingContext_">SkiaControl.CheckCachedObjectValid(CachedObject, SKRect, SkiaDrawingContext)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsCacheGPU">SkiaControl.IsCacheGPU</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsingCacheType">SkiaControl.UsingCacheType</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsCacheComposite">SkiaControl.IsCacheComposite</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateRenderingObject_DrawnUi_Draw_DrawingContext_SkiaSharp_SKRect_DrawnUi_Draw_CachedObject_DrawnUi_Draw_SkiaCacheType_System_Action_DrawnUi_Draw_DrawingContext__">SkiaControl.CreateRenderingObject(DrawingContext, SKRect, CachedObject, SkiaCacheType, Action&lt;DrawingContext&gt;)</a>
@@ -1247,6 +1256,9 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ApplyTransforms_SkiaSharp_SKRect_">SkiaControl.ApplyTransforms(SKRect)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetTransformedDirtyBounds">SkiaControl.GetTransformedDirtyBounds()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RenderTransformMatrix">SkiaControl.RenderTransformMatrix</a>
@@ -2716,7 +2728,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll__ctor" data-uid="DrawnUi.Draw.SkiaScroll.#ctor">
   SkiaScroll()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2926"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2928"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2745,7 +2757,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_AdaptToKeyboardForProperty" data-uid="DrawnUi.Draw.SkiaScroll.AdaptToKeyboardForProperty">
   AdaptToKeyboardForProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3187"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3189"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2775,7 +2787,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_AdaptToKeyboardSizeProperty" data-uid="DrawnUi.Draw.SkiaScroll.AdaptToKeyboardSizeProperty">
   AdaptToKeyboardSizeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3199"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3201"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2805,7 +2817,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_AutoScrollingSpeedMsProperty" data-uid="DrawnUi.Draw.SkiaScroll.AutoScrollingSpeedMsProperty">
   AutoScrollingSpeedMsProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L824"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L826"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2835,7 +2847,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_BouncesProperty" data-uid="DrawnUi.Draw.SkiaScroll.BouncesProperty">
   BouncesProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L768"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L770"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>ToDo adapt this to same logic as ScrollLooped has !</p>
@@ -2866,7 +2878,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_CanScrollUsingHeaderProperty" data-uid="DrawnUi.Draw.SkiaScroll.CanScrollUsingHeaderProperty">
   CanScrollUsingHeaderProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L543"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L545"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2896,7 +2908,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ChangeDistancePannedProperty" data-uid="DrawnUi.Draw.SkiaScroll.ChangeDistancePannedProperty">
   ChangeDistancePannedProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L957"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L959"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2926,7 +2938,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ChangeVelocityScrolledProperty" data-uid="DrawnUi.Draw.SkiaScroll.ChangeVelocityScrolledProperty">
   ChangeVelocityScrolledProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L912"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L914"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2956,7 +2968,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ContentGesturesHit" data-uid="DrawnUi.Draw.SkiaScroll.ContentGesturesHit">
   ContentGesturesHit
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L558"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L560"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -2986,7 +2998,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ContentOffsetProperty" data-uid="DrawnUi.Draw.SkiaScroll.ContentOffsetProperty">
   ContentOffsetProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L117"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L119"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3016,7 +3028,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ContentProperty" data-uid="DrawnUi.Draw.SkiaScroll.ContentProperty">
   ContentProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3135"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3137"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3046,7 +3058,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_DetectIndexChildAt" data-uid="DrawnUi.Draw.SkiaScroll.DetectIndexChildAt">
   DetectIndexChildAt
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1040"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1042"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3076,7 +3088,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_DetectIndexChildEndAt" data-uid="DrawnUi.Draw.SkiaScroll.DetectIndexChildEndAt">
   DetectIndexChildEndAt
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1041"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1043"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3106,7 +3118,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_DetectIndexChildStartAt" data-uid="DrawnUi.Draw.SkiaScroll.DetectIndexChildStartAt">
   DetectIndexChildStartAt
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1039"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1041"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3136,7 +3148,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_Elastic" data-uid="DrawnUi.Draw.SkiaScroll.Elastic">
   Elastic
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L511"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L513"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3166,7 +3178,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_FooterProperty" data-uid="DrawnUi.Draw.SkiaScroll.FooterProperty">
   FooterProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L159"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L161"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3196,7 +3208,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_FooterSize" data-uid="DrawnUi.Draw.SkiaScroll.FooterSize">
   FooterSize
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1914"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1916"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3226,7 +3238,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_FrictionScrolledProperty" data-uid="DrawnUi.Draw.SkiaScroll.FrictionScrolledProperty">
   FrictionScrolledProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L851"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L853"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3256,7 +3268,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_HeaderBehindProperty" data-uid="DrawnUi.Draw.SkiaScroll.HeaderBehindProperty">
   HeaderBehindProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L105"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L107"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3286,7 +3298,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_HeaderParallaxRatioProperty" data-uid="DrawnUi.Draw.SkiaScroll.HeaderParallaxRatioProperty">
   HeaderParallaxRatioProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L147"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L149"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3316,7 +3328,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_HeaderProperty" data-uid="DrawnUi.Draw.SkiaScroll.HeaderProperty">
   HeaderProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L129"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L131"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3346,7 +3358,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_HeaderSize" data-uid="DrawnUi.Draw.SkiaScroll.HeaderSize">
   HeaderSize
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1913"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1915"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3376,7 +3388,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_HeaderStickyProperty" data-uid="DrawnUi.Draw.SkiaScroll.HeaderStickyProperty">
   HeaderStickyProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L80"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3406,7 +3418,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_IgnoreWrongDirectionProperty" data-uid="DrawnUi.Draw.SkiaScroll.IgnoreWrongDirectionProperty">
   IgnoreWrongDirectionProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L858"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L860"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3466,7 +3478,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_IsRefreshingProperty" data-uid="DrawnUi.Draw.SkiaScroll.IsRefreshingProperty">
   IsRefreshingProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L272"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L274"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3496,7 +3508,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_LastContentSizePixels" data-uid="DrawnUi.Draw.SkiaScroll.LastContentSizePixels">
   LastContentSizePixels
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1760"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1762"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3526,7 +3538,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_LastMeasuredSizePixels" data-uid="DrawnUi.Draw.SkiaScroll.LastMeasuredSizePixels">
   LastMeasuredSizePixels
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1761"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1763"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3556,7 +3568,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_LoadMoreCommandProperty" data-uid="DrawnUi.Draw.SkiaScroll.LoadMoreCommandProperty">
   LoadMoreCommandProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1735"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1737"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3586,7 +3598,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_LoadMoreOffsetProperty" data-uid="DrawnUi.Draw.SkiaScroll.LoadMoreOffsetProperty">
   LoadMoreOffsetProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1747"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1749"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3646,7 +3658,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_MaxBounceVelocityProperty" data-uid="DrawnUi.Draw.SkiaScroll.MaxBounceVelocityProperty">
   MaxBounceVelocityProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L933"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L935"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3676,7 +3688,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_MaxVelocityProperty" data-uid="DrawnUi.Draw.SkiaScroll.MaxVelocityProperty">
   MaxVelocityProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L918"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L920"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3706,7 +3718,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OrderedScrollIsAnimatedProperty" data-uid="DrawnUi.Draw.SkiaScroll.OrderedScrollIsAnimatedProperty">
   OrderedScrollIsAnimatedProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L250"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L252"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3736,7 +3748,7 @@ public class SkiaScroll : SkiaControl, INotifyPropertyChanged, IEffectControlPro
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OrderedScrollProperty" data-uid="DrawnUi.Draw.SkiaScroll.OrderedScrollProperty">
   OrderedScrollProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L240"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L242"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3830,7 +3842,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OrientationProperty" data-uid="DrawnUi.Draw.SkiaScroll.OrientationProperty">
   OrientationProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3155"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3157"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3860,7 +3872,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ParallaxOverscrollEnabledProperty" data-uid="DrawnUi.Draw.SkiaScroll.ParallaxOverscrollEnabledProperty">
   ParallaxOverscrollEnabledProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L93"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L95"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -3980,7 +3992,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RefreshCommandProperty" data-uid="DrawnUi.Draw.SkiaScroll.RefreshCommandProperty">
   RefreshCommandProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L298"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L300"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4010,7 +4022,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RefreshDistanceLimitProperty" data-uid="DrawnUi.Draw.SkiaScroll.RefreshDistanceLimitProperty">
   RefreshDistanceLimitProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L309"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L311"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4040,7 +4052,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RefreshEnabledProperty" data-uid="DrawnUi.Draw.SkiaScroll.RefreshEnabledProperty">
   RefreshEnabledProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L261"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L263"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4070,7 +4082,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RefreshIndicatorProperty" data-uid="DrawnUi.Draw.SkiaScroll.RefreshIndicatorProperty">
   RefreshIndicatorProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L177"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L179"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4100,7 +4112,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RefreshShowDistanceProperty" data-uid="DrawnUi.Draw.SkiaScroll.RefreshShowDistanceProperty">
   RefreshShowDistanceProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L324"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L326"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4130,7 +4142,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ResetScrollPositionOnContentSizeChangedProperty" data-uid="DrawnUi.Draw.SkiaScroll.ResetScrollPositionOnContentSizeChangedProperty">
   ResetScrollPositionOnContentSizeChangedProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L890"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L892"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4160,7 +4172,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RespondsToGesturesProperty" data-uid="DrawnUi.Draw.SkiaScroll.RespondsToGesturesProperty">
   RespondsToGesturesProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L528"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L530"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4190,7 +4202,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RubberDampingProperty" data-uid="DrawnUi.Draw.SkiaScroll.RubberDampingProperty">
   RubberDampingProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L782"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L784"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4220,7 +4232,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RubberEffectProperty" data-uid="DrawnUi.Draw.SkiaScroll.RubberEffectProperty">
   RubberEffectProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L797"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L799"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4250,7 +4262,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ScrollTypeProperty" data-uid="DrawnUi.Draw.SkiaScroll.ScrollTypeProperty">
   ScrollTypeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3169"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3171"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4311,7 +4323,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ScrollingEasing" data-uid="DrawnUi.Draw.SkiaScroll.ScrollingEasing">
   ScrollingEasing
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L339"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L341"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4341,7 +4353,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ScrollingSpeedMsProperty" data-uid="DrawnUi.Draw.SkiaScroll.ScrollingSpeedMsProperty">
   ScrollingSpeedMsProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3023"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3025"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4371,7 +4383,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SnapBouncingIfVelocityLessThanProperty" data-uid="DrawnUi.Draw.SkiaScroll.SnapBouncingIfVelocityLessThanProperty">
   SnapBouncingIfVelocityLessThanProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L818"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L820"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4401,7 +4413,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SnapToChildrenProperty" data-uid="DrawnUi.Draw.SkiaScroll.SnapToChildrenProperty">
   SnapToChildrenProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1686"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1688"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4493,7 +4505,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_TrackIndexPositionOffsetProperty" data-uid="DrawnUi.Draw.SkiaScroll.TrackIndexPositionOffsetProperty">
   TrackIndexPositionOffsetProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1723"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1725"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4523,7 +4535,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_TrackIndexPositionProperty" data-uid="DrawnUi.Draw.SkiaScroll.TrackIndexPositionProperty">
   TrackIndexPositionProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1700"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1702"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4553,7 +4565,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_VelocityImageLoaderLockProperty" data-uid="DrawnUi.Draw.SkiaScroll.VelocityImageLoaderLockProperty">
   VelocityImageLoaderLockProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3082"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3084"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4583,7 +4595,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_VelocityTrackerPan" data-uid="DrawnUi.Draw.SkiaScroll.VelocityTrackerPan">
   VelocityTrackerPan
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L406"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L408"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4613,7 +4625,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_VelocityTrackerScale" data-uid="DrawnUi.Draw.SkiaScroll.VelocityTrackerScale">
   VelocityTrackerScale
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L407"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L409"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4643,7 +4655,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ViewportZoomProperty" data-uid="DrawnUi.Draw.SkiaScroll.ViewportZoomProperty">
   ViewportZoomProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3071"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3073"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4704,7 +4716,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ZoomLockedProperty" data-uid="DrawnUi.Draw.SkiaScroll.ZoomLockedProperty">
   ZoomLockedProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3038"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3040"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4734,7 +4746,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ZoomMaxProperty" data-uid="DrawnUi.Draw.SkiaScroll.ZoomMaxProperty">
   ZoomMaxProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3060"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3062"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4764,7 +4776,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ZoomMinProperty" data-uid="DrawnUi.Draw.SkiaScroll.ZoomMinProperty">
   ZoomMinProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3049"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3051"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -4794,7 +4806,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__animatorFlingX" data-uid="DrawnUi.Draw.SkiaScroll._animatorFlingX">
   _animatorFlingX
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L589"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L591"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Fling with deceleration</p>
@@ -4825,7 +4837,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__animatorFlingY" data-uid="DrawnUi.Draw.SkiaScroll._animatorFlingY">
   _animatorFlingY
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L594"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L596"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Fling with deceleration</p>
@@ -4886,7 +4898,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__minVelocitySnap" data-uid="DrawnUi.Draw.SkiaScroll._minVelocitySnap">
   _minVelocitySnap
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L686"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L688"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5006,7 +5018,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__panningCurrentOffsetPts" data-uid="DrawnUi.Draw.SkiaScroll._panningCurrentOffsetPts">
   _panningCurrentOffsetPts
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L345"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L347"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5036,7 +5048,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__panningLastDelta" data-uid="DrawnUi.Draw.SkiaScroll._panningLastDelta">
   _panningLastDelta
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L344"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L346"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5066,7 +5078,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__planeHeight" data-uid="DrawnUi.Draw.SkiaScroll._planeHeight">
   _planeHeight
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L198"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L258"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5096,7 +5108,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__planePrepareThreshold" data-uid="DrawnUi.Draw.SkiaScroll._planePrepareThreshold">
   _planePrepareThreshold
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L199"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L259"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5126,7 +5138,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__planeWidth" data-uid="DrawnUi.Draw.SkiaScroll._planeWidth">
   _planeWidth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L197"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L257"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5156,7 +5168,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__scrollMaxX" data-uid="DrawnUi.Draw.SkiaScroll._scrollMaxX">
   _scrollMaxX
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L616"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L618"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5186,7 +5198,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__scrollMaxY" data-uid="DrawnUi.Draw.SkiaScroll._scrollMaxY">
   _scrollMaxY
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L617"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L619"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5216,7 +5228,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__scrollMinX" data-uid="DrawnUi.Draw.SkiaScroll._scrollMinX">
   _scrollMinX
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L609"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L611"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Units</p>
@@ -5247,7 +5259,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__scrollMinY" data-uid="DrawnUi.Draw.SkiaScroll._scrollMinY">
   _scrollMinY
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L614"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L616"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Units</p>
@@ -5278,7 +5290,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__scrollerX" data-uid="DrawnUi.Draw.SkiaScroll._scrollerX">
   _scrollerX
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L599"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L601"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Direct scroller for ordered scroll, snap etc</p>
@@ -5309,7 +5321,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__scrollerY" data-uid="DrawnUi.Draw.SkiaScroll._scrollerY">
   _scrollerY
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L604"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L606"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Direct scroller for ordered scroll, snap etc</p>
@@ -5340,7 +5352,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__vectorAnimatorBounceX" data-uid="DrawnUi.Draw.SkiaScroll._vectorAnimatorBounceX">
   _vectorAnimatorBounceX
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L583"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L585"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5370,7 +5382,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__vectorAnimatorBounceY" data-uid="DrawnUi.Draw.SkiaScroll._vectorAnimatorBounceY">
   _vectorAnimatorBounceY
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L584"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L586"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5400,7 +5412,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__velocitySwipe" data-uid="DrawnUi.Draw.SkiaScroll._velocitySwipe">
   _velocitySwipe
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L342"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L344"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5430,7 +5442,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll__velocitySwipeRatio" data-uid="DrawnUi.Draw.SkiaScroll._velocitySwipeRatio">
   _velocitySwipeRatio
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L343"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L345"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5580,7 +5592,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_snapMinimumVelocity" data-uid="DrawnUi.Draw.SkiaScroll.snapMinimumVelocity">
   snapMinimumVelocity
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L691"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L693"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>POINTS per sec</p>
@@ -5616,7 +5628,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_AdaptToKeyboardFor" data-uid="DrawnUi.Draw.SkiaScroll.AdaptToKeyboardFor">
   AdaptToKeyboardFor
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3193"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3195"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5647,7 +5659,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_AdaptToKeyboardSize" data-uid="DrawnUi.Draw.SkiaScroll.AdaptToKeyboardSize">
   AdaptToKeyboardSize
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3205"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3207"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5678,7 +5690,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_AutoScrollingSpeedMs" data-uid="DrawnUi.Draw.SkiaScroll.AutoScrollingSpeedMs">
   AutoScrollingSpeedMs
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L833"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L835"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>For snap and ordered scrolling</p>
@@ -5710,7 +5722,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_Bounces" data-uid="DrawnUi.Draw.SkiaScroll.Bounces">
   Bounces
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L776"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L778"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Should the scroll bounce at edges. Set to false if you want this scroll to let the parent SkiaDrawer respond to scroll when the child scroll reached bounds.</p>
@@ -5742,7 +5754,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_CanScrollUsingHeader" data-uid="DrawnUi.Draw.SkiaScroll.CanScrollUsingHeader">
   CanScrollUsingHeader
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L552"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L554"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>If disabled will not scroll using gestures. Scrolling will still be possible by code.</p>
@@ -5774,7 +5786,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ChangeDistancePanned" data-uid="DrawnUi.Draw.SkiaScroll.ChangeDistancePanned">
   ChangeDistancePanned
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L951"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L953"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>For when the finger is down and panning</p>
@@ -5806,7 +5818,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ChangeVelocityScrolled" data-uid="DrawnUi.Draw.SkiaScroll.ChangeVelocityScrolled">
   ChangeVelocityScrolled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L906"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L908"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>For when the finger is up and swipe is detected</p>
@@ -5838,7 +5850,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ChildWasPanning" data-uid="DrawnUi.Draw.SkiaScroll.ChildWasPanning">
   ChildWasPanning
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L571"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L573"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5869,7 +5881,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ChildWasTapped" data-uid="DrawnUi.Draw.SkiaScroll.ChildWasTapped">
   ChildWasTapped
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L572"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L574"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5900,7 +5912,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_Content" data-uid="DrawnUi.Draw.SkiaScroll.Content">
   Content
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3149"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3151"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5931,7 +5943,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ContentAvailableSpace" data-uid="DrawnUi.Draw.SkiaScroll.ContentAvailableSpace">
   ContentAvailableSpace
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2919"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2921"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5962,7 +5974,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ContentOffset" data-uid="DrawnUi.Draw.SkiaScroll.ContentOffset">
   ContentOffset
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L123"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L125"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5993,7 +6005,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ContentOffsetBounds" data-uid="DrawnUi.Draw.SkiaScroll.ContentOffsetBounds">
   ContentOffsetBounds
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L413"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L415"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>There are the bounds the scroll offset can go to.. This is NOT the bounds for the whole content.</p>
@@ -6025,7 +6037,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ContentRectWithOffset" data-uid="DrawnUi.Draw.SkiaScroll.ContentRectWithOffset">
   ContentRectWithOffset
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2924"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2926"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The viewport for content</p>
@@ -6057,7 +6069,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ContentViewport" data-uid="DrawnUi.Draw.SkiaScroll.ContentViewport">
   ContentViewport
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2064"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2066"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6088,7 +6100,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_CurrentIndex" data-uid="DrawnUi.Draw.SkiaScroll.CurrentIndex">
   CurrentIndex
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L973"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L975"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6119,7 +6131,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_CurrentIndexHit" data-uid="DrawnUi.Draw.SkiaScroll.CurrentIndexHit">
   CurrentIndexHit
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1020"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1022"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6181,7 +6193,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_FirstVisibleIndex" data-uid="DrawnUi.Draw.SkiaScroll.FirstVisibleIndex">
   FirstVisibleIndex
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L988"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L990"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6212,7 +6224,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_Footer" data-uid="DrawnUi.Draw.SkiaScroll.Footer">
   Footer
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L171"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L173"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6243,7 +6255,7 @@ saved every time one calls ScrollToIndex</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_FrictionScrolled" data-uid="DrawnUi.Draw.SkiaScroll.FrictionScrolled">
   FrictionScrolled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L845"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L847"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Use this to control how fast the scroll will decelerate.
@@ -6309,7 +6321,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_HasContentToScroll" data-uid="DrawnUi.Draw.SkiaScroll.HasContentToScroll">
   HasContentToScroll
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L65"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6340,7 +6352,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_Header" data-uid="DrawnUi.Draw.SkiaScroll.Header">
   Header
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L141"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L143"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6371,7 +6383,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_HeaderBehind" data-uid="DrawnUi.Draw.SkiaScroll.HeaderBehind">
   HeaderBehind
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L111"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L113"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6402,7 +6414,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_HeaderParallaxRatio" data-uid="DrawnUi.Draw.SkiaScroll.HeaderParallaxRatio">
   HeaderParallaxRatio
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L153"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L155"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6433,7 +6445,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_HeaderSticky" data-uid="DrawnUi.Draw.SkiaScroll.HeaderSticky">
   HeaderSticky
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L89"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Should the header stay in place when content is scrolling</p>
@@ -6465,7 +6477,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_IgnoreWrongDirection" data-uid="DrawnUi.Draw.SkiaScroll.IgnoreWrongDirection">
   IgnoreWrongDirection
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L867"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L869"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Will ignore gestures of the wrong direction, like if this Orientation is Horizontal will ignore gestures with vertical direction velocity. Default is False.</p>
@@ -6559,7 +6571,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_InteractionState" data-uid="DrawnUi.Draw.SkiaScroll.InteractionState">
   InteractionState
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L40"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6590,7 +6602,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_InternalRefreshIndicator" data-uid="DrawnUi.Draw.SkiaScroll.InternalRefreshIndicator">
   InternalRefreshIndicator
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L198"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L200"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6621,7 +6633,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_InternalViewportOffset" data-uid="DrawnUi.Draw.SkiaScroll.InternalViewportOffset">
   InternalViewportOffset
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2059"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2061"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This is where the view port is actually is after being scrolled. We used this value to offset viewport on drawing the last frame</p>
@@ -6715,7 +6727,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_IsContentActive" data-uid="DrawnUi.Draw.SkiaScroll.IsContentActive">
   IsContentActive
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L574"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L576"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6746,7 +6758,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_IsRefreshing" data-uid="DrawnUi.Draw.SkiaScroll.IsRefreshing">
   IsRefreshing
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L292"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L294"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6777,7 +6789,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_IsScrolling" data-uid="DrawnUi.Draw.SkiaScroll.IsScrolling">
   IsScrolling
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2298"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2300"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6932,7 +6944,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_LastVisibleIndex" data-uid="DrawnUi.Draw.SkiaScroll.LastVisibleIndex">
   LastVisibleIndex
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1003"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1005"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6963,7 +6975,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_LoadMoreCommand" data-uid="DrawnUi.Draw.SkiaScroll.LoadMoreCommand">
   LoadMoreCommand
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1741"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1743"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6994,7 +7006,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_LoadMoreOffset" data-uid="DrawnUi.Draw.SkiaScroll.LoadMoreOffset">
   LoadMoreOffset
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1752"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1754"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7025,7 +7037,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_MaxBounceVelocity" data-uid="DrawnUi.Draw.SkiaScroll.MaxBounceVelocity">
   MaxBounceVelocity
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L942"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L944"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Limit bounce velocity</p>
@@ -7057,7 +7069,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_MaxVelocity" data-uid="DrawnUi.Draw.SkiaScroll.MaxVelocity">
   MaxVelocity
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L927"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L929"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Limit user input velocity</p>
@@ -7151,7 +7163,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OrderedScroll" data-uid="DrawnUi.Draw.SkiaScroll.OrderedScroll">
   OrderedScroll
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L244"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L246"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7182,7 +7194,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OrderedScrollIsAnimated" data-uid="DrawnUi.Draw.SkiaScroll.OrderedScrollIsAnimated">
   OrderedScrollIsAnimated
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L255"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L257"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7213,7 +7225,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_Orientation" data-uid="DrawnUi.Draw.SkiaScroll.Orientation">
   Orientation
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3163"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3165"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><summary>Gets or sets the scrolling direction of the ScrollView. This is a bindable property.</summary>
@@ -7276,7 +7288,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OverscrollDistance" data-uid="DrawnUi.Draw.SkiaScroll.OverscrollDistance">
   OverscrollDistance
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L368"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L370"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Units</p>
@@ -7308,7 +7320,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ParallaxComputedValue" data-uid="DrawnUi.Draw.SkiaScroll.ParallaxComputedValue">
   ParallaxComputedValue
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2689"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2691"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7339,7 +7351,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ParallaxOverscrollEnabled" data-uid="DrawnUi.Draw.SkiaScroll.ParallaxOverscrollEnabled">
   ParallaxOverscrollEnabled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L101"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7370,7 +7382,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_PlaneBackward" data-uid="DrawnUi.Draw.SkiaScroll.PlaneBackward">
   PlaneBackward
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L196"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L256"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7401,7 +7413,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_PlaneCurrent" data-uid="DrawnUi.Draw.SkiaScroll.PlaneCurrent">
   PlaneCurrent
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L194"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L254"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7432,7 +7444,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_PlaneForward" data-uid="DrawnUi.Draw.SkiaScroll.PlaneForward">
   PlaneForward
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L195"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L255"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7463,7 +7475,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RefreshCommand" data-uid="DrawnUi.Draw.SkiaScroll.RefreshCommand">
   RefreshCommand
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L303"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L305"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7494,7 +7506,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RefreshDistanceLimit" data-uid="DrawnUi.Draw.SkiaScroll.RefreshDistanceLimit">
   RefreshDistanceLimit
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L318"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L320"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Applyed to RefreshView</p>
@@ -7526,7 +7538,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RefreshEnabled" data-uid="DrawnUi.Draw.SkiaScroll.RefreshEnabled">
   RefreshEnabled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L266"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L268"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7557,7 +7569,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RefreshIndicator" data-uid="DrawnUi.Draw.SkiaScroll.RefreshIndicator">
   RefreshIndicator
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L184"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L186"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7588,7 +7600,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RefreshShowDistance" data-uid="DrawnUi.Draw.SkiaScroll.RefreshShowDistance">
   RefreshShowDistance
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L333"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L335"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Applyed to RefreshView, distance in points where the refresh view will stop moving and stay here animating</p>
@@ -7620,7 +7632,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ResetScrollPositionOnContentSizeChanged" data-uid="DrawnUi.Draw.SkiaScroll.ResetScrollPositionOnContentSizeChanged">
   ResetScrollPositionOnContentSizeChanged
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L897"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L899"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7651,7 +7663,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RespondsToGestures" data-uid="DrawnUi.Draw.SkiaScroll.RespondsToGestures">
   RespondsToGestures
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L537"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L539"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>If disabled will not scroll using gestures. Scrolling will still be possible by code.</p>
@@ -7714,7 +7726,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RubberDamping" data-uid="DrawnUi.Draw.SkiaScroll.RubberDamping">
   RubberDamping
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L791"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L793"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>If Bounce is enabled this basically controls how less the scroll will bounce when displaced from limit by finger or inertia. Default is 0.55.</p>
@@ -7746,7 +7758,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_RubberEffect" data-uid="DrawnUi.Draw.SkiaScroll.RubberEffect">
   RubberEffect
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L806"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L808"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>If Bounce is enabled this basically controls how far from the limit can the scroll be elastically offset by finger or inertia. Default is 0.55.</p>
@@ -7778,7 +7790,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ScrollLocked" data-uid="DrawnUi.Draw.SkiaScroll.ScrollLocked">
   ScrollLocked
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L388"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L390"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7873,7 +7885,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ScrollType" data-uid="DrawnUi.Draw.SkiaScroll.ScrollType">
   ScrollType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3177"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3179"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><summary>Gets or sets the scrolling direction of the ScrollView. This is a bindable property.</summary>
@@ -7936,7 +7948,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ScrollingSpeedMs" data-uid="DrawnUi.Draw.SkiaScroll.ScrollingSpeedMs">
   ScrollingSpeedMs
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3032"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3034"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Used by range scroller (ScrollToX, ScrollToY)</p>
@@ -7968,7 +7980,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SnapBouncingIfVelocityLessThan" data-uid="DrawnUi.Draw.SkiaScroll.SnapBouncingIfVelocityLessThan">
   SnapBouncingIfVelocityLessThan
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L812"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L814"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -7999,7 +8011,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SnapToChildren" data-uid="DrawnUi.Draw.SkiaScroll.SnapToChildren">
   SnapToChildren
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1694"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1696"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether should snap to children after scrolling stopped</p>
@@ -8062,7 +8074,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SwipeVelocityAccumulator" data-uid="DrawnUi.Draw.SkiaScroll.SwipeVelocityAccumulator">
   SwipeVelocityAccumulator
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L579"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L581"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8093,7 +8105,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_TrackIndexPosition" data-uid="DrawnUi.Draw.SkiaScroll.TrackIndexPosition">
   TrackIndexPosition
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1717"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1719"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The position in viewport you want to track for content layout child index</p>
@@ -8125,7 +8137,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_TrackIndexPositionOffset" data-uid="DrawnUi.Draw.SkiaScroll.TrackIndexPositionOffset">
   TrackIndexPositionOffset
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1729"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1731"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8156,7 +8168,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_UseVirtual" data-uid="DrawnUi.Draw.SkiaScroll.UseVirtual">
   UseVirtual
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L183"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L243"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8187,7 +8199,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_UsesRenderingTree" data-uid="DrawnUi.Draw.SkiaScroll.UsesRenderingTree">
   UsesRenderingTree
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L582"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L584"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8218,7 +8230,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_UsingRefreshDistanceLimit" data-uid="DrawnUi.Draw.SkiaScroll.UsingRefreshDistanceLimit">
   UsingRefreshDistanceLimit
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2355"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2357"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8249,7 +8261,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_VelocityImageLoaderLock" data-uid="DrawnUi.Draw.SkiaScroll.VelocityImageLoaderLock">
   VelocityImageLoaderLock
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3091"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3093"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Range at which the image loader will stop or resume loading images while scrolling</p>
@@ -8281,7 +8293,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_VelocityX" data-uid="DrawnUi.Draw.SkiaScroll.VelocityX">
   VelocityX
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1819"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1821"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8312,7 +8324,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_VelocityY" data-uid="DrawnUi.Draw.SkiaScroll.VelocityY">
   VelocityY
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1799"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1801"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8343,7 +8355,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_Viewport" data-uid="DrawnUi.Draw.SkiaScroll.Viewport">
   Viewport
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2009"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2011"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8436,7 +8448,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ViewportZoom" data-uid="DrawnUi.Draw.SkiaScroll.ViewportZoom">
   ViewportZoom
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3076"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3078"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8499,7 +8511,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_WillClipBounds" data-uid="DrawnUi.Draw.SkiaScroll.WillClipBounds">
   WillClipBounds
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3288"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3290"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Used to check whether to apply IsClippedToBounds property</p>
@@ -8531,7 +8543,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ZoomLocked" data-uid="DrawnUi.Draw.SkiaScroll.ZoomLocked">
   ZoomLocked
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3043"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3045"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8562,7 +8574,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ZoomMax" data-uid="DrawnUi.Draw.SkiaScroll.ZoomMax">
   ZoomMax
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3065"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3067"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8593,7 +8605,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ZoomMin" data-uid="DrawnUi.Draw.SkiaScroll.ZoomMin">
   ZoomMin
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3054"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3056"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8624,7 +8636,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ZoomScaleInternal" data-uid="DrawnUi.Draw.SkiaScroll.ZoomScaleInternal">
   ZoomScaleInternal
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1911"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1913"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>We might have difference between pinch scale and manually set zoom.</p>
@@ -8660,7 +8672,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_AdaptToKeyboard" data-uid="DrawnUi.Draw.SkiaScroll.AdaptToKeyboard">
   AdaptToKeyboard()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3252"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3254"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8686,7 +8698,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_AdjustCache" data-uid="DrawnUi.Draw.SkiaScroll.AdjustCache">
   AdjustCache()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2281"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2283"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8712,7 +8724,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_AdjustHeaderParallax" data-uid="DrawnUi.Draw.SkiaScroll.AdjustHeaderParallax">
   AdjustHeaderParallax()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2066"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2068"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8738,7 +8750,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ApplyBindingContext" data-uid="DrawnUi.Draw.SkiaScroll.ApplyBindingContext">
   ApplyBindingContext()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2944"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2946"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p><a href="https://github.com/taublast/DrawnUi/issues/92#issuecomment-2408805077">https://github.com/taublast/DrawnUi/issues/92#issuecomment-2408805077</a></p>
@@ -8765,7 +8777,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ApplyContentSize" data-uid="DrawnUi.Draw.SkiaScroll.ApplyContentSize">
   ApplyContentSize()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1763"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1765"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8823,7 +8835,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ApplyScrollPositionToRefreshViewUnsafe" data-uid="DrawnUi.Draw.SkiaScroll.ApplyScrollPositionToRefreshViewUnsafe">
   ApplyScrollPositionToRefreshViewUnsafe()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2398"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2400"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8880,7 +8892,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_CalculateNeededScrollForKeyboard" data-uid="DrawnUi.Draw.SkiaScroll.CalculateNeededScrollForKeyboard">
   CalculateNeededScrollForKeyboard()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3222"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3224"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -8945,7 +8957,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_CalculateScrollOffsetForIndex_System_Int32_DrawnUi_Draw_RelativePositionType_" data-uid="DrawnUi.Draw.SkiaScroll.CalculateScrollOffsetForIndex(System.Int32,DrawnUi.Draw.RelativePositionType)">
   CalculateScrollOffsetForIndex(int, RelativePositionType)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1449"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1451"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>ToDo this actually work only for Stack and Row</p>
@@ -8984,7 +8996,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_CalculateViewportForPlane_DrawnUi_Draw_Plane_SkiaSharp_SKPoint_" data-uid="DrawnUi.Draw.SkiaScroll.CalculateViewportForPlane(DrawnUi.Draw.Plane,SkiaSharp.SKPoint)">
   CalculateViewportForPlane(Plane, SKPoint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L713"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L773"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Calculate the specific viewport area this plane should render</p>
@@ -9023,7 +9035,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_CalculateVisibleIndex_DrawnUi_Draw_RelativePositionType_" data-uid="DrawnUi.Draw.SkiaScroll.CalculateVisibleIndex(DrawnUi.Draw.RelativePositionType)">
   CalculateVisibleIndex(RelativePositionType)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1107"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1109"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Calculates CurrentIndex</p>
@@ -9060,7 +9072,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_CalculateVisibleIndexes" data-uid="DrawnUi.Draw.SkiaScroll.CalculateVisibleIndexes">
   CalculateVisibleIndexes()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1151"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1153"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Will calculate first/last visible and current index, if tracked with TrackIndexPosition.</p>
@@ -9087,7 +9099,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_CheckAndInvalidateDirtyPlanes" data-uid="DrawnUi.Draw.SkiaScroll.CheckAndInvalidateDirtyPlanes">
   CheckAndInvalidateDirtyPlanes()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L88"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L148"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Check dirty children and invalidate specific planes that contain them</p>
@@ -9171,7 +9183,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_CheckNeedRefresh" data-uid="DrawnUi.Draw.SkiaScroll.CheckNeedRefresh">
   CheckNeedRefresh()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2433"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2435"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -9197,7 +9209,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_CheckNeedToSnap" data-uid="DrawnUi.Draw.SkiaScroll.CheckNeedToSnap">
   CheckNeedToSnap()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1557"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1559"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -9228,7 +9240,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ClampOffset_System_Single_System_Single_SkiaSharp_SKRect_System_Boolean_" data-uid="DrawnUi.Draw.SkiaScroll.ClampOffset(System.Single,System.Single,SkiaSharp.SKRect,System.Boolean)">
   ClampOffset(float, float, SKRect, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L513"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L515"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -9309,7 +9321,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ClampOffsetWithRubberBand_System_Single_System_Single_SkiaSharp_SKRect_" data-uid="DrawnUi.Draw.SkiaScroll.ClampOffsetWithRubberBand(System.Single,System.Single,SkiaSharp.SKRect)">
   ClampOffsetWithRubberBand(float, float, SKRect)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L439"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L441"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Used to clamp while panning while finger is down</p>
@@ -9350,7 +9362,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ClampedOrderedScrollOffset_SkiaSharp_SKPoint_" data-uid="DrawnUi.Draw.SkiaScroll.ClampedOrderedScrollOffset(SkiaSharp.SKPoint)">
   ClampedOrderedScrollOffset(SKPoint)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1408"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1410"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -9420,11 +9432,37 @@ For a picker: 05 - 0.9.</p>
 
 
 
+  <a id="DrawnUi_Draw_SkiaScroll_DisposeVirtualPlanes_" data-uid="DrawnUi.Draw.SkiaScroll.DisposeVirtualPlanes*"></a>
+
+  <h3 id="DrawnUi_Draw_SkiaScroll_DisposeVirtualPlanes" data-uid="DrawnUi.Draw.SkiaScroll.DisposeVirtualPlanes">
+  DisposeVirtualPlanes()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void DisposeVirtualPlanes()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
   <a id="DrawnUi_Draw_SkiaScroll_Draw_" data-uid="DrawnUi.Draw.SkiaScroll.Draw*"></a>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_Draw_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaScroll.Draw(DrawnUi.Draw.DrawingContext)">
   Draw(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2533"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2535"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -9455,7 +9493,7 @@ For a picker: 05 - 0.9.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_DrawViews_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaScroll.DrawViews(DrawnUi.Draw.DrawingContext)">
   DrawViews(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2700"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2702"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Base method will call RenderViewsList.
@@ -9493,7 +9531,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_DrawVirtual_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaScroll.DrawVirtual(DrawnUi.Draw.DrawingContext)">
   DrawVirtual(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L525"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L585"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This is called when scrolling changes when in UseVirtual mode, override this to draw custom content</p>
@@ -9613,7 +9651,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_FindPlaneContainingChild_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Draw.SkiaScroll.FindPlaneContainingChild(DrawnUi.Draw.SkiaControl)">
   FindPlaneContainingChild(SkiaControl)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L158"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L218"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Determines which plane contains the given child control by checking render trees</p>
@@ -9851,7 +9889,7 @@ Return number of drawn views.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_GetContentAvailableRect_SkiaSharp_SKRect_" data-uid="DrawnUi.Draw.SkiaScroll.GetContentAvailableRect(SkiaSharp.SKRect)">
   GetContentAvailableRect(SKRect)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2032"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2034"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>In PIXELS</p>
@@ -9922,7 +9960,7 @@ In POINTS not pixels!!!</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_GetItemIndex_DrawnUi_Draw_SkiaLayout_System_Single_System_Single_DrawnUi_Draw_RelativePositionType_" data-uid="DrawnUi.Draw.SkiaScroll.GetItemIndex(DrawnUi.Draw.SkiaLayout,System.Single,System.Single,DrawnUi.Draw.RelativePositionType)">
   GetItemIndex(SkiaLayout, float, float, RelativePositionType)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1266"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1268"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -9964,7 +10002,7 @@ In POINTS not pixels!!!</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_GetOnScreenVisibleArea_DrawnUi_Draw_DrawingContext_System_Numerics_Vector2_" data-uid="DrawnUi.Draw.SkiaScroll.GetOnScreenVisibleArea(DrawnUi.Draw.DrawingContext,System.Numerics.Vector2)">
   GetOnScreenVisibleArea(DrawingContext, Vector2)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L203"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L263"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>For virtualization. For this method to be conditional we introduced the <code>pixelsDestination</code>
@@ -10005,7 +10043,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_GetPlaneById_System_String_" data-uid="DrawnUi.Draw.SkiaScroll.GetPlaneById(System.String)">
   GetPlaneById(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L385"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L445"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -10041,7 +10079,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_GetVisibleIndexes_DrawnUi_Draw_SkiaLayout_System_Single_System_Single_" data-uid="DrawnUi.Draw.SkiaScroll.GetVisibleIndexes(DrawnUi.Draw.SkiaLayout,System.Single,System.Single)">
   GetVisibleIndexes(SkiaLayout, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1194"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1196"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -10081,7 +10119,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_HasDirtyChildren" data-uid="DrawnUi.Draw.SkiaScroll.HasDirtyChildren">
   HasDirtyChildren()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L120"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L180"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -10112,7 +10150,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_HideRefreshIndicator" data-uid="DrawnUi.Draw.SkiaScroll.HideRefreshIndicator">
   HideRefreshIndicator()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2326"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2328"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -10138,7 +10176,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_Init" data-uid="DrawnUi.Draw.SkiaScroll.Init">
   Init()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2931"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2933"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -10164,7 +10202,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_InitializePlanes" data-uid="DrawnUi.Draw.SkiaScroll.InitializePlanes">
   InitializePlanes()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L244"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L304"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -10305,7 +10343,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_InvalidateViewport" data-uid="DrawnUi.Draw.SkiaScroll.InvalidateViewport">
   InvalidateViewport()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3280"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3282"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Indicated that wants to be re-measured without invalidating cache</p>
@@ -10370,7 +10408,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_IsGestureForChild_DrawnUi_Draw_ISkiaGestureListener_System_Single_System_Single_" data-uid="DrawnUi.Draw.SkiaScroll.IsGestureForChild(DrawnUi.Draw.ISkiaGestureListener,System.Single,System.Single)">
   IsGestureForChild(ISkiaGestureListener, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L560"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L562"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -10486,7 +10524,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_IsGestureInPlane_DrawnUi_Draw_Plane_Microsoft_Maui_Graphics_PointF_" data-uid="DrawnUi.Draw.SkiaScroll.IsGestureInPlane(DrawnUi.Draw.Plane,Microsoft.Maui.Graphics.PointF)">
   IsGestureInPlane(Plane, PointF)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L809"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L869"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Check if gesture point intersects with plane's visible area</p>
@@ -10525,7 +10563,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_MeasureContent_System_Single_System_Single_System_Single_" data-uid="DrawnUi.Draw.SkiaScroll.MeasureContent(System.Single,System.Single,System.Single)">
   MeasureContent(float, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1923"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1925"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Calculate the value that will be set to ContentSize after that</p>
@@ -10566,7 +10604,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_MeasureInternal_DrawnUi_Draw_MeasureRequest_" data-uid="DrawnUi.Draw.SkiaScroll.MeasureInternal(DrawnUi.Draw.MeasureRequest)">
   MeasureInternal(MeasureRequest)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1928"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1930"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -10701,7 +10739,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OnDrawn_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaScroll.OnDrawn(DrawnUi.Draw.DrawingContext)">
   OnDrawn(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3304"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3306"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -10732,7 +10770,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OnLayoutReady" data-uid="DrawnUi.Draw.SkiaScroll.OnLayoutReady">
   OnLayoutReady()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2977"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2979"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Layout was changed with dimensions above zero. Rather a helper method, can you more generic OnLayoutChanged().</p>
@@ -10759,7 +10797,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OnMeasured" data-uid="DrawnUi.Draw.SkiaScroll.OnMeasured">
   OnMeasured()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1777"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1779"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -10785,7 +10823,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OnPropertyChanged_System_String_" data-uid="DrawnUi.Draw.SkiaScroll.OnPropertyChanged(System.String)">
   OnPropertyChanged(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3269"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3271"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Method that is called when a bound property is changed.</p>
@@ -10818,7 +10856,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OnScrollCompleted" data-uid="DrawnUi.Draw.SkiaScroll.OnScrollCompleted">
   OnScrollCompleted()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2260"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2262"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This triggers smapping checks and actions</p>
@@ -10845,7 +10883,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OnScrolled" data-uid="DrawnUi.Draw.SkiaScroll.OnScrolled">
   OnScrolled()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2336"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2338"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Notify current scroll offset to some dependent views.</p>
@@ -10872,7 +10910,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OnScrolledForPlanes" data-uid="DrawnUi.Draw.SkiaScroll.OnScrolledForPlanes">
   OnScrolledForPlanes()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L408"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L468"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Viewport scrolled</p>
@@ -10977,7 +11015,7 @@ Normally pass your current destination you are drawing into as this parameter.</
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OnScrollingStateChanged_System_Boolean_" data-uid="DrawnUi.Draw.SkiaScroll.OnScrollingStateChanged(System.Boolean)">
   OnScrollingStateChanged(bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2270"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2272"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -11036,7 +11074,7 @@ This method will be called without delay when Dispose() is invoked. Disposed wil
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OrderToPreparePlaneBackwardInBackground_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaScroll.OrderToPreparePlaneBackwardInBackground(DrawnUi.Draw.DrawingContext)">
   OrderToPreparePlaneBackwardInBackground(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L452"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L512"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -11067,7 +11105,7 @@ This method will be called without delay when Dispose() is invoked. Disposed wil
 
   <h3 id="DrawnUi_Draw_SkiaScroll_OrderToPreparePlaneForwardInBackground_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaScroll.OrderToPreparePlaneForwardInBackground(DrawnUi.Draw.DrawingContext)">
   OrderToPreparePlaneForwardInBackground(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L430"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L490"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -11098,7 +11136,7 @@ This method will be called without delay when Dispose() is invoked. Disposed wil
 
   <h3 id="DrawnUi_Draw_SkiaScroll_Paint_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaScroll.Paint(DrawnUi.Draw.DrawingContext)">
   Paint(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2510"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2512"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This is the main drawing routine you should override to draw something.
@@ -11132,7 +11170,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaScroll_PaintOnPlane_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_Plane_" data-uid="DrawnUi.Draw.SkiaScroll.PaintOnPlane(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.Plane)">
   PaintOnPlane(DrawingContext, Plane)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L799"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L859"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -11165,7 +11203,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaScroll_PaintViews_DrawnUi_Draw_DrawingContext_" data-uid="DrawnUi.Draw.SkiaScroll.PaintViews(DrawnUi.Draw.DrawingContext)">
   PaintViews(DrawingContext)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2495"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2497"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -11196,7 +11234,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaScroll_PassGestureToChildren_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_" data-uid="DrawnUi.Draw.SkiaScroll.PassGestureToChildren(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)">
   PassGestureToChildren(SkiaGesturesParameters, GestureEventProcessingInfo)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1788"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1790"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -11234,7 +11272,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaScroll_PlayEdgeGlowAnimation_Microsoft_Maui_Graphics_Color_System_Double_System_Double_System_Boolean_" data-uid="DrawnUi.Draw.SkiaScroll.PlayEdgeGlowAnimation(Microsoft.Maui.Graphics.Color,System.Double,System.Double,System.Boolean)">
   PlayEdgeGlowAnimation(Color, double, double, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L348"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L350"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -11271,7 +11309,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaScroll_PositionViewport_SkiaSharp_SKRect_SkiaSharp_SKPoint_System_Single_System_Single_System_Boolean_" data-uid="DrawnUi.Draw.SkiaScroll.PositionViewport(SkiaSharp.SKRect,SkiaSharp.SKPoint,System.Single,System.Single,System.Boolean)">
   PositionViewport(SKRect, SKPoint, float, float, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2101"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2103"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Input offset parameters in PIXELS.
@@ -11320,7 +11358,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_PreparePlane_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_Plane_" data-uid="DrawnUi.Draw.SkiaScroll.PreparePlane(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.Plane)">
   PreparePlane(DrawingContext, Plane)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L728"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L788"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -11427,7 +11465,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ProcessGesturesForPlane_DrawnUi_Draw_Plane_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_" data-uid="DrawnUi.Draw.SkiaScroll.ProcessGesturesForPlane(DrawnUi.Draw.Plane,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)">
   ProcessGesturesForPlane(Plane, SkiaGesturesParameters, GestureEventProcessingInfo)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L823"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L883"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Process gestures for a specific plane using its rendering tree</p>
@@ -11824,7 +11862,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SendScrolled" data-uid="DrawnUi.Draw.SkiaScroll.SendScrolled">
   SendScrolled()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2240"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2242"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -11850,7 +11888,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SendScrollingEnded" data-uid="DrawnUi.Draw.SkiaScroll.SendScrollingEnded">
   SendScrollingEnded()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2251"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2253"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -11876,7 +11914,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SetChildren_System_Collections_Generic_IEnumerable_DrawnUi_Draw_SkiaControl__" data-uid="DrawnUi.Draw.SkiaScroll.SetChildren(System.Collections.Generic.IEnumerable{DrawnUi.Draw.SkiaControl})">
   SetChildren(IEnumerable&lt;SkiaControl&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2937"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2939"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -11907,7 +11945,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SetContent_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Draw.SkiaScroll.SetContent(DrawnUi.Draw.SkiaControl)">
   SetContent(SkiaControl)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2956"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2958"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Use Content property for direct access</p>
@@ -11975,7 +12013,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SetDetectIndexChildPoint_DrawnUi_Draw_RelativePositionType_" data-uid="DrawnUi.Draw.SkiaScroll.SetDetectIndexChildPoint(DrawnUi.Draw.RelativePositionType)">
   SetDetectIndexChildPoint(RelativePositionType)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1043"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1045"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -12006,7 +12044,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SetFooter_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Draw.SkiaScroll.SetFooter(DrawnUi.Draw.SkiaControl)">
   SetFooter(SkiaControl)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3004"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L3006"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -12037,7 +12075,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SetHeader_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Draw.SkiaScroll.SetHeader(DrawnUi.Draw.SkiaControl)">
   SetHeader(SkiaControl)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2986"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2988"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -12068,7 +12106,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SetIsRefreshing_System_Boolean_System_Boolean_" data-uid="DrawnUi.Draw.SkiaScroll.SetIsRefreshing(System.Boolean,System.Boolean)">
   SetIsRefreshing(bool, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2463"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2465"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -12101,7 +12139,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SetMeasured_System_Single_System_Single_System_Boolean_System_Boolean_System_Single_" data-uid="DrawnUi.Draw.SkiaScroll.SetMeasured(System.Single,System.Single,System.Boolean,System.Boolean,System.Single)">
   SetMeasured(float, float, bool, bool, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2015"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2017"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Parameters in PIXELS. sets IsLayoutDirty = true;</p>
@@ -12146,7 +12184,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SetScrollOffset_SkiaSharp_SKRect_System_Single_System_Single_System_Single_System_Single_System_Boolean_" data-uid="DrawnUi.Draw.SkiaScroll.SetScrollOffset(SkiaSharp.SKRect,System.Single,System.Single,System.Single,System.Single,System.Boolean)">
   SetScrollOffset(SKRect, float, float, float, float, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2636"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2638"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Pass position in PIXELS</p>
@@ -12188,7 +12226,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_SetZoom_System_Double_" data-uid="DrawnUi.Draw.SkiaScroll.SetZoom(System.Double)">
   SetZoom(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1845"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1847"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -12224,7 +12262,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ShouldSwapDown_SkiaSharp_SKRect_" data-uid="DrawnUi.Draw.SkiaScroll.ShouldSwapDown(SkiaSharp.SKRect)">
   ShouldSwapDown(SKRect)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L475"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L535"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Determines if we should swap down based on visual position and content boundaries</p>
@@ -12261,7 +12299,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ShouldSwapUp_SkiaSharp_SKRect_" data-uid="DrawnUi.Draw.SkiaScroll.ShouldSwapUp(SkiaSharp.SKRect)">
   ShouldSwapUp(SKRect)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L499"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L559"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Determines if we should swap up based on visual position and content boundaries</p>
@@ -12298,7 +12336,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ShowRefreshIndicatorForced" data-uid="DrawnUi.Draw.SkiaScroll.ShowRefreshIndicatorForced">
   ShowRefreshIndicatorForced()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2369"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2371"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -12324,7 +12362,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_Snap_System_Single_" data-uid="DrawnUi.Draw.SkiaScroll.Snap(System.Single)">
   Snap(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1577"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1579"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -12395,7 +12433,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_StopScrolling" data-uid="DrawnUi.Draw.SkiaScroll.StopScrolling">
   StopScrolling()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L619"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L621"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -12478,7 +12516,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_TriggerPreparePlane_DrawnUi_Draw_DrawingContext_System_String_" data-uid="DrawnUi.Draw.SkiaScroll.TriggerPreparePlane(DrawnUi.Draw.DrawingContext,System.String)">
   TriggerPreparePlane(DrawingContext, string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L316"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L376"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -12511,7 +12549,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_UpdateByChild_DrawnUi_Draw_SkiaControl_" data-uid="DrawnUi.Draw.SkiaScroll.UpdateByChild(DrawnUi.Draw.SkiaControl)">
   UpdateByChild(SkiaControl)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L66"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.Planes.cs/#L126"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>To track dirty area when Updating parent</p>
@@ -12569,7 +12607,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_UpdateVisibleIndex" data-uid="DrawnUi.Draw.SkiaScroll.UpdateVisibleIndex">
   UpdateVisibleIndex()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L53"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -12598,7 +12636,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_IndexChanged" data-uid="DrawnUi.Draw.SkiaScroll.IndexChanged">
   IndexChanged
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1018"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L1020"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -12628,7 +12666,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_Scrolled" data-uid="DrawnUi.Draw.SkiaScroll.Scrolled">
   Scrolled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2353"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2355"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -12658,7 +12696,7 @@ Creates a valid ViewportRect inside.</p>
 
   <h3 id="DrawnUi_Draw_SkiaScroll_ScrollingEnded" data-uid="DrawnUi.Draw.SkiaScroll.ScrollingEnded">
   ScrollingEnded
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2352"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Scroll/SkiaScroll.cs/#L2354"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

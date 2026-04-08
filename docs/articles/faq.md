@@ -53,7 +53,7 @@ A: Use the `BlockGesturesBelow="True"` property on the top control. Note that `I
 **Q: How do I internally rebuild the ItemsSource?**  
 A: Directly call `layout.ApplyItemsSource()`.
 
-** Q: How to make images to Fade-In when loaded?**
+**Q: How to make images to Fade-In when loaded?**
 A: Subclass `SkiaImage` to define your animation:
 
 ```csharp
@@ -66,6 +66,19 @@ public class BannerImage : SkiaImage
         this.Opacity = 0.01;
         _ = this.FadeToAsync(1, 300, Easing.SinIn);
     }
+}
+```
+
+**Q: How to expand button hitbox?**
+
+A: Every drawn control can do that:
+
+```csharp
+public override SKRect CreateHitRect()
+{
+    var ret = base.CreateHitRect();
+    ret.Inflate(10*RenderingScale, 10*RenderingScale);
+    return ret;
 }
 ```
 
@@ -90,6 +103,8 @@ A: Might be Apple Metal specifics, cap FPS:
    * `UseCache = SkiaCacheType.ImageComposite` for complex layouts where a region changes while others remain static, like a stack with different user-handled controls.
    * `UseCache = SkiaCacheType.ImageDoubleBuffered` for equally sized recycled cells. Will show old cache while preparing new one in background.
    * `UseCache = SkiaCacheType.GPU` for small static overlays like headers, navbars.
+   * **PROHIBITED:** Never use `Operations` or `GPU` cache for controls with GPU-surface shaders — use `Image`, `ImageDoubleBuffered`, or `ImageComposite` instead.
+   * **PROHIBITED:** Never nest children that use GPU-backed cache types (`GPU`, `ImageCompositeGPU`) inside a parent cached with `Operations`.
 2. Check that you do not have some logging running for every rendering frame.
 
 **Q: Why isn't my UI updating when ViewModel properties change:**  

@@ -576,7 +576,6 @@ namespace DrawnUi.Views
 
         private bool _initialized;
 
-      
 
         public void SetDeviceOrientation(DeviceOrientation value)
         {
@@ -639,11 +638,7 @@ namespace DrawnUi.Views
         /// <summary>
         /// Underlying drawn views need measurement
         /// </summary>
-        protected bool NeedMeasureDrawn
-        {
-            get;
-            set;
-        } = true;
+        protected bool NeedMeasureDrawn { get; set; } = true;
 
         /// <summary>
         /// Invoked when IsHiddenInViewTree changes
@@ -983,7 +978,7 @@ namespace DrawnUi.Views
                 NeedCheckParentVisibility = true;
 
                 //if (IsVisible)
-                    Update();
+                Update();
             }
         }
 
@@ -1120,7 +1115,7 @@ namespace DrawnUi.Views
         /// <param name="heightRequest">UNITS</param>
         /// <param name="scale"></param>
         public SKRect CalculateLayout(SKRect destination, double widthRequest,
-                double heightRequest, double scale = 1.0)
+            double heightRequest, double scale = 1.0)
         {
             var scaledOffsetMargin = 0;
 
@@ -1434,6 +1429,7 @@ namespace DrawnUi.Views
                 {
                     return CanvasView.Surface.Context != null;
                 }
+
                 return true;
             }
         }
@@ -1581,9 +1577,17 @@ namespace DrawnUi.Views
             {
                 return accelerated.GRContext;
             }
+
             return null;
         }
 
+        /// <summary>
+        /// Create surface, if impossible to create a GPU one when required then will return CPU surface. Use ReturnSurface to recycle properly.
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="isGpu"></param>
+        /// <returns></returns>
         public SKSurface CreateSurface(int width, int height, bool isGpu)
         {
             SKSurface surface = null;
@@ -1593,8 +1597,13 @@ namespace DrawnUi.Views
                 if (CanvasView is SkiaViewAccelerated accelerated
                     && accelerated.GRContext != null)
                 {
-                    var cacheSurfaceInfo = new SKImageInfo(width, height);
+                    //var cacheSurfaceInfo = new SKImageInfo(width, height);
+                    var cacheSurfaceInfo = new SKImageInfo(width, height, SKColorType.Rgba8888, SKAlphaType.Premul);
                     surface = SKSurface.Create(accelerated.GRContext, true, cacheSurfaceInfo);
+                }
+                if (surface != null)
+                {
+                    surface.Canvas.Clear(SKColors.Transparent); //clear to avoid garbage if reused from GPU cache
                 }
             }
 
@@ -1608,14 +1617,21 @@ namespace DrawnUi.Views
         }
 
         /// <summary>
-        /// DO NOT call this for GPU surfaces use DisposeObject instead
+        /// Will Dispose if GPU of recycle CPU-one to be reused later.
         /// </summary>
         /// <param name="surface"></param>
         public void ReturnSurface(SKSurface surface)
         {
             if (surface != null)
             {
-                SurfaceCacheManager.ReturnSurface(surface);
+                if (surface.Context != null)
+                {
+                    DisposeManager.EnqueueDisposable(surface, FrameNumber);
+                }
+                else
+                {
+                    SurfaceCacheManager.ReturnSurface(surface);
+                }
             }
         }
 
@@ -1637,6 +1653,7 @@ namespace DrawnUi.Views
                 {
                     Super.Log($"DisposeObject EXCEPTION from {caller} {e}");
                 }
+
                 return;
             }
 
@@ -1918,7 +1935,6 @@ namespace DrawnUi.Views
                     else //usual one, still working fine
                     */
                     {
-               
                         foreach (var child in children)
                         {
                             child.OptionalOnBeforeDrawing(); //could set IsVisible or whatever inside
@@ -1932,7 +1948,7 @@ namespace DrawnUi.Views
                                 child.Render(context.WithDestination(rectForChild));
                             }
                         }
-                        
+
                         dirtyChilrenProcessing = true;
 
                         //todo for retained mode!!!
@@ -2188,6 +2204,7 @@ namespace DrawnUi.Views
                     Update(); //need rebuild as GPU memory was corrupt maybe
                 }
             }
+
             return value;
         }
 
@@ -2347,6 +2364,7 @@ namespace DrawnUi.Views
                     created.CollectionChanged += OnChildrenCollectionChanged;
                     _children = created;
                 }
+
                 return _children;
             }
             set
@@ -2740,7 +2758,8 @@ namespace DrawnUi.Views
 
         private void OnParentVisibilityCheck(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(IsVisible))// || e.PropertyName == nameof(Frame) || e.PropertyName == nameof(Parent))
+            if (e.PropertyName ==
+                nameof(IsVisible)) // || e.PropertyName == nameof(Frame) || e.PropertyName == nameof(Parent))
             {
                 _visibilityParent.PropertyChanged -= OnParentVisibilityCheck;
                 NeedCheckParentVisibility = true;

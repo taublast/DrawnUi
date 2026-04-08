@@ -261,6 +261,14 @@
 
         public virtual void Stop()
         {
+            PlayWhenAvailable = false;
+            _delayedPlay = false;
+
+            if (Animator == null)
+            {
+                return;
+            }
+
             Animator.Stop();
 
             Update();
@@ -400,12 +408,23 @@
         public static readonly BindableProperty AutoPlayProperty = BindableProperty.Create(nameof(AutoPlay),
             typeof(bool),
             typeof(AnimatedFramesRenderer),
-            true);
+            true, propertyChanged: AutoPlayNeedChange);
 
         public bool AutoPlay
         {
             get => (bool)GetValue(AutoPlayProperty);
             set => SetValue(AutoPlayProperty, value);
+        }
+
+        private static void AutoPlayNeedChange(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is AnimatedFramesRenderer control)
+            {
+                if (!(bool)newValue)
+                {
+                    control.Stop();
+                }
+            }
         }
 
         #endregion

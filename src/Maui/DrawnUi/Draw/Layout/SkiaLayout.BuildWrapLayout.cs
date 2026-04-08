@@ -36,10 +36,14 @@ public partial class SkiaLayout
             //for current row, to layout upon finalizing
             var cellsToLayoutLater = new List<ControlInStack>();
 
-            var maxAvailableSpace = rectForChildrenPixels.Width;
+            var available = rectForChildrenPixels;
+            available.Inflate(-1, -1); //fix pixels roundings
+
+            var maxAvailableSpace = available.Width;
             float sizePerChunk = maxAvailableSpace;
 
-            SKRect rectForChild = rectForChildrenPixels;
+            SKRect rectForChild = available;
+
             bool useFixedSplitSize = _layout.Split > 0;
             bool alignSplit = _layout.SplitAlign && useFixedSplitSize;
 

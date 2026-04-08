@@ -118,46 +118,9 @@ namespace DrawnUi.Draw
             }
 
             _thermalService = new ThermalStateService();
+            OnThermalStateChanged(_thermalService.CurrentState);
 
             _thermalService.StateChanged += OnThermalStateChanged;
-        }
-
-        public static ThermalState ThermalState { get; private set; }
-
-        public static event EventHandler<ThermalState> ThermalStateChanged;
-
-        private static void OnThermalStateChanged(ThermalState state)
-        {
-            ThermalState = state;
-
-            Super.Log($"[Super] Thermal state changed to: {state}");
-
-            ThermalStateChanged?.Invoke(null, state);
-
-            //switch (state)
-            //{
-            //    case ThermalState.Nominal:
-            //        ThermalWarningLabel.IsVisible = false;
-            //        break;
-
-            //    case ThermalState.Fair:
-            //        ThermalWarningLabel.Text = "Device is warming up...";
-            //        ThermalWarningLabel.IsVisible = true;
-            //        // Optional: slightly reduce FPS/resolution
-            //        break;
-
-            //    case ThermalState.Serious:
-            //    case ThermalState.Critical:
-            //        ThermalWarningLabel.Text = "iPhone is overheating — frame rate reduced to cool down the device. This is normal and not an app bug.";
-            //        ThermalWarningLabel.IsVisible = true;
-            //        ThermalWarningLabel.TextColor = Colors.Red;
-            //        // Strongly consider: lower FPS, pause recording, etc.
-            //        break;
-
-            //    default:
-            //        ThermalWarningLabel.IsVisible = false;
-            //        break;
-            //}
         }
 
         private static ThermalStateService _thermalService;
@@ -177,6 +140,7 @@ namespace DrawnUi.Draw
             // Display link callback reads MaxFps dynamically, no action needed there.
             // Update looper fps if it's being used instead of CADisplayLink.
             Looper?.SetTargetFps(fps > 0 ? fps : RefreshRate);
+            UpdateRegisteredMetalViewsPreferredFramesPerSecond(fps);
         }
 
 

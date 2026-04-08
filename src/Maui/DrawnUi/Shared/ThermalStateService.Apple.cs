@@ -6,12 +6,6 @@ using DrawnUi.Draw;
 
 namespace DrawnUi;
 
-public interface IThermalStateService
-{
-    ThermalState CurrentState { get; }
-    event Action<ThermalState>? StateChanged;
-}
-
 public class ThermalStateService : NSObject, IThermalStateService
 {
     public ThermalState CurrentState => MapState(NSProcessInfo.ProcessInfo.ThermalState);

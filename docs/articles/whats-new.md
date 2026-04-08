@@ -121,12 +121,12 @@ This page highlights the latest updates, features, and improvements in DrawnUi.M
 ### From Other UI Frameworks
 * **XAML Compatibility**: Most XAML patterns work with minimal changes
 * **Control Mapping**: See [Controls documentation](controls/index.md) for equivalent controls
-* **Performance**: Review [caching strategies](development-notes.md#performance-tips) for optimal performance
+* **Performance**: Review [SkiaScroll & Virtualization](advanced/skiascroll.md) for performance optimization strategies
 
 ## Getting Help with Updates
 
 * **Migration Issues**: Check [FAQ](faq.md) for common migration problems
-* **Breaking Changes**: See [Development Notes](development-notes.md) for detailed technical information
+* **Breaking Changes**: See [Startup Settings](startup-settings.md) for configuration updates and technical details
 * **Community Support**: Ask questions in [GitHub Discussions](https://github.com/taublast/DrawnUi/discussions)
 * **Bug Reports**: Report issues on [GitHub Issues](https://github.com/taublast/DrawnUi.Maui/issues)
 

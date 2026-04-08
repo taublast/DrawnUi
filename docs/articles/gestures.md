@@ -340,4 +340,4 @@ private void OnLongPress(object sender, SkiaGesturesInfo e)
 6. **Use `AddGestures` for MVVM** - When you need command binding instead of code-behind
 7. **Use `LockChildrenGestures` to manage propagation** - Control which gestures reach nested controls
 
-For additional gesture utilities, see the helper methods in [Canvas.cs](../../src/Maui/DrawnUi/Views/Canvas.cs#L1) and [SkiaControl.Shared.cs](../../src/Shared/Draw/Base/SkiaControl.Shared.cs#L1) for `GetGesturePositionInsideControl()`, `GetGesturePositionInsideChild()`, and `CheckChildGestureHit()`.
+For additional gesture utilities, see the helper methods in [Canvas.cs](https://github.com/taublast/DrawnUi.Maui/blob/main/src/Maui/DrawnUi/Views/Canvas.cs#L1) and [SkiaControl.Shared.cs](https://github.com/taublast/DrawnUi.Maui/blob/main/src/Shared/Draw/Base/SkiaControl.Shared.cs#L1) for `GetGesturePositionInsideControl()`, `GetGesturePositionInsideChild()`, and `CheckChildGestureHit()`.

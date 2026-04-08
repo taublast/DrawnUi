@@ -53,6 +53,16 @@ items:
   inheritedMembers:
   - DrawnUi.Draw.TextSpan.TextProperty
   - DrawnUi.Draw.TextSpan.Text
+  - DrawnUi.Draw.TextSpan.TextColorProperty
+  - DrawnUi.Draw.TextSpan.TextColor
+  - DrawnUi.Draw.TextSpan.FontSizeProperty
+  - DrawnUi.Draw.TextSpan.FontSize
+  - DrawnUi.Draw.TextSpan.HasSetColor
+  - DrawnUi.Draw.TextSpan.StrikeoutColor
+  - DrawnUi.Draw.TextSpan.BackgroundColor
+  - DrawnUi.Draw.TextSpan.ParagraphColor
+  - DrawnUi.Draw.TextSpan.SetupPaint(System.Double,SkiaSharp.SKPaint)
+  - DrawnUi.Draw.TextSpan.OnPropertyChanged(System.String)
   - DrawnUi.Draw.TextSpan.Default
   - DrawnUi.Draw.TextSpan.DebugString
   - DrawnUi.Draw.TextSpan.RenderingScale
@@ -60,10 +70,8 @@ items:
   - DrawnUi.Draw.TextSpan.Shape
   - DrawnUi.Draw.TextSpan.TextFiltered
   - DrawnUi.Draw.TextSpan.CheckGlyphsCanBeRendered
-  - DrawnUi.Draw.TextSpan.SetupPaint(System.Double,SkiaSharp.SKPaint)
   - DrawnUi.Draw.TextSpan.HasSetFont
   - DrawnUi.Draw.TextSpan.HasSetSize
-  - DrawnUi.Draw.TextSpan.HasSetColor
   - DrawnUi.Draw.TextSpan.Paint
   - DrawnUi.Draw.TextSpan.TypeFace
   - DrawnUi.Draw.TextSpan.NeedShape
@@ -72,7 +80,6 @@ items:
   - DrawnUi.Draw.TextSpan.UnderlineWidth
   - DrawnUi.Draw.TextSpan.Strikeout
   - DrawnUi.Draw.TextSpan.StrikeoutWidth
-  - DrawnUi.Draw.TextSpan.StrikeoutColor
   - DrawnUi.Draw.TextSpan.HasTapHandler
   - DrawnUi.Draw.TextSpan.ForceCaptureInput
   - DrawnUi.Draw.TextSpan.HitIsInside(System.Single,System.Single)
@@ -83,19 +90,13 @@ items:
   - DrawnUi.Draw.TextSpan.CommandTapped
   - DrawnUi.Draw.TextSpan.Tapped
   - DrawnUi.Draw.TextSpan.ParentControl
-  - DrawnUi.Draw.TextSpan.OnPropertyChanged(System.String)
   - DrawnUi.Draw.TextSpan._fontAutoSet
   - DrawnUi.Draw.TextSpan.UpdateFont
+  - DrawnUi.Draw.TextSpan._typeFace
   - DrawnUi.Draw.TextSpan.FontFamily
   - DrawnUi.Draw.TextSpan.LineSpacing
   - DrawnUi.Draw.TextSpan.LineHeight
   - DrawnUi.Draw.TextSpan.FontWeight
-  - DrawnUi.Draw.TextSpan.TextColorProperty
-  - DrawnUi.Draw.TextSpan.TextColor
-  - DrawnUi.Draw.TextSpan.BackgroundColor
-  - DrawnUi.Draw.TextSpan.ParagraphColor
-  - DrawnUi.Draw.TextSpan.FontSizeProperty
-  - DrawnUi.Draw.TextSpan.FontSize
   - DrawnUi.Draw.TextSpan.IsItalic
   - DrawnUi.Draw.TextSpan.IsBold
   - DrawnUi.Draw.TextSpan.AutoFindFont
@@ -571,6 +572,136 @@ references:
   name: Text
   nameWithType: TextSpan.Text
   fullName: DrawnUi.Draw.TextSpan.Text
+- uid: DrawnUi.Draw.TextSpan.TextColorProperty
+  commentId: F:DrawnUi.Draw.TextSpan.TextColorProperty
+  parent: DrawnUi.Draw.TextSpan
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_TextColorProperty
+  name: TextColorProperty
+  nameWithType: TextSpan.TextColorProperty
+  fullName: DrawnUi.Draw.TextSpan.TextColorProperty
+- uid: DrawnUi.Draw.TextSpan.TextColor
+  commentId: P:DrawnUi.Draw.TextSpan.TextColor
+  parent: DrawnUi.Draw.TextSpan
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_TextColor
+  name: TextColor
+  nameWithType: TextSpan.TextColor
+  fullName: DrawnUi.Draw.TextSpan.TextColor
+- uid: DrawnUi.Draw.TextSpan.FontSizeProperty
+  commentId: F:DrawnUi.Draw.TextSpan.FontSizeProperty
+  parent: DrawnUi.Draw.TextSpan
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_FontSizeProperty
+  name: FontSizeProperty
+  nameWithType: TextSpan.FontSizeProperty
+  fullName: DrawnUi.Draw.TextSpan.FontSizeProperty
+- uid: DrawnUi.Draw.TextSpan.FontSize
+  commentId: P:DrawnUi.Draw.TextSpan.FontSize
+  parent: DrawnUi.Draw.TextSpan
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_FontSize
+  name: FontSize
+  nameWithType: TextSpan.FontSize
+  fullName: DrawnUi.Draw.TextSpan.FontSize
+- uid: DrawnUi.Draw.TextSpan.HasSetColor
+  commentId: P:DrawnUi.Draw.TextSpan.HasSetColor
+  parent: DrawnUi.Draw.TextSpan
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_HasSetColor
+  name: HasSetColor
+  nameWithType: TextSpan.HasSetColor
+  fullName: DrawnUi.Draw.TextSpan.HasSetColor
+- uid: DrawnUi.Draw.TextSpan.StrikeoutColor
+  commentId: P:DrawnUi.Draw.TextSpan.StrikeoutColor
+  parent: DrawnUi.Draw.TextSpan
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_StrikeoutColor
+  name: StrikeoutColor
+  nameWithType: TextSpan.StrikeoutColor
+  fullName: DrawnUi.Draw.TextSpan.StrikeoutColor
+- uid: DrawnUi.Draw.TextSpan.BackgroundColor
+  commentId: P:DrawnUi.Draw.TextSpan.BackgroundColor
+  parent: DrawnUi.Draw.TextSpan
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_BackgroundColor
+  name: BackgroundColor
+  nameWithType: TextSpan.BackgroundColor
+  fullName: DrawnUi.Draw.TextSpan.BackgroundColor
+- uid: DrawnUi.Draw.TextSpan.ParagraphColor
+  commentId: P:DrawnUi.Draw.TextSpan.ParagraphColor
+  parent: DrawnUi.Draw.TextSpan
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_ParagraphColor
+  name: ParagraphColor
+  nameWithType: TextSpan.ParagraphColor
+  fullName: DrawnUi.Draw.TextSpan.ParagraphColor
+- uid: DrawnUi.Draw.TextSpan.SetupPaint(System.Double,SkiaSharp.SKPaint)
+  commentId: M:DrawnUi.Draw.TextSpan.SetupPaint(System.Double,SkiaSharp.SKPaint)
+  parent: DrawnUi.Draw.TextSpan
+  isExternal: true
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_SetupPaint_System_Double_SkiaSharp_SKPaint_
+  name: SetupPaint(double, SKPaint)
+  nameWithType: TextSpan.SetupPaint(double, SKPaint)
+  fullName: DrawnUi.Draw.TextSpan.SetupPaint(double, SkiaSharp.SKPaint)
+  nameWithType.vb: TextSpan.SetupPaint(Double, SKPaint)
+  fullName.vb: DrawnUi.Draw.TextSpan.SetupPaint(Double, SkiaSharp.SKPaint)
+  name.vb: SetupPaint(Double, SKPaint)
+  spec.csharp:
+  - uid: DrawnUi.Draw.TextSpan.SetupPaint(System.Double,SkiaSharp.SKPaint)
+    name: SetupPaint
+    href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_SetupPaint_System_Double_SkiaSharp_SKPaint_
+  - name: (
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKPaint
+    name: SKPaint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.TextSpan.SetupPaint(System.Double,SkiaSharp.SKPaint)
+    name: SetupPaint
+    href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_SetupPaint_System_Double_SkiaSharp_SKPaint_
+  - name: (
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKPaint
+    name: SKPaint
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
+  - name: )
+- uid: DrawnUi.Draw.TextSpan.OnPropertyChanged(System.String)
+  commentId: M:DrawnUi.Draw.TextSpan.OnPropertyChanged(System.String)
+  parent: DrawnUi.Draw.TextSpan
+  isExternal: true
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_OnPropertyChanged_System_String_
+  name: OnPropertyChanged(string)
+  nameWithType: TextSpan.OnPropertyChanged(string)
+  fullName: DrawnUi.Draw.TextSpan.OnPropertyChanged(string)
+  nameWithType.vb: TextSpan.OnPropertyChanged(String)
+  fullName.vb: DrawnUi.Draw.TextSpan.OnPropertyChanged(String)
+  name.vb: OnPropertyChanged(String)
+  spec.csharp:
+  - uid: DrawnUi.Draw.TextSpan.OnPropertyChanged(System.String)
+    name: OnPropertyChanged
+    href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_OnPropertyChanged_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.TextSpan.OnPropertyChanged(System.String)
+    name: OnPropertyChanged
+    href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_OnPropertyChanged_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
 - uid: DrawnUi.Draw.TextSpan.Default
   commentId: P:DrawnUi.Draw.TextSpan.Default
   parent: DrawnUi.Draw.TextSpan
@@ -632,49 +763,6 @@ references:
     href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_CheckGlyphsCanBeRendered
   - name: (
   - name: )
-- uid: DrawnUi.Draw.TextSpan.SetupPaint(System.Double,SkiaSharp.SKPaint)
-  commentId: M:DrawnUi.Draw.TextSpan.SetupPaint(System.Double,SkiaSharp.SKPaint)
-  parent: DrawnUi.Draw.TextSpan
-  isExternal: true
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_SetupPaint_System_Double_SkiaSharp_SKPaint_
-  name: SetupPaint(double, SKPaint)
-  nameWithType: TextSpan.SetupPaint(double, SKPaint)
-  fullName: DrawnUi.Draw.TextSpan.SetupPaint(double, SkiaSharp.SKPaint)
-  nameWithType.vb: TextSpan.SetupPaint(Double, SKPaint)
-  fullName.vb: DrawnUi.Draw.TextSpan.SetupPaint(Double, SkiaSharp.SKPaint)
-  name.vb: SetupPaint(Double, SKPaint)
-  spec.csharp:
-  - uid: DrawnUi.Draw.TextSpan.SetupPaint(System.Double,SkiaSharp.SKPaint)
-    name: SetupPaint
-    href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_SetupPaint_System_Double_SkiaSharp_SKPaint_
-  - name: (
-  - uid: System.Double
-    name: double
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.double
-  - name: ','
-  - name: " "
-  - uid: SkiaSharp.SKPaint
-    name: SKPaint
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.TextSpan.SetupPaint(System.Double,SkiaSharp.SKPaint)
-    name: SetupPaint
-    href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_SetupPaint_System_Double_SkiaSharp_SKPaint_
-  - name: (
-  - uid: System.Double
-    name: Double
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.double
-  - name: ','
-  - name: " "
-  - uid: SkiaSharp.SKPaint
-    name: SKPaint
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
-  - name: )
 - uid: DrawnUi.Draw.TextSpan.HasSetFont
   commentId: P:DrawnUi.Draw.TextSpan.HasSetFont
   parent: DrawnUi.Draw.TextSpan
@@ -689,13 +777,6 @@ references:
   name: HasSetSize
   nameWithType: TextSpan.HasSetSize
   fullName: DrawnUi.Draw.TextSpan.HasSetSize
-- uid: DrawnUi.Draw.TextSpan.HasSetColor
-  commentId: P:DrawnUi.Draw.TextSpan.HasSetColor
-  parent: DrawnUi.Draw.TextSpan
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_HasSetColor
-  name: HasSetColor
-  nameWithType: TextSpan.HasSetColor
-  fullName: DrawnUi.Draw.TextSpan.HasSetColor
 - uid: DrawnUi.Draw.TextSpan.Paint
   commentId: P:DrawnUi.Draw.TextSpan.Paint
   parent: DrawnUi.Draw.TextSpan
@@ -752,13 +833,6 @@ references:
   name: StrikeoutWidth
   nameWithType: TextSpan.StrikeoutWidth
   fullName: DrawnUi.Draw.TextSpan.StrikeoutWidth
-- uid: DrawnUi.Draw.TextSpan.StrikeoutColor
-  commentId: P:DrawnUi.Draw.TextSpan.StrikeoutColor
-  parent: DrawnUi.Draw.TextSpan
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_StrikeoutColor
-  name: StrikeoutColor
-  nameWithType: TextSpan.StrikeoutColor
-  fullName: DrawnUi.Draw.TextSpan.StrikeoutColor
 - uid: DrawnUi.Draw.TextSpan.HasTapHandler
   commentId: P:DrawnUi.Draw.TextSpan.HasTapHandler
   parent: DrawnUi.Draw.TextSpan
@@ -877,37 +951,6 @@ references:
   name: ParentControl
   nameWithType: TextSpan.ParentControl
   fullName: DrawnUi.Draw.TextSpan.ParentControl
-- uid: DrawnUi.Draw.TextSpan.OnPropertyChanged(System.String)
-  commentId: M:DrawnUi.Draw.TextSpan.OnPropertyChanged(System.String)
-  parent: DrawnUi.Draw.TextSpan
-  isExternal: true
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_OnPropertyChanged_System_String_
-  name: OnPropertyChanged(string)
-  nameWithType: TextSpan.OnPropertyChanged(string)
-  fullName: DrawnUi.Draw.TextSpan.OnPropertyChanged(string)
-  nameWithType.vb: TextSpan.OnPropertyChanged(String)
-  fullName.vb: DrawnUi.Draw.TextSpan.OnPropertyChanged(String)
-  name.vb: OnPropertyChanged(String)
-  spec.csharp:
-  - uid: DrawnUi.Draw.TextSpan.OnPropertyChanged(System.String)
-    name: OnPropertyChanged
-    href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_OnPropertyChanged_System_String_
-  - name: (
-  - uid: System.String
-    name: string
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.TextSpan.OnPropertyChanged(System.String)
-    name: OnPropertyChanged
-    href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_OnPropertyChanged_System_String_
-  - name: (
-  - uid: System.String
-    name: String
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: )
 - uid: DrawnUi.Draw.TextSpan._fontAutoSet
   commentId: F:DrawnUi.Draw.TextSpan._fontAutoSet
   parent: DrawnUi.Draw.TextSpan
@@ -934,6 +977,13 @@ references:
     href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_UpdateFont
   - name: (
   - name: )
+- uid: DrawnUi.Draw.TextSpan._typeFace
+  commentId: F:DrawnUi.Draw.TextSpan._typeFace
+  parent: DrawnUi.Draw.TextSpan
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan__typeFace
+  name: _typeFace
+  nameWithType: TextSpan._typeFace
+  fullName: DrawnUi.Draw.TextSpan._typeFace
 - uid: DrawnUi.Draw.TextSpan.FontFamily
   commentId: P:DrawnUi.Draw.TextSpan.FontFamily
   parent: DrawnUi.Draw.TextSpan
@@ -962,48 +1012,6 @@ references:
   name: FontWeight
   nameWithType: TextSpan.FontWeight
   fullName: DrawnUi.Draw.TextSpan.FontWeight
-- uid: DrawnUi.Draw.TextSpan.TextColorProperty
-  commentId: F:DrawnUi.Draw.TextSpan.TextColorProperty
-  parent: DrawnUi.Draw.TextSpan
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_TextColorProperty
-  name: TextColorProperty
-  nameWithType: TextSpan.TextColorProperty
-  fullName: DrawnUi.Draw.TextSpan.TextColorProperty
-- uid: DrawnUi.Draw.TextSpan.TextColor
-  commentId: P:DrawnUi.Draw.TextSpan.TextColor
-  parent: DrawnUi.Draw.TextSpan
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_TextColor
-  name: TextColor
-  nameWithType: TextSpan.TextColor
-  fullName: DrawnUi.Draw.TextSpan.TextColor
-- uid: DrawnUi.Draw.TextSpan.BackgroundColor
-  commentId: P:DrawnUi.Draw.TextSpan.BackgroundColor
-  parent: DrawnUi.Draw.TextSpan
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_BackgroundColor
-  name: BackgroundColor
-  nameWithType: TextSpan.BackgroundColor
-  fullName: DrawnUi.Draw.TextSpan.BackgroundColor
-- uid: DrawnUi.Draw.TextSpan.ParagraphColor
-  commentId: P:DrawnUi.Draw.TextSpan.ParagraphColor
-  parent: DrawnUi.Draw.TextSpan
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_ParagraphColor
-  name: ParagraphColor
-  nameWithType: TextSpan.ParagraphColor
-  fullName: DrawnUi.Draw.TextSpan.ParagraphColor
-- uid: DrawnUi.Draw.TextSpan.FontSizeProperty
-  commentId: F:DrawnUi.Draw.TextSpan.FontSizeProperty
-  parent: DrawnUi.Draw.TextSpan
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_FontSizeProperty
-  name: FontSizeProperty
-  nameWithType: TextSpan.FontSizeProperty
-  fullName: DrawnUi.Draw.TextSpan.FontSizeProperty
-- uid: DrawnUi.Draw.TextSpan.FontSize
-  commentId: P:DrawnUi.Draw.TextSpan.FontSize
-  parent: DrawnUi.Draw.TextSpan
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_FontSize
-  name: FontSize
-  nameWithType: TextSpan.FontSize
-  fullName: DrawnUi.Draw.TextSpan.FontSize
 - uid: DrawnUi.Draw.TextSpan.IsItalic
   commentId: P:DrawnUi.Draw.TextSpan.IsItalic
   parent: DrawnUi.Draw.TextSpan

@@ -7,10 +7,17 @@ items:
   children:
   - DrawnUi.Draw.SkiaPoint.#ctor
   - DrawnUi.Draw.SkiaPoint.#ctor(System.Double,System.Double)
+  - DrawnUi.Draw.SkiaPoint.CompareTo(DrawnUi.Draw.SkiaPoint)
+  - DrawnUi.Draw.SkiaPoint.CompareTo(System.Object)
+  - DrawnUi.Draw.SkiaPoint.Equals(DrawnUi.Draw.SkiaPoint)
+  - DrawnUi.Draw.SkiaPoint.Equals(System.Object)
+  - DrawnUi.Draw.SkiaPoint.GetHashCode
   - DrawnUi.Draw.SkiaPoint.X
   - DrawnUi.Draw.SkiaPoint.XProperty
   - DrawnUi.Draw.SkiaPoint.Y
   - DrawnUi.Draw.SkiaPoint.YProperty
+  - DrawnUi.Draw.SkiaPoint.op_Equality(DrawnUi.Draw.SkiaPoint,DrawnUi.Draw.SkiaPoint)
+  - DrawnUi.Draw.SkiaPoint.op_Inequality(DrawnUi.Draw.SkiaPoint,DrawnUi.Draw.SkiaPoint)
   langs:
   - csharp
   - vb
@@ -30,13 +37,16 @@ items:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: 'public class SkiaPoint : BindableObject, INotifyPropertyChanged'
-    content.vb: Public Class SkiaPoint Inherits BindableObject Implements INotifyPropertyChanged
+    content: 'public class SkiaPoint : BindableObject, INotifyPropertyChanged, IComparable, IComparable<SkiaPoint>, IEquatable<SkiaPoint>'
+    content.vb: Public Class SkiaPoint Inherits BindableObject Implements INotifyPropertyChanged, IComparable, IComparable(Of SkiaPoint), IEquatable(Of SkiaPoint)
   inheritance:
   - System.Object
   - Microsoft.Maui.Controls.BindableObject
   implements:
   - System.ComponentModel.INotifyPropertyChanged
+  - System.IComparable
+  - System.IComparable{DrawnUi.Draw.SkiaPoint}
+  - System.IEquatable{DrawnUi.Draw.SkiaPoint}
   inheritedMembers:
   - Microsoft.Maui.Controls.BindableObject.BindingContextProperty
   - Microsoft.Maui.Controls.BindableObject.ClearValue(Microsoft.Maui.Controls.BindableProperty)
@@ -59,9 +69,7 @@ items:
   - Microsoft.Maui.Controls.BindableObject.PropertyChanged
   - Microsoft.Maui.Controls.BindableObject.PropertyChanging
   - Microsoft.Maui.Controls.BindableObject.BindingContextChanged
-  - System.Object.Equals(System.Object)
   - System.Object.Equals(System.Object,System.Object)
-  - System.Object.GetHashCode
   - System.Object.GetType
   - System.Object.MemberwiseClone
   - System.Object.ReferenceEquals(System.Object,System.Object)
@@ -245,6 +253,273 @@ items:
       type: System.Double
     content.vb: Public Property Y As Double
   overload: DrawnUi.Draw.SkiaPoint.Y*
+- uid: DrawnUi.Draw.SkiaPoint.CompareTo(System.Object)
+  commentId: M:DrawnUi.Draw.SkiaPoint.CompareTo(System.Object)
+  id: CompareTo(System.Object)
+  parent: DrawnUi.Draw.SkiaPoint
+  langs:
+  - csharp
+  - vb
+  name: CompareTo(object)
+  nameWithType: SkiaPoint.CompareTo(object)
+  fullName: DrawnUi.Draw.SkiaPoint.CompareTo(object)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Internals/Models/SkiaPoint.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CompareTo
+    path: ../src/Shared/Internals/Models/SkiaPoint.cs
+    startLine: 41
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+  example: []
+  syntax:
+    content: public int CompareTo(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+      description: An object to compare with this instance.
+    return:
+      type: System.Int32
+      description: >-
+        A value that indicates the relative order of the objects being compared. The return value has these meanings:
+
+         <table><thead><tr><th class="term"> Value</th><th class="description"> Meaning</th></tr></thead><tbody><tr><td class="term"> Less than zero</td><td class="description"> This instance precedes <code class="paramref">obj</code> in the sort order.</td></tr><tr><td class="term"> Zero</td><td class="description"> This instance occurs in the same position in the sort order as <code class="paramref">obj</code>.</td></tr><tr><td class="term"> Greater than zero</td><td class="description"> This instance follows <code class="paramref">obj</code> in the sort order.</td></tr></tbody></table>
+    content.vb: Public Function CompareTo(obj As Object) As Integer
+  overload: DrawnUi.Draw.SkiaPoint.CompareTo*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code class="paramref">obj</code> is not the same type as this instance.
+  implements:
+  - System.IComparable.CompareTo(System.Object)
+  nameWithType.vb: SkiaPoint.CompareTo(Object)
+  fullName.vb: DrawnUi.Draw.SkiaPoint.CompareTo(Object)
+  name.vb: CompareTo(Object)
+- uid: DrawnUi.Draw.SkiaPoint.CompareTo(DrawnUi.Draw.SkiaPoint)
+  commentId: M:DrawnUi.Draw.SkiaPoint.CompareTo(DrawnUi.Draw.SkiaPoint)
+  id: CompareTo(DrawnUi.Draw.SkiaPoint)
+  parent: DrawnUi.Draw.SkiaPoint
+  langs:
+  - csharp
+  - vb
+  name: CompareTo(SkiaPoint)
+  nameWithType: SkiaPoint.CompareTo(SkiaPoint)
+  fullName: DrawnUi.Draw.SkiaPoint.CompareTo(DrawnUi.Draw.SkiaPoint)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Internals/Models/SkiaPoint.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CompareTo
+    path: ../src/Shared/Internals/Models/SkiaPoint.cs
+    startLine: 56
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+  example: []
+  syntax:
+    content: public int CompareTo(SkiaPoint other)
+    parameters:
+    - id: other
+      type: DrawnUi.Draw.SkiaPoint
+      description: An object to compare with this instance.
+    return:
+      type: System.Int32
+      description: >-
+        A value that indicates the relative order of the objects being compared. The return value has these meanings:  
+
+         <table><thead><tr><th class="term"> Value</th><th class="description"> Meaning</th></tr></thead><tbody><tr><td class="term"> Less than zero</td><td class="description"> This instance precedes <code class="paramref">other</code> in the sort order.</td></tr><tr><td class="term"> Zero</td><td class="description"> This instance occurs in the same position in the sort order as <code class="paramref">other</code>.</td></tr><tr><td class="term"> Greater than zero</td><td class="description"> This instance follows <code class="paramref">other</code> in the sort order.</td></tr></tbody></table>
+    content.vb: Public Function CompareTo(other As SkiaPoint) As Integer
+  overload: DrawnUi.Draw.SkiaPoint.CompareTo*
+  implements:
+  - System.IComparable{DrawnUi.Draw.SkiaPoint}.CompareTo(DrawnUi.Draw.SkiaPoint)
+- uid: DrawnUi.Draw.SkiaPoint.Equals(DrawnUi.Draw.SkiaPoint)
+  commentId: M:DrawnUi.Draw.SkiaPoint.Equals(DrawnUi.Draw.SkiaPoint)
+  id: Equals(DrawnUi.Draw.SkiaPoint)
+  parent: DrawnUi.Draw.SkiaPoint
+  langs:
+  - csharp
+  - vb
+  name: Equals(SkiaPoint)
+  nameWithType: SkiaPoint.Equals(SkiaPoint)
+  fullName: DrawnUi.Draw.SkiaPoint.Equals(DrawnUi.Draw.SkiaPoint)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Internals/Models/SkiaPoint.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Equals
+    path: ../src/Shared/Internals/Models/SkiaPoint.cs
+    startLine: 77
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Indicates whether the current object is equal to another object of the same type.
+  example: []
+  syntax:
+    content: public bool Equals(SkiaPoint other)
+    parameters:
+    - id: other
+      type: DrawnUi.Draw.SkiaPoint
+      description: An object to compare with this object.
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the current object is equal to the <code class="paramref">other</code> parameter; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+    content.vb: Public Function Equals(other As SkiaPoint) As Boolean
+  overload: DrawnUi.Draw.SkiaPoint.Equals*
+  implements:
+  - System.IEquatable{DrawnUi.Draw.SkiaPoint}.Equals(DrawnUi.Draw.SkiaPoint)
+- uid: DrawnUi.Draw.SkiaPoint.Equals(System.Object)
+  commentId: M:DrawnUi.Draw.SkiaPoint.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: DrawnUi.Draw.SkiaPoint
+  langs:
+  - csharp
+  - vb
+  name: Equals(object)
+  nameWithType: SkiaPoint.Equals(object)
+  fullName: DrawnUi.Draw.SkiaPoint.Equals(object)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Internals/Models/SkiaPoint.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Equals
+    path: ../src/Shared/Internals/Models/SkiaPoint.cs
+    startLine: 82
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Determines whether the specified object is equal to the current object.
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+      description: The object to compare with the current object.
+    return:
+      type: System.Boolean
+      description: <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the specified object  is equal to the current object; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.Object.Equals(System.Object)
+  overload: DrawnUi.Draw.SkiaPoint.Equals*
+  nameWithType.vb: SkiaPoint.Equals(Object)
+  fullName.vb: DrawnUi.Draw.SkiaPoint.Equals(Object)
+  name.vb: Equals(Object)
+- uid: DrawnUi.Draw.SkiaPoint.GetHashCode
+  commentId: M:DrawnUi.Draw.SkiaPoint.GetHashCode
+  id: GetHashCode
+  parent: DrawnUi.Draw.SkiaPoint
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: SkiaPoint.GetHashCode()
+  fullName: DrawnUi.Draw.SkiaPoint.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Internals/Models/SkiaPoint.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: GetHashCode
+    path: ../src/Shared/Internals/Models/SkiaPoint.cs
+    startLine: 87
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Serves as the default hash function.
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+      description: A hash code for the current object.
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.Object.GetHashCode
+  overload: DrawnUi.Draw.SkiaPoint.GetHashCode*
+- uid: DrawnUi.Draw.SkiaPoint.op_Equality(DrawnUi.Draw.SkiaPoint,DrawnUi.Draw.SkiaPoint)
+  commentId: M:DrawnUi.Draw.SkiaPoint.op_Equality(DrawnUi.Draw.SkiaPoint,DrawnUi.Draw.SkiaPoint)
+  id: op_Equality(DrawnUi.Draw.SkiaPoint,DrawnUi.Draw.SkiaPoint)
+  parent: DrawnUi.Draw.SkiaPoint
+  langs:
+  - csharp
+  - vb
+  name: operator ==(SkiaPoint, SkiaPoint)
+  nameWithType: SkiaPoint.operator ==(SkiaPoint, SkiaPoint)
+  fullName: DrawnUi.Draw.SkiaPoint.operator ==(DrawnUi.Draw.SkiaPoint, DrawnUi.Draw.SkiaPoint)
+  type: Operator
+  source:
+    remote:
+      path: src/Shared/Internals/Models/SkiaPoint.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: op_Equality
+    path: ../src/Shared/Internals/Models/SkiaPoint.cs
+    startLine: 92
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool operator ==(SkiaPoint left, SkiaPoint right)
+    parameters:
+    - id: left
+      type: DrawnUi.Draw.SkiaPoint
+    - id: right
+      type: DrawnUi.Draw.SkiaPoint
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator =(left As SkiaPoint, right As SkiaPoint) As Boolean
+  overload: DrawnUi.Draw.SkiaPoint.op_Equality*
+  nameWithType.vb: SkiaPoint.=(SkiaPoint, SkiaPoint)
+  fullName.vb: DrawnUi.Draw.SkiaPoint.=(DrawnUi.Draw.SkiaPoint, DrawnUi.Draw.SkiaPoint)
+  name.vb: =(SkiaPoint, SkiaPoint)
+- uid: DrawnUi.Draw.SkiaPoint.op_Inequality(DrawnUi.Draw.SkiaPoint,DrawnUi.Draw.SkiaPoint)
+  commentId: M:DrawnUi.Draw.SkiaPoint.op_Inequality(DrawnUi.Draw.SkiaPoint,DrawnUi.Draw.SkiaPoint)
+  id: op_Inequality(DrawnUi.Draw.SkiaPoint,DrawnUi.Draw.SkiaPoint)
+  parent: DrawnUi.Draw.SkiaPoint
+  langs:
+  - csharp
+  - vb
+  name: operator !=(SkiaPoint, SkiaPoint)
+  nameWithType: SkiaPoint.operator !=(SkiaPoint, SkiaPoint)
+  fullName: DrawnUi.Draw.SkiaPoint.operator !=(DrawnUi.Draw.SkiaPoint, DrawnUi.Draw.SkiaPoint)
+  type: Operator
+  source:
+    remote:
+      path: src/Shared/Internals/Models/SkiaPoint.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: op_Inequality
+    path: ../src/Shared/Internals/Models/SkiaPoint.cs
+    startLine: 97
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static bool operator !=(SkiaPoint left, SkiaPoint right)
+    parameters:
+    - id: left
+      type: DrawnUi.Draw.SkiaPoint
+    - id: right
+      type: DrawnUi.Draw.SkiaPoint
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <>(left As SkiaPoint, right As SkiaPoint) As Boolean
+  overload: DrawnUi.Draw.SkiaPoint.op_Inequality*
+  nameWithType.vb: SkiaPoint.<>(SkiaPoint, SkiaPoint)
+  fullName.vb: DrawnUi.Draw.SkiaPoint.<>(DrawnUi.Draw.SkiaPoint, DrawnUi.Draw.SkiaPoint)
+  name.vb: <>(SkiaPoint, SkiaPoint)
 references:
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
@@ -295,6 +570,80 @@ references:
   name: INotifyPropertyChanged
   nameWithType: INotifyPropertyChanged
   fullName: System.ComponentModel.INotifyPropertyChanged
+- uid: System.IComparable
+  commentId: T:System.IComparable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable
+  name: IComparable
+  nameWithType: IComparable
+  fullName: System.IComparable
+- uid: System.IComparable{DrawnUi.Draw.SkiaPoint}
+  commentId: T:System.IComparable{DrawnUi.Draw.SkiaPoint}
+  parent: System
+  definition: System.IComparable`1
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  name: IComparable<SkiaPoint>
+  nameWithType: IComparable<SkiaPoint>
+  fullName: System.IComparable<DrawnUi.Draw.SkiaPoint>
+  nameWithType.vb: IComparable(Of SkiaPoint)
+  fullName.vb: System.IComparable(Of DrawnUi.Draw.SkiaPoint)
+  name.vb: IComparable(Of SkiaPoint)
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaPoint
+    name: SkiaPoint
+    href: DrawnUi.Draw.SkiaPoint.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaPoint
+    name: SkiaPoint
+    href: DrawnUi.Draw.SkiaPoint.html
+  - name: )
+- uid: System.IEquatable{DrawnUi.Draw.SkiaPoint}
+  commentId: T:System.IEquatable{DrawnUi.Draw.SkiaPoint}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<SkiaPoint>
+  nameWithType: IEquatable<SkiaPoint>
+  fullName: System.IEquatable<DrawnUi.Draw.SkiaPoint>
+  nameWithType.vb: IEquatable(Of SkiaPoint)
+  fullName.vb: System.IEquatable(Of DrawnUi.Draw.SkiaPoint)
+  name.vb: IEquatable(Of SkiaPoint)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: DrawnUi.Draw.SkiaPoint
+    name: SkiaPoint
+    href: DrawnUi.Draw.SkiaPoint.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaPoint
+    name: SkiaPoint
+    href: DrawnUi.Draw.SkiaPoint.html
+  - name: )
 - uid: Microsoft.Maui.Controls.BindableObject.BindingContextProperty
   commentId: F:Microsoft.Maui.Controls.BindableObject.BindingContextProperty
   parent: Microsoft.Maui.Controls.BindableObject
@@ -817,39 +1166,6 @@ references:
   name: BindingContextChanged
   nameWithType: BindableObject.BindingContextChanged
   fullName: Microsoft.Maui.Controls.BindableObject.BindingContextChanged
-- uid: System.Object.Equals(System.Object)
-  commentId: M:System.Object.Equals(System.Object)
-  parent: System.Object
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
-  name: Equals(object)
-  nameWithType: object.Equals(object)
-  fullName: object.Equals(object)
-  nameWithType.vb: Object.Equals(Object)
-  fullName.vb: Object.Equals(Object)
-  name.vb: Equals(Object)
-  spec.csharp:
-  - uid: System.Object.Equals(System.Object)
-    name: Equals
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
-  - name: (
-  - uid: System.Object
-    name: object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: )
-  spec.vb:
-  - uid: System.Object.Equals(System.Object)
-    name: Equals
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
-  - name: (
-  - uid: System.Object
-    name: Object
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: )
 - uid: System.Object.Equals(System.Object,System.Object)
   commentId: M:System.Object.Equals(System.Object,System.Object)
   parent: System.Object
@@ -894,30 +1210,6 @@ references:
     name: Object
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.object
-  - name: )
-- uid: System.Object.GetHashCode
-  commentId: M:System.Object.GetHashCode
-  parent: System.Object
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
-  name: GetHashCode()
-  nameWithType: object.GetHashCode()
-  fullName: object.GetHashCode()
-  nameWithType.vb: Object.GetHashCode()
-  fullName.vb: Object.GetHashCode()
-  spec.csharp:
-  - uid: System.Object.GetHashCode
-    name: GetHashCode
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: System.Object.GetHashCode
-    name: GetHashCode
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
-  - name: (
   - name: )
 - uid: System.Object.GetType
   commentId: M:System.Object.GetType
@@ -1280,6 +1572,62 @@ references:
     name: ComponentModel
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.componentmodel
+- uid: System.IComparable`1
+  commentId: T:System.IComparable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  name: IComparable<T>
+  nameWithType: IComparable<T>
+  fullName: System.IComparable<T>
+  nameWithType.vb: IComparable(Of T)
+  fullName.vb: System.IComparable(Of T)
+  name.vb: IComparable(Of T)
+  spec.csharp:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IComparable`1
+    name: IComparable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
 - uid: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
   commentId: M:DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
   href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
@@ -1512,3 +1860,287 @@ references:
   name: Y
   nameWithType: SkiaPoint.Y
   fullName: DrawnUi.Draw.SkiaPoint.Y
+- uid: System.ArgumentException
+  commentId: T:System.ArgumentException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentexception
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: DrawnUi.Draw.SkiaPoint.CompareTo*
+  commentId: Overload:DrawnUi.Draw.SkiaPoint.CompareTo
+  href: DrawnUi.Draw.SkiaPoint.html#DrawnUi_Draw_SkiaPoint_CompareTo_System_Object_
+  name: CompareTo
+  nameWithType: SkiaPoint.CompareTo
+  fullName: DrawnUi.Draw.SkiaPoint.CompareTo
+- uid: System.IComparable.CompareTo(System.Object)
+  commentId: M:System.IComparable.CompareTo(System.Object)
+  parent: System.IComparable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable.compareto
+  name: CompareTo(object)
+  nameWithType: IComparable.CompareTo(object)
+  fullName: System.IComparable.CompareTo(object)
+  nameWithType.vb: IComparable.CompareTo(Object)
+  fullName.vb: System.IComparable.CompareTo(Object)
+  name.vb: CompareTo(Object)
+  spec.csharp:
+  - uid: System.IComparable.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable.compareto
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.IComparable.CompareTo(System.Object)
+    name: CompareTo
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable.compareto
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.IComparable{DrawnUi.Draw.SkiaPoint}.CompareTo(DrawnUi.Draw.SkiaPoint)
+  commentId: M:System.IComparable{DrawnUi.Draw.SkiaPoint}.CompareTo(DrawnUi.Draw.SkiaPoint)
+  parent: System.IComparable{DrawnUi.Draw.SkiaPoint}
+  definition: System.IComparable`1.CompareTo(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1.compareto
+  name: CompareTo(SkiaPoint)
+  nameWithType: IComparable<SkiaPoint>.CompareTo(SkiaPoint)
+  fullName: System.IComparable<DrawnUi.Draw.SkiaPoint>.CompareTo(DrawnUi.Draw.SkiaPoint)
+  nameWithType.vb: IComparable(Of SkiaPoint).CompareTo(SkiaPoint)
+  fullName.vb: System.IComparable(Of DrawnUi.Draw.SkiaPoint).CompareTo(DrawnUi.Draw.SkiaPoint)
+  spec.csharp:
+  - uid: System.IComparable{DrawnUi.Draw.SkiaPoint}.CompareTo(DrawnUi.Draw.SkiaPoint)
+    name: CompareTo
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1.compareto
+  - name: (
+  - uid: DrawnUi.Draw.SkiaPoint
+    name: SkiaPoint
+    href: DrawnUi.Draw.SkiaPoint.html
+  - name: )
+  spec.vb:
+  - uid: System.IComparable{DrawnUi.Draw.SkiaPoint}.CompareTo(DrawnUi.Draw.SkiaPoint)
+    name: CompareTo
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1.compareto
+  - name: (
+  - uid: DrawnUi.Draw.SkiaPoint
+    name: SkiaPoint
+    href: DrawnUi.Draw.SkiaPoint.html
+  - name: )
+- uid: DrawnUi.Draw.SkiaPoint
+  commentId: T:DrawnUi.Draw.SkiaPoint
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaPoint.html
+  name: SkiaPoint
+  nameWithType: SkiaPoint
+  fullName: DrawnUi.Draw.SkiaPoint
+- uid: System.IComparable`1.CompareTo(`0)
+  commentId: M:System.IComparable`1.CompareTo(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.icomparable-1.compareto
+  name: CompareTo(T)
+  nameWithType: IComparable<T>.CompareTo(T)
+  fullName: System.IComparable<T>.CompareTo(T)
+  nameWithType.vb: IComparable(Of T).CompareTo(T)
+  fullName.vb: System.IComparable(Of T).CompareTo(T)
+  spec.csharp:
+  - uid: System.IComparable`1.CompareTo(`0)
+    name: CompareTo
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1.compareto
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.IComparable`1.CompareTo(`0)
+    name: CompareTo
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.icomparable-1.compareto
+  - name: (
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.SkiaPoint.Equals*
+  commentId: Overload:DrawnUi.Draw.SkiaPoint.Equals
+  href: DrawnUi.Draw.SkiaPoint.html#DrawnUi_Draw_SkiaPoint_Equals_DrawnUi_Draw_SkiaPoint_
+  name: Equals
+  nameWithType: SkiaPoint.Equals
+  fullName: DrawnUi.Draw.SkiaPoint.Equals
+- uid: System.IEquatable{DrawnUi.Draw.SkiaPoint}.Equals(DrawnUi.Draw.SkiaPoint)
+  commentId: M:System.IEquatable{DrawnUi.Draw.SkiaPoint}.Equals(DrawnUi.Draw.SkiaPoint)
+  parent: System.IEquatable{DrawnUi.Draw.SkiaPoint}
+  definition: System.IEquatable`1.Equals(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(SkiaPoint)
+  nameWithType: IEquatable<SkiaPoint>.Equals(SkiaPoint)
+  fullName: System.IEquatable<DrawnUi.Draw.SkiaPoint>.Equals(DrawnUi.Draw.SkiaPoint)
+  nameWithType.vb: IEquatable(Of SkiaPoint).Equals(SkiaPoint)
+  fullName.vb: System.IEquatable(Of DrawnUi.Draw.SkiaPoint).Equals(DrawnUi.Draw.SkiaPoint)
+  spec.csharp:
+  - uid: System.IEquatable{DrawnUi.Draw.SkiaPoint}.Equals(DrawnUi.Draw.SkiaPoint)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: DrawnUi.Draw.SkiaPoint
+    name: SkiaPoint
+    href: DrawnUi.Draw.SkiaPoint.html
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable{DrawnUi.Draw.SkiaPoint}.Equals(DrawnUi.Draw.SkiaPoint)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: DrawnUi.Draw.SkiaPoint
+    name: SkiaPoint
+    href: DrawnUi.Draw.SkiaPoint.html
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.IEquatable`1.Equals(`0)
+  commentId: M:System.IEquatable`1.Equals(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(T)
+  nameWithType: IEquatable<T>.Equals(T)
+  fullName: System.IEquatable<T>.Equals(T)
+  nameWithType.vb: IEquatable(Of T).Equals(T)
+  fullName.vb: System.IEquatable(Of T).Equals(T)
+  spec.csharp:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaPoint.GetHashCode*
+  commentId: Overload:DrawnUi.Draw.SkiaPoint.GetHashCode
+  href: DrawnUi.Draw.SkiaPoint.html#DrawnUi_Draw_SkiaPoint_GetHashCode
+  name: GetHashCode
+  nameWithType: SkiaPoint.GetHashCode
+  fullName: DrawnUi.Draw.SkiaPoint.GetHashCode
+- uid: DrawnUi.Draw.SkiaPoint.op_Equality*
+  commentId: Overload:DrawnUi.Draw.SkiaPoint.op_Equality
+  href: DrawnUi.Draw.SkiaPoint.html#DrawnUi_Draw_SkiaPoint_op_Equality_DrawnUi_Draw_SkiaPoint_DrawnUi_Draw_SkiaPoint_
+  name: operator ==
+  nameWithType: SkiaPoint.operator ==
+  fullName: DrawnUi.Draw.SkiaPoint.operator ==
+  nameWithType.vb: SkiaPoint.=
+  fullName.vb: DrawnUi.Draw.SkiaPoint.=
+  name.vb: =
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaPoint.op_Equality*
+    name: ==
+    href: DrawnUi.Draw.SkiaPoint.html#DrawnUi_Draw_SkiaPoint_op_Equality_DrawnUi_Draw_SkiaPoint_DrawnUi_Draw_SkiaPoint_
+- uid: DrawnUi.Draw.SkiaPoint.op_Inequality*
+  commentId: Overload:DrawnUi.Draw.SkiaPoint.op_Inequality
+  href: DrawnUi.Draw.SkiaPoint.html#DrawnUi_Draw_SkiaPoint_op_Inequality_DrawnUi_Draw_SkiaPoint_DrawnUi_Draw_SkiaPoint_
+  name: operator !=
+  nameWithType: SkiaPoint.operator !=
+  fullName: DrawnUi.Draw.SkiaPoint.operator !=
+  nameWithType.vb: SkiaPoint.<>
+  fullName.vb: DrawnUi.Draw.SkiaPoint.<>
+  name.vb: <>
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaPoint.op_Inequality*
+    name: '!='
+    href: DrawnUi.Draw.SkiaPoint.html#DrawnUi_Draw_SkiaPoint_op_Inequality_DrawnUi_Draw_SkiaPoint_DrawnUi_Draw_SkiaPoint_

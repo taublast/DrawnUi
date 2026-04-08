@@ -18,11 +18,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustContrastEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AdjustBrightnessEffect
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustContrastEffect.cs
     startLine: 55
   assemblies:
   - DrawnUi.Maui
@@ -96,11 +96,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustContrastEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: BrightnessProperty
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustContrastEffect.cs
     startLine: 57
   assemblies:
   - DrawnUi.Maui
@@ -123,11 +123,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustContrastEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Brightness
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustContrastEffect.cs
     startLine: 64
   assemblies:
   - DrawnUi.Maui
@@ -152,11 +152,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustContrastEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateFilter
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustContrastEffect.cs
     startLine: 70
   assemblies:
   - DrawnUi.Maui
@@ -185,11 +185,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustContrastEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustContrastEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustContrastEffect.cs
     startLine: 95
   assemblies:
   - DrawnUi.Maui

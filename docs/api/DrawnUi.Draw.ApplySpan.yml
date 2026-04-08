@@ -20,11 +20,11 @@ items:
   type: Struct
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+      path: src/Shared/Draw/Text/ApplySpan.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplySpan
-    path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+    path: ../src/Shared/Draw/Text/ApplySpan.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -54,11 +54,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+      path: src/Shared/Draw/Text/ApplySpan.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DebugString
-    path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+    path: ../src/Shared/Draw/Text/ApplySpan.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui
@@ -83,11 +83,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+      path: src/Shared/Draw/Text/ApplySpan.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Create
-    path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+    path: ../src/Shared/Draw/Text/ApplySpan.cs
     startLine: 16
   assemblies:
   - DrawnUi.Maui
@@ -121,11 +121,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+      path: src/Shared/Draw/Text/ApplySpan.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Span
-    path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+    path: ../src/Shared/Draw/Text/ApplySpan.cs
     startLine: 26
   assemblies:
   - DrawnUi.Maui
@@ -150,11 +150,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+      path: src/Shared/Draw/Text/ApplySpan.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Start
-    path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+    path: ../src/Shared/Draw/Text/ApplySpan.cs
     startLine: 27
   assemblies:
   - DrawnUi.Maui
@@ -179,11 +179,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+      path: src/Shared/Draw/Text/ApplySpan.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: End
-    path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+    path: ../src/Shared/Draw/Text/ApplySpan.cs
     startLine: 28
   assemblies:
   - DrawnUi.Maui
@@ -208,11 +208,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+      path: src/Shared/Draw/Text/ApplySpan.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Empty
-    path: ../src/Maui/DrawnUi/Draw/Text/ApplySpan.cs
+    path: ../src/Shared/Draw/Text/ApplySpan.cs
     startLine: 30
   assemblies:
   - DrawnUi.Maui

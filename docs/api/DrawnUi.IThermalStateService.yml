@@ -1,0 +1,288 @@
+### YamlMime:ManagedReference
+items:
+- uid: DrawnUi.IThermalStateService
+  commentId: T:DrawnUi.IThermalStateService
+  id: IThermalStateService
+  parent: DrawnUi
+  children:
+  - DrawnUi.IThermalStateService.CurrentState
+  - DrawnUi.IThermalStateService.StateChanged
+  langs:
+  - csharp
+  - vb
+  name: IThermalStateService
+  nameWithType: IThermalStateService
+  fullName: DrawnUi.IThermalStateService
+  type: Interface
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/IThermalStateService.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: IThermalStateService
+    path: ../src/Maui/DrawnUi/Shared/IThermalStateService.cs
+    startLine: 4
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi
+  syntax:
+    content: public interface IThermalStateService
+    content.vb: Public Interface IThermalStateService
+  extensionMethods:
+  - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+- uid: DrawnUi.IThermalStateService.CurrentState
+  commentId: P:DrawnUi.IThermalStateService.CurrentState
+  id: CurrentState
+  parent: DrawnUi.IThermalStateService
+  langs:
+  - csharp
+  - vb
+  name: CurrentState
+  nameWithType: IThermalStateService.CurrentState
+  fullName: DrawnUi.IThermalStateService.CurrentState
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/IThermalStateService.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CurrentState
+    path: ../src/Maui/DrawnUi/Shared/IThermalStateService.cs
+    startLine: 6
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi
+  syntax:
+    content: ThermalState CurrentState { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.ThermalState
+    content.vb: ReadOnly Property CurrentState As ThermalState
+  overload: DrawnUi.IThermalStateService.CurrentState*
+- uid: DrawnUi.IThermalStateService.StateChanged
+  commentId: E:DrawnUi.IThermalStateService.StateChanged
+  id: StateChanged
+  parent: DrawnUi.IThermalStateService
+  langs:
+  - csharp
+  - vb
+  name: StateChanged
+  nameWithType: IThermalStateService.StateChanged
+  fullName: DrawnUi.IThermalStateService.StateChanged
+  type: Event
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Shared/IThermalStateService.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: StateChanged
+    path: ../src/Maui/DrawnUi/Shared/IThermalStateService.cs
+    startLine: 7
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi
+  syntax:
+    content: event Action<ThermalState>? StateChanged
+    return:
+      type: System.Action{DrawnUi.Draw.ThermalState}
+    content.vb: Event StateChanged As Action(Of ThermalState)
+references:
+- uid: DrawnUi
+  commentId: N:DrawnUi
+  href: DrawnUi.html
+  name: DrawnUi
+  nameWithType: DrawnUi
+  fullName: DrawnUi
+- uid: System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  parent: DrawnUi.Extensions.InternalExtensions
+  definition: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  commentId: M:DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+  isExternal: true
+  href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  name: FromPlatform(object)
+  nameWithType: InternalExtensions.FromPlatform(object)
+  fullName: DrawnUi.Extensions.InternalExtensions.FromPlatform(object)
+  nameWithType.vb: InternalExtensions.FromPlatform(Object)
+  fullName.vb: DrawnUi.Extensions.InternalExtensions.FromPlatform(Object)
+  name.vb: FromPlatform(Object)
+  spec.csharp:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Extensions.InternalExtensions.FromPlatform(System.Object)
+    name: FromPlatform
+    href: DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: DrawnUi.Extensions.InternalExtensions
+  commentId: T:DrawnUi.Extensions.InternalExtensions
+  parent: DrawnUi.Extensions
+  href: DrawnUi.Extensions.InternalExtensions.html
+  name: InternalExtensions
+  nameWithType: InternalExtensions
+  fullName: DrawnUi.Extensions.InternalExtensions
+- uid: DrawnUi.Extensions
+  commentId: N:DrawnUi.Extensions
+  href: DrawnUi.html
+  name: DrawnUi.Extensions
+  nameWithType: DrawnUi.Extensions
+  fullName: DrawnUi.Extensions
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Extensions
+    name: Extensions
+    href: DrawnUi.Extensions.html
+- uid: DrawnUi.IThermalStateService.CurrentState*
+  commentId: Overload:DrawnUi.IThermalStateService.CurrentState
+  href: DrawnUi.IThermalStateService.html#DrawnUi_IThermalStateService_CurrentState
+  name: CurrentState
+  nameWithType: IThermalStateService.CurrentState
+  fullName: DrawnUi.IThermalStateService.CurrentState
+- uid: DrawnUi.Draw.ThermalState
+  commentId: T:DrawnUi.Draw.ThermalState
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ThermalState.html
+  name: ThermalState
+  nameWithType: ThermalState
+  fullName: DrawnUi.Draw.ThermalState
+- uid: DrawnUi.Draw
+  commentId: N:DrawnUi.Draw
+  href: DrawnUi.html
+  name: DrawnUi.Draw
+  nameWithType: DrawnUi.Draw
+  fullName: DrawnUi.Draw
+  spec.csharp:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+  spec.vb:
+  - uid: DrawnUi
+    name: DrawnUi
+    href: DrawnUi.html
+  - name: .
+  - uid: DrawnUi.Draw
+    name: Draw
+    href: DrawnUi.Draw.html
+- uid: System.Action{DrawnUi.Draw.ThermalState}
+  commentId: T:System.Action{DrawnUi.Draw.ThermalState}
+  parent: System
+  definition: System.Action`1
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<ThermalState>
+  nameWithType: Action<ThermalState>
+  fullName: System.Action<DrawnUi.Draw.ThermalState>
+  nameWithType.vb: Action(Of ThermalState)
+  fullName.vb: System.Action(Of DrawnUi.Draw.ThermalState)
+  name.vb: Action(Of ThermalState)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: DrawnUi.Draw.ThermalState
+    name: ThermalState
+    href: DrawnUi.Draw.ThermalState.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.ThermalState
+    name: ThermalState
+    href: DrawnUi.Draw.ThermalState.html
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System

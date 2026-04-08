@@ -22,7 +22,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SpanCollection
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 274
+    startLine: 290
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -98,7 +98,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: InsertItem
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 276
+    startLine: 292
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -137,7 +137,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetItem
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 279
+    startLine: 295
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -176,7 +176,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ClearItems
     path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 282
+    startLine: 298
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

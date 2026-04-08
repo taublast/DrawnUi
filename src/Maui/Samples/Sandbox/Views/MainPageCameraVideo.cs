@@ -262,7 +262,7 @@ public class MainPageCameraVideo : BasePageReloadable, IDisposable
             Children = { Canvas }
         };
 
-        CameraControl.FrameProcessor = (frame) =>
+        CameraControl.ProcessFrame = (frame) =>
         {
             // Simple text overlay for testing
             using var paint = new SKPaint { Color = SKColors.White, TextSize = 48, IsAntialias = true, };

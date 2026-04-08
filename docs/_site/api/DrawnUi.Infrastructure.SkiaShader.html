@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class SkiaShader | DrawnUI for .NET MAUI </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class SkiaShader | DrawnUI for .NET MAUI ">
+      
+      <meta name="description" content="DrawnUI for .NET MAUI - Rendering engine built on SkiaSharp. Create pixel-perfect cross-platform apps for iOS, Android, Windows, MacCatalyst with advanced animations, gestures, and visual effects.">
+      <link rel="icon" href="../images/draw.svg">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/taublast/drawnui/new/main/apiSpec/new?filename=DrawnUi_Infrastructure_SkiaShader.md&amp;value=---%0Auid%3A%20DrawnUi.Infrastructure.SkiaShader%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/draw.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="DrawnUi.Infrastructure.SkiaShader">
+
+
+
+  <h1 id="DrawnUi_Infrastructure_SkiaShader" data-uid="DrawnUi.Infrastructure.SkiaShader" class="text-break">
+Class SkiaShader  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="DrawnUi.html">DrawnUi</a>.<a class="xref" href="DrawnUi.Infrastructure.html">Infrastructure</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>DrawnUi.Maui.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Lightweight reusable shader wrapper for applying SKSL shaders directly to an SKPaint.
+Used standalone for direct rendering, or as the engine inside SkiaShaderEffect.
+Subclass and override CreateUniforms/CreateChildren for custom uniforms.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class SkiaShader : IDisposable</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">SkiaShader</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="DrawnUi.Extensions.InternalExtensions.html#DrawnUi_Extensions_InternalExtensions_FromPlatform_System_Object_">InternalExtensions.FromPlatform(object)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader__ctor_" data-uid="DrawnUi.Infrastructure.SkiaShader.#ctor*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader__ctor" data-uid="DrawnUi.Infrastructure.SkiaShader.#ctor">
+  SkiaShader()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SkiaShader()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader__bufImageResolution" data-uid="DrawnUi.Infrastructure.SkiaShader._bufImageResolution">
+  _bufImageResolution
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly float[] _bufImageResolution</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>[]</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader__bufMouse" data-uid="DrawnUi.Infrastructure.SkiaShader._bufMouse">
+  _bufMouse
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly float[] _bufMouse</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>[]</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader__bufOffset" data-uid="DrawnUi.Infrastructure.SkiaShader._bufOffset">
+  _bufOffset
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L20"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly float[] _bufOffset</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>[]</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader__bufResolution" data-uid="DrawnUi.Infrastructure.SkiaShader._bufResolution">
+  _bufResolution
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly float[] _bufResolution</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>[]</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader__compiled" data-uid="DrawnUi.Infrastructure.SkiaShader._compiled">
+  _compiled
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L10"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected SKRuntimeEffect _compiled</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skruntimeeffect">SKRuntimeEffect</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_BlendMode_" data-uid="DrawnUi.Infrastructure.SkiaShader.BlendMode*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_BlendMode" data-uid="DrawnUi.Infrastructure.SkiaShader.BlendMode">
+  BlendMode
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Blend mode used when drawing. Default is SrcOver.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SKBlendMode BlendMode { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skblendmode">SKBlendMode</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_Compiled_" data-uid="DrawnUi.Infrastructure.SkiaShader.Compiled*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_Compiled" data-uid="DrawnUi.Infrastructure.SkiaShader.Compiled">
+  Compiled
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The compiled SKRuntimeEffect, if available.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SKRuntimeEffect Compiled { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skruntimeeffect">SKRuntimeEffect</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_FilterMode_" data-uid="DrawnUi.Infrastructure.SkiaShader.FilterMode*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_FilterMode" data-uid="DrawnUi.Infrastructure.SkiaShader.FilterMode">
+  FilterMode
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Filter mode for the primary input texture. Default is Linear.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SKFilterMode FilterMode { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skfiltermode">SKFilterMode</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_IsCompiled_" data-uid="DrawnUi.Infrastructure.SkiaShader.IsCompiled*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_IsCompiled" data-uid="DrawnUi.Infrastructure.SkiaShader.IsCompiled">
+  IsCompiled
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the shader is compiled and ready to use.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsCompiled { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_MipmapMode_" data-uid="DrawnUi.Infrastructure.SkiaShader.MipmapMode*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_MipmapMode" data-uid="DrawnUi.Infrastructure.SkiaShader.MipmapMode">
+  MipmapMode
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Mipmap mode for the primary input texture. Default is None.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SKMipmapMode MipmapMode { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skmipmapmode">SKMipmapMode</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_Mouse_" data-uid="DrawnUi.Infrastructure.SkiaShader.Mouse*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_Mouse" data-uid="DrawnUi.Infrastructure.SkiaShader.Mouse">
+  Mouse
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Current mouse/touch position (Shadertoy convention).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SKPoint Mouse { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpoint">SKPoint</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_MouseInitial_" data-uid="DrawnUi.Infrastructure.SkiaShader.MouseInitial*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_MouseInitial" data-uid="DrawnUi.Infrastructure.SkiaShader.MouseInitial">
+  MouseInitial
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Where click/drag started. If zero, means not dragging.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SKPoint MouseInitial { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpoint">SKPoint</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_Offset_" data-uid="DrawnUi.Infrastructure.SkiaShader.Offset*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_Offset" data-uid="DrawnUi.Infrastructure.SkiaShader.Offset">
+  Offset
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Top-left offset of the drawing rect. Default (0,0).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SKPoint Offset { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpoint">SKPoint</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_TileMode_" data-uid="DrawnUi.Infrastructure.SkiaShader.TileMode*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_TileMode" data-uid="DrawnUi.Infrastructure.SkiaShader.TileMode">
+  TileMode
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Tile mode for input textures. Default is Clamp.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SKShaderTileMode TileMode { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skshadertilemode">SKShaderTileMode</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_Time_" data-uid="DrawnUi.Infrastructure.SkiaShader.Time*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_Time" data-uid="DrawnUi.Infrastructure.SkiaShader.Time">
+  Time
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Elapsed time in seconds, typically fed from a frame timer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float Time { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_ApplyTo_" data-uid="DrawnUi.Infrastructure.SkiaShader.ApplyTo*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_ApplyTo_SkiaSharp_SKPaint_SkiaSharp_SKImage_System_Single_System_Single_" data-uid="DrawnUi.Infrastructure.SkiaShader.ApplyTo(SkiaSharp.SKPaint,SkiaSharp.SKImage,System.Single,System.Single)">
+  ApplyTo(SKPaint, SKImage, float, float)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L162"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Apply the shader to a paint using an image as the primary input texture (iImage1).
+Returns the created SKShader so caller can dispose it, or null if not compiled.
+The uniforms, children, and texture shader objects are cached on the instance
+and reused across frames — callers must NOT dispose them.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SKShader ApplyTo(SKPaint paint, SKImage source, float width, float height)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>paint</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpaint">SKPaint</a></dt>
+    <dd></dd>
+    <dt><code>source</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skimage">SKImage</a></dt>
+    <dd></dd>
+    <dt><code>width</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+    <dt><code>height</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skshader">SKShader</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_ApplyTo_" data-uid="DrawnUi.Infrastructure.SkiaShader.ApplyTo*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_ApplyTo_SkiaSharp_SKPaint_System_Single_System_Single_" data-uid="DrawnUi.Infrastructure.SkiaShader.ApplyTo(SkiaSharp.SKPaint,System.Single,System.Single)">
+  ApplyTo(SKPaint, float, float)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L179"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Apply the shader without an input texture (generative/output-only shaders).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SKShader ApplyTo(SKPaint paint, float width, float height)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>paint</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpaint">SKPaint</a></dt>
+    <dd></dd>
+    <dt><code>width</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+    <dt><code>height</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skshader">SKShader</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_CompileFromCode_" data-uid="DrawnUi.Infrastructure.SkiaShader.CompileFromCode*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_CompileFromCode_System_String_System_String_System_Boolean_System_Action_System_String__" data-uid="DrawnUi.Infrastructure.SkiaShader.CompileFromCode(System.String,System.String,System.Boolean,System.Action{System.String})">
+  CompileFromCode(string, string, bool, Action&lt;string&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compile shader from an SKSL code string.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CompileFromCode(string skslCode, string cacheKey = null, bool useCache = false, Action&lt;string&gt; onError = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>skslCode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>cacheKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>useCache</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+    <dt><code>onError</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_CompileFromResource_" data-uid="DrawnUi.Infrastructure.SkiaShader.CompileFromResource*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_CompileFromResource_System_String_System_Boolean_System_Action_System_String__" data-uid="DrawnUi.Infrastructure.SkiaShader.CompileFromResource(System.String,System.Boolean,System.Action{System.String})">
+  CompileFromResource(string, bool, Action&lt;string&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Compile shader from an embedded resource file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CompileFromResource(string resourcePath, bool useCache = true, Action&lt;string&gt; onError = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>resourcePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>useCache</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+    <dt><code>onError</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_CreateChildren_" data-uid="DrawnUi.Infrastructure.SkiaShader.CreateChildren*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_CreateChildren_SkiaSharp_SKShader_" data-uid="DrawnUi.Infrastructure.SkiaShader.CreateChildren(SkiaSharp.SKShader)">
+  CreateChildren(SKShader)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L323"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates texture children with the primary texture as iImage1.
+Override to add additional textures (iImage2, etc.) by setting extra keys on the
+returned instance.</p>
+<p>
+IMPORTANT: the returned <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skruntimeeffectchildren">SKRuntimeEffectChildren</a> is OWNED by this
+<a class="xref" href="DrawnUi.Infrastructure.SkiaShader.html">SkiaShader</a> and reused every frame. Do not dispose it and do not
+return a different instance from an override. It is invalidated automatically
+when the compiled effect changes.
+</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual SKRuntimeEffectChildren CreateChildren(SKShader primaryTexture)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>primaryTexture</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skshader">SKShader</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skruntimeeffectchildren">SKRuntimeEffectChildren</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_CreateTextureShader_" data-uid="DrawnUi.Infrastructure.SkiaShader.CreateTextureShader*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_CreateTextureShader_SkiaSharp_SKImage_" data-uid="DrawnUi.Infrastructure.SkiaShader.CreateTextureShader(SkiaSharp.SKImage)">
+  CreateTextureShader(SKImage)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L340"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates (or reuses) a shader from an <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skimage">SKImage</a> for use as a texture
+uniform. The returned <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skshader">SKShader</a> is cached on the instance and reused
+while the source image handle and sampling options are unchanged — callers must
+NOT dispose it. It is disposed automatically when the source, sampling options, or
+compiled effect change, and in <a class="xref" href="DrawnUi.Infrastructure.SkiaShader.html#DrawnUi_Infrastructure_SkiaShader_Dispose">Dispose()</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SKShader CreateTextureShader(SKImage source)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>source</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skimage">SKImage</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skshader">SKShader</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_CreateUniforms_" data-uid="DrawnUi.Infrastructure.SkiaShader.CreateUniforms*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_CreateUniforms_System_Single_System_Single_System_Single_System_Single_" data-uid="DrawnUi.Infrastructure.SkiaShader.CreateUniforms(System.Single,System.Single,System.Single,System.Single)">
+  CreateUniforms(float, float, float, float)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L283"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates standard uniforms: iResolution, iImageResolution, iTime, iOffset, iMouse.
+Override to add custom uniforms for specialized shaders — the typical pattern is
+to call <code>base.CreateUniforms(...)</code> and then set extra keys on the returned
+instance.</p>
+<p>
+IMPORTANT: the returned <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skruntimeeffectuniforms">SKRuntimeEffectUniforms</a> is OWNED by this
+<a class="xref" href="DrawnUi.Infrastructure.SkiaShader.html">SkiaShader</a> and reused every frame. Do not dispose it and do not
+return a different instance from an override — mutate and return the same one.
+It is invalidated automatically when the compiled effect changes.
+</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual SKRuntimeEffectUniforms CreateUniforms(float viewportWidth, float viewportHeight, float imageWidth, float imageHeight)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>viewportWidth</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+    <dt><code>viewportHeight</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+    <dt><code>imageWidth</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+    <dt><code>imageHeight</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skruntimeeffectuniforms">SKRuntimeEffectUniforms</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_Dispose_" data-uid="DrawnUi.Infrastructure.SkiaShader.Dispose*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_Dispose" data-uid="DrawnUi.Infrastructure.SkiaShader.Dispose">
+  Dispose()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L384"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_DisposeCompiled_" data-uid="DrawnUi.Infrastructure.SkiaShader.DisposeCompiled*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_DisposeCompiled" data-uid="DrawnUi.Infrastructure.SkiaShader.DisposeCompiled">
+  DisposeCompiled()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DisposeCompiled()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_DrawImage_" data-uid="DrawnUi.Infrastructure.SkiaShader.DrawImage*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_DrawImage_SkiaSharp_SKCanvas_SkiaSharp_SKImage_System_Single_System_Single_" data-uid="DrawnUi.Infrastructure.SkiaShader.DrawImage(SkiaSharp.SKCanvas,SkiaSharp.SKImage,System.Single,System.Single)">
+  DrawImage(SKCanvas, SKImage, float, float)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L247"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Full render: apply the shader and draw the result on the canvas.
+The source image is passed to the shader as iImage1 texture;
+actual drawing uses DrawRect because the shader generates all pixels itself.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DrawImage(SKCanvas canvas, SKImage source, float x, float y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>canvas</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skcanvas">SKCanvas</a></dt>
+    <dd></dd>
+    <dt><code>source</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skimage">SKImage</a></dt>
+    <dd></dd>
+    <dt><code>x</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+    <dt><code>y</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_DrawRect_" data-uid="DrawnUi.Infrastructure.SkiaShader.DrawRect*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_DrawRect_SkiaSharp_SKCanvas_SkiaSharp_SKImage_SkiaSharp_SKRect_" data-uid="DrawnUi.Infrastructure.SkiaShader.DrawRect(SkiaSharp.SKCanvas,SkiaSharp.SKImage,SkiaSharp.SKRect)">
+  DrawRect(SKCanvas, SKImage, SKRect)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L195"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Full render: apply the shader and draw a rect on the canvas.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DrawRect(SKCanvas canvas, SKImage source, SKRect destination)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>canvas</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skcanvas">SKCanvas</a></dt>
+    <dd></dd>
+    <dt><code>source</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skimage">SKImage</a></dt>
+    <dd></dd>
+    <dt><code>destination</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skrect">SKRect</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_DrawRect_" data-uid="DrawnUi.Infrastructure.SkiaShader.DrawRect*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_DrawRect_SkiaSharp_SKCanvas_SkiaSharp_SKRect_" data-uid="DrawnUi.Infrastructure.SkiaShader.DrawRect(SkiaSharp.SKCanvas,SkiaSharp.SKRect)">
+  DrawRect(SKCanvas, SKRect)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L220"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Full render without input texture (generative shaders).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DrawRect(SKCanvas canvas, SKRect destination)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>canvas</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skcanvas">SKCanvas</a></dt>
+    <dd></dd>
+    <dt><code>destination</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skrect">SKRect</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_FromCode_" data-uid="DrawnUi.Infrastructure.SkiaShader.FromCode*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_FromCode_System_String_" data-uid="DrawnUi.Infrastructure.SkiaShader.FromCode(System.String)">
+  FromCode(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create and compile from inline SKSL code.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SkiaShader FromCode(string skslCode)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>skslCode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Infrastructure.SkiaShader.html">SkiaShader</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_FromResource_" data-uid="DrawnUi.Infrastructure.SkiaShader.FromResource*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_FromResource_System_String_System_Boolean_" data-uid="DrawnUi.Infrastructure.SkiaShader.FromResource(System.String,System.Boolean)">
+  FromResource(string, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Create and compile from a resource file path (e.g. &quot;Shaders/myeffect.sksl&quot;).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SkiaShader FromResource(string resourcePath, bool useCache = true)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>resourcePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>useCache</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DrawnUi.Infrastructure.SkiaShader.html">SkiaShader</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_GetPaint_" data-uid="DrawnUi.Infrastructure.SkiaShader.GetPaint*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_GetPaint" data-uid="DrawnUi.Infrastructure.SkiaShader.GetPaint">
+  GetPaint()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L367"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SKPaint GetPaint()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/skiasharp.skpaint">SKPaint</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="DrawnUi_Infrastructure_SkiaShader_NormalizeLineEndings_" data-uid="DrawnUi.Infrastructure.SkiaShader.NormalizeLineEndings*"></a>
+
+  <h3 id="DrawnUi_Infrastructure_SkiaShader_NormalizeLineEndings_System_String_" data-uid="DrawnUi.Infrastructure.SkiaShader.NormalizeLineEndings(System.String)">
+  NormalizeLineEndings(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L377"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string NormalizeLineEndings(string text)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>text</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/taublast/DrawnUi/blob/dev/src/Shared/Features/Shaders/SkiaShader.cs/#L8" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Made by <a href="https://taublast.github.io/about/">Nick Kovalsky aka AppoMobi (@taublast)</a><script>(function(){try{const fix=function(){const brand=document.querySelector('a.navbar-brand');if(brand){brand.setAttribute('href','/');}document.querySelectorAll('a[href]').forEach(function(a){var href=a.getAttribute('href');if(!href||href.startsWith('http'))return;if(href==='index.html'||href==='/index.html'||href==='../index.html'){a.setAttribute('href','/');return;}if(href.endsWith('/articles/index.html')||href==='articles/index.html'||href==='../articles/index.html'){a.setAttribute('href','/articles/');return;}var m=href.match(/^(?:\.?\.?\/)?articles\/.*\/index\.html(.*)$/);if(m){var p=href.replace(/\/index\.html(.*)$/,'/');if(!p.startsWith('/')){p='/' + p.replace(/^\/?/,'');}a.setAttribute('href',p);}});};if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fix);}else{fix();}}catch(e){})();</script>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

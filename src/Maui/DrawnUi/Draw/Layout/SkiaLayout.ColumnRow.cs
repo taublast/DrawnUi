@@ -931,7 +931,7 @@ else
                     var measured = MeasureAndArrangeCell(rectFitChild, cell, child, rectForChildrenPixels, scale);
 
                     // Track child as dirty for ImageComposite cache support
-                    if (UsingCacheType == SkiaCacheType.ImageComposite)
+                    if (IsCacheComposite)
                     {
                         TrackChildAsDirty(child);
                     }
@@ -1119,7 +1119,7 @@ else
                         }
 
                         // Track child as dirty for ImageComposite cache support
-                        if (UsingCacheType == SkiaCacheType.ImageComposite)
+                        if (IsCacheComposite)
                         {
                             TrackChildAsDirty(child);
                         }
@@ -1289,7 +1289,7 @@ else
                             isTemplated, needMeasureAll, ref firstCell);
 
                         // Track child as dirty for ImageComposite cache support
-                        if (UsingCacheType == SkiaCacheType.ImageComposite)
+                        if (IsCacheComposite)
                         {
                             TrackChildAsDirty(child);
                         }
@@ -1781,7 +1781,7 @@ else
 
             // Cache type safety
             if (UsingCacheType == SkiaCacheType.ImageDoubleBuffered
-                || UsingCacheType == SkiaCacheType.ImageComposite)
+                || IsCacheComposite)
             {
                 return false;
             }

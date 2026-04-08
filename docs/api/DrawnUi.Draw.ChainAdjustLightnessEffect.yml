@@ -19,11 +19,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustLightnessEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ChainAdjustLightnessEffect
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustLightnessEffect.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -97,11 +97,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustLightnessEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ValueProperty
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustLightnessEffect.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -124,11 +124,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustLightnessEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustLightnessEffect.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui
@@ -153,11 +153,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustLightnessEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustLightnessEffect.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui
@@ -195,11 +195,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustLightnessEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateLightnessFilter
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustLightnessEffect.cs
     startLine: 44
   assemblies:
   - DrawnUi.Maui
@@ -233,11 +233,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustLightnessEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustLightnessEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustLightnessEffect.cs
     startLine: 61
   assemblies:
   - DrawnUi.Maui

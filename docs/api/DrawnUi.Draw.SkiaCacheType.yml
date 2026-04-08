@@ -8,6 +8,7 @@ items:
   - DrawnUi.Draw.SkiaCacheType.GPU
   - DrawnUi.Draw.SkiaCacheType.Image
   - DrawnUi.Draw.SkiaCacheType.ImageComposite
+  - DrawnUi.Draw.SkiaCacheType.ImageCompositeGPU
   - DrawnUi.Draw.SkiaCacheType.ImageDoubleBuffered
   - DrawnUi.Draw.SkiaCacheType.None
   - DrawnUi.Draw.SkiaCacheType.Operations
@@ -225,6 +226,45 @@ items:
     content: ImageComposite = 5
     return:
       type: DrawnUi.Draw.SkiaCacheType
+- uid: DrawnUi.Draw.SkiaCacheType.ImageCompositeGPU
+  commentId: F:DrawnUi.Draw.SkiaCacheType.ImageCompositeGPU
+  id: ImageCompositeGPU
+  parent: DrawnUi.Draw.SkiaCacheType
+  langs:
+  - csharp
+  - vb
+  name: ImageCompositeGPU
+  nameWithType: SkiaCacheType.ImageCompositeGPU
+  fullName: DrawnUi.Draw.SkiaCacheType.ImageCompositeGPU
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Internals/Enums/SkiaCacheType.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ImageCompositeGPU
+    path: ../src/Shared/Internals/Enums/SkiaCacheType.cs
+    startLine: 53
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    The cached surface will use the same graphic context as your hardware-accelerated canvas.
+
+    Would receive the invalidated area rectangle, then redraw the previous cache
+
+    but clipped to exclude the dirty area, then would re-create the dirty area and
+
+    draw it clipped inside the dirty rectangle. This is useful for layouts with many children,
+
+    like scroll content etc, but useless for non-containers.
+
+    But will suffer from children that love to invalidate parent much!
+  example: []
+  syntax:
+    content: ImageCompositeGPU = 6
+    return:
+      type: DrawnUi.Draw.SkiaCacheType
 - uid: DrawnUi.Draw.SkiaCacheType.GPU
   commentId: F:DrawnUi.Draw.SkiaCacheType.GPU
   id: GPU
@@ -243,7 +283,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GPU
     path: ../src/Shared/Internals/Enums/SkiaCacheType.cs
-    startLine: 50
+    startLine: 60
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -255,7 +295,7 @@ items:
     Will fallback to simple Image cache type if hardware acceleration is not available.
   example: []
   syntax:
-    content: GPU = 6
+    content: GPU = 7
     return:
       type: DrawnUi.Draw.SkiaCacheType
 references:

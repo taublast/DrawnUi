@@ -24,6 +24,7 @@ public partial class Super
 
     public static event EventHandler OnFrame;
     static Looper Looper { get; set; }
+    private static ThermalStateService _thermalService;
 
     public static int RefreshRate { get; protected set; }
 
@@ -83,6 +84,10 @@ public partial class Super
         }
 
         InitShared();
+
+        _thermalService = new ThermalStateService();
+        OnThermalStateChanged(_thermalService.CurrentState);
+        _thermalService.StateChanged += OnThermalStateChanged;
 
         Tasks.StartDelayed(TimeSpan.FromMilliseconds(250), async () =>
         {
@@ -712,6 +717,11 @@ public partial class Super
 
         public override void OnOrientationChanged(int degrees)
         {
+            if (degrees >= 0)
+            {
+                DeviceRotation = degrees % 360;
+            }
+
             var rotation = ((degrees + 45) / 90) % 4;
 
             var deviceOrientation = rotation * 90;

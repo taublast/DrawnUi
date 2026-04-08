@@ -21,11 +21,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      path: src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ObjectPools
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -58,11 +58,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      path: src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetLineGlyphList
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
     startLine: 28
   assemblies:
   - DrawnUi.Maui
@@ -86,11 +86,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      path: src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReturnLineGlyphList
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
     startLine: 39
   assemblies:
   - DrawnUi.Maui
@@ -118,11 +118,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      path: src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetTextLineList
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
     startLine: 60
   assemblies:
   - DrawnUi.Maui
@@ -146,11 +146,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      path: src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReturnTextLineList
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
     startLine: 71
   assemblies:
   - DrawnUi.Maui
@@ -178,11 +178,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      path: src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetStringBuilder
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
     startLine: 92
   assemblies:
   - DrawnUi.Maui
@@ -206,11 +206,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      path: src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ReturnStringBuilder
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
     startLine: 103
   assemblies:
   - DrawnUi.Maui
@@ -235,11 +235,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      path: src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetPoolSizes
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
     startLine: 124
   assemblies:
   - DrawnUi.Maui

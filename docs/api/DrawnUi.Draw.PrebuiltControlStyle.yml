@@ -19,11 +19,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
+      path: src/Shared/Internals/Enums/PrebuiltControlStyle.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PrebuiltControlStyle
-    path: ../src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
+    path: ../src/Shared/Internals/Enums/PrebuiltControlStyle.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -46,11 +46,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
+      path: src/Shared/Internals/Enums/PrebuiltControlStyle.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Unset
-    path: ../src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
+    path: ../src/Shared/Internals/Enums/PrebuiltControlStyle.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -72,11 +72,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
+      path: src/Shared/Internals/Enums/PrebuiltControlStyle.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Platform
-    path: ../src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
+    path: ../src/Shared/Internals/Enums/PrebuiltControlStyle.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -100,11 +100,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
+      path: src/Shared/Internals/Enums/PrebuiltControlStyle.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Cupertino
-    path: ../src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
+    path: ../src/Shared/Internals/Enums/PrebuiltControlStyle.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui
@@ -128,11 +128,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
+      path: src/Shared/Internals/Enums/PrebuiltControlStyle.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Material
-    path: ../src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
+    path: ../src/Shared/Internals/Enums/PrebuiltControlStyle.cs
     startLine: 19
   assemblies:
   - DrawnUi.Maui
@@ -156,11 +156,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
+      path: src/Shared/Internals/Enums/PrebuiltControlStyle.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Windows
-    path: ../src/Maui/DrawnUi/Controls/Switches/PrebuiltControlStyle.cs
+    path: ../src/Shared/Internals/Enums/PrebuiltControlStyle.cs
     startLine: 24
   assemblies:
   - DrawnUi.Maui

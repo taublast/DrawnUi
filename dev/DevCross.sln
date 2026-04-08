@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11201.2 d18.0
+VisualStudioVersion = 18.0.11201.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8ED244C1-6F60-4954-BC7F-98D827EA31CC}"
 EndProject
@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawnUi.Blazor", "..\src\Bl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSandbox", "..\src\Blazor\Samples\BlazorSandbox\BlazorSandbox.csproj", "{D1B96898-763F-4BB2-A7A5-1F388B0A2703}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "..\src\Maui\Samples\Sandbox\Sandbox.csproj", "{C1DD571C-2920-5549-C18A-6A32245B0D13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{D1B96898-763F-4BB2-A7A5-1F388B0A2703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1B96898-763F-4BB2-A7A5-1F388B0A2703}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1B96898-763F-4BB2-A7A5-1F388B0A2703}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1DD571C-2920-5549-C18A-6A32245B0D13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1DD571C-2920-5549-C18A-6A32245B0D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1DD571C-2920-5549-C18A-6A32245B0D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1DD571C-2920-5549-C18A-6A32245B0D13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

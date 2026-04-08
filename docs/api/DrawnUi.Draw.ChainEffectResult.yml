@@ -17,11 +17,11 @@ items:
   type: Struct
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs
+      path: src/Shared/Features/Effects/ChainEffectResult.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ChainEffectResult
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs
+    path: ../src/Shared/Features/Effects/ChainEffectResult.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -51,11 +51,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs
+      path: src/Shared/Features/Effects/ChainEffectResult.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DrawnControl
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs
+    path: ../src/Shared/Features/Effects/ChainEffectResult.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -82,11 +82,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs
+      path: src/Shared/Features/Effects/ChainEffectResult.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Create
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs
+    path: ../src/Shared/Features/Effects/ChainEffectResult.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -116,11 +116,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs
+      path: src/Shared/Features/Effects/ChainEffectResult.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Default
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainEffectResult.cs
+    path: ../src/Shared/Features/Effects/ChainEffectResult.cs
     startLine: 18
   assemblies:
   - DrawnUi.Maui

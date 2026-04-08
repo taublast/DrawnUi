@@ -62,6 +62,66 @@ namespace DrawnUi.Draw
             PlaneForward?.Invalidate();
         }
 
+        protected virtual void DisposeVirtualPlanes()
+        {
+            foreach (var state in _planeBuildStates.Values)
+            {
+                state.Cts?.Cancel();
+            }
+
+            foreach (var planeLock in _planeLocks.Values)
+            {
+                planeLock.Wait();
+            }
+
+            try
+            {
+                foreach (var state in _planeBuildStates.Values)
+                {
+                    state.IsBuilding = false;
+                    state.Cts?.Dispose();
+                    state.Cts = null;
+                }
+
+                DisposePlane(PlaneCurrent);
+                DisposePlane(PlaneForward);
+                DisposePlane(PlaneBackward);
+
+                PlaneCurrent = null;
+                PlaneForward = null;
+                PlaneBackward = null;
+            }
+            finally
+            {
+                foreach (var planeLock in _planeLocks.Values)
+                {
+                    planeLock.Release();
+                }
+            }
+        }
+
+        private void DisposePlane(Plane plane)
+        {
+            if (plane == null)
+            {
+                return;
+            }
+
+            plane.IsReady = false;
+
+            if (plane.CachedObject != null)
+            {
+                DisposeObject(plane.CachedObject);
+                plane.CachedObject = null;
+            }
+
+            if (plane.Surface != null)
+            {
+                DisposeObject(plane.Surface);
+                plane.Surface = null;
+            }
+        }
+
 
         public override void UpdateByChild(SkiaControl control)
         {

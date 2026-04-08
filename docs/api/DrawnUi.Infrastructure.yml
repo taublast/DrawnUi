@@ -15,6 +15,7 @@ items:
   - DrawnUi.Infrastructure.PerpetualPendulum
   - DrawnUi.Infrastructure.RenderOnTimer
   - DrawnUi.Infrastructure.SkSl
+  - DrawnUi.Infrastructure.SkiaShader
   - DrawnUi.Infrastructure.SkiaTouchResultContext
   - DrawnUi.Infrastructure.Spring
   - DrawnUi.Infrastructure.StorageType
@@ -32,45 +33,12 @@ items:
   assemblies:
   - DrawnUi.Maui
 references:
-- uid: DrawnUi.Infrastructure.FileDescriptor
-  commentId: T:DrawnUi.Infrastructure.FileDescriptor
-  parent: DrawnUi.Infrastructure
-  href: DrawnUi.Infrastructure.FileDescriptor.html
-  name: FileDescriptor
-  nameWithType: FileDescriptor
-  fullName: DrawnUi.Infrastructure.FileDescriptor
 - uid: DrawnUi.Infrastructure.Files
   commentId: T:DrawnUi.Infrastructure.Files
   href: DrawnUi.Infrastructure.Files.html
   name: Files
   nameWithType: Files
   fullName: DrawnUi.Infrastructure.Files
-- uid: DrawnUi.Infrastructure.StorageType
-  commentId: T:DrawnUi.Infrastructure.StorageType
-  parent: DrawnUi.Infrastructure
-  href: DrawnUi.Infrastructure.StorageType.html
-  name: StorageType
-  nameWithType: StorageType
-  fullName: DrawnUi.Infrastructure.StorageType
-- uid: DrawnUi.Infrastructure.PaperFormat
-  commentId: T:DrawnUi.Infrastructure.PaperFormat
-  parent: DrawnUi.Infrastructure
-  href: DrawnUi.Infrastructure.PaperFormat.html
-  name: PaperFormat
-  nameWithType: PaperFormat
-  fullName: DrawnUi.Infrastructure.PaperFormat
-- uid: DrawnUi.Infrastructure.PdfPagePosition
-  commentId: T:DrawnUi.Infrastructure.PdfPagePosition
-  href: DrawnUi.Infrastructure.PdfPagePosition.html
-  name: PdfPagePosition
-  nameWithType: PdfPagePosition
-  fullName: DrawnUi.Infrastructure.PdfPagePosition
-- uid: DrawnUi.Infrastructure.Pdf
-  commentId: T:DrawnUi.Infrastructure.Pdf
-  href: DrawnUi.Infrastructure.Pdf.html
-  name: Pdf
-  nameWithType: Pdf
-  fullName: DrawnUi.Infrastructure.Pdf
 - uid: DrawnUi.Infrastructure.SkSl
   commentId: T:DrawnUi.Infrastructure.SkSl
   href: DrawnUi.Infrastructure.SkSl.html
@@ -169,6 +137,46 @@ references:
   name: VisualTreeChain
   nameWithType: VisualTreeChain
   fullName: DrawnUi.Infrastructure.VisualTreeChain
+- uid: DrawnUi.Infrastructure.StorageType
+  commentId: T:DrawnUi.Infrastructure.StorageType
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.StorageType.html
+  name: StorageType
+  nameWithType: StorageType
+  fullName: DrawnUi.Infrastructure.StorageType
+- uid: DrawnUi.Infrastructure.FileDescriptor
+  commentId: T:DrawnUi.Infrastructure.FileDescriptor
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.FileDescriptor.html
+  name: FileDescriptor
+  nameWithType: FileDescriptor
+  fullName: DrawnUi.Infrastructure.FileDescriptor
+- uid: DrawnUi.Infrastructure.SkiaShader
+  commentId: T:DrawnUi.Infrastructure.SkiaShader
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.SkiaShader.html
+  name: SkiaShader
+  nameWithType: SkiaShader
+  fullName: DrawnUi.Infrastructure.SkiaShader
+- uid: DrawnUi.Infrastructure.PaperFormat
+  commentId: T:DrawnUi.Infrastructure.PaperFormat
+  parent: DrawnUi.Infrastructure
+  href: DrawnUi.Infrastructure.PaperFormat.html
+  name: PaperFormat
+  nameWithType: PaperFormat
+  fullName: DrawnUi.Infrastructure.PaperFormat
+- uid: DrawnUi.Infrastructure.PdfPagePosition
+  commentId: T:DrawnUi.Infrastructure.PdfPagePosition
+  href: DrawnUi.Infrastructure.PdfPagePosition.html
+  name: PdfPagePosition
+  nameWithType: PdfPagePosition
+  fullName: DrawnUi.Infrastructure.PdfPagePosition
+- uid: DrawnUi.Infrastructure.Pdf
+  commentId: T:DrawnUi.Infrastructure.Pdf
+  href: DrawnUi.Infrastructure.Pdf.html
+  name: Pdf
+  nameWithType: Pdf
+  fullName: DrawnUi.Infrastructure.Pdf
 - uid: DrawnUi.Infrastructure
   commentId: N:DrawnUi.Infrastructure
   href: DrawnUi.html

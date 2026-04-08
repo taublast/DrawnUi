@@ -18,11 +18,11 @@ items:
   type: Enum
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Gestures/GesturesMode.cs
+      path: src/Shared/Internals/Enums/GesturesMode.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GesturesMode
-    path: ../src/Maui/DrawnUi/Features/Gestures/GesturesMode.cs
+    path: ../src/Shared/Internals/Enums/GesturesMode.cs
     startLine: 5
   assemblies:
   - DrawnUi.Maui
@@ -47,11 +47,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Gestures/GesturesMode.cs
+      path: src/Shared/Internals/Enums/GesturesMode.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Disabled
-    path: ../src/Maui/DrawnUi/Features/Gestures/GesturesMode.cs
+    path: ../src/Shared/Internals/Enums/GesturesMode.cs
     startLine: 10
   assemblies:
   - DrawnUi.Maui
@@ -75,11 +75,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Gestures/GesturesMode.cs
+      path: src/Shared/Internals/Enums/GesturesMode.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Enabled
-    path: ../src/Maui/DrawnUi/Features/Gestures/GesturesMode.cs
+    path: ../src/Shared/Internals/Enums/GesturesMode.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui
@@ -103,11 +103,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Gestures/GesturesMode.cs
+      path: src/Shared/Internals/Enums/GesturesMode.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SoftLock
-    path: ../src/Maui/DrawnUi/Features/Gestures/GesturesMode.cs
+    path: ../src/Shared/Internals/Enums/GesturesMode.cs
     startLine: 20
   assemblies:
   - DrawnUi.Maui
@@ -131,11 +131,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Gestures/GesturesMode.cs
+      path: src/Shared/Internals/Enums/GesturesMode.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Lock
-    path: ../src/Maui/DrawnUi/Features/Gestures/GesturesMode.cs
+    path: ../src/Shared/Internals/Enums/GesturesMode.cs
     startLine: 25
   assemblies:
   - DrawnUi.Maui

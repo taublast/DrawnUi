@@ -18,6 +18,12 @@ items:
   assemblies:
   - DrawnUi.Maui
 references:
+- uid: DrawnUi.Maui.Navigation.MenuPageItem
+  commentId: T:DrawnUi.Maui.Navigation.MenuPageItem
+  href: DrawnUi.Maui.Navigation.MenuPageItem.html
+  name: MenuPageItem
+  nameWithType: MenuPageItem
+  fullName: DrawnUi.Maui.Navigation.MenuPageItem
 - uid: DrawnUi.Maui.Navigation.DeviceRotation
   commentId: T:DrawnUi.Maui.Navigation.DeviceRotation
   parent: DrawnUi.Maui.Navigation
@@ -31,12 +37,6 @@ references:
   name: IndexArgs
   nameWithType: IndexArgs
   fullName: DrawnUi.Maui.Navigation.IndexArgs
-- uid: DrawnUi.Maui.Navigation.MenuPageItem
-  commentId: T:DrawnUi.Maui.Navigation.MenuPageItem
-  href: DrawnUi.Maui.Navigation.MenuPageItem.html
-  name: MenuPageItem
-  nameWithType: MenuPageItem
-  fullName: DrawnUi.Maui.Navigation.MenuPageItem
 - uid: DrawnUi.Maui.Navigation.RotationEventArgs
   commentId: T:DrawnUi.Maui.Navigation.RotationEventArgs
   href: DrawnUi.Maui.Navigation.RotationEventArgs.html

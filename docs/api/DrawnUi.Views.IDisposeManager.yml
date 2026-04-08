@@ -15,11 +15,11 @@ items:
   type: Interface
   source:
     remote:
-      path: src/Maui/DrawnUi/Views/DisposableManager.cs
+      path: src/Shared/Views/DisposableManager.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IDisposeManager
-    path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
+    path: ../src/Shared/Views/DisposableManager.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -42,11 +42,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Views/DisposableManager.cs
+      path: src/Shared/Views/DisposableManager.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DisposeObject
-    path: ../src/Maui/DrawnUi/Views/DisposableManager.cs
+    path: ../src/Shared/Views/DisposableManager.cs
     startLine: 8
   assemblies:
   - DrawnUi.Maui

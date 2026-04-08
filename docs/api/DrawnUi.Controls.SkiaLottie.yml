@@ -50,6 +50,8 @@ items:
   - DrawnUi.Controls.SkiaLottie.Source
   - DrawnUi.Controls.SkiaLottie.SourceProperty
   - DrawnUi.Controls.SkiaLottie.Stop
+  - DrawnUi.Controls.SkiaLottie.StopAtCurrentFrame
+  - DrawnUi.Controls.SkiaLottie.StopAtCurrentFrameProperty
   - DrawnUi.Controls.SkiaLottie.StreamFromResourceUrl(System.String,System.Reflection.Assembly)
   - DrawnUi.Controls.SkiaLottie.StringToXamarinColor(System.String)
   - DrawnUi.Controls.SkiaLottie.StringToXamarinColorFromHex(System.String)
@@ -168,12 +170,13 @@ items:
   - DrawnUi.Draw.SkiaControl.RemoveSubView(DrawnUi.Draw.SkiaControl)
   - DrawnUi.Draw.SkiaControl.OnLayoutPositionChanged
   - DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect)
-  - DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@)
+  - DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@,DrawnUi.Draw.SkiaGradient@)
   - DrawnUi.Draw.SkiaControl.CreateShadow(DrawnUi.Draw.SkiaShadow,System.Single)
   - DrawnUi.Draw.SkiaControl.UpdatePlatformShadow
   - DrawnUi.Draw.SkiaControl.PlatformShadow
   - DrawnUi.Draw.SkiaControl.HasPlatformClip
   - DrawnUi.Draw.SkiaControl.GetDensity
+  - DrawnUi.Draw.SkiaControl.SetupRenderingWithComposition(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaControl.AutoCacheProperty
   - DrawnUi.Draw.SkiaControl.AutoCache
   - DrawnUi.Draw.SkiaControl.UseCacheProperty
@@ -192,7 +195,9 @@ items:
   - DrawnUi.Draw.SkiaControl.CreateRenderedObject(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect,System.Boolean)
   - DrawnUi.Draw.SkiaControl.RasterizeToCache(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaControl.CheckCachedObjectValid(DrawnUi.Draw.CachedObject,SkiaSharp.SKRect,DrawnUi.Draw.SkiaDrawingContext)
+  - DrawnUi.Draw.SkiaControl.IsCacheGPU
   - DrawnUi.Draw.SkiaControl.UsingCacheType
+  - DrawnUi.Draw.SkiaControl.IsCacheComposite
   - DrawnUi.Draw.SkiaControl.CreateRenderingObject(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect,DrawnUi.Draw.CachedObject,DrawnUi.Draw.SkiaCacheType,System.Action{DrawnUi.Draw.DrawingContext})
   - DrawnUi.Draw.SkiaControl.DelegateDrawCache
   - DrawnUi.Draw.SkiaControl.DrawRenderObjectInternal(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.CachedObject)
@@ -505,6 +510,7 @@ items:
   - DrawnUi.Draw.SkiaControl.IsGestureForChild(DrawnUi.Draw.ISkiaGestureListener,SkiaSharp.SKPoint)
   - DrawnUi.Draw.SkiaControl.IsGestureForChild(DrawnUi.Draw.ISkiaGestureListener,System.Single,System.Single)
   - DrawnUi.Draw.SkiaControl.ApplyTransforms(SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaControl.GetTransformedDirtyBounds
   - DrawnUi.Draw.SkiaControl.RenderTransformMatrix
   - DrawnUi.Draw.SkiaControl.InverseRenderTransformMatrix
   - DrawnUi.Draw.SkiaControl.ApplyTransformationMatrix(DrawnUi.Draw.SkiaDrawingContext)
@@ -1056,6 +1062,67 @@ items:
     return:
       type: System.Collections.Concurrent.ConcurrentDictionary{System.String,System.String}
     content.vb: Public Shared CachedAnimations As ConcurrentDictionary(Of String, String)
+- uid: DrawnUi.Controls.SkiaLottie.StopAtCurrentFrameProperty
+  commentId: F:DrawnUi.Controls.SkiaLottie.StopAtCurrentFrameProperty
+  id: StopAtCurrentFrameProperty
+  parent: DrawnUi.Controls.SkiaLottie
+  langs:
+  - csharp
+  - vb
+  name: StopAtCurrentFrameProperty
+  nameWithType: SkiaLottie.StopAtCurrentFrameProperty
+  fullName: DrawnUi.Controls.SkiaLottie.StopAtCurrentFrameProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: StopAtCurrentFrameProperty
+    path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
+    startLine: 25
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  syntax:
+    content: public static readonly BindableProperty StopAtCurrentFrameProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly StopAtCurrentFrameProperty As BindableProperty
+- uid: DrawnUi.Controls.SkiaLottie.StopAtCurrentFrame
+  commentId: P:DrawnUi.Controls.SkiaLottie.StopAtCurrentFrame
+  id: StopAtCurrentFrame
+  parent: DrawnUi.Controls.SkiaLottie
+  langs:
+  - csharp
+  - vb
+  name: StopAtCurrentFrame
+  nameWithType: SkiaLottie.StopAtCurrentFrame
+  fullName: DrawnUi.Controls.SkiaLottie.StopAtCurrentFrame
+  type: Property
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: StopAtCurrentFrame
+    path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
+    startLine: 35
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: >-
+    When true, Stop() and OnFinished() will leave the animation at the current frame instead of seeking to DefaultFrame.
+
+    Start() will then resume from that same frame rather than restarting from the beginning.
+  example: []
+  syntax:
+    content: public bool StopAtCurrentFrame { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property StopAtCurrentFrame As Boolean
+  overload: DrawnUi.Controls.SkiaLottie.StopAtCurrentFrame*
 - uid: DrawnUi.Controls.SkiaLottie.Stop
   commentId: M:DrawnUi.Controls.SkiaLottie.Stop
   id: Stop
@@ -1074,7 +1141,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Stop
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 25
+    startLine: 41
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1102,7 +1169,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnFinished
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 32
+    startLine: 49
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1130,7 +1197,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SeekToDefaultFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 39
+    startLine: 57
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1156,7 +1223,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnLayoutChanged
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 61
+    startLine: 79
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1185,7 +1252,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorSeeking
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 76
+    startLine: 94
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1219,7 +1286,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyDefaultFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 91
+    startLine: 109
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1247,7 +1314,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Animation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 132
+    startLine: 150
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1276,7 +1343,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyIsOnWhenNotPlayingProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 146
+    startLine: 164
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1303,7 +1370,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyIsOnWhenNotPlaying
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 157
+    startLine: 175
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1339,7 +1406,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsOnProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 163
+    startLine: 181
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1366,7 +1433,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: IsOn
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 174
+    startLine: 192
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1404,7 +1471,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultFrameWhenOnProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 180
+    startLine: 198
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1431,11 +1498,11 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: DefaultFrameWhenOn
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 190
+    startLine: 208
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
-  summary: For the case IsOn = True. What frame should we display at start or when stopped. 0 (START) is default, can specify other number. if value is less than 0 then will seek to the last available frame (END).
+  summary: For the case IsOn = True. What frame should we display at start or when stopped. 0 (START) is default, can specify other number. if value is less than 0 then will seek to the last available frame (END). You can also set `StopAtCurrentFrame` to true to never rewind to this value.
   example: []
   syntax:
     content: public int DefaultFrameWhenOn { get; set; }
@@ -1462,7 +1529,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorTintProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 196
+    startLine: 214
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1489,7 +1556,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorTint
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 207
+    startLine: 225
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1525,7 +1592,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorsProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 216
+    startLine: 234
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1552,7 +1619,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Colors
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 231
+    startLine: 249
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1581,7 +1648,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SourceProperty
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 276
+    startLine: 294
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1608,7 +1675,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: Source
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 288
+    startLine: 306
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1644,7 +1711,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: RenderFrame
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 294
+    startLine: 312
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1675,7 +1742,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadLocalJson
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 307
+    startLine: 325
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1709,7 +1776,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadSource
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 341
+    startLine: 359
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1747,7 +1814,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateAnimation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 409
+    startLine: 427
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1781,7 +1848,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StreamFromResourceUrl
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 436
+    startLine: 454
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1817,7 +1884,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnJsonLoaded
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 467
+    startLine: 485
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1858,7 +1925,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadAnimationFromJson
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 477
+    startLine: 495
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1896,7 +1963,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: SetAnimation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 496
+    startLine: 514
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1930,7 +1997,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnDisposing
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 543
+    startLine: 561
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1959,7 +2026,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorUpdated
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 559
+    startLine: 577
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -1995,7 +2062,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplySpeed
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 570
+    startLine: 588
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2023,7 +2090,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorInitializing
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 583
+    startLine: 601
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2051,7 +2118,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CheckCanStartAnimator
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 596
+    startLine: 614
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2081,7 +2148,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: OnAnimatorStarting
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 601
+    startLine: 619
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2109,7 +2176,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GoToStart
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 606
+    startLine: 625
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2135,7 +2202,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: GoToEnd
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 615
+    startLine: 634
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2161,7 +2228,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ReloadSource
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 626
+    startLine: 645
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2187,7 +2254,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ProcessJson
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 711
+    startLine: 730
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2214,7 +2281,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ApplyTint
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 713
+    startLine: 732
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2250,7 +2317,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: FindColorProperties
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 768
+    startLine: 787
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2284,7 +2351,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorToRGBHexString
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 803
+    startLine: 822
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2315,7 +2382,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorToHexString
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 811
+    startLine: 830
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2346,7 +2413,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorToArrayString
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 821
+    startLine: 840
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2377,7 +2444,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StringToXamarinColorFromHex
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 831
+    startLine: 850
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2411,7 +2478,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: StringToXamarinColor
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 860
+    startLine: 879
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2445,7 +2512,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: ColorToString
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 878
+    startLine: 897
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2476,7 +2543,7 @@ items:
       repo: https://github.com/taublast/DrawnUi.git
     id: CalculateSaturation
     path: ../src/Maui/DrawnUi/Controls/PlayFrames/SkiaLottie.cs
-    startLine: 894
+    startLine: 913
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3904,21 +3971,21 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
   - name: )
-- uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@)
-  commentId: M:DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@)
+- uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@,DrawnUi.Draw.SkiaGradient@)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@,DrawnUi.Draw.SkiaGradient@)
   parent: DrawnUi.Draw.SkiaControl
   isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__
-  name: SetupGradient(SKPaint, SkiaGradient, SKRect, ref SKShader, ref int, ref SKRect)
-  nameWithType: SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect, ref SKShader, ref int, ref SKRect)
-  fullName: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint, DrawnUi.Draw.SkiaGradient, SkiaSharp.SKRect, ref SkiaSharp.SKShader, ref int, ref SkiaSharp.SKRect)
-  nameWithType.vb: SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect, SKShader, Integer, SKRect)
-  fullName.vb: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint, DrawnUi.Draw.SkiaGradient, SkiaSharp.SKRect, SkiaSharp.SKShader, Integer, SkiaSharp.SKRect)
-  name.vb: SetupGradient(SKPaint, SkiaGradient, SKRect, SKShader, Integer, SKRect)
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__DrawnUi_Draw_SkiaGradient__
+  name: SetupGradient(SKPaint, SkiaGradient, SKRect, ref SKShader, ref int, ref SKRect, ref SkiaGradient)
+  nameWithType: SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect, ref SKShader, ref int, ref SKRect, ref SkiaGradient)
+  fullName: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint, DrawnUi.Draw.SkiaGradient, SkiaSharp.SKRect, ref SkiaSharp.SKShader, ref int, ref SkiaSharp.SKRect, ref DrawnUi.Draw.SkiaGradient)
+  nameWithType.vb: SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect, SKShader, Integer, SKRect, SkiaGradient)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint, DrawnUi.Draw.SkiaGradient, SkiaSharp.SKRect, SkiaSharp.SKShader, Integer, SkiaSharp.SKRect, DrawnUi.Draw.SkiaGradient)
+  name.vb: SetupGradient(SKPaint, SkiaGradient, SKRect, SKShader, Integer, SKRect, SkiaGradient)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@)
+  - uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@,DrawnUi.Draw.SkiaGradient@)
     name: SetupGradient
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__DrawnUi_Draw_SkiaGradient__
   - name: (
   - uid: SkiaSharp.SKPaint
     name: SKPaint
@@ -3959,11 +4026,18 @@ references:
     name: SKRect
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - name: ref
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGradient
+    name: SkiaGradient
+    href: DrawnUi.Draw.SkiaGradient.html
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@)
+  - uid: DrawnUi.Draw.SkiaControl.SetupGradient(SkiaSharp.SKPaint,DrawnUi.Draw.SkiaGradient,SkiaSharp.SKRect,SkiaSharp.SKShader@,System.Int32@,SkiaSharp.SKRect@,DrawnUi.Draw.SkiaGradient@)
     name: SetupGradient
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__DrawnUi_Draw_SkiaGradient__
   - name: (
   - uid: SkiaSharp.SKPaint
     name: SKPaint
@@ -3998,6 +4072,11 @@ references:
     name: SKRect
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGradient
+    name: SkiaGradient
+    href: DrawnUi.Draw.SkiaGradient.html
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.CreateShadow(DrawnUi.Draw.SkiaShadow,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.CreateShadow(DrawnUi.Draw.SkiaShadow,System.Single)
@@ -4103,6 +4182,31 @@ references:
     name: GetDensity
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetDensity
   - name: (
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.SetupRenderingWithComposition(DrawnUi.Draw.DrawingContext)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetupRenderingWithComposition(DrawnUi.Draw.DrawingContext)
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupRenderingWithComposition_DrawnUi_Draw_DrawingContext_
+  name: SetupRenderingWithComposition(DrawingContext)
+  nameWithType: SkiaControl.SetupRenderingWithComposition(DrawingContext)
+  fullName: DrawnUi.Draw.SkiaControl.SetupRenderingWithComposition(DrawnUi.Draw.DrawingContext)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SetupRenderingWithComposition(DrawnUi.Draw.DrawingContext)
+    name: SetupRenderingWithComposition
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupRenderingWithComposition_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SetupRenderingWithComposition(DrawnUi.Draw.DrawingContext)
+    name: SetupRenderingWithComposition
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupRenderingWithComposition_DrawnUi_Draw_DrawingContext_
+  - name: (
+  - uid: DrawnUi.Draw.DrawingContext
+    name: DrawingContext
+    href: DrawnUi.Draw.DrawingContext.html
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.AutoCacheProperty
   commentId: F:DrawnUi.Draw.SkiaControl.AutoCacheProperty
@@ -4527,6 +4631,13 @@ references:
     name: SkiaDrawingContext
     href: DrawnUi.Draw.SkiaDrawingContext.html
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.IsCacheGPU
+  commentId: P:DrawnUi.Draw.SkiaControl.IsCacheGPU
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsCacheGPU
+  name: IsCacheGPU
+  nameWithType: SkiaControl.IsCacheGPU
+  fullName: DrawnUi.Draw.SkiaControl.IsCacheGPU
 - uid: DrawnUi.Draw.SkiaControl.UsingCacheType
   commentId: P:DrawnUi.Draw.SkiaControl.UsingCacheType
   parent: DrawnUi.Draw.SkiaControl
@@ -4534,6 +4645,13 @@ references:
   name: UsingCacheType
   nameWithType: SkiaControl.UsingCacheType
   fullName: DrawnUi.Draw.SkiaControl.UsingCacheType
+- uid: DrawnUi.Draw.SkiaControl.IsCacheComposite
+  commentId: P:DrawnUi.Draw.SkiaControl.IsCacheComposite
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsCacheComposite
+  name: IsCacheComposite
+  nameWithType: SkiaControl.IsCacheComposite
+  fullName: DrawnUi.Draw.SkiaControl.IsCacheComposite
 - uid: DrawnUi.Draw.SkiaControl.CreateRenderingObject(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect,DrawnUi.Draw.CachedObject,DrawnUi.Draw.SkiaCacheType,System.Action{DrawnUi.Draw.DrawingContext})
   commentId: M:DrawnUi.Draw.SkiaControl.CreateRenderingObject(DrawnUi.Draw.DrawingContext,SkiaSharp.SKRect,DrawnUi.Draw.CachedObject,DrawnUi.Draw.SkiaCacheType,System.Action{DrawnUi.Draw.DrawingContext})
   parent: DrawnUi.Draw.SkiaControl
@@ -10640,6 +10758,25 @@ references:
     name: SKRect
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.GetTransformedDirtyBounds
+  commentId: M:DrawnUi.Draw.SkiaControl.GetTransformedDirtyBounds
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetTransformedDirtyBounds
+  name: GetTransformedDirtyBounds()
+  nameWithType: SkiaControl.GetTransformedDirtyBounds()
+  fullName: DrawnUi.Draw.SkiaControl.GetTransformedDirtyBounds()
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.GetTransformedDirtyBounds
+    name: GetTransformedDirtyBounds
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetTransformedDirtyBounds
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.GetTransformedDirtyBounds
+    name: GetTransformedDirtyBounds
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetTransformedDirtyBounds
+  - name: (
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.RenderTransformMatrix
   commentId: P:DrawnUi.Draw.SkiaControl.RenderTransformMatrix
@@ -30117,6 +30254,31 @@ references:
     name: Concurrent
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.collections.concurrent
+- uid: Microsoft.Maui.Controls.BindableProperty
+  commentId: T:Microsoft.Maui.Controls.BindableProperty
+  parent: Microsoft.Maui.Controls
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  name: BindableProperty
+  nameWithType: BindableProperty
+  fullName: Microsoft.Maui.Controls.BindableProperty
+- uid: DrawnUi.Controls.SkiaLottie.StopAtCurrentFrame*
+  commentId: Overload:DrawnUi.Controls.SkiaLottie.StopAtCurrentFrame
+  href: DrawnUi.Controls.SkiaLottie.html#DrawnUi_Controls_SkiaLottie_StopAtCurrentFrame
+  name: StopAtCurrentFrame
+  nameWithType: SkiaLottie.StopAtCurrentFrame
+  fullName: DrawnUi.Controls.SkiaLottie.StopAtCurrentFrame
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
 - uid: DrawnUi.Controls.AnimatedFramesRenderer.Stop
   commentId: M:DrawnUi.Controls.AnimatedFramesRenderer.Stop
   parent: DrawnUi.Controls.AnimatedFramesRenderer
@@ -30312,31 +30474,12 @@ references:
     name: Skottie
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skottie
-- uid: Microsoft.Maui.Controls.BindableProperty
-  commentId: T:Microsoft.Maui.Controls.BindableProperty
-  parent: Microsoft.Maui.Controls
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
-  name: BindableProperty
-  nameWithType: BindableProperty
-  fullName: Microsoft.Maui.Controls.BindableProperty
 - uid: DrawnUi.Controls.SkiaLottie.ApplyIsOnWhenNotPlaying*
   commentId: Overload:DrawnUi.Controls.SkiaLottie.ApplyIsOnWhenNotPlaying
   href: DrawnUi.Controls.SkiaLottie.html#DrawnUi_Controls_SkiaLottie_ApplyIsOnWhenNotPlaying
   name: ApplyIsOnWhenNotPlaying
   nameWithType: SkiaLottie.ApplyIsOnWhenNotPlaying
   fullName: DrawnUi.Controls.SkiaLottie.ApplyIsOnWhenNotPlaying
-- uid: System.Boolean
-  commentId: T:System.Boolean
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.boolean
-  name: bool
-  nameWithType: bool
-  fullName: bool
-  nameWithType.vb: Boolean
-  fullName.vb: Boolean
-  name.vb: Boolean
 - uid: DrawnUi.Controls.SkiaLottie.IsOn*
   commentId: Overload:DrawnUi.Controls.SkiaLottie.IsOn
   href: DrawnUi.Controls.SkiaLottie.html#DrawnUi_Controls_SkiaLottie_IsOn

@@ -18,11 +18,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustBrightnessEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustBrightnessEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ChainAdjustBrightnessEffect
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustBrightnessEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustBrightnessEffect.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -96,11 +96,11 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustBrightnessEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustBrightnessEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ValueProperty
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustBrightnessEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustBrightnessEffect.cs
     startLine: 6
   assemblies:
   - DrawnUi.Maui
@@ -123,11 +123,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustBrightnessEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustBrightnessEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustBrightnessEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustBrightnessEffect.cs
     startLine: 13
   assemblies:
   - DrawnUi.Maui
@@ -152,11 +152,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustBrightnessEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustBrightnessEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Draw
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustBrightnessEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustBrightnessEffect.cs
     startLine: 19
   assemblies:
   - DrawnUi.Maui
@@ -194,11 +194,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/ChainAdjustBrightnessEffect.cs
+      path: src/Shared/Features/Effects/ChainAdjustBrightnessEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
-    path: ../src/Maui/DrawnUi/Features/Effects/ChainAdjustBrightnessEffect.cs
+    path: ../src/Shared/Features/Effects/ChainAdjustBrightnessEffect.cs
     startLine: 86
   assemblies:
   - DrawnUi.Maui

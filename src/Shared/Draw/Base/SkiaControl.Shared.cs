@@ -2316,9 +2316,9 @@ namespace DrawnUi.Draw
 
             if (!newvalue)
             {
-                if (this.UsingCacheType == SkiaCacheType.GPU)
+                if (IsCacheGPU)
                 {
-                    RenderObject = null;
+                    DestroyRenderingObject();
                 }
             }
 
@@ -2365,9 +2365,9 @@ namespace DrawnUi.Draw
         {
             if (!newvalue)
             {
-                if (this.UsingCacheType == SkiaCacheType.GPU)
+                if (IsCacheGPU)
                 {
-                    RenderObject = null;
+                    DestroyRenderingObject();
                 }
             }
 
@@ -3934,6 +3934,47 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
+        /// Returns the DirtyRegion bounds transformed by the full RenderTransformMatrix,
+        /// including Left/Top cache offsets. Correctly handles rotation, scale, skew, and perspective
+        /// unlike ApplyTransforms which only accounts for translation.
+        /// Used by the ImageComposite cache path for dirty region calculations.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public SKRect GetTransformedDirtyBounds()
+        {
+            var rect = DirtyRegion;
+            var m = RenderTransformMatrix;
+
+            var leftOffset = (float)(Left * RenderingScale);
+            var topOffset = (float)(Top * RenderingScale);
+
+            // Fast path: matrix is pure translation (no rotation/scale/skew)
+            if (m.ScaleX == 1 && m.ScaleY == 1 && m.SkewX == 0 && m.SkewY == 0 &&
+                m.Persp0 == 0 && m.Persp1 == 0 && m.Persp2 == 1)
+            {
+                var offsetX = m.TransX + leftOffset;
+                var offsetY = m.TransY + topOffset;
+                return new SKRect(
+                    rect.Left + offsetX,
+                    rect.Top + offsetY,
+                    rect.Right + offsetX,
+                    rect.Bottom + offsetY);
+            }
+
+            // Full transform path: map corners through matrix and compute AABB
+            var tl = m.MapPoint(rect.Left, rect.Top);
+            var tr = m.MapPoint(rect.Right, rect.Top);
+            var br = m.MapPoint(rect.Right, rect.Bottom);
+            var bl = m.MapPoint(rect.Left, rect.Bottom);
+
+            return new SKRect(
+                Math.Min(Math.Min(tl.X, tr.X), Math.Min(br.X, bl.X)) + leftOffset,
+                Math.Min(Math.Min(tl.Y, tr.Y), Math.Min(br.Y, bl.Y)) + topOffset,
+                Math.Max(Math.Max(tl.X, tr.X), Math.Max(br.X, bl.X)) + leftOffset,
+                Math.Max(Math.Max(tl.Y, tr.Y), Math.Max(br.Y, bl.Y)) + topOffset);
+        }
+
+        /// <summary>
         /// Stores the transformation matrix used during rendering for hit testing
         /// </summary>
         public SKMatrix RenderTransformMatrix { get; protected set; } = SKMatrix.Identity;
@@ -4910,6 +4951,10 @@ namespace DrawnUi.Draw
             return SetMeasuredAdaptToContentSize(constraints, request.Scale);
         }
 
+        private float measuredForWidthConstraint = -1;
+        private float measuredForHeightConstraint = -1;
+        private float measuredForScale = -1;
+
         /// <summary>
         /// Main method for measuring, override OnMeasuring to plug-in.
         /// </summary>
@@ -4926,6 +4971,15 @@ namespace DrawnUi.Draw
             {
                 UpdateSizeRequest();
             }
+            else
+            if (!NeedMeasure && widthConstraint == measuredForWidthConstraint && heightConstraint == measuredForHeightConstraint && scale == measuredForScale)
+            {
+                return  MeasuredSize;
+            }
+
+            measuredForWidthConstraint = widthConstraint;
+            measuredForHeightConstraint = heightConstraint;
+            measuredForScale = scale;
 
             return OnMeasuring(widthConstraint, heightConstraint, scale);
         }
@@ -6004,8 +6058,7 @@ namespace DrawnUi.Draw
                     InvalidateMeasure();
                 }
             }
-            else if (UsingCacheType == SkiaCacheType.ImageComposite
-                     && RenderObjectPrevious != null)
+            else if (IsCacheComposite && RenderObjectPrevious != null)
             {
                 if (!CompareRectsSize(DrawingRect, RenderObjectPrevious.Bounds, 0.5f))
                 {
@@ -7177,9 +7230,8 @@ namespace DrawnUi.Draw
 
                     foreach (var dirtyChild in DirtyChildrenInternal)
                     {
-                        //adjust by Left,Top,TranslateX,TranslateY
-                        //todo maybe others
-                        var clip = dirtyChild.ApplyTransforms(dirtyChild.DirtyRegion);
+                        //use full transform-aware bounds (handles rotation, scale, skew, perspective)
+                        var clip = dirtyChild.GetTransformedDirtyBounds();
                         clip.Offset(offset);
                         clipPreviousCachePath.AddRect(clip);
                     }
@@ -7288,7 +7340,7 @@ namespace DrawnUi.Draw
                 {
                     Update();
                 }
-                if (UsingCacheType == SkiaCacheType.ImageComposite)
+                if (IsCacheComposite)
                 {
                     DestroyRenderingObject();
                 }
@@ -7432,7 +7484,7 @@ namespace DrawnUi.Draw
 
             if (!WasMeasured || UpdateLocks > 0)
             {
-                if (UsingCacheType == SkiaCacheType.ImageComposite)
+                if (IsCacheComposite)
                 {
                     DestroyRenderingObject();
                 }
@@ -7883,7 +7935,7 @@ namespace DrawnUi.Draw
 
         public virtual void OnChildAdded(SkiaControl child)
         {
-            if (UsingCacheType == SkiaCacheType.ImageComposite)
+            if (IsCacheComposite)
             {
                 TrackChildAsDirty(child);
             }
@@ -7893,7 +7945,7 @@ namespace DrawnUi.Draw
 
         public virtual void OnChildRemoved(SkiaControl child)
         {
-            if (UsingCacheType == SkiaCacheType.ImageComposite)
+            if (IsCacheComposite)
             {
                 TrackChildAsDirty(child);
             }

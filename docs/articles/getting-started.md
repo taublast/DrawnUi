@@ -294,4 +294,4 @@ Canvas = new Canvas()
 - Explore the [Controls documentation](controls/index.md) to learn about available controls
 - See [Platform-Specific Styling](advanced/platform-styling.md) for more styling options
 - Check out the [Sample Applications](tutorials.md) for complete examples
-- Review [Development Notes](development-notes.md) for technical requirements and best practices
+- Review [Startup Settings](startup-settings.md) for technical configuration and best practices

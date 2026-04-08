@@ -10,17 +10,15 @@ Rendering engine for .NET MAUI with gestures and animations and much more, power
 
 Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware acceleration.
 
-Please note this is a .NET9 library, entry controls are not yet fully compatible with .NET10 due to MAUI changes.
-
 * To use inside a usual MAUI app, by wrapping drawn controls into `Canvas` views.
 * To create a totally drawn apps with just one `Canvas` as root view.
 * Drawn controls are totally virtual, no native views/handlers.
 * Design in XAML or [code-behind](https://drawnui.net/articles/first-app-code.html)
 * Free to use under the MIT license, nuget package available.
 
-
 ## Features
 
+* __Create visuals totally matching designer's image__, no more compromises with native controls
 * __Use virtual controls to draw your UI__
 * __Create your own animated pixel-perfect controls__
 * __Port existing native controls to drawn__
@@ -34,15 +32,19 @@ Please note this is a .NET9 library, entry controls are not yet fully compatible
 * __Keyboard support__, track any key
 * __Navigate__ on the canvas with MAUI Shell-like techniques 
 
+## To Note
+
+* Still targeting .NET9 library: entry controls not fully compatible with .NET10.
+ 
 ---
 
-## 🆕 What's new for 1.9.5.2
+## 🆕 What's new for 1.9.7.2
 
-* Fix `SkiaCamera` manual stop freezing main thread on Android.
-* Fix `SkiaShell` modals due to SkiaDrawer API changed.
-* Fix Y-position drawing text span color backgrounds, including markdown, with `SkiaLabel`.
-* Hotfixes for latest interop optimizations.
-
+* Optimized composite cache and added new `SkiaCacheType.ImageCompositeGPU` type.
+* Fix memory leak for the `SkiaCacheType.ImageDoubleBuffered` flow.
+* `SkiaCamera` auto-exposure fix for low light, record video on Android emulator and more. 
+* Various optimizations and fixes.
+ 
 ## 💡 Hint of the Day
 
 **❓ Q: How to expand button hitbox?**

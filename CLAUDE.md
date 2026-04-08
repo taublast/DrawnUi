@@ -113,6 +113,8 @@ builder.UseDrawnUi(new()
 - `ImageDoubleBuffered` - Best for animations, double memory usage
 - `GPU` - Hardware-accelerated, for graphics memory caching
 - Never cache layers containing SkiaScroll, SkiaDrawer, SkiaCarousel and similar, SkiaMauiElement and derived controls (SkiaMauiEntry etc)
+- **PROHIBITED:** Never cache controls with GPU-surface shaders inside `Operations` or `GPU` cache types — `Operations` (SKPicture) cannot replay shader programs and `GPU` cache surface conflicts with the shader's surface requirements. Use `Image`, `ImageDoubleBuffered`, or `ImageComposite` instead.
+- **PROHIBITED:** Never nest children that use GPU-backed cache types (`GPU`, `ImageCompositeGPU`) inside a parent cached with `Operations` — `SKPicture` recording cannot capture GPU-surface output from children.
 
 **Layout Differences from Standard MAUI:**
 - Default `HorizontalOptions` and `VerticalOptions` are `Start`, not `Fill`

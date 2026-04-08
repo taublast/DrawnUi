@@ -18,11 +18,11 @@ items:
   type: Struct
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      path: src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: PooledStringBuilder
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
     startLine: 181
   assemblies:
   - DrawnUi.Maui
@@ -56,11 +56,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      path: src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: StringBuilder
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
     startLine: 183
   assemblies:
   - DrawnUi.Maui
@@ -85,11 +85,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      path: src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
     startLine: 185
   assemblies:
   - DrawnUi.Maui
@@ -117,11 +117,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      path: src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Get
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
     startLine: 190
   assemblies:
   - DrawnUi.Maui
@@ -145,11 +145,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+      path: src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.ObjectPools.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.ObjectPools.cs
     startLine: 195
   assemblies:
   - DrawnUi.Maui

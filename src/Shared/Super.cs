@@ -246,6 +246,21 @@ public partial class Super
 
     public static double MaxFrameLengthMs { get; set; }
 
+    public static ThermalState ThermalState { get; private set; } = ThermalState.Unknown;
+
+    public static event EventHandler<ThermalState> ThermalStateChanged;
+
+    private static void OnThermalStateChanged(ThermalState state)
+    {
+        if (ThermalState == state)
+            return;
+
+        Debug.WriteLine($"[SUPER] Thermal state changed: {state}");
+
+        ThermalState = state;
+        ThermalStateChanged?.Invoke(null, state);
+    }
+
     /// <summary>
     /// App was launched and UI is ready to be created
     /// </summary>

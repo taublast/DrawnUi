@@ -22,11 +22,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
+      path: src/Shared/Draw/Text/TextLine.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextLine
-    path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
+    path: ../src/Shared/Draw/Text/TextLine.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -59,11 +59,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
+      path: src/Shared/Draw/Text/TextLine.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Bounds
-    path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
+    path: ../src/Shared/Draw/Text/TextLine.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -90,11 +90,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
+      path: src/Shared/Draw/Text/TextLine.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Value
-    path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
+    path: ../src/Shared/Draw/Text/TextLine.cs
     startLine: 9
   assemblies:
   - DrawnUi.Maui
@@ -119,11 +119,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
+      path: src/Shared/Draw/Text/TextLine.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsNewParagraph
-    path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
+    path: ../src/Shared/Draw/Text/TextLine.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui
@@ -148,11 +148,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
+      path: src/Shared/Draw/Text/TextLine.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsLastInParagraph
-    path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
+    path: ../src/Shared/Draw/Text/TextLine.cs
     startLine: 12
   assemblies:
   - DrawnUi.Maui
@@ -177,11 +177,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
+      path: src/Shared/Draw/Text/TextLine.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
-    path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
+    path: ../src/Shared/Draw/Text/TextLine.cs
     startLine: 14
   assemblies:
   - DrawnUi.Maui
@@ -206,11 +206,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
+      path: src/Shared/Draw/Text/TextLine.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Height
-    path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
+    path: ../src/Shared/Draw/Text/TextLine.cs
     startLine: 15
   assemblies:
   - DrawnUi.Maui
@@ -235,11 +235,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
+      path: src/Shared/Draw/Text/TextLine.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Spans
-    path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
+    path: ../src/Shared/Draw/Text/TextLine.cs
     startLine: 21
   assemblies:
   - DrawnUi.Maui
@@ -264,11 +264,11 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextLine.cs
+      path: src/Shared/Draw/Text/TextLine.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Maui/DrawnUi/Draw/Text/TextLine.cs
+    path: ../src/Shared/Draw/Text/TextLine.cs
     startLine: 23
   assemblies:
   - DrawnUi.Maui

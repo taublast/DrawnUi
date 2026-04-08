@@ -12,6 +12,114 @@ public partial class SkiaControl
 {
     private readonly LimitedQueue<Action> _offscreenCacheRenderingQueue = new(1);
 
+    /// <summary>
+    /// Find intersections between changed children and DrawingRect,
+    /// add intersecting ones to DirtyChildrenInternal and set IsRenderingWithComposition = true if any.
+    /// </summary>
+    /// <param name="ctx"></param>
+    /// <param name="destination"></param>
+    protected virtual void SetupRenderingWithComposition(DrawingContext ctx)
+    {
+        if (IsCacheComposite)
+        {
+            DirtyChildrenInternal.Clear();
+
+            var previousCache = RenderObjectPrevious;
+
+            if (previousCache != null && ctx.Context.IsRecycled) //not the first draw
+            {
+                IsRenderingWithComposition = true;
+
+                var offset = new SKPoint(this.DrawingRect.Left - previousCache.Bounds.Left,
+                    DrawingRect.Top - previousCache.Bounds.Top);
+
+                //Super.Log($"[ImageComposite] {Tag} drawing cached at {offset}  {DrawingRect}");
+
+
+                // Add more children that are not already added but intersect with the dirty regions
+                var asSpans = CollectionsMarshal.AsSpan(DirtyChildrenTracker.GetList());
+                foreach (var item in asSpans)
+                {
+                    DirtyChildrenInternal.Add(item);
+                }
+
+                //make intersecting children dirty too
+                var asSpan = CollectionsMarshal.AsSpan(RenderTree);
+                foreach (var cell in asSpan)
+                {
+                    //use full transform-aware bounds (handles rotation, scale, skew, perspective)
+                    if (!DirtyChildrenInternal.Contains(cell.Control) &&
+                        DirtyChildrenInternal.Any(dirtyChild =>
+                            dirtyChild.GetTransformedDirtyBounds()
+                                .IntersectsWith(cell.Control.GetTransformedDirtyBounds())))
+                    {
+                        DirtyChildrenInternal.Add(cell.Control);
+                    }
+
+                    // Log the current cell's DirtyRegion
+                    /*
+                      var cellRect = cell.Control.DirtyRegion;
+                      Trace.WriteLine($"Checking cell.Control: {cell.Control}, DirtyRegion: X={cellRect.Left}, Y={cellRect.Top}, Width={cellRect.Width}, Height={cellRect.Height}");
+
+                      if (!DirtyChildrenInternal.Contains(cell.Control))
+                      {
+                          bool intersects = false;
+                          foreach (var dirtyChild in DirtyChildrenInternal)
+                          {
+                              var dirtyChildRect = dirtyChild.DirtyRegion;
+                              bool doesIntersect = dirtyChild.DirtyRegion.IntersectsWith(cell.Control.DirtyRegion);
+
+                              // Log the comparison details
+                              Trace.WriteLine($"  Comparing with dirtyChild: {dirtyChild}, DirtyRegion: X={dirtyChildRect.Left}, Y={dirtyChildRect.Top}, Width={dirtyChildRect.Width}, Height={dirtyChildRect.Height}");
+                              Trace.WriteLine($"  Intersects: {doesIntersect}");
+
+                              if (doesIntersect)
+                              {
+                                  intersects = true;
+                                  // Optionally break early if you only need one intersection
+                                  // break;
+                              }
+                          }
+
+                          if (intersects)
+                          {
+                              Trace.WriteLine($"Adding cell.Control: {cell.Control} to DirtyChildrenInternal");
+                              DirtyChildrenInternal.Add(cell.Control);
+                          }
+                      }
+                      else
+                      {
+                          Trace.WriteLine($"Skipping cell.Control: {cell.Control} (already in DirtyChildrenInternal)");
+                      }
+                     */
+                }
+
+                var count = 0;
+                foreach (var dirtyChild in DirtyChildrenInternal)
+                {
+                    var clip = dirtyChild.GetTransformedDirtyBounds();
+                    clip.Offset(offset);
+                    //clip.Inflate(0.4f, 0.4f);
+
+                    previousCache.Surface.Canvas.DrawRect(clip, PaintErase);
+
+                    count++;
+                }
+            }
+            else
+            {
+                //Debug.WriteLine("[ImageComposite] was rebuild");
+                IsRenderingWithComposition = false;
+            }
+        }
+        else
+        {
+            IsRenderingWithComposition = false;
+        }
+    }
+
+
+
 #if BROWSER
 
 #else
@@ -154,7 +262,7 @@ public partial class SkiaControl
                     {
                         if (UsesCacheDoubleBuffering
                             //|| UsingCacheType == SkiaCacheType.Image //to just reuse same surface
-                            || UsingCacheType == SkiaCacheType.ImageComposite)
+                            || IsCacheComposite)
                         {
                             RenderObjectPrevious = _renderObject; //send it to back for special cases
                         }
@@ -300,7 +408,7 @@ public partial class SkiaControl
             }
 
             //check hardware context maybe changed
-            if (UsingCacheType == SkiaCacheType.GPU && cache.Surface != null &&
+            if (IsCacheGPU && cache.Surface != null &&
                 cache.Surface.Context != null &&
                 context.Superview?.CanvasView is SkiaViewAccelerated hardware)
             {
@@ -319,6 +427,14 @@ public partial class SkiaControl
 
         CacheValidity = CacheValidityType.Missing;
         return false;
+    }
+
+    public bool IsCacheGPU
+    {
+        get
+        {
+            return UsingCacheType == SkiaCacheType.GPU || UsingCacheType == SkiaCacheType.ImageCompositeGPU;
+        }
     }
 
     public virtual SkiaCacheType UsingCacheType
@@ -341,12 +457,15 @@ public partial class SkiaControl
                 if (UseCache == SkiaCacheType.ImageDoubleBuffered || UseCache == SkiaCacheType.GPU)
                     return SkiaCacheType.Image;
 
-                if (UseCache == SkiaCacheType.ImageComposite)
+                if (UseCache == SkiaCacheType.ImageComposite || UseCache == SkiaCacheType.ImageCompositeGPU)
                     return SkiaCacheType.Operations;
             }
 
             if (UseCache == SkiaCacheType.GPU && !Super.GpuCacheEnabled)
                 return SkiaCacheType.Image;
+
+            if (UseCache == SkiaCacheType.ImageCompositeGPU && !Super.GpuCacheEnabled)
+                return SkiaCacheType.ImageComposite;
 
             //if (EffectPostRenderer != null 
             //    && (UseCache == SkiaCacheType.None || UseCache == SkiaCacheType.Operations))
@@ -357,6 +476,14 @@ public partial class SkiaControl
                 return SkiaCacheType.Operations;
 
             return UseCache;
+        }
+    }
+
+    public bool IsCacheComposite
+    {
+        get
+        {
+            return UsingCacheType == SkiaCacheType.ImageComposite || UsingCacheType == SkiaCacheType.ImageCompositeGPU;
         }
     }
 
@@ -398,7 +525,7 @@ public partial class SkiaControl
 
                     action(recordingContext);
 
-                    var skPicture = recorder.EndRecording();
+                    SKPicture skPicture = recorder.EndRecording();
                     renderObject = new(UsingCacheType, skPicture, context.Destination, cacheRecordingArea);
                 }
             }
@@ -424,13 +551,17 @@ public partial class SkiaControl
 
                     reuseSurfaceFrom.PreserveSourceFromDispose = true; //we will dispose that source in this new object
 
-                    if (usingCacheType != SkiaCacheType.ImageComposite)
+                    if (!IsCacheComposite)
                         surface.Canvas.Clear();
                 }
                 else
                 {
-                    bool isGpu = usingCacheType == SkiaCacheType.GPU;
-                    surface = CreateSurface(width, height, isGpu);
+                    surface = CreateSurface(width, height, IsCacheGPU);
+
+                    if (IsCacheComposite && RenderObjectPrevious != null)
+                    {
+                        InvalidateMeasure();
+                    }
                 }
 
                 if (surface == null)
@@ -518,6 +649,7 @@ public partial class SkiaControl
             return cache == SkiaCacheType.Image
                    || cache == SkiaCacheType.GPU
                    || cache == SkiaCacheType.ImageComposite
+                   || cache == SkiaCacheType.ImageCompositeGPU
                    || cache == SkiaCacheType.ImageDoubleBuffered;
         }
     }
@@ -540,7 +672,7 @@ public partial class SkiaControl
             var cacheOffscreen = RenderObjectPrevious;
             var needBuild = false;
 
-            if (UsingCacheType == SkiaCacheType.ImageComposite)
+            if (IsCacheComposite)
             {
                 if (RenderObjectPreviousNeedsUpdate)
                 {
@@ -658,11 +790,15 @@ public partial class SkiaControl
                     PushToOffscreenRendering(() =>
                     {
                         //will be executed on background thread in parallel
-                        var oldObject = RenderObjectPreparing;
-                        RenderObjectPreparing = CreateRenderingObject(clone, recordArea, oldObject, UsingCacheType,
+                        var prepared = CreateRenderingObject(clone, recordArea, RenderObjectPreparing, UsingCacheType,
                             (ctx) => { PaintWithEffects(ctx); });
-                        RenderObject = RenderObjectPreparing;
-                        _renderObjectPreparing = null;
+
+                        RenderObjectPreparing = prepared;
+                        if (prepared != null)
+                        {
+                            RenderObject = prepared;
+                            _renderObjectPreparing = null;
+                        }
 
                         if (Parent != null && Parent.UpdateLocks < 1)
                         {
@@ -772,7 +908,15 @@ public partial class SkiaControl
             RenderObjectNeedsUpdate = false;
             if (_renderObjectPreparing != value)
             {
+                var previous = _renderObjectPreparing;
                 _renderObjectPreparing = value;
+
+                if (previous != null
+                    && !ReferenceEquals(previous, RenderObject)
+                    && !ReferenceEquals(previous, RenderObjectPrevious))
+                {
+                    DisposeObject(previous);
+                }
             }
         }
     }
@@ -836,7 +980,7 @@ public partial class SkiaControl
     {
         InvalidateCache();
 
-        if (UsingCacheType == SkiaCacheType.ImageComposite)
+        if (IsCacheComposite)
         {
             RenderObjectPreviousNeedsUpdate = true;
         }
@@ -914,14 +1058,18 @@ public partial class SkiaControl
                         PushToOffscreenRendering(() =>
                         {
                             //will be executed on background thread in parallel
-                            var oldObject = RenderObjectPreparing;
-                            RenderObjectPreparing = CreateRenderingObject(clone, recordArea, oldObject, UsingCacheType,
+                            var prepared = CreateRenderingObject(clone, recordArea, RenderObjectPreparing, UsingCacheType,
                                 (ctx) =>
                                 {
                                     PaintWithEffects(ctx);
                                 });
-                            RenderObject = RenderObjectPreparing;
-                            _renderObjectPreparing = null;
+
+                            RenderObjectPreparing = prepared;
+                            if (prepared != null)
+                            {
+                                RenderObject = prepared;
+                                _renderObjectPreparing = null;
+                            }
 
                             if (Parent != null && Parent.UpdateLocks < 1)
                             {
@@ -1062,7 +1210,7 @@ public partial class SkiaControl
         //tried to reuse surface for image SkiaCacheType.Image
         //but is seems to be GCed after GC hits randomly  along with some other object, like shader or something unsure
         //so safer not to reusage at this stage
-        if (UsingCacheType == SkiaCacheType.ImageComposite)//_ || UsingCacheType == SkiaCacheType.Image)
+        if (IsCacheComposite)//_ || UsingCacheType == SkiaCacheType.Image)
         {
             oldObject = RenderObjectPrevious;
         }

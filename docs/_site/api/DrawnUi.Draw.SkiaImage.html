@@ -253,7 +253,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_">SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect)</a>
     </div>
     <div>
-      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__">SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect, ref SKShader, ref int, ref SKRect)</a>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupGradient_SkiaSharp_SKPaint_DrawnUi_Draw_SkiaGradient_SkiaSharp_SKRect_SkiaSharp_SKShader__System_Int32__SkiaSharp_SKRect__DrawnUi_Draw_SkiaGradient__">SkiaControl.SetupGradient(SKPaint, SkiaGradient, SKRect, ref SKShader, ref int, ref SKRect, ref SkiaGradient)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateShadow_DrawnUi_Draw_SkiaShadow_System_Single_">SkiaControl.CreateShadow(SkiaShadow, float)</a>
@@ -269,6 +269,9 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetDensity">SkiaControl.GetDensity()</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetupRenderingWithComposition_DrawnUi_Draw_DrawingContext_">SkiaControl.SetupRenderingWithComposition(DrawingContext)</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_AutoCacheProperty">SkiaControl.AutoCacheProperty</a>
@@ -325,7 +328,13 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CheckCachedObjectValid_DrawnUi_Draw_CachedObject_SkiaSharp_SKRect_DrawnUi_Draw_SkiaDrawingContext_">SkiaControl.CheckCachedObjectValid(CachedObject, SKRect, SkiaDrawingContext)</a>
     </div>
     <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsCacheGPU">SkiaControl.IsCacheGPU</a>
+    </div>
+    <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_UsingCacheType">SkiaControl.UsingCacheType</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_IsCacheComposite">SkiaControl.IsCacheComposite</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_CreateRenderingObject_DrawnUi_Draw_DrawingContext_SkiaSharp_SKRect_DrawnUi_Draw_CachedObject_DrawnUi_Draw_SkiaCacheType_System_Action_DrawnUi_Draw_DrawingContext__">SkiaControl.CreateRenderingObject(DrawingContext, SKRect, CachedObject, SkiaCacheType, Action&lt;DrawingContext&gt;)</a>
@@ -1253,6 +1262,9 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ApplyTransforms_SkiaSharp_SKRect_">SkiaControl.ApplyTransforms(SKRect)</a>
+    </div>
+    <div>
+      <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetTransformedDirtyBounds">SkiaControl.GetTransformedDirtyBounds()</a>
     </div>
     <div>
       <a class="xref" href="DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_RenderTransformMatrix">SkiaControl.RenderTransformMatrix</a>
@@ -4383,7 +4395,7 @@ Class SkiaImage  <a class="header-action link-secondary" title="View source" hre
 
   <h3 id="DrawnUi_Draw_SkiaImage_DisplayRect" data-uid="DrawnUi.Draw.SkiaImage.DisplayRect">
   DisplayRect
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1596"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1593"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5233,7 +5245,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SourceHeight" data-uid="DrawnUi.Draw.SkiaImage.SourceHeight">
   SourceHeight
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1781"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1778"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>From current set Source in points</p>
@@ -5265,7 +5277,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SourceImageSize" data-uid="DrawnUi.Draw.SkiaImage.SourceImageSize">
   SourceImageSize
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1612"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1609"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5296,7 +5308,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SourceWidth" data-uid="DrawnUi.Draw.SkiaImage.SourceWidth">
   SourceWidth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1776"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1773"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>From current set Source in points</p>
@@ -5452,7 +5464,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_TextureScale" data-uid="DrawnUi.Draw.SkiaImage.TextureScale">
   TextureScale
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1611"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1608"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5673,7 +5685,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_AvoidRemeasuring_DrawnUi_Draw_MeasureRequest_" data-uid="DrawnUi.Draw.SkiaImage.AvoidRemeasuring(DrawnUi.Draw.MeasureRequest)">
   AvoidRemeasuring(MeasureRequest)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1647"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1644"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -5709,7 +5721,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_CalculateDisplayRect_SkiaSharp_SKRect_System_Single_System_Single_DrawnUi_Draw_DrawImageAlignment_DrawnUi_Draw_DrawImageAlignment_" data-uid="DrawnUi.Draw.SkiaImage.CalculateDisplayRect(SkiaSharp.SKRect,System.Single,System.Single,DrawnUi.Draw.DrawImageAlignment,DrawnUi.Draw.DrawImageAlignment)">
   CalculateDisplayRect(SKRect, float, float, DrawImageAlignment, DrawImageAlignment)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1783"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1780"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6234,7 +6246,7 @@ public ImageSource Source { get; set; }</code></pre>
 
   <h3 id="DrawnUi_Draw_SkiaImage_OnMeasuring_System_Single_System_Single_System_Single_" data-uid="DrawnUi.Draw.SkiaImage.OnMeasuring(System.Single,System.Single,System.Single)">
   OnMeasuring(float, float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1652"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1649"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Input in POINTS</p>
@@ -6420,7 +6432,7 @@ Pass arguments if you want to use some time-frozen data for painting at any time
 
   <h3 id="DrawnUi_Draw_SkiaImage_SetAspectScale_System_Int32_System_Int32_SkiaSharp_SKRect_DrawnUi_Draw_TransformAspect_System_Single_" data-uid="DrawnUi.Draw.SkiaImage.SetAspectScale(System.Int32,System.Int32,SkiaSharp.SKRect,DrawnUi.Draw.TransformAspect,System.Single)">
   SetAspectScale(int, int, SKRect, TransformAspect, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1614"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1611"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6574,7 +6586,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public LoadedImageSource SetImageInternal(SKImage image, bool protectFromDispose = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual LoadedImageSource SetImageInternal(SKImage image, bool protectFromDispose = false)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -6636,7 +6648,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_SetMeasuredAsEmpty_System_Single_" data-uid="DrawnUi.Draw.SkiaImage.SetMeasuredAsEmpty(System.Single)">
   SetMeasuredAsEmpty(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1626"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1623"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -6887,7 +6899,7 @@ You would want to set InstancedBitmap prop for a usual approach.</p>
 
   <h3 id="DrawnUi_Draw_SkiaImage_DisplayRectChanged" data-uid="DrawnUi.Draw.SkiaImage.DisplayRectChanged">
   DisplayRectChanged
-  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1609"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/taublast/DrawnUi/blob/dev/src/Maui/DrawnUi/Draw/Images/SkiaImage.cs/#L1606"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

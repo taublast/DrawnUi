@@ -925,6 +925,8 @@ public class MyViewModel : INotifyPropertyChanged
    * `UseCache = SkiaCacheType.ImageComposite` for complex layouts where a region changes while others remain static, like a stack with different user-handled controls.
    * `UseCache = SkiaCacheType.ImageDoubleBuffered` for equally sized recycled cells. Will show old cache while preparing new one in background.
    * `UseCache = SkiaCacheType.GPU` for small static overlays like headers, navbars.
+   * **PROHIBITED:** Never use `Operations` or `GPU` cache for controls with GPU-surface shaders — use `Image`, `ImageDoubleBuffered`, or `ImageComposite` instead.
+   * **PROHIBITED:** Never nest children that use GPU-backed cache types (`GPU`, `ImageCompositeGPU`) inside a parent cached with `Operations`.
 2. Check that you do not have logs spamming the console on every rendering frame.
 
 

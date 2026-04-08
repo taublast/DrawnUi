@@ -12,6 +12,7 @@ items:
   - DrawnUi.Draw.LoadedImageSource.Bitmap
   - DrawnUi.Draw.LoadedImageSource.Clone
   - DrawnUi.Draw.LoadedImageSource.Dispose
+  - DrawnUi.Draw.LoadedImageSource.DrawImageOnCpuSurface(SkiaSharp.SKImage)
   - DrawnUi.Draw.LoadedImageSource.GetBitmap
   - DrawnUi.Draw.LoadedImageSource.Height
   - DrawnUi.Draw.LoadedImageSource.Id
@@ -29,11 +30,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LoadedImageSource
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -68,11 +69,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Clone
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
@@ -83,6 +84,44 @@ items:
       type: DrawnUi.Draw.LoadedImageSource
     content.vb: Public Function Clone() As LoadedImageSource
   overload: DrawnUi.Draw.LoadedImageSource.Clone*
+- uid: DrawnUi.Draw.LoadedImageSource.DrawImageOnCpuSurface(SkiaSharp.SKImage)
+  commentId: M:DrawnUi.Draw.LoadedImageSource.DrawImageOnCpuSurface(SkiaSharp.SKImage)
+  id: DrawImageOnCpuSurface(SkiaSharp.SKImage)
+  parent: DrawnUi.Draw.LoadedImageSource
+  langs:
+  - csharp
+  - vb
+  name: DrawImageOnCpuSurface(SKImage)
+  nameWithType: LoadedImageSource.DrawImageOnCpuSurface(SKImage)
+  fullName: DrawnUi.Draw.LoadedImageSource.DrawImageOnCpuSurface(SkiaSharp.SKImage)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DrawImageOnCpuSurface
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
+    startLine: 57
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Forces a GPU-backed (texture-backed) SKImage to be rasterized into CPU memory
+
+    by drawing it onto a new raster (CPU) SKSurface. 
+
+    Returns the resulting SKSurface (caller is responsible for disposing it).
+  example: []
+  syntax:
+    content: public static SKImage DrawImageOnCpuSurface(SKImage image)
+    parameters:
+    - id: image
+      type: SkiaSharp.SKImage
+    return:
+      type: SkiaSharp.SKImage
+    content.vb: Public Shared Function DrawImageOnCpuSurface(image As SKImage) As SKImage
+  overload: DrawnUi.Draw.LoadedImageSource.DrawImageOnCpuSurface*
 - uid: DrawnUi.Draw.LoadedImageSource.Id
   commentId: P:DrawnUi.Draw.LoadedImageSource.Id
   id: Id
@@ -96,12 +135,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Id
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-    startLine: 41
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
+    startLine: 92
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -125,12 +164,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ProtectFromDispose
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-    startLine: 46
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
+    startLine: 97
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -156,12 +195,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ProtectBitmapFromDispose
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-    startLine: 51
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
+    startLine: 102
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -187,12 +226,12 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Dispose
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-    startLine: 53
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
+    startLine: 104
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -217,12 +256,12 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-    startLine: 70
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
+    startLine: 121
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -249,12 +288,12 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-    startLine: 75
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
+    startLine: 126
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -281,12 +320,12 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-    startLine: 80
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
+    startLine: 131
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -313,12 +352,12 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-    startLine: 85
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
+    startLine: 136
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -342,12 +381,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Width
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-    startLine: 95
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
+    startLine: 146
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -371,12 +410,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Height
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-    startLine: 102
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
+    startLine: 153
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -400,12 +439,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsDisposed
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-    startLine: 110
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
+    startLine: 161
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -429,12 +468,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Bitmap
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-    startLine: 112
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
+    startLine: 163
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -458,12 +497,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Image
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-    startLine: 142
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
+    startLine: 193
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -487,12 +526,12 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
+      path: src/Shared/Draw/Images/LoadedImageSource.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: GetBitmap
-    path: ../src/Maui/DrawnUi/Draw/Images/LoadedImageSource.cs
-    startLine: 170
+    path: ../src/Shared/Draw/Images/LoadedImageSource.cs
+    startLine: 221
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -873,6 +912,27 @@ references:
   name: LoadedImageSource
   nameWithType: LoadedImageSource
   fullName: DrawnUi.Draw.LoadedImageSource
+- uid: DrawnUi.Draw.LoadedImageSource.DrawImageOnCpuSurface*
+  commentId: Overload:DrawnUi.Draw.LoadedImageSource.DrawImageOnCpuSurface
+  href: DrawnUi.Draw.LoadedImageSource.html#DrawnUi_Draw_LoadedImageSource_DrawImageOnCpuSurface_SkiaSharp_SKImage_
+  name: DrawImageOnCpuSurface
+  nameWithType: LoadedImageSource.DrawImageOnCpuSurface
+  fullName: DrawnUi.Draw.LoadedImageSource.DrawImageOnCpuSurface
+- uid: SkiaSharp.SKImage
+  commentId: T:SkiaSharp.SKImage
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  name: SKImage
+  nameWithType: SKImage
+  fullName: SkiaSharp.SKImage
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
 - uid: DrawnUi.Draw.LoadedImageSource.Id*
   commentId: Overload:DrawnUi.Draw.LoadedImageSource.Id
   href: DrawnUi.Draw.LoadedImageSource.html#DrawnUi_Draw_LoadedImageSource_Id
@@ -955,21 +1015,6 @@ references:
   name: SKBitmap
   nameWithType: SKBitmap
   fullName: SkiaSharp.SKBitmap
-- uid: SkiaSharp
-  commentId: N:SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp
-  name: SkiaSharp
-  nameWithType: SkiaSharp
-  fullName: SkiaSharp
-- uid: SkiaSharp.SKImage
-  commentId: T:SkiaSharp.SKImage
-  parent: SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
-  name: SKImage
-  nameWithType: SKImage
-  fullName: SkiaSharp.SKImage
 - uid: System.Byte[]
   isExternal: true
   href: https://learn.microsoft.com/dotnet/api/system.byte

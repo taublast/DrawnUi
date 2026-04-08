@@ -48,6 +48,19 @@
             SkiaNativeMethods.PaintSetStrokeJoin(Handle, join);
         }
 
+        public bool CanComputeFastBounds()
+        {
+            EnsureNotDisposed();
+            return SkiaNativeMethods.PaintCanComputeFastBounds(Handle);
+        }
+
+        public unsafe SkRectNative ComputeFastBounds(SkRectNative orig)
+        {
+            EnsureNotDisposed();
+            SkRectNative storage;
+            return *SkiaNativeMethods.PaintComputeFastBounds(Handle, &orig, &storage);
+        }
+
         private void EnsureNotDisposed()
         {
             ObjectDisposedException.ThrowIf(_disposed, this);

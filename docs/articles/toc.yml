@@ -81,6 +81,8 @@
       href: advanced/theme-binding.md
     - name: Drawing Pipeline
       href: drawing-pipeline.md
+    - name: Shaders
+      href: shaders.md
     - name: Game UI & Interactive Games
       href: advanced/game-ui.md
 

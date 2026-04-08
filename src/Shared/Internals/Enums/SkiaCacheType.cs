@@ -45,6 +45,16 @@ public enum SkiaCacheType
 
     /// <summary>
     /// The cached surface will use the same graphic context as your hardware-accelerated canvas.
+    /// Would receive the invalidated area rectangle, then redraw the previous cache
+    /// but clipped to exclude the dirty area, then would re-create the dirty area and
+    /// draw it clipped inside the dirty rectangle. This is useful for layouts with many children,
+    /// like scroll content etc, but useless for non-containers.
+    /// But will suffer from children that love to invalidate parent much!
+    /// </summary>
+    ImageCompositeGPU,
+
+    /// <summary>
+    /// The cached surface will use the same graphic context as your hardware-accelerated canvas.
     /// This kind of cache will not apply Opacity as not all platforms support transparency for hardware accelerated layer.
     /// Will fallback to simple Image cache type if hardware acceleration is not available.
     /// </summary>

@@ -6,11 +6,11 @@
     - name: Installation and Setup
       href: articles/getting-started.md
     - name: Startup Settings
-      href: startup-settings.md
+      href: articles/startup-settings.md
     - name: Drawn Layouts
       href: articles/layouts.md
     - name: Handling Gestures
-      href: gestures.md
+      href: articles/gestures.md
     - name: Porting Native to Drawn
       href: articles/porting-maui.md
 
@@ -81,6 +81,8 @@
       href: articles/advanced/theme-binding.md
     - name: Drawing Pipeline
       href: articles/drawing-pipeline.md
+    - name: Shaders
+      href: articles/shaders.md
     - name: Game UI & Interactive Games
       href: articles/advanced/game-ui.md
 

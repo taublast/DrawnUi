@@ -22,11 +22,11 @@ items:
   type: Struct
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+      path: src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ScrollToPointOrder
-    path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+    path: ../src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
     startLine: 64
   assemblies:
   - DrawnUi.Maui
@@ -56,11 +56,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+      path: src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsValid
-    path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+    path: ../src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
     startLine: 66
   assemblies:
   - DrawnUi.Maui
@@ -85,11 +85,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+      path: src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NotValid
-    path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+    path: ../src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
     startLine: 74
   assemblies:
   - DrawnUi.Maui
@@ -114,11 +114,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+      path: src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToPoint
-    path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+    path: ../src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
     startLine: 80
   assemblies:
   - DrawnUi.Maui
@@ -150,11 +150,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+      path: src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToCoords
-    path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+    path: ../src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
     startLine: 89
   assemblies:
   - DrawnUi.Maui
@@ -188,11 +188,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+      path: src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: ToCoords
-    path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+    path: ../src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
     startLine: 98
   assemblies:
   - DrawnUi.Maui
@@ -226,11 +226,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+      path: src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Animated
-    path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+    path: ../src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
     startLine: 107
   assemblies:
   - DrawnUi.Maui
@@ -255,11 +255,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+      path: src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Location
-    path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+    path: ../src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
     startLine: 108
   assemblies:
   - DrawnUi.Maui
@@ -284,11 +284,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+      path: src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: MaxTimeSecs
-    path: ../src/Maui/DrawnUi/Draw/Scroll/ScrollToIndexOrder.cs
+    path: ../src/Shared/Draw/Scroll/ScrollToIndexOrder.cs
     startLine: 109
   assemblies:
   - DrawnUi.Maui

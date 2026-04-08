@@ -7,8 +7,8 @@ items:
   children:
   - DrawnUi.Draw.SaturationEffect.CreateFilter(SkiaSharp.SKRect)
   - DrawnUi.Draw.SaturationEffect.NeedApply
-  - DrawnUi.Draw.SaturationEffect.Saturation
-  - DrawnUi.Draw.SaturationEffect.SaturationProperty
+  - DrawnUi.Draw.SaturationEffect.Value
+  - DrawnUi.Draw.SaturationEffect.ValueProperty
   langs:
   - csharp
   - vb
@@ -18,11 +18,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/SaturationEffect.cs
+      path: src/Shared/Features/Effects/SaturationEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SaturationEffect
-    path: ../src/Maui/DrawnUi/Features/Effects/SaturationEffect.cs
+    path: ../src/Shared/Features/Effects/SaturationEffect.cs
     startLine: 2
   assemblies:
   - DrawnUi.Maui
@@ -83,62 +83,62 @@ items:
   - DrawnUi.Draw.SaturationEffect.DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.SaturationEffect@)
   - DrawnUi.Draw.SaturationEffect.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
-- uid: DrawnUi.Draw.SaturationEffect.SaturationProperty
-  commentId: F:DrawnUi.Draw.SaturationEffect.SaturationProperty
-  id: SaturationProperty
+- uid: DrawnUi.Draw.SaturationEffect.ValueProperty
+  commentId: F:DrawnUi.Draw.SaturationEffect.ValueProperty
+  id: ValueProperty
   parent: DrawnUi.Draw.SaturationEffect
   langs:
   - csharp
   - vb
-  name: SaturationProperty
-  nameWithType: SaturationEffect.SaturationProperty
-  fullName: DrawnUi.Draw.SaturationEffect.SaturationProperty
+  name: ValueProperty
+  nameWithType: SaturationEffect.ValueProperty
+  fullName: DrawnUi.Draw.SaturationEffect.ValueProperty
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/SaturationEffect.cs
+      path: src/Shared/Features/Effects/SaturationEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
-    id: SaturationProperty
-    path: ../src/Maui/DrawnUi/Features/Effects/SaturationEffect.cs
+    id: ValueProperty
+    path: ../src/Shared/Features/Effects/SaturationEffect.cs
     startLine: 4
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public static readonly BindableProperty SaturationProperty
+    content: public static readonly BindableProperty ValueProperty
     return:
       type: Microsoft.Maui.Controls.BindableProperty
-    content.vb: Public Shared ReadOnly SaturationProperty As BindableProperty
-- uid: DrawnUi.Draw.SaturationEffect.Saturation
-  commentId: P:DrawnUi.Draw.SaturationEffect.Saturation
-  id: Saturation
+    content.vb: Public Shared ReadOnly ValueProperty As BindableProperty
+- uid: DrawnUi.Draw.SaturationEffect.Value
+  commentId: P:DrawnUi.Draw.SaturationEffect.Value
+  id: Value
   parent: DrawnUi.Draw.SaturationEffect
   langs:
   - csharp
   - vb
-  name: Saturation
-  nameWithType: SaturationEffect.Saturation
-  fullName: DrawnUi.Draw.SaturationEffect.Saturation
+  name: Value
+  nameWithType: SaturationEffect.Value
+  fullName: DrawnUi.Draw.SaturationEffect.Value
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/SaturationEffect.cs
+      path: src/Shared/Features/Effects/SaturationEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
-    id: Saturation
-    path: ../src/Maui/DrawnUi/Features/Effects/SaturationEffect.cs
+    id: Value
+    path: ../src/Shared/Features/Effects/SaturationEffect.cs
     startLine: 11
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public float Saturation { get; set; }
+    content: public float Value { get; set; }
     parameters: []
     return:
       type: System.Single
-    content.vb: Public Property Saturation As Single
-  overload: DrawnUi.Draw.SaturationEffect.Saturation*
+    content.vb: Public Property Value As Single
+  overload: DrawnUi.Draw.SaturationEffect.Value*
 - uid: DrawnUi.Draw.SaturationEffect.CreateFilter(SkiaSharp.SKRect)
   commentId: M:DrawnUi.Draw.SaturationEffect.CreateFilter(SkiaSharp.SKRect)
   id: CreateFilter(SkiaSharp.SKRect)
@@ -152,11 +152,11 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/SaturationEffect.cs
+      path: src/Shared/Features/Effects/SaturationEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CreateFilter
-    path: ../src/Maui/DrawnUi/Features/Effects/SaturationEffect.cs
+    path: ../src/Shared/Features/Effects/SaturationEffect.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui
@@ -185,12 +185,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Features/Effects/SaturationEffect.cs
+      path: src/Shared/Features/Effects/SaturationEffect.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: NeedApply
-    path: ../src/Maui/DrawnUi/Features/Effects/SaturationEffect.cs
-    startLine: 46
+    path: ../src/Shared/Features/Effects/SaturationEffect.cs
+    startLine: 27
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1658,12 +1658,12 @@ references:
   name: BindableProperty
   nameWithType: BindableProperty
   fullName: Microsoft.Maui.Controls.BindableProperty
-- uid: DrawnUi.Draw.SaturationEffect.Saturation*
-  commentId: Overload:DrawnUi.Draw.SaturationEffect.Saturation
-  href: DrawnUi.Draw.SaturationEffect.html#DrawnUi_Draw_SaturationEffect_Saturation
-  name: Saturation
-  nameWithType: SaturationEffect.Saturation
-  fullName: DrawnUi.Draw.SaturationEffect.Saturation
+- uid: DrawnUi.Draw.SaturationEffect.Value*
+  commentId: Overload:DrawnUi.Draw.SaturationEffect.Value
+  href: DrawnUi.Draw.SaturationEffect.html#DrawnUi_Draw_SaturationEffect_Value
+  name: Value
+  nameWithType: SaturationEffect.Value
+  fullName: DrawnUi.Draw.SaturationEffect.Value
 - uid: System.Single
   commentId: T:System.Single
   parent: System

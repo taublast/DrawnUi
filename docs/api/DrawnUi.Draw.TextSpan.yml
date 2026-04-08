@@ -56,6 +56,7 @@ items:
   - DrawnUi.Draw.TextSpan.UnderlineWidth
   - DrawnUi.Draw.TextSpan.UpdateFont
   - DrawnUi.Draw.TextSpan._fontAutoSet
+  - DrawnUi.Draw.TextSpan._typeFace
   langs:
   - csharp
   - vb
@@ -65,11 +66,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextSpan
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
     startLine: 7
   assemblies:
   - DrawnUi.Maui
@@ -173,12 +174,12 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: TextProperty
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 13
+    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
+    startLine: 10
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -200,12 +201,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Text
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 17
+    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
+    startLine: 14
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -216,212 +217,234 @@ items:
       type: System.String
     content.vb: Public Property Text As String
   overload: DrawnUi.Draw.TextSpan.Text*
-- uid: DrawnUi.Draw.TextSpan.Default
-  commentId: P:DrawnUi.Draw.TextSpan.Default
-  id: Default
+- uid: DrawnUi.Draw.TextSpan.TextColorProperty
+  commentId: F:DrawnUi.Draw.TextSpan.TextColorProperty
+  id: TextColorProperty
   parent: DrawnUi.Draw.TextSpan
   langs:
   - csharp
   - vb
-  name: Default
-  nameWithType: TextSpan.Default
-  fullName: DrawnUi.Draw.TextSpan.Default
+  name: TextColorProperty
+  nameWithType: TextSpan.TextColorProperty
+  fullName: DrawnUi.Draw.TextSpan.TextColorProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TextColorProperty
+    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
+    startLine: 20
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty TextColorProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly TextColorProperty As BindableProperty
+- uid: DrawnUi.Draw.TextSpan.TextColor
+  commentId: P:DrawnUi.Draw.TextSpan.TextColor
+  id: TextColor
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: TextColor
+  nameWithType: TextSpan.TextColor
+  fullName: DrawnUi.Draw.TextSpan.TextColor
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
-    id: Default
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 25
+    id: TextColor
+    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
+    startLine: 32
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public static TextSpan Default { get; }
+    content: public Color TextColor { get; set; }
     parameters: []
     return:
-      type: DrawnUi.Draw.TextSpan
-    content.vb: Public Shared ReadOnly Property [Default] As TextSpan
-  overload: DrawnUi.Draw.TextSpan.Default*
-- uid: DrawnUi.Draw.TextSpan.DebugString
-  commentId: P:DrawnUi.Draw.TextSpan.DebugString
-  id: DebugString
+      type: Microsoft.Maui.Graphics.Color
+    content.vb: Public Property TextColor As Color
+  overload: DrawnUi.Draw.TextSpan.TextColor*
+- uid: DrawnUi.Draw.TextSpan.FontSizeProperty
+  commentId: F:DrawnUi.Draw.TextSpan.FontSizeProperty
+  id: FontSizeProperty
   parent: DrawnUi.Draw.TextSpan
   langs:
   - csharp
   - vb
-  name: DebugString
-  nameWithType: TextSpan.DebugString
-  fullName: DrawnUi.Draw.TextSpan.DebugString
+  name: FontSizeProperty
+  nameWithType: TextSpan.FontSizeProperty
+  fullName: DrawnUi.Draw.TextSpan.FontSizeProperty
+  type: Field
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FontSizeProperty
+    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
+    startLine: 38
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static readonly BindableProperty FontSizeProperty
+    return:
+      type: Microsoft.Maui.Controls.BindableProperty
+    content.vb: Public Shared ReadOnly FontSizeProperty As BindableProperty
+- uid: DrawnUi.Draw.TextSpan.FontSize
+  commentId: P:DrawnUi.Draw.TextSpan.FontSize
+  id: FontSize
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: FontSize
+  nameWithType: TextSpan.FontSize
+  fullName: DrawnUi.Draw.TextSpan.FontSize
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
-    id: DebugString
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 33
+    id: FontSize
+    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
+    startLine: 53
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public string DebugString { get; }
+    content: public double FontSize { get; set; }
     parameters: []
     return:
-      type: System.String
-    content.vb: Public ReadOnly Property DebugString As String
-  overload: DrawnUi.Draw.TextSpan.DebugString*
-- uid: DrawnUi.Draw.TextSpan.RenderingScale
-  commentId: P:DrawnUi.Draw.TextSpan.RenderingScale
-  id: RenderingScale
+      type: System.Double
+    content.vb: Public Property FontSize As Double
+  overload: DrawnUi.Draw.TextSpan.FontSize*
+- uid: DrawnUi.Draw.TextSpan.HasSetColor
+  commentId: P:DrawnUi.Draw.TextSpan.HasSetColor
+  id: HasSetColor
   parent: DrawnUi.Draw.TextSpan
   langs:
   - csharp
   - vb
-  name: RenderingScale
-  nameWithType: TextSpan.RenderingScale
-  fullName: DrawnUi.Draw.TextSpan.RenderingScale
+  name: HasSetColor
+  nameWithType: TextSpan.HasSetColor
+  fullName: DrawnUi.Draw.TextSpan.HasSetColor
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
-    id: RenderingScale
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 41
+    id: HasSetColor
+    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
+    startLine: 63
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public float RenderingScale { get; set; }
+    content: public bool HasSetColor { get; set; }
     parameters: []
     return:
-      type: System.Single
-    content.vb: Public Property RenderingScale As Single
-  overload: DrawnUi.Draw.TextSpan.RenderingScale*
-- uid: DrawnUi.Draw.TextSpan.Glyphs
-  commentId: P:DrawnUi.Draw.TextSpan.Glyphs
-  id: Glyphs
+      type: System.Boolean
+    content.vb: Public Property HasSetColor As Boolean
+  overload: DrawnUi.Draw.TextSpan.HasSetColor*
+- uid: DrawnUi.Draw.TextSpan.StrikeoutColor
+  commentId: P:DrawnUi.Draw.TextSpan.StrikeoutColor
+  id: StrikeoutColor
   parent: DrawnUi.Draw.TextSpan
   langs:
   - csharp
   - vb
-  name: Glyphs
-  nameWithType: TextSpan.Glyphs
-  fullName: DrawnUi.Draw.TextSpan.Glyphs
+  name: StrikeoutColor
+  nameWithType: TextSpan.StrikeoutColor
+  fullName: DrawnUi.Draw.TextSpan.StrikeoutColor
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
-    id: Glyphs
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 46
+    id: StrikeoutColor
+    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
+    startLine: 66
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
-  summary: Ig can be drawn char by char with char spacing etc we use this
-  example: []
   syntax:
-    content: public List<UsedGlyph> Glyphs { get; protected set; }
+    content: public Color StrikeoutColor { get; set; }
     parameters: []
     return:
-      type: System.Collections.Generic.List{DrawnUi.Draw.UsedGlyph}
-    content.vb: Public Property Glyphs As List(Of UsedGlyph)
-  overload: DrawnUi.Draw.TextSpan.Glyphs*
-- uid: DrawnUi.Draw.TextSpan.Shape
-  commentId: P:DrawnUi.Draw.TextSpan.Shape
-  id: Shape
+      type: Microsoft.Maui.Graphics.Color
+    content.vb: Public Property StrikeoutColor As Color
+  overload: DrawnUi.Draw.TextSpan.StrikeoutColor*
+- uid: DrawnUi.Draw.TextSpan.BackgroundColor
+  commentId: P:DrawnUi.Draw.TextSpan.BackgroundColor
+  id: BackgroundColor
   parent: DrawnUi.Draw.TextSpan
   langs:
   - csharp
   - vb
-  name: Shape
-  nameWithType: TextSpan.Shape
-  fullName: DrawnUi.Draw.TextSpan.Shape
+  name: BackgroundColor
+  nameWithType: TextSpan.BackgroundColor
+  fullName: DrawnUi.Draw.TextSpan.BackgroundColor
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
-    id: Shape
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 51
+    id: BackgroundColor
+    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
+    startLine: 83
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
-  summary: If text can be drawn only shaped we use this
-  example: []
   syntax:
-    content: public string Shape { get; protected set; }
+    content: public Color BackgroundColor { get; set; }
     parameters: []
     return:
-      type: System.String
-    content.vb: Public Property Shape As String
-  overload: DrawnUi.Draw.TextSpan.Shape*
-- uid: DrawnUi.Draw.TextSpan.TextFiltered
-  commentId: P:DrawnUi.Draw.TextSpan.TextFiltered
-  id: TextFiltered
+      type: Microsoft.Maui.Graphics.Color
+    content.vb: Public Property BackgroundColor As Color
+  overload: DrawnUi.Draw.TextSpan.BackgroundColor*
+- uid: DrawnUi.Draw.TextSpan.ParagraphColor
+  commentId: P:DrawnUi.Draw.TextSpan.ParagraphColor
+  id: ParagraphColor
   parent: DrawnUi.Draw.TextSpan
   langs:
   - csharp
   - vb
-  name: TextFiltered
-  nameWithType: TextSpan.TextFiltered
-  fullName: DrawnUi.Draw.TextSpan.TextFiltered
+  name: ParagraphColor
+  nameWithType: TextSpan.ParagraphColor
+  fullName: DrawnUi.Draw.TextSpan.ParagraphColor
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
-    id: TextFiltered
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 54
+    id: ParagraphColor
+    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
+    startLine: 95
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public string TextFiltered { get; protected set; }
+    content: public Color ParagraphColor { get; set; }
     parameters: []
     return:
-      type: System.String
-    content.vb: Public Property TextFiltered As String
-  overload: DrawnUi.Draw.TextSpan.TextFiltered*
-- uid: DrawnUi.Draw.TextSpan.CheckGlyphsCanBeRendered
-  commentId: M:DrawnUi.Draw.TextSpan.CheckGlyphsCanBeRendered
-  id: CheckGlyphsCanBeRendered
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: CheckGlyphsCanBeRendered()
-  nameWithType: TextSpan.CheckGlyphsCanBeRendered()
-  fullName: DrawnUi.Draw.TextSpan.CheckGlyphsCanBeRendered()
-  type: Method
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: CheckGlyphsCanBeRendered
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 59
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: Parse glyphs, setup typeface, replace unrenderable glyphs with fallback character
-  example: []
-  syntax:
-    content: public void CheckGlyphsCanBeRendered()
-    content.vb: Public Sub CheckGlyphsCanBeRendered()
-  overload: DrawnUi.Draw.TextSpan.CheckGlyphsCanBeRendered*
+      type: Microsoft.Maui.Graphics.Color
+    content.vb: Public Property ParagraphColor As Color
+  overload: DrawnUi.Draw.TextSpan.ParagraphColor*
 - uid: DrawnUi.Draw.TextSpan.SetupPaint(System.Double,SkiaSharp.SKPaint)
   commentId: M:DrawnUi.Draw.TextSpan.SetupPaint(System.Double,SkiaSharp.SKPaint)
   id: SetupPaint(System.Double,SkiaSharp.SKPaint)
@@ -435,12 +458,12 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: SetupPaint
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 105
+    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
+    startLine: 111
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -460,686 +483,6 @@ items:
   nameWithType.vb: TextSpan.SetupPaint(Double, SKPaint)
   fullName.vb: DrawnUi.Draw.TextSpan.SetupPaint(Double, SkiaSharp.SKPaint)
   name.vb: SetupPaint(Double, SKPaint)
-- uid: DrawnUi.Draw.TextSpan.HasSetFont
-  commentId: P:DrawnUi.Draw.TextSpan.HasSetFont
-  id: HasSetFont
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: HasSetFont
-  nameWithType: TextSpan.HasSetFont
-  fullName: DrawnUi.Draw.TextSpan.HasSetFont
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: HasSetFont
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 177
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public bool HasSetFont { get; set; }
-    parameters: []
-    return:
-      type: System.Boolean
-    content.vb: Public Property HasSetFont As Boolean
-  overload: DrawnUi.Draw.TextSpan.HasSetFont*
-- uid: DrawnUi.Draw.TextSpan.HasSetSize
-  commentId: P:DrawnUi.Draw.TextSpan.HasSetSize
-  id: HasSetSize
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: HasSetSize
-  nameWithType: TextSpan.HasSetSize
-  fullName: DrawnUi.Draw.TextSpan.HasSetSize
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: HasSetSize
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 178
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public bool HasSetSize { get; set; }
-    parameters: []
-    return:
-      type: System.Boolean
-    content.vb: Public Property HasSetSize As Boolean
-  overload: DrawnUi.Draw.TextSpan.HasSetSize*
-- uid: DrawnUi.Draw.TextSpan.HasSetColor
-  commentId: P:DrawnUi.Draw.TextSpan.HasSetColor
-  id: HasSetColor
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: HasSetColor
-  nameWithType: TextSpan.HasSetColor
-  fullName: DrawnUi.Draw.TextSpan.HasSetColor
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: HasSetColor
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 179
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public bool HasSetColor { get; set; }
-    parameters: []
-    return:
-      type: System.Boolean
-    content.vb: Public Property HasSetColor As Boolean
-  overload: DrawnUi.Draw.TextSpan.HasSetColor*
-- uid: DrawnUi.Draw.TextSpan.Paint
-  commentId: P:DrawnUi.Draw.TextSpan.Paint
-  id: Paint
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: Paint
-  nameWithType: TextSpan.Paint
-  fullName: DrawnUi.Draw.TextSpan.Paint
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: Paint
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 181
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public SKPaint Paint { get; set; }
-    parameters: []
-    return:
-      type: SkiaSharp.SKPaint
-    content.vb: Public Property Paint As SKPaint
-  overload: DrawnUi.Draw.TextSpan.Paint*
-- uid: DrawnUi.Draw.TextSpan.TypeFace
-  commentId: P:DrawnUi.Draw.TextSpan.TypeFace
-  id: TypeFace
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: TypeFace
-  nameWithType: TextSpan.TypeFace
-  fullName: DrawnUi.Draw.TextSpan.TypeFace
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: TypeFace
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 183
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public SKTypeface TypeFace { get; set; }
-    parameters: []
-    return:
-      type: SkiaSharp.SKTypeface
-    content.vb: Public Property TypeFace As SKTypeface
-  overload: DrawnUi.Draw.TextSpan.TypeFace*
-- uid: DrawnUi.Draw.TextSpan.NeedShape
-  commentId: P:DrawnUi.Draw.TextSpan.NeedShape
-  id: NeedShape
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: NeedShape
-  nameWithType: TextSpan.NeedShape
-  fullName: DrawnUi.Draw.TextSpan.NeedShape
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: NeedShape
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 196
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public bool NeedShape { get; set; }
-    parameters: []
-    return:
-      type: System.Boolean
-    content.vb: Public Property NeedShape As Boolean
-  overload: DrawnUi.Draw.TextSpan.NeedShape*
-- uid: DrawnUi.Draw.TextSpan.HasDecorations
-  commentId: P:DrawnUi.Draw.TextSpan.HasDecorations
-  id: HasDecorations
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: HasDecorations
-  nameWithType: TextSpan.HasDecorations
-  fullName: DrawnUi.Draw.TextSpan.HasDecorations
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: HasDecorations
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 207
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public bool HasDecorations { get; }
-    parameters: []
-    return:
-      type: System.Boolean
-    content.vb: Public ReadOnly Property HasDecorations As Boolean
-  overload: DrawnUi.Draw.TextSpan.HasDecorations*
-- uid: DrawnUi.Draw.TextSpan.Underline
-  commentId: P:DrawnUi.Draw.TextSpan.Underline
-  id: Underline
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: Underline
-  nameWithType: TextSpan.Underline
-  fullName: DrawnUi.Draw.TextSpan.Underline
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: Underline
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 216
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public bool Underline { get; set; }
-    parameters: []
-    return:
-      type: System.Boolean
-    content.vb: Public Property Underline As Boolean
-  overload: DrawnUi.Draw.TextSpan.Underline*
-- uid: DrawnUi.Draw.TextSpan.UnderlineWidth
-  commentId: P:DrawnUi.Draw.TextSpan.UnderlineWidth
-  id: UnderlineWidth
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: UnderlineWidth
-  nameWithType: TextSpan.UnderlineWidth
-  fullName: DrawnUi.Draw.TextSpan.UnderlineWidth
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: UnderlineWidth
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 236
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: In points, if set to negative will be in pixels instead.
-  example: []
-  syntax:
-    content: public double UnderlineWidth { get; set; }
-    parameters: []
-    return:
-      type: System.Double
-    content.vb: Public Property UnderlineWidth As Double
-  overload: DrawnUi.Draw.TextSpan.UnderlineWidth*
-- uid: DrawnUi.Draw.TextSpan.Strikeout
-  commentId: P:DrawnUi.Draw.TextSpan.Strikeout
-  id: Strikeout
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: Strikeout
-  nameWithType: TextSpan.Strikeout
-  fullName: DrawnUi.Draw.TextSpan.Strikeout
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: Strikeout
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 253
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public bool Strikeout { get; set; }
-    parameters: []
-    return:
-      type: System.Boolean
-    content.vb: Public Property Strikeout As Boolean
-  overload: DrawnUi.Draw.TextSpan.Strikeout*
-- uid: DrawnUi.Draw.TextSpan.StrikeoutWidth
-  commentId: P:DrawnUi.Draw.TextSpan.StrikeoutWidth
-  id: StrikeoutWidth
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: StrikeoutWidth
-  nameWithType: TextSpan.StrikeoutWidth
-  fullName: DrawnUi.Draw.TextSpan.StrikeoutWidth
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: StrikeoutWidth
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 273
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: In points
-  example: []
-  syntax:
-    content: public double StrikeoutWidth { get; set; }
-    parameters: []
-    return:
-      type: System.Double
-    content.vb: Public Property StrikeoutWidth As Double
-  overload: DrawnUi.Draw.TextSpan.StrikeoutWidth*
-- uid: DrawnUi.Draw.TextSpan.StrikeoutColor
-  commentId: P:DrawnUi.Draw.TextSpan.StrikeoutColor
-  id: StrikeoutColor
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: StrikeoutColor
-  nameWithType: TextSpan.StrikeoutColor
-  fullName: DrawnUi.Draw.TextSpan.StrikeoutColor
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: StrikeoutColor
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 290
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public Color StrikeoutColor { get; set; }
-    parameters: []
-    return:
-      type: Microsoft.Maui.Graphics.Color
-    content.vb: Public Property StrikeoutColor As Color
-  overload: DrawnUi.Draw.TextSpan.StrikeoutColor*
-- uid: DrawnUi.Draw.TextSpan.HasTapHandler
-  commentId: P:DrawnUi.Draw.TextSpan.HasTapHandler
-  id: HasTapHandler
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: HasTapHandler
-  nameWithType: TextSpan.HasTapHandler
-  fullName: DrawnUi.Draw.TextSpan.HasTapHandler
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: HasTapHandler
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 309
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: Will listen to gestures
-  example: []
-  syntax:
-    content: public bool HasTapHandler { get; }
-    parameters: []
-    return:
-      type: System.Boolean
-    content.vb: Public ReadOnly Property HasTapHandler As Boolean
-  overload: DrawnUi.Draw.TextSpan.HasTapHandler*
-- uid: DrawnUi.Draw.TextSpan.ForceCaptureInput
-  commentId: P:DrawnUi.Draw.TextSpan.ForceCaptureInput
-  id: ForceCaptureInput
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: ForceCaptureInput
-  nameWithType: TextSpan.ForceCaptureInput
-  fullName: DrawnUi.Draw.TextSpan.ForceCaptureInput
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: ForceCaptureInput
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 320
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: When no tap handler or command are set this forces to listen to taps anyway
-  example: []
-  syntax:
-    content: public bool ForceCaptureInput { get; set; }
-    parameters: []
-    return:
-      type: System.Boolean
-    content.vb: Public Property ForceCaptureInput As Boolean
-  overload: DrawnUi.Draw.TextSpan.ForceCaptureInput*
-- uid: DrawnUi.Draw.TextSpan.HitIsInside(System.Single,System.Single)
-  commentId: M:DrawnUi.Draw.TextSpan.HitIsInside(System.Single,System.Single)
-  id: HitIsInside(System.Single,System.Single)
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: HitIsInside(float, float)
-  nameWithType: TextSpan.HitIsInside(float, float)
-  fullName: DrawnUi.Draw.TextSpan.HitIsInside(float, float)
-  type: Method
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: HitIsInside
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 322
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public virtual bool HitIsInside(float x, float y)
-    parameters:
-    - id: x
-      type: System.Single
-    - id: y
-      type: System.Single
-    return:
-      type: System.Boolean
-    content.vb: Public Overridable Function HitIsInside(x As Single, y As Single) As Boolean
-  overload: DrawnUi.Draw.TextSpan.HitIsInside*
-  nameWithType.vb: TextSpan.HitIsInside(Single, Single)
-  fullName.vb: DrawnUi.Draw.TextSpan.HitIsInside(Single, Single)
-  name.vb: HitIsInside(Single, Single)
-- uid: DrawnUi.Draw.TextSpan.FireTap
-  commentId: M:DrawnUi.Draw.TextSpan.FireTap
-  id: FireTap
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: FireTap()
-  nameWithType: TextSpan.FireTap()
-  fullName: DrawnUi.Draw.TextSpan.FireTap()
-  type: Method
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: FireTap
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 332
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public virtual void FireTap()
-    content.vb: Public Overridable Sub FireTap()
-  overload: DrawnUi.Draw.TextSpan.FireTap*
-- uid: DrawnUi.Draw.TextSpan.Dispose
-  commentId: M:DrawnUi.Draw.TextSpan.Dispose
-  id: Dispose
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: Dispose()
-  nameWithType: TextSpan.Dispose()
-  fullName: DrawnUi.Draw.TextSpan.Dispose()
-  type: Method
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: Dispose
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 338
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-  example: []
-  syntax:
-    content: public virtual void Dispose()
-    content.vb: Public Overridable Sub Dispose()
-  overload: DrawnUi.Draw.TextSpan.Dispose*
-  implements:
-  - System.IDisposable.Dispose
-- uid: DrawnUi.Draw.TextSpan.DrawingOffset
-  commentId: P:DrawnUi.Draw.TextSpan.DrawingOffset
-  id: DrawingOffset
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: DrawingOffset
-  nameWithType: TextSpan.DrawingOffset
-  fullName: DrawnUi.Draw.TextSpan.DrawingOffset
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: DrawingOffset
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 351
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: Rendering offset, set when combining spans. Ofset of the first line.
-  example: []
-  syntax:
-    content: public SKPoint DrawingOffset { get; set; }
-    parameters: []
-    return:
-      type: SkiaSharp.SKPoint
-    content.vb: Public Property DrawingOffset As SKPoint
-  overload: DrawnUi.Draw.TextSpan.DrawingOffset*
-- uid: DrawnUi.Draw.TextSpan.Tag
-  commentId: P:DrawnUi.Draw.TextSpan.Tag
-  id: Tag
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: Tag
-  nameWithType: TextSpan.Tag
-  fullName: DrawnUi.Draw.TextSpan.Tag
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: Tag
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 353
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public string Tag { get; set; }
-    parameters: []
-    return:
-      type: System.String
-    content.vb: Public Property Tag As String
-  overload: DrawnUi.Draw.TextSpan.Tag*
-- uid: DrawnUi.Draw.TextSpan.Rects
-  commentId: F:DrawnUi.Draw.TextSpan.Rects
-  id: Rects
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: Rects
-  nameWithType: TextSpan.Rects
-  fullName: DrawnUi.Draw.TextSpan.Rects
-  type: Field
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: Rects
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 358
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: Relative to DrawingRect
-  example: []
-  syntax:
-    content: public readonly List<SKRect> Rects
-    return:
-      type: System.Collections.Generic.List{SkiaSharp.SKRect}
-    content.vb: Public ReadOnly Rects As List(Of SKRect)
-- uid: DrawnUi.Draw.TextSpan.CommandTapped
-  commentId: P:DrawnUi.Draw.TextSpan.CommandTapped
-  id: CommandTapped
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: CommandTapped
-  nameWithType: TextSpan.CommandTapped
-  fullName: DrawnUi.Draw.TextSpan.CommandTapped
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: CommandTapped
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 362
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public ICommand CommandTapped { get; set; }
-    parameters: []
-    return:
-      type: System.Windows.Input.ICommand
-    content.vb: Public Property CommandTapped As ICommand
-  overload: DrawnUi.Draw.TextSpan.CommandTapped*
-- uid: DrawnUi.Draw.TextSpan.Tapped
-  commentId: E:DrawnUi.Draw.TextSpan.Tapped
-  id: Tapped
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: Tapped
-  nameWithType: TextSpan.Tapped
-  fullName: DrawnUi.Draw.TextSpan.Tapped
-  type: Event
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: Tapped
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 378
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public event EventHandler<ControlTappedEventArgs> Tapped
-    return:
-      type: System.EventHandler{DrawnUi.Draw.ControlTappedEventArgs}
-    content.vb: Public Event Tapped As EventHandler(Of ControlTappedEventArgs)
-- uid: DrawnUi.Draw.TextSpan.ParentControl
-  commentId: P:DrawnUi.Draw.TextSpan.ParentControl
-  id: ParentControl
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: ParentControl
-  nameWithType: TextSpan.ParentControl
-  fullName: DrawnUi.Draw.TextSpan.ParentControl
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: ParentControl
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 380
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: protected SkiaControl ParentControl { get; }
-    parameters: []
-    return:
-      type: DrawnUi.Draw.SkiaControl
-    content.vb: Protected ReadOnly Property ParentControl As SkiaControl
-  overload: DrawnUi.Draw.TextSpan.ParentControl*
 - uid: DrawnUi.Draw.TextSpan.OnPropertyChanged(System.String)
   commentId: M:DrawnUi.Draw.TextSpan.OnPropertyChanged(System.String)
   id: OnPropertyChanged(System.String)
@@ -1153,12 +496,12 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: OnPropertyChanged
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 388
+    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
+    startLine: 181
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1189,12 +532,12 @@ items:
   type: Constructor
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: .ctor
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 425
+    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.Maui.cs
+    startLine: 218
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1205,6 +548,834 @@ items:
   nameWithType.vb: TextSpan.New()
   fullName.vb: DrawnUi.Draw.TextSpan.New()
   name.vb: New()
+- uid: DrawnUi.Draw.TextSpan.Default
+  commentId: P:DrawnUi.Draw.TextSpan.Default
+  id: Default
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: Default
+  nameWithType: TextSpan.Default
+  fullName: DrawnUi.Draw.TextSpan.Default
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Default
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 10
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static TextSpan Default { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.TextSpan
+    content.vb: Public Shared ReadOnly Property [Default] As TextSpan
+  overload: DrawnUi.Draw.TextSpan.Default*
+- uid: DrawnUi.Draw.TextSpan.DebugString
+  commentId: P:DrawnUi.Draw.TextSpan.DebugString
+  id: DebugString
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: DebugString
+  nameWithType: TextSpan.DebugString
+  fullName: DrawnUi.Draw.TextSpan.DebugString
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DebugString
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 18
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public string DebugString { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property DebugString As String
+  overload: DrawnUi.Draw.TextSpan.DebugString*
+- uid: DrawnUi.Draw.TextSpan.RenderingScale
+  commentId: P:DrawnUi.Draw.TextSpan.RenderingScale
+  id: RenderingScale
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: RenderingScale
+  nameWithType: TextSpan.RenderingScale
+  fullName: DrawnUi.Draw.TextSpan.RenderingScale
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: RenderingScale
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 26
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public float RenderingScale { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property RenderingScale As Single
+  overload: DrawnUi.Draw.TextSpan.RenderingScale*
+- uid: DrawnUi.Draw.TextSpan.Glyphs
+  commentId: P:DrawnUi.Draw.TextSpan.Glyphs
+  id: Glyphs
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: Glyphs
+  nameWithType: TextSpan.Glyphs
+  fullName: DrawnUi.Draw.TextSpan.Glyphs
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Glyphs
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 31
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Ig can be drawn char by char with char spacing etc we use this
+  example: []
+  syntax:
+    content: public List<UsedGlyph> Glyphs { get; protected set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{DrawnUi.Draw.UsedGlyph}
+    content.vb: Public Property Glyphs As List(Of UsedGlyph)
+  overload: DrawnUi.Draw.TextSpan.Glyphs*
+- uid: DrawnUi.Draw.TextSpan.Shape
+  commentId: P:DrawnUi.Draw.TextSpan.Shape
+  id: Shape
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: Shape
+  nameWithType: TextSpan.Shape
+  fullName: DrawnUi.Draw.TextSpan.Shape
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Shape
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 36
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: If text can be drawn only shaped we use this
+  example: []
+  syntax:
+    content: public string Shape { get; protected set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Shape As String
+  overload: DrawnUi.Draw.TextSpan.Shape*
+- uid: DrawnUi.Draw.TextSpan.TextFiltered
+  commentId: P:DrawnUi.Draw.TextSpan.TextFiltered
+  id: TextFiltered
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: TextFiltered
+  nameWithType: TextSpan.TextFiltered
+  fullName: DrawnUi.Draw.TextSpan.TextFiltered
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TextFiltered
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 38
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public string TextFiltered { get; protected set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property TextFiltered As String
+  overload: DrawnUi.Draw.TextSpan.TextFiltered*
+- uid: DrawnUi.Draw.TextSpan.CheckGlyphsCanBeRendered
+  commentId: M:DrawnUi.Draw.TextSpan.CheckGlyphsCanBeRendered
+  id: CheckGlyphsCanBeRendered
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: CheckGlyphsCanBeRendered()
+  nameWithType: TextSpan.CheckGlyphsCanBeRendered()
+  fullName: DrawnUi.Draw.TextSpan.CheckGlyphsCanBeRendered()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CheckGlyphsCanBeRendered
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 43
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Parse glyphs, setup typeface, replace unrenderable glyphs with fallback character
+  example: []
+  syntax:
+    content: public void CheckGlyphsCanBeRendered()
+    content.vb: Public Sub CheckGlyphsCanBeRendered()
+  overload: DrawnUi.Draw.TextSpan.CheckGlyphsCanBeRendered*
+- uid: DrawnUi.Draw.TextSpan.HasSetFont
+  commentId: P:DrawnUi.Draw.TextSpan.HasSetFont
+  id: HasSetFont
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: HasSetFont
+  nameWithType: TextSpan.HasSetFont
+  fullName: DrawnUi.Draw.TextSpan.HasSetFont
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HasSetFont
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 84
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool HasSetFont { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property HasSetFont As Boolean
+  overload: DrawnUi.Draw.TextSpan.HasSetFont*
+- uid: DrawnUi.Draw.TextSpan.HasSetSize
+  commentId: P:DrawnUi.Draw.TextSpan.HasSetSize
+  id: HasSetSize
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: HasSetSize
+  nameWithType: TextSpan.HasSetSize
+  fullName: DrawnUi.Draw.TextSpan.HasSetSize
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HasSetSize
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 85
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool HasSetSize { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property HasSetSize As Boolean
+  overload: DrawnUi.Draw.TextSpan.HasSetSize*
+- uid: DrawnUi.Draw.TextSpan.Paint
+  commentId: P:DrawnUi.Draw.TextSpan.Paint
+  id: Paint
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: Paint
+  nameWithType: TextSpan.Paint
+  fullName: DrawnUi.Draw.TextSpan.Paint
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Paint
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 87
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKPaint Paint { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKPaint
+    content.vb: Public Property Paint As SKPaint
+  overload: DrawnUi.Draw.TextSpan.Paint*
+- uid: DrawnUi.Draw.TextSpan.TypeFace
+  commentId: P:DrawnUi.Draw.TextSpan.TypeFace
+  id: TypeFace
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: TypeFace
+  nameWithType: TextSpan.TypeFace
+  fullName: DrawnUi.Draw.TextSpan.TypeFace
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: TypeFace
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 89
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public SKTypeface TypeFace { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKTypeface
+    content.vb: Public Property TypeFace As SKTypeface
+  overload: DrawnUi.Draw.TextSpan.TypeFace*
+- uid: DrawnUi.Draw.TextSpan.NeedShape
+  commentId: P:DrawnUi.Draw.TextSpan.NeedShape
+  id: NeedShape
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: NeedShape
+  nameWithType: TextSpan.NeedShape
+  fullName: DrawnUi.Draw.TextSpan.NeedShape
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: NeedShape
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 102
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool NeedShape { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property NeedShape As Boolean
+  overload: DrawnUi.Draw.TextSpan.NeedShape*
+- uid: DrawnUi.Draw.TextSpan.HasDecorations
+  commentId: P:DrawnUi.Draw.TextSpan.HasDecorations
+  id: HasDecorations
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: HasDecorations
+  nameWithType: TextSpan.HasDecorations
+  fullName: DrawnUi.Draw.TextSpan.HasDecorations
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HasDecorations
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 113
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool HasDecorations { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property HasDecorations As Boolean
+  overload: DrawnUi.Draw.TextSpan.HasDecorations*
+- uid: DrawnUi.Draw.TextSpan.Underline
+  commentId: P:DrawnUi.Draw.TextSpan.Underline
+  id: Underline
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: Underline
+  nameWithType: TextSpan.Underline
+  fullName: DrawnUi.Draw.TextSpan.Underline
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Underline
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 122
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool Underline { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property Underline As Boolean
+  overload: DrawnUi.Draw.TextSpan.Underline*
+- uid: DrawnUi.Draw.TextSpan.UnderlineWidth
+  commentId: P:DrawnUi.Draw.TextSpan.UnderlineWidth
+  id: UnderlineWidth
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: UnderlineWidth
+  nameWithType: TextSpan.UnderlineWidth
+  fullName: DrawnUi.Draw.TextSpan.UnderlineWidth
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: UnderlineWidth
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 142
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: In points, if set to negative will be in pixels instead.
+  example: []
+  syntax:
+    content: public double UnderlineWidth { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Property UnderlineWidth As Double
+  overload: DrawnUi.Draw.TextSpan.UnderlineWidth*
+- uid: DrawnUi.Draw.TextSpan.Strikeout
+  commentId: P:DrawnUi.Draw.TextSpan.Strikeout
+  id: Strikeout
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: Strikeout
+  nameWithType: TextSpan.Strikeout
+  fullName: DrawnUi.Draw.TextSpan.Strikeout
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Strikeout
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 159
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public bool Strikeout { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property Strikeout As Boolean
+  overload: DrawnUi.Draw.TextSpan.Strikeout*
+- uid: DrawnUi.Draw.TextSpan.StrikeoutWidth
+  commentId: P:DrawnUi.Draw.TextSpan.StrikeoutWidth
+  id: StrikeoutWidth
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: StrikeoutWidth
+  nameWithType: TextSpan.StrikeoutWidth
+  fullName: DrawnUi.Draw.TextSpan.StrikeoutWidth
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: StrikeoutWidth
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 179
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: In points
+  example: []
+  syntax:
+    content: public double StrikeoutWidth { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Property StrikeoutWidth As Double
+  overload: DrawnUi.Draw.TextSpan.StrikeoutWidth*
+- uid: DrawnUi.Draw.TextSpan.HasTapHandler
+  commentId: P:DrawnUi.Draw.TextSpan.HasTapHandler
+  id: HasTapHandler
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: HasTapHandler
+  nameWithType: TextSpan.HasTapHandler
+  fullName: DrawnUi.Draw.TextSpan.HasTapHandler
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HasTapHandler
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 198
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Will listen to gestures
+  example: []
+  syntax:
+    content: public bool HasTapHandler { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property HasTapHandler As Boolean
+  overload: DrawnUi.Draw.TextSpan.HasTapHandler*
+- uid: DrawnUi.Draw.TextSpan.ForceCaptureInput
+  commentId: P:DrawnUi.Draw.TextSpan.ForceCaptureInput
+  id: ForceCaptureInput
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: ForceCaptureInput
+  nameWithType: TextSpan.ForceCaptureInput
+  fullName: DrawnUi.Draw.TextSpan.ForceCaptureInput
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ForceCaptureInput
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 209
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: When no tap handler or command are set this forces to listen to taps anyway
+  example: []
+  syntax:
+    content: public bool ForceCaptureInput { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property ForceCaptureInput As Boolean
+  overload: DrawnUi.Draw.TextSpan.ForceCaptureInput*
+- uid: DrawnUi.Draw.TextSpan.HitIsInside(System.Single,System.Single)
+  commentId: M:DrawnUi.Draw.TextSpan.HitIsInside(System.Single,System.Single)
+  id: HitIsInside(System.Single,System.Single)
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: HitIsInside(float, float)
+  nameWithType: TextSpan.HitIsInside(float, float)
+  fullName: DrawnUi.Draw.TextSpan.HitIsInside(float, float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: HitIsInside
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 211
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public virtual bool HitIsInside(float x, float y)
+    parameters:
+    - id: x
+      type: System.Single
+    - id: y
+      type: System.Single
+    return:
+      type: System.Boolean
+    content.vb: Public Overridable Function HitIsInside(x As Single, y As Single) As Boolean
+  overload: DrawnUi.Draw.TextSpan.HitIsInside*
+  nameWithType.vb: TextSpan.HitIsInside(Single, Single)
+  fullName.vb: DrawnUi.Draw.TextSpan.HitIsInside(Single, Single)
+  name.vb: HitIsInside(Single, Single)
+- uid: DrawnUi.Draw.TextSpan.FireTap
+  commentId: M:DrawnUi.Draw.TextSpan.FireTap
+  id: FireTap
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: FireTap()
+  nameWithType: TextSpan.FireTap()
+  fullName: DrawnUi.Draw.TextSpan.FireTap()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: FireTap
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 221
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public virtual void FireTap()
+    content.vb: Public Overridable Sub FireTap()
+  overload: DrawnUi.Draw.TextSpan.FireTap*
+- uid: DrawnUi.Draw.TextSpan.Dispose
+  commentId: M:DrawnUi.Draw.TextSpan.Dispose
+  id: Dispose
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: TextSpan.Dispose()
+  fullName: DrawnUi.Draw.TextSpan.Dispose()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Dispose
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 227
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public virtual void Dispose()
+    content.vb: Public Overridable Sub Dispose()
+  overload: DrawnUi.Draw.TextSpan.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+- uid: DrawnUi.Draw.TextSpan.DrawingOffset
+  commentId: P:DrawnUi.Draw.TextSpan.DrawingOffset
+  id: DrawingOffset
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: DrawingOffset
+  nameWithType: TextSpan.DrawingOffset
+  fullName: DrawnUi.Draw.TextSpan.DrawingOffset
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: DrawingOffset
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 240
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Rendering offset, set when combining spans. Ofset of the first line.
+  example: []
+  syntax:
+    content: public SKPoint DrawingOffset { get; set; }
+    parameters: []
+    return:
+      type: SkiaSharp.SKPoint
+    content.vb: Public Property DrawingOffset As SKPoint
+  overload: DrawnUi.Draw.TextSpan.DrawingOffset*
+- uid: DrawnUi.Draw.TextSpan.Tag
+  commentId: P:DrawnUi.Draw.TextSpan.Tag
+  id: Tag
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: Tag
+  nameWithType: TextSpan.Tag
+  fullName: DrawnUi.Draw.TextSpan.Tag
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Tag
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 242
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public string Tag { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Tag As String
+  overload: DrawnUi.Draw.TextSpan.Tag*
+- uid: DrawnUi.Draw.TextSpan.Rects
+  commentId: F:DrawnUi.Draw.TextSpan.Rects
+  id: Rects
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: Rects
+  nameWithType: TextSpan.Rects
+  fullName: DrawnUi.Draw.TextSpan.Rects
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Rects
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 247
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Relative to DrawingRect
+  example: []
+  syntax:
+    content: public readonly List<SKRect> Rects
+    return:
+      type: System.Collections.Generic.List{SkiaSharp.SKRect}
+    content.vb: Public ReadOnly Rects As List(Of SKRect)
+- uid: DrawnUi.Draw.TextSpan.CommandTapped
+  commentId: P:DrawnUi.Draw.TextSpan.CommandTapped
+  id: CommandTapped
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: CommandTapped
+  nameWithType: TextSpan.CommandTapped
+  fullName: DrawnUi.Draw.TextSpan.CommandTapped
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: CommandTapped
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 250
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public ICommand CommandTapped { get; set; }
+    parameters: []
+    return:
+      type: System.Windows.Input.ICommand
+    content.vb: Public Property CommandTapped As ICommand
+  overload: DrawnUi.Draw.TextSpan.CommandTapped*
+- uid: DrawnUi.Draw.TextSpan.Tapped
+  commentId: E:DrawnUi.Draw.TextSpan.Tapped
+  id: Tapped
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: Tapped
+  nameWithType: TextSpan.Tapped
+  fullName: DrawnUi.Draw.TextSpan.Tapped
+  type: Event
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: Tapped
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 266
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public event EventHandler<ControlTappedEventArgs> Tapped
+    return:
+      type: System.EventHandler{DrawnUi.Draw.ControlTappedEventArgs}
+    content.vb: Public Event Tapped As EventHandler(Of ControlTappedEventArgs)
+- uid: DrawnUi.Draw.TextSpan.ParentControl
+  commentId: P:DrawnUi.Draw.TextSpan.ParentControl
+  id: ParentControl
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: ParentControl
+  nameWithType: TextSpan.ParentControl
+  fullName: DrawnUi.Draw.TextSpan.ParentControl
+  type: Property
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: ParentControl
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 268
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected SkiaControl ParentControl { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.SkiaControl
+    content.vb: Protected ReadOnly Property ParentControl As SkiaControl
+  overload: DrawnUi.Draw.TextSpan.ParentControl*
 - uid: DrawnUi.Draw.TextSpan._fontAutoSet
   commentId: F:DrawnUi.Draw.TextSpan._fontAutoSet
   id: _fontAutoSet
@@ -1218,12 +1389,12 @@ items:
   type: Field
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: _fontAutoSet
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 436
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 276
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1245,12 +1416,12 @@ items:
   type: Method
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: UpdateFont
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 438
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 278
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1258,6 +1429,33 @@ items:
     content: protected virtual void UpdateFont()
     content.vb: Protected Overridable Sub UpdateFont()
   overload: DrawnUi.Draw.TextSpan.UpdateFont*
+- uid: DrawnUi.Draw.TextSpan._typeFace
+  commentId: F:DrawnUi.Draw.TextSpan._typeFace
+  id: _typeFace
+  parent: DrawnUi.Draw.TextSpan
+  langs:
+  - csharp
+  - vb
+  name: _typeFace
+  nameWithType: TextSpan._typeFace
+  fullName: DrawnUi.Draw.TextSpan._typeFace
+  type: Field
+  source:
+    remote:
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
+      branch: dev
+      repo: https://github.com/taublast/DrawnUi.git
+    id: _typeFace
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 306
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: protected SKTypeface _typeFace
+    return:
+      type: SkiaSharp.SKTypeface
+    content.vb: Protected _typeFace As SKTypeface
 - uid: DrawnUi.Draw.TextSpan.FontFamily
   commentId: P:DrawnUi.Draw.TextSpan.FontFamily
   id: FontFamily
@@ -1271,12 +1469,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontFamily
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 474
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 309
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1300,12 +1498,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineSpacing
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 490
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 325
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1329,12 +1527,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: LineHeight
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 501
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 336
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1358,12 +1556,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontWeight
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 512
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 347
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1374,176 +1572,6 @@ items:
       type: System.Int32
     content.vb: Public Property FontWeight As Integer
   overload: DrawnUi.Draw.TextSpan.FontWeight*
-- uid: DrawnUi.Draw.TextSpan.TextColorProperty
-  commentId: F:DrawnUi.Draw.TextSpan.TextColorProperty
-  id: TextColorProperty
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: TextColorProperty
-  nameWithType: TextSpan.TextColorProperty
-  fullName: DrawnUi.Draw.TextSpan.TextColorProperty
-  type: Field
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: TextColorProperty
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 523
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public static readonly BindableProperty TextColorProperty
-    return:
-      type: Microsoft.Maui.Controls.BindableProperty
-    content.vb: Public Shared ReadOnly TextColorProperty As BindableProperty
-- uid: DrawnUi.Draw.TextSpan.TextColor
-  commentId: P:DrawnUi.Draw.TextSpan.TextColor
-  id: TextColor
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: TextColor
-  nameWithType: TextSpan.TextColor
-  fullName: DrawnUi.Draw.TextSpan.TextColor
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: TextColor
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 535
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public Color TextColor { get; set; }
-    parameters: []
-    return:
-      type: Microsoft.Maui.Graphics.Color
-    content.vb: Public Property TextColor As Color
-  overload: DrawnUi.Draw.TextSpan.TextColor*
-- uid: DrawnUi.Draw.TextSpan.BackgroundColor
-  commentId: P:DrawnUi.Draw.TextSpan.BackgroundColor
-  id: BackgroundColor
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: BackgroundColor
-  nameWithType: TextSpan.BackgroundColor
-  fullName: DrawnUi.Draw.TextSpan.BackgroundColor
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: BackgroundColor
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 541
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public Color BackgroundColor { get; set; }
-    parameters: []
-    return:
-      type: Microsoft.Maui.Graphics.Color
-    content.vb: Public Property BackgroundColor As Color
-  overload: DrawnUi.Draw.TextSpan.BackgroundColor*
-- uid: DrawnUi.Draw.TextSpan.ParagraphColor
-  commentId: P:DrawnUi.Draw.TextSpan.ParagraphColor
-  id: ParagraphColor
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: ParagraphColor
-  nameWithType: TextSpan.ParagraphColor
-  fullName: DrawnUi.Draw.TextSpan.ParagraphColor
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: ParagraphColor
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 552
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public Color ParagraphColor { get; set; }
-    parameters: []
-    return:
-      type: Microsoft.Maui.Graphics.Color
-    content.vb: Public Property ParagraphColor As Color
-  overload: DrawnUi.Draw.TextSpan.ParagraphColor*
-- uid: DrawnUi.Draw.TextSpan.FontSizeProperty
-  commentId: F:DrawnUi.Draw.TextSpan.FontSizeProperty
-  id: FontSizeProperty
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: FontSizeProperty
-  nameWithType: TextSpan.FontSizeProperty
-  fullName: DrawnUi.Draw.TextSpan.FontSizeProperty
-  type: Field
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: FontSizeProperty
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 563
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public static readonly BindableProperty FontSizeProperty
-    return:
-      type: Microsoft.Maui.Controls.BindableProperty
-    content.vb: Public Shared ReadOnly FontSizeProperty As BindableProperty
-- uid: DrawnUi.Draw.TextSpan.FontSize
-  commentId: P:DrawnUi.Draw.TextSpan.FontSize
-  id: FontSize
-  parent: DrawnUi.Draw.TextSpan
-  langs:
-  - csharp
-  - vb
-  name: FontSize
-  nameWithType: TextSpan.FontSize
-  fullName: DrawnUi.Draw.TextSpan.FontSize
-  type: Property
-  source:
-    remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-      branch: dev
-      repo: https://github.com/taublast/DrawnUi.git
-    id: FontSize
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 578
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public double FontSize { get; set; }
-    parameters: []
-    return:
-      type: System.Double
-    content.vb: Public Property FontSize As Double
-  overload: DrawnUi.Draw.TextSpan.FontSize*
 - uid: DrawnUi.Draw.TextSpan.IsItalic
   commentId: P:DrawnUi.Draw.TextSpan.IsItalic
   id: IsItalic
@@ -1557,12 +1585,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsItalic
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 584
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 358
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1586,12 +1614,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: IsBold
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 595
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 369
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1615,12 +1643,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoFindFont
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 613
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 383
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1646,12 +1674,12 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/TextSpan.cs
+      path: src/Shared/Draw/Text/TextSpan.Shared.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: FontDetectedWith
-    path: ../src/Maui/DrawnUi/Draw/Text/TextSpan.cs
-    startLine: 624
+    path: ../src/Shared/Draw/Text/TextSpan.Shared.cs
+    startLine: 394
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3852,6 +3880,178 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
+- uid: DrawnUi.Draw.TextSpan.TextColor*
+  commentId: Overload:DrawnUi.Draw.TextSpan.TextColor
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_TextColor
+  name: TextColor
+  nameWithType: TextSpan.TextColor
+  fullName: DrawnUi.Draw.TextSpan.TextColor
+- uid: Microsoft.Maui.Graphics.Color
+  commentId: T:Microsoft.Maui.Graphics.Color
+  parent: Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
+  name: Color
+  nameWithType: Color
+  fullName: Microsoft.Maui.Graphics.Color
+- uid: Microsoft.Maui.Graphics
+  commentId: N:Microsoft.Maui.Graphics
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Maui.Graphics
+  nameWithType: Microsoft.Maui.Graphics
+  fullName: Microsoft.Maui.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Maui
+    name: Maui
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
+  - name: .
+  - uid: Microsoft.Maui.Graphics
+    name: Graphics
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
+- uid: DrawnUi.Draw.TextSpan.FontSize*
+  commentId: Overload:DrawnUi.Draw.TextSpan.FontSize
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_FontSize
+  name: FontSize
+  nameWithType: TextSpan.FontSize
+  fullName: DrawnUi.Draw.TextSpan.FontSize
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Draw.TextSpan.HasSetColor*
+  commentId: Overload:DrawnUi.Draw.TextSpan.HasSetColor
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_HasSetColor
+  name: HasSetColor
+  nameWithType: TextSpan.HasSetColor
+  fullName: DrawnUi.Draw.TextSpan.HasSetColor
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.TextSpan.StrikeoutColor*
+  commentId: Overload:DrawnUi.Draw.TextSpan.StrikeoutColor
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_StrikeoutColor
+  name: StrikeoutColor
+  nameWithType: TextSpan.StrikeoutColor
+  fullName: DrawnUi.Draw.TextSpan.StrikeoutColor
+- uid: DrawnUi.Draw.TextSpan.BackgroundColor*
+  commentId: Overload:DrawnUi.Draw.TextSpan.BackgroundColor
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_BackgroundColor
+  name: BackgroundColor
+  nameWithType: TextSpan.BackgroundColor
+  fullName: DrawnUi.Draw.TextSpan.BackgroundColor
+- uid: DrawnUi.Draw.TextSpan.ParagraphColor*
+  commentId: Overload:DrawnUi.Draw.TextSpan.ParagraphColor
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_ParagraphColor
+  name: ParagraphColor
+  nameWithType: TextSpan.ParagraphColor
+  fullName: DrawnUi.Draw.TextSpan.ParagraphColor
+- uid: DrawnUi.Draw.TextSpan.SetupPaint*
+  commentId: Overload:DrawnUi.Draw.TextSpan.SetupPaint
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_SetupPaint_System_Double_SkiaSharp_SKPaint_
+  name: SetupPaint
+  nameWithType: TextSpan.SetupPaint
+  fullName: DrawnUi.Draw.TextSpan.SetupPaint
+- uid: SkiaSharp.SKPaint
+  commentId: T:SkiaSharp.SKPaint
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
+  name: SKPaint
+  nameWithType: SKPaint
+  fullName: SkiaSharp.SKPaint
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: Microsoft.Maui.Controls.Element.OnPropertyChanged(System.String)
+  commentId: M:Microsoft.Maui.Controls.Element.OnPropertyChanged(System.String)
+  parent: Microsoft.Maui.Controls.Element
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onpropertychanged
+  name: OnPropertyChanged(string)
+  nameWithType: Element.OnPropertyChanged(string)
+  fullName: Microsoft.Maui.Controls.Element.OnPropertyChanged(string)
+  nameWithType.vb: Element.OnPropertyChanged(String)
+  fullName.vb: Microsoft.Maui.Controls.Element.OnPropertyChanged(String)
+  name.vb: OnPropertyChanged(String)
+  spec.csharp:
+  - uid: Microsoft.Maui.Controls.Element.OnPropertyChanged(System.String)
+    name: OnPropertyChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onpropertychanged
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: Microsoft.Maui.Controls.Element.OnPropertyChanged(System.String)
+    name: OnPropertyChanged
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onpropertychanged
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: DrawnUi.Draw.TextSpan.OnPropertyChanged*
+  commentId: Overload:DrawnUi.Draw.TextSpan.OnPropertyChanged
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_OnPropertyChanged_System_String_
+  name: OnPropertyChanged
+  nameWithType: TextSpan.OnPropertyChanged
+  fullName: DrawnUi.Draw.TextSpan.OnPropertyChanged
+- uid: DrawnUi.Draw.TextSpan.#ctor*
+  commentId: Overload:DrawnUi.Draw.TextSpan.#ctor
+  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan__ctor
+  name: TextSpan
+  nameWithType: TextSpan.TextSpan
+  fullName: DrawnUi.Draw.TextSpan.TextSpan
+  nameWithType.vb: TextSpan.New
+  fullName.vb: DrawnUi.Draw.TextSpan.New
+  name.vb: New
 - uid: DrawnUi.Draw.TextSpan.Default*
   commentId: Overload:DrawnUi.Draw.TextSpan.Default
   href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_Default
@@ -4010,67 +4210,18 @@ references:
   name: CheckGlyphsCanBeRendered
   nameWithType: TextSpan.CheckGlyphsCanBeRendered
   fullName: DrawnUi.Draw.TextSpan.CheckGlyphsCanBeRendered
-- uid: DrawnUi.Draw.TextSpan.SetupPaint*
-  commentId: Overload:DrawnUi.Draw.TextSpan.SetupPaint
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_SetupPaint_System_Double_SkiaSharp_SKPaint_
-  name: SetupPaint
-  nameWithType: TextSpan.SetupPaint
-  fullName: DrawnUi.Draw.TextSpan.SetupPaint
-- uid: System.Double
-  commentId: T:System.Double
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.double
-  name: double
-  nameWithType: double
-  fullName: double
-  nameWithType.vb: Double
-  fullName.vb: Double
-  name.vb: Double
-- uid: SkiaSharp.SKPaint
-  commentId: T:SkiaSharp.SKPaint
-  parent: SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp.skpaint
-  name: SKPaint
-  nameWithType: SKPaint
-  fullName: SkiaSharp.SKPaint
-- uid: SkiaSharp
-  commentId: N:SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp
-  name: SkiaSharp
-  nameWithType: SkiaSharp
-  fullName: SkiaSharp
 - uid: DrawnUi.Draw.TextSpan.HasSetFont*
   commentId: Overload:DrawnUi.Draw.TextSpan.HasSetFont
   href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_HasSetFont
   name: HasSetFont
   nameWithType: TextSpan.HasSetFont
   fullName: DrawnUi.Draw.TextSpan.HasSetFont
-- uid: System.Boolean
-  commentId: T:System.Boolean
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.boolean
-  name: bool
-  nameWithType: bool
-  fullName: bool
-  nameWithType.vb: Boolean
-  fullName.vb: Boolean
-  name.vb: Boolean
 - uid: DrawnUi.Draw.TextSpan.HasSetSize*
   commentId: Overload:DrawnUi.Draw.TextSpan.HasSetSize
   href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_HasSetSize
   name: HasSetSize
   nameWithType: TextSpan.HasSetSize
   fullName: DrawnUi.Draw.TextSpan.HasSetSize
-- uid: DrawnUi.Draw.TextSpan.HasSetColor*
-  commentId: Overload:DrawnUi.Draw.TextSpan.HasSetColor
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_HasSetColor
-  name: HasSetColor
-  nameWithType: TextSpan.HasSetColor
-  fullName: DrawnUi.Draw.TextSpan.HasSetColor
 - uid: DrawnUi.Draw.TextSpan.Paint*
   commentId: Overload:DrawnUi.Draw.TextSpan.Paint
   href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_Paint
@@ -4127,57 +4278,6 @@ references:
   name: StrikeoutWidth
   nameWithType: TextSpan.StrikeoutWidth
   fullName: DrawnUi.Draw.TextSpan.StrikeoutWidth
-- uid: DrawnUi.Draw.TextSpan.StrikeoutColor*
-  commentId: Overload:DrawnUi.Draw.TextSpan.StrikeoutColor
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_StrikeoutColor
-  name: StrikeoutColor
-  nameWithType: TextSpan.StrikeoutColor
-  fullName: DrawnUi.Draw.TextSpan.StrikeoutColor
-- uid: Microsoft.Maui.Graphics.Color
-  commentId: T:Microsoft.Maui.Graphics.Color
-  parent: Microsoft.Maui.Graphics
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics.color
-  name: Color
-  nameWithType: Color
-  fullName: Microsoft.Maui.Graphics.Color
-- uid: Microsoft.Maui.Graphics
-  commentId: N:Microsoft.Maui.Graphics
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/microsoft
-  name: Microsoft.Maui.Graphics
-  nameWithType: Microsoft.Maui.Graphics
-  fullName: Microsoft.Maui.Graphics
-  spec.csharp:
-  - uid: Microsoft
-    name: Microsoft
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft
-  - name: .
-  - uid: Microsoft.Maui
-    name: Maui
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
-  - name: .
-  - uid: Microsoft.Maui.Graphics
-    name: Graphics
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
-  spec.vb:
-  - uid: Microsoft
-    name: Microsoft
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft
-  - name: .
-  - uid: Microsoft.Maui
-    name: Maui
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.maui
-  - name: .
-  - uid: Microsoft.Maui.Graphics
-    name: Graphics
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.graphics
 - uid: DrawnUi.Draw.TextSpan.HasTapHandler*
   commentId: Overload:DrawnUi.Draw.TextSpan.HasTapHandler
   href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_HasTapHandler
@@ -4410,54 +4510,6 @@ references:
   name: SkiaControl
   nameWithType: SkiaControl
   fullName: DrawnUi.Draw.SkiaControl
-- uid: Microsoft.Maui.Controls.Element.OnPropertyChanged(System.String)
-  commentId: M:Microsoft.Maui.Controls.Element.OnPropertyChanged(System.String)
-  parent: Microsoft.Maui.Controls.Element
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onpropertychanged
-  name: OnPropertyChanged(string)
-  nameWithType: Element.OnPropertyChanged(string)
-  fullName: Microsoft.Maui.Controls.Element.OnPropertyChanged(string)
-  nameWithType.vb: Element.OnPropertyChanged(String)
-  fullName.vb: Microsoft.Maui.Controls.Element.OnPropertyChanged(String)
-  name.vb: OnPropertyChanged(String)
-  spec.csharp:
-  - uid: Microsoft.Maui.Controls.Element.OnPropertyChanged(System.String)
-    name: OnPropertyChanged
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onpropertychanged
-  - name: (
-  - uid: System.String
-    name: string
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: )
-  spec.vb:
-  - uid: Microsoft.Maui.Controls.Element.OnPropertyChanged(System.String)
-    name: OnPropertyChanged
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.element.onpropertychanged
-  - name: (
-  - uid: System.String
-    name: String
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: )
-- uid: DrawnUi.Draw.TextSpan.OnPropertyChanged*
-  commentId: Overload:DrawnUi.Draw.TextSpan.OnPropertyChanged
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_OnPropertyChanged_System_String_
-  name: OnPropertyChanged
-  nameWithType: TextSpan.OnPropertyChanged
-  fullName: DrawnUi.Draw.TextSpan.OnPropertyChanged
-- uid: DrawnUi.Draw.TextSpan.#ctor*
-  commentId: Overload:DrawnUi.Draw.TextSpan.#ctor
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan__ctor
-  name: TextSpan
-  nameWithType: TextSpan.TextSpan
-  fullName: DrawnUi.Draw.TextSpan.TextSpan
-  nameWithType.vb: TextSpan.New
-  fullName.vb: DrawnUi.Draw.TextSpan.New
-  name.vb: New
 - uid: DrawnUi.Draw.TextSpan.UpdateFont*
   commentId: Overload:DrawnUi.Draw.TextSpan.UpdateFont
   href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_UpdateFont
@@ -4499,30 +4551,6 @@ references:
   nameWithType.vb: Integer
   fullName.vb: Integer
   name.vb: Integer
-- uid: DrawnUi.Draw.TextSpan.TextColor*
-  commentId: Overload:DrawnUi.Draw.TextSpan.TextColor
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_TextColor
-  name: TextColor
-  nameWithType: TextSpan.TextColor
-  fullName: DrawnUi.Draw.TextSpan.TextColor
-- uid: DrawnUi.Draw.TextSpan.BackgroundColor*
-  commentId: Overload:DrawnUi.Draw.TextSpan.BackgroundColor
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_BackgroundColor
-  name: BackgroundColor
-  nameWithType: TextSpan.BackgroundColor
-  fullName: DrawnUi.Draw.TextSpan.BackgroundColor
-- uid: DrawnUi.Draw.TextSpan.ParagraphColor*
-  commentId: Overload:DrawnUi.Draw.TextSpan.ParagraphColor
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_ParagraphColor
-  name: ParagraphColor
-  nameWithType: TextSpan.ParagraphColor
-  fullName: DrawnUi.Draw.TextSpan.ParagraphColor
-- uid: DrawnUi.Draw.TextSpan.FontSize*
-  commentId: Overload:DrawnUi.Draw.TextSpan.FontSize
-  href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_FontSize
-  name: FontSize
-  nameWithType: TextSpan.FontSize
-  fullName: DrawnUi.Draw.TextSpan.FontSize
 - uid: DrawnUi.Draw.TextSpan.IsItalic*
   commentId: Overload:DrawnUi.Draw.TextSpan.IsItalic
   href: DrawnUi.Draw.TextSpan.html#DrawnUi_Draw_TextSpan_IsItalic

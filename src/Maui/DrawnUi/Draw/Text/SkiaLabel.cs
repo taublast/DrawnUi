@@ -52,6 +52,22 @@ namespace DrawnUi.Draw
 
         #region INFRASTRUCTURE
 
+        /// <summary>
+        /// Use main thread to handle spans collection changes properly
+        /// </summary>
+        /// <param name="spans"></param>
+        protected virtual void ReplaceSpans(IEnumerable<TextSpan> spans)
+        {
+            lock (LockSetup)
+            {
+                if (_spans != null)
+                {
+                    _spans.Clear();
+                    _spans.AddRange(spans);
+                }
+            }
+        }
+
         public override void OnDisposing()
         {
             if (_spans != null)
@@ -334,8 +350,17 @@ namespace DrawnUi.Draw
             PaintDefault.GuardTypeface(ref _paintDefaultTypeface, this.TypeFace ?? SkiaFontManager.DefaultTypeface);
             var fakeBold = (this.FontAttributes & FontAttributes.Bold) != 0;
             var textSkewX = (this.FontAttributes & FontAttributes.Italic) != 0 ? -0.25f : 0f;
-            if (_paintDefaultFakeBold != fakeBold) { _paintDefaultFakeBold = fakeBold; PaintDefault.FakeBoldText = fakeBold; }
-            if (_paintDefaultTextSkewX != textSkewX) { _paintDefaultTextSkewX = textSkewX; PaintDefault.TextSkewX = textSkewX; }
+            if (_paintDefaultFakeBold != fakeBold)
+            {
+                _paintDefaultFakeBold = fakeBold;
+                PaintDefault.FakeBoldText = fakeBold;
+            }
+
+            if (_paintDefaultTextSkewX != textSkewX)
+            {
+                _paintDefaultTextSkewX = textSkewX;
+                PaintDefault.TextSkewX = textSkewX;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1178,10 +1203,10 @@ namespace DrawnUi.Draw
                         }
 
                         // Last sanity pass if we don't keep spaces on line breaks
-                        if (!KeepSpacesOnLineBreaks && Spans.Count > 0)
+                        int totalLines = mergedLines.Count;
+                        if (!KeepSpacesOnLineBreaks && Spans.Count > 0 && totalLines>1)
                         {
                             // Avoid LINQ .Count(), use Count property
-                            int totalLines = mergedLines.Count;
                             for (int i = 0; i < totalLines - 1; i++) // do not process last line
                             {
                                 var line = mergedLines[i];
@@ -1298,7 +1323,7 @@ namespace DrawnUi.Draw
             }
         }
 
- 
+
         /// <summary>
         /// Optimized version of LastNonSpaceIndex that works with spans
         /// </summary>
@@ -1414,7 +1439,6 @@ namespace DrawnUi.Draw
                 }
 
 
-
                 var finalWidth = value - spacingModifier;
                 var arr2 = positions.ToArray();
                 GlyphMeasurementCache.Add(paintTypeface, needsShaping, text, finalWidth, arr2);
@@ -1522,10 +1546,18 @@ namespace DrawnUi.Draw
                 var lineIndex = 0;
                 var lineResult = "";
                 float width = 0;
-                var space = ' ';
+                var space = SpaceChar;
                 bool spanPostponed = false;
+                Stack<string> stackWords;
 
-                Stack<string> stackWords = new Stack<string>(SplitLineToWords(line, space));
+                if (LineBreakMode == LineBreakMode.NoWrap && maxLines == 1)
+                {
+                    stackWords = new Stack<string>(new[] { line });
+                }
+                else
+                {
+                    stackWords = new Stack<string>(SplitLineToWords(line, space));
+                }
 
                 //returns true if need stop processing: was last allowed line
                 bool AddLine(string adding, string full = null)
@@ -1577,7 +1609,8 @@ namespace DrawnUi.Draw
 
                         var widthBlock = (float)Math.Round(smartMeasure.Width);
                         var spanMetrics = paint.FontMetrics;
-                        var spanLineHeight = (float)Math.Round((GetCorrectedAscent(paint) + spanMetrics.Descent) * LineHeight);
+                        var spanLineHeight =
+                            (float)Math.Round((GetCorrectedAscent(paint) + spanMetrics.Descent) * LineHeight);
                         var heightBlock = spanLineHeight > LineHeightPixels ? spanLineHeight : LineHeightPixels;
 
                         if (paint.TextSkewX != 0)
@@ -1589,15 +1622,17 @@ namespace DrawnUi.Draw
                         if (StrokeWidth > 0 && StrokeColor != TransparentColor)
                         {
                             float additionalWidth = (float)(StrokeWidth * 2 * RenderingScale);
-                            widthBlock += additionalWidth*2;
+                            widthBlock += additionalWidth * 2;
                             heightBlock += additionalWidth * 2;
                         }
 
                         if (DropShadowSize > 0 && DropShadowColor != TransparentColor)
                         {
-                            float additionalWidth = (float)(DropShadowSize * RenderingScale + DropShadowOffsetX * RenderingScale);
+                            float additionalWidth =
+                                (float)(DropShadowSize * RenderingScale + DropShadowOffsetX * RenderingScale);
                             widthBlock += additionalWidth;
-                            float additionalHeight = (float)(DropShadowSize * RenderingScale + DropShadowOffsetY * RenderingScale);
+                            float additionalHeight =
+                                (float)(DropShadowSize * RenderingScale + DropShadowOffsetY * RenderingScale);
                             heightBlock += additionalHeight;
                         }
 
@@ -1671,6 +1706,7 @@ namespace DrawnUi.Draw
                         {
                             lineResult += " "; // Add one space for each empty string
                         }
+
                         continue;
                     }
 
@@ -1829,7 +1865,9 @@ namespace DrawnUi.Draw
                         AddEmptyLineInternal();
                     }
                     else
+                    {
                         AddLine(lineResult);
+                    }
                 }
 
                 if (isCut) // If the text is cut  break paragraphs loop
@@ -2541,7 +2579,8 @@ namespace DrawnUi.Draw
         /// represent. Result is cached per (typeface, size) to avoid repeated native calls
         /// in the per-span measurement loop.
         /// </summary>
-        static readonly System.Collections.Concurrent.ConcurrentDictionary<(IntPtr, float), float> _correctedAscentCache = new();
+        static readonly System.Collections.Concurrent.ConcurrentDictionary<(IntPtr, float), float> _correctedAscentCache
+ = new();
 
         static float GetCorrectedAscent(SKPaint paint)
         {
@@ -2565,7 +2604,8 @@ namespace DrawnUi.Draw
         {
             FontMetrics = paint.FontMetrics;
             LineHeightPixels =
-                (float)Math.Round((GetCorrectedAscent(paint) + FontMetrics.Descent) * LineHeight); //PaintText.FontSpacing;
+                (float)Math.Round((GetCorrectedAscent(paint) + FontMetrics.Descent) *
+                                  LineHeight); //PaintText.FontSpacing;
             fontUnderline = FontMetrics.UnderlinePosition.GetValueOrDefault();
 
             if (!string.IsNullOrEmpty(this.MonoForDigits))
@@ -3163,6 +3203,7 @@ namespace DrawnUi.Draw
             get { return (string)GetValue(FormatProperty); }
             set { SetValue(FormatProperty, value); }
         }
+
         protected static void TextWasChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (bindable is SkiaLabel control)

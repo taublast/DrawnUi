@@ -20,11 +20,11 @@ items:
   type: Class
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+      path: src/Shared/Draw/Text/SkiaLabel.Line.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: DecomposedText
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.Line.cs
     startLine: 52
   assemblies:
   - DrawnUi.Maui
@@ -57,11 +57,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+      path: src/Shared/Draw/Text/SkiaLabel.Line.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: Lines
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.Line.cs
     startLine: 55
   assemblies:
   - DrawnUi.Maui
@@ -86,11 +86,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+      path: src/Shared/Draw/Text/SkiaLabel.Line.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: CountParagraphs
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.Line.cs
     startLine: 57
   assemblies:
   - DrawnUi.Maui
@@ -115,11 +115,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+      path: src/Shared/Draw/Text/SkiaLabel.Line.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: WasCut
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.Line.cs
     startLine: 59
   assemblies:
   - DrawnUi.Maui
@@ -144,11 +144,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+      path: src/Shared/Draw/Text/SkiaLabel.Line.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HasMoreVerticalSpace
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.Line.cs
     startLine: 63
   assemblies:
   - DrawnUi.Maui
@@ -175,11 +175,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+      path: src/Shared/Draw/Text/SkiaLabel.Line.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: HasMoreHorizontalSpace
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.Line.cs
     startLine: 67
   assemblies:
   - DrawnUi.Maui
@@ -206,11 +206,11 @@ items:
   type: Property
   source:
     remote:
-      path: src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+      path: src/Shared/Draw/Text/SkiaLabel.Line.cs
       branch: dev
       repo: https://github.com/taublast/DrawnUi.git
     id: AutoSize
-    path: ../src/Maui/DrawnUi/Draw/Text/SkiaLabel.Line.cs
+    path: ../src/Shared/Draw/Text/SkiaLabel.Line.cs
     startLine: 69
   assemblies:
   - DrawnUi.Maui

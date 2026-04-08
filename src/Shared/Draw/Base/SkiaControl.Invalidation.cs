@@ -157,7 +157,7 @@
 
         public virtual void UpdateByChild(SkiaControl child)
         {
-            if (UsingCacheType == SkiaCacheType.ImageComposite)
+            if (IsCacheComposite)
                 TrackChildAsDirty(child);
 
             UpdateInternal();

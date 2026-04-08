@@ -112,13 +112,6 @@ references:
   name: SkiaDynamicDrawnCell
   nameWithType: SkiaDynamicDrawnCell
   fullName: DrawnUi.Controls.SkiaDynamicDrawnCell
-- uid: DrawnUi.Controls.DrawerDirection
-  commentId: T:DrawnUi.Controls.DrawerDirection
-  parent: DrawnUi.Controls
-  href: DrawnUi.Controls.DrawerDirection.html
-  name: DrawerDirection
-  nameWithType: DrawerDirection
-  fullName: DrawnUi.Controls.DrawerDirection
 - uid: DrawnUi.Controls.SkiaDrawer
   commentId: T:DrawnUi.Controls.SkiaDrawer
   parent: DrawnUi.Controls
@@ -198,13 +191,6 @@ references:
   name: SkiaDecoratedGrid
   nameWithType: SkiaDecoratedGrid
   fullName: DrawnUi.Controls.SkiaDecoratedGrid
-- uid: DrawnUi.Controls.NavigationSource
-  commentId: T:DrawnUi.Controls.NavigationSource
-  parent: DrawnUi.Controls
-  href: DrawnUi.Controls.NavigationSource.html
-  name: NavigationSource
-  nameWithType: NavigationSource
-  fullName: DrawnUi.Controls.NavigationSource
 - uid: DrawnUi.Controls.SkiaShell
   commentId: T:DrawnUi.Controls.SkiaShell
   parent: DrawnUi.Controls
@@ -427,20 +413,6 @@ references:
   - uid: DrawnUi.Controls.SkiaShell.PopupWrapper
     name: PopupWrapper
     href: DrawnUi.Controls.SkiaShell.PopupWrapper.html
-- uid: DrawnUi.Controls.SkiaShellNavigatedArgs
-  commentId: T:DrawnUi.Controls.SkiaShellNavigatedArgs
-  parent: DrawnUi.Controls
-  href: DrawnUi.Controls.SkiaShellNavigatedArgs.html
-  name: SkiaShellNavigatedArgs
-  nameWithType: SkiaShellNavigatedArgs
-  fullName: DrawnUi.Controls.SkiaShellNavigatedArgs
-- uid: DrawnUi.Controls.SkiaShellNavigatingArgs
-  commentId: T:DrawnUi.Controls.SkiaShellNavigatingArgs
-  parent: DrawnUi.Controls
-  href: DrawnUi.Controls.SkiaShellNavigatingArgs.html
-  name: SkiaShellNavigatingArgs
-  nameWithType: SkiaShellNavigatingArgs
-  fullName: DrawnUi.Controls.SkiaShellNavigatingArgs
 - uid: DrawnUi.Controls.SkiaSpinner
   commentId: T:DrawnUi.Controls.SkiaSpinner
   href: DrawnUi.Controls.SkiaSpinner.html
@@ -454,13 +426,6 @@ references:
   name: SkiaWheelShape
   nameWithType: SkiaWheelShape
   fullName: DrawnUi.Controls.SkiaWheelShape
-- uid: DrawnUi.Controls.IWheelPickerCell
-  commentId: T:DrawnUi.Controls.IWheelPickerCell
-  parent: DrawnUi.Controls
-  href: DrawnUi.Controls.IWheelPickerCell.html
-  name: IWheelPickerCell
-  nameWithType: IWheelPickerCell
-  fullName: DrawnUi.Controls.IWheelPickerCell
 - uid: DrawnUi.Controls.ScrollPickerLabelContainer
   commentId: T:DrawnUi.Controls.ScrollPickerLabelContainer
   href: DrawnUi.Controls.ScrollPickerLabelContainer.html
@@ -505,13 +470,6 @@ references:
   name: SkiaWheelStack
   nameWithType: SkiaWheelStack
   fullName: DrawnUi.Controls.SkiaWheelStack
-- uid: DrawnUi.Controls.WheelCellInfo
-  commentId: T:DrawnUi.Controls.WheelCellInfo
-  parent: DrawnUi.Controls
-  href: DrawnUi.Controls.WheelCellInfo.html
-  name: WheelCellInfo
-  nameWithType: WheelCellInfo
-  fullName: DrawnUi.Controls.WheelCellInfo
 - uid: DrawnUi.Controls.AnimatedFramesRenderer
   commentId: T:DrawnUi.Controls.AnimatedFramesRenderer
   parent: DrawnUi.Controls
@@ -519,13 +477,6 @@ references:
   name: AnimatedFramesRenderer
   nameWithType: AnimatedFramesRenderer
   fullName: DrawnUi.Controls.AnimatedFramesRenderer
-- uid: DrawnUi.Controls.GifAnimation
-  commentId: T:DrawnUi.Controls.GifAnimation
-  parent: DrawnUi.Controls
-  href: DrawnUi.Controls.GifAnimation.html
-  name: GifAnimation
-  nameWithType: GifAnimation
-  fullName: DrawnUi.Controls.GifAnimation
 - uid: DrawnUi.Controls.SkiaGif
   commentId: T:DrawnUi.Controls.SkiaGif
   parent: DrawnUi.Controls
@@ -582,13 +533,6 @@ references:
   name: SkiaSpriteSet
   nameWithType: SkiaSpriteSet
   fullName: DrawnUi.Controls.SkiaSpriteSet
-- uid: DrawnUi.Controls.ISkiaRadioButton
-  commentId: T:DrawnUi.Controls.ISkiaRadioButton
-  parent: DrawnUi.Controls
-  href: DrawnUi.Controls.ISkiaRadioButton.html
-  name: ISkiaRadioButton
-  nameWithType: ISkiaRadioButton
-  fullName: DrawnUi.Controls.ISkiaRadioButton
 - uid: DrawnUi.Controls.RadioButtons
   commentId: T:DrawnUi.Controls.RadioButtons
   parent: DrawnUi.Controls
@@ -660,6 +604,62 @@ references:
   - uid: DrawnUi.Controls.SkiaViewSwitcher.NavigationStackEntry
     name: NavigationStackEntry
     href: DrawnUi.Controls.SkiaViewSwitcher.NavigationStackEntry.html
+- uid: DrawnUi.Controls.DrawerDirection
+  commentId: T:DrawnUi.Controls.DrawerDirection
+  parent: DrawnUi.Controls
+  href: DrawnUi.Controls.DrawerDirection.html
+  name: DrawerDirection
+  nameWithType: DrawerDirection
+  fullName: DrawnUi.Controls.DrawerDirection
+- uid: DrawnUi.Controls.IWheelPickerCell
+  commentId: T:DrawnUi.Controls.IWheelPickerCell
+  parent: DrawnUi.Controls
+  href: DrawnUi.Controls.IWheelPickerCell.html
+  name: IWheelPickerCell
+  nameWithType: IWheelPickerCell
+  fullName: DrawnUi.Controls.IWheelPickerCell
+- uid: DrawnUi.Controls.WheelCellInfo
+  commentId: T:DrawnUi.Controls.WheelCellInfo
+  parent: DrawnUi.Controls
+  href: DrawnUi.Controls.WheelCellInfo.html
+  name: WheelCellInfo
+  nameWithType: WheelCellInfo
+  fullName: DrawnUi.Controls.WheelCellInfo
+- uid: DrawnUi.Controls.NavigationSource
+  commentId: T:DrawnUi.Controls.NavigationSource
+  parent: DrawnUi.Controls
+  href: DrawnUi.Controls.NavigationSource.html
+  name: NavigationSource
+  nameWithType: NavigationSource
+  fullName: DrawnUi.Controls.NavigationSource
+- uid: DrawnUi.Controls.SkiaShellNavigatedArgs
+  commentId: T:DrawnUi.Controls.SkiaShellNavigatedArgs
+  parent: DrawnUi.Controls
+  href: DrawnUi.Controls.SkiaShellNavigatedArgs.html
+  name: SkiaShellNavigatedArgs
+  nameWithType: SkiaShellNavigatedArgs
+  fullName: DrawnUi.Controls.SkiaShellNavigatedArgs
+- uid: DrawnUi.Controls.SkiaShellNavigatingArgs
+  commentId: T:DrawnUi.Controls.SkiaShellNavigatingArgs
+  parent: DrawnUi.Controls
+  href: DrawnUi.Controls.SkiaShellNavigatingArgs.html
+  name: SkiaShellNavigatingArgs
+  nameWithType: SkiaShellNavigatingArgs
+  fullName: DrawnUi.Controls.SkiaShellNavigatingArgs
+- uid: DrawnUi.Controls.GifAnimation
+  commentId: T:DrawnUi.Controls.GifAnimation
+  parent: DrawnUi.Controls
+  href: DrawnUi.Controls.GifAnimation.html
+  name: GifAnimation
+  nameWithType: GifAnimation
+  fullName: DrawnUi.Controls.GifAnimation
+- uid: DrawnUi.Controls.ISkiaRadioButton
+  commentId: T:DrawnUi.Controls.ISkiaRadioButton
+  parent: DrawnUi.Controls
+  href: DrawnUi.Controls.ISkiaRadioButton.html
+  name: ISkiaRadioButton
+  nameWithType: ISkiaRadioButton
+  fullName: DrawnUi.Controls.ISkiaRadioButton
 - uid: DrawnUi.Controls
   commentId: N:DrawnUi.Controls
   href: DrawnUi.html
