@@ -64,11 +64,6 @@ public override SKRect CreateHitRect()
 
 ---
 
-## 👍 Latest Showcase
-
-* [SolTempo](https://github.com/taublast/SolTempo)  - Audio Processing App with SKSL Shaders, read the [blog article](https://taublast.github.io/posts/SolTempo/).
-
----
 
 ## Quick Start
 
