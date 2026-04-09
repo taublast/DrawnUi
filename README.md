@@ -38,12 +38,10 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
  
 ---
 
-## 🆕 What's new for 1.9.7.2
+## 🆕 What's new for 1.9.7.3
 
-* Optimized composite cache and added new `SkiaCacheType.ImageCompositeGPU` type.
-* Fix memory leak for the `SkiaCacheType.ImageDoubleBuffered` flow.
-* `SkiaCamera` auto-exposure fix for low light, record video on Android emulator and more. 
-* Various optimizations and fixes.
+* Hotfix for GPU caches to flush instantly after drawing to avoid occasional GPU memory corruption.
+* Update when inivisiblity changes instead of re-painting.
  
 ## 💡 Hint of the Day
 

@@ -166,34 +166,7 @@ namespace DrawnUi.Views
             // The heavy lifting is delegated to the Android-specific method above
             IsHiddenInViewTree = !IsElementVisibleInParentChain(platformView);
 
-            //if (element != null)
-            //{
-
-            //    if (element.Handler != null)
-            //    {
-            //        if (element.Handler.PlatformView is Android.Views.View nativeView)
-            //        {
-            //            if (nativeView.Visibility != Android.Views.ViewStates.Visible)
-            //            {
-            //                IsHiddenInViewTree = true;
-            //                return;
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if (element.GetVisualElementWindow() == null)
-            //        {
-            //            IsHiddenInViewTree = true;
-            //            return;
-            //        }
-            //    }
-
-
-            //}
-
-
-            //IsHiddenInViewTree = false;
+    
         }
 
 #if CHOREOGRAPHER

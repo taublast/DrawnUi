@@ -67,6 +67,12 @@ public class CachedObject : ISkiaDisposable
 
                 canvas.DrawImage(Image, x, y, paint);
                 LastDrawnAt = new(x, y, Bounds.Width + x, Bounds.Height + y);
+
+                if (Surface != null && Surface.Context != null)
+                {
+                    //GPU
+                    //canvas.Flush();
+                }
             }
         }
         catch (Exception e)
@@ -106,8 +112,14 @@ public class CachedObject : ISkiaDisposable
             {
                 canvas.DrawImage(Image, x, y, paint);
                 LastDrawnAt = new(x, y, Bounds.Width + x, Bounds.Height + y);
-            }
 
+
+                if (Surface != null && Surface.Context != null)
+                {
+                    //GPU
+                    //canvas.Flush();
+                }
+            }
         }
         catch (Exception e)
         {

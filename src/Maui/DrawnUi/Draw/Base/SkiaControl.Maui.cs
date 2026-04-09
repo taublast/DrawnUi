@@ -296,8 +296,6 @@ namespace DrawnUi.Draw
             else if (propertyName.IsEither(nameof(IsVisible)))
             {
                 OnVisibilityChanged(IsVisible);
-
-                Repaint();
             }
 
             #endregion
