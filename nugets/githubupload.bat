@@ -24,7 +24,7 @@ for /L %%i in (1,1,%mask_count%) do (
     REM Loop through each package file matching the mask in the source directory
     for %%f in ("!source_dir!\!file_mask!") do (
         echo Uploading "%%f" to GitHub with API key.
-        dotnet nuget push --source github "%%f" --api-key %APIKEY%
+        dotnet nuget push --skip-duplicate --source github "%%f" --api-key %APIKEY%
         if errorlevel 1 (
             echo An error occurred while uploading "%%f".
         ) else (
