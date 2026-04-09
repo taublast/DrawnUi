@@ -2404,6 +2404,8 @@ namespace DrawnUi.Draw
             }
 
             SendVisibilityChanged();
+
+            Update();
         }
 
         void StopPostAnimators()
