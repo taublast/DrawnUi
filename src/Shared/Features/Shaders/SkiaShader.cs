@@ -79,30 +79,48 @@ public class SkiaShader : IDisposable
     /// </summary>
     public SKRuntimeEffect Compiled => _compiled;
 
+
     // ─── Construction ───────────────────────────────────────────────────────
 
-    public SkiaShader()
-    {
-    }
 
     /// <summary>
     /// Create and compile from a resource file path (e.g. "Shaders/myeffect.sksl").
     /// </summary>
-    public static SkiaShader FromResource(string resourcePath, bool useCache = true)
+    /// <param name="resourcePath"></param>
+    /// <param name="useCache"></param>
+    /// <param name="onError"></param>
+    /// <returns></returns>
+    public static SkiaShader FromResource(string resourcePath, bool useCache = true, Action<string>onError = null)
     {
         var shader = new SkiaShader();
-        shader.CompileFromResource(resourcePath, useCache);
+        shader.CompileFromResource(resourcePath, useCache, onError);
         return shader;
     }
 
     /// <summary>
     /// Create and compile from inline SKSL code.
     /// </summary>
-    public static SkiaShader FromCode(string skslCode)
+    /// <param name="skslCode"></param>
+    /// <param name="onError"></param>
+    /// <returns></returns>
+    public static SkiaShader FromCode(string skslCode, Action<string> onError = null)
     {
         var shader = new SkiaShader();
-        shader.CompileFromCode(skslCode);
+        shader.CompileFromCode(skslCode,null, false, onError);
         return shader;
+    }
+
+    private string _code;
+
+    /// <summary>
+    /// Gets the shader code used for last compilation
+    /// </summary>
+    public string Code
+    {
+        get
+        {
+            return _code;
+        }
     }
 
     // ─── Compilation ────────────────────────────────────────────────────────
@@ -113,8 +131,8 @@ public class SkiaShader : IDisposable
     public void CompileFromResource(string resourcePath, bool useCache = true, Action<string> onError = null)
     {
         DisposeCompiled();
-        var shaderCode = NormalizeLineEndings(SkSl.LoadFromResources(resourcePath));
-        _compiled = SkSl.Compile(shaderCode, resourcePath, useCache, onError);
+        _code = NormalizeLineEndings(SkSl.LoadFromResources(resourcePath));
+        _compiled = SkSl.Compile(_code, resourcePath, useCache, onError);
         _ownCompiled = !useCache;
     }
 
@@ -124,8 +142,8 @@ public class SkiaShader : IDisposable
     public void CompileFromCode(string skslCode, string cacheKey = null, bool useCache = false, Action<string> onError = null)
     {
         DisposeCompiled();
-        var normalized = NormalizeLineEndings(skslCode);
-        _compiled = SkSl.Compile(normalized, cacheKey, useCache, onError);
+        _code = NormalizeLineEndings(skslCode);
+        _compiled = SkSl.Compile(_code, cacheKey, useCache, onError);
         _ownCompiled = !useCache;
     }
 

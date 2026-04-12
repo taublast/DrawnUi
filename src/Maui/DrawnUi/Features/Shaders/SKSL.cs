@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections.Concurrent;
+using System.Text.RegularExpressions;
 
 namespace DrawnUi.Infrastructure;
 
@@ -33,7 +34,13 @@ public static class SkSl
         }
     }
 
-    public static Dictionary<string, SKRuntimeEffect> CompiledCache = new();
+    /// <summary>
+    /// Provides a thread-safe cache of compiled runtime effects, indexed by their string identifiers.
+    /// </summary>
+    /// <remarks>This static field enables efficient reuse of compiled SKRuntimeEffect instances by storing
+    /// them for quick retrieval. Access to the cache is thread-safe, allowing concurrent read and write operations from
+    /// multiple threads without additional synchronization.</remarks>
+    public static ConcurrentDictionary<string, SKRuntimeEffect> CompiledCache = new();
 
     /// <summary>
     /// Will compile your SKSL shader code into SKRuntimeEffect.
