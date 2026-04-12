@@ -1,4 +1,4 @@
-name: nuget release
+name: Publish Nugets
 
 on:
   workflow_dispatch:
@@ -153,10 +153,10 @@ jobs:
           name: nuget-packages
           path: artifacts/nuget-packages
 
-      - name: Setup .NET SDK
+        - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          global-json-file: global.json
+            dotnet-version: 10.0.x
 
       - name: Configure GitHub Packages source
         shell: pwsh

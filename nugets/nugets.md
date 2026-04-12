@@ -95,7 +95,7 @@ In GitHub:
 ## How To Run The Workflow
 
 1. Open the repository `Actions` tab.
-2. Select the workflow `nuget release`.
+2. Select the workflow `Publish Nugets`.
 3. Click `Run workflow`.
 4. Choose whether to publish to NuGet.org.
 5. Choose whether to publish to GitHub Packages.
@@ -143,6 +143,7 @@ This job:
 - also waits for the NuGet.org job if that job was enabled
 - skips GitHub publishing if the NuGet.org job failed
 - downloads the same artifact
+- installs a current .NET SDK explicitly for `dotnet nuget push`
 - authenticates to the GitHub Packages NuGet feed using `GITHUB_TOKEN`
 - pushes `.nupkg` files with `--skip-duplicate`
 
@@ -151,6 +152,7 @@ Important detail:
 - this job intentionally pushes only `.nupkg`
 - it does not push `.snupkg` to GitHub Packages
 - symbol packages remain useful for NuGet.org and for archived build artifacts
+- it does not depend on the repository `global.json`, because it only needs a working `dotnet` CLI to upload already-built packages
 
 ## Why This Is Better Than The Local Batch Flow
 
