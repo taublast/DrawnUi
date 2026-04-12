@@ -1,0 +1,194 @@
+name: nuget release
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_nuget:
+        description: Publish Nuget Packages to NuGet.org
+        required: true
+        default: true
+        type: boolean
+      publish_github:
+        description: Publish packages to GitHub Packages
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+run-name: NuGet release ${{ github.ref_name }} #${{ github.run_number }}
+
+jobs:
+  pack:
+    name: Pack NuGet packages
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+          cache: true
+          cache-dependency-path: |
+            global.json
+            src/**/*.csproj
+            src/**/*.props
+            src/**/*.targets
+
+      - name: Install MAUI workload
+        run: dotnet workload install maui --ignore-failed-sources
+
+      - name: Pack projects
+        shell: pwsh
+        run: |
+          $projects = @(
+            'src/Maui/DrawnUi/DrawnUi.Maui.csproj'
+            'src/Maui/MetaPackage/AppoMobi.Maui.DrawnUi/AppoMobi.Maui.DrawnUi.csproj'
+            'src/Maui/Addons/DrawnUi.Maui.Game/DrawnUi.Maui.Game.csproj'
+            'src/Maui/Addons/DrawnUi.Maui.MapsUi/DrawnUi.Maui.MapsUi.csproj'
+            'src/Maui/Addons/DrawnUi.Maui.Rive/DrawnUi.Maui.Rive.csproj'
+            'src/Maui/Addons/DrawnUi.MauiGraphics/DrawnUi.MauiGraphics.csproj'
+          )
+
+          foreach ($project in $projects) {
+            Write-Host "Packing $project"
+            dotnet pack $project --configuration Release --nologo -p:ContinuousIntegrationBuild=true
+            if ($LASTEXITCODE -ne 0) {
+              exit $LASTEXITCODE
+            }
+          }
+
+      - name: Collect packages
+        shell: pwsh
+        run: |
+          $artifactDir = Join-Path $env:GITHUB_WORKSPACE 'artifacts/nuget-packages'
+          New-Item -ItemType Directory -Force -Path $artifactDir | Out-Null
+
+          $packageFiles = Get-ChildItem -Path 'src/Maui' -Recurse -File |
+            Where-Object {
+              $_.FullName -match '[\\/]bin[\\/]Release[\\/]' -and
+              ($_.Extension -eq '.nupkg' -or $_.Extension -eq '.snupkg')
+            }
+
+          if (-not $packageFiles) {
+            throw 'No NuGet packages were produced by dotnet pack.'
+          }
+
+          foreach ($packageFile in $packageFiles) {
+            Copy-Item $packageFile.FullName -Destination $artifactDir -Force
+          }
+
+          Write-Host 'Collected packages:'
+          Get-ChildItem $artifactDir | Sort-Object Name | ForEach-Object {
+            Write-Host " - $($_.Name)"
+          }
+
+      - name: Upload packages artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-packages
+          path: artifacts/nuget-packages/*
+          if-no-files-found: error
+          retention-days: 14
+
+  publish-nuget:
+    name: Publish to NuGet.org
+    runs-on: windows-latest
+    needs: pack
+    if: ${{ inputs.publish_nuget }}
+
+    steps:
+      - name: Download packages artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: nuget-packages
+          path: artifacts/nuget-packages
+
+      - name: Setup NuGet CLI
+        uses: NuGet/setup-nuget@v2
+
+      - name: Push packages to NuGet.org
+        shell: pwsh
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:NUGET_API_KEY)) {
+            throw 'Missing required repository secret: NUGET_API_KEY'
+          }
+
+          $packages = Get-ChildItem -Path 'artifacts/nuget-packages' -File |
+            Where-Object { $_.Extension -eq '.nupkg' }
+
+          if (-not $packages) {
+            throw 'No .nupkg files found to publish to NuGet.org.'
+          }
+
+          foreach ($package in $packages) {
+            Write-Host "Publishing $($package.Name) to NuGet.org"
+            nuget push $package.FullName -Source https://api.nuget.org/v3/index.json -ApiKey $env:NUGET_API_KEY -SkipDuplicate -NonInteractive
+            if ($LASTEXITCODE -ne 0) {
+              exit $LASTEXITCODE
+            }
+          }
+
+  publish-github:
+    name: Publish to GitHub Packages
+    runs-on: windows-latest
+    needs:
+      - pack
+      - publish-nuget
+    if: ${{ inputs.publish_github && (needs.publish-nuget.result == 'success' || needs.publish-nuget.result == 'skipped') }}
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Download packages artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: nuget-packages
+          path: artifacts/nuget-packages
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Configure GitHub Packages source
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $sourceName = 'github-actions'
+          $sourceUrl = 'https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json'
+
+          dotnet nuget remove source $sourceName 2>$null
+
+          dotnet nuget add source $sourceUrl --name $sourceName --username '${{ github.actor }}' --password $env:GITHUB_TOKEN --store-password-in-clear-text
+          if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+          }
+
+      - name: Push packages to GitHub Packages
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $packages = Get-ChildItem -Path 'artifacts/nuget-packages' -File |
+            Where-Object { $_.Extension -eq '.nupkg' }
+
+          if (-not $packages) {
+            throw 'No .nupkg files found to publish to GitHub Packages.'
+          }
+
+          foreach ($package in $packages) {
+            Write-Host "Publishing $($package.Name) to GitHub Packages"
+            dotnet nuget push $package.FullName --source github-actions --api-key $env:GITHUB_TOKEN --skip-duplicate --force-english-output
+            if ($LASTEXITCODE -ne 0) {
+              exit $LASTEXITCODE
+            }
+          }

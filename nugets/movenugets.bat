@@ -13,7 +13,6 @@ echo Batch directory: %batch_dir%
 REM Define source directories relative to the batch file location
 set "source_dir1=%batch_dir%\..\src\Maui\DrawnUi\bin\Release"
 set "source_dir2=%batch_dir%\..\src\Maui\MetaPackage\AppoMobi.Maui.DrawnUi\bin\Release"
-set "source_dir3=%batch_dir%\..\src\Maui\Addons\DrawnUi.Maui.Camera\bin\Release"
 set "source_dir4=%batch_dir%\..\src\Maui\Addons\DrawnUi.Maui.Game\bin\Release"
 set "source_dir5=%batch_dir%\..\src\Maui\Addons\DrawnUi.Maui.MapsUi\bin\Release"
 set "source_dir6=%batch_dir%\..\src\Maui\Addons\DrawnUi.Maui.Rive\bin\Release"

@@ -38,10 +38,9 @@ Supports **iOS**, **MacCatalyst**, **Android**, **Windows** with hardware accele
  
 ---
 
-## 🆕 What's new for 1.9.7.3
+## 🆕 What's new for 1.9.7.4
 
-* Hotfix for GPU caches to flush instantly after drawing to avoid occasional GPU memory corruption.
-* Update when inivisiblity changes instead of re-painting.
+* `SKSL` helper improvements: concurrent cache, error callbacks for static creation methods.
  
 ## 💡 Hint of the Day
 
