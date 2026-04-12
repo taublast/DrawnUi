@@ -1,17 +1,8 @@
 # NuGet CI/CD For DrawnUI
 
-This folder now has a GitHub Actions replacement for the local flow based on these scripts:
-
-- `makenugets.bat`
-- `movenugets.bat`
-- `nugetupload.bat`
-- `githubupload.bat`
-
-The workflow file is:
+This repo has a GitHub action:
 
 - `.github/workflows/nuget-release.yml`
-
-It is designed to do the same work in GitHub Actions without relying on `C:\Nugets` or any local manual upload steps.
 
 ## What The Workflow Does
 
@@ -33,10 +24,9 @@ The workflow packs the same projects that are currently packed by `makenugets.ba
 - `src/Maui/MetaPackage/AppoMobi.Maui.DrawnUi/AppoMobi.Maui.DrawnUi.csproj`
 - `src/Maui/Addons/DrawnUi.Maui.Game/DrawnUi.Maui.Game.csproj`
 - `src/Maui/Addons/DrawnUi.Maui.MapsUi/DrawnUi.Maui.MapsUi.csproj`
-- `src/Maui/Addons/DrawnUi.Maui.Rive/DrawnUi.Maui.Rive.csproj`
 - `src/Maui/Addons/DrawnUi.MauiGraphics/DrawnUi.MauiGraphics.csproj`
 
-Package versions are not hardcoded in the workflow. They come from the repository build metadata, currently centralized in `src/Directory.Build.targets`.
+Package versions come from the repository build metadata, currently centralized in `src/Directory.Build.targets`.
 
 ## Produced Artifacts
 
@@ -57,14 +47,6 @@ Create this repository secret before running the full publish flow:
 
 GitHub Packages publishing does not require a custom repository secret in the current workflow. 
 It uses the built-in `GITHUB_TOKEN` issued by GitHub Actions for the repository that runs the workflow.
-
-## Recommended Optional Secrets
-
-These are not required by the current workflow, but they are useful if you later want to change the publishing model:
-
-- `GH_PACKAGES_PAT`: optional classic PAT with `write:packages` and `read:packages` if you later need to publish outside the repository token model
-
-The current workflow does not read `GH_PACKAGES_PAT`. It is documented here only as a future escape hatch.
 
 ## GitHub Settings To Verify
 
@@ -151,25 +133,6 @@ Important detail:
 - this job intentionally pushes only `.nupkg`
 - it does not push `.snupkg` to GitHub Packages
 - symbol packages remain useful for NuGet.org and for archived build artifacts
-
-## Why This Is Better Than The Local Batch Flow
-
-This workflow removes the current local release friction:
-
-- no local `C:\Nugets` folder requirement
-- no manual moving of packages between folders
-- no manual entering of API keys during upload
-- no repeated one-by-one local command execution
-- the exact published files are preserved as a build artifact
-- package creation and publication are reproducible from the repository state
-
-## Failure Triage
-
-If the workflow fails, use the exact failure signal first.
-
-### Parser Or YAML Failure
-
-If GitHub reports a workflow parser error and gives a line number, inspect that exact line first.
 
 ### Pack Job Fails
 

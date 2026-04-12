@@ -50,7 +50,6 @@ jobs:
             'src/Maui/MetaPackage/AppoMobi.Maui.DrawnUi/AppoMobi.Maui.DrawnUi.csproj'
             'src/Maui/Addons/DrawnUi.Maui.Game/DrawnUi.Maui.Game.csproj'
             'src/Maui/Addons/DrawnUi.Maui.MapsUi/DrawnUi.Maui.MapsUi.csproj'
-            'src/Maui/Addons/DrawnUi.Maui.Rive/DrawnUi.Maui.Rive.csproj'
             'src/Maui/Addons/DrawnUi.MauiGraphics/DrawnUi.MauiGraphics.csproj'
           )
 
