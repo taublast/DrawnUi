@@ -67,6 +67,8 @@
 - name: Advanced
   href: articles/advanced/index.md
   items:
+    - name: Shared/MAUI/Blazor Port Status
+      href: shared-maui-blazor-port-status.md
     - name: Layout System Architecture
       href: articles/advanced/layout-system.md
     - name: Platform-Specific Styling

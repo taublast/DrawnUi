@@ -282,7 +282,7 @@ namespace DrawnUi.Draw
 
         void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(nameof(Spans));
 
-        void OnItemPropertyChanging(object sender, PropertyChangingEventArgs e) => OnPropertyChanging(nameof(Spans));
+        void OnItemPropertyChanging(object sender, System.ComponentModel.PropertyChangingEventArgs e) => OnPropertyChanging(nameof(Spans));
 
         protected readonly SpanCollection _spans = new();
 
@@ -937,10 +937,15 @@ namespace DrawnUi.Draw
             float y,
             SKPaint paint)
         {
-            if (string.IsNullOrEmpty(text) || Shaper == null || paint == null || paint.Typeface == null)
+            if (string.IsNullOrEmpty(text) || paint == null || paint.Typeface == null)
                 return;
 
             SetupShaper(paint.Typeface);
+            if (Shaper == null)
+            {
+                canvas.DrawText(text, x, y, paint);
+                return;
+            }
             DrawShapedText(canvas, Shaper, text, x, y, paint);
         }
 
@@ -1357,16 +1362,13 @@ namespace DrawnUi.Draw
             {
                 SetupShaper(paintTypeface);
                 var result = GetShapedText(Shaper, text, 0, 0, paint);
-                if (result == null)
+                if (result != null)
                 {
-                    GlyphMeasurementCache.Add(paintTypeface, needsShaping, text, 0f, null);
-                    return (0.0f, null);
+                    var measured = GetResultSize(result);
+
+                    GlyphMeasurementCache.Add(paintTypeface, needsShaping, text, measured.Width, null);
+                    return (measured.Width, null);
                 }
-
-                var measured = GetResultSize(result);
-
-                GlyphMeasurementCache.Add(paintTypeface, needsShaping, text, measured.Width, null);
-                return (measured.Width, null);
             }
 
             if (charMonoWidthPixels > 0)
@@ -2287,7 +2289,7 @@ namespace DrawnUi.Draw
                 return null;
 
             if (shaper == null)
-                throw new ArgumentNullException(nameof(shaper));
+                return null;
             if (paint == null)
                 throw new ArgumentNullException(nameof(paint));
 
@@ -2744,7 +2746,14 @@ namespace DrawnUi.Draw
             if (Shaper == null || Shaper.Typeface != typeface)
             {
                 var kill = Shaper;
-                Shaper = new SKShaper(typeface);
+                try
+                {
+                    Shaper = new SKShaper(typeface);
+                }
+                catch
+                {
+                    Shaper = null;
+                }
                 DisposeObject(kill);
             }
         }

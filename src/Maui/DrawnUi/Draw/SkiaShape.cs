@@ -42,35 +42,7 @@ namespace DrawnUi.Draw
             base.ApplyBindingContext();
         }
 
-        /// <summary>
-        /// Available size for children content, accounting for padding and stroke
-        /// </summary>
-        public SKRect MeasuredStrokeAwareChildrenSize { get; protected set; }
-
-        /// <summary>
-        /// Area to use for clipping inside stroke
-        /// </summary>
-        public SKRect MeasuredStrokeAwareClipSize { get; protected set; } //todo!!!
-
-        /// <summary>
-        /// Size we must use to draw stroke to fit inside available destination
-        /// </summary>
-        public SKRect MeasuredStrokeAwareSize { get; protected set; }
-
         #region PROPERTIES
-
-        public static readonly BindableProperty PathDataProperty = BindableProperty.Create(nameof(PathData),
-            typeof(string), typeof(SkiaShape),
-            null,
-            propertyChanged: NeedSetType);
-
-        private static void NeedSetType(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (bindable is SkiaShape control)
-            {
-                control.SetupType();
-            }
-        }
 
         /// <summary>
         /// For Type = Path, use the path markup syntax
@@ -94,16 +66,6 @@ namespace DrawnUi.Draw
         /// 
         /// The path will be automatically scaled to fit the control dimensions.
         /// </remarks>
-        public string PathData
-        {
-            get { return (string)GetValue(PathDataProperty); }
-            set { SetValue(PathDataProperty, value); }
-        }
-
-        public static new readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type),
-            typeof(ShapeType), typeof(SkiaShape),
-            ShapeType.Rectangle,
-            propertyChanged: NeedSetType);
 
         /// <summary>
         /// Gets or sets the type of shape to render.
@@ -121,12 +83,6 @@ namespace DrawnUi.Draw
         /// Changing the Type property may require setting additional properties for proper rendering,
         /// such as PathData for Path type or Points for Polygon/Line types.
         /// </remarks>
-        public new ShapeType Type
-        {
-            get { return (ShapeType)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
-        }
-
         #region StrokeGradient
 
         private const string nameStrokeGradient = "StrokeGradient";
@@ -211,13 +167,6 @@ namespace DrawnUi.Draw
             set { SetValue(ClipBackgroundColorProperty, value); }
         }
 
-        public static readonly BindableProperty StrokeWidthProperty = BindableProperty.Create(
-            nameof(StrokeWidth),
-            typeof(double),
-            typeof(SkiaShape),
-            0.0,
-            propertyChanged: NeedInvalidateMeasure);
-
         /// <summary>
         /// Gets or sets the width of the stroke (outline) in device-independent units.
         /// If you set it negative it will be in PIXELS instead of point.
@@ -232,12 +181,6 @@ namespace DrawnUi.Draw
         /// 
         /// The stroke is always drawn on top of the shape's fill and any child elements.
         /// </remarks>
-        public double StrokeWidth
-        {
-            get { return (double)GetValue(StrokeWidthProperty); }
-            set { SetValue(StrokeWidthProperty, value); }
-        }
-
         public static readonly BindableProperty StrokeCapProperty = BindableProperty.Create(
             nameof(StrokeCap),
             typeof(SKStrokeCap),
@@ -319,180 +262,9 @@ namespace DrawnUi.Draw
             return array;
         }
 
-        public struct ShapePaintArguments
-        {
-            public SKRect StrokeAwareSize { get; set; }
-            public SKRect StrokeAwareChildrenSize { get; set; }
-            public SKRect StrokeAwareClipSize { get; set; }
-        }
-
         #endregion
 
         #region RENDERiNG
-
-        public virtual void SetupType()
-        {
-            if (Type == ShapeType.Path)
-            {
-                var kill = DrawPath;
-                if (!string.IsNullOrEmpty(PathData))
-                {
-                    DrawPath = SKPath.ParseSvgPathData(this.PathData);
-                }
-                else
-                {
-                    DrawPath = null;
-                }
-
-                if (kill != null)
-                {
-                    DisposeObject(kill);
-                }
-            }
-
-            Update();
-        }
-
-
-        public virtual bool WillStroke
-        {
-            get { return StrokeColor != TransparentColor && StrokeWidth != 0; }
-        }
-
-        protected float GetHalfStroke(float scale)
-        {
-            var pixelsStrokeWidth = StrokeWidth > 0
-                ? (float)(StrokeWidth * scale)
-                : (float)(-StrokeWidth);
-
-            return (float)(pixelsStrokeWidth / 2.0f);
-        }
-
-        protected float GetSmallUnderStroke(float scale)
-        {
-            var pixelsStrokeWidth = StrokeWidth > 0
-                ? (float)(StrokeWidth * scale)
-                : (float)(-StrokeWidth);
-
-            return (float)(pixelsStrokeWidth / 3.0f);
-        }
-
-        protected float GetStrokePixels(float scale)
-        {
-            var pixelsStrokeWidth = StrokeWidth > 0
-                ? (float)(StrokeWidth * scale)
-                : (float)(-StrokeWidth);
-
-            return (float)(pixelsStrokeWidth);
-        }
-
-        protected float GetInflationForStroke(float halfStroke)
-        {
-            if (halfStroke < 0.5f)
-            {
-                return -1f;
-            }
-
-            return -(float)Math.Round(halfStroke);
-        }
-
-        protected SKRect CalculateContentSizeForStroke(SKRect destination, float scale)
-        {
-            if (WillStroke)
-            {
-                destination = CalculateShapeSizeForStroke(destination, scale);
-            }
-
-            var strokeAwareChildrenSize
-                = ContractPixelsRect(destination, scale, UsePadding);
-
-            return strokeAwareChildrenSize;
-        }
-
-        protected SKRect CalculateClipSizeForStroke(SKRect destination, float scale)
-        {
-            if (WillStroke)
-            {
-                var strokeAwareSize = CalculateShapeSizeForStroke(destination, scale);
-
-                var contract = GetSmallUnderStroke(scale);
-
-                var strokeAwareChildrenSize
-                    = ContractPixelsRect(strokeAwareSize, contract);
-
-                return strokeAwareChildrenSize;
-            }
-
-            return destination;
-        }
-
-        protected SKRect CalculateShapeSizeForStroke(SKRect destination, float scale)
-        {
-            if (WillStroke)
-            {
-                float halfStroke = 0;
-                float inflate;
-                var x = destination.Left;
-                var y = destination.Top;
-
-                var strokeAwareSize = new SKRect(x, y,
-                    (float)(x + (destination.Width)),
-                    (float)(y + (destination.Height)));
-
-
-                halfStroke = GetHalfStroke(scale);
-                inflate = GetInflationForStroke(halfStroke);
-
-                strokeAwareSize =
-                    SKRect.Inflate(strokeAwareSize, inflate, inflate);
-
-                strokeAwareSize = new SKRect(
-                    (float)Math.Ceiling(strokeAwareSize.Left),
-                    (float)Math.Ceiling(strokeAwareSize.Top),
-                    (float)Math.Floor(strokeAwareSize.Right),
-                    (float)Math.Floor(strokeAwareSize.Bottom));
-
-                return strokeAwareSize;
-            }
-
-            return destination;
-        }
-
-        protected void CalculateSizeForStroke(SKRect destination, float scale)
-        {
-            MeasuredStrokeAwareSize = CalculateShapeSizeForStroke(destination, scale);
-            MeasuredStrokeAwareClipSize = CalculateClipSizeForStroke(destination, scale);
-            MeasuredStrokeAwareChildrenSize = CalculateContentSizeForStroke(destination, scale);
-
-            //rescale the path to match container
-            if (Type == ShapeType.Path)
-            {
-                if (DrawPath != null)
-                {
-                    DrawPath.GetTightBounds(out var bounds);
-                    using SKPath stretched = new();
-                    stretched.AddPath(DrawPath);
-
-                    float halfStroke = GetHalfStroke(scale);
-                    float scaleX = MeasuredStrokeAwareSize.Width / (bounds.Width + halfStroke);
-                    float scaleY = MeasuredStrokeAwareSize.Height / (bounds.Height + halfStroke);
-
-                    float translateX = (MeasuredStrokeAwareSize.Width - (bounds.Width + halfStroke) * scaleX) / 2 -
-                                       bounds.Left * scaleX;
-                    float translateY = (MeasuredStrokeAwareSize.Height - (bounds.Height + halfStroke) * scaleY) / 2 -
-                                       bounds.Top * scaleY;
-
-                    SKMatrix matrix = SKMatrix.CreateScale(scaleX, scaleY);
-                    matrix = SKMatrix.Concat(matrix, SKMatrix.CreateTranslation(translateX / 2, translateY / 2));
-
-                    stretched.Transform(matrix);
-                    stretched.Offset(halfStroke, halfStroke);
-
-                    DrawPathResized.Reset();
-                    DrawPathResized.AddPath(stretched);
-                }
-            }
-        }
 
         protected SKRect CalculateSizeForStrokeFromContent(SKRect destination, float scale)
         {
@@ -521,14 +293,6 @@ namespace DrawnUi.Draw
             return destination;
         }
 
-        public override void Arrange(SKRect destination, float widthRequest, float heightRequest, float scale)
-        {
-            base.Arrange(destination, widthRequest, heightRequest, scale);
-
-            // need to do it everytime we arrange
-            CalculateSizeForStroke(DrawingRect, scale);
-        }
-
         protected override SKSize GetContentSizeForAutosizeInPixels()
         {
             if (WillStroke)
@@ -555,10 +319,6 @@ namespace DrawnUi.Draw
             return measured;
         }
 
-        public SKPath DrawPathResized { get; } = new();
-        public SKPath DrawPathAligned { get; } = new();
-
-
         public double BorderWithPixels
         {
             get { return (DrawingRect.Width - MeasuredStrokeAwareChildrenSize.Width); }
@@ -569,32 +329,7 @@ namespace DrawnUi.Draw
         private SKPaintStyle _renderingPaintStyle;
         private bool _renderingPaintIsDither;
 
-        /// <summary>
-        /// Gets or sets the parsed SKPath object created from the PathData property.
-        /// </summary>
-        /// <remarks>
-        /// This field holds the SkiaSharp path object that is created by parsing the
-        /// PathData string. It is automatically created when PathData is set and Type
-        /// is ShapeType.Path. The path is used for both rendering and hit-testing.
-        /// 
-        /// The path is stored in its original form and is scaled/transformed during rendering
-        /// to fit the shape's bounds.
-        /// </remarks>
-        protected SKPath DrawPath { get; set; } = new();
-
         protected SKPath DrawPathShape { get; set; } = new();
-
-        /// <summary>
-        /// Gets or sets the rounded rectangle used for rendering when Type is Rectangle with CornerRadius.
-        /// </summary>
-        /// <remarks>
-        /// This object is created and reused during rendering to represent a rectangle with
-        /// rounded corners. It is automatically configured with the appropriate dimensions
-        /// and corner radii based on the shape's properties.
-        /// 
-        /// The object is created on demand and may be null until needed for rendering.
-        /// </remarks>
-        protected SKRoundRect DrawRoundedRect { get; set; }
 
         SKPath ClipContentPath { get; set; } = new();
 
@@ -614,6 +349,8 @@ namespace DrawnUi.Draw
 
         public override void OnDisposing()
         {
+            DisposeSharedShapeResources();
+
             RenderingPaint?.Dispose();
             RenderingPaint = null;
 
@@ -623,10 +360,6 @@ namespace DrawnUi.Draw
             _cachedDashEffect?.Dispose();
             _cachedDashEffect = null;
 
-            DrawPath?.Dispose();
-            DrawPathResized?.Dispose();
-            DrawPathAligned?.Dispose();
-            DrawRoundedRect?.Dispose();
             DrawPathShape?.Dispose();
             ClipContentPath?.Dispose();
 
@@ -654,27 +387,13 @@ namespace DrawnUi.Draw
                     strokeAwareChildrenSize.Width + offsetToZero.X, strokeAwareChildrenSize.Height + offsetToZero.Y);
             }
 
+            if (TryCreateBasicClip(arguments, usePosition, path))
+            {
+                return path;
+            }
+
             switch (Type)
             {
-                case ShapeType.Path:
-                    ShouldClipAntialiased = true;
-                    path.AddPath(DrawPathResized);
-                    break;
-
-                case ShapeType.Circle:
-                    ShouldClipAntialiased = true;
-                    path.AddCircle(
-                        (float)(strokeAwareChildrenSize.Left + strokeAwareChildrenSize.Width / 2.0f),
-                        (float)(strokeAwareChildrenSize.Top + strokeAwareChildrenSize.Height / 2.0f),
-                        (float)Math.Floor(Math.Min(strokeAwareChildrenSize.Width, strokeAwareChildrenSize.Height) /
-                                          2.0f) + 0);
-                    break;
-
-                case ShapeType.Ellipse:
-                    ShouldClipAntialiased = true;
-                    path.AddOval(strokeAwareChildrenSize);
-                    break;
-
                 case ShapeType.Polygon:
                     ShouldClipAntialiased = true;
                     if (Points != null && Points.Count > 0)
@@ -708,95 +427,12 @@ namespace DrawnUi.Draw
                     }
 
                     break;
-
-                case ShapeType.Rectangle:
-                default:
-                    if (CornerRadius != default)
-                    {
-                        ShouldClipAntialiased = true;
-
-                        var scaledRadiusLeftTop = (float)(CornerRadius.TopLeft * RenderingScale);
-                        var scaledRadiusRightTop = (float)(CornerRadius.TopRight * RenderingScale);
-                        var scaledRadiusLeftBottom = (float)(CornerRadius.BottomLeft * RenderingScale);
-                        var scaledRadiusRightBottom = (float)(CornerRadius.BottomRight * RenderingScale);
-                        var rrect = new SKRoundRect(strokeAwareChildrenSize);
-
-                        // Step 3: Calculate the inner rounded rectangle corner radii
-                        double maxValue = Math.Max(Math.Max(UsePadding.Left, UsePadding.Top),
-                            Math.Max(UsePadding.Right, UsePadding.Bottom));
-                        var strokeWidth = StrokeWidth > 0
-                            ? (float)(StrokeWidth * RenderingScale)
-                            : (float)(-StrokeWidth);
-
-                        float cornerRadiusDifference = -
-                            (float)(strokeWidth + maxValue * RenderingScale) / 2.0f;
-
-                        scaledRadiusLeftTop = (float)(Math.Max(scaledRadiusLeftTop + cornerRadiusDifference, 0));
-                        scaledRadiusRightTop = (float)(Math.Max(scaledRadiusRightTop + cornerRadiusDifference, 0));
-                        scaledRadiusLeftBottom = (float)(Math.Max(scaledRadiusLeftBottom + cornerRadiusDifference, 0));
-                        scaledRadiusRightBottom =
-                            (float)(Math.Max(scaledRadiusRightBottom + cornerRadiusDifference, 0));
-
-                        rrect.SetRectRadii(strokeAwareChildrenSize,
-                            new[]
-                            {
-                                new SKPoint(scaledRadiusLeftTop, scaledRadiusLeftTop),
-                                new SKPoint(scaledRadiusRightTop, scaledRadiusRightTop),
-                                new SKPoint(scaledRadiusLeftBottom, scaledRadiusLeftBottom),
-                                new SKPoint(scaledRadiusRightBottom, scaledRadiusRightBottom),
-                            });
-                        path.AddRoundRect(rrect);
-
-
-                        //path.AddRoundRect(strokeAwareChildrenSize, innerCornerRadius, innerCornerRadius);
-                    }
-                    else
-                    {
-                        ShouldClipAntialiased = false;
-                        path.AddRect(strokeAwareChildrenSize);
-                    }
-
-                    break;
             }
 
             return path;
         }
 
         /// <summary>
-        /// Calculates corrected corner radii for the background rectangle to maintain visual consistency with the stroke
-        /// </summary>
-        /// <param name="originalRadii">The original radii used for the stroke</param>
-        /// <param name="strokeRect">The rectangle used for drawing the stroke</param>
-        /// <param name="backgroundRect">The contracted rectangle used for drawing the background</param>
-        /// <returns>Corrected radii array for the background</returns>
-        protected SKPoint[] GetCorrectedBackgroundRadii(SKPoint[] originalRadii, SKRect strokeRect,
-            SKRect backgroundRect)
-        {
-            // Calculate how much the rectangle was contracted
-            float widthContraction = strokeRect.Width - backgroundRect.Width;
-            float heightContraction = strokeRect.Height - backgroundRect.Height;
-
-            // Calculate the reduction per side
-            float horizontalReduction = widthContraction / 2.0f;
-            float verticalReduction = heightContraction / 2.0f;
-
-            // Use the smaller reduction to maintain the circular nature of corners
-            float radiusReduction = Math.Min(horizontalReduction, verticalReduction);
-
-            var correctedRadii = new SKPoint[4];
-
-            for (int i = 0; i < originalRadii.Length; i++)
-            {
-                // Reduce each radius component, but never go below 0
-                float correctedX = Math.Max(0, originalRadii[i].X - radiusReduction);
-                float correctedY = Math.Max(0, originalRadii[i].Y - radiusReduction);
-
-                correctedRadii[i] = new SKPoint(correctedX, correctedY);
-            }
-
-            return correctedRadii;
-        }
-
         protected virtual void PaintBackground(SkiaDrawingContext ctx,
             SKRect outRect,
             SKPoint[] radii,
@@ -808,22 +444,6 @@ namespace DrawnUi.Draw
 
             switch (Type)
             {
-                case ShapeType.Rectangle:
-                    if (CornerRadius != default)
-                    {
-                        paint.IsAntialias = true;
-
-                        if (DrawRoundedRect == null)
-                            DrawRoundedRect = new();
-
-                        DrawRoundedRect.SetRectRadii(outRect, radii);
-                        ctx.Canvas.DrawRoundRect(DrawRoundedRect, paint);
-                    }
-                    else
-                        ctx.Canvas.DrawRect(outRect, paint);
-
-                    break;
-
                 case ShapeType.Polygon:
 
                     if (Points != null && Points.Count > 1)
@@ -846,39 +466,14 @@ namespace DrawnUi.Draw
 
                     break;
 
-                case ShapeType.Circle:
+                default:
                     if (StrokeWidth == 0 || StrokeColor == TransparentColor)
                     {
                         paint.IsAntialias = true;
                     }
 
-                    ctx.Canvas.DrawCircle(outRect.MidX, outRect.MidY, minSize / 2.0f, RenderingPaint);
+                    TryPaintBasicShape(ctx.Canvas, outRect, radii, minSize, Type == ShapeType.Circle ? RenderingPaint : paint);
                     break;
-
-                case ShapeType.Ellipse:
-                    if (StrokeWidth == 0 || StrokeColor == TransparentColor)
-                    {
-                        paint.IsAntialias = true;
-                    }
-
-                    DrawPathShape.Reset();
-                    DrawPathShape.AddOval(outRect);
-                    ctx.Canvas.DrawPath(DrawPathShape, paint);
-
-                    break;
-
-                case ShapeType.Path:
-                    if (StrokeWidth == 0 || StrokeColor == TransparentColor)
-                    {
-                        paint.IsAntialias = true;
-                    }
-
-
-                    ctx.Canvas.DrawPath(DrawPathAligned, paint);
-
-                    break;
-
-                //case ShapeType.Arc: - has no background
             }
         }
 
@@ -948,26 +543,9 @@ namespace DrawnUi.Draw
 
             var outRect = strokeAwareSize;
 
-            if (Type == ShapeType.Path)
-            {
-                DrawPathAligned.Reset();
-                DrawPathAligned.AddPath(DrawPathResized);
-                DrawPathAligned.Offset(outRect.Left, outRect.Top);
-            }
+            AlignResizedPath(outRect);
 
-            CornerRadius scaledRadius = new(
-                (CornerRadius.TopLeft * scale),
-                (CornerRadius.TopRight * scale),
-                (CornerRadius.BottomLeft * scale),
-                (CornerRadius.BottomRight * scale));
-
-            var radii = new SKPoint[]
-            {
-                new SKPoint((float)scaledRadius.TopLeft, (float)scaledRadius.TopLeft), //LeftTop
-                new SKPoint((float)scaledRadius.TopRight, (float)scaledRadius.TopRight), //RightTop
-                new SKPoint((float)scaledRadius.BottomLeft, (float)scaledRadius.BottomLeft), //LeftBottom
-                new SKPoint((float)scaledRadius.BottomRight, (float)scaledRadius.BottomRight), //RightBottom
-            };
+            var radii = CreateScaledRadii(scale);
 
 
             /// <summary>

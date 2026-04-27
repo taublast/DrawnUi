@@ -970,15 +970,10 @@ namespace DrawnUi.Draw
 
         public override void ApplyMeasureResult()
         {
-            if (StackStructureMeasured != null)
-            {
-                var kill = StackStructure;
-                StackStructure = StackStructureMeasured;
-                StackStructureMeasured = null;
-                if (kill != StackStructure)
-                    kill?.Clear();
+            var hadStackMeasure = StackStructureMeasured != null;
+            ApplyStackMeasureResult();
+            if (hadStackMeasure)
                 CheckAndSetupIfEmpty();
-            }
 
             if (GridStructureMeasured != null)
             {

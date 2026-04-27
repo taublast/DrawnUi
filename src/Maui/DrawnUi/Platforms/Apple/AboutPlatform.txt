@@ -1,0 +1,2 @@
+Folder created by Plugin.Maui.ApplePlatform.
+Put your shared Apple (`IOS || MACCATALYST`) platform files here.

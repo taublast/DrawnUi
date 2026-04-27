@@ -11,32 +11,6 @@ namespace DrawnUi.Draw
 {
     public partial class SkiaShape
 	{
-		public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(
-			nameof(CornerRadius),
-			typeof(CornerRadius),
-			typeof(SkiaShape),
-			default(CornerRadius),
-			propertyChanged: NeedInvalidateMeasure);
-
-		/// <summary>
-		/// Gets or sets the corner radius for the shape when Type is Rectangle.
-		/// </summary>
-		/// <remarks>
-		/// You can specify different corner radii for each corner using the format 
-		/// "topLeft,topRight,bottomLeft,bottomRight". For equal corner radius on all 
-		/// corners, just provide a single value.
-		/// 
-		/// In XAML, this can be set using string values that will be automatically converted:
-		/// - Single value: "10" (all corners have radius 10)
-		/// - Multiple values: "10,20,15,5" (each corner has its own radius)
-		/// </remarks>
-		[System.ComponentModel.TypeConverter(typeof(Microsoft.Maui.Converters.CornerRadiusTypeConverter))]
-		public CornerRadius CornerRadius
-		{
-			get { return (CornerRadius)GetValue(CornerRadiusProperty); }
-			set { SetValue(CornerRadiusProperty, value); }
-		}
-
 		public static readonly BindableProperty StrokePathProperty = BindableProperty.Create(
 			nameof(StrokePath),
 			typeof(double[]),
@@ -62,31 +36,6 @@ namespace DrawnUi.Draw
 		{
 			get { return (double[])GetValue(StrokePathProperty); }
 			set { SetValue(StrokePathProperty, value); }
-		}
-
-		public static readonly BindableProperty StrokeColorProperty = BindableProperty.Create(
-			nameof(StrokeColor),
-			typeof(Color),
-			typeof(SkiaShape),
-			Colors.Gray,
-			propertyChanged: NeedDraw);
-
-		/// <summary>
-		/// Gets or sets the color of the shape's outline stroke.
-		/// </summary>
-		/// <remarks>
-		/// - Default is Transparent (no visible stroke)
-		/// - Must be used with a non-zero StrokeWidth to make the stroke visible
-		/// - Can use MAUI Color resources and predefined colors
-		/// - Can be combined with StrokeGradient for gradient stroke effects
-		/// - Can be animated for dynamic effects
-		/// 
-		/// The stroke is rendered on top of the fill and any child elements.
-		/// </remarks>
-		public Color StrokeColor
-		{
-			get { return (Color)GetValue(StrokeColorProperty); }
-			set { SetValue(StrokeColorProperty, value); }
 		}
 
 	}

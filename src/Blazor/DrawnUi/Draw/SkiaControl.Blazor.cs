@@ -4,8 +4,8 @@ Normally other partial code definitions should be framework independent.
 */
 
 using System.Collections;
-using System.Drawing;
 using System.Runtime.CompilerServices;
+using Color = Microsoft.Maui.Graphics.Color;
 
 
 namespace DrawnUi.Draw
@@ -23,14 +23,122 @@ namespace DrawnUi.Draw
         }
     }
 
-    public partial class SkiaControl : BindableObject
+    public partial class SkiaControl : Microsoft.Maui.Controls.View
     {
+        private static void ReportHotreloadChildAdded(SkiaControl control)
+        {
+        }
+
+        private static void ReportHotreloadChildRemoved(SkiaControl control)
+        {
+        }
  
 
-        public static Color TransparentColor = Color.Transparent;
-        public static Color WhiteColor = Color.White;
-        public static Color BlackColor = Color.Black;
-        public static Color RedColor = Color.Red;
+        public static Color TransparentColor = Colors.Transparent;
+        public static Color WhiteColor = Colors.White;
+        public static Color BlackColor = Colors.Black;
+        public static Color RedColor = Colors.Red;
+
+        public virtual SkiaCacheType UsingCacheType => SkiaCacheType.None;
+
+        public virtual bool IsCacheComposite => false;
+
+        public virtual bool IsCacheGPU => false;
+
+        public virtual bool IsCacheOperations => UsingCacheType == SkiaCacheType.Operations;
+
+        protected CachedObject _renderObject;
+
+        protected CachedObject _renderObjectPrevious;
+
+        public virtual CachedObject RenderObjectPreparing { get; set; }
+
+        public virtual bool RenderObjectNeedsUpdate { get; set; }
+
+        public virtual bool UsesCacheDoubleBuffering => UsingCacheType == SkiaCacheType.ImageDoubleBuffered;
+
+        public virtual bool CanUseCacheDoubleBuffering => UsesCacheDoubleBuffering;
+
+        public virtual Action<DrawingContext> DelegateDrawCache { get; set; }
+
+        public virtual CachedObject RenderObject
+        {
+            get => _renderObject;
+            set => _renderObject = value;
+        }
+
+        public virtual CachedObject RenderObjectPrevious
+        {
+            get => _renderObjectPrevious;
+            set => _renderObjectPrevious = value;
+        }
+
+        public bool NeedUpdateFrontCache
+        {
+            get => _needUpdateFrontCache;
+            set => _needUpdateFrontCache = value;
+        }
+
+        protected virtual void InvalidateCacheWithPrevious()
+        {
+        }
+
+        public virtual void DrawRenderObjectInternal(DrawingContext context, CachedObject cache)
+        {
+        }
+
+        public virtual void DrawDirectInternal(DrawingContext context, SKRect drawingRect)
+        {
+            var destination = context.Destination;
+
+            var clone = AddPaintArguments(context).WithDestination(drawingRect);
+            DrawWithClipAndTransforms(clone, drawingRect, true, true, ctx =>
+            {
+                PaintWithEffects(ctx);
+
+                foreach (var postRenderer in EffectPostRenderers)
+                {
+                    postRenderer.Render(ctx.WithDestination(destination));
+                }
+            });
+        }
+
+        public virtual void DestroyRenderingObject()
+        {
+            RenderObject = null;
+            RenderObjectPrevious = null;
+        }
+
+        public virtual void InvalidateCache()
+        {
+            NeedUpdateFrontCache = true;
+            DestroyRenderingObject();
+        }
+
+        public virtual void Render(DrawingContext context, SKRect destination, float scale)
+        {
+            Render(context);
+        }
+
+        public virtual void Render(SkiaDrawingContext context, SKRect destination, float scale)
+        {
+            Render(new DrawingContext(context, destination, scale));
+        }
+
+        protected virtual void DrawUsingRenderObject(DrawingContext context, double width, double height)
+        {
+            if (IsDisposed || IsDisposing || !IsVisible)
+                return;
+
+            Arrange(context.Destination, (float)width, (float)height, context.Scale);
+
+            if (!CheckIsGhost())
+            {
+                DrawDirectInternal(context, DrawingRect);
+            }
+
+            FinalizeDrawingWithRenderObject(context);
+        }
 
         public static Color GetRandomColor()
         {

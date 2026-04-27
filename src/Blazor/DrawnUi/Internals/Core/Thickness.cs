@@ -50,6 +50,7 @@ namespace DrawnUi.Views
             get;
             set;
         }
+            public static readonly Thickness Zero = new Thickness(0);
 
         //
         // Summary:

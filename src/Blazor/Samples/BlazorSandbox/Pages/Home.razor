@@ -1,4 +1,8 @@
 ﻿@page "/"
+@using AppoMobi.Maui.Gestures
+@using DrawnUi.Draw
+@using DrawnUi.Views
+@using Microsoft.Maui.Graphics
 @using SkiaSharp
 @using SkiaSharp.Views.Blazor
 
@@ -8,9 +12,178 @@
 
 Welcome to your new app.
 
-<SKCanvasView OnPaintSurface="OnPaintSurface" Width="400" Height="300" />
+@* <SKCanvasView OnPaintSurface="OnPaintSurface" Width="400" Height="300" /> *@
+
+<Canvas WidthRequest="400" HeightRequest="980" BackgroundColor="#FFF5E8" Margin="0,16,0,0" Gestures="@GesturesMode.Enabled" RootControl="@RootControl" />
 
 @code {
+    private readonly SkiaLabel _tapStatus = new()
+    {
+        Text = "Tap target: waiting",
+        FontFamily = "FontText",
+        FontSize = 14,
+        TextColor = new Color(0.220f, 0.247f, 0.286f, 1f),
+        HorizontalOptions = LayoutOptions.Fill
+    };
+
+    private readonly SkiaLabel _panStatus = new()
+    {
+        Text = "Drag target: waiting",
+        FontFamily = "FontText",
+        FontSize = 14,
+        TextColor = new Color(0.220f, 0.247f, 0.286f, 1f),
+        HorizontalOptions = LayoutOptions.Fill
+    };
+
+    private readonly SkiaShape _dragTarget = new()
+    {
+        WidthRequest = 120,
+        HeightRequest = 120,
+        Type = ShapeType.Rectangle,
+        BackgroundColor = new Color(0.992f, 0.819f, 0.490f, 1f),
+        StrokeColor = new Color(0.529f, 0.302f, 0.094f, 1f),
+        StrokeWidth = 2,
+        CornerRadius = 18,
+        HorizontalOptions = LayoutOptions.Start,
+        VerticalOptions = LayoutOptions.Start
+    };
+
+    private readonly SkiaControl RootControl;
+
+    public Home()
+    {
+        var tapTarget = new SkiaShape()
+        {
+            WidthRequest = 336,
+            HeightRequest = 72,
+            Type = ShapeType.Rectangle,
+            BackgroundColor = new Color(0.204f, 0.553f, 0.780f, 1f),
+            StrokeColor = Colors.White,
+            StrokeWidth = 2,
+            CornerRadius = 16,
+            Padding = new Thickness(16),
+            HorizontalOptions = LayoutOptions.Fill,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "Tap me",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 20,
+                    TextColor = Colors.White,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center
+                }
+            }
+        };
+        tapTarget.ConsumeGestures += OnTapTargetConsumeGestures;
+        tapTarget.Tapped += OnTapTargetTapped;
+
+        _dragTarget.ConsumeGestures += OnDragTargetGestures;
+
+        var dragSurface = new SkiaLayout()
+        {
+            WidthRequest = 336,
+            HeightRequest = 220,
+            BackgroundColor = new Color(0.961f, 0.929f, 0.855f, 1f),
+            Padding = new Thickness(16),
+            Type = LayoutType.Absolute,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "Drag the yellow card",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 18,
+                    TextColor = new Color(0.302f, 0.165f, 0.063f, 1f),
+                    Margin = new Thickness(0, 0, 0, 8)
+                },
+                _dragTarget
+            }
+        };
+
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 368,
+            HeightRequest = 948,
+            BackgroundColor = Colors.Red,
+            Padding = new Thickness(16),
+            Spacing = 16,
+            Type = LayoutType.Column,
+            Children =
+            {
+                tapTarget,
+                _tapStatus,
+                dragSurface,
+                _panStatus,
+                new SkiaLayout()
+                {
+                    WidthRequest = 336,
+                    BackgroundColor = new Color(0.957f, 0.984f, 1f, 1f),
+                    Padding = new Thickness(12),
+                    Spacing = 8,
+                    Type = LayoutType.Column,
+                    Children =
+                    {
+                        new SkiaLabel()
+                        {
+                            Text = "SkiaRichLabel runtime probe",
+                            FontFamily = "FontTextTitle",
+                            FontSize = 18,
+                            TextColor = new Color(0.302f, 0.165f, 0.063f, 1f),
+                            HorizontalOptions = LayoutOptions.Fill
+                        },
+                        new SkiaRichLabel()
+                        {
+                            Text = "# Rich heading\nA richer markdown sample with **bold**, _italic_, and **nested _formatting_** plus emoji 🙂 🚒 🌍.\n\n## Mixed content\n- Bullet one with `inline code`\n- Bullet two with **strong text and _nested italic_** 🤖\n- Bullet three with a [link-like label](https://example.com) and emoji 👻\n\n1. Ordered step one\n2. Ordered step two with `code()` and 🎯\n\n```csharp\nvar total = 3;\nConsole.WriteLine($\"DrawnUi {total}\");\n```\n\nFinal line keeps plain text, markdown, and emoji working together ✅.",
+                            FontFamily = "FontText",
+                            FontSize = 14,
+                            WidthRequest = 312,
+                            HeadingTextColor = Colors.Black,
+                            TextColor = new Color(0.220f, 0.247f, 0.286f, 1f),
+                            HorizontalOptions = LayoutOptions.Fill
+                        }
+                    }
+                }
+            }
+        };
+        RootControl.ConsumeGestures += OnRootConsumeGestures;
+    }
+
+    private void OnRootConsumeGestures(object? sender, SkiaGesturesInfo e)
+    {
+        Console.WriteLine($"[Home] root got {e.Args.Type} at {e.Args.Event.Location.X:0},{e.Args.Event.Location.Y:0}");
+    }
+
+    private void OnTapTargetConsumeGestures(object? sender, SkiaGesturesInfo e)
+    {
+        Console.WriteLine($"[Home] tap-target got {e.Args.Type} at {e.Args.Event.Location.X:0},{e.Args.Event.Location.Y:0}");
+    }
+
+    private void OnTapTargetTapped(object? sender, ControlTappedEventArgs e)
+    {
+        Console.WriteLine($"[Home] tap {e.Parameters.Type} at {e.Parameters.Event.Location.X:0},{e.Parameters.Event.Location.Y:0}");
+        _tapStatus.Text = $"Tap target: {e.Parameters.Type} at {e.Parameters.Event.Location.X:0},{e.Parameters.Event.Location.Y:0}";
+    }
+
+    private void OnDragTargetGestures(object? sender, SkiaGesturesInfo e)
+    {
+        if (e.Args.Type == TouchActionResult.Panning)
+        {
+            Console.WriteLine($"[Home] pan dx={e.Args.Event.Distance.Delta.X:0.##} dy={e.Args.Event.Distance.Delta.Y:0.##}");
+            _dragTarget.TranslationX += e.Args.Event.Distance.Delta.X;
+            _dragTarget.TranslationY += e.Args.Event.Distance.Delta.Y;
+            _panStatus.Text = $"Drag target: dx {e.Args.Event.Distance.Delta.X:0}, dy {e.Args.Event.Distance.Delta.Y:0}";
+            e.Consumed = true;
+        }
+        else if (e.Args.Type == TouchActionResult.Up)
+        {
+            Console.WriteLine($"[Home] up at {_dragTarget.TranslationX:0},{_dragTarget.TranslationY:0}");
+            _panStatus.Text = $"Drag target: released at {_dragTarget.TranslationX:0},{_dragTarget.TranslationY:0}";
+        }
+    }
+
     private void OnPaintSurface(SKPaintSurfaceEventArgs e)
     {
         var canvas = e.Surface.Canvas;

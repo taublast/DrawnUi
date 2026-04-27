@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\ControlTappedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\ObservableAttachedItemsCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\VisualLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\SkiaShape.Shared.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\SkiaControl.Cache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\SkiaControl.Effects.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\SkiaControl.Invalidation.cs" />
@@ -32,6 +33,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\ControlLifecycleState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\SkiaCacheType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\ThermalState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Interfaces\IThermalStateService.cs">
+      <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Models\RangeF.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Models\CachedObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Enums\AutoSizeType.cs" />
@@ -220,6 +224,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Models\WheelCellInfo.cs" />
     <!-- Layout types moved from Maui -->
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Layout\LayoutStructure.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Layout\SkiaLayout.StackWrap.Shared.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Layout\SkiaLayout.Render.Shared.cs" />
     <!-- Scroll types moved from Maui -->
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Scroll\ScrollToIndexOrder.cs" />
     <!-- Gesture types moved from Maui -->

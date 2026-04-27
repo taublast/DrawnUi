@@ -2,20 +2,22 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using DrawnUi.Blazor.Views;
+using Color = Microsoft.Maui.Graphics.Color;
+using Grid = DrawnUi.Blazor.Views.Grid;
 
 namespace DrawnUi.Views
 {
 
     [ContentProperty("Children")]
-    public partial class DrawnView : ContentView,
+    public partial class DrawnView : Canvas,
         IDrawnBase, IAnimatorsManager
     {
+        public bool IsDirty { get; set; } = true;
+
         protected virtual void Draw(SkiaDrawingContext context, SKRect destination, float scale)
         {
 
@@ -89,7 +91,7 @@ namespace DrawnUi.Views
                                 destination.Top + (float)Math.Round((Padding.Top) * scale),
                                 destination.Right - (float)Math.Round((Padding.Right) * scale),
                                 destination.Bottom - (float)Math.Round((Padding.Bottom) * scale));
-                            child.Render(context, rectForChild, (float)scale);
+                            child.Render(new DrawingContext(context, rectForChild, (float)scale), rectForChild, (float)scale);
                         }
                     }
 
@@ -277,7 +279,7 @@ namespace DrawnUi.Views
             NeedCheckParentVisibility = true;
         }
 
-        public bool GetIsVisibleWithParent(VisualElement element)
+        public bool GetIsVisibleWithParent(Microsoft.Maui.Controls.View element)
         {
             if (element != null)
             {
@@ -295,7 +297,7 @@ namespace DrawnUi.Views
                     return false;
                 }
 
-                if (element.Parent is VisualElement visualParent)
+                if (element.Parent is Microsoft.Maui.Controls.View visualParent)
                 {
                     return GetIsVisibleWithParent(visualParent);
                 }
@@ -304,7 +306,7 @@ namespace DrawnUi.Views
             return true;
         }
 
-        private VisualElement _visibilityParent;
+        private Microsoft.Maui.Controls.View _visibilityParent;
 
         private void OnParentVisibilityCheck(object sender, PropertyChangedEventArgs e)
         {
@@ -350,13 +352,17 @@ namespace DrawnUi.Views
         {
             Update();
         }
-
-
         public virtual ScaledRect GetOnScreenVisibleArea(float inflateByPixels = 0)
         {
             var bounds = new SKRect(0 - inflateByPixels, 0 - inflateByPixels, (int)(Width * RenderingScale + inflateByPixels), (int)(Height * RenderingScale + inflateByPixels));
 
             return ScaledRect.FromPixels(bounds, (float)RenderingScale);
+        }
+
+        public virtual ScaledRect GetOnScreenVisibleArea(DrawingContext context, Vector2 inflateByPixels = default)
+        {
+            var inflate = Math.Max(Math.Abs(inflateByPixels.X), Math.Abs(inflateByPixels.Y));
+            return GetOnScreenVisibleArea(inflate);
         }
 
 
@@ -380,6 +386,11 @@ namespace DrawnUi.Views
         /// </summary>
         /// <param name="action"></param>
         public void PostponeExecutionBeforeDraw(Action action)
+        {
+            ExecuteBeforeDraw.Enqueue(action);
+        }
+
+        public void PostponeExecutionBeforeDraw(Action action, long key)
         {
             ExecuteBeforeDraw.Enqueue(action);
         }
@@ -636,7 +647,7 @@ namespace DrawnUi.Views
                         var finished = skiaAnimation.TickFrame(context.FrameTimeNanos);
                         if (skiaAnimation is ICanRenderOnCanvas renderer)
                         {
-                            var renderedrawn = renderer.Render(this, context, scale);
+                            var renderedrawn = renderer.Render(new DrawingContext(context, DrawingRect, (float)scale), this);
                         }
 
                         if (finished)
@@ -733,6 +744,46 @@ namespace DrawnUi.Views
             Update();
         }
 
+        public void AttachCanvasView(ISkiaDrawable drawable)
+        {
+            if (drawable == null)
+                return;
+
+            if (ReferenceEquals(CanvasView, drawable) && rendererSet)
+                return;
+
+            CanvasView = drawable;
+
+            if (!rendererSet)
+            {
+                rendererSet = true;
+                ConnectedHandler();
+                HandlerWasSet?.Invoke(this, rendererSet);
+            }
+        }
+
+        public void SyncExternalSize(double width, double height)
+        {
+            if (Math.Abs(Width - width) < 0.5 && Math.Abs(Height - height) < 0.5)
+                return;
+
+            Width = width;
+            Height = height;
+            OnSizeChanged();
+        }
+
+        public bool RenderExternalSurface(SKSurface surface, SKRect rect, long frameTimeNanos)
+        {
+            if (CanvasView is SkiaView skiaView)
+            {
+                skiaView.AttachSurface(surface, rect, frameTimeNanos);
+            }
+
+            SyncExternalSize(rect.Width, rect.Height);
+
+            return OnDrawSurface(surface?.Canvas, rect);
+        }
+
         public ISkiaDrawable CanvasView
         {
             get => _canvasView;
@@ -802,6 +853,13 @@ namespace DrawnUi.Views
             0,
             propertyChanged: UpdateRotation);
 
+            protected virtual void DisposePlatform()
+            {
+            }
+        
+            protected virtual void SetupRenderingLoop()
+            {
+            }
         private static void UpdateRotation(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (bindable is DrawnView control)
@@ -887,6 +945,12 @@ namespace DrawnUi.Views
 
         public virtual void Repaint()
         {
+            if (CanvasView != null)
+            {
+                CanvasView.Update();
+                return;
+            }
+
             Update();
         }
 
@@ -919,18 +983,7 @@ namespace DrawnUi.Views
 
         protected void SwapToDelayed()
         {
-            if (Delayed != null)
-            {
-                var normal = Delayed.Children[0] as SkiaView;
-                var accel = Delayed.Children[1] as SkiaViewAccelerated;
-                var kill = CanvasView;
-                kill.OnDraw = null;
-                accel.OnDraw = OnDrawSurface;
-                CanvasView = accel;
-                Delayed = null;
-
-                normal?.Disconnect();
-            }
+            Delayed = null;
         }
 
         /// <summary>
@@ -940,39 +993,17 @@ namespace DrawnUi.Views
         {
             DestroySkiaView();
 
-            if (IsUsingHardwareAcceleration)
+            if (IsUsingHardwareAcceleration && HardwareAcceleration != HardwareAccelerationMode.Disabled)
             {
-                if (HardwareAcceleration == HardwareAccelerationMode.Prerender)
-                {
-                    //create normal view, then after it has rendered 3 frames swap to the accelerated view, to avoid the blank screen when accelerated view is initializing (slow)
-                    var pre = new SkiaView(this);
-                    pre.OnDraw = OnDrawSurface;
-                    CanvasView = pre;
-                    var accel = new SkiaViewAccelerated(this);
-
-                    var content = new Grid()
-                    {
-
-                    };
-                    content.Children.Add(pre);
-                    content.Children.Add(accel);
-                    Content = content;
-                    Delayed = content;
-                    return;
-                }
-                else
-                if (HardwareAcceleration == HardwareAccelerationMode.Enabled)
-                {
-                    var view = new SkiaViewAccelerated(this);
-                    view.OnDraw = OnDrawSurface;
-                    CanvasView = view;
-                }
+                var acceleratedView = new SkiaViewAccelerated(this);
+                acceleratedView.OnDraw = (surface, rect) => OnDrawSurface(surface.Canvas, rect);
+                CanvasView = acceleratedView;
             }
             else
             {
-                var view = new SkiaView(this);
-                view.OnDraw = OnDrawSurface;
-                CanvasView = view;
+                var softwareView = new SkiaView(this);
+                softwareView.OnDraw = (surface, rect) => OnDrawSurface(surface.Canvas, rect);
+                CanvasView = softwareView;
             }
 
             Content = CanvasView as View;
@@ -1725,12 +1756,14 @@ namespace DrawnUi.Views
 
         protected object LockDraw = new();
 
+        public int UpdateLocks => 0;
+
         long renderedFrames;
 
 
         #region DISPOSE STUFF
 
-        public void DisposeObject(IDisposable resource)
+        public void DisposeObject(IDisposable resource, [CallerMemberName] string caller = null)
         {
             if (this.IsDisposed)
                 return;
@@ -1926,7 +1959,7 @@ namespace DrawnUi.Views
 
 
         public static readonly BindableProperty TintColorProperty = BindableProperty.Create(nameof(TintColor), typeof(Color), typeof(DrawnView),
-            Color.Transparent,
+            Colors.Transparent,
             propertyChanged: RedrawCanvas);
         public Color TintColor
         {
@@ -1935,7 +1968,7 @@ namespace DrawnUi.Views
         }
 
         public static readonly BindableProperty ClearColorProperty = BindableProperty.Create(nameof(ClearColor), typeof(Color), typeof(DrawnView),
-            Color.Transparent,
+            Colors.Transparent,
             propertyChanged: RedrawCanvas);
         public Color ClearColor
         {
@@ -2066,7 +2099,7 @@ namespace DrawnUi.Views
 
         public void PaintTintBackground(SKCanvas canvas)
         {
-            if (TintColor != null && TintColor != Color.Transparent)
+            if (TintColor != null && TintColor != Colors.Transparent)
             {
                 if (PaintSystem == null)
                 {
@@ -2080,7 +2113,7 @@ namespace DrawnUi.Views
 
         public void PaintClearBackground(SKCanvas canvas)
         {
-            if (ClearColor != Color.Transparent)
+            if (ClearColor != Colors.Transparent)
             {
                 if (PaintSystem == null)
                 {
@@ -2367,6 +2400,11 @@ namespace DrawnUi.Views
         private static void NeedInvalidate(BindableObject bindable, object oldvalue, object newvalue)
         {
             ((DrawnView)bindable).Invalidate();
+        }
+
+        protected virtual void OnSizeChanged()
+        {
+            Invalidate();
         }
 
         public static readonly BindableProperty MaximumWidthRequestProperty = BindableProperty.Create(

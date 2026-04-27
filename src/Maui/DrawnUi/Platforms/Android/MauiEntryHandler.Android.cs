@@ -8,10 +8,15 @@ using Android.Widget;
 using AndroidX.AppCompat.Widget;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
- 
+using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
- 
+
+#if NET9
+using TView = AndroidX.AppCompat.Widget.AppCompatEditText;
+#else
+using TView = Microsoft.Maui.Platform.MauiAppCompatEditText;
+#endif
 
 namespace DrawnUi.Controls;
 
@@ -50,11 +55,11 @@ public partial class MauiEntryHandler : EntryHandler
         }
     }
 
-    public AppCompatEditText NativeControl;
+    public TView NativeControl;
     protected MauiEntry Control => VirtualView as MauiEntry;
     private int _implyMaxLines;
 
-    protected override void ConnectHandler(AppCompatEditText platformView)
+    protected override void ConnectHandler(TView platformView) 
     {
         base.ConnectHandler(platformView);
 
@@ -68,7 +73,8 @@ public partial class MauiEntryHandler : EntryHandler
         ApplySettings();
     }
 
-    protected override void DisconnectHandler(AppCompatEditText platformView)
+
+    protected override void DisconnectHandler(TView platformView)
     {
         base.DisconnectHandler(platformView);
 
@@ -173,7 +179,7 @@ public partial class MauiEntryHandler : EntryHandler
         }
     }
 
-    protected override AppCompatEditText CreatePlatformView()
+    protected override TView CreatePlatformView()
     {
         NativeControl = base.CreatePlatformView();
 

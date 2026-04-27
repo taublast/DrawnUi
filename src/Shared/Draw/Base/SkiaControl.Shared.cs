@@ -3644,7 +3644,7 @@ namespace DrawnUi.Draw
             float marginVerticalDelta = (float)((Margins.Top - Margins.Bottom) * scale);
 
             var realWidth = useHorizontalThickness ? useMaxWidth + marginHorizontalDelta : useMaxWidth;
-            var realHeight = useVerticalThickness ? useMaxHeight + marginVerticalDelta : useMaxWidth;
+            var realHeight = useVerticalThickness ? useMaxHeight + marginVerticalDelta : useMaxHeight;
 
             // layoutHorizontal
             switch (layoutHorizontal.Alignment)

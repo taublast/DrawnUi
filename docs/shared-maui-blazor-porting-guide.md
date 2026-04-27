@@ -1,5 +1,7 @@
 # DrawnUi Shared / MAUI / Blazor Code Separation Guide
 
+Live status moved to [shared-maui-blazor-port-status.md](shared-maui-blazor-port-status.md). Update that file whenever port coverage or parity changes.
+
 ## Architecture Overview
 
 DrawnUi uses a **three-tier code separation** strategy:

@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.3.11527.330 d18.3
+VisualStudioVersion = 18.3.11527.330
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Addons", "Addons", "{5B1CDC4F-5ED6-4662-8EC6-3DE3FF0B05BE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawnUi.Maui.Camera", "Maui\Addons\DrawnUi.Maui.Camera\DrawnUi.Maui.Camera.csproj", "{DD2D491D-7046-41D2-A00E-FE65CBADE85E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawnUi.Maui.Game", "Maui\Addons\DrawnUi.Maui.Game\DrawnUi.Maui.Game.csproj", "{793E382E-815C-42A2-B045-44FF930BED07}"
 EndProject
@@ -51,10 +49,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DD2D491D-7046-41D2-A00E-FE65CBADE85E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD2D491D-7046-41D2-A00E-FE65CBADE85E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD2D491D-7046-41D2-A00E-FE65CBADE85E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD2D491D-7046-41D2-A00E-FE65CBADE85E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{793E382E-815C-42A2-B045-44FF930BED07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{793E382E-815C-42A2-B045-44FF930BED07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{793E382E-815C-42A2-B045-44FF930BED07}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -99,7 +93,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{DD2D491D-7046-41D2-A00E-FE65CBADE85E} = {5B1CDC4F-5ED6-4662-8EC6-3DE3FF0B05BE}
 		{793E382E-815C-42A2-B045-44FF930BED07} = {5B1CDC4F-5ED6-4662-8EC6-3DE3FF0B05BE}
 		{E1A7A5B7-8B7A-43CC-888B-4CF97783AFB7} = {5B1CDC4F-5ED6-4662-8EC6-3DE3FF0B05BE}
 		{1BECAEC0-5BCC-49FE-AB0B-0677D78C3D0B} = {8ED244C1-6F60-4954-BC7F-98D827EA31CC}

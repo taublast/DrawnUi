@@ -137,10 +137,8 @@ jobs:
   publish-github:
     name: Publish to GitHub Packages
     runs-on: windows-latest
-    needs:
-      - pack
-      - publish-nuget
-    if: ${{ inputs.publish_github && (needs.publish-nuget.result == 'success' || needs.publish-nuget.result == 'skipped') }}
+    needs: pack
+    if: ${{ inputs.publish_github }}
     permissions:
       contents: read
       packages: write

@@ -86,6 +86,10 @@
         <!--<PackageReference Include="Markdig" Version="0.41.1" />-->
         <PackageReference Include="CommonMark.NET" Version="0.15.1" />
         <PackageReference Include="AppoMobi.Maui.Gestures" Version="1.11.9.2" />
+        <PackageReference Include="Plugin.Maui.ApplePlatform" Version="1.0.0-pre7">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.0" />
         <PackageReference Include="SkiaSharp.Skottie" Version="3.119.0" />
         <PackageReference Include="Svg.Skia" Version="3.0.3" />
@@ -176,9 +180,10 @@
 
     <ItemGroup>
         <Folder Include="Internals\Handlers\" />
+        <Folder Include="Platforms\Apple\Extensions\" />
     </ItemGroup>
 
-    <ItemGroup>
+    <!--<ItemGroup>
         <Compile Remove="Shared/**/*.*pple.cs" />
         <None Include="Shared/**/*.*pple.cs" />
     </ItemGroup>
@@ -193,7 +198,7 @@
         <Compile Include="Shared/**/*.*pple.cs">
             <Link>Platforms/iOS/%(RecursiveDir)%(Filename)%(Extension)</Link>
         </Compile>
-    </ItemGroup>
+    </ItemGroup>-->
 
     <Import Project="..\..\Shared\Shared.projitems" Label="Shared" />
 

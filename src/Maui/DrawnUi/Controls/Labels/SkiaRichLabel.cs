@@ -25,9 +25,9 @@ public partial class SkiaRichLabel : SkiaLabel
 
     #region PROPERTIES DEFAULTS
 
-    public static Color ColorLink = Colors.CornflowerBlue;
-    public static Color ColorCodeBackground = Colors.DimGray;
-    public static Color ColorCodeBlock = Color.Parse("#222222");
+    public static Color ColorLink = new Color(0.392f, 0.584f, 0.929f, 1f);
+    public static Color ColorCodeBackground = new Color(0.412f, 0.412f, 0.412f, 1f);
+    public static Color ColorCodeBlock = new Color(0.133f, 0.133f, 0.133f, 1f);
     public static Color ColorCode = Colors.White;
     public static Color ColorStrikeout = Colors.Red;
     public static string MaskPrefixBullet = "• ";
@@ -115,6 +115,12 @@ public partial class SkiaRichLabel : SkiaLabel
                 {
                     needShape = SkiaLabel.UnicodeNeedsShaping(codePoint);
                 }
+#if BROWSER
+                if (SkiaLabel.EmojiData.IsEmoji(codePoint))
+                {
+                    needShape = false;
+                }
+#endif
 
                 spanData.Add((add, currentTypeFace, codePoint, needShape));
                 currentTypeFace = newTypeface;

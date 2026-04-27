@@ -11,6 +11,11 @@ using Context = Android.Content.Context;
 using Size = Microsoft.Maui.Graphics.Size;
 using TextChangedEventArgs = Android.Text.TextChangedEventArgs;
 
+#if NET9
+using TView = AndroidX.AppCompat.Widget.AppCompatEditText;
+#else
+using TView = Microsoft.Maui.Platform.MauiAppCompatEditText;
+#endif
 
 namespace DrawnUi.Controls;
 /*
@@ -101,6 +106,7 @@ public partial class MauiEditorHandler : EditorHandler
 {
     AppCompatEditText _control;
 
+    #if NET9
     protected override void ConnectHandler(AppCompatEditText platformView)
     {
         base.ConnectHandler(platformView);
@@ -112,6 +118,7 @@ public partial class MauiEditorHandler : EditorHandler
 
         ApplySettings();
     }
+    #endif
 
     private void OnTextChanged(object sender, TextChangedEventArgs e)
     {
@@ -154,7 +161,7 @@ public partial class MauiEditorHandler : EditorHandler
         ApplySettings();
     }
 
-    protected override void DisconnectHandler(AppCompatEditText platformView)
+    protected override void DisconnectHandler(TView platformView)
     {
         _control = null;
 
@@ -168,7 +175,7 @@ public partial class MauiEditorHandler : EditorHandler
 
     private MauiEditor Control;
 
-    protected override AppCompatEditText CreatePlatformView()
+    protected override TView CreatePlatformView()
     {
         //var native = base.CreatePlatformView();
         Control = this.VirtualView as MauiEditor;
@@ -230,7 +237,7 @@ public partial class MauiEditorHandler : EditorHandler
         return Math.Max(0, selectedLength);
     }
 
-    public class SubclassedAppCompatEditText : AppCompatEditText
+    public class SubclassedAppCompatEditText : TView
     {
 
         public void SetReturnType(ReturnType returnType)
@@ -276,8 +283,9 @@ public partial class MauiEditorHandler : EditorHandler
             SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public event EventHandler? SelectionChanged;
+        public new event EventHandler? SelectionChanged;
 
+#if NET9
         protected SubclassedAppCompatEditText(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
         { }
 
@@ -289,6 +297,15 @@ public partial class MauiEditorHandler : EditorHandler
 
         public SubclassedAppCompatEditText([NotNull] Context context, IAttributeSet attrs, int defStyleAttr) : base(context, attrs, defStyleAttr)
         { }
+#else
+
+        public SubclassedAppCompatEditText([NotNull] Context context) : base(context)
+        { }
+
+
+#endif
+
+
 
         public override IInputConnection OnCreateInputConnection(EditorInfo outAttrs)
         {

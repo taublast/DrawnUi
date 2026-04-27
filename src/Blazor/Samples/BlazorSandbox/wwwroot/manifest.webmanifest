@@ -1,6 +1,6 @@
 {
-  "name": "BlazorAppTestDrawn",
-  "short_name": "BlazorAppTestDrawn",
+  "name": "BlazorSandbox",
+  "short_name": "BlazorSandbox",
   "id": "./",
   "start_url": "./",
   "display": "standalone",

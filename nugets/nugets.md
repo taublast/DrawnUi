@@ -11,10 +11,10 @@ The workflow is manual and runs from the GitHub Actions UI with `workflow_dispat
 It has three jobs in order:
 
 1. `Pack NuGet packages`
-2. `Publish to NuGet.org`
-3. `Publish to GitHub Packages`
+2. `Publish to NuGet.org` (runs if `publish_nuget = true`)
+3. `Publish to GitHub Packages` (runs if `publish_github = true`)
 
-The second and third jobs use the artifact produced by the first job, so the exact packages that were packed are the ones that get published.
+Both publish jobs depend only on the pack job, so they run independently based on input toggles.
 
 ## Package List
 
@@ -122,8 +122,6 @@ This is why the workflow keeps `.snupkg` files in the artifact even though the p
 This job:
 
 - waits for the pack job
-- also waits for the NuGet.org job if that job was enabled
-- skips GitHub publishing if the NuGet.org job failed
 - downloads the same artifact
 - installs a current .NET SDK explicitly for `dotnet nuget push`
 - authenticates to the GitHub Packages NuGet feed using `GITHUB_TOKEN`

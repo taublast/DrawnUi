@@ -4,6 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
     <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
   </PropertyGroup>
@@ -19,6 +20,9 @@
     <ItemGroup>
     
       <PackageReference Include="AppoMobi.Specials" Version="9.0.3" />
+        <PackageReference Include="CommonMark.NET" Version="0.15.1" />
+        <PackageReference Include="HarfBuzzSharp" Version="8.3.1.3-preview.1" />
+        <PackageReference Include="SkiaSharp.HarfBuzz" Version="3.119.2-preview.1" />
     
       <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.2" />
 
@@ -30,7 +34,45 @@
     <Folder Include="Controls\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\Maui\DrawnUi\Draw\Text\SkiaLabel.cs" Link="Draw\Text\SkiaLabel.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Draw\Text\SkiaLabel.Maui.cs" Link="Draw\Text\SkiaLabel.Maui.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Draw\Text\TextSpan.Maui.cs" Link="Draw\Text\TextSpan.Maui.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Controls\Labels\SkiaRichLabel.cs" Link="Controls\Labels\SkiaRichLabel.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Controls\Labels\SkiaMarkdownLabel.CommonMark.cs" Link="Controls\Labels\SkiaMarkdownLabel.CommonMark.cs" />
+  </ItemGroup>
+
   <Import Project="..\..\Shared\Shared.projitems" Label="Shared" />
+
+  <ItemGroup>
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Internals\Extensions\FluentExtensions.Shared.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Fluent\SkiaFrame.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Fluent\SkiaLayer.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Fluent\SkiaRow.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Fluent\SkiaGrid.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Fluent\SkiaStack.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Fluent\SkiaWrap.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Pdf\Pdf.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Draw\Base\SkiaControl.Cache.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Draw\Base\VisualTreeHandler.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Shaders\SkiaShader.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\SkiaShaderEffect.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\AnimatedShaderEffect.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\SkiaDoubleAttachedTexturesEffect.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\BaseColorFilterEffect.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\BaseImageFilterEffect.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\BaseRenderEffect.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\BlurEffect.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\SaturationEffect.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\ContrastEffect.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\ColorPresetEffect.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\AdjustRGBEffect.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\ChainAdjustBrightnessEffect.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\ChainAdjustContrastEffect.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\ChainAdjustLightnessEffect.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\ChainColorPresetEffect.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\ChainSaturationEffect.cs" />
+  </ItemGroup>
  
 
 
