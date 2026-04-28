@@ -30,7 +30,6 @@ export function attachCanvasGestures(element, dotNetRef, enabled) {
     const pointerHandler = (type) => async (event) => {
         event.preventDefault();
         const offset = getOffset(element, event);
-        console.log('[canvasGestures] pointer', type, offset.x, offset.y);
         try {
             await dotNetRef.invokeMethodAsync('OnCanvasPointer', {
                 type,
@@ -43,7 +42,6 @@ export function attachCanvasGestures(element, dotNetRef, enabled) {
                 pressure: event.pressure ?? 0,
                 isInsideView: offset.inside
             });
-            console.log('[canvasGestures] pointer delivered', type);
         } catch (error) {
             console.error('[canvasGestures] pointer failed', type, error?.message ?? error);
         }
@@ -52,7 +50,6 @@ export function attachCanvasGestures(element, dotNetRef, enabled) {
     const wheelHandler = async (event) => {
         event.preventDefault();
         const offset = getOffset(element, event);
-        console.log('[canvasGestures] wheel', offset.x, offset.y, event.deltaY ?? 0);
         try {
             await dotNetRef.invokeMethodAsync('OnCanvasWheel', {
                 offsetX: offset.x,
@@ -60,7 +57,6 @@ export function attachCanvasGestures(element, dotNetRef, enabled) {
                 deltaY: event.deltaY ?? 0,
                 buttons: event.buttons ?? 0
             });
-            console.log('[canvasGestures] wheel delivered');
         } catch (error) {
             console.error('[canvasGestures] wheel failed', error?.message ?? error);
         }

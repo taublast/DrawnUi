@@ -781,7 +781,7 @@ namespace DrawnUi.Views
 
             SyncExternalSize(rect.Width, rect.Height);
 
-            return OnDrawSurface(surface?.Canvas, rect);
+            return OnDrawSurface(surface, rect);
         }
 
         public ISkiaDrawable CanvasView
@@ -996,13 +996,13 @@ namespace DrawnUi.Views
             if (IsUsingHardwareAcceleration && HardwareAcceleration != HardwareAccelerationMode.Disabled)
             {
                 var acceleratedView = new SkiaViewAccelerated(this);
-                acceleratedView.OnDraw = (surface, rect) => OnDrawSurface(surface.Canvas, rect);
+                acceleratedView.OnDraw = (surface, rect) => OnDrawSurface(surface, rect);
                 CanvasView = acceleratedView;
             }
             else
             {
                 var softwareView = new SkiaView(this);
-                softwareView.OnDraw = (surface, rect) => OnDrawSurface(surface.Canvas, rect);
+                softwareView.OnDraw = (surface, rect) => OnDrawSurface(surface, rect);
                 CanvasView = softwareView;
             }
 
@@ -1553,15 +1553,16 @@ namespace DrawnUi.Views
             return (long)nanoseconds;
         }
 
-        SkiaDrawingContext CreateContext(SKCanvas canvas)
+        SkiaDrawingContext CreateContext(SKSurface surface)
         {
             return new SkiaDrawingContext()
             {
                 Superview = this,
                 FrameTimeNanos = CanvasView.FrameTime,
-                Canvas = canvas,
-                Width = canvas.DeviceClipBounds.Width,
-                Height = canvas.DeviceClipBounds.Height
+                Surface = surface,
+                Canvas = surface.Canvas,
+                Width = surface.Canvas.DeviceClipBounds.Width,
+                Height = surface.Canvas.DeviceClipBounds.Height
             };
         }
 
@@ -1576,22 +1577,25 @@ namespace DrawnUi.Views
         public event EventHandler<SkiaDrawingContext?> WillDraw;
         public event EventHandler<SkiaDrawingContext?> WillFirstTimeDraw;
 
-        private bool OnDrawSurface(SKCanvas canvas, SKRect rect)
+        private bool OnDrawSurface(SKSurface surface, SKRect rect)
         {
             //lock (LockDraw)
             {
+                var canvas = surface?.Canvas;
 
                 if (!OnStartRendering(canvas))
                     return UpdateMode == DrawnUi.Infrastructure.Enums.UpdateMode.Constant;
 
                 try
                 {
+                    canvas.Clear(SKColors.Transparent);
+
                     if (NeedMeasure)
                     {
                         FixDensity();
                     }
 
-                    var args = CreateContext(canvas);
+                    var args = CreateContext(surface);
 
                     this.DrawingThreadId = Thread.CurrentThread.ManagedThreadId;
 

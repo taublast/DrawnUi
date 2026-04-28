@@ -210,16 +210,6 @@
             "pointermove" when args.Buttons > 0 => TouchActionType.Moved,
             _ => TouchActionType.Pointer
         };
-
-        Console.WriteLine($"[CanvasBridge] {args.Type} => {actionType}, listeners={_drawnView.GestureListeners.GetListeners().Count}");
-        if (_drawnView.GestureListeners.GetListeners().FirstOrDefault() is SkiaControl rootListener)
-        {
-            var hit = rootListener.HitIsInside((float)args.OffsetX, (float)args.OffsetY);
-            var hitBox = rootListener.HitBoxAuto;
-            var drawing = rootListener.DrawingRect;
-            var renderTreeCount = rootListener.RenderTree?.Count ?? -1;
-            Console.WriteLine($"[CanvasBridge] root={rootListener.GetType().Name} point={args.OffsetX:0},{args.OffsetY:0} hit={hit} drawing={drawing.Left:0},{drawing.Top:0},{drawing.Right:0},{drawing.Bottom:0} hitbox={hitBox.Left:0},{hitBox.Top:0},{hitBox.Right:0},{hitBox.Bottom:0} renderTree={renderTreeCount}");
-        }
         _drawnView.OnTouchAction(CreatePointerArgs(args, actionType, args.IsInsideView));
         return Task.CompletedTask;
     }

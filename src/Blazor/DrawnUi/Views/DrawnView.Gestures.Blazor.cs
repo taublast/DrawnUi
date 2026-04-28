@@ -96,7 +96,6 @@ public partial class DrawnView
                     {
                         forChild = ((SkiaControl)listener).HitIsInside(args.Event.StartingLocation.X, args.Event.StartingLocation.Y) ||
                                    listener == FocusedChild;
-                        Console.WriteLine($"[DrawnViewGestures] listener={listener.GetType().Name} tag={listener.Tag} point={args.Event.StartingLocation.X:0},{args.Event.StartingLocation.Y:0} inside={forChild}");
                     }
 
                     if (!forChild)
