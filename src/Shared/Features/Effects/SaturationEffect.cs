@@ -5,7 +5,7 @@ public class SaturationEffect : BaseColorFilterEffect
     public static readonly BindableProperty ValueProperty = BindableProperty.Create(
         nameof(Value),
         typeof(float),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         1f,
         propertyChanged: NeedUpdate);
 

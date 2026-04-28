@@ -49,6 +49,15 @@
     <Compile Include="..\..\Maui\DrawnUi\Controls\PlayFrames\SkiaLottie.cs" Link="Controls\PlayFrames\SkiaLottie.cs" />
     <Compile Include="..\..\Maui\DrawnUi\Controls\Labels\SkiaRichLabel.cs" Link="Controls\Labels\SkiaRichLabel.cs" />
     <Compile Include="..\..\Maui\DrawnUi\Controls\Labels\SkiaMarkdownLabel.CommonMark.cs" Link="Controls\Labels\SkiaMarkdownLabel.CommonMark.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Features\Effects\ChainDropShadowsEffect.cs" Link="Features\Effects\ChainDropShadowsEffect.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Features\Effects\ChainTintWithAlphaEffect.cs" Link="Features\Effects\ChainTintWithAlphaEffect.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Features\Effects\DropShadowEffect.cs" Link="Features\Effects\DropShadowEffect.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Features\Effects\OuterGlowEffect.cs" Link="Features\Effects\OuterGlowEffect.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Features\Effects\ShaderDoubleTexturesEffect.cs" Link="Features\Effects\ShaderDoubleTexturesEffect.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Features\Effects\TintEffect.cs" Link="Features\Effects\TintEffect.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Features\Effects\TintWithAlphaEffect.cs" Link="Features\Effects\TintWithAlphaEffect.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Features\Shaders\SKSL.cs" Link="Features\Shaders\SKSL.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Internals\Xaml\SkiaShadowsCollection.cs" Link="Internals\Xaml\SkiaShadowsCollection.cs" />
   </ItemGroup>
 
   <Import Project="..\..\Shared\Shared.projitems" Label="Shared" />
@@ -56,32 +65,9 @@
   <ItemGroup>
     <Compile Include="..\..\Shared\Internals\Enums\MeasuringStrategy.cs" Link="Internals\Enums\MeasuringStrategy.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Internals\Extensions\FluentExtensions.Shared.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Fluent\SkiaFrame.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Fluent\SkiaLayer.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Fluent\SkiaRow.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Fluent\SkiaGrid.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Fluent\SkiaStack.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Fluent\SkiaWrap.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Pdf\Pdf.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Draw\Base\SkiaControl.Cache.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Draw\Base\VisualTreeHandler.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Shaders\SkiaShader.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\SkiaShaderEffect.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\AnimatedShaderEffect.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\SkiaDoubleAttachedTexturesEffect.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\BaseColorFilterEffect.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\BaseImageFilterEffect.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\BaseRenderEffect.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\BlurEffect.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\SaturationEffect.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\ContrastEffect.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\ColorPresetEffect.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\AdjustRGBEffect.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\ChainAdjustBrightnessEffect.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\ChainAdjustContrastEffect.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\ChainAdjustLightnessEffect.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\ChainColorPresetEffect.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Effects\ChainSaturationEffect.cs" />
   </ItemGroup>
  
 

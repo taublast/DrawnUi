@@ -6,9 +6,19 @@ namespace DrawnUi.Infrastructure;
 public static class SkSl
 {
 
+    private static async Task<Stream> OpenResourceStreamAsync(string fileName)
+    {
+#if BROWSER
+        var httpClient = Super.Services.GetService(typeof(HttpClient)) as HttpClient ?? new HttpClient();
+        return await httpClient.GetStreamAsync(fileName);
+#else
+        return await FileSystem.OpenAppPackageFileAsync(fileName);
+#endif
+    }
+
     public static async Task<string> LoadFromResourcesAsync(string fileName)
     {
-        using var stream = await FileSystem.OpenAppPackageFileAsync(fileName);
+        using var stream = await OpenResourceStreamAsync(fileName);
         using var reader = new StreamReader(stream);
         var json = await reader.ReadToEndAsync();
         return json;
@@ -16,10 +26,14 @@ public static class SkSl
 
     public static string LoadFromResources(string fileName)
     {
+#if BROWSER
+        throw new NotSupportedException($"Synchronous shader resource loading is not supported in the browser for '{fileName}'. Use LoadFromResourcesAsync instead.");
+#else
         using var stream = FileSystem.OpenAppPackageFileAsync(fileName).GetAwaiter().GetResult();
         using var reader = new StreamReader(stream);
         var json = reader.ReadToEnd();
         return json;
+#endif
     }
 
     public static void Precompile(params string[] filenames)

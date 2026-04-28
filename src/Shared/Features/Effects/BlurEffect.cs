@@ -5,7 +5,7 @@ public class BlurEffect : BaseImageFilterEffect
     public static readonly BindableProperty AmountProperty = BindableProperty.Create(
         nameof(Amount),
         typeof(double),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         0.3,
         propertyChanged: NeedUpdate);
 

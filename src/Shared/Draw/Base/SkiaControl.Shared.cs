@@ -7190,7 +7190,7 @@ namespace DrawnUi.Draw
                 }
             }
 
-            if (gradient != null && color == null)
+            if (gradient != null && (color == null || color.Alpha <= 0))
             {
                 color = Colors.Black;
             }

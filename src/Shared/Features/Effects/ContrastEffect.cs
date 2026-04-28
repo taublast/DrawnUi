@@ -5,7 +5,7 @@ public class ContrastEffect : BaseColorFilterEffect
     public static readonly BindableProperty ContrastProperty = BindableProperty.Create(
         nameof(Contrast),
         typeof(float),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         1f, // Default to no change
         propertyChanged: NeedUpdate);
 

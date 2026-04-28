@@ -85,10 +85,16 @@ namespace DrawnUi.Draw
 
         public virtual Action<DrawingContext> DelegateDrawCache { get; set; }
 
+        public virtual event EventHandler<CachedObject> CreatedCache;
+
         public virtual CachedObject RenderObject
         {
             get => _renderObject;
-            set => _renderObject = value;
+            set
+            {
+                _renderObject = value;
+                CreatedCache?.Invoke(this, value);
+            }
         }
 
         public virtual CachedObject RenderObjectPrevious

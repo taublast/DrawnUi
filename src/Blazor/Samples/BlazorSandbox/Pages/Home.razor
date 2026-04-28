@@ -1,5 +1,5 @@
-﻿@page "/"
-@using DrawnUi.Controls
+@page "/"
+@using AppoMobi.Maui.Gestures
 @using DrawnUi.Draw
 @using DrawnUi.Views
 @using Microsoft.Maui.Controls
@@ -7,190 +7,465 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>SkiaLottie Workcase</h1>
+<h1>Interactive Cards Workcase</h1>
 
 Latest DrawnUI workcase hosted in the Blazor sandbox.
 
-<p id="lottie-debug-status">@_statusText</p>
+<p id="cards-debug-status">@_statusText</p>
 
-<Canvas WidthRequest="400"
-        HeightRequest="520"
-        BackgroundColor="#081B33"
-        Margin="0,16,0,0"
-        Gestures="@GesturesMode.Lock"
-        RootControl="@_rootControl" />
+<Canvas
+    WidthRequest="400"
+    HeightRequest="760"
+    BackgroundColor="#F0F0F5"
+    Margin="0,16,0,0"
+    RenderingMode="@RenderingModeType.Accelerated"
+    Gestures="@GesturesMode.Enabled"
+    RootControl="@RootControl" />
 
 @code {
-    private SkiaControl? _rootControl;
-    private SkiaLottie? _lottie;
-    private string _statusText = "Lottie status: booting";
     private readonly SkiaLabel _status = new()
     {
-        Text = "Lottie status: ready",
+        Text = "Cards status: ready",
         FontFamily = "FontText",
         FontSize = 14,
-        TextColor = Colors.White,
+        TextColor = Colors.Black,
         HorizontalOptions = LayoutOptions.Center
     };
 
-    protected override void OnInitialized()
+    private readonly SkiaLayer _card1Layer;
+    private readonly SkiaLayer _card2Layer;
+    private readonly SkiaControl RootControl;
+    private string _statusText = "Cards status: booting";
+    private bool _canRefreshUi;
+
+    public Home()
     {
-        var lottie = new SkiaLottie()
+        var title = new SkiaLayout()
         {
-            AutoPlay = false,
-            WidthRequest = 160,
-            HeightRequest = 160,
-            LockRatio = 1,
-            SpeedRatio = 0.6f,
-            Repeat = 0,
-            DefaultFrame = -1,
-            UseCache = SkiaCacheType.ImageDoubleBuffered,
-            HorizontalOptions = LayoutOptions.Center,
-            Source = "lottie/ok.json"
-        };
-        lottie.Started += OnLottieStarted;
-        lottie.Finished += OnLottieFinished;
-        _lottie = lottie;
-
-        SetStatus(lottie.Animation == null
-            ? "Lottie status: source pending"
-            : "Lottie status: source loaded");
-
-        var toggleButton = new SkiaShape()
-        {
-            WidthRequest = 180,
-            HeightRequest = 52,
-            Type = ShapeType.Rectangle,
-            BackgroundColor = new Color(0.149f, 0.439f, 0.741f, 1f),
-            StrokeColor = new Color(0.369f, 0.655f, 0.933f, 1f),
-            StrokeWidth = 1,
-            CornerRadius = 18,
-            HorizontalOptions = LayoutOptions.Center,
-            Children =
-            {
-                new SkiaLabel()
-                {
-                    Text = "Toggle Play",
-                    FontFamily = "FontTextTitle",
-                    FontSize = 16,
-                    TextColor = Colors.White,
-                    HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.Center
-                }
-            }
-        };
-        toggleButton.Tapped += OnToggleTapped;
-
-        _rootControl = new SkiaLayout()
-        {
-            Margin = new Thickness(16),
-            WidthRequest = 368,
-            HeightRequest = 488,
-            BackgroundColor = new Color(0.031f, 0.106f, 0.200f, 1f),
-            Padding = new Thickness(18),
-            Spacing = 16,
             Type = LayoutType.Column,
+            HorizontalOptions = LayoutOptions.Center,
+            Margin = new Thickness(16),
+            UseCache = SkiaCacheType.Image,
+            Spacing = 8,
             Children =
             {
                 new SkiaLabel()
                 {
-                    Text = "SkiaLottie runtime probe",
+                    Text = "Interactive Cards",
                     FontFamily = "FontTextTitle",
-                    FontSize = 24,
-                    TextColor = Colors.White,
+                    FontSize = 32,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = new Color(0.173f, 0.243f, 0.314f, 1f),
                     HorizontalOptions = LayoutOptions.Center
                 },
                 new SkiaLabel()
                 {
-                    Text = "Mirrors the MAUI sandbox play/stop sample using a local JSON asset served by Blazor.",
+                    Text = "Tap and drag to interact!",
                     FontFamily = "FontText",
-                    FontSize = 14,
-                    TextColor = new Color(0.757f, 0.831f, 0.922f, 1f),
-                    HorizontalOptions = LayoutOptions.Center,
-                    WidthRequest = 320
-                },
-                new SkiaShape()
-                {
-                    WidthRequest = 320,
-                    HeightRequest = 220,
-                    Type = ShapeType.Rectangle,
-                    BackgroundColor = new Color(0.063f, 0.149f, 0.286f, 1f),
-                    StrokeColor = new Color(0.286f, 0.498f, 0.710f, 1f),
-                    StrokeWidth = 1,
-                    CornerRadius = 22,
-                    Padding = new Thickness(20),
-                    HorizontalOptions = LayoutOptions.Center,
-                    Children =
-                    {
-                        lottie
-                    }
-                },
-                toggleButton,
+                    FontSize = 16,
+                    TextColor = new Color(0.498f, 0.549f, 0.553f, 1f),
+                    HorizontalOptions = LayoutOptions.Center
+                }
+            }
+        };
+
+        _card1Layer = CreateGradientCard();
+        _card2Layer = CreateGamingCard();
+
+        var scrollContent = new SkiaLayout()
+        {
+            Type = LayoutType.Column,
+            Tag = "Cells",
+            Padding = new Thickness(0, 5),
+            Spacing = 0,
+            Children =
+            {
+                _card1Layer,
+                _card2Layer,
+                CreateDataCard(),
                 _status
             }
         };
 
-        _ = MonitorLottieLoadAsync();
-    }
-
-    private async Task MonitorLottieLoadAsync()
-    {
-        for (var attempt = 0; attempt < 50; attempt++)
+        var scroll = new SkiaScroll()
         {
-            await Task.Delay(100);
+            IgnoreWrongDirection = true,
+            VerticalOptions = LayoutOptions.Fill,
+            Orientation = ScrollOrientation.Vertical,
+            Spacing = 20,
+            Content = scrollContent
+        };
 
-            if (_lottie?.Animation != null)
+        RootControl = new SkiaLayout()
+        {
+            Type = LayoutType.Column,
+            WidthRequest = 390,
+            HeightRequest = 720,
+            Spacing = 0,
+            Children =
             {
-                SetStatus("Lottie status: source loaded");
-                return;
+                title,
+                scroll
             }
-        }
+        };
 
-        if (_lottie?.Animation == null)
-        {
-            SetStatus("Lottie status: source load timeout");
-        }
+        SetStatus("Cards status: ready for runtime validation");
     }
 
-    private void OnToggleTapped(object? sender, ControlTappedEventArgs e)
+    private SkiaLayer CreateGradientCard()
     {
-        if (_lottie == null)
+        var card = new SkiaShape()
+        {
+            WidthRequest = 300,
+            HeightRequest = 180,
+            Type = ShapeType.Rectangle,
+            CornerRadius = 20,
+            HorizontalOptions = LayoutOptions.Center,
+            FillGradient = new SkiaGradient()
+            {
+                Type = GradientType.Linear,
+                Angle = 45,
+                Colors = new List<Color>
+                {
+                    new Color(0.400f, 0.494f, 0.918f, 1f),
+                    new Color(0.463f, 0.294f, 0.635f, 1f)
+                }
+            },
+            Children =
+            {
+                new SkiaLayout()
+                {
+                    Type = LayoutType.Column,
+                    Margin = new Thickness(24),
+                    Spacing = 12,
+                    Children =
+                    {
+                        new SkiaRichLabel()
+                        {
+                            Text = "🎨 Gradient Card",
+                            FontSize = 20,
+                            FontAttributes = FontAttributes.Bold,
+                            TextColor = Colors.White
+                        },
+                        new SkiaLabel()
+                        {
+                            Text = "Beautiful gradients with glow effects",
+                            FontFamily = "FontText",
+                            FontSize = 14,
+                            TextColor = new Color(0.910f, 0.910f, 1f, 1f)
+                        },
+                        new SkiaLabel()
+                        {
+                            Text = "Tap to animate!",
+                            FontFamily = "FontText",
+                            FontSize = 12,
+                            TextColor = new Color(0.800f, 0.800f, 1f, 1f),
+                            Margin = new Thickness(0, 8, 0, 0)
+                        }
+                    }
+                }
+            }
+        };
+
+        card.VisualEffects.Add(new DropShadowEffect()
+        {
+            Color = new Color(0.400f, 0.494f, 0.918f, 1f),
+            Blur = 3,
+            X = 1,
+            Y = 1
+        });
+        card.ConsumeGestures += OnCardGestures;
+
+        return new SkiaLayer()
+        {
+            Padding = new Thickness(20, 8),
+            UseCache = SkiaCacheType.Image,
+            Children =
+            {
+                card
+            }
+        };
+    }
+
+    private SkiaLayer CreateGamingCard()
+    {
+        var card = new SkiaShape()
+        {
+            WidthRequest = 300,
+            HeightRequest = 180,
+            Type = ShapeType.Rectangle,
+            CornerRadius = 20,
+            HorizontalOptions = LayoutOptions.Center,
+            FillGradient = new SkiaGradient()
+            {
+                Type = GradientType.Circular,
+                StartXRatio = 0.85f,
+                StartYRatio = 0.25f,
+                Colors = new List<Color>
+                {
+                    new Color(1f, 0.420f, 0.420f, 1f),
+                    new Color(0.769f, 0.271f, 0.412f, 1f)
+                }
+            },
+            Children =
+            {
+                new SkiaLayout()
+                {
+                    Type = LayoutType.Column,
+                    Margin = new Thickness(24),
+                    Spacing = 12,
+                    Children =
+                    {
+                        new SkiaRichLabel()
+                        {
+                            Text = "🎮 Gaming Card",
+                            FontSize = 20,
+                            FontAttributes = FontAttributes.Bold,
+                            TextColor = Colors.White
+                        },
+                        new SkiaLabel()
+                        {
+                            Text = "Drag me around! Smooth movement",
+                            FontFamily = "FontText",
+                            FontSize = 14,
+                            TextColor = new Color(1f, 0.910f, 0.910f, 1f)
+                        },
+                        new SkiaLabel()
+                        {
+                            Text = "Pan gesture enabled",
+                            FontFamily = "FontText",
+                            FontSize = 12,
+                            TextColor = new Color(1f, 0.800f, 0.800f, 1f),
+                            Margin = new Thickness(0, 8, 0, 0)
+                        }
+                    }
+                }
+            }
+        };
+
+        card.VisualEffects.Add(new DropShadowEffect()
+        {
+            Color = new Color(1f, 0.420f, 0.420f, 1f),
+            Blur = 5,
+            X = 0,
+            Y = 0
+        });
+        card.ConsumeGestures += OnCardGestures;
+
+        var layer = new SkiaLayer()
+        {
+            Padding = new Thickness(20, 8),
+            UseCache = SkiaCacheType.Image,
+            Children =
+            {
+                card
+            }
+        };
+
+        layer.ConsumeGestures += OnCardGestures;
+        return layer;
+    }
+
+    private SkiaLayer CreateDataCard()
+    {
+        var card = new SkiaShape()
+        {
+            Type = ShapeType.Rectangle,
+            CornerRadius = 20,
+            WidthRequest = 300,
+            HeightRequest = 200,
+            HorizontalOptions = LayoutOptions.Center,
+            FillGradient = new SkiaGradient()
+            {
+                Type = GradientType.Linear,
+                Angle = 135,
+                Colors = new List<Color>
+                {
+                    new Color(0f, 0.267f, 0f, 1f),
+                    new Color(0f, 0.600f, 0f, 1f)
+                }
+            },
+            Children =
+            {
+                new SkiaLayout()
+                {
+                    Type = LayoutType.Column,
+                    Margin = new Thickness(24),
+                    Spacing = 16,
+                    Children =
+                    {
+                        new SkiaRichLabel()
+                        {
+                            Text = "📊 Data Card",
+                            FontSize = 20,
+                            FontAttributes = FontAttributes.Bold,
+                            TextColor = Colors.White
+                        },
+                        new SkiaLayout()
+                        {
+                            Type = LayoutType.Column,
+                            Spacing = 8,
+                            Children =
+                            {
+                                new SkiaLabel()
+                                {
+                                    Text = "Performance: 87%",
+                                    FontFamily = "FontText",
+                                    FontSize = 12,
+                                    TextColor = new Color(0.910f, 0.957f, 1f, 1f)
+                                },
+                                CreateProgressBar(174),
+                                new SkiaLabel()
+                                {
+                                    Text = "Memory: 64%",
+                                    FontFamily = "FontText",
+                                    FontSize = 12,
+                                    TextColor = new Color(0.910f, 0.957f, 1f, 1f)
+                                },
+                                CreateProgressBar(128)
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        card.VisualEffects.Add(new DropShadowEffect()
+        {
+            Color = new Color(1f, 0f, 0f, 0.600f),
+            Blur = 5,
+            X = 0,
+            Y = 0
+        });
+        card.ConsumeGestures += OnCardGestures;
+
+        return new SkiaLayer()
+        {
+            Padding = new Thickness(20, 8),
+            UseCache = SkiaCacheType.Image,
+            Children =
+            {
+                card
+            }
+        };
+    }
+
+    private SkiaShape CreateProgressBar(double fillWidth)
+    {
+        return new SkiaShape()
+        {
+            Type = ShapeType.Rectangle,
+            CornerRadius = 4,
+            WidthRequest = 200,
+            HeightRequest = 6,
+            BackgroundColor = new Color(1f, 1f, 1f, 0.314f),
+            Children =
+            {
+                new SkiaShape()
+                {
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 4,
+                    WidthRequest = fillWidth,
+                    HeightRequest = 6,
+                    BackgroundColor = Colors.White,
+                    HorizontalOptions = LayoutOptions.Start
+                }
+            }
+        };
+    }
+
+    private void OnCardGestures(object? sender, SkiaGesturesInfo e)
+    {
+        if (sender is not SkiaControl control)
         {
             return;
         }
 
-        if (_lottie.Animation == null)
+        if (e.Args.Type == TouchActionResult.Tapped)
         {
-            SetStatus("Lottie status: source not loaded");
+            e.Consumed = true;
+            SetStatus("Cards status: animating tutorial card");
+
+            Task.Run(async () =>
+            {
+                if (control is SkiaShape shape && shape.FillGradient is SkiaGradient gradient && gradient.Colors.Count >= 2)
+                {
+                    var originalStart = gradient.Colors[0];
+                    var originalEnd = gradient.Colors[1];
+                    const double lighter = 1.5;
+
+                    var gradientStartColor = new Color(
+                        (float)Math.Min(1, originalStart.Red * lighter),
+                        (float)Math.Min(1, originalStart.Green * lighter),
+                        (float)Math.Min(1, originalStart.Blue * lighter),
+                        originalStart.Alpha);
+
+                    var gradientEndColor = new Color(
+                        (float)Math.Min(1, originalEnd.Red * lighter),
+                        (float)Math.Min(1, originalEnd.Green * lighter),
+                        (float)Math.Min(1, originalEnd.Blue * lighter),
+                        originalEnd.Alpha);
+
+                    gradient.Colors = new List<Color> { gradientStartColor, gradientEndColor };
+                    await Task.Delay(200);
+                    gradient.Colors = new List<Color> { originalStart, originalEnd };
+                }
+            });
+
+            Task.Run(async () =>
+            {
+                control.ScaleToAsync(1.1, 1.1, 150);
+                await Task.Delay(100);
+                control.ScaleToAsync(1.0, 1.0, 200);
+
+                control.RotateToAsync(control.Rotation + 2, 200, Easing.SpringOut);
+                await Task.Delay(150);
+                control.RotateToAsync(0, 300, Easing.SpringOut);
+                SetStatus("Cards status: tutorial card animation complete");
+            });
+        }
+
+        if (sender != _card2Layer)
+        {
             return;
         }
 
-        if (_lottie.IsPlaying)
+        if (e.Args.Type == TouchActionResult.Panning)
         {
-            _lottie.Stop();
-            SetStatus("Lottie status: stopped");
+            e.Consumed = true;
+
+            control.TranslationX += e.Args.Event.Distance.Delta.X / control.RenderingScale;
+            control.TranslationY += e.Args.Event.Distance.Delta.Y / control.RenderingScale;
+
+            var deltaX = e.Args.Event.Distance.Total.X / control.RenderingScale;
+            var rotationAmount = deltaX * 0.1;
+            control.Rotation = Math.Max(-15, Math.Min(15, rotationAmount));
+            SetStatus($"Cards status: dragging pannable card ({control.TranslationX:0},{control.TranslationY:0})");
         }
-        else
+        else if (e.Args.Type == TouchActionResult.Up)
         {
-            _lottie.Start();
-            SetStatus("Lottie status: starting");
+            control.TranslateToAsync(0, 0, 100, Easing.SpringOut);
+            control.RotateToAsync(0, 75, Easing.SpringOut);
+            SetStatus("Cards status: pannable card reset");
         }
     }
 
-    private void OnLottieStarted(object? sender, EventArgs e)
+    protected override void OnAfterRender(bool firstRender)
     {
-        SetStatus("Lottie status: playing");
-    }
-
-    private void OnLottieFinished(object? sender, EventArgs e)
-    {
-        SetStatus("Lottie status: finished");
+        if (firstRender)
+        {
+            _canRefreshUi = true;
+        }
     }
 
     private void SetStatus(string value)
     {
         _status.Text = value;
         _statusText = value;
-        InvokeAsync(StateHasChanged);
+
+        if (_canRefreshUi)
+        {
+            InvokeAsync(StateHasChanged);
+        }
     }
 }

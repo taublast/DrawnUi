@@ -1,0 +1,196 @@
+@page "/lottie-probe"
+@using DrawnUi.Controls
+@using DrawnUi.Draw
+@using DrawnUi.Views
+@using Microsoft.Maui.Controls
+@using Microsoft.Maui.Graphics
+
+<PageTitle>Lottie Probe</PageTitle>
+
+<h1>SkiaLottie Workcase</h1>
+
+Archived DrawnUI workcase kept for regression access from the Blazor sandbox menu.
+
+<p id="lottie-debug-status">@_statusText</p>
+
+<Canvas WidthRequest="400"
+        HeightRequest="520"
+        BackgroundColor="#081B33"
+        Margin="0,16,0,0"
+        Gestures="@GesturesMode.Lock"
+        RootControl="@_rootControl" />
+
+@code {
+    private SkiaControl? _rootControl;
+    private SkiaLottie? _lottie;
+    private string _statusText = "Lottie status: booting";
+    private readonly SkiaLabel _status = new()
+    {
+        Text = "Lottie status: ready",
+        FontFamily = "FontText",
+        FontSize = 14,
+        TextColor = Colors.White,
+        HorizontalOptions = LayoutOptions.Center
+    };
+
+    protected override void OnInitialized()
+    {
+        var lottie = new SkiaLottie()
+        {
+            AutoPlay = false,
+            WidthRequest = 160,
+            HeightRequest = 160,
+            LockRatio = 1,
+            SpeedRatio = 0.6f,
+            Repeat = 0,
+            DefaultFrame = -1,
+            UseCache = SkiaCacheType.ImageDoubleBuffered,
+            HorizontalOptions = LayoutOptions.Center,
+            Source = "lottie/ok.json"
+        };
+        lottie.Started += OnLottieStarted;
+        lottie.Finished += OnLottieFinished;
+        _lottie = lottie;
+
+        SetStatus(lottie.Animation == null
+            ? "Lottie status: source pending"
+            : "Lottie status: source loaded");
+
+        var toggleButton = new SkiaShape()
+        {
+            WidthRequest = 180,
+            HeightRequest = 52,
+            Type = ShapeType.Rectangle,
+            BackgroundColor = new Color(0.149f, 0.439f, 0.741f, 1f),
+            StrokeColor = new Color(0.369f, 0.655f, 0.933f, 1f),
+            StrokeWidth = 1,
+            CornerRadius = 18,
+            HorizontalOptions = LayoutOptions.Center,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "Toggle Play",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 16,
+                    TextColor = Colors.White,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center
+                }
+            }
+        };
+        toggleButton.Tapped += OnToggleTapped;
+
+        _rootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 368,
+            HeightRequest = 488,
+            BackgroundColor = new Color(0.031f, 0.106f, 0.200f, 1f),
+            Padding = new Thickness(18),
+            Spacing = 16,
+            Type = LayoutType.Column,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SkiaLottie runtime probe",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 24,
+                    TextColor = Colors.White,
+                    HorizontalOptions = LayoutOptions.Center
+                },
+                new SkiaLabel()
+                {
+                    Text = "Mirrors the MAUI sandbox play/stop sample using a local JSON asset served by Blazor.",
+                    FontFamily = "FontText",
+                    FontSize = 14,
+                    TextColor = new Color(0.757f, 0.831f, 0.922f, 1f),
+                    HorizontalOptions = LayoutOptions.Center,
+                    WidthRequest = 320
+                },
+                new SkiaShape()
+                {
+                    WidthRequest = 320,
+                    HeightRequest = 220,
+                    Type = ShapeType.Rectangle,
+                    BackgroundColor = new Color(0.063f, 0.149f, 0.286f, 1f),
+                    StrokeColor = new Color(0.286f, 0.498f, 0.710f, 1f),
+                    StrokeWidth = 1,
+                    CornerRadius = 22,
+                    Padding = new Thickness(20),
+                    HorizontalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        lottie
+                    }
+                },
+                toggleButton,
+                _status
+            }
+        };
+
+        _ = MonitorLottieLoadAsync();
+    }
+
+    private async Task MonitorLottieLoadAsync()
+    {
+        for (var attempt = 0; attempt < 50; attempt++)
+        {
+            await Task.Delay(100);
+
+            if (_lottie?.Animation != null)
+            {
+                SetStatus("Lottie status: source loaded");
+                return;
+            }
+        }
+
+        if (_lottie?.Animation == null)
+        {
+            SetStatus("Lottie status: source load timeout");
+        }
+    }
+
+    private void OnToggleTapped(object? sender, ControlTappedEventArgs e)
+    {
+        if (_lottie == null)
+        {
+            return;
+        }
+
+        if (_lottie.Animation == null)
+        {
+            SetStatus("Lottie status: source not loaded");
+            return;
+        }
+
+        if (_lottie.IsPlaying)
+        {
+            _lottie.Stop();
+            SetStatus("Lottie status: stopped");
+        }
+        else
+        {
+            _lottie.Start();
+            SetStatus("Lottie status: starting");
+        }
+    }
+
+    private void OnLottieStarted(object? sender, EventArgs e)
+    {
+        SetStatus("Lottie status: playing");
+    }
+
+    private void OnLottieFinished(object? sender, EventArgs e)
+    {
+        SetStatus("Lottie status: finished");
+    }
+
+    private void SetStatus(string value)
+    {
+        _status.Text = value;
+        _statusText = value;
+        InvokeAsync(StateHasChanged);
+    }
+}

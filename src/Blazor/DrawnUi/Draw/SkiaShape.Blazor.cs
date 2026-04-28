@@ -37,15 +37,16 @@ namespace DrawnUi.Draw
 
             var scaledRadii = CreateScaledRadii(scale);
 
-            var backgroundColor = BackgroundColor != null ? BackgroundColor.ToSKColor() : SKColors.Transparent;
-            if (backgroundColor.Alpha > 0)
+            using var fillPaint = new SKPaint
             {
-                using var fillPaint = new SKPaint
-                {
-                    Color = backgroundColor,
-                    Style = SKPaintStyle.Fill,
-                    IsAntialias = Type != ShapeType.Rectangle || CornerRadius != default
-                };
+                Style = SKPaintStyle.Fill,
+                IsAntialias = Type != ShapeType.Rectangle || CornerRadius != default
+            };
+
+            if (SetupBackgroundPaint(fillPaint, backgroundRect))
+            {
+                fillPaint.BlendMode = FillBlendMode;
+                fillPaint.Style = SKPaintStyle.Fill;
                 TryPaintBasicShape(ctx.Context.Canvas, backgroundRect, scaledRadii, minSize, fillPaint);
             }
 

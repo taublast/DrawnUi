@@ -6,7 +6,7 @@ public class TintEffect : BaseColorFilterEffect
     public static readonly BindableProperty ColorProperty = BindableProperty.Create(
         nameof(Color),
         typeof(Color),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         Colors.Red,
         propertyChanged: NeedUpdate);
 
@@ -19,7 +19,7 @@ public class TintEffect : BaseColorFilterEffect
     public static readonly BindableProperty EffectBlendModeProperty = BindableProperty.Create(
         nameof(EffectBlendMode),
         typeof(SKBlendMode),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         SKBlendMode.SrcATop,
         propertyChanged: NeedUpdate);
 

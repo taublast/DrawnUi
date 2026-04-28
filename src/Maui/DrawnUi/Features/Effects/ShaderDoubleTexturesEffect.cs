@@ -237,7 +237,7 @@ public class ShaderDoubleTexturesEffect : SkiaShaderEffect
             }
             else
             {
-                using var stream = await FileSystem.OpenAppPackageFileAsync(fileName);
+                using var stream = await OpenPackageFileStreamAsync(fileName);
                 LoadedPrimaryBitmap = SKBitmap.Decode(stream);
             }
 
@@ -393,7 +393,7 @@ public class ShaderDoubleTexturesEffect : SkiaShaderEffect
             }
             else
             {
-                using var stream = await FileSystem.OpenAppPackageFileAsync(fileName);
+                using var stream = await OpenPackageFileStreamAsync(fileName);
                 LoadedSecondaryBitmap = SKBitmap.Decode(stream);
             }
 
@@ -411,6 +411,16 @@ public class ShaderDoubleTexturesEffect : SkiaShaderEffect
             _semaphoreLoadSecondaryFile.Release();
         }
     }
+
+        protected virtual async Task<Stream> OpenPackageFileStreamAsync(string fileName)
+        {
+    #if BROWSER
+        var httpClient = Super.Services.GetService(typeof(HttpClient)) as HttpClient ?? new HttpClient();
+        return await httpClient.GetStreamAsync(fileName);
+    #else
+        return await FileSystem.OpenAppPackageFileAsync(fileName);
+    #endif
+        }
 
     #endregion
 

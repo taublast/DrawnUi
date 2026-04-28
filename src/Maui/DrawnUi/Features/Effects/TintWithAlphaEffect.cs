@@ -6,7 +6,7 @@ public class TintWithAlphaEffect : BaseColorFilterEffect
     public static readonly BindableProperty ColorTintProperty = BindableProperty.Create(
         nameof(ColorTint),
         typeof(Color),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         Colors.Red,
         propertyChanged: NeedUpdate);
 
@@ -19,7 +19,7 @@ public class TintWithAlphaEffect : BaseColorFilterEffect
     public static readonly BindableProperty AlphaProperty = BindableProperty.Create(
         nameof(Alpha),
         typeof(double),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         1.0,
         propertyChanged: NeedUpdate);
 
@@ -32,7 +32,7 @@ public class TintWithAlphaEffect : BaseColorFilterEffect
     public static readonly BindableProperty EffectBlendModeProperty = BindableProperty.Create(
         nameof(EffectBlendMode),
         typeof(SKBlendMode),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         SKBlendMode.SrcATop,
         propertyChanged: NeedUpdate);
 

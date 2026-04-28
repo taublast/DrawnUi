@@ -5,7 +5,7 @@ public class ChainSaturationEffect : BaseChainedEffect
     public static readonly BindableProperty ValueProperty = BindableProperty.Create(
         nameof(Value),
         typeof(float),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         1f, // Default to no change
         propertyChanged: NeedUpdate);
 

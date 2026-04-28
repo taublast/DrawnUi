@@ -58,7 +58,7 @@ public class AdjustBrightnessEffect : BaseColorFilterEffect
     public static readonly BindableProperty BrightnessProperty = BindableProperty.Create(
         nameof(Brightness),
         typeof(float),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         0f, // Default to no change
         propertyChanged: NeedUpdate);
 

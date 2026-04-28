@@ -15,14 +15,7 @@ namespace DrawnUi.Infrastructure.Xaml
             }
             else
             {
-
-                var fromPlatform = InternalExtensions.FromPlatform(value);
-                if (fromPlatform != null)
-                {
-                    base.Add(fromPlatform);
-                }
-                else
-                    throw new InvalidOperationException("Invalid item type in Shadows collection");
+                throw new InvalidOperationException("Invalid item type in Shadows collection");
             }
             return Count - 1;
         }

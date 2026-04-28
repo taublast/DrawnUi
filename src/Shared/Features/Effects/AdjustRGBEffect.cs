@@ -5,21 +5,21 @@ public class AdjustRGBEffect : BaseColorFilterEffect
     public static readonly BindableProperty RedProperty = BindableProperty.Create(
         nameof(Red),
         typeof(float),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         1f, // Default to no change
         propertyChanged: NeedUpdate);
 
     public static readonly BindableProperty GreenProperty = BindableProperty.Create(
         nameof(Green),
         typeof(float),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         1f, // Default to no change
         propertyChanged: NeedUpdate);
 
     public static readonly BindableProperty BlueProperty = BindableProperty.Create(
         nameof(Blue),
         typeof(float),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         1f, // Default to no change
         propertyChanged: NeedUpdate);
 
@@ -74,21 +74,21 @@ public class ChainAdjustRGBEffect : BaseChainedEffect
     public static readonly BindableProperty RedProperty = BindableProperty.Create(
         nameof(Red),
         typeof(float),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         1f, // Default to no change
         propertyChanged: NeedUpdate);
 
     public static readonly BindableProperty GreenProperty = BindableProperty.Create(
         nameof(Green),
         typeof(float),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         1f, // Default to no change
         propertyChanged: NeedUpdate);
 
     public static readonly BindableProperty BlueProperty = BindableProperty.Create(
         nameof(Blue),
         typeof(float),
-        typeof(SkiaImage),
+        typeof(SkiaControl),
         1f, // Default to no change
         propertyChanged: NeedUpdate);
 
