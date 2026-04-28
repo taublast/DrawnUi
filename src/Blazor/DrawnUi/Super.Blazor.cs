@@ -33,7 +33,15 @@ namespace DrawnUi.Draw
 {
     public partial class Super
     {
+        private static readonly object FrameLoopLock = new();
+        private static CancellationTokenSource _frameLoopCancellation;
+        private static bool _loopStarted;
+
         public static object App { get; set; }
+
+        public static event EventHandler OnFrame;
+
+        public static int RefreshRate { get; protected set; } = 60;
 
         public static IServiceProvider Services
         {
@@ -72,8 +80,61 @@ namespace DrawnUi.Draw
             Log(message, level, caller);
         }
 
+        public static void EnsureFrameLoopStarted()
+        {
+            lock (FrameLoopLock)
+            {
+                if (_loopStarted)
+                {
+                    return;
+                }
+
+                _loopStarted = true;
+                _frameLoopCancellation = new CancellationTokenSource();
+                _ = RunFrameLoopAsync(_frameLoopCancellation.Token);
+            }
+        }
+
+        private static async Task RunFrameLoopAsync(CancellationToken cancellationToken)
+        {
+            try
+            {
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    var fps = MaxFps > 0 ? MaxFps : RefreshRate;
+                    if (fps <= 0)
+                    {
+                        fps = 60;
+                    }
+
+                    await Task.Delay(TimeSpan.FromSeconds(1.0 / fps), cancellationToken);
+                    OnFrame?.Invoke(null, EventArgs.Empty);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+            }
+        }
+
+        private static void RestartFrameLoop()
+        {
+            lock (FrameLoopLock)
+            {
+                if (!_loopStarted)
+                {
+                    return;
+                }
+
+                _frameLoopCancellation?.Cancel();
+                _frameLoopCancellation?.Dispose();
+                _frameLoopCancellation = new CancellationTokenSource();
+                _ = RunFrameLoopAsync(_frameLoopCancellation.Token);
+            }
+        }
+
         static partial void OnMaxFpsChanged(int fps)
         {
+            RestartFrameLoop();
         }
 
 

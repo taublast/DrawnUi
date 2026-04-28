@@ -358,6 +358,23 @@ namespace Microsoft.Maui.Controls
         Microsoft.Maui.IView PresentedContent { get; }
     }
 
+    public enum BindingMode
+    {
+        Default,
+        OneWay,
+        TwoWay,
+        OneTime,
+        OneWayToSource
+    }
+
+    public enum ScrollOrientation
+    {
+        Neither,
+        Horizontal,
+        Vertical,
+        Both
+    }
+
     public class View : Element, Microsoft.Maui.IView
     {
         public object Handler { get; set; }
@@ -658,6 +675,12 @@ namespace Microsoft.Maui.Controls
         public static Easing Linear { get; } = new(value => value);
 
         public static Easing CubicIn { get; } = new(value => value * value * value);
+
+        public static Easing SpringOut { get; } = new(value =>
+        {
+            var inverse = 1d - value;
+            return 1d - inverse * inverse * inverse;
+        });
     }
 }
 

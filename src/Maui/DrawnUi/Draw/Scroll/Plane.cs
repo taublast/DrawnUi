@@ -13,7 +13,7 @@
         public float OffsetX;
 
         public SKColor BackgroundColor { get; set; } = SKColors.Transparent;
-        public RenderObject RenderObject { get; set; }
+        public CachedObject RenderObject { get; set; }
         public SKRect Destination { get; set; }
         public SKRect LastDrawnAt { get; set; }
         public CachedObject CachedObject { get; set; }

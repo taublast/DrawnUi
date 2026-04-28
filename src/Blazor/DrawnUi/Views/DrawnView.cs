@@ -18,6 +18,22 @@ namespace DrawnUi.Views
     {
         public bool IsDirty { get; set; } = true;
 
+        public override void Update()
+        {
+            if (!Super.EnableRendering || IsDisposing || IsDisposed || UpdateLocks > 0)
+            {
+                return;
+            }
+
+            if (CanvasView != null)
+            {
+                CanvasView.Update();
+                return;
+            }
+
+            base.Update();
+        }
+
         protected virtual void Draw(SkiaDrawingContext context, SKRect destination, float scale)
         {
 
@@ -855,11 +871,24 @@ namespace DrawnUi.Views
 
             protected virtual void DisposePlatform()
             {
+                Super.OnFrame -= OnFrame;
             }
         
             protected virtual void SetupRenderingLoop()
             {
+                Super.EnsureFrameLoopStarted();
+                Super.OnFrame -= OnFrame;
+                Super.OnFrame += OnFrame;
             }
+
+        private void OnFrame(object sender, EventArgs e)
+        {
+            if (CanDraw)
+            {
+                CanvasView?.Update();
+            }
+        }
+
         private static void UpdateRotation(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (bindable is DrawnView control)

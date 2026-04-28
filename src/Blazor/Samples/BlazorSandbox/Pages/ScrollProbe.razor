@@ -1,0 +1,236 @@
+@page "/scroll-probe"
+@using AppoMobi.Maui.Gestures
+@using DrawnUi.Draw
+@using DrawnUi.Views
+@using Microsoft.Maui.Controls
+@using Microsoft.Maui.Graphics
+
+<PageTitle>Scroll Probe</PageTitle>
+
+<h1>Scroll Probe</h1>
+
+Archived DrawnUI workcase kept in the sandbox menu for regression testing.
+
+<Canvas WidthRequest="400" HeightRequest="980" BackgroundColor="#FFF5E8" Margin="0,16,0,0" Gestures="@GesturesMode.Enabled" RootControl="@RootControl" />
+
+@code {
+    private readonly SkiaLabel _tapStatus = new()
+    {
+        Text = "Tap target: waiting",
+        FontFamily = "FontText",
+        FontSize = 14,
+        TextColor = new Color(0.220f, 0.247f, 0.286f, 1f),
+        HorizontalOptions = LayoutOptions.Fill
+    };
+
+    private readonly SkiaLabel _panStatus = new()
+    {
+        Text = "Drag target: waiting",
+        FontFamily = "FontText",
+        FontSize = 14,
+        TextColor = new Color(0.220f, 0.247f, 0.286f, 1f),
+        HorizontalOptions = LayoutOptions.Fill
+    };
+
+    private readonly SkiaLabel _scrollStatus = new()
+    {
+        Text = "Scroll probe: waiting",
+        FontFamily = "FontText",
+        FontSize = 14,
+        TextColor = new Color(0.220f, 0.247f, 0.286f, 1f),
+        HorizontalOptions = LayoutOptions.Fill
+    };
+
+    private readonly SkiaShape _dragTarget = new()
+    {
+        WidthRequest = 120,
+        HeightRequest = 120,
+        Type = ShapeType.Rectangle,
+        BackgroundColor = new Color(0.992f, 0.819f, 0.490f, 1f),
+        StrokeColor = new Color(0.529f, 0.302f, 0.094f, 1f),
+        StrokeWidth = 2,
+        CornerRadius = 18,
+        HorizontalOptions = LayoutOptions.Start,
+        VerticalOptions = LayoutOptions.Start
+    };
+
+    private readonly SkiaControl RootControl;
+
+    public ScrollProbe()
+    {
+        var tapTarget = new SkiaShape()
+        {
+            WidthRequest = 336,
+            HeightRequest = 72,
+            Type = ShapeType.Rectangle,
+            BackgroundColor = new Color(0.204f, 0.553f, 0.780f, 1f),
+            StrokeColor = Colors.White,
+            StrokeWidth = 2,
+            CornerRadius = 16,
+            Padding = new Thickness(16),
+            HorizontalOptions = LayoutOptions.Fill,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "Tap me",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 20,
+                    TextColor = Colors.White,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center
+                }
+            }
+        };
+        tapTarget.Tapped += OnTapTargetTapped;
+
+        _dragTarget.ConsumeGestures += OnDragTargetGestures;
+
+        var dragSurface = new SkiaLayout()
+        {
+            WidthRequest = 336,
+            HeightRequest = 220,
+            BackgroundColor = new Color(0.961f, 0.929f, 0.855f, 1f),
+            Padding = new Thickness(16),
+            Type = LayoutType.Absolute,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "Drag the yellow card",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 18,
+                    TextColor = new Color(0.302f, 0.165f, 0.063f, 1f),
+                    Margin = new Thickness(0, 0, 0, 8)
+                },
+                _dragTarget
+            }
+        };
+
+        var scrollContent = new SkiaLayout()
+        {
+            WidthRequest = 312,
+            Padding = new Thickness(0, 0, 12, 0),
+            Spacing = 12,
+            Type = LayoutType.Column,
+            Children =
+            {
+                CreateCard("Card 1: top of scroll", new Color(1f, 1f, 1f, 1f), new Color(0.859f, 0.729f, 0.420f, 1f), new Color(0.302f, 0.165f, 0.063f, 1f)),
+                CreateCard("Card 2: keep dragging vertically", new Color(0.980f, 0.957f, 0.914f, 1f), new Color(0.859f, 0.729f, 0.420f, 1f), new Color(0.302f, 0.165f, 0.063f, 1f)),
+                CreateCard("Card 3: scroll inertia probe", new Color(0.957f, 0.984f, 1f, 1f), new Color(0.502f, 0.651f, 0.800f, 1f), new Color(0.157f, 0.278f, 0.420f, 1f)),
+                new SkiaRichLabel()
+                {
+                    Text = "# Scrollable rich content\nThis `SkiaScroll` block is now hosted inside the Blazor canvas.\n\n- drag inside this area\n- verify content keeps moving\n- verify tap and drag probes above still work\n\nFinal line gives enough height to require scrolling.",
+                    FontFamily = "FontText",
+                    FontSize = 14,
+                    WidthRequest = 300,
+                    HeadingTextColor = Colors.Black,
+                    TextColor = new Color(0.220f, 0.247f, 0.286f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                CreateCard("Card 4: bottom marker", new Color(1f, 0.973f, 0.878f, 1f), new Color(0.859f, 0.729f, 0.420f, 1f), new Color(0.302f, 0.165f, 0.063f, 1f), 88)
+            }
+        };
+
+        var scrollProbe = new SkiaScroll()
+        {
+            WidthRequest = 312,
+            HeightRequest = 248,
+            Orientation = ScrollOrientation.Vertical,
+            BackgroundColor = new Color(1f, 1f, 1f, 0.65f),
+            Content = scrollContent
+        };
+        scrollProbe.Scrolled += OnScrollProbeScrolled;
+
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 368,
+            HeightRequest = 948,
+            BackgroundColor = Colors.Red,
+            Padding = new Thickness(16),
+            Spacing = 16,
+            Type = LayoutType.Column,
+            Children =
+            {
+                tapTarget,
+                _tapStatus,
+                dragSurface,
+                _panStatus,
+                new SkiaLayout()
+                {
+                    WidthRequest = 336,
+                    BackgroundColor = new Color(0.957f, 0.984f, 1f, 1f),
+                    Padding = new Thickness(12),
+                    Spacing = 8,
+                    Type = LayoutType.Column,
+                    Children =
+                    {
+                        new SkiaLabel()
+                        {
+                            Text = "SkiaScroll runtime probe",
+                            FontFamily = "FontTextTitle",
+                            FontSize = 18,
+                            TextColor = new Color(0.302f, 0.165f, 0.063f, 1f),
+                            HorizontalOptions = LayoutOptions.Fill
+                        },
+                        _scrollStatus,
+                        scrollProbe
+                    }
+                }
+            }
+        };
+    }
+
+    private static SkiaShape CreateCard(string text, Color backgroundColor, Color strokeColor, Color textColor, double height = 72)
+    {
+        return new SkiaShape()
+        {
+            WidthRequest = 300,
+            HeightRequest = height,
+            Type = ShapeType.Rectangle,
+            BackgroundColor = backgroundColor,
+            StrokeColor = strokeColor,
+            StrokeWidth = 1,
+            CornerRadius = 14,
+            Padding = new Thickness(14, 12),
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = text,
+                    FontFamily = "FontTextTitle",
+                    FontSize = 16,
+                    TextColor = textColor,
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Center
+                }
+            }
+        };
+    }
+
+    private void OnTapTargetTapped(object? sender, ControlTappedEventArgs e)
+    {
+        _tapStatus.Text = $"Tap target: {e.Parameters.Type} at {e.Parameters.Event.Location.X:0},{e.Parameters.Event.Location.Y:0}";
+    }
+
+    private void OnDragTargetGestures(object? sender, SkiaGesturesInfo e)
+    {
+        if (e.Args.Type == TouchActionResult.Panning)
+        {
+            _dragTarget.TranslationX += e.Args.Event.Distance.Delta.X;
+            _dragTarget.TranslationY += e.Args.Event.Distance.Delta.Y;
+            _panStatus.Text = $"Drag target: dx {e.Args.Event.Distance.Delta.X:0}, dy {e.Args.Event.Distance.Delta.Y:0}";
+            e.Consumed = true;
+        }
+        else if (e.Args.Type == TouchActionResult.Up)
+        {
+            _panStatus.Text = $"Drag target: released at {_dragTarget.TranslationX:0},{_dragTarget.TranslationY:0}";
+        }
+    }
+
+    private void OnScrollProbeScrolled(object? sender, ScaledPoint e)
+    {
+        _scrollStatus.Text = $"Scroll probe: x {e.Units.X:0}, y {e.Units.Y:0}";
+    }
+}

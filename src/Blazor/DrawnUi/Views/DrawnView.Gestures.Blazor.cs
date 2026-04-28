@@ -215,6 +215,11 @@ public partial class DrawnView
             Super.Log(e);
         }
 
+        if (touchAction == TouchActionResult.Up)
+        {
+            var stop = 1;
+        }
+
         Repaint();
     }
 

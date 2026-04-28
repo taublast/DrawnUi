@@ -1,8 +1,40 @@
+using System.Collections;
+
 namespace DrawnUi.Draw
 {
     public partial class SkiaLayout : SkiaControl, ISkiaLayout
     {
+        public SkiaLayout()
+        {
+            ChildrenFactory = new(this);
+        }
+
+        public ViewsAdapter ChildrenFactory { get; protected set; }
+
+        public MeasuringStrategy MeasureItemsStrategy { get; set; } = MeasuringStrategy.MeasureAll;
+
+        public int FirstMeasuredIndex { get; protected set; }
+
+        public int LastMeasuredIndex { get; protected set; } = -1;
+
+        public IList? ItemsSource { get; set; }
+
         public bool IsStack => Type == LayoutType.Column || Type == LayoutType.Row || Type == LayoutType.Wrap;
+
+        public ScaledSize GetEstimatedContentSize(float scale)
+        {
+            return MeasuredSize;
+        }
+
+        public double GetMeasuredContentEnd()
+        {
+            return Type == LayoutType.Row ? MeasuredSize.Pixels.Width : MeasuredSize.Pixels.Height;
+        }
+
+        public int MeasureAdditionalItems(int batchSize, int aheadCount, float scale)
+        {
+            return 0;
+        }
 
         public virtual ContainsPointResult GetVisibleChildIndexAt(SKPoint point)
         {

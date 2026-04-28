@@ -25,6 +25,30 @@ namespace DrawnUi.Draw
 
     public partial class SkiaControl : Microsoft.Maui.Controls.View
     {
+        public static readonly BindableProperty AutoCacheProperty = BindableProperty.Create(
+            nameof(AutoCache),
+            typeof(bool),
+            typeof(SkiaControl),
+            false);
+
+        public bool AutoCache
+        {
+            get => (bool)GetValue(AutoCacheProperty);
+            set => SetValue(AutoCacheProperty, value);
+        }
+
+        public static readonly BindableProperty UseCacheProperty = BindableProperty.Create(
+            nameof(UseCache),
+            typeof(SkiaCacheType),
+            typeof(SkiaControl),
+            SkiaCacheType.None);
+
+        public SkiaCacheType UseCache
+        {
+            get => (SkiaCacheType)GetValue(UseCacheProperty);
+            set => SetValue(UseCacheProperty, value);
+        }
+
         private static void ReportHotreloadChildAdded(SkiaControl control)
         {
         }

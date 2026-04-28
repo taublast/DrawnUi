@@ -180,6 +180,28 @@ namespace DrawnUi.Draw
                 coerceValue);
         }
 
+        public static BindableProperty Create(
+            string propertyName,
+            Type returnType,
+            Type declaringType,
+            object defaultValue,
+            Microsoft.Maui.Controls.BindingMode defaultBindingMode,
+            Func<BindableObject, object> defaultValueCreator = null,
+            Func<BindableObject, object, bool> validateValue = null,
+            Action<BindableObject, object, object> propertyChanged = null,
+            Func<BindableObject, object, object> coerceValue = null)
+        {
+            return Create(
+                propertyName,
+                returnType,
+                declaringType,
+                defaultValue,
+                defaultValueCreator,
+                validateValue,
+                propertyChanged,
+                coerceValue);
+        }
+
         internal object GetDefaultValue(BindableObject bindable)
         {
             return DefaultValueCreator?.Invoke(bindable) ?? DefaultValue;

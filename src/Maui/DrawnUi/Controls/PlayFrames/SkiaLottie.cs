@@ -4,8 +4,12 @@ using System.Collections.Specialized;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
+#if BROWSER
+using DrawnUi.Draw;
+#else
 using DrawnUi.Features.Images;
 using Microsoft.Maui.Storage;
+#endif
 using Newtonsoft.Json.Linq;
 using Animation = SkiaSharp.Skottie.Animation;
 
@@ -323,6 +327,19 @@ public class SkiaLottie : AnimatedFramesRenderer
             }
     }
 
+    private async Task<Stream> OpenPackageFileStreamAsync(string fileName)
+    {
+#if BROWSER
+        var httpClient = Super.Services?.GetService<HttpClient>();
+        if (httpClient == null)
+            throw new InvalidOperationException("[SkiaLottie] HttpClient service was not found.");
+
+        return await httpClient.GetStreamAsync(fileName);
+#else
+        return await FileSystem.OpenAppPackageFileAsync(fileName);
+#endif
+    }
+
     public string LoadLocalJson(string fileName)
     {
         string json = null;
@@ -337,7 +354,7 @@ public class SkiaLottie : AnimatedFramesRenderer
             }
             else
             {
-                using var stream = FileSystem.OpenAppPackageFileAsync(fileName).GetAwaiter().GetResult();
+                using var stream = OpenPackageFileStreamAsync(fileName).GetAwaiter().GetResult();
                 using var reader = new StreamReader(stream);
                 json = reader.ReadToEnd();
             }
@@ -375,7 +392,12 @@ public class SkiaLottie : AnimatedFramesRenderer
             {
                 if (Uri.TryCreate(fileName, UriKind.Absolute, out var uri) && uri.Scheme != "file")
                 {
-                    using HttpClient client = Super.Services.CreateHttpClient();
+                    using HttpClient client =
+#if BROWSER
+                        Super.Services?.GetService<HttpClient>() ?? throw new InvalidOperationException("[SkiaLottie] HttpClient service was not found.");
+#else
+                        Super.Services.CreateHttpClient();
+#endif
                     var data = await client.GetByteArrayAsync(uri);
                     //var client = new WebClient();
                     //var data = await client.DownloadDataTaskAsync(uri);
@@ -392,7 +414,7 @@ public class SkiaLottie : AnimatedFramesRenderer
                     }
                     else
                     {
-                        using var stream = await FileSystem.OpenAppPackageFileAsync(fileName);
+                        using var stream = await OpenPackageFileStreamAsync(fileName);
                         using var reader = new StreamReader(stream);
                         json = await reader.ReadToEndAsync();
                     }
@@ -671,17 +693,13 @@ public class SkiaLottie : AnimatedFramesRenderer
             switch (type)
             {
                 case SourceType.Url:
-                    Tasks.StartDelayedAsync(TimeSpan.FromMilliseconds(1), async () =>
-                    {
-                        var a = await LoadSource(Source);
-                        if (a != null)
-                        {
-                            SetAnimation(a, true);
-                        }
-                    });
+                    _ = LoadAndApplySourceAsync(Source);
                     break;
                 default:
-
+#if BROWSER
+                    _ = LoadAndApplySourceAsync(Source);
+                    break;
+#else
                     json = LoadLocalJson(Source);
                     animation = CreateAnimation(json);
                     if (animation != null)
@@ -691,7 +709,28 @@ public class SkiaLottie : AnimatedFramesRenderer
                     }
 
                     break;
+#endif
             }
+        }
+    }
+
+    private async Task LoadAndApplySourceAsync(string source)
+    {
+        try
+        {
+            var animation = await LoadSource(source);
+            if (animation != null)
+            {
+                SetAnimation(animation, true);
+            }
+            else
+            {
+                Super.Log($"[SkiaLottie] Async load returned null for {source}");
+            }
+        }
+        catch (Exception e)
+        {
+            Super.Log($"[SkiaLottie] Async load failed for {source}: {e}");
         }
     }
 

@@ -1,203 +1,196 @@
 ﻿@page "/"
-@using AppoMobi.Maui.Gestures
+@using DrawnUi.Controls
 @using DrawnUi.Draw
 @using DrawnUi.Views
+@using Microsoft.Maui.Controls
 @using Microsoft.Maui.Graphics
-@using SkiaSharp
-@using SkiaSharp.Views.Blazor
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>SkiaLottie Workcase</h1>
 
-Welcome to your new app.
+Latest DrawnUI workcase hosted in the Blazor sandbox.
 
-@* <SKCanvasView OnPaintSurface="OnPaintSurface" Width="400" Height="300" /> *@
+<p id="lottie-debug-status">@_statusText</p>
 
-<Canvas WidthRequest="400" HeightRequest="980" BackgroundColor="#FFF5E8" Margin="0,16,0,0" Gestures="@GesturesMode.Enabled" RootControl="@RootControl" />
+<Canvas WidthRequest="400"
+        HeightRequest="520"
+        BackgroundColor="#081B33"
+        Margin="0,16,0,0"
+        Gestures="@GesturesMode.Lock"
+        RootControl="@_rootControl" />
 
 @code {
-    private readonly SkiaLabel _tapStatus = new()
+    private SkiaControl? _rootControl;
+    private SkiaLottie? _lottie;
+    private string _statusText = "Lottie status: booting";
+    private readonly SkiaLabel _status = new()
     {
-        Text = "Tap target: waiting",
+        Text = "Lottie status: ready",
         FontFamily = "FontText",
         FontSize = 14,
-        TextColor = new Color(0.220f, 0.247f, 0.286f, 1f),
-        HorizontalOptions = LayoutOptions.Fill
+        TextColor = Colors.White,
+        HorizontalOptions = LayoutOptions.Center
     };
 
-    private readonly SkiaLabel _panStatus = new()
+    protected override void OnInitialized()
     {
-        Text = "Drag target: waiting",
-        FontFamily = "FontText",
-        FontSize = 14,
-        TextColor = new Color(0.220f, 0.247f, 0.286f, 1f),
-        HorizontalOptions = LayoutOptions.Fill
-    };
-
-    private readonly SkiaShape _dragTarget = new()
-    {
-        WidthRequest = 120,
-        HeightRequest = 120,
-        Type = ShapeType.Rectangle,
-        BackgroundColor = new Color(0.992f, 0.819f, 0.490f, 1f),
-        StrokeColor = new Color(0.529f, 0.302f, 0.094f, 1f),
-        StrokeWidth = 2,
-        CornerRadius = 18,
-        HorizontalOptions = LayoutOptions.Start,
-        VerticalOptions = LayoutOptions.Start
-    };
-
-    private readonly SkiaControl RootControl;
-
-    public Home()
-    {
-        var tapTarget = new SkiaShape()
+        var lottie = new SkiaLottie()
         {
-            WidthRequest = 336,
-            HeightRequest = 72,
+            AutoPlay = false,
+            WidthRequest = 160,
+            HeightRequest = 160,
+            LockRatio = 1,
+            SpeedRatio = 0.6f,
+            Repeat = 0,
+            DefaultFrame = -1,
+            UseCache = SkiaCacheType.ImageDoubleBuffered,
+            HorizontalOptions = LayoutOptions.Center,
+            Source = "lottie/ok.json"
+        };
+        lottie.Started += OnLottieStarted;
+        lottie.Finished += OnLottieFinished;
+        _lottie = lottie;
+
+        SetStatus(lottie.Animation == null
+            ? "Lottie status: source pending"
+            : "Lottie status: source loaded");
+
+        var toggleButton = new SkiaShape()
+        {
+            WidthRequest = 180,
+            HeightRequest = 52,
             Type = ShapeType.Rectangle,
-            BackgroundColor = new Color(0.204f, 0.553f, 0.780f, 1f),
-            StrokeColor = Colors.White,
-            StrokeWidth = 2,
-            CornerRadius = 16,
-            Padding = new Thickness(16),
-            HorizontalOptions = LayoutOptions.Fill,
+            BackgroundColor = new Color(0.149f, 0.439f, 0.741f, 1f),
+            StrokeColor = new Color(0.369f, 0.655f, 0.933f, 1f),
+            StrokeWidth = 1,
+            CornerRadius = 18,
+            HorizontalOptions = LayoutOptions.Center,
             Children =
             {
                 new SkiaLabel()
                 {
-                    Text = "Tap me",
+                    Text = "Toggle Play",
                     FontFamily = "FontTextTitle",
-                    FontSize = 20,
+                    FontSize = 16,
                     TextColor = Colors.White,
                     HorizontalOptions = LayoutOptions.Center,
                     VerticalOptions = LayoutOptions.Center
                 }
             }
         };
-        tapTarget.ConsumeGestures += OnTapTargetConsumeGestures;
-        tapTarget.Tapped += OnTapTargetTapped;
+        toggleButton.Tapped += OnToggleTapped;
 
-        _dragTarget.ConsumeGestures += OnDragTargetGestures;
-
-        var dragSurface = new SkiaLayout()
-        {
-            WidthRequest = 336,
-            HeightRequest = 220,
-            BackgroundColor = new Color(0.961f, 0.929f, 0.855f, 1f),
-            Padding = new Thickness(16),
-            Type = LayoutType.Absolute,
-            Children =
-            {
-                new SkiaLabel()
-                {
-                    Text = "Drag the yellow card",
-                    FontFamily = "FontTextTitle",
-                    FontSize = 18,
-                    TextColor = new Color(0.302f, 0.165f, 0.063f, 1f),
-                    Margin = new Thickness(0, 0, 0, 8)
-                },
-                _dragTarget
-            }
-        };
-
-        RootControl = new SkiaLayout()
+        _rootControl = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 368,
-            HeightRequest = 948,
-            BackgroundColor = Colors.Red,
-            Padding = new Thickness(16),
+            HeightRequest = 488,
+            BackgroundColor = new Color(0.031f, 0.106f, 0.200f, 1f),
+            Padding = new Thickness(18),
             Spacing = 16,
             Type = LayoutType.Column,
             Children =
             {
-                tapTarget,
-                _tapStatus,
-                dragSurface,
-                _panStatus,
-                new SkiaLayout()
+                new SkiaLabel()
                 {
-                    WidthRequest = 336,
-                    BackgroundColor = new Color(0.957f, 0.984f, 1f, 1f),
-                    Padding = new Thickness(12),
-                    Spacing = 8,
-                    Type = LayoutType.Column,
+                    Text = "SkiaLottie runtime probe",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 24,
+                    TextColor = Colors.White,
+                    HorizontalOptions = LayoutOptions.Center
+                },
+                new SkiaLabel()
+                {
+                    Text = "Mirrors the MAUI sandbox play/stop sample using a local JSON asset served by Blazor.",
+                    FontFamily = "FontText",
+                    FontSize = 14,
+                    TextColor = new Color(0.757f, 0.831f, 0.922f, 1f),
+                    HorizontalOptions = LayoutOptions.Center,
+                    WidthRequest = 320
+                },
+                new SkiaShape()
+                {
+                    WidthRequest = 320,
+                    HeightRequest = 220,
+                    Type = ShapeType.Rectangle,
+                    BackgroundColor = new Color(0.063f, 0.149f, 0.286f, 1f),
+                    StrokeColor = new Color(0.286f, 0.498f, 0.710f, 1f),
+                    StrokeWidth = 1,
+                    CornerRadius = 22,
+                    Padding = new Thickness(20),
+                    HorizontalOptions = LayoutOptions.Center,
                     Children =
                     {
-                        new SkiaLabel()
-                        {
-                            Text = "SkiaRichLabel runtime probe",
-                            FontFamily = "FontTextTitle",
-                            FontSize = 18,
-                            TextColor = new Color(0.302f, 0.165f, 0.063f, 1f),
-                            HorizontalOptions = LayoutOptions.Fill
-                        },
-                        new SkiaRichLabel()
-                        {
-                            Text = "# Rich heading\nA richer markdown sample with **bold**, _italic_, and **nested _formatting_** plus emoji 🙂 🚒 🌍.\n\n## Mixed content\n- Bullet one with `inline code`\n- Bullet two with **strong text and _nested italic_** 🤖\n- Bullet three with a [link-like label](https://example.com) and emoji 👻\n\n1. Ordered step one\n2. Ordered step two with `code()` and 🎯\n\n```csharp\nvar total = 3;\nConsole.WriteLine($\"DrawnUi {total}\");\n```\n\nFinal line keeps plain text, markdown, and emoji working together ✅.",
-                            FontFamily = "FontText",
-                            FontSize = 14,
-                            WidthRequest = 312,
-                            HeadingTextColor = Colors.Black,
-                            TextColor = new Color(0.220f, 0.247f, 0.286f, 1f),
-                            HorizontalOptions = LayoutOptions.Fill
-                        }
+                        lottie
                     }
-                }
+                },
+                toggleButton,
+                _status
             }
         };
-        RootControl.ConsumeGestures += OnRootConsumeGestures;
+
+        _ = MonitorLottieLoadAsync();
     }
 
-    private void OnRootConsumeGestures(object? sender, SkiaGesturesInfo e)
+    private async Task MonitorLottieLoadAsync()
     {
-        Console.WriteLine($"[Home] root got {e.Args.Type} at {e.Args.Event.Location.X:0},{e.Args.Event.Location.Y:0}");
-    }
-
-    private void OnTapTargetConsumeGestures(object? sender, SkiaGesturesInfo e)
-    {
-        Console.WriteLine($"[Home] tap-target got {e.Args.Type} at {e.Args.Event.Location.X:0},{e.Args.Event.Location.Y:0}");
-    }
-
-    private void OnTapTargetTapped(object? sender, ControlTappedEventArgs e)
-    {
-        Console.WriteLine($"[Home] tap {e.Parameters.Type} at {e.Parameters.Event.Location.X:0},{e.Parameters.Event.Location.Y:0}");
-        _tapStatus.Text = $"Tap target: {e.Parameters.Type} at {e.Parameters.Event.Location.X:0},{e.Parameters.Event.Location.Y:0}";
-    }
-
-    private void OnDragTargetGestures(object? sender, SkiaGesturesInfo e)
-    {
-        if (e.Args.Type == TouchActionResult.Panning)
+        for (var attempt = 0; attempt < 50; attempt++)
         {
-            Console.WriteLine($"[Home] pan dx={e.Args.Event.Distance.Delta.X:0.##} dy={e.Args.Event.Distance.Delta.Y:0.##}");
-            _dragTarget.TranslationX += e.Args.Event.Distance.Delta.X;
-            _dragTarget.TranslationY += e.Args.Event.Distance.Delta.Y;
-            _panStatus.Text = $"Drag target: dx {e.Args.Event.Distance.Delta.X:0}, dy {e.Args.Event.Distance.Delta.Y:0}";
-            e.Consumed = true;
+            await Task.Delay(100);
+
+            if (_lottie?.Animation != null)
+            {
+                SetStatus("Lottie status: source loaded");
+                return;
+            }
         }
-        else if (e.Args.Type == TouchActionResult.Up)
+
+        if (_lottie?.Animation == null)
         {
-            Console.WriteLine($"[Home] up at {_dragTarget.TranslationX:0},{_dragTarget.TranslationY:0}");
-            _panStatus.Text = $"Drag target: released at {_dragTarget.TranslationX:0},{_dragTarget.TranslationY:0}";
+            SetStatus("Lottie status: source load timeout");
         }
     }
 
-    private void OnPaintSurface(SKPaintSurfaceEventArgs e)
+    private void OnToggleTapped(object? sender, ControlTappedEventArgs e)
     {
-        var canvas = e.Surface.Canvas;
-        canvas.Clear(SKColors.White);
-
-        using var paint = new SKPaint
+        if (_lottie == null)
         {
-            Color = SKColors.DeepSkyBlue,
-            IsAntialias = true,
-            StrokeWidth = 4,
-            Style = SKPaintStyle.Stroke
-        };
+            return;
+        }
 
-        canvas.DrawCircle(150, 100, 80, paint);
-        canvas.DrawText("Hello Skia!", 80, 200, new SKPaint { Color = SKColors.Black, TextSize = 32 });
+        if (_lottie.Animation == null)
+        {
+            SetStatus("Lottie status: source not loaded");
+            return;
+        }
+
+        if (_lottie.IsPlaying)
+        {
+            _lottie.Stop();
+            SetStatus("Lottie status: stopped");
+        }
+        else
+        {
+            _lottie.Start();
+            SetStatus("Lottie status: starting");
+        }
+    }
+
+    private void OnLottieStarted(object? sender, EventArgs e)
+    {
+        SetStatus("Lottie status: playing");
+    }
+
+    private void OnLottieFinished(object? sender, EventArgs e)
+    {
+        SetStatus("Lottie status: finished");
+    }
+
+    private void SetStatus(string value)
+    {
+        _status.Text = value;
+        _statusText = value;
+        InvokeAsync(StateHasChanged);
     }
 }

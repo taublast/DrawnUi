@@ -27,6 +27,7 @@
       <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.2" />
 
     <PackageReference Include="SkiaSharp.Views.Blazor" Version="3.119.2-preview.1" />
+        <PackageReference Include="SkiaSharp.Skottie" Version="3.119.2-preview.1" />
 
   </ItemGroup>
 
@@ -38,6 +39,14 @@
     <Compile Include="..\..\Maui\DrawnUi\Draw\Text\SkiaLabel.cs" Link="Draw\Text\SkiaLabel.cs" />
     <Compile Include="..\..\Maui\DrawnUi\Draw\Text\SkiaLabel.Maui.cs" Link="Draw\Text\SkiaLabel.Maui.cs" />
     <Compile Include="..\..\Maui\DrawnUi\Draw\Text\TextSpan.Maui.cs" Link="Draw\Text\TextSpan.Maui.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Draw\Scroll\SkiaScroll.cs" Link="Draw\Scroll\SkiaScroll.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Draw\Scroll\SkiaScroll.Gestures.cs" Link="Draw\Scroll\SkiaScroll.Gestures.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Draw\Scroll\SkiaScroll.Scrolling.cs" Link="Draw\Scroll\SkiaScroll.Scrolling.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Draw\Scroll\SkiaScroll.Planes.cs" Link="Draw\Scroll\SkiaScroll.Planes.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Draw\Scroll\SkiaScrollCells.cs" Link="Draw\Scroll\SkiaScrollCells.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Draw\Scroll\Plane.cs" Link="Draw\Scroll\Plane.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Controls\PlayFrames\AnimatedFramesRenderer.cs" Link="Controls\PlayFrames\AnimatedFramesRenderer.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Controls\PlayFrames\SkiaLottie.cs" Link="Controls\PlayFrames\SkiaLottie.cs" />
     <Compile Include="..\..\Maui\DrawnUi\Controls\Labels\SkiaRichLabel.cs" Link="Controls\Labels\SkiaRichLabel.cs" />
     <Compile Include="..\..\Maui\DrawnUi\Controls\Labels\SkiaMarkdownLabel.CommonMark.cs" Link="Controls\Labels\SkiaMarkdownLabel.CommonMark.cs" />
   </ItemGroup>
@@ -45,6 +54,7 @@
   <Import Project="..\..\Shared\Shared.projitems" Label="Shared" />
 
   <ItemGroup>
+    <Compile Include="..\..\Shared\Internals\Enums\MeasuringStrategy.cs" Link="Internals\Enums\MeasuringStrategy.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Internals\Extensions\FluentExtensions.Shared.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Fluent\SkiaFrame.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Fluent\SkiaLayer.cs" />

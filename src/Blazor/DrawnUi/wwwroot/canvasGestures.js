@@ -29,6 +29,14 @@ export function attachCanvasGestures(element, dotNetRef, enabled) {
 
     const pointerHandler = (type) => async (event) => {
         event.preventDefault();
+
+        if (type === 'pointerdown' && typeof element.setPointerCapture === 'function') {
+            try {
+                element.setPointerCapture(event.pointerId);
+            } catch {
+            }
+        }
+
         const offset = getOffset(element, event);
         try {
             await dotNetRef.invokeMethodAsync('OnCanvasPointer', {
@@ -42,6 +50,15 @@ export function attachCanvasGestures(element, dotNetRef, enabled) {
                 pressure: event.pressure ?? 0,
                 isInsideView: offset.inside
             });
+
+            if ((type === 'pointerup' || type === 'pointercancel') && typeof element.releasePointerCapture === 'function') {
+                try {
+                    if (element.hasPointerCapture?.(event.pointerId)) {
+                        element.releasePointerCapture(event.pointerId);
+                    }
+                } catch {
+                }
+            }
         } catch (error) {
             console.error('[canvasGestures] pointer failed', type, error?.message ?? error);
         }

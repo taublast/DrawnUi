@@ -201,6 +201,8 @@
         if (!CaptureInput)
             return Task.CompletedTask;
 
+        Debug.WriteLine($"CANVAS mouse: {args.Type}, PointerId: {args.PointerId}, OffsetX: {args.OffsetX}, OffsetY: {args.OffsetY}");
+
         var actionType = args.Type switch
         {
             "pointerdown" => TouchActionType.Pressed,
@@ -210,7 +212,9 @@
             "pointermove" when args.Buttons > 0 => TouchActionType.Moved,
             _ => TouchActionType.Pointer
         };
+
         _drawnView.OnTouchAction(CreatePointerArgs(args, actionType, args.IsInsideView));
+        
         return Task.CompletedTask;
     }
 
