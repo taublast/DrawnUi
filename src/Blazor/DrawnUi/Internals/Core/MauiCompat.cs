@@ -417,19 +417,19 @@ namespace Microsoft.Maui.Controls
 
         public virtual double RotationY { get; set; }
 
-        public virtual double AnchorX { get; set; }
+        public virtual double AnchorX { get; set; } = 0.5;
 
-        public virtual double AnchorY { get; set; }
+        public virtual double AnchorY { get; set; } = 0.5;
 
         public virtual double ScaleX { get; set; } = 1.0;
 
         public virtual double ScaleY { get; set; } = 1.0;
 
-        public virtual double MaximumWidthRequest { get; set; } = -1;
+        public virtual double MaximumWidthRequest { get; set; } = double.PositiveInfinity;
 
         public virtual double MinimumWidthRequest { get; set; } = -1;
 
-        public virtual double MaximumHeightRequest { get; set; } = -1;
+        public virtual double MaximumHeightRequest { get; set; } = double.PositiveInfinity;
 
         public virtual double MinimumHeightRequest { get; set; } = -1;
 
@@ -449,7 +449,7 @@ namespace Microsoft.Maui.Controls
 
         public virtual LayoutOptions VerticalOptions { get; set; } = LayoutOptions.Start;
 
-        public virtual Microsoft.Maui.Graphics.Color BackgroundColor { get; set; } = Microsoft.Maui.Graphics.Colors.Transparent;
+        public virtual Microsoft.Maui.Graphics.Color BackgroundColor { get; set; }
 
         public virtual void Update()
         {
