@@ -4,7 +4,7 @@ using DrawnUi.Infrastructure.Enums;
 
 namespace DrawnUi.Views
 {
-    public partial class DrawnView : IDrawnBase, IAnimatorsManager, IVisualTreeElement, IDisposeManager
+    public partial class DrawnView : IDrawnBase, IAnimatorsManager, IDisposeManager
     {
         public void DumpLayersTree(VisualLayer node, string prefix = "", bool isLast = true, int level = 0)
         {
@@ -142,40 +142,6 @@ namespace DrawnUi.Views
             return ScaledRect.FromPixels(bounds, (float)RenderingScale);
         }
 
-        protected override void OnHandlerChanging(HandlerChangingEventArgs args)
-        {
-            if (args.NewHandler == null || args.OldHandler != null)
-            {
-                DestroySkiaView();
-
-#if ONPLATFORM
-                DisposePlatform();
-#endif
-            }
-
-            base.OnHandlerChanging(args);
-        }
-
-        protected override void OnHandlerChanged()
-        {
-            base.OnHandlerChanged();
-
-#if ANDROID
-            OnHandlerChangedInternal();
-#endif
-
-            if (Handler != null)
-            {
-                CreateSkiaView();
-
-#if ONPLATFORM
-                SetupRenderingLoop();
-#endif
-            }
-
-            HandlerWasSet?.Invoke(this, Handler != null);
-            //InvalidateChildren(); //need clear gfx cache
-        }
 
         public event EventHandler<bool> HandlerWasSet;
 
@@ -232,12 +198,6 @@ namespace DrawnUi.Views
         public void UsubscribeFromRenderingFinished(SkiaControl control)
         {
             RenderingSubscribers.Remove(control, out _);
-        }
-
-        IReadOnlyList<IVisualTreeElement> IVisualTreeElement.GetVisualChildren()
-        {
-            return Views.Cast<IVisualTreeElement>()
-                .ToList();
         }
 
         public void RegisterGestureListener(ISkiaGestureListener gestureListener)
@@ -557,7 +517,10 @@ namespace DrawnUi.Views
         public virtual void OnCanvasViewChanged()
         {
             Update();
+            OnCanvasViewChangedPlatform();
         }
+
+        partial void OnCanvasViewChangedPlatform();
 
         public ISkiaDrawable CanvasView
         {
@@ -573,6 +536,10 @@ namespace DrawnUi.Views
                 OnCanvasViewChanged();
             }
         }
+
+        protected bool RequestedCanvasViewIsHardwareAccelerated { get; private set; }
+
+        protected int CanvasViewRequestVersion { get; private set; }
 
         private bool _initialized;
 
@@ -660,19 +627,6 @@ namespace DrawnUi.Views
             Super.NeedGlobalRefresh += OnNeedUpdate;
         }
 
-        protected void FixDensity()
-        {
-            if (_renderingScale <= 0.0)
-            {
-                var scale = (float)GetDensity();
-                if (scale <= 0.0)
-                {
-                    scale = (float)(CanvasView.CanvasSize.Width / this.Width);
-                }
-
-                RenderingScale = scale;
-            }
-        }
 
         /// <summary>
         /// Set this to true if you do not want the canvas to be redrawn as transparent and showing content below the canvas (splash?..) when UpdateLocks is True
@@ -707,7 +661,6 @@ namespace DrawnUi.Views
         protected long InvalidatedCanvas { get; set; }
 
         public bool IsRendering { get; protected set; }
-        protected Grid Delayed { get; set; }
 
         public static double GetDensity()
         {
@@ -721,24 +674,37 @@ namespace DrawnUi.Views
         {
             DestroySkiaView();
 
+            RequestedCanvasViewIsHardwareAccelerated = IsUsingHardwareAcceleration;
+            CanvasViewRequestVersion++;
+
 #if ONPLATFORM
             PlatformHardwareAccelerationChanged();
 #endif
 
+#if BROWSER
+            Content = null;
+#else
             if (IsUsingHardwareAcceleration)
             {
-                var view = new SkiaViewAccelerated(this);
+                var view = new SkiaViewAccelerated()
+                {
+                    Superview = this
+                };
                 view.OnDraw = OnDrawSurface;
                 CanvasView = view;
             }
             else
             {
-                var view = new SkiaView(this);
+                var view = new SkiaView()
+                {
+                    Superview = this
+                };
                 view.OnDraw = OnDrawSurface;
                 CanvasView = view;
             }
 
             Content = CanvasView as View;
+#endif
         }
 
         protected virtual void OnDestroyingVew()
@@ -859,17 +825,7 @@ namespace DrawnUi.Views
 
                     DestroySkiaView();
 
-                    MainThread.BeginInvokeOnMainThread(() =>
-                    {
-                        try
-                        {
-                            this.Handler?.DisconnectHandler();
-                        }
-                        catch (Exception e)
-                        {
-                            Super.Log(e);
-                        }
-                    });
+                    DestroyThis();
                 }
                 catch (Exception e)
                 {
@@ -946,17 +902,7 @@ namespace DrawnUi.Views
             get { return NeedAutoSize; }
         }
 
-        public static readonly BindableProperty UpdateLocksProperty = BindableProperty.Create(
-            nameof(UpdateLocks),
-            typeof(int),
-            typeof(DrawnView),
-            0);
-
-        public int UpdateLocks
-        {
-            get { return (int)GetValue(UpdateLocksProperty); }
-            set { SetValue(UpdateLocksProperty, value); }
-        }
+        public int UpdateLocks { get; set; }
 
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -1097,16 +1043,6 @@ namespace DrawnUi.Views
 
         public string Tag { get; set; }
 
-        public bool IsRootView(float width, float height, SKRect destination)
-        {
-            if (this.Parent != null)
-            {
-                return true; //Xamarin/MAUI
-            }
-
-            return this.Parent == null && destination.Width == width && destination.Height == height;
-        }
-
         /// <summary>
         ///  destination in PIXELS, requests in UNITS. resulting Destination prop will be filed in PIXELS.
         /// </summary>
@@ -1132,8 +1068,8 @@ namespace DrawnUi.Views
             var availableWidth = destination.Width - scaledOffsetMargin * 2;
             var availableHeight = destination.Height - scaledOffsetMargin * 2;
 
-            var layoutHorizontal = new LayoutOptions(HorizontalOptions.Alignment, HorizontalOptions.Expands);
-            var layoutVertical = new LayoutOptions(VerticalOptions.Alignment, VerticalOptions.Expands);
+            var layoutHorizontal = new LayoutOptions(HorizontalOptions.Alignment, false);
+            var layoutVertical = new LayoutOptions(VerticalOptions.Alignment, false);
 
 
             //todo sensor rotation
@@ -1361,7 +1297,7 @@ namespace DrawnUi.Views
 
         protected SKRect LastDrawnRect;
 
-        private bool OnDrawSurface(SKSurface surface, SKRect rect)
+        protected bool OnDrawSurface(SKSurface surface, SKRect rect)
         {
             lock (LockDraw)
             {
@@ -1853,7 +1789,7 @@ namespace DrawnUi.Views
 
         #endregion
 
-        private VisualTreeHandler VisualTree; // = new();
+
 
         protected virtual void Draw(DrawingContext context)
         {
@@ -2311,30 +2247,11 @@ namespace DrawnUi.Views
             if (child == null)
                 return;
 
-            var index = Views.FindIndex(child);
-            VisualDiagnostics.OnChildAdded(this, child, index);
+            //var index = Views.FindIndex(child);
+            //VisualDiagnostics.OnChildAdded(this, child, index);
         }
 
-        public void RemoveSubView(SkiaControl control)
-        {
-            if (control == null)
-                return;
-
-            //if (Debugger.IsAttached)
-            ReportHotreloadChildRemoved(control);
-
-            control.SetParent(null);
-            OnChildRemoved(control);
-        }
-
-        public virtual void ReportHotreloadChildRemoved(SkiaControl control)
-        {
-            if (control == null)
-                return;
-
-            var index = Views.FindIndex(control);
-            VisualDiagnostics.OnChildRemoved(this, control, index);
-        }
+    
 
         protected virtual void OnChildAdded(SkiaControl child)
         {
@@ -2417,6 +2334,17 @@ namespace DrawnUi.Views
             }
         }
 
+        public void RemoveSubView(SkiaControl control)
+        {
+            if (control == null)
+                return;
+
+            //if (Debugger.IsAttached)
+            ReportHotreloadChildRemoved(control);
+
+            control.SetParent(null);
+            OnChildRemoved(control);
+        }
 
         private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -2630,6 +2558,8 @@ namespace DrawnUi.Views
                                 Super.SetFocus(IntPtr.Zero); // Removes focus from all
 #elif ANDROID
                                 ResetFocus();
+#elif BROWSER
+                                 
 #else
                                 this.Focus();
                                 TouchEffect.CloseKeyboard();
@@ -2752,7 +2682,7 @@ namespace DrawnUi.Views
             NeedCheckParentVisibility = true;
         }
 
-        private VisualElement _visibilityParent;
+
         private bool needMeasure = true;
         private Guid _destroyed;
 

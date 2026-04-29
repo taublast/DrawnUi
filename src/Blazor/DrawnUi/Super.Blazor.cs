@@ -1,5 +1,5 @@
-﻿global using System.Collections.Specialized;
-global using AppoMobi.Maui.Gestures;
+global using System.Collections.Specialized;
+global using AppoMobi.Gestures;
 global using System.ComponentModel;
 global using Microsoft.Maui;
 global using System.Numerics;
@@ -42,6 +42,23 @@ namespace DrawnUi.Draw
         public static event EventHandler OnFrame;
 
         public static int RefreshRate { get; protected set; } = 60;
+        public static void Init()
+        {
+            Initialized = true;
+
+            Super.Screen.Density = 1;
+
+            RefreshRate = GetDisplayRefreshRate(60);
+        }
+
+        public static int GetDisplayRefreshRate(int fallback)
+        {
+            var ret = fallback;
+
+            //TODO: Implement browser-specific logic to get the actual display refresh rate
+
+            return ret;
+        }
 
         public static IServiceProvider Services
         {
@@ -136,10 +153,5 @@ namespace DrawnUi.Draw
         {
             RestartFrameLoop();
         }
-
-
-
-
-
     }
 }

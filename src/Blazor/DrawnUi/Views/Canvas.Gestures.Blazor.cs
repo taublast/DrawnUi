@@ -1,9 +1,9 @@
-using AppoMobi.Maui.Gestures;
-
 namespace DrawnUi.Views;
 
-public partial class DrawnView
+public partial class Canvas : IGestureListener
 {
+    public bool InputTransparent => false;
+
     private readonly object _gestureLock = new();
     private readonly Dictionary<long, TouchActionEventArgs> _previousTouchArgs = new();
     private readonly Dictionary<long, TouchActionEventArgs> _pointerDownArgs = new();
@@ -14,8 +14,6 @@ public partial class DrawnView
     public Dictionary<Guid, ISkiaGestureListener> HadInput { get; } = new();
 
     public event EventHandler? Tapped;
-
-    public GesturesMode Gestures { get; set; } = GesturesMode.Disabled;
 
     protected bool IsSavedGesture(TouchActionResult type)
     {
@@ -177,7 +175,7 @@ public partial class DrawnView
         }
     }
 
-    public override bool SignalInput(ISkiaGestureListener listener, TouchActionResult gestureType)
+    public bool SignalInput(ISkiaGestureListener listener, TouchActionResult gestureType)
     {
         if (ReceivedInput.Contains(listener))
             return false;

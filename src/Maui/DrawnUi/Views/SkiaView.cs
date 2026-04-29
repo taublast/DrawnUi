@@ -15,7 +15,7 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
 
     public Func<SKSurface, SKRect, bool> OnDraw { get; set; }
 
-    public DrawnView Superview { get; protected set; }
+    public DrawnView Superview { get; set; }
 
     public void Dispose()
     {
@@ -24,9 +24,8 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
         Superview = null;
     }
 
-    public SkiaView(DrawnView superview)
+    public SkiaView()
     {
-        Superview = superview;
         EnableTouchEvents = false;
     }
 

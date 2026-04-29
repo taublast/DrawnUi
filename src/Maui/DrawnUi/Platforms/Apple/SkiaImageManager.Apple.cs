@@ -1,7 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
+using CoreGraphics;
 using Foundation;
+
 using SkiaSharp.Views.iOS;
+
 using UIKit;
 
 #if USENUKE

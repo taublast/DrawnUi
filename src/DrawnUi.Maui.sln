@@ -43,6 +43,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomeBenchmarks", "Tests\Ben
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorials", "Maui\Samples\Tutorials\Tutorials.csproj", "{F6E58B0C-85AB-D5A3-0840-88682D38F9CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppoMobi.Gestures", "..\..\AppoMobi.Maui.Gestures\src\AppoMobi.Gestures\AppoMobi.Gestures.csproj", "{F2B95D27-F9A7-AE21-BB6F-437B266419DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppoMobi.Maui.Gestures", "..\..\AppoMobi.Maui.Gestures\src\AppoMobi.Maui.Gestures\AppoMobi.Maui.Gestures.csproj", "{93B29DB5-8877-B316-D6BC-96DBF0A39418}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +92,14 @@ Global
 		{F6E58B0C-85AB-D5A3-0840-88682D38F9CF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{F6E58B0C-85AB-D5A3-0840-88682D38F9CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6E58B0C-85AB-D5A3-0840-88682D38F9CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2B95D27-F9A7-AE21-BB6F-437B266419DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2B95D27-F9A7-AE21-BB6F-437B266419DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2B95D27-F9A7-AE21-BB6F-437B266419DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2B95D27-F9A7-AE21-BB6F-437B266419DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93B29DB5-8877-B316-D6BC-96DBF0A39418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93B29DB5-8877-B316-D6BC-96DBF0A39418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93B29DB5-8877-B316-D6BC-96DBF0A39418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93B29DB5-8877-B316-D6BC-96DBF0A39418}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

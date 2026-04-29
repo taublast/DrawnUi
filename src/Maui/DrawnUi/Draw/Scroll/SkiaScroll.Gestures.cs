@@ -698,7 +698,7 @@ public partial class SkiaScroll
         SkiaGesturesParameters args,
         GestureEventProcessingInfo apply)
     {
-        var gestureLocation = args.Event.Location;
+        var gestureLocation = args.Event.Location;//.ToMauiPointF();
 
         // Process planes in Z-order (top to bottom): Forward -> Current -> Backward
         // Check Forward plane first (top layer)

@@ -19,13 +19,15 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DrawnUi.Shared", "..\src\Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawnUi.Maui", "..\src\Maui\DrawnUi\DrawnUi.Maui.csproj", "{93E119B1-4378-87DF-2DD2-A818D1E6C2A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppoMobi.Maui.Gestures", "..\..\AppoMobi.Maui.Gestures\src\AppoMobi.Maui.Gestures.csproj", "{C7A0CFB8-7334-356A-4EC4-AC7F028C6099}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawnUi.Blazor", "..\src\Blazor\DrawnUi\DrawnUi.Blazor.csproj", "{A600FD05-5DE5-E382-DB79-8E53AD2FED7E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSandbox", "..\src\Blazor\Samples\BlazorSandbox\BlazorSandbox.csproj", "{D1B96898-763F-4BB2-A7A5-1F388B0A2703}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "..\src\Maui\Samples\Sandbox\Sandbox.csproj", "{C1DD571C-2920-5549-C18A-6A32245B0D13}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppoMobi.Gestures", "..\..\AppoMobi.Maui.Gestures\src\AppoMobi.Gestures\AppoMobi.Gestures.csproj", "{F2B95D27-F9A7-AE21-BB6F-437B266419DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppoMobi.Maui.Gestures", "..\..\AppoMobi.Maui.Gestures\src\AppoMobi.Maui.Gestures\AppoMobi.Maui.Gestures.csproj", "{93B29DB5-8877-B316-D6BC-96DBF0A39418}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppoMobi.Blazor.Gestures", "..\..\AppoMobi.Maui.Gestures\src\AppoMobi.Blazor.Gestures\AppoMobi.Blazor.Gestures.csproj", "{F6C53346-CFC0-7B29-02C5-8BE27B8C5139}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +39,6 @@ Global
 		{93E119B1-4378-87DF-2DD2-A818D1E6C2A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93E119B1-4378-87DF-2DD2-A818D1E6C2A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93E119B1-4378-87DF-2DD2-A818D1E6C2A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7A0CFB8-7334-356A-4EC4-AC7F028C6099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7A0CFB8-7334-356A-4EC4-AC7F028C6099}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7A0CFB8-7334-356A-4EC4-AC7F028C6099}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7A0CFB8-7334-356A-4EC4-AC7F028C6099}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A600FD05-5DE5-E382-DB79-8E53AD2FED7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A600FD05-5DE5-E382-DB79-8E53AD2FED7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A600FD05-5DE5-E382-DB79-8E53AD2FED7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,10 +47,18 @@ Global
 		{D1B96898-763F-4BB2-A7A5-1F388B0A2703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1B96898-763F-4BB2-A7A5-1F388B0A2703}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1B96898-763F-4BB2-A7A5-1F388B0A2703}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C1DD571C-2920-5549-C18A-6A32245B0D13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1DD571C-2920-5549-C18A-6A32245B0D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1DD571C-2920-5549-C18A-6A32245B0D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1DD571C-2920-5549-C18A-6A32245B0D13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2B95D27-F9A7-AE21-BB6F-437B266419DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2B95D27-F9A7-AE21-BB6F-437B266419DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2B95D27-F9A7-AE21-BB6F-437B266419DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2B95D27-F9A7-AE21-BB6F-437B266419DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93B29DB5-8877-B316-D6BC-96DBF0A39418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93B29DB5-8877-B316-D6BC-96DBF0A39418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93B29DB5-8877-B316-D6BC-96DBF0A39418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93B29DB5-8877-B316-D6BC-96DBF0A39418}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6C53346-CFC0-7B29-02C5-8BE27B8C5139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6C53346-CFC0-7B29-02C5-8BE27B8C5139}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6C53346-CFC0-7B29-02C5-8BE27B8C5139}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6C53346-CFC0-7B29-02C5-8BE27B8C5139}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

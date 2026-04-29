@@ -1,11 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Net.NetworkInformation;
-using System.Runtime.CompilerServices;
-using HarfBuzzSharp;
-using Microsoft.Maui.Controls;
-using SkiaSharp;
-
+﻿
 namespace DrawnUi.Draw;
 
 public partial class SkiaControl

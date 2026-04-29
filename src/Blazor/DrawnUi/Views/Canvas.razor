@@ -1,32 +1,36 @@
-﻿@using DrawnUi.Draw
+@namespace DrawnUi.Views
+@using AppoMobi.Blazor.Gestures
+@using DrawnUi.Draw
+@using Microsoft.AspNetCore.Components
 @using Microsoft.Maui.Graphics
-@using Microsoft.AspNetCore.Components.Web
 @using Microsoft.JSInterop
-@using SkiaSharp.Views.Blazor
-@inherits VisualElement
+@inherits DrawnView
 @implements IAsyncDisposable
 @inject IJSRuntime JS
 
 @if (IsVisible)
 {
-  
+
             <div class="xaml-element xaml-contentview xaml-canvas @Class"
                 @ref="_hostElement"
                 style="@CssMargins @CssPadding @CssGridPosition @CssStyle @GestureStyle">
-        @if(RenderingMode == RenderingModeType.Default)
-        {
-            <SKCanvasView OnPaintSurface="OnPaintSurface" Width="@CanvasElementWidth" Height="@CanvasElementHeight"/>
-        }
-        else
-        {
-            <SKGLView OnPaintSurface="OnPaintSurfaceAccelerated" Width="@CanvasElementWidth" Height="@CanvasElementHeight"/>
-        }
 
-        <div class="xaml-canvas-content">
+                @if(RenderingMode == RenderingModeType.Default)
+                {
+                    <SkiaView Superview="@this" DrawHandler="DrawFrame"
+                              Width="@CanvasElementWidth" Height="@CanvasElementHeight" />
+                }
+                else
+                {
+                    <SkiaViewAccelerated Superview="@this" DrawHandler="DrawFrame"
+                                        Width="@CanvasElementWidth" Height="@CanvasElementHeight" />
+                }
+
+                <div class="xaml-canvas-content">
             @ChildContent
         </div>
     </div>
- 
+
 }
 
 <style>
@@ -43,363 +47,104 @@
 
 @code {
 
-    private readonly DrawnView _drawnView = new();
-    private BlazorCanvasDrawable? _canvasDrawable;
     private ElementReference _hostElement;
-    private IJSObjectReference? _gestureModule;
-    private DotNetObjectReference<Canvas>? _selfReference;
-    private bool? _gesturesAttached;
+    private BlazorGestureEffect? _gestureEffect;
 
     [Parameter]
     public SkiaControl? RootControl { get; set; }
+
+    public virtual bool Focus()
+    {
+        return true;
+    }
 
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
 
-        _drawnView.Gestures = Gestures;
-        _drawnView.CanRenderOffScreen = CanRenderOffScreen;
-        _drawnView.WidthRequest = WidthRequest;
-        _drawnView.HeightRequest = HeightRequest;
-        _drawnView.BackgroundColor = ParseColor(BackgroundColor);
+        base.BackgroundColor = ParsedBackgroundColor;
+        base.Margin = ParsedMargin;
+        base.RenderingMode = RenderingMode;
+        base.CanRenderOffScreen = CanRenderOffScreen;
+    }
 
+    protected override Task OnInitializedAsync()
+    {
         if (RootControl != null)
         {
-            _drawnView.SetChildren(new[] { RootControl });
+            SetChildren(new[]
+            {
+                RootControl
+            });
         }
         else
         {
-            _drawnView.ClearChildren();
+            ClearChildren();
         }
+
+        return base.OnInitializedAsync();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
 
-        if (_gestureModule == null)
+        if (firstRender)
         {
-            _gestureModule = await JS.InvokeAsync<IJSObjectReference>("import", "./_content/DrawnUi.Blazor/canvasGestures.js");
-            _selfReference = DotNetObjectReference.Create(this);
+            SetupRenderingLoop();
         }
 
-        if (_gesturesAttached != CaptureInput)
+        if (CaptureInput)
         {
-            await _gestureModule.InvokeVoidAsync("attachCanvasGestures", _hostElement, _selfReference, CaptureInput);
-            _gesturesAttached = CaptureInput;
+            _gestureEffect ??= new BlazorGestureEffect(JS);
+            await _gestureEffect.AttachAsync(_hostElement, this);
         }
-    }
-
-    private void OnPaintSurfaceAccelerated(SKPaintGLSurfaceEventArgs obj)
-    {
-        EnsureCanvasDrawable(true);
-        _drawnView.RenderExternalSurface(obj.Surface, new SKRect(0, 0, obj.BackendRenderTarget.Size.Width, obj.BackendRenderTarget.Size.Height), DateTime.UtcNow.Ticks * 100L);
-    }
-
-    private void OnPaintSurface(SKPaintSurfaceEventArgs e)
-    {
-        EnsureCanvasDrawable(false);
-        _drawnView.RenderExternalSurface(e.Surface, new SKRect(0, 0, e.Info.Width, e.Info.Height), DateTime.UtcNow.Ticks * 100L);
-    }
-
-    private void EnsureCanvasDrawable(bool accelerated)
-    {
-        if (_canvasDrawable != null && _canvasDrawable.IsHardwareAccelerated == accelerated)
-            return;
-
-        _canvasDrawable = new BlazorCanvasDrawable(_drawnView, accelerated, TriggerRepaint);
-        _drawnView.AttachCanvasView(_canvasDrawable);
-    }
-
-    private void TriggerRepaint()
-    {
-        _ = InvokeAsync(async () =>
+        else if (_gestureEffect != null)
         {
-            if (_gestureModule != null)
-            {
-                try
-                {
-                    var scheduled = await _gestureModule.InvokeAsync<bool>("requestCanvasFrame", _hostElement, CanvasElementWidth, CanvasElementHeight);
-                    if (scheduled)
-                        return;
-                }
-                catch
-                {
-                }
-            }
-
-            StateHasChanged();
-        });
+            await _gestureEffect.DetachAsync();
+        }
     }
 
     private float CanvasElementWidth => WidthRequest > 0 ? (float)WidthRequest : 100f;
 
     private float CanvasElementHeight => HeightRequest > 0 ? (float)HeightRequest : 100f;
 
-    private static Color ParseColor(string? value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-            return Colors.Transparent;
-
-        try
-        {
-            return Color.FromSKColor(SKColor.Parse(value));
-        }
-        catch
-        {
-            return Colors.Transparent;
-        }
-    }
-
-
-
-    /// <summary>
-    /// Whether is using hardware acceleration or software rendering
-    /// </summary>
-    [Parameter]
-    public RenderingModeType RenderingMode { get; set; }
-
-    [Parameter]
-    public GesturesMode Gestures { get; set; } = GesturesMode.Disabled;
-
-    /// <summary>
-    ///  If this is check you view will be refreshed even off-screen or hidden
-    /// </summary>
-    [Parameter]
-    public bool CanRenderOffScreen { get; set; }
-
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
-
     public MarkupString CssStyle
     {
         get
         {
-            var ret = $"background: {BackgroundColor}; {CssLayoutAlignment} {Style}";
-
+            var bg = BackgroundColorCss;
+            var ret = $"background: {bg}; {CssLayoutAlignment} {Style}";
             return new MarkupString(ret);
         }
     }
 
-
-
-
-
-    /// <summary>
-    /// Hex string
-    /// </summary>
     [Parameter]
-    public string BackgroundColor { get; set; } = "#00000000";
+    public new RenderingModeType RenderingMode { get; set; }
+
+    [Parameter]
+    public new bool CanRenderOffScreen { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public new GesturesMode Gestures { get; set; } = GesturesMode.Disabled;
 
     private bool CaptureInput => Gestures != GesturesMode.Disabled;
 
     private string GestureStyle => CaptureInput ? "touch-action:none; user-select:none;" : string.Empty;
 
-    [JSInvokable]
-    public Task OnCanvasPointer(CanvasPointerEventPayload args)
-    {
-        if (!CaptureInput)
-            return Task.CompletedTask;
-
-        Debug.WriteLine($"CANVAS mouse: {args.Type}, PointerId: {args.PointerId}, OffsetX: {args.OffsetX}, OffsetY: {args.OffsetY}");
-
-        var actionType = args.Type switch
-        {
-            "pointerdown" => TouchActionType.Pressed,
-            "pointerup" => TouchActionType.Released,
-            "pointercancel" => TouchActionType.Cancelled,
-            "pointerleave" => TouchActionType.Exited,
-            "pointermove" when args.Buttons > 0 => TouchActionType.Moved,
-            _ => TouchActionType.Pointer
-        };
-
-        _drawnView.OnTouchAction(CreatePointerArgs(args, actionType, args.IsInsideView));
-        
-        return Task.CompletedTask;
-    }
-
-    [JSInvokable]
-    public Task OnCanvasWheel(CanvasWheelEventPayload args)
-    {
-        if (!CaptureInput)
-            return Task.CompletedTask;
-
-        var point = CreatePoint(args.OffsetX, args.OffsetY);
-        var touchArgs = new TouchActionEventArgs(0, TouchActionType.Wheel, point)
-        {
-            IsInsideView = true,
-            Wheel = new DrawnUi.Draw.TouchEffect.WheelEventArgs
-            {
-                Delta = (float)args.DeltaY,
-                Scale = 1f,
-                Center = point
-            },
-            Pointer = CreatePointerData(args, isScrolling: true, MouseButtonState.Pressed)
-        };
-
-        _drawnView.OnTouchAction(touchArgs);
-        return Task.CompletedTask;
-    }
-
-    private static TouchActionEventArgs CreatePointerArgs(CanvasPointerEventPayload args, TouchActionType actionType, bool isInsideView)
-    {
-        var point = CreatePoint(args.OffsetX, args.OffsetY);
-
-        return new TouchActionEventArgs(args.PointerId, actionType, point)
-        {
-            IsInsideView = isInsideView,
-            Pointer = CreatePointerData(args, isScrolling: false,
-                actionType == TouchActionType.Released || actionType == TouchActionType.Cancelled || actionType == TouchActionType.Exited
-                    ? MouseButtonState.Released
-                    : MouseButtonState.Pressed)
-        };
-    }
-
-    private static PointF CreatePoint(double x, double y)
-    {
-        return new PointF((float)x, (float)y);
-    }
-
-    private static DrawnUi.Draw.TouchEffect.PointerData CreatePointerData(CanvasPointerEventPayload args, bool isScrolling, MouseButtonState state)
-    {
-        return new DrawnUi.Draw.TouchEffect.PointerData
-        {
-            Button = MapMouseButton(args.Button),
-            ButtonNumber = args.Button + 1,
-            IsScrolling = isScrolling,
-            State = state,
-            PressedButtons = MapPressedButtons(args.Buttons),
-            DeviceType = MapPointerDeviceType(args.PointerType),
-            Pressure = args.Pressure <= 0 ? 1f : (float)args.Pressure
-        };
-    }
-
-    private static DrawnUi.Draw.TouchEffect.PointerData CreatePointerData(CanvasWheelEventPayload args, bool isScrolling, MouseButtonState state)
-    {
-        return new DrawnUi.Draw.TouchEffect.PointerData
-        {
-            Button = MouseButton.Middle,
-            ButtonNumber = 3,
-            IsScrolling = isScrolling,
-            State = state,
-            PressedButtons = MapPressedButtons(args.Buttons),
-            DeviceType = PointerDeviceType.Mouse,
-            Pressure = 1f
-        };
-    }
-
-    private static PointerDeviceType MapPointerDeviceType(string? pointerType)
-    {
-        return pointerType?.ToLowerInvariant() switch
-        {
-            "touch" => PointerDeviceType.Touch,
-            "pen" => PointerDeviceType.Pen,
-            _ => PointerDeviceType.Mouse
-        };
-    }
-
-    private static MouseButton MapMouseButton(long button)
-    {
-        return button switch
-        {
-            1 => MouseButton.Middle,
-            2 => MouseButton.Right,
-            3 => MouseButton.XButton1,
-            4 => MouseButton.XButton2,
-            _ => MouseButton.Left
-        };
-    }
-
-    private static MouseButtons MapPressedButtons(long buttons)
-    {
-        var result = MouseButtons.None;
-
-        if ((buttons & 1) != 0)
-            result |= MouseButtons.Left;
-        if ((buttons & 2) != 0)
-            result |= MouseButtons.Right;
-        if ((buttons & 4) != 0)
-            result |= MouseButtons.Middle;
-        if ((buttons & 8) != 0)
-            result |= MouseButtons.XButton1;
-        if ((buttons & 16) != 0)
-            result |= MouseButtons.XButton2;
-
-        return result;
-    }
-
     public async ValueTask DisposeAsync()
     {
-        if (_gestureModule != null)
+        if (_gestureEffect != null)
         {
-            try
-            {
-                await _gestureModule.InvokeVoidAsync("detachCanvasGestures", _hostElement);
-                await _gestureModule.DisposeAsync();
-            }
-            catch
-            {
-            }
+            try { await _gestureEffect.DisposeAsync(); }
+            catch { }
         }
 
-        _selfReference?.Dispose();
+        OnDisposing();
     }
-
-    public sealed class CanvasPointerEventPayload
-    {
-        public string Type { get; set; } = string.Empty;
-
-        public long PointerId { get; set; }
-
-        public double OffsetX { get; set; }
-
-        public double OffsetY { get; set; }
-
-        public int Button { get; set; }
-
-        public long Buttons { get; set; }
-
-        public string? PointerType { get; set; }
-
-        public double Pressure { get; set; }
-
-        public bool IsInsideView { get; set; }
-    }
-
-    public sealed class CanvasWheelEventPayload
-    {
-        public double OffsetX { get; set; }
-
-        public double OffsetY { get; set; }
-
-        public double DeltaY { get; set; }
-
-        public long Buttons { get; set; }
-    }
-
-    private sealed class BlazorCanvasDrawable : SkiaView
-    {
-        private readonly Action _invalidate;
-        private readonly bool _accelerated;
-
-        public BlazorCanvasDrawable(DrawnView superview, bool accelerated, Action invalidate) : base(superview)
-        {
-            _accelerated = accelerated;
-            _invalidate = invalidate;
-        }
-
-        public override bool IsHardwareAccelerated => _accelerated;
-
-        public override bool Update(long nanos = 0)
-        {
-            base.Update(nanos);
-            _invalidate();
-            return true;
-        }
-    }
-
-
-
 
 }
 

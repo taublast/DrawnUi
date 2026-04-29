@@ -608,7 +608,7 @@ public class SkiaSpinner : SkiaLayout
     protected bool IsUserPanning;
     double _lastPanAngle;
 
-    double GetAngleFromPoint(PointF point)
+    double GetAngleFromPoint(System.Drawing.PointF point)
     {
         var center = new SKPoint(DrawingRect.MidX, DrawingRect.MidY);
         var dx = point.X - center.X;
@@ -616,7 +616,7 @@ public class SkiaSpinner : SkiaLayout
         return Math.Atan2(dy, dx) * 180.0 / Math.PI;
     }
 
-    double GetAngularVelocity(PointF velocity, PointF touchPoint)
+    double GetAngularVelocity(System.Drawing.PointF velocity, System.Drawing.PointF touchPoint)
     {
         var center = new SKPoint(DrawingRect.MidX, DrawingRect.MidY);
         var radius = Math.Min(DrawingRect.Width, DrawingRect.Height) / 2.0;
@@ -644,7 +644,7 @@ public class SkiaSpinner : SkiaLayout
     /// <summary>
     /// Checks if a point is inside the wheel's circular area
     /// </summary>
-    bool IsPointInsideWheel(PointF point)
+    bool IsPointInsideWheel(System.Drawing.PointF point)
     {
         var center = new SKPoint(DrawingRect.MidX, DrawingRect.MidY);
         var radius = Math.Min(DrawingRect.Width, DrawingRect.Height) / 2.0;

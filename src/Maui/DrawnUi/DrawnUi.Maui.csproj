@@ -85,13 +85,14 @@
         <!--cannot use due to .net runtime bug still being worked out to be fixed-->
         <!--<PackageReference Include="Markdig" Version="0.41.1" />-->
         <PackageReference Include="CommonMark.NET" Version="0.15.1" />
-        <PackageReference Include="AppoMobi.Maui.Gestures" Version="1.11.9.2" />
+        <!--<PackageReference Include="AppoMobi.Maui.Gestures" Version="1.11.9.2" />-->
         <PackageReference Include="Plugin.Maui.ApplePlatform" Version="1.0.0-pre7">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.0" />
-        <PackageReference Include="SkiaSharp.Skottie" Version="3.119.0" />
+        <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="4.147.0-preview.1.1" />
+        <PackageReference Include="SkiaSharp.Views" Version="4.147.0-preview.1.1" />
+        <PackageReference Include="SkiaSharp.Skottie" Version="4.147.0-preview.1.1" />
         <PackageReference Include="Svg.Skia" Version="3.0.3" />
 
         <!--MIT open source-->
@@ -116,6 +117,9 @@
 
     <!-- FIX for Windows unpackaged mode when library is referenced directly -->
     <ItemGroup Condition="$(TargetFramework.Contains('windows')) == true">
+
+        <PackageReference Include="SkiaSharp.Views.WinUI" Version="4.147.0-preview.1.1" />
+
         <None Include="Platforms/Windows/Natives/libEGL.dll">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
             <TargetPath>libEGL.dll</TargetPath>
@@ -181,6 +185,11 @@
     <ItemGroup>
         <Folder Include="Internals\Handlers\" />
         <Folder Include="Platforms\Apple\Extensions\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\AppoMobi.Maui.Gestures\src\AppoMobi.Gestures\AppoMobi.Gestures.csproj" />
+      <ProjectReference Include="..\..\..\..\AppoMobi.Maui.Gestures\src\AppoMobi.Maui.Gestures\AppoMobi.Maui.Gestures.csproj" />
     </ItemGroup>
 
     <!--<ItemGroup>

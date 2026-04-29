@@ -9,6 +9,7 @@
     <Import_RootNamespace>Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Labels\SkiaLabelFps.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\SKPaintExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\ControlTappedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\ObservableAttachedItemsCollection.cs" />
@@ -268,10 +269,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Features\Pdf\Pdf.cs" />
     <!-- Views utilities -->
     <Compile Include="$(MSBuildThisFileDirectory)Views\CanvasRestoreScope.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DrawnView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\SKAutoCanvasRestoreFixed.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\DisposableManager.cs" />
     <!-- Controls -->
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PlayFrames\GifAnimation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Interfaces\ISkiaRadioButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SurfaceCacheManager.cs" />
   </ItemGroup>
 </Project>

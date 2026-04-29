@@ -156,7 +156,7 @@
 
 
 	<ItemGroup>
-        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
 	</ItemGroup>
 
@@ -246,7 +246,6 @@
 
     
   <ItemGroup>
-    <ProjectReference Include="..\..\Addons\DrawnUi.Maui.Camera\DrawnUi.Maui.Camera.csproj" />
     <ProjectReference Include="..\..\Addons\DrawnUi.Maui.Game\DrawnUi.Maui.Game.csproj" />
     <ProjectReference Include="..\..\Addons\DrawnUi.Maui.MapsUi\DrawnUi.Maui.MapsUi.csproj" />
     <ProjectReference Include="..\..\Addons\DrawnUi.MauiGraphics\DrawnUi.MauiGraphics.csproj" />

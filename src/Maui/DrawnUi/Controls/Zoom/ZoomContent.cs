@@ -347,7 +347,7 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
 
                     if (PanningMode == PanningModeType.TwoFingers || PanningMode == PanningModeType.Enabled)
                     {
-                        var moved = args.Event.Wheel.Center - _pinchCenter;
+                        var moved = args.Event.Wheel.Center.ToMauiPointF() - _pinchCenter;
                         var panMultiplier = GetPanDirectionMultiplier();
                         // Direct 1:1 movement in screen space
                         OffsetImage = new(
@@ -362,7 +362,7 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
 
                     _lastPinch = args.Event.Wheel.Scale;
                     _zoom += delta;
-                    _pinchCenter = args.Event.Wheel.Center;
+                    _pinchCenter = args.Event.Wheel.Center.ToMauiPointF();
 
                     SetZoom(_zoom, false);
                     _zoom = ViewportZoom;
@@ -372,7 +372,7 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
                     _lastPinch = args.Event.Wheel.Scale;
 
                     if (!_wasPanning)
-                        _pinchCenter = args.Event.Wheel.Center;
+                        _pinchCenter = args.Event.Wheel.Center.ToMauiPointF();
                     else
                     {
                         _pinchCenter = new(
@@ -394,7 +394,7 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
                     return null;
 
                 _zoom += args.Event.Manipulation.Scale * ZoomSpeed;
-                _pinchCenter = args.Event.Manipulation.Center;
+                _pinchCenter = args.Event.Manipulation.Center.ToMauiPointF();
                 SetZoom(_zoom, false);
                 _zoom = ViewportZoom;
                 _wasPinching = true;
@@ -441,7 +441,7 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
                 {
                     if (!_wasPanning)
                     {
-                        _panStarted = args.Event.Location;
+                        _panStarted = args.Event.Location.ToMauiPointF();
                         _wasPanning = true;
                         //Debug.WriteLine($"[Pan] Started at {_panStarted}");
                     }
@@ -449,7 +449,7 @@ public class ZoomContent : ContentLayout, ISkiaGestureListener
                     var deltaX = args.Event.Location.X - _panStarted.X;
                     var deltaY = args.Event.Location.Y - _panStarted.Y;
 
-                    _panStarted = args.Event.Location;
+                    _panStarted = args.Event.Location.ToMauiPointF();
 
                     var panMultiplier = GetPanDirectionMultiplier();
                     // Direct 1:1 movement in screen space for natural panning

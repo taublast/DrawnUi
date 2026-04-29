@@ -134,5 +134,22 @@ namespace DrawnUi.Views
 
             _flags = ((int)alignment | (expands ? 4 : 0));
         }
+
+        public static implicit operator LayoutAlignment(LayoutOptions options) => options.Alignment;
+        public static implicit operator LayoutOptions(LayoutAlignment alignment) => new LayoutOptions(alignment, false);
+
+        public static bool operator ==(LayoutOptions opts, LayoutAlignment align) => opts.Alignment == align;
+        public static bool operator !=(LayoutOptions opts, LayoutAlignment align) => opts.Alignment != align;
+        public static bool operator ==(LayoutAlignment align, LayoutOptions opts) => opts.Alignment == align;
+        public static bool operator !=(LayoutAlignment align, LayoutOptions opts) => opts.Alignment != align;
+
+        public override bool Equals(object obj)
+        {
+            if (obj is LayoutOptions other) return _flags == other._flags;
+            if (obj is LayoutAlignment align) return Alignment == align;
+            return false;
+        }
+
+        public override int GetHashCode() => _flags.GetHashCode();
     }
 }

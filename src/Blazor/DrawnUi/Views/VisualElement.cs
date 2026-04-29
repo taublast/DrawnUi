@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Maui.Controls;
 
 namespace DrawnUi.Views
 {
@@ -10,9 +11,8 @@ namespace DrawnUi.Views
 
     }
 
-    public class VisualElement : LayoutComponentBase, IDisposable, INotifyPropertyChanged
+    public class VisualElement : Microsoft.Maui.Controls.View, IDisposable
     {
-        
         [Parameter]
         public string Units { get; set; } = "px";
 
@@ -23,78 +23,27 @@ namespace DrawnUi.Views
             var row = 0;
             if (GridColumn != null)
             {
-                cssForGrid += $" grid-column-start: {GridColumn+1};";
+                cssForGrid += $" grid-column-start: {GridColumn + 1};";
                 col = GridColumn.Value;
             }
             if (GridRow != null)
             {
-                cssForGrid += $" grid-row-start: {GridRow+1};";
+                cssForGrid += $" grid-row-start: {GridRow + 1};";
                 row = GridRow.Value;
             }
             if (GridColumnSpan != null)
             {
-                cssForGrid += $" grid-column-end: {col+GridColumnSpan+1};";
+                cssForGrid += $" grid-column-end: {col + GridColumnSpan + 1};";
             }
             if (GridRowSpan != null)
             {
-                cssForGrid += $" grid-row-end: {row + GridRowSpan+1};";
+                cssForGrid += $" grid-row-end: {row + GridRowSpan + 1};";
             }
 
             CssGridPosition = cssForGrid;
 
-            if (!string.IsNullOrEmpty(Margin))
-            {
-                var cols = Margin.Split(',', StringSplitOptions.RemoveEmptyEntries);
-                var nbCol = -1;
-
-                if (cols.Length == 1)
-                {
-                    CssMargins = $"margin: {cols[0].Trim()}{Units};";
-                }
-                else if (cols.Length == 2)
-                {
-                    CssMargins = $"margin: {cols[1].Trim()}{Units} {cols[0].Trim()}{Units};";
-                }
-                else if (cols.Length == 4)
-                {
-                    // L T R B -> T R B L
-                    // 0 1 2 3 -> 1 2 3 0
-                    CssMargins =
-                        $"margin: {cols[1].Trim()}{Units} {cols[2].Trim()}{Units} {cols[3].Trim()}{Units} {cols[0].Trim()}{Units};";
-                }
-            }
-
-            if (!string.IsNullOrEmpty(Padding))
-                {
-                    var cols = Padding.Split(',', StringSplitOptions.RemoveEmptyEntries);
-                    var nbCol = -1;
-
-                    if (cols.Length == 1)
-                    {
-                        var value = $"{cols[0].Trim()}";
-                        CssPadding = $"padding: {value}{Units};";
-                        PaddingParsed = new Thickness(value.ToDouble());
-                    }
-                    else if (cols.Length == 2)
-                    {
-                        CssPadding = $"padding: {cols[1].Trim()}{Units} {cols[0].Trim()}{Units};";
-                    }
-                    else if (cols.Length == 4)
-                    {
-                        // L T R B -> T R B L
-                        // 0 1 2 3 -> 1 2 3 0
-                        CssPadding = $"padding: {cols[1].Trim()}{Units} {cols[2].Trim()}{Units} {cols[3].Trim()}{Units} {cols[0].Trim()}{Units};";
-                    }
-                }
-
             base.OnParametersSet();
         }
-
-        public Thickness PaddingParsed { get; set; }
-
-        protected string CssMargins { get; set; }
-
-        protected string CssPadding { get; set; }
 
         protected string CssGridPosition { get; set; }
 
@@ -111,45 +60,35 @@ namespace DrawnUi.Views
         public int? GridRow { get; set; }
 
         [Parameter]
-        public LayoutAlignment HorizontalOptions { get; set; } = LayoutAlignment.Start;
+        public new virtual LayoutOptions HorizontalOptions { get; set; } = LayoutOptions.Start;
 
         [Parameter]
-        public LayoutAlignment VerticalOptions { get; set; } = LayoutAlignment.Start;
-
-        //[Parameter]
-        //public bool HorizontalOptionsExpands { get; set; }  
-
-        //[Parameter]
-        //public bool VerticalOptionsExpands { get; set; }  
-
-        [Parameter] 
-        public double WidthRequest { get; set; } = -1.0;
+        public new virtual LayoutOptions VerticalOptions { get; set; } = LayoutOptions.Start;
 
         [Parameter]
-        public double HeightRequest { get; set; } = -1.0;
+        public new virtual double WidthRequest { get; set; } = -1.0;
+
+        [Parameter]
+        public new virtual double HeightRequest { get; set; } = -1.0;
 
         protected string CssLayoutAlignment
         {
             get
             {
                 var ret = "";
-                var width = " width: fit-content;"; //for layout.start
-                var height = " height: fit-content;"; //for layout.start
+                var hAlign = HorizontalOptions.Alignment;
+                var vAlign = VerticalOptions.Alignment;
 
-                //if (HorizontalOptionsExpands)
-                //    width = "";
-
-                //if (VerticalOptionsExpands)
-                //    height = "";
-
+                var width = " width: fit-content;";
+                var height = " height: fit-content;";
 
                 if (WidthRequest >= 0)
                 {
-                    width = $"width: {WidthRequest}{Units};".Replace(",",".");
+                    width = $"width: {WidthRequest.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units};";
                 }
                 else
                 {
-                    if (HorizontalOptions == LayoutAlignment.Fill)
+                    if (hAlign == LayoutAlignment.Fill)
                     {
                         width = $"width: initial;";
                     }
@@ -157,66 +96,76 @@ namespace DrawnUi.Views
 
                 if (HeightRequest >= 0)
                 {
-                    height = $"height: {HeightRequest}{Units};".Replace(",", "."); ;
+                    height = $"height: {HeightRequest.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units};";
                 }
                 else
                 {
-                    if (VerticalOptions == LayoutAlignment.Fill)
+                    if (vAlign == LayoutAlignment.Fill)
                     {
                         height = $"height: 100%;";
                     }
                 }
 
-                if (HorizontalOptions == LayoutAlignment.Start || HorizontalOptions == LayoutAlignment.Fill)
+                if (hAlign == LayoutAlignment.Start || hAlign == LayoutAlignment.Fill)
                 {
-                    ret +=  width;
+                    ret += width;
                 }
-                else
-                if (HorizontalOptions == LayoutAlignment.Center)
+                else if (hAlign == LayoutAlignment.Center)
                 {
-                    ret += "margin-left: auto; margin-right: auto;"+width;
+                    ret += "margin-left: auto; margin-right: auto;" + width;
                 }
-                else
-                if (HorizontalOptions == LayoutAlignment.End)
+                else if (hAlign == LayoutAlignment.End)
                 {
-                    ret += "margin-left: auto;"+width;
+                    ret += "margin-left: auto;" + width;
                 }
 
-                if (VerticalOptions == LayoutAlignment.Start || VerticalOptions == LayoutAlignment.Fill)
+                if (vAlign == LayoutAlignment.Start || vAlign == LayoutAlignment.Fill)
                 {
                     ret += height;
                 }
-                else
-                if (VerticalOptions == LayoutAlignment.Center)
+                else if (vAlign == LayoutAlignment.Center)
                 {
-                    ret += "margin-top: auto; margin-bottom: auto;"+height;
-                 //ret += "top: 50%; transform: translate(0, -50%); " + height; 
+                    ret += "margin-top: auto; margin-bottom: auto;" + height;
                 }
-                else
-                if (VerticalOptions == LayoutAlignment.End)
+                else if (vAlign == LayoutAlignment.End)
                 {
-                    ret += "margin-top: auto;"+height;
+                    ret += "margin-top: auto;" + height;
                 }
 
                 return ret;
             }
         }
 
+        protected string CssMargins
+        {
+            get
+            {
+                var m = Margin;
+                if (m == default)
+                    return string.Empty;
+                return $"margin: {m.Top.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units} {m.Right.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units} {m.Bottom.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units} {m.Left.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units};";
+            }
+        }
 
-        [Parameter]
-        public string Margin { get; set; }
-
-        [Parameter]
-        public string Padding { get; set; }
+        protected string CssPadding
+        {
+            get
+            {
+                var p = Padding;
+                if (p == default)
+                    return string.Empty;
+                return $"padding: {p.Top.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units} {p.Right.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units} {p.Bottom.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units} {p.Left.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units};";
+            }
+        }
 
         [Parameter]
         public string Class { get; set; }
 
         [Parameter]
-        public string Style { get; set; }
+        public new string Style { get; set; }
 
         [Parameter]
-        public bool IsVisible { get; set; } = true;
+        public new bool IsVisible { get; set; } = true;
 
         protected override bool ShouldRender()
         {
@@ -230,29 +179,6 @@ namespace DrawnUi.Views
 
         public string Uid { get; protected set; } = Guid.NewGuid().ToString();
 
-
-        //protected string AdjustPositionOpen
-        //{
-        //    get
-        //    {
-        //        if (!string.IsNullOrEmpty(CssMargins))
-        //            return $"<div style='{CssMargins}'>";
-
-        //        return string.Empty; ;
-        //    }
-        //}
-
-        //protected string AdjustPositionClose
-        //{
-        //    get
-        //    {
-        //        if (!string.IsNullOrEmpty(CssMargins))
-        //            return CloseDiv;
-
-        //        return string.Empty; 
-        //    }
-        //}
-
         public async void Update()
         {
             await InvokeAsync(() =>
@@ -261,30 +187,14 @@ namespace DrawnUi.Views
             });
         }
 
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-#if DEBUG
-            //       dynamic value = Reflection.GetPropertyValueFor(this, propertyName);
-            //       Console.WriteLine($"[PropertyChanged] BasePage {propertyName} = {value}");
-#endif
-             
-            Update();
-
-            var changed = PropertyChanged;
-            if (changed == null)
-                return;
-
-            changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
+            //Update();
+            base.OnPropertyChanged(propertyName);
         }
-        #endregion
 
         public virtual void OnDisposing()
         {
-            //todo
-
         }
 
         public void Dispose()
@@ -292,9 +202,6 @@ namespace DrawnUi.Views
             OnDisposing();
         }
 
-        /// <summary>
-        /// Use to get class unique class name for use in markup
-        /// </summary>
         public MarkupString ClassUid
         {
             get
@@ -303,9 +210,6 @@ namespace DrawnUi.Views
             }
         }
 
-        /// <summary>
-        /// Use to get class unique class name for use in stylesheet with preceding dot
-        /// </summary>
         public MarkupString ClassUidStyle
         {
             get
@@ -314,5 +218,7 @@ namespace DrawnUi.Views
             }
         }
 
+        // Frame for GetIsVisibleWithParent compatibility
+        public virtual SKRect Frame { get; protected set; }
     }
 }

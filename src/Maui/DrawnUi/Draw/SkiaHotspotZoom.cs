@@ -56,7 +56,7 @@ public class SkiaHotspotZoom : SkiaHotspot
         if (args.Type == TouchActionResult.Panning && args.Event.Manipulation != null)
         {
             _zoom += args.Event.Manipulation.Scale * ZoomSpeed;
-            _pinchCenter = args.Event.Manipulation.Center;
+            _pinchCenter = args.Event.Manipulation.Center.ToMauiPointF();
             SetZoom(_zoom, false);
             _zoom = ViewportZoom;
         }
@@ -79,7 +79,7 @@ public class SkiaHotspotZoom : SkiaHotspot
 
                     _lastPinch = args.Event.Wheel.Scale;
                     _zoom += delta;
-                    _pinchCenter = args.Event.Wheel.Center;
+                    _pinchCenter = args.Event.Wheel.Center.ToMauiPointF();
 
                     //Debug.WriteLine($"[ZOOM] got {args.Event.Pinch.Scale:0.000}, delta {delta:0.00} -> {_zoom:0.00}");
 

@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Components;
 
 namespace DrawnUi.Draw
 {
-    public class BindableObject : INotifyPropertyChanged
+    public class BindableObject : LayoutComponentBase, INotifyPropertyChanged
     {
         private readonly Dictionary<BindableProperty, object> _values = new();
         private object _bindingContext;
 
-        public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+        public event PropertyChangingEventHandler PropertyChanging;
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -52,15 +53,7 @@ namespace DrawnUi.Draw
 
         }
 
-        protected virtual void OnChildAdded(Microsoft.Maui.Controls.Element child)
-        {
 
-        }
-
-        protected virtual void OnChildRemoved(Microsoft.Maui.Controls.Element child, int oldLogicalIndex)
-        {
-
-        }
 
         protected virtual void InvalidateMeasure()
         {
@@ -109,7 +102,7 @@ namespace DrawnUi.Draw
             OnPropertyChanged(property.PropertyName);
         }
 
-        public static void SetInheritedBindingContext(Microsoft.Maui.Controls.Element bindable, object value)
+        public static void SetInheritedBindingContext(BindableObject bindable, object value)
         {
             if (bindable != null)
             {

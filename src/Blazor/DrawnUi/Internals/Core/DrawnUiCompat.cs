@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -203,32 +204,6 @@ namespace DrawnUi.Draw
 
         public static bool LogEnabled { get; set; }
 
-        public sealed class WheelEventArgs : EventArgs
-        {
-            public float Delta { get; set; }
-
-            public float Scale { get; set; }
-
-            public PointF Center { get; set; }
-        }
-
-        public sealed class PointerData : EventArgs
-        {
-            public MouseButton Button { get; set; }
-
-            public int ButtonNumber { get; set; }
-
-            public bool IsScrolling { get; set; }
-
-            public MouseButtonState State { get; set; }
-
-            public MouseButtons PressedButtons { get; set; }
-
-            public PointerDeviceType DeviceType { get; set; }
-
-            public float Pressure { get; set; } = 1.0f;
-        }
-
         public static void CloseKeyboard()
         {
         }
@@ -245,9 +220,12 @@ namespace DrawnUi.Draw
             StartupSettings = settings;
 
             var host = builder.Build();
+
             Super.Services = host.Services;
 
             await SkiaFontManager.Instance.InitializeAsync(host.Services, cancellationToken);
+
+            Super.Init();
 
             return host;
         }
@@ -499,98 +477,17 @@ namespace DrawnUi.Blazor.Views
             return Task.CompletedTask;
         }
     }
+}
 
+namespace DrawnUi.Views
+{
     public partial class Canvas
     {
         public SkiaControl HasHover { get; set; }
     }
 }
 
-namespace DrawnUi.Views
-{
-    public class Canvas : Microsoft.Maui.Controls.ContentView
-    {
-        public SkiaControl HasHover { get; set; }
-
-        public virtual bool SignalInput(ISkiaGestureListener listener, TouchActionResult touchAction)
-        {
-            return false;
-        }
-
-        public virtual bool Focus()
-        {
-            return true;
-        }
-    }
-}
-
-namespace DrawnUi.Draw
-{
-    public class SkiaView : Microsoft.Maui.Controls.View, ISkiaDrawable
-    {
-        public SkiaView(DrawnUi.Views.DrawnView superview)
-        {
-            Superview = superview;
-            Uid = Guid.NewGuid();
-        }
-
-        protected DrawnUi.Views.DrawnView Superview { get; }
-
-        public Func<SKSurface, SKRect, bool> OnDraw { get; set; }
-
-        public SKSurface Surface { get; protected set; }
-
-        public virtual bool IsHardwareAccelerated => false;
-
-        public double FPS { get; protected set; }
-
-        public bool IsDrawing { get; protected set; }
-
-        public bool HasDrawn { get; protected set; }
-
-        public long FrameTime { get; protected set; }
-
-        public Guid Uid { get; }
-
-        public SKSize CanvasSize { get; protected set; }
-
-        public virtual bool Update(long nanos = 0)
-        {
-            FrameTime = nanos;
-            return true;
-        }
-
-        public virtual void AttachSurface(SKSurface surface, SKRect rect, long frameTime)
-        {
-            Surface = surface;
-            CanvasSize = new SKSize(rect.Width, rect.Height);
-            FrameTime = frameTime;
-            HasDrawn = true;
-        }
-
-        public virtual void SignalFrame(long nanoseconds)
-        {
-            FrameTime = nanoseconds;
-        }
-
-        public virtual void Disconnect()
-        {
-        }
-
-        public void Dispose()
-        {
-        }
-    }
-
-    public sealed class SkiaViewAccelerated : SkiaView
-    {
-        public SkiaViewAccelerated(DrawnUi.Views.DrawnView superview) : base(superview)
-        {
-        }
-
-        public override bool IsHardwareAccelerated => true;
-    }
-}
+ 
 
 namespace DrawnUi.Models
 {

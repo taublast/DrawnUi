@@ -4,6 +4,14 @@ namespace DrawnUi.Extensions;
 
 public static partial class InternalExtensions
 {
+    #region SYSTEM.DRAWING CONVERSIONS
+
+    public static SKPoint ToSKPoint(this System.Drawing.PointF pt) => new(pt.X, pt.Y);
+
+    public static PointF ToMauiPointF(this System.Drawing.PointF pt) => new(pt.X, pt.Y);
+
+    #endregion
+
     #region MAUI CONTEXT
 
     public static IMauiContext? FindMauiContext(this Element element, bool fallbackToAppMauiContext = false)

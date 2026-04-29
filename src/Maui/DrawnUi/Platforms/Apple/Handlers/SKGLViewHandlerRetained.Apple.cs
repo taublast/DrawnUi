@@ -2,6 +2,9 @@
 using UIKit;
 using Metal;
 
+using SkiaSharp.Views.iOS;
+ 
+
 namespace DrawnUi.Views
 {
     /// <summary>
@@ -9,8 +12,9 @@ namespace DrawnUi.Views
     /// </summary>
     public partial class SKGLViewHandlerRetained : ViewHandler<ISKGLView, SKMetalViewRetained>
     {
+ 
         private PaintSurfaceProxy? paintSurfaceProxy;
-
+ 
         // P3-iOS Optimization: Shared Metal device across all views
         private static IMTLDevice? _sharedMetalDevice;
         private static readonly object _deviceLock = new object();
@@ -38,7 +42,7 @@ namespace DrawnUi.Views
             };
         }
 
-
+ 
         protected override void ConnectHandler(SKMetalViewRetained platformView)
         {
             paintSurfaceProxy = new();
@@ -56,6 +60,7 @@ namespace DrawnUi.Views
 
             platformView?.Dispose();  //MAUI is not disposing PlatformView in base, avoid the leak
         }
+ 
 
         // Mapper actions / properties
 
@@ -109,6 +114,8 @@ namespace DrawnUi.Views
             // P1-Cross Optimization: Track first frame render for initialization
             public bool HasRenderedFirstFrame { get; set; }
 
+
+ 
             protected override void OnPaintSurface(SkiaSharp.Views.iOS.SKPaintMetalSurfaceEventArgs e)
             {
                 // P1-Cross Optimization: Mark first frame as rendered
@@ -129,7 +136,11 @@ namespace DrawnUi.Views
 
                 base.OnPaintSurface(e);
             }
+
+ 
         }
+
+ 
 
         private class PaintSurfaceProxy : SKEventProxy<ISKGLView, SKMetalViewRetained>
         {
@@ -178,5 +189,6 @@ namespace DrawnUi.Views
         }
 
  
+
     }
 }

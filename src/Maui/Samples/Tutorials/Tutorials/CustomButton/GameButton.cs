@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using AppoMobi.Maui.Gestures;
+using AppoMobi.Gestures;
 using DrawnUi.Infrastructure.Xaml;
 
 namespace DrawnUI.Tutorials.CustomButton

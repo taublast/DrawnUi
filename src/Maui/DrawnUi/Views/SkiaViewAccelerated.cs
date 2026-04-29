@@ -1,7 +1,4 @@
-﻿using DrawnUi.Controls;
-using HarfBuzzSharp;
-
-namespace DrawnUi.Views;
+﻿namespace DrawnUi.Views;
 
 
 
@@ -11,19 +8,11 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
 
     public Func<SKSurface, SKRect, bool> OnDraw { get; set; }
 
-    public SkiaViewAccelerated(DrawnView superview)
+    public SkiaViewAccelerated()
     {
-        Superview = superview;
         EnableTouchEvents = false;
         //this.HasRenderLoop = true;
     }
-
-#if ANDROID
-
-
-
-
-#endif
 
     protected override void OnHandlerChanging(HandlerChangingEventArgs args)
     {
@@ -61,7 +50,8 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
         Superview?.SetDeviceOrientation(deviceOrientation);
     }
 
-    public DrawnView Superview { get; protected set; }
+    public DrawnView Superview { get; set; }
+
     private bool _newFrameReady;
 
     public void Dispose()
@@ -182,7 +172,7 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
 
 #if WINDOWS
             //fix handler renderer didn't render first frame at startup for skiasharp v3
-            if (Handler?.PlatformView is SoftwareWindowsCanvas canvas)
+            if (Handler?.PlatformView is DrawnUi.Controls.SoftwareWindowsCanvas canvas)
             {
                 if (canvas.CanvasSize ==  SKSize.Empty)
                 {

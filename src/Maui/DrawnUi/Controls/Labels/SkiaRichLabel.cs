@@ -115,12 +115,12 @@ public partial class SkiaRichLabel : SkiaLabel
                 {
                     needShape = SkiaLabel.UnicodeNeedsShaping(codePoint);
                 }
-#if BROWSER
-                if (SkiaLabel.EmojiData.IsEmoji(codePoint))
-                {
-                    needShape = false;
-                }
-#endif
+//#if BROWSER
+//                if (SkiaLabel.EmojiData.IsEmoji(codePoint))
+//                {
+//                    needShape = false;
+//                }
+//#endif
 
                 spanData.Add((add, currentTypeFace, codePoint, needShape));
                 currentTypeFace = newTypeface;

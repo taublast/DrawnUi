@@ -1,5 +1,5 @@
 @page "/"
-@using AppoMobi.Maui.Gestures
+@using AppoMobi.Gestures
 @using DrawnUi.Draw
 @using DrawnUi.Views
 @using Microsoft.Maui.Controls
@@ -40,72 +40,84 @@ Latest DrawnUI workcase hosted in the Blazor sandbox.
 
     public Home()
     {
-        var title = new SkiaLayout()
-        {
-            Type = LayoutType.Column,
-            HorizontalOptions = LayoutOptions.Center,
-            Margin = new Thickness(16),
-            UseCache = SkiaCacheType.Image,
-            Spacing = 8,
-            Children =
-            {
-                new SkiaLabel()
-                {
-                    Text = "Interactive Cards",
-                    FontFamily = "FontTextTitle",
-                    FontSize = 32,
-                    FontAttributes = FontAttributes.Bold,
-                    TextColor = new Color(0.173f, 0.243f, 0.314f, 1f),
-                    HorizontalOptions = LayoutOptions.Center
-                },
-                new SkiaLabel()
-                {
-                    Text = "Tap and drag to interact!",
-                    FontFamily = "FontText",
-                    FontSize = 16,
-                    TextColor = new Color(0.498f, 0.549f, 0.553f, 1f),
-                    HorizontalOptions = LayoutOptions.Center
-                }
-            }
-        };
-
         _card1Layer = CreateGradientCard();
         _card2Layer = CreateGamingCard();
 
-        var scrollContent = new SkiaLayout()
+        RootControl = new SkiaLayer()
         {
-            Type = LayoutType.Column,
-            Tag = "Cells",
-            Padding = new Thickness(0, 5),
-            Spacing = 0,
-            Children =
-            {
-                _card1Layer,
-                _card2Layer,
-                CreateDataCard(),
-                _status
-            }
-        };
-
-        var scroll = new SkiaScroll()
-        {
-            IgnoreWrongDirection = true,
             VerticalOptions = LayoutOptions.Fill,
-            Orientation = ScrollOrientation.Vertical,
-            Spacing = 20,
-            Content = scrollContent
-        };
-
-        RootControl = new SkiaLayout()
-        {
-            Type = LayoutType.Column,
-            WidthRequest = 390,
-            HeightRequest = 720,
-            Spacing = 0,
+            HorizontalOptions = LayoutOptions.Fill,
             Children =
             {
-                title,
-                scroll
+                new SkiaStack()
+                {
+                    Spacing = 0,
+                    Children =
+                    {
+                        new SkiaLayout()
+                        {
+                            Type = LayoutType.Column,
+                            HorizontalOptions = LayoutOptions.Fill,
+                            Margin = new Thickness(16),
+                            UseCache = SkiaCacheType.Image,
+                            Spacing = 8,
+                            Children =
+                            {
+                                new SkiaLabel()
+                                {
+                                    Text = "Interactive Cards",
+                                    FontFamily = "FontTextTitle",
+                                    FontSize = 32,
+                                    FontAttributes = FontAttributes.Bold,
+                                    TextColor = new Color(0.173f, 0.243f, 0.314f, 1f),
+                                    HorizontalOptions = LayoutOptions.Center
+                                },
+                                new SkiaLabel()
+                                {
+                                    Text = "Tap and drag to interact!",
+                                    FontFamily = "FontText",
+                                    FontSize = 16,
+                                    TextColor = new Color(0.498f, 0.549f, 0.553f, 1f),
+                                    HorizontalOptions = LayoutOptions.Center
+                                }
+                            }
+                        },
+                        new SkiaScroll()
+                        {
+                            IgnoreWrongDirection = true,
+                            VerticalOptions = LayoutOptions.Fill,
+                            HorizontalOptions = LayoutOptions.Fill,
+                            Spacing = 20,
+                            Content = 
+                            new SkiaLayout()
+                            {
+                                Type = LayoutType.Column,
+                                Tag = "Cells",
+                                Padding = new Thickness(0, 5),
+                                Spacing = 0,
+                                Children =
+                                {
+                                    _card1Layer,
+                                    _card2Layer,
+                                    CreateDataCard(),
+                                    _status
+                                }
+                            }
+                        }
+                    }
+                },
+
+                new SkiaLabelFps()
+                {
+                    //ForceRefresh = true,
+                    Margin = new (0, 0, 4, 24),
+                    VerticalOptions = LayoutOptions.End,
+                    HorizontalOptions = LayoutOptions.End,
+                    Rotation = -45,
+                    BackgroundColor = Colors.DarkRed,
+                    TextColor = Colors.White,
+                    ZIndex = 110,
+                }
             }
         };
 

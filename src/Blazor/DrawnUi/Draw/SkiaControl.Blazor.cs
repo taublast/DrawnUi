@@ -537,6 +537,11 @@ namespace DrawnUi.Draw
             return (float)Super.Screen.Density;
         }
 
+        public virtual Action GetOffscreenRenderingAction()
+        {
+            return null;
+        }
+
         /*
         #region HotReload
 

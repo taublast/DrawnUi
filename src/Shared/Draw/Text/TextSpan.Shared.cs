@@ -63,12 +63,12 @@ public partial class TextSpan : IDisposable
                     {
                         FontDetectedWith = glyph.Symbol;
                         NeedShape = SkiaLabel.UnicodeNeedsShaping(glyph.Symbol);
-#if BROWSER
-                        if (SkiaLabel.EmojiData.IsEmoji(glyph.Symbol))
-                        {
-                            NeedShape = false;
-                        }
-#endif
+//#if BROWSER
+//                        if (SkiaLabel.EmojiData.IsEmoji(glyph.Symbol))
+//                        {
+//                            NeedShape = false;
+//                        }
+//#endif
                         _fontAutoSet = true;
                         TypeFace = typeFace;
                         CheckGlyphsCanBeRendered();

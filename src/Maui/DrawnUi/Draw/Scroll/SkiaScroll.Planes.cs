@@ -866,7 +866,7 @@ namespace DrawnUi.Draw
         /// <summary>
         /// Check if gesture point intersects with plane's visible area
         /// </summary>
-        protected virtual bool IsGestureInPlane(Plane plane, PointF location)
+        protected virtual bool IsGestureInPlane(Plane plane, System.Drawing.PointF location)
         {
             var currentScroll = InternalViewportOffset.Pixels.Y;
             var planeRect = new SKRect(0, 0, _planeWidth, _planeHeight);

@@ -61,6 +61,7 @@ public static partial class InternalExtensions
         return currentNode.Value;
     }
 
+
     public static void DisposeControlAndChildren(this IView view)
     {
         if (view == null) return;

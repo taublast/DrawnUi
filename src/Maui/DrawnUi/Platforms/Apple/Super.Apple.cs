@@ -2,6 +2,10 @@ using DrawnUi.Views;
 
 namespace DrawnUi.Draw;
 
+ 
+using SkiaSharp.Views.iOS;
+ 
+
 public partial class Super
 {
     private static readonly object MetalViewsLock = new();

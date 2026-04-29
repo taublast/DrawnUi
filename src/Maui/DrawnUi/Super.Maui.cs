@@ -7,6 +7,7 @@ global using System.Text;
 global using System.Windows.Input;
 global using Microsoft.Maui.ApplicationModel;
 global using AppoMobi.Maui.Gestures;
+global using AppoMobi.Gestures;
 global using Microsoft.Maui;
 global using AppoMobi.Specials;
 global using DrawnUi.Draw;

@@ -1,4 +1,4 @@
-using AppoMobi.Maui.Gestures;
+using AppoMobi.Gestures;
 
 namespace DrawnUI.Tutorials.InteractiveCards;
 

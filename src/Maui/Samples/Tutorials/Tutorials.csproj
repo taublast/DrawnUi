@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
-        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+        <TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
+        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
         
         <ApplicationId>com.drawnui.tutorials</ApplicationId>
         <ApplicationIdGuid>430e66b0-efc2-4fde-9ac8-074d5c3299b4</ApplicationIdGuid>
@@ -76,7 +76,7 @@
     <ItemGroup>
         <!--https://github.com/BretJohnson/hot-preview-->
         <!--<PackageReference Include="HotPreview.App.Maui" Version="0.15.26" />-->
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(UseSource)' == 'true'">

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Concurrent;
-using Microsoft.Maui.Controls.Compatibility;
 
 namespace DrawnUi.Views
 {

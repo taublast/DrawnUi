@@ -2,9 +2,12 @@ using CoreGraphics;
 using Foundation;
 using Metal;
 using MetalKit;
-using SkiaSharp.Views.iOS;
+
 using UIKit;
 using DrawnUi.Draw;
+
+using SkiaSharp.Views.iOS;
+ 
 
 namespace DrawnUi.Views
 {
@@ -150,7 +153,7 @@ namespace DrawnUi.Views
 
             // GPU memory used not only for rendering but could be read by SkiaSharp too
             FramebufferOnly = false;
-
+ 
             // Acquire a reference to the shared Metal pipeline.
             // Created on demand by the first view; reused by all subsequent views.
             lock (_sharedContextLock)
@@ -162,6 +165,7 @@ namespace DrawnUi.Views
                 {
                     _sharedQueue = _device.CreateCommandQueue();
 
+#if NET9
                     _sharedBackendContext = new GRMtlBackendContext
                     {
                         Device = _device,
@@ -170,6 +174,13 @@ namespace DrawnUi.Views
 
                     // Prevent GC from moving/finalizing the queue while Metal holds raw pointers to it
                     _sharedQueuePin = GCHandle.Alloc(_sharedBackendContext.Queue, GCHandleType.Pinned);
+#else
+                    _sharedBackendContext = new GRMtlBackendContext
+                    {
+                        DeviceHandle = _device.Handle,
+                        QueueHandle = _sharedQueue.Handle
+                    };
+#endif
 
                     //todo if SkiaSharp doesn't throw but just returns null woul need to check logic for _sharedContextRefCount a bit..
                     _sharedContext = GRContext.CreateMetal(_sharedBackendContext);
@@ -179,8 +190,9 @@ namespace DrawnUi.Views
             Device = _device;
             Queue = _sharedQueue; // MTKView uses the shared queue for drawable presentation
             Delegate = this;
-
+ 
             Super.RegisterMetalView(this);
+
         }
 
         // ── MTKView delegate ─────────────────────────────────────────────────────
@@ -189,6 +201,7 @@ namespace DrawnUi.Views
         {
             if (stopped)
                 return;
+ 
 
             var newSize = size.ToSKSize();
             _canvasSize = newSize;
@@ -199,13 +212,19 @@ namespace DrawnUi.Views
 
             if (ManualRefresh)
                 SetNeedsDisplay();
+ 
         }
 
         void IMTKViewDelegate.Draw(MTKView view)
         {
+
+#if NET9
             if (_designMode || _sharedBackendContext.Queue == null || CurrentDrawable?.Texture == null || stopped)
                 return;
-
+#else
+            if (_designMode || _sharedBackendContext.QueueHandle == IntPtr.Zero || CurrentDrawable?.Texture == null || stopped)
+                return;
+#endif
             _canvasSize = DrawableSize.ToSKSize();
             if (_canvasSize.Width <= 0 || _canvasSize.Height <= 0)
                 return;
@@ -248,13 +267,22 @@ namespace DrawnUi.Views
                 }
 
                 // Create Metal texture info and render target (shared by both paths)
+#if NET9
                 var metalInfo = new GRMtlTextureInfo(textureToUse);
+
                 using var renderTarget = new GRBackendRenderTarget(
                     (int)_canvasSize.Width,
                     (int)_canvasSize.Height,
                     1, // Sample count must be 1 for render targets
                     metalInfo);
+#else
+                var metalInfo = new GRMtlTextureInfo(textureToUse.Handle);
 
+                using var renderTarget = new GRBackendRenderTarget(
+                    (int)_canvasSize.Width,
+                    (int)_canvasSize.Height,
+                    metalInfo);
+#endif
                 // FAST FIRST FRAME: Use CPU pre-rendered image if available
                 // CRITICAL: Check placement - must happen BEFORE normal rendering setup
                 if (_preRenderedImage != null)
@@ -280,7 +308,11 @@ namespace DrawnUi.Views
                         //Debug.WriteLine("[SKMetalView] First frame: Used CPU pre-rendered image (fast blit)");
 
                         // Immediately copy to screen and return - skip normal rendering
-                        using var commandBuffer = _sharedBackendContext.Queue.CommandBuffer();
+#if NET9
+                        using IMTLCommandBuffer commandBuffer = _sharedBackendContext.Queue.CommandBuffer();
+#else
+                        using IMTLCommandBuffer commandBuffer = _sharedQueue.CommandBuffer();
+#endif
                         if (commandBuffer == null) return;
                         using var blitEncoder = commandBuffer.BlitCommandEncoder;
 
@@ -325,7 +357,11 @@ namespace DrawnUi.Views
                 _needsFullRedraw = false;
 
                 // Copy retained texture to screen
-                using var commandBuffer2 = _sharedBackendContext.Queue.CommandBuffer();
+#if NET9
+                using IMTLCommandBuffer commandBuffer2 = _sharedBackendContext.Queue.CommandBuffer();
+#else
+                using IMTLCommandBuffer commandBuffer2 = _sharedQueue.CommandBuffer();
+#endif
                 if (commandBuffer2 == null) return;
                 using var blitEncoder2 = commandBuffer2.BlitCommandEncoder;
 
@@ -346,7 +382,7 @@ namespace DrawnUi.Views
             {
                 inQueue--;
             }
-
+ 
         }
 
         public override void MovedToWindow()
@@ -441,13 +477,15 @@ namespace DrawnUi.Views
                         // Create dummy renderTarget for CPU rendering (won't be used but required by constructor)
                         // Use a fake Metal texture info
                         var dummyMtlInfo = new GRMtlTextureInfo(IntPtr.Zero);
+
+#if NET9
                         using var dummyRenderTarget = new GRBackendRenderTarget(
                             (int)_canvasSize.Width,
                             (int)_canvasSize.Height,
                             1,
                             dummyMtlInfo);
 
-                        var e = new SKPaintMetalSurfaceEventArgs(
+                            var e = new SKPaintMetalSurfaceEventArgs(
                             softSurface,
                             dummyRenderTarget,
                             GRSurfaceOrigin.TopLeft,
@@ -455,6 +493,14 @@ namespace DrawnUi.Views
                         );
 
                         OnPaintSurface(e);
+#else
+
+                        // ???
+        
+#endif
+
+
+
                     }
 
                     // Capture pre-rendered result for fast first Metal frame
@@ -474,6 +520,7 @@ namespace DrawnUi.Views
 
         // ── Paint surface ────────────────────────────────────────────────────────
 
+ 
         public event EventHandler<SKPaintMetalSurfaceEventArgs> PaintSurface;
 
         /// <summary>
@@ -487,6 +534,7 @@ namespace DrawnUi.Views
             }
             PaintSurface?.Invoke(this, e);
         }
+ 
 
         /// <summary>
         /// Forces the view to redraw its contents.
@@ -509,6 +557,7 @@ namespace DrawnUi.Views
         protected override void Dispose(bool disposing)
         {
             stopped = true;
+
             Super.UnregisterMetalView(this);
 
             if (disposing)

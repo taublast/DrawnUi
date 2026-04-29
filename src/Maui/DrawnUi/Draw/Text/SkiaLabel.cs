@@ -3,7 +3,13 @@ using System.Collections.Concurrent;
 using SkiaSharp.HarfBuzz;
 using Color = Microsoft.Maui.Graphics.Color;
 using Font = Microsoft.Maui.Font;
-using PropertyChangingEventArgs = Microsoft.Maui.Controls.PropertyChangingEventArgs;
+
+
+#if BROWSER
+    using PropertyChangingEventArgs = System.ComponentModel.PropertyChangingEventArgs;
+#else
+    using PropertyChangingEventArgs = Microsoft.Maui.Controls.PropertyChangingEventArgs;
+#endif
 
 namespace DrawnUi.Draw
 {
@@ -282,7 +288,7 @@ namespace DrawnUi.Draw
 
         void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(nameof(Spans));
 
-        void OnItemPropertyChanging(object sender, System.ComponentModel.PropertyChangingEventArgs e) => OnPropertyChanging(nameof(Spans));
+        void OnItemPropertyChanging(object? sender, PropertyChangingEventArgs propertyChangingEventArgs) => OnPropertyChanging(nameof(Spans));
 
         protected readonly SpanCollection _spans = new();
 
@@ -937,15 +943,10 @@ namespace DrawnUi.Draw
             float y,
             SKPaint paint)
         {
-            if (string.IsNullOrEmpty(text) || paint == null || paint.Typeface == null)
+            if (string.IsNullOrEmpty(text) || Shaper == null || paint == null || paint.Typeface == null)
                 return;
 
             SetupShaper(paint.Typeface);
-            if (Shaper == null)
-            {
-                canvas.DrawText(text, x, y, paint);
-                return;
-            }
             DrawShapedText(canvas, Shaper, text, x, y, paint);
         }
 
@@ -1209,7 +1210,7 @@ namespace DrawnUi.Draw
 
                         // Last sanity pass if we don't keep spaces on line breaks
                         int totalLines = mergedLines.Count;
-                        if (!KeepSpacesOnLineBreaks && Spans.Count > 0 && totalLines>1)
+                        if (!KeepSpacesOnLineBreaks && Spans.Count > 0 && totalLines > 1)
                         {
                             // Avoid LINQ .Count(), use Count property
                             for (int i = 0; i < totalLines - 1; i++) // do not process last line
@@ -1362,13 +1363,16 @@ namespace DrawnUi.Draw
             {
                 SetupShaper(paintTypeface);
                 var result = GetShapedText(Shaper, text, 0, 0, paint);
-                if (result != null)
+                if (result == null)
                 {
-                    var measured = GetResultSize(result);
-
-                    GlyphMeasurementCache.Add(paintTypeface, needsShaping, text, measured.Width, null);
-                    return (measured.Width, null);
+                    GlyphMeasurementCache.Add(paintTypeface, needsShaping, text, 0f, null);
+                    return (0.0f, null);
                 }
+
+                var measured = GetResultSize(result);
+
+                GlyphMeasurementCache.Add(paintTypeface, needsShaping, text, measured.Width, null);
+                return (measured.Width, null);
             }
 
             if (charMonoWidthPixels > 0)
@@ -2070,7 +2074,7 @@ namespace DrawnUi.Draw
                 TextSpan span,
                 TextLine line,
                 TextLine previousSpanLastLine)
-            //merge first line with last from previous span
+        //merge first line with last from previous span
         {
             if (string.IsNullOrEmpty(previousSpanLastLine.Value))
             {
@@ -2289,7 +2293,7 @@ namespace DrawnUi.Draw
                 return null;
 
             if (shaper == null)
-                return null;
+                throw new ArgumentNullException(nameof(shaper));
             if (paint == null)
                 throw new ArgumentNullException(nameof(paint));
 
@@ -2746,14 +2750,7 @@ namespace DrawnUi.Draw
             if (Shaper == null || Shaper.Typeface != typeface)
             {
                 var kill = Shaper;
-                try
-                {
-                    Shaper = new SKShaper(typeface);
-                }
-                catch
-                {
-                    Shaper = null;
-                }
+                Shaper = new SKShaper(typeface);
                 DisposeObject(kill);
             }
         }
