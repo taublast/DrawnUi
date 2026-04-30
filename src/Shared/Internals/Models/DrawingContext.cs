@@ -235,7 +235,7 @@ public class SkiaDrawingContext
     {
         get
         {
-            return (float)Microsoft.Maui.Devices.DeviceDisplay.Current.MainDisplayInfo.Density;
+            return (float)DeviceDisplay.Current.MainDisplayInfo.Density;
         }
     }
 

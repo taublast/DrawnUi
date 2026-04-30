@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <PropertyGroup>
-        <DefineConstants>$(DefineConstants);ONPLATFORM;BROWSER</DefineConstants>
+        <DefineConstants>$(DefineConstants);ONPLATFORM;BROWSER;NET10</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
@@ -23,12 +23,12 @@
         <PackageReference Include="CommonMark.NET" Version="0.15.1" />
         <PackageReference Include="HarfBuzzSharp.NativeAssets.WebAssembly" Version="8.3.1.6-preview.1.1" />
 
-      <PackageReference Include="SkiaSharp.HarfBuzz" Version="3.119.2-preview.1" />
+      <PackageReference Include="SkiaSharp.HarfBuzz" Version="4.147.0-preview.1.1" />
     
-      <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.2" />
+      <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.7" />
 
-    <PackageReference Include="SkiaSharp.Views.Blazor" Version="3.119.2-preview.1" />
-        <PackageReference Include="SkiaSharp.Skottie" Version="3.119.2-preview.1" />
+    <PackageReference Include="SkiaSharp.Views.Blazor" Version="4.147.0-preview.1.1" />
+        <PackageReference Include="SkiaSharp.Skottie" Version="4.147.0-preview.1.1" />
 
   </ItemGroup>
 
@@ -40,41 +40,11 @@
     <ProjectReference Include="..\..\..\..\AppoMobi.Maui.Gestures\src\AppoMobi.Blazor.Gestures\AppoMobi.Blazor.Gestures.csproj" />
     <ProjectReference Include="..\..\..\..\AppoMobi.Maui.Gestures\src\AppoMobi.Gestures\AppoMobi.Gestures.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="..\..\Maui\DrawnUi\Features\Keyboard\KeyboardManager.cs" Link="Features\Keyboard\KeyboardManager.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Features\Keyboard\MauiKeys.cs" Link="Features\Keyboard\MauiKeys.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Draw\Text\SkiaLabel.cs" Link="Draw\Text\SkiaLabel.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Draw\Text\SkiaLabel.Maui.cs" Link="Draw\Text\SkiaLabel.Maui.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Draw\Text\TextSpan.Maui.cs" Link="Draw\Text\TextSpan.Maui.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Draw\Scroll\SkiaScroll.cs" Link="Draw\Scroll\SkiaScroll.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Draw\Scroll\SkiaScroll.Gestures.cs" Link="Draw\Scroll\SkiaScroll.Gestures.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Draw\Scroll\SkiaScroll.Scrolling.cs" Link="Draw\Scroll\SkiaScroll.Scrolling.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Draw\Scroll\SkiaScroll.Planes.cs" Link="Draw\Scroll\SkiaScroll.Planes.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Draw\Scroll\SkiaScrollCells.cs" Link="Draw\Scroll\SkiaScrollCells.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Draw\Scroll\Plane.cs" Link="Draw\Scroll\Plane.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Controls\PlayFrames\AnimatedFramesRenderer.cs" Link="Controls\PlayFrames\AnimatedFramesRenderer.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Controls\PlayFrames\SkiaLottie.cs" Link="Controls\PlayFrames\SkiaLottie.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Controls\Labels\SkiaRichLabel.cs" Link="Controls\Labels\SkiaRichLabel.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Controls\Labels\SkiaMarkdownLabel.CommonMark.cs" Link="Controls\Labels\SkiaMarkdownLabel.CommonMark.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Features\Effects\ChainDropShadowsEffect.cs" Link="Features\Effects\ChainDropShadowsEffect.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Features\Effects\ChainTintWithAlphaEffect.cs" Link="Features\Effects\ChainTintWithAlphaEffect.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Features\Effects\DropShadowEffect.cs" Link="Features\Effects\DropShadowEffect.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Features\Effects\OuterGlowEffect.cs" Link="Features\Effects\OuterGlowEffect.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Features\Effects\ShaderDoubleTexturesEffect.cs" Link="Features\Effects\ShaderDoubleTexturesEffect.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Features\Effects\TintEffect.cs" Link="Features\Effects\TintEffect.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Features\Effects\TintWithAlphaEffect.cs" Link="Features\Effects\TintWithAlphaEffect.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Features\Shaders\SKSL.cs" Link="Features\Shaders\SKSL.cs" />
-    <Compile Include="..\..\Maui\DrawnUi\Internals\Xaml\SkiaShadowsCollection.cs" Link="Internals\Xaml\SkiaShadowsCollection.cs" />
-  </ItemGroup>
-
+ 
   <Import Project="..\..\Shared\Shared.projitems" Label="Shared" />
 
   <ItemGroup>
-    <Compile Include="..\..\Shared\Internals\Enums\MeasuringStrategy.cs" Link="Internals\Enums\MeasuringStrategy.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Internals\Extensions\FluentExtensions.Shared.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Pdf\Pdf.cs" />
-    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Draw\Base\SkiaControl.Cache.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Draw\Base\VisualTreeHandler.cs" />
   </ItemGroup>
  

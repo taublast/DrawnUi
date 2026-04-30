@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using DrawnUi.Views;
 
-namespace Microsoft.Maui.Controls
+namespace DrawnUi.Draw
 {
     public class ContentView : VisualElement, IContentView
     {

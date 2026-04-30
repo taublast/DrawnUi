@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Microsoft.Maui.Controls;
+
 using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace DrawnUi.Draw;
@@ -10,7 +10,7 @@ public record CellWIthHeight(float Height, SkiaControl view);
 /// <summary>
 /// Top level class for working with ItemTemplates. Holds visible views.
 /// </summary>
-public class ViewsAdapter : IDisposable
+public partial class ViewsAdapter : IDisposable
 {
     public static bool LogEnabled = false;
 

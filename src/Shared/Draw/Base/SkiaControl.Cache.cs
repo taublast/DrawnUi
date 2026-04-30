@@ -111,11 +111,6 @@ public partial class SkiaControl
         }
     }
 
-
-
-#if BROWSER
-
-#else
     public static readonly BindableProperty AutoCacheProperty = BindableProperty.Create(nameof(AutoCache),
         typeof(bool),
         typeof(SkiaControl),
@@ -130,7 +125,7 @@ public partial class SkiaControl
         get { return (bool)GetValue(AutoCacheProperty); }
         set { SetValue(AutoCacheProperty, value); }
     }
-#endif
+ 
 
     public static readonly BindableProperty UseCacheProperty = BindableProperty.Create(nameof(UseCache),
         typeof(SkiaCacheType),

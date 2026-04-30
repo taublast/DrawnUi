@@ -1,4 +1,4 @@
-namespace Microsoft.Maui.Devices
+namespace DrawnUi.Draw
 {
     public readonly struct DisplayInfo
     {

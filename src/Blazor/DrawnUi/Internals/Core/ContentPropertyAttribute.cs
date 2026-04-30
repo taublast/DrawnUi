@@ -1,4 +1,4 @@
-namespace Microsoft.Maui.Controls
+namespace DrawnUi.Draw
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
     public sealed class ContentPropertyAttribute : Attribute

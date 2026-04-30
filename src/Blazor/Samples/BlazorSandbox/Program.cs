@@ -29,6 +29,9 @@ DrawnExtensions.RegisterFont("FontGameSemiBold", "/fonts/Orbitron-SemiBold.ttf")
 DrawnExtensions.RegisterFont("FontGameBold", "/fonts/Orbitron-Bold.ttf");
 DrawnExtensions.RegisterFont("FontGameExtraBold", "/fonts/Orbitron-ExtraBold.ttf");
 
+DrawnExtensions.RegisterImage("favicon.png", "/favicon.png");
+DrawnExtensions.RegisterImage("icon-192.png", "/icon-192.png");
+
 var host = await builder.UseDrawnUiAsync(new DrawnUiStartupSettings
 {
 	UseDesktopKeyboard = true

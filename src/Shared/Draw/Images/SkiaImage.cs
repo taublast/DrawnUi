@@ -11,7 +11,7 @@ public class SkiaImage : SkiaControl
 
     public SkiaImage(string source)
     {
-        this.Source = source;
+        this.Source = FrameworkImageSourceConverter.FromInvariantString(source);
     }
 
     void CancelNextSource()
@@ -104,28 +104,21 @@ public class SkiaImage : SkiaControl
             var width = LoadedSource.Width;
             var height = LoadedSource.Height;
 
-            var surface = CreateSurface(width, height, false);
+            using var surface = SKSurface.Create(new SKImageInfo(width, height));
 
             if (surface != null)
             {
-                try
+                var context = new SkiaDrawingContext()
                 {
-                    var context = new SkiaDrawingContext()
-                    {
-                        Canvas = surface.Canvas,
-                        Width = width,
-                        Height = height
-                    };
-                    var destination = new SKRect(0, 0, width, height);
-                    var ctx = new DrawingContext(context, destination, 1, null);
-                    Render(ctx);
-                    surface.Flush();
-                    return surface.Snapshot();
-                }
-                finally
-                {
-                    ReturnSurface(surface);
-                }
+                    Canvas = surface.Canvas,
+                    Width = width,
+                    Height = height
+                };
+                var destination = new SKRect(0, 0, width, height);
+                var ctx = new DrawingContext(context, destination, 1, null);
+                Render(ctx);
+                surface.Flush();
+                return surface.Snapshot();
             }
         }
 

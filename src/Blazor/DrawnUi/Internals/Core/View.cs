@@ -1,4 +1,6 @@
-namespace Microsoft.Maui.Controls
+using DrawnUi.Views;
+
+namespace DrawnUi.Draw
 {
     public class Element : DrawnUi.Draw.BindableObject
     {
@@ -22,6 +24,11 @@ namespace Microsoft.Maui.Controls
         public object Handler { get; set; }
 
         public event EventHandler SizeChanged;
+
+        /// <summary>
+        /// ToDo
+        /// </summary>
+        public bool IsEnabled { get; set; }
 
         public IList<object> Effects { get; } = new List<object>();
 

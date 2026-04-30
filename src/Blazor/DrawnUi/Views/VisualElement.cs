@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Maui.Controls;
+
 
 namespace DrawnUi.Views
 {
@@ -11,7 +11,7 @@ namespace DrawnUi.Views
 
     }
 
-    public class VisualElement : Microsoft.Maui.Controls.View, IDisposable
+    public class VisualElement : View, IDisposable
     {
         [Parameter]
         public string Units { get; set; } = "px";

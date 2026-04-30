@@ -36,7 +36,7 @@ namespace Microsoft.Maui
 {
 }
 
-namespace Microsoft.Maui.Devices
+namespace DrawnUi.Draw
 {
 }
 
@@ -44,7 +44,7 @@ namespace DrawnUi
 {
 }
 
-namespace Microsoft.Maui.Controls
+namespace DrawnUi.Draw
 {
 }
 

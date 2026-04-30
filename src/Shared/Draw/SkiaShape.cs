@@ -1,8 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using DrawnUi.Infrastructure.Xaml;
-using Microsoft.Maui.Graphics;
+
 
 namespace DrawnUi.Draw
 {
@@ -918,26 +916,7 @@ namespace DrawnUi.Draw
             return value;
         }
 
-        public static readonly BindableProperty PointsProperty = BindableProperty.Create(
-            nameof(Points),
-            typeof(IList<SkiaPoint>),
-            typeof(SkiaShape),
-            defaultValueCreator: (instance) =>
-            {
-                var created = new ObservableCollection<SkiaPoint>();
-                created.CollectionChanged += ((SkiaShape)instance).OnPointsCollectionChanged;
-                return created;
-            },
-            validateValue: (bo, v) => v is IList<SkiaPoint>,
-            propertyChanged: NeedDraw,
-            coerceValue: CoercePoints);
 
-        [TypeConverter(typeof(SkiaPointCollectionConverter))]
-        public IList<SkiaPoint> Points
-        {
-            get => (IList<SkiaPoint>)GetValue(PointsProperty);
-            set => SetValue(PointsProperty, value);
-        }
 
         public static List<SkiaPoint> PolygonStar
         {

@@ -18,6 +18,8 @@ namespace DrawnUi.Draw
 
         public static Color Gray { get; } = Color.FromSKColor(SKColors.Gray);
 
+        public static Color DarkGray { get; } = Color.FromSKColor(SKColors.DarkGray);
+
         public static Color Orange { get; } = Color.FromSKColor(SKColors.Orange);
 
         public static Color LimeGreen { get; } = Color.FromSKColor(SKColors.LawnGreen);

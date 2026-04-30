@@ -1,7 +1,6 @@
 ﻿//Adapted code from the Xamarin.Forms Grid implementation
-
 using System.Runtime.CompilerServices;
-using Microsoft.Maui.Primitives;
+
 
 namespace DrawnUi.Draw;
 
@@ -334,7 +333,7 @@ public partial class SkiaLayout
 
         public double MeasuredGridHeight()
         {
-            var height = Dimension.IsExplicitSet(_explicitGridHeight) ? _explicitGridHeight : GridHeight();
+            var height = !double.IsNaN(_explicitGridHeight) ? _explicitGridHeight : GridHeight();
 
             if (_gridMaxHeight >= 0 && height > _gridMaxHeight)
             {
@@ -351,7 +350,7 @@ public partial class SkiaLayout
 
         public double MeasuredGridWidth()
         {
-            var width = Dimension.IsExplicitSet(_explicitGridWidth) ? _explicitGridWidth : GridWidth();
+            var width = !double.IsNaN(_explicitGridWidth) ? _explicitGridWidth : GridWidth();
 
             if (_gridMaxWidth >= 0 && width > _gridMaxWidth)
             {
@@ -872,7 +871,7 @@ public partial class SkiaLayout
 
         public void DecompressStars(SKSize targetSize)
         {
-            if (Dimension.IsExplicitSet(_explicitGridHeight))// || _grid.VerticalLayoutAlignment == LayoutAlignment.Fill
+            if (!double.IsNaN(_explicitGridHeight))// || _grid.VerticalLayoutAlignment == LayoutAlignment.Fill
             {
                 // Reset the size on all star rows
                 ZeroOutStarSizes(Rows);
@@ -881,7 +880,7 @@ public partial class SkiaLayout
                 ResolveStarRows(targetSize.Height);
             }
 
-            if (Dimension.IsExplicitSet(_explicitGridWidth)) //_grid.HorizontalLayoutAlignment == LayoutAlignment.Fill
+            if (!double.IsNaN(_explicitGridWidth)) //_grid.HorizontalLayoutAlignment == LayoutAlignment.Fill
             {
                 // Reset the size on all star columns
                 ZeroOutStarSizes(Columns);

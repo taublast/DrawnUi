@@ -30,7 +30,7 @@ namespace DrawnUi.Draw
 
         protected virtual void OnPropertyChanging([CallerMemberName] string propertyName = "")
         {
-            PropertyChanging?.Invoke(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+            PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
         }
         #endregion
 
@@ -178,7 +178,7 @@ namespace DrawnUi.Draw
             Type returnType,
             Type declaringType,
             object defaultValue,
-            Microsoft.Maui.Controls.BindingMode defaultBindingMode,
+            BindingMode defaultBindingMode,
             Func<BindableObject, object> defaultValueCreator = null,
             Func<BindableObject, object, bool> validateValue = null,
             Action<BindableObject, object, object> propertyChanged = null,
@@ -208,6 +208,25 @@ namespace DrawnUi.Draw
         internal object Coerce(BindableObject bindable, object value)
         {
             return CoerceValue?.Invoke(bindable, value) ?? value;
+        }    
+
+        public static BindableProperty CreateAttached(
+            string propertyName,
+            Type returnType,
+            Type declaringType,
+            object defaultValue = null,
+            Func<object, object, bool> validateValue = null,
+            Action<BindableObject, object, object> propertyChanged = null)
+        {
+            return new BindableProperty(
+                propertyName,
+                returnType,
+                declaringType,
+                defaultValue,
+                null,
+                (bindable, value) => validateValue?.Invoke(bindable, value) ?? true,
+                propertyChanged,
+                null);
         }
     }
 }

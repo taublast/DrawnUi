@@ -38,5 +38,28 @@ namespace DrawnUi.Draw
 			set { SetValue(StrokePathProperty, value); }
 		}
 
-	}
+        public static readonly BindableProperty PointsProperty = BindableProperty.Create(
+            nameof(Points),
+            typeof(IList<SkiaPoint>),
+            typeof(SkiaShape),
+            defaultValueCreator: (instance) =>
+            {
+                var created = new ObservableCollection<SkiaPoint>();
+                created.CollectionChanged += ((SkiaShape)instance).OnPointsCollectionChanged;
+                return created;
+            },
+            validateValue: (bo, v) => v is IList<SkiaPoint>,
+            propertyChanged: NeedDraw,
+            coerceValue: CoercePoints);
+
+        [TypeConverter(typeof(SkiaPointCollectionConverter))]
+        public IList<SkiaPoint> Points
+        {
+            get => (IList<SkiaPoint>)GetValue(PointsProperty);
+            set => SetValue(PointsProperty, value);
+        }
+
+
+
+    }
 }

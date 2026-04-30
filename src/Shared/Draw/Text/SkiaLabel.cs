@@ -287,7 +287,7 @@ namespace DrawnUi.Draw
 
         void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(nameof(Spans));
 
-        void OnItemPropertyChanging(object? sender, PropertyChangingEventArgs propertyChangingEventArgs) => OnPropertyChanging(nameof(Spans));
+        void OnItemPropertyChanging(object? sender, System.ComponentModel.PropertyChangingEventArgs changingEventArgs) => OnPropertyChanging(nameof(Spans));
 
         protected readonly SpanCollection _spans = new();
 

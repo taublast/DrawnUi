@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.HotReload;
-
+﻿
 namespace DrawnUi.Draw;
 
 [ContentProperty("Content")]

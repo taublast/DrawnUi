@@ -3,6 +3,12 @@ using System.Text;
 using System.Windows.Input;
 using static DrawnUi.Draw.SkiaControl;
 
+#if BROWSER
+    using PropertyChangingEventArgs = System.ComponentModel.PropertyChangingEventArgs;
+#else
+using PropertyChangingEventArgs = Microsoft.Maui.Controls.PropertyChangingEventArgs;
+#endif
+
 namespace DrawnUi.Draw;
 
 [DebuggerDisplay("{DebugString}")]

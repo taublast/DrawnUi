@@ -100,7 +100,7 @@ namespace DrawnUi.Views
                     return false;
                 }
 
-                if (element.Parent is Microsoft.Maui.Controls.View visualParent)
+                if (element.Parent is View visualParent)
                 {
                     return GetIsVisibleWithParent(visualParent);
                 }
@@ -283,8 +283,9 @@ namespace DrawnUi.Views
 
                 SizeChanged += ViewSizeChanged;
 
-                //bug this creates garbage on aandroid on every frame
-                // DeviceDisplay.Current.MainDisplayInfoChanged += OnMainDisplayInfoChanged;
+                InitFramework(true);
+
+                SurfaceCacheManager = new(this);
             }
         }
 

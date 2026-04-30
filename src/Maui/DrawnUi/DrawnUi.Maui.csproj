@@ -183,6 +183,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Draw\Images\" />
+        <Folder Include="Draw\Scroll\" />
+        <Folder Include="Features\Effects\" />
         <Folder Include="Internals\Handlers\" />
         <Folder Include="Platforms\Apple\Extensions\" />
     </ItemGroup>

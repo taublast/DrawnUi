@@ -50,8 +50,8 @@ public partial class SkiaLayout
                                 col = index % split;
                             }
 
-                            Grid.SetRow(child, row);
-                            Grid.SetColumn(child, col);
+                            SetRow(child, row);
+                            SetColumn(child, col);
                             list.Add(child);
                         }
                     }
@@ -212,52 +212,13 @@ public partial class SkiaLayout
         GridStructureMeasured = new SkiaGridStructure(this, constraints.Width, constraints.Height);
     }
 
-    public int GetColumn(BindableObject bindable)
-    {
-        return Grid.GetColumn(bindable);
-    }
-
-    public int GetColumnSpan(BindableObject bindable)
-    {
-        return Grid.GetColumnSpan(bindable);
-    }
-
-    public int GetRow(BindableObject bindable)
-    {
-        return Grid.GetRow(bindable);
-    }
-
-    public int GetRowSpan(BindableObject bindable)
-    {
-        return Grid.GetRowSpan(bindable);
-    }
-
-    public void SetColumn(BindableObject bindable, int value)
-    {
-        Grid.SetColumn(bindable, value);
-    }
-
-    public void SetColumnSpan(BindableObject bindable, int value)
-    {
-        Grid.SetColumnSpan(bindable, value);
-    }
-
-    public void SetRow(BindableObject bindable, int value)
-    {
-        Grid.SetRow(bindable, value);
-    }
-
-    public void SetRowSpan(BindableObject bindable, int value)
-    {
-        Grid.SetRowSpan(bindable, value);
-    }
-
-
     public SkiaGridStructure GridStructure;
 
     public SkiaGridStructure GridStructureMeasured;
 
     #endregion
+
+
 
     #region PROPERTIES
 
@@ -270,7 +231,9 @@ public partial class SkiaLayout
     /// <summary>
     /// Will use this to create a missing but required ColumnDefinition
     /// </summary>
+#if !BROWSER
     [TypeConverter(typeof(ColumnDefinitionTypeConverter))]
+#endif
     public ColumnDefinition DefaultColumnDefinition
     {
         get { return (ColumnDefinition)GetValue(DefaultColumnDefinitionProperty); }
@@ -286,7 +249,9 @@ public partial class SkiaLayout
     /// <summary>
     /// Will use this to create a missing but required RowDefinition
     /// </summary>
+#if !BROWSER
     [TypeConverter(typeof(RowDefinitionTypeConverter))]
+#endif
     public RowDefinition DefaultRowDefinition
     {
         get { return (RowDefinition)GetValue(DefaultRowDefinitionProperty); }
@@ -336,7 +301,9 @@ public partial class SkiaLayout
             return colDef;
         });
 
+    #if !BROWSER
     [TypeConverter(typeof(ColumnDefinitionCollectionTypeConverter))]
+    #endif
     public ColumnDefinitionCollection ColumnDefinitions
     {
         get { return (ColumnDefinitionCollection)GetValue(ColumnDefinitionsProperty); }
@@ -360,8 +327,9 @@ public partial class SkiaLayout
             }
             return colDef;
         });
+#if !BROWSER
     [TypeConverter(typeof(RowDefinitionCollectionTypeConverter))]
-
+#endif
     public RowDefinitionCollection RowDefinitions
     {
         get { return (RowDefinitionCollection)GetValue(RowDefinitionsProperty); }
@@ -431,6 +399,6 @@ public partial class SkiaLayout
 
 
 
-    #endregion
+#endregion
 
 }

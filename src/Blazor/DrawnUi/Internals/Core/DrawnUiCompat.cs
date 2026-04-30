@@ -33,7 +33,7 @@ namespace Microsoft.Maui
     }
 }
 
-namespace Microsoft.Maui.Controls
+namespace DrawnUi.Draw
 {
     [Flags]
     public enum FontAttributes
@@ -89,50 +89,6 @@ namespace DrawnUi.Draw
         Enabled
     }
 
-    public sealed class SkiaControlWithRect
-    {
-        public SkiaControlWithRect(SkiaControl control, SKRect rect, SKRect hitRect = default, int index = 0, int freezeIndex = 0, object freezeBindingContext = null)
-        {
-            Control = control;
-            Rect = rect;
-            HitRect = hitRect == default ? rect : hitRect;
-            Index = index;
-            FreezeIndex = freezeIndex;
-            FreezeBindingContext = freezeBindingContext;
-        }
-
-        public SkiaControl Control { get; }
-
-        public SKRect Rect { get; }
-
-        public SKRect HitRect { get; }
-
-        public int Index { get; }
-
-        public int FreezeIndex { get; }
-
-        public object FreezeBindingContext { get; }
-
-        public static bool operator ==(SkiaControlWithRect left, ISkiaGestureListener right)
-        {
-            return ReferenceEquals(left?.Control, right);
-        }
-
-        public static bool operator !=(SkiaControlWithRect left, ISkiaGestureListener right)
-        {
-            return !(left == right);
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is SkiaControlWithRect other && ReferenceEquals(Control, other.Control);
-        }
-
-        public override int GetHashCode()
-        {
-            return Control?.GetHashCode() ?? 0;
-        }
-    }
 
     public static class AddGestures
     {
@@ -225,6 +181,7 @@ namespace DrawnUi.Draw
             Super.Services = host.Services;
 
             await SkiaFontManager.Instance.InitializeAsync(host.Services, cancellationToken);
+            await SkiaImageManager.Instance.InitializeAsync(host.Services, cancellationToken);
 
             Super.Init();
 
@@ -248,6 +205,16 @@ namespace DrawnUi.Draw
         public static void RegisterFont(string family, FontWeight weight, string sourceUrl)
         {
             SkiaFontManager.Instance.RegisterFont(family, weight, sourceUrl);
+        }
+
+        public static void RegisterImage(string sourceUrl)
+        {
+            SkiaImageManager.Instance.RegisterImage(sourceUrl);
+        }
+
+        public static void RegisterImage(string alias, string sourceUrl)
+        {
+            SkiaImageManager.Instance.RegisterImage(alias, sourceUrl);
         }
 
         public static bool IsFinite(float value)
@@ -503,7 +470,7 @@ namespace DrawnUi.Models
 {
     public partial class Screen
     {
-        public static Microsoft.Maui.Devices.DisplayInfo DisplayInfo => Microsoft.Maui.Devices.DeviceDisplay.Current.MainDisplayInfo;
+        public static DisplayInfo DisplayInfo => DeviceDisplay.Current.MainDisplayInfo;
     }
 }
 
