@@ -23,15 +23,6 @@ Latest DrawnUI workcase hosted in the Blazor sandbox.
     RootControl="@RootControl" />
 
 @code {
-    private readonly SkiaLabel _status = new()
-    {
-        Text = "Cards status: ready",
-        FontFamily = "FontText",
-        FontSize = 14,
-        TextColor = Colors.Black,
-        HorizontalOptions = LayoutOptions.Center
-    };
-
     private readonly SkiaLayer _card1Layer;
     private readonly SkiaLayer _card2Layer;
     private readonly SkiaControl RootControl;
@@ -43,80 +34,60 @@ Latest DrawnUI workcase hosted in the Blazor sandbox.
         _card1Layer = CreateGradientCard();
         _card2Layer = CreateGamingCard();
 
-        RootControl = new SkiaLayer()
+        RootControl = new SkiaStack()
         {
             VerticalOptions = LayoutOptions.Fill,
-            HorizontalOptions = LayoutOptions.Fill,
+            Spacing = 0,
             Children =
             {
-                new SkiaStack()
+                new SkiaLayout()
                 {
-                    Spacing = 0,
+                    Type = LayoutType.Column,
+                    HorizontalOptions = LayoutOptions.Center,
+                    Margin = new Thickness(16),
+                    UseCache = SkiaCacheType.Image,
+                    Spacing = 8,
                     Children =
                     {
-                        new SkiaLayout()
+                        new SkiaLabel()
                         {
-                            Type = LayoutType.Column,
-                            HorizontalOptions = LayoutOptions.Fill,
-                            Margin = new Thickness(16),
-                            UseCache = SkiaCacheType.Image,
-                            Spacing = 8,
-                            Children =
-                            {
-                                new SkiaLabel()
-                                {
-                                    Text = "Interactive Cards",
-                                    FontFamily = "FontTextTitle",
-                                    FontSize = 32,
-                                    FontAttributes = FontAttributes.Bold,
-                                    TextColor = new Color(0.173f, 0.243f, 0.314f, 1f),
-                                    HorizontalOptions = LayoutOptions.Center
-                                },
-                                new SkiaLabel()
-                                {
-                                    Text = "Tap and drag to interact!",
-                                    FontFamily = "FontText",
-                                    FontSize = 16,
-                                    TextColor = new Color(0.498f, 0.549f, 0.553f, 1f),
-                                    HorizontalOptions = LayoutOptions.Center
-                                }
-                            }
+                            Text = "Interactive Cards",
+                            FontFamily = "FontTextTitle",
+                            FontSize = 32,
+                            FontAttributes = FontAttributes.Bold,
+                            TextColor = new Color(0.173f, 0.243f, 0.314f, 1f),
+                            HorizontalOptions = LayoutOptions.Center
                         },
-                        new SkiaScroll()
+                        new SkiaLabel()
                         {
-                            IgnoreWrongDirection = true,
-                            VerticalOptions = LayoutOptions.Fill,
-                            HorizontalOptions = LayoutOptions.Fill,
-                            Spacing = 20,
-                            Content = 
-                            new SkiaLayout()
-                            {
-                                Type = LayoutType.Column,
-                                Tag = "Cells",
-                                Padding = new Thickness(0, 5),
-                                Spacing = 0,
-                                Children =
-                                {
-                                    _card1Layer,
-                                    _card2Layer,
-                                    CreateDataCard(),
-                                    _status
-                                }
-                            }
+                            Text = "Tap and drag to interact!",
+                            FontFamily = "FontText",
+                            FontSize = 16,
+                            TextColor = new Color(0.498f, 0.549f, 0.553f, 1f),
+                            HorizontalOptions = LayoutOptions.Center
                         }
                     }
                 },
-
-                new SkiaLabelFps()
+                new SkiaScroll()
                 {
-                    //ForceRefresh = true,
-                    Margin = new (0, 0, 4, 24),
-                    VerticalOptions = LayoutOptions.End,
-                    HorizontalOptions = LayoutOptions.End,
-                    Rotation = -45,
-                    BackgroundColor = Colors.DarkRed,
-                    TextColor = Colors.White,
-                    ZIndex = 110,
+                    IgnoreWrongDirection = true,
+                    VerticalOptions = LayoutOptions.Fill,
+                    Orientation = ScrollOrientation.Vertical,
+                    Spacing = 20,
+                    Content = 
+                    new SkiaStack()
+                    {
+                        Type = LayoutType.Column,
+                        Tag = "Cells",
+                        Padding = new Thickness(0, 5),
+                        Spacing = 0,
+                        Children =
+                        {
+                            _card1Layer,
+                            _card2Layer,
+                            CreateDataCard()
+                        }
+                    }
                 }
             }
         };
@@ -262,11 +233,11 @@ Latest DrawnUI workcase hosted in the Blazor sandbox.
             X = 0,
             Y = 0
         });
-        card.ConsumeGestures += OnCardGestures;
 
         var layer = new SkiaLayer()
         {
             Padding = new Thickness(20, 8),
+            ZIndex = 10,
             UseCache = SkiaCacheType.Image,
             Children =
             {
@@ -284,8 +255,9 @@ Latest DrawnUI workcase hosted in the Blazor sandbox.
         {
             Type = ShapeType.Rectangle,
             CornerRadius = 20,
+            WidthRequest = 300,
             HeightRequest = 200,
-            HorizontalOptions = LayoutOptions.Fill,
+            HorizontalOptions = LayoutOptions.Center,
             FillGradient = new SkiaGradient()
             {
                 Type = GradientType.Linear,
@@ -471,7 +443,6 @@ Latest DrawnUI workcase hosted in the Blazor sandbox.
 
     private void SetStatus(string value)
     {
-        _status.Text = value;
         _statusText = value;
 
         if (_canRefreshUi)
