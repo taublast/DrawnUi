@@ -8,6 +8,7 @@ using System.Reflection.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.JSInterop;
 
 namespace Microsoft.Maui
 {
@@ -174,21 +175,21 @@ namespace DrawnUi.Draw
 
     public static partial class ColorExtensions
     {
-        public static Microsoft.Maui.Graphics.Color MakeDarker(this Microsoft.Maui.Graphics.Color color, double percent)
+        public static DrawnUi.Color MakeDarker(this DrawnUi.Color color, double percent)
         {
             var factor = Math.Clamp(1.0 - percent / 100.0, 0.0, 1.0);
-            return new Microsoft.Maui.Graphics.Color(
+            return new DrawnUi.Color(
                 color.Red * (float)factor,
                 color.Green * (float)factor,
                 color.Blue * (float)factor,
                 color.Alpha);
         }
 
-        public static Microsoft.Maui.Graphics.Color MakeLighter(this Microsoft.Maui.Graphics.Color color, double percent)
+        public static DrawnUi.Color MakeLighter(this DrawnUi.Color color, double percent)
         {
             float Lerp(float channel) => channel + (1f - channel) * (float)Math.Clamp(percent / 100.0, 0.0, 1.0);
 
-            return new Microsoft.Maui.Graphics.Color(
+            return new DrawnUi.Color(
                 Lerp(color.Red),
                 Lerp(color.Green),
                 Lerp(color.Blue),
@@ -226,6 +227,15 @@ namespace DrawnUi.Draw
             await SkiaFontManager.Instance.InitializeAsync(host.Services, cancellationToken);
 
             Super.Init();
+
+            if (settings?.UseDesktopKeyboard == true)
+            {
+                var jsRuntime = host.Services.GetService<IJSRuntime>();
+                if (jsRuntime != null)
+                {
+                    await KeyboardManager.AttachToKeyboardAsync(jsRuntime);
+                }
+            }
 
             return host;
         }
@@ -501,9 +511,9 @@ namespace DrawnUi.Extensions
 {
     public static class SkiaCompatExtensions
     {
-        public static Microsoft.Maui.Graphics.Rect ToMauiRectangle(this SKRect rect)
+        public static DrawnUi.Rect ToMauiRectangle(this SKRect rect)
         {
-            return new Microsoft.Maui.Graphics.Rect(rect.Left, rect.Top, rect.Width, rect.Height);
+            return new DrawnUi.Rect(rect.Left, rect.Top, rect.Width, rect.Height);
         }
     }
 }

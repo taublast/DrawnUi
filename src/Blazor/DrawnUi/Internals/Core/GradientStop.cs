@@ -6,13 +6,13 @@ namespace Microsoft.Maui.Controls
         {
         }
 
-        public GradientStop(Microsoft.Maui.Graphics.Color color, float offset)
+        public GradientStop(DrawnUi.Color color, float offset)
         {
             Color = color;
             Offset = offset;
         }
 
-        public Microsoft.Maui.Graphics.Color Color { get; set; }
+        public DrawnUi.Color Color { get; set; }
 
         public float Offset { get; set; }
     }

@@ -1,4 +1,4 @@
-namespace Microsoft.Maui.Graphics
+namespace DrawnUi
 {
     public struct PointF
     {

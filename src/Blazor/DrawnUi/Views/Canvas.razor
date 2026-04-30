@@ -2,8 +2,9 @@
 @using AppoMobi.Blazor.Gestures
 @using DrawnUi.Draw
 @using Microsoft.AspNetCore.Components
-@using Microsoft.Maui.Graphics
+@using DrawnUi
 @using Microsoft.JSInterop
+@using System
 @inherits DrawnView
 @implements IAsyncDisposable
 @inject IJSRuntime JS
@@ -15,16 +16,18 @@
                 @ref="_hostElement"
                 style="@CssMargins @CssPadding @CssGridPosition @CssStyle @GestureStyle">
 
-                @if(RenderingMode == RenderingModeType.Default)
-                {
-                    <SkiaView Superview="@this" DrawHandler="DrawFrame"
-                              Width="@CanvasElementWidth" Height="@CanvasElementHeight" />
-                }
-                else
-                {
-                    <SkiaViewAccelerated Superview="@this" DrawHandler="DrawFrame"
-                                        Width="@CanvasElementWidth" Height="@CanvasElementHeight" />
-                }
+                <div class="xaml-canvas-surface">
+                    @if(RenderingMode == RenderingModeType.Default)
+                    {
+                        <SkiaView Superview="@this" DrawHandler="DrawFrame"
+                                  Width="@CanvasElementWidth" Height="@CanvasElementHeight" />
+                    }
+                    else
+                    {
+                        <SkiaViewAccelerated Superview="@this" DrawHandler="DrawFrame"
+                                            Width="@CanvasElementWidth" Height="@CanvasElementHeight" />
+                    }
+                </div>
 
                 <div class="xaml-canvas-content">
             @ChildContent
@@ -39,6 +42,12 @@
         overflow: hidden;
     }
 
+    .xaml-canvas-surface {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+    }
+
     .xaml-canvas-content {
         position: absolute;
         inset: 0;
@@ -49,6 +58,12 @@
 
     private ElementReference _hostElement;
     private BlazorGestureEffect? _gestureEffect;
+    private IJSObjectReference? _resizeModule;
+    private DotNetObjectReference<Canvas>? _resizeCallbackRef;
+    private float _measuredCanvasWidth;
+    private float _measuredCanvasHeight;
+
+    private const string ResizeModulePath = "./_content/DrawnUi.Blazor/drawnui-canvas-resize.js";
 
     [Parameter]
     public SkiaControl? RootControl { get; set; }
@@ -92,6 +107,7 @@
         if (firstRender)
         {
             SetupRenderingLoop();
+            await EnsureResizeObserverAsync();
         }
 
         if (CaptureInput)
@@ -105,9 +121,39 @@
         }
     }
 
-    private float CanvasElementWidth => WidthRequest > 0 ? (float)WidthRequest : 100f;
+    private async Task EnsureResizeObserverAsync()
+    {
+        _resizeModule ??= await JS.InvokeAsync<IJSObjectReference>("import", ResizeModulePath);
+        _resizeCallbackRef ??= DotNetObjectReference.Create(this);
 
-    private float CanvasElementHeight => HeightRequest > 0 ? (float)HeightRequest : 100f;
+        await _resizeModule.InvokeVoidAsync("attachCanvasHost", _hostElement, _resizeCallbackRef);
+    }
+
+    [JSInvokable]
+    public async Task OnHostResized(double width, double height)
+    {
+        if ((WidthRequest <= 0 && width <= 0) || (HeightRequest <= 0 && height <= 0))
+            return;
+
+        var nextWidth = WidthRequest > 0 ? (float)WidthRequest : (float)Math.Round(width);
+        var nextHeight = HeightRequest > 0 ? (float)HeightRequest : (float)Math.Round(height);
+
+        if (nextWidth == _measuredCanvasWidth && nextHeight == _measuredCanvasHeight)
+            return;
+
+        _measuredCanvasWidth = nextWidth;
+        _measuredCanvasHeight = nextHeight;
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private float CanvasElementWidth => WidthRequest > 0
+        ? (float)WidthRequest
+        : _measuredCanvasWidth > 0 ? _measuredCanvasWidth : 1f;
+
+    private float CanvasElementHeight => HeightRequest > 0
+        ? (float)HeightRequest
+        : _measuredCanvasHeight > 0 ? _measuredCanvasHeight : 1f;
 
     public MarkupString CssStyle
     {
@@ -137,11 +183,25 @@
 
     public async ValueTask DisposeAsync()
     {
+        if (_resizeModule != null)
+        {
+            try { await _resizeModule.InvokeVoidAsync("detachCanvasHost", _hostElement); }
+            catch { }
+        }
+
         if (_gestureEffect != null)
         {
             try { await _gestureEffect.DisposeAsync(); }
             catch { }
         }
+
+        if (_resizeModule != null)
+        {
+            try { await _resizeModule.DisposeAsync(); }
+            catch { }
+        }
+
+        _resizeCallbackRef?.Dispose();
 
         OnDisposing();
     }

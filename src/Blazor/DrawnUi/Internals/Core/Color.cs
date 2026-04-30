@@ -1,4 +1,4 @@
-namespace Microsoft.Maui.Graphics
+namespace DrawnUi
 {
     public class Color : IEquatable<Color>
     {
@@ -15,6 +15,11 @@ namespace Microsoft.Maui.Graphics
         {
         }
 
+        public Color(double red, double green, double blue, double alpha = 1, object rgb = null) : this(red, green, blue, alpha)
+        {
+            Rgb = rgb;
+        }
+
         public float Red { get; }
 
         public float Green { get; }
@@ -24,6 +29,8 @@ namespace Microsoft.Maui.Graphics
         public float Alpha { get; }
 
         public float A => Alpha;
+
+        public object Rgb { get; }
 
         public SKColor ToSKColor()
         {
@@ -59,6 +66,11 @@ namespace Microsoft.Maui.Graphics
         public static Color FromSKColor(SKColor color)
         {
             return new Color(color.Red / 255f, color.Green / 255f, color.Blue / 255f, color.Alpha / 255f);
+        }
+
+        public static Color FromHex(string hex)
+        {
+            return hex.ToColor();
         }
 
         public bool Equals(Color other)

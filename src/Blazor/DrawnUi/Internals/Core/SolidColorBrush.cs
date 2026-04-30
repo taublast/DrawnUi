@@ -6,11 +6,11 @@ namespace Microsoft.Maui.Controls
         {
         }
 
-        public SolidColorBrush(Microsoft.Maui.Graphics.Color color)
+        public SolidColorBrush(DrawnUi.Color color)
         {
             Color = color;
         }
 
-        public Microsoft.Maui.Graphics.Color Color { get; set; }
+        public DrawnUi.Color Color { get; set; }
     }
 }

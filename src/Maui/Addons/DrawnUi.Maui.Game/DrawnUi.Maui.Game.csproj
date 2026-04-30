@@ -18,5 +18,7 @@
       <ProjectReference Include="..\..\DrawnUi\DrawnUi.Maui.csproj" />
     </ItemGroup>
 
+    <Import Project="..\..\..\SharedGame\SharedGame.projitems" Label="Shared" />
+
 
 </Project>

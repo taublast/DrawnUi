@@ -20,7 +20,7 @@ public class DrawnUiStartupSettings
     public bool? MobileIsFullscreen { get; set; }
 
     /// <summary>
-    /// Listen to desktop keyboard keys with KeyboardManager. Windows and Catalyst available.
+    /// Listen to keyboard keys with KeyboardManager. Available on supported MAUI platforms and Blazor.
     /// </summary>
     public bool UseDesktopKeyboard { get; set; }
 

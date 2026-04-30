@@ -60,7 +60,7 @@
         /// Gets or sets the light color for the highlight edges.
         /// </summary>
         public static readonly BindableProperty LightColorProperty = BindableProperty.Create(
-            nameof(LightColor), typeof(Color), typeof(SkiaBevel), Microsoft.Maui.Graphics.Colors.White, propertyChanged: RedrawCanvas);
+            nameof(LightColor), typeof(Color), typeof(SkiaBevel), Colors.White, propertyChanged: RedrawCanvas);
         public Color LightColor
         {
             get { return (Color)GetValue(LightColorProperty); }
@@ -71,7 +71,7 @@
         /// Gets or sets the shadow color for the shadowed edges.
         /// </summary>
         public static readonly BindableProperty ShadowColorProperty = BindableProperty.Create(
-            nameof(ShadowColor), typeof(Color), typeof(SkiaBevel), Microsoft.Maui.Graphics.Colors.Black, propertyChanged: RedrawCanvas);
+            nameof(ShadowColor), typeof(Color), typeof(SkiaBevel), Colors.Black, propertyChanged: RedrawCanvas);
         public Color ShadowColor
         {
             get { return (Color)GetValue(ShadowColorProperty); }

@@ -2,10 +2,10 @@
 
 namespace DrawnUi.Gaming
 {
-    public interface IMauiGame
+    public interface IGame
     {
-        void OnKeyDown(MauiKey key);
-        void OnKeyUp(MauiKey key);
+        void OnKeyDown(InputKey key);
+        void OnKeyUp(InputKey key);
 
         void Pause();
         void Resume();

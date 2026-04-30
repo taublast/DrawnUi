@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Color = Microsoft.Maui.Graphics.Color;
+using Color = DrawnUi.Color;
 using Grid = DrawnUi.Blazor.Views.Grid;
 
 namespace DrawnUi.Views

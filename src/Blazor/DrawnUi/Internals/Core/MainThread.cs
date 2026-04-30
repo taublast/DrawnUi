@@ -40,7 +40,7 @@ namespace Microsoft.Maui.Devices
 {
 }
 
-namespace Microsoft.Maui.Graphics
+namespace DrawnUi
 {
 }
 

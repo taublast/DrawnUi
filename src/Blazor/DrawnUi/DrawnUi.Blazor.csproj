@@ -42,6 +42,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\Maui\DrawnUi\Features\Keyboard\KeyboardManager.cs" Link="Features\Keyboard\KeyboardManager.cs" />
+    <Compile Include="..\..\Maui\DrawnUi\Features\Keyboard\MauiKeys.cs" Link="Features\Keyboard\MauiKeys.cs" />
     <Compile Include="..\..\Maui\DrawnUi\Draw\Text\SkiaLabel.cs" Link="Draw\Text\SkiaLabel.cs" />
     <Compile Include="..\..\Maui\DrawnUi\Draw\Text\SkiaLabel.Maui.cs" Link="Draw\Text\SkiaLabel.Maui.cs" />
     <Compile Include="..\..\Maui\DrawnUi\Draw\Text\TextSpan.Maui.cs" Link="Draw\Text\TextSpan.Maui.cs" />

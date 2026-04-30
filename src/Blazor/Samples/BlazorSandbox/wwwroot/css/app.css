@@ -2,6 +2,39 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+html,
+body,
+#app {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+}
+
+#app > .page {
+    min-height: 100vh;
+}
+
+#app > .page > main {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 0;
+}
+
+#app > .page > main > .content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+}
+
+#app > .page > main > .content > .xaml-element {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
 h1:focus {
     outline: none;
 }

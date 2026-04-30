@@ -11,7 +11,7 @@ namespace DrawnUi.Gaming
     /// <summary>
     /// Base class for implementing a game. StartLoop, StopLoop, override GameLoop(..) etc.
     /// </summary>
-    public class MauiGame : SkiaLayout, IMauiGame
+    public partial class Game : SkiaLayout, IGame
     {
         /// <summary>
         /// Can disable frame time interpolator
@@ -21,9 +21,9 @@ namespace DrawnUi.Gaming
         private ActionOnTickAnimator _appLoop;
         protected long LastFrameTimeNanos;
 
-        public MauiGame()
+        public Game()
         {
-            Super.Log("****************** MAUIGAME CREATED **********************");
+            Super.Log("****************** GAME CREATED **********************");
 
             KeyboardManager.KeyDown += OnKeyboardDownEvent;
             KeyboardManager.KeyUp += OnKeyboardUpEvent;
@@ -89,7 +89,7 @@ namespace DrawnUi.Gaming
             float deltaSeconds = (frameTimeNanos - LastFrameTimeNanos) / 1_000_000_000.0f;
 
             // Use stable time
-            if (!MauiGame.FrameInterpolatorDisabled)
+            if (!Game.FrameInterpolatorDisabled)
                 deltaSeconds = FrameTimeInterpolator.GetDeltaTimeFromDelta(deltaSeconds);
 
             LastFrameTimeNanos = frameTimeNanos;
@@ -124,45 +124,6 @@ namespace DrawnUi.Gaming
             IsPaused = false;
             OnResumed();
         }
-
-        #region KEYS
-
-        /// <summary>
-        /// Override this to process game keys
-        /// </summary>
-        /// <param name="key"></param>
-        public virtual void OnKeyDown(MauiKey key)
-        {
-        }
-
-        /// <summary>
-        /// Override this to process game keys
-        /// </summary>
-        /// <param name="key"></param>
-        public virtual void OnKeyUp(MauiKey key)
-        {
-        }
-
-        /// <summary>
-        /// Do not use directly. It's public to be able to send keys to game manually if needed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="key"></param>
-        public void OnKeyboardDownEvent(object sender, MauiKey key)
-        {
-            OnKeyDown(key);
-        }
-
-        /// <summary>
-        /// Do not use directly. It's public to be able to send keys to game manually if needed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="key"></param>
-        public void OnKeyboardUpEvent(object sender, MauiKey key)
-        {
-            OnKeyUp(key);
-        }
-
-        #endregion
+      
     }
 }

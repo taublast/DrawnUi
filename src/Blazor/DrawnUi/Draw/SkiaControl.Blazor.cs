@@ -5,7 +5,7 @@ Normally other partial code definitions should be framework independent.
 
 using System.Collections;
 using System.Runtime.CompilerServices;
-using Color = Microsoft.Maui.Graphics.Color;
+using Color = DrawnUi.Color;
 
 
 namespace DrawnUi.Draw

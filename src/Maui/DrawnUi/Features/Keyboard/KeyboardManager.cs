@@ -6,11 +6,11 @@ namespace DrawnUi.Draw;
 public partial class KeyboardManager
 {
 
-    public static event EventHandler<MauiKey> KeyDown;
+    public static event EventHandler<InputKey> KeyDown;
 
-    public static event EventHandler<MauiKey> KeyUp;
+    public static event EventHandler<InputKey> KeyUp;
 
-    public static void KeyboardPressed(MauiKey key)
+    public static void KeyboardPressed(InputKey key)
     {
         CheckAndApplyModifiers(key, true);
 
@@ -19,7 +19,7 @@ public partial class KeyboardManager
         KeyDown?.Invoke(null, key);
     }
 
-    public static void KeyboardReleased(MauiKey key)
+    public static void KeyboardReleased(InputKey key)
     {
         CheckAndApplyModifiers(key, false);
 
@@ -62,34 +62,34 @@ public partial class KeyboardManager
 
     static bool IsRightControlDown { get; set; }
 
-    static void CheckAndApplyModifiers(MauiKey key, bool state)
+    static void CheckAndApplyModifiers(InputKey key, bool state)
     {
-        if (key == MauiKey.ShiftLeft)
+        if (key == InputKey.ShiftLeft)
         {
             IsLeftShiftDown = state;
         }
         else
-        if (key == MauiKey.ShiftRight)
+        if (key == InputKey.ShiftRight)
         {
             IsRightShiftDown = state;
         }
         else
-        if (key == MauiKey.AltLeft)
+        if (key == InputKey.AltLeft)
         {
             IsLeftAltDown = state;
         }
         else
-        if (key == MauiKey.AltRight)
+        if (key == InputKey.AltRight)
         {
             IsRightAltDown = state;
         }
         else
-        if (key == MauiKey.ControlLeft)
+        if (key == InputKey.ControlLeft)
         {
             IsLeftControlDown = state;
         }
         else
-        if (key == MauiKey.ControlRight)
+        if (key == InputKey.ControlRight)
         {
             IsRightControlDown = state;
         }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -9,6 +9,13 @@
     <WasmBuildNative>true</WasmBuildNative>
         </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Game\**" />
+    <Content Remove="Game\**" />
+    <EmbeddedResource Remove="Game\**" />
+    <None Remove="Game\**" />
+  </ItemGroup>
+
             
   <ItemGroup>
 
@@ -17,6 +24,7 @@
       
 
   </ItemGroup>  <ItemGroup>
+    <ProjectReference Include="..\..\Addons\DrawnUi.Gaming.Blazor\DrawnUi.Gaming.Blazor.csproj" />
     <ProjectReference Include="..\..\DrawnUi\DrawnUi.Blazor.csproj" />
   </ItemGroup>
 

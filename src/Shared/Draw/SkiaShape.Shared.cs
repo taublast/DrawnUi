@@ -1,5 +1,4 @@
-using Microsoft.Maui.Graphics;
-using Color = Microsoft.Maui.Graphics.Color;
+using DrawnUi;
 
 namespace DrawnUi.Draw
 {

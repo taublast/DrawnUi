@@ -91,7 +91,7 @@ namespace Microsoft.Maui.Controls
 
         public virtual LayoutOptions VerticalOptions { get; set; } = LayoutOptions.Start;
 
-        public virtual Microsoft.Maui.Graphics.Color BackgroundColor { get; set; }
+        public virtual Color BackgroundColor { get; set; }
 
         public virtual void Update()
         {

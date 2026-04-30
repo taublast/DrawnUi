@@ -1,7 +1,6 @@
 ﻿using System.Buffers;
 using System.Collections.Concurrent;
 using SkiaSharp.HarfBuzz;
-using Color = Microsoft.Maui.Graphics.Color;
 using Font = Microsoft.Maui.Font;
 
 

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+    <!--using Directory.Build.props-->
+
+    <PropertyGroup>
+        <Title>Game creation addon to DrawnUI for Blazor</Title>
+        <PackageId>DrawnUi.Gaming.Blazor</PackageId>
+        <Description>Base class for implementing a game with SkiaSharp in Blazor WebAssembly</Description>
+        <PackageTags>blazor drawnui skia skiasharp draw game wasm</PackageTags>
+        <Packable>true</Packable>
+        <CreatePackage>false</CreatePackage>
+        <TargetFramework>net9.0</TargetFramework>
+        <SupportedPlatform Condition="'$(TargetFramework)' == 'net9.0'">browser</SupportedPlatform>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <WarningsAsErrors>$(WarningsAsErrors);CS0108</WarningsAsErrors>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\DrawnUi\DrawnUi.Blazor.csproj" />
+    </ItemGroup>
+
+    <Import Project="..\..\..\SharedGame\SharedGame.projitems" Label="Shared" />
+
+</Project>
