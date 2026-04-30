@@ -1,3 +1,6 @@
+using DrawnUi.Draw;
+using DrawnUi.Views;
+
 namespace SpaceShooter.Game;
 
 public partial class SpaceShooter

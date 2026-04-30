@@ -3,6 +3,7 @@
 
 global using DrawnUi.Controls;
 using System.Collections.Concurrent;
+using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using AppoMobi.Gestures;
@@ -111,7 +112,7 @@ public partial class SpaceShooter : DrawnUi.Gaming.Game
         IgnoreChildrenInvalidations = true;
 
         // in case we implement key press for desktop
-        Focus();
+        //Focus();
 
         //prebuilt reusable sprites pools
         Parallel.Invoke(
@@ -656,9 +657,6 @@ public partial class SpaceShooter : DrawnUi.Gaming.Game
         {
             return new Command((context) =>
             {
-                if (TouchEffect.CheckLockAndSet())
-                    return;
-
                 if (State == GameState.Ready || State == GameState.Ended)
                 {
                     StartNewGame();

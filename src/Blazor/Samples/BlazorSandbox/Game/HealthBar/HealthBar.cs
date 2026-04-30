@@ -28,7 +28,7 @@ public partial class HealthBar : SkiaShape
         {
             Type = GradientType.Linear,
             StartXRatio = 0, StartYRatio = 0, EndXRatio = 1, EndYRatio = 0,
-            Opacity = 0.60,
+            Opacity = 0.60f,
             Colors = new List<Color>
             {
                 Color.FromHex("#ee281D"),
@@ -42,7 +42,7 @@ public partial class HealthBar : SkiaShape
         StrokeGradient = new SkiaGradient()
         {
             Type = GradientType.Linear,
-            StartXRatio = 0.2, StartYRatio = 0.2, EndXRatio = 0.2, EndYRatio = 0.8,
+            StartXRatio = 0.2f, StartYRatio = 0.2f, EndXRatio = 0.2f, EndYRatio = 0.8f,
             Colors = new List<Color>
             {
                 Color.FromHex("#000022"),
