@@ -26,6 +26,7 @@ Latest DrawnUI workcase hosted in the Blazor sandbox.
     private readonly SkiaLayer _card1Layer;
     private readonly SkiaLayer _card2Layer;
     private readonly SkiaControl RootControl;
+    private bool _isTutorialCardAnimating;
     private string _statusText = "Cards status: booting";
     private bool _canRefreshUi;
 
@@ -367,45 +368,7 @@ Latest DrawnUI workcase hosted in the Blazor sandbox.
         if (e.Args.Type == TouchActionResult.Tapped)
         {
             e.Consumed = true;
-            SetStatus("Cards status: animating tutorial card");
-
-            Task.Run(async () =>
-            {
-                if (control is SkiaShape shape && shape.FillGradient is SkiaGradient gradient && gradient.Colors.Count >= 2)
-                {
-                    var originalStart = gradient.Colors[0];
-                    var originalEnd = gradient.Colors[1];
-                    const double lighter = 1.5;
-
-                    var gradientStartColor = new Color(
-                        (float)Math.Min(1, originalStart.Red * lighter),
-                        (float)Math.Min(1, originalStart.Green * lighter),
-                        (float)Math.Min(1, originalStart.Blue * lighter),
-                        originalStart.Alpha);
-
-                    var gradientEndColor = new Color(
-                        (float)Math.Min(1, originalEnd.Red * lighter),
-                        (float)Math.Min(1, originalEnd.Green * lighter),
-                        (float)Math.Min(1, originalEnd.Blue * lighter),
-                        originalEnd.Alpha);
-
-                    gradient.Colors = new List<Color> { gradientStartColor, gradientEndColor };
-                    await Task.Delay(200);
-                    gradient.Colors = new List<Color> { originalStart, originalEnd };
-                }
-            });
-
-            Task.Run(async () =>
-            {
-                control.ScaleToAsync(1.1, 1.1, 150);
-                await Task.Delay(100);
-                control.ScaleToAsync(1.0, 1.0, 200);
-
-                control.RotateToAsync(control.Rotation + 2, 200, Easing.SpringOut);
-                await Task.Delay(150);
-                control.RotateToAsync(0, 300, Easing.SpringOut);
-                SetStatus("Cards status: tutorial card animation complete");
-            });
+            _ = AnimateTapAsync(control);
         }
 
         if (sender != _card2Layer)
@@ -449,5 +412,91 @@ Latest DrawnUI workcase hosted in the Blazor sandbox.
         {
             InvokeAsync(StateHasChanged);
         }
+    }
+
+    private async Task AnimateTapAsync(SkiaControl control)
+    {
+        var animatedControl = GetTapAnimationTarget(control);
+
+        if (senderIsTutorialCard(animatedControl))
+        {
+            if (_isTutorialCardAnimating)
+            {
+                return;
+            }
+
+            _isTutorialCardAnimating = true;
+        }
+
+        try
+        {
+            SetStatus("Cards status: animating tutorial card");
+
+            var gradientTask = AnimateGradientAsync(control);
+
+            await animatedControl.ScaleToAsync(1.1, 1.1, 150, Easing.CubicOut);
+            await animatedControl.ScaleToAsync(1.0, 1.0, 200, Easing.BounceOut);
+
+            await animatedControl.RotateToAsync(animatedControl.Rotation + 2, 200, Easing.SpringOut);
+            await animatedControl.RotateToAsync(0, 300, Easing.SpringOut);
+
+            await gradientTask;
+
+            animatedControl.Rotation = 0;
+            control.Rotation = 0;
+            animatedControl.Update();
+
+            if (!ReferenceEquals(animatedControl, control))
+            {
+                control.Update();
+            }
+
+            SetStatus("Cards status: tutorial card animation complete");
+        }
+        finally
+        {
+            if (senderIsTutorialCard(animatedControl))
+            {
+                _isTutorialCardAnimating = false;
+            }
+        }
+    }
+
+    private async Task AnimateGradientAsync(SkiaControl control)
+    {
+        if (control is not SkiaShape shape || shape.FillGradient is not SkiaGradient gradient || gradient.Colors.Count < 2)
+        {
+            return;
+        }
+
+        var originalStart = gradient.Colors[0];
+        var originalEnd = gradient.Colors[1];
+        const double lighter = 1.5;
+
+        var gradientStartColor = new Color(
+            (float)Math.Min(1, originalStart.Red * lighter),
+            (float)Math.Min(1, originalStart.Green * lighter),
+            (float)Math.Min(1, originalStart.Blue * lighter),
+            originalStart.Alpha);
+
+        var gradientEndColor = new Color(
+            (float)Math.Min(1, originalEnd.Red * lighter),
+            (float)Math.Min(1, originalEnd.Green * lighter),
+            (float)Math.Min(1, originalEnd.Blue * lighter),
+            originalEnd.Alpha);
+
+        gradient.Colors = new List<Color> { gradientStartColor, gradientEndColor };
+        await Task.Delay(200);
+        gradient.Colors = new List<Color> { originalStart, originalEnd };
+    }
+
+    private bool senderIsTutorialCard(SkiaControl control)
+    {
+        return control == _card1Layer || control.Parent == _card1Layer;
+    }
+
+    private static SkiaControl GetTapAnimationTarget(SkiaControl control)
+    {
+        return control.Parent as SkiaLayer ?? control;
     }
 }

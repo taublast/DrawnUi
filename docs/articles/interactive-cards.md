@@ -98,7 +98,7 @@ Replace `MainPage.xaml` with our card gallery:
             <draw:SkiaLayout Type="Column"
                              HorizontalOptions="Center"
                              Margin="16"
-                             UseCache="Operations"
+                             UseCache="Image"
                              Spacing="8">
 
                 <draw:SkiaLabel
@@ -342,14 +342,15 @@ Replace `MainPage.xaml` with our card gallery:
 Replace `MainPage.xaml.cs` with the interaction logic:
 
 ```csharp
-using DrawnUi.Draw;
-using DrawnUi.Infrastructure;
+using AppoMobi.Gestures;
 
-namespace InteractiveCardsTutorial;
+namespace DrawnUI.Tutorials.InteractiveCards;
 
-public partial class MainPage : ContentPage
+public partial class TutorialCards : ContentPage
 {
-    public MainPage()
+    private readonly HashSet<SkiaControl> _activeTapAnimations = new();
+
+    public TutorialCards()
     {
         try
         {
@@ -363,80 +364,96 @@ public partial class MainPage : ContentPage
 
     private void OnCardGestures(object sender, SkiaGesturesInfo e)
     {
-        if (sender is SkiaControl control)
+        if (sender is not SkiaControl control)
         {
-            if (e.Args.Type == TouchActionResult.Tapped)
+            return;
+        }
+
+        if (e.Args.Type == TouchActionResult.Tapped)
+        {
+            e.Consumed = true;
+            _ = AnimateTapAsync(control);
+        }
+
+        if (sender == Pannable)
+        {
+            // Smooth drag following with momentum
+            if (e.Args.Type == TouchActionResult.Panning)
             {
-                e.Consumed = true; //could consume
+                e.Consumed = true;
 
-                Task.Run(async () =>
-                {
-                    // Color pulse effect
-                    if (control is SkiaShape shape && shape.FillGradient is SkiaGradient gradient)
-                    {
-                        var originalStart = gradient.Colors[0];
-                        var originalEnd = gradient.Colors[1];
-                        var lighter = 1.5;
+                control.TranslationX += e.Args.Event.Distance.Delta.X / control.RenderingScale;
+                control.TranslationY += e.Args.Event.Distance.Delta.Y / control.RenderingScale;
 
-                        // Brighten colors
-                        var gradientStartColor = Color.FromRgba(
-                            Math.Min(1, originalStart.Red * lighter),
-                            Math.Min(1, originalStart.Green * lighter),
-                            Math.Min(1, originalStart.Blue * lighter),
-                            originalStart.Alpha);
-
-                        var gradientEndColor = Color.FromRgba(
-                            Math.Min(1, originalEnd.Red * lighter),
-                            Math.Min(1, originalEnd.Green * lighter),
-                            Math.Min(1, originalEnd.Blue * lighter),
-                            originalEnd.Alpha);
-
-                        gradient.Colors = new List<Color>() { gradientStartColor, gradientEndColor };
-
-                        // Restore original colors
-                        await Task.Delay(200);
-                        gradient.Colors = new List<Color>() { originalStart, originalEnd };
-                    }
-                });
-
-                Task.Run(async () =>
-                {
-                    // Smooth scale animation with bounce effect
-                    control.ScaleToAsync(1.1, 1.1, 150, Easing.CubicOut);
-                    await Task.Delay(100);
-                    control.ScaleToAsync(1.0, 1.0, 200, Easing.BounceOut);
-
-                    // Rotate animation for fun
-                    control.RotateToAsync(control.Rotation + 2, 200, Easing.SpringOut);
-                    await Task.Delay(150);
-                    control.RotateToAsync(0, 300, Easing.SpringOut);
-                });
-
+                // Add subtle rotation based on pan direction
+                var deltaX = e.Args.Event.Distance.Total.X / control.RenderingScale;
+                var rotationAmount = deltaX * 0.1;
+                control.Rotation = Math.Max(-15, Math.Min(15, rotationAmount));
             }
-
-            if (sender == Pannable)
+            else if (e.Args.Type == TouchActionResult.Up)
             {
-                // Smooth drag following with momentum
-                if (e.Args.Type == TouchActionResult.Panning)
-                {
-                    e.Consumed = true;
-
-                    control.TranslationX += e.Args.Event.Distance.Delta.X / control.RenderingScale;
-                    control.TranslationY += e.Args.Event.Distance.Delta.Y / control.RenderingScale;
-
-                    // Add subtle rotation based on pan direction
-                    var deltaX = e.Args.Event.Distance.Total.X / control.RenderingScale;
-                    var rotationAmount = deltaX * 0.1;
-                    control.Rotation = Math.Max(-15, Math.Min(15, rotationAmount));
-                }
-                else if (e.Args.Type == TouchActionResult.Up)
-                {
-                    // Snap back to original position
-                    control.TranslateToAsync(0, 0, 100, Easing.SpringOut);
-                    control.RotateToAsync(0, 75, Easing.SpringOut);
-                }
+                // Snap back to original position
+                control.TranslateToAsync(0, 0, 100, Easing.SpringOut);
+                control.RotateToAsync(0, 75, Easing.SpringOut);
             }
         }
+    }
+
+    private async Task AnimateTapAsync(SkiaControl control)
+    {
+        if (!_activeTapAnimations.Add(control))
+        {
+            return;
+        }
+
+        try
+        {
+            var gradientTask = AnimateGradientAsync(control);
+
+            await control.ScaleToAsync(1.1, 1.1, 150, Easing.CubicOut);
+            await control.ScaleToAsync(1.0, 1.0, 200, Easing.BounceOut);
+            await control.RotateToAsync(control.Rotation + 2, 200, Easing.SpringOut);
+            await control.RotateToAsync(0, 300, Easing.SpringOut);
+
+            await gradientTask;
+        }
+        finally
+        {
+            _activeTapAnimations.Remove(control);
+        }
+    }
+
+    private static async Task AnimateGradientAsync(SkiaControl control)
+    {
+        // Color pulse effect
+        if (control is not SkiaShape shape || shape.FillGradient is not SkiaGradient gradient)
+        {
+            return;
+        }
+
+        var originalStart = gradient.Colors[0];
+        var originalEnd = gradient.Colors[1];
+        var lighter = 1.5;
+
+        // Brighten colors
+        var gradientStartColor = Color.FromRgba(
+            Math.Min(1, originalStart.Red * lighter),
+            Math.Min(1, originalStart.Green * lighter),
+            Math.Min(1, originalStart.Blue * lighter),
+            originalStart.Alpha);
+
+        var gradientEndColor = Color.FromRgba(
+            Math.Min(1, originalEnd.Red * lighter),
+            Math.Min(1, originalEnd.Green * lighter),
+            Math.Min(1, originalEnd.Blue * lighter),
+            originalEnd.Alpha);
+
+        gradient.Colors = new List<Color>() { gradientStartColor, gradientEndColor };
+
+        // Restore original colors
+        await Task.Delay(200);
+        gradient.Colors = new List<Color>() { originalStart, originalEnd };
+    }
     }
 }
 ```
@@ -475,8 +492,8 @@ When the font you are using for the `FontFamily` property doesn't have emoji gly
 Each container uses specific caching strategies for optimal performance:
 
 ```xml
-<!-- Static title section - cache the drawing operations -->
-<draw:SkiaLayout UseCache="Operations" ... >
+<!-- Static title section -->
+<draw:SkiaLayout UseCache="Image" ... >
     <draw:SkiaLabel Text="Interactive Cards" ... />
 </draw:SkiaLayout>
 
@@ -492,11 +509,8 @@ Each container uses specific caching strategies for optimal performance:
 
 **Cache Strategy Explained:**
 
-- **`UseCache="Operations"`** - Caches drawing operations (shapes, text, paths) as SKPicture objects
-  - Perfect for vector-based content
-  - Very memory efficient
-  
 - **`UseCache="Image"`** - Caches the entire visual result as a bitmap
+    - Used in this tutorial for the title section and card containers
   - Essential for **shadow effects** - shadows are expensive to recalculate every frame
   - Used on card containers instead of cards to avoid clipping shadows
 
@@ -564,31 +578,25 @@ private void OnCardGestures(object sender, SkiaGesturesInfo e)
 {
     if (e.Args.Type == TouchActionResult.Tapped)
     {
-        e.Consumed = true; // MUST happen synchronously!
-        
-        Task.Run(async () =>
-        {
-            // Scale animation runs on background thread
-            control.ScaleToAsync(1.1, 1.1, 150, Easing.CubicOut);
-            await Task.Delay(100);
-            control.ScaleToAsync(1.0, 1.0, 200, Easing.BounceOut);
-        });
+        e.Consumed = true;
+        _ = AnimateTapAsync(control);
     }
 }
 ```
 
-**Why Task.Run for animations?** 
+**Animation Pattern:** 
 
-The gesture event handler **must remain synchronous** so that `e.Consumed = true` is processed correctly by the gesture system. If we made the event handler `async`, the gesture processing would exit the thread before `e.Consumed` is evaluated, leaving it as `false`.
+The gesture handler stays synchronous so `e.Consumed = true` is applied immediately, while the tap animation itself runs in a dedicated async helper.
 
 **The Pattern:**
 1. **Synchronous gesture handling** - Set `e.Consumed = true` immediately
-2. **Background animations** - Use `Task.Run` for time-consuming animations
-3. **Non-blocking UI** - Gesture system gets immediate response, animations run separately
+2. **Async helper method** - Kick off `AnimateTapAsync(control)` from the handler
+3. **Serialized animation flow** - Await scale, rotation, and gradient tasks inside that helper
+4. **Per-card reentry guard** - Skip duplicate taps while the same card is already animating
 
 This ensures:
 - Gesture consumption works correctly
-- Multiple animations can run simultaneously
+- Each card finishes one tap animation before starting another
 - No gesture conflicts or scroll interference
 
 **Easing Functions:**
