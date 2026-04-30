@@ -238,7 +238,18 @@ public partial class SpaceShooter : DrawnUi.Gaming.Game
                                 CornerRadius = 14,
                                 HorizontalOptions = LayoutOptions.Fill,
                                 VerticalOptions = LayoutOptions.Fill,
-                                BackgroundColor = Color.FromHex("#22000000"),
+                                Children = new List<SkiaControl>()
+                                {
+                                    new SkiaBackdrop()
+                                    {
+                                        BackgroundColor = Color.FromHex("#22000000"),
+                                        Blur = 3,
+                                        HorizontalOptions = LayoutOptions.Fill,
+                                        Tag = "Blur",
+                                        VerticalOptions = LayoutOptions.Fill,
+                                        ZIndex = -1,
+                                    },
+                                },
                             },
                         },
                     },

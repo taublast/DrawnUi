@@ -671,11 +671,11 @@ public partial class SpaceShooter : DrawnUi.Gaming.Game
     /// Mappings from platform-independent keys to game action keys.
     /// Player could change these mappings if you implement this in settings.
     /// </summary>
-    Dictionary<InputKey GameKey> ActionKeys = new()
+    Dictionary<InputKey, GameKey> ActionKeys = new()
     {
-        { MauiKey.Space, GameKey.Fire },
-        { MauiKey.ArrowLeft, GameKey.Left },
-        { MauiKey.ArrowRight, GameKey.Right },
+        { InputKey.Space, GameKey.Fire },
+        { InputKey.ArrowLeft, GameKey.Left },
+        { InputKey.ArrowRight, GameKey.Right },
     };
 
     /// <summary>
@@ -683,7 +683,7 @@ public partial class SpaceShooter : DrawnUi.Gaming.Game
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    GameKey MapToGame(MauiKey key)
+    GameKey MapToGame(InputKey key)
     {
         if (ActionKeys.TryGetValue(key, out var gameKey))
         {
@@ -692,7 +692,7 @@ public partial class SpaceShooter : DrawnUi.Gaming.Game
         return GameKey.Unset;
     }
 
-    public override void OnKeyUp(MauiKey mauiKey)
+    public override void OnKeyUp(InputKey mauiKey)
     {
         var key = MapToGame(mauiKey);
 
@@ -716,7 +716,7 @@ public partial class SpaceShooter : DrawnUi.Gaming.Game
         }
     }
 
-    public override void OnKeyDown(MauiKey mauiKey)
+    public override void OnKeyDown(InputKey mauiKey)
     {
         var key = MapToGame(mauiKey);
 
