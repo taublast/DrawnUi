@@ -13,12 +13,12 @@ namespace DrawnUi.Gaming
     /// </summary>
     public partial class Game : SkiaLayout, IGame
     {
-#if !BROWSER
+ 
         /// <summary>
         /// Can disable frame time interpolator
         /// </summary>
         public static bool FrameInterpolatorDisabled { get; set; }
-#endif
+ 
 
         private ActionOnTickAnimator _appLoop;
         protected long LastFrameTimeNanos;
@@ -91,10 +91,8 @@ namespace DrawnUi.Gaming
             float deltaSeconds = (frameTimeNanos - LastFrameTimeNanos) / 1_000_000_000.0f;
 
             // Use stable time
-#if !BROWSER
             if (!Game.FrameInterpolatorDisabled)
-#endif
-            deltaSeconds = FrameTimeInterpolator.GetDeltaTimeFromDelta(deltaSeconds);
+                deltaSeconds = FrameTimeInterpolator.GetDeltaTimeFromDelta(deltaSeconds);
 
             LastFrameTimeNanos = frameTimeNanos;
 

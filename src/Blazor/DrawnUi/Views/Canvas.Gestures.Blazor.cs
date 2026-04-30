@@ -204,21 +204,21 @@ public partial class Canvas : IGestureListener
 
         var args = SkiaGesturesParameters.Create(touchAction, args1);
 
-        try
+        //this is intended to not lose gestures when fps drops and avoid crashes in double-buffering
+        PostponeExecutionBeforeDraw(() =>
         {
-            ProcessGestures(args);
-        }
-        catch (Exception e)
-        {
-            Super.Log(e);
-        }
-
-        if (touchAction == TouchActionResult.Up)
-        {
-            var stop = 1;
-        }
+            try
+            {
+                ProcessGestures(args);
+            }
+            catch (Exception e)
+            {
+                Super.Log(e);
+            }
+        }, LongKeyGenerator.Next());
 
         Repaint();
+
     }
 
     public void OnTouchAction(TouchActionEventArgs args)
