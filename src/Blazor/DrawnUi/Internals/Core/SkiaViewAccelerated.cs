@@ -201,7 +201,7 @@ namespace DrawnUi.Draw
                 var isDirty = OnDraw.Invoke(paintArgs.Surface, rect);
             }
 
-            if (CanvasSize == SKSize.Empty)
+            if (paintArgs.BackendRenderTarget.Width == 0 || paintArgs.BackendRenderTarget.Height == 0)
             {
                 maybeDrawn = false;
             }

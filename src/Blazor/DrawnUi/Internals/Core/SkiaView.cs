@@ -151,7 +151,7 @@ namespace DrawnUi.Draw
                 _surface = paintArgs.Surface;
                 OnDraw.Invoke(paintArgs.Surface, rect);
 
-                if (CanvasSize == SKSize.Empty)
+                if (paintArgs.Info.Width == 0 || paintArgs.Info.Height == 0)
                 {
                     maybeDrawn = false;
                 }
