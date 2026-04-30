@@ -1158,6 +1158,7 @@ namespace DrawnUi.Draw
             }
             catch 
             {
+                this.Rotation = end;
             }
         }
 
