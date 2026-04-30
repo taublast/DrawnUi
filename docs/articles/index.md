@@ -32,6 +32,7 @@ builder.UseDrawnUi();
 
 ### Documentation & Guides
 - **[Getting Started Guide](getting-started.md)** - Complete installation and setup
+- **[Blazor](blazor.md)** - Blazor WebAssembly setup, startup, fonts, canvas hosting, and keyboard support
 - **[Tutorials](tutorials.md)** - Tutorials and example projects
 - **[Fluent Extensions](fluent-extensions.md)** - Code-behind UI creation patterns
 - **[FAQ](faq.md)** - Frequently asked questions and answers

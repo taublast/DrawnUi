@@ -5,6 +5,8 @@
   items:
     - name: Installation and Setup
       href: getting-started.md
+    - name: Blazor
+      href: blazor.md
     - name: Startup Settings
       href: startup-settings.md
     - name: Drawn Layouts

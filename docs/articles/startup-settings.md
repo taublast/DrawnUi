@@ -42,6 +42,25 @@ builder
 
 See also: Getting Started → Installation and Setup.
 
+## Blazor
+
+Blazor WebAssembly uses the same settings type, but passes it to `UseDrawnUiAsync`:
+
+```csharp
+using DrawnUi.Draw;
+
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
+var host = await builder.UseDrawnUiAsync(new DrawnUiStartupSettings
+{
+  UseDesktopKeyboard = true
+});
+
+await host.RunAsync();
+```
+
+In Blazor, `UseDesktopKeyboard` attaches browser `keydown` and `keyup` listeners and forwards them to `KeyboardManager`.
+
 ## Properties
 
 - DesktopWindow (WindowParameters?)
@@ -53,7 +72,9 @@ See also: Getting Started → Installation and Setup.
   - If supported by the platform, avoids safe insets and removes some system UI (e.g., status bar) for a more immersive layout.
 
 - UseDesktopKeyboard (bool)
-  - Enables desktop keyboard handling via KeyboardManager (Windows and Mac Catalyst).
+  - Enables keyboard handling via `KeyboardManager`.
+  - MAUI: desktop support on Windows and Mac Catalyst.
+  - Blazor: browser keyboard events are forwarded to the same API.
 
 - Startup (Action<IServiceProvider>)
   - Called after DrawnUI is initialized and the MAUI App is created, useful for one-time setup that needs DI services.

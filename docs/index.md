@@ -65,6 +65,10 @@ void main() {
 }
 </script>
 
+<div style="margin: 22px 0 0 0; padding: 16px 20px; border: 1px solid rgba(37,99,235,0.22); border-radius: 10px; background: linear-gradient(180deg, rgba(37,99,235,0.06), rgba(37,99,235,0.02)); color: #dbeafe; text-align: center;">
+  Don't miss the <a href="articles/blazor.md" style="color: white; font-weight: 700; text-decoration: underline;">Blazor version too</a> if you want to run DrawnUI in the browser with WebAssembly.
+</div>
+
 <script id="fragShader" type="x-shader/x-fragment">
 precision mediump float;
 
@@ -352,6 +356,7 @@ Perfect for apps requiring **custom UI designs**, **complex animations**, **game
   <h4 style="margin-bottom: 15px;">📖 Documentation</h4>
   <p style="margin-bottom: 20px; ">Complete guides and API reference</p>
   <a href="articles/getting-started.md" style="color: #4299e1; text-decoration: none; font-weight: 600;">Getting Started →</a><br>
+  <a href="articles/blazor.md" style="color: #4299e1; text-decoration: none; font-weight: 600;">Blazor →</a><br>
   <a href="articles/controls/index.md" style="color: #4299e1; text-decoration: none; font-weight: 600;">Controls Reference →</a><br>
   <a href="articles/advanced/index.md" style="color: #4299e1; text-decoration: none; font-weight: 600;">Advanced Topics →</a><br>
   <a href="/api/" style="color: #4299e1; text-decoration: none; font-weight: 600;">API Reference →</a>
