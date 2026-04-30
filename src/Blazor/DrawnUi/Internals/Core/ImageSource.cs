@@ -1,8 +1,27 @@
+using System.ComponentModel;
+using DrawnUi.Infrastructure.Xaml;
+
 namespace DrawnUi.Draw;
 
+[TypeConverter(typeof(FrameworkImageSourceConverter))]
 public abstract class ImageSource
 {
     public virtual bool IsEmpty => false;
+
+    public static implicit operator ImageSource(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        return FrameworkImageSourceConverter.FromInvariantString(value);
+    }
+
+    public static implicit operator ImageSource(Uri uri)
+    {
+        return uri == null ? null : FromUri(uri);
+    }
 
     public static ImageSource FromFile(string file)
     {

@@ -50,7 +50,7 @@
                     TextColor = new Color(0.255f, 0.286f, 0.353f, 1f),
                     HorizontalOptions = LayoutOptions.Fill
                 },
-                CreateImageCard("Rounded card with thick stroke", ImageSource.FromUri(new Uri("https://picsum.photos/600/360"))),
+                CreateImageCard("Rounded card with thick stroke", "https://picsum.photos/600/360"),
                 CreateInsetCard("Inset fill test"),
                 CreateCircleClipCard("Circle clip test")
             }
@@ -155,7 +155,7 @@
                 {
                     HorizontalOptions = LayoutOptions.Fill,
                     VerticalOptions = LayoutOptions.Fill,
-                    Source = ImageSource.FromUri(new Uri("https://picsum.photos/480/480")),
+                    Source = "https://picsum.photos/480/480",
                     Aspect = TransformAspect.AspectCover,
                     EraseChangedContent = true
                 },

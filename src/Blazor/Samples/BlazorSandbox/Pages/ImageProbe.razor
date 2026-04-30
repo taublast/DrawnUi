@@ -26,9 +26,9 @@
         SkiaImage.LogEnabled = true;
         SkiaImageManager.LogEnabled = true;
 
-        var faviconImage = CreateProbeImage("favicon", FrameworkImageSourceConverter.FromInvariantString("favicon.png"), TransformAspect.AspectFit);
-        var iconImage = CreateProbeImage("icon-192", FrameworkImageSourceConverter.FromInvariantString("icon-192.png"), TransformAspect.AspectFit);
-        var remoteImage = CreateProbeImage("remote", ImageSource.FromUri(new Uri("https://picsum.photos/440/280")), TransformAspect.AspectCover, eraseChangedContent: true);
+        var faviconImage = CreateProbeImage("favicon", "favicon.png", TransformAspect.AspectFit);
+        var iconImage = CreateProbeImage("icon-192", "icon-192.png", TransformAspect.AspectFit);
+        var remoteImage = CreateProbeImage("remote", "https://picsum.photos/440/280", TransformAspect.AspectCover, eraseChangedContent: true);
 
         RootControl = new SkiaLayout()
         {
