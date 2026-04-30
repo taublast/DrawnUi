@@ -1,0 +1,188 @@
+@page "/backdrop-probe"
+@using DrawnUi.Draw
+@using DrawnUi.Infrastructure.Xaml
+@using DrawnUi.Views
+
+@using DrawnUi
+
+<PageTitle>Backdrop Probe</PageTitle>
+
+<h1>Backdrop Probe</h1>
+
+<p id="backdrop-probe-description">Use this page to validate the shared SkiaBackdrop port with a frosted-glass card over layered content.</p>
+
+<Canvas WidthRequest="420"
+        HeightRequest="760"
+        BackgroundColor="#08131F"
+        Margin="0,16,0,32"
+        RootControl="@_rootControl" />
+
+@code {
+    private readonly SkiaControl _rootControl;
+
+    public BackdropProbe()
+    {
+        var backgroundContent = new SkiaLayout()
+        {
+            Padding = new Thickness(24),
+            BackgroundColor = new Color(0.946f, 0.961f, 0.980f, 1f),
+            HeightRequest = 620,
+            HorizontalOptions = LayoutOptions.Fill,
+            UseCache = SkiaCacheType.Image,
+            Children =
+            {
+                new SkiaImage()
+                {
+                    Aspect = TransformAspect.AspectCover,
+                    HeightRequest = 420,
+                    HorizontalOptions = LayoutOptions.Fill,
+                    Source = "icon-512.png"
+                },
+                new SkiaShape()
+                {
+                    Margin = new Thickness(24, 44, 0, 0),
+                    WidthRequest = 140,
+                    HeightRequest = 48,
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 18,
+                    BackgroundColor = new Color(0.078f, 0.576f, 0.847f, 0.90f),
+                    StrokeColor = Colors.White,
+                    StrokeWidth = 1,
+                    Children =
+                    {
+                        new SkiaLabel()
+                        {
+                            Text = "Backdrop",
+                            FontFamily = "FontTextTitle",
+                            FontSize = 18,
+                            TextColor = Colors.White,
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.Center
+                        }
+                    }
+                },
+                new SkiaShape()
+                {
+                    Margin = new Thickness(170, 360, 0, 0),
+                    WidthRequest = 150,
+                    HeightRequest = 92,
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 26,
+                    BackgroundColor = new Color(0.929f, 0.376f, 0.286f, 0.82f),
+                    Rotation = -8,
+                    Children =
+                    {
+                        new SkiaLabel()
+                        {
+                            Text = "Color under glass",
+                            FontFamily = "FontText",
+                            FontSize = 15,
+                            TextColor = Colors.White,
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.Center,
+                            WidthRequest = 110
+                        }
+                    }
+                },
+                new SkiaShape()
+                {
+                    Margin = new Thickness(44, 470, 0, 0),
+                    WidthRequest = 250,
+                    HeightRequest = 90,
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 28,
+                    BackgroundColor = new Color(0.224f, 0.224f, 0.753f, 0.72f),
+                    Rotation = 9
+                }
+            }
+        };
+
+        var glassCard = new SkiaShape()
+        {
+            Margin = new Thickness(92, 196, 0, 0),
+            WidthRequest = 220,
+            HeightRequest = 220,
+            BackgroundColor = Colors.Black,
+            ClipBackgroundColor = true, //we set background color only for dropshadow
+            CornerRadius = 24,
+            HorizontalOptions = LayoutOptions.Start,
+            VerticalOptions = LayoutOptions.Start,
+            Children =
+            {
+                new SkiaLayout()
+                {
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Fill,
+                    Children =
+                    {
+                        new SkiaBackdrop()
+                        {
+                            BackgroundColor = new Color(1f, 1f, 1f, 0.25),
+                            Blur = 6,
+                            HorizontalOptions = LayoutOptions.Fill,
+                            UseContext = true,
+                            VerticalOptions = LayoutOptions.Fill,
+                            ZIndex = -1
+                        },
+                        new SkiaLayout()
+                        {
+                            Padding = new Thickness(16),
+                            HorizontalOptions = LayoutOptions.Fill,
+                            VerticalOptions = LayoutOptions.Fill,
+                            Type = LayoutType.Column,
+                            Spacing = 10,
+                            Children =
+                            {
+                                new SkiaLabel()
+                                {
+                                    Text = "SkiaBackdrop",
+                                    FontFamily = "FontTextTitle",
+                                    FontSize = 20,
+                                    TextColor = Colors.Black,
+                                    HorizontalOptions = LayoutOptions.Fill,
+                                    HorizontalTextAlignment = DrawTextAlignment.Center
+                                },
+                                new SkiaLabel()
+                                {
+                                    Text = "Expected: the card softens the image and colored panels behind it instead of painting opaque content.",
+                                    FontFamily = "FontText",
+                                    FontSize = 14,
+                                    TextColor = Colors.Black,
+                                    HorizontalOptions = LayoutOptions.Fill,
+                                    HorizontalTextAlignment = DrawTextAlignment.Center,
+                                    WidthRequest = 172
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            Shadows = new SkiaShadowsCollection
+            {
+                new SkiaShadow()
+                {
+                    Blur = 8,
+                    Opacity = 1,
+                    X = 4,
+                    Y = 4,
+                    Color = new Color(0f, 0f, 0f, 0.28f)
+                }
+            }
+        };
+
+        _rootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 388,
+            HeightRequest = 700,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            Type = LayoutType.Absolute,
+            Children =
+            {
+                backgroundContent,
+                glassCard
+            }
+        };
+    }
+}

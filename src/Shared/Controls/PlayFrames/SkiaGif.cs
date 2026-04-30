@@ -1,13 +1,14 @@
-﻿using DrawnUi.Features.Images;
+using DrawnUi.Draw;
+#if !BROWSER
+using DrawnUi.Features.Images;
 using Microsoft.Maui.Storage;
+#endif
 
 namespace DrawnUi.Controls;
-
 
 public class SkiaGif : AnimatedFramesRenderer
 {
     public SkiaImage Display { get; protected set; }
-
 
     /// <summary>
     /// For standalone use
@@ -16,7 +17,7 @@ public class SkiaGif : AnimatedFramesRenderer
     {
         this.Display = new()
         {
-            Tag="GifDisplay",
+            Tag = "GifDisplay",
             IsParentIndependent = true,
             LoadSourceOnFirstDraw = false,
             HorizontalOptions = LayoutOptions.Fill,
@@ -28,7 +29,7 @@ public class SkiaGif : AnimatedFramesRenderer
 
         UseCache = SkiaCacheType.ImageDoubleBuffered;
 
-        Display.SetParent(this);
+        AddSubView(Display);
     }
 
     protected void ApplyAspect()
@@ -57,11 +58,11 @@ public class SkiaGif : AnimatedFramesRenderer
     /// <summary>
     /// For building custom controls
     /// </summary>
-    /// <param name="display"></param>
     public SkiaGif(SkiaImage display)
     {
         IsStandalone = true;
         this.Display = display;
+        AddSubView(Display);
     }
 
     protected override SkiaControl GetAnimatorParent()
@@ -76,24 +77,15 @@ public class SkiaGif : AnimatedFramesRenderer
 
     protected override void RenderFrame(DrawingContext ctx)
     {
-        DrawViews(ctx); //just draw our Display
+        DrawViews(ctx);
     }
 
-    /// <summary>
-    /// invoked by internal animator
-    /// </summary>
-    /// <param name="value"></param>
     protected override void OnAnimatorUpdated(double value)
     {
         base.OnAnimatorUpdated(value);
-
         Seek(value);
     }
 
-    /// <summary>
-    /// called by Seek
-    /// </summary>
-    /// <param name="frame"></param>
     protected override void OnAnimatorSeeking(double time)
     {
         if (Animation != null)
@@ -167,7 +159,7 @@ public class SkiaGif : AnimatedFramesRenderer
 
             Debug.WriteLine($"[SkiaGif] Loaded animation: Duration:{Animation.DurationMs} Frames:  Fps:{Animation.TotalFrames}");
 
-            InitializeAnimator(); //autoplay applied inside
+            InitializeAnimator();
 
             OnAnimatorSeeking(DefaultFrame);
 
@@ -201,15 +193,22 @@ public class SkiaGif : AnimatedFramesRenderer
 
     private object lockSource = new();
 
-    /// <summary>
-    /// Happens when loaded fine from `Source`. Will pass source as string.
-    /// </summary>
     public event EventHandler<string> Success;
 
-    /// <summary>
-    /// Happens when loaded with error from `Source`. Will pass exception.
-    /// </summary>
     public event EventHandler<Exception> Error;
+
+    private async Task<Stream> OpenPackageFileStreamAsync(string fileName)
+    {
+#if BROWSER
+        var httpClient = Super.Services?.GetService<HttpClient>();
+        if (httpClient == null)
+            throw new InvalidOperationException("[SkiaGif] HttpClient service was not found.");
+
+        return await httpClient.GetStreamAsync(fileName);
+#else
+        return await FileSystem.OpenAppPackageFileAsync(fileName);
+#endif
+    }
 
     public virtual void ReloadSource()
     {
@@ -225,21 +224,13 @@ public class SkiaGif : AnimatedFramesRenderer
             switch (type)
             {
                 case SourceType.Url:
-                    Tasks.StartDelayedAsync(TimeSpan.FromMilliseconds(1), async () =>
-                    {
-                        var a = await LoadSource(Source);
-                        if (a != null)
-                        {
-                            Success?.Invoke(this, Source);
-                            SetAnimation(a, true);
-                        }
-                        else
-                        {
-                            Error?.Invoke(this, new Exception($"Failed to load source {Source}"));
-                        }
-                    });
+                    _ = LoadAndApplySourceAsync(Source);
                     break;
                 default:
+#if BROWSER
+                    _ = LoadAndApplySourceAsync(Source);
+                    break;
+#else
                     GifAnimation animation = new();
                     try
                     {
@@ -251,11 +242,10 @@ public class SkiaGif : AnimatedFramesRenderer
                         }
                         else
                         {
-                            using var stream = FileSystem.OpenAppPackageFileAsync(Source).GetAwaiter().GetResult();
-                            using var reader = new StreamReader(stream);
+                            using var stream = OpenPackageFileStreamAsync(Source).GetAwaiter().GetResult();
                             animation.LoadFromStream(stream);
                         }
-                        if (animation.TotalFrames <1)
+                        if (animation.TotalFrames < 1)
                         {
                             animation = null;
                         }
@@ -275,19 +265,36 @@ public class SkiaGif : AnimatedFramesRenderer
                         Error?.Invoke(this, new Exception($"Failed to load source {Source}"));
                     }
                     break;
+#endif
             }
         }
-
-
     }
 
-
+    private async Task LoadAndApplySourceAsync(string source)
+    {
+        try
+        {
+            var animation = await LoadSource(source);
+            if (animation != null)
+            {
+                Success?.Invoke(this, source);
+                SetAnimation(animation, true);
+            }
+            else
+            {
+                Error?.Invoke(this, new Exception($"Failed to load source {source}"));
+            }
+        }
+        catch (Exception e)
+        {
+            Super.Log(e);
+            Error?.Invoke(this, new Exception($"Failed to load source {source}"));
+        }
+    }
 
     /// <summary>
     /// This is not replacing current animation, only pre-loading! Use SetAnimation after that if needed.
     /// </summary>
-    /// <param name="fileName"></param>
-    /// <returns></returns>
     public async Task<GifAnimation> LoadSource(string fileName)
     {
         if (string.IsNullOrEmpty(fileName))
@@ -298,28 +305,43 @@ public class SkiaGif : AnimatedFramesRenderer
         try
         {
             GifAnimation animation = new();
+            if (Uri.TryCreate(fileName, UriKind.Absolute, out var uri) && uri.Scheme != "file")
             {
-                if (Uri.TryCreate(fileName, UriKind.Absolute, out var uri) && uri.Scheme != "file")
+                using HttpClient client =
+#if BROWSER
+                    Super.Services?.GetService<HttpClient>() ?? throw new InvalidOperationException("[SkiaGif] HttpClient service was not found.");
+#else
+                    Super.Services.CreateHttpClient();
+#endif
+                using var dataStream = await client.GetStreamAsync(uri);
+#if BROWSER
+                using var bufferedStream = new MemoryStream();
+                await dataStream.CopyToAsync(bufferedStream);
+                bufferedStream.Position = 0;
+                animation.LoadFromStream(bufferedStream);
+#else
+                animation.LoadFromStream(dataStream);
+#endif
+            }
+            else
+            {
+                if (fileName.SafeContainsInLower(SkiaImageManager.NativeFilePrefix))
                 {
-                    using HttpClient client = Super.Services.CreateHttpClient();
-                    using var dataStream = await client.GetStreamAsync(uri);
-                    animation.LoadFromStream(dataStream);
+                    var fullFilename = fileName.Replace(SkiaImageManager.NativeFilePrefix, "");
+                    using var stream = new FileStream(fullFilename, FileMode.Open);
+                    animation.LoadFromStream(stream);
                 }
                 else
                 {
-                    if (fileName.SafeContainsInLower(SkiaImageManager.NativeFilePrefix))
-                    {
-                        var fullFilename = fileName.Replace(SkiaImageManager.NativeFilePrefix, "");
-                        using var stream = new FileStream(fullFilename, FileMode.Open);
-                        animation.LoadFromStream(stream);
-                    }
-                    else
-                    {
-                        using var stream = await FileSystem.OpenAppPackageFileAsync(fileName);
-                        using var reader = new StreamReader(stream);
-                        animation.LoadFromStream(stream);
-                    }
-
+                    using var stream = await OpenPackageFileStreamAsync(fileName);
+#if BROWSER
+                    using var bufferedStream = new MemoryStream();
+                    await stream.CopyToAsync(bufferedStream);
+                    bufferedStream.Position = 0;
+                    animation.LoadFromStream(bufferedStream);
+#else
+                    animation.LoadFromStream(stream);
+#endif
                 }
             }
 
@@ -332,7 +354,7 @@ public class SkiaGif : AnimatedFramesRenderer
         }
         catch (Exception e)
         {
-            Trace.WriteLine($"[SkiaLottie] LoadSource failed to load animation {fileName}");
+            Trace.WriteLine($"[SkiaGif] LoadSource failed to load animation {fileName}");
             Trace.WriteLine(e);
             return null;
         }
@@ -342,13 +364,11 @@ public class SkiaGif : AnimatedFramesRenderer
         }
     }
 
-
     public static readonly BindableProperty SourceProperty = BindableProperty.Create(nameof(Source),
         typeof(string),
         typeof(SkiaGif),
         string.Empty,
         propertyChanged: ApplySourceProperty);
-
 
     public string Source
     {
@@ -370,11 +390,9 @@ public class SkiaGif : AnimatedFramesRenderer
         }
     }
 
-
     public TransformAspect Aspect
     {
         get => (TransformAspect)GetValue(AspectProperty);
         set => SetValue(AspectProperty, value);
     }
-
 }

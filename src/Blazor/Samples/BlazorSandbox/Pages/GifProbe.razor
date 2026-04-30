@@ -1,0 +1,111 @@
+@page "/gif-probe"
+@using DrawnUi.Controls
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+@using DrawnUi
+
+<PageTitle>Gif Probe</PageTitle>
+
+<h1>Gif Probe</h1>
+
+<p id="gif-probe-description">Use this page to validate the shared SkiaGif browser port.</p>
+<p id="gif-local-status">@_gifStatus</p>
+
+<Canvas WidthRequest="420"
+        HeightRequest="560"
+        BackgroundColor="#EFF5F8"
+        Margin="0,16,0,32"
+        RootControl="@_rootControl" />
+
+@code {
+    private readonly SkiaControl _rootControl;
+    private string _gifStatus = "gif local: pending";
+
+    public GifProbe()
+    {
+        var gif = new SkiaGif()
+        {
+            WidthRequest = 280,
+            HeightRequest = 180,
+            HorizontalOptions = LayoutOptions.Center,
+            Aspect = TransformAspect.AspectFit,
+            AutoPlay = true,
+            Repeat = -1,
+            SpeedRatio = 0.8,
+            Source = "media/banana.gif"
+        };
+
+        gif.Success += (_, source) => SetGifStatus($"gif local: loaded {source}");
+        gif.Error += (_, exception) => SetGifStatus($"gif local: error {exception.Message}");
+
+        _rootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 388,
+            HeightRequest = 520,
+            Padding = new Thickness(20),
+            BackgroundColor = new Color(0.976f, 0.984f, 0.992f, 1f),
+            Type = LayoutType.Column,
+            Spacing = 16,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SkiaGif shared probe",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 28,
+                    TextColor = new Color(0.133f, 0.184f, 0.251f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                new SkiaLabel()
+                {
+                    Text = "Expected: the local banana gif animates inside the rounded card.",
+                    FontFamily = "FontText",
+                    FontSize = 15,
+                    TextColor = new Color(0.290f, 0.341f, 0.408f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                new SkiaShape()
+                {
+                    WidthRequest = 348,
+                    HeightRequest = 280,
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 22,
+                    BackgroundColor = Colors.White,
+                    StrokeColor = new Color(0.518f, 0.620f, 0.725f, 1f),
+                    StrokeWidth = 1,
+                    Padding = new Thickness(18),
+                    Children =
+                    {
+                        new SkiaLayout()
+                        {
+                            Type = LayoutType.Column,
+                            Spacing = 12,
+                            VerticalOptions = LayoutOptions.Fill,
+                            Children =
+                            {
+                                new SkiaLabel()
+                                {
+                                    Text = "Local gif via package-style source",
+                                    FontFamily = "FontTextTitle",
+                                    FontSize = 18,
+                                    TextColor = new Color(0.184f, 0.243f, 0.310f, 1f),
+                                    HorizontalOptions = LayoutOptions.Fill
+                                },
+                                gif
+                            }
+                        }
+                    }
+                }
+            }
+        };
+    }
+
+    private void SetGifStatus(string value)
+    {
+        _gifStatus = value;
+        Console.WriteLine($"[GifProbe] {value}");
+        _ = InvokeAsync(StateHasChanged);
+    }
+}

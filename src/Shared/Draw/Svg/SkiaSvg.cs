@@ -1,10 +1,11 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Runtime.Intrinsics.Arm;
 using System.Text;
+#if !BROWSER
 using DrawnUi.Features.Images;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Storage;
+#endif
 using Svg.Skia;
 
 namespace DrawnUi.Draw
@@ -25,9 +26,6 @@ namespace DrawnUi.Draw
 
         #region SHADOW
 
-        //-------------------------------------------------------------
-        // ShadowColor
-        //-------------------------------------------------------------
         private const string nameShadowColor = "ShadowColor";
 
         public static readonly BindableProperty ShadowColorProperty = BindableProperty.Create(nameShadowColor,
@@ -41,9 +39,6 @@ namespace DrawnUi.Draw
             set { SetValue(ShadowColorProperty, value); }
         }
 
-        //-------------------------------------------------------------
-        // ShadowX
-        //-------------------------------------------------------------
         private const string nameShadowX = "ShadowX";
 
         public static readonly BindableProperty ShadowXProperty = BindableProperty.Create(nameShadowX, typeof(double),
@@ -57,9 +52,6 @@ namespace DrawnUi.Draw
             set { SetValue(ShadowXProperty, value); }
         }
 
-        //-------------------------------------------------------------
-        // ShadowY
-        //-------------------------------------------------------------
         private const string nameShadowY = "ShadowY";
 
         public static readonly BindableProperty ShadowYProperty = BindableProperty.Create(nameShadowY, typeof(double),
@@ -73,9 +65,6 @@ namespace DrawnUi.Draw
             set { SetValue(ShadowYProperty, value); }
         }
 
-        //-------------------------------------------------------------
-        // ShadowBlur
-        //-------------------------------------------------------------
         private const string nameShadowBlur = "ShadowBlur";
 
         public static readonly BindableProperty ShadowBlurProperty = BindableProperty.Create(nameShadowBlur,
@@ -106,24 +95,16 @@ namespace DrawnUi.Draw
         {
             UseCache = SkiaCacheType.Operations;
 
-            _assembly = Application.Current?.GetType()?.Assembly; //(); //Assembly.GetExecutingAssembly();
-
-            if (_assembly == null)
-            {
-            }
-
-            _part1 = _assembly.GetName().Name + $".Resources.Images.";
+            _assembly = Assembly.GetCallingAssembly();
+            _part1 = _assembly?.GetName().Name + ".Resources.Images.";
         }
-
 
         protected static void NeedUpdateIcon(BindableObject bindable, object oldvalue, object newvalue)
         {
             var control = bindable as SkiaSvg;
+            if (control != null && !control.IsDisposed)
             {
-                if (control != null && !control.IsDisposed)
-                {
-                    control.UpdateIcon();
-                }
+                control.UpdateIcon();
             }
         }
 
@@ -166,7 +147,6 @@ namespace DrawnUi.Draw
             set { SetValue(FontAwesomeSecondaryColorProperty, value); }
         }
 
-
         public static readonly BindableProperty GradientBlendModeProperty = BindableProperty.Create(
             nameof(GradientBlendMode),
             typeof(SKBlendMode),
@@ -174,9 +154,6 @@ namespace DrawnUi.Draw
             SKBlendMode.SrcIn,
             propertyChanged: NeedDraw);
 
-        /// <summary>
-        /// When FIllGradient is set this will override its blend mode for drawing SVG with gradient
-        /// </summary>
         public SKBlendMode GradientBlendMode
         {
             get { return (SKBlendMode)GetValue(GradientBlendModeProperty); }
@@ -220,21 +197,6 @@ namespace DrawnUi.Draw
             get { return (string)GetValue(SvgStringProperty); }
             set { SetValue(SvgStringProperty, value); }
         }
-        /*
-        public static readonly BindableProperty SvgDataProperty = BindableProperty.Create(
-            nameof(SvgData),
-            typeof(string),
-            typeof(SkiaSvg),
-            string.Empty,
-            BindingMode.OneWay,
-            propertyChanged: NeedUpdateIcon);
-
-        public string SvgData
-        {
-            get { return (string)GetValue(SvgDataProperty); }
-            set { SetValue(SvgDataProperty, value); }
-        }
-        */
 
         public static readonly BindableProperty ZoomXProperty = BindableProperty.Create(
             nameof(ZoomX),
@@ -342,7 +304,6 @@ namespace DrawnUi.Draw
             set { SetValue(HasContentProperty, value); }
         }
 
-
         public static readonly BindableProperty IconFilePathProperty = BindableProperty.Create(
             nameof(IconFilePath),
             typeof(string),
@@ -357,25 +318,9 @@ namespace DrawnUi.Draw
             set => SetValue(IconFilePathProperty, value);
         }
 
-
-        //public static SKTypeface GetTypeface(string fullFontName)
-        //{
-        //    SKTypeface result;
-
-        //    var assembly = Assembly.GetExecutingAssembly();
-        //    var stream = assembly.GetManifestResourceStream("ClassLibrary1.Font." + fullFontName);
-        //    if (stream == null)
-        //        return null;
-
-        //    result = SKTypeface.FromStream(stream);
-        //    return result;
-        //}
-
         #endregion
 
-
         private string _loadedString;
-
         private readonly Assembly _assembly;
 
         protected string LoadedString
@@ -386,7 +331,6 @@ namespace DrawnUi.Draw
                 if (_loadedString != value)
                 {
                     _loadedString = value;
-
                     HasContent = !string.IsNullOrEmpty(value);
                 }
             }
@@ -407,20 +351,19 @@ namespace DrawnUi.Draw
             base.OnDisposing();
         }
 
-        /// <summary>
-        /// Protected SKSvg container
-        /// </summary>
         public SKSvg Svg { get; protected set; }
-
-        //protected SKMatrix DrawingMatrix;
 
         public new void Clear()
         {
             var svg = Svg;
             Svg = null;
             svg?.Dispose();
+        }
 
-            base.Clear();
+        private static string ToSvgHex(Color color)
+        {
+            var skColor = color.ToSKColor();
+            return $"#{skColor.Red:X2}{skColor.Green:X2}{skColor.Blue:X2}";
         }
 
         public void UpdateIcon()
@@ -438,38 +381,15 @@ namespace DrawnUi.Draw
             Update();
         }
 
-        //public static readonly BindableProperty IconStringProperty = BindableProperty.Create("IconString", typeof(string), typeof(SkiaSvg), null, BindingMode.OneWay, null, NeedUpdateIcon);
-        //public string IconString
-        //{
-        //    get
-        //    {
-        //        return (string)GetValue(IconStringProperty);
-        //    }
-        //    set
-        //    {
-        //        SetValue(IconStringProperty, value);
-        //    }
-        //}
-
-
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             base.OnPropertyChanged(propertyName);
-
 
             if (propertyName == nameof(FontAwesomePrimaryColor) ||
                 propertyName == nameof(FontAwesomeSecondaryColor))
             {
                 UpdateIcon();
             }
-
-
-            //else
-            //if (propertyName == "Height" || propertyName == "Width")
-            //{
-            //    AnchorX = Width / 2.0f;
-            //    AnchorY = Height / 2.0f;
-            //}
         }
 
         protected void UpdateImageFromString(string source)
@@ -480,15 +400,14 @@ namespace DrawnUi.Draw
                 return;
             }
 
-            //replace anything
             if (FontAwesomePrimaryColor != Colors.Black)
             {
-                source = source.Replace("class=\"fa-primary\"", $"fill=\"{FontAwesomePrimaryColor.ToHex()}\"");
+                source = source.Replace("class=\"fa-primary\"", $"fill=\"{ToSvgHex(FontAwesomePrimaryColor)}\"");
             }
 
             if (FontAwesomeSecondaryColor != Colors.Gray)
             {
-                source = source.Replace("class=\"fa-secondary\"", $"fill=\"{FontAwesomeSecondaryColor.ToHex()}\"");
+                source = source.Replace("class=\"fa-secondary\"", $"fill=\"{ToSvgHex(FontAwesomeSecondaryColor)}\"");
             }
 
             LoadedString = source;
@@ -504,7 +423,9 @@ namespace DrawnUi.Draw
                     control.Update();
                 }
                 else
+                {
                     Task.Run(async () => { await control.LoadSource(control.Source); });
+                }
             }
         }
 
@@ -522,12 +443,19 @@ namespace DrawnUi.Draw
 
         private SemaphoreSlim _semaphoreLoadFile = new(1, 1);
 
+        private async Task<Stream> OpenPackageFileStreamAsync(string fileName)
+        {
+#if BROWSER
+            var httpClient = Super.Services?.GetService<HttpClient>();
+            if (httpClient == null)
+                throw new InvalidOperationException("[SkiaSvg] HttpClient service was not found.");
 
-        /// <summary>
-        /// This is not replacing current animation, use SetAnimation for that.
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
+            return await httpClient.GetStreamAsync(fileName);
+#else
+            return await FileSystem.OpenAppPackageFileAsync(fileName);
+#endif
+        }
+
         public virtual async Task LoadSource(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
@@ -538,16 +466,21 @@ namespace DrawnUi.Draw
             try
             {
                 string json;
-                if (Uri.TryCreate(fileName, UriKind.Absolute, out var uri))
+                if (Uri.TryCreate(fileName, UriKind.Absolute, out var uri) && uri.Scheme != "file")
                 {
-                    using HttpClient client = Super.Services.CreateHttpClient();
+                    using HttpClient client =
+#if BROWSER
+                        Super.Services?.GetService<HttpClient>() ?? throw new InvalidOperationException("[SkiaSvg] HttpClient service was not found.");
+#else
+                        Super.Services.CreateHttpClient();
+#endif
                     using var stream = await client.GetStreamAsync(uri);
                     using var reader = new StreamReader(stream);
                     json = await reader.ReadToEndAsync();
                 }
                 else
                 {
-                    using var stream = await FileSystem.OpenAppPackageFileAsync(fileName);
+                    using var stream = await OpenPackageFileStreamAsync(fileName);
                     using var reader = new StreamReader(stream);
                     json = await reader.ReadToEndAsync();
                 }
@@ -569,14 +502,7 @@ namespace DrawnUi.Draw
             }
         }
 
-        /// <summary>
-        /// Happens when loaded fine from `Source`. Will pass source as string.
-        /// </summary>
         public event EventHandler<string> Success;
-
-        /// <summary>
-        /// Happens when loaded with error from `Source`. Will pass exception.
-        /// </summary>
         public event EventHandler<Exception> Error;
 
         public static SKRect CalculateDisplayRect(SKRect dest, float bmpWidth, float bmpHeight,
@@ -590,10 +516,8 @@ namespace DrawnUi.Draw
                 case DrawImageAlignment.Center:
                     x = (dest.Width - bmpWidth) / 2.0f;
                     break;
-
                 case DrawImageAlignment.Start:
                     break;
-
                 case DrawImageAlignment.End:
                     x = dest.Width - bmpWidth;
                     break;
@@ -604,10 +528,8 @@ namespace DrawnUi.Draw
                 case DrawImageAlignment.Center:
                     y = (dest.Height - bmpHeight) / 2.0f;
                     break;
-
                 case DrawImageAlignment.Start:
                     break;
-
                 case DrawImageAlignment.End:
                     y = dest.Height - bmpHeight;
                     break;
@@ -633,18 +555,11 @@ namespace DrawnUi.Draw
             var scaleX = scaled.X * (float)ZoomX;
             var scaleY = scaled.Y * (float)ZoomY;
 
-            //MaxWidth = PixelsToDeviceUnits(scaleX * bitmap.Width);
-
             SKRect display = CalculateDisplayRect(dest, scaleX * pxWidth, scaleY * pxHeight,
                 horizontal, vertical);
 
-            //if (this.BlurAmount > 0)
             display.Inflate(new SKSize((float)InflateAmount, (float)InflateAmount));
 
-            //using matrix
-            //display.Offset(SkiaControl.DeviceUnitsToPixels(HorizontalOffset), SkiaControl.DeviceUnitsToPixels(VerticalOffset));
-
-            //todo apply clipping here
             if (WillClipBounds || Clipping != null)
             {
                 using (SKPath path = new SKPath())
@@ -663,13 +578,6 @@ namespace DrawnUi.Draw
                         path.Close();
                     }
 
-                    //var ShadowSize = 2 * scale;
-                    //var ShadowBlurAmount = 5 * scale;
-                    //var ColorShadow = Colors.FromHex("#cccccc");
-
-                    //paint.IsAntialias = true;
-                    //paint.ImageFilter = SKImageFilter.CreateDropShadowOnly(0, (float)ShadowSize, 0, (float)ShadowBlurAmount,
-                    //    ColorShadow.ToSKColor());
                     canvas.DrawPath(path, paint);
 
                     paint.ImageFilter = null;
@@ -689,10 +597,6 @@ namespace DrawnUi.Draw
             }
         }
 
-
-        //-------------------------------------------------------------
-        // Zoom
-        //-------------------------------------------------------------
         private const string nameZoom = "Zoom";
 
         public static readonly BindableProperty ZoomProperty = BindableProperty.Create(nameZoom, typeof(double),
@@ -705,11 +609,6 @@ namespace DrawnUi.Draw
             set { SetValue(ZoomProperty, value); }
         }
 
-        /// <summary>
-        /// Directly loads svg from bytes array into container
-        /// </summary>
-        /// <param name="byteArray"></param>
-        /// <returns></returns>
         public virtual bool LoadSvgFromBytes(byte[] byteArray)
         {
             using (Stream stream = new MemoryStream(byteArray))
@@ -734,27 +633,18 @@ namespace DrawnUi.Draw
             }
         }
 
-        /// <summary>
-        /// Loads svg into container from string. For public access use SvgString property instead.
-        /// </summary>
-        /// <param name="loadedString"></param>
-        /// <returns></returns>
         protected virtual bool CreateSvg(string loadedString)
         {
             byte[] byteArray = Encoding.ASCII.GetBytes(loadedString);
             return LoadSvgFromBytes(byteArray);
         }
 
-
         SKMatrix CreateSvgMatrix(SKRect destination, double scale)
         {
-            #region Layout
-
             SKRect contentSize = Svg.Picture.CullRect;
-            float scaledContentWidth = (float)(contentSize.Width); // * Density);
-            float scaledContentHeight = (float)(contentSize.Height); // * Density);
+            float scaledContentWidth = (float)(contentSize.Width);
+            float scaledContentHeight = (float)(contentSize.Height);
 
-            //multipliers to reduce
             float xRatio = destination.Width / scaledContentWidth;
             float yRatio = destination.Height / scaledContentHeight;
 
@@ -765,7 +655,6 @@ namespace DrawnUi.Draw
 
             if (Aspect == TransformAspect.Fill)
             {
-                //multipliers to enlarge
                 if (destination.Width > scaledContentWidth && aspectX < 1)
                 {
                     aspectX = 1 + (1 - aspectX);
@@ -776,7 +665,6 @@ namespace DrawnUi.Draw
                     aspectY = 1 + (1 - aspectY);
                 }
 
-                //todo can add property ResizeAnchor, actually its Center
                 adjustX = (destination.Width - scaledContentWidth * aspectX) / 2.0f;
                 adjustY = (destination.Height - scaledContentHeight * aspectY) / 2.0f;
             }
@@ -807,19 +695,18 @@ namespace DrawnUi.Draw
                 adjustX = (destination.Width - scaledContentWidth * aspectX) / 2.0f;
                 adjustY = (destination.Height - scaledContentHeight * aspectY) / 2.0f;
             }
-            else //FIT
+            else
             {
-                //keep aspect
                 var aspectFit = Math.Min(xRatio / ZoomX, yRatio / ZoomY);
 
                 var aspectFitX = (float)(aspectFit * ZoomX * Zoom);
                 var aspectFitY = (float)(aspectFit * ZoomY * Zoom);
 
-                if (yRatio == aspectFit) // was fit for by height, need to center x
+                if (yRatio == aspectFit)
                 {
                     adjustX = (destination.Width - scaledContentWidth * aspectFitX) / 2.0f;
                 }
-                else // was fit for by width, need to center y
+                else
                 {
                     adjustY = (destination.Height - scaledContentHeight * aspectFitY) / 2.0f;
                 }
@@ -842,8 +729,6 @@ namespace DrawnUi.Draw
             };
 
             return matrix;
-
-            #endregion
         }
 
         protected override void Paint(DrawingContext ctx)
@@ -853,7 +738,6 @@ namespace DrawnUi.Draw
                 var scale = ctx.Scale;
                 var area = ContractPixelsRect(ctx.Destination, ctx.Scale, UsePadding);
 
-                //actually Skia.Svg cant render well with subpixel so...
                 area = new SKRect((float)Math.Round(area.Left), (float)Math.Round(area.Top),
                     (float)Math.Round(area.Right), (float)Math.Round(area.Bottom));
 
@@ -865,8 +749,7 @@ namespace DrawnUi.Draw
 
                 SKPath clipPath = null;
 
-                if (TintColor != Colors.Transparent
-                    && FillGradient == null)
+                if (TintColor != Colors.Transparent && FillGradient == null)
                 {
                     base.Paint(ctx);
 
@@ -876,8 +759,7 @@ namespace DrawnUi.Draw
                         DisposeObject(kill1);
 
                     AddShadow(RenderingPaint, scale);
-                    RenderingPaint.ColorFilter =
-                        SKColorFilter.CreateBlendMode(TintColor.ToSKColor(), SKBlendMode.SrcIn);
+                    RenderingPaint.ColorFilter = SKColorFilter.CreateBlendMode(TintColor.ToSKColor(), SKBlendMode.SrcIn);
 
                     ctx.Context.Canvas.DrawPicture(Svg.Picture, ref matrix, RenderingPaint);
                 }
@@ -898,8 +780,7 @@ namespace DrawnUi.Draw
                     intermediateCanvas.Clear(SKColors.Transparent);
 
                     var adjustedMatrix = matrix;
-                    adjustedMatrix =
-                        adjustedMatrix.PostConcat(SKMatrix.CreateTranslation(-destination.Left, -destination.Top));
+                    adjustedMatrix = adjustedMatrix.PostConcat(SKMatrix.CreateTranslation(-destination.Left, -destination.Top));
 
                     intermediateCanvas.DrawPicture(Svg.Picture, ref adjustedMatrix);
 
@@ -907,8 +788,7 @@ namespace DrawnUi.Draw
                     SetupGradient(RenderingPaint, FillGradient, rect);
                     RenderingPaint.BlendMode = GradientBlendMode;
 
-                    intermediateCanvas.DrawRect(new SKRect(0, 0, destination.Width, destination.Height),
-                        RenderingPaint);
+                    intermediateCanvas.DrawRect(new SKRect(0, 0, destination.Width, destination.Height), RenderingPaint);
 
                     var kill = RenderingPaint.Shader;
                     RenderingPaint.Shader = null;
@@ -917,8 +797,7 @@ namespace DrawnUi.Draw
                     RenderingPaint.BlendMode = this.FillBlendMode;
 
                     AddShadow(RenderingPaint, scale);
-                    ctx.Context.Canvas.DrawSurface(intermediateSurface, new(destination.Left, destination.Top),
-                        RenderingPaint);
+                    ctx.Context.Canvas.DrawSurface(intermediateSurface, new(destination.Left, destination.Top), RenderingPaint);
                 }
                 else
                 {
@@ -933,7 +812,6 @@ namespace DrawnUi.Draw
                     if (kill2 != null)
                         DisposeObject(kill2);
 
-                    //drop shadow
                     AddShadow(RenderingPaint, scale);
 
                     if (Clipping != null)

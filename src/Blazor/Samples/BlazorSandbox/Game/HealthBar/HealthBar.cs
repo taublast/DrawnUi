@@ -7,108 +7,80 @@ namespace SpaceShooter.Game;
 
 public partial class HealthBar : SkiaShape
 {
+    private SignalInverter Inverter;
+    private SkiaGradient _inverterGradient;
+
     public HealthBar()
     {
         var ThisControlBar = this;
 
         StrokeColor = Colors.Black;
         Tag = "Health";
-        BackgroundColor = "#000066".ToColor();
+        BackgroundColor = Color.FromHex("#000066");
         StrokeWidth = 0.5;
         CornerRadius = 3;
         HeightRequest = 6;
         HorizontalOptions = LayoutOptions.Fill;
-        
+
         IgnoreChildrenInvalidations = true;
+
+        FillGradient = new SkiaGradient()
+        {
+            Type = GradientType.Linear,
+            StartXRatio = 0, StartYRatio = 0, EndXRatio = 1, EndYRatio = 0,
+            Opacity = 0.60,
+            Colors = new List<Color>
+            {
+                Color.FromHex("#ee281D"),
+                Color.FromHex("#F0E70B"),
+                Color.FromHex("#65FF10"),
+                Color.FromHex("#65FF10"),
+            },
+            ColorPositions = new List<double> { 0.0, 0.3, 0.4, 1.0 },
+        };
+
+        StrokeGradient = new SkiaGradient()
+        {
+            Type = GradientType.Linear,
+            StartXRatio = 0.2, StartYRatio = 0.2, EndXRatio = 0.2, EndYRatio = 0.8,
+            Colors = new List<Color>
+            {
+                Color.FromHex("#000022"),
+                Color.FromHex("#42464B"),
+            },
+        };
+
+        _inverterGradient = new SkiaGradient()
+        {
+            Type = GradientType.Linear,
+            StartXRatio = 0, StartYRatio = 0, EndXRatio = 1, EndYRatio = 0,
+            Opacity = 1,
+            Colors = new List<Color>
+            {
+                Color.FromHex("#00000022"),
+                Color.FromHex("#000022"),
+                Color.FromHex("#000022"),
+            },
+        };
 
         Children = new List<SkiaControl>()
         {
-            /*
- 
-       <draw:SkiaShape.FillGradient>
-   
-           <draw:SkiaGradient
-               EndXRatio="1"
-               EndYRatio="0"
-               Opacity="0.60"
-               StartXRatio="0"
-               StartYRatio="0"
-               Type="Linear">
-   
-               <draw:SkiaGradient.Colors>
-                   <Color>#ee281D</Color>
-                   <Color>#F0E70B</Color>
-                   <Color>#65FF10</Color>
-                   <Color>#65FF10</Color>
-               </draw:SkiaGradient.Colors>
-   
-               <draw:SkiaGradient.ColorPositions>
-                   <x:Double>0.0</x:Double>
-                   <x:Double>0.3</x:Double>
-                   <x:Double>0.4</x:Double>
-                   <x:Double>1.0</x:Double>
-               </draw:SkiaGradient.ColorPositions>
-   
-           </draw:SkiaGradient>
-   
-       </draw:SkiaShape.FillGradient>
-   
-       <draw:SkiaShape.StrokeGradient>
-   
-           <draw:SkiaGradient
-               EndXRatio="0.2"
-               EndYRatio="0.8"
-               StartXRatio="0.2"
-               StartYRatio="0.2"
-               Type="Linear">
-               <draw:SkiaGradient.Colors>
-                   <Color>#000022</Color>
-                   <Color>#42464B</Color>
-               </draw:SkiaGradient.Colors>
-           </draw:SkiaGradient>
-   
-       </draw:SkiaShape.StrokeGradient>
-   
-       <!--  INVERTED PLUS <=  -->
-       <!--
-           "{Binding Source={x:Reference ThisControlBar},
-           Path=Value}"
-           ColorPositions="{Binding Source={x:Reference ThisControlBar}, Path=Points}"
-       -->
-       <spaceShooter:SignalInverter
-           x:Name="Inverter"
-           BackgroundColor="Black"
-           HorizontalOptions="End"
-           VerticalOptions="Fill"
-           ZIndex="100">
-   
-           <draw:SkiaControl.FillGradient>
-               <draw:SkiaGradient
-                   ColorPositions="{Binding Source={x:Reference Inverter}, Path=Points}"
-                   EndXRatio="1"
-                   EndYRatio="0"
-                   Opacity="1"
-                   StartXRatio="0"
-                   StartYRatio="0"
-                   Type="Linear">
-                   <draw:SkiaGradient.Colors>
-                       <Color>#00000022</Color>
-                       <Color>#000022</Color>
-                       <Color>#000022</Color>
-                   </draw:SkiaGradient.Colors>
-   
-                   <!--<draw:SkiaGradient.ColorPositions>
-                               <x:Double>0.0</x:Double>
-                               <x:Double>0.05</x:Double>
-                               <x:Double>1.0</x:Double>
-                           </draw:SkiaGradient.ColorPositions>-->
-   
-               </draw:SkiaGradient>
-           </draw:SkiaControl.FillGradient>
-   
-       </spaceShooter:SignalInverter>
- 
- */
+            new SignalInverter()
+            {
+                BackgroundColor = Colors.Black,
+                HorizontalOptions = LayoutOptions.End,
+                VerticalOptions = LayoutOptions.Fill,
+                ZIndex = 100,
+                FillGradient = _inverterGradient,
+            }.Assign(out Inverter),
+        };
+
+        Inverter.PropertyChanged += (s, e) =>
+        {
+            if (e.PropertyName == nameof(SignalInverter.Points))
+            {
+                _inverterGradient.ColorPositions = Inverter.Points;
+            }
         };
     }
 
@@ -156,23 +128,23 @@ public partial class HealthBar : SkiaShape
         new ()
         {
             Base = 0.25
-        },  
+        },
         //3
         new ()
         {
             Base = 0.5
-        },  
+        },
         //4
         new ()
         {
             Base = 0.95
         },
         //5
-		new ()
+        new ()
         {
             Stick = 0.05,
             Base = 1.0
-        },  
+        },
         //6
         new ()
         {
@@ -241,7 +213,4 @@ public partial class HealthBar : SkiaShape
         get { return (double)GetValue(ValueProperty); }
         set { SetValue(ValueProperty, value); }
     }
-
-
-
 }

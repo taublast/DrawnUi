@@ -24,6 +24,7 @@
         <PackageReference Include="HarfBuzzSharp.NativeAssets.WebAssembly" Version="8.3.1.6-preview.1.1" />
 
       <PackageReference Include="SkiaSharp.HarfBuzz" Version="4.147.0-preview.1.1" />
+      <PackageReference Include="Svg.Skia" Version="3.0.3" />
     
       <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.7" />
 
