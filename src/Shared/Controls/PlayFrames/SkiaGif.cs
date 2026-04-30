@@ -307,13 +307,13 @@ public class SkiaGif : AnimatedFramesRenderer
             GifAnimation animation = new();
             if (Uri.TryCreate(fileName, UriKind.Absolute, out var uri) && uri.Scheme != "file")
             {
-                using HttpClient client =
 #if BROWSER
-                    Super.Services?.GetService<HttpClient>() ?? throw new InvalidOperationException("[SkiaGif] HttpClient service was not found.");
+                var httpClient = Super.Services?.GetService<HttpClient>() ?? throw new InvalidOperationException("[SkiaGif] HttpClient service was not found.");
+                using var dataStream = await httpClient.GetStreamAsync(uri);
 #else
-                    Super.Services.CreateHttpClient();
-#endif
+                using HttpClient client = Super.Services.CreateHttpClient();
                 using var dataStream = await client.GetStreamAsync(uri);
+#endif
 #if BROWSER
                 using var bufferedStream = new MemoryStream();
                 await dataStream.CopyToAsync(bufferedStream);

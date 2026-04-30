@@ -468,13 +468,13 @@ namespace DrawnUi.Draw
                 string json;
                 if (Uri.TryCreate(fileName, UriKind.Absolute, out var uri) && uri.Scheme != "file")
                 {
-                    using HttpClient client =
 #if BROWSER
-                        Super.Services?.GetService<HttpClient>() ?? throw new InvalidOperationException("[SkiaSvg] HttpClient service was not found.");
+                    var httpClient = Super.Services?.GetService<HttpClient>() ?? throw new InvalidOperationException("[SkiaSvg] HttpClient service was not found.");
+                    using var stream = await httpClient.GetStreamAsync(uri);
 #else
-                        Super.Services.CreateHttpClient();
-#endif
+                    using HttpClient client = Super.Services.CreateHttpClient();
                     using var stream = await client.GetStreamAsync(uri);
+#endif
                     using var reader = new StreamReader(stream);
                     json = await reader.ReadToEndAsync();
                 }
