@@ -1,0 +1,739 @@
+@page "/skmesh-parallax-probe"
+@using DrawnUi.Draw
+@using DrawnUi.Controls
+@using DrawnUi.Views
+@using DrawnUi
+@using SkiaSharp
+@using System.Runtime.InteropServices
+@inject HttpClient Http
+
+<PageTitle>SKMesh Parallax Probe</PageTitle>
+
+<h1>SKMesh Parallax Probe</h1>
+
+<p id="skmesh-parallax-description"><b>Cold Corridors layered parallax rendered as textured SKMesh strips on the accelerated Blazor canvas.</b></p>
+
+<Canvas HorizontalOptions="@LayoutOptions.Fill"
+    MaxWidthRequest="980"
+    HeightRequest="520"
+    BackgroundColor="#060A12"
+    Margin="0,16,0,32"
+    RenderingMode="@RenderingModeType.Accelerated"
+    RootControl="@RootControl" />
+
+@code {
+    private const float SceneHeight = 239f;
+    private const float LayerHeight = 224f;
+    private const float LayerBottomInset = SceneHeight - LayerHeight;
+    private const float NearTextureWidth = 224f;
+    private const float NearRepeatWidth = 896f;
+    private const float NearScrollSpeed = 0.060f;
+    private const float NearDepth = 0.72f;
+    private const float EnvironmentScale = 430f / SceneHeight;
+
+    private readonly SkiaLayout RootControl;
+    private readonly SkiaLayer _stage;
+    private readonly ParallaxMeshControl _back;
+    private readonly ParallaxMeshControl _far;
+    private readonly ParallaxMeshControl _middle;
+    private readonly ParallaxMeshControl _near;
+    private readonly ParallaxMeshControl _foreground;
+    private readonly BackRunwayStripControl _backRunway;
+    private readonly TilesetStripControl _tileset;
+    private readonly SkiaLayer _nearTorches;
+    private readonly SkiaSprite _heroine;
+    private readonly ParallaxSceneState _sceneState;
+    private SkiaLabel _statusLabel = null!;
+
+    public SkMeshParallaxProbe()
+    {
+        _sceneState = new ParallaxSceneState();
+
+        _back = new ParallaxMeshControl(SetStatus, _sceneState, new[] { "back" }, drivesAnimation: true, drawBackdrop: true, drawHud: false)
+        {
+            BackgroundColor = Colors.Black,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Start,
+            HeightRequest = 430,
+            ZIndex = 1,
+        };
+
+        _far = new ParallaxMeshControl(SetStatus, _sceneState, new[] { "far" }, drivesAnimation: false, drawBackdrop: false, drawHud: false)
+        {
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Start,
+            HeightRequest = 430,
+            ZIndex = 3,
+        };
+
+        _middle = new ParallaxMeshControl(SetStatus, _sceneState, new[] { "middle" }, drivesAnimation: false, drawBackdrop: false, drawHud: false)
+        {
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Start,
+            HeightRequest = 430,
+            ZIndex = 4,
+        };
+
+        _near = new ParallaxMeshControl(SetStatus, _sceneState, new[] { "near" }, drivesAnimation: false, drawBackdrop: false, drawHud: false)
+        {
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Start,
+            HeightRequest = 430,
+            ZIndex = 5,
+        };
+
+        _foreground = new ParallaxMeshControl(SetStatus, _sceneState, new[] { "foreground" }, drivesAnimation: false, drawBackdrop: false, drawHud: false)
+        {
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Start,
+            HeightRequest = 430,
+            ZIndex = 9,
+        };
+
+        _tileset = new TilesetStripControl(_sceneState)
+        {
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Start,
+            HeightRequest = 430,
+            ZIndex = 7,
+        };
+
+        _backRunway = new BackRunwayStripControl(_sceneState)
+        {
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Start,
+            HeightRequest = 430,
+            ZIndex = 2,
+        };
+
+        _heroine = new SkiaSprite
+        {
+            UseCache = SkiaCacheType.GPU,
+            AutoPlay = true,
+            Repeat = -1,
+            FramesPerSecond = 12,
+            Columns = 7,
+            Rows = 1,
+            WidthRequest = 233.28,
+            HeightRequest = 233.28,
+            HorizontalOptions = LayoutOptions.Start,
+            VerticalOptions = LayoutOptions.Start,
+            TranslationX = 271.36,
+            TranslationY = 173.92,
+            ZIndex = 8,
+        };
+        _heroine.Source = "media/gothicvania/heroine-run.png";
+
+        _nearTorches = new SkiaLayer
+        {
+            HeightRequest = 430,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Start,
+            ZIndex = 6,
+            TranslationY = 430f - (SceneHeight * EnvironmentScale),
+            Children =
+            {
+                CreateTorch(143f - NearRepeatWidth, 112f, 14),
+                CreateTorch(369f - NearRepeatWidth, 111f, 14),
+                CreateTorch(591f - NearRepeatWidth, 112f, 14),
+                CreateTorch(817f - NearRepeatWidth, 110f, 14),
+                CreateTorch(143f, 112f, 14),
+                CreateTorch(369f, 111f, 14),
+                CreateTorch(591f, 112f, 14),
+                CreateTorch(817f, 110f, 14),
+                CreateTorch(143f + NearRepeatWidth, 112f, 14),
+                CreateTorch(369f + NearRepeatWidth, 111f, 14),
+                CreateTorch(591f + NearRepeatWidth, 112f, 14),
+                CreateTorch(817f + NearRepeatWidth, 110f, 14),
+            }
+        };
+
+        _sceneState.Changed += HandleSceneStateChanged;
+
+        _stage = new SkiaLayer
+        {
+            HeightRequest = 430,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Start,
+            Children =
+            {
+                _back,
+                _backRunway,
+                _far,
+                _middle,
+                _near,
+                _nearTorches,
+                _tileset,
+                _heroine,
+                _foreground,
+                new SkiaLabel()
+                {
+                    UseCache = SkiaCacheType.Image,
+                    Text = "status: loading layers",
+                    FontSize = 13,
+                    TextColor = Color.FromHex("#FFD166"),
+                    HorizontalOptions = LayoutOptions.Start,
+                    VerticalOptions = LayoutOptions.Start,
+                    TranslationX = 14,
+                    TranslationY = 12,
+                    ZIndex = 40,
+                }.Assign(out _statusLabel),
+            }
+        };
+
+        RootControl = new SkiaLayout()
+        {
+            WidthRequest = -1,
+            HeightRequest = 520,
+            MaximumWidthRequest = 980,
+            Padding = new Thickness(20),
+            Type = LayoutType.Column,
+            Spacing = 14,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            Children =
+            {
+                new SkiaStack()
+                {
+                    UseCache = SkiaCacheType.Image,
+                    Type = LayoutType.Column,
+                    Spacing = 8,
+                    Children =
+                    {
+                        new SkiaLabel()
+                        {
+                            Text = "SKMesh parallax scroller",
+                            FontSize = 24,
+                            FontAttributes = FontAttributes.Bold,
+                            TextColor = Colors.White,
+                            HorizontalOptions = LayoutOptions.Fill,
+                        },
+                    }
+                },
+                _stage,
+            }
+        };
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await _back.LoadAsync(Http);
+            await _far.LoadAsync(Http);
+            await _middle.LoadAsync(Http);
+            await _near.LoadAsync(Http);
+            await _foreground.LoadAsync(Http);
+            await _backRunway.LoadAsync(Http);
+            await _tileset.LoadAsync(Http);
+        }
+        catch (Exception ex)
+        {
+            SetStatus("load FAIL: " + ex.Message);
+        }
+    }
+
+    private void SetStatus(string message)
+    {
+        Console.WriteLine("[SkMeshParallaxProbe] " + message);
+
+        if (_statusLabel != null)
+        {
+            _statusLabel.Text = message;
+            _statusLabel.Update();
+
+            if (message.StartsWith("parallax OK", StringComparison.Ordinal))
+            {
+                _statusLabel.Opacity = 0;
+                _statusLabel.Update();
+            }
+        }
+    }
+
+    private void HandleSceneStateChanged()
+    {
+        var shift = (float)_sceneState.Phase * NearScrollSpeed * NearTextureWidth * EnvironmentScale;
+        _nearTorches.TranslationX = -shift;
+        _nearTorches.Update();
+    }
+
+    private static SkiaSprite CreateTorch(float x, float y, int zIndex)
+    {
+        var size = 32 * EnvironmentScale;
+        var torch = new SkiaSprite
+        {
+            UseCache = SkiaCacheType.Image,
+            AutoPlay = true,
+            Repeat = -1,
+            FramesPerSecond = 5,
+            Columns = 4,
+            Rows = 1,
+            WidthRequest = size,
+            HeightRequest = size,
+            HorizontalOptions = LayoutOptions.Start,
+            VerticalOptions = LayoutOptions.Start,
+            TranslationX = (x * EnvironmentScale) - (size * 0.5f),
+            TranslationY = (y * EnvironmentScale) - (size * 0.5f),
+            ZIndex = zIndex,
+        };
+        torch.Source = "media/cold-corridors/torch-sheet.png";
+        return torch;
+    }
+
+    private sealed class ParallaxSceneState
+    {
+        public event Action? Changed;
+
+        public double Phase { get; private set; }
+
+        public void SetPhase(double phase)
+        {
+            Phase = phase;
+            Changed?.Invoke();
+        }
+    }
+
+    private sealed class TilesetStripControl : SkiaControl
+    {
+        private readonly ParallaxSceneState _sceneState;
+        private SKBitmap? _tilesetBitmap;
+        private SKImage? _tilesetImage;
+        private static readonly SKSamplingOptions PixelSampling = new(SKFilterMode.Nearest, SKMipmapMode.None);
+
+        public TilesetStripControl(ParallaxSceneState sceneState)
+        {
+            _sceneState = sceneState;
+            _sceneState.Changed += HandleSceneChanged;
+        }
+
+        public async Task LoadAsync(HttpClient http)
+        {
+            if (_tilesetImage != null)
+                return;
+
+            var tilesetBytes = await http.GetByteArrayAsync("media/cold-corridors/tileset.png");
+            _tilesetBitmap = SKBitmap.Decode(tilesetBytes) ?? throw new InvalidOperationException("decode failed: media/cold-corridors/tileset.png");
+            _tilesetImage = SKImage.FromBitmap(_tilesetBitmap);
+            Update();
+        }
+
+        public override void OnDisposing()
+        {
+            _sceneState.Changed -= HandleSceneChanged;
+            _tilesetImage?.Dispose();
+            _tilesetImage = null;
+            _tilesetBitmap?.Dispose();
+            _tilesetBitmap = null;
+            base.OnDisposing();
+        }
+
+        protected override void Paint(DrawingContext ctx)
+        {
+            base.Paint(ctx);
+
+            if (_tilesetImage == null || _tilesetBitmap == null)
+                return;
+
+            var dest = ctx.Destination;
+            var sceneTop = dest.Bottom - (SceneHeight * EnvironmentScale);
+            var stripTop = sceneTop + (197f * EnvironmentScale);
+            var stripBottom = sceneTop + (239f * EnvironmentScale);
+            var tileWidth = _tilesetBitmap.Width * EnvironmentScale;
+            var scroll = (float)_sceneState.Phase * EnvironmentScale;
+            var offset = scroll % tileWidth;
+            using var paint = new SKPaint
+            {
+                IsAntialias = false,
+                Color = SKColors.White,
+            };
+
+            for (var x = dest.Left - offset - tileWidth; x < dest.Right + tileWidth; x += tileWidth)
+            {
+                ctx.Context.Canvas.DrawImage(_tilesetImage, new SKRect(x, stripTop, x + tileWidth, stripBottom), PixelSampling, paint);
+            }
+        }
+
+        private void HandleSceneChanged()
+        {
+            Update();
+        }
+    }
+
+    private sealed class BackRunwayStripControl : SkiaControl
+    {
+        private readonly ParallaxSceneState _sceneState;
+        private SKBitmap? _backBitmap;
+        private SKImage? _backImage;
+        private static readonly SKSamplingOptions PixelSampling = new(SKFilterMode.Nearest, SKMipmapMode.None);
+
+        public BackRunwayStripControl(ParallaxSceneState sceneState)
+        {
+            _sceneState = sceneState;
+            _sceneState.Changed += HandleSceneChanged;
+        }
+
+        public async Task LoadAsync(HttpClient http)
+        {
+            if (_backImage != null)
+                return;
+
+            var bytes = await http.GetByteArrayAsync("media/cold-corridors/back.png");
+            _backBitmap = SKBitmap.Decode(bytes) ?? throw new InvalidOperationException("decode failed: media/cold-corridors/back.png");
+            _backImage = SKImage.FromBitmap(_backBitmap);
+            Update();
+        }
+
+        public override void OnDisposing()
+        {
+            _sceneState.Changed -= HandleSceneChanged;
+            _backImage?.Dispose();
+            _backImage = null;
+            _backBitmap?.Dispose();
+            _backBitmap = null;
+            base.OnDisposing();
+        }
+
+        protected override void Paint(DrawingContext ctx)
+        {
+            base.Paint(ctx);
+
+            if (_backImage == null || _backBitmap == null)
+                return;
+
+            const float sourceTop = 158f;
+            const float sourceBottom = 214f;
+            var dest = ctx.Destination;
+            var sceneTop = dest.Bottom - (SceneHeight * EnvironmentScale);
+            var runwayTop = sceneTop + (sourceTop * EnvironmentScale);
+            var runwayBottom = sceneTop + (sourceBottom * EnvironmentScale);
+            var source = new SKRect(0f, sourceTop, _backBitmap.Width, sourceBottom);
+            var tileWidth = source.Width * EnvironmentScale;
+            var scroll = (float)(_sceneState.Phase * 0.3f * EnvironmentScale);
+            var offset = scroll % tileWidth;
+            using var paint = new SKPaint
+            {
+                IsAntialias = false,
+                Color = SKColors.White,
+            };
+
+            for (var x = dest.Left - offset - tileWidth; x < dest.Right + tileWidth; x += tileWidth)
+            {
+                ctx.Context.Canvas.DrawImage(_backImage, source, new SKRect(x, runwayTop, x + tileWidth, runwayBottom), PixelSampling, paint);
+            }
+        }
+
+        private void HandleSceneChanged()
+        {
+            Update();
+        }
+    }
+
+    private sealed class ParallaxMeshControl : SkiaControl
+    {
+        private readonly Action<string> _setStatus;
+        private readonly ParallaxSceneState _sceneState;
+        private readonly HashSet<string> _textureNames;
+        private readonly bool _drivesAnimation;
+        private readonly bool _drawBackdrop;
+        private readonly bool _drawHud;
+        private readonly List<ParallaxLayer> _layers = new();
+        private PerpetualPendulumAnimator? _animator;
+        private SKMeshSpecification? _spec;
+        private bool _reportedReady;
+        private static readonly SKSamplingOptions PixelSampling = new(SKFilterMode.Nearest, SKMipmapMode.None);
+
+        private const int Columns = 28;
+
+        public ParallaxMeshControl(Action<string> setStatus, ParallaxSceneState sceneState, IEnumerable<string> textureNames, bool drivesAnimation, bool drawBackdrop, bool drawHud)
+        {
+            _setStatus = setStatus;
+            _sceneState = sceneState;
+            _textureNames = new HashSet<string>(textureNames, StringComparer.Ordinal);
+            _drivesAnimation = drivesAnimation;
+            _drawBackdrop = drawBackdrop;
+            _drawHud = drawHud;
+            _sceneState.Changed += HandleSceneChanged;
+        }
+
+        public async Task LoadAsync(HttpClient http)
+        {
+            if (_layers.Count > 0)
+                return;
+
+            var configs = new[]
+            {
+                new LayerConfig("back",       "media/cold-corridors/back.png",       0.018f, 320f, 0.12f),
+                new LayerConfig("far",        "media/cold-corridors/far.png",        0.026f, 400f, 0.24f),
+                new LayerConfig("middle",     "media/cold-corridors/middle.png",     0.040f, 800f, 0.46f),
+                new LayerConfig("near",       "media/cold-corridors/near.png",       0.060f, 896f, 0.72f),
+                new LayerConfig("foreground", "media/cold-corridors/foreground.png", 0.078f, 1344f, 1.00f),
+            };
+
+            foreach (var config in configs.Where(ShouldRenderLayer))
+            {
+                var bytes = await http.GetByteArrayAsync(config.Path);
+                var bitmap = SKBitmap.Decode(bytes) ?? throw new InvalidOperationException($"decode failed: {config.Path}");
+                var image = SKImage.FromBitmap(bitmap);
+                _layers.Add(new ParallaxLayer(config, bitmap, image));
+            }
+
+            if (_drivesAnimation)
+            {
+                _setStatus("layers OK mesh=5 images=back, far, middle, near, front");
+            }
+
+            Update();
+        }
+
+        protected override void OnLayoutReady()
+        {
+            base.OnLayoutReady();
+            EnsureAnimator();
+        }
+
+        public override void OnDisposing()
+        {
+            _sceneState.Changed -= HandleSceneChanged;
+            _animator?.Stop();
+            _animator = null;
+            _spec?.Dispose();
+            _spec = null;
+
+            foreach (var layer in _layers)
+            {
+                layer.Image.Dispose();
+                layer.Bitmap.Dispose();
+            }
+            _layers.Clear();
+
+            base.OnDisposing();
+        }
+
+        protected override void Paint(DrawingContext ctx)
+        {
+            base.Paint(ctx);
+            EnsureAnimator();
+
+            var canvas = ctx.Context.Canvas;
+            var dest = ctx.Destination;
+            if (dest.Width <= 0 || dest.Height <= 0)
+                return;
+
+            if (_drawBackdrop)
+            {
+                DrawBackdrop(canvas, dest);
+            }
+
+            if (_layers.Count == 0)
+                return;
+
+            try
+            {
+                if (_spec == null)
+                {
+                    _spec = CreateMeshSpecification(out var initError);
+                    if (_spec == null)
+                    {
+                        _setStatus("parallax spec FAIL: " + initError);
+                        return;
+                    }
+                }
+
+                foreach (var layer in _layers)
+                {
+                    var vertices = BuildLayerVertices(dest, layer, (float)_sceneState.Phase);
+                    using var vb = SKMeshVertexBuffer.Make(MemoryMarshal.AsBytes(vertices.AsSpan()));
+                    using var mesh = SKMesh.Make(
+                        _spec,
+                        SKMeshMode.TriangleStrip,
+                        vb,
+                        vertices.Length / 4,
+                        0,
+                        dest,
+                        out var meshErr);
+
+                    if (mesh == null)
+                    {
+                        _setStatus($"{layer.Config.Name} mesh FAIL: {meshErr}");
+                        return;
+                    }
+
+                    using var shader = layer.Image.ToShader(
+                        SKShaderTileMode.Repeat,
+                        SKShaderTileMode.Clamp,
+                        PixelSampling);
+                    using var paint = new SKPaint
+                    {
+                        IsAntialias = false,
+                        Color = SKColors.White,
+                        Shader = shader,
+                    };
+
+                    canvas.DrawMesh(mesh, paint);
+
+                }
+
+                if (_drawHud)
+                {
+                    DrawHud(canvas, dest, (float)_sceneState.Phase);
+                }
+
+                if (_drivesAnimation && !_reportedReady)
+                {
+                    _reportedReady = true;
+                    _setStatus($"parallax OK layers=5 stride={_spec.Stride} mode=TriangleStrip");
+                }
+            }
+            catch (Exception ex)
+            {
+                _setStatus("parallax EX: " + ex.GetType().Name + ": " + ex.Message);
+            }
+        }
+
+        private void EnsureAnimator()
+        {
+            if (!_drivesAnimation)
+                return;
+
+            if (_animator != null)
+                return;
+
+            _animator = new PerpetualPendulumAnimator(this, value =>
+            {
+                _sceneState.SetPhase(value);
+            })
+            {
+                Amplitude = Math.PI * 8,
+                Speed = 0.65,
+            };
+            _animator.Start();
+        }
+
+        private bool ShouldRenderLayer(LayerConfig config)
+        {
+            return _textureNames.Contains(config.Name);
+        }
+
+        private void HandleSceneChanged()
+        {
+            Update();
+        }
+
+        private static SKMeshSpecification? CreateMeshSpecification(out string error)
+        {
+            var attrs = new[]
+            {
+                new SKMeshSpecificationAttribute(SKMeshSpecificationAttributeType.Float2, 0, "position"),
+                new SKMeshSpecificationAttribute(SKMeshSpecificationAttributeType.Float2, 8, "uv"),
+            };
+            var varyings = new[]
+            {
+                new SKMeshSpecificationVarying(SKMeshSpecificationVaryingType.Float2, "uv"),
+            };
+
+            const string vert = @"
+                Varyings main(const Attributes attrs) {
+                    Varyings v;
+                    v.position = attrs.position;
+                    v.uv = attrs.uv;
+                    return v;
+                }";
+
+            const string frag = @"
+                float2 main(const Varyings v) {
+                    return v.uv;
+                }";
+
+            return SKMeshSpecification.Make(
+                attrs,
+                sizeof(float) * 4,
+                varyings,
+                vert,
+                frag,
+                out error);
+        }
+
+        private static float[] BuildLayerVertices(SKRect dest, ParallaxLayer layer, float phase)
+        {
+            var vertexCount = (Columns + 1) * 2;
+            var vertices = new float[vertexCount * 4];
+            var index = 0;
+
+            var width = dest.Width;
+            var sceneTop = dest.Bottom - (SceneHeight * EnvironmentScale);
+            var layerHeight = LayerHeight * EnvironmentScale;
+            var isForeground = string.Equals(layer.Config.Name, "foreground", StringComparison.Ordinal);
+            var top = isForeground ? dest.Bottom - layerHeight : sceneTop;
+            var bottom = isForeground ? dest.Bottom : sceneTop + layerHeight;
+            var tileWidth = layer.Bitmap.Width * EnvironmentScale;
+            var scroll = phase * layer.Config.Speed;
+            var cameraSway = 0f;
+
+            for (var column = 0; column <= Columns; column++)
+            {
+                var u = column / (float)Columns;
+                var x = dest.Left + u * width;
+                var topY = top;
+                var bottomY = bottom;
+                var scrollUv = (((x - dest.Left) / tileWidth) + scroll + cameraSway) * layer.Bitmap.Width;
+
+                vertices[index++] = x;
+                vertices[index++] = topY;
+                vertices[index++] = scrollUv;
+                vertices[index++] = 0f;
+
+                vertices[index++] = x;
+                vertices[index++] = bottomY;
+                vertices[index++] = scrollUv;
+                vertices[index++] = layer.Bitmap.Height;
+            }
+
+            return vertices;
+        }
+
+        private static void DrawBackdrop(SKCanvas canvas, SKRect dest)
+        {
+            using var fill = new SKPaint
+            {
+                IsAntialias = true,
+                Shader = SKShader.CreateLinearGradient(
+                    new SKPoint(dest.Left, dest.Top),
+                    new SKPoint(dest.Right, dest.Bottom),
+                    new[]
+                    {
+                        SKColor.Parse("#03060E"),
+                        SKColor.Parse("#0A1120"),
+                        SKColor.Parse("#111C31"),
+                    },
+                    null,
+                    SKShaderTileMode.Clamp),
+            };
+            canvas.DrawRect(dest, fill);
+
+            using var frame = new SKPaint
+            {
+                Color = SKColor.Parse("#2A335C"),
+                IsAntialias = true,
+                Style = SKPaintStyle.Stroke,
+                StrokeWidth = 2,
+            };
+            canvas.DrawRect(dest, frame);
+        }
+
+        private void DrawHud(SKCanvas canvas, SKRect dest, float phase)
+        {
+            using var paint = new SKPaint
+            {
+                Color = SKColor.Parse("#B7C8F7").WithAlpha(180),
+                IsAntialias = true,
+                TextSize = 12,
+            };
+
+            canvas.DrawText($"phase {phase:F2}  layers {_layers.Count}  assets cold-corridors", dest.Left + 10, dest.Bottom - 12, paint);
+        }
+
+        private sealed record LayerConfig(string Name, string Path, float Speed, float RepeatWidth, float Depth);
+
+        private sealed record ParallaxLayer(LayerConfig Config, SKBitmap Bitmap, SKImage Image);
+    }
+}

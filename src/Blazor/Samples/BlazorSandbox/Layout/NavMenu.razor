@@ -7,86 +7,135 @@
     </div>
 </div>
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+<div class="@NavMenuCssClass nav-scrollable">
     <nav class="nav flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All" @onclick="CloseNavMenu">
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="cards">
-                <span class="bi bi-arrow-down-up-nav-menu" aria-hidden="true"></span> Cards
-            </NavLink>
+
+        <div class="nav-group px-2">
+            <button type="button" class="nav-group-toggle" @onclick="ToggleGeneralGroup">
+                <span class="bi @(generalGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                <span>General Probes</span>
+            </button>
+
+            @if (generalGroupExpanded)
+            {
+                <div class="nav-group-items">
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="cards" @onclick="CloseNavMenu">
+                            <span class="bi bi-arrow-down-up-nav-menu" aria-hidden="true"></span> Cards
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="keyboard-probe" @onclick="CloseNavMenu">
+                            <span class="bi bi-keyboard-nav-menu" aria-hidden="true"></span> Keyboard
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="image-probe" @onclick="CloseNavMenu">
+                            <span class="bi bi-image-nav-menu" aria-hidden="true"></span> Image
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="shapes-probe" @onclick="CloseNavMenu">
+                            <span class="bi bi-bounding-box-nav-menu" aria-hidden="true"></span> Shapes
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="scroll-probe" @onclick="CloseNavMenu">
+                            <span class="bi bi-arrow-down-up-nav-menu" aria-hidden="true"></span> Scroll
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="lottie-probe" @onclick="CloseNavMenu">
+                            <span class="bi bi-play-circle-nav-menu" aria-hidden="true"></span> Lottie
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="gif-probe" @onclick="CloseNavMenu">
+                            <span class="bi bi-film-nav-menu" aria-hidden="true"></span> Gif
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="svg-probe" @onclick="CloseNavMenu">
+                            <span class="bi bi-badge-sd-nav-menu" aria-hidden="true"></span> Svg
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="backdrop-probe" @onclick="CloseNavMenu">
+                            <span class="bi bi-layers-half-nav-menu" aria-hidden="true"></span> Backdrop
+                        </NavLink>
+                    </div>
+                </div>
+            }
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="keyboard-probe">
-                <span class="bi bi-keyboard-nav-menu" aria-hidden="true"></span> Keyboard
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="image-probe">
-                <span class="bi bi-image-nav-menu" aria-hidden="true"></span> Image
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="shapes-probe">
-                <span class="bi bi-bounding-box-nav-menu" aria-hidden="true"></span> Shapes
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="scroll-probe">
-                <span class="bi bi-arrow-down-up-nav-menu" aria-hidden="true"></span> Scroll 
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="lottie-probe">
-                <span class="bi bi-play-circle-nav-menu" aria-hidden="true"></span> Lottie 
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="gif-probe">
-                <span class="bi bi-film-nav-menu" aria-hidden="true"></span> Gif
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="svg-probe">
-                <span class="bi bi-badge-sd-nav-menu" aria-hidden="true"></span> Svg
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="backdrop-probe">
-                <span class="bi bi-layers-half-nav-menu" aria-hidden="true"></span> Backdrop
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="skmesh-probe">
-                <span class="bi bi-grid-3x3-gap-fill-nav-menu" aria-hidden="true"></span>
-                <span>SKMesh</span>
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="skmesh-projection-probe">
-                <span class="bi bi-badge-3d-nav-menu" aria-hidden="true"></span>
-                <span>SKMesh Projection</span>
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="skmesh-rocket-probe">
-                <span class="bi bi-rocket-takeoff-nav-menu" aria-hidden="true"></span>
-                <span>SKMesh Rocket</span>
-            </NavLink>
+
+        <div class="nav-group px-2">
+            <button type="button" class="nav-group-toggle" @onclick="ToggleSkMeshGroup">
+                <span class="bi @(skMeshGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                <span>SKMech</span>
+            </button>
+
+            @if (skMeshGroupExpanded)
+            {
+                <div class="nav-group-items">
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="skmesh-probe" @onclick="CloseNavMenu">
+                            <span class="bi bi-grid-3x3-gap-fill-nav-menu" aria-hidden="true"></span>
+                            <span>SKMesh</span>
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="skmesh-projection-probe" @onclick="CloseNavMenu">
+                            <span class="bi bi-badge-3d-nav-menu" aria-hidden="true"></span>
+                            <span>Projection</span>
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="skmesh-rocket-probe" @onclick="CloseNavMenu">
+                            <span class="bi bi-rocket-takeoff-nav-menu" aria-hidden="true"></span>
+                            <span>Rocket</span>
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="skmesh-parallax-probe" @onclick="CloseNavMenu">
+                            <span class="bi bi-layers-fill-nav-menu" aria-hidden="true"></span>
+                            <span>Parallax</span>
+                        </NavLink>
+                    </div>
+                </div>
+            }
         </div>
     </nav>
 </div>
 
 @code {
     private bool collapseNavMenu = true;
+    private bool generalGroupExpanded = true;
+    private bool skMeshGroupExpanded = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void ToggleGeneralGroup()
+    {
+        generalGroupExpanded = !generalGroupExpanded;
+    }
+
+    private void ToggleSkMeshGroup()
+    {
+        skMeshGroupExpanded = !skMeshGroupExpanded;
+    }
+
+    private void CloseNavMenu()
+    {
+        collapseNavMenu = true;
     }
 }
