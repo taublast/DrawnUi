@@ -86,13 +86,13 @@
         <!--<PackageReference Include="Markdig" Version="0.41.1" />-->
         <PackageReference Include="CommonMark.NET" Version="0.15.1" />
         <!--<PackageReference Include="AppoMobi.Maui.Gestures" Version="1.11.9.2" />-->
-        <PackageReference Include="Plugin.Maui.ApplePlatform" Version="1.0.0-pre7">
+        <PackageReference Include="Plugin.Maui.ApplePlatform" Version="1.0.0">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="4.147.0-preview.1.1" />
-        <PackageReference Include="SkiaSharp.Views" Version="4.147.0-preview.1.1" />
-        <PackageReference Include="SkiaSharp.Skottie" Version="4.147.0-preview.1.1" />
+        <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="4.147.0-pr.3779.2" />
+        <PackageReference Include="SkiaSharp.Views" Version="4.147.0-pr.3779.2" />
+        <PackageReference Include="SkiaSharp.Skottie" Version="4.147.0-pr.3779.2" />
         <PackageReference Include="Svg.Skia" Version="3.0.3" />
 
         <!--MIT open source-->
@@ -118,7 +118,7 @@
     <!-- FIX for Windows unpackaged mode when library is referenced directly -->
     <ItemGroup Condition="$(TargetFramework.Contains('windows')) == true">
 
-        <PackageReference Include="SkiaSharp.Views.WinUI" Version="4.147.0-preview.1.1" />
+        <PackageReference Include="SkiaSharp.Views.WinUI" Version="4.147.0-pr.3779.2" />
 
         <None Include="Platforms/Windows/Natives/libEGL.dll">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -155,7 +155,7 @@
     <!--ANDROID ONLY-->
     <ItemGroup Condition="$(TargetFramework.Contains('android')) == true">
         <!--fix android bad alignement-->
-        <PackageReference Include="HarfBuzzSharp" Version="8.3.1.1" />
+        <PackageReference Include="HarfBuzzSharp" Version="8.3.1.6-pr.3779.2" />
         <!--native interop todo expose native source ? -->
        <PackageReference Include="AppoMobi.Maui.Native.Android" Version="2.1.1.0-pre" />
     </ItemGroup>

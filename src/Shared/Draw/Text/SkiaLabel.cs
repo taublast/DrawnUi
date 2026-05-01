@@ -5,9 +5,9 @@ using Font = Microsoft.Maui.Font;
 
 
 #if BROWSER
-    using PropertyChangingEventArgs = System.ComponentModel.PropertyChangingEventArgs;
+    using PropertyChangingArgs = System.ComponentModel.PropertyChangingEventArgs;
 #else
-    using PropertyChangingEventArgs = Microsoft.Maui.Controls.PropertyChangingEventArgs;
+    using PropertyChangingArgs = Microsoft.Maui.Controls.PropertyChangingEventArgs;
 #endif
 
 namespace DrawnUi.Draw
@@ -287,7 +287,7 @@ namespace DrawnUi.Draw
 
         void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(nameof(Spans));
 
-        void OnItemPropertyChanging(object? sender, System.ComponentModel.PropertyChangingEventArgs changingEventArgs) => OnPropertyChanging(nameof(Spans));
+        void OnItemPropertyChanging(object? sender, PropertyChangingArgs changingEventArgs) => OnPropertyChanging(nameof(Spans));
 
         protected readonly SpanCollection _spans = new();
 
