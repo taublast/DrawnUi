@@ -1,0 +1,378 @@
+@page "/skmesh-probe"
+@using DrawnUi.Draw
+@using DrawnUi.Views
+@using DrawnUi
+@using SkiaSharp
+@using System.Runtime.InteropServices
+
+<PageTitle>SKMesh Probe</PageTitle>
+
+<h1>SKMesh Probe</h1>
+<p>Three SKMesh demos: solid triangle, indexed UV-gradient quad, animated wave with time uniform.</p>
+<p><strong>Requires SkiaSharp 4.147.0-pr.3779.2 (mesh-enabled build).</strong></p>
+
+<Canvas
+    WidthRequest="420"
+    HeightRequest="900"
+    BackgroundColor="#1A1A2E"
+    Margin="0,16,0,32"
+    RenderingMode="@RenderingModeType.Accelerated"
+    RootControl="@RootControl" />
+
+@code {
+    private readonly SkiaControl RootControl;
+    private static SkiaLabel _statusLabel;
+
+    public SkMeshProbe()
+    {
+        RootControl = new SkiaLayout()
+        {
+            WidthRequest = 420,
+            HeightRequest = 900,
+            Padding = new Thickness(20),
+            Type = LayoutType.Column,
+            Spacing = 12,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SKMesh Probe",
+                    FontSize = 22,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = Colors.White,
+                    HorizontalOptions = LayoutOptions.Fill,
+                },
+                new SkiaLabel()
+                {
+                    Text = "status: pending",
+                    FontSize = 13,
+                    TextColor = Color.FromHex("#FFD166"),
+                    HorizontalOptions = LayoutOptions.Fill,
+                }.Assign(out _statusLabel),
+
+                new SkiaLabel { Text = "1. Solid yellow triangle (Float2 position only)",
+                                FontSize = 12, TextColor = Color.FromHex("#9DB4FF") },
+                new SolidTriangleMesh
+                {
+                    BackgroundColor = Colors.Black,
+                    WidthRequest = 380,
+                    HeightRequest = 200,
+                    HorizontalOptions = LayoutOptions.Fill,
+                },
+
+                new SkiaLabel { Text = "2. Indexed quad, RGB color from UV varying",
+                                FontSize = 12, TextColor = Color.FromHex("#9DB4FF") },
+                new IndexedUvQuadMesh
+                {
+                    BackgroundColor = Colors.Black,
+                    WidthRequest = 380,
+                    HeightRequest = 200,
+                    HorizontalOptions = LayoutOptions.Fill,
+                },
+
+                new SkiaLabel { Text = "3. Animated wave (uniform float uTime + vertex displacement)",
+                                FontSize = 12, TextColor = Color.FromHex("#9DB4FF") },
+                new AnimatedWaveMesh
+                {
+                    BackgroundColor = Colors.Black,
+                    WidthRequest = 380,
+                    HeightRequest = 200,
+                    HorizontalOptions = LayoutOptions.Fill,
+                },
+            }
+        };
+    }
+
+    private static void SetStatus(string msg)
+    {
+        Console.WriteLine("[SkMeshProbe] " + msg);
+        if (_statusLabel != null)
+            _statusLabel.Text = msg;
+    }
+
+    // -------------------------------------------------------------------- Demo 1
+
+    private class SolidTriangleMesh : SkiaControl
+    {
+        private bool _ranOnce;
+
+        protected override void Paint(DrawingContext ctx)
+        {
+            base.Paint(ctx);
+            var canvas = ctx.Context.Canvas;
+            var dest = ctx.Destination;
+            if (dest.Width <= 0 || dest.Height <= 0) return;
+
+            float cx = dest.MidX;
+            float cy = dest.MidY;
+            float r = Math.Min(dest.Width, dest.Height) * 0.40f;
+
+            try
+            {
+                var attrs = new[]
+                {
+                    new SKMeshSpecificationAttribute(SKMeshSpecificationAttributeType.Float2, 0, "position"),
+                };
+                const string vert = "Varyings main(const Attributes attrs) { Varyings v; v.position = attrs.position; return v; }";
+                const string frag = "float2 main(const Varyings v, out half4 color) { color = half4(1.0, 0.85, 0.2, 1.0); return v.position; }";
+
+                using var spec = SKMeshSpecification.Make(
+                    attrs, sizeof(float) * 2, Array.Empty<SKMeshSpecificationVarying>(),
+                    vert, frag, SKColorSpace.CreateSrgb(), SKAlphaType.Premul, out var specErr);
+                if (spec == null) { LogOnce("triangle spec FAIL: " + specErr); return; }
+
+                var verts = new float[] { cx, cy - r,  cx + r, cy + r,  cx - r, cy + r };
+                using var vb = SKMeshVertexBuffer.Make(MemoryMarshal.AsBytes(verts.AsSpan()));
+                var bounds = new SKRect(cx - r, cy - r, cx + r, cy + r);
+
+                using var mesh = SKMesh.Make(spec, SKMeshMode.Triangles, vb, 3, 0, bounds, out var meshErr);
+                if (mesh == null) { LogOnce("triangle mesh FAIL: " + meshErr); return; }
+
+                using var paint = new SKPaint { IsAntialias = true, Color = SKColors.White };
+                canvas.DrawMesh(mesh, paint);
+
+                LogOnce($"triangle OK stride={spec.Stride}");
+            }
+            catch (Exception ex) { LogOnce("triangle EX: " + ex.Message); }
+        }
+
+        private void LogOnce(string s)
+        {
+            if (_ranOnce) return;
+            _ranOnce = true;
+            SetStatus(s);
+        }
+    }
+
+    // -------------------------------------------------------------------- Demo 2
+
+    private class IndexedUvQuadMesh : SkiaControl
+    {
+        private bool _ranOnce;
+
+        protected override void Paint(DrawingContext ctx)
+        {
+            base.Paint(ctx);
+            var canvas = ctx.Context.Canvas;
+            var dest = ctx.Destination;
+            if (dest.Width <= 0 || dest.Height <= 0) return;
+
+            float pad = 20f;
+            float l = dest.Left + pad, t = dest.Top + pad, r = dest.Right - pad, b = dest.Bottom - pad;
+
+            try
+            {
+                var attrs = new[]
+                {
+                    new SKMeshSpecificationAttribute(SKMeshSpecificationAttributeType.Float2, 0, "position"),
+                    new SKMeshSpecificationAttribute(SKMeshSpecificationAttributeType.Float2, 8, "uv"),
+                };
+                var varyings = new[]
+                {
+                    new SKMeshSpecificationVarying(SKMeshSpecificationVaryingType.Float2, "uv"),
+                };
+                const string vert = @"
+                    Varyings main(const Attributes a) {
+                        Varyings v;
+                        v.position = a.position;
+                        v.uv = a.uv;
+                        return v;
+                    }";
+                const string frag = @"
+                    float2 main(const Varyings v, out half4 color) {
+                        color = half4(v.uv.x, v.uv.y, 1.0 - v.uv.x, 1.0);
+                        return v.position;
+                    }";
+
+                using var spec = SKMeshSpecification.Make(
+                    attrs, sizeof(float) * 4, varyings,
+                    vert, frag, SKColorSpace.CreateSrgb(), SKAlphaType.Premul, out var specErr);
+                if (spec == null) { LogOnce("uvquad spec FAIL: " + specErr); return; }
+
+                // NOTE: SKMesh.MakeIndexed crashes the WASM Mono interpreter
+                // (ves_pinvoke_method / get_build_args_from_sig_info). Use non-indexed
+                // Make on Blazor WASM until that PInvoke signature is fixed in SkiaSharp.
+                // Two triangles, 6 verts, no index buffer. posX posY uvX uvY
+                var verts = new float[]
+                {
+                    l, t,  0f, 0f,
+                    r, t,  1f, 0f,
+                    r, b,  1f, 1f,
+
+                    l, t,  0f, 0f,
+                    r, b,  1f, 1f,
+                    l, b,  0f, 1f,
+                };
+                using var vb = SKMeshVertexBuffer.Make(MemoryMarshal.AsBytes(verts.AsSpan()));
+
+                using var mesh = SKMesh.Make(
+                    spec, SKMeshMode.Triangles, vb, 6, 0,
+                    new SKRect(l, t, r, b), out var meshErr);
+                if (mesh == null) { LogOnce("uvquad mesh FAIL: " + meshErr); return; }
+
+                using var paint = new SKPaint { IsAntialias = true, Color = SKColors.White };
+                canvas.DrawMesh(mesh, paint);
+
+                LogOnce($"uvquad OK stride={spec.Stride} uniformSize={spec.UniformSize}");
+            }
+            catch (Exception ex) { LogOnce("uvquad EX: " + ex.Message); }
+        }
+
+        private void LogOnce(string s)
+        {
+            if (_ranOnce) return;
+            _ranOnce = true;
+            SetStatus(s);
+        }
+    }
+
+    // -------------------------------------------------------------------- Demo 3
+
+    private class AnimatedWaveMesh : SkiaControl
+    {
+        private bool _ranOnce;
+        private PerpetualPendulumAnimator _animator;
+        private double _phase;
+        private const int Cols = 24;
+        private const int Rows = 1;
+
+        protected override void OnLayoutReady()
+        {
+            base.OnLayoutReady();
+            EnsureAnimator();
+        }
+
+        private void EnsureAnimator()
+        {
+            if (_animator != null) return;
+            _animator = new PerpetualPendulumAnimator(this, v =>
+            {
+                _phase = v;
+                Update();
+            })
+            {
+                Amplitude = 6.28, // ~2*PI so phase wraps a full sine
+                Speed = 1500,
+            };
+            _animator.Start();
+        }
+
+        protected override void Paint(DrawingContext ctx)
+        {
+            base.Paint(ctx);
+            EnsureAnimator();
+
+            var canvas = ctx.Context.Canvas;
+            var dest = ctx.Destination;
+            if (dest.Width <= 0 || dest.Height <= 0) return;
+
+            float pad = 20f;
+            float l = dest.Left + pad, t = dest.Top + pad, r = dest.Right - pad, b = dest.Bottom - pad;
+
+            try
+            {
+                var attrs = new[]
+                {
+                    new SKMeshSpecificationAttribute(SKMeshSpecificationAttributeType.Float2, 0, "position"),
+                    new SKMeshSpecificationAttribute(SKMeshSpecificationAttributeType.Float2, 8, "uv"),
+                };
+                var varyings = new[]
+                {
+                    new SKMeshSpecificationVarying(SKMeshSpecificationVaryingType.Float2, "uv"),
+                };
+
+                // Note SkSL uniforms must be declared OUTSIDE main, before it.
+                const string vert = @"
+                    uniform float uTime;
+                    uniform float uAmp;
+                    uniform float uFreq;
+                    Varyings main(const Attributes a) {
+                        Varyings v;
+                        float dy = sin(a.position.x * uFreq + uTime) * uAmp;
+                        v.position = a.position + float2(0.0, dy);
+                        v.uv = a.uv;
+                        return v;
+                    }";
+                const string frag = @"
+                    float2 main(const Varyings v, out half4 color) {
+                        // teal->magenta gradient, banded along uv.x
+                        float band = abs(sin(v.uv.x * 12.0));
+                        color = half4(band, 0.4 + 0.5 * v.uv.y, 1.0 - band, 1.0);
+                        return v.position;
+                    }";
+
+                using var spec = SKMeshSpecification.Make(
+                    attrs, sizeof(float) * 4, varyings,
+                    vert, frag, SKColorSpace.CreateSrgb(), SKAlphaType.Premul, out var specErr);
+                if (spec == null) { LogOnce("wave spec FAIL: " + specErr); return; }
+
+                // Build a strip of (Cols+1) * 2 vertices forming Cols quads (TriangleStrip mesh)
+                int vertCount = (Cols + 1) * 2;
+                var verts = new float[vertCount * 4];
+                float w = r - l;
+                float h = b - t;
+                for (int i = 0; i <= Cols; i++)
+                {
+                    float u = i / (float)Cols;
+                    float x = l + u * w;
+                    int top = i * 2 * 4;
+                    int bot = top + 4;
+                    verts[top + 0] = x;
+                    verts[top + 1] = t;
+                    verts[top + 2] = u;
+                    verts[top + 3] = 0f;
+                    verts[bot + 0] = x;
+                    verts[bot + 1] = b;
+                    verts[bot + 2] = u;
+                    verts[bot + 3] = 1f;
+                }
+
+                using var vb = SKMeshVertexBuffer.Make(MemoryMarshal.AsBytes(verts.AsSpan()));
+
+                // Pack three floats matching uniform layout: uTime, uAmp, uFreq.
+                Span<float> uniBlob = stackalloc float[3];
+                uniBlob[0] = (float)_phase;
+                uniBlob[1] = 18f;     // amplitude px
+                uniBlob[2] = 0.05f;   // x frequency
+                using var uniforms = SKData.CreateCopy(MemoryMarshal.AsBytes(uniBlob).ToArray());
+
+                if (spec.UniformSize != 12)
+                {
+                    LogOnce($"wave uniform size mismatch expected=12 actual={spec.UniformSize}");
+                    return;
+                }
+
+                // Bounds inflated to allow vertex displacement.
+                var bounds = new SKRect(l, t - 30, r, b + 30);
+
+                using var mesh = SKMesh.Make(
+                    spec, SKMeshMode.TriangleStrip,
+                    vb, vertCount, 0,
+                    uniforms, ReadOnlySpan<SKRuntimeEffectChild>.Empty,
+                    bounds, out var meshErr);
+                if (mesh == null) { LogOnce("wave mesh FAIL: " + meshErr); return; }
+
+                using var paint = new SKPaint { IsAntialias = true, Color = SKColors.White };
+                canvas.DrawMesh(mesh, paint);
+
+                LogOnce($"wave OK verts={vertCount} stride={spec.Stride} uniformSize={spec.UniformSize}");
+            }
+            catch (Exception ex) { LogOnce("wave EX: " + ex.GetType().Name + ": " + ex.Message); }
+        }
+
+        private void LogOnce(string s)
+        {
+            if (_ranOnce) return;
+            _ranOnce = true;
+            SetStatus(s);
+        }
+
+        public override void OnDisposing()
+        {
+            _animator?.Stop();
+            _animator?.Dispose();
+            _animator = null;
+            base.OnDisposing();
+        }
+    }
+}
