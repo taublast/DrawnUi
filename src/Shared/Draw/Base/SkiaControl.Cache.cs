@@ -304,6 +304,10 @@ public partial class SkiaControl
     {
         get
         {
+            #if BROWSER
+            return false;
+            #endif
+            
             return CanUseCacheDoubleBuffering
                    && Super.Multithreaded
                    //&& Parent is SkiaControl
