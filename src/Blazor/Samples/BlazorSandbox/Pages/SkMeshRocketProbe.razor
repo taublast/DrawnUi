@@ -8,11 +8,11 @@
 @using System.Runtime.InteropServices
 @inject HttpClient Http
 
-<PageTitle>SKMesh Rocket Probe</PageTitle>
+<PageTitle>SKMesh API</PageTitle>
 
-<h1>SKMesh Rocket Probe</h1>
+<h1>SKMesh API</h1>
 
-<p id="skmesh-rocket-description">Load the shipped "wwwroot/media/rocket.obj"", triangulates on the CPU, projects it into screen space, and renders on GPU using SKMesh SkiaSharp API.</p>
+<p id="skmesh-rocket-description"><b>Load "wwwroot/media/rocket.obj", triangulates on the CPU, renders on GPU using SkiaSharp v4 SKMesh.</b></p>
 
 <Canvas
     WidthRequest="420"
@@ -47,7 +47,7 @@
             {
                 new SkiaLabel()
                 {
-                    Text = "SKMesh rotating OBJ rocket",
+                    Text = "SKMesh loaded OBJ",
                     FontSize = 24,
                     FontAttributes = FontAttributes.Bold,
                     TextColor = Colors.White,
@@ -56,7 +56,7 @@
                 
                 new SkiaLabel()
                 {
-                    Text = "status: loading rocket.obj",
+                    Text = "status: loading",
                     FontSize = 13,
                     TextColor = Color.FromHex("#FFD166"),
                     HorizontalOptions = LayoutOptions.Fill,
@@ -64,7 +64,7 @@
 
                 new SkiaLabel()
                 {
-                    Text = "CPU parsing + projection, non-indexed SKMesh triangles for WASM safety, wireframe pass rendered on top.",
+                    Text = "Parsing + projection, wireframe pass rendered on top.",
                     FontSize = 13,
                     TextColor = Color.FromHex("#9DB4FF"),
                     HorizontalOptions = LayoutOptions.Fill,

@@ -1,15 +1,12 @@
 @page "/"
-@using AppoMobi.Gestures
 @using DrawnUi.Draw
 @using DrawnUi.Views
 
-@using DrawnUi
-
 <PageTitle>Home</PageTitle>
 
-<h1>SpaceShooter Blazor</h1>
+<h1>SpaceShooter</h1>
 
-DrawnUI sample for Blazor.
+DrawnUI sample MAUI XAML rewritten to fluent code-behind for Blazor.
 
 <Canvas 
     HorizontalOptions="LayoutOptions.Fill"
@@ -38,7 +35,6 @@ DrawnUI sample for Blazor.
                 
                 new SkiaLabelFps()
                 {
-                    //ForceRefresh = true,
                     Margin = new (0, 0, 4, 24),
                     VerticalOptions = LayoutOptions.End,
                     HorizontalOptions = LayoutOptions.End,
