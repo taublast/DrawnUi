@@ -27,9 +27,17 @@
     private const float LayerBottomInset = SceneHeight - LayerHeight;
     private const float NearTextureWidth = 224f;
     private const float NearRepeatWidth = 896f;
+    private const float GodotBackScrollScale = 0.3f;
+    private const float GodotFarScrollScale = 0.5f;
+    private const float GodotMiddleScrollScale = 0.6f;
     private const float NearScrollSpeed = 0.060f;
+    private const float GodotNearScrollScale = 0.7f;
+    private const float GodotTilesetScrollScale = 1.0f;
+    private const float GodotForegroundScrollScale = 1.3f;
     private const float NearDepth = 0.72f;
     private const float EnvironmentScale = 430f / SceneHeight;
+    private const float PhaseSpeedPerGodotScrollUnit = NearScrollSpeed / GodotNearScrollScale;
+    private const float BaseCameraPixelsPerPhase = (NearScrollSpeed * NearTextureWidth * EnvironmentScale) / GodotNearScrollScale;
 
     private readonly SkiaLayout RootControl;
     private readonly SkiaLayer _stage;
@@ -38,7 +46,6 @@
     private readonly ParallaxMeshControl _middle;
     private readonly ParallaxMeshControl _near;
     private readonly ParallaxMeshControl _foreground;
-    private readonly BackRunwayStripControl _backRunway;
     private readonly TilesetStripControl _tileset;
     private readonly SkiaLayer _nearTorches;
     private readonly SkiaSprite _heroine;
@@ -98,14 +105,6 @@
             ZIndex = 7,
         };
 
-        _backRunway = new BackRunwayStripControl(_sceneState)
-        {
-            HorizontalOptions = LayoutOptions.Fill,
-            VerticalOptions = LayoutOptions.Start,
-            HeightRequest = 430,
-            ZIndex = 2,
-        };
-
         _heroine = new SkiaSprite
         {
             UseCache = SkiaCacheType.GPU,
@@ -158,7 +157,6 @@
             Children =
             {
                 _back,
-                _backRunway,
                 _far,
                 _middle,
                 _near,
@@ -224,7 +222,6 @@
             await _middle.LoadAsync(Http);
             await _near.LoadAsync(Http);
             await _foreground.LoadAsync(Http);
-            await _backRunway.LoadAsync(Http);
             await _tileset.LoadAsync(Http);
         }
         catch (Exception ex)
@@ -257,6 +254,16 @@
         _nearTorches.Update();
     }
 
+    private static float ToLayerPhaseSpeed(float godotScrollScale)
+    {
+        return godotScrollScale * PhaseSpeedPerGodotScrollUnit;
+    }
+
+    private static float ToPixelScrollPerPhase(float godotScrollScale)
+    {
+        return godotScrollScale * BaseCameraPixelsPerPhase;
+    }
+
     private static SkiaSprite CreateTorch(float x, float y, int zIndex)
     {
         var size = 32 * EnvironmentScale;
@@ -265,7 +272,7 @@
             UseCache = SkiaCacheType.Image,
             AutoPlay = true,
             Repeat = -1,
-            FramesPerSecond = 5,
+            FramesPerSecond = 6,
             Columns = 4,
             Rows = 1,
             WidthRequest = size,
@@ -339,7 +346,8 @@
             var stripTop = sceneTop + (197f * EnvironmentScale);
             var stripBottom = sceneTop + (239f * EnvironmentScale);
             var tileWidth = _tilesetBitmap.Width * EnvironmentScale;
-            var scroll = (float)_sceneState.Phase * EnvironmentScale;
+            // Godot's Tileset is its own Parallax2D with default scroll_scale = 1.0.
+            var scroll = (float)_sceneState.Phase * ToPixelScrollPerPhase(GodotTilesetScrollScale);
             var offset = scroll % tileWidth;
             using var paint = new SKPaint
             {
@@ -350,75 +358,6 @@
             for (var x = dest.Left - offset - tileWidth; x < dest.Right + tileWidth; x += tileWidth)
             {
                 ctx.Context.Canvas.DrawImage(_tilesetImage, new SKRect(x, stripTop, x + tileWidth, stripBottom), PixelSampling, paint);
-            }
-        }
-
-        private void HandleSceneChanged()
-        {
-            Update();
-        }
-    }
-
-    private sealed class BackRunwayStripControl : SkiaControl
-    {
-        private readonly ParallaxSceneState _sceneState;
-        private SKBitmap? _backBitmap;
-        private SKImage? _backImage;
-        private static readonly SKSamplingOptions PixelSampling = new(SKFilterMode.Nearest, SKMipmapMode.None);
-
-        public BackRunwayStripControl(ParallaxSceneState sceneState)
-        {
-            _sceneState = sceneState;
-            _sceneState.Changed += HandleSceneChanged;
-        }
-
-        public async Task LoadAsync(HttpClient http)
-        {
-            if (_backImage != null)
-                return;
-
-            var bytes = await http.GetByteArrayAsync("media/cold-corridors/back.png");
-            _backBitmap = SKBitmap.Decode(bytes) ?? throw new InvalidOperationException("decode failed: media/cold-corridors/back.png");
-            _backImage = SKImage.FromBitmap(_backBitmap);
-            Update();
-        }
-
-        public override void OnDisposing()
-        {
-            _sceneState.Changed -= HandleSceneChanged;
-            _backImage?.Dispose();
-            _backImage = null;
-            _backBitmap?.Dispose();
-            _backBitmap = null;
-            base.OnDisposing();
-        }
-
-        protected override void Paint(DrawingContext ctx)
-        {
-            base.Paint(ctx);
-
-            if (_backImage == null || _backBitmap == null)
-                return;
-
-            const float sourceTop = 158f;
-            const float sourceBottom = 214f;
-            var dest = ctx.Destination;
-            var sceneTop = dest.Bottom - (SceneHeight * EnvironmentScale);
-            var runwayTop = sceneTop + (sourceTop * EnvironmentScale);
-            var runwayBottom = sceneTop + (sourceBottom * EnvironmentScale);
-            var source = new SKRect(0f, sourceTop, _backBitmap.Width, sourceBottom);
-            var tileWidth = source.Width * EnvironmentScale;
-            var scroll = (float)(_sceneState.Phase * 0.3f * EnvironmentScale);
-            var offset = scroll % tileWidth;
-            using var paint = new SKPaint
-            {
-                IsAntialias = false,
-                Color = SKColors.White,
-            };
-
-            for (var x = dest.Left - offset - tileWidth; x < dest.Right + tileWidth; x += tileWidth)
-            {
-                ctx.Context.Canvas.DrawImage(_backImage, source, new SKRect(x, runwayTop, x + tileWidth, runwayBottom), PixelSampling, paint);
             }
         }
 
@@ -462,11 +401,11 @@
 
             var configs = new[]
             {
-                new LayerConfig("back",       "media/cold-corridors/back.png",       0.018f, 320f, 0.12f),
-                new LayerConfig("far",        "media/cold-corridors/far.png",        0.026f, 400f, 0.24f),
-                new LayerConfig("middle",     "media/cold-corridors/middle.png",     0.040f, 800f, 0.46f),
-                new LayerConfig("near",       "media/cold-corridors/near.png",       0.060f, 896f, 0.72f),
-                new LayerConfig("foreground", "media/cold-corridors/foreground.png", 0.078f, 1344f, 1.00f),
+                new LayerConfig("back",       "media/cold-corridors/back.png",       ToLayerPhaseSpeed(GodotBackScrollScale),       320f, 0.12f),
+                new LayerConfig("far",        "media/cold-corridors/far.png",        ToLayerPhaseSpeed(GodotFarScrollScale),        400f, 0.24f),
+                new LayerConfig("middle",     "media/cold-corridors/middle.png",     ToLayerPhaseSpeed(GodotMiddleScrollScale),     800f, 0.46f),
+                new LayerConfig("near",       "media/cold-corridors/near.png",       ToLayerPhaseSpeed(GodotNearScrollScale),       896f, 0.72f),
+                new LayerConfig("foreground", "media/cold-corridors/foreground.png", ToLayerPhaseSpeed(GodotForegroundScrollScale), 1344f, 1.00f),
             };
 
             foreach (var config in configs.Where(ShouldRenderLayer))
@@ -661,9 +600,9 @@
 
             var width = dest.Width;
             var sceneTop = dest.Bottom - (SceneHeight * EnvironmentScale);
-            var layerHeight = LayerHeight * EnvironmentScale;
+            var layerHeight = SceneHeight * EnvironmentScale;
             var isForeground = string.Equals(layer.Config.Name, "foreground", StringComparison.Ordinal);
-            var top = isForeground ? dest.Bottom - layerHeight : sceneTop;
+            var top = sceneTop;
             var bottom = isForeground ? dest.Bottom : sceneTop + layerHeight;
             var tileWidth = layer.Bitmap.Width * EnvironmentScale;
             var scroll = phase * layer.Config.Speed;
