@@ -3,6 +3,11 @@ using static DrawnUi.Draw.SkiaControl;
 
 namespace DrawnUi.Draw;
 
+#if BROWSER
+    using PropertyChangingEventArgs = System.ComponentModel.PropertyChangingEventArgs;
+#else
+using PropertyChangingEventArgs = Microsoft.Maui.Controls.PropertyChangingEventArgs;
+#endif
 public partial class TextSpan : Element //we subclassed Element to be able to use internal IElementNode..
 {
 
