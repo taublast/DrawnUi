@@ -1,0 +1,363 @@
+@page "/skmesh-projection-probe"
+@using DrawnUi.Draw
+@using DrawnUi.Views
+@using DrawnUi
+@using SkiaSharp
+@using System.Runtime.InteropServices
+
+<PageTitle>SKMesh Projection Probe</PageTitle>
+
+<h1>SKMesh Projection Probe</h1>
+
+<p id="skmesh-projection-description">Animated pseudo-3D mesh built from CPU-projected vertices and drawn with SKMesh on the accelerated Blazor canvas.</p>
+
+<Canvas
+    WidthRequest="420"
+    HeightRequest="520"
+    BackgroundColor="#0D1020"
+    Margin="0,16,0,32"
+    RenderingMode="@RenderingModeType.Accelerated"
+    RootControl="@RootControl" />
+
+@code {
+    private readonly SkiaControl RootControl;
+    private SkiaLabel _statusLabel;
+
+    public SkMeshProjectionProbe()
+    {
+        RootControl = new SkiaLayout()
+        {
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            Padding = new Thickness(20),
+            Type = LayoutType.Column,
+            Spacing = 14,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SKMesh pseudo-3D projection",
+                    FontSize = 24,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = Colors.White,
+                    HorizontalOptions = LayoutOptions.Fill,
+                },
+                new SkiaLabel()
+                {
+                    Text = "status: pending",
+                    FontSize = 13,
+                    TextColor = Color.FromHex("#FFD166"),
+                    HorizontalOptions = LayoutOptions.Fill,
+                }.Assign(out _statusLabel),
+                new SkiaLabel()
+                {
+                    Text = "Projected strip mesh, no index buffer, perspective done on CPU, color from UV in fragment shader, rendered on GPU.",
+                    FontSize = 13,
+                    TextColor = Color.FromHex("#9DB4FF"),
+                    HorizontalOptions = LayoutOptions.Fill,
+                },
+                new ProjectionMeshControl(SetStatus)
+                {
+                    BackgroundColor = Colors.Black,
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Fill,
+                },
+            }
+        };
+    }
+
+    private void SetStatus(string message)
+    {
+        Console.WriteLine("[SkMeshProjectionProbe] " + message);
+
+        if (_statusLabel != null)
+        {
+            _statusLabel.Text = message;
+            _statusLabel.Update();
+        }
+    }
+
+    private sealed class ProjectionMeshControl : SkiaControl
+    {
+        private readonly Action<string> _setStatus;
+        private PerpetualPendulumAnimator _animator;
+        private double _phase;
+        private bool _reportedOk;
+
+        private const int Columns = 18;
+        private const int Rows = 12;
+
+        public ProjectionMeshControl(Action<string> setStatus)
+        {
+            _setStatus = setStatus;
+        }
+
+        protected override void OnLayoutReady()
+        {
+            base.OnLayoutReady();
+            EnsureAnimator();
+        }
+
+        public override void OnDisposing()
+        {
+            _animator?.Stop();
+            _animator = null;
+            base.OnDisposing();
+        }
+
+        protected override void Paint(DrawingContext ctx)
+        {
+            base.Paint(ctx);
+            EnsureAnimator();
+
+            var canvas = ctx.Context.Canvas;
+            var dest = ctx.Destination;
+            if (dest.Width <= 0 || dest.Height <= 0)
+            {
+                return;
+            }
+
+            using var backgroundPaint = new SKPaint
+            {
+                Color = SKColor.Parse("#090B14"),
+                IsAntialias = true,
+            };
+            canvas.DrawRect(dest, backgroundPaint);
+
+            using var borderPaint = new SKPaint
+            {
+                Color = SKColor.Parse("#2A335C"),
+                IsAntialias = true,
+                Style = SKPaintStyle.Stroke,
+                StrokeWidth = 2,
+            };
+            canvas.DrawRect(dest, borderPaint);
+
+            try
+            {
+                var attributes = new[]
+                {
+                    new SKMeshSpecificationAttribute(SKMeshSpecificationAttributeType.Float2, 0, "position"),
+                    new SKMeshSpecificationAttribute(SKMeshSpecificationAttributeType.Float2, 8, "uv"),
+                };
+                var varyings = new[]
+                {
+                    new SKMeshSpecificationVarying(SKMeshSpecificationVaryingType.Float2, "uv"),
+                };
+
+                const string vert = @"
+                    Varyings main(const Attributes attrs) {
+                        Varyings v;
+                        v.position = attrs.position;
+                        v.uv = attrs.uv;
+                        return v;
+                    }";
+
+                const string frag = @"
+                    float2 main(const Varyings v, out half4 color) {
+                        float stripe = 0.5 + 0.5 * sin(v.uv.x * 20.0 + v.uv.y * 6.0);
+                        color = half4(
+                            0.10 + 0.55 * v.uv.x + 0.15 * stripe,
+                            0.20 + 0.55 * (1.0 - v.uv.y),
+                            0.55 + 0.35 * stripe,
+                            1.0);
+                        return v.position;
+                    }";
+
+                using var spec = SKMeshSpecification.Make(
+                    attributes,
+                    sizeof(float) * 4,
+                    varyings,
+                    vert,
+                    frag,
+                    SKColorSpace.CreateSrgb(),
+                    SKAlphaType.Premul,
+                    out var specErr);
+
+                if (spec == null)
+                {
+                    _setStatus("projection spec FAIL: " + specErr);
+                    return;
+                }
+
+                var vertices = BuildProjectedVertices(dest, (float)_phase);
+                using var vertexBuffer = SKMeshVertexBuffer.Make(MemoryMarshal.AsBytes(vertices.AsSpan()));
+
+                var bounds = new SKRect(dest.Left - 60, dest.Top - 60, dest.Right + 60, dest.Bottom + 60);
+                using var mesh = SKMesh.Make(
+                    spec,
+                    SKMeshMode.Triangles,
+                    vertexBuffer,
+                    vertices.Length / 4,
+                    0,
+                    bounds,
+                    out var meshErr);
+
+                if (mesh == null)
+                {
+                    _setStatus("projection mesh FAIL: " + meshErr);
+                    return;
+                }
+
+                using var meshPaint = new SKPaint { IsAntialias = true, Color = SKColors.White };
+                canvas.DrawMesh(mesh, meshPaint);
+
+                DrawWireOverlay(canvas, dest, (float)_phase);
+
+                if (!_reportedOk)
+                {
+                    _reportedOk = true;
+                    _setStatus($"projection OK tris={(vertices.Length / 4) / 3} stride={spec.Stride}");
+                }
+            }
+            catch (Exception ex)
+            {
+                _setStatus("projection EX: " + ex.GetType().Name + ": " + ex.Message);
+            }
+        }
+
+        private void EnsureAnimator()
+        {
+            if (_animator != null)
+            {
+                return;
+            }
+
+            _animator = new PerpetualPendulumAnimator(this, value =>
+            {
+                _phase = value;
+                Update();
+            })
+            {
+                Amplitude = Math.PI,
+                Speed = 2.4,
+            };
+            _animator.Start();
+        }
+
+        private static float[] BuildProjectedVertices(SKRect dest, float phase)
+        {
+            var result = new float[Columns * Rows * 6 * 4];
+            var index = 0;
+
+            for (var row = 0; row < Rows; row++)
+            {
+                var v0 = row / (float)Rows;
+                var v1 = (row + 1) / (float)Rows;
+
+                for (var col = 0; col < Columns; col++)
+                {
+                    var u0 = col / (float)Columns;
+                    var u1 = (col + 1) / (float)Columns;
+
+                    var p00 = ProjectSurfacePoint(dest, u0, v0, phase);
+                    var p10 = ProjectSurfacePoint(dest, u1, v0, phase);
+                    var p11 = ProjectSurfacePoint(dest, u1, v1, phase);
+                    var p01 = ProjectSurfacePoint(dest, u0, v1, phase);
+
+                    AppendVertex(result, ref index, p00, u0, v0);
+                    AppendVertex(result, ref index, p10, u1, v0);
+                    AppendVertex(result, ref index, p11, u1, v1);
+
+                    AppendVertex(result, ref index, p00, u0, v0);
+                    AppendVertex(result, ref index, p11, u1, v1);
+                    AppendVertex(result, ref index, p01, u0, v1);
+                }
+            }
+
+            return result;
+        }
+
+        private static void AppendVertex(float[] vertices, ref int index, SKPoint point, float u, float v)
+        {
+            vertices[index++] = point.X;
+            vertices[index++] = point.Y;
+            vertices[index++] = u;
+            vertices[index++] = v;
+        }
+
+        private static SKPoint ProjectSurfacePoint(SKRect dest, float u, float v, float phase)
+        {
+            var localX = (u - 0.5f) * 2.3f;
+            var localY = (v - 0.5f) * 1.6f;
+            var localZ =
+                MathF.Sin((u * 3.7f + phase) * 1.9f) * 0.20f +
+                MathF.Cos((v * 2.3f - phase * 0.7f) * 2.4f) * 0.14f;
+
+            var yaw = MathF.Sin(phase * 0.55f) * 0.85f;
+            var pitch = -0.55f + MathF.Cos(phase * 0.35f) * 0.18f;
+
+            RotateY(localX, localZ, yaw, out var rotX, out var rotZ);
+            RotateX(localY, rotZ, pitch, out var rotY, out var depth);
+
+            var cameraDistance = 4.2f;
+            var perspective = MathF.Min(dest.Width, dest.Height) * 0.92f / (depth + cameraDistance);
+
+            var centerX = dest.MidX;
+            var centerY = dest.MidY + 18f;
+
+            return new SKPoint(
+                centerX + rotX * perspective,
+                centerY + rotY * perspective);
+        }
+
+        private static void RotateY(float x, float z, float angle, out float outX, out float outZ)
+        {
+            var sin = MathF.Sin(angle);
+            var cos = MathF.Cos(angle);
+            outX = x * cos + z * sin;
+            outZ = -x * sin + z * cos;
+        }
+
+        private static void RotateX(float y, float z, float angle, out float outY, out float outZ)
+        {
+            var sin = MathF.Sin(angle);
+            var cos = MathF.Cos(angle);
+            outY = y * cos - z * sin;
+            outZ = y * sin + z * cos;
+        }
+
+        private static void DrawWireOverlay(SKCanvas canvas, SKRect dest, float phase)
+        {
+            using var wirePaint = new SKPaint
+            {
+                Color = SKColor.Parse("#B7D7FF").WithAlpha(70),
+                IsAntialias = true,
+                Style = SKPaintStyle.Stroke,
+                StrokeWidth = 1,
+            };
+
+            for (var row = 0; row <= Rows; row++)
+            {
+                SKPoint? previous = null;
+                var v = row / (float)Rows;
+                for (var col = 0; col <= Columns; col++)
+                {
+                    var u = col / (float)Columns;
+                    var point = ProjectSurfacePoint(dest, u, v, phase);
+                    if (previous.HasValue)
+                    {
+                        canvas.DrawLine(previous.Value, point, wirePaint);
+                    }
+                    previous = point;
+                }
+            }
+
+            for (var col = 0; col <= Columns; col++)
+            {
+                SKPoint? previous = null;
+                var u = col / (float)Columns;
+                for (var row = 0; row <= Rows; row++)
+                {
+                    var v = row / (float)Rows;
+                    var point = ProjectSurfacePoint(dest, u, v, phase);
+                    if (previous.HasValue)
+                    {
+                        canvas.DrawLine(previous.Value, point, wirePaint);
+                    }
+                    previous = point;
+                }
+            }
+        }
+    }
+}

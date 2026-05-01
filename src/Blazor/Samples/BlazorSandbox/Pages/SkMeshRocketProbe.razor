@@ -1,0 +1,610 @@
+@page "/skmesh-rocket-probe"
+@using DrawnUi.Draw
+@using DrawnUi.Views
+@using DrawnUi
+@using SkiaSharp
+@using System.Globalization
+@using System.Net.Http
+@using System.Runtime.InteropServices
+@inject HttpClient Http
+
+<PageTitle>SKMesh Rocket Probe</PageTitle>
+
+<h1>SKMesh Rocket Probe</h1>
+
+<p id="skmesh-rocket-description">Load the shipped "wwwroot/media/rocket.obj"", triangulates on the CPU, projects it into screen space, and renders on GPU using SKMesh SkiaSharp API.</p>
+
+<Canvas
+    WidthRequest="420"
+    HeightRequest="560"
+    BackgroundColor="#060A12"
+    Margin="0,16,0,32"
+    RenderingMode="@RenderingModeType.Accelerated"
+    RootControl="@RootControl" />
+
+@code {
+    private readonly SkiaLayout RootControl;
+    private readonly RocketMeshControl _viewer;
+    private SkiaLabel _statusLabel = null!;
+
+    public SkMeshRocketProbe()
+    {
+        _viewer = new RocketMeshControl(SetStatus)
+        {
+            BackgroundColor = Colors.Blue,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+        };
+
+        RootControl = new SkiaLayout()
+        {
+            WidthRequest = 420,
+            HeightRequest = 560,
+            Padding = new Thickness(20),
+            Type = LayoutType.Column,
+            Spacing = 14,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SKMesh rotating OBJ rocket",
+                    FontSize = 24,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = Colors.White,
+                    HorizontalOptions = LayoutOptions.Fill,
+                },
+                
+                new SkiaLabel()
+                {
+                    Text = "status: loading rocket.obj",
+                    FontSize = 13,
+                    TextColor = Color.FromHex("#FFD166"),
+                    HorizontalOptions = LayoutOptions.Fill,
+                }.Assign(out _statusLabel),
+
+                new SkiaLabel()
+                {
+                    Text = "CPU parsing + projection, non-indexed SKMesh triangles for WASM safety, wireframe pass rendered on top.",
+                    FontSize = 13,
+                    TextColor = Color.FromHex("#9DB4FF"),
+                    HorizontalOptions = LayoutOptions.Fill,
+                },
+
+                _viewer,
+            }
+        };
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var objText = await Http.GetStringAsync("media/rocket.obj");
+            var model = ObjModel.Parse(objText);
+            _viewer.SetModel(model);
+            SetStatus($"rocket loaded tris={model.Triangles.Count} verts={model.VertexCount}");
+        }
+        catch (Exception ex)
+        {
+            SetStatus("load FAIL: " + ex.Message);
+        }
+    }
+
+    private void SetStatus(string message)
+    {
+        Console.WriteLine("[SkMeshRocketProbe] " + message);
+
+        if (_statusLabel != null)
+        {
+            _statusLabel.Text = message;
+            _statusLabel.Update();
+        }
+    }
+
+    private sealed class RocketMeshControl : SkiaControl
+    {
+        private readonly Action<string> _setStatus;
+        private PerpetualPendulumAnimator? _animator;
+        private ObjModel? _model;
+        private double _phase;
+        private bool _reportedReady;
+
+        public RocketMeshControl(Action<string> setStatus)
+        {
+            _setStatus = setStatus;
+        }
+
+        public void SetModel(ObjModel model)
+        {
+            _model = model;
+            _reportedReady = false;
+            Update();
+        }
+
+        protected override void OnLayoutReady()
+        {
+            base.OnLayoutReady();
+            EnsureAnimator();
+        }
+
+        public override void OnDisposing()
+        {
+            _animator?.Stop();
+            _animator = null;
+            base.OnDisposing();
+        }
+
+        protected override void Paint(DrawingContext ctx)
+        {
+            base.Paint(ctx);
+            EnsureAnimator();
+
+            var canvas = ctx.Context.Canvas;
+            var dest = ctx.Destination;
+            if (dest.Width <= 0 || dest.Height <= 0)
+            {
+                return;
+            }
+
+            DrawBackground(canvas, dest);
+
+            if (_model == null || _model.Triangles.Count == 0)
+            {
+                return;
+            }
+
+            try
+            {
+                var packet = BuildFramePacket(dest, (float)_phase, _model);
+                using var spec = CreateMeshSpecification(out var specErr);
+                if (spec == null)
+                {
+                    _setStatus("rocket spec FAIL: " + specErr);
+                    return;
+                }
+
+                using var vb = SKMeshVertexBuffer.Make(MemoryMarshal.AsBytes(packet.MeshVertices.AsSpan()));
+                using var mesh = SKMesh.Make(
+                    spec,
+                    SKMeshMode.Triangles,
+                    vb,
+                    packet.MeshVertices.Length / 6,
+                    0,
+                    packet.Bounds,
+                    out var meshErr);
+
+                if (mesh == null)
+                {
+                    _setStatus("rocket mesh FAIL: " + meshErr);
+                    return;
+                }
+
+                using var paint = new SKPaint { IsAntialias = true, Color = SKColors.White };
+                canvas.DrawMesh(mesh, paint);
+                DrawWireOverlay(canvas, packet.WireLines);
+
+                if (!_reportedReady)
+                {
+                    _reportedReady = true;
+                    _setStatus($"rocket OK tris={_model.Triangles.Count} submitted={packet.MeshVertices.Length / 6 / 3}");
+                }
+            }
+            catch (Exception ex)
+            {
+                _setStatus("rocket EX: " + ex.GetType().Name + ": " + ex.Message);
+            }
+        }
+
+        private void EnsureAnimator()
+        {
+            if (_animator != null)
+            {
+                return;
+            }
+
+            _animator = new PerpetualPendulumAnimator(this, value =>
+            {
+                _phase = value;
+                Update();
+            })
+            {
+                Amplitude = Math.PI,
+                Speed = 1.75,
+            };
+            _animator.Start();
+        }
+
+        private static void DrawBackground(SKCanvas canvas, SKRect dest)
+        {
+            using var fill = new SKPaint
+            {
+                IsAntialias = true,
+                Shader = SKShader.CreateLinearGradient(
+                    new SKPoint(dest.Left, dest.Top),
+                    new SKPoint(dest.Right, dest.Bottom),
+                    new[] { SKColor.Parse("#04070F"), SKColor.Parse("#0A1428") },
+                    null,
+                    SKShaderTileMode.Clamp),
+            };
+            canvas.DrawRect(dest, fill);
+
+            using var grid = new SKPaint
+            {
+                Color = SKColor.Parse("#1C2946"),
+                StrokeWidth = 1,
+                IsAntialias = true,
+                Style = SKPaintStyle.Stroke,
+            };
+
+            var cols = 4;
+            var rows = 5;
+            for (var col = 1; col < cols; col++)
+            {
+                var x = dest.Left + dest.Width * col / cols;
+                canvas.DrawLine(x, dest.Top, x, dest.Bottom, grid);
+            }
+
+            for (var row = 1; row < rows; row++)
+            {
+                var y = dest.Top + dest.Height * row / rows;
+                canvas.DrawLine(dest.Left, y, dest.Right, y, grid);
+            }
+
+            using var border = new SKPaint
+            {
+                Color = SKColor.Parse("#2A335C"),
+                IsAntialias = true,
+                Style = SKPaintStyle.Stroke,
+                StrokeWidth = 2,
+            };
+            canvas.DrawRect(dest, border);
+        }
+
+        private static SKMeshSpecification CreateMeshSpecification(out string error)
+        {
+            var attrs = new[]
+            {
+                new SKMeshSpecificationAttribute(SKMeshSpecificationAttributeType.Float2, 0, "position"),
+                new SKMeshSpecificationAttribute(SKMeshSpecificationAttributeType.Float4, 8, "color"),
+            };
+            var varyings = new[]
+            {
+                new SKMeshSpecificationVarying(SKMeshSpecificationVaryingType.Float4, "color"),
+            };
+
+            const string vert = @"
+                Varyings main(const Attributes attrs) {
+                    Varyings v;
+                    v.position = attrs.position;
+                    v.color = attrs.color;
+                    return v;
+                }";
+
+            const string frag = @"
+                float2 main(const Varyings v, out half4 color) {
+                    color = half4(v.color);
+                    return v.position;
+                }";
+
+            return SKMeshSpecification.Make(
+                attrs,
+                sizeof(float) * 6,
+                varyings,
+                vert,
+                frag,
+                SKColorSpace.CreateSrgb(),
+                SKAlphaType.Premul,
+                out error);
+        }
+
+        private static FramePacket BuildFramePacket(SKRect dest, float phase, ObjModel model)
+        {
+            var meshVertices = new float[model.Triangles.Count * 18];
+            var wireLines = new float[model.Triangles.Count * 12];
+            var meshIndex = 0;
+            var wireIndex = 0;
+            var minX = float.MaxValue;
+            var minY = float.MaxValue;
+            var maxX = float.MinValue;
+            var maxY = float.MinValue;
+
+            var yaw = phase * 0.65f;
+            var pitch = -0.35f + MathF.Sin(phase * 0.4f) * 0.12f;
+            var roll = MathF.Sin(phase * 0.23f) * 0.08f;
+            var light = Normalize(new Vec3(0.45f, -0.6f, -1.0f));
+
+            foreach (var triangle in model.Triangles)
+            {
+                var p0 = Rotate(triangle.A.Position, yaw, pitch, roll);
+                var p1 = Rotate(triangle.B.Position, yaw, pitch, roll);
+                var p2 = Rotate(triangle.C.Position, yaw, pitch, roll);
+
+                var faceNormal = Normalize(Cross(Subtract(p1, p0), Subtract(p2, p0)));
+                var depth = (p0.Z + p1.Z + p2.Z) / 3f;
+                var lightValue = MathF.Max(0.16f, Dot(faceNormal, light) * 0.75f + 0.25f);
+                var depthTint = Math.Clamp((depth - model.Bounds.Min.Z) / Math.Max(0.0001f, model.Bounds.Size.Z), 0f, 1f);
+
+                var projected0 = Project(p0, dest);
+                var projected1 = Project(p1, dest);
+                var projected2 = Project(p2, dest);
+
+                var color = ComputeColor(lightValue, depthTint);
+
+                AppendMeshVertex(meshVertices, ref meshIndex, projected0.X, projected0.Y, color);
+                AppendMeshVertex(meshVertices, ref meshIndex, projected1.X, projected1.Y, color);
+                AppendMeshVertex(meshVertices, ref meshIndex, projected2.X, projected2.Y, color);
+
+                AppendWire(wireLines, ref wireIndex, projected0, projected1);
+                AppendWire(wireLines, ref wireIndex, projected1, projected2);
+                AppendWire(wireLines, ref wireIndex, projected2, projected0);
+
+                UpdateBounds(projected0.X, projected0.Y, ref minX, ref minY, ref maxX, ref maxY);
+                UpdateBounds(projected1.X, projected1.Y, ref minX, ref minY, ref maxX, ref maxY);
+                UpdateBounds(projected2.X, projected2.Y, ref minX, ref minY, ref maxX, ref maxY);
+            }
+
+            return new FramePacket(
+                meshVertices,
+                wireLines,
+                new SKRect(minX - 12, minY - 12, maxX + 12, maxY + 12));
+        }
+
+        private static void DrawWireOverlay(SKCanvas canvas, float[] wireLines)
+        {
+            using var paint = new SKPaint
+            {
+                Color = SKColor.Parse("#A5D8FF").WithAlpha(110),
+                StrokeWidth = 1,
+                IsAntialias = true,
+                Style = SKPaintStyle.Stroke,
+            };
+
+            for (var index = 0; index < wireLines.Length; index += 4)
+            {
+                canvas.DrawLine(
+                    wireLines[index],
+                    wireLines[index + 1],
+                    wireLines[index + 2],
+                    wireLines[index + 3],
+                    paint);
+            }
+        }
+
+        private static void AppendMeshVertex(float[] buffer, ref int index, float x, float y, SKColor color)
+        {
+            buffer[index++] = x;
+            buffer[index++] = y;
+            buffer[index++] = color.Red / 255f;
+            buffer[index++] = color.Green / 255f;
+            buffer[index++] = color.Blue / 255f;
+            buffer[index++] = color.Alpha / 255f;
+        }
+
+        private static void AppendWire(float[] buffer, ref int index, Vec2 a, Vec2 b)
+        {
+            buffer[index++] = a.X;
+            buffer[index++] = a.Y;
+            buffer[index++] = b.X;
+            buffer[index++] = b.Y;
+        }
+
+        private static SKColor ComputeColor(float lightValue, float depthTint)
+        {
+            var baseRed = 0.26f + depthTint * 0.28f;
+            var baseGreen = 0.36f + depthTint * 0.22f;
+            var baseBlue = 0.45f + depthTint * 0.40f;
+
+            return new SKColor(
+                (byte)(Math.Clamp(baseRed * lightValue, 0f, 1f) * 255),
+                (byte)(Math.Clamp(baseGreen * lightValue, 0f, 1f) * 255),
+                (byte)(Math.Clamp(baseBlue * (0.92f + depthTint * 0.18f), 0f, 1f) * 255),
+                255);
+        }
+
+        private static Vec2 Project(Vec3 point, SKRect dest)
+        {
+            const float focal = 540f;
+            var depth = 8.5f + point.Z;
+            var scale = focal / Math.Max(1.2f, depth);
+
+            return new Vec2(
+                dest.MidX + point.X * scale,
+                dest.MidY - point.Y * scale);
+        }
+
+        private static Vec3 Rotate(Vec3 point, float yaw, float pitch, float roll)
+        {
+            var cy = MathF.Cos(yaw);
+            var sy = MathF.Sin(yaw);
+            var cp = MathF.Cos(pitch);
+            var sp = MathF.Sin(pitch);
+            var cr = MathF.Cos(roll);
+            var sr = MathF.Sin(roll);
+
+            var x1 = point.X * cy - point.Z * sy;
+            var z1 = point.X * sy + point.Z * cy;
+            var y1 = point.Y;
+
+            var y2 = y1 * cp - z1 * sp;
+            var z2 = y1 * sp + z1 * cp;
+            var x2 = x1;
+
+            var x3 = x2 * cr - y2 * sr;
+            var y3 = x2 * sr + y2 * cr;
+
+            return new Vec3(x3, y3, z2);
+        }
+
+        private static Vec3 Subtract(Vec3 a, Vec3 b) => new(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
+        private static Vec3 Cross(Vec3 a, Vec3 b) => new(a.Y * b.Z - a.Z * b.Y, a.Z * b.X - a.X * b.Z, a.X * b.Y - a.Y * b.X);
+        private static float Dot(Vec3 a, Vec3 b) => a.X * b.X + a.Y * b.Y + a.Z * b.Z;
+
+        private static Vec3 Normalize(Vec3 value)
+        {
+            var length = MathF.Sqrt(value.X * value.X + value.Y * value.Y + value.Z * value.Z);
+            if (length <= 0.0001f)
+            {
+                return new Vec3(0, 1, 0);
+            }
+
+            return new Vec3(value.X / length, value.Y / length, value.Z / length);
+        }
+
+        private static void UpdateBounds(float x, float y, ref float minX, ref float minY, ref float maxX, ref float maxY)
+        {
+            minX = Math.Min(minX, x);
+            minY = Math.Min(minY, y);
+            maxX = Math.Max(maxX, x);
+            maxY = Math.Max(maxY, y);
+        }
+    }
+
+    private sealed class ObjModel
+    {
+        public ObjModel(List<Triangle3> triangles, Bounds3 bounds, int vertexCount)
+        {
+            Triangles = triangles;
+            Bounds = bounds;
+            VertexCount = vertexCount;
+        }
+
+        public List<Triangle3> Triangles { get; }
+        public Bounds3 Bounds { get; }
+        public int VertexCount { get; }
+
+        public static ObjModel Parse(string source)
+        {
+            var positions = new List<Vec3>();
+            var texcoords = new List<Vec2>();
+            var normals = new List<Vec3>();
+            var triangles = new List<Triangle3>();
+            var min = new Vec3(float.MaxValue, float.MaxValue, float.MaxValue);
+            var max = new Vec3(float.MinValue, float.MinValue, float.MinValue);
+
+            foreach (var rawLine in source.Split('\n'))
+            {
+                var line = rawLine.Trim();
+                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#", StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                if (line.StartsWith("v ", StringComparison.Ordinal))
+                {
+                    var vertex = ParseVec3(line.AsSpan(2));
+                    positions.Add(vertex);
+                    min = new Vec3(Math.Min(min.X, vertex.X), Math.Min(min.Y, vertex.Y), Math.Min(min.Z, vertex.Z));
+                    max = new Vec3(Math.Max(max.X, vertex.X), Math.Max(max.Y, vertex.Y), Math.Max(max.Z, vertex.Z));
+                    continue;
+                }
+
+                if (line.StartsWith("vt ", StringComparison.Ordinal))
+                {
+                    texcoords.Add(ParseVec2(line.AsSpan(3)));
+                    continue;
+                }
+
+                if (line.StartsWith("vn ", StringComparison.Ordinal))
+                {
+                    normals.Add(ParseVec3(line.AsSpan(3)));
+                    continue;
+                }
+
+                if (!line.StartsWith("f ", StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                var faceTokens = line.AsSpan(2).ToString().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                if (faceTokens.Length < 3)
+                {
+                    continue;
+                }
+
+                var faceVertices = new FaceVertex[faceTokens.Length];
+                for (var index = 0; index < faceTokens.Length; index++)
+                {
+                    faceVertices[index] = ParseFaceVertex(faceTokens[index], positions, texcoords, normals);
+                }
+
+                for (var index = 1; index < faceVertices.Length - 1; index++)
+                {
+                    triangles.Add(new Triangle3(faceVertices[0], faceVertices[index], faceVertices[index + 1]));
+                }
+            }
+
+            var center = new Vec3(
+                (min.X + max.X) * 0.5f,
+                (min.Y + max.Y) * 0.5f,
+                (min.Z + max.Z) * 0.5f);
+            var size = new Vec3(max.X - min.X, max.Y - min.Y, max.Z - min.Z);
+            var maxDim = Math.Max(size.X, Math.Max(size.Y, size.Z));
+            var scale = maxDim <= 0.0001f ? 1f : 4.6f / maxDim;
+
+            for (var index = 0; index < triangles.Count; index++)
+            {
+                triangles[index] = triangles[index].Transform(center, scale);
+            }
+
+            return new ObjModel(triangles, new Bounds3(min, max, size), positions.Count);
+        }
+
+        private static Vec3 ParseVec3(ReadOnlySpan<char> span)
+        {
+            var parts = span.ToString().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            return new Vec3(ParseFloat(parts[0]), ParseFloat(parts[1]), ParseFloat(parts[2]));
+        }
+
+        private static Vec2 ParseVec2(ReadOnlySpan<char> span)
+        {
+            var parts = span.ToString().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            return new Vec2(ParseFloat(parts[0]), ParseFloat(parts[1]));
+        }
+
+        private static FaceVertex ParseFaceVertex(string token, List<Vec3> positions, List<Vec2> texcoords, List<Vec3> normals)
+        {
+            var parts = token.Split('/');
+            var position = positions[ParseIndex(parts[0], positions.Count)];
+            var texcoord = parts.Length > 1 && parts[1].Length > 0
+                ? texcoords[ParseIndex(parts[1], texcoords.Count)]
+                : new Vec2(0, 0);
+            var normal = parts.Length > 2 && parts[2].Length > 0
+                ? normals[ParseIndex(parts[2], normals.Count)]
+                : new Vec3(0, 1, 0);
+
+            return new FaceVertex(position, texcoord, normal);
+        }
+
+        private static int ParseIndex(string value, int count)
+        {
+            var parsed = int.Parse(value, NumberStyles.Integer, CultureInfo.InvariantCulture);
+            return parsed > 0 ? parsed - 1 : count + parsed;
+        }
+
+        private static float ParseFloat(string value)
+            => float.Parse(value, NumberStyles.Float, CultureInfo.InvariantCulture);
+    }
+
+    private readonly record struct FaceVertex(Vec3 Position, Vec2 Uv, Vec3 Normal)
+    {
+        public FaceVertex Transform(Vec3 center, float scale)
+            => new(
+                new Vec3(
+                    (Position.X - center.X) * scale,
+                    (Position.Y - center.Y) * scale - 0.35f,
+                    (Position.Z - center.Z) * scale),
+                Uv,
+                Normal);
+    }
+
+    private readonly record struct Triangle3(FaceVertex A, FaceVertex B, FaceVertex C)
+    {
+        public Triangle3 Transform(Vec3 center, float scale)
+            => new(A.Transform(center, scale), B.Transform(center, scale), C.Transform(center, scale));
+    }
+
+    private readonly record struct Bounds3(Vec3 Min, Vec3 Max, Vec3 Size);
+    private readonly record struct FramePacket(float[] MeshVertices, float[] WireLines, SKRect Bounds);
+    private readonly record struct Vec2(float X, float Y);
+    private readonly record struct Vec3(float X, float Y, float Z);
+}
