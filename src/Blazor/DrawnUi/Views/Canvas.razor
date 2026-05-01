@@ -12,7 +12,7 @@
 @if (IsVisible)
 {
 
-            <div class="xaml-element xaml-contentview xaml-canvas @Class"
+			<div class="xaml-element xaml-contentview xaml-canvas @CanvasLayoutClass @Class"
                 @ref="_hostElement"
                 style="@CssMargins @CssPadding @CssGridPosition @CssStyle @GestureStyle">
 
@@ -40,6 +40,17 @@
     .xaml-canvas {
         position: relative;
         overflow: hidden;
+    }
+
+    .xaml-canvas-fill {
+        flex: 1 1 auto;
+        min-width: 0;
+        min-height: 0;
+        align-self: stretch;
+    }
+
+    .xaml-canvas-fixed {
+        flex: 0 0 auto !important;
     }
 
     .xaml-canvas-surface {
@@ -154,6 +165,24 @@
     private float CanvasElementHeight => HeightRequest > 0
         ? (float)HeightRequest
         : _measuredCanvasHeight > 0 ? _measuredCanvasHeight : 1f;
+
+    private string CanvasLayoutClass
+    {
+        get
+        {
+            if (WidthRequest > 0 || HeightRequest > 0)
+            {
+                return "xaml-canvas-fixed";
+            }
+
+            if (HorizontalOptions.Alignment == LayoutAlignment.Fill || VerticalOptions.Alignment == LayoutAlignment.Fill)
+            {
+                return "xaml-canvas-fill";
+            }
+
+            return string.Empty;
+        }
+    }
 
     public MarkupString CssStyle
     {

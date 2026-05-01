@@ -30,11 +30,6 @@ body {
     min-height: 0;
 }
 
-#app > .page > main > .content > .xaml-element {
-    flex: 1 1 auto;
-    min-height: 0;
-}
-
 h1:focus {
     outline: none;
 }
