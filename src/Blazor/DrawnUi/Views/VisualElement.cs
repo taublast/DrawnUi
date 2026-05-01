@@ -71,6 +71,16 @@ namespace DrawnUi.Views
         [Parameter]
         public new virtual double HeightRequest { get; set; } = -1.0;
 
+        [Parameter]
+        public new virtual double MaximumWidthRequest { get; set; } = double.PositiveInfinity;
+
+        [Parameter]
+        public double MaxWidthRequest
+        {
+            get => MaximumWidthRequest;
+            set => MaximumWidthRequest = value;
+        }
+
         protected string CssLayoutAlignment
         {
             get
@@ -90,8 +100,14 @@ namespace DrawnUi.Views
                 {
                     if (hAlign == LayoutAlignment.Fill)
                     {
-                        width = $"width: initial;";
+                        width = "width: 100%;";
                     }
+                }
+
+                var maxWidth = string.Empty;
+                if (!double.IsPositiveInfinity(MaximumWidthRequest) && MaximumWidthRequest >= 0)
+                {
+                    maxWidth = $"max-width: {MaximumWidthRequest.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units};";
                 }
 
                 if (HeightRequest >= 0)
@@ -108,15 +124,15 @@ namespace DrawnUi.Views
 
                 if (hAlign == LayoutAlignment.Start || hAlign == LayoutAlignment.Fill)
                 {
-                    ret += width;
+                    ret += width + maxWidth;
                 }
                 else if (hAlign == LayoutAlignment.Center)
                 {
-                    ret += "margin-left: auto; margin-right: auto;" + width;
+                    ret += "margin-left: auto; margin-right: auto;" + width + maxWidth;
                 }
                 else if (hAlign == LayoutAlignment.End)
                 {
-                    ret += "margin-left: auto;" + width;
+                    ret += "margin-left: auto;" + width + maxWidth;
                 }
 
                 if (vAlign == LayoutAlignment.Start || vAlign == LayoutAlignment.Fill)

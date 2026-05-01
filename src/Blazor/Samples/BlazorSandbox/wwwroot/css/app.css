@@ -133,6 +133,39 @@ code {
     color: #c02d76;
 }
 
+.nav-group {
+    margin: 0.35rem 0 0.6rem;
+}
+
+.nav-group-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.6rem 0.95rem;
+    border: 0;
+    border-radius: 0.7rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: left;
+}
+
+.nav-group-toggle:hover {
+    background: rgba(255, 255, 255, 0.10);
+}
+
+.nav-group-items {
+    margin-top: 0.35rem;
+    padding-left: 0.3rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-group-items .nav-item {
+    margin-top: 0.1rem;
+}
+
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
     color: var(--bs-secondary-color);
     text-align: end;
