@@ -1,5 +1,9 @@
+#if BROWSER
+using DrawnUi.Draw;
+#else
 using DrawnUi.Features.Images;
 using Microsoft.Maui.Storage;
+#endif
 using System.Collections.Concurrent;
 
 namespace DrawnUi.Controls;
@@ -338,7 +342,13 @@ public class SkiaSprite : AnimatedFramesRenderer
 
             if (Uri.TryCreate(source, UriKind.Absolute, out var uri) && uri.Scheme != "file")
             {
-                using HttpClient client = Super.Services.CreateHttpClient();
+                var client = Super.Services?.GetService(typeof(HttpClient)) as HttpClient;
+                if (client == null)
+                {
+                    Super.Log($"[SkiaSprite] HttpClient service unavailable for {source}");
+                    return null;
+                }
+
                 var data = await client.GetByteArrayAsync(uri);
                 bitmap = SKBitmap.Decode(data);
             }
@@ -393,8 +403,20 @@ public class SkiaSprite : AnimatedFramesRenderer
             }
             else
             {
+#if BROWSER
+                var client = Super.Services?.GetService(typeof(HttpClient)) as HttpClient;
+                if (client == null)
+                {
+                    Super.Log($"[SkiaSprite] HttpClient service unavailable for local source {source}");
+                    return null;
+                }
+
+                var data = await client.GetByteArrayAsync(source);
+                bitmap = SKBitmap.Decode(data);
+#else
                 using var stream = await FileSystem.OpenAppPackageFileAsync(source);
                 bitmap = SKBitmap.Decode(stream);
+#endif
             }
 
             if (bitmap != null)
