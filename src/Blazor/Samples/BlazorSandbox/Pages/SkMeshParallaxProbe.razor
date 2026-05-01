@@ -154,6 +154,7 @@
             HeightRequest = 430,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Start,
+            IsClippedToBounds = true,
             Children =
             {
                 _back,
@@ -451,17 +452,13 @@
         protected override void Paint(DrawingContext ctx)
         {
             base.Paint(ctx);
+
             EnsureAnimator();
 
             var canvas = ctx.Context.Canvas;
             var dest = ctx.Destination;
             if (dest.Width <= 0 || dest.Height <= 0)
                 return;
-
-            if (_drawBackdrop)
-            {
-                DrawBackdrop(canvas, dest);
-            }
 
             if (_layers.Count == 0)
                 return;
@@ -628,35 +625,6 @@
             }
 
             return vertices;
-        }
-
-        private static void DrawBackdrop(SKCanvas canvas, SKRect dest)
-        {
-            using var fill = new SKPaint
-            {
-                IsAntialias = true,
-                Shader = SKShader.CreateLinearGradient(
-                    new SKPoint(dest.Left, dest.Top),
-                    new SKPoint(dest.Right, dest.Bottom),
-                    new[]
-                    {
-                        SKColor.Parse("#03060E"),
-                        SKColor.Parse("#0A1120"),
-                        SKColor.Parse("#111C31"),
-                    },
-                    null,
-                    SKShaderTileMode.Clamp),
-            };
-            canvas.DrawRect(dest, fill);
-
-            using var frame = new SKPaint
-            {
-                Color = SKColor.Parse("#2A335C"),
-                IsAntialias = true,
-                Style = SKPaintStyle.Stroke,
-                StrokeWidth = 2,
-            };
-            canvas.DrawRect(dest, frame);
         }
 
         private void DrawHud(SKCanvas canvas, SKRect dest, float phase)
