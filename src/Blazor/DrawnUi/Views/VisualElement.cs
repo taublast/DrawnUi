@@ -76,6 +76,16 @@ namespace DrawnUi.Views
             set => MaximumWidthRequest = value;
         }
 
+        [Parameter]
+        public new virtual double MaximumHeightRequest { get; set; } = double.PositiveInfinity;
+
+        [Parameter]
+        public double MaxHeightRequest
+        {
+            get => MaximumHeightRequest;
+            set => MaximumHeightRequest = value;
+        }
+
         protected string CssLayoutAlignment
         {
             get
@@ -105,6 +115,12 @@ namespace DrawnUi.Views
                     maxWidth = $"max-width: {MaximumWidthRequest.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units};";
                 }
 
+                var maxHeight = string.Empty;
+                if (!double.IsPositiveInfinity(MaximumHeightRequest) && MaximumHeightRequest >= 0)
+                {
+                    maxHeight = $"max-height: {MaximumHeightRequest.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units};";
+                }
+
                 if (HeightRequest >= 0)
                 {
                     height = $"height: {HeightRequest.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units};";
@@ -132,15 +148,15 @@ namespace DrawnUi.Views
 
                 if (vAlign == LayoutAlignment.Start || vAlign == LayoutAlignment.Fill)
                 {
-                    ret += height;
+                    ret += height + maxHeight;
                 }
                 else if (vAlign == LayoutAlignment.Center)
                 {
-                    ret += "margin-top: auto; margin-bottom: auto;" + height;
+                    ret += "margin-top: auto; margin-bottom: auto;" + height + maxHeight;
                 }
                 else if (vAlign == LayoutAlignment.End)
                 {
-                    ret += "margin-top: auto;" + height;
+                    ret += "margin-top: auto;" + height + maxHeight;
                 }
 
                 return ret;

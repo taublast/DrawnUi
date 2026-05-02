@@ -53,6 +53,10 @@
         flex: 0 0 auto !important;
     }
 
+    .xaml-canvas-auto {
+        display: inline-block;
+    }
+
     .xaml-canvas-surface {
         position: absolute;
         inset: 0;
@@ -160,11 +164,67 @@
 
     private float CanvasElementWidth => WidthRequest > 0
         ? (float)WidthRequest
-        : _measuredCanvasWidth > 0 ? _measuredCanvasWidth : 1f;
+        : _measuredCanvasWidth > 0 ? _measuredCanvasWidth : AutoCanvasWidth;
 
     private float CanvasElementHeight => HeightRequest > 0
         ? (float)HeightRequest
-        : _measuredCanvasHeight > 0 ? _measuredCanvasHeight : 1f;
+        : _measuredCanvasHeight > 0 ? _measuredCanvasHeight : AutoCanvasHeight;
+
+    private float AutoCanvasWidth
+    {
+        get
+        {
+            if (RootControl?.WidthRequest > 0)
+            {
+                return (float)RootControl.WidthRequest;
+            }
+
+            if (RootControl?.MeasuredSize?.Units.Width > 0)
+            {
+                return RootControl.MeasuredSize.Units.Width;
+            }
+
+            return 1f;
+        }
+    }
+
+    private float AutoCanvasHeight
+    {
+        get
+        {
+            if (RootControl?.HeightRequest > 0)
+            {
+                return (float)RootControl.HeightRequest;
+            }
+
+            if (RootControl?.MeasuredSize?.Units.Height > 0)
+            {
+                return RootControl.MeasuredSize.Units.Height;
+            }
+
+            return 1f;
+        }
+    }
+
+    private string AutoCanvasStyle
+    {
+        get
+        {
+            if (WidthRequest > 0 || HorizontalOptions.Alignment == LayoutAlignment.Fill)
+            {
+                return string.Empty;
+            }
+
+            var style = $"width: {AutoCanvasWidth.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units};";
+
+            if (HeightRequest <= 0 && VerticalOptions.Alignment != LayoutAlignment.Fill)
+            {
+                style += $" height: {AutoCanvasHeight.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units};";
+            }
+
+            return style;
+        }
+    }
 
     private string CanvasLayoutClass
     {
@@ -180,7 +240,7 @@
                 return "xaml-canvas-fill";
             }
 
-            return string.Empty;
+            return "xaml-canvas-auto";
         }
     }
 
@@ -189,7 +249,7 @@
         get
         {
             var bg = BackgroundColorCss;
-            var ret = $"background: {bg}; {CssLayoutAlignment} {Style}";
+            var ret = $"background: {bg}; {CssLayoutAlignment} {AutoCanvasStyle} {Style}";
             return new MarkupString(ret);
         }
     }
