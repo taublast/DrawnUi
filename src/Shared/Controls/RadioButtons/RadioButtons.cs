@@ -288,7 +288,7 @@
             {
                 if (GroupsByName[groupName].Contains(control))
                 {
-                    SetGroupValuesExcept(groupName, control, newValue, false);
+                    SetGroupValuesExcept(groupName, control, newValue);
                     if (newValue)
                     {
                         Changed?.Invoke(control, EventArgs.Empty);
@@ -301,7 +301,7 @@
             {
                 if (GroupsByParent[parent].Contains(control))
                 {
-                    SetGroupValuesExcept(parent, control, newValue, true);
+                    SetGroupValuesExcept(parent, control, newValue);
                     if (newValue)
                     {
                         Changed?.Invoke(control, EventArgs.Empty);
@@ -311,13 +311,13 @@
             }
         }
 
-        private void SetGroupValuesExcept(string groupName, ISkiaRadioButton exceptControl, bool newValue, bool isGroupA)
+        private void SetGroupValuesExcept(string groupName, ISkiaRadioButton exceptControl, bool newValue)
         {
-            var group = isGroupA ? GroupsByName[groupName] : null;
+            var group = GroupsByName[groupName];
 
             if (newValue)
             {
-                group?.ForEach(c => { if (c != exceptControl) c.SetValueInternal(false); });
+                group.ForEach(c => { if (c != exceptControl) c.SetValueInternal(false); });
             }
             else
             {
@@ -325,13 +325,13 @@
             }
         }
 
-        private void SetGroupValuesExcept(SkiaControl parent, ISkiaRadioButton exceptControl, bool newValue, bool byParent)
+        private void SetGroupValuesExcept(SkiaControl parent, ISkiaRadioButton exceptControl, bool newValue)
         {
-            var group = byParent ? GroupsByParent[parent] : null;
+            var group = GroupsByParent[parent];
 
             if (newValue)
             {
-                group?.ForEach(c => { if (c != exceptControl) c.SetValueInternal(false); });
+                group.ForEach(c => { if (c != exceptControl) c.SetValueInternal(false); });
             }
             else
             {
