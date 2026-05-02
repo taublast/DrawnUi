@@ -28,11 +28,22 @@
     private const string FpsSnippet = """
 var fps = new SkiaLabelFps()
 {
+    UseCache = SkiaCacheType.GPU,
     BackgroundColor = Colors.DarkRed,
     TextColor = Colors.White,
     Rotation = -12
 };
 """;
+
+    private const float PulseTrackWidth = 220f;
+    private const float PulseBaseSize = 58f;
+    private const float PulseScaleMin = 0.86f;
+    private const float PulseScaleRange = 0.30f;
+    private const float PulseScaleMax = PulseScaleMin + PulseScaleRange;
+    private const float PulseInset = 0f;
+    private const float PulseTrackHalfWidth = PulseTrackWidth * 0.5f;
+    private const float PulseCenterOffset = (PulseTrackWidth - PulseBaseSize) * 0.5f;
+    private const float PulseInitialRadius = PulseBaseSize * PulseScaleMin * 0.5f;
 
     private readonly CancellationTokenSource _animationCts = new();
     private readonly SkiaShape _pulse;
@@ -42,13 +53,14 @@ var fps = new SkiaLabelFps()
     {
         _pulse = new SkiaShape()
         {
-            WidthRequest = 58,
-            HeightRequest = 58,
+            WidthRequest = PulseBaseSize,
+            HeightRequest = PulseBaseSize,
             Type = ShapeType.Circle,
             BackgroundColor = new Color(0.153f, 0.431f, 0.741f, 1f),
             HorizontalOptions = LayoutOptions.Start,
             VerticalOptions = LayoutOptions.Center,
-            TranslationX = -94
+            Margin = new Thickness(PulseCenterOffset, 0, 0, 0),
+            TranslationX = -(PulseTrackHalfWidth - PulseInitialRadius - PulseInset)
         };
 
         RootControl = new SkiaLayout()
@@ -88,19 +100,31 @@ var fps = new SkiaLabelFps()
                     HorizontalOptions = LayoutOptions.Center,
                     Children =
                     {
-                        new SkiaShape()
+                        new SkiaLayout()
                         {
-                            WidthRequest = 220,
-                            HeightRequest = 10,
-                            Type = ShapeType.Rectangle,
-                            CornerRadius = 5,
-                            BackgroundColor = new Color(1f, 1f, 1f, 0.16f),
+                            WidthRequest = PulseTrackWidth,
+                            HeightRequest = PulseBaseSize * PulseScaleMax,
+                            Type = LayoutType.Absolute,
                             HorizontalOptions = LayoutOptions.Center,
-                            VerticalOptions = LayoutOptions.Center
+                            VerticalOptions = LayoutOptions.Center,
+                            Children =
+                            {
+                                new SkiaShape()
+                                {
+                                    WidthRequest = PulseTrackWidth,
+                                    HeightRequest = 10,
+                                    Type = ShapeType.Rectangle,
+                                    CornerRadius = 5,
+                                    BackgroundColor = new Color(1f, 1f, 1f, 0.16f),
+                                    HorizontalOptions = LayoutOptions.Center,
+                                    VerticalOptions = LayoutOptions.Center
+                                },
+                                _pulse
+                            }
                         },
-                        _pulse,
                         new SkiaLabelFps()
                         {
+                            UseCache = SkiaCacheType.GPU,
                             Margin = new Thickness(0, 0, 12, 14),
                             BackgroundColor = new Color(0.471f, 0.094f, 0.094f, 0.92f),
                             FontFamily = "FontText",
@@ -140,9 +164,13 @@ var fps = new SkiaLabelFps()
                 }
 
                 var eased = (float)((Math.Sin(progress * Math.PI * 2) + 1) * 0.5);
-                _pulse.TranslationX = -94 + eased * 188;
-                _pulse.ScaleX = 0.86f + eased * 0.3f;
-                _pulse.ScaleY = 0.86f + eased * 0.3f;
+                var pulseScale = PulseScaleMin + eased * PulseScaleRange;
+                var pulseRadius = PulseBaseSize * pulseScale * 0.5f;
+                var pulseTravel = PulseTrackHalfWidth - pulseRadius - PulseInset;
+
+                _pulse.TranslationX = -pulseTravel + eased * (pulseTravel * 2f);
+                _pulse.ScaleX = pulseScale;
+                _pulse.ScaleY = pulseScale;
                 _pulse.Rotation = eased * 360f;
 
                 RootControl.Update();
