@@ -1,62 +1,20 @@
 @page "/"
-@using DrawnUi.Draw
-@using DrawnUi.Views
+<PageTitle>Home</PageTitle>
 
-<PageTitle>Space Shooter</PageTitle>
+<div class="docs-page">
+    <h1>Welcome to DrawnUI for Blazor</h1>
+    <p class="docs-lead">This sandbox collects focused DrawnUI samples for controls, graphics, gestures, advanced rendering, and gaming scenarios running in WebAssembly.</p>
+    <p class="docs-note">Use the left navigation to open sections as you need them. The default route now starts on this lightweight home page instead of jumping straight into a heavy demo.</p>
 
-<h1>Space Shooter</h1>
-
-This gaming demo is the sandbox home route. It stays in the docs menu as a full-scene example of accelerated rendering, gestures, and the DrawnUI game loop running in Blazor.
-
-<Canvas 
-    HorizontalOptions="LayoutOptions.Fill"
-    VerticalOptions="LayoutOptions.Fill"
-    BackgroundColor="#F0F0F5"
-    Margin="16,16,16,16"
-    RenderingMode="@RenderingModeType.Accelerated"
-    Gestures="@GesturesMode.Enabled"
-    RootControl="@RootControl" />
-
-@code {
-
-    private readonly SkiaControl RootControl;
-    private bool _canRefreshUi;
-
-    public Home()
-    {
-
-        RootControl = new SkiaLayer()
-        {
-            VerticalOptions = LayoutOptions.Fill,
-            HorizontalOptions = LayoutOptions.Fill,
-            Children =
-            {
-                new SpaceShooter.Game.SpaceShooter(),
-                
-                new SkiaLabelFps()
-                {
-                    Margin = new (0, 0, 4, 24),
-                    VerticalOptions = LayoutOptions.End,
-                    HorizontalOptions = LayoutOptions.End,
-                    Rotation = -45,
-                    BackgroundColor = Colors.DarkRed,
-                    TextColor = Colors.White,
-                    ZIndex = 110,
-                }
-            }
-        };
-
-
-    }
-
-
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender)
-        {
-            _canRefreshUi = true;
-        }
-    }
-
-}
+    <div class="docs-example-frame" style="padding: 24px; margin-top: 16px;">
+        <h2 style="margin-top: 0;">Start Here</h2>
+        <p>Browse the sandbox by intent:</p>
+        <ul>
+            <li><strong>Presentation</strong> for the landing page and richer showcase samples.</li>
+            <li><strong>Tutorials</strong> for guided examples like cards.</li>
+            <li><strong>Controls</strong>, <strong>Graphics</strong>, and <strong>Effects</strong> for targeted component probes.</li>
+            <li><strong>Gaming</strong> for heavier accelerated scenes like Space Shooter and Parallax.</li>
+        </ul>
+        <p>The Space Shooter demo is still available from the <strong>Gaming</strong> section.</p>
+    </div>
+</div>

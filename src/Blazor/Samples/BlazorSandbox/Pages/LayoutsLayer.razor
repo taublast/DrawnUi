@@ -1,0 +1,101 @@
+@page "/layouts-layer"
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>SkiaLayer</PageTitle>
+
+<div class="docs-page">
+    <h1>SkiaLayer</h1>
+    <p class="docs-lead">SkiaLayer is the convenience absolute-layout version of SkiaLayout. Use it when you want children layered in the same surface and positioned by their own bounds or margins.</p>
+    <p class="docs-note">It is a good fit for overlays, badges, floating controls, and stacked visual composition where child order matters more than flow layout.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="360"
+                HeightRequest="324"
+                BackgroundColor="#F6F0E6"
+                Margin="0,8,0,0"
+                Gestures="@GesturesMode.Enabled"
+                RootControl="@RootControl" />
+    </div>
+
+    <pre class="docs-code"><code>@LayerSnippet</code></pre>
+</div>
+
+@code {
+    private const string LayerSnippet = """
+var layer = new SkiaLayer()
+{
+    WidthRequest = 260,
+    HeightRequest = 150,
+    Children =
+    {
+        new SkiaShape() { WidthRequest = 220, HeightRequest = 110 },
+        new SkiaShape() { WidthRequest = 64, HeightRequest = 64, Margin = new Thickness(160, 24, 0, 0) }
+    }
+};
+""";
+
+    private readonly SkiaControl RootControl;
+
+    public LayoutsLayer()
+    {
+        var layer = new SkiaLayer()
+        {
+            WidthRequest = 260,
+            HeightRequest = 150,
+            HorizontalOptions = LayoutOptions.Center,
+            Children =
+            {
+                new SkiaShape()
+                {
+                    WidthRequest = 220,
+                    HeightRequest = 110,
+                    Margin = new Thickness(20, 20, 0, 0),
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 20,
+                    BackgroundColor = new Color(0.918f, 0.941f, 0.976f, 1f)
+                },
+                new SkiaShape()
+                {
+                    WidthRequest = 72,
+                    HeightRequest = 72,
+                    Margin = new Thickness(156, 12, 0, 0),
+                    Type = ShapeType.Circle,
+                    BackgroundColor = new Color(0.784f, 0.396f, 0.282f, 1f)
+                },
+                new SkiaLabel()
+                {
+                    Text = "Overlay",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 16,
+                    Margin = new Thickness(36, 60, 0, 0),
+                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f)
+                }
+            }
+        };
+
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 328,
+            HeightRequest = 292,
+            Padding = new Thickness(18),
+            BackgroundColor = new Color(1f, 0.989f, 0.959f, 1f),
+            Type = LayoutType.Column,
+            Spacing = 12,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SkiaLayer",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 24,
+                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                layer
+            }
+        };
+    }
+}

@@ -1,0 +1,91 @@
+@page "/canvas-fill-direction"
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>Fill Direction</PageTitle>
+
+<div class="docs-page">
+    <h1>Fill Direction</h1>
+    <p class="docs-lead">Canvas can fill in one direction while staying content-driven in the other. In Blazor that matters because the host CSS is generated from the same layout options you set on the control.</p>
+    <p class="docs-note">This sample uses <strong>HorizontalOptions = Fill</strong> together with <strong>MaxHeightRequest = 300</strong>. The content wants to be taller, but the Canvas still caps the vertical size.</p>
+
+    <pre class="docs-code"><code>@CanvasSnippet</code></pre>
+</div>
+
+<Canvas HorizontalOptions="@LayoutOptions.Fill"
+        HeightRequest="200"
+        MaxHeightRequest="300"
+        BackgroundColor="#F7F3EA"
+        Margin="0,8,0,0"
+        RootControl="@_fillDirectionRoot" />
+
+@code {
+    private const string CanvasSnippet = """
+<Canvas HorizontalOptions="@LayoutOptions.Fill"
+    HeightRequest="200"
+    MaxHeightRequest="300"
+    BackgroundColor="#F7F3EA"
+    Margin="0,8,0,0"
+    RootControl="@_fillDirectionRoot"" />
+""";
+
+    private readonly SkiaControl _fillDirectionRoot;
+
+    public CanvasFillDirection()
+    {
+        _fillDirectionRoot = new SkiaLayout()
+        {
+            Type = LayoutType.Column,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            Padding = new Thickness(18),
+            Spacing = 12,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "Horizontal fill keeps the surface stretched while height stays requested.",
+                    FontFamily = "FontText",
+                    FontSize = 14,
+                    TextColor = new Color(0.365f, 0.314f, 0.231f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                new SkiaShape()
+                {
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 18,
+                    BackgroundColor = new Color(0.918f, 0.941f, 0.976f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill,
+                    HeightRequest = 112,
+                    Children =
+                    {
+                        new SkiaLayout()
+                        {
+                            Type = LayoutType.Column,
+                            Margin = new Thickness(18, 16),
+                            Spacing = 6,
+                            Children =
+                            {
+                                new SkiaLabel()
+                                {
+                                    Text = "Fill X",
+                                    FontFamily = "FontTextTitle",
+                                    FontSize = 18,
+                                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f)
+                                },
+                                new SkiaLabel()
+                                {
+                                    Text = "The root control expands with the host width, while the Canvas height stays bounded.",
+                                    FontFamily = "FontText",
+                                    FontSize = 13,
+                                    TextColor = new Color(0.365f, 0.314f, 0.231f, 1f)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+    }
+}

@@ -1,0 +1,72 @@
+@page "/canvas-full-fill"
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>Full Fill</PageTitle>
+
+<div class="docs-page">
+    <h1>Full Fill</h1>
+    <p class="docs-lead">When both <strong>HorizontalOptions</strong> and <strong>VerticalOptions</strong> are set to <strong>Fill</strong>, the Canvas expands to match the available space from its parent.</p>
+    <p class="docs-note">The parent matters here. This example gives the Canvas a bounded host area so you can see it occupy the full width and height instead of falling back to content sizing.</p>
+
+    <pre class="docs-code"><code>@CanvasSnippet</code></pre>
+</div>
+
+<Canvas HorizontalOptions="@LayoutOptions.Fill"
+        VerticalOptions="@LayoutOptions.Fill"
+        BackgroundColor="#F7F3EA"
+        Margin="0,8,0,8"
+        RootControl="@_fullFillRoot" />
+
+@code {
+    private const string CanvasSnippet = """
+<Canvas HorizontalOptions="@LayoutOptions.Fill"
+    VerticalOptions="@LayoutOptions.Fill"
+    BackgroundColor="#F7F3EA"
+    Margin="0,8,0,8"
+    RootControl="@_fullFillRoot" />
+""";
+
+    private readonly SkiaControl _fullFillRoot;
+
+    public CanvasFullFill()
+    {
+        _fullFillRoot = 
+            new SkiaLayout()
+            {
+                Type = LayoutType.Column,
+                Margin = new Thickness(20, 18),
+                VerticalOptions = LayoutOptions.Fill,
+                Spacing = 8,
+                Children =
+                {
+                    new SkiaRichLabel()
+                    {
+                        Text = "This is a `Canvas` control",
+                        FontFamily = "FontTextTitle",
+                        FontSize = 20,
+                        TextColor = new Color(0.208f, 0.169f, 0.118f, 1f)
+                    },
+                    new SkiaLabel()
+                    {
+                        Text = "The drawn root stretches with the Canvas, so the inner card occupies the whole bounded host.",
+                        FontFamily = "FontText",
+                        FontSize = 13,
+                        TextColor = new Color(0.365f, 0.314f, 0.231f, 1f)
+                    },
+                    new SkiaButton("Filling the host")
+                    {
+                        WidthRequest = 180,
+                        HeightRequest = 42,
+                        HorizontalOptions = LayoutOptions.Start,
+                        BackgroundColor = new Color(0.208f, 0.600f, 0.357f, 1f),
+                        TextColor = Colors.White,
+                        CornerRadius = 12,
+                        Padding = new Thickness(14, 8)
+                    }
+                }
+            }
+        ;
+    }
+}

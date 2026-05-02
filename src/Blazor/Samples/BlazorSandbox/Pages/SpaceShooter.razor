@@ -1,0 +1,62 @@
+@page "/space-shooter"
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>Space Shooter</PageTitle>
+
+<h1>Space Shooter</h1>
+
+This gaming demo stays in the sandbox as a full-scene example of accelerated rendering, gestures, and the DrawnUI game loop running in Blazor.
+
+<Canvas 
+    HorizontalOptions="LayoutOptions.Fill"
+    VerticalOptions="LayoutOptions.Fill"
+    BackgroundColor="#F0F0F5"
+    Margin="16,16,16,16"
+    RenderingMode="@RenderingModeType.Accelerated"
+    Gestures="@GesturesMode.Enabled"
+    RootControl="@RootControl" />
+
+@code {
+
+    private readonly SkiaControl RootControl;
+    private bool _canRefreshUi;
+
+    public SpaceShooter()
+    {
+
+        RootControl = new SkiaLayer()
+        {
+            VerticalOptions = LayoutOptions.Fill,
+            HorizontalOptions = LayoutOptions.Fill,
+            Children =
+            {
+                new global::SpaceShooter.Game.SpaceShooter(),
+                
+                new SkiaLabelFps()
+                {
+                    Margin = new (0, 0, 4, 24),
+                    VerticalOptions = LayoutOptions.End,
+                    HorizontalOptions = LayoutOptions.End,
+                    Rotation = -45,
+                    BackgroundColor = Colors.DarkRed,
+                    TextColor = Colors.White,
+                    ZIndex = 110,
+                }
+            }
+        };
+
+
+    }
+
+
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _canRefreshUi = true;
+        }
+    }
+
+}

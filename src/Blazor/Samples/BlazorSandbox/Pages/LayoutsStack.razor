@@ -1,0 +1,102 @@
+@page "/layouts-stack"
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>SkiaStack</PageTitle>
+
+<div class="docs-page">
+    <h1>SkiaStack</h1>
+    <p class="docs-lead">SkiaStack is the vertical-stack alias for SkiaLayout. It fixes <strong>Type = LayoutType.Column</strong> so the control reads by intent instead of by configuration.</p>
+    <p class="docs-note">Use it when the layout is unambiguously vertical and you want the code to stay terse.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="360"
+                HeightRequest="324"
+                BackgroundColor="#F6F0E6"
+                Margin="0,8,0,0"
+                Gestures="@GesturesMode.Enabled"
+                RootControl="@RootControl" />
+    </div>
+
+    <pre class="docs-code"><code>@StackSnippet</code></pre>
+</div>
+
+@code {
+    private const string StackSnippet = """
+var stack = new SkiaStack()
+{
+    Spacing = 10,
+    Children =
+    {
+        new SkiaShape() { HeightRequest = 54 },
+        new SkiaShape() { HeightRequest = 54 },
+        new SkiaShape() { HeightRequest = 54 }
+    }
+};
+""";
+
+    private readonly SkiaControl RootControl;
+
+    public LayoutsStack()
+    {
+        var stack = new SkiaStack()
+        {
+            WidthRequest = 220,
+            Spacing = 10,
+            HorizontalOptions = LayoutOptions.Center,
+            Children =
+            {
+                CreateStackTile("Header", new Color(0.918f, 0.941f, 0.976f, 1f)),
+                CreateStackTile("Body", new Color(0.961f, 0.925f, 0.898f, 1f)),
+                CreateStackTile("Footer", new Color(0.922f, 0.961f, 0.929f, 1f))
+            }
+        };
+
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 328,
+            HeightRequest = 292,
+            Padding = new Thickness(18),
+            BackgroundColor = new Color(1f, 0.989f, 0.959f, 1f),
+            Type = LayoutType.Column,
+            Spacing = 12,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SkiaStack",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 24,
+                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                stack
+            }
+        };
+    }
+
+    private static SkiaShape CreateStackTile(string text, Color color)
+    {
+        return new SkiaShape()
+        {
+            HeightRequest = 54,
+            Type = ShapeType.Rectangle,
+            CornerRadius = 16,
+            BackgroundColor = color,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = text,
+                    FontFamily = "FontTextTitle",
+                    FontSize = 14,
+                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center
+                }
+            }
+        };
+    }
+}

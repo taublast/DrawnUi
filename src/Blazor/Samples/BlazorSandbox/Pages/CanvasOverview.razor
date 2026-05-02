@@ -1,0 +1,97 @@
+@page "/canvas"
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>Canvas</PageTitle>
+
+<div class="docs-page">
+    <h1>Canvas</h1>
+    <p class="docs-lead">Canvas is the Blazor host for a DrawnUI render tree. It bridges browser layout and the DrawnUI drawing surface, and it can run in either <strong>Default</strong> or <strong>Accelerated</strong> rendering mode.</p>
+    <p class="docs-note">Use <strong>WidthRequest</strong> and <strong>HeightRequest</strong> when you want a fixed surface. The other Canvas pages in this section focus on how the same control behaves when you let Blazor layout drive the size instead.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="344"
+                HeightRequest="118"
+                BackgroundColor="#F7F3EA"
+                Margin="0,8,0,0"
+                RenderingMode="@RenderingModeType.Default"
+                RootControl="@_defaultRoot" />
+
+        <Canvas WidthRequest="344"
+                HeightRequest="118"
+                BackgroundColor="#F7F3EA"
+                Margin="0,12,0,0"
+                RenderingMode="@RenderingModeType.Accelerated"
+                RootControl="@_acceleratedRoot" />
+    </div>
+
+    <pre class="docs-code"><code>@CanvasSnippet</code></pre>
+</div>
+
+@code {
+    private const string CanvasSnippet = """
+<Canvas WidthRequest="344"
+        HeightRequest="118"
+        RenderingMode="@RenderingModeType.Accelerated"
+        RootControl="@RootControl" />
+""";
+
+    private readonly SkiaControl _defaultRoot;
+    private readonly SkiaControl _acceleratedRoot;
+
+    public CanvasOverview()
+    {
+        _defaultRoot = CreateCard("Default", "SkiaView", new Color(0.918f, 0.941f, 0.976f, 1f));
+        _acceleratedRoot = CreateCard("Accelerated", "SkiaViewAccelerated", new Color(0.922f, 0.961f, 0.929f, 1f));
+    }
+
+    private static SkiaControl CreateCard(string title, string subtitle, Color color)
+    {
+        return new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 312,
+            HeightRequest = 86,
+            Type = LayoutType.Column,
+            Spacing = 6,
+            Children =
+            {
+                new SkiaShape()
+                {
+                    WidthRequest = 312,
+                    HeightRequest = 86,
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 18,
+                    BackgroundColor = color,
+                    Children =
+                    {
+                        new SkiaLayout()
+                        {
+                            Type = LayoutType.Column,
+                            Margin = new Thickness(18, 16),
+                            Spacing = 4,
+                            Children =
+                            {
+                                new SkiaLabel()
+                                {
+                                    Text = title,
+                                    FontFamily = "FontTextTitle",
+                                    FontSize = 18,
+                                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f)
+                                },
+                                new SkiaLabel()
+                                {
+                                    Text = subtitle,
+                                    FontFamily = "FontText",
+                                    FontSize = 13,
+                                    TextColor = new Color(0.365f, 0.314f, 0.231f, 1f)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+    }
+}

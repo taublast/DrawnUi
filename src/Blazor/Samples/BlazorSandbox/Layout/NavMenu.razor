@@ -17,7 +17,46 @@
 
             @if (presentationGroupExpanded)
             {
-                <div class="nav-group-items"></div>
+                <div class="nav-group-items">
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="" Match="NavLinkMatch.All" @onclick="CloseNavMenu">
+                            <span class="bi bi-house-door-nav-menu" aria-hidden="true"></span> Home
+                        </NavLink>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="nav-group px-2">
+            <button type="button" class="nav-group-toggle" @onclick="ToggleCanvasGroup">
+                <span class="bi @(canvasGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                <span>The Canvas</span>
+            </button>
+
+            @if (canvasGroupExpanded)
+            {
+                <div class="nav-group-items">
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="canvas" @onclick="CloseNavMenu">
+                            <span class="bi bi-aspect-ratio" aria-hidden="true"></span> Canvas
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="canvas-auto-size" @onclick="CloseNavMenu">
+                            <span class="bi bi-arrows-angle-expand" aria-hidden="true"></span> Auto Size
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="canvas-fill-direction" @onclick="CloseNavMenu">
+                            <span class="bi bi-arrows-collapse-vertical" aria-hidden="true"></span> Fill Direction
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="canvas-full-fill" @onclick="CloseNavMenu">
+                            <span class="bi bi-fullscreen" aria-hidden="true"></span> Full Fill
+                        </NavLink>
+                    </div>
+                </div>
             }
         </div>
 
@@ -187,6 +226,31 @@
                         @if (layoutsControlsGroupExpanded)
                         {
                             <div class="nav-subgroup-items">
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="layouts-layout" @onclick="CloseNavMenu">
+                                        <span class="bi bi-layout-text-window-nav-menu" aria-hidden="true"></span> SkiaLayout
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="layouts-layer" @onclick="CloseNavMenu">
+                                        <span class="bi bi-layers-nav-menu" aria-hidden="true"></span> SkiaLayer
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="layouts-stack" @onclick="CloseNavMenu">
+                                        <span class="bi bi-stack-nav-menu" aria-hidden="true"></span> SkiaStack
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="layouts-row" @onclick="CloseNavMenu">
+                                        <span class="bi bi-distribute-horizontal-nav-menu" aria-hidden="true"></span> SkiaRow
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="layouts-wrap" @onclick="CloseNavMenu">
+                                        <span class="bi bi-text-wrap-nav-menu" aria-hidden="true"></span> SkiaWrap
+                                    </NavLink>
+                                </div>
                                 <div class="nav-item px-3">
                                     <NavLink class="nav-link" href="layouts-grid" @onclick="CloseNavMenu">
                                         <span class="bi bi-grid-nav-menu" aria-hidden="true"></span> SkiaGrid
@@ -375,7 +439,7 @@
             {
                 <div class="nav-group-items">
                     <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="" Match="NavLinkMatch.All" @onclick="CloseNavMenu">
+                        <NavLink class="nav-link" href="space-shooter" @onclick="CloseNavMenu">
                             <span class="bi bi-rocket-takeoff-nav-menu" aria-hidden="true"></span> Space Shooter
                         </NavLink>
                     </div>
@@ -392,7 +456,8 @@
 
 @code {
     private bool collapseNavMenu = true;
-    private bool presentationGroupExpanded;
+    private bool presentationGroupExpanded = true;
+    private bool canvasGroupExpanded;
     private bool tutorialsGroupExpanded;
     private bool primitivesGroupExpanded;
     private bool controlsGroupExpanded;
@@ -424,6 +489,11 @@
     private void ToggleTutorialsGroup()
     {
         tutorialsGroupExpanded = !tutorialsGroupExpanded;
+    }
+
+    private void ToggleCanvasGroup()
+    {
+        canvasGroupExpanded = !canvasGroupExpanded;
     }
 
     private void TogglePrimitivesGroup()
