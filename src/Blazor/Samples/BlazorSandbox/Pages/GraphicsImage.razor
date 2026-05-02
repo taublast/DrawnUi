@@ -1,0 +1,115 @@
+@page "/graphics-image"
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>SkiaImage</PageTitle>
+
+<div class="docs-page">
+    <h1>SkiaImage</h1>
+    <p class="docs-lead">SkiaImage is the standard way to place local or remote bitmaps into a DrawnUI surface. The two properties you reach for most often are `Source` and `Aspect`.</p>
+    <p class="docs-note">This example shows one local image and one remote image with different aspect modes, inside small cards that fit the docs layout.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="380"
+                HeightRequest="360"
+                BackgroundColor="#F6F1E7"
+                Margin="0,8,0,0"
+                RootControl="@RootControl" />
+    </div>
+
+    <pre class="docs-code"><code>@ImageSnippet</code></pre>
+</div>
+
+@code {
+    private const string ImageSnippet = """
+var image = new SkiaImage()
+{
+    Source = "icon-192.png",
+    Aspect = TransformAspect.AspectFit
+};
+""";
+
+    private readonly SkiaControl RootControl;
+
+    public GraphicsImage()
+    {
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 348,
+            HeightRequest = 328,
+            Padding = new Thickness(18),
+            BackgroundColor = new Color(1f, 0.989f, 0.959f, 1f),
+            Type = LayoutType.Column,
+            Spacing = 14,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SkiaImage",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 24,
+                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                new SkiaLayout()
+                {
+                    Type = LayoutType.Row,
+                    Spacing = 12,
+                    HorizontalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        CreateImageCard("Local fit", "icon-192.png", TransformAspect.AspectFit),
+                        CreateImageCard("Remote cover", "https://picsum.photos/240/320", TransformAspect.AspectCover)
+                    }
+                }
+            }
+        };
+    }
+
+    private static SkiaShape CreateImageCard(string title, ImageSource source, TransformAspect aspect)
+    {
+        return new SkiaShape()
+        {
+            WidthRequest = 146,
+            HeightRequest = 214,
+            Type = ShapeType.Rectangle,
+            CornerRadius = 18,
+            BackgroundColor = Colors.White,
+            StrokeColor = new Color(0.851f, 0.827f, 0.776f, 1f),
+            StrokeWidth = 1,
+            Padding = new Thickness(12),
+            Children =
+            {
+                new SkiaLayout()
+                {
+                    Type = LayoutType.Column,
+                    Spacing = 8,
+                    VerticalOptions = LayoutOptions.Fill,
+                    Children =
+                    {
+                        new SkiaLabel()
+                        {
+                            Text = title,
+                            FontFamily = "FontTextTitle",
+                            FontSize = 15,
+                            TextColor = new Color(0.278f, 0.196f, 0.110f, 1f),
+                            HorizontalOptions = LayoutOptions.Center
+                        },
+                        new SkiaImage()
+                        {
+                            WidthRequest = 118,
+                            HeightRequest = 146,
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.Center,
+                            BackgroundColor = new Color(0.949f, 0.929f, 0.878f, 1f),
+                            Source = source,
+                            Aspect = aspect
+                        }
+                    }
+                }
+            }
+        };
+    }
+}

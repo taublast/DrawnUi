@@ -70,30 +70,32 @@ The current direct Blazor implementation footprint is still a foundation layer, 
 
 That footprint matches the current validated slices: layout, shape rendering, text slices, image/font infrastructure, keyboard integration, and sandbox probes built on top of those primitives.
 
-## Direct MAUI Controls Still Missing a Blazor/Shared Port Footprint
+## Porting Definition Used In This Status File
 
-The following MAUI controls/classes currently have no corresponding class footprint in `src/Shared/` or `src/Blazor/DrawnUi/`, so they should still be treated as not ported to Blazor:
+For this board, a control is considered ported once it resides in `src/Shared/`.
+
+- `Ported` means the control has been moved from MAUI-only code into the shared project.
+- `Not ported yet` means the control still exists only under `src/Maui/`.
+- Runtime parity in Blazor is tracked separately from structural porting.
+
+## Controls Still Not Ported Yet
+
+The following controls/classes are still MAUI-only and therefore remain not ported under the definition above:
 
 | Area | Controls/classes not ported yet |
 |---|---|
-| Buttons and interaction widgets | `SkiaButton`, `SkiaCheckbox`, `SkiaHoverMask`, `SkiaRadioButton`, `SkiaSwitch`, `SkiaToggle` |
-| Navigation and containers | `SkiaDrawer`, `SkiaShell`, `SkiaTabsSelector`, `SkiaViewSwitcher` |
-| Scrolling/carousels/cells | `SkiaCarousel`, `SkiaDrawnCell`, `SkiaDynamicDrawnCell` |
-| Sliders and progress | `SkiaSlider`, `SkiaProgress`, `SkiaRangeBase` |
-| Pickers and spinners | `SkiaSpinner`, `SkiaWheelPicker`, `SkiaWheelPickerCell`, `SkiaWheelScroll`, `SkiaWheelShape`, `SkiaWheelStack` |
-| Decorated layout helpers | `SkiaDecoratedColumn`, `SkiaDecoratedGrid` |
-| Text input and media wrappers | `SkiaMauiEditor`, `SkiaMauiEntry`, `SkiaMediaImage` |
+| Navigation | `SkiaShell` |
+| Text input wrappers | `SkiaMauiEditor`, `SkiaMauiEntry` |
+| Media playback wrappers | `SkiaMediaImage` |
 
 ## Features Still Not Ported Or Still Partial
 
 | Feature area | State |
 |---|---|
-| Full MAUI control catalog parity | Not ported yet beyond the currently validated foundation slices listed above |
+| Full Blazor runtime parity across all shared controls | Still partial; many controls are structurally ported via `src/Shared/` but not all have validated Blazor runtime parity yet |
 | Text input/editor stack | Not ported yet; MAUI entry/editor wrappers remain MAUI-only |
-| Shell/drawer navigation stack | Not ported yet |
-| Wheel picker and spinner stack | Not ported yet |
-| Slider/progress/range controls | Not ported yet |
-| Checkbox/radio/switch/toggle family | Not ported yet |
+| Shell navigation stack | Not ported yet |
+| Media playback wrapper control | Not ported yet; `SkiaMediaImage` remains MAUI-only |
 | XAML-specific converters, markup extensions, and styling helpers | MAUI-only infrastructure; no equivalent full Blazor port surface yet |
 | PDF support | Explicitly excluded from the Blazor compile surface |
 | Native file loading paths | Browser implementation logs native file loading as unsupported |

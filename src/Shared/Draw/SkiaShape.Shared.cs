@@ -40,9 +40,9 @@ namespace DrawnUi.Draw
 
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(
             nameof(CornerRadius),
-            typeof(Microsoft.Maui.CornerRadius),
+            typeof(CornerRadius),
             typeof(SkiaShape),
-            default(Microsoft.Maui.CornerRadius),
+            default(CornerRadius),
             propertyChanged: NeedInvalidateMeasure);
 
         public string PathData
@@ -69,9 +69,9 @@ namespace DrawnUi.Draw
             set => SetValue(StrokeColorProperty, value);
         }
 
-        public Microsoft.Maui.CornerRadius CornerRadius
+        public CornerRadius CornerRadius
         {
-            get => (Microsoft.Maui.CornerRadius)GetValue(CornerRadiusProperty);
+            get => (CornerRadius)GetValue(CornerRadiusProperty);
             set => SetValue(CornerRadiusProperty, value);
         }
 

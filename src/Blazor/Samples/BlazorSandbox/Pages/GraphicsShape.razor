@@ -1,0 +1,146 @@
+@page "/graphics-shape"
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>SkiaShape</PageTitle>
+
+<div class="docs-page">
+    <h1>SkiaShape</h1>
+    <p class="docs-lead">SkiaShape is the basic building block for rectangles, circles, strokes, clipping, and simple composed surfaces. You will use it constantly, both directly and inside larger controls.</p>
+    <p class="docs-note">This example shows three common cases: a filled card, a stroked inset panel, and a clipped circle with an image inside.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="380"
+                HeightRequest="440"
+                BackgroundColor="#F6F1E7"
+                Margin="0,8,0,0"
+                RootControl="@RootControl" />
+    </div>
+
+    <pre class="docs-code"><code>@ShapeSnippet</code></pre>
+</div>
+
+@code {
+    private const string ShapeSnippet = """
+var card = new SkiaShape()
+{
+    Type = ShapeType.Rectangle,
+    CornerRadius = 20,
+    StrokeWidth = 2,
+    BackgroundColor = Colors.White
+};
+""";
+
+    private readonly SkiaControl RootControl;
+
+    public GraphicsShape()
+    {
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 348,
+            HeightRequest = 408,
+            Padding = new Thickness(18),
+            BackgroundColor = new Color(1f, 0.989f, 0.959f, 1f),
+            Type = LayoutType.Column,
+            Spacing = 14,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SkiaShape",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 24,
+                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                new SkiaShape()
+                {
+                    WidthRequest = 312,
+                    HeightRequest = 82,
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 20,
+                    BackgroundColor = new Color(0.204f, 0.553f, 0.780f, 1f),
+                    HorizontalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        new SkiaLabel()
+                        {
+                            Text = "Filled rounded surface",
+                            FontFamily = "FontTextTitle",
+                            FontSize = 18,
+                            TextColor = Colors.White,
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.Center
+                        }
+                    }
+                },
+                new SkiaShape()
+                {
+                    WidthRequest = 312,
+                    HeightRequest = 104,
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 22,
+                    BackgroundColor = new Color(0.949f, 0.929f, 0.878f, 1f),
+                    StrokeColor = Colors.Black,
+                    StrokeWidth = 10,
+                    Padding = new Thickness(12),
+                    HorizontalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        new SkiaShape()
+                        {
+                            Type = ShapeType.Rectangle,
+                            CornerRadius = 14,
+                            BackgroundColor = new Color(0.220f, 0.365f, 0.624f, 1f),
+                            HorizontalOptions = LayoutOptions.Fill,
+                            VerticalOptions = LayoutOptions.Fill,
+                            Children =
+                            {
+                                new SkiaLabel()
+                                {
+                                    Text = "Stroke shrinks the interior area",
+                                    FontFamily = "FontText",
+                                    FontSize = 13,
+                                    TextColor = Colors.White,
+                                    HorizontalOptions = LayoutOptions.Center,
+                                    VerticalOptions = LayoutOptions.Center
+                                }
+                            }
+                        }
+                    }
+                },
+                new SkiaShape()
+                {
+                    WidthRequest = 160,
+                    HeightRequest = 160,
+                    Type = ShapeType.Circle,
+                    StrokeColor = Colors.Black,
+                    StrokeWidth = 12,
+                    BackgroundColor = new Color(0.949f, 0.929f, 0.878f, 1f),
+                    HorizontalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        new SkiaImage()
+                        {
+                            HorizontalOptions = LayoutOptions.Fill,
+                            VerticalOptions = LayoutOptions.Fill,
+                            Source = "icon-192.png",
+                            Aspect = TransformAspect.AspectCover
+                        },
+                        new SkiaLabel()
+                        {
+                            Text = "Clip",
+                            FontFamily = "FontTextTitle",
+                            FontSize = 18,
+                            TextColor = Colors.White,
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.Center
+                        }
+                    }
+                }
+            }
+        };
+    }
+}

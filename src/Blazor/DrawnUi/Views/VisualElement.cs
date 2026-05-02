@@ -6,11 +6,6 @@ using Microsoft.AspNetCore.Components;
 
 namespace DrawnUi.Views
 {
-    public static class XamlExtensions
-    {
-
-    }
-
     public class VisualElement : View, IDisposable
     {
         [Parameter]

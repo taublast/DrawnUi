@@ -9,31 +9,45 @@
 
 <div class="@NavMenuCssClass nav-scrollable">
     <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All" @onclick="CloseNavMenu">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
+        <div class="nav-group px-2">
+            <button type="button" class="nav-group-toggle" @onclick="TogglePresentationGroup">
+                <span class="bi @(presentationGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                <span>Presentation</span>
+            </button>
+
+            @if (presentationGroupExpanded)
+            {
+                <div class="nav-group-items"></div>
+            }
         </div>
 
         <div class="nav-group px-2">
-            <button type="button" class="nav-group-toggle" @onclick="ToggleGeneralGroup">
-                <span class="bi @(generalGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
-                <span>General Probes</span>
+            <button type="button" class="nav-group-toggle" @onclick="ToggleTutorialsGroup">
+                <span class="bi @(tutorialsGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                <span>Tutorials</span>
             </button>
 
-            @if (generalGroupExpanded)
+            @if (tutorialsGroupExpanded)
             {
                 <div class="nav-group-items">
                     <div class="nav-item px-3">
                         <NavLink class="nav-link" href="cards" @onclick="CloseNavMenu">
-                            <span class="bi bi-arrow-down-up-nav-menu" aria-hidden="true"></span> Cards
+                            <span class="bi bi-columns-gap-nav-menu" aria-hidden="true"></span> Cards
                         </NavLink>
                     </div>
-                    <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="keyboard-probe" @onclick="CloseNavMenu">
-                            <span class="bi bi-keyboard-nav-menu" aria-hidden="true"></span> Keyboard
-                        </NavLink>
-                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="nav-group px-2">
+            <button type="button" class="nav-group-toggle" @onclick="TogglePrimitivesGroup">
+                <span class="bi @(primitivesGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                <span>Primitives</span>
+            </button>
+
+            @if (primitivesGroupExpanded)
+            {
+                <div class="nav-group-items">
                     <div class="nav-item px-3">
                         <NavLink class="nav-link" href="image-probe" @onclick="CloseNavMenu">
                             <span class="bi bi-image-nav-menu" aria-hidden="true"></span> Image
@@ -45,28 +59,8 @@
                         </NavLink>
                     </div>
                     <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="scroll-probe" @onclick="CloseNavMenu">
-                            <span class="bi bi-arrow-down-up-nav-menu" aria-hidden="true"></span> Scroll
-                        </NavLink>
-                    </div>
-                    <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="lottie-probe" @onclick="CloseNavMenu">
-                            <span class="bi bi-play-circle-nav-menu" aria-hidden="true"></span> Lottie
-                        </NavLink>
-                    </div>
-                    <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="gif-probe" @onclick="CloseNavMenu">
-                            <span class="bi bi-film-nav-menu" aria-hidden="true"></span> Gif
-                        </NavLink>
-                    </div>
-                    <div class="nav-item px-3">
                         <NavLink class="nav-link" href="svg-probe" @onclick="CloseNavMenu">
                             <span class="bi bi-badge-sd-nav-menu" aria-hidden="true"></span> Svg
-                        </NavLink>
-                    </div>
-                    <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="backdrop-probe" @onclick="CloseNavMenu">
-                            <span class="bi bi-layers-half-nav-menu" aria-hidden="true"></span> Backdrop
                         </NavLink>
                     </div>
                 </div>
@@ -74,12 +68,279 @@
         </div>
 
         <div class="nav-group px-2">
-            <button type="button" class="nav-group-toggle" @onclick="ToggleSkMeshGroup">
-                <span class="bi @(skMeshGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
-                <span>SKMech</span>
+            <button type="button" class="nav-group-toggle" @onclick="ToggleControlsGroup">
+                <span class="bi @(controlsGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                <span>Controls</span>
             </button>
 
-            @if (skMeshGroupExpanded)
+            @if (controlsGroupExpanded)
+            {
+                <div class="nav-group-items">
+                    <div class="nav-subgroup">
+                        <button type="button" class="nav-subgroup-toggle" @onclick="ToggleLabelsControlsGroup">
+                            <span class="bi @(labelsControlsGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                            <span>Labels</span>
+                        </button>
+
+                        @if (labelsControlsGroupExpanded)
+                        {
+                            <div class="nav-subgroup-items">
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="labels" @onclick="CloseNavMenu">
+                                        <span class="bi bi-type-nav-menu" aria-hidden="true"></span> SkiaLabel
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="labels-rich" @onclick="CloseNavMenu">
+                                        <span class="bi bi-text-paragraph-nav-menu" aria-hidden="true"></span> SkiaRichLabel
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="labels-fps" @onclick="CloseNavMenu">
+                                        <span class="bi bi-speedometer2-nav-menu" aria-hidden="true"></span> SkiaLabelFps
+                                    </NavLink>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="nav-subgroup">
+                        <button type="button" class="nav-subgroup-toggle" @onclick="ToggleButtonsControlsGroup">
+                            <span class="bi @(buttonsControlsGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                            <span>Buttons</span>
+                        </button>
+
+                        @if (buttonsControlsGroupExpanded)
+                        {
+                            <div class="nav-subgroup-items">
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="buttons" @onclick="CloseNavMenu">
+                                        <span class="bi bi-hand-index-thumb-nav-menu" aria-hidden="true"></span> SkiaButton
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="buttons-custom" @onclick="CloseNavMenu">
+                                        <span class="bi bi-boxes-nav-menu" aria-hidden="true"></span> Custom
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="buttons-radio" @onclick="CloseNavMenu">
+                                        <span class="bi bi-record-circle-nav-menu" aria-hidden="true"></span> Radio Buttons
+                                    </NavLink>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="nav-subgroup">
+                        <button type="button" class="nav-subgroup-toggle" @onclick="ToggleSwitchesControlsGroup">
+                            <span class="bi @(switchesControlsGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                            <span>Switches</span>
+                        </button>
+
+                        @if (switchesControlsGroupExpanded)
+                        {
+                            <div class="nav-subgroup-items">
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="switches" @onclick="CloseNavMenu">
+                                        <span class="bi bi-toggle2-on-nav-menu" aria-hidden="true"></span> SkiaSwitch
+                                    </NavLink>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="nav-subgroup">
+                        <button type="button" class="nav-subgroup-toggle" @onclick="ToggleScrollsControlsGroup">
+                            <span class="bi @(scrollsControlsGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                            <span>Scrolls</span>
+                        </button>
+
+                        @if (scrollsControlsGroupExpanded)
+                        {
+                            <div class="nav-subgroup-items">
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="scrolls" @onclick="CloseNavMenu">
+                                        <span class="bi bi-arrow-down-up-nav-menu" aria-hidden="true"></span> SkiaScroll
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="scrolls-carousel" @onclick="CloseNavMenu">
+                                        <span class="bi bi-view-list-nav-menu" aria-hidden="true"></span> SkiaCarousel
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="scrolls-drawer" @onclick="CloseNavMenu">
+                                        <span class="bi bi-layout-sidebar-inset-nav-menu" aria-hidden="true"></span> SkiaDrawer
+                                    </NavLink>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="nav-subgroup">
+                        <button type="button" class="nav-subgroup-toggle" @onclick="ToggleLayoutsControlsGroup">
+                            <span class="bi @(layoutsControlsGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                            <span>Layouts</span>
+                        </button>
+
+                        @if (layoutsControlsGroupExpanded)
+                        {
+                            <div class="nav-subgroup-items">
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="layouts-grid" @onclick="CloseNavMenu">
+                                        <span class="bi bi-grid-nav-menu" aria-hidden="true"></span> SkiaGrid
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="layouts-decorated-grid" @onclick="CloseNavMenu">
+                                        <span class="bi bi-grid-3x3-gap-nav-menu" aria-hidden="true"></span> SkiaDecoratedGrid
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="layouts-view-switcher" @onclick="CloseNavMenu">
+                                        <span class="bi bi-window-stack-nav-menu" aria-hidden="true"></span> SkiaViewSwitcher
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="layouts-tabs-selector" @onclick="CloseNavMenu">
+                                        <span class="bi bi-ui-radios-grid-nav-menu" aria-hidden="true"></span> SkiaTabsSelector
+                                    </NavLink>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="nav-subgroup">
+                        <button type="button" class="nav-subgroup-toggle" @onclick="TogglePickersControlsGroup">
+                            <span class="bi @(pickersControlsGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                            <span>Pickers</span>
+                        </button>
+
+                        @if (pickersControlsGroupExpanded)
+                        {
+                            <div class="nav-subgroup-items">
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="pickers" @onclick="CloseNavMenu">
+                                        <span class="bi bi-list-ul-nav-menu" aria-hidden="true"></span> Wheels
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="pickers-spinner" @onclick="CloseNavMenu">
+                                        <span class="bi bi-disc-nav-menu" aria-hidden="true"></span> Spinner
+                                    </NavLink>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="nav-subgroup">
+                        <button type="button" class="nav-subgroup-toggle" @onclick="ToggleAnimatedControlsGroup">
+                            <span class="bi @(animatedControlsGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                            <span>Animated</span>
+                        </button>
+
+                        @if (animatedControlsGroupExpanded)
+                        {
+                            <div class="nav-subgroup-items">
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="lottie-probe" @onclick="CloseNavMenu">
+                                        <span class="bi bi-play-circle-nav-menu" aria-hidden="true"></span> SkiaLottie
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="gif-probe" @onclick="CloseNavMenu">
+                                        <span class="bi bi-film-nav-menu" aria-hidden="true"></span> SkiaGif
+                                    </NavLink>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="nav-subgroup">
+                        <button type="button" class="nav-subgroup-toggle" @onclick="ToggleGraphicsControlsGroup">
+                            <span class="bi @(graphicsControlsGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                            <span>Graphics</span>
+                        </button>
+
+                        @if (graphicsControlsGroupExpanded)
+                        {
+                            <div class="nav-subgroup-items">
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="graphics-shape" @onclick="CloseNavMenu">
+                                        <span class="bi bi-bounding-box-nav-menu" aria-hidden="true"></span> SkiaShape
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="graphics-svg" @onclick="CloseNavMenu">
+                                        <span class="bi bi-badge-sd-nav-menu" aria-hidden="true"></span> SkiaSvg
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="graphics-image" @onclick="CloseNavMenu">
+                                        <span class="bi bi-image-nav-menu" aria-hidden="true"></span> SkiaImage
+                                    </NavLink>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="nav-subgroup">
+                        <button type="button" class="nav-subgroup-toggle" @onclick="ToggleEffectsControlsGroup">
+                            <span class="bi @(effectsControlsGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                            <span>Effects</span>
+                        </button>
+
+                        @if (effectsControlsGroupExpanded)
+                        {
+                            <div class="nav-subgroup-items">
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="effects-backdrop" @onclick="CloseNavMenu">
+                                        <span class="bi bi-layers-half-nav-menu" aria-hidden="true"></span> SkiaBackdrop
+                                    </NavLink>
+                                </div>
+                                <div class="nav-item px-3">
+                                    <NavLink class="nav-link" href="effects-hover-mask" @onclick="CloseNavMenu">
+                                        <span class="bi bi-intersect-nav-menu" aria-hidden="true"></span> SkiaHoverMask
+                                    </NavLink>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="nav-group px-2">
+            <button type="button" class="nav-group-toggle" @onclick="ToggleGesturesGroup">
+                <span class="bi @(gesturesGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                <span>Gestures</span>
+            </button>
+
+            @if (gesturesGroupExpanded)
+            {
+                <div class="nav-group-items">
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="scroll-probe" @onclick="CloseNavMenu">
+                            <span class="bi bi-arrow-down-up-nav-menu" aria-hidden="true"></span> Scroll
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="keyboard-probe" @onclick="CloseNavMenu">
+                            <span class="bi bi-keyboard-nav-menu" aria-hidden="true"></span> Keyboard Input
+                        </NavLink>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="nav-group px-2">
+            <button type="button" class="nav-group-toggle" @onclick="ToggleAdvancedGroup">
+                <span class="bi @(advancedGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                <span>Advanced</span>
+            </button>
+
+            @if (advancedGroupExpanded)
             {
                 <div class="nav-group-items">
                     <div class="nav-item px-3">
@@ -100,10 +361,27 @@
                             <span>Rocket</span>
                         </NavLink>
                     </div>
+                </div>
+            }
+        </div>
+
+        <div class="nav-group px-2">
+            <button type="button" class="nav-group-toggle" @onclick="ToggleGamingGroup">
+                <span class="bi @(gamingGroupExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+                <span>Gaming</span>
+            </button>
+
+            @if (gamingGroupExpanded)
+            {
+                <div class="nav-group-items">
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="" Match="NavLinkMatch.All" @onclick="CloseNavMenu">
+                            <span class="bi bi-rocket-takeoff-nav-menu" aria-hidden="true"></span> Space Shooter
+                        </NavLink>
+                    </div>
                     <div class="nav-item px-3">
                         <NavLink class="nav-link" href="skmesh-parallax-probe" @onclick="CloseNavMenu">
-                            <span class="bi bi-layers-fill-nav-menu" aria-hidden="true"></span>
-                            <span>Parallax</span>
+                            <span class="bi bi-layers-fill-nav-menu" aria-hidden="true"></span> Parallax
                         </NavLink>
                     </div>
                 </div>
@@ -114,8 +392,22 @@
 
 @code {
     private bool collapseNavMenu = true;
-    private bool generalGroupExpanded = true;
-    private bool skMeshGroupExpanded = true;
+    private bool presentationGroupExpanded;
+    private bool tutorialsGroupExpanded = true;
+    private bool primitivesGroupExpanded;
+    private bool controlsGroupExpanded = true;
+    private bool labelsControlsGroupExpanded = true;
+    private bool buttonsControlsGroupExpanded = true;
+    private bool switchesControlsGroupExpanded = true;
+    private bool pickersControlsGroupExpanded = true;
+    private bool scrollsControlsGroupExpanded = true;
+    private bool layoutsControlsGroupExpanded = true;
+    private bool animatedControlsGroupExpanded = true;
+    private bool graphicsControlsGroupExpanded = true;
+    private bool effectsControlsGroupExpanded = true;
+    private bool gesturesGroupExpanded;
+    private bool advancedGroupExpanded;
+    private bool gamingGroupExpanded = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
@@ -124,14 +416,84 @@
         collapseNavMenu = !collapseNavMenu;
     }
 
-    private void ToggleGeneralGroup()
+    private void TogglePresentationGroup()
     {
-        generalGroupExpanded = !generalGroupExpanded;
+        presentationGroupExpanded = !presentationGroupExpanded;
     }
 
-    private void ToggleSkMeshGroup()
+    private void ToggleTutorialsGroup()
     {
-        skMeshGroupExpanded = !skMeshGroupExpanded;
+        tutorialsGroupExpanded = !tutorialsGroupExpanded;
+    }
+
+    private void TogglePrimitivesGroup()
+    {
+        primitivesGroupExpanded = !primitivesGroupExpanded;
+    }
+
+    private void ToggleControlsGroup()
+    {
+        controlsGroupExpanded = !controlsGroupExpanded;
+    }
+
+    private void ToggleLabelsControlsGroup()
+    {
+        labelsControlsGroupExpanded = !labelsControlsGroupExpanded;
+    }
+
+    private void ToggleButtonsControlsGroup()
+    {
+        buttonsControlsGroupExpanded = !buttonsControlsGroupExpanded;
+    }
+
+    private void ToggleSwitchesControlsGroup()
+    {
+        switchesControlsGroupExpanded = !switchesControlsGroupExpanded;
+    }
+
+    private void TogglePickersControlsGroup()
+    {
+        pickersControlsGroupExpanded = !pickersControlsGroupExpanded;
+    }
+
+    private void ToggleScrollsControlsGroup()
+    {
+        scrollsControlsGroupExpanded = !scrollsControlsGroupExpanded;
+    }
+
+    private void ToggleLayoutsControlsGroup()
+    {
+        layoutsControlsGroupExpanded = !layoutsControlsGroupExpanded;
+    }
+
+    private void ToggleAnimatedControlsGroup()
+    {
+        animatedControlsGroupExpanded = !animatedControlsGroupExpanded;
+    }
+
+    private void ToggleGraphicsControlsGroup()
+    {
+        graphicsControlsGroupExpanded = !graphicsControlsGroupExpanded;
+    }
+
+    private void ToggleEffectsControlsGroup()
+    {
+        effectsControlsGroupExpanded = !effectsControlsGroupExpanded;
+    }
+
+    private void ToggleGesturesGroup()
+    {
+        gesturesGroupExpanded = !gesturesGroupExpanded;
+    }
+
+    private void ToggleAdvancedGroup()
+    {
+        advancedGroupExpanded = !advancedGroupExpanded;
+    }
+
+    private void ToggleGamingGroup()
+    {
+        gamingGroupExpanded = !gamingGroupExpanded;
     }
 
     private void CloseNavMenu()

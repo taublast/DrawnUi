@@ -1,0 +1,126 @@
+@page "/pickers"
+@using DrawnUi
+@using DrawnUi.Controls
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>Wheel Pickers</PageTitle>
+
+<div class="docs-page">
+    <h1>Wheel Pickers</h1>
+    <p class="docs-lead">Wheel pickers are useful when you want a compact, tactile selector that still lives entirely in the DrawnUI rendering tree. This page shows the minimal moving pieces: items, selected index, and a live label.</p>
+    <p class="docs-note">Drag the wheel in the canvas. The selected value updates below it, which is usually the only state you need to bridge into your view model.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="360"
+                HeightRequest="324"
+                BackgroundColor="#F4EFE5"
+                Margin="0,8,0,0"
+                Gestures="@GesturesMode.Enabled"
+                RootControl="@RootControl" />
+    </div>
+
+    <pre class="docs-code"><code>@PickerSnippet</code></pre>
+</div>
+
+@code {
+    private const string PickerSnippet = """
+var picker = new SkiaWheelPicker()
+{
+    ItemsSource = new List<string> { "Mon", "Tue", "Wed" },
+    VisibleItems = 5,
+    SelectedIndex = 1
+};
+
+picker.SelectedIndexChanged += (_, index) => { /* use index */ };
+""";
+
+    private readonly List<string> _days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    private readonly SkiaLabel _selectionLabel;
+    private readonly SkiaWheelPicker _picker;
+    private readonly SkiaControl RootControl;
+
+    public Pickers()
+    {
+        _selectionLabel = new SkiaLabel()
+        {
+            Text = "Selected: Wed",
+            FontFamily = "FontTextTitle",
+            FontSize = 18,
+            TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+            HorizontalOptions = LayoutOptions.Fill,
+            HorizontalTextAlignment = DrawTextAlignment.Center
+        };
+
+        _picker = new SkiaWheelPicker()
+        {
+            WidthRequest = 180,
+            HeightRequest = 180,
+            VisibleItems = 5,
+            SelectedIndex = 2,
+            ItemsSource = _days,
+            TextColor = new Color(0.486f, 0.451f, 0.404f, 1f),
+            TextSelectedColor = new Color(0.157f, 0.278f, 0.420f, 1f),
+            LinesColor = new Color(0.788f, 0.808f, 0.843f, 1f),
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
+        };
+
+        _picker.SelectedIndexChanged += OnSelectedIndexChanged;
+
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 328,
+            HeightRequest = 292,
+            Padding = new Thickness(18),
+            BackgroundColor = new Color(1f, 0.989f, 0.959f, 1f),
+            Type = LayoutType.Column,
+            Spacing = 10,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SkiaWheelPicker",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 24,
+                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                new SkiaLabel()
+                {
+                    Text = "A compact wheel picker with a selected index and built-in item rendering.",
+                    FontFamily = "FontText",
+                    FontSize = 13,
+                    TextColor = new Color(0.365f, 0.314f, 0.231f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                new SkiaShape()
+                {
+                    WidthRequest = 292,
+                    HeightRequest = 204,
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 18,
+                    BackgroundColor = Colors.White,
+                    StrokeColor = new Color(0.851f, 0.827f, 0.776f, 1f),
+                    StrokeWidth = 1,
+                    HorizontalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        _picker
+                    }
+                },
+                _selectionLabel
+            }
+        };
+    }
+
+    private void OnSelectedIndexChanged(object? sender, int index)
+    {
+        if (index >= 0 && index < _days.Count)
+        {
+            _selectionLabel.Text = $"Selected: {_days[index]}";
+            _ = InvokeAsync(StateHasChanged);
+        }
+    }
+}

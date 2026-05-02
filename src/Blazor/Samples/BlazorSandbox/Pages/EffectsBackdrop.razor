@@ -1,0 +1,188 @@
+@page "/effects-backdrop"
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Infrastructure.Xaml
+@using DrawnUi.Views
+
+<PageTitle>SkiaBackdrop</PageTitle>
+
+<div class="docs-page">
+    <h1>SkiaBackdrop</h1>
+    <p class="docs-lead">SkiaBackdrop samples the already drawn content behind it and applies blur and brightness changes. That makes it the base tool for frosted panels, glass overlays, and softened HUD surfaces.</p>
+    <p class="docs-note">This is a compact docs version of the larger sandbox backdrop demo: layered content underneath, one glass card on top.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="360"
+                HeightRequest="420"
+                BackgroundColor="#08131F"
+                Margin="0,8,0,0"
+                Gestures="@GesturesMode.Enabled"
+                RootControl="@RootControl" />
+    </div>
+
+    <pre class="docs-code"><code>@BackdropSnippet</code></pre>
+</div>
+
+@code {
+    private const string BackdropSnippet = """
+var backdrop = new SkiaBackdrop()
+{
+    Blur = 8,
+    UseContext = true,
+    BackgroundColor = new Color(1f, 1f, 1f, 0.22f)
+};
+""";
+
+    private readonly SkiaControl RootControl;
+
+    public EffectsBackdrop()
+    {
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 328,
+            HeightRequest = 388,
+            Type = LayoutType.Absolute,
+            Children =
+            {
+                CreateBackdropBackground(),
+                CreateGlassCard()
+            }
+        };
+    }
+
+    private static SkiaLayout CreateBackdropBackground()
+    {
+        return new SkiaLayout()
+        {
+            WidthRequest = 328,
+            HeightRequest = 388,
+            BackgroundColor = new Color(0.946f, 0.961f, 0.980f, 1f),
+            UseCache = SkiaCacheType.Image,
+            Children =
+            {
+                new SkiaImage()
+                {
+                    WidthRequest = 328,
+                    HeightRequest = 248,
+                    Aspect = TransformAspect.AspectCover,
+                    Source = "icon-512.png"
+                },
+                new SkiaShape()
+                {
+                    Margin = new Thickness(22, 28, 0, 0),
+                    WidthRequest = 132,
+                    HeightRequest = 48,
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 18,
+                    BackgroundColor = new Color(0.078f, 0.576f, 0.847f, 0.90f),
+                    Rotation = -4,
+                    Children =
+                    {
+                        new SkiaLabel()
+                        {
+                            Text = "Backdrop",
+                            FontFamily = "FontTextTitle",
+                            FontSize = 17,
+                            TextColor = Colors.White,
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.Center
+                        }
+                    }
+                },
+                new SkiaShape()
+                {
+                    Margin = new Thickness(164, 208, 0, 0),
+                    WidthRequest = 136,
+                    HeightRequest = 92,
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 26,
+                    BackgroundColor = new Color(0.929f, 0.376f, 0.286f, 0.82f),
+                    Rotation = -8
+                },
+                new SkiaShape()
+                {
+                    Margin = new Thickness(34, 286, 0, 0),
+                    WidthRequest = 234,
+                    HeightRequest = 80,
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 28,
+                    BackgroundColor = new Color(0.224f, 0.224f, 0.753f, 0.72f),
+                    Rotation = 9
+                }
+            }
+        };
+    }
+
+    private static SkiaShape CreateGlassCard()
+    {
+        return new SkiaShape()
+        {
+            Margin = new Thickness(66, 124, 0, 0),
+            WidthRequest = 208,
+            HeightRequest = 208,
+            BackgroundColor = Colors.Black,
+            ClipBackgroundColor = true,
+            CornerRadius = 24,
+            Children =
+            {
+                new SkiaLayout()
+                {
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Fill,
+                    Children =
+                    {
+                        new SkiaBackdrop()
+                        {
+                            BackgroundColor = new Color(1f, 1f, 1f, 0.22f),
+                            Blur = 8,
+                            HorizontalOptions = LayoutOptions.Fill,
+                            VerticalOptions = LayoutOptions.Fill,
+                            UseContext = true,
+                            ZIndex = -1
+                        },
+                        new SkiaLayout()
+                        {
+                            Padding = new Thickness(16),
+                            Type = LayoutType.Column,
+                            Spacing = 8,
+                            Children =
+                            {
+                                new SkiaLabel()
+                                {
+                                    Text = "SkiaBackdrop",
+                                    FontFamily = "FontTextTitle",
+                                    FontSize = 20,
+                                    TextColor = Colors.Black,
+                                    HorizontalOptions = LayoutOptions.Fill,
+                                    HorizontalTextAlignment = DrawTextAlignment.Center
+                                },
+                                new SkiaLabel()
+                                {
+                                    Text = "Blur the surface behind the card instead of drawing an opaque panel over it.",
+                                    FontFamily = "FontText",
+                                    FontSize = 14,
+                                    TextColor = Colors.Black,
+                                    HorizontalOptions = LayoutOptions.Fill,
+                                    HorizontalTextAlignment = DrawTextAlignment.Center,
+                                    WidthRequest = 160
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            Shadows = new SkiaShadowsCollection
+            {
+                new SkiaShadow()
+                {
+                    Blur = 8,
+                    Opacity = 1,
+                    X = 4,
+                    Y = 4,
+                    Color = new Color(0f, 0f, 0f, 0.28f)
+                }
+            }
+        };
+    }
+}

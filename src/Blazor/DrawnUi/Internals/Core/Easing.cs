@@ -128,7 +128,7 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
-        /// Converts a function into an <see cref="T:Microsoft.Maui.Easing" />.
+        /// Converts a function into an <see cref="T:DrawnUi.Draw.Easing" />.
         /// </summary>
         /// <param name="func">An easing function.</param>
         /// <remarks>An easing function should return a value of (or near) 0 at 0 and 1 (or near) for 1.</remarks>

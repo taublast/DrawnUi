@@ -1,0 +1,108 @@
+@page "/layouts-decorated-grid"
+@using DrawnUi
+@using DrawnUi.Controls
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>SkiaDecoratedGrid</PageTitle>
+
+<div class="docs-page">
+    <h1>SkiaDecoratedGrid</h1>
+    <p class="docs-lead">SkiaDecoratedGrid extends SkiaGrid with drawn separator lines. It is useful for tables, scoreboards, or report-like layouts where the structure itself should be visible.</p>
+    <p class="docs-note">This example mirrors the MAUI sandbox idea: a compact support matrix with decorative row and column separators.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="360"
+                HeightRequest="324"
+                BackgroundColor="#F6F0E6"
+                Margin="0,8,0,0"
+                Gestures="@GesturesMode.Enabled"
+                RootControl="@RootControl" />
+    </div>
+
+    <pre class="docs-code"><code>@DecoratedGridSnippet</code></pre>
+</div>
+
+@code {
+    private const string DecoratedGridSnippet = """
+var grid = new SkiaDecoratedGrid()
+{
+    ColumnDefinitions = new() { new ColumnDefinition(GridLength.Star), new ColumnDefinition(GridLength.Star) },
+    RowDefinitions = new() { new RowDefinition(GridLength.Auto), new RowDefinition(GridLength.Auto) },
+    ColumnSpacing = 8,
+    RowSpacing = 8
+};
+""";
+
+    private readonly SkiaControl RootControl;
+
+    public LayoutsDecoratedGrid()
+    {
+        var grid = new SkiaDecoratedGrid()
+        {
+            WidthRequest = 292,
+            HeightRequest = 176,
+            ColumnSpacing = 8,
+            RowSpacing = 8,
+            HorizontalOptions = LayoutOptions.Center,
+            ColumnDefinitions = new ColumnDefinitionCollection
+            {
+                new ColumnDefinition(GridLength.Star),
+                new ColumnDefinition(GridLength.Star),
+                new ColumnDefinition(GridLength.Star)
+            },
+            RowDefinitions = new RowDefinitionCollection
+            {
+                new RowDefinition(GridLength.Auto),
+                new RowDefinition(GridLength.Auto)
+            }
+        };
+
+        AddDecoratedCell(grid, "Web", 0, 0, true);
+        AddDecoratedCell(grid, "Android", 0, 1, true);
+        AddDecoratedCell(grid, "iOS", 0, 2, true);
+        AddDecoratedCell(grid, "Yes", 1, 0, false, Colors.ForestGreen);
+        AddDecoratedCell(grid, "Yes", 1, 1, false, Colors.ForestGreen);
+        AddDecoratedCell(grid, "Yes", 1, 2, false, Colors.ForestGreen);
+
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 328,
+            HeightRequest = 292,
+            Padding = new Thickness(18),
+            BackgroundColor = new Color(1f, 0.989f, 0.959f, 1f),
+            Type = LayoutType.Column,
+            Spacing = 12,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SkiaDecoratedGrid",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 24,
+                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                grid
+            }
+        };
+    }
+
+    private static void AddDecoratedCell(SkiaDecoratedGrid grid, string text, int row, int column, bool isHeader, Color? textColor = null)
+    {
+        var cell = new SkiaLabel()
+        {
+            Text = text,
+            FontFamily = isHeader ? "FontTextTitle" : "FontText",
+            FontSize = isHeader ? 15 : 14,
+            TextColor = textColor ?? new Color(0.208f, 0.169f, 0.118f, 1f),
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
+        };
+
+        Grid.SetRow(cell, row);
+        Grid.SetColumn(cell, column);
+        grid.AddSubView(cell);
+    }
+}

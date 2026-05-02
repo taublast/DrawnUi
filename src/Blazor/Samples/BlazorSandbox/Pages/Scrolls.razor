@@ -1,0 +1,149 @@
+@page "/scrolls"
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>SkiaScroll</PageTitle>
+
+<div class="docs-page">
+    <h1>SkiaScroll</h1>
+    <p class="docs-lead">SkiaScroll is the base scroll container for drawn content. Use it for custom feeds, long forms, diagnostics surfaces, and any scrollable layout that should stay inside the DrawnUI tree.</p>
+    <p class="docs-note">Drag inside the scroll frame. The header stays visible while the cards move underneath it.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="360"
+                HeightRequest="364"
+                BackgroundColor="#F6F0E6"
+                Margin="0,8,0,0"
+                Gestures="@GesturesMode.Enabled"
+                RootControl="@RootControl" />
+    </div>
+
+    <pre class="docs-code"><code>@ScrollSnippet</code></pre>
+</div>
+
+@code {
+    private const string ScrollSnippet = """
+var scroll = new SkiaScroll()
+{
+    HeaderSticky = true,
+    Header = new SkiaLabel() { Text = "Sticky header" },
+    Content = new SkiaLayout() { Type = LayoutType.Column }
+};
+""";
+
+    private readonly SkiaControl RootControl;
+
+    public Scrolls()
+    {
+        var content = new SkiaLayout()
+        {
+            Type = LayoutType.Column,
+            Spacing = 10,
+            Padding = new Thickness(12, 8, 12, 12)
+        };
+
+        for (var index = 0; index < 7; index++)
+        {
+            content.AddSubView(CreateCard(index));
+        }
+
+        var scroll = new SkiaScroll()
+        {
+            WidthRequest = 292,
+            HeightRequest = 220,
+            BackgroundColor = Colors.White,
+            HeaderSticky = true,
+            HorizontalOptions = LayoutOptions.Center,
+            Header = new SkiaShape()
+            {
+                HeightRequest = 40,
+                BackgroundColor = new Color(0.157f, 0.278f, 0.420f, 1f),
+                Children =
+                {
+                    new SkiaLabel()
+                    {
+                        Text = "Sticky header",
+                        FontFamily = "FontTextTitle",
+                        FontSize = 16,
+                        TextColor = Colors.White,
+                        HorizontalOptions = LayoutOptions.Center,
+                        VerticalOptions = LayoutOptions.Center
+                    }
+                }
+            },
+            Content = content
+        };
+
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 328,
+            HeightRequest = 332,
+            Padding = new Thickness(18),
+            BackgroundColor = new Color(1f, 0.989f, 0.959f, 1f),
+            Type = LayoutType.Column,
+            Spacing = 12,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SkiaScroll",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 24,
+                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                scroll
+            }
+        };
+    }
+
+    private static SkiaShape CreateCard(int index)
+    {
+        var shades = new[]
+        {
+            new Color(0.922f, 0.941f, 0.976f, 1f),
+            new Color(0.969f, 0.925f, 0.898f, 1f),
+            new Color(0.922f, 0.961f, 0.929f, 1f)
+        };
+
+        return new SkiaShape()
+        {
+            WidthRequest = 252,
+            HeightRequest = 74,
+            Type = ShapeType.Rectangle,
+            CornerRadius = 16,
+            BackgroundColor = shades[index % shades.Length],
+            HorizontalOptions = LayoutOptions.Center,
+            Children =
+            {
+                new SkiaLayout()
+                {
+                    Padding = new Thickness(14, 12),
+                    Type = LayoutType.Column,
+                    Spacing = 4,
+                    Children =
+                    {
+                        new SkiaLabel()
+                        {
+                            Text = $"Row {index + 1}",
+                            FontFamily = "FontTextTitle",
+                            FontSize = 16,
+                            TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                            HorizontalOptions = LayoutOptions.Fill
+                        },
+                        new SkiaLabel()
+                        {
+                            Text = "Reusable for long drawn feeds, settings pages, or custom list content.",
+                            FontFamily = "FontText",
+                            FontSize = 12,
+                            TextColor = new Color(0.365f, 0.314f, 0.231f, 1f),
+                            HorizontalOptions = LayoutOptions.Fill
+                        }
+                    }
+                }
+            }
+        };
+    }
+}

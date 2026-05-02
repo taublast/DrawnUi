@@ -92,7 +92,28 @@ public partial class SkiaRichLabel : SkiaLabel
             return; //do not crash please
         }
 
-        var originalTypeFace = TypeFace; //cannot be null 
+        var originalTypeFace = TypeFace; //cannot be null
+        var spanData = BuildSpanData(text, originalTypeFace);
+
+        // Create TextSpans from optimized spans data
+        foreach (var (Text, Typeface, Symbol, Shape) in spanData)
+        {
+            var span = new TextSpan { Text = Text, TypeFace = Typeface, FontDetectedWith = Symbol, NeedShape = Shape };
+            modifySpan?.Invoke(span);
+            Spans.Add(SpanWithAttributes(span, this.FontAttributes));
+        }
+    }
+
+    /// <summary>
+    /// Walks <paramref name="text"/> codepoint-by-codepoint, switching typeface
+    /// when current cannot render a glyph (font fallback via <see cref="SkiaFontManager.MatchCharacter"/>).
+    /// Produces a list of contiguous-typeface runs ready to become <see cref="TextSpan"/>s.
+    /// Shared between SkiaRichLabel and SkiaRichLabelFast.
+    /// </summary>
+    public static List<(string Text, SKTypeface Typeface, int Symbol, bool Shape)> BuildSpanData(
+        string text,
+        SKTypeface originalTypeFace)
+    {
         var currentIndex = 0;
         var spanStart = 0;
         var spanData = new List<(string Text, SKTypeface Typeface, int Symbol, bool shape)>();
@@ -100,7 +121,6 @@ public partial class SkiaRichLabel : SkiaLabel
         SKTypeface currentTypeFace = originalTypeFace;
         bool needShape = false;
 
-        // First pass: Create raw span data
         while (currentIndex < text.Length)
         {
             int codePoint = char.ConvertToUtf32(text, currentIndex);
@@ -109,18 +129,11 @@ public partial class SkiaRichLabel : SkiaLabel
 
             void BreakSpanAndSwitchTypeface(SKTypeface newTypeface)
             {
-                // When we switch typefaces, we add the span up to this point and then change the typeface
                 var add = text.Substring(spanStart, currentIndex - spanStart);
                 if (!needShape)
                 {
                     needShape = SkiaLabel.UnicodeNeedsShaping(codePoint);
                 }
-//#if BROWSER
-//                if (SkiaLabel.EmojiData.IsEmoji(codePoint))
-//                {
-//                    needShape = false;
-//                }
-//#endif
 
                 spanData.Add((add, currentTypeFace, codePoint, needShape));
                 currentTypeFace = newTypeface;
@@ -147,13 +160,11 @@ public partial class SkiaRichLabel : SkiaLabel
                 {
                     if (currentIndex - spanStart > 1)
                     {
-                        //if we it's not the first symbol and we had some data to create a span with previous font..
                         BreakSpanAndSwitchTypeface(originalTypeFace);
                     }
                     else
                     {
-                        //otherwise just switch font back to original
-                        currentIndex--; //go back in time
+                        currentIndex--;
                         currentTypeFace = originalTypeFace;
                         spanStart = currentIndex;
                         needShape = false;
@@ -177,23 +188,14 @@ public partial class SkiaRichLabel : SkiaLabel
 
             currentIndex += advance;
 
-            // When we reach the end, we add the remaining text as a span
             if (currentIndex >= text.Length)
             {
                 BreakSpanAndSwitchTypeface(originalTypeFace);
             }
         }
 
-        // Optimize spans data
-        ProcessSpanData(ref spanData, originalTypeFace);
-
-        // Create TextSpans from optimized spans data
-        foreach (var (Text, Typeface, Symbol, Shape) in spanData)
-        {
-            var span = new TextSpan { Text = Text, TypeFace = Typeface, FontDetectedWith = Symbol, NeedShape = Shape };
-            modifySpan?.Invoke(span);
-            Spans.Add(SpanWithAttributes(span, this.FontAttributes));
-        }
+        ProcessSpanDataStatic(ref spanData, originalTypeFace);
+        return spanData;
     }
 
     protected static HashSet<char> standardSymbols = new HashSet<char> { ' ', '\n', '\r', '\t' };
@@ -204,6 +206,13 @@ public partial class SkiaRichLabel : SkiaLabel
     /// <param name="spanData"></param>
     /// <param name="originalTypeFace"></param>
     protected virtual void ProcessSpanData(
+        ref List<(string Text, SKTypeface Typeface, int Symbol, bool Shape)> spanData, SKTypeface originalTypeFace)
+        => ProcessSpanDataStatic(ref spanData, originalTypeFace);
+
+    /// <summary>
+    /// Static counterpart to <see cref="ProcessSpanData"/>. Shared by SkiaRichLabelFast.
+    /// </summary>
+    protected static void ProcessSpanDataStatic(
         ref List<(string Text, SKTypeface Typeface, int Symbol, bool Shape)> spanData, SKTypeface originalTypeFace)
     {
         for (int i = 0; i < spanData.Count - 1; i++)

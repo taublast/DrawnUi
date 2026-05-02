@@ -1,12 +1,12 @@
 ﻿using System.Buffers;
 using System.Collections.Concurrent;
 using SkiaSharp.HarfBuzz;
-using Font = Microsoft.Maui.Font;
-
 
 #if BROWSER
+    using Font = DrawnUi.Draw.Font;
     using PropertyChangingArgs = System.ComponentModel.PropertyChangingEventArgs;
 #else
+    using Font = Microsoft.Maui.Font;
     using PropertyChangingArgs = Microsoft.Maui.Controls.PropertyChangingEventArgs;
 #endif
 
@@ -14,13 +14,6 @@ namespace DrawnUi.Draw
 {
     //todo add accesibility features
 
-    //todo
-    //public enum UseRotationDirection
-    //{
-    //    Horizontal,
-    //    Vertical,
-    //    UsePath
-    //}
 
     /// <summary>
     /// A high-performance text rendering control that provides advanced text formatting,
@@ -44,6 +37,19 @@ namespace DrawnUi.Draw
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public partial class SkiaLabel : SkiaControl, ISkiaGestureListener, IText
     {
+        private static IFontRegistrar _registrar;
+        public static IFontRegistrar FontRegistrar
+        {
+            get
+            {
+                if (_registrar == null)
+                {
+                    _registrar = Super.Services.GetService<IFontRegistrar>();
+                }
+                return _registrar;
+            }
+        }
+
         private string DebuggerDisplay
         {
             get
@@ -1337,7 +1343,7 @@ namespace DrawnUi.Draw
             return SpanMeasurement.LastNonSpaceIndexSpan(textSpan);
         }
 
-        protected (float Width, LineGlyph[] Glyphs) MeasureLineGlyphs(SKPaint paint, string text, bool needsShaping,
+        protected virtual (float Width, LineGlyph[] Glyphs) MeasureLineGlyphs(SKPaint paint, string text, bool needsShaping,
             float scale)
         {
             if (string.IsNullOrEmpty(text))
@@ -1461,7 +1467,7 @@ namespace DrawnUi.Draw
             return (simpleValue, null);
         }
 
-        protected DecomposedText DecomposeText(string text, SKPaint paint,
+        protected virtual DecomposedText DecomposeText(string text, SKPaint paint,
             SKPoint firstLineOffset,
             float maxWidth,
             float maxHeight, //-1
@@ -1939,7 +1945,7 @@ namespace DrawnUi.Draw
             return words;
         }
 
-        private TextLine[] SplitLines(string text,
+        protected virtual TextLine[] SplitLines(string text,
             SKPaint paint,
             SKPoint firstLineOffset,
             float maxWidth,
@@ -2133,7 +2139,7 @@ namespace DrawnUi.Draw
             */
         }
 
-        public (int Limit, float Width) CutLineToFit(
+        public virtual (int Limit, float Width) CutLineToFit(
             SKPaint paint,
             string textIn, float maxWidth)
         {
@@ -3182,19 +3188,6 @@ namespace DrawnUi.Draw
         {
             get { return (LineBreakMode)GetValue(LineBreakModeProperty); }
             set { SetValue(LineBreakModeProperty, value); }
-        }
-
-        public static readonly BindableProperty FormattedTextProperty = BindableProperty.Create(
-            nameof(FormattedText),
-            typeof(FormattedString),
-            typeof(SkiaLabel),
-            defaultValue: null,
-            propertyChanged: NeedInvalidateMeasure);
-
-        public FormattedString FormattedText
-        {
-            get { return (FormattedString)GetValue(FormattedTextProperty); }
-            set { SetValue(FormattedTextProperty, value); }
         }
 
 

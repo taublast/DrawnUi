@@ -5,7 +5,7 @@ using DrawnUi.Draw;
 using DrawnUi.Views;
 using SkiaSharp;
 
-namespace Microsoft.Maui.ApplicationModel
+namespace DrawnUi.Draw.ApplicationModel
 {
     public static class MainThread
     {
@@ -32,7 +32,7 @@ namespace Microsoft.Maui.ApplicationModel
     }
 }
 
-namespace Microsoft.Maui
+namespace DrawnUi.Draw
 {
 }
 

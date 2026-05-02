@@ -112,6 +112,7 @@ public class SkiaRadioButton : SkiaToggle, ISkiaRadioButton
         {
             ViewOn.IsVisible = false;
         }
+        Update();
     }
 
     public virtual void ApplyOn()
@@ -120,6 +121,7 @@ public class SkiaRadioButton : SkiaToggle, ISkiaRadioButton
         {
             ViewOn.IsVisible = true;
         }
+        Update();
     }
 
     public SkiaControl ViewOff;
@@ -138,6 +140,7 @@ public class SkiaRadioButton : SkiaToggle, ISkiaRadioButton
         base.OnChildrenChanged();
 
         FindViews();
+        ApplyProperties();
     }
 
 
@@ -155,7 +158,7 @@ public class SkiaRadioButton : SkiaToggle, ISkiaRadioButton
         else
         {
             ApplyOff();
-        }
+        }        
     }
 
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
@@ -211,6 +214,7 @@ public class SkiaRadioButton : SkiaToggle, ISkiaRadioButton
         base.OnParentChanged(newvalue, oldvalue);
 
         UpdateGroup();
+        ApplyProperties();
     }
 
     RadioButtons Manager => RadioButtons.All;

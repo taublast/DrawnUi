@@ -1,0 +1,123 @@
+@page "/pickers-spinner"
+@using DrawnUi
+@using DrawnUi.Controls
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>Spinner</PageTitle>
+
+<div class="docs-page">
+    <h1>Spinner</h1>
+    <p class="docs-lead">SkiaSpinner is the radial counterpart to wheel pickers. It arranges items around a circle and lets the user spin to a selected segment.</p>
+    <p class="docs-note">This example keeps the setup small: items source, selected index feedback, and an indicator arrow so the chosen sector is obvious at a glance.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="380"
+                HeightRequest="360"
+                BackgroundColor="#102338"
+                Margin="0,8,0,0"
+                Gestures="@GesturesMode.Enabled"
+                RenderingMode="@RenderingModeType.Accelerated"
+                RootControl="@RootControl" />
+    </div>
+
+    <pre class="docs-code"><code>@SpinnerSnippet</code></pre>
+</div>
+
+@code {
+    private const string SpinnerSnippet = """
+var spinner = new SkiaSpinner()
+{
+    ItemsSource = new List<string> { "One", "Two", "Three" },
+    SidePosition = SidePosition.Left,
+    InverseVisualRotation = true
+};
+""";
+
+    private readonly List<string> _items = ["Azure", "Maui", "Blazor", "Skia", "Docs", "Gaming"];
+    private readonly SkiaSpinner _spinner;
+    private readonly SkiaLabel _selectionLabel;
+    private readonly SkiaControl RootControl;
+
+    public PickersSpinner()
+    {
+        _spinner = new SkiaSpinner()
+        {
+            Velocity = 2.0,
+            ItemsSource = _items,
+            InverseVisualRotation = true,
+            SidePosition = SidePosition.Left,
+            WidthRequest = 210,
+            HeightRequest = 210,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center
+        };
+        _spinner.SelectedIndexChanged += OnSpinnerSelectionChanged;
+
+        _selectionLabel = new SkiaLabel()
+        {
+            Text = "Selected: None",
+            FontFamily = "FontTextTitle",
+            FontSize = 18,
+            TextColor = Colors.White,
+            HorizontalOptions = LayoutOptions.Center
+        };
+
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 344,
+            HeightRequest = 328,
+            Padding = new Thickness(16),
+            BackgroundColor = new Color(0.063f, 0.149f, 0.286f, 1f),
+            Type = LayoutType.Column,
+            Spacing = 14,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SkiaSpinner",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 24,
+                    TextColor = Colors.White,
+                    HorizontalOptions = LayoutOptions.Center
+                },
+                new SkiaLayout()
+                {
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        _spinner,
+                        new SkiaShape()
+                        {
+                            Type = ShapeType.Polygon,
+                            BackgroundColor = Colors.Red,
+                            StrokeColor = Colors.White,
+                            StrokeWidth = 1,
+                            WidthRequest = 22,
+                            HeightRequest = 16,
+                            VerticalOptions = LayoutOptions.Center,
+                            HorizontalOptions = LayoutOptions.Start,
+                            Margin = new Thickness(22, 0, 0, 0),
+                            Points = new List<SkiaPoint>
+                            {
+                                new (0, 8),
+                                new (22, 0),
+                                new (22, 16)
+                            }
+                        }
+                    }
+                },
+                _selectionLabel
+            }
+        };
+    }
+
+    private void OnSpinnerSelectionChanged(object? sender, int index)
+    {
+        var selected = index >= 0 && index < _items.Count ? _items[index] : "None";
+        _selectionLabel.Text = $"Selected: {selected}";
+        _ = InvokeAsync(StateHasChanged);
+    }
+}

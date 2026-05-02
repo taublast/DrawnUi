@@ -1,0 +1,114 @@
+@page "/layouts-grid"
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>SkiaGrid</PageTitle>
+
+<div class="docs-page">
+    <h1>SkiaGrid</h1>
+    <p class="docs-lead">SkiaGrid is the drawn grid container for row and column layouts. It maps to the same layout intent as MAUI Grid, but it stays inside the DrawnUI layout and rendering pipeline.</p>
+    <p class="docs-note">The sample below keeps to a small two-by-two grid so the page shows the basic API without turning into a layout article.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="360"
+                HeightRequest="320"
+                BackgroundColor="#F6F0E6"
+                Margin="0,8,0,0"
+                Gestures="@GesturesMode.Enabled"
+                RootControl="@RootControl" />
+    </div>
+
+    <pre class="docs-code"><code>@GridSnippet</code></pre>
+</div>
+
+@code {
+    private const string GridSnippet = """
+var grid = new SkiaGrid()
+{
+    ColumnDefinitions = new() { new ColumnDefinition(GridLength.Star), new ColumnDefinition(GridLength.Star) },
+    RowDefinitions = new() { new RowDefinition(GridLength.Auto), new RowDefinition(GridLength.Star) }
+};
+""";
+
+    private readonly SkiaControl RootControl;
+
+    public LayoutsGrid()
+    {
+        var grid = new SkiaGrid()
+        {
+            WidthRequest = 292,
+            HeightRequest = 188,
+            ColumnSpacing = 10,
+            RowSpacing = 10,
+            ColumnDefinitions = new ColumnDefinitionCollection
+            {
+                new ColumnDefinition(GridLength.Star),
+                new ColumnDefinition(GridLength.Star)
+            },
+            RowDefinitions = new RowDefinitionCollection
+            {
+                new RowDefinition(GridLength.Auto),
+                new RowDefinition(GridLength.Star)
+            },
+            HorizontalOptions = LayoutOptions.Center
+        };
+
+        var title = CreateGridTile("Header", new Color(0.918f, 0.941f, 0.976f, 1f));
+        Grid.SetColumnSpan(title, 2);
+
+        var left = CreateGridTile("Left", new Color(0.961f, 0.925f, 0.898f, 1f));
+        Grid.SetRow(left, 1);
+
+        var right = CreateGridTile("Right", new Color(0.922f, 0.961f, 0.929f, 1f));
+        Grid.SetRow(right, 1);
+        Grid.SetColumn(right, 1);
+
+        grid.Children = new List<SkiaControl> { title, left, right };
+
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 328,
+            HeightRequest = 288,
+            Padding = new Thickness(18),
+            BackgroundColor = new Color(1f, 0.989f, 0.959f, 1f),
+            Type = LayoutType.Column,
+            Spacing = 12,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SkiaGrid",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 24,
+                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                grid
+            }
+        };
+    }
+
+    private static SkiaShape CreateGridTile(string text, Color color)
+    {
+        return new SkiaShape()
+        {
+            Type = ShapeType.Rectangle,
+            CornerRadius = 16,
+            BackgroundColor = color,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = text,
+                    FontFamily = "FontTextTitle",
+                    FontSize = 16,
+                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center
+                }
+            }
+        };
+    }
+}

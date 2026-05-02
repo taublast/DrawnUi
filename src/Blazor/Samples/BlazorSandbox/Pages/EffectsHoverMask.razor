@@ -1,0 +1,95 @@
+@page "/effects-hover-mask"
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>SkiaHoverMask</PageTitle>
+
+<div class="docs-page">
+    <h1>SkiaHoverMask</h1>
+    <p class="docs-lead">SkiaHoverMask paints the parent surface while cutting out its own viewport. The effect is useful when you want a spotlight or reveal window without moving the underlying content into a separate layer.</p>
+    <p class="docs-note">This demo darkens the full surface except for the circular cutout in the center, which lets the background artwork stay visible through the mask.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="360"
+                HeightRequest="360"
+                BackgroundColor="#09121A"
+                Margin="0,8,0,0"
+                Gestures="@GesturesMode.Enabled"
+                RootControl="@RootControl" />
+    </div>
+
+    <pre class="docs-code"><code>@HoverMaskSnippet</code></pre>
+</div>
+
+@code {
+    private const string HoverMaskSnippet = """
+var mask = new SkiaHoverMask()
+{
+    Type = ShapeType.Circle,
+    BackgroundColor = new Color(0f, 0f, 0f, 0.55f)
+};
+""";
+
+    private readonly SkiaControl RootControl;
+
+    public EffectsHoverMask()
+    {
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 328,
+            HeightRequest = 328,
+            BackgroundColor = new Color(0.922f, 0.941f, 0.976f, 1f),
+            Children =
+            {
+                new SkiaImage()
+                {
+                    WidthRequest = 328,
+                    HeightRequest = 328,
+                    Aspect = TransformAspect.AspectCover,
+                    Source = "icon-512.png"
+                },
+                new SkiaShape()
+                {
+                    Margin = new Thickness(24, 34, 0, 0),
+                    WidthRequest = 126,
+                    HeightRequest = 54,
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 18,
+                    BackgroundColor = new Color(0.078f, 0.576f, 0.847f, 0.88f),
+                    Rotation = -7
+                },
+                new SkiaShape()
+                {
+                    Margin = new Thickness(172, 212, 0, 0),
+                    WidthRequest = 112,
+                    HeightRequest = 92,
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 24,
+                    BackgroundColor = new Color(0.929f, 0.376f, 0.286f, 0.84f),
+                    Rotation = 8
+                },
+                new SkiaHoverMask()
+                {
+                    WidthRequest = 184,
+                    HeightRequest = 184,
+                    Type = ShapeType.Circle,
+                    BackgroundColor = new Color(0f, 0f, 0f, 0.55f),
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Center
+                },
+                new SkiaLabel()
+                {
+                    Text = "SkiaHoverMask",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 18,
+                    TextColor = Colors.White,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.End,
+                    Margin = new Thickness(0, 0, 0, 22)
+                }
+            }
+        };
+    }
+}

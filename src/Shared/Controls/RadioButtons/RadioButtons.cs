@@ -145,8 +145,15 @@
             {
                 GroupsByName[groupName] = new();
             }
-            GroupsByName[groupName].Add(control);
-            MakeAtLeastOneSelected(GroupsByName[groupName]);
+
+            var group = GroupsByName[groupName];
+            if (!group.Contains(control))
+            {
+                group.Add(control);
+            }
+
+            NormalizeGroupSelection(group);
+            SyncGroupVisuals(group);
         }
 
         /// <summary>
@@ -160,8 +167,15 @@
             {
                 GroupsByParent[parent] = new();
             }
-            GroupsByParent[parent].Add(control);
-            MakeAtLeastOneSelected(GroupsByParent[parent]);
+
+            var group = GroupsByParent[parent];
+            if (!group.Contains(control))
+            {
+                group.Add(control);
+            }
+
+            NormalizeGroupSelection(group);
+            SyncGroupVisuals(group);
         }
 
         /// <summary>
@@ -173,8 +187,10 @@
         {
             if (GroupsByName.ContainsKey(groupName) && GroupsByName[groupName].Contains(control))
             {
-                GroupsByName[groupName].Remove(control);
-                MakeAtLeastOneSelected(GroupsByName[groupName]);
+                var group = GroupsByName[groupName];
+                group.RemoveAll(radio => radio == control);
+                NormalizeGroupSelection(group);
+                SyncGroupVisuals(group);
             }
         }
 
@@ -187,8 +203,10 @@
         {
             if (GroupsByParent.ContainsKey(parent) && GroupsByParent[parent].Contains(control))
             {
-                GroupsByParent[parent].Remove(control);
-                MakeAtLeastOneSelected(GroupsByParent[parent]);
+                var group = GroupsByParent[parent];
+                group.RemoveAll(radio => radio == control);
+                NormalizeGroupSelection(group);
+                SyncGroupVisuals(group);
             }
         }
 
@@ -198,42 +216,63 @@
         /// <param name="control">The radio button control to remove from all groups.</param>
         public void RemoveFromGroups(ISkiaRadioButton control)
         {
-            bool removed = false;
             foreach (var groupName in GroupsByName.Keys.ToList())
             {
                 var group = GroupsByName[groupName];
-                if (group.Contains(control))
+                if (group.RemoveAll(radio => radio == control) > 0)
                 {
-                    group.Remove(control);
-                    MakeAtLeastOneSelected(group);
-                    removed = true;
-                    break;
+                    NormalizeGroupSelection(group);
+                    SyncGroupVisuals(group);
                 }
             }
 
-            if (!removed)
+            foreach (var parent in GroupsByParent.Keys.ToList())
             {
-                foreach (var parent in GroupsByParent.Keys.ToList())
+                var group = GroupsByParent[parent];
+                if (group.RemoveAll(radio => radio == control) > 0)
                 {
-                    var group = GroupsByParent[parent];
-                    if (group.Contains(control))
-                    {
-                        group.Remove(control);
-                        MakeAtLeastOneSelected(group);
-                        break;
-                    }
+                    NormalizeGroupSelection(group);
+                    SyncGroupVisuals(group);
                 }
             }
         }
 
-        private void MakeAtLeastOneSelected(List<ISkiaRadioButton> group)
+        private void NormalizeGroupSelection(List<ISkiaRadioButton> group)
         {
-            if (!group.Any(c => c.GetValueInternal()))
+            if (group == null || group.Count == 0)
             {
-                var firstControl = group.FirstOrDefault();
-                if (firstControl != null)
+                return;
+            }
+
+            var selected = group.Where(c => c.GetValueInternal()).ToList();
+            if (selected.Count == 0)
+            {
+                group[0].SetValueInternal(true);
+                return;
+            }
+
+            var keeper = selected[0];
+            foreach (var radio in selected)
+            {
+                if (!ReferenceEquals(radio, keeper))
                 {
-                    firstControl.SetValueInternal(true);
+                    radio.SetValueInternal(false);
+                }
+            }
+        }
+
+        private static void SyncGroupVisuals(List<ISkiaRadioButton> group)
+        {
+            if (group == null)
+            {
+                return;
+            }
+
+            foreach (var radio in group)
+            {
+                if (radio is SkiaToggle toggle)
+                {
+                    toggle.ApplyProperties();
                 }
             }
         }

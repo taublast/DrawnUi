@@ -1,0 +1,88 @@
+@page "/labels-rich"
+@using DrawnUi
+@using DrawnUi.Controls
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>SkiaRichLabel</PageTitle>
+
+<div class="docs-page">
+    <h1>SkiaRichLabel</h1>
+    <p class="docs-lead">SkiaRichLabel builds spans from markdown-like text for you. It is the compact option when a docs block needs emphasis, links, inline code, or mixed styles without manually constructing spans.</p>
+    <p class="docs-note">The control below uses a single markdown string. DrawnUI parses it into spans and keeps the result inside the same drawn text pipeline as the rest of the page.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="360"
+                HeightRequest="328"
+                BackgroundColor="#F5EFE6"
+                Margin="0,8,0,0"
+                Gestures="@GesturesMode.Enabled"
+                RootControl="@RootControl" />
+    </div>
+
+    <pre class="docs-code"><code>@RichLabelSnippet</code></pre>
+</div>
+
+@code {
+    private const string RichLabelSnippet = """
+var body = new SkiaRichLabel()
+{
+    Text = "Use **bold**, _italics_, and [links](https://drawnui.net)",
+    FontSize = 14,
+    LinkColor = Colors.MediumPurple
+};
+""";
+
+    private readonly SkiaControl RootControl;
+
+    public LabelsRich()
+    {
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 328,
+            HeightRequest = 296,
+            Padding = new Thickness(18),
+            BackgroundColor = new Color(1f, 0.989f, 0.959f, 1f),
+            Type = LayoutType.Column,
+            Spacing = 12,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SkiaRichLabel",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 24,
+                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                new SkiaShape()
+                {
+                    WidthRequest = 292,
+                    HeightRequest = 216,
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 18,
+                    BackgroundColor = Colors.White,
+                    StrokeColor = new Color(0.851f, 0.827f, 0.776f, 1f),
+                    StrokeWidth = 1,
+                    HorizontalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        new SkiaRichLabel()
+                        {
+                            WidthRequest = 248,
+                            Text = "Use **SkiaRichLabel** when your docs block needs _mixed emphasis_, `inline code`, or [links](https://github.com/taublast/DrawnUi).\n\n- Markdown-style spans are generated automatically\n- You stay inside the DrawnUI text pipeline\n- The page code stays short",
+                            FontFamily = "FontText",
+                            FontSize = 14,
+                            LineSpacing = 1.35,
+                            LinkColor = new Color(0.424f, 0.255f, 0.745f, 1f),
+                            TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.Center
+                        }
+                    }
+                }
+            }
+        };
+    }
+}

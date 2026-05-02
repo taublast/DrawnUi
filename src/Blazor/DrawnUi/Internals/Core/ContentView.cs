@@ -8,7 +8,7 @@ namespace DrawnUi.Draw
         [Parameter]
         public object Content { get; set; }
 
-        public Microsoft.Maui.IView PresentedContent => Content as Microsoft.Maui.IView;
+        public IView PresentedContent => Content as IView;
 
         protected virtual SizeRequest OnMeasure(double widthConstraint, double heightConstraint)
         {

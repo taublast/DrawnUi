@@ -19,7 +19,7 @@ namespace DrawnUi.Draw
         }
     }
 
-    public class View : Element, Microsoft.Maui.IView
+    public class View : Element, DrawnUi.Draw.IView
     {
         public object Handler { get; set; }
 

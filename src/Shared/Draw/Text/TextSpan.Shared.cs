@@ -6,7 +6,7 @@ using static DrawnUi.Draw.SkiaControl;
 #if BROWSER
     using PropertyChangingEventArgs = System.ComponentModel.PropertyChangingEventArgs;
 #else
-using PropertyChangingEventArgs = Microsoft.Maui.Controls.PropertyChangingEventArgs;
+    using PropertyChangingEventArgs = Microsoft.Maui.Controls.PropertyChangingEventArgs;
 #endif
 
 namespace DrawnUi.Draw;

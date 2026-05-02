@@ -1,0 +1,128 @@
+@page "/buttons-custom"
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>Custom Button</PageTitle>
+
+<div class="docs-page">
+    <h1>Custom Button</h1>
+    <p class="docs-lead">You do not need a dedicated control for every interaction. In DrawnUI, a custom button is usually just composition: a shaped container, a label, and a tap handler on the outer view.</p>
+    <p class="docs-note">This example uses a rounded shape plus nested labels, then handles the tap on the outer card. That keeps the composed surface readable and easy to extend with icons, badges, or richer layout.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="360"
+                HeightRequest="290"
+                BackgroundColor="#F7F3EA"
+                Margin="0,8,0,0"
+                Gestures="@GesturesMode.Enabled"
+                RootControl="@RootControl" />
+    </div>
+
+    <pre class="docs-code"><code>@CustomSnippet</code></pre>
+</div>
+
+@code {
+    private const string CustomSnippet = """
+var customButton = new SkiaShape()
+{
+    Type = ShapeType.Rectangle,
+    CornerRadius = 18,
+    BackgroundColor = Colors.DarkSlateBlue,
+    Children =
+    {
+        new SkiaLabel() { Text = "Launch" }
+    }
+};
+
+customButton.Tapped += (_, _) => { /* action */ };
+""";
+
+    private readonly SkiaLabel _statusLabel;
+    private readonly SkiaShape _customButton;
+    private readonly SkiaControl RootControl;
+
+    public ButtonsCustom()
+    {
+        _statusLabel = new SkiaLabel()
+        {
+            Text = "Tap the composed button.",
+            FontFamily = "FontText",
+            FontSize = 13,
+            TextColor = new Color(0.302f, 0.165f, 0.063f, 1f),
+            HorizontalOptions = LayoutOptions.Fill,
+            HorizontalTextAlignment = DrawTextAlignment.Center
+        };
+
+        _customButton = new SkiaShape()
+        {
+            WidthRequest = 260,
+            HeightRequest = 100,
+            Type = ShapeType.Rectangle,
+            CornerRadius = 20,
+            BackgroundColor = new Color(0.149f, 0.251f, 0.447f, 1f),
+            StrokeColor = new Color(0.588f, 0.725f, 0.886f, 1f),
+            StrokeWidth = 1,
+            HorizontalOptions = LayoutOptions.Center,
+            Padding = new Thickness(18),
+            Children =
+            {
+                new SkiaLayout()
+                {
+                    Type = LayoutType.Column,
+                    Spacing = 4,
+                    VerticalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        new SkiaLabel()
+                        {
+                            Text = "Launch Mission",
+                            FontFamily = "FontTextTitle",
+                            FontSize = 20,
+                            TextColor = Colors.White,
+                            HorizontalOptions = LayoutOptions.Center
+                        },
+                        new SkiaLabel()
+                        {
+                            Text = "SkiaShape + SkiaLabel composition",
+                            FontFamily = "FontText",
+                            FontSize = 12,
+                            TextColor = new Color(0.855f, 0.902f, 0.973f, 1f),
+                            HorizontalOptions = LayoutOptions.Center
+                        }
+                    }
+                }
+            }
+        };
+
+        _customButton.Tapped += (_, _) =>
+        {
+            _statusLabel.Text = "Custom button tapped.";
+            _ = InvokeAsync(StateHasChanged);
+        };
+
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 328,
+            HeightRequest = 258,
+            Padding = new Thickness(18),
+            BackgroundColor = new Color(1f, 0.989f, 0.959f, 1f),
+            Type = LayoutType.Column,
+            Spacing = 14,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "Composed action surface",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 24,
+                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                _customButton,
+                _statusLabel
+            }
+        };
+    }
+}

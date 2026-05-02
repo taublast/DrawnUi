@@ -1,0 +1,156 @@
+@page "/labels-fps"
+@implements IDisposable
+@using DrawnUi
+@using DrawnUi.Controls
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>SkiaLabelFps</PageTitle>
+
+<div class="docs-page">
+    <h1>SkiaLabelFps</h1>
+    <p class="docs-lead">SkiaLabelFps is a debugging overlay for live DrawnUI surfaces. Drop it on an animated page or a frequently redrawn surface and it reports the current frame rate without forcing you to build your own counter.</p>
+    <p class="docs-note">This page runs a tiny animation loop so the label has live frame updates instead of sitting on a static canvas.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="360"
+                HeightRequest="316"
+                BackgroundColor="#F4EEE4"
+                Margin="0,8,0,0"
+                Gestures="@GesturesMode.Enabled"
+                RootControl="@RootControl" />
+    </div>
+
+    <pre class="docs-code"><code>@FpsSnippet</code></pre>
+</div>
+
+@code {
+    private const string FpsSnippet = """
+var fps = new SkiaLabelFps()
+{
+    BackgroundColor = Colors.DarkRed,
+    TextColor = Colors.White,
+    Rotation = -12
+};
+""";
+
+    private readonly CancellationTokenSource _animationCts = new();
+    private readonly SkiaShape _pulse;
+    private readonly SkiaControl RootControl;
+
+    public LabelsFps()
+    {
+        _pulse = new SkiaShape()
+        {
+            WidthRequest = 58,
+            HeightRequest = 58,
+            Type = ShapeType.Circle,
+            BackgroundColor = new Color(0.153f, 0.431f, 0.741f, 1f),
+            HorizontalOptions = LayoutOptions.Start,
+            VerticalOptions = LayoutOptions.Center,
+            TranslationX = -94
+        };
+
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 328,
+            HeightRequest = 284,
+            Padding = new Thickness(18),
+            BackgroundColor = new Color(1f, 0.989f, 0.959f, 1f),
+            Type = LayoutType.Column,
+            Spacing = 12,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SkiaLabelFps",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 24,
+                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                new SkiaLabel()
+                {
+                    Text = "Best used as a live overlay on games, animations, carousels, camera previews, or diagnostics pages.",
+                    FontFamily = "FontText",
+                    FontSize = 13,
+                    TextColor = new Color(0.365f, 0.314f, 0.231f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                new SkiaShape()
+                {
+                    WidthRequest = 292,
+                    HeightRequest = 172,
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 20,
+                    BackgroundColor = new Color(0.149f, 0.176f, 0.278f, 1f),
+                    HorizontalOptions = LayoutOptions.Center,
+                    Children =
+                    {
+                        new SkiaShape()
+                        {
+                            WidthRequest = 220,
+                            HeightRequest = 10,
+                            Type = ShapeType.Rectangle,
+                            CornerRadius = 5,
+                            BackgroundColor = new Color(1f, 1f, 1f, 0.16f),
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.Center
+                        },
+                        _pulse,
+                        new SkiaLabelFps()
+                        {
+                            Margin = new Thickness(0, 0, 12, 14),
+                            BackgroundColor = new Color(0.471f, 0.094f, 0.094f, 0.92f),
+                            FontFamily = "FontText",
+                            FontSize = 12,
+                            TextColor = Colors.White,
+                            HorizontalOptions = LayoutOptions.End,
+                            VerticalOptions = LayoutOptions.End,
+                            Rotation = -10,
+                            Padding = new Thickness(8, 4)
+                        }
+                    }
+                }
+            }
+        };
+
+        _ = AnimateAsync(_animationCts.Token);
+    }
+
+    public void Dispose()
+    {
+        _animationCts.Cancel();
+        _animationCts.Dispose();
+    }
+
+    private async Task AnimateAsync(CancellationToken token)
+    {
+        var progress = 0f;
+
+        try
+        {
+            while (!token.IsCancellationRequested)
+            {
+                progress += 0.022f;
+                if (progress > 1f)
+                {
+                    progress -= 1f;
+                }
+
+                var eased = (float)((Math.Sin(progress * Math.PI * 2) + 1) * 0.5);
+                _pulse.TranslationX = -94 + eased * 188;
+                _pulse.ScaleX = 0.86f + eased * 0.3f;
+                _pulse.ScaleY = 0.86f + eased * 0.3f;
+                _pulse.Rotation = eased * 360f;
+
+                RootControl.Update();
+                await Task.Delay(16, token);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+        }
+    }
+}

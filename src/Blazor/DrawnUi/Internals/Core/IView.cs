@@ -1,4 +1,4 @@
-namespace Microsoft.Maui
+namespace DrawnUi.Draw
 {
     public interface IView
     {

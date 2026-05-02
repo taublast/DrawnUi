@@ -1,0 +1,121 @@
+@page "/buttons"
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>SkiaButton</PageTitle>
+
+<div class="docs-page">
+    <h1>SkiaButton</h1>
+    <p class="docs-lead">SkiaButton gives you a ready-made drawn button with built-in press feedback. The example below keeps the surface small and copyable, which is the right shape for docs and quick experiments.</p>
+    <p class="docs-note">Try tapping the buttons inside the canvas. The status line updates, and the button text changes to show that the control stays fully interactive in Blazor.</p>
+
+    <div class="docs-example-frame">
+        <Canvas WidthRequest="360"
+                HeightRequest="272"
+                BackgroundColor="#F7F3EA"
+                Margin="0,8,0,0"
+                Gestures="@GesturesMode.Enabled"
+                RootControl="@RootControl" />
+    </div>
+
+    <pre class="docs-code"><code>@ButtonSnippet</code></pre>
+</div>
+
+@code {
+    private const string ButtonSnippet = """
+var button = new SkiaButton("Save")
+{
+    BackgroundColor = Colors.CornflowerBlue,
+    TextColor = Colors.White,
+    CornerRadius = 10
+};
+
+button.Tapped += (_, _) => button.Text = "Saved";
+""";
+
+    private readonly SkiaLabel _statusLabel;
+    private readonly SkiaButton _primaryButton;
+    private readonly SkiaButton _materialButton;
+    private readonly SkiaButton _windowsButton;
+    private readonly SkiaControl RootControl;
+
+    public Buttons()
+    {
+        _statusLabel = new SkiaLabel()
+        {
+            Text = "Tap a button to see the event flow.",
+            FontFamily = "FontText",
+            FontSize = 13,
+            TextColor = new Color(0.302f, 0.165f, 0.063f, 1f),
+            HorizontalOptions = LayoutOptions.Fill,
+            HorizontalTextAlignment = DrawTextAlignment.Center
+        };
+
+        _primaryButton = CreateButton("Primary action", 0.227f, 0.482f, 0.816f);
+        _materialButton = CreateButton("Material style", 0.129f, 0.588f, 0.953f, PrebuiltControlStyle.Material);
+        _windowsButton = CreateButton("Windows style", 0.000f, 0.471f, 0.843f, PrebuiltControlStyle.Windows);
+
+        RootControl = new SkiaLayout()
+        {
+            Margin = new Thickness(16),
+            WidthRequest = 328,
+            HeightRequest = 240,
+            Padding = new Thickness(18),
+            BackgroundColor = new Color(1f, 0.989f, 0.959f, 1f),
+            Type = LayoutType.Column,
+            Spacing = 10,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "SkiaButton",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 24,
+                    TextColor = new Color(0.208f, 0.169f, 0.118f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                new SkiaLabel()
+                {
+                    Text = "Default content, custom colors, and prebuilt styles in one control.",
+                    FontFamily = "FontText",
+                    FontSize = 14,
+                    TextColor = new Color(0.365f, 0.314f, 0.231f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                _primaryButton,
+                _materialButton,
+                _windowsButton,
+                _statusLabel
+            }
+        };
+    }
+
+    private SkiaButton CreateButton(string text, float red, float green, float blue, PrebuiltControlStyle? style = null)
+    {
+        var button = new SkiaButton(text)
+        {
+            WidthRequest = 220,
+            HeightRequest = 40,
+            HorizontalOptions = LayoutOptions.Center,
+            BackgroundColor = new Color(red, green, blue, 1f),
+            TextColor = Colors.White,
+            CornerRadius = 10,
+            Padding = new Thickness(12, 6)
+        };
+
+        if (style.HasValue)
+        {
+            button.ControlStyle = style.Value;
+        }
+
+        button.Tapped += (_, _) =>
+        {
+            button.Text = $"{text} tapped";
+            _statusLabel.Text = $"Last event: {text}";
+            _ = InvokeAsync(StateHasChanged);
+        };
+
+        return button;
+    }
+}

@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Labels\SkiaLabelFps.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Labels\SkiaMarkdownLabel.CommonMark.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Labels\SkiaRichLabel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Labels\SkiaRichLabelFast.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Layouts\ContentWithBackdrop.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Layouts\GridLayout.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Layouts\SkiaCarousel.cs" />
@@ -99,7 +100,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\SkiaControl.Shared.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\VisualTreeHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\SkiaLabel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\SkiaLabel.Maui.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\SkiaLabelFast.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Text\TextSpan.Maui.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\AnimatedShaderEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\ChainDropShadowsEffect.cs" />

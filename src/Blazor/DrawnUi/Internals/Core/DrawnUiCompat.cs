@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.JSInterop;
 
-namespace Microsoft.Maui
+namespace DrawnUi.Draw
 {
     public readonly struct Font
     {
@@ -60,16 +60,6 @@ namespace DrawnUi.Draw
         TailTruncation
     }
 
-    public class FormattedString
-    {
-    }
-
-    public class PropertyChangingEventArgs : global::System.ComponentModel.PropertyChangingEventArgs
-    {
-        public PropertyChangingEventArgs(string? propertyName) : base(propertyName)
-        {
-        }
-    }
 }
 
 namespace DrawnUi.Draw

@@ -1,7 +1,7 @@
 global using System.Collections.Specialized;
 global using AppoMobi.Gestures;
 global using System.ComponentModel;
-global using Microsoft.Maui;
+global using DrawnUi.Draw;
 global using System.Numerics;
 global using System.Runtime.CompilerServices;
 global using System.Runtime.InteropServices;
@@ -13,7 +13,7 @@ global using DrawnUi.Extensions;
 global using DrawnUi.Infrastructure;
 global using DrawnUi.Infrastructure.Models;
 global using DrawnUi.Models;
-global using Microsoft.Maui.ApplicationModel;
+global using DrawnUi.Draw.ApplicationModel;
 global using DrawnUi;
 global using DrawnUi.Views;
 global using SkiaSharp;
