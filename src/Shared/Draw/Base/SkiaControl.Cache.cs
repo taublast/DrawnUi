@@ -304,7 +304,7 @@ public partial class SkiaControl
     {
         get
         {
-            #if BROWSER
+            #if BROWSER || DRAWNUI_NET
             return false;
             #endif
             

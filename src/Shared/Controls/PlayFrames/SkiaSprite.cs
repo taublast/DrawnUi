@@ -1,4 +1,4 @@
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
 using DrawnUi.Draw;
 #else
 using DrawnUi.Features.Images;
@@ -403,7 +403,7 @@ public class SkiaSprite : AnimatedFramesRenderer
             }
             else
             {
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
                 var client = Super.Services?.GetService(typeof(HttpClient)) as HttpClient;
                 if (client == null)
                 {

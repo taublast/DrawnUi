@@ -1,5 +1,7 @@
-﻿using System;
+#if BROWSER
+using System;
 using Microsoft.AspNetCore.Components;
+using DrawnUi.Views;
 
 namespace DrawnUi.Views
 {
@@ -13,10 +15,15 @@ namespace DrawnUi.Views
 
         [Parameter]
         public EventCallback<T> BindingContextChanged { get; set; }
-
     }
-
-    //
-    // Summary:
-    //     The orientations the a StackLayout can have.
 }
+#else
+namespace DrawnUi.Views
+{
+    public class ViewCell<T> : DrawnUi.Draw.View
+    {
+        public new T BindingContext { get; set; }
+        public Action<T> OnSelected { get; set; }
+    }
+}
+#endif

@@ -3,7 +3,7 @@ using System.Text;
 using System.Windows.Input;
 using static DrawnUi.Draw.SkiaControl;
 
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
     using PropertyChangingEventArgs = System.ComponentModel.PropertyChangingEventArgs;
 #else
     using PropertyChangingEventArgs = Microsoft.Maui.Controls.PropertyChangingEventArgs;
@@ -69,7 +69,7 @@ public partial class TextSpan : IDisposable
                     {
                         FontDetectedWith = glyph.Symbol;
                         NeedShape = SkiaLabel.UnicodeNeedsShaping(glyph.Symbol);
-//#if BROWSER
+//#if BROWSER || DRAWNUI_NET
 //                        if (SkiaLabel.EmojiData.IsEmoji(glyph.Symbol))
 //                        {
 //                            NeedShape = false;

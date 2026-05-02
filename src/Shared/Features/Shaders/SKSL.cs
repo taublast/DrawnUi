@@ -8,7 +8,7 @@ public static class SkSl
 
     private static async Task<Stream> OpenResourceStreamAsync(string fileName)
     {
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
         var httpClient = Super.Services.GetService(typeof(HttpClient)) as HttpClient ?? new HttpClient();
         return await httpClient.GetStreamAsync(fileName);
 #else
@@ -26,7 +26,7 @@ public static class SkSl
 
     public static string LoadFromResources(string fileName)
     {
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
         throw new NotSupportedException($"Synchronous shader resource loading is not supported in the browser for '{fileName}'. Use LoadFromResourcesAsync instead.");
 #else
         using var stream = FileSystem.OpenAppPackageFileAsync(fileName).GetAwaiter().GetResult();

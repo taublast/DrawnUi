@@ -1,3 +1,4 @@
+#if BROWSER
 using Microsoft.AspNetCore.Components;
 using DrawnUi.Views;
 
@@ -39,3 +40,16 @@ namespace DrawnUi.Draw
         }
     }
 }
+#else
+using DrawnUi.Draw;
+
+namespace DrawnUi.Draw
+{
+    public class ContentView : VisualElement, IContentView
+    {
+        public object Content { get; set; }
+
+        public IView PresentedContent => Content as IView;
+    }
+}
+#endif

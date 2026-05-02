@@ -1,7 +1,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
-#if !BROWSER
+#if !BROWSER && !DRAWNUI_NET
 using DrawnUi.Features.Images;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Storage;
@@ -445,7 +445,7 @@ namespace DrawnUi.Draw
 
         private async Task<Stream> OpenPackageFileStreamAsync(string fileName)
         {
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
             var httpClient = Super.Services?.GetService<HttpClient>();
             if (httpClient == null)
                 throw new InvalidOperationException("[SkiaSvg] HttpClient service was not found.");
@@ -468,7 +468,7 @@ namespace DrawnUi.Draw
                 string json;
                 if (Uri.TryCreate(fileName, UriKind.Absolute, out var uri) && uri.Scheme != "file")
                 {
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
                     var httpClient = Super.Services?.GetService<HttpClient>() ?? throw new InvalidOperationException("[SkiaSvg] HttpClient service was not found.");
                     using var stream = await httpClient.GetStreamAsync(uri);
 #else

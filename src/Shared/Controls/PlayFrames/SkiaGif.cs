@@ -1,5 +1,5 @@
 using DrawnUi.Draw;
-#if !BROWSER
+#if !BROWSER && !DRAWNUI_NET
 using DrawnUi.Features.Images;
 using Microsoft.Maui.Storage;
 #endif
@@ -199,7 +199,7 @@ public class SkiaGif : AnimatedFramesRenderer
 
     private async Task<Stream> OpenPackageFileStreamAsync(string fileName)
     {
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
         var httpClient = Super.Services?.GetService<HttpClient>();
         if (httpClient == null)
             throw new InvalidOperationException("[SkiaGif] HttpClient service was not found.");
@@ -227,7 +227,7 @@ public class SkiaGif : AnimatedFramesRenderer
                     _ = LoadAndApplySourceAsync(Source);
                     break;
                 default:
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
                     _ = LoadAndApplySourceAsync(Source);
                     break;
 #else
@@ -307,14 +307,14 @@ public class SkiaGif : AnimatedFramesRenderer
             GifAnimation animation = new();
             if (Uri.TryCreate(fileName, UriKind.Absolute, out var uri) && uri.Scheme != "file")
             {
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
                 var httpClient = Super.Services?.GetService<HttpClient>() ?? throw new InvalidOperationException("[SkiaGif] HttpClient service was not found.");
                 using var dataStream = await httpClient.GetStreamAsync(uri);
 #else
                 using HttpClient client = Super.Services.CreateHttpClient();
                 using var dataStream = await client.GetStreamAsync(uri);
 #endif
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
                 using var bufferedStream = new MemoryStream();
                 await dataStream.CopyToAsync(bufferedStream);
                 bufferedStream.Position = 0;
@@ -334,7 +334,7 @@ public class SkiaGif : AnimatedFramesRenderer
                 else
                 {
                     using var stream = await OpenPackageFileStreamAsync(fileName);
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
                     using var bufferedStream = new MemoryStream();
                     await stream.CopyToAsync(bufferedStream);
                     bufferedStream.Position = 0;

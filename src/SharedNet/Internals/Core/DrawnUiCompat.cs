@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Reflection.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.JSInterop;
 
 namespace DrawnUi.Draw
 {
@@ -60,6 +56,16 @@ namespace DrawnUi.Draw
         TailTruncation
     }
 
+    public class FormattedString
+    {
+    }
+
+    public class PropertyChangingEventArgs : global::System.ComponentModel.PropertyChangingEventArgs
+    {
+        public PropertyChangingEventArgs(string? propertyName) : base(propertyName)
+        {
+        }
+    }
 }
 
 namespace DrawnUi.Draw
@@ -143,36 +149,9 @@ namespace DrawnUi.Draw
         }
     }
 
-    public static class DrawnExtensions
+    public static partial class DrawnExtensions
     {
         public static DrawnUiStartupSettings StartupSettings { get; set; }
-
-        public static async Task<WebAssemblyHost> UseDrawnUiAsync(this WebAssemblyHostBuilder builder,
-            DrawnUiStartupSettings settings = null,
-            CancellationToken cancellationToken = default)
-        {
-            StartupSettings = settings;
-
-            var host = builder.Build();
-
-            Super.Services = host.Services;
-
-            await SkiaFontManager.Instance.InitializeAsync(host.Services, cancellationToken);
-            await SkiaImageManager.Instance.InitializeAsync(host.Services, cancellationToken);
-
-            Super.Init();
-
-            if (settings?.UseDesktopKeyboard == true)
-            {
-                var jsRuntime = host.Services.GetService<IJSRuntime>();
-                if (jsRuntime != null)
-                {
-                    await KeyboardManager.AttachToKeyboardAsync(jsRuntime);
-                }
-            }
-
-            return host;
-        }
 
         public static void RegisterFont(string alias, string sourceUrl)
         {
@@ -205,7 +184,7 @@ namespace DrawnUi.Draw
         }
     }
 
-    public sealed class SkiaFontManager
+    public sealed partial class SkiaFontManager
     {
         public static SkiaFontManager Instance { get; } = new();
 
@@ -244,59 +223,7 @@ namespace DrawnUi.Draw
 
         public void Initialize()
         {
-        }
-
-        public async Task InitializeAsync(IServiceProvider services, CancellationToken cancellationToken = default)
-        {
-            if (_fontSources.Count == 0)
-            {
-                Initialized = true;
-                return;
-            }
-
-            await _loadSemaphore.WaitAsync(cancellationToken);
-            try
-            {
-                var httpClient = services?.GetService(typeof(HttpClient)) as HttpClient;
-                if (httpClient == null)
-                {
-                    Super.Log("[DRAWNUI] Blazor font preload skipped: HttpClient service was not found.", Microsoft.Extensions.Logging.LogLevel.Warning);
-                    return;
-                }
-
-                foreach (var source in _fontSources)
-                {
-                    if (_fonts.ContainsKey(source.Key))
-                    {
-                        continue;
-                    }
-
-                    try
-                    {
-                        var bytes = await httpClient.GetByteArrayAsync(source.Value, cancellationToken);
-                        using var data = SKData.CreateCopy(bytes);
-                        var typeface = SKTypeface.FromData(data);
-                        if (typeface != null)
-                        {
-                            _fonts[source.Key] = typeface;
-                        }
-                        else
-                        {
-                            Super.Log($"[DRAWNUI] Blazor font preload failed for {source.Key} from {source.Value}", Microsoft.Extensions.Logging.LogLevel.Warning);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Super.Log(e);
-                    }
-                }
-
-                Initialized = true;
-            }
-            finally
-            {
-                _loadSemaphore.Release();
-            }
+            Initialized = true;
         }
 
         public SKTypeface GetFont(string alias)
@@ -315,11 +242,6 @@ namespace DrawnUi.Draw
             if (systemFont != null)
             {
                 return systemFont;
-            }
-
-            if (_fontSources.ContainsKey(alias) && !Initialized)
-            {
-                Super.Log($"[DRAWNUI] Blazor font '{alias}' requested before UseDrawnUiAsync finished preloading registered fonts.", Microsoft.Extensions.Logging.LogLevel.Warning);
             }
 
             return DefaultTypeface;
@@ -420,19 +342,6 @@ namespace DrawnUi.Draw
     }
 }
 
-namespace DrawnUi.Blazor.Views
-{
-    public sealed class App
-    {
-        public static App Current { get; } = new();
-
-        public Task CallJSAsync(string identifier, object arg1, bool arg2)
-        {
-            return Task.CompletedTask;
-        }
-    }
-}
-
 namespace DrawnUi.Views
 {
     public partial class Canvas
@@ -440,8 +349,6 @@ namespace DrawnUi.Views
         public SkiaControl HasHover { get; set; }
     }
 }
-
- 
 
 namespace DrawnUi.Models
 {

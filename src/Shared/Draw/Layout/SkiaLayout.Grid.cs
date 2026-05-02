@@ -231,7 +231,7 @@ public partial class SkiaLayout
     /// <summary>
     /// Will use this to create a missing but required ColumnDefinition
     /// </summary>
-#if !BROWSER
+#if !BROWSER && !DRAWNUI_NET
     [TypeConverter(typeof(ColumnDefinitionTypeConverter))]
 #endif
     public ColumnDefinition DefaultColumnDefinition
@@ -249,7 +249,7 @@ public partial class SkiaLayout
     /// <summary>
     /// Will use this to create a missing but required RowDefinition
     /// </summary>
-#if !BROWSER
+#if !BROWSER && !DRAWNUI_NET
     [TypeConverter(typeof(RowDefinitionTypeConverter))]
 #endif
     public RowDefinition DefaultRowDefinition
@@ -301,7 +301,7 @@ public partial class SkiaLayout
             return colDef;
         });
 
-    #if !BROWSER
+    #if !BROWSER && !DRAWNUI_NET
     [TypeConverter(typeof(ColumnDefinitionCollectionTypeConverter))]
     #endif
     public ColumnDefinitionCollection ColumnDefinitions
@@ -327,7 +327,7 @@ public partial class SkiaLayout
             }
             return colDef;
         });
-#if !BROWSER
+#if !BROWSER && !DRAWNUI_NET
     [TypeConverter(typeof(RowDefinitionCollectionTypeConverter))]
 #endif
     public RowDefinitionCollection RowDefinitions

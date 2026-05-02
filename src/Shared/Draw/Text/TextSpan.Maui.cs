@@ -3,7 +3,7 @@ using static DrawnUi.Draw.SkiaControl;
 
 namespace DrawnUi.Draw;
 
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
     using PropertyChangingEventArgs = System.ComponentModel.PropertyChangingEventArgs;
 #else
 using PropertyChangingEventArgs = Microsoft.Maui.Controls.PropertyChangingEventArgs;

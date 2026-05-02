@@ -1,23 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-    
     <PropertyGroup>
+        <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <WindowsEnableDebugging>true</WindowsEnableDebugging>
-        <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
-        <!--<DocumentationMarkdown>$(MSBuildProjectDirectory)\Generated.md</DocumentationMarkdown>-->
     </PropertyGroup>
 
-    <ItemGroup Condition=" '$(Configuration)'=='Release' ">
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-    </ItemGroup>
-
+    <PropertyGroup>
+        <DefineConstants>$(DefineConstants);DRAWNUI_NET</DefineConstants>
+    </PropertyGroup>
 
     <PropertyGroup>
         <Title>DrawnUI for .NET</Title>
         <PackageId>DrawnUi.Net</PackageId>
         <Description>Rendering engine for .NET to draw with SkiaSharp</Description>
-        <PackageTags>maui drawnui skia skiasharp draw ui</PackageTags>
+        <PackageTags>drawnui skia skiasharp draw ui net</PackageTags>
         <PackageIcon>icon128.png</PackageIcon>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <CreatePackage>false</CreatePackage>
@@ -29,30 +27,38 @@
         <WarningsAsErrors>$(WarningsAsErrors);CS0108;XLS0501</WarningsAsErrors>
     </PropertyGroup>
 
- 
+    <ItemGroup Condition=" '$(Configuration)'=='Release' ">
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+    </ItemGroup>
+
     <ItemGroup>
-        <None Include="..\..\..\icon128.png">
+        <None Include="..\..\icon128.png">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
         </None>
-        <None Include="..\..\Directory.Build.targets" Link="Directory.Build.targets" />
+        <None Include="..\Directory.Build.targets" Link="Directory.Build.targets" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CommonMark.NET" Version="0.15.1" />
-        <PackageReference Include="SkiaSharp.Skottie" Version="3.119.0" />
+        <PackageReference Include="SkiaSharp.HarfBuzz" Version="4.147.0-pr.3779.2" />
+        <PackageReference Include="SkiaSharp.Skottie" Version="4.147.0-pr.3779.2" />
         <PackageReference Include="Svg.Skia" Version="3.0.3" />
-        <!--MIT open source .net helpers and extensions-->
+        <PackageReference Include="CommonMark.NET" Version="0.15.1" />
         <PackageReference Include="AppoMobi.Specials" Version="9.0.3" />
         <PackageReference Include="EasyCaching.InMemory" Version="1.9.2" />
+        <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.6" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.6" />
+        <ProjectReference Include="..\..\..\AppoMobi.Maui.Gestures\src\AppoMobi.Gestures\AppoMobi.Gestures.csproj" />
     </ItemGroup>
- 
 
-    <Import Project="..\..\Shared\Shared.projitems" Label="Shared" />
+    <Import Project="..\Shared\Shared.projitems" Label="Shared" />
+    <Import Project="..\SharedNet\SharedNet.projitems" Label="SharedNet" />
 
+    <ItemGroup>
+        <Compile Remove="$(MSBuildThisFileDirectory)..\Shared\Features\Pdf\Pdf.cs" />
+        <Compile Remove="$(MSBuildThisFileDirectory)..\Shared\Draw\Base\VisualTreeHandler.cs" />
+    </ItemGroup>
 
 </Project>

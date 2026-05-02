@@ -438,7 +438,7 @@ namespace DrawnUi.Controls
                     soundPicker.PlaySystemSound();
 #endif
 
-#if !BROWSER
+#if !BROWSER && !DRAWNUI_NET
                     if (HapticEnabled)
                     {
                         MainThread.BeginInvokeOnMainThread(() =>

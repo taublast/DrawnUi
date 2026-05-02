@@ -681,7 +681,7 @@ namespace DrawnUi.Views
             PlatformHardwareAccelerationChanged();
 #endif
 
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
             Content = null;
 #else
             if (IsUsingHardwareAcceleration)

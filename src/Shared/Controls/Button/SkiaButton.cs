@@ -1,4 +1,4 @@
-﻿#if !BROWSER
+﻿#if !BROWSER && !DRAWNUI_NET
 using Thickness = Microsoft.Maui.Thickness;
 #endif
 

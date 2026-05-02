@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <PropertyGroup>
-        <DefineConstants>$(DefineConstants);ONPLATFORM;BROWSER;NET10</DefineConstants>
+        <DefineConstants>$(DefineConstants);ONPLATFORM;BROWSER;NET;NET10</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
@@ -43,6 +43,7 @@
   </ItemGroup>
  
   <Import Project="..\..\Shared\Shared.projitems" Label="Shared" />
+  <Import Project="..\..\SharedNet\SharedNet.projitems" Label="SharedNet" />
 
   <ItemGroup>
     <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Pdf\Pdf.cs" />

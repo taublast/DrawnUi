@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>c4d8f2a1-7b3e-4f9c-a8d6-5e1b9f2c8d3a</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SharedNet</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)SharedNet.GlobalUsings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\BindableObject.Plain.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\BindingMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\Brush.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\Color.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\Colors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\ColumnDefinition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\Command.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\ContentPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\ContentPropertyAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\ContentView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\CornerRadius.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\DataTemplate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\DataTemplateSelector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\DeviceDisplay.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\DeviceInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\DevicePlatform.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\DisplayInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\DisplayInfoChangedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\DisplayRotation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\DrawnExtensions.Blazor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\DrawnUiCompat.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\Easing.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\FontWeights.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\Geometry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\GradientBrush.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\GradientStop.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\GridLength.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\GridUnitType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\IContentView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\IElementHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\IGridColumnDefinition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\IGridRowDefinition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\IView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\ImageSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\Layout.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\LayoutAlignment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\LayoutOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\LinearGradientBrush.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\MainThread.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\Point.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\RadialGradientBrush.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\Rect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\RowDefinition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\ScrollOrientation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\Shadow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\Size.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\SizeRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\SolidColorBrush.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\StackOrientation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\Style.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\Thickness.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\View.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\ViewCell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Core\VisualTreeChangeEventArgs.cs" />
+  </ItemGroup>
+</Project>

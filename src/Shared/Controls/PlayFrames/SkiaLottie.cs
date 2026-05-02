@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
 using DrawnUi.Draw;
 #else
 using DrawnUi.Features.Images;
@@ -329,7 +329,7 @@ public class SkiaLottie : AnimatedFramesRenderer
 
     private async Task<Stream> OpenPackageFileStreamAsync(string fileName)
     {
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
         var httpClient = Super.Services?.GetService<HttpClient>();
         if (httpClient == null)
             throw new InvalidOperationException("[SkiaLottie] HttpClient service was not found.");
@@ -393,7 +393,7 @@ public class SkiaLottie : AnimatedFramesRenderer
                 if (Uri.TryCreate(fileName, UriKind.Absolute, out var uri) && uri.Scheme != "file")
                 {
                     using HttpClient client =
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
                         Super.Services?.GetService<HttpClient>() ?? throw new InvalidOperationException("[SkiaLottie] HttpClient service was not found.");
 #else
                         Super.Services.CreateHttpClient();
@@ -696,7 +696,7 @@ public class SkiaLottie : AnimatedFramesRenderer
                     _ = LoadAndApplySourceAsync(Source);
                     break;
                 default:
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
                     _ = LoadAndApplySourceAsync(Source);
                     break;
 #else

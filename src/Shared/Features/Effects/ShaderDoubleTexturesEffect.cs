@@ -414,7 +414,7 @@ public class ShaderDoubleTexturesEffect : SkiaShaderEffect
 
         protected virtual async Task<Stream> OpenPackageFileStreamAsync(string fileName)
         {
-    #if BROWSER
+    #if BROWSER || DRAWNUI_NET
         var httpClient = Super.Services.GetService(typeof(HttpClient)) as HttpClient ?? new HttpClient();
         return await httpClient.GetStreamAsync(fileName);
     #else

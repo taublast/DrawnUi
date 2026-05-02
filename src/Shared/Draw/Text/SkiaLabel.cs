@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using SkiaSharp.HarfBuzz;
 
-#if BROWSER
+#if BROWSER || DRAWNUI_NET
     using Font = DrawnUi.Draw.Font;
     using PropertyChangingArgs = System.ComponentModel.PropertyChangingEventArgs;
 #else
