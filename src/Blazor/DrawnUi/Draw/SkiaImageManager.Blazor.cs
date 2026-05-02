@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using DrawnUi.Infrastructure.Models;
 using DrawnUi.Infrastructure.Xaml;
+using System.IO;
 
 namespace DrawnUi.Draw;
 
@@ -10,6 +11,12 @@ public class SkiaImageManager : IDisposable
     private readonly ConcurrentDictionary<string, Task<SKBitmap>> _inFlight = new(StringComparer.OrdinalIgnoreCase);
     private readonly ConcurrentDictionary<string, string> _registeredSources = new(StringComparer.OrdinalIgnoreCase);
     private readonly SemaphoreSlim _initializeSemaphore = new(1, 1);
+
+    /// <summary>
+    /// Limits concurrent HTTP image loads to avoid memory/CPU pressure from many simultaneous
+    /// decode operations. Browser fetch is non-blocking so without this all requests fire at once.
+    /// </summary>
+    private static readonly SemaphoreSlim _loadSemaphore = new(8, 8);
 
     private sealed record CacheEntry(SKBitmap Bitmap, DateTimeOffset ExpiresAtUtc);
 
@@ -224,14 +231,14 @@ public class SkiaImageManager : IDisposable
         }
 
         using var localCancel = cancel == null ? new CancellationTokenSource() : null;
-        foreach (var source in list)
+        var cts = cancel ?? localCancel;
+        var tasks = list
+            .TakeWhile(_ => !cts.IsCancellationRequested)
+            .Select(source => PreloadImage(source, cts))
+            .ToList();
+        if (tasks.Count > 0)
         {
-            if ((cancel ?? localCancel).IsCancellationRequested)
-            {
-                break;
-            }
-
-            await PreloadImage(source, cancel ?? localCancel);
+            await Task.WhenAll(tasks);
         }
     }
 
@@ -243,15 +250,18 @@ public class SkiaImageManager : IDisposable
         }
 
         using var localCancel = cancel == null ? new CancellationTokenSource() : null;
-        foreach (var item in list)
-        {
-            if ((cancel ?? localCancel).IsCancellationRequested)
+        var cts = cancel ?? localCancel;
+        var tasks = list
+            .TakeWhile(_ => !cts.IsCancellationRequested)
+            .Select(item =>
             {
-                break;
-            }
-
-            item.BannerPreloadOrdered = true;
-            await PreloadImage(item.Banner, cancel ?? localCancel);
+                item.BannerPreloadOrdered = true;
+                return PreloadImage(item.Banner, cts);
+            })
+            .ToList();
+        if (tasks.Count > 0)
+        {
+            await Task.WhenAll(tasks);
         }
     }
 
@@ -373,16 +383,24 @@ public class SkiaImageManager : IDisposable
                 return null;
             }
 
-            var bytes = await client.GetByteArrayAsync(sourcePath, cancel);
-            var bitmap = SKBitmap.Decode(bytes);
-            if (bitmap != null)
+            await _loadSemaphore.WaitAsync(cancel);
+            try
             {
-                Instance.AddToCache(cacheKey, bitmap, CacheLongevitySecs);
-                if (!string.Equals(cacheKey, sourcePath, StringComparison.OrdinalIgnoreCase))
+                var bytes = await client.GetByteArrayAsync(sourcePath, cancel);
+                var bitmap = DecodeBitmap(bytes);
+                if (bitmap != null)
                 {
-                    Instance.AddToCache(sourcePath, bitmap, CacheLongevitySecs);
+                    Instance.AddToCache(cacheKey, bitmap, CacheLongevitySecs);
+                    if (!string.Equals(cacheKey, sourcePath, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Instance.AddToCache(sourcePath, bitmap, CacheLongevitySecs);
+                    }
+                    return ReuseBitmaps ? bitmap : bitmap.Copy();
                 }
-                return ReuseBitmaps ? bitmap : bitmap.Copy();
+            }
+            finally
+            {
+                _loadSemaphore.Release();
             }
         }
         catch (OperationCanceledException)
@@ -447,8 +465,16 @@ public class SkiaImageManager : IDisposable
                 return null;
             }
 
-            var bytes = await client.GetByteArrayAsync(uri, cancel);
-            return SKBitmap.Decode(bytes);
+            await _loadSemaphore.WaitAsync(cancel);
+            try
+            {
+                var bytes = await client.GetByteArrayAsync(uri, cancel);
+                return DecodeBitmap(bytes);
+            }
+            finally
+            {
+                _loadSemaphore.Release();
+            }
         }
         catch (OperationCanceledException)
         {
@@ -473,7 +499,7 @@ public class SkiaImageManager : IDisposable
             if (source is StreamImageSource streamSource)
             {
                 using var stream = await streamSource.Stream(cancel);
-                return stream == null ? null : SKBitmap.Decode(stream);
+                return await DecodeBitmapAsync(stream, cancel);
             }
 
             if (source is UriImageSource uriSource)
@@ -500,6 +526,23 @@ public class SkiaImageManager : IDisposable
     private static HttpClient GetHttpClient()
     {
         return Super.Services?.GetService<HttpClient>();
+    }
+
+    private static SKBitmap DecodeBitmap(byte[] bytes)
+    {
+        return bytes == null || bytes.Length == 0 ? null : SKBitmap.Decode(bytes);
+    }
+
+    private static async Task<SKBitmap> DecodeBitmapAsync(Stream stream, CancellationToken cancel)
+    {
+        if (stream == null)
+        {
+            return null;
+        }
+
+        using var buffer = new MemoryStream();
+        await stream.CopyToAsync(buffer, cancel);
+        return DecodeBitmap(buffer.ToArray());
     }
 
     private string ResolveRegisteredSource(string path)
