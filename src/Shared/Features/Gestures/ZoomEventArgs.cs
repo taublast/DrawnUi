@@ -1,4 +1,5 @@
 ﻿namespace DrawnUi.Draw;
+using PointF = System.Drawing.PointF;
 
 public class ZoomEventArgs : EventArgs
 {

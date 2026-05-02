@@ -153,19 +153,6 @@ namespace DrawnUi.Draw
         }
     }
 
-    public static class TouchEffect
-    {
-        public static float Density { get; set; } = 1f;
-
-        public static float TappedCancelMoveThresholdPoints { get; set; } = 16f;
-
-        public static bool LogEnabled { get; set; }
-
-        public static void CloseKeyboard()
-        {
-        }
-    }
-
     public static class DrawnExtensions
     {
         public static DrawnUiStartupSettings StartupSettings { get; set; }

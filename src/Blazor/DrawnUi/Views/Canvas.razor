@@ -1,5 +1,5 @@
 @namespace DrawnUi.Views
-@using AppoMobi.Blazor.Gestures
+@using AppoMobi.Gestures
 @using DrawnUi.Draw
 @using Microsoft.AspNetCore.Components
 @using DrawnUi
@@ -68,7 +68,7 @@
 @code {
 
     private ElementReference _hostElement;
-    private BlazorGestureEffect? _gestureEffect;
+    private TouchEffect? _gestureEffect;
     private IJSObjectReference? _resizeModule;
     private DotNetObjectReference<Canvas>? _resizeCallbackRef;
     private float _measuredCanvasWidth;
@@ -123,7 +123,7 @@
 
         if (CaptureInput)
         {
-            _gestureEffect ??= new BlazorGestureEffect(JS);
+            _gestureEffect ??= new TouchEffect(JS);
             await _gestureEffect.AttachAsync(_hostElement, this);
         }
         else if (_gestureEffect != null)

@@ -7,5 +7,4 @@ public interface IHasAfterEffects
     void PlayShimmerAnimation(Color color, float shimmerWidth, float shimmerAngle, int speedMs, bool removePrevious = true);
 
     SKPoint GetOffsetInsideControlInPoints(PointF argsLocation, SKPoint childOffset);
-    SKPoint GetOffsetInsideControlInPoints(System.Drawing.PointF argsLocation, SKPoint childOffset);
 }

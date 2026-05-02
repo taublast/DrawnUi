@@ -1,9 +1,11 @@
+using System.Drawing;
+
 namespace DrawnUi.Draw
 {
     public class LinearGradientBrush : GradientBrush
     {
-        public DrawnUi.PointF StartPoint { get; set; }
+        public PointF StartPoint { get; set; }
 
-        public DrawnUi.PointF EndPoint { get; set; }
+        public PointF EndPoint { get; set; }
     }
 }

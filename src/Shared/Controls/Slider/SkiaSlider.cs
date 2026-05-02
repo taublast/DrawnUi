@@ -91,7 +91,7 @@ public class SkiaSlider : SkiaLayout
                             HeightRequest = 8,
                             CornerRadius = 6,
                             HorizontalOptions = LayoutOptions.Fill,
-                            StrokeColor = Colors.Grey,
+                            StrokeColor = Colors.Gray,
                             StrokeWidth = 2,
                             UseCache = SkiaCacheType.Operations,
                             VerticalOptions = LayoutOptions.Center

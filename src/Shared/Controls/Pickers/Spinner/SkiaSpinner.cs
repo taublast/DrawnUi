@@ -34,7 +34,7 @@ public class SkiaSpinner : SkiaLayout
         {
             Type = ShapeType.Circle,
             BackgroundColor = Colors.Black,
-            StrokeColor = Colors.Grey,
+            StrokeColor = Colors.Gray,
             StrokeWidth = 2,
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill

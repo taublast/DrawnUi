@@ -7,7 +7,7 @@ Maintenance rule:
 - Keep dates current.
 - Record validated state only.
 
-Last updated: 2026-04-28
+Last updated: 2026-05-02
 
 ## Overall Status
 
@@ -50,6 +50,56 @@ Last updated: 2026-04-28
 | Shader resource loading | Partial | Browser-safe async resource loading was added, but shader effects still need runtime proof in sandbox |
 | Bindable/text surface | Blazor still relies on compatibility shims instead of full MAUI-equivalent property system |
 | Label runtime proof | Rich proof complete | Home page sample renders visible rich text with headings, emphasis, lists, inline code, links, and emoji in VS Code browser |
+
+## Current Blazor Compile Surface Snapshot
+
+The current direct Blazor implementation footprint is still a foundation layer, not a broad control-for-control port. At the time of this update, the Blazor project contains platform partials or platform-owned files for:
+
+- `Super`
+- `SkiaControl`
+- `SkiaLayout`
+- `SkiaLayout.Scroll`
+- `SkiaLayout.Grid`
+- `SkiaShape`
+- `SkiaImageManager`
+- `Canvas`
+- `DrawnView`
+- `KeyboardManager`
+- `DrawnExtensions`
+- `ViewsAdapter`
+
+That footprint matches the current validated slices: layout, shape rendering, text slices, image/font infrastructure, keyboard integration, and sandbox probes built on top of those primitives.
+
+## Direct MAUI Controls Still Missing a Blazor/Shared Port Footprint
+
+The following MAUI controls/classes currently have no corresponding class footprint in `src/Shared/` or `src/Blazor/DrawnUi/`, so they should still be treated as not ported to Blazor:
+
+| Area | Controls/classes not ported yet |
+|---|---|
+| Buttons and interaction widgets | `SkiaButton`, `SkiaCheckbox`, `SkiaHoverMask`, `SkiaRadioButton`, `SkiaSwitch`, `SkiaToggle` |
+| Navigation and containers | `SkiaDrawer`, `SkiaShell`, `SkiaTabsSelector`, `SkiaViewSwitcher` |
+| Scrolling/carousels/cells | `SkiaCarousel`, `SkiaDrawnCell`, `SkiaDynamicDrawnCell` |
+| Sliders and progress | `SkiaSlider`, `SkiaProgress`, `SkiaRangeBase` |
+| Pickers and spinners | `SkiaSpinner`, `SkiaWheelPicker`, `SkiaWheelPickerCell`, `SkiaWheelScroll`, `SkiaWheelShape`, `SkiaWheelStack` |
+| Decorated layout helpers | `SkiaDecoratedColumn`, `SkiaDecoratedGrid` |
+| Text input and media wrappers | `SkiaMauiEditor`, `SkiaMauiEntry`, `SkiaMediaImage` |
+
+## Features Still Not Ported Or Still Partial
+
+| Feature area | State |
+|---|---|
+| Full MAUI control catalog parity | Not ported yet beyond the currently validated foundation slices listed above |
+| Text input/editor stack | Not ported yet; MAUI entry/editor wrappers remain MAUI-only |
+| Shell/drawer navigation stack | Not ported yet |
+| Wheel picker and spinner stack | Not ported yet |
+| Slider/progress/range controls | Not ported yet |
+| Checkbox/radio/switch/toggle family | Not ported yet |
+| XAML-specific converters, markup extensions, and styling helpers | MAUI-only infrastructure; no equivalent full Blazor port surface yet |
+| PDF support | Explicitly excluded from the Blazor compile surface |
+| Native file loading paths | Browser implementation logs native file loading as unsupported |
+| Browser display refresh-rate detection | Still TODO in `Super.Blazor.cs`; frame loop uses configured fallback timing |
+| Shader-backed effects runtime coverage | Still partial; compile surface exists, but runtime proof is still limited to the validated slices recorded above |
+| Full bindable property parity | Still partial; Blazor uses compatibility shims instead of full MAUI-equivalent property semantics |
 
 ## Blazor Font Loading Status
 

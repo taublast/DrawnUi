@@ -1,7 +1,9 @@
+using System.Drawing;
+
 namespace DrawnUi.Draw
 {
     public class RadialGradientBrush : GradientBrush
     {
-        public DrawnUi.PointF Center { get; set; }
+        public PointF Center { get; set; }
     }
 }

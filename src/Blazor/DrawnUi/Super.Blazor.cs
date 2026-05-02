@@ -17,6 +17,7 @@ global using Microsoft.Maui.ApplicationModel;
 global using DrawnUi;
 global using DrawnUi.Views;
 global using SkiaSharp;
+global using PointF = System.Drawing.PointF;
 //global using SkiaSharp.Views.Maui;
 //global using SkiaSharp.Views.Maui.Controls;
 using Microsoft.Extensions.Logging;

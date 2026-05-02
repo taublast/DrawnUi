@@ -1,5 +1,3 @@
-using DrawnUi.Infrastructure;
-
 namespace DrawnUi.Draw;
 
 /// <summary>

@@ -1,4 +1,6 @@
-﻿using Thickness = Microsoft.Maui.Thickness;
+﻿#if !BROWSER
+using Thickness = Microsoft.Maui.Thickness;
+#endif
 
 namespace DrawnUi.Draw;
 

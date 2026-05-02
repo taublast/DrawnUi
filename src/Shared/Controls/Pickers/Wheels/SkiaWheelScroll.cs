@@ -12,14 +12,16 @@ namespace DrawnUi.Controls
             return false;
         }
 
-        public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+        public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args,
+            GestureEventProcessingInfo apply)
         {
             CheckHovered(args);
 
             var consumedDefault = BlockGesturesBelow ? this : null;
 
-            if (!RespondsToGestures  
-                || (args.Type != TouchActionResult.Down && args.Type != TouchActionResult.Up && args.Type != TouchActionResult.Panning))
+            if (!RespondsToGestures
+                || (args.Type != TouchActionResult.Down && args.Type != TouchActionResult.Up &&
+                    args.Type != TouchActionResult.Panning))
             {
                 return consumedDefault;
             }
@@ -66,7 +68,6 @@ namespace DrawnUi.Controls
         #endregion
 
         #region PROPERTIES
-
 
         public DrawImageAlignment HorizontalChildAlignement => DrawImageAlignment.Center;
 
@@ -151,6 +152,7 @@ namespace DrawnUi.Controls
         }
 
         private float wheelScrollingOffset;
+
         public float WheelScrollingOffset
         {
             get { return wheelScrollingOffset; }
@@ -165,12 +167,10 @@ namespace DrawnUi.Controls
         }
 
         private float _itemHeight;
+
         protected float ItemHeight
         {
-            get
-            {
-                return _itemHeight;
-            }
+            get { return _itemHeight; }
             set
             {
                 _itemHeight = value;
@@ -256,7 +256,7 @@ namespace DrawnUi.Controls
         {
             base.CreateDefaultContent();
 
-            ItemsWrapper = Views.FirstOrDefault(x=>x is SkiaWheelStack) as SkiaWheelStack;
+            ItemsWrapper = Views.FirstOrDefault(x => x is SkiaWheelStack) as SkiaWheelStack;
         }
 
         protected override ScaledSize MeasureContent(float width, float height, float scale)
@@ -270,7 +270,8 @@ namespace DrawnUi.Controls
         {
             if (Orientation == ScrollOrientation.Vertical)
             {
-                ContentSize = ScaledSize.FromPixels(new(MeasuredSize.Pixels.Width, ItemHeight * 15000), MeasuredSize.Scale);
+                ContentSize = ScaledSize.FromPixels(new(MeasuredSize.Pixels.Width, ItemHeight * 15000),
+                    MeasuredSize.Scale);
             }
             else if (Orientation == ScrollOrientation.Horizontal)
             {
@@ -306,12 +307,13 @@ namespace DrawnUi.Controls
 
         public override void DrawVirtual(DrawingContext context)
         {
-            if (ItemsWrapper!=null && CellsPool != null && DrawingRect.Height > 1)
+            if (ItemsWrapper != null && CellsPool != null && DrawingRect.Height > 1)
             {
                 //Debug.WriteLine($"[PICKER] at {context.Destination} with {DrawingRect}");
 
                 var logicalIndexes = new int[CellsCount + 2];
-                int startingIndex = this.GetIndexAtScrollOffset(this.WheelScrollingOffset, false, false) - this.VisibleCellsCountHalf;
+                int startingIndex = this.GetIndexAtScrollOffset(this.WheelScrollingOffset, false, false) -
+                                    this.VisibleCellsCountHalf;
 
                 for (int i = startingIndex - 1; i < startingIndex + CellsCount + 1; i++)
                 {
@@ -341,9 +343,11 @@ namespace DrawnUi.Controls
                     {
                         WheelCellInfo cell = CellsPool[VisibleCellsCountHalf - cellsToDraw];
 
-                        if (!cell.WasMeasured || cell.Index != currentIndex || !CompareFloats(cell.Offset, WheelScrollingOffset))
+                        if (!cell.WasMeasured || cell.Index != currentIndex ||
+                            !CompareFloats(cell.Offset, WheelScrollingOffset))
                         {
-                            float cellOffset = this.WheelVerticalCenter - (float)cellsToDraw * (ItemHeight + this.UseSpacing) - offset;
+                            float cellOffset = this.WheelVerticalCenter -
+                                               (float)cellsToDraw * (ItemHeight + this.UseSpacing) - offset;
 
                             // Compute full 3D position for this item
                             cell.Index = currentIndex;
@@ -358,15 +362,10 @@ namespace DrawnUi.Controls
                     itemIndex++;
                     cellsToDraw--;
                 }
-
-
             }
 
             PaintSelectionIndicator(context);
-
         }
-
-
 
 
         public void ApplyVisibleItemCount()
@@ -403,7 +402,6 @@ namespace DrawnUi.Controls
             {
                 if (ItemsWrapper.ChildrenFactory.TemplatesAvailable)
                 {
-
                     child = ItemsWrapper.ChildrenFactory.GetViewForIndex(item.Index, null,
                         ItemsWrapper.GetSizeKey(cell.Measured.Pixels));
                 }
@@ -440,6 +438,7 @@ namespace DrawnUi.Controls
                     soundPicker.PlaySystemSound();
 #endif
 
+#if !BROWSER
                     if (HapticEnabled)
                     {
                         MainThread.BeginInvokeOnMainThread(() =>
@@ -450,6 +449,8 @@ namespace DrawnUi.Controls
                             }
                         });
                     }
+
+#endif
                 }
 
                 CurrentIndex = index;
@@ -462,7 +463,7 @@ namespace DrawnUi.Controls
         /// <param name="context"></param>
         /// <param name="info"></param>
         /// <param name="itemCenterY"></param>
-        private void PrepareCell(DrawingContext context, WheelCellInfo info, float itemCenterY)
+        void PrepareCell(DrawingContext context, WheelCellInfo info, float itemCenterY)
         {
             info.WasMeasured = true;
             info.Offset = this.WheelScrollingOffset;
@@ -516,6 +517,7 @@ namespace DrawnUi.Controls
                 {
                     return;
                 }
+
                 info.View = view;
             }
             catch (Exception e)
@@ -548,7 +550,8 @@ namespace DrawnUi.Controls
             if (Fade && !info.IsSelected)
             {
                 float minOpacity = FadeMin;
-                float calculatedOpacity = (WheelHalfHeight - Math.Abs(WheelVerticalCenter - itemCenterY)) / (WheelHalfHeight * FadeStrength);
+                float calculatedOpacity = (WheelHalfHeight - Math.Abs(WheelVerticalCenter - itemCenterY)) /
+                                          (WheelHalfHeight * FadeStrength);
                 info.Opacity = Math.Max(minOpacity, calculatedOpacity);
             }
             else
@@ -566,7 +569,7 @@ namespace DrawnUi.Controls
             }
         }
 
-        private void DrawItem(DrawingContext context, WheelCellInfo item)
+        void DrawItem(DrawingContext context, WheelCellInfo item)
         {
             if (item.View == null)
                 return;
@@ -635,7 +638,6 @@ namespace DrawnUi.Controls
             }
         }
 
-
         #endregion
 
         #region SCROLLING
@@ -684,16 +686,17 @@ namespace DrawnUi.Controls
             return false;
         }
 
-        protected override bool PositionViewport(SKRect destination, SKPoint offsetPixels, float viewportScale, float scale,
+        protected override bool PositionViewport(SKRect destination, SKPoint offsetPixels, float viewportScale,
+            float scale,
             bool forceSyncOffsets)
         {
-
             var changed = base.PositionViewport(destination, offsetPixels, viewportScale, scale, forceSyncOffsets);
             if (changed)
             {
                 //Debug.WriteLine($"{offsetPixels} - {InternalViewportOffset.Pixels.Y}");
                 WheelScrollingOffset = -InternalViewportOffset.Pixels.Y;
             }
+
             return changed;
         }
 
@@ -718,6 +721,7 @@ namespace DrawnUi.Controls
             {
                 return false;
             }
+
             return true;
         }
 
@@ -941,7 +945,6 @@ namespace DrawnUi.Controls
                 _animatorFlingX.Stop();
                 _animatorFlingY.Stop();
                 ScrollTo(ViewportOffsetX, needOffsetY, AutoScrollingSpeedMs, true);
-
             }
             else
             {
@@ -958,6 +961,7 @@ namespace DrawnUi.Controls
         protected int VisibleCellsCountHalf => CellsCount / 2;
         protected float WheelHalfHeight => DrawingRect.Height / 2.0f;
         protected float WheelVerticalCenter => DrawingRect.MidY;
+
         protected float UseSpacing
         {
             get
@@ -966,6 +970,7 @@ namespace DrawnUi.Controls
                 {
                     return 0;
                 }
+
                 return (float)(ItemsWrapper.Spacing * RenderingScale);
             }
         }
@@ -974,7 +979,8 @@ namespace DrawnUi.Controls
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsIndexValid(int position)
         {
-            if (ItemsWrapper == null || ItemsWrapper.ItemsSource == null || ItemsWrapper.ItemsSource.Count == 0 || position < 0)
+            if (ItemsWrapper == null || ItemsWrapper.ItemsSource == null || ItemsWrapper.ItemsSource.Count == 0 ||
+                position < 0)
             {
                 return false;
             }
@@ -991,6 +997,7 @@ namespace DrawnUi.Controls
                 {
                     return 0;
                 }
+
                 return ItemsWrapper.ItemsSource.Count;
             }
         }
@@ -1007,10 +1014,11 @@ namespace DrawnUi.Controls
             {
                 return 0;
             }
+
             int logicalRows = ItemsSourceCount;
 
-            int num = (nearest ?
-                (int)Math.Round((double)(y / (ItemHeight + UseSpacing)))
+            int num = (nearest
+                ? (int)Math.Round((double)(y / (ItemHeight + UseSpacing)))
                 : (int)Math.Floor((double)(y / (ItemHeight + this.UseSpacing)))) - VisibleCellsCountHalf;
 
             if (checkBounds && !IsLooped)
@@ -1019,14 +1027,15 @@ namespace DrawnUi.Controls
                 {
                     num = logicalRows - 1;
                 }
+
                 if (num < 0)
                 {
                     num = 0;
                 }
             }
+
             return num;
         }
-
 
 
         public int GetCellPositionForIndex(int index)
@@ -1035,10 +1044,12 @@ namespace DrawnUi.Controls
             {
                 return index;
             }
+
             if (ItemsSourceCount == 0)
             {
                 return 0;
             }
+
             return LoopedOffset + index % ItemsSourceCount;
         }
 
@@ -1048,6 +1059,7 @@ namespace DrawnUi.Controls
             {
                 return position;
             }
+
             int rows = ItemsSourceCount;
             int adjust = position - LoopedOffset;
             int index = Math.Abs(adjust % rows);
@@ -1055,6 +1067,7 @@ namespace DrawnUi.Controls
             {
                 index = (rows + rows - index) % rows;
             }
+
             return index;
         }
 

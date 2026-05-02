@@ -13,7 +13,9 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
         new CornerRadius(8),
         propertyChanged: NeedApplyProperties);
 
+#if !BROWSER
     [System.ComponentModel.TypeConverter(typeof(Microsoft.Maui.Converters.CornerRadiusTypeConverter))]
+#endif
     public CornerRadius CornerRadius
     {
         get { return (CornerRadius)GetValue(CornerRadiusProperty); }

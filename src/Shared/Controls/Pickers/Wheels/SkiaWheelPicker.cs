@@ -227,7 +227,7 @@ namespace DrawnUi.Controls
             nameof(TextColor),
             typeof(Color),
             typeof(SkiaWheelPicker),
-            defaultValue: Colors.Grey, propertyChanged: NeedInvalidateScroller);
+            defaultValue: Colors.Gray, propertyChanged: NeedInvalidateScroller);
 
         public Color TextColor
         {

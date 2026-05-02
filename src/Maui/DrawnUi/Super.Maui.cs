@@ -6,7 +6,7 @@ global using System.Runtime.InteropServices;
 global using System.Text;
 global using System.Windows.Input;
 global using Microsoft.Maui.ApplicationModel;
-global using AppoMobi.Maui.Gestures;
+global using AppoMobi.Gestures;
 global using AppoMobi.Gestures;
 global using Microsoft.Maui;
 global using AppoMobi.Specials;
@@ -21,6 +21,8 @@ global using SkiaSharp.Views.Maui.Controls;
 global using Microsoft.Maui.Controls;
 global using Microsoft.Maui.Devices;
 global using Microsoft.Maui.Graphics;
+global using PointF = System.Drawing.PointF;
+
 using Microsoft.Extensions.Logging;
 
 [assembly: XmlnsDefinition("http://schemas.appomobi.com/drawnUi/2023/draw",

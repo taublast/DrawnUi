@@ -1,3 +1,5 @@
+using AppoMobi.Gestures;
+
 namespace DrawnUi.Views;
 
 public partial class Canvas : IGestureListener

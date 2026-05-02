@@ -1,6 +1,7 @@
 ﻿using DrawnUi.Draw;
 using System.Windows.Input;
 
+
 namespace DrawnUi.Draw;
 
 public class SkiaHotspotZoom : SkiaHotspot
@@ -56,7 +57,7 @@ public class SkiaHotspotZoom : SkiaHotspot
         if (args.Type == TouchActionResult.Panning && args.Event.Manipulation != null)
         {
             _zoom += args.Event.Manipulation.Scale * ZoomSpeed;
-            _pinchCenter = args.Event.Manipulation.Center.ToMauiPointF();
+            _pinchCenter = args.Event.Manipulation.Center;
             SetZoom(_zoom, false);
             _zoom = ViewportZoom;
         }
@@ -79,7 +80,7 @@ public class SkiaHotspotZoom : SkiaHotspot
 
                     _lastPinch = args.Event.Wheel.Scale;
                     _zoom += delta;
-                    _pinchCenter = args.Event.Wheel.Center.ToMauiPointF();
+                    _pinchCenter = args.Event.Wheel.Center;
 
                     //Debug.WriteLine($"[ZOOM] got {args.Event.Pinch.Scale:0.000}, delta {delta:0.00} -> {_zoom:0.00}");
 

@@ -4464,9 +4464,6 @@ namespace DrawnUi.Draw
             return new SKPoint(location.X + thisOffset.X, location.Y + thisOffset.Y);
         }
 
-        public SKPoint TranslateInputOffsetToPixels(System.Drawing.PointF location, SKPoint childOffset)
-            => TranslateInputOffsetToPixels(new PointF(location.X, location.Y), childOffset);
-
         public virtual SKRect GetHitBoxOnCanvas()
         {
             SKRect hitbox;
@@ -6449,9 +6446,6 @@ namespace DrawnUi.Draw
             var insideY = y - Y;
             return new((float)insideX, (float)insideY);
         }
-
-        public SKPoint GetOffsetInsideControlInPoints(System.Drawing.PointF location, SKPoint childOffset)
-            => GetOffsetInsideControlInPoints(new PointF(location.X, location.Y), childOffset);
 
         public SKPoint GetOffsetInsideControlInPixels(PointF location, SKPoint childOffset)
         {

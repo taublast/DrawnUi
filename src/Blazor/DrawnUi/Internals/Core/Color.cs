@@ -32,42 +32,74 @@ namespace DrawnUi
 
         public object Rgb { get; }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SKColor ToSKColor()
         {
             return new SKColor(ToByte(Red), ToByte(Green), ToByte(Blue), ToByte(Alpha));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color WithAlpha(double alpha)
         {
             return new Color(Red, Green, Blue, (float)alpha);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color WithAlpha(float alpha)
         {
             return new Color(Red, Green, Blue, alpha);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color WithAlpha(byte alpha)
         {
             return new Color(Red, Green, Blue, alpha / 255f);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Color FromArgb(string hex)
+        {
+            return hex.ToColor();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Color Parse(string hex)
+        {
+            return hex.ToColor();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Color FromRgba(double red, double green, double blue, double alpha)
+        {
+            return new Color(red , green , blue , alpha);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Color FromRgba(byte red, byte green, byte blue, byte alpha)
+        {
+            return new Color(red / 255f, green / 255f, blue / 255f, alpha / 255f);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Color FromRgb(byte red, byte green, byte blue)
         {
             return new Color(red / 255f, green / 255f, blue / 255f, 1f);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Color FromHsla(float hue, float saturation, float lightness, float alpha = 1f)
         {
             var sk = SKColor.FromHsl(hue * 360f, saturation * 100f, lightness * 100f).WithAlpha(ToByte(alpha));
             return FromSKColor(sk);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Color FromSKColor(SKColor color)
         {
             return new Color(color.Red / 255f, color.Green / 255f, color.Blue / 255f, color.Alpha / 255f);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Color FromHex(string hex)
         {
             return hex.ToColor();
@@ -102,13 +134,17 @@ namespace DrawnUi
             return FromSKColor(color);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static float Clamp(float value)
         {
             return Math.Clamp(value, 0f, 1f);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+
         private static byte ToByte(float value)
         {
+
             return (byte)Math.Clamp((int)Math.Round(value * 255f), 0, 255);
         }
     }
