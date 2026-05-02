@@ -1343,6 +1343,76 @@ namespace DrawnUi.Draw
             return SpanMeasurement.LastNonSpaceIndexSpan(textSpan);
         }
 
+        private readonly record struct WordKey(
+            string Family, int Weight, int Width, SKFontStyleSlant Slant, float TextSize, string Word);
+
+        private Dictionary<WordKey, float>? _wordCache;
+
+        private bool IsComplexMeasuring =>
+            Spans.Count > 0 ||
+            CharacterSpacing != 1f ||
+            HorizontalTextAlignment == DrawTextAlignment.FillWordsFull ||
+            HorizontalTextAlignment == DrawTextAlignment.FillCharactersFull ||
+            HorizontalTextAlignment == DrawTextAlignment.FillWords ||
+            HorizontalTextAlignment == DrawTextAlignment.FillCharacters;
+
+        // Probe: width-only, glyphs discarded. Overrides the O(n²) accumulating-string loop with
+        // per-word caching. Committed-line calls go to MeasureLineGlyphs (accurate glyphs, full kern).
+        protected virtual (float Width, LineGlyph[] Glyphs) MeasureLineGlyphsProbe(SKPaint paint, string text, bool needsShaping,
+            float scale)
+        {
+            if (needsShaping || charMonoWidthPixels > 0 || IsComplexMeasuring)
+                return MeasureLineGlyphs(paint, text, needsShaping, scale);
+
+            if (string.IsNullOrEmpty(text))
+                return (0f, null);
+
+            _wordCache ??= new Dictionary<WordKey, float>();
+
+            var typeface = paint.Typeface ?? SkiaFontManager.DefaultTypeface;
+            var style = typeface.FontStyle;
+            var family = typeface.FamilyName;
+            var textSize = paint.TextSize;
+
+            float total = 0f;
+            int start = 0;
+
+            while (start < text.Length)
+            {
+                int spaceIdx = text.IndexOf(' ', start);
+                int end = spaceIdx < 0 ? text.Length : spaceIdx;
+
+                if (end > start)
+                {
+                    var key = new WordKey(family, style.Weight, style.Width, style.Slant, textSize, text.Substring(start, end - start));
+                    if (!_wordCache.TryGetValue(key, out var w))
+                    {
+                        w = MeasureTextWidthWithAdvance(paint, text.AsSpan(start, end - start));
+                        _wordCache[key] = w;
+                    }
+                    total += w;
+                }
+
+                if (spaceIdx < 0) break;
+
+                {
+                    var spaceKey = new WordKey(family, style.Weight, style.Width, style.Slant, textSize, " ");
+                    if (!_wordCache.TryGetValue(spaceKey, out var sw))
+                    {
+                        sw = MeasureTextWidthWithAdvance(paint, " ");
+                        _wordCache[spaceKey] = sw;
+                    }
+                    total += sw;
+                }
+                start = spaceIdx + 1;
+            }
+
+            if (paint.TextSkewX != 0)
+                total += Math.Abs(paint.TextSkewX) * textSize;
+
+            return (total, null);
+        }
+
         protected virtual (float Width, LineGlyph[] Glyphs) MeasureLineGlyphs(SKPaint paint, string text, bool needsShaping,
             float scale)
         {
@@ -1745,7 +1815,7 @@ namespace DrawnUi.Draw
                         severalWords = true;
                     }
 
-                    var textWidth = MeasureLineGlyphs(paint, textLine, needsShaping, scale).Width;
+                    var textWidth = MeasureLineGlyphsProbe(paint, textLine, needsShaping, scale).Width;
 
                     //apply
 
@@ -1816,7 +1886,7 @@ namespace DrawnUi.Draw
                                     break;
                                 }
 
-                                width = MeasureLineGlyphs(paint, chunk, needsShaping, scale).Width;
+                                width = MeasureLineGlyphsProbe(paint, chunk, needsShaping, scale).Width;
 
                                 var pass = textLine;
                                 if (paragraphs.Length > 1)
