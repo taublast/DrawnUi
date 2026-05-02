@@ -1,4 +1,4 @@
-﻿namespace SpaceShooter.Game;
+﻿namespace SpaceShooter;
 
 /// <summary>
 /// Game-dependent action keys

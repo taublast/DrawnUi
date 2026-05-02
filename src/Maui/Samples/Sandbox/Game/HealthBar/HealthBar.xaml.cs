@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace SpaceShooter.Game;
+namespace SpaceShooter;
 
 public partial class HealthBar : SkiaShape
 {

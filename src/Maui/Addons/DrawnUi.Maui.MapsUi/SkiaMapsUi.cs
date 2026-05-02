@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Net;
 using System.Windows.Input;
-using AppoMobi.Maui.Gestures;
+using AppoMobi.Gestures;
 using DrawnUi.Draw;
 using DrawnUi.Extensions;
 using Mapsui;

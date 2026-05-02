@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<gaming:MauiGame
-    x:Class="SpaceShooter.Game.SpaceShooter"
+<gaming:Game
+    x:Class="SpaceShooter.SpaceShooter"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
-    xmlns:game="clr-namespace:SpaceShooter.Game"
+    xmlns:game="clr-namespace:SpaceShooter"
     xmlns:gaming="clr-namespace:DrawnUi.Gaming;assembly=DrawnUi.Maui.Game"
     x:DataType="game:SpaceShooter"
     BackgroundColor="#000011"
@@ -378,4 +378,4 @@
 
     </draw:SkiaLayout>
 
-</gaming:MauiGame>
+</gaming:Game>

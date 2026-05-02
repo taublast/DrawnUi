@@ -1,4 +1,4 @@
-﻿using AppoMobi.Maui.Gestures;
+﻿using AppoMobi.Gestures;
 using DrawnUi.Infrastructure;
 
 namespace Sandbox.Views

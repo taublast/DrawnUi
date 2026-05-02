@@ -1,4 +1,4 @@
-namespace SpaceShooter.Game;
+namespace SpaceShooter;
 
 /// <summary>
 /// Resusable model, to avoid GC

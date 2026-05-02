@@ -1,4 +1,4 @@
-using AppoMobi.Maui.Gestures;
+using AppoMobi.Gestures;
 using System.Collections.Concurrent;
 
 namespace Sandbox.Views.Controls;
@@ -13,7 +13,7 @@ public class MultiRippleWithTouchEffect : ShaderDoubleTexturesEffect,
 
     protected bool Initialized { get; set; }
 
-    private PointF _mouse;
+    private System.Drawing.PointF _mouse;
 
     #region IStateEffect
 
@@ -79,14 +79,14 @@ public class MultiRippleWithTouchEffect : ShaderDoubleTexturesEffect,
     public class Ripple
     {
         public Guid Uid { get; set; }
-        public PointF Origin { get; set; }
+        public System.Drawing.PointF Origin { get; set; }
         public long Time { get; set; }
         public double Progress { get; set; }
     }
 
     ConcurrentDictionary<Guid, Ripple> Ripples = new();
 
-    public Ripple CreateRipple(PointF origin)
+    public Ripple CreateRipple(System.Drawing.PointF origin)
     {
         var ripple = new Ripple
         {

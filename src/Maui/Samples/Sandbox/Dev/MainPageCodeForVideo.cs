@@ -1,4 +1,4 @@
-﻿using AppoMobi.Maui.Gestures;
+﻿using AppoMobi.Gestures;
 using Sandbox.Views;
 using Canvas = DrawnUi.Views.Canvas;
 

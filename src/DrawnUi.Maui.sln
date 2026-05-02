@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppoMobi.Maui.Gestures", ".
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastRepro", "Maui\Samples\FastRepro\FastRepro.csproj", "{DA3890E5-27F6-AFA3-CE6A-B32052050764}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedGame", "SharedGame\SharedGame.shproj", "{F1532DEC-E3EE-4616-8F16-B594C891FCC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -120,12 +122,15 @@ Global
 		{EEC6E610-C1E3-9D71-F4EE-66581B2394A3} = {8ED244C1-6F60-4954-BC7F-98D827EA31CC}
 		{F6E58B0C-85AB-D5A3-0840-88682D38F9CF} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
 		{DA3890E5-27F6-AFA3-CE6A-B32052050764} = {5D20AA90-6969-D8BD-9DCD-8634F4692FDA}
+		{F1532DEC-E3EE-4616-8F16-B594C891FCC3} = {5B1CDC4F-5ED6-4662-8EC6-3DE3FF0B05BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {329E3D0C-A3F7-4A3E-B61C-6B2D1BD7F708}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedGame\SharedGame.projitems*{793e382e-815c-42a2-b045-44ff930bed07}*SharedItemsImports = 5
 		Shared\Shared.projitems*{83974207-9636-48dd-bdb3-98edecbb1107}*SharedItemsImports = 13
 		Shared\Shared.projitems*{93e119b1-4378-87df-2dd2-a818d1e6c2a2}*SharedItemsImports = 5
+		SharedGame\SharedGame.projitems*{f1532dec-e3ee-4616-8f16-b594c891fcc3}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Windows.Input;
-using AppoMobi.Maui.Gestures;
+using AppoMobi.Gestures;
 using DrawnUi.Extensions;
 using Newtonsoft.Json;
 using Sandbox;

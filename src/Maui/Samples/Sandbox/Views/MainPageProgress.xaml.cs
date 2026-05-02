@@ -17,7 +17,7 @@
             }
         }
 
-        private void SkiaButton_Tapped(object sender, AppoMobi.Maui.Gestures.TouchActionEventArgs e)
+        private void SkiaButton_Tapped(object sender, AppoMobi.Gestures.TouchActionEventArgs e)
         {
             //MainCarousel.ChildrenFactory.PrintDebugVisible();
         }

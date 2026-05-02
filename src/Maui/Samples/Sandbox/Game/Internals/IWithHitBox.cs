@@ -1,6 +1,6 @@
 using SkiaSharp;
 
-namespace SpaceShooter.Game;
+namespace SpaceShooter;
 
 public interface IWithHitBox
 {

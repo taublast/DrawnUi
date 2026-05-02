@@ -5,13 +5,13 @@ global using DrawnUi.Controls;
 using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using AppoMobi.Maui.Gestures;
+using AppoMobi.Gestures;
 using AppoMobi.Specials;
 using DrawnUi.Gaming;
 
-namespace SpaceShooter.Game;
+namespace SpaceShooter;
 
-public partial class SpaceShooter : MauiGame
+public partial class SpaceShooter : Game
 {
     #region CONSTANTS
 
@@ -680,11 +680,11 @@ public partial class SpaceShooter : MauiGame
     /// Mappings from platform-independent keys to game action keys.
     /// Player could change these mappings if you implement this in settings.
     /// </summary>
-    Dictionary<MauiKey, GameKey> ActionKeys = new()
+    Dictionary<InputKey, GameKey> ActionKeys = new()
     {
-        { MauiKey.Space, GameKey.Fire },
-        { MauiKey.ArrowLeft, GameKey.Left },
-        { MauiKey.ArrowRight, GameKey.Right },
+        { InputKey.Space, GameKey.Fire },
+        { InputKey.ArrowLeft, GameKey.Left },
+        { InputKey.ArrowRight, GameKey.Right },
     };
 
     /// <summary>
@@ -692,7 +692,7 @@ public partial class SpaceShooter : MauiGame
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    GameKey MapToGame(MauiKey key)
+    GameKey MapToGame(InputKey key)
     {
         if (ActionKeys.TryGetValue(key, out var gameKey))
         {
@@ -701,7 +701,7 @@ public partial class SpaceShooter : MauiGame
         return GameKey.Unset;
     }
 
-    public override void OnKeyUp(MauiKey mauiKey)
+    public override void OnKeyUp(InputKey mauiKey)
     {
         var key = MapToGame(mauiKey);
 
@@ -725,7 +725,7 @@ public partial class SpaceShooter : MauiGame
         }
     }
 
-    public override void OnKeyDown(MauiKey mauiKey)
+    public override void OnKeyDown(InputKey mauiKey)
     {
         var key = MapToGame(mauiKey);
 
@@ -751,8 +751,8 @@ public partial class SpaceShooter : MauiGame
     }
 
     volatile bool _moveLeft, _moveRight;
-    private PointF _lastPan;
-    private PointF _lastDown;
+    private System.Drawing.PointF _lastPan;
+    private System.Drawing.PointF _lastDown;
     bool _wasPanning;
     bool _isPressed;
 

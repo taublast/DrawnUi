@@ -3,7 +3,7 @@
 
 
 
-namespace SpaceShooter.Game;
+namespace SpaceShooter;
 
 public partial class SpaceShooter
 {

@@ -4,7 +4,7 @@
 using AppoMobi.Specials;
 using SkiaSharp;
 
-namespace SpaceShooter.Game;
+namespace SpaceShooter;
 
 public partial class SpaceShooter
 {

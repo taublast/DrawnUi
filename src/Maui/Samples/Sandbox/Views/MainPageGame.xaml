@@ -6,7 +6,7 @@
     xmlns:controls="clr-namespace:Sandbox.Views.Controls"
     xmlns:demo="clr-namespace:Sandbox"
     xmlns:draw="http://schemas.appomobi.com/drawnUi/2023/draw"
-    xmlns:game="clr-namespace:SpaceShooter.Game"
+    xmlns:game="clr-namespace:SpaceShooter"
     xmlns:views="clr-namespace:Sandbox.Views"
     x:Name="ThisPage"
     x:DataType="demo:MainPageViewModel"

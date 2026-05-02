@@ -1,4 +1,4 @@
-﻿using AppoMobi.Maui.Gestures;
+﻿using AppoMobi.Gestures;
 using SkiaSharp.Views.Maui;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
