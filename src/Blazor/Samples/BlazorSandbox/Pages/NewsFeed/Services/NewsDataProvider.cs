@@ -9,16 +9,16 @@ public class NewsDataProvider
     
     private static (string name, string avatarUrl)[] authors = new (string, string)[]
     {
-        ("Alex Chen", "https://randomuser.me/api/portraits/men/1.jpg"),
-        ("Sarah Williams", "https://randomuser.me/api/portraits/women/2.jpg"),
-        ("Mike Johnson", "https://randomuser.me/api/portraits/men/3.jpg"),
-        ("Emma Davis", "https://randomuser.me/api/portraits/women/4.jpg"),
-        ("Chris Brown", "https://randomuser.me/api/portraits/men/5.jpg"),
-        ("Lisa Martinez", "https://randomuser.me/api/portraits/women/6.jpg"),
-        ("David Wilson", "https://randomuser.me/api/portraits/men/7.jpg"),
-        ("Amy Garcia", "https://randomuser.me/api/portraits/women/8.jpg"),
-        ("Tom Anderson", "https://randomuser.me/api/portraits/men/9.jpg"),
-        ("Maya Patel", "https://randomuser.me/api/portraits/women/10.jpg")
+        ("Alex Chen", "https://picsum.photos/seed/alex-chen-avatar/128/128"),
+        ("Sarah Williams", "https://picsum.photos/seed/sarah-williams-avatar/128/128"),
+        ("Mike Johnson", "https://picsum.photos/seed/mike-johnson-avatar/128/128"),
+        ("Emma Davis", "https://picsum.photos/seed/emma-davis-avatar/128/128"),
+        ("Chris Brown", "https://picsum.photos/seed/chris-brown-avatar/128/128"),
+        ("Lisa Martinez", "https://picsum.photos/seed/lisa-martinez-avatar/128/128"),
+        ("David Wilson", "https://picsum.photos/seed/david-wilson-avatar/128/128"),
+        ("Amy Garcia", "https://picsum.photos/seed/amy-garcia-avatar/128/128"),
+        ("Tom Anderson", "https://picsum.photos/seed/tom-anderson-avatar/128/128"),
+        ("Maya Patel", "https://picsum.photos/seed/maya-patel-avatar/128/128")
     };
     
     private static string[] postTexts = new string[]

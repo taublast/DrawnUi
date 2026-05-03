@@ -34,7 +34,45 @@ public class SkiaImageManager : IDisposable
     public static SkiaImageManager Instance => _instance ??= new SkiaImageManager();
 
     public bool IsDisposed { get; protected set; }
-    public bool IsLoadingLocked { get; set; }
+
+    private readonly object _loadingLockStateGate = new();
+    private bool _isLoadingLocked;
+    private TaskCompletionSource<bool> _loadingUnlocked = CreateLoadingUnlockedSignal(completed: true);
+
+    public bool IsLoadingLocked
+    {
+        get => _isLoadingLocked;
+        set
+        {
+            TaskCompletionSource<bool> unlockedToSignal = null;
+            var shouldRaiseCanReload = false;
+
+            lock (_loadingLockStateGate)
+            {
+                if (_isLoadingLocked == value)
+                {
+                    return;
+                }
+
+                _isLoadingLocked = value;
+                if (value)
+                {
+                    _loadingUnlocked = CreateLoadingUnlockedSignal();
+                }
+                else
+                {
+                    unlockedToSignal = _loadingUnlocked;
+                    shouldRaiseCanReload = true;
+                }
+            }
+
+            unlockedToSignal?.TrySetResult(true);
+            if (shouldRaiseCanReload)
+            {
+                CanReload?.Invoke(this, EventArgs.Empty);
+            }
+        }
+    }
     public bool IsOffline { get; protected set; }
 
     public event EventHandler CanReload;
@@ -148,7 +186,7 @@ public class SkiaImageManager : IDisposable
 
         if (IsLoadingLocked)
         {
-            return Task.FromCanceled<SKBitmap>(token.Token);
+            return LoadWhenUnlockedAsync(source, token, priority);
         }
 
         var cacheKey = GetUriFromImageSource(source);
@@ -166,6 +204,41 @@ public class SkiaImageManager : IDisposable
         }
 
         return LoadImageOnPlatformAsync(source, token.Token);
+    }
+
+    private async Task<SKBitmap> LoadWhenUnlockedAsync(ImageSource source, CancellationTokenSource token, LoadPriority priority)
+    {
+        var cancellationToken = token?.Token ?? CancellationToken.None;
+
+        while (true)
+        {
+            Task waitForUnlock;
+            lock (_loadingLockStateGate)
+            {
+                if (!_isLoadingLocked)
+                {
+                    break;
+                }
+
+                waitForUnlock = _loadingUnlocked.Task;
+            }
+
+            await waitForUnlock.WaitAsync(cancellationToken);
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
+        return await LoadImageManagedAsync(source, token, priority);
+    }
+
+    private static TaskCompletionSource<bool> CreateLoadingUnlockedSignal(bool completed = false)
+    {
+        var signal = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        if (completed)
+        {
+            signal.TrySetResult(true);
+        }
+
+        return signal;
     }
 
     private async Task<SKBitmap> AwaitTrackedLoadAsync(string cacheKey, Task<SKBitmap> task, CancellationToken cancellationToken)

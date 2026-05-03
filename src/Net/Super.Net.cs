@@ -41,6 +41,9 @@ namespace DrawnUi.Draw
             Super.Screen.Density = 1;
 
             RefreshRate = GetDisplayRefreshRate(60);
+
+            var n = new SkiaControl();
+            n.Opacity = 1;
         }
 
         public static int GetDisplayRefreshRate(int fallback) => fallback;

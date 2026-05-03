@@ -39,23 +39,23 @@ namespace DrawnUi.Draw
 
         public static event EventHandler OnFrame;
 
-        public static int RefreshRate { get; protected set; } = 60;
+        private const int DEFAULT_TARGET_FPS = 120;
+
+        public static int RefreshRate { get; protected set; } = DEFAULT_TARGET_FPS;
         public static void Init()
         {
             Initialized = true;
 
             Super.Screen.Density = 1;
 
-            RefreshRate = GetDisplayRefreshRate(60);
+            RefreshRate = GetDisplayRefreshRate(DEFAULT_TARGET_FPS);
         }
 
         public static int GetDisplayRefreshRate(int fallback)
         {
-            var ret = fallback;
-
             //TODO: Implement browser-specific logic to get the actual display refresh rate
 
-            return ret;
+            return DEFAULT_TARGET_FPS;
         }
 
         public static IServiceProvider Services

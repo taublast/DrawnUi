@@ -74,7 +74,7 @@ namespace DrawnUi.Draw
                          nameof(ScaleX), nameof(ScaleY)
                      ))
             {
-                Repaint();
+                Repaint(); 
             }
             else if (propertyName.IsEither(nameof(BackgroundColor),
                          nameof(IsClippedToBounds)

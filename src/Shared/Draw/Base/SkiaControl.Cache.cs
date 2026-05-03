@@ -304,13 +304,9 @@ public partial class SkiaControl
     {
         get
         {
-            #if BROWSER || DRAWNUI_NET
-            return false;
-            #endif
-            
+           
             return CanUseCacheDoubleBuffering
                    && Super.Multithreaded
-                   //&& Parent is SkiaControl
                    || UsingCacheType == SkiaCacheType.ImageDoubleBuffered;
         }
     }

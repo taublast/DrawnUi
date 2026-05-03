@@ -32,6 +32,7 @@ public class NewsCell : DrawnListCell
         DelayIncrementMs = 75;
         TimeAnimateMs = 150;
         TimeWindowMs = 100;
+        //UseCache = SkiaCacheType.None; //TODO fix bug - with cache enabled fade in animation visual gets stall below final value
 
         _avatarImage = new BannerImage()
         {
@@ -72,6 +73,7 @@ public class NewsCell : DrawnListCell
             LineBreakMode = LineBreakMode.WordWrap,
             IsVisible = false
         };
+
 
         _contentImg = new BannerImage()
         {
@@ -363,7 +365,7 @@ public class NewsCell : DrawnListCell
 
         _authorLabel.Text = news.AuthorName;
         _timeLabel.Text = GetRelativeTime(news.PublishedAt);
-        //_avatarImage.Source = news.AuthorAvatarUrl;
+        _avatarImage.Source = news.AuthorAvatarUrl;
         _likeButton.Text = $"👍 {news.LikesCount}";
         _commentButton.Text = $"💬 {news.CommentsCount}";
 
