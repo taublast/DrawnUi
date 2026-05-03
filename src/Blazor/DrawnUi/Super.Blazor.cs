@@ -53,8 +53,6 @@ namespace DrawnUi.Draw
 
         public static int GetDisplayRefreshRate(int fallback)
         {
-            //TODO: Implement browser-specific logic to get the actual display refresh rate
-
             return DEFAULT_TARGET_FPS;
         }
 
