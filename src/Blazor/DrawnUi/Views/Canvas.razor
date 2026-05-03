@@ -148,6 +148,7 @@
         if (CaptureInput)
         {
             _gestureEffect ??= new TouchEffect(JS);
+            _gestureEffect.TouchMode = GestureTouchMode;
             await _gestureEffect.AttachAsync(_hostElement, this);
         }
         else if (_gestureEffect != null)
@@ -342,7 +343,18 @@
 
     private bool CaptureInput => Gestures != GesturesMode.Disabled;
 
-    private string GestureStyle => CaptureInput ? "touch-action:none; user-select:none;" : string.Empty;
+    private TouchHandlingStyle GestureTouchMode => Gestures switch
+    {
+        GesturesMode.Enabled => TouchHandlingStyle.Manual,
+        GesturesMode.Lock => TouchHandlingStyle.Lock,
+        _ => TouchHandlingStyle.Disabled
+    };
+
+    private string GestureStyle => Gestures switch
+    {
+        GesturesMode.Enabled or GesturesMode.Lock => "touch-action:none; user-select:none;",
+        _ => string.Empty
+    };
 
     public async ValueTask DisposeAsync()
     {

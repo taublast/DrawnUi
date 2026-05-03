@@ -170,6 +170,19 @@ public partial class Canvas : IGestureListener
                 ReceivedInput.Clear();
             }
 
+            if (_gestureEffect != null)
+            {
+                if (consumed == null && args.Type == TouchActionResult.Panning)
+                {
+                    _gestureEffect.WIllLock = ShareLockState.Unlocked;
+                }
+                else if (consumed != null &&
+                         (args.Type == TouchActionResult.Panning || args.Type == TouchActionResult.Wheel))
+                {
+                    _gestureEffect.WIllLock = ShareLockState.Locked;
+                }
+            }
+
             if (checkHover && !hadHover)
             {
                 HasHover = null;
@@ -204,20 +217,23 @@ public partial class Canvas : IGestureListener
             Tapped?.Invoke(this, EventArgs.Empty);
         }
 
+        if (touchAction == TouchActionResult.Down && _gestureEffect != null)
+        {
+            _gestureEffect.WIllLock = ShareLockState.Initial;
+        }
+
         var args = SkiaGesturesParameters.Create(touchAction, args1);
 
-        //this is intended to not lose gestures when fps drops and avoid crashes in double-buffering
-        PostponeExecutionBeforeDraw(() =>
+        // Blazor interop needs the lock state updated before JS decides whether
+        // the current browser event should stay local or bubble to the page.
+        try
         {
-            try
-            {
-                ProcessGestures(args);
-            }
-            catch (Exception e)
-            {
-                Super.Log(e);
-            }
-        }, LongKeyGenerator.Next());
+            ProcessGestures(args);
+        }
+        catch (Exception e)
+        {
+            Super.Log(e);
+        }
 
         Repaint();
 
