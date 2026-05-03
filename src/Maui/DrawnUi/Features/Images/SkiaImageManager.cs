@@ -899,6 +899,28 @@ public partial class SkiaImageManager : IDisposable
     }
 
     /// <summary>
+    /// Opens a stream for any source (native file, local asset, or URL).
+    /// On MAUI the stream is returned directly without buffering.
+    /// Mirrors <c>SkiaImageManager.OpenStreamAsync</c> on Blazor.
+    /// </summary>
+    public static async Task<Stream> OpenStreamAsync(string source, CancellationToken cancel = default)
+    {
+        if (source.SafeContainsInLower(NativeFilePrefix))
+        {
+            var fullFilename = source.Replace(NativeFilePrefix, "");
+            return new FileStream(fullFilename, FileMode.Open, FileAccess.Read, FileShare.Read);
+        }
+
+        if (Uri.TryCreate(source, UriKind.Absolute, out var uri) && uri.Scheme != "file")
+        {
+            using var client = Super.Services.CreateHttpClient();
+            return await client.GetStreamAsync(uri, cancel);
+        }
+
+        return await FileSystem.OpenAppPackageFileAsync(source);
+    }
+
+    /// <summary>
     /// Controls whether LoadImageFromInternetAsync should use retry logic.
     /// Default is true for iOS/Windows (where it's the fallback when Nuke/Glide is disabled),
     /// false for Android (uses Glide retry).
