@@ -124,6 +124,7 @@ internal static class NavMenuItems
             [
                 new("First App", "tutorial-first-app", "bi-stars-nav-menu"),
                 new("Custom Button", "tutorial-custom-button", "bi-dpad-fill-nav-menu"),
+                new("News Feed", "tutorial-news-feed", "bi-newspaper-nav-menu"),
                 new("Cards", "cards", "bi-columns-gap-nav-menu")
             ]),
 

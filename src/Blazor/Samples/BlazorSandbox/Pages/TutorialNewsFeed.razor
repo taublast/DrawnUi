@@ -1,0 +1,32 @@
+@page "/tutorial-news-feed"
+@using BlazorSandbox.Pages.NewsFeed
+@using BlazorSandbox.Pages.NewsFeed.Views
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>News Feed Tutorial</PageTitle>
+
+<div class="docs-page">
+    <h1>News Feed</h1>
+    <p class="docs-lead">Blazor port of the DrawnUI NewsFeed tutorial. The DrawnUI feed tree, recycled cell setup, refresh, and load-more behavior are kept aligned with the MAUI sample.</p>
+
+</div>
+
+<Canvas Content="_canvasContent"
+        MaxWidthRequest="430"
+        HorizontalOptions="@LayoutOptions.Fill"
+        VerticalOptions="@LayoutOptions.Fill"
+        BackgroundColor="#DCDCDC"
+        Margin="0,8,0,8"
+        RenderingMode="@RenderingModeType.Accelerated"
+        Gestures="@GesturesMode.Lock" />
+
+@code {
+    private readonly SkiaControl _canvasContent;
+
+    public TutorialNewsFeed()
+    {
+        _canvasContent = new NewsFeedLayout();
+    }
+}
