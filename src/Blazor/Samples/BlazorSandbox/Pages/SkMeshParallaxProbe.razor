@@ -180,27 +180,24 @@
             }
         };
 
-        _canvasContent = new SkiaLayout()
+        _canvasContent = new SkiaLayer()
         {
             WidthRequest = -1,
             HeightRequest = 520,
             MaximumWidthRequest = 980,
             Padding = new Thickness(20),
-            Type = LayoutType.Column,
-            Spacing = 14,
-            HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
             Children =
             {
                 new SkiaStack()
                 {
-                    UseCache = SkiaCacheType.Image,
                     Type = LayoutType.Column,
                     Spacing = 8,
                     Children =
                     {
                         new SkiaLabel()
                         {
+                            UseCache = SkiaCacheType.GPU,
                             Text = "SKMesh parallax scroller",
                             FontSize = 24,
                             FontAttributes = FontAttributes.Bold,
@@ -209,7 +206,20 @@
                         },
                     }
                 },
-                _stage,
+
+                _stage.WithMargin(0,40,0,0),
+
+                new SkiaLabelFps()
+                {
+                    UseCache = SkiaCacheType.GPU,
+                    Margin = new (0, 0, 4, 24),
+                    VerticalOptions = LayoutOptions.End,
+                    HorizontalOptions = LayoutOptions.End,
+                    Rotation = -45,
+                    BackgroundColor = Colors.DarkRed,
+                    TextColor = Colors.White,
+                    ZIndex = 110,
+                }
             }
         };
     }
