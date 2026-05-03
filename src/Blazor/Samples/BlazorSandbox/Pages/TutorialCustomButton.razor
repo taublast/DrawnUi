@@ -1,0 +1,221 @@
+@page "/tutorial-custom-button"
+@using System.Diagnostics
+@using BlazorSandbox.Pages
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>Custom Button Tutorial</PageTitle>
+
+<div class="docs-page">
+    <h1>Custom Button</h1>
+    <p class="docs-lead">This is the Blazor version of DrawnUI tutorial Interactive Button Tutorial. The DrawnUI content inside the canvas is kept as close as possible to the MAUI tutorial version.</p>
+    <p class="docs-note">The only deliberate host-side changes here are the Blazor page wrapper and the canvas background string format.</p>
+
+    <div class="docs-example-frame">
+        <Canvas Content="_canvasContent"
+                WidthRequest="420"
+                HeightRequest="780"
+                BackgroundColor="#483D8B"
+                Margin="0,8,0,0"
+                RenderingMode="@RenderingModeType.Accelerated"
+                Gestures="@GesturesMode.Enabled" />
+    </div>
+</div>
+
+@code {
+    private readonly SkiaControl _canvasContent;
+
+    public TutorialCustomButton()
+    {
+        _canvasContent = CreateCanvasContent();
+    }
+
+    private SkiaControl CreateCanvasContent()
+    {
+        var playButton = new GameButton()
+        {
+            Text = "PLAY GAME",
+            HorizontalOptions = LayoutOptions.Center
+        };
+        playButton.Clicked += ClickedPlay;
+
+        var blueButton = new GameButton()
+        {
+            Text = "YO !",
+            TintColor = Colors.CornflowerBlue,
+            LeftImageSource = @"media\banana.gif",
+            HorizontalOptions = LayoutOptions.Center
+        };
+        blueButton.Clicked += ClickedBlue;
+
+        var greenButton = new GameButton()
+        {
+            Text = "GREEN ONE",
+            TintColor = Colors.Green,
+            HorizontalOptions = LayoutOptions.Center
+        };
+        greenButton.Clicked += ClickedGreen;
+
+        var orangeButton = new GameButton()
+        {
+            Text = "ORANGE",
+            TintColor = Colors.Orange,
+            HorizontalOptions = LayoutOptions.Center
+        };
+        orangeButton.Clicked += ClickedOrange;
+
+        return new SkiaLayout()
+        {
+            HorizontalOptions = LayoutOptions.Fill,
+            Tag = "Wrapper",
+            VerticalOptions = LayoutOptions.Fill,
+            Children =
+            {
+                new SkiaScroll()
+                {
+                    VerticalOptions = LayoutOptions.Fill,
+                    HorizontalOptions = LayoutOptions.Fill,
+                    Content = new SkiaLayout()
+                    {
+                        Type = LayoutType.Column,
+                        UseCache = SkiaCacheType.Operations,
+                        Spacing = 30,
+                        Padding = new Thickness(20),
+                        HorizontalOptions = LayoutOptions.Center,
+                        Children =
+                        {
+                            new SkiaLayout()
+                            {
+                                Type = LayoutType.Column,
+                                UseCache = SkiaCacheType.Image,
+                                Spacing = 8,
+                                HorizontalOptions = LayoutOptions.Center,
+                                Margin = new Thickness(0, 20, 0, 0),
+                                Children =
+                                {
+                                    new SkiaLabel()
+                                    {
+                                        Text = "Custom Button Tutorial",
+                                        FontSize = 24,
+                                        FontAttributes = FontAttributes.Bold,
+                                        TextColor = Colors.White,
+                                        HorizontalOptions = LayoutOptions.Center
+                                    },
+                                    new SkiaRichLabel()
+                                    {
+                                        Text = "Game-style button with visual effects ✨",
+                                        FontSize = 16,
+                                        TextColor = Colors.LightGray,
+                                        HorizontalOptions = LayoutOptions.Center,
+                                        HorizontalTextAlignment = DrawTextAlignment.Center
+                                    }
+                                }
+                            },
+                            playButton,
+                            new SkiaLayout()
+                            {
+                                UseCache = SkiaCacheType.Image,
+                                Type = LayoutType.Column,
+                                Spacing = 12,
+                                HorizontalOptions = LayoutOptions.Center,
+                                Children =
+                                {
+                                    new SkiaLabel()
+                                    {
+                                        Text = "Features Demonstrated:",
+                                        FontSize = 18,
+                                        FontAttributes = FontAttributes.Bold,
+                                        TextColor = Colors.White,
+                                        HorizontalOptions = LayoutOptions.Center
+                                    },
+                                    new SkiaRichLabel()
+                                    {
+                                        Text = "🌈 Gradient backgrounds",
+                                        FontSize = 14,
+                                        TextColor = Colors.LightBlue,
+                                        HorizontalOptions = LayoutOptions.Center
+                                    },
+                                    new SkiaRichLabel()
+                                    {
+                                        Text = "✨ Bevel/Emboss effects",
+                                        FontSize = 14,
+                                        TextColor = Colors.LightBlue,
+                                        HorizontalOptions = LayoutOptions.Center
+                                    },
+                                    new SkiaRichLabel()
+                                    {
+                                        Text = "🎮 Press animations",
+                                        FontSize = 14,
+                                        TextColor = Colors.LightBlue,
+                                        HorizontalOptions = LayoutOptions.Center
+                                    },
+                                    new SkiaRichLabel()
+                                    {
+                                        Text = "⚡ Optimized performance",
+                                        FontSize = 14,
+                                        TextColor = Colors.LightBlue,
+                                        HorizontalOptions = LayoutOptions.Center
+                                    }
+                                }
+                            },
+                            new SkiaLayout()
+                            {
+                                UseCache = SkiaCacheType.Operations,
+                                Type = LayoutType.Column,
+                                Spacing = 16,
+                                HorizontalOptions = LayoutOptions.Center,
+                                Margin = new Thickness(0, 20, 0, 20),
+                                Children =
+                                {
+                                    new SkiaLabel()
+                                    {
+                                        UseCache = SkiaCacheType.Operations,
+                                        Text = "Usage Examples:",
+                                        FontSize = 18,
+                                        FontAttributes = FontAttributes.Bold,
+                                        TextColor = Colors.White,
+                                        HorizontalOptions = LayoutOptions.Center
+                                    },
+                                    blueButton,
+                                    greenButton,
+                                    orangeButton
+                                }
+                            }
+                        }
+                    }
+                },
+                new SkiaLabelFps()
+                {
+                    Margin = new Thickness(0, 0, 4, 24),
+                    BackgroundColor = Colors.DarkRed,
+                    HorizontalOptions = LayoutOptions.End,
+                    Rotation = -45,
+                    TextColor = Colors.White,
+                    VerticalOptions = LayoutOptions.End,
+                    ZIndex = 100
+                }
+            }
+        };
+    }
+
+    private void ClickedPlay(object? sender, EventArgs e)
+    {
+        Debug.WriteLine("PLAY was pressed! 🎉");
+    }
+
+    private void ClickedBlue(object? sender, EventArgs e)
+    {
+        Debug.WriteLine("Blue button pressed! 💚");
+    }
+
+    private void ClickedGreen(object? sender, EventArgs e)
+    {
+        Debug.WriteLine("Green button pressed! 💚");
+    }
+
+    private void ClickedOrange(object? sender, EventArgs e)
+    {
+        Debug.WriteLine("Orange button pressed! 💚");
+    }
+}

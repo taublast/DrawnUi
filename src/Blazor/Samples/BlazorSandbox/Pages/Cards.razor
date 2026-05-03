@@ -1,34 +1,32 @@
 @page "/cards"
 @using AppoMobi.Gestures
+@using DrawnUi
 @using DrawnUi.Draw
 @using DrawnUi.Views
 
-@using DrawnUi
+<PageTitle>Interactive Cards</PageTitle>
 
-<PageTitle>Cards</PageTitle>
+<div class="docs-page">
+    <h1>Interactive Cards</h1>
+    <p class="docs-lead">This is the sandbox port of the MAUI interactive cards tutorial: tap any card for a short animation and drag the gaming card to see direct gesture handling on a drawn surface.</p>
+    <p class="docs-note">The page stays close to the tutorial structure, but keeps everything inside a single Blazor sandbox page with the canvas content built inline.</p>
 
-<h1>Interactive Cards</h1>
-
-This presentation page keeps a richer composed example in the sandbox without turning it into a long article.
-
-<p id="cards-debug-status">@_statusText</p>
-
-<Canvas
-    WidthRequest="400"
-    HeightRequest="760"
-    BackgroundColor="#F0F0F5"
-    Margin="0,16,0,0"
-    RenderingMode="@RenderingModeType.Accelerated"
-    Gestures="@GesturesMode.Enabled"
-     />
+    <div class="docs-example-frame">
+        <Canvas Content="_canvasContent"
+                WidthRequest="400"
+                HeightRequest="760"
+                BackgroundColor="#F0F0F5"
+                Margin="0,16,0,0"
+                RenderingMode="@RenderingModeType.Accelerated"
+                Gestures="@GesturesMode.Enabled" />
+    </div>
+</div>
 
 @code {
     private readonly SkiaLayer _card1Layer;
     private readonly SkiaLayer _card2Layer;
+    private readonly HashSet<SkiaControl> _activeTapAnimations = new();
     private SkiaControl _canvasContent;
-    private bool _isTutorialCardAnimating;
-    private string _statusText = "Cards status: booting";
-    private bool _canRefreshUi;
 
     public Cards()
     {
@@ -93,7 +91,6 @@ This presentation page keeps a richer composed example in the sandbox without tu
             }
         };
 
-        SetStatus("Cards status: ready for runtime validation");
     }
 
     private SkiaLayer CreateGradientCard()
@@ -386,31 +383,11 @@ This presentation page keeps a richer composed example in the sandbox without tu
             var deltaX = e.Args.Event.Distance.Total.X / control.RenderingScale;
             var rotationAmount = deltaX * 0.1;
             control.Rotation = Math.Max(-15, Math.Min(15, rotationAmount));
-            SetStatus($"Cards status: dragging pannable card ({control.TranslationX:0},{control.TranslationY:0})");
         }
         else if (e.Args.Type == TouchActionResult.Up)
         {
             control.TranslateToAsync(0, 0, 100, Easing.SpringOut);
             control.RotateToAsync(0, 75, Easing.SpringOut);
-            SetStatus("Cards status: pannable card reset");
-        }
-    }
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender)
-        {
-            _canRefreshUi = true;
-        }
-    }
-
-    private void SetStatus(string value)
-    {
-        _statusText = value;
-
-        if (_canRefreshUi)
-        {
-            InvokeAsync(StateHasChanged);
         }
     }
 
@@ -418,20 +395,13 @@ This presentation page keeps a richer composed example in the sandbox without tu
     {
         var animatedControl = GetTapAnimationTarget(control);
 
-        if (senderIsTutorialCard(animatedControl))
+        if (!_activeTapAnimations.Add(animatedControl))
         {
-            if (_isTutorialCardAnimating)
-            {
-                return;
-            }
-
-            _isTutorialCardAnimating = true;
+            return;
         }
 
         try
         {
-            SetStatus("Cards status: animating tutorial card");
-
             var gradientTask = AnimateGradientAsync(control);
 
             await animatedControl.ScaleToAsync(1.1, 1.1, 150, Easing.CubicOut);
@@ -450,15 +420,10 @@ This presentation page keeps a richer composed example in the sandbox without tu
             {
                 control.Update();
             }
-
-            SetStatus("Cards status: tutorial card animation complete");
         }
         finally
         {
-            if (senderIsTutorialCard(animatedControl))
-            {
-                _isTutorialCardAnimating = false;
-            }
+            _activeTapAnimations.Remove(animatedControl);
         }
     }
 
@@ -488,11 +453,6 @@ This presentation page keeps a richer composed example in the sandbox without tu
         gradient.Colors = new List<Color> { gradientStartColor, gradientEndColor };
         await Task.Delay(200);
         gradient.Colors = new List<Color> { originalStart, originalEnd };
-    }
-
-    private bool senderIsTutorialCard(SkiaControl control)
-    {
-        return control == _card1Layer || control.Parent == _card1Layer;
     }
 
     private static SkiaControl GetTapAnimationTarget(SkiaControl control)

@@ -37,10 +37,12 @@ internal static class NavMenuItems
         // CONTROLS
         new(
             "controls",
-            "Controls",
+            "Drawn Elements",
             false,
             Children:
             [
+
+                // GRAPHICS
                 new(
                     "controls-graphics",
                     "Graphics",
@@ -48,21 +50,19 @@ internal static class NavMenuItems
                     IsSubgroup: true,
                     Items:
                     [
-                        new("SkiaShape", "graphics-shape", "bi-bounding-box-nav-menu"),
-                        new("SkiaSvg", "graphics-svg", "bi-badge-sd-nav-menu"),
-                        new("SkiaImage", "graphics-image", "bi-image-nav-menu")
-                    ]),
-
-                new(
-                    "controls-labels",
-                    "Labels",
-                    false,
-                    IsSubgroup: true,
-                    Items:
-                    [
                         new("SkiaLabel", "labels", "bi-type-nav-menu"),
                         new("SkiaRichLabel", "labels-rich", "bi-text-paragraph-nav-menu"),
-                        new("SkiaLabelFps", "labels-fps", "bi-speedometer2-nav-menu")
+                        new("SkiaLabelFps", "labels-fps", "bi-speedometer2-nav-menu"),
+
+                        new("SkiaShape", "graphics-shape", "bi-bounding-box-nav-menu"),
+                        new("SkiaSvg", "graphics-svg", "bi-badge-sd-nav-menu"),
+                        new("SkiaImage", "graphics-image", "bi-image-nav-menu"),
+
+                        new("SkiaLottie", "lottie-probe", "bi-play-circle-nav-menu"),
+                        new("SkiaGif", "gif-probe", "bi-film-nav-menu"),
+
+                        new("SkiaBackdrop", "effects-backdrop", "bi-layers-half-nav-menu"),
+                        new("SkiaHoverMask", "effects-hover-mask", "bi-intersect-nav-menu"),
                     ]),
 
                 // Layouts
@@ -81,78 +81,39 @@ internal static class NavMenuItems
                         new("SkiaGrid", "layouts-grid", "bi-grid-nav-menu"),
                         new("SkiaDecoratedGrid", "layouts-decorated-grid", "bi-grid-3x3-gap-nav-menu"),
                         new("SkiaViewSwitcher", "layouts-view-switcher", "bi-window-stack-nav-menu"),
-                        new("SkiaTabsSelector", "layouts-tabs-selector", "bi-ui-radios-grid-nav-menu")
-                    ]),
+                        new("SkiaTabsSelector", "layouts-tabs-selector", "bi-ui-radios-grid-nav-menu"),
 
-                // Scrolls
-                new(
-                    "controls-scrolls",
-                    "Scrolls",
-                    false,
-                    IsSubgroup: true,
-                    Items:
-                    [
                         new("SkiaScroll", "scrolls", "bi-arrow-down-up-nav-menu"),
                         new("SkiaCarousel", "scrolls-carousel", "bi-view-list-nav-menu"),
                         new("SkiaDrawer", "scrolls-drawer", "bi-layout-sidebar-inset-nav-menu")
                     ]),
 
+                // CONTROLS
                 new(
                     "controls-buttons",
-                    "Buttons",
+                    "Controls",
                     false,
                     IsSubgroup: true,
                     Items:
                     [
                         new("SkiaButton", "buttons", "bi-hand-index-thumb-nav-menu"),
-                        new("Custom", "buttons-custom", "bi-boxes-nav-menu"),
-                        new("Radio Buttons", "buttons-radio", "bi-record-circle-nav-menu")
+                        new("Custom Button", "buttons-custom", "bi-boxes-nav-menu"),
+                        new("Radio Buttons", "buttons-radio", "bi-record-circle-nav-menu"),
+
+                        new("SkiaSwitch", "switches", "bi-toggle2-on-nav-menu"),
+
+                        new("Picker Wheels", "pickers", "bi-list-ul-nav-menu"),
+                        new("Picker Spinner", "pickers-spinner", "bi-disc-nav-menu")
                     ]),
 
-                new(
-                    "controls-switches",
-                    "Switches",
-                    false,
-                    IsSubgroup: true,
-                    Items:
-                    [
-                        new("SkiaSwitch", "switches", "bi-toggle2-on-nav-menu")
-                    ]),
 
-                
-
-                new(
-                    "controls-pickers",
-                    "Pickers",
-                    false,
-                    IsSubgroup: true,
-                    Items:
-                    [
-                        new("Wheels", "pickers", "bi-list-ul-nav-menu"),
-                        new("Spinner", "pickers-spinner", "bi-disc-nav-menu")
-                    ]),
-                new(
-                    "controls-animated",
-                    "Animated",
-                    false,
-                    IsSubgroup: true,
-                    Items:
-                    [
-                        new("SkiaLottie", "lottie-probe", "bi-play-circle-nav-menu"),
-                        new("SkiaGif", "gif-probe", "bi-film-nav-menu")
-                    ]),
-
-                new(
-                    "controls-effects",
-                    "Effects",
-                    false,
-                    IsSubgroup: true,
-                    Items:
-                    [
-                        new("SkiaBackdrop", "effects-backdrop", "bi-layers-half-nav-menu"),
-                        new("SkiaHoverMask", "effects-hover-mask", "bi-intersect-nav-menu")
-                    ])
             ]),
+
+
+
+ 
+
+
 
         //TUTORIALS
         new(
@@ -161,6 +122,8 @@ internal static class NavMenuItems
             false,
             Items:
             [
+                new("First App", "tutorial-first-app", "bi-stars-nav-menu"),
+                new("Custom Button", "tutorial-custom-button", "bi-dpad-fill-nav-menu"),
                 new("Cards", "cards", "bi-columns-gap-nav-menu")
             ]),
 
