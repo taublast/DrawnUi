@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.5.11723.231 stable
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelsBenchmarks", "LabelsBenchmarks.csproj", "{13073260-C4E4-A02F-2846-497FE28E71A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawnUi.Net", "..\..\src\Net\DrawnUi.Net.csproj", "{AA2D4FBD-2A0C-B277-3A1F-2E1C3EEF8DD1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13073260-C4E4-A02F-2846-497FE28E71A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13073260-C4E4-A02F-2846-497FE28E71A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13073260-C4E4-A02F-2846-497FE28E71A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13073260-C4E4-A02F-2846-497FE28E71A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA2D4FBD-2A0C-B277-3A1F-2E1C3EEF8DD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA2D4FBD-2A0C-B277-3A1F-2E1C3EEF8DD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA2D4FBD-2A0C-B277-3A1F-2E1C3EEF8DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA2D4FBD-2A0C-B277-3A1F-2E1C3EEF8DD1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CA6F163A-BD27-4A56-8BA7-4D2BA915C0FE}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\src\Shared\Shared.projitems*{aa2d4fbd-2a0c-b277-3a1f-2e1c3eef8dd1}*SharedItemsImports = 5
+	EndGlobalSection
+EndGlobal
