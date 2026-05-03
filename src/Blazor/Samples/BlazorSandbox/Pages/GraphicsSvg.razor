@@ -11,11 +11,11 @@
     <p class="docs-note">This page shows a local SVG asset and a tinted variant so the most common setup is visible immediately.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="380"
+        <Canvas Content="_canvasContent" WidthRequest="380"
                 HeightRequest="330"
                 BackgroundColor="#FBF7F0"
                 Margin="0,8,0,0"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@SvgSnippet</code></pre>
@@ -31,11 +31,11 @@ var logo = new SkiaSvg()
 };
 """;
 
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public GraphicsSvg()
     {
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 348,

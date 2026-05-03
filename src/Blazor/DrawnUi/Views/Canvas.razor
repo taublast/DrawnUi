@@ -12,26 +12,26 @@
 @if (IsVisible)
 {
 
-			<div class="xaml-element xaml-contentview xaml-canvas @CanvasLayoutClass @Class"
-                @ref="_hostElement"
-                style="@CssMargins @CssPadding @CssGridPosition @CssStyle @GestureStyle">
+<div class="xaml-element xaml-contentview xaml-canvas @CanvasLayoutClass @Class"
+    @ref="_hostElement"
+    style="@CssMargins @CssPadding @CssGridPosition @CssStyle @GestureStyle">
 
-                <div class="xaml-canvas-surface">
-                    @if(RenderingMode == RenderingModeType.Default)
-                    {
-                        <SkiaView Superview="@this" DrawHandler="DrawFrame"
-                                  Width="@CanvasElementWidth" Height="@CanvasElementHeight" />
-                    }
-                    else
-                    {
-                        <SkiaViewAccelerated Superview="@this" DrawHandler="DrawFrame"
-                                            Width="@CanvasElementWidth" Height="@CanvasElementHeight" />
-                    }
-                </div>
+    <div class="xaml-canvas-surface">
+        @if(RenderingMode == RenderingModeType.Default)
+        {
+            <SkiaView Superview="@this" DrawHandler="DrawFrame"
+                      Width="@CanvasElementWidth" Height="@CanvasElementHeight" />
+        }
+        else
+        {
+            <SkiaViewAccelerated Superview="@this" DrawHandler="DrawFrame"
+                                Width="@CanvasElementWidth" Height="@CanvasElementHeight" />
+        }
+    </div>
 
-                <div class="xaml-canvas-content">
-            @ChildContent
-        </div>
+    @*<div class="xaml-canvas-content">
+    @ChildContent
+    </div> *@
     </div>
 
 }
@@ -40,6 +40,14 @@
     .xaml-canvas {
         position: relative;
         overflow: hidden;
+    }
+
+    .xaml-canvas:fullscreen,
+    .xaml-canvas:-webkit-full-screen {
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: none !important;
+        max-height: none !important;
     }
 
     .xaml-canvas-fill {
@@ -77,11 +85,13 @@
     private DotNetObjectReference<Canvas>? _resizeCallbackRef;
     private float _measuredCanvasWidth;
     private float _measuredCanvasHeight;
+    private bool _isBrowserFullscreen;
+    private bool? _lastFullscreenRequest;
 
     private const string ResizeModulePath = "./_content/DrawnUi.Blazor/drawnui-canvas-resize.js";
 
     [Parameter]
-    public SkiaControl? RootControl { get; set; }
+    public SkiaControl? Content { get; set; }
 
     public virtual bool Focus()
     {
@@ -98,13 +108,23 @@
         base.CanRenderOffScreen = CanRenderOffScreen;
     }
 
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+
+        if (_resizeModule != null && _lastFullscreenRequest != IsFullscreen)
+        {
+            await SyncFullscreenAsync();
+        }
+    }
+
     protected override Task OnInitializedAsync()
     {
-        if (RootControl != null)
+        if (Content != null)
         {
             SetChildren(new[]
             {
-                RootControl
+                Content
             });
         }
         else
@@ -134,6 +154,7 @@
         {
             await _gestureEffect.DetachAsync();
         }
+
     }
 
     private async Task EnsureResizeObserverAsync()
@@ -150,8 +171,8 @@
         if ((WidthRequest <= 0 && width <= 0) || (HeightRequest <= 0 && height <= 0))
             return;
 
-        var nextWidth = WidthRequest > 0 ? (float)WidthRequest : (float)Math.Round(width);
-        var nextHeight = HeightRequest > 0 ? (float)HeightRequest : (float)Math.Round(height);
+        var nextWidth = WidthRequest > 0 && !_isBrowserFullscreen ? (float)WidthRequest : (float)Math.Round(width);
+        var nextHeight = HeightRequest > 0 && !_isBrowserFullscreen ? (float)HeightRequest : (float)Math.Round(height);
 
         if (nextWidth == _measuredCanvasWidth && nextHeight == _measuredCanvasHeight)
             return;
@@ -162,11 +183,58 @@
         await InvokeAsync(StateHasChanged);
     }
 
-    private float CanvasElementWidth => WidthRequest > 0
+    [JSInvokable]
+    public async Task OnFullscreenChanged(bool isFullscreen)
+    {
+        if (_isBrowserFullscreen == isFullscreen)
+        {
+            return;
+        }
+
+        _isBrowserFullscreen = isFullscreen;
+
+        if (IsFullscreen != isFullscreen && IsFullscreenChanged.HasDelegate)
+        {
+            await IsFullscreenChanged.InvokeAsync(isFullscreen);
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task SyncFullscreenAsync()
+    {
+        if (_resizeModule == null || _lastFullscreenRequest == IsFullscreen)
+        {
+            return;
+        }
+
+        try
+        {
+            var isFullscreen = await _resizeModule.InvokeAsync<bool>("setCanvasFullscreen", _hostElement, IsFullscreen);
+            _lastFullscreenRequest = isFullscreen;
+
+            if (_isBrowserFullscreen != isFullscreen)
+            {
+                _isBrowserFullscreen = isFullscreen;
+                await InvokeAsync(StateHasChanged);
+            }
+
+            if (IsFullscreen != isFullscreen && IsFullscreenChanged.HasDelegate)
+            {
+                await IsFullscreenChanged.InvokeAsync(isFullscreen);
+            }
+        }
+        catch
+        {
+            _lastFullscreenRequest = _isBrowserFullscreen;
+        }
+    }
+
+    private float CanvasElementWidth => WidthRequest > 0 && !_isBrowserFullscreen
         ? (float)WidthRequest
         : _measuredCanvasWidth > 0 ? _measuredCanvasWidth : AutoCanvasWidth;
 
-    private float CanvasElementHeight => HeightRequest > 0
+    private float CanvasElementHeight => HeightRequest > 0 && !_isBrowserFullscreen
         ? (float)HeightRequest
         : _measuredCanvasHeight > 0 ? _measuredCanvasHeight : AutoCanvasHeight;
 
@@ -174,14 +242,14 @@
     {
         get
         {
-            if (RootControl?.WidthRequest > 0)
+            if (Content?.WidthRequest > 0)
             {
-                return (float)RootControl.WidthRequest;
+                return (float)Content.WidthRequest;
             }
 
-            if (RootControl?.MeasuredSize?.Units.Width > 0)
+            if (Content?.MeasuredSize?.Units.Width > 0)
             {
-                return RootControl.MeasuredSize.Units.Width;
+                return Content.MeasuredSize.Units.Width;
             }
 
             return 1f;
@@ -192,14 +260,14 @@
     {
         get
         {
-            if (RootControl?.HeightRequest > 0)
+            if (Content?.HeightRequest > 0)
             {
-                return (float)RootControl.HeightRequest;
+                return (float)Content.HeightRequest;
             }
 
-            if (RootControl?.MeasuredSize?.Units.Height > 0)
+            if (Content?.MeasuredSize?.Units.Height > 0)
             {
-                return RootControl.MeasuredSize.Units.Height;
+                return Content.MeasuredSize.Units.Height;
             }
 
             return 1f;
@@ -210,12 +278,12 @@
     {
         get
         {
-            if (WidthRequest > 0 || HorizontalOptions.Alignment == LayoutAlignment.Fill)
-            {
-                return string.Empty;
-            }
+            var style = string.Empty;
 
-            var style = $"width: {AutoCanvasWidth.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units};";
+            if (WidthRequest <= 0 && HorizontalOptions.Alignment != LayoutAlignment.Fill)
+            {
+                style += $"width: {AutoCanvasWidth.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Units};";
+            }
 
             if (HeightRequest <= 0 && VerticalOptions.Alignment != LayoutAlignment.Fill)
             {
@@ -260,8 +328,14 @@
     [Parameter]
     public new bool CanRenderOffScreen { get; set; }
 
+    // [Parameter]
+    // public RenderFragment ChildContent { get; set; }
+
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public bool IsFullscreen { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsFullscreenChanged { get; set; }
 
     [Parameter]
     public new GesturesMode Gestures { get; set; } = GesturesMode.Disabled;

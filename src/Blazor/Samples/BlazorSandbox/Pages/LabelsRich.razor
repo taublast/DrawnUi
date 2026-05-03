@@ -12,12 +12,12 @@
     <p class="docs-note">The control below uses a single markdown string. DrawnUI parses it into spans and keeps the result inside the same drawn text pipeline as the rest of the page.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="328"
                 BackgroundColor="#F5EFE6"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@RichLabelSnippet</code></pre>
@@ -33,11 +33,11 @@ var body = new SkiaRichLabel()
 };
 """;
 
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public LabelsRich()
     {
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

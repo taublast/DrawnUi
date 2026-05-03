@@ -11,12 +11,12 @@
     <p class="docs-note">The sample below keeps to a small two-by-two grid so the page shows the basic API without turning into a layout article.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="320"
                 BackgroundColor="#F6F0E6"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@GridSnippet</code></pre>
@@ -31,7 +31,7 @@ var grid = new SkiaGrid()
 };
 """;
 
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public LayoutsGrid()
     {
@@ -66,7 +66,7 @@ var grid = new SkiaGrid()
 
         grid.Children = new List<SkiaControl> { title, left, right };
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

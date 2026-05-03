@@ -12,12 +12,12 @@
     <p class="docs-note">Tap the labels in the tab strip. The selector updates the selected index and this demo recolors the active tab to make the state obvious.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="316"
                 BackgroundColor="#F6F0E6"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@TabsSnippet</code></pre>
@@ -34,7 +34,7 @@ var tabs = new SkiaTabsSelector()
 
     private readonly DemoTabsSelector _tabs;
     private readonly SkiaLabel _statusLabel;
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public LayoutsTabsSelector()
     {
@@ -70,7 +70,7 @@ var tabs = new SkiaTabsSelector()
 
         _tabs.ApplyVisualState();
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

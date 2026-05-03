@@ -11,12 +11,12 @@
     <p class="docs-note">It is a good fit for overlays, badges, floating controls, and stacked visual composition where child order matters more than flow layout.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="324"
                 BackgroundColor="#F6F0E6"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@LayerSnippet</code></pre>
@@ -36,7 +36,7 @@ var layer = new SkiaLayer()
 };
 """;
 
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public LayoutsLayer()
     {
@@ -75,7 +75,7 @@ var layer = new SkiaLayer()
             }
         };
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

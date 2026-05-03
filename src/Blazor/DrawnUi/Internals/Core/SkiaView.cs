@@ -1,5 +1,6 @@
 using System.Reflection;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using SkiaSharp.Views.Blazor;
 
 namespace DrawnUi.Draw
@@ -197,5 +198,28 @@ namespace DrawnUi.Draw
                 return SKSize.Empty;
             }
         }
+
+        private FieldInfo? _canvasRef;
+
+        public ElementReference CanvasReference
+        {
+            get
+            {
+                if (_canvasRef == null)
+                {
+                    _canvasRef = typeof(SKCanvasView).GetField("htmlCanvas",
+                        BindingFlags.NonPublic | BindingFlags.Instance);
+                }
+
+                if (_canvasRef != null)
+                {
+                    return (ElementReference)(_canvasRef.GetValue(this) ?? default(ElementReference));
+                }
+
+                return default(ElementReference);
+            }
+        }
+
     }
+
 }

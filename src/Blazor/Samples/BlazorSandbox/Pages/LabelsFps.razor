@@ -13,15 +13,16 @@
     <p class="docs-note">This page runs a tiny animation loop so the label has live frame updates instead of sitting on a static canvas.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="316"
                 BackgroundColor="#F4EEE4"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@FpsSnippet</code></pre>
+
 </div>
 
 @code {
@@ -46,10 +47,18 @@ var fps = new SkiaLabelFps()
     private const float PulseInitialRadius = PulseBaseSize * PulseScaleMin * 0.5f;
 
     private readonly CancellationTokenSource _animationCts = new();
-    private readonly SkiaShape _pulse;
-    private readonly SkiaControl RootControl;
+    private SkiaShape _pulse;
+    private SkiaControl _canvasContent;
 
-    public LabelsFps()
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+
+        CreateContent();
+    }
+
+    void CreateContent()
     {
         _pulse = new SkiaShape()
         {
@@ -63,7 +72,7 @@ var fps = new SkiaLabelFps()
             TranslationX = -(PulseTrackHalfWidth - PulseInitialRadius - PulseInset)
         };
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,
@@ -149,6 +158,11 @@ var fps = new SkiaLabelFps()
         _animationCts.Dispose();
     }
 
+    /// <summary>
+    /// Very silly animation, not using drawnui animators
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
     private async Task AnimateAsync(CancellationToken token)
     {
         var progress = 0f;
@@ -173,7 +187,7 @@ var fps = new SkiaLabelFps()
                 _pulse.ScaleY = pulseScale;
                 _pulse.Rotation = eased * 360f;
 
-                RootControl.Update();
+                _canvasContent.Update();
                 await Task.Delay(16, token);
             }
         }

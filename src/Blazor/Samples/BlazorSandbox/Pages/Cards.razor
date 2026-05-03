@@ -20,12 +20,12 @@ This presentation page keeps a richer composed example in the sandbox without tu
     Margin="0,16,0,0"
     RenderingMode="@RenderingModeType.Accelerated"
     Gestures="@GesturesMode.Enabled"
-    RootControl="@RootControl" />
+     />
 
 @code {
     private readonly SkiaLayer _card1Layer;
     private readonly SkiaLayer _card2Layer;
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
     private bool _isTutorialCardAnimating;
     private string _statusText = "Cards status: booting";
     private bool _canRefreshUi;
@@ -35,7 +35,7 @@ This presentation page keeps a richer composed example in the sandbox without tu
         _card1Layer = CreateGradientCard();
         _card2Layer = CreateGamingCard();
 
-        RootControl = new SkiaStack()
+        _canvasContent = new SkiaStack()
         {
             VerticalOptions = LayoutOptions.Fill,
             Spacing = 0,

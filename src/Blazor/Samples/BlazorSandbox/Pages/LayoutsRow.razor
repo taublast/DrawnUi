@@ -11,12 +11,12 @@
     <p class="docs-note">Use it when the intent is clearly a horizontal flow. It keeps the code shorter than a raw SkiaLayout setup while still staying inside the same DrawnUI layout system.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="324"
                 BackgroundColor="#F6F0E6"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@RowSnippet</code></pre>
@@ -36,7 +36,7 @@ var row = new SkiaRow()
 };
 """;
 
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public LayoutsRow()
     {
@@ -52,7 +52,7 @@ var row = new SkiaRow()
             }
         };
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

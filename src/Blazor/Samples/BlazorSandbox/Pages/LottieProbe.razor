@@ -13,12 +13,12 @@ Archived DrawnUI workcase kept for regression access from the Blazor sandbox men
 
 <p id="lottie-debug-status">@_statusText</p>
 
-<Canvas WidthRequest="400"
+<Canvas Content="_rootControl" WidthRequest="400"
         HeightRequest="520"
         BackgroundColor="#081B33"
         Margin="0,16,0,0"
         Gestures="@GesturesMode.Lock"
-        RootControl="@_rootControl" />
+         />
 
 @code {
     private SkiaControl? _rootControl;

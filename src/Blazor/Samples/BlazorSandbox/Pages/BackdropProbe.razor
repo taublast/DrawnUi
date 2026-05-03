@@ -11,14 +11,14 @@
 
 <p id="backdrop-probe-description">Use this page to validate the shared SkiaBackdrop port with a frosted-glass card over layered content.</p>
 
-<Canvas WidthRequest="420"
+<Canvas Content="_canvasContent" WidthRequest="420"
         HeightRequest="760"
         BackgroundColor="#08131F"
         Margin="0,16,0,32"
-        RootControl="@_rootControl" />
+         />
 
 @code {
-    private readonly SkiaControl _rootControl;
+    private SkiaControl _canvasContent;
 
     public BackdropProbe()
     {
@@ -170,7 +170,7 @@
             }
         };
 
-        _rootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 388,

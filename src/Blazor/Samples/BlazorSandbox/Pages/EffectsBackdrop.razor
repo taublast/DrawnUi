@@ -12,12 +12,12 @@
     <p class="docs-note">This is a compact docs version of the larger sandbox backdrop demo: layered content underneath, one glass card on top.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="420"
                 BackgroundColor="#08131F"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@BackdropSnippet</code></pre>
@@ -33,11 +33,11 @@ var backdrop = new SkiaBackdrop()
 };
 """;
 
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public EffectsBackdrop()
     {
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

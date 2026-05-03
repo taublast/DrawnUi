@@ -11,12 +11,12 @@
     <p class="docs-note">Drag inside the scroll frame. The header stays visible while the cards move underneath it.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="364"
                 BackgroundColor="#F6F0E6"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@ScrollSnippet</code></pre>
@@ -32,7 +32,7 @@ var scroll = new SkiaScroll()
 };
 """;
 
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public Scrolls()
     {
@@ -75,7 +75,7 @@ var scroll = new SkiaScroll()
             Content = content
         };
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

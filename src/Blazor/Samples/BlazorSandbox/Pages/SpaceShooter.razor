@@ -8,24 +8,24 @@
 
 This gaming demo stays in the sandbox as a full-scene example of accelerated rendering, gestures, and the DrawnUI game loop running in Blazor.
 
-<Canvas 
+<Canvas Content="_canvasContent" 
     HorizontalOptions="LayoutOptions.Fill"
     VerticalOptions="LayoutOptions.Fill"
     BackgroundColor="#F0F0F5"
     Margin="16,16,16,16"
     RenderingMode="@RenderingModeType.Accelerated"
     Gestures="@GesturesMode.Enabled"
-    RootControl="@RootControl" />
+     />
 
 @code {
 
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
     private bool _canRefreshUi;
 
     public SpaceShooter()
     {
 
-        RootControl = new SkiaLayer()
+        _canvasContent = new SkiaLayer()
         {
             VerticalOptions = LayoutOptions.Fill,
             HorizontalOptions = LayoutOptions.Fill,

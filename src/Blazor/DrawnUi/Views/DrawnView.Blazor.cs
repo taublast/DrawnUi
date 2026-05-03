@@ -6,16 +6,21 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using Color = DrawnUi.Color;
 using Grid = DrawnUi.Blazor.Views.Grid;
 
 namespace DrawnUi.Views
 {
     [ContentProperty("Children")]
-    public partial class DrawnView : ContentView,
+    public partial class DrawnView : VisualElement,
         IDrawnBase, IAnimatorsManager
     {
 
+        //[Parameter]
+        //public RenderingModeType RenderingMode { get; set; }
+      
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void UpdatePlatform()
         {

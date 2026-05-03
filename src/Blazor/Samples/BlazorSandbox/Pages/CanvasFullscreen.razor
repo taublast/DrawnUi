@@ -1,0 +1,97 @@
+@page "/canvas-fullscreen"
+@using DrawnUi
+@using DrawnUi.Draw
+@using DrawnUi.Views
+
+<PageTitle>Full Size Canvas</PageTitle>
+
+<div class="docs-page">
+    <h1>Full Size Canvas</h1>
+    <p class="docs-lead">When both <strong>HorizontalOptions</strong> and <strong>VerticalOptions</strong> are set to <strong>Fill</strong>, the Canvas expands to match the available space from its parent. In this example will resize along with the browser window size.</p>
+    <p class="docs-lead">Canvas also supports a boolean <strong>IsFullscreen</strong> property. Toggle it to use browser fullscreen API.</p>
+
+    <div style="display: flex; gap: 12px; align-items: center; margin: 0.5rem 0 1rem; flex-wrap: wrap;">
+        <button class="btn btn-primary" @onclick="ToggleFullscreen">@(_isFullscreen ? "Leave fullscreen" : "Enter fullscreen")</button>
+        <span>State: @(_isFullscreen ? "fullscreen" : "embedded")</span>
+    </div>
+
+</div>
+
+<Canvas Content="_canvasContent"  
+    Margin="0,0,0,16"
+    HorizontalOptions="@LayoutOptions.Fill"
+    VerticalOptions="@LayoutOptions.Fill"
+    BackgroundColor="#111827"
+    Gestures="@GesturesMode.Enabled"
+    IsFullscreen="@_isFullscreen"
+    IsFullscreenChanged="OnFullscreenChanged"/>
+
+@code {
+    private readonly SkiaControl _canvasContent;
+    private bool _isFullscreen;
+
+    public CanvasFullscreen()
+    {
+        _canvasContent = new SkiaLayout()
+        {
+            Type = LayoutType.Column,
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            BackgroundColor = new Color(0.067f, 0.094f, 0.153f, 1f),
+            Padding = new Thickness(24),
+            Spacing = 14,
+            Children =
+            {
+                new SkiaLabel()
+                {
+                    Text = "Canvas fullscreen",
+                    FontFamily = "FontTextTitle",
+                    FontSize = 28,
+                    TextColor = Colors.White,
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                new SkiaLabel()
+                {
+                    Text = "The browser fullscreen API is applied to the canvas host. ResizeObserver then drives the DrawnUI surface to the fullscreen dimensions.",
+                    FontFamily = "FontText",
+                    FontSize = 15,
+                    TextColor = new Color(0.827f, 0.871f, 0.929f, 1f),
+                    HorizontalOptions = LayoutOptions.Fill
+                },
+                new SkiaShape()
+                {
+                    Type = ShapeType.Rectangle,
+                    CornerRadius = 18,
+                    BackgroundColor = new Color(0.180f, 0.251f, 0.420f, 1f),
+                    HeightRequest = 160,
+                    HorizontalOptions = LayoutOptions.Fill,
+                    Children =
+                    {
+                        new SkiaLabel()
+                        {
+                            Text = "Press Esc to leave fullscreen",
+                            FontFamily = "FontTextTitle",
+                            FontSize = 22,
+                            TextColor = Colors.White,
+                            HorizontalOptions = LayoutOptions.Center,
+                            VerticalOptions = LayoutOptions.Center,
+                            HorizontalTextAlignment = DrawTextAlignment.Center,
+                            VerticalTextAlignment = TextAlignment.Center
+                        }
+                    }
+                }
+            }
+        };
+    }
+
+    private void ToggleFullscreen()
+    {
+        _isFullscreen = !_isFullscreen;
+    }
+
+    private Task OnFullscreenChanged(bool isFullscreen)
+    {
+        _isFullscreen = isFullscreen;
+        return Task.CompletedTask;
+    }
+}

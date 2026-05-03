@@ -13,13 +13,13 @@
 
 <p id="skmesh-parallax-description"><b>Cold Corridors layered parallax rendered as textured SKMesh strips on the accelerated Blazor canvas.</b></p>
 
-<Canvas HorizontalOptions="@LayoutOptions.Fill"
+<Canvas Content="_canvasContent" HorizontalOptions="@LayoutOptions.Fill"
     MaxWidthRequest="980"
     HeightRequest="520"
     BackgroundColor="#060A12"
     Margin="0,16,0,32"
     RenderingMode="@RenderingModeType.Accelerated"
-    RootControl="@RootControl" />
+     />
 
 @code {
     private const float SceneHeight = 239f;
@@ -39,7 +39,7 @@
     private const float PhaseSpeedPerGodotScrollUnit = NearScrollSpeed / GodotNearScrollScale;
     private const float BaseCameraPixelsPerPhase = (NearScrollSpeed * NearTextureWidth * EnvironmentScale) / GodotNearScrollScale;
 
-    private readonly SkiaLayout RootControl;
+    private readonly SkiaLayout _canvasContent;
     private readonly SkiaLayer _stage;
     private readonly ParallaxMeshControl _back;
     private readonly ParallaxMeshControl _far;
@@ -180,7 +180,7 @@
             }
         };
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             WidthRequest = -1,
             HeightRequest = 520,

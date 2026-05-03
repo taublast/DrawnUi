@@ -6,47 +6,47 @@
 <PageTitle>Auto Size</PageTitle>
 
 <div class="docs-page">
-    <h1>Auto Size</h1>
-    <p class="docs-lead">When you do not set <strong>WidthRequest</strong> or <strong>HeightRequest</strong>, and you do not ask the Canvas to fill, the host can shrink-wrap around its content in Blazor.</p>
-    <p class="docs-note">This example keeps the content simple on purpose: the Canvas adapts to the button inside it, which is the easiest way to see the layout behavior without mixing in larger rendering logic.</p>
+    <h1>Auto-sized Canvas</h1>
+    <p class="docs-lead">When you do not set <strong>WidthRequest</strong> or <strong>HeightRequest</strong>, and you do not ask the Canvas to fill, the host can shrink-wrap around its content.</p>
+    <p class="docs-note">Useful to fast drop drawn controls. In this example Canvas adapts it's size to the drawn SkiaButton size inside of it.</p>
     <pre class="docs-code"><code>@CanvasSnippet</code></pre>
 </div>
 
-<Canvas BackgroundColor="#F7F3EA"
-        Margin="0,8,0,0"
-        Gestures="@GesturesMode.Enabled"
-        RootControl="@_autoButton" />
-
+<Canvas 
+        Content="_canvasContent"
+        BackgroundColor="#F7F3EA"
+        Margin="0,16,0,16"
+        Gestures="@GesturesMode.Enabled" />
 
 @code {
     private const string CanvasSnippet = """
-<Canvas BackgroundColor="#F7F3EA"
-    Margin="0,8,0,0"
+<Canvas Content="_canvasContent" BackgroundColor="#F7F3EA"
+    Margin="0,16,0,16"
     Gestures="@GesturesMode.Enabled"
-    RootControl="@_autoButton" />
+    Content="@_autoButton" />
 """;
 
-    private readonly SkiaButton _autoButton;
+    private SkiaControl _canvasContent;
 
     public CanvasAutoSize()
     {
-        _autoButton = new SkiaButton("Tap the real SkiaButton")
+        _canvasContent = new SkiaButton("Tap the real SkiaButton")
         {
             WidthRequest = 228,
             HeightRequest = 48,
             BackgroundColor = new Color(0.188f, 0.478f, 0.827f, 1f),
             TextColor = Colors.White,
             CornerRadius = 12,
-            Padding = new Thickness(16, 8)
-        };
-
-        _autoButton.Tapped += (_, _) =>
+            Padding = new Thickness(16, 8),
+        }.OnTapped(me =>
         {
-            _autoButton.Text = _autoButton.Text == "Tap the real SkiaButton"
+            me.Text = me.Text == "Tap the real SkiaButton"
                 ? "The button is alive"
                 : "Tap the real SkiaButton";
 
             _ = InvokeAsync(StateHasChanged);
-        };
+        });
+
+   
     }
 }

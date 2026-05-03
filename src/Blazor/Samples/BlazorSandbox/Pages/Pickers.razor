@@ -12,12 +12,12 @@
     <p class="docs-note">Drag the wheel in the canvas. The selected value updates below it, which is usually the only state you need to bridge into your view model.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="324"
                 BackgroundColor="#F4EFE5"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@PickerSnippet</code></pre>
@@ -38,7 +38,7 @@ picker.SelectedIndexChanged += (_, index) => { /* use index */ };
     private readonly List<string> _days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     private readonly SkiaLabel _selectionLabel;
     private readonly SkiaWheelPicker _picker;
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public Pickers()
     {
@@ -68,7 +68,7 @@ picker.SelectedIndexChanged += (_, index) => { /* use index */ };
 
         _picker.SelectedIndexChanged += OnSelectedIndexChanged;
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

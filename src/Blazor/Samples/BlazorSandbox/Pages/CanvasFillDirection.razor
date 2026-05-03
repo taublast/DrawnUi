@@ -13,28 +13,29 @@
     <pre class="docs-code"><code>@CanvasSnippet</code></pre>
 </div>
 
-<Canvas HorizontalOptions="@LayoutOptions.Fill"
+<Canvas 
+        HorizontalOptions="@LayoutOptions.Fill"
         HeightRequest="200"
         MaxHeightRequest="300"
         BackgroundColor="#F7F3EA"
         Margin="0,8,0,0"
-        RootControl="@_fillDirectionRoot" />
+        Content="_canvasContent" />
 
 @code {
     private const string CanvasSnippet = """
-<Canvas HorizontalOptions="@LayoutOptions.Fill"
+<Canvas Content="_canvasContent" HorizontalOptions="@LayoutOptions.Fill"
     HeightRequest="200"
     MaxHeightRequest="300"
     BackgroundColor="#F7F3EA"
     Margin="0,8,0,0"
-    RootControl="@_fillDirectionRoot"" />
+    Content="@_fillDirectionRoot"" />
 """;
 
-    private readonly SkiaControl _fillDirectionRoot;
+    private SkiaControl _canvasContent;
 
     public CanvasFillDirection()
     {
-        _fillDirectionRoot = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Type = LayoutType.Column,
             HorizontalOptions = LayoutOptions.Fill,

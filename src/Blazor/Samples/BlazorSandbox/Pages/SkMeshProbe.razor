@@ -17,15 +17,15 @@
     BackgroundColor="#1A1A2E"
     Margin="0,16,0,32"
     RenderingMode="@RenderingModeType.Accelerated"
-    RootControl="@RootControl" />
+     />
 
 @code {
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
     private static SkiaLabel _statusLabel;
 
     public SkMeshProbe()
     {
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             WidthRequest = 420,
             HeightRequest = 900,

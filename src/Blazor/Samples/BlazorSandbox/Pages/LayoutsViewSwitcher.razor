@@ -12,12 +12,12 @@
     <p class="docs-note">Use the buttons to switch the active card. The example intentionally stays small and focuses on the selected view behavior.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="364"
                 BackgroundColor="#F6F0E6"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@ViewSwitcherSnippet</code></pre>
@@ -34,7 +34,7 @@ var switcher = new SkiaViewSwitcher()
 
     private readonly SkiaViewSwitcher _switcher;
     private readonly SkiaLabel _statusLabel;
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public LayoutsViewSwitcher()
     {
@@ -62,7 +62,7 @@ var switcher = new SkiaViewSwitcher()
             }
         };
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

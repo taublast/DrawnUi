@@ -12,13 +12,13 @@
     <p class="docs-note">This example keeps the setup small: items source, selected index feedback, and an indicator arrow so the chosen sector is obvious at a glance.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="380"
+        <Canvas Content="_canvasContent" WidthRequest="380"
                 HeightRequest="360"
                 BackgroundColor="#102338"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
                 RenderingMode="@RenderingModeType.Accelerated"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@SpinnerSnippet</code></pre>
@@ -37,7 +37,7 @@ var spinner = new SkiaSpinner()
     private readonly List<string> _items = ["Azure", "Maui", "Blazor", "Skia", "Docs", "Gaming"];
     private readonly SkiaSpinner _spinner;
     private readonly SkiaLabel _selectionLabel;
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public PickersSpinner()
     {
@@ -63,7 +63,7 @@ var spinner = new SkiaSpinner()
             HorizontalOptions = LayoutOptions.Center
         };
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 344,

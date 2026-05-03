@@ -11,12 +11,12 @@
     <p class="docs-note">This example keeps the page small on purpose: one headline, one centered caption, and one wrapped note card. That is enough to show the core text API.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="296"
                 BackgroundColor="#F6F1E8"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@LabelSnippet</code></pre>
@@ -33,11 +33,11 @@ var title = new SkiaLabel()
 };
 """;
 
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public Labels()
     {
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

@@ -11,19 +11,19 @@
     <p class="docs-note">Use <strong>WidthRequest</strong> and <strong>HeightRequest</strong> when you want a fixed surface. The other Canvas pages in this section focus on how the same control behaves when you let Blazor layout drive the size instead.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="344"
+        <Canvas Content="_defaultRoot" WidthRequest="344"
                 HeightRequest="118"
                 BackgroundColor="#F7F3EA"
                 Margin="0,8,0,0"
                 RenderingMode="@RenderingModeType.Default"
-                RootControl="@_defaultRoot" />
+                 />
 
-        <Canvas WidthRequest="344"
+        <Canvas Content="_acceleratedRoot" WidthRequest="344"
                 HeightRequest="118"
                 BackgroundColor="#F7F3EA"
                 Margin="0,12,0,0"
                 RenderingMode="@RenderingModeType.Accelerated"
-                RootControl="@_acceleratedRoot" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@CanvasSnippet</code></pre>
@@ -31,10 +31,10 @@
 
 @code {
     private const string CanvasSnippet = """
-<Canvas WidthRequest="344"
+<Canvas Content="_canvasContent" WidthRequest="344"
         HeightRequest="118"
         RenderingMode="@RenderingModeType.Accelerated"
-        RootControl="@RootControl" />
+         />
 """;
 
     private readonly SkiaControl _defaultRoot;

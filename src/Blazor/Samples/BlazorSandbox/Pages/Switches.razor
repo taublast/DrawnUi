@@ -11,12 +11,12 @@
     <p class="docs-note">Tap the controls in the canvas. The summary line shows the current state without leaving the compact example format.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="296"
                 BackgroundColor="#F5F0E5"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@SwitchSnippet</code></pre>
@@ -37,7 +37,7 @@ newsletter.Toggled += (_, isOn) => { /* react here */ };
     private readonly SkiaSwitch _notificationsSwitch;
     private readonly SkiaSwitch _updatesSwitch;
     private readonly SkiaCheckbox _termsCheckbox;
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public Switches()
     {
@@ -82,7 +82,7 @@ newsletter.Toggled += (_, isOn) => { /* react here */ };
         _updatesSwitch.Toggled += OnToggleChanged;
         _termsCheckbox.Toggled += OnToggleChanged;
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

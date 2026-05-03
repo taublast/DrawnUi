@@ -12,14 +12,14 @@
 <p id="gif-probe-description">Use this page to validate the shared SkiaGif browser port.</p>
 <p id="gif-local-status">@_gifStatus</p>
 
-<Canvas WidthRequest="420"
+<Canvas Content="_canvasContent" WidthRequest="420"
         HeightRequest="560"
         BackgroundColor="#EFF5F8"
         Margin="0,16,0,32"
-        RootControl="@_rootControl" />
+         />
 
 @code {
-    private readonly SkiaControl _rootControl;
+    private SkiaControl _canvasContent;
     private string _gifStatus = "gif local: pending";
 
     public GifProbe()
@@ -39,7 +39,7 @@
         gif.Success += (_, source) => SetGifStatus($"gif local: loaded {source}");
         gif.Error += (_, exception) => SetGifStatus($"gif local: error {exception.Message}");
 
-        _rootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 388,

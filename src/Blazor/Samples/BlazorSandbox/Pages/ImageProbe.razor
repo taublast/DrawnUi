@@ -16,10 +16,10 @@
     HeightRequest="760"
     BackgroundColor="#F4F1E8"
     Margin="0,16,0,32"
-    RootControl="@RootControl" />
+     />
 
 @code {
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public ImageProbe()
     {
@@ -30,7 +30,7 @@
         var iconImage = CreateProbeImage("icon-192", "icon-192.png", TransformAspect.AspectFit);
         var remoteImage = CreateProbeImage("remote", "https://picsum.photos/440/280", TransformAspect.AspectCover, eraseChangedContent: true);
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 388,

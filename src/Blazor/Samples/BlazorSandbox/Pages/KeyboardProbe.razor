@@ -26,7 +26,7 @@ Use this page to verify `UseDesktopKeyboard` in Blazor. Keep this tab active and
     HeightRequest="520"
     BackgroundColor="#F4F1E8"
     Margin="0,16,0,0"
-    RootControl="@RootControl" />
+    Content="_canvasContent" />
 
 @code {
     private readonly SkiaLabel _heroLabel = new()
@@ -74,14 +74,14 @@ Use this page to verify `UseDesktopKeyboard` in Blazor. Keep this tab active and
         "Waiting for input"
     ];
 
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     private string _lastKeyText = "Last key: waiting";
     private string _modifierText = "Modifiers: shift false, ctrl false, alt false";
 
     public KeyboardProbe()
     {
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 368,

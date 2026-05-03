@@ -11,12 +11,12 @@
     <p class="docs-note">Many convenience controls are built on top of it, including SkiaLayer, SkiaStack, SkiaRow, and SkiaWrap. Start with SkiaLayout when you want the base primitive, then move to the specialized aliases when the intent is fixed.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="324"
                 BackgroundColor="#F6F0E6"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@LayoutSnippet</code></pre>
@@ -37,7 +37,7 @@ var layout = new SkiaLayout()
 };
 """;
 
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public LayoutsLayout()
     {
@@ -54,7 +54,7 @@ var layout = new SkiaLayout()
             }
         };
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

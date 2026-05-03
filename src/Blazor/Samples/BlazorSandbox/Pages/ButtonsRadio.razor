@@ -12,12 +12,12 @@
     <p class="docs-note">This demo mirrors the MAUI sandbox more closely: framed sections, wrapped options, and custom radio content instead of the bare default surface. Test both sections below.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="620"
                 BackgroundColor="#F6F0E6"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@RadioSnippet</code></pre>
@@ -43,7 +43,7 @@ var named = new SkiaRadioButton("Express") { GroupName = "delivery" };
     private readonly SkiaLabel _namedSummaryLabel;
     private readonly List<SkiaRadioButton> _containerGroupRadios;
     private readonly List<SkiaRadioButton> _namedGroupRadios;
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public ButtonsRadio()
     {
@@ -83,7 +83,7 @@ var named = new SkiaRadioButton("Express") { GroupName = "delivery" };
             CreateRadio("Courier", OnNamedGroupChanged, false, "delivery")
         ];
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

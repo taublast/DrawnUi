@@ -14,16 +14,16 @@
 
 <p id="skmesh-rocket-description"><b>Load "wwwroot/media/rocket.obj", triangulates on the CPU, renders on GPU using SkiaSharp v4 SKMesh.</b></p>
 
-<Canvas
+<Canvas Content="_canvasContent"
     WidthRequest="420"
     HeightRequest="560"
     BackgroundColor="#060A12"
     Margin="0,16,0,32"
     RenderingMode="@RenderingModeType.Accelerated"
-    RootControl="@RootControl" />
+     />
 
 @code {
-    private readonly SkiaLayout RootControl;
+    private readonly SkiaLayout _canvasContent;
     private readonly RocketMeshControl _viewer;
     private SkiaLabel _statusLabel = null!;
 
@@ -36,7 +36,7 @@
             VerticalOptions = LayoutOptions.Fill,
         };
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             WidthRequest = 420,
             HeightRequest = 560,

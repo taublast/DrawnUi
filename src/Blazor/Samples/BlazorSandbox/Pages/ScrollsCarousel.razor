@@ -12,12 +12,12 @@
     <p class="docs-note">Swipe the cards or use the buttons. The selected index label follows the active slide.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="388"
                 BackgroundColor="#F6F0E6"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@CarouselSnippet</code></pre>
@@ -35,7 +35,7 @@ var carousel = new SkiaCarousel()
 
     private readonly SkiaCarousel _carousel;
     private readonly SkiaLabel _statusLabel;
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public ScrollsCarousel()
     {
@@ -69,7 +69,7 @@ var carousel = new SkiaCarousel()
 
         _carousel.SelectedIndexChanged += OnSelectedIndexChanged;
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

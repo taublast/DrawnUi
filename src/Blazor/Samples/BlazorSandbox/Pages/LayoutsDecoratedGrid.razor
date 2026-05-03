@@ -12,12 +12,12 @@
     <p class="docs-note">This example mirrors the MAUI sandbox idea: a compact support matrix with decorative row and column separators.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="324"
                 BackgroundColor="#F6F0E6"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@DecoratedGridSnippet</code></pre>
@@ -34,7 +34,7 @@ var grid = new SkiaDecoratedGrid()
 };
 """;
 
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public LayoutsDecoratedGrid()
     {
@@ -65,7 +65,7 @@ var grid = new SkiaDecoratedGrid()
         AddDecoratedCell(grid, "Yes", 1, 1, false, Colors.ForestGreen);
         AddDecoratedCell(grid, "Yes", 1, 2, false, Colors.ForestGreen);
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

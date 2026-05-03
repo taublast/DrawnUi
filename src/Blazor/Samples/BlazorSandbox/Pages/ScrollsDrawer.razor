@@ -12,12 +12,12 @@
     <p class="docs-note">Use the button or drag the sheet handle. The drawer content here is just a small vertical scroll to keep the example focused.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="420"
                 BackgroundColor="#F6F0E6"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@DrawerSnippet</code></pre>
@@ -35,7 +35,7 @@ var drawer = new SkiaDrawer()
 
     private readonly SkiaDrawer _drawer;
     private readonly SkiaButton _toggleButton;
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public ScrollsDrawer()
     {
@@ -97,7 +97,7 @@ var drawer = new SkiaDrawer()
         };
         _toggleButton.Tapped += (_, _) => ToggleDrawer();
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

@@ -11,12 +11,12 @@
     <p class="docs-note">This demo darkens the full surface except for the circular cutout in the center, which lets the background artwork stay visible through the mask.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="360"
                 BackgroundColor="#09121A"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@HoverMaskSnippet</code></pre>
@@ -31,11 +31,11 @@ var mask = new SkiaHoverMask()
 };
 """;
 
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public EffectsHoverMask()
     {
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,

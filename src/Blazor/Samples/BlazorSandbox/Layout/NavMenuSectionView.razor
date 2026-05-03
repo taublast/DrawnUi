@@ -1,0 +1,54 @@
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="@(Section.IsSubgroup ? "nav-subgroup" : "nav-group px-2")">
+    <button type="button" class="@(Section.IsSubgroup ? "nav-subgroup-toggle" : "nav-group-toggle")" @onclick="ToggleCurrentSection">
+        <span class="bi @(IsExpanded ? "bi-chevron-down" : "bi-chevron-right")" aria-hidden="true"></span>
+        <span>@Section.Title</span>
+    </button>
+
+    @if (IsExpanded)
+    {
+        <div class="@(Section.IsSubgroup ? "nav-subgroup-items" : "nav-group-items")">
+            @foreach (var item in Section.Items)
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="@item.Href" Match="@item.Match" @onclick="CloseNavMenu">
+                        <span class="bi @item.IconClass" aria-hidden="true"></span>
+                        <span>@item.Title</span>
+                    </NavLink>
+                </div>
+            }
+
+            @foreach (var child in Section.Children)
+            {
+                <NavMenuSectionView Section="child"
+                                    IsExpanded="IsSectionExpanded(child.Key)"
+                                    IsSectionExpanded="IsSectionExpanded"
+                                    ToggleSection="ToggleSection"
+                                    CloseNavMenu="CloseNavMenu" />
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public NavMenuSectionDefinition Section { get; set; } = default!;
+
+    [Parameter]
+    public bool IsExpanded { get; set; }
+
+    [Parameter, EditorRequired]
+    public Func<string, bool> IsSectionExpanded { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public EventCallback<string> ToggleSection { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback<MouseEventArgs> CloseNavMenu { get; set; }
+
+    private Task ToggleCurrentSection()
+    {
+        return ToggleSection.InvokeAsync(Section.Key);
+    }
+}

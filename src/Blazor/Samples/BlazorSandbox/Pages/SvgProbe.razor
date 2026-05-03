@@ -12,14 +12,14 @@
 <p id="svg-local-status">@_localSvgStatus</p>
 <p id="svg-remote-status">@_remoteSvgStatus</p>
 
-<Canvas WidthRequest="420"
+<Canvas Content="_canvasContent" WidthRequest="420"
         HeightRequest="760"
         BackgroundColor="#FAF7F0"
         Margin="0,16,0,32"
-        RootControl="@_rootControl" />
+         />
 
 @code {
-    private readonly SkiaControl _rootControl;
+    private SkiaControl _canvasContent;
     private string _localSvgStatus = "svg local: pending";
     private string _remoteSvgStatus = "svg remote: pending";
 
@@ -37,7 +37,7 @@
             Colors.Transparent,
             Colors.Transparent);
 
-        _rootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 388,

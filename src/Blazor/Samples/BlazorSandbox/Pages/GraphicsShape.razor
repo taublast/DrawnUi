@@ -11,11 +11,11 @@
     <p class="docs-note">This example shows three common cases: a filled card, a stroked inset panel, and a clipped circle with an image inside.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="380"
+        <Canvas Content="_canvasContent" WidthRequest="380"
                 HeightRequest="440"
                 BackgroundColor="#F6F1E7"
                 Margin="0,8,0,0"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@ShapeSnippet</code></pre>
@@ -32,11 +32,11 @@ var card = new SkiaShape()
 };
 """;
 
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public GraphicsShape()
     {
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 348,

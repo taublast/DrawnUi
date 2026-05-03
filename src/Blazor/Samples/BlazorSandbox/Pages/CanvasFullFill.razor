@@ -13,26 +13,28 @@
     <pre class="docs-code"><code>@CanvasSnippet</code></pre>
 </div>
 
-<Canvas HorizontalOptions="@LayoutOptions.Fill"
-        VerticalOptions="@LayoutOptions.Fill"
-        BackgroundColor="#F7F3EA"
-        Margin="0,8,0,8"
-        RootControl="@_fullFillRoot" />
+<Canvas 
+    Content="_canvasContent" 
+    HorizontalOptions="@LayoutOptions.Fill"
+    VerticalOptions="@LayoutOptions.Fill"
+    BackgroundColor="#F7F3EA"
+    Margin="0,8,0,16"/>
 
 @code {
     private const string CanvasSnippet = """
-<Canvas HorizontalOptions="@LayoutOptions.Fill"
+<Canvas 
+    Content="_canvasContent" 
+    HorizontalOptions="@LayoutOptions.Fill"
     VerticalOptions="@LayoutOptions.Fill"
     BackgroundColor="#F7F3EA"
-    Margin="0,8,0,8"
-    RootControl="@_fullFillRoot" />
+    Margin="0,8,0,16"/>
 """;
 
-    private readonly SkiaControl _fullFillRoot;
+    private SkiaControl _canvasContent;
 
     public CanvasFullFill()
     {
-        _fullFillRoot = 
+        _canvasContent = 
             new SkiaLayout()
             {
                 Type = LayoutType.Column,

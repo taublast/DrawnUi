@@ -11,12 +11,12 @@
     <p class="docs-note">This example uses a rounded shape plus nested labels, then handles the tap on the outer card. That keeps the composed surface readable and easy to extend with icons, badges, or richer layout.</p>
 
     <div class="docs-example-frame">
-        <Canvas WidthRequest="360"
+        <Canvas Content="_canvasContent" WidthRequest="360"
                 HeightRequest="290"
                 BackgroundColor="#F7F3EA"
                 Margin="0,8,0,0"
                 Gestures="@GesturesMode.Enabled"
-                RootControl="@RootControl" />
+                 />
     </div>
 
     <pre class="docs-code"><code>@CustomSnippet</code></pre>
@@ -40,7 +40,7 @@ customButton.Tapped += (_, _) => { /* action */ };
 
     private readonly SkiaLabel _statusLabel;
     private readonly SkiaShape _customButton;
-    private readonly SkiaControl RootControl;
+    private SkiaControl _canvasContent;
 
     public ButtonsCustom()
     {
@@ -101,7 +101,7 @@ customButton.Tapped += (_, _) => { /* action */ };
             _ = InvokeAsync(StateHasChanged);
         };
 
-        RootControl = new SkiaLayout()
+        _canvasContent = new SkiaLayout()
         {
             Margin = new Thickness(16),
             WidthRequest = 328,
