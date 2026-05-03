@@ -70,12 +70,44 @@ namespace DrawnUi.Draw
 
         public static object AppContext => null;
 
+        public static void DisplayException(SkiaControl view, Exception e)
+        {
+            Log(e?.ToString() ?? string.Empty, LogLevel.Error);
+
+            if (view is SkiaControl skia)
+            {
+                var scroll = new SkiaScroll()
+                {
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Fill,
+                    Content = new SkiaLabel
+                    {
+                        Margin = new Thickness(32),
+                        TextColor = Colors.Red,
+                        Text = $"{e}"
+                    }
+                };
+
+                if (skia is ContentLayout content)
+                {
+                    content.Content = scroll;
+                }
+                else
+                {
+                    skia.AddSubView(scroll);
+                }
+            }
+        }
+
         public static void DisplayException(VisualElement view, Exception e)
         {
             Log(e?.ToString() ?? string.Empty, LogLevel.Error);
 
             if (view == null)
-                throw e;
+                return;
+
+
+            //todo
 
             view.Update();
         }
