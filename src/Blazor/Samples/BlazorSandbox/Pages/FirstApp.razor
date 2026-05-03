@@ -18,12 +18,15 @@
         <Canvas
             Content="_canvasContent"
             WidthRequest="420"
-            HeightRequest="640"
+            HeightRequest="440"
             BackgroundColor="#F5F5F5"
             Margin="0,8,0,0"
             RenderingMode="RenderingModeType.Accelerated"
             Gestures="@GesturesMode.Enabled"/>
     </div>
+    
+    <pre class="docs-code"><code>@LabelSnippet</code></pre>
+
 </div>
 
 @code {
@@ -37,22 +40,20 @@
     @code {
 
         private const string LabelSnippet = """
-        new SkiaButton("Click Me!")
+        //reading and reflecting text on the button
+        new SkiaRichLabel()
+        {
+            UseCache = SkiaCacheType.Operations,
+            FontSize = 14,
+            TextColor = Colors.Green,
+            HorizontalOptions = LayoutOptions.Center,
+        }
+        .ObserveProperties(() => btnClickMe, [nameof(SkiaButton.Text), nameof(SkiaButton.IsPressed)],
+            me =>
             {
-                UseCache = SkiaCacheType.Image,
-                BackgroundColor = Colors.CornflowerBlue,
-                TextColor = Colors.White,
-                CornerRadius = 8,
-                HorizontalOptions = LayoutOptions.Center,
-            }
-            .Assign(out btnClickMe)
-            .OnTapped(async me =>
-            {
-                clickCount++;
-                me.Text = $"Clicked {clickCount} times! 🎉";
-                await me.ScaleToAsync(1.1, 1.1, 100);
-                await me.ScaleToAsync(1, 1, 100);
-            }),
+                me.Text =
+                    $"Observing button: \"..{btnClickMe.Text.Right(12)}\", is pressed: {btnClickMe.IsPressed}";
+            })            
         """;
 
         public FirstApp()
