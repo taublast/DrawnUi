@@ -27,6 +27,10 @@ public class SkiaLottie : AnimatedFramesRenderer
     /// </summary>
     public static ConcurrentDictionary<string, string> CachedAnimations = new();
 
+    // In-flight task dedup — prevents N simultaneous HTTP fetches for the same source.
+    private static readonly ConcurrentDictionary<string, Task<string>> _lottieInFlight =
+        new(StringComparer.OrdinalIgnoreCase);
+
     public static readonly BindableProperty StopAtCurrentFrameProperty = BindableProperty.Create(
         nameof(StopAtCurrentFrame),
         typeof(bool),
@@ -327,17 +331,30 @@ public class SkiaLottie : AnimatedFramesRenderer
             }
     }
 
-    private async Task<Stream> OpenPackageFileStreamAsync(string fileName)
+    /// <summary>
+    /// Fetches Lottie JSON text from a file path or URL.
+    /// Concurrent calls for the same source are deduplicated; result is cached in
+    /// <see cref="CachedAnimations"/>. HTTP concurrency is controlled by
+    /// <see cref="SkiaImageManager.OpenStreamAsync"/>.
+    /// </summary>
+    private static async Task<string> FetchLottieJsonAsync(string source)
     {
-#if BROWSER || DRAWNUI_NET
-        var httpClient = Super.Services?.GetService<HttpClient>();
-        if (httpClient == null)
-            throw new InvalidOperationException("[SkiaLottie] HttpClient service was not found.");
+        try
+        {
+            using var stream = await SkiaImageManager.OpenStreamAsync(source);
+            using var reader = new StreamReader(stream, Encoding.UTF8);
+            var json = await reader.ReadToEndAsync();
 
-        return await httpClient.GetStreamAsync(fileName);
-#else
-        return await FileSystem.OpenAppPackageFileAsync(fileName);
-#endif
+            if (!string.IsNullOrEmpty(json))
+                CachedAnimations.TryAdd(source, json);
+
+            return json;
+        }
+        catch (Exception e)
+        {
+            Super.Log($"[SkiaLottie] FetchLottieJsonAsync failed for {source}: {e.Message}");
+            return null;
+        }
     }
 
     public string LoadLocalJson(string fileName)
@@ -354,7 +371,7 @@ public class SkiaLottie : AnimatedFramesRenderer
             }
             else
             {
-                using var stream = OpenPackageFileStreamAsync(fileName).GetAwaiter().GetResult();
+                using var stream = SkiaImageManager.OpenStreamAsync(fileName).GetAwaiter().GetResult();
                 using var reader = new StreamReader(stream);
                 json = reader.ReadToEnd();
             }
@@ -390,36 +407,15 @@ public class SkiaLottie : AnimatedFramesRenderer
             }
             else
             {
-                if (Uri.TryCreate(fileName, UriKind.Absolute, out var uri) && uri.Scheme != "file")
+                // Deduplicate concurrent fetches of the same source.
+                var fetchTask = _lottieInFlight.GetOrAdd(fileName, key => FetchLottieJsonAsync(key));
+                try
                 {
-                    using HttpClient client =
-#if BROWSER || DRAWNUI_NET
-                        Super.Services?.GetService<HttpClient>() ?? throw new InvalidOperationException("[SkiaLottie] HttpClient service was not found.");
-#else
-                        Super.Services.CreateHttpClient();
-#endif
-                    var data = await client.GetByteArrayAsync(uri);
-                    //var client = new WebClient();
-                    //var data = await client.DownloadDataTaskAsync(uri);
-                    json = Encoding.UTF8.GetString(data);
+                    json = await fetchTask;
                 }
-                else
+                finally
                 {
-                    if (fileName.SafeContainsInLower(SkiaImageManager.NativeFilePrefix))
-                    {
-                        var fullFilename = fileName.Replace(SkiaImageManager.NativeFilePrefix, "");
-                        using var stream = new FileStream(fullFilename, FileMode.Open);
-                        using var reader = new StreamReader(stream);
-                        json = await reader.ReadToEndAsync();
-                    }
-                    else
-                    {
-                        using var stream = await OpenPackageFileStreamAsync(fileName);
-                        using var reader = new StreamReader(stream);
-                        json = await reader.ReadToEndAsync();
-                    }
-
-                    CachedAnimations.TryAdd(fileName, json);
+                    _lottieInFlight.TryRemove(fileName, out _);
                 }
             }
 

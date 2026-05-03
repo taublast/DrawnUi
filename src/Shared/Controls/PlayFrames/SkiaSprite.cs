@@ -18,6 +18,10 @@ public class SkiaSprite : AnimatedFramesRenderer
     /// </summary>
     public static ConcurrentDictionary<string, SKBitmap> CachedSpriteSheets = new();
 
+    // In-flight task dedup — prevents multiple simultaneous fetches for the same source URL.
+    private static readonly ConcurrentDictionary<string, Task<SKBitmap>> _spriteInFlight =
+        new(StringComparer.OrdinalIgnoreCase);
+
     /// <summary>
     /// Internal SkiaImage control used to display the current frame
     /// </summary>
@@ -320,46 +324,40 @@ public class SkiaSprite : AnimatedFramesRenderer
         if (string.IsNullOrEmpty(source))
             return null;
 
-        // Check if the spritesheet is already in the cache
-        if (CachedSpriteSheets.TryGetValue(source, out var cachedBitmap))
+        if (CachedSpriteSheets.TryGetValue(source, out var cached))
         {
             Debug.WriteLine($"[SkiaSprite] Loaded {source} from cache");
-            return cachedBitmap;
+            return cached;
         }
 
-        await _semaphoreLoadFile.WaitAsync();
-
+        // Deduplicate concurrent loads for the same source across all instances.
+        var task = _spriteInFlight.GetOrAdd(source, key => LoadAndCacheSpriteAsync(key));
         try
         {
-            // Check cache again in case another thread loaded it while we were waiting
-            if (CachedSpriteSheets.TryGetValue(source, out cachedBitmap))
+            return await task;
+        }
+        finally
+        {
+            _spriteInFlight.TryRemove(source, out _);
+        }
+    }
+
+    private async Task<SKBitmap> LoadAndCacheSpriteAsync(string source)
+    {
+        await _semaphoreLoadFile.WaitAsync();
+        try
+        {
+            if (CachedSpriteSheets.TryGetValue(source, out var cached))
             {
                 Debug.WriteLine($"[SkiaSprite] Loaded {source} from cache after semaphore wait");
-                return cachedBitmap;
+                return cached;
             }
 
-            SKBitmap bitmap = null;
-
-            if (Uri.TryCreate(source, UriKind.Absolute, out var uri) && uri.Scheme != "file")
-            {
-                var client = Super.Services?.GetService(typeof(HttpClient)) as HttpClient;
-                if (client == null)
-                {
-                    Super.Log($"[SkiaSprite] HttpClient service unavailable for {source}");
-                    return null;
-                }
-
-                var data = await client.GetByteArrayAsync(uri);
-                bitmap = SKBitmap.Decode(data);
-            }
-            else
-            {
-                bitmap = await LoadLocalImageAsync(source);
-            }
+            using var stream = await SkiaImageManager.OpenStreamAsync(source);
+            var bitmap = SKBitmap.Decode(stream);
 
             if (bitmap != null)
             {
-                // Add the loaded bitmap to the cache
                 CachedSpriteSheets.TryAdd(source, bitmap);
                 Debug.WriteLine($"[SkiaSprite] Added {source} to cache");
             }
@@ -368,7 +366,7 @@ public class SkiaSprite : AnimatedFramesRenderer
         }
         catch (Exception e)
         {
-            Super.Log($"[SkiaSprite] LoadSource failed to load spritesheet {source}");
+            Super.Log($"[SkiaSprite] LoadSourceAsync failed to load spritesheet {source}: {e.Message}");
             return null;
         }
         finally
@@ -384,55 +382,7 @@ public class SkiaSprite : AnimatedFramesRenderer
     /// <returns>SKBitmap of the loaded spritesheet</returns>
     public async Task<SKBitmap> LoadLocalImageAsync(string source)
     {
-        try
-        {
-            // Check if the spritesheet is already in the cache
-            if (CachedSpriteSheets.TryGetValue(source, out var cachedBitmap))
-            {
-                Debug.WriteLine($"[SkiaSprite] Loaded {source} from cache");
-                return cachedBitmap;
-            }
-
-            SKBitmap bitmap = null;
-
-            if (source.SafeContainsInLower(SkiaImageManager.NativeFilePrefix))
-            {
-                var fullFilename = source.Replace(SkiaImageManager.NativeFilePrefix, "");
-                using var stream = new FileStream(fullFilename, FileMode.Open);
-                bitmap = SKBitmap.Decode(stream);
-            }
-            else
-            {
-#if BROWSER || DRAWNUI_NET
-                var client = Super.Services?.GetService(typeof(HttpClient)) as HttpClient;
-                if (client == null)
-                {
-                    Super.Log($"[SkiaSprite] HttpClient service unavailable for local source {source}");
-                    return null;
-                }
-
-                var data = await client.GetByteArrayAsync(source);
-                bitmap = SKBitmap.Decode(data);
-#else
-                using var stream = await FileSystem.OpenAppPackageFileAsync(source);
-                bitmap = SKBitmap.Decode(stream);
-#endif
-            }
-
-            if (bitmap != null)
-            {
-                // Add the loaded bitmap to the cache
-                CachedSpriteSheets.TryAdd(source, bitmap);
-                Debug.WriteLine($"[SkiaSprite] Added {source} to cache");
-            }
-
-            return bitmap;
-        }
-        catch (Exception e)
-        {
-            Super.Log($"[SkiaSprite] LoadLocalImage failed to load spritesheet {source}");
-            return null;
-        }
+        return await LoadSourceAsync(source);
     }
 
     /// <summary>

@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -441,19 +442,54 @@ namespace DrawnUi.Draw
             set { SetValue(SourceProperty, value); }
         }
 
+        // Per-instance guard: prevents re-entrant LoadSource calls on the same control.
         private SemaphoreSlim _semaphoreLoadFile = new(1, 1);
 
-        private async Task<Stream> OpenPackageFileStreamAsync(string fileName)
-        {
-#if BROWSER || DRAWNUI_NET
-            var httpClient = Super.Services?.GetService<HttpClient>();
-            if (httpClient == null)
-                throw new InvalidOperationException("[SkiaSvg] HttpClient service was not found.");
+        // Static SVG source text cache — keyed by file/URL.
+        private static readonly ConcurrentDictionary<string, string> _svgSourceCache =
+            new(StringComparer.OrdinalIgnoreCase);
 
-            return await httpClient.GetStreamAsync(fileName);
-#else
-            return await FileSystem.OpenAppPackageFileAsync(fileName);
-#endif
+        // In-flight task dedup — prevents multiple simultaneous fetches for the same source.
+        private static readonly ConcurrentDictionary<string, Task<string>> _svgInFlight =
+            new(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// Returns cached SVG text for <paramref name="source"/> or fetches it (with deduplication).
+        /// </summary>
+        private static async Task<string> FetchSvgTextAsync(string source)
+        {
+            if (_svgSourceCache.TryGetValue(source, out var cached))
+                return cached;
+
+            var task = _svgInFlight.GetOrAdd(source, key => LoadSvgTextCoreAsync(key));
+            try
+            {
+                return await task;
+            }
+            finally
+            {
+                _svgInFlight.TryRemove(source, out _);
+            }
+        }
+
+        private static async Task<string> LoadSvgTextCoreAsync(string source)
+        {
+            try
+            {
+                using var stream = await SkiaImageManager.OpenStreamAsync(source);
+                using var reader = new StreamReader(stream);
+                var json = await reader.ReadToEndAsync();
+
+                if (!string.IsNullOrEmpty(json))
+                    _svgSourceCache[source] = json;
+
+                return json;
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine($"[SkiaSvg] LoadSvgTextCoreAsync failed for {source}: {e.Message}");
+                return null;
+            }
         }
 
         public virtual async Task LoadSource(string fileName)
@@ -465,30 +501,14 @@ namespace DrawnUi.Draw
 
             try
             {
-                string json;
-                if (Uri.TryCreate(fileName, UriKind.Absolute, out var uri) && uri.Scheme != "file")
-                {
-#if BROWSER || DRAWNUI_NET
-                    var httpClient = Super.Services?.GetService<HttpClient>() ?? throw new InvalidOperationException("[SkiaSvg] HttpClient service was not found.");
-                    using var stream = await httpClient.GetStreamAsync(uri);
-#else
-                    using HttpClient client = Super.Services.CreateHttpClient();
-                    using var stream = await client.GetStreamAsync(uri);
-#endif
-                    using var reader = new StreamReader(stream);
-                    json = await reader.ReadToEndAsync();
-                }
-                else
-                {
-                    using var stream = await OpenPackageFileStreamAsync(fileName);
-                    using var reader = new StreamReader(stream);
-                    json = await reader.ReadToEndAsync();
-                }
+                var json = await FetchSvgTextAsync(fileName);
 
-                UpdateImageFromString(json);
-                UpdateIcon();
-
-                Success?.Invoke(this, fileName);
+                if (!string.IsNullOrEmpty(json))
+                {
+                    UpdateImageFromString(json);
+                    UpdateIcon();
+                    Success?.Invoke(this, fileName);
+                }
             }
             catch (Exception e)
             {

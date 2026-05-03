@@ -197,76 +197,14 @@ public class SkiaGif : AnimatedFramesRenderer
 
     public event EventHandler<Exception> Error;
 
-    private async Task<Stream> OpenPackageFileStreamAsync(string fileName)
-    {
-#if BROWSER || DRAWNUI_NET
-        var httpClient = Super.Services?.GetService<HttpClient>();
-        if (httpClient == null)
-            throw new InvalidOperationException("[SkiaGif] HttpClient service was not found.");
-
-        return await httpClient.GetStreamAsync(fileName);
-#else
-        return await FileSystem.OpenAppPackageFileAsync(fileName);
-#endif
-    }
-
     public virtual void ReloadSource()
     {
         if (string.IsNullOrEmpty(Source))
-        {
             return;
-        }
 
         lock (lockSource)
         {
-            var type = GetSourceType(Source);
-
-            switch (type)
-            {
-                case SourceType.Url:
-                    _ = LoadAndApplySourceAsync(Source);
-                    break;
-                default:
-#if BROWSER || DRAWNUI_NET
-                    _ = LoadAndApplySourceAsync(Source);
-                    break;
-#else
-                    GifAnimation animation = new();
-                    try
-                    {
-                        if (Source.SafeContainsInLower(SkiaImageManager.NativeFilePrefix))
-                        {
-                            var fullFilename = Source.Replace(SkiaImageManager.NativeFilePrefix, "");
-                            using var stream = new FileStream(fullFilename, FileMode.Open);
-                            animation.LoadFromStream(stream);
-                        }
-                        else
-                        {
-                            using var stream = OpenPackageFileStreamAsync(Source).GetAwaiter().GetResult();
-                            animation.LoadFromStream(stream);
-                        }
-                        if (animation.TotalFrames < 1)
-                        {
-                            animation = null;
-                        }
-                        if (animation != null)
-                        {
-                            Success?.Invoke(this, Source);
-                            SetAnimation(animation, true);
-                        }
-                        else
-                        {
-                            Error?.Invoke(this, new Exception($"Failed to load source {Source}"));
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Super.Log(e);
-                        Error?.Invoke(this, new Exception($"Failed to load source {Source}"));
-                    }
-                    break;
-#endif
-            }
+            _ = LoadAndApplySourceAsync(Source);
         }
     }
 
@@ -301,56 +239,14 @@ public class SkiaGif : AnimatedFramesRenderer
             return null;
 
         await _semaphoreLoadFile.WaitAsync();
-
         try
         {
             GifAnimation animation = new();
-            if (Uri.TryCreate(fileName, UriKind.Absolute, out var uri) && uri.Scheme != "file")
-            {
-#if BROWSER || DRAWNUI_NET
-                var httpClient = Super.Services?.GetService<HttpClient>() ?? throw new InvalidOperationException("[SkiaGif] HttpClient service was not found.");
-                using var dataStream = await httpClient.GetStreamAsync(uri);
-#else
-                using HttpClient client = Super.Services.CreateHttpClient();
-                using var dataStream = await client.GetStreamAsync(uri);
-#endif
-#if BROWSER || DRAWNUI_NET
-                using var bufferedStream = new MemoryStream();
-                await dataStream.CopyToAsync(bufferedStream);
-                bufferedStream.Position = 0;
-                animation.LoadFromStream(bufferedStream);
-#else
-                animation.LoadFromStream(dataStream);
-#endif
-            }
-            else
-            {
-                if (fileName.SafeContainsInLower(SkiaImageManager.NativeFilePrefix))
-                {
-                    var fullFilename = fileName.Replace(SkiaImageManager.NativeFilePrefix, "");
-                    using var stream = new FileStream(fullFilename, FileMode.Open);
-                    animation.LoadFromStream(stream);
-                }
-                else
-                {
-                    using var stream = await OpenPackageFileStreamAsync(fileName);
-#if BROWSER || DRAWNUI_NET
-                    using var bufferedStream = new MemoryStream();
-                    await stream.CopyToAsync(bufferedStream);
-                    bufferedStream.Position = 0;
-                    animation.LoadFromStream(bufferedStream);
-#else
-                    animation.LoadFromStream(stream);
-#endif
-                }
-            }
+            // OpenStreamAsync on Blazor/WASM already returns a seekable MemoryStream.
+            using var stream = await SkiaImageManager.OpenStreamAsync(fileName);
+            animation.LoadFromStream(stream);
 
-            if (animation.TotalFrames > 0)
-            {
-                return animation;
-            }
-
-            return null;
+            return animation.TotalFrames > 0 ? animation : null;
         }
         catch (Exception e)
         {
