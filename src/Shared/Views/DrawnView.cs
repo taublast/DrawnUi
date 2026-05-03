@@ -682,7 +682,7 @@ namespace DrawnUi.Views
 #endif
 
 #if BROWSER || DRAWNUI_NET
-            Content = null;
+            //Content = null;
 #else
             if (IsUsingHardwareAcceleration)
             {
@@ -815,7 +815,7 @@ namespace DrawnUi.Views
 
                     ClearChildren();
 
-                    Content = null;
+                    //Content = null;
 
                     DisposeManager.Dispose();
 
