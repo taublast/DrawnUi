@@ -322,6 +322,38 @@ public class SkiaImageManager : IDisposable
         }
     }
 
+    /// <summary>
+    /// Opens a fully-buffered stream for any source (local asset or URL).
+    /// On Blazor/WASM the HTTP concurrency limit is respected and the result is
+    /// always a seekable <see cref="MemoryStream"/> so callers can use it immediately
+    /// after the returned task completes without holding a connection open.
+    /// </summary>
+    public static async Task<Stream> OpenStreamAsync(string source, CancellationToken cancel = default)
+    {
+        if (source.SafeContainsInLower(NativeFilePrefix))
+        {
+            var fullFilename = source.Replace(NativeFilePrefix, "");
+            return new FileStream(fullFilename, FileMode.Open, FileAccess.Read, FileShare.Read);
+        }
+
+        var httpClient = Super.Services?.GetService<HttpClient>()
+            ?? throw new InvalidOperationException("[SkiaImageManager] HttpClient service was not found.");
+
+        await _loadSemaphore.WaitAsync(cancel);
+        try
+        {
+            using var httpStream = await httpClient.GetStreamAsync(source, cancel);
+            var ms = new MemoryStream();
+            await httpStream.CopyToAsync(ms, cancel);
+            ms.Position = 0;
+            return ms;
+        }
+        finally
+        {
+            _loadSemaphore.Release();
+        }
+    }
+
     public static string GetUriFromImageSource(ImageSource source)
     {
         if (source is UriImageSource uriSource)
