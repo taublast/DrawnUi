@@ -38,10 +38,9 @@ namespace DrawnUi.Draw
         {
             var label = new SkiaLabel
             {
-                //BackgroundColor = Colors.Red,
-                // VerticalOptions = LayoutOptions.Center,
                 KeepSpacesOnLineBreaks = true,
-                Margin = new Thickness(0, 0, 4, 0), //leave side space for cursor todo 4 as property
+                NeedsGlyphPositions = true,
+                Margin = new Thickness(0, 0, 4, 0),
             };
 
             return OnCreatingLabel(label);
@@ -58,8 +57,8 @@ namespace DrawnUi.Draw
                 Label.FontWeight = this.FontWeight;
                 Label.FillGradient = this.TextGradient;
 
-                Label.HorizontalOptions = this.AlignContentHorizontal;
-                Label.VerticalOptions = this.AlignContentVertical;
+                Label.HorizontalOptions = LayoutOptions.Fill;
+                Label.VerticalOptions = LayoutOptions.Fill;
 
                 Label.HorizontalTextAlignment = this.HorizontalTextAlignment;
                 Label.VerticalTextAlignment = this.VerticalTextAlignment;
@@ -85,11 +84,11 @@ namespace DrawnUi.Draw
             Cursor = new()
             {
                 ZIndex = 1,
-                //BackgroundColor = Colors.Red,
-                WidthRequest = 1,
-                Margin = new Thickness(1),
+                UseCache = SkiaCacheType.Operations,
+                WidthRequest = 2,
+                HeightRequest = FontSize > 0 ? FontSize * 1.2 : 20,
                 HorizontalOptions = LayoutOptions.Start,
-                VerticalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Start,
                 IsVisible = false
             };
 
@@ -164,8 +163,6 @@ namespace DrawnUi.Draw
             //we have all lines position inside Label
             if (Label != null && Label.Lines != null)
             {
-                Debug.WriteLine($"GetCursorPosition exec fror '{Label.Text}', allowed 0-{Label.Text.Length}");
-
                 var firstPosInLine = 0;
                 var line = 0;
                 foreach (var labelLine in Label.Lines)
@@ -174,11 +171,16 @@ namespace DrawnUi.Draw
                     var rect = labelLine.Bounds;
                     // rect.Offset(new SKPoint(0, this.HitBoxAuto.Top));
 
+                    var lineGlyphs = labelLine.Spans.Count > 0 ? (labelLine.Spans[0].Glyphs ?? Array.Empty<LineGlyph>()) : Array.Empty<LineGlyph>();
+
                     if (y >= rect.Top && y <= rect.Bottom) //inside line
                     {
+                        if (lineGlyphs.Length == 0)
+                            return Text?.Length ?? 0;
+
                         var posInline = 0;
                         var prevX = 0f;
-                        foreach (var charX in labelLine.Spans.First().Glyphs)
+                        foreach (var charX in lineGlyphs)
                         {
                             //we are checking x vs next char in line, not not current
                             if (prevX <= posX && posX <= charX.Position)
@@ -195,11 +197,11 @@ namespace DrawnUi.Draw
                     }
 
                     line++;
-                    firstPosInLine += labelLine.Spans.First().Glyphs.Length;
+                    firstPosInLine += lineGlyphs.Length;
                 }
 
                 if (Text != null)
-                    return Text.Length - 1;
+                    return Text.Length;
             }
             return 0;
         }
@@ -224,7 +226,6 @@ namespace DrawnUi.Draw
             var y = args.Event.StartingLocation.Y + thisOffset.Y;
 
             var pos = GetCursorPosition(x, y);
-            Debug.WriteLine($"GetCursorPosition detected {pos}");
             CursorPosition = pos;
 
             Superview.FocusedChild = this;
@@ -278,12 +279,15 @@ namespace DrawnUi.Draw
                 var cursorIndex = CursorPosition;
 
                 //make cursor fit the line height
-                Cursor.HeightRequest = Label.MeasuredLineHeight / RenderingScale;
+                var lineH = Label.MeasuredLineHeight / RenderingScale;
+                if (lineH > 0)
+                    Cursor.HeightRequest = lineH;
 
                 if (cursorIndex < 0 || Label.Lines == null)
                 {
                     CursorPosition = 0;
                     MoveCursorTo(0, 0);
+                    SetCursorVisible(IsFocused && CanShowCursor);
                     return;
                 }
 
@@ -293,8 +297,10 @@ namespace DrawnUi.Draw
                 var lastY = 0f;
                 foreach (var labelLine in Label.Lines)
                 {
+                    var lineGlyphs = labelLine.Spans.Count > 0 ? (labelLine.Spans[0].Glyphs ?? Array.Empty<LineGlyph>()) : Array.Empty<LineGlyph>();
+
                     // Check if we're on the last line and the cursor is at the last position
-                    if (line == Label.LinesCount - 1 && cursorIndex == index + labelLine.Spans.First().Glyphs.Length)
+                    if (line == Label.LinesCount - 1 && cursorIndex == index + lineGlyphs.Length)
                     {
                         var translateX = labelLine.Bounds.Width / RenderingScale;
                         var translateY = (labelLine.Bounds.Top - Label.DrawingRect.Top) / RenderingScale;
@@ -303,7 +309,7 @@ namespace DrawnUi.Draw
                         break;
                     }
 
-                    if (cursorIndex < index + labelLine.Spans.First().Glyphs.Length)
+                    if (cursorIndex < index + lineGlyphs.Length)
                     {
 
                         if (line > 0 && cursorIndex - index == 0)
@@ -313,7 +319,7 @@ namespace DrawnUi.Draw
                             break;
                         }
 
-                        var x = labelLine.Bounds.Left + labelLine.Spans.First().Glyphs[cursorIndex - index].Position;
+                        var x = labelLine.Bounds.Left + lineGlyphs[cursorIndex - index].Position;
                         var y = labelLine.Bounds.Top;
 
                         MoveCursorTo((x - Label.DrawingRect.Left) / RenderingScale, (y - Label.DrawingRect.Top) / RenderingScale);
@@ -323,12 +329,26 @@ namespace DrawnUi.Draw
                     endX = labelLine.Bounds.Right;
                     lastY = labelLine.Bounds.Top;
                     line++;
-                    index += labelLine.Spans.First().Glyphs.Length;
+                    index += lineGlyphs.Length;
                 }
 
-                Cursor.IsVisible = IsFocused && CanShowCursor;
+                SetCursorVisible(IsFocused && CanShowCursor);
             }
 
+        }
+
+        protected void SetCursorVisible(bool show)
+        {
+            if (show)
+            {
+                Cursor.Opacity = 1;
+                if (!Cursor.IsVisible) Cursor.Invalidate();
+                Cursor.IsVisible = true;
+            }
+            else
+            {
+                Cursor.IsVisible = false;
+            }
         }
 
         /// <summary>
@@ -338,9 +358,9 @@ namespace DrawnUi.Draw
         /// <param name="y"></param>
         protected virtual void MoveCursorTo(double x, double y)
         {
-            Debug.WriteLine($"MoveCursorTo {x:0} {y:0}");
-            Cursor.TranslationX = x;
-            Cursor.TranslationY = y;
+            Cursor.Left = x;
+            Cursor.Top = y;
+            Invalidate();
         }
 
 

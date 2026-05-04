@@ -41,6 +41,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DrawnUi.SharedNet", "..\src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawnUi.Net", "..\src\Net\DrawnUi.Net.csproj", "{F680942C-44B5-04E5-EEA5-99CB85C43474}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastRepro", "..\src\Maui\Samples\FastRepro\FastRepro.csproj", "{34C68A1E-31A9-BF07-E16B-D2A2E3D79A40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{F680942C-44B5-04E5-EEA5-99CB85C43474}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F680942C-44B5-04E5-EEA5-99CB85C43474}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F680942C-44B5-04E5-EEA5-99CB85C43474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34C68A1E-31A9-BF07-E16B-D2A2E3D79A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34C68A1E-31A9-BF07-E16B-D2A2E3D79A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34C68A1E-31A9-BF07-E16B-D2A2E3D79A40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34C68A1E-31A9-BF07-E16B-D2A2E3D79A40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

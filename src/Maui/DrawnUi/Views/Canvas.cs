@@ -689,7 +689,7 @@ public class Canvas : DrawnView, IGestureListener
             }
 
             //manage focus changes
-            if (args.Type == TouchActionResult.Up || FocusedChild != null)
+            if (args.Type != TouchActionResult.Pointer && (args.Type == TouchActionResult.Up || FocusedChild != null))
             {
                 if (manageChildFocus || (FocusedChild != null && consumed != FocusedChild && !FocusedChild.LockFocus))
                 {

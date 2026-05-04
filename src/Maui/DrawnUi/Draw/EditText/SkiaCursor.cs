@@ -22,7 +22,7 @@ public class SkiaCursor : SkiaShape
                     Ratio = 0.5,
                     OnUpdated = (value) =>
                     {
-                        if (_blinkAnimator.State)
+                        if (!_blinkAnimator.State)
                         {
                             Opacity = 1.0;
                         }
