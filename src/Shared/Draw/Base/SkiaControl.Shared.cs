@@ -2342,7 +2342,7 @@ namespace DrawnUi.Draw
                     }
                 } //end
 
-                if (manageChildFocus)
+                if (manageChildFocus && args.Type != TouchActionResult.Pointer)
                 {
                     Superview.FocusedChild = null;
                 }
@@ -2431,7 +2431,7 @@ namespace DrawnUi.Draw
                                 }
                             }
 
-                        if (manageChildFocus)
+                        if (manageChildFocus && args.Type != TouchActionResult.Pointer)
                         {
                             Superview.FocusedChild = null;
                         }
@@ -2578,6 +2578,7 @@ namespace DrawnUi.Draw
             get { return (LayoutOptions)GetValue(HorizontalOptionsProperty); }
             set { SetValue(HorizontalOptionsProperty, value); }
         }
+ 
 
         /// <summary>
         /// todo override for templated skialayout to use ViewsProvider
