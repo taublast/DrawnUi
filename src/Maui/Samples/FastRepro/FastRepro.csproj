@@ -147,16 +147,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\..\AppoMobi.Maui.Gestures\src\AppoMobi.Maui.Gestures\AppoMobi.Maui.Gestures.csproj" />
       <ProjectReference Include="..\..\DrawnUi\DrawnUi.Maui.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <MauiXaml Update="TestRandom.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </MauiXaml>
-    </ItemGroup>
-
+ 
 
  
 </Project>
