@@ -1423,7 +1423,9 @@ namespace DrawnUi.Draw
 
             if (GlyphMeasurementCache.TryGetValue(paintTypeface, needsShaping, text, out var cachedResult))
             {
-                return cachedResult;
+                if (!NeedsGlyphPositions || cachedResult.Glyphs != null)
+                    return cachedResult;
+                // have a width-only cache entry but glyphs needed — fall through to full measurement
             }
 
             var glyphs = GetGlyphs(text, paintTypeface);
@@ -1486,6 +1488,7 @@ namespace DrawnUi.Draw
 
             // Check if we need character spacing or alignment adjustments
             bool requiresComplexMeasuring =
+                NeedsGlyphPositions ||
                 Spans.Count > 0 ||
                 CharacterSpacing != 1f ||
                 HorizontalTextAlignment == DrawTextAlignment.FillWordsFull ||
@@ -2894,6 +2897,12 @@ namespace DrawnUi.Draw
             get { return (bool)GetValue(DrawWhenEmptyProperty); }
             set { SetValue(DrawWhenEmptyProperty, value); }
         }
+
+        /// <summary>
+        /// Forces per-character glyph position measurement. Required for cursor/caret hit-testing in drawn editors.
+        /// Slightly more expensive than the default simple-path measurement.
+        /// </summary>
+        public bool NeedsGlyphPositions { get; set; }
 
         public static readonly BindableProperty KeepSpacesOnLineBreaksProperty = BindableProperty.Create(
             nameof(KeepSpacesOnLineBreaks),
