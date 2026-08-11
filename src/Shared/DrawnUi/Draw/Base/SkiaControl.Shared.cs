@@ -1483,7 +1483,16 @@ namespace DrawnUi.Draw
         {
             if (float.IsNaN(contentWidthPixels) || contentWidthPixels <= 0)
             {
-                return 0;
+                // Empty content collapses to 0 (empty views must not take all available size),
+                // UNLESS an explicit MinimumWidthRequest is set: then fall through with sanitized
+                // content so the min/max clamps below still apply (e.g. an auto-sized container
+                // whose children are all Fill measures content 0 but must hold its requested minimum).
+                if (MinimumWidthRequest <= 0)
+                {
+                    return 0;
+                }
+
+                contentWidthPixels = 0;
             }
 
             var sideConstraintsPixels = NeedAutoWidth
@@ -1506,7 +1515,14 @@ namespace DrawnUi.Draw
         {
             if (float.IsNaN(contentHeightPixels) || contentHeightPixels <= 0)
             {
-                return 0;
+                // Same contract as AdaptWidthConstraintToContentRequest: empty content is 0
+                // unless an explicit MinimumHeightRequest must be honored.
+                if (MinimumHeightRequest <= 0)
+                {
+                    return 0;
+                }
+
+                contentHeightPixels = 0;
             }
 
             var sideConstraintsPixels = NeedAutoHeight
@@ -5519,12 +5535,18 @@ namespace DrawnUi.Draw
                         // Don't call PostProcessMeasuredChild for fill children
                     }
 
-                    if (maxChildHeight == 0)
+                    // Adopt the full-Fill child's measured size when no other child defined the
+                    // dimension (sentinel -1) or content measured empty (0): an auto-sized layout whose
+                    // children are ALL Fill would otherwise report content 0/-1 and collapse, while its
+                    // Fill children were measured against the full available rect — producing a parent
+                    // narrower than what its children were laid out for (clipped content). Was `== 0`
+                    // before, which never fired because the accumulators start at -1.
+                    if (maxChildHeight <= 0)
                     {
                         maxChildHeight = measured.Pixels.Height;
                     }
 
-                    if (maxChildWidth == 0)
+                    if (maxChildWidth <= 0)
                     {
                         maxChildWidth = measured.Pixels.Width;
                     }
