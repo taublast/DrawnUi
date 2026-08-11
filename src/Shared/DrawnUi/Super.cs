@@ -70,6 +70,35 @@ public partial class Super
     static partial void OnMaxFpsChanged(int fps);
 
     /// <summary>
+    /// Integer display APIs report fractional NTSC-timing refresh rates truncated: a 59.94Hz panel
+    /// reports 59, 29.97 reports 29, 119.88 reports 119. Pacing the render loop at the truncated
+    /// integer undershoots vsync (~one dropped beat per 17s at "59"). For a near-integer reported rate
+    /// in the known truncated set the exact rate is (reported + 1) * 1000 / 1001 — restore it.
+    /// Already-fractional inputs and genuine integer rates pass through unchanged.
+    /// </summary>
+    public static float AdjustTruncatedRate(float reported)
+    {
+        if (MathF.Abs(reported - MathF.Round(reported)) > 0.001f)
+            return reported; // already fractional = exact, not truncated
+
+        switch ((int)MathF.Round(reported))
+        {
+            case 23:  // 23.976
+            case 29:  // 29.97
+            case 47:  // 47.952
+            case 59:  // 59.94
+            case 71:  // 71.928
+            case 95:  // 95.904
+            case 119: // 119.88
+            case 143: // 143.856
+            case 239: // 239.76
+                return (MathF.Round(reported) + 1f) * 1000f / 1001f;
+            default:
+                return reported;
+        }
+    }
+
+    /// <summary>
     /// Can optionally disable hardware-acceleration with this flag, for example on iOS you would want to avoid creating many metal views.
     /// </summary>
     public static bool CanUseHardwareAcceleration = true;

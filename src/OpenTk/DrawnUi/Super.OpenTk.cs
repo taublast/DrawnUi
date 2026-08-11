@@ -41,7 +41,7 @@ namespace DrawnUi.Draw
 
         public static event EventHandler OnFrame;
 
-        public static int RefreshRate { get; protected set; } = 60;
+        public static float RefreshRate { get; protected set; } = 60;
 
         public static void Init()
         {
@@ -55,7 +55,7 @@ namespace DrawnUi.Draw
             n.Opacity = 1;
         }
 
-        public static int GetDisplayRefreshRate(int fallback)
+        public static float GetDisplayRefreshRate(float fallback)
         {
             try
             {
@@ -65,8 +65,9 @@ namespace DrawnUi.Draw
                     if (monitor != null)
                     {
                         var mode = GLFW.GetVideoMode(monitor);
+                        // GLFW reports an integer rate — 59 on a 59.94Hz panel; restore the exact fraction
                         if (mode != null && mode->RefreshRate > 0)
-                            return mode->RefreshRate;
+                            return AdjustTruncatedRate(mode->RefreshRate);
                     }
                 }
             }

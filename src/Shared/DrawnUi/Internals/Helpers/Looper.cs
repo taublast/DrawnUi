@@ -40,7 +40,7 @@ public class Looper : IDisposable
     bool _loopStarting = false;
     bool _loopStarted = false;
 
-    public void StartOnMainThread(int targetFps, bool useLegacy = false)
+    public void StartOnMainThread(float targetFps, bool useLegacy = false)
     {
         Tasks.StartDelayed(TimeSpan.FromMilliseconds(1), async () =>
         {
@@ -88,9 +88,9 @@ public class Looper : IDisposable
 
     double targetIntervalMs;
 
-    public void SetTargetFps(int targetFps)
+    public void SetTargetFps(float targetFps)
     {
-        targetIntervalMs = 1000.0 / (double)targetFps;
+        targetIntervalMs = 1000.0 / targetFps;
     }
 
     public void Stop()

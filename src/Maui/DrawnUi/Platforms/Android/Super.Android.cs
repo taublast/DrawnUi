@@ -27,9 +27,9 @@ public partial class Super
     static Looper Looper { get; set; }
     private static ThermalStateService _thermalService;
 
-    public static int RefreshRate { get; protected set; }
+    public static float RefreshRate { get; protected set; }
 
-    public static int GetDisplayRefreshRate(int fallback)
+    public static float GetDisplayRefreshRate(float fallback)
     {
         var ret = fallback;
         try
@@ -39,7 +39,9 @@ public partial class Super
             if (Platform.CurrentActivity?.WindowManager?.DefaultDisplay != null)
             {
                 var display = Platform.CurrentActivity.WindowManager.DefaultDisplay;
-                ret = (int)display.RefreshRate;
+                // Display.RefreshRate is a float (59.94 on NTSC-timing panels) — keep it exact;
+                // AdjustTruncatedRate restores the fraction when the OS itself reports a truncated int.
+                ret = AdjustTruncatedRate(display.RefreshRate);
             }
         }
         catch

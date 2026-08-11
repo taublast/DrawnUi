@@ -197,7 +197,7 @@ public class FrameTimeInterpolator
         _frameHistoryCount = 0;
     }
 
-    static int _framerate = 60;
+    static float _framerate = 60;
 
     void SetTargetFps()
     {
@@ -222,7 +222,10 @@ public class FrameTimeInterpolator
         _lastFrameTime = currentFrameTime;
         IsSkippingFrames = false;
         ShouldReduceQuality = false;
-        _frameTimeHistory = new float[(int)_framerate];
+        // history length is a frame COUNT: round the (possibly fractional, e.g. 59.94) refresh rate.
+        // All index math below keys off the array's own Length — float modulo against _framerate
+        // yields 59 % 59.94 = 59 on a 59-length array (IndexOutOfRange).
+        _frameTimeHistory = new float[Math.Max(1, (int)MathF.Round(_framerate))];
         _frameHistoryIndex = 0;
         _frameHistoryCount = 0;
         _currentTimeStep = 1f / _targetFps;
@@ -236,9 +239,9 @@ public class FrameTimeInterpolator
     private void AddToFrameTimeHistory(float frameTime)
     {
         _frameTimeHistory[_frameHistoryIndex] = frameTime;
-        _frameHistoryIndex = (_frameHistoryIndex + 1) % _framerate;
+        _frameHistoryIndex = (_frameHistoryIndex + 1) % _frameTimeHistory.Length;
 
-        if (_frameHistoryCount < _framerate)
+        if (_frameHistoryCount < _frameTimeHistory.Length)
         {
             _frameHistoryCount++;
         }
@@ -250,7 +253,7 @@ public class FrameTimeInterpolator
     private void UpdateQualitySettings()
     {
         // Only evaluate after collecting enough samples
-        if (_frameHistoryCount < _framerate)
+        if (_frameHistoryCount < _frameTimeHistory.Length)
         {
             return;
         }
@@ -261,7 +264,7 @@ public class FrameTimeInterpolator
         int framesWithLowPerformance = 0;
 
         // Count frames that are below the quality threshold
-        for (int i = 0; i < _framerate; i++)
+        for (int i = 0; i < _frameTimeHistory.Length; i++)
         {
             if (_frameTimeHistory[i] > qualityThreshold)
             {
@@ -269,7 +272,7 @@ public class FrameTimeInterpolator
             }
         }
 
-        float percentageLowPerformance = (float)framesWithLowPerformance / _framerate;
+        float percentageLowPerformance = (float)framesWithLowPerformance / _frameTimeHistory.Length;
         float thresholdFps = 1f / qualityThreshold;
 
         // Update quality settings based on threshold

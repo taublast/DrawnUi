@@ -52,7 +52,7 @@ namespace DrawnUi.Draw
 
         private const int DEFAULT_TARGET_FPS = 120;
 
-        public static int RefreshRate { get; protected set; } = DEFAULT_TARGET_FPS;
+        public static float RefreshRate { get; protected set; } = DEFAULT_TARGET_FPS;
         public static void Init()
         {
             Initialized = true;
@@ -62,7 +62,7 @@ namespace DrawnUi.Draw
             RefreshRate = GetDisplayRefreshRate(DEFAULT_TARGET_FPS);
         }
 
-        public static int GetDisplayRefreshRate(int fallback)
+        public static float GetDisplayRefreshRate(float fallback)
         {
             return DEFAULT_TARGET_FPS;
         }

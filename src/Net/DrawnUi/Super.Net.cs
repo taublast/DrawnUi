@@ -31,7 +31,7 @@ namespace DrawnUi.Draw
 
         public static event EventHandler OnFrame;
 
-        public static int RefreshRate { get; protected set; } = 60;
+        public static float RefreshRate { get; protected set; } = 60;
 
         public static void Init()
         {
@@ -45,7 +45,7 @@ namespace DrawnUi.Draw
             n.Opacity = 1;
         }
 
-        public static int GetDisplayRefreshRate(int fallback) => fallback;
+        public static float GetDisplayRefreshRate(float fallback) => fallback;
 
         public static IServiceProvider Services
         {
