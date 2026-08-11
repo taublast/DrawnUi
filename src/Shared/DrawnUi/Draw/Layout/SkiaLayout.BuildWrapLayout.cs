@@ -126,10 +126,13 @@ public partial class SkiaLayout
                         }
                         else
                         {
+                            // Clamp arrange Area to row bounds: the measure rect may extend past the
+                            // row edge (full-row-width measure above) — without the clamp an End/Center
+                            // aligned child would arrange beyond the visible row.
                             controlInStack.Area = new(
                                 controlInStack.Area.Left,
                                 controlInStack.Area.Top,
-                                controlInStack.Area.Right,
+                                Math.Min(controlInStack.Area.Right, available.Right),
                                 controlInStack.Area.Top + layoutHeight);
                         }
 
@@ -178,11 +181,17 @@ public partial class SkiaLayout
                 }
                 else
                 {
-                    //take the remaining width
+                    // Measure with the FULL row width from this column's start (flex-wrap semantics):
+                    // a squeezable child (auto-sized panel, nested wrap) must report its DESIRED width,
+                    // so the fitsH check can wrap it to a fresh row. Measuring with only the remaining
+                    // width let such children silently reflow into the leftover strip after a wide
+                    // sibling ("crushed panel"). Fit against the actually remaining width is enforced
+                    // by fitsH -> BreakRow + remeasure; the arrange Area is clamped back to row bounds
+                    // in LayoutCellsInternal.
                     rectFitChild = new SKRect(
                         rectForChild.Left,
                         rectForChild.Top,
-                        rectForChild.Right,
+                        rectForChild.Left + maxAvailableSpace,
                         rectForChild.Bottom);
                 }
             }
