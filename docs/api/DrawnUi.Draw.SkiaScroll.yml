@@ -177,6 +177,7 @@ items:
   - DrawnUi.Draw.SkiaScroll.ParallaxOverscrollEnabled
   - DrawnUi.Draw.SkiaScroll.ParallaxOverscrollEnabledProperty
   - DrawnUi.Draw.SkiaScroll.PassGestureToChildren(DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  - DrawnUi.Draw.SkiaScroll.PixelAwareFlingFinishBelowScale
   - DrawnUi.Draw.SkiaScroll.PlayEdgeGlowAnimation(Microsoft.Maui.Graphics.Color,System.Double,System.Double,System.Boolean)
   - DrawnUi.Draw.SkiaScroll.PositionViewport(SkiaSharp.SKRect,SkiaSharp.SKPoint,System.Single,System.Single,System.Boolean)
   - DrawnUi.Draw.SkiaScroll.PrepareToFlingAfterInitialized(DrawnUi.Draw.ScrollFlingAnimator)
@@ -9774,6 +9775,40 @@ items:
     content: public void UpdateFriction()
     content.vb: Public Sub UpdateFriction()
   overload: DrawnUi.Draw.SkiaScroll.UpdateFriction*
+- uid: DrawnUi.Draw.SkiaScroll.PixelAwareFlingFinishBelowScale
+  commentId: F:DrawnUi.Draw.SkiaScroll.PixelAwareFlingFinishBelowScale
+  id: PixelAwareFlingFinishBelowScale
+  parent: DrawnUi.Draw.SkiaScroll
+  langs:
+  - csharp
+  - vb
+  name: PixelAwareFlingFinishBelowScale
+  nameWithType: SkiaScroll.PixelAwareFlingFinishBelowScale
+  fullName: DrawnUi.Draw.SkiaScroll.PixelAwareFlingFinishBelowScale
+  type: Field
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: PixelAwareFlingFinishBelowScale
+    path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
+    startLine: 809
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Rendering scales below this use the pixel-aware fling finish (short ease-out instead of the
+
+    asymptotic sub-pixel tail, which shows as jagged 1px hops on low-density displays).
+
+    Scales at or above it keep the classic smooth exponential die-out. Default 1.5.
+  example: []
+  syntax:
+    content: public static float PixelAwareFlingFinishBelowScale
+    return:
+      type: System.Single
+    content.vb: Public Shared PixelAwareFlingFinishBelowScale As Single
 - uid: DrawnUi.Draw.SkiaScroll.StartToFlingFrom(DrawnUi.Draw.ScrollFlingAnimator,System.Single,System.Single)
   commentId: M:DrawnUi.Draw.SkiaScroll.StartToFlingFrom(DrawnUi.Draw.ScrollFlingAnimator,System.Single,System.Single)
   id: StartToFlingFrom(DrawnUi.Draw.ScrollFlingAnimator,System.Single,System.Single)
@@ -9792,7 +9827,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: StartToFlingFrom
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 804
+    startLine: 811
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9830,7 +9865,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FlingFrom
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 819
+    startLine: 826
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9868,7 +9903,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FlingToAuto
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 832
+    startLine: 839
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9908,7 +9943,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FlingTo
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 845
+    startLine: 852
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9948,7 +9983,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PrepareToFlingAfterInitialized
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 856
+    startLine: 863
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9979,7 +10014,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FlingAfterInitialized
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 909
+    startLine: 923
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10010,7 +10045,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OrderedScrollTo
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 927
+    startLine: 941
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10042,7 +10077,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OrderedScrollToIndex
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 933
+    startLine: 947
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10074,7 +10109,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ClearOrderedScrollToIndex
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 948
+    startLine: 962
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10102,7 +10137,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OrderedScrollToIndexIsSet
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 956
+    startLine: 970
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10131,7 +10166,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: HasPendingScrollOrder
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 970
+    startLine: 984
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10169,7 +10204,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _windowTravelExtension
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 985
+    startLine: 999
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10198,7 +10233,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetHardContentOffsetBounds
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 988
+    startLine: 1002
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10228,7 +10263,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ScrollToOffset
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 1000
+    startLine: 1014
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10262,7 +10297,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MoveToY
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 1018
+    startLine: 1032
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10294,7 +10329,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MoveToX
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 1026
+    startLine: 1040
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10326,7 +10361,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ScrollToIndex
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 1034
+    startLine: 1048
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10364,7 +10399,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ExecuteScrollToOrder
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 1060
+    startLine: 1074
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10392,7 +10427,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ExecuteScrollToIndexOrder
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 1072
+    startLine: 1086
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10420,7 +10455,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ResetPosition
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 1204
+    startLine: 1218
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10448,7 +10483,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetContentOffset
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 1214
+    startLine: 1228
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10488,7 +10523,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ScrollTo
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 1221
+    startLine: 1235
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10529,7 +10564,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ScrollToTop
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 1235
+    startLine: 1249
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10561,7 +10596,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ScrollToBottom
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 1251
+    startLine: 1265
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10593,7 +10628,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Snapped
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 1323
+    startLine: 1337
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10622,7 +10657,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsSnapping
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 1338
+    startLine: 1352
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10651,7 +10686,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsAnimating
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 1351
+    startLine: 1365
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10680,7 +10715,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsBouncing
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.Scrolling.cs
-    startLine: 1352
+    startLine: 1366
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

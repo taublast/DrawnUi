@@ -11,11 +11,11 @@ items:
   - DrawnUi.Draw.Looper.Dispose
   - DrawnUi.Draw.Looper.IsRunning
   - DrawnUi.Draw.Looper.OnFrame
-  - DrawnUi.Draw.Looper.SetTargetFps(System.Int32)
+  - DrawnUi.Draw.Looper.SetTargetFps(System.Single)
   - DrawnUi.Draw.Looper.Start(System.Int32,System.Boolean)
   - DrawnUi.Draw.Looper.StartLegacyLooperAsync(System.Threading.CancellationToken)
   - DrawnUi.Draw.Looper.StartLooperAsync(System.Threading.CancellationToken)
-  - DrawnUi.Draw.Looper.StartOnMainThread(System.Int32,System.Boolean)
+  - DrawnUi.Draw.Looper.StartOnMainThread(System.Single,System.Boolean)
   - DrawnUi.Draw.Looper.Stop
   langs:
   - csharp
@@ -176,16 +176,16 @@ items:
   nameWithType.vb: Looper.Start(Integer, Boolean)
   fullName.vb: DrawnUi.Draw.Looper.Start(Integer, Boolean)
   name.vb: Start(Integer, Boolean)
-- uid: DrawnUi.Draw.Looper.StartOnMainThread(System.Int32,System.Boolean)
-  commentId: M:DrawnUi.Draw.Looper.StartOnMainThread(System.Int32,System.Boolean)
-  id: StartOnMainThread(System.Int32,System.Boolean)
+- uid: DrawnUi.Draw.Looper.StartOnMainThread(System.Single,System.Boolean)
+  commentId: M:DrawnUi.Draw.Looper.StartOnMainThread(System.Single,System.Boolean)
+  id: StartOnMainThread(System.Single,System.Boolean)
   parent: DrawnUi.Draw.Looper
   langs:
   - csharp
   - vb
-  name: StartOnMainThread(int, bool)
-  nameWithType: Looper.StartOnMainThread(int, bool)
-  fullName: DrawnUi.Draw.Looper.StartOnMainThread(int, bool)
+  name: StartOnMainThread(float, bool)
+  nameWithType: Looper.StartOnMainThread(float, bool)
+  fullName: DrawnUi.Draw.Looper.StartOnMainThread(float, bool)
   type: Method
   source:
     remote:
@@ -199,27 +199,27 @@ items:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public void StartOnMainThread(int targetFps, bool useLegacy = false)
+    content: public void StartOnMainThread(float targetFps, bool useLegacy = false)
     parameters:
     - id: targetFps
-      type: System.Int32
+      type: System.Single
     - id: useLegacy
       type: System.Boolean
-    content.vb: Public Sub StartOnMainThread(targetFps As Integer, useLegacy As Boolean = False)
+    content.vb: Public Sub StartOnMainThread(targetFps As Single, useLegacy As Boolean = False)
   overload: DrawnUi.Draw.Looper.StartOnMainThread*
-  nameWithType.vb: Looper.StartOnMainThread(Integer, Boolean)
-  fullName.vb: DrawnUi.Draw.Looper.StartOnMainThread(Integer, Boolean)
-  name.vb: StartOnMainThread(Integer, Boolean)
-- uid: DrawnUi.Draw.Looper.SetTargetFps(System.Int32)
-  commentId: M:DrawnUi.Draw.Looper.SetTargetFps(System.Int32)
-  id: SetTargetFps(System.Int32)
+  nameWithType.vb: Looper.StartOnMainThread(Single, Boolean)
+  fullName.vb: DrawnUi.Draw.Looper.StartOnMainThread(Single, Boolean)
+  name.vb: StartOnMainThread(Single, Boolean)
+- uid: DrawnUi.Draw.Looper.SetTargetFps(System.Single)
+  commentId: M:DrawnUi.Draw.Looper.SetTargetFps(System.Single)
+  id: SetTargetFps(System.Single)
   parent: DrawnUi.Draw.Looper
   langs:
   - csharp
   - vb
-  name: SetTargetFps(int)
-  nameWithType: Looper.SetTargetFps(int)
-  fullName: DrawnUi.Draw.Looper.SetTargetFps(int)
+  name: SetTargetFps(float)
+  nameWithType: Looper.SetTargetFps(float)
+  fullName: DrawnUi.Draw.Looper.SetTargetFps(float)
   type: Method
   source:
     remote:
@@ -233,15 +233,15 @@ items:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public void SetTargetFps(int targetFps)
+    content: public void SetTargetFps(float targetFps)
     parameters:
     - id: targetFps
-      type: System.Int32
-    content.vb: Public Sub SetTargetFps(targetFps As Integer)
+      type: System.Single
+    content.vb: Public Sub SetTargetFps(targetFps As Single)
   overload: DrawnUi.Draw.Looper.SetTargetFps*
-  nameWithType.vb: Looper.SetTargetFps(Integer)
-  fullName.vb: DrawnUi.Draw.Looper.SetTargetFps(Integer)
-  name.vb: SetTargetFps(Integer)
+  nameWithType.vb: Looper.SetTargetFps(Single)
+  fullName.vb: DrawnUi.Draw.Looper.SetTargetFps(Single)
+  name.vb: SetTargetFps(Single)
 - uid: DrawnUi.Draw.Looper.Stop
   commentId: M:DrawnUi.Draw.Looper.Stop
   id: Stop
@@ -864,13 +864,24 @@ references:
   name.vb: Boolean
 - uid: DrawnUi.Draw.Looper.StartOnMainThread*
   commentId: Overload:DrawnUi.Draw.Looper.StartOnMainThread
-  href: DrawnUi.Draw.Looper.html#DrawnUi_Draw_Looper_StartOnMainThread_System_Int32_System_Boolean_
+  href: DrawnUi.Draw.Looper.html#DrawnUi_Draw_Looper_StartOnMainThread_System_Single_System_Boolean_
   name: StartOnMainThread
   nameWithType: Looper.StartOnMainThread
   fullName: DrawnUi.Draw.Looper.StartOnMainThread
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
 - uid: DrawnUi.Draw.Looper.SetTargetFps*
   commentId: Overload:DrawnUi.Draw.Looper.SetTargetFps
-  href: DrawnUi.Draw.Looper.html#DrawnUi_Draw_Looper_SetTargetFps_System_Int32_
+  href: DrawnUi.Draw.Looper.html#DrawnUi_Draw_Looper_SetTargetFps_System_Single_
   name: SetTargetFps
   nameWithType: Looper.SetTargetFps
   fullName: DrawnUi.Draw.Looper.SetTargetFps

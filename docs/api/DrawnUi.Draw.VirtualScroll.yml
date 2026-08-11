@@ -352,6 +352,7 @@ items:
   - DrawnUi.Draw.SkiaScroll._minVelocity
   - DrawnUi.Draw.SkiaScroll.DecelerationRatio
   - DrawnUi.Draw.SkiaScroll.UpdateFriction
+  - DrawnUi.Draw.SkiaScroll.PixelAwareFlingFinishBelowScale
   - DrawnUi.Draw.SkiaScroll.StartToFlingFrom(DrawnUi.Draw.ScrollFlingAnimator,System.Single,System.Single)
   - DrawnUi.Draw.SkiaScroll.FlingFrom(DrawnUi.Draw.ScrollFlingAnimator,System.Single,System.Single)
   - DrawnUi.Draw.SkiaScroll.FlingToAuto(DrawnUi.Draw.ScrollFlingAnimator,System.Single,System.Single,System.Single)
@@ -5824,6 +5825,13 @@ references:
     href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_UpdateFriction
   - name: (
   - name: )
+- uid: DrawnUi.Draw.SkiaScroll.PixelAwareFlingFinishBelowScale
+  commentId: F:DrawnUi.Draw.SkiaScroll.PixelAwareFlingFinishBelowScale
+  parent: DrawnUi.Draw.SkiaScroll
+  href: DrawnUi.Draw.SkiaScroll.html#DrawnUi_Draw_SkiaScroll_PixelAwareFlingFinishBelowScale
+  name: PixelAwareFlingFinishBelowScale
+  nameWithType: SkiaScroll.PixelAwareFlingFinishBelowScale
+  fullName: DrawnUi.Draw.SkiaScroll.PixelAwareFlingFinishBelowScale
 - uid: DrawnUi.Draw.SkiaScroll.StartToFlingFrom(DrawnUi.Draw.ScrollFlingAnimator,System.Single,System.Single)
   commentId: M:DrawnUi.Draw.SkiaScroll.StartToFlingFrom(DrawnUi.Draw.ScrollFlingAnimator,System.Single,System.Single)
   parent: DrawnUi.Draw.SkiaScroll
