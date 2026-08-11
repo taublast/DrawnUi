@@ -44,7 +44,7 @@ namespace DrawnUi.Draw
 
         public static event EventHandler OnFrame;
 
-        public static int RefreshRate { get; protected set; } = 60;
+        public static float RefreshRate { get; protected set; } = 60;
 
         /// <summary>
         /// Called by JS requestAnimationFrame to trigger frame updates
@@ -82,7 +82,7 @@ namespace DrawnUi.Draw
             }
         }
 
-        public static int GetDisplayRefreshRate(int fallback) => fallback;
+        public static float GetDisplayRefreshRate(float fallback) => fallback;
 
         public static IServiceProvider Services
         {

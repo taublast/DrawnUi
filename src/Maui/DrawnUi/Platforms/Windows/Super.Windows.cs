@@ -26,6 +26,61 @@ namespace DrawnUi.Draw
         const int VREFRESH = 116;
         const int ENUM_CURRENT_SETTINGS = -1;
 
+        [StructLayout(LayoutKind.Sequential)]
+        struct UNSIGNED_RATIO
+        {
+            public uint uiNumerator;
+            public uint uiDenominator;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct DWM_TIMING_INFO
+        {
+            public uint cbSize;
+            public UNSIGNED_RATIO rateRefresh;
+            public ulong qpcRefreshPeriod;
+            public UNSIGNED_RATIO rateCompose;
+            public ulong qpcVBlank;
+            public ulong cRefresh;
+            public uint cDXRefresh;
+            public ulong qpcCompose;
+            public ulong cFrame;
+            public uint cDXPresent;
+            public ulong cRefreshFrame;
+            public ulong cFrameSubmitted;
+            public uint cDXPresentSubmitted;
+            public ulong cFrameConfirmed;
+            public uint cDXPresentConfirmed;
+            public ulong cRefreshConfirmed;
+            public uint cDXRefreshConfirmed;
+            public ulong cFramesLate;
+            public uint cFramesOutstanding;
+            public ulong cFrameDisplayed;
+            public ulong qpcFrameDisplayed;
+            public ulong cRefreshFrameDisplayed;
+            public ulong cFrameComplete;
+            public ulong qpcFrameComplete;
+            public ulong cFramePending;
+            public ulong qpcFramePending;
+            public ulong cFramesDisplayed;
+            public ulong cFramesComplete;
+            public ulong cFramesPending;
+            public ulong cFramesAvailable;
+            public ulong cFramesDropped;
+            public ulong cFramesMissed;
+            public ulong cRefreshNextDisplayed;
+            public ulong cRefreshNextPresented;
+            public ulong cRefreshesDisplayed;
+            public ulong cRefreshesPresented;
+            public ulong cRefreshStarted;
+            public ulong cPixelsReceived;
+            public ulong cPixelsDrawn;
+            public ulong cBuffersEmpty;
+        }
+
+        [DllImport("dwmapi.dll")]
+        static extern int DwmGetCompositionTimingInfo(IntPtr hwnd, ref DWM_TIMING_INFO pTimingInfo);
+
         struct DEVMODE
         {
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
@@ -54,31 +109,43 @@ namespace DrawnUi.Draw
             public int dmDisplayFrequency;
         }
 
-        public static int GetDisplayRefreshRate(int fallback)
+        public static float GetDisplayRefreshRate(float fallback)
         {
-            // Method 1: GetDeviceCaps
+            // Method 1: DWM composition timing — exact rational (e.g. 59951/1000 = 59.951).
+            // hwnd must be IntPtr.Zero (per-window unsupported since Win 8.1) → primary monitor rate.
+            var timing = new DWM_TIMING_INFO { cbSize = (uint)Marshal.SizeOf<DWM_TIMING_INFO>() };
+            if (DwmGetCompositionTimingInfo(IntPtr.Zero, ref timing) == 0
+                && timing.rateRefresh.uiDenominator > 0 && timing.rateRefresh.uiNumerator > 0)
+            {
+                return (float)timing.rateRefresh.uiNumerator / timing.rateRefresh.uiDenominator;
+            }
+
+            // Method 2: GetDeviceCaps (integer)
             IntPtr hdc = GetDC(IntPtr.Zero);
             int refreshRate = GetDeviceCaps(hdc, VREFRESH);
             ReleaseDC(IntPtr.Zero, hdc);
 
             if (refreshRate > 0)
-                return refreshRate;
+                return AdjustTruncatedRate(refreshRate);
 
-            // Method 2: EnumDisplaySettings (more precise)
+            // Method 3: EnumDisplaySettings (integer)
             DEVMODE devMode = new DEVMODE();
             devMode.dmSize = (short)Marshal.SizeOf(devMode);
 
             if (EnumDisplaySettings(null, ENUM_CURRENT_SETTINGS, ref devMode))
             {
-                return devMode.dmDisplayFrequency;
+                return AdjustTruncatedRate(devMode.dmDisplayFrequency);
             }
 
             return fallback;
         }
 
-        public static int RefreshRate { get; protected set; }
+        public static float RefreshRate { get; protected set; }
 
-        public static bool UsingDisplaySync { get; protected set; }
+        /// <summary>
+        /// Default is true. If set to false will use Looper instead of display sync.
+        /// </summary>
+        public static bool UsingDisplaySync { get; protected set; } = true;
 
         static bool _loopStarting = false;
         static bool _loopStarted = false;
@@ -100,8 +167,6 @@ namespace DrawnUi.Draw
             InitShared();
 
             RefreshRate = GetDisplayRefreshRate(60);
-
-            UsingDisplaySync = RefreshRate >= 120;
 
             if (UsingDisplaySync)
             {

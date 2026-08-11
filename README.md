@@ -50,9 +50,16 @@ Supported hosts:
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
 
-## What's New
+## What's New 1.10.5.4
+
+* Target fps now allows floats instead of integers for more fluent animations, resulting in smoother scrolling etc.
+* Scrolling ending jagging removed on density < 1.5 devices.
+* SkiaLayout Wrap fix for auto-sized children
+
+### Previously 1.10.5.2
 
 ### General
+
 * Breaking: migrated to SkiaSharp v4 API: `SKFilterQuality` removed (SkiaSharp), DrawnUi's own `FilterQuality` enum replaces it.
 `SKPaint.FilterQuality` removed. Quality moves to SKSamplingOptions: Fix via existing `DrawnUi.Draw.SkiaSamplingOptions.GetSamplingOptions(FilterQuality)` helper.
 * Added pure-WASM target (without Blazor);

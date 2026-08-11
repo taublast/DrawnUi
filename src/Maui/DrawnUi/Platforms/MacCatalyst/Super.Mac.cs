@@ -109,12 +109,12 @@ namespace DrawnUi.Draw
 
         #endregion
 
-        public static int GetDisplayRefreshRate(int fallback)
+        public static float GetDisplayRefreshRate(float fallback)
         {
             return (int)UIScreen.MainScreen.MaximumFramesPerSecond;
         }
 
-        public static int RefreshRate { get; protected set; }
+        public static float RefreshRate { get; protected set; }
 
 
         public static void Init()

@@ -802,6 +802,13 @@ public partial class SkiaScroll
         DecelerationRatio = (float)friction / 100f; // 0.2 => 0.002
     }
 
+    /// <summary>
+    /// Rendering scales below this use the pixel-aware fling finish (short ease-out instead of the
+    /// asymptotic sub-pixel tail, which shows as jagged 1px hops on low-density displays).
+    /// Scales at or above it keep the classic smooth exponential die-out. Default 1.5.
+    /// </summary>
+    public static float PixelAwareFlingFinishBelowScale = 1.5f;
+
     public virtual bool StartToFlingFrom(ScrollFlingAnimator animator, float from, float velocity)
     {
         var contentOffset = from;
@@ -856,6 +863,13 @@ public partial class SkiaScroll
 
     protected virtual bool PrepareToFlingAfterInitialized(ScrollFlingAnimator animator)
     {
+        // Pixel-aware finish replaces the sub-pixel exponential tail with a short ease-out landing on
+        // the px grid — ONLY on low-density displays (desktop 100-125%), where the tail renders as
+        // visible 1px hops with growing pauses ("jagged fling ending"). On high-DPI screens the same
+        // tail is sub-visual and reads as the natural smooth iOS-like die-out — keep it (device-tested:
+        // the finish there trades smoothness for nothing). 0 disables.
+        animator.PixelsScale = RenderingScale < PixelAwareFlingFinishBelowScale ? RenderingScale : 0;
+
         var destination = animator.Parameters.Destination;
         bool offsetOk = true;
 
