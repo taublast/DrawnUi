@@ -131,7 +131,7 @@ Useful probes currently include cards, keyboard, scrolling, and other runtime va
 
 Use the hosted sample to demonstrate the current browser-side DrawnUI runtime:
 
-- <a href="https://drawnui-wasm.appomobi.com/" target="_blank" rel="noopener noreferrer">Open Blazor WebAssembly sample</a>
+- <a href="https://drawnui.net/sandbox/" target="_blank" rel="noopener noreferrer">Open Blazor WebAssembly sample</a>
 
 ## Publishing
 
