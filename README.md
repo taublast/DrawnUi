@@ -55,7 +55,7 @@ Supported hosts:
 
 * Fixed Split=1 on a grid without ColumnDefinitions.
 
- ### Previously 1.10.5.6
+ ### Previously 1.10.5.5
 
 * Target fps now allows floats instead of integers for more fluent animations, resulting in smoother scrolling etc.
 * Scrolling ending jagging removed on density < 1.5 devices.
