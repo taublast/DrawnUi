@@ -326,7 +326,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Instance
     path: ../src/Shared/DrawnUi/Features/Animations/FrameTimeInterpolator.cs
-    startLine: 296
+    startLine: 299
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

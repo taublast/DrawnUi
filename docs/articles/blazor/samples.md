@@ -19,7 +19,7 @@ This is the best sample to start with if you want the strongest current Blazor r
 
 Hosted sample:
 
-- <a href="https://drawnui-wasm.appomobi.com/" target="_blank" rel="noopener noreferrer">Open Blazor WebAssembly sample</a>
+- <a href="https://drawnui.net/sandbox/" target="_blank" rel="noopener noreferrer">Open Blazor WebAssembly sample</a>
 
 ## BlazorSandboxServer
 

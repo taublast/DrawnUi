@@ -32,6 +32,7 @@ Supported hosts:
 * __Keyboard support__, track any key
 * __Navigate__ on the canvas with shell-like techniques 
 
+😎 [Blazor sample in browser](https://drawnui.net/sandbox/) 👈
 
 ## Addons
 
@@ -50,11 +51,11 @@ Supported hosts:
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
 
-## What's New 1.10.5.4
+## What's New 1.10.5.5
 
 * Target fps now allows floats instead of integers for more fluent animations, resulting in smoother scrolling etc.
 * Scrolling ending jagging removed on density < 1.5 devices.
-* SkiaLayout Wrap fix for auto-sized children
+* SkiaLayout Wrap fix for auto-sized children, other layout fixes
 
 ### Previously 1.10.5.2
 

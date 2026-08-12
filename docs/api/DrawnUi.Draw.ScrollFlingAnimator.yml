@@ -7,9 +7,12 @@ items:
   children:
   - DrawnUi.Draw.ScrollFlingAnimator.#ctor(DrawnUi.Draw.IDrawnBase)
   - DrawnUi.Draw.ScrollFlingAnimator.CurrentVelocity
+  - DrawnUi.Draw.ScrollFlingAnimator.FinishDurationSecs
+  - DrawnUi.Draw.ScrollFlingAnimator.FinishStepPixels
   - DrawnUi.Draw.ScrollFlingAnimator.InitializeWithDestination(System.Single,System.Single,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.ScrollFlingAnimator.InitializeWithVelocity(System.Single,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.ScrollFlingAnimator.Parameters
+  - DrawnUi.Draw.ScrollFlingAnimator.PixelsScale
   - DrawnUi.Draw.ScrollFlingAnimator.RunAsync(System.Single,System.Single,System.Single,System.Threading.CancellationToken)
   - DrawnUi.Draw.ScrollFlingAnimator.SelfFinished
   - DrawnUi.Draw.ScrollFlingAnimator.Shift(System.Single)
@@ -158,6 +161,112 @@ items:
       type: System.Single
     content.vb: Public Property ValueThreshold As Single
   overload: DrawnUi.Draw.ScrollFlingAnimator.ValueThreshold*
+- uid: DrawnUi.Draw.ScrollFlingAnimator.PixelsScale
+  commentId: P:DrawnUi.Draw.ScrollFlingAnimator.PixelsScale
+  id: PixelsScale
+  parent: DrawnUi.Draw.ScrollFlingAnimator
+  langs:
+  - csharp
+  - vb
+  name: PixelsScale
+  nameWithType: ScrollFlingAnimator.PixelsScale
+  fullName: DrawnUi.Draw.ScrollFlingAnimator.PixelsScale
+  type: Property
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Features/Animators/ScrollFlingAnimator.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: PixelsScale
+    path: ../src/Shared/DrawnUi/Features/Animators/ScrollFlingAnimator.cs
+    startLine: 22
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Rendering scale (physical pixels per unit) of the parent surface. When &gt; 0 enables the
+
+    pixel-aware finish: the exponential deceleration has an asymptotic tail that spends up to
+
+    a second below one pixel per frame — on low-density displays (desktop 100-150%) that renders
+
+    as visible single-pixel hops with growing pauses ("jagged fling ending"). Instead, once the
+
+    per-frame step falls under <xref href="DrawnUi.Draw.ScrollFlingAnimator.FinishStepPixels" data-throw-if-not-resolved="false"></xref> physical pixels, the remaining
+
+    trajectory is replaced by a short velocity-continuous ease-out that lands on the pixel grid.
+
+    Set by the owning scroll before each run. 0 = disabled (legacy tail).
+  example: []
+  syntax:
+    content: public float PixelsScale { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property PixelsScale As Single
+  overload: DrawnUi.Draw.ScrollFlingAnimator.PixelsScale*
+- uid: DrawnUi.Draw.ScrollFlingAnimator.FinishStepPixels
+  commentId: P:DrawnUi.Draw.ScrollFlingAnimator.FinishStepPixels
+  id: FinishStepPixels
+  parent: DrawnUi.Draw.ScrollFlingAnimator
+  langs:
+  - csharp
+  - vb
+  name: FinishStepPixels
+  nameWithType: ScrollFlingAnimator.FinishStepPixels
+  fullName: DrawnUi.Draw.ScrollFlingAnimator.FinishStepPixels
+  type: Property
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Features/Animators/ScrollFlingAnimator.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: FinishStepPixels
+    path: ../src/Shared/DrawnUi/Features/Animators/ScrollFlingAnimator.cs
+    startLine: 27
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Physical-pixel per-frame step (at 60fps baseline) below which the finish phase engages.
+  example: []
+  syntax:
+    content: public float FinishStepPixels { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property FinishStepPixels As Single
+  overload: DrawnUi.Draw.ScrollFlingAnimator.FinishStepPixels*
+- uid: DrawnUi.Draw.ScrollFlingAnimator.FinishDurationSecs
+  commentId: P:DrawnUi.Draw.ScrollFlingAnimator.FinishDurationSecs
+  id: FinishDurationSecs
+  parent: DrawnUi.Draw.ScrollFlingAnimator
+  langs:
+  - csharp
+  - vb
+  name: FinishDurationSecs
+  nameWithType: ScrollFlingAnimator.FinishDurationSecs
+  fullName: DrawnUi.Draw.ScrollFlingAnimator.FinishDurationSecs
+  type: Property
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Features/Animators/ScrollFlingAnimator.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: FinishDurationSecs
+    path: ../src/Shared/DrawnUi/Features/Animators/ScrollFlingAnimator.cs
+    startLine: 32
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Duration of the finishing ease-out in seconds.
+  example: []
+  syntax:
+    content: public float FinishDurationSecs { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property FinishDurationSecs As Single
+  overload: DrawnUi.Draw.ScrollFlingAnimator.FinishDurationSecs*
 - uid: DrawnUi.Draw.ScrollFlingAnimator.RunAsync(System.Single,System.Single,System.Single,System.Threading.CancellationToken)
   commentId: M:DrawnUi.Draw.ScrollFlingAnimator.RunAsync(System.Single,System.Single,System.Single,System.Threading.CancellationToken)
   id: RunAsync(System.Single,System.Single,System.Single,System.Threading.CancellationToken)
@@ -176,7 +285,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RunAsync
     path: ../src/Shared/DrawnUi/Features/Animators/ScrollFlingAnimator.cs
-    startLine: 13
+    startLine: 40
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -216,7 +325,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InitializeWithVelocity
     path: ../src/Shared/DrawnUi/Features/Animators/ScrollFlingAnimator.cs
-    startLine: 25
+    startLine: 52
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -260,7 +369,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InitializeWithDestination
     path: ../src/Shared/DrawnUi/Features/Animators/ScrollFlingAnimator.cs
-    startLine: 43
+    startLine: 71
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -307,7 +416,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Parameters
     path: ../src/Shared/DrawnUi/Features/Animators/ScrollFlingAnimator.cs
-    startLine: 52
+    startLine: 81
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -336,7 +445,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CurrentVelocity
     path: ../src/Shared/DrawnUi/Features/Animators/ScrollFlingAnimator.cs
-    startLine: 53
+    startLine: 82
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -365,7 +474,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Shift
     path: ../src/Shared/DrawnUi/Features/Animators/ScrollFlingAnimator.cs
-    startLine: 60
+    startLine: 89
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -404,7 +513,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Start
     path: ../src/Shared/DrawnUi/Features/Animators/ScrollFlingAnimator.cs
-    startLine: 71
+    startLine: 106
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -438,7 +547,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UpdateValue
     path: ../src/Shared/DrawnUi/Features/Animators/ScrollFlingAnimator.cs
-    startLine: 78
+    startLine: 114
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -482,7 +591,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: .ctor
     path: ../src/Shared/DrawnUi/Features/Animators/ScrollFlingAnimator.cs
-    startLine: 122
+    startLine: 200
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1552,6 +1661,30 @@ references:
   nameWithType.vb: Single
   fullName.vb: Single
   name.vb: Single
+- uid: DrawnUi.Draw.ScrollFlingAnimator.FinishStepPixels
+  commentId: P:DrawnUi.Draw.ScrollFlingAnimator.FinishStepPixels
+  href: DrawnUi.Draw.ScrollFlingAnimator.html#DrawnUi_Draw_ScrollFlingAnimator_FinishStepPixels
+  name: FinishStepPixels
+  nameWithType: ScrollFlingAnimator.FinishStepPixels
+  fullName: DrawnUi.Draw.ScrollFlingAnimator.FinishStepPixels
+- uid: DrawnUi.Draw.ScrollFlingAnimator.PixelsScale*
+  commentId: Overload:DrawnUi.Draw.ScrollFlingAnimator.PixelsScale
+  href: DrawnUi.Draw.ScrollFlingAnimator.html#DrawnUi_Draw_ScrollFlingAnimator_PixelsScale
+  name: PixelsScale
+  nameWithType: ScrollFlingAnimator.PixelsScale
+  fullName: DrawnUi.Draw.ScrollFlingAnimator.PixelsScale
+- uid: DrawnUi.Draw.ScrollFlingAnimator.FinishStepPixels*
+  commentId: Overload:DrawnUi.Draw.ScrollFlingAnimator.FinishStepPixels
+  href: DrawnUi.Draw.ScrollFlingAnimator.html#DrawnUi_Draw_ScrollFlingAnimator_FinishStepPixels
+  name: FinishStepPixels
+  nameWithType: ScrollFlingAnimator.FinishStepPixels
+  fullName: DrawnUi.Draw.ScrollFlingAnimator.FinishStepPixels
+- uid: DrawnUi.Draw.ScrollFlingAnimator.FinishDurationSecs*
+  commentId: Overload:DrawnUi.Draw.ScrollFlingAnimator.FinishDurationSecs
+  href: DrawnUi.Draw.ScrollFlingAnimator.html#DrawnUi_Draw_ScrollFlingAnimator_FinishDurationSecs
+  name: FinishDurationSecs
+  nameWithType: ScrollFlingAnimator.FinishDurationSecs
+  fullName: DrawnUi.Draw.ScrollFlingAnimator.FinishDurationSecs
 - uid: DrawnUi.Draw.ScrollFlingAnimator.RunAsync*
   commentId: Overload:DrawnUi.Draw.ScrollFlingAnimator.RunAsync
   href: DrawnUi.Draw.ScrollFlingAnimator.html#DrawnUi_Draw_ScrollFlingAnimator_RunAsync_System_Single_System_Single_System_Single_System_Threading_CancellationToken_
