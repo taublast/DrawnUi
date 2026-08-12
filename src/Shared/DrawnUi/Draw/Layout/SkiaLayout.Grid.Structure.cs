@@ -132,8 +132,11 @@ public partial class SkiaLayout
             int count = ColumnDefinitions.Count;
             int split = _parentGrid.Split;
 
-            // When Split > 1 and no explicit ColumnDefinitions, create Split number of equal columns
-            if (count == 0 && split > 1)
+            // When Split is explicitly set (default 0) and no explicit ColumnDefinitions, create
+            // Split number of equal star columns: Split=N means "divide width into N columns",
+            // same contract as Split on Column/Wrap. Split=1 included — one full-width column
+            // (an implied Auto column would collapse Fill cells to their content width).
+            if (count == 0 && split >= 1)
             {
                 var definitions = new DefinitionInfo[split];
                 // Use star sizing for equal column distribution
