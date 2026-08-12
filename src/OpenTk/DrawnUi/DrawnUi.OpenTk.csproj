@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Features\Pdf\Pdf.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)..\..\Shared\Draw\Base\VisualTreeHandler.cs" />
-    <Compile Remove="C:\Dev\Cases\GitHub\DrawnUi\src\OpenTk\DrawnUi\..\..\Net\DrawnUi\Super.Net.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\..\Net\DrawnUi\Super.Net.cs" />
   </ItemGroup>
 
 </Project>
