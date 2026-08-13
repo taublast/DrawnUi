@@ -104,7 +104,8 @@ Traps (learned the hard way):
 - NotoColorEmoji is COLR/SVG vector — subsetting scales well, but `drop_tables=["SVG "]` does NOT shrink it (bulk is COLR layers + glyf).
 - Set `ignore_missing_unicodes`/`ignore_missing_glyphs`; keep `name_IDs = ["*"]` so aliases stay stable.
 - Emoji are >U+FFFF: decode surrogate pairs when scanning sources; always include U+FE0F and U+200D.
-- Plain `SkiaLabel` does NOT per-character font-fallback — a subset missing a script silently drops glyphs (not tofu). Verify coverage with `TTFont(...).getBestCmap()`.
+- `SkiaLabel` has NO automatic font fallback, but DOES have an opt-in single-fallback: `FontFamilyFallback` (per-codepoint, checks the fallback face when the main font misses a glyph). Without it a missing glyph is silently dropped (not tofu). Verify coverage with `TTFont(...).getBestCmap()`.
+- **Missing arrows/symbols/hearts recipe (verified 2026-08, DrawnCells)**: OpenSans (and most text fonts) ship NO U+2190–21FF arrows, U+2665 ♥ etc. On WASM there are no system fonts to save you — buttons show "B" instead of "→ B". Fix = `fonts.AddSymbols()` (registers `FontSymbols` = Noto Sans Math subset + `FontSymbols2`) + a global style setter `SkiaLabel.FontFamilyFallbackProperty = "FontSymbols"` next to the FontFamily setter in `ConfigureStyles`. One place, whole app. NEVER swap the text to an ASCII lookalike instead — that is a content dodge, not a fix.
 - Multi-head apps: each head has its own `wwwroot` — sync the subset file to every one.
 - Measure candidate tiers empirically with fonttools before committing (glyph→byte ratio is font-specific); state the tofu tradeoff (excluded categories) to the user.
 
@@ -114,7 +115,9 @@ For the full three-stage architecture (boot subsets → in-app loading screen �
 
 ## Publishing to GitHub Pages (repo subpath)
 
-Workflow shape: manual `workflow_dispatch` (optional `source_ref` input for pre-merge testing), pin SDK via `global.json`, `dotnet publish` the web csproj to a temp folder, rewrite `<base href="/" />` → `<base href="/RepoName/" />` in the published index.html, `actions/upload-pages-artifact` + `actions/deploy-pages` (never commit generated site output). Full worked example: `docs/articles/blazor/publishing.html` on drawnui.net.
+Workflow shape: manual `workflow_dispatch` (optional `source_ref` input for pre-merge testing), pin SDK via `global.json`, **`dotnet workload install wasm-tools` BEFORE publish**, `dotnet publish` the web csproj to a temp folder, rewrite `<base href="/" />` → `<base href="/RepoName/" />` in the published index.html, `actions/upload-pages-artifact` + `actions/deploy-pages` (never commit generated site output). Full worked example: `docs/articles/blazor/publishing.html` on drawnui.net.
+
+**wasm-tools is NOT optional on CI** (verified 2026-08, DrawnCells): without the workload the publish SUCCEEDS but skips the native relink — libSkiaSharp never links into `dotnet.native.wasm` and the deployed app dies at boot with `TypeInitialization_Type, SkiaSharp.SkiaApi` while every asset fetches 200 (managed `SkiaSharp.wasm` in the payload is not proof of native code). Diagnostic tell: deployed `dotnet.native.wasm` ~3MB (stock runtime) vs ~27MB with Skia linked — compare via `curl -sI ... | grep -i content-length` against a locally working build.
 
 Performance: add `<RunAOTCompilation>true</RunAOTCompilation>` for game/animation apps (`WasmBuildNative` is NOT AOT; interpreter costs ~2x FPS). AOT grows `dotnet.native.wasm` ~5x raw — verify compressed transfer after deploy: `curl -sI -H "Accept-Encoding: br" .../dotnet.native.<hash>.wasm` must show `content-encoding`.
 

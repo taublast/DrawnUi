@@ -50,52 +50,17 @@ Supported hosts:
 🤩 [Fiddle](https://fiddle.drawnui.net)   
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
+## What's New 1.10.5.8
 
-## What's New 1.10.5.7
+* Fix FPS metering for capped scenarions.
 
-* On iOS MaxFps cap is now synched with display rate for better smothness.
-
- ### Previously 1.10.5.6
+ ### Previously
 
 * Fixed Split=1 on a grid without ColumnDefinitions.
-
- ### Previously 1.10.5.5
-
 * Target fps now allows floats instead of integers for more fluent animations, resulting in smoother scrolling etc.
 * Scrolling ending jagging removed on density < 1.5 devices.
 * SkiaLayout Wrap fix for auto-sized children, other layout fixes
-
-### Previously 1.10.5.2
-
-### General
-
-* Breaking: migrated to SkiaSharp v4 API: `SKFilterQuality` removed (SkiaSharp), DrawnUi's own `FilterQuality` enum replaces it.
-`SKPaint.FilterQuality` removed. Quality moves to SKSamplingOptions: Fix via existing `DrawnUi.Draw.SkiaSamplingOptions.GetSamplingOptions(FilterQuality)` helper.
-* Added pure-WASM target (without Blazor);
-* Web fonts for symbols and emojis shipped; `LoadFontAsync` via http with AOT support.
-* Caching now auto-expands to include `VisualEffects` shadows/glows and SkiaShape own`Shadows`, no more need for wrappers.
-* `Style` support now also for for Blazor / .NET / OpenTK targets (previously MAUI-only).
-* `SharedCache` for reusing rendered caches between controls: use logical different instances of same control, same memory. 
-* New `Material3` (Material You) prebuilt control style; restyled Switch, Checkbox, Slider, Progress, RadioButton, Button, Editor per platform style.
-* FIX gestures for cached controls without render tree and for transformed controls.
-* FIX critical: empty views taking all available size instead of 0; critical stack measurement fix.
-* `SkiaGrid` autosize fixed for autosized children; ROW layout right padding fix.
-* Fluent extensions improvements, compiled bindings support. 
-* Range animator can be shifted externally.
-* Optimized shader compilation for `SkiaShader`; auto-expanded cache region for effects.
-* `ImageDoubleBuffered` cache no longer killed on change; `CachedObject.LogicalBounds` for correct gesture math on inflated caches.
-* Touch effects fixed, new shockwave touch shader; shimmer effect respects speed.
-
-### Controls
-* Prebuilt control styles `Cupertino`, `Material`, `Material3`, `Windows` for `SkiaProgress`, `SkiaButton`, `SkiaSlider`, `SkiaSwitch`, `SkiaCheckbox`, `SkiaEditor`, customizations properties fixed for above controls.
-* `SkiaScroll` finally gets scrollbars with customization properties.
-* Recycled cells / virtualization rewrite: built-in windowed `ItemsSource` support (internal limited window pack), `ViewsAdapter` re-allocation reduction, cell pre-warming, created `SkiaCadhedStack`.
-* `AutoCache` defaults to true for Scroll and Drawer: draws cache instead of content when idle.
-* `MarkdownEnabled` on SkiaRichLabel — render emoji/unicode plain text without markdown parsing.
-* New ascent handling on Windows for SkiaLabel, reduced allocations; crash fix disposing text spans (MAUI).
-* `SkiaEditor` proper `AutoHeight` property, multiline submit: Enter submits, Shift+Enter inserts newline (all platforms incl. Windows) and many other fixes and improvements.
-
-
+ 
 ---
 MIT | Free to use and customize
 
