@@ -114,7 +114,9 @@ For the full three-stage architecture (boot subsets → in-app loading screen �
 
 ## Publishing to GitHub Pages (repo subpath)
 
-Workflow shape: manual `workflow_dispatch` (optional `source_ref` input for pre-merge testing), pin SDK via `global.json`, `dotnet publish` the web csproj to a temp folder, rewrite `<base href="/" />` → `<base href="/RepoName/" />` in the published index.html, `actions/upload-pages-artifact` + `actions/deploy-pages` (never commit generated site output). Full worked example: `docs/articles/blazor/publishing.html` on drawnui.net.
+Workflow shape: manual `workflow_dispatch` (optional `source_ref` input for pre-merge testing), pin SDK via `global.json`, **`dotnet workload install wasm-tools` BEFORE publish**, `dotnet publish` the web csproj to a temp folder, rewrite `<base href="/" />` → `<base href="/RepoName/" />` in the published index.html, `actions/upload-pages-artifact` + `actions/deploy-pages` (never commit generated site output). Full worked example: `docs/articles/blazor/publishing.html` on drawnui.net.
+
+**wasm-tools is NOT optional on CI** (verified 2026-08, DrawnCells): without the workload the publish SUCCEEDS but skips the native relink — libSkiaSharp never links into `dotnet.native.wasm` and the deployed app dies at boot with `TypeInitialization_Type, SkiaSharp.SkiaApi` while every asset fetches 200 (managed `SkiaSharp.wasm` in the payload is not proof of native code). Diagnostic tell: deployed `dotnet.native.wasm` ~3MB (stock runtime) vs ~27MB with Skia linked — compare via `curl -sI ... | grep -i content-length` against a locally working build.
 
 Performance: add `<RunAOTCompilation>true</RunAOTCompilation>` for game/animation apps (`WasmBuildNative` is NOT AOT; interpreter costs ~2x FPS). AOT grows `dotnet.native.wasm` ~5x raw — verify compressed transfer after deploy: `curl -sI -H "Accept-Encoding: br" .../dotnet.native.<hash>.wasm` must show `content-encoding`.
 

@@ -124,6 +124,38 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
     private long _lastFrameTimestamp;
     private bool _isDrawing;
 
+    private long _clockLastVsync;
+    private long _clockLast;
+
+    private long NextFrameClock()
+    {
+        var vsync = Super.VsyncFrameTimeNanos;
+        long now;
+
+        if (vsync > _clockLastVsync)
+        {
+            // fresh tick timestamp — use it as-is
+            _clockLastVsync = vsync;
+            now = vsync;
+        }
+        else if (_clockLast > 0)
+        {
+            // tick hasn't advanced since our last draw — synthesize the next frame slot
+            var fps = Super.MaxFps > 0 ? Super.MaxFps : 60;
+            now = _clockLast + (long)(1_000_000_000.0 / fps);
+        }
+        else
+        {
+            now = vsync > 0 ? vsync : Super.GetCurrentTimeNanos();
+        }
+
+        if (now <= _clockLast)
+            now = _clockLast + 1_000_000; // strict monotonicity safety net (1ms)
+
+        _clockLast = now;
+        return now;
+    }
+
 
 
     /// <summary>
@@ -161,10 +193,12 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
         IsDrawing = true;
         bool maybeDrawn = true;
 
-        // Prefer the vsync-aligned clock: stamping with execution time here injects
-        // runloop scheduling noise into animator deltas (velocity jitter during scroll).
-        var vsync = Super.VsyncFrameTimeNanos;
-        FrameTime = vsync > 0 ? vsync : Super.GetCurrentTimeNanos();
+        // Vsync-aligned clock, made STRICTLY MONOTONIC per draw. The raw value advances
+        // on the shared tick, but with view-driven pacing a draw can land between two
+        // ticks and read a repeated value: delta 0 → animators no-op then double-step
+        // (visible jank) and FPS meters divide by zero. When the tick hasn't advanced
+        // yet, synthesize the next frame slot instead of reusing the stale timestamp.
+        FrameTime = NextFrameClock();
 
         CalculateFPS(FrameTime);
 

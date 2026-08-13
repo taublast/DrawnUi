@@ -128,14 +128,43 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
 
     private bool on;
 
+    private long _clockLastVsync;
+    private long _clockLast;
+
+    private long NextFrameClock()
+    {
+        var vsync = Super.VsyncFrameTimeNanos;
+        long now;
+
+        if (vsync > _clockLastVsync)
+        {
+            _clockLastVsync = vsync;
+            now = vsync;
+        }
+        else if (_clockLast > 0)
+        {
+            var fps = Super.MaxFps > 0 ? Super.MaxFps : 60;
+            now = _clockLast + (long)(1_000_000_000.0 / fps);
+        }
+        else
+        {
+            now = vsync > 0 ? vsync : Super.GetCurrentTimeNanos();
+        }
+
+        if (now <= _clockLast)
+            now = _clockLast + 1_000_000;
+
+        _clockLast = now;
+        return now;
+    }
+
     private void OnPaintingSurface(object sender, SKPaintSurfaceEventArgs paintArgs)
     {
         IsDrawing = true;
         bool maybeDrawn = true;
 
-        // Prefer the vsync-aligned clock — see SkiaViewAccelerated.OnPaintingSurface.
-        var vsync = Super.VsyncFrameTimeNanos;
-        FrameTime = vsync > 0 ? vsync : Super.GetCurrentTimeNanos();
+        // Strictly monotonic vsync-aligned clock — see SkiaViewAccelerated.NextFrameClock.
+        FrameTime = NextFrameClock();
 
         CalculateFPS(FrameTime);
 
