@@ -104,7 +104,8 @@ Traps (learned the hard way):
 - NotoColorEmoji is COLR/SVG vector — subsetting scales well, but `drop_tables=["SVG "]` does NOT shrink it (bulk is COLR layers + glyf).
 - Set `ignore_missing_unicodes`/`ignore_missing_glyphs`; keep `name_IDs = ["*"]` so aliases stay stable.
 - Emoji are >U+FFFF: decode surrogate pairs when scanning sources; always include U+FE0F and U+200D.
-- Plain `SkiaLabel` does NOT per-character font-fallback — a subset missing a script silently drops glyphs (not tofu). Verify coverage with `TTFont(...).getBestCmap()`.
+- `SkiaLabel` has NO automatic font fallback, but DOES have an opt-in single-fallback: `FontFamilyFallback` (per-codepoint, checks the fallback face when the main font misses a glyph). Without it a missing glyph is silently dropped (not tofu). Verify coverage with `TTFont(...).getBestCmap()`.
+- **Missing arrows/symbols/hearts recipe (verified 2026-08, DrawnCells)**: OpenSans (and most text fonts) ship NO U+2190–21FF arrows, U+2665 ♥ etc. On WASM there are no system fonts to save you — buttons show "B" instead of "→ B". Fix = `fonts.AddSymbols()` (registers `FontSymbols` = Noto Sans Math subset + `FontSymbols2`) + a global style setter `SkiaLabel.FontFamilyFallbackProperty = "FontSymbols"` next to the FontFamily setter in `ConfigureStyles`. One place, whole app. NEVER swap the text to an ASCII lookalike instead — that is a content dodge, not a fix.
 - Multi-head apps: each head has its own `wwwroot` — sync the subset file to every one.
 - Measure candidate tiers empirically with fonttools before committing (glyph→byte ratio is font-specific); state the tofu tradeoff (excluded categories) to the user.
 
