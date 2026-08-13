@@ -133,7 +133,9 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
         IsDrawing = true;
         bool maybeDrawn = true;
 
-        FrameTime = Super.GetCurrentTimeNanos();
+        // Prefer the vsync-aligned clock — see SkiaViewAccelerated.OnPaintingSurface.
+        var vsync = Super.VsyncFrameTimeNanos;
+        FrameTime = vsync > 0 ? vsync : Super.GetCurrentTimeNanos();
 
         CalculateFPS(FrameTime);
 

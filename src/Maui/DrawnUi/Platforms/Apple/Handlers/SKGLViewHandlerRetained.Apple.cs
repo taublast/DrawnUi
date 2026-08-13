@@ -87,17 +87,16 @@ namespace DrawnUi.Views
             if (handler?.PlatformView == null)
                 return;
 
-            // P1-Cross Optimization: Start paused until first frame for better initialization
-            if (handler.PlatformView is MauiSkMetalViewRetained metalView && !metalView.HasRenderedFirstFrame)
-            {
-                handler.PlatformView.Paused = true;
-                handler.PlatformView.EnableSetNeedsDisplay = true;
-            }
-            else
-            {
-                handler.PlatformView.Paused = !view.HasRenderLoop;
-                handler.PlatformView.EnableSetNeedsDisplay = !view.HasRenderLoop;
-            }
+            // EXPERIMENT: view-driven pacing. On-demand mode (Paused + SetNeedsDisplay)
+            // has uneven cadence during animations: the next frame is scheduled by an
+            // invalidate issued from INSIDE the current draw, and CoreAnimation honors
+            // it either this vsync or the next — measured 33/66ms alternation at MaxFps=30
+            // while the tick loop itself was a perfect 33.4ms. Continuous MTKView at the
+            // capped rate makes the view the single pacer: a draw EVERY divided vsync,
+            // animators stepped inside a guaranteed-cadence draw pass.
+            handler.PlatformView.Paused = false;
+            handler.PlatformView.EnableSetNeedsDisplay = false;
+            handler.PlatformView.PreferredFramesPerSecond = Super.MaxFps > 0 ? Super.MaxFps : 0;
         }
 
         public static void MapEnableTouchEvents(SKGLViewHandlerRetained handler, ISKGLView view)

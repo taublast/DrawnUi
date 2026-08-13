@@ -20,6 +20,9 @@ public partial class Super
         {
             PruneMetalViewsLocked();
 
+            // EXPERIMENT: view-driven pacing — the MTKView runs continuously at the
+            // capped rate and is the single frame pacer (see SKGLViewHandlerRetained
+            // MapHasRenderLoop). Keep its PreferredFramesPerSecond in sync with MaxFps.
             if (MaxFps > 0)
             {
                 ApplyMetalViewPreferredFramesPerSecond(view, MaxFps);
