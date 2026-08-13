@@ -124,33 +124,36 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
     private long _lastFrameTimestamp;
     private bool _isDrawing;
 
-    private long _clockLastVsync;
     private long _clockLast;
 
+    /// <summary>
+    /// Animation clock for draws: advances by EXACTLY one frame interval per draw
+    /// (the view is the frame pacer), loosely anchored to the shared vsync clock.
+    /// Mixing the two clocks per-draw is wrong in both directions: reusing a stale
+    /// vsync value gives delta 0 (freeze + double-step jank, FPS=∞), and switching
+    /// between synthesized and real values gives ~1ms deltas (FPS meter reads
+    /// thousands). Resync to vsync only when genuinely behind it — e.g. after an
+    /// idle period with no draws.
+    /// </summary>
     private long NextFrameClock()
     {
         var vsync = Super.VsyncFrameTimeNanos;
+        var fps = Super.MaxFps > 0 ? Super.MaxFps : 60;
+        var step = (long)(1_000_000_000.0 / fps);
         long now;
 
-        if (vsync > _clockLastVsync)
-        {
-            // fresh tick timestamp — use it as-is
-            _clockLastVsync = vsync;
-            now = vsync;
-        }
-        else if (_clockLast > 0)
-        {
-            // tick hasn't advanced since our last draw — synthesize the next frame slot
-            var fps = Super.MaxFps > 0 ? Super.MaxFps : 60;
-            now = _clockLast + (long)(1_000_000_000.0 / fps);
-        }
-        else
+        if (_clockLast == 0)
         {
             now = vsync > 0 ? vsync : Super.GetCurrentTimeNanos();
         }
+        else
+        {
+            now = _clockLast + step;
 
-        if (now <= _clockLast)
-            now = _clockLast + 1_000_000; // strict monotonicity safety net (1ms)
+            // Fell behind the real clock (idle gap, dropped frames) — jump forward.
+            if (vsync > now + step)
+                now = vsync;
+        }
 
         _clockLast = now;
         return now;
@@ -200,13 +203,19 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
         // yet, synthesize the next frame slot instead of reusing the stale timestamp.
         FrameTime = NextFrameClock();
 
-        CalculateFPS(FrameTime);
-
         if (OnDraw != null && Super.EnableRendering)
         {
             var rect = new SKRect(0, 0, paintArgs.BackendRenderTarget.Width, paintArgs.BackendRenderTarget.Height);
             _surface = paintArgs.Surface;
             var isDirty = OnDraw.Invoke(paintArgs.Surface, rect);
+
+            // FPS meter counts frames where CONTENT actually rendered, measured on
+            // wall clock. In continuous (view-paced) mode the MTKView re-presents
+            // retained content every slot — counting those would pin the meter at
+            // the cap forever; counting synthetic animation-clock deltas shows
+            // nonsense (thousands). Real work + real time only.
+            if (isDirty)
+                CalculateFPS(Super.GetCurrentTimeNanos());
 
 #if WINDOWS
             //fix handler renderer didn't render first frame at startup for skiasharp v3
