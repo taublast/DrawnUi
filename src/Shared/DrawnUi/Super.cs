@@ -70,6 +70,15 @@ public partial class Super
     static partial void OnMaxFpsChanged(int fps);
 
     /// <summary>
+    /// Vsync-aligned timestamp (nanoseconds) of the frame currently being produced,
+    /// stamped by the platform frame source (CADisplayLink on iOS/Mac). Animators must
+    /// step with THIS clock, not wall-clock-at-execution: callback scheduling noise in
+    /// an execution-time clock becomes velocity jitter in touch-tracked animations.
+    /// 0 when the platform has no vsync clock — callers fall back to GetCurrentTimeNanos().
+    /// </summary>
+    public static long VsyncFrameTimeNanos;
+
+    /// <summary>
     /// Integer display APIs report fractional NTSC-timing refresh rates truncated: a 59.94Hz panel
     /// reports 59, 29.97 reports 29, 119.88 reports 119. Pacing the render loop at the truncated
     /// integer undershoots vsync (~one dropped beat per 17s at "59"). For a near-integer reported rate

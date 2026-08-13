@@ -51,7 +51,11 @@ Supported hosts:
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
 
-## What's New 1.10.5.6
+## What's New 1.10.5.7
+
+* On iOS MaxFps cap is now synched with display rate for better smothness.
+
+ ### Previously 1.10.5.6
 
 * Fixed Split=1 on a grid without ColumnDefinitions.
 

@@ -81,17 +81,25 @@ namespace DrawnUi.Draw
                                         {
                                             if (MaxFps > 0)
                                             {
-                                                // Vsync-aligned interval: skip N whole frames where N = ceil(RefreshRate / MaxFps).
-                                                // e.g. 60Hz display, MaxFps=40 → skip every 2 frames → effective 30fps (40 is not a divisor of 60).
-                                                // On 120Hz, MaxFps=40 → skip every 3 frames → effective 40fps exactly.
+                                                // Fallback guard for when the OS ignores PreferredFramesPerSecond
+                                                // (it may deliver faster). The primary throttle is the native one
+                                                // below — it hands each capped tick the FULL divided frame budget
+                                                // (e.g. 33ms at 30fps on 60Hz). Skipping callbacks of a full-rate
+                                                // link instead leaves only one native vsync (16.7ms) of budget, so
+                                                // any tick running slightly long slips a vsync and the frame shows
+                                                // for 50ms instead of 33ms — a very visible 3:2 stutter.
                                                 var skipFrames = Math.Ceiling((double)RefreshRate / MaxFps);
                                                 var minInterval = skipFrames / RefreshRate - 0.001;
                                                 if (_displayLink.Timestamp - _lastDisplayTimestamp < minInterval)
                                                     return;
                                                 _lastDisplayTimestamp = _displayLink.Timestamp;
                                             }
+                                            // Vsync-aligned animation clock: TargetTimestamp is when the
+                                            // frame produced by this tick will actually be displayed.
+                                            VsyncFrameTimeNanos = (long)(_displayLink.TargetTimestamp * 1_000_000_000.0);
                                             OnFrame?.Invoke(null, null);
                                         });
+                                        ApplyDisplayLinkFps(MaxFps);
                                         _displayLink.AddToRunLoop(NSRunLoop.Main, NSRunLoopMode.Default);
                                     }
                                     catch (Exception e)
@@ -135,11 +143,49 @@ namespace DrawnUi.Draw
         static bool _loopStarting = false;
         static bool _loopStarted = false;
 
+        /// <summary>
+        /// Runs the shared display link natively at the capped rate. The OS aligns
+        /// callbacks to vsync AND gives each tick the full divided frame budget
+        /// (33ms at 30fps on a 60Hz panel) instead of the single native vsync a
+        /// callback-skipping scheme would leave. 0 restores the display's native rate.
+        /// </summary>
+        static void ApplyDisplayLinkFps(int fps)
+        {
+            var link = _displayLink;
+            if (link == null)
+                return;
+
+            void Set()
+            {
+                if (OperatingSystem.IsIOSVersionAtLeast(15))
+                {
+                    var target = fps > 0 ? fps : RefreshRate;
+                    link.PreferredFrameRateRange = new CAFrameRateRange
+                    {
+                        Minimum = target,
+                        Maximum = target,
+                        Preferred = target
+                    };
+                }
+                else
+                {
+                    link.PreferredFramesPerSecond = fps > 0 ? fps : 0;
+                }
+            }
+
+            if (MainThread.IsMainThread)
+                Set();
+            else
+                MainThread.BeginInvokeOnMainThread(Set);
+        }
+
         static partial void OnMaxFpsChanged(int fps)
         {
             // Display link callback reads MaxFps dynamically, no action needed there.
             // Update looper fps if it's being used instead of CADisplayLink.
             Looper?.SetTargetFps(fps > 0 ? fps : RefreshRate);
+            ApplyDisplayLinkFps(fps);
+            // View-driven pacing experiment: keep continuous MTKViews in sync with the cap.
             UpdateRegisteredMetalViewsPreferredFramesPerSecond(fps);
         }
 

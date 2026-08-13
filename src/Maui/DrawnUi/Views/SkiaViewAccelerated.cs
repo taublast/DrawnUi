@@ -125,6 +125,7 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
     private bool _isDrawing;
 
 
+
     /// <summary>
     /// Calculates the frames per second (FPS) and updates the rolling average FPS every 'averageAmount' frames.
     /// </summary>
@@ -160,7 +161,10 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
         IsDrawing = true;
         bool maybeDrawn = true;
 
-        FrameTime = Super.GetCurrentTimeNanos();
+        // Prefer the vsync-aligned clock: stamping with execution time here injects
+        // runloop scheduling noise into animator deltas (velocity jitter during scroll).
+        var vsync = Super.VsyncFrameTimeNanos;
+        FrameTime = vsync > 0 ? vsync : Super.GetCurrentTimeNanos();
 
         CalculateFPS(FrameTime);
 
