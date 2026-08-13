@@ -128,31 +128,28 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
 
     private bool on;
 
-    private long _clockLastVsync;
     private long _clockLast;
 
+    // Frame clock: one frame interval per draw, resync to vsync when behind.
+    // See SkiaViewAccelerated.NextFrameClock for the full rationale.
     private long NextFrameClock()
     {
         var vsync = Super.VsyncFrameTimeNanos;
+        var fps = Super.MaxFps > 0 ? Super.MaxFps : 60;
+        var step = (long)(1_000_000_000.0 / fps);
         long now;
 
-        if (vsync > _clockLastVsync)
-        {
-            _clockLastVsync = vsync;
-            now = vsync;
-        }
-        else if (_clockLast > 0)
-        {
-            var fps = Super.MaxFps > 0 ? Super.MaxFps : 60;
-            now = _clockLast + (long)(1_000_000_000.0 / fps);
-        }
-        else
+        if (_clockLast == 0)
         {
             now = vsync > 0 ? vsync : Super.GetCurrentTimeNanos();
         }
+        else
+        {
+            now = _clockLast + step;
 
-        if (now <= _clockLast)
-            now = _clockLast + 1_000_000;
+            if (vsync > now + step)
+                now = vsync;
+        }
 
         _clockLast = now;
         return now;
@@ -166,13 +163,16 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
         // Strictly monotonic vsync-aligned clock — see SkiaViewAccelerated.NextFrameClock.
         FrameTime = NextFrameClock();
 
-        CalculateFPS(FrameTime);
-
         if (OnDraw != null && Super.EnableRendering)
         {
             var rect = new SKRect(0, 0, paintArgs.Info.Width, paintArgs.Info.Height);
             _surface = paintArgs.Surface;
             bool isDirty = OnDraw.Invoke(paintArgs.Surface, rect);
+
+            // FPS counts frames with real content rendering, on wall clock —
+            // see SkiaViewAccelerated.OnPaintingSurface for rationale.
+            if (isDirty)
+                CalculateFPS(Super.GetCurrentTimeNanos());
 
 
 #if WINDOWS

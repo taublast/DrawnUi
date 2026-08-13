@@ -50,7 +50,7 @@ Supported hosts:
 🤩 [Fiddle](https://fiddle.drawnui.net)   
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
-## What's New 1.10.5.8
+## What's New 1.10.5.9
 
 * Fix FPS metering for capped scenarions.
 
