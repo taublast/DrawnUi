@@ -50,12 +50,14 @@ Supported hosts:
 🤩 [Fiddle](https://fiddle.drawnui.net)   
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
-## What's New 1.10.5.9
+## What's New 1.10.5.10
 
-* Fix FPS metering for capped scenarions.
+* Fixed SkiaCarousel changing selected index in the middle of animating.
+* Fix children clipping in viewport when children had effects. `ClipContentPath` is now in base.
 
  ### Previously
 
+* Fix FPS metering for capped scenarions.
 * Fixed Split=1 on a grid without ColumnDefinitions.
 * Target fps now allows floats instead of integers for more fluent animations, resulting in smoother scrolling etc.
 * Scrolling ending jagging removed on density < 1.5 devices.
