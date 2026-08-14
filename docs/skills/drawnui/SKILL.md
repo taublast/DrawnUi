@@ -382,6 +382,12 @@ Drop-in for `SkiaStack` in scrolling lists with many cells per screen: records v
 
 Scroll `Rotation=180` + `ReverseGestures`; cells `Rotation=180`; local item i == global `[WindowEnd-1-i]`; offset 0 = newest at bottom. The inverted scroll keeps its newest-side anchor on viewport resize (e.g. keyboard) BY ITSELF — do not wire `AdaptToKeyboardFor` on it (see SkiaEditor section).
 
+## Animator restart + carousel interrupt (fixed 2026-08)
+
+- `AnimatorBase.Start()` resets `StartFrameTimeNanos` ONLY when `!IsRunning`: re-`Initialize()` + `Start()` on a STILL-RUNNING `SkiaValueAnimator` keeps the OLD clock — next tick `deltaFromStart` ≥ new duration → animation completes instantly (teleport). Always `Stop()` before retargeting a possibly-running animator.
+- `SkiaCarousel` programmatic `GoNext()/GoPrev()` during a settling snap/bounce: fixed via `InterruptSnapping()` — stops both animators, and for `IsLooped` normalizes a position in the virtual zone by whole-strip shifts into the `SelectedIndex` neighborhood (visually identical, looped rendering wraps) BEFORE mutating `SelectedIndex`; otherwise `ScrollToOffset` computes `start=CurrentSnap` in virtual coords vs a real-coords target → full-strip reverse sweep (the "4→1 animates as 1←4" bug). `FixPosition()` alone is insufficient: it only fixes when nearest anchor IS a pseudo point, not mid-flight positions nearest a real snap.
+- Symptom signature: programmatic index change works when idle but teleports/reverses when clicked during the bounce tail — gesture path immune because `ResetPan()` stops animators on Down.
+
 ## Fling ending jag on low-density displays (fixed 2026-08)
 
 - Symptom: SkiaScroll fling smooth until the end, then "jagged" die-out (px hops with growing pauses) — ONLY on rendering scale < 1.5 (desktop Windows 100–125%). Probe-verified: paint cadence uniform (16.6ms, zero gaps), animator offsets perfectly smooth SUB-pixel — the jag is presentation-side: exponential deceleration spends ~1s below 1px/frame and nearest-sampled cache blits quantize that crawl into visible 1-physical-px hops at irregular growing intervals. High-DPI screens have the same crawl but the hop quantum (1/scale pt) is sub-visual — and that slow drift IS the natural smooth die-out feel (device-tested: removing it on Android "lost the smooth feel").
