@@ -423,6 +423,18 @@ public class SkiaCarousel : SnappingLayout
             //PASS 2 - draw only visible and thoses at sides that would be selected
             var cellsToRelease = new List<SkiaControl>();
 
+            //children containment, same rationale as SkiaScroll.Paint: the outer clip in
+            //DrawWithClipAndTransforms is an EFFECTS concern (aggregated margins so shadows
+            //survive cache boundaries) — the viewport contains its children HERE instead.
+            //Gated: zero cost when nothing in the subtree paints beyond bounds.
+            var needContentClip = GetRenderingExpandPixels() != Thickness.Zero;
+            int savedClip = 0;
+            if (needContentClip)
+            {
+                savedClip = context.Context.Canvas.Save();
+                ClipSmart(context.Context.Canvas, GetContentClip());
+            }
+
             try
             {
                 var track = DrawingRect.Width - SidesOffset;
@@ -472,6 +484,11 @@ public class SkiaCarousel : SnappingLayout
             }
             finally
             {
+                if (needContentClip)
+                {
+                    context.Context.Canvas.RestoreToCount(savedClip);
+                }
+
                 if (IsTemplated)
                     foreach (var cell in cellsToRelease)
                     {
