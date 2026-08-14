@@ -4,7 +4,17 @@ DrawnUI ships agent skills — focused instruction files that teach an AI coding
 
 They are maintained in the repository under [`docs/skills/`](https://github.com/taublast/DrawnUi/tree/main/docs/skills) and published here, so the version you download always matches the current codebase.
 
-## Installing
+## Quick install
+
+Paste this into your agent (Claude Code, Cursor, Copilot — anything that can fetch URLs and write files):
+
+```
+Fetch https://drawnui.net/llms.txt and install the DrawnUI skills
+```
+
+The agent downloads every skill (including multi-file bundles) into its own skills folder. Done.
+
+## Installing manually
 
 Save each skill as `SKILL.md` inside a folder named after the skill:
 

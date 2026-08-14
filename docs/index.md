@@ -66,7 +66,7 @@ void main() {
 </script>
 
 <div style="margin: 22px 0 0 0; padding: 16px 20px; border: 1px solid rgba(37,99,235,0.22); border-radius: 10px; background: linear-gradient(180deg, rgba(37,99,235,0.06), rgba(37,99,235,0.02)); color: #dbeafe; text-align: center;">
-  Choose your target from the <a href="articles/platforms.md" style="color: white; font-weight: 700; text-decoration: underline;">platform and package guide</a>: .NET MAUI, Blazor, Wasm, OpenTK, or pure .NET.
+  🤖 <strong style="color: white;">Teach your AI agent to use DrawnUI</strong> — see the <a href="articles/ai-skills.md" style="color: white; font-weight: 700; text-decoration: underline;">AI skills guide</a>.
 </div>
 
 <script id="fragShader" type="x-shader/x-fragment">
