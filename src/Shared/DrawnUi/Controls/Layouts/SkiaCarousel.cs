@@ -1570,38 +1570,66 @@ public class SkiaCarousel : SnappingLayout
         get { return SelectedIndex; }
     }
 
-    public void GoNext()
+    /// <summary>
+    /// Interrupts an in-flight snapping animation before a programmatic index change:
+    /// stops animators (so a restarted animator gets a fresh clock instead of the old
+    /// one's elapsed time, which would finish it instantly) and continues from the actual
+    /// visual position. For IsLooped the position may sit in the virtual zone beyond the
+    /// real strip — it is shifted by whole strip lengths into the neighborhood of the
+    /// current SelectedIndex (visually identical, looped rendering wraps), so the next
+    /// ScrollToOffset computes a short correct-direction displacement instead of sweeping
+    /// backwards across the whole strip. Must be called BEFORE SelectedIndex mutates.
+    /// </summary>
+    protected void InterruptSnapping()
     {
-        _isSnapping = null;
-
-        var index = SelectedIndex;
-        if (index < MaxIndex)
+        if (VectorAnimatorSpring != null && (VectorAnimatorSpring.IsRunning || AnimatorRange.IsRunning))
         {
-            SelectedIndex++;
-            return;
+            VectorAnimatorSpring.Stop();
+            AnimatorRange.Stop();
+
+            var position = CurrentPosition;
+            if (IsLooped && SnapPoints.Count > 1
+                && SelectedIndex >= 0 && SelectedIndex < SnapPoints.Count)
+            {
+                var strip = (SnapPoints[1] - SnapPoints[0]) * SnapPoints.Count;
+                var target = SnapPoints[SelectedIndex];
+                while (Vector2.Distance(position + strip, target) < Vector2.Distance(position, target))
+                    position += strip;
+                while (Vector2.Distance(position - strip, target) < Vector2.Distance(position, target))
+                    position -= strip;
+            }
+
+            CurrentPosition = position;
+            CurrentSnap = position;
         }
 
-        // Edge -> loop behavior
-        if (IsLooped)
+        _isSnapping = null;
+    }
+
+    public void GoNext()
+    {
+        if (SelectedIndex < MaxIndex)
         {
+            InterruptSnapping();
+            SelectedIndex += 1;
+        }
+        else if (IsLooped)
+        {
+            InterruptSnapping();
             SelectedIndex = 0;
         }
     }
 
     public virtual void GoPrev()
     {
-        _isSnapping = null;
-
-        var index = SelectedIndex;
-        if (index > 0)
+        if (SelectedIndex > 0)
         {
-            SelectedIndex--;
-            return;
+            InterruptSnapping();
+            SelectedIndex -= 1;
         }
-
-        // Edge -> loop behavior
-        if (IsLooped)
+        else if (IsLooped)
         {
+            InterruptSnapping();
             SelectedIndex = MaxIndex;
         }
     }
