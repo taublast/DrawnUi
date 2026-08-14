@@ -6475,6 +6475,8 @@ namespace DrawnUi.Draw
                     _paintWithEffects?.Dispose();
                     _shadowLayerPaint?.Dispose();
                     _preparedClipBounds?.Dispose();
+                    ClipContentPath?.Dispose();
+                    ClipContentPath = null;
 
                     EffectColorFilter = null;
                     EffectImageFilter = null;
@@ -7528,6 +7530,36 @@ namespace DrawnUi.Draw
             }
 
             return path;
+        }
+
+        /// <summary>
+        /// Reused path for the children-containment clip (SkiaShape outline, SkiaScroll/SkiaCarousel
+        /// viewport). Built by <see cref="GetContentClip"/>, disposed with the control.
+        /// </summary>
+        protected SKPath ClipContentPath;
+
+        /// <summary>
+        /// Builds the path that contains this control's CHILDREN, from the standard sources:
+        /// <see cref="ClipWith"/> reference if set, else virtual <see cref="CreateClip"/>
+        /// (subclass shapes it — SkiaShape returns its outline) plus the <see cref="Clipping"/>
+        /// delegate. Reuses <see cref="ClipContentPath"/>, no allocations after the first call.
+        /// </summary>
+        protected virtual SKPath GetContentClip(object arguments = null)
+        {
+            ClipContentPath ??= new SKPath();
+            ClipContentPath.Reset();
+
+            if (ClipWith != null)
+            {
+                ClipWith.CreateClip(null, true, ClipContentPath);
+            }
+            else
+            {
+                CreateClip(arguments, true, ClipContentPath);
+                Clipping?.Invoke(ClipContentPath, DrawingRect);
+            }
+
+            return ClipContentPath;
         }
 
         public static SKColor DebugRenderingColor = SKColor.Parse("#66FFFF00");

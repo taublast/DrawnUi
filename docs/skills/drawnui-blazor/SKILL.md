@@ -129,3 +129,12 @@ Runtime fixes Pages hosting needs:
 5. **App-version reload** (web games): compare a stored version constant on startup, write the NEW version BEFORE `forceLoad: true` reload (else infinite loop).
 
 Validate the deployed app, not the workflow logs: subpath opens, no `_framework` 404s, DrawnUI loader leaves splash, console clean.
+
+## SEO for Blazor WASM sites — block the payload from crawlers (2026-08-14)
+
+Google indexes a Blazor WASM page badly (or "Oops" fails in GSC Request Indexing) because its renderer stalls downloading the multi-MB runtime. VERIFIED 2026-08-14: robots-blocking the payload immediately fixed failing Request Indexing on both fiddle.drawnui.net and a blog post iframing a WASM sample. Fix — the page's indexable content must be STATIC HTML, and robots must never fetch the payload:
+
+1. **Static SEO content in index.html**: real `<h1>` + prose + links in a `<footer>` OUTSIDE `#app` (Blazor never replaces it), always `display:block`, kept below the fold via `#app { min-height:100vh }` — NEVER `display:none` (discounted, and Googlebot may snapshot before boot finishes). Plus keyworded `<title>`, meta description, canonical, JSON-LD WebApplication.
+2. **robots.txt blocks payload**: `Disallow: /_framework/`, `/_content/`, `decode.js`; explicitly `Allow:` favicon paths under `_content` (longest-match wins). Bots then see splash + SEO footer instantly — deterministic, no crawl budget burn. The old "never block CSS/JS" guidance targets pages whose CONTENT needs JS; here content is deliberately static.
+3. **Favicon for Google Search**: needs >=48x48 (32x32 = generic globe icon in results). Ship 96x96 PNG (`<link rel="icon" sizes="96x96">`) + root `/favicon.ico` (ICO may be a PNG-embedded container).
+4. **Embedded-iframe case**: a post/page embedding a WASM sample iframe fails indexing the SAME way — block the sample's `_framework` in the robots.txt of the IFRAME'S ORIGIN domain root (robots.txt works only at domain root; a project-path robots.txt is ignored; for GitHub Pages project sites the override lives in the USER-site repo, which beats a Jekyll theme's generated robots.txt).

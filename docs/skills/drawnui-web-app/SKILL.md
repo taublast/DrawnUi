@@ -329,3 +329,7 @@ await session.send('Emulation.setCPUThrottlingRate', { rate: 2 });
 - Verify the browser runs YOUR build: the served `dotnet.native.<hash>.js` hash must match the local build output.
 - Release publish drops `#if DEBUG` dev screens; temporary csproj `<DefineConstants>$(DefineConstants);DEBUG;</DefineConstants>` re-enables (REMOVE after).
 - Cleanup before finishing: all probes out (grep `ProbeLog|_probe`), temp defines out, everything rebuilds clean.
+
+## SEO: crawlers must not download the WASM payload
+
+For any public DrawnUi.Web/WASM site: static `<h1>`+prose SEO footer outside the app mount (below fold via `#app{min-height:100vh}`, never display:none), robots.txt `Disallow` on the runtime/payload dirs (with favicon Allow exceptions), favicon >=48x48 for Google. Full recipe: see `drawnui-blazor` skill "SEO for Blazor WASM sites".

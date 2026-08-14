@@ -27,7 +27,7 @@
 </ItemGroup>
 
 <ItemGroup Condition="'$(UseSource)' != 'true'">
-    <PackageReference Include="DrawnUi.Blazor.Game" Version="1.10.5.9" />
+    <PackageReference Include="DrawnUi.Blazor.Game" Version="1.10.5.10" />
 </ItemGroup>
 
 <ItemGroup Condition="'$(UseSource)' == 'true'">

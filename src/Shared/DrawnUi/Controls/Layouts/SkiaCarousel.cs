@@ -423,6 +423,18 @@ public class SkiaCarousel : SnappingLayout
             //PASS 2 - draw only visible and thoses at sides that would be selected
             var cellsToRelease = new List<SkiaControl>();
 
+            //children containment, same rationale as SkiaScroll.Paint: the outer clip in
+            //DrawWithClipAndTransforms is an EFFECTS concern (aggregated margins so shadows
+            //survive cache boundaries) — the viewport contains its children HERE instead.
+            //Gated: zero cost when nothing in the subtree paints beyond bounds.
+            var needContentClip = GetRenderingExpandPixels() != Thickness.Zero;
+            int savedClip = 0;
+            if (needContentClip)
+            {
+                savedClip = context.Context.Canvas.Save();
+                ClipSmart(context.Context.Canvas, GetContentClip());
+            }
+
             try
             {
                 var track = DrawingRect.Width - SidesOffset;
@@ -472,6 +484,11 @@ public class SkiaCarousel : SnappingLayout
             }
             finally
             {
+                if (needContentClip)
+                {
+                    context.Context.Canvas.RestoreToCount(savedClip);
+                }
+
                 if (IsTemplated)
                     foreach (var cell in cellsToRelease)
                     {
@@ -1553,38 +1570,66 @@ public class SkiaCarousel : SnappingLayout
         get { return SelectedIndex; }
     }
 
-    public void GoNext()
+    /// <summary>
+    /// Interrupts an in-flight snapping animation before a programmatic index change:
+    /// stops animators (so a restarted animator gets a fresh clock instead of the old
+    /// one's elapsed time, which would finish it instantly) and continues from the actual
+    /// visual position. For IsLooped the position may sit in the virtual zone beyond the
+    /// real strip — it is shifted by whole strip lengths into the neighborhood of the
+    /// current SelectedIndex (visually identical, looped rendering wraps), so the next
+    /// ScrollToOffset computes a short correct-direction displacement instead of sweeping
+    /// backwards across the whole strip. Must be called BEFORE SelectedIndex mutates.
+    /// </summary>
+    protected void InterruptSnapping()
     {
-        _isSnapping = null;
-
-        var index = SelectedIndex;
-        if (index < MaxIndex)
+        if (VectorAnimatorSpring != null && (VectorAnimatorSpring.IsRunning || AnimatorRange.IsRunning))
         {
-            SelectedIndex++;
-            return;
+            VectorAnimatorSpring.Stop();
+            AnimatorRange.Stop();
+
+            var position = CurrentPosition;
+            if (IsLooped && SnapPoints.Count > 1
+                && SelectedIndex >= 0 && SelectedIndex < SnapPoints.Count)
+            {
+                var strip = (SnapPoints[1] - SnapPoints[0]) * SnapPoints.Count;
+                var target = SnapPoints[SelectedIndex];
+                while (Vector2.Distance(position + strip, target) < Vector2.Distance(position, target))
+                    position += strip;
+                while (Vector2.Distance(position - strip, target) < Vector2.Distance(position, target))
+                    position -= strip;
+            }
+
+            CurrentPosition = position;
+            CurrentSnap = position;
         }
 
-        // Edge -> loop behavior
-        if (IsLooped)
+        _isSnapping = null;
+    }
+
+    public void GoNext()
+    {
+        if (SelectedIndex < MaxIndex)
         {
+            InterruptSnapping();
+            SelectedIndex += 1;
+        }
+        else if (IsLooped)
+        {
+            InterruptSnapping();
             SelectedIndex = 0;
         }
     }
 
     public virtual void GoPrev()
     {
-        _isSnapping = null;
-
-        var index = SelectedIndex;
-        if (index > 0)
+        if (SelectedIndex > 0)
         {
-            SelectedIndex--;
-            return;
+            InterruptSnapping();
+            SelectedIndex -= 1;
         }
-
-        // Edge -> loop behavior
-        if (IsLooped)
+        else if (IsLooped)
         {
+            InterruptSnapping();
             SelectedIndex = MaxIndex;
         }
     }

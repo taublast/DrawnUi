@@ -3035,15 +3035,45 @@ namespace DrawnUi.Draw
                 new(ContextArguments.Scale.ToString(), _zoomedScale),
                 new(ContextArguments.Rect.ToString(), ContentRectWithOffset.Pixels));
 
-            if (UseVirtual)
+            //Children containment, same pattern SkiaShape uses for its outline: the outer clip in
+            //DrawWithClipAndTransforms is an EFFECTS concern (expanded by the subtree's aggregated
+            //effects margin so shadows/glow survive cache boundaries) — it must not be relied on to
+            //contain scrolled content. A shadowed descendant in content would widen it and leak
+            //scrolled content past the viewport (3*Blur*scale). So the viewport clips its children
+            //HERE, inside Paint: the own-effects filter (PaintWithEffects wraps Paint) captures the
+            //already-clipped content, so a shadow ON the scroll still paints beyond bounds while
+            //content never does.
+            //Gated: when nothing in the subtree paints beyond bounds the outer clip is already the
+            //exact rect and this inner clip is skipped — zero per-frame cost for plain scrolls.
+            var needContentClip = GetRenderingExpandPixels() != Thickness.Zero;
+
+            int saved = 0;
+            if (needContentClip)
             {
-                DrawVirtual(c);
+                saved = ctx.Context.Canvas.Save();
+                ClipSmart(ctx.Context.Canvas, GetContentClip());
             }
-            else
+
+            try
             {
-                PaintViews(c);
+                if (UseVirtual)
+                {
+                    DrawVirtual(c);
+                }
+                else
+                {
+                    PaintViews(c);
+                }
+            }
+            finally
+            {
+                if (needContentClip)
+                {
+                    ctx.Context.Canvas.RestoreToCount(saved);
+                }
             }
         }
+
 
         private bool devUseVelocityPanning = false;
 

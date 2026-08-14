@@ -334,8 +334,6 @@ namespace DrawnUi.Draw
 
         protected SKPath DrawPathShape { get; set; } = new();
 
-        SKPath ClipContentPath { get; set; } = new();
-
         // Stroke gradient shader cache
         private SKShader _strokeGradientShader;
         private int _strokeGradientVersion = -1;
@@ -364,7 +362,6 @@ namespace DrawnUi.Draw
             _cachedDashEffect = null;
 
             DrawPathShape?.Dispose();
-            ClipContentPath?.Dispose();
 
             base.OnDisposing();
         }
