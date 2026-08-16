@@ -50,13 +50,14 @@ Supported hosts:
 🤩 [Fiddle](https://fiddle.drawnui.net)   
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
-## What's New 1.10.5.10
+## What's New 1.10.5.11
 
-* Fixed SkiaCarousel changing selected index in the middle of animating.
-* Fix children clipping in viewport when children had effects. `ClipContentPath` is now in base.
+*  Hotfix for templated layouts which were cached (BindableLayout-like), were not invalidated when applying staged structure changes
 
  ### Previously
 
+* Fixed SkiaCarousel changing selected index in the middle of animating.
+* Fix children clipping in viewport when children had effects. `ClipContentPath` is now in base.
 * Fix FPS metering for capped scenarions.
 * Fixed Split=1 on a grid without ColumnDefinitions.
 * Target fps now allows floats instead of integers for more fluent animations, resulting in smoother scrolling etc.
