@@ -1591,7 +1591,7 @@ public partial class SkiaLayout
             // Same reason as in StageStructureChange: the queue is drained by ApplyStructureChanges
             // inside Paint, and a cached layout never repaints on its own - freshly measured items
             // would stay invisible until something else invalidated the cache.
-            if (false && UsingCacheType != SkiaCacheType.None) //TEMP AB
+            if (UsingCacheType != SkiaCacheType.None)
             {
                 InvalidateCache();
             }
@@ -4010,7 +4010,7 @@ public partial class SkiaLayout
         }
 
         // see StageStructureChange: a cached layout must re-record for the queue to be drained
-        if (false && UsingCacheType != SkiaCacheType.None) //TEMP AB
+        if (UsingCacheType != SkiaCacheType.None)
         {
             InvalidateCache();
         }
