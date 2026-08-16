@@ -1588,6 +1588,14 @@ public partial class SkiaLayout
                 });
             }
 
+            // Same reason as in StageStructureChange: the queue is drained by ApplyStructureChanges
+            // inside Paint, and a cached layout never repaints on its own - freshly measured items
+            // would stay invisible until something else invalidated the cache.
+            if (false && UsingCacheType != SkiaCacheType.None) //TEMP AB
+            {
+                InvalidateCache();
+            }
+
             // Recalculate estimated content size
             //UpdateEstimatedContentSize(scale);
 
@@ -3999,6 +4007,12 @@ public partial class SkiaLayout
                 Epoch = _itemsShiftEpoch,
                 Items = dataItem != null ? new List<object> { dataItem } : null
             });
+        }
+
+        // see StageStructureChange: a cached layout must re-record for the queue to be drained
+        if (false && UsingCacheType != SkiaCacheType.None) //TEMP AB
+        {
+            InvalidateCache();
         }
     }
 

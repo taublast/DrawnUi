@@ -13,6 +13,8 @@ Compose with alias containers, not raw `SkiaLayout { Type = LayoutType.X }`: `Sk
 
 Constructor shorthand is the documented idiom for text controls: `new SkiaLabel("text")`, `new SkiaRichLabel("**md**")`, `new SkiaButton("Caption")`.
 
+**Row does NOT distribute Fill children** (device-verified 2026-08-15): two `HorizontalOptions=Fill` children inside a `SkiaRow` each take full width and overflow the screen — a Row is not a star-grid. For proportional button rows use `SkiaGrid` + `.WithColumnDefinitions("2*,3*")` + `.SetGrid(col, 0)` per child. Same for `HorizontalFillRatio` inside a Row — not a substitute for grid columns.
+
 ## Composition Style — MANDATORY
 
 **Never declare a local variable for a control and then reference it in a children list.** Always construct inline inside the collection initializer. Use `.Assign(out _field)` when a field reference is needed — it returns the control so chaining continues.
@@ -342,6 +344,24 @@ FillGradient = new SkiaGradient()
     Opacity = 0.8,
 }
 ```
+
+### Photo-legibility scrim overlay (verified user-corrected pattern, 2026-08-15)
+
+Overlay gradient scrim over an image (tile label legibility): plain `SkiaLayer` + `FillGradient`, NO SkiaShape and NO BackgroundColor needed. Use NEAR-transparent/NEAR-opaque alpha endpoints (`#01000000` → `#FE000000`), not `#00`/`#FF`; control the fade start with `StartYRatio` (e.g. 0.5 = fade begins mid-tile). Remember `SkiaLayer` inside a `SkiaShape` needs explicit `VerticalOptions = Fill` to cover it.
+
+```csharp
+new SkiaLayer
+{
+    VerticalOptions = LayoutOptions.Fill,
+    FillGradient = new SkiaGradient
+    {
+        StartYRatio = 0.5f,
+        Colors = new List<Color> { Color.Parse("#01000000"), Color.Parse("#FE000000") },
+    },
+}
+```
+
+Related: for tighter multi-line display headlines prefer negative `ParagraphSpacing` (e.g. `-0.2`) over `LineHeight < 1`.
 
 ### StrokeGradient (SkiaShape only)
 

@@ -2001,6 +2001,16 @@ ExistingLogic:
                     _pendingStructureChanges.Add(change);
                 }
 
+                // A staged change is applied by ApplyStructureChanges, which runs ONLY inside Paint.
+                // A CACHED layout re-blits its cached image without repainting, so the change would sit
+                // pending forever: items added to ItemsSource never appear and the layout never re-measures
+                // (autosized templated stack froze at its first item - Racebox measure results 2026-08).
+                // Invalidating the cache makes the next redraw re-record, which drains the queue.
+                if (UsingCacheType != SkiaCacheType.None)
+                {
+                    InvalidateCache();
+                }
+
                 if (ViewsAdapter.LogEnabled)
                 {
                     Trace.WriteLine($"[SkiaLayout] {Tag} Staged structure change: {change.Type}");
