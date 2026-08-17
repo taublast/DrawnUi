@@ -63,6 +63,8 @@ Prefer alias controls over raw `SkiaLayout Type="..."` — same class, preset `T
 - Grid: `ColumnDefinitions`/`RowDefinitions` (`*`, `2*`, `Auto`, absolute), attached `SkiaLayout.Column/Row/ColumnSpan/RowSpan` (0-based), `ColumnSpacing`/`RowSpacing`. `SkiaDecoratedGrid` = grid drawing separator lines (`HorizontalLine`/`VerticalLine` gradients).
 - `Split` = explicit column count for Column/Wrap/Grid with ItemsSource; `UseDynamicColumns` lets a short last row expand; grid `Invert` flips fill order to columns-first.
 - Perf: for a known-size icon + label pair prefer an Absolute layer + left `Margin` on the label over a 2-column grid.
+- **`LockRatio` is an aspect tool, not a square-only switch** (verified in `CreateMeasureRequest`): it rewrites BOTH constraints to `min(w,h) * |LockRatio|` when negative, `max(w,h) * LockRatio` when positive. Because the parent still clamps the arranged width to its cell/column, a child with `HorizontalOptions=Fill` and `LockRatio = -1.33` inside a grid column renders width = column, height = column × 1.33 — i.e. a 3:4 tile with no hardcoded numbers, correct at any window size. Use NEGATIVE values when the width constraint is the smaller one (grid columns inside a vertical scroll); positive keys off the larger constraint. `-1` / `1` are just the square cases.
+- **NEVER size a dynamic layout from `DeviceDisplay.MainDisplayInfo`** (or any screen metric). It is the SCREEN, not the container: on desktop windows, split views, resizable or padded hosts it is off by multiples (a 500pt window on a 2048px screen gave cells ~4× too tall), and being read once at construction it never follows resize/rotation. For a grid of cells use `SkiaGrid` with `*` column definitions; for proportional sizing inside a container use `HorizontalFillRatio` / `VerticalFillRatio`; for content-driven heights use `MeasureItemsStrategy = MeasureVisible` instead of faking a uniform height for `MeasureFirst`.
 - `Spacing` = between children (single value); `Padding` internal; `Margin` external. Layouts support `BackgroundColor` directly but NOT `CornerRadius` (verified: no such member on SkiaLayout/aliases — wrap in `SkiaShape`/`SkiaFrame` for a rounded panel).
 - iOS safe insets require a MAUI root wrapper (e.g. `Grid`) around the `Canvas`; opt out via startup `MobileIsFullscreen = true`.
 
@@ -194,6 +196,17 @@ Two layers must BOTH be on, or handlers never fire: (1) canvas host input mode, 
 - SKSL scalar uniforms must be `float`, not `float[1]` (see drawnui-fluent shader section).
 
 ## Caching Guidance
+
+### A control with an IPostRendererEffect NEVER blits from its cache
+
+`SkiaShaderEffect`, `SkiaBackdrop` and anything else implementing `IPostRendererEffect` bypass the cached blit entirely. In `SkiaControl.Shared.cs` the draw path is literally `if (EffectPostRenderers.Count == 0) { cache.Draw(...) }` followed by `foreach (var postRenderer in EffectPostRenderers) postRenderer.Render(context);` — so when the list is non-empty the cache is NOT drawn and the effect re-executes **every frame**: build uniforms, `Compiled.ToShader(...)`, `DrawRect`, then `Canvas.Flush()`. A `Canvas.Flush()` per effect per frame is a GPU pipeline stall, so the cost scales with the NUMBER of shader-carrying controls on screen and is nearly independent of how simple the SKSL is.
+
+Consequences, all verified from source:
+- **Never remove an image cache from a control that carries a shader effect.** `GetPrimaryTextureImage` (mode `Always`, the default) returns `Parent?.CachedImage` when present, and otherwise falls back to `CreateSnapshot` = `Canvas.Flush()` + `Surface.Snapshot()` EVERY frame. The cache on such a control is not a redundant "nested cache" — it is the effect's input texture. Removing it makes the control dramatically more expensive, not cheaper.
+- **N live shader-carrying controls on one screen is an N-stall-per-frame design.** A filter-picker strip of live shader thumbnails over a camera preview measured 60fps → 36fps (+11ms/frame) for ~8 visible thumbs on a high-end Windows GPU. Hiding the strip restored 60fps.
+- **If the shaded content changes far slower than the frame rate, do not use a live effect at all.** Bake the shaded result into an `SKImage` once per content change and show it in a plain cached `SkiaImage` with no `VisualEffects`. Thumbnails refreshed every few seconds must never re-run their shader 60 times a second.
+- `UseBackground = PostRendererEffectUseBackgroud.Once` freezes the input snapshot (removing the per-frame `Surface.Snapshot`) but the `Render` still runs per frame — it is a mitigation, not a fix.
+- Diagnosing: FPS drops proportional to how many shader-carrying controls are VISIBLE, and does not improve when you switch to a simpler shader. That signature means per-frame effect dispatch, not shader cost.
 
 ### Group before you cache (layer grouping)
 
