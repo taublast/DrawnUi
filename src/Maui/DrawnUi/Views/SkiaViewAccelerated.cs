@@ -78,16 +78,11 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
 
     public bool IsHardwareAccelerated => true;
 
-    /// <summary>
-    /// Frames PRESENTED per second, measured on the wall clock — every paint callback,
-    /// including frames that re-presented unchanged content. This is the cadence the
-    /// display actually runs at and what an FPS cap limits.
-    /// </summary>
     public double FPS
     {
         get
         {
-            return _meter.Value;
+            return _reportFps;
         }
     }
 
@@ -124,7 +119,9 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
         return false;
     }
 
-    private readonly FpsMeter _meter = new();
+    private double _fpsAverage;
+    private int _fpsCount;
+    private long _lastFrameTimestamp;
     private bool _isDrawing;
 
     private long _clockLast;
@@ -165,6 +162,31 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
 
 
     /// <summary>
+    /// Calculates the frames per second (FPS) and updates the rolling average FPS every 'averageAmount' frames.
+    /// </summary>
+    /// <param name="currentTimestamp">The current timestamp in nanoseconds.</param>
+    /// <param name="averageAmount">The number of frames over which to average the FPS. Default is 10.</param>
+    void CalculateFPS(long currentTimestamp, int averageAmount = 10)
+    {
+        // Convert nanoseconds to seconds for elapsed time calculation.
+        double elapsedSeconds = (currentTimestamp - _lastFrameTimestamp) / 1_000_000_000.0;
+        _lastFrameTimestamp = currentTimestamp;
+
+        double currentFps = 1.0 / elapsedSeconds;
+
+        _fpsAverage = ((_fpsAverage * _fpsCount) + currentFps) / (_fpsCount + 1);
+        _fpsCount++;
+
+        if (_fpsCount >= averageAmount)
+        {
+            _reportFps = _fpsAverage;
+            _fpsCount = 0;
+            _fpsAverage = 0.0;
+        }
+    }
+
+
+    /// <summary>
     /// We are drawing the frame
     /// </summary>
     /// <param name="sender"></param>
@@ -187,12 +209,13 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
             _surface = paintArgs.Surface;
             var isDirty = OnDraw.Invoke(paintArgs.Surface, rect);
 
-            // Count every presented frame, on the WALL clock. Two things this must not do:
-            // measure on the animation clock (it advances by a fixed frame step per draw, so
-            // it can only ever report the nominal rate), and count only isDirty frames — that
-            // reports the CONTENT rate, so a 60fps loop feeding a 30fps camera preview reads
-            // as "half the FPS" while the loop is perfectly healthy.
-            _meter.Tick(Super.GetCurrentTimeNanos());
+            // FPS meter counts frames where CONTENT actually rendered, measured on
+            // wall clock. In continuous (view-paced) mode the MTKView re-presents
+            // retained content every slot — counting those would pin the meter at
+            // the cap forever; counting synthetic animation-clock deltas shows
+            // nonsense (thousands). Real work + real time only.
+            if (isDirty)
+                CalculateFPS(Super.GetCurrentTimeNanos());
 
 #if WINDOWS
             //fix handler renderer didn't render first frame at startup for skiasharp v3
