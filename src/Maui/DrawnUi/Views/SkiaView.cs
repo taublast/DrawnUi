@@ -130,11 +130,28 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
 
     private long _clockLast;
 
+    /// <summary>
+    /// True when the platform publishes a vsync timestamp (iOS/Mac display link). Such a
+    /// platform presents continuously — it re-presents retained content every slot, and the
+    /// draw callback is not a reliable "real render" signal. Platforms without it paint
+    /// ONLY after an explicit invalidation, so there wall clock and per-paint counting are
+    /// both correct and the synthetic clock below would never resync (vsync stays 0).
+    /// </summary>
+    private static bool HasVsyncClock => Super.VsyncFrameTimeNanos > 0;
+
     // Frame clock: one frame interval per draw, resync to vsync when behind.
     // See SkiaViewAccelerated.NextFrameClock for the full rationale.
     private long NextFrameClock()
     {
         var vsync = Super.VsyncFrameTimeNanos;
+
+        if (vsync == 0)
+        {
+            // No vsync source: the view is not the pacer, wall clock is the truth.
+            _clockLast = Super.GetCurrentTimeNanos();
+            return _clockLast;
+        }
+
         var fps = Super.MaxFps > 0 ? Super.MaxFps : 60;
         var step = (long)(1_000_000_000.0 / fps);
         long now;
@@ -169,9 +186,9 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
             _surface = paintArgs.Surface;
             bool isDirty = OnDraw.Invoke(paintArgs.Surface, rect);
 
-            // FPS counts frames with real content rendering, on wall clock —
+            // FPS on wall clock, every paint unless the platform presents continuously —
             // see SkiaViewAccelerated.OnPaintingSurface for rationale.
-            if (isDirty)
+            if (isDirty || !HasVsyncClock)
                 CalculateFPS(Super.GetCurrentTimeNanos());
 
 

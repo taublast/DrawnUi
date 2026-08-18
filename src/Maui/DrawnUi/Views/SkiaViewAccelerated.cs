@@ -127,6 +127,15 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
     private long _clockLast;
 
     /// <summary>
+    /// True when the platform publishes a vsync timestamp (iOS/Mac display link). Such a
+    /// platform presents continuously — it re-presents retained content every slot, and the
+    /// draw callback is not a reliable "real render" signal. Platforms without it paint
+    /// ONLY after an explicit invalidation, so there wall clock and per-paint counting are
+    /// both correct and the synthetic clock below would never resync (vsync stays 0).
+    /// </summary>
+    private static bool HasVsyncClock => Super.VsyncFrameTimeNanos > 0;
+
+    /// <summary>
     /// Animation clock for draws: advances by EXACTLY one frame interval per draw
     /// (the view is the frame pacer), loosely anchored to the shared vsync clock.
     /// Mixing the two clocks per-draw is wrong in both directions: reusing a stale
@@ -138,6 +147,14 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
     private long NextFrameClock()
     {
         var vsync = Super.VsyncFrameTimeNanos;
+
+        if (vsync == 0)
+        {
+            // No vsync source: the view is not the pacer, wall clock is the truth.
+            _clockLast = Super.GetCurrentTimeNanos();
+            return _clockLast;
+        }
+
         var fps = Super.MaxFps > 0 ? Super.MaxFps : 60;
         var step = (long)(1_000_000_000.0 / fps);
         long now;
@@ -209,12 +226,13 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
             _surface = paintArgs.Surface;
             var isDirty = OnDraw.Invoke(paintArgs.Surface, rect);
 
-            // FPS meter counts frames where CONTENT actually rendered, measured on
-            // wall clock. In continuous (view-paced) mode the MTKView re-presents
-            // retained content every slot — counting those would pin the meter at
-            // the cap forever; counting synthetic animation-clock deltas shows
-            // nonsense (thousands). Real work + real time only.
-            if (isDirty)
+            // FPS meter, measured on wall clock. On a continuously presenting platform
+            // (MTKView re-presents retained content every slot) only frames that really
+            // rendered content count, otherwise the meter would sit pinned at the cap.
+            // Where painting happens only on invalidation every paint IS a real render,
+            // and gating on isDirty there reports the content rate instead of the
+            // rendering rate — a 60fps loop redrawing 30 times reads as 30.
+            if (isDirty || !HasVsyncClock)
                 CalculateFPS(Super.GetCurrentTimeNanos());
 
 #if WINDOWS
