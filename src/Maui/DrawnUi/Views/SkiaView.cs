@@ -83,42 +83,18 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
         }
     }
 
+    /// <summary>
+    /// Frames PRESENTED per second — see <see cref="SkiaViewAccelerated.FPS"/>.
+    /// </summary>
     public double FPS
     {
         get
         {
-            return _reportFps;
+            return _meter.Value;
         }
     }
 
-
-    private double _fpsAverage;
-    private int _fpsCount;
-    private long _lastFrameTimestamp;
-
-    /// <summary>
-    /// Calculates the frames per second (FPS) and updates the rolling average FPS every 'averageAmount' frames.
-    /// </summary>
-    /// <param name="currentTimestamp">The current timestamp in nanoseconds.</param>
-    /// <param name="averageAmount">The number of frames over which to average the FPS. Default is 10.</param>
-    void CalculateFPS(long currentTimestamp, int averageAmount = 10)
-    {
-        // Convert nanoseconds to seconds for elapsed time calculation.
-        double elapsedSeconds = (currentTimestamp - _lastFrameTimestamp) / 1_000_000_000.0;
-        _lastFrameTimestamp = currentTimestamp;
-
-        double currentFps = 1.0 / elapsedSeconds;
-
-        _fpsAverage = ((_fpsAverage * _fpsCount) + currentFps) / (_fpsCount + 1);
-        _fpsCount++;
-
-        if (_fpsCount >= averageAmount)
-        {
-            _reportFps = _fpsAverage;
-            _fpsCount = 0;
-            _fpsAverage = 0.0;
-        }
-    }
+    private readonly FpsMeter _meter = new();
 
     public long FrameTime { get; protected set; }
 
@@ -169,10 +145,8 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
             _surface = paintArgs.Surface;
             bool isDirty = OnDraw.Invoke(paintArgs.Surface, rect);
 
-            // FPS counts frames with real content rendering, on wall clock —
-            // see SkiaViewAccelerated.OnPaintingSurface for rationale.
-            if (isDirty)
-                CalculateFPS(Super.GetCurrentTimeNanos());
+            // Every presented frame, wall clock — see SkiaViewAccelerated.OnPaintingSurface.
+            _meter.Tick(Super.GetCurrentTimeNanos());
 
 
 #if WINDOWS

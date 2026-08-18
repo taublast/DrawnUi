@@ -198,6 +198,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Extensions\RenderTreeDomExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Extensions\InternalExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Extensions\PointExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internals\Helpers\FpsMeter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Helpers\IntersectionUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Helpers\Looper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Internals\Helpers\Pendulum.cs" />
