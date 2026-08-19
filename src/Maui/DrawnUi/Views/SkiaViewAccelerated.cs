@@ -131,6 +131,13 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
     private const long FpsIdleResetNanos = 1_000_000_000;
 
     private long _clockLast;
+    private long _clockLastVsync;
+
+    /// <summary>
+    /// Upper bound on how many frame slots one draw may advance animation time by. Beyond this
+    /// the gap is not dropped frames but an idle period, and is resynced instead of stepped.
+    /// </summary>
+    private const int MaxCatchUpSlots = 4;
 
     /// <summary>
     /// True when the platform publishes a vsync timestamp (iOS/Mac display link). Such a
@@ -161,25 +168,48 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
             return _clockLast;
         }
 
+        // MaxFps is snapped to a cadence the display can present (Super.SnapMaxFpsToDisplay),
+        // so this step is the real frame interval, not an approximation of one.
+#if ONPLATFORM
+        //RefreshRate lives in the platform partials of Super
+        var fps = Super.MaxFps > 0 ? Super.MaxFps : (Super.RefreshRate > 0 ? Super.RefreshRate : 60);
+#else
         var fps = Super.MaxFps > 0 ? Super.MaxFps : 60;
+#endif
         var step = (long)(1_000_000_000.0 / fps);
-        long now;
 
         if (_clockLast == 0)
         {
-            now = vsync > 0 ? vsync : Super.GetCurrentTimeNanos();
+            _clockLast = vsync;
+            _clockLastVsync = vsync;
+            return _clockLast;
         }
-        else
+
+        // Advance by the number of frame slots that ACTUALLY passed, not always one. Always
+        // stepping one turns a missed slot into a speed error: content travels half the
+        // distance the elapsed time called for, then the resync below hops to catch up —
+        // a stall followed by a snap. Counting the slot makes it an honest repeated frame.
+        // Matters most under a low cap, where one missed slot is 33ms rather than 8 or 16.
+        var slots = 1L;
+        if (vsync > _clockLastVsync)
         {
-            now = _clockLast + step;
+            slots = (long)Math.Round((vsync - _clockLastVsync) / (double)step);
 
-            // Fell behind the real clock (idle gap, dropped frames) — jump forward.
-            if (vsync > now + step)
-                now = vsync;
+            if (slots < 1)
+                slots = 1;
+
+            if (slots > MaxCatchUpSlots)
+                slots = MaxCatchUpSlots;
         }
 
-        _clockLast = now;
-        return now;
+        _clockLastVsync = vsync;
+        _clockLast += step * slots;
+
+        // Too far behind to walk back one frame at a time (idle period, app resumed).
+        if (vsync > _clockLast + step * MaxCatchUpSlots)
+            _clockLast = vsync;
+
+        return _clockLast;
     }
 
 

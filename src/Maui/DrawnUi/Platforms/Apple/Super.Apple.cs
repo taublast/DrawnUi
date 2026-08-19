@@ -17,6 +17,50 @@ public partial class Super
     public static float RefreshRate { get; protected set; }
 
     /// <summary>
+    /// Rounds a requested frame cap to a cadence the display can actually present: only whole
+    /// divisors of the refresh rate exist (60, 30, 20, 15, 12... on a 60Hz panel; 120, 60, 40,
+    /// 30, 24, 20... on a 120Hz one). Asking for something in between is not "approximately
+    /// that": the display link range can't be satisfied and falls back to native, the MTKView
+    /// rounds on its own, and the callback skip guard divides — three layers, three different
+    /// answers, none of them the requested number. Snapping once keeps every consumer of MaxFps
+    /// (link, view, skip guard, frame clock) working from the same achievable value.
+    /// 0 (uncapped) passes through, as does any value set before the display rate is known.
+    /// </summary>
+    public static int SnapMaxFpsToDisplay(int fps)
+    {
+        if (fps <= 0)
+            return 0;
+
+        var refresh = (int)MathF.Round(RefreshRate);
+        if (refresh <= 0)
+            return fps; //display rate not known yet, Init snaps again once it is
+
+        if (fps >= refresh)
+            return refresh;
+
+        var best = refresh;
+        var bestDelta = int.MaxValue;
+
+        for (var divider = 1; divider <= refresh; divider++)
+        {
+            if (refresh % divider != 0)
+                continue;
+
+            var candidate = refresh / divider;
+            var delta = Math.Abs(candidate - fps);
+
+            //nearest achievable cadence, ties go to the faster one
+            if (delta < bestDelta || (delta == bestDelta && candidate > best))
+            {
+                best = candidate;
+                bestDelta = delta;
+            }
+        }
+
+        return best;
+    }
+
+    /// <summary>
     /// Opens web link in native browser
     /// </summary>
     /// <param name="link"></param>

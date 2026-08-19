@@ -142,6 +142,13 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
     private bool on;
 
     private long _clockLast;
+    private long _clockLastVsync;
+
+    /// <summary>
+    /// Upper bound on how many frame slots one draw may advance animation time by. Beyond this
+    /// the gap is not dropped frames but an idle period, and is resynced instead of stepped.
+    /// </summary>
+    private const int MaxCatchUpSlots = 4;
 
     /// <summary>
     /// True when the platform publishes a vsync timestamp (iOS/Mac display link). Such a
@@ -152,7 +159,7 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
     /// </summary>
     private static bool HasVsyncClock => Super.VsyncFrameTimeNanos > 0;
 
-    // Frame clock: one frame interval per draw, resync to vsync when behind.
+    // Frame clock: advances by the frame slots that actually elapsed, resyncs after an idle gap.
     // See SkiaViewAccelerated.NextFrameClock for the full rationale.
     private long NextFrameClock()
     {
@@ -165,24 +172,40 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
             return _clockLast;
         }
 
+#if ONPLATFORM
+        //RefreshRate lives in the platform partials of Super
+        var fps = Super.MaxFps > 0 ? Super.MaxFps : (Super.RefreshRate > 0 ? Super.RefreshRate : 60);
+#else
         var fps = Super.MaxFps > 0 ? Super.MaxFps : 60;
+#endif
         var step = (long)(1_000_000_000.0 / fps);
-        long now;
 
         if (_clockLast == 0)
         {
-            now = vsync > 0 ? vsync : Super.GetCurrentTimeNanos();
+            _clockLast = vsync;
+            _clockLastVsync = vsync;
+            return _clockLast;
         }
-        else
+
+        var slots = 1L;
+        if (vsync > _clockLastVsync)
         {
-            now = _clockLast + step;
+            slots = (long)Math.Round((vsync - _clockLastVsync) / (double)step);
 
-            if (vsync > now + step)
-                now = vsync;
+            if (slots < 1)
+                slots = 1;
+
+            if (slots > MaxCatchUpSlots)
+                slots = MaxCatchUpSlots;
         }
 
-        _clockLast = now;
-        return now;
+        _clockLastVsync = vsync;
+        _clockLast += step * slots;
+
+        if (vsync > _clockLast + step * MaxCatchUpSlots)
+            _clockLast = vsync;
+
+        return _clockLast;
     }
 
     private void OnPaintingSurface(object sender, SKPaintSurfaceEventArgs paintArgs)

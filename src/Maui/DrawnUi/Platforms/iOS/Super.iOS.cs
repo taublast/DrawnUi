@@ -24,6 +24,9 @@ namespace DrawnUi.Draw
 
             RefreshRate = GetDisplayRefreshRate(60);
 
+            //a cap set before the display rate was known could not be snapped yet
+            MaxFps = SnapMaxFpsToDisplay(MaxFps);
+
             Super.Screen.Density = UIScreen.MainScreen.Scale;
             Super.Screen.WidthDip = UIScreen.MainScreen.Bounds.Width;
             Super.Screen.HeightDip = UIScreen.MainScreen.Bounds.Height;
@@ -174,6 +177,14 @@ namespace DrawnUi.Draw
 
         static partial void OnMaxFpsChanged(int fps)
         {
+            var snapped = SnapMaxFpsToDisplay(fps);
+            if (snapped != fps)
+            {
+                //not a cadence this display can present — re-enters here with one that is
+                MaxFps = snapped;
+                return;
+            }
+
             // Display link callback reads MaxFps dynamically, no action needed there.
             // Update looper fps if it's being used instead of CADisplayLink.
             Looper?.SetTargetFps(fps > 0 ? fps : RefreshRate);
