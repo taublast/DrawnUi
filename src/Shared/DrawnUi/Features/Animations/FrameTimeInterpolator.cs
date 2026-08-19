@@ -1,4 +1,4 @@
-namespace DrawnUi.Draw;
+﻿namespace DrawnUi.Draw;
 
 /// <summary>
 /// Interpolated time between frames, works in seconds. See examples..
@@ -83,7 +83,7 @@ public class FrameTimeInterpolator
     public float GetDeltaTimeFromDelta(float actualDeltaTime)
     {
         // First frame or reset
-        if (_frameTimeHistory == null)
+        if (_frameTimeHistory == null || _appliedMaxFps != Super.MaxFps)
         {
             InitializeManager(0);
             return _currentTimeStep;
@@ -128,8 +128,8 @@ public class FrameTimeInterpolator
     /// <returns>The delta time to use for game updates</returns>
     public float GetDeltaTime(float currentFrameTime)
     {
-        // First frame or reset
-        if (_lastFrameTime == 0)
+        // First frame, reset, or the cap changed under us
+        if (_lastFrameTime == 0 || _appliedMaxFps != Super.MaxFps)
         {
             InitializeManager(currentFrameTime);
             return _currentTimeStep;
@@ -199,11 +199,21 @@ public class FrameTimeInterpolator
 
     static float _framerate = 60;
 
+    /// <summary>
+    /// MaxFps the target was last computed from, so a cap changed at runtime is picked up.
+    /// </summary>
+    private int _appliedMaxFps = -1;
+
     void SetTargetFps()
     {
+        // A cap IS the frame budget: with MaxFps=30 frames arrive every 33ms, and a target of
+        // 60 would judge every single one of them as "below target minus buffer" — permanently
+        // skipping frames and permanently a candidate for quality reduction, against a rate the
+        // app deliberately gave up. Only fall back to the display rate when uncapped.
+        _appliedMaxFps = Super.MaxFps;
 
 #if ONPLATFORM
-        _framerate = Super.GetDisplayRefreshRate(DEFAULT_TARGET_FPS);
+        _framerate = Super.MaxFps > 0 ? Super.MaxFps : Super.GetDisplayRefreshRate(DEFAULT_TARGET_FPS);
 #else
         _framerate = Super.MaxFps > 0 ? Super.MaxFps : DEFAULT_TARGET_FPS;
 #endif

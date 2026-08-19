@@ -67,6 +67,49 @@ public partial class Super
         }
     }
 
+    /// <summary>
+    /// Rounds a requested frame cap to a cadence the display can actually present: only whole
+    /// divisors of the refresh rate exist (60, 30, 20, 15, 12... on a 60Hz panel; 120, 60, 40,
+    /// 30, 24, 20... on a 120Hz one). A value in between is not "approximately that" — every
+    /// pacing layer resolves it its own way (a display link range that cannot be satisfied falls
+    /// back to native, a view rounds, a skip guard divides), so the layers end up disagreeing.
+    /// Snapping once, when the cap is set, keeps them all working from the same achievable rate.
+    /// A cap of 0 (uncapped), or one set before the refresh rate is known, passes through.
+    /// </summary>
+    public static int SnapFps(int fps, float refreshRate)
+    {
+        if (fps <= 0)
+            return 0;
+
+        var refresh = (int)MathF.Round(refreshRate);
+        if (refresh <= 0)
+            return fps; //display rate not known yet, platform Init snaps again once it is
+
+        if (fps >= refresh)
+            return refresh;
+
+        var best = refresh;
+        var bestDelta = int.MaxValue;
+
+        for (var divider = 1; divider <= refresh; divider++)
+        {
+            if (refresh % divider != 0)
+                continue;
+
+            var candidate = refresh / divider;
+            var delta = Math.Abs(candidate - fps);
+
+            //nearest achievable cadence, ties go to the faster one
+            if (delta < bestDelta || (delta == bestDelta && candidate > best))
+            {
+                best = candidate;
+                bestDelta = delta;
+            }
+        }
+
+        return best;
+    }
+
     static partial void OnMaxFpsChanged(int fps);
 
     /// <summary>

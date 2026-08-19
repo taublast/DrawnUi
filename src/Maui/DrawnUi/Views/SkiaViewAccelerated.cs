@@ -119,12 +119,40 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
         return false;
     }
 
-    private double _fpsAverage;
-    private int _fpsCount;
-    private long _lastFrameTimestamp;
+    private int _fpsFrames;
+    private long _fpsWindowStart;
+    private long _fpsLastFrame;
     private bool _isDrawing;
 
+    /// <summary>
+    /// Nanoseconds without a counted frame after which the meter starts a fresh window: the
+    /// pause is not a slow frame, and averaging it in would report a fraction of the real rate.
+    /// </summary>
+    private const long FpsIdleResetNanos = 1_000_000_000;
+
     private long _clockLast;
+    private long _clockLastVsync;
+
+    /// <summary>
+    /// Upper bound on how many frame slots one draw may advance animation time by. Beyond this
+    /// the gap is not dropped frames but an idle period, and is resynced instead of stepped.
+    /// </summary>
+    private const int MaxCatchUpSlots = 4;
+
+    /// <summary>
+    /// True when the platform presents CONTINUOUSLY: it re-presents retained content every slot,
+    /// so the draw callback is not a reliable "real render" signal and the FPS meter would sit
+    /// pinned at the cap if it counted every one. Platforms that paint only after an explicit
+    /// invalidation are the opposite — there every paint IS a real render.
+    /// Deliberately not derived from the vsync clock: having a vsync timestamp and presenting
+    /// continuously are different properties, and Android has the first without the second.
+    /// </summary>
+    private static bool PresentsContinuously =>
+#if IOS || MACCATALYST
+        true;
+#else
+        false;
+#endif
 
     /// <summary>
     /// Animation clock for draws: advances by EXACTLY one frame interval per draw
@@ -138,50 +166,88 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
     private long NextFrameClock()
     {
         var vsync = Super.VsyncFrameTimeNanos;
+
+        if (vsync == 0)
+        {
+            // No vsync source: the view is not the pacer, wall clock is the truth.
+            _clockLast = Super.GetCurrentTimeNanos();
+            return _clockLast;
+        }
+
+        // MaxFps is snapped to a cadence the display can present (Super.SnapMaxFpsToDisplay),
+        // so this step is the real frame interval, not an approximation of one.
+#if ONPLATFORM
+        //RefreshRate lives in the platform partials of Super
+        var fps = Super.MaxFps > 0 ? Super.MaxFps : (Super.RefreshRate > 0 ? Super.RefreshRate : 60);
+#else
         var fps = Super.MaxFps > 0 ? Super.MaxFps : 60;
+#endif
         var step = (long)(1_000_000_000.0 / fps);
-        long now;
 
         if (_clockLast == 0)
         {
-            now = vsync > 0 ? vsync : Super.GetCurrentTimeNanos();
+            _clockLast = vsync;
+            _clockLastVsync = vsync;
+            return _clockLast;
         }
-        else
+
+        // Advance by the number of frame slots that ACTUALLY passed, not always one. Always
+        // stepping one turns a missed slot into a speed error: content travels half the
+        // distance the elapsed time called for, then the resync below hops to catch up —
+        // a stall followed by a snap. Counting the slot makes it an honest repeated frame.
+        // Matters most under a low cap, where one missed slot is 33ms rather than 8 or 16.
+        var slots = 1L;
+        if (vsync > _clockLastVsync)
         {
-            now = _clockLast + step;
+            slots = (long)Math.Round((vsync - _clockLastVsync) / (double)step);
 
-            // Fell behind the real clock (idle gap, dropped frames) — jump forward.
-            if (vsync > now + step)
-                now = vsync;
+            if (slots < 1)
+                slots = 1;
+
+            if (slots > MaxCatchUpSlots)
+                slots = MaxCatchUpSlots;
         }
 
-        _clockLast = now;
-        return now;
+        _clockLastVsync = vsync;
+        _clockLast += step * slots;
+
+        // Too far behind to walk back one frame at a time (idle period, app resumed).
+        if (vsync > _clockLast + step * MaxCatchUpSlots)
+            _clockLast = vsync;
+
+        return _clockLast;
     }
 
 
 
     /// <summary>
-    /// Calculates the frames per second (FPS) and updates the rolling average FPS every 'averageAmount' frames.
+    /// Measures frames per second the way the unit is defined: count the frames, divide by the
+    /// time they actually took. Deliberately NOT a mean of per-frame 1/dt — that estimator is
+    /// convex, so frame-interval jitter inflates it (measured 51fps reported over a real 31fps
+    /// second), it makes the reading depend on where in the paint callback the timestamp is
+    /// taken, and it can only refresh once every N frames, freezing on a stale value whenever
+    /// the frame stream thins out.
     /// </summary>
-    /// <param name="currentTimestamp">The current timestamp in nanoseconds.</param>
-    /// <param name="averageAmount">The number of frames over which to average the FPS. Default is 10.</param>
-    void CalculateFPS(long currentTimestamp, int averageAmount = 10)
+    /// <param name="currentTimestamp">Wall clock timestamp in nanoseconds.</param>
+    /// <param name="windowSeconds">Length of one measurement window. Shorter reacts faster, longer reads steadier.</param>
+    void CalculateFPS(long currentTimestamp, double windowSeconds = 0.5)
     {
-        // Convert nanoseconds to seconds for elapsed time calculation.
-        double elapsedSeconds = (currentTimestamp - _lastFrameTimestamp) / 1_000_000_000.0;
-        _lastFrameTimestamp = currentTimestamp;
-
-        double currentFps = 1.0 / elapsedSeconds;
-
-        _fpsAverage = ((_fpsAverage * _fpsCount) + currentFps) / (_fpsCount + 1);
-        _fpsCount++;
-
-        if (_fpsCount >= averageAmount)
+        if (_fpsWindowStart == 0 || currentTimestamp - _fpsLastFrame > FpsIdleResetNanos)
         {
-            _reportFps = _fpsAverage;
-            _fpsCount = 0;
-            _fpsAverage = 0.0;
+            //first frame, or the first one after an idle gap
+            _fpsWindowStart = currentTimestamp;
+            _fpsFrames = 0;
+        }
+
+        _fpsLastFrame = currentTimestamp;
+        _fpsFrames++;
+
+        double elapsedSeconds = (currentTimestamp - _fpsWindowStart) / 1_000_000_000.0;
+        if (elapsedSeconds >= windowSeconds)
+        {
+            _reportFps = _fpsFrames / elapsedSeconds;
+            _fpsFrames = 0;
+            _fpsWindowStart = currentTimestamp;
         }
     }
 
@@ -209,12 +275,13 @@ public partial class SkiaViewAccelerated : SKGLView, ISkiaDrawable
             _surface = paintArgs.Surface;
             var isDirty = OnDraw.Invoke(paintArgs.Surface, rect);
 
-            // FPS meter counts frames where CONTENT actually rendered, measured on
-            // wall clock. In continuous (view-paced) mode the MTKView re-presents
-            // retained content every slot — counting those would pin the meter at
-            // the cap forever; counting synthetic animation-clock deltas shows
-            // nonsense (thousands). Real work + real time only.
-            if (isDirty)
+            // FPS meter, measured on wall clock. On a continuously presenting platform
+            // (MTKView re-presents retained content every slot) only frames that really
+            // rendered content count, otherwise the meter would sit pinned at the cap.
+            // Where painting happens only on invalidation every paint IS a real render,
+            // and gating on isDirty there reports the content rate instead of the
+            // rendering rate — a 60fps loop redrawing 30 times reads as 30.
+            if (isDirty || !PresentsContinuously)
                 CalculateFPS(Super.GetCurrentTimeNanos());
 
 #if WINDOWS

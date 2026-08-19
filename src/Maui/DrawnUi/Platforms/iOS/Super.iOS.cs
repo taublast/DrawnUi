@@ -15,13 +15,6 @@ namespace DrawnUi.Draw
     public partial class Super
     {
 
-        public static float GetDisplayRefreshRate(float fallback)
-        {
-            return (int)UIScreen.MainScreen.MaximumFramesPerSecond;
-        }
-
-        public static float RefreshRate { get; protected set; }
-
         public static void Init()
         {
             if (Initialized)
@@ -30,6 +23,9 @@ namespace DrawnUi.Draw
             Initialized = true;
 
             RefreshRate = GetDisplayRefreshRate(60);
+
+            //a cap set before the display rate was known could not be snapped yet
+            MaxFps = SnapMaxFpsToDisplay(MaxFps);
 
             Super.Screen.Density = UIScreen.MainScreen.Scale;
             Super.Screen.WidthDip = UIScreen.MainScreen.Bounds.Width;
@@ -181,12 +177,21 @@ namespace DrawnUi.Draw
 
         static partial void OnMaxFpsChanged(int fps)
         {
+            var snapped = SnapMaxFpsToDisplay(fps);
+            if (snapped != fps)
+            {
+                //not a cadence this display can present — re-enters here with one that is
+                MaxFps = snapped;
+                return;
+            }
+
             // Display link callback reads MaxFps dynamically, no action needed there.
             // Update looper fps if it's being used instead of CADisplayLink.
             Looper?.SetTargetFps(fps > 0 ? fps : RefreshRate);
             ApplyDisplayLinkFps(fps);
-            // View-driven pacing experiment: keep continuous MTKViews in sync with the cap.
-            UpdateRegisteredMetalViewsPreferredFramesPerSecond(fps);
+            // Capped: MTKViews pace themselves at the cap. Uncapped: they go on-demand and
+            // the display link above paces them.
+            UpdateRegisteredMetalViewsPacing(fps);
         }
 
 
@@ -330,95 +335,6 @@ namespace DrawnUi.Draw
             });
         }
 
-        /// <summary>
-        /// Opens web link in native browser
-        /// </summary>
-        /// <param name="link"></param>
-
-        public static void OpenLink(string link)
-        {
-            try
-            {
-                var url = new NSUrl(link);
-                var res = UIApplication.SharedApplication.OpenUrl(url);
-            }
-            catch (Exception e)
-            {
-                Super.Log(e);
-            }
-        }
-
-        /// <summary>
-        /// Lists assets inside the Resources/Raw subfolder
-        /// </summary>
-        /// <param name="subfolder"></param>
-        /// <returns></returns>
-        public static IEnumerable<string> ListResources(string subfolder)
-        {
-            NSBundle mainBundle = NSBundle.MainBundle;
-            string resourcesPath = mainBundle.ResourcePath;
-            string subfolderPath = Path.Combine(resourcesPath, subfolder);
-
-            if (Directory.Exists(subfolderPath))
-            {
-                string[] files = Directory.GetFiles(subfolderPath);
-                return files.Select(Path.GetFileName).ToList();
-            }
-            else
-            {
-                return new List<string>();
-            }
-        }
-
-        public static async Task<byte[]> CaptureScreenshotAsync()
-        {
-            UIWindow window;
-            if (UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
-            {
-                window = UIApplication.SharedApplication.Windows.First();
-                if (window.GetType().Name.Contains("Popup"))
-                {
-                    var maybe = UIApplication.SharedApplication.Windows.FirstOrDefault(x => x != window);
-                    if (maybe != null)
-                    {
-                        window = maybe;
-                    }
-                }
-            }
-            else
-            {
-                window = UIApplication.SharedApplication.KeyWindow;
-            }
-
-            UIGraphics.BeginImageContextWithOptions(window.Bounds.Size, false, UIScreen.MainScreen.Scale);
-            window.Layer.RenderInContext(UIGraphics.GetCurrentContext());
-            UIImage image = UIGraphics.GetImageFromCurrentImageContext();
-            UIGraphics.EndImageContext();
-            using (NSData data = image.AsPNG())
-            {
-                var bytes = new byte[data.Length];
-                Marshal.Copy(data.Bytes, bytes, 0, Convert.ToInt32(data.Length));
-                return bytes;
-            }
-
-        }
-
-        private static bool _keepScreenOn;
-        /// <summary>
-        /// Prevents display from auto-turning off  Everytime you set this the setting will be applied.
-        /// </summary>
-        public static bool KeepScreenOn
-        {
-            get
-            {
-                return _keepScreenOn;
-            }
-            set
-            {
-                UIApplication.SharedApplication.IdleTimerDisabled = value;
-                _keepScreenOn = value;
-            }
-        }
 
     }
 }
