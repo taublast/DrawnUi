@@ -50,12 +50,12 @@ Supported hosts:
 🤩 [Fiddle](https://fiddle.drawnui.net)   
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
-## What's New 1.10.5.11
-
-*  Hotfix for templated layouts which were cached (BindableLayout-like), were not invalidated when applying staged structure changes
+## What's New 1.10.5.13
+*  Hotfix for smoother rendering loop frames sync
 
  ### Previously
 
+*  Hotfix for templated layouts which were cached (BindableLayout-like), were not invalidated when applying staged structure changes
 * Fixed SkiaCarousel changing selected index in the middle of animating.
 * Fix children clipping in viewport when children had effects. `ClipContentPath` is now in base.
 * Fix FPS metering for capped scenarions.
