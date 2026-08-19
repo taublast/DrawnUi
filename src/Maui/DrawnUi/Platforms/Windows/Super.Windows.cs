@@ -168,6 +168,9 @@ namespace DrawnUi.Draw
 
             RefreshRate = GetDisplayRefreshRate(60);
 
+            //a cap set before the display rate was known could not be snapped yet
+            MaxFps = SnapFps(MaxFps, RefreshRate);
+
             if (UsingDisplaySync)
             {
                 object lockFrane = new();
@@ -193,15 +196,26 @@ namespace DrawnUi.Draw
                                             _loopStarted = true;
                                             try
                                             {
-                                                var frameStopwatch = Stopwatch.StartNew();
+                                                var frameTick = 0L;
                                                 CompositionTarget.Rendering += (s, a) =>
                                                 {
-                                                    if (MaxFps > 0)
+                                                    var cap = MaxFps;
+                                                    if (cap > 0)
                                                     {
-                                                        var minIntervalMs = 1000.0 / MaxFps;
-                                                        if (frameStopwatch.Elapsed.TotalMilliseconds < minIntervalMs)
+                                                        // Accept one tick out of every N, N = RefreshRate / cap.
+                                                        // Counting ticks rather than measuring elapsed time: the
+                                                        // composition tick IS the vsync, so dividing it is exact,
+                                                        // while a wall-clock threshold skips whenever a tick lands
+                                                        // a hair early and pushes that frame a whole vsync late.
+                                                        var skipFrames = RefreshRate > 0
+                                                            ? (long)Math.Round(RefreshRate / cap)
+                                                            : 1;
+
+                                                        if (skipFrames < 1)
+                                                            skipFrames = 1;
+
+                                                        if (++frameTick % skipFrames != 0)
                                                             return;
-                                                        frameStopwatch.Restart();
                                                     }
                                                     OnFrame?.Invoke(null, null);
                                                 };
@@ -247,6 +261,14 @@ namespace DrawnUi.Draw
 
         static partial void OnMaxFpsChanged(int fps)
         {
+            var snapped = SnapFps(fps, RefreshRate);
+            if (snapped != fps)
+            {
+                //not a cadence this display can present — re-enters here with one that is
+                MaxFps = snapped;
+                return;
+            }
+
             if (!UsingDisplaySync)
                 Looper?.SetTargetFps(fps > 0 ? fps : RefreshRate);
         }

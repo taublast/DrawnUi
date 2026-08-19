@@ -29,6 +29,14 @@ public partial class Super
 
     public static float RefreshRate { get; protected set; }
 
+    static partial void OnMaxFpsChanged(int fps)
+    {
+        //the frame callback reads MaxFps live, it only has to be a rate the display can present
+        var snapped = SnapFps(fps, RefreshRate);
+        if (snapped != fps)
+            MaxFps = snapped;
+    }
+
     public static float GetDisplayRefreshRate(float fallback)
     {
         var ret = fallback;
@@ -58,6 +66,9 @@ public partial class Super
         MainActivity = activity;
 
         RefreshRate = GetDisplayRefreshRate(60);
+
+        //a cap set before the display rate was known could not be snapped yet
+        MaxFps = SnapFps(MaxFps, RefreshRate);
 
         Super.Screen.Density = activity.Resources.DisplayMetrics.Density;
 
@@ -101,9 +112,18 @@ public partial class Super
 
                 if (MaxFps > 0)
                 {
-                    // Vsync-aligned: skip N whole frames where N = ceil(RefreshRate / MaxFps).
-                    var skipFrames = (long)Math.Ceiling((double)RefreshRate / MaxFps);
-                    var minIntervalNanos = skipFrames * (1_000_000_000L / RefreshRate);
+                    // Vsync-aligned: accept one frame out of every N, N = RefreshRate / MaxFps
+                    // (the cap is snapped to a divisor, so that division is whole).
+                    // The threshold carries a half-vsync tolerance: two vsyncs measure 33.333ms
+                    // against a 33.333ms threshold, so a callback arriving a hair early would be
+                    // skipped and its frame pushed a whole vsync late — 33/50ms alternation at a
+                    // steady-looking 30fps. Half a vsync is less than one, so two consecutive
+                    // callbacks still can never both be accepted.
+                    var refresh = RefreshRate > 0 ? RefreshRate : 60;
+                    var vsyncNanos = 1_000_000_000.0 / refresh;
+                    var skipFrames = Math.Max(1, Math.Round(refresh / MaxFps));
+                    var minIntervalNanos = (long)(skipFrames * vsyncNanos - vsyncNanos * 0.5);
+
                     if (nanos - _lastFrameNanos < minIntervalNanos)
                     {
                         Choreographer.Instance.PostFrameCallback(_frameCallback);
