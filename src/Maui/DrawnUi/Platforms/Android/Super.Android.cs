@@ -29,6 +29,8 @@ public partial class Super
 
     public static float RefreshRate { get; protected set; }
 
+
+
     static partial void OnMaxFpsChanged(int fps)
     {
         //the frame callback reads MaxFps live, it only has to be a rate the display can present
@@ -133,6 +135,15 @@ public partial class Super
 
                 isRendering = true;
                 _lastFrameNanos = nanos;
+
+                // Vsync-aligned animation clock. Choreographer hands us the timestamp of the vsync
+                // this callback belongs to; the frame we are about to produce is presented on the
+                // NEXT one. Animators must step with that, not with wall-clock-at-draw: the draw
+                // starts after callback -> requestRender -> GL thread wakeup, and all of that
+                // scheduling noise would otherwise land in the delta as position jitter — twice as
+                // visible under a cap, where each frame carries twice the movement.
+                var vsyncStep = (long)(1_000_000_000.0 / (RefreshRate > 0 ? RefreshRate : 60));
+                VsyncFrameTimeNanos = nanos + vsyncStep;
                 OnFrame?.Invoke(null, null);
                 Choreographer.Instance.PostFrameCallback(_frameCallback);
                 isRendering = false;

@@ -151,13 +151,19 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
     private const int MaxCatchUpSlots = 4;
 
     /// <summary>
-    /// True when the platform publishes a vsync timestamp (iOS/Mac display link). Such a
-    /// platform presents continuously — it re-presents retained content every slot, and the
-    /// draw callback is not a reliable "real render" signal. Platforms without it paint
-    /// ONLY after an explicit invalidation, so there wall clock and per-paint counting are
-    /// both correct and the synthetic clock below would never resync (vsync stays 0).
+    /// True when the platform presents CONTINUOUSLY: it re-presents retained content every slot,
+    /// so the draw callback is not a reliable "real render" signal and the FPS meter would sit
+    /// pinned at the cap if it counted every one. Platforms that paint only after an explicit
+    /// invalidation are the opposite — there every paint IS a real render.
+    /// Deliberately not derived from the vsync clock: having a vsync timestamp and presenting
+    /// continuously are different properties, and Android has the first without the second.
     /// </summary>
-    private static bool HasVsyncClock => Super.VsyncFrameTimeNanos > 0;
+    private static bool PresentsContinuously =>
+#if IOS || MACCATALYST
+        true;
+#else
+        false;
+#endif
 
     // Frame clock: advances by the frame slots that actually elapsed, resyncs after an idle gap.
     // See SkiaViewAccelerated.NextFrameClock for the full rationale.
@@ -224,7 +230,7 @@ public partial class SkiaView : SKCanvasView, ISkiaDrawable
 
             // FPS on wall clock, every paint unless the platform presents continuously —
             // see SkiaViewAccelerated.OnPaintingSurface for rationale.
-            if (isDirty || !HasVsyncClock)
+            if (isDirty || !PresentsContinuously)
                 CalculateFPS(Super.GetCurrentTimeNanos());
 
 
