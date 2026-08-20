@@ -50,11 +50,12 @@ Supported hosts:
 🤩 [Fiddle](https://fiddle.drawnui.net)   
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
-## What's New 1.10.5.12
-*  Hotfix for smoother rendering loop frames sync
+## What's New 1.10.5.13
+*  Fixed `SkiaImageManager` cache keys now slash-agnostic on all platforms: `GetFromCache("/media/x.png")` and `GetFromCache("media/x.png")` hit the same cached entry (was a silent cache miss on Blazor after path-resolution changes, e.g. missing preloaded sprites).
 
  ### Previously
 
+*  Hotfix for smoother rendering loop frames sync
 *  Hotfix for templated layouts which were cached (BindableLayout-like), were not invalidated when applying staged structure changes
 * Fixed SkiaCarousel changing selected index in the middle of animating.
 * Fix children clipping in viewport when children had effects. `ClipContentPath` is now in base.
