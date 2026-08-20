@@ -51,7 +51,7 @@ Supported hosts:
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
 ## What's New 1.10.5.13
-*  Fixed `SkiaImageManager` cache keys now slash-agnostic on all platforms: `GetFromCache("/media/x.png")` and `GetFromCache("media/x.png")` hit the same cached entry (was a silent cache miss on Blazor after path-resolution changes, e.g. missing preloaded sprites).
+*  Fixed `SkiaImageManager` cache keys now slash-agnostic on all platforms.
 
  ### Previously
 
