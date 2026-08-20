@@ -339,6 +339,23 @@ public class SkiaImageManager : IDisposable
         }
     }
 
+    /// <summary>
+    /// Cache keys are stored slash-agnostic: "/media/x.png" and "media/x.png" address the same entry.
+    /// </summary>
+    private static string GetCacheKey(string uri)
+    {
+        // Strip the root slash BEFORE normalizing: on WASM (unix path rules) a rooted
+        // "/media/x.png" parses as an absolute file:// URI inside NormalizeFilePath and
+        // would never match the relative "media/x.png" key the loaders store under.
+        var normalized = uri.Replace('\\', '/');
+        if (normalized.StartsWith('/') && !normalized.StartsWith("//", StringComparison.Ordinal))
+        {
+            normalized = normalized.TrimStart('/');
+        }
+
+        return NormalizeFilePath(normalized).TrimStart('/');
+    }
+
     public void UpdateInCache(string uri, SKBitmap bitmap, int cacheLongevityMinutes)
     {
         if (string.IsNullOrWhiteSpace(uri) || bitmap == null)
@@ -346,6 +363,7 @@ public class SkiaImageManager : IDisposable
             return;
         }
 
+        uri = GetCacheKey(uri);
         _cache[uri] = new CacheEntry(bitmap, DateTimeOffset.UtcNow.AddMinutes(cacheLongevityMinutes));
     }
 
@@ -356,6 +374,7 @@ public class SkiaImageManager : IDisposable
             return false;
         }
 
+        uri = GetCacheKey(uri);
         CleanupExpired(uri);
         if (_cache.ContainsKey(uri))
         {
@@ -377,7 +396,7 @@ public class SkiaImageManager : IDisposable
             return false;
         }
 
-        return _cache.TryRemove(uri, out _);
+        return _cache.TryRemove(GetCacheKey(uri), out _);
     }
 
     public SKBitmap GetFromCache(string url)
@@ -398,6 +417,7 @@ public class SkiaImageManager : IDisposable
             return null;
         }
 
+        url = GetCacheKey(url);
         CleanupExpired(url);
         return _cache.TryGetValue(url, out var cached) ? cached.Bitmap : null;
     }
