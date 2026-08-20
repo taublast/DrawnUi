@@ -408,11 +408,19 @@ namespace DrawnUi.Draw
         }
 
         /// <summary>
-        /// Provides a cached  image if any
+        /// Provides the cached texture if any, with the canvas rect it was rasterized over —
+        /// image caches record with Translate(-Bounds) into a surface sized after
+        /// <see cref="CachedObject.Bounds"/>, so that rect, not DrawingRect, is where the
+        /// texture starts. Override when the cached representation is not a CachedObject
+        /// (see <see cref="SkiaImage"/> and its rescaled source).
         /// </summary>
-        public virtual SKImage CachedImage
+        public virtual CachedTexture CachedImage
         {
-            get { return RenderObject?.Image; }
+            get
+            {
+                var cache = RenderObject;
+                return cache != null ? new CachedTexture(cache.Image, cache.Bounds) : CachedTexture.None;
+            }
         }
 
         public static readonly BindableProperty LeftProperty

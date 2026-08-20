@@ -201,24 +201,23 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
     public bool AquiredBackground { get; set; }
 
     // Frozen snapshot for Once mode
-    private SKImage _frozenSnapshot;
+    private CachedTexture _frozenSnapshot;
     private bool _frozenSnapshotOwned;
 
     public void ReleaseFrozenSnapshot()
     {
         if (Parent != null)
         {
-            Parent.DisposeObject(_frozenSnapshot);
+            Parent.DisposeObject(_frozenSnapshot.Image);
         }
         else
-        if (_frozenSnapshotOwned && _frozenSnapshot != null)
+        if (_frozenSnapshotOwned && _frozenSnapshot.Image != null)
         {
-            _frozenSnapshot.Dispose();
-            _frozenSnapshot = null;
+            _frozenSnapshot.Image.Dispose();
         }
 
         _frozenSnapshotOwned = false;
-        _frozenSnapshot = null;
+        _frozenSnapshot = CachedTexture.None;
     }
 
     // ─── UseContext / AutoCreateInputTexture ────────────────────────────────
@@ -283,8 +282,12 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
         if (UseContext)
         {
             ctx.Canvas.Flush();
-            return ctx.Surface.Snapshot(new((int)destination.Left, (int)destination.Top,
-                (int)destination.Right, (int)destination.Bottom));
+            // ctx.Surface can be a CACHE surface, recorded with Translate(-recordArea): the
+            // canvas-space destination must be mapped into surface space or we grab the wrong
+            // region, shifted by the control offset inside that cache.
+            var mapped = ctx.Canvas.TotalMatrix.MapRect(destination);
+            return ctx.Surface.Snapshot(new((int)mapped.Left, (int)mapped.Top,
+                (int)mapped.Right, (int)mapped.Bottom));
         }
         else
         {
@@ -301,36 +304,45 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
     /// Once    — snapshot taken on first call, frozen thereafter; reset AquiredBackground to re-capture.
     /// Never   — returns null; shader must not require iImage1.
     /// </summary>
-    protected virtual SKImage GetPrimaryTextureImage(SkiaDrawingContext ctx, SKRect destination)
+    protected virtual CachedTexture GetPrimaryTexture(SkiaDrawingContext ctx, SKRect destination)
     {
         switch (UseBackground)
         {
             case PostRendererEffectUseBackgroud.Never:
-                return null;
+                return CachedTexture.None;
 
             case PostRendererEffectUseBackgroud.Once:
-                if (!AquiredBackground || _frozenSnapshot.Handle==0) //check handle as cache might be disposed
+                if (!AquiredBackground || !_frozenSnapshot.IsValid) //check handle as cache might be disposed
                 {
                     _frozenSnapshotOwned = false;
 
-                    var snapshot = Parent?.CachedImage;
-                    if (Parent?.CachedImage == null && AutoCreateInputTexture)
+                    var snapshot = Parent?.CachedImage ?? CachedTexture.None;
+                    if (!snapshot.IsValid && AutoCreateInputTexture)
                     {
-                        snapshot = CreateSnapshot(ctx, destination);
+                        // a snapshot we take ourselves spans exactly the destination
+                        snapshot = new CachedTexture(CreateSnapshot(ctx, destination), destination);
                     }
 
                     AquiredBackground = true;
                     _frozenSnapshot = snapshot;
                     return snapshot;
                 }
-                return _frozenSnapshot;
+
+                // A snapshot WE took spans whatever destination it is drawn at - if the control
+                // moved since the capture, the frozen pixels must still land on the control, so
+                // the bounds follow the destination. A frozen PARENT CACHE keeps its own bounds.
+                if (Parent != null && ReferenceEquals(_frozenSnapshot.Image, Parent.CachedImage.Image))
+                    return _frozenSnapshot;
+
+                return new CachedTexture(_frozenSnapshot.Image, destination);
 
             default: // Always
-                if (Parent?.CachedImage == null && AutoCreateInputTexture)
+                var cached = Parent?.CachedImage ?? CachedTexture.None;
+                if (!cached.IsValid && AutoCreateInputTexture)
                 {
-                    return CreateSnapshot(ctx, destination);
+                    return new CachedTexture(CreateSnapshot(ctx, destination), destination);
                 }
-                return Parent?.CachedImage;
+                return cached;
         }
     }
 
@@ -339,13 +351,14 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
     /// <summary>
     /// Syncs Effect properties to the engine before uniform creation.
     /// </summary>
-    protected virtual void SyncEngineState(SKRect destination)
+    protected virtual void SyncEngineState(SKRect destination, SKRect textureBounds)
     {
         var engine = GetEngine();
         engine.Time = TimeSeconds;
         engine.Mouse = new(MouseCurrent.X, MouseCurrent.Y);
         engine.MouseInitial = new(MouseInitial.X, MouseInitial.Y);
-        engine.Offset = new(destination.Left, destination.Top);
+        // iOffset is where the TEXTURE starts on screen, shaders sample (fragCoord - iOffset)
+        engine.Offset = new(textureBounds.Left, textureBounds.Top);
         engine.FilterMode = FilterMode;
         engine.MipmapMode = MipmapMode;
         engine.TileMode = TileMode;
@@ -361,13 +374,13 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
 
         TimeSeconds = ctx.Context.FrameTimeNanos * NanosecondsToSeconds;
 
-        var image = GetPrimaryTextureImage(ctx.Context, ctx.Destination);
-        bool shouldDisposeImage = ShouldDisposePreviousTexture(image);
+        var texture = GetPrimaryTexture(ctx.Context, ctx.Destination);
+        bool shouldDisposeImage = ShouldDisposePreviousTexture(texture);
         SKShader shader = null;
 
         try
         {
-            shader = CreateShader(ctx, image);
+            shader = CreateShader(ctx, texture);
             if (shader != null)
             {
                 paint.BlendMode = BlendMode;
@@ -383,9 +396,9 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
         finally
         {
             // Dispose the image if we created it (not frozen, not parent cache)
-            if (shouldDisposeImage && image != null)
+            if (shouldDisposeImage && texture.Image != null)
             {
-                image.Dispose();
+                texture.Image.Dispose();
             }
 
             // Dispose the shader we created this frame
@@ -400,18 +413,18 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
     /// Checks if image is a new snapshot that needs disposal this frame.
     /// Frozen snapshots are managed by ReleaseFrozenSnapshot; parent cache is never owned.
     /// </summary>
-    protected virtual bool ShouldDisposePreviousTexture(SKImage image)
+    protected virtual bool ShouldDisposePreviousTexture(CachedTexture texture)
     {
         // Frozen snapshot lifecycle is managed separately — never dispose per-frame
-        if (image == _frozenSnapshot) return false;
+        if (texture.Image == _frozenSnapshot.Image) return false;
         // Don't dispose if it's the cached image from parent
-        return image != null && image != Parent?.CachedImage;
+        return texture.Image != null && texture.Image != Parent?.CachedImage.Image;
     }
 
     /// <summary>
     /// Creates shader fresh each time - no caching of GPU resources. Use for DEV cases ONLY!!! It re-compiles shader code everytime!
     /// </summary>
-    public virtual SKShader CreateShader(DrawingContext ctx, SKImage source)
+    public virtual SKShader CreateShader(DrawingContext ctx, CachedTexture source)
     {
         var engine = GetEngine();
         SKRect destination = ctx.Destination;
@@ -452,22 +465,22 @@ public class SkiaShaderEffect : SkiaEffect, IPostRendererEffect, IComparable, IC
             // Step 2: For Always/Once modes, ensure we have a source image
             if (UseBackground != PostRendererEffectUseBackgroud.Never)
             {
-                if (source == null && AutoCreateInputTexture)
+                if (!source.IsValid && AutoCreateInputTexture)
                 {
-                    source = CreateSnapshot(ctx.Context, destination);
-                    sourceToDispose = source;
+                    sourceToDispose = CreateSnapshot(ctx.Context, destination);
+                    source = new CachedTexture(sourceToDispose, destination);
                 }
 
-                if (source == null || source.Handle==0)
+                if (!source.IsValid)
                     return null;
             }
 
             // Step 3: Sync state and build uniforms/children. The engine caches these
             // instances — do NOT dispose them here. Only the final SKShader returned
             // below is per-frame and owned by the caller.
-            SyncEngineState(destination);
+            SyncEngineState(destination, source.Bounds);
 
-            SKShader primaryTextureShader = engine.CreateTextureShader(source);
+            SKShader primaryTextureShader = engine.CreateTextureShader(source.Image);
             var textureUniforms = CreateTexturesUniforms(ctx.Context, destination, primaryTextureShader);
             var uniforms = CreateUniforms(destination);
 

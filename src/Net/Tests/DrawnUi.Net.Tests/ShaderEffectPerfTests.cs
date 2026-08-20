@@ -93,7 +93,7 @@ half4 main(float2 fragCoord)
 
         // the real discriminator: a non-null CachedImage means the effect reuses that
         // texture, null means it snapshots the surface on every draw
-        path = image.CachedImage != null ? "ScaledSource reuse" : "SNAPSHOT per frame";
+        path = image.CachedImage.IsValid ? "ScaledSource reuse" : "SNAPSHOT per frame";
 
         var sw = Stopwatch.StartNew();
         host.AdvanceFrames(frames);
