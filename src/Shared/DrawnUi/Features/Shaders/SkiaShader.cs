@@ -26,10 +26,8 @@ public class SkiaShader : IDisposable
     // Names the COMPILED shader actually declares. The indexer throws for anything else, and the
     // standard set below is not universal - a transition shader with only (progress, ratio,
     // iOffset, iResolution, iImageResolution) threw on iTime EVERY FRAME, which killed the whole
-    // effect. Resolved once per compile: the standard five become plain bools (the per-frame path
-    // then costs a field read), the set stays for HasUniform callers with custom names.
+    // effect. Built once per compile, so the guard costs a hash lookup, not an exception.
     private HashSet<string> _declaredUniforms;
-    private bool _hasResolution, _hasImageResolution, _hasTime, _hasOffset, _hasMouse;
     private SKRuntimeEffectChildren _cachedChildren;
     private SKShader _cachedTextureShader;
     private IntPtr _cachedTextureSourceHandle;
@@ -162,7 +160,6 @@ public class SkiaShader : IDisposable
         _cachedUniforms?.Dispose();
         _cachedUniforms = null;
         _declaredUniforms = null;
-        _hasResolution = _hasImageResolution = _hasTime = _hasOffset = _hasMouse = false;
 
         _cachedChildren?.Dispose();
         _cachedChildren = null;
@@ -316,42 +313,37 @@ public class SkiaShader : IDisposable
         {
             _cachedUniforms = new SKRuntimeEffectUniforms(_compiled);
             _declaredUniforms = new HashSet<string>(_cachedUniforms.Names, StringComparer.Ordinal);
-            _hasResolution = _declaredUniforms.Contains("iResolution");
-            _hasImageResolution = _declaredUniforms.Contains("iImageResolution");
-            _hasTime = _declaredUniforms.Contains("iTime");
-            _hasOffset = _declaredUniforms.Contains("iOffset");
-            _hasMouse = _declaredUniforms.Contains("iMouse");
         }
 
         var uniforms = _cachedUniforms;
 
-        if (_hasResolution)
+        if (HasUniform("iResolution"))
         {
             _bufResolution[0] = viewportWidth;
             _bufResolution[1] = viewportHeight;
             uniforms["iResolution"] = _bufResolution;
         }
 
-        if (_hasImageResolution)
+        if (HasUniform("iImageResolution"))
         {
             _bufImageResolution[0] = imageWidth;
             _bufImageResolution[1] = imageHeight;
             uniforms["iImageResolution"] = _bufImageResolution;
         }
 
-        if (_hasTime)
+        if (HasUniform("iTime"))
         {
             uniforms["iTime"] = Time;
         }
 
-        if (_hasOffset)
+        if (HasUniform("iOffset"))
         {
             _bufOffset[0] = Offset.X;
             _bufOffset[1] = Offset.Y;
             uniforms["iOffset"] = _bufOffset;
         }
 
-        if (_hasMouse)
+        if (HasUniform("iMouse"))
         {
             _bufMouse[0] = Mouse.X;
             _bufMouse[1] = Mouse.Y;
