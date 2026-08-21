@@ -1,4 +1,4 @@
-# DrawnUI for .NET
+﻿# DrawnUI for .NET
 ![NuGet DrawnUi.Net](https://img.shields.io/nuget/v/DrawnUi.Net.svg)
 ![License](https://img.shields.io/github/license/taublast/DrawnUi.svg)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=flat)](https://github.com/taublast/drawnui/blob/master/CONTRIBUTING.md)
@@ -54,7 +54,6 @@ Supported hosts:
 * Fixed shader effects sampling the wrong texel when the input texture is not the control's box: an image whose `AspectCover` overflows its box (square/landscape source in a taller-than-wide tile) rendered off-centre, and a cache inflated by effects/shadow margins was offset by that margin. `CachedImage` now returns a `CachedTexture` carrying the image together with the canvas rect it was rasterized over. **Breaking** for custom effects: `GetPrimaryTextureImage` is renamed `GetPrimaryTexture`, and it, `CreateShader`, `ShouldDisposePreviousTexture` and `SyncEngineState` take/return `CachedTexture`.
 * Fixed effect input snapshot taken with canvas coordinates out of a cache surface when the parent bakes into a cache.
 * Fixed templated `SkiaCarousel` with `RecyclingTemplate.Disabled` coming up blank: the cell pool was one short of what a full initialization rents at once.
-* Fixed shaders that do not declare `iTime`/`iMouse` throwing on every frame, which killed the effect. Added `SkiaShader.HasUniform(name)`.
 *  Fixed `SkiaImageManager` cache keys now slash-agnostic on all platforms.
 
  ### Previously
