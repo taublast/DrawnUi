@@ -22,12 +22,6 @@ public class SkiaShader : IDisposable
     // Cached native objects reused across frames. All are bound to _compiled and
     // must be disposed+nulled whenever _compiled changes (see DisposeCompiled).
     private SKRuntimeEffectUniforms _cachedUniforms;
-
-    // Names the COMPILED shader actually declares. The indexer throws for anything else, and the
-    // standard set below is not universal - a transition shader with only (progress, ratio,
-    // iOffset, iResolution, iImageResolution) threw on iTime EVERY FRAME, which killed the whole
-    // effect. Built once per compile, so the guard costs a hash lookup, not an exception.
-    private HashSet<string> _declaredUniforms;
     private SKRuntimeEffectChildren _cachedChildren;
     private SKShader _cachedTextureShader;
     private IntPtr _cachedTextureSourceHandle;
@@ -159,7 +153,6 @@ public class SkiaShader : IDisposable
         // They MUST be torn down before the effect handle changes.
         _cachedUniforms?.Dispose();
         _cachedUniforms = null;
-        _declaredUniforms = null;
 
         _cachedChildren?.Dispose();
         _cachedChildren = null;
@@ -309,59 +302,29 @@ public class SkiaShader : IDisposable
         float viewportWidth, float viewportHeight,
         float imageWidth, float imageHeight)
     {
-        if (_cachedUniforms == null)
-        {
-            _cachedUniforms = new SKRuntimeEffectUniforms(_compiled);
-            _declaredUniforms = new HashSet<string>(_cachedUniforms.Names, StringComparer.Ordinal);
-        }
+        var uniforms = _cachedUniforms ??= new SKRuntimeEffectUniforms(_compiled);
 
-        var uniforms = _cachedUniforms;
+        _bufResolution[0] = viewportWidth;
+        _bufResolution[1] = viewportHeight;
+        uniforms["iResolution"] = _bufResolution;
 
-        if (HasUniform("iResolution"))
-        {
-            _bufResolution[0] = viewportWidth;
-            _bufResolution[1] = viewportHeight;
-            uniforms["iResolution"] = _bufResolution;
-        }
+        _bufImageResolution[0] = imageWidth;
+        _bufImageResolution[1] = imageHeight;
+        uniforms["iImageResolution"] = _bufImageResolution;
 
-        if (HasUniform("iImageResolution"))
-        {
-            _bufImageResolution[0] = imageWidth;
-            _bufImageResolution[1] = imageHeight;
-            uniforms["iImageResolution"] = _bufImageResolution;
-        }
+        uniforms["iTime"] = Time;
 
-        if (HasUniform("iTime"))
-        {
-            uniforms["iTime"] = Time;
-        }
+        _bufOffset[0] = Offset.X;
+        _bufOffset[1] = Offset.Y;
+        uniforms["iOffset"] = _bufOffset;
 
-        if (HasUniform("iOffset"))
-        {
-            _bufOffset[0] = Offset.X;
-            _bufOffset[1] = Offset.Y;
-            uniforms["iOffset"] = _bufOffset;
-        }
-
-        if (HasUniform("iMouse"))
-        {
-            _bufMouse[0] = Mouse.X;
-            _bufMouse[1] = Mouse.Y;
-            _bufMouse[2] = MouseInitial.X;
-            _bufMouse[3] = MouseInitial.Y;
-            uniforms["iMouse"] = _bufMouse;
-        }
+        _bufMouse[0] = Mouse.X;
+        _bufMouse[1] = Mouse.Y;
+        _bufMouse[2] = MouseInitial.X;
+        _bufMouse[3] = MouseInitial.Y;
+        uniforms["iMouse"] = _bufMouse;
 
         return uniforms;
-    }
-
-    /// <summary>
-    /// True when the compiled shader declares this uniform. Setting an undeclared one throws,
-    /// so callers adding custom uniforms should check first instead of catching per frame.
-    /// </summary>
-    public bool HasUniform(string name)
-    {
-        return _declaredUniforms != null && _declaredUniforms.Contains(name);
     }
 
     /// <summary>
