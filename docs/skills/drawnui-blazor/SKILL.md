@@ -57,6 +57,10 @@ Pipeline: JS gesture package → `Canvas.OnTouchAction(TouchActionEventArgs)` �
 
 Frame loop is `Task.Delay`-based off `Super.MaxFps` (not rAF).
 
+## SkiaImageManager cache keys (Blazor) — slash-agnostic (2026-08-20)
+
+Symptom: a control's `SkiaImageManager.Instance.GetFromCache("/media/x.png")` silently returns null after `PreloadImages(["media/x.png"])` → sprite/overlay just missing, zero console errors. Cause: lib commit `96caf1e8` changed `NormalizeFilePath` from always-forcing a leading `/` on cache keys to storing relative keys — old-contract callers prepending `/` miss forever. Fixed in lib: `GetCacheKey` normalizes symmetrically in Add/Get/Update/RemoveFromCache, so `/media/x.png` == `media/x.png`. WASM trap inside that fix: on the browser runtime (unix path rules) `Uri.TryCreate("/media/x.png", Absolute)` SUCCEEDS as `file:///media/x.png` (fails on Windows — desktop shell tests mislead), so the root slash must be trimmed BEFORE `NormalizeFilePath`, not after. Debugging rule: an image cache miss draws nothing silently — check key both with and without leading slash before theorizing about render code.
+
 ## Fullscreen canvas backgrounds
 
 Real browser fullscreen targets the canvas host element (`.xaml-canvas`), not the page root — and browsers apply `:not(:root):fullscreen::backdrop { background: black; }`. If a scene expects an image/gradient behind a centered surface in fullscreen, style the actual fullscreen host AND its backdrop in GLOBAL CSS (scoped `.razor.css` can miss child pseudo-elements):

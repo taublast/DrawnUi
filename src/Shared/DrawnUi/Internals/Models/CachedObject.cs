@@ -2,6 +2,32 @@
 
 namespace DrawnUi.Draw;
 
+/// <summary>
+/// A texture together with WHERE it sits, in canvas pixels. The two halves are inseparable:
+/// a cache surface is recorded over <see cref="CachedObject.Bounds"/>, which can be inflated
+/// beyond the control box by effects/shadow margins, and <see cref="SkiaImage"/> hands over
+/// its rescaled source, rasterized at DISPLAY size — neither starts at DrawingRect. Consumers
+/// that sample the texture by screen coordinates (post-renderer effects) get it wrong unless
+/// the origin travels with the image.
+/// </summary>
+public readonly struct CachedTexture
+{
+    public CachedTexture(SKImage image, SKRect bounds)
+    {
+        Image = image;
+        Bounds = bounds;
+    }
+
+    public readonly SKImage Image;
+
+    /// <summary>Canvas-space rect the texture was rasterized over. Its top-left is the texel (0,0).</summary>
+    public readonly SKRect Bounds;
+
+    public bool IsValid => Image != null && Image.Handle != 0;
+
+    public static CachedTexture None => default;
+}
+
 public class CachedObject : ISkiaDisposable
 {
     public int DataContext { get; set; }

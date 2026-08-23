@@ -1243,8 +1243,13 @@ public class SkiaCarousel : SnappingLayout
                 if (!IsTemplated || RecyclingTemplate == RecyclingTemplate.Disabled)
                 {
                     var view = ChildrenFactory.GetViewForIndex(index);
-                    if (IsTemplated) cellsToRelease.Add(view);
-                    view.InvalidateWithChildren();
+                    if (view != null)
+                    {
+                        if (IsTemplated) cellsToRelease.Add(view);
+                        view.InvalidateWithChildren();
+                    }
+                    //a refused cell must not take the whole layout down: without this the NRE
+                    //escaped through OnLayoutChanged and left snap points empty = blank carousel
                 }
 
                 var offset = (float)(index * (-SidesOffset * 2 + Spacing));
@@ -1263,7 +1268,8 @@ public class SkiaCarousel : SnappingLayout
             if (IsTemplated)
                 foreach (var cell in cellsToRelease)
                 {
-                    ChildrenFactory.ReleaseViewInUseForIndex(cell.ContextIndex, cell);
+                    if (cell != null)
+                        ChildrenFactory.ReleaseViewInUseForIndex(cell.ContextIndex, cell);
                 }
         }
 
@@ -1348,7 +1354,14 @@ public class SkiaCarousel : SnappingLayout
     {
         var poolSize = 3;
         if (this.RecyclingTemplate == RecyclingTemplate.Disabled)
-            poolSize = ItemsSource.Count;
+        {
+            // Count alone is one short: InitializeChildren rents EVERY index at once (releasing
+            // only in its finally) while the currently displayed cell is already rented, so the
+            // last index got null from the full pool and the carousel came up blank. Same
+            // +mult*2 headroom the base uses for non-recycling lists.
+            var count = EffectiveItemsSource?.Count ?? ItemsSource?.Count ?? 0;
+            poolSize = count + 2;
+        }
 
         return poolSize;
     }

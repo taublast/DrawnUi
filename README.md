@@ -1,4 +1,4 @@
-# DrawnUI for .NET
+﻿# DrawnUI for .NET
 ![NuGet DrawnUi.Net](https://img.shields.io/nuget/v/DrawnUi.Net.svg)
 ![License](https://img.shields.io/github/license/taublast/DrawnUi.svg)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=flat)](https://github.com/taublast/drawnui/blob/master/CONTRIBUTING.md)
@@ -50,11 +50,18 @@ Supported hosts:
 🤩 [Fiddle](https://fiddle.drawnui.net)   
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
-## What's New 1.10.5.12
-*  Hotfix for smoother rendering loop frames sync
+
+## What's New 1.10.5.13
+* Fix text alignement dropping shadow
+* Fixed templated `SkiaCarousel` with `RecyclingTemplate.Disabled` coming up blank: the cell pool was one short of what a full initialization rents at once.
+*  Fixed `SkiaImageManager` cache keys now slash-agnostic on all platforms.
+* Fixed effect input snapshot taken with canvas coordinates out of a cache surface when the parent cached.
+* Docs: the standard shader uniforms (`iResolution`, `iImageResolution`, `iTime`, `iOffset`, `iMouse`) are **mandatory** in every `.sksl`, even when unused. The engine writes all of them every frame and writing one the compiled shader does not declare throws, aborting shader creation so the effect silently renders nothing.
+ 
 
  ### Previously
 
+*  Hotfix for smoother rendering loop frames sync
 *  Hotfix for templated layouts which were cached (BindableLayout-like), were not invalidated when applying staged structure changes
 * Fixed SkiaCarousel changing selected index in the middle of animating.
 * Fix children clipping in viewport when children had effects. `ClipContentPath` is now in base.

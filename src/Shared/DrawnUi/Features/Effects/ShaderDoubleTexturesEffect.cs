@@ -1,4 +1,4 @@
-using SKBitmap = SkiaSharp.SKBitmap;
+﻿using SKBitmap = SkiaSharp.SKBitmap;
 using SKData = SkiaSharp.SKData;
 using SKMemoryStream = SkiaSharp.SKMemoryStream;
  
@@ -15,12 +15,13 @@ public class ShaderDoubleTexturesEffect : SkiaShaderEffect
         return !(Parent == null || Parent.DrawingRect.Width <= 0 || Parent.DrawingRect.Height <= 0);
     }
 
-    protected override bool ShouldDisposePreviousTexture(SKImage image)
+    protected override bool ShouldDisposePreviousTexture(CachedTexture texture)
     {
+        var image = texture.Image;
         if (image == null) return false;
 
         // base check, don't dispose parent's cached image
-        if (image == Parent?.CachedImage) return false;
+        if (image == Parent?.CachedImage.Image) return false;
 
         // Don't dispose images from other controls
         if (image == _controlFrom?.RenderObject?.Image) return false;
@@ -78,11 +79,12 @@ public class ShaderDoubleTexturesEffect : SkiaShaderEffect
     #region PrimaryTexture
 
 
-    protected override SKImage GetPrimaryTextureImage(SkiaDrawingContext ctx, SKRect destination)
+    protected override CachedTexture GetPrimaryTexture(SkiaDrawingContext ctx, SKRect destination)
     {
         if (ControlFrom != null)
         {
-            return _controlFrom.RenderObject?.Image;
+            //that control knows where its own texture sits
+            return _controlFrom?.CachedImage ?? CachedTexture.None;
         }
 
         if (PrimarySource != null)
@@ -91,10 +93,11 @@ public class ShaderDoubleTexturesEffect : SkiaShaderEffect
             {
                 ResizePrimaryLoadedBitmap();
             }
-            return ResizedPrimaryImage;
+            //rescaled to Parent.DrawingRect, so it spans the destination
+            return new CachedTexture(ResizedPrimaryImage, destination);
         }
 
-        return base.GetPrimaryTextureImage(ctx, destination);
+        return base.GetPrimaryTexture(ctx, destination);
     }
 
     #region FromControl

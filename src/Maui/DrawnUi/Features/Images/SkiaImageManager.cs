@@ -382,7 +382,7 @@ public partial class SkiaImageManager : IDisposable
                     }
 
             // 1 Try to get from cache
-            var cacheKey = uri;
+            var cacheKey = GetCacheKey(uri);
 
             if (_cachingProvider != null && !string.IsNullOrEmpty(cacheKey))
             {
@@ -500,7 +500,7 @@ public partial class SkiaImageManager : IDisposable
                         // Add the loaded bitmap to the cache
                         if (_cachingProvider != null)
                         {
-                            _cachingProvider.Set(uri, bitmap, TimeSpan.FromSeconds(CacheLongevitySecs));
+                            _cachingProvider.Set(GetCacheKey(uri), bitmap, TimeSpan.FromSeconds(CacheLongevitySecs));
                         }
                         TraceLog($"ImageLoadManager: Loaded bitmap for UriImageSource {uri}");
                         // Remove the Task from the loadingBitmaps dictionary now that we're done loading this image
@@ -514,7 +514,7 @@ public partial class SkiaImageManager : IDisposable
                             // Add the loaded bitmap to the cache
                             if (_cachingProvider != null)
                             {
-                                _cachingProvider.Set(uri, bitmap, TimeSpan.FromSeconds(CacheLongevitySecs));
+                                _cachingProvider.Set(GetCacheKey(uri), bitmap, TimeSpan.FromSeconds(CacheLongevitySecs));
                             }
 
                             TraceLog($"ImageLoadManager: Loaded bitmap for FileImageSource {uri}");
@@ -697,11 +697,31 @@ public partial class SkiaImageManager : IDisposable
     }
 
 
+    /// <summary>
+    /// Cache keys are slash-agnostic: "/media/x.png", "media/x.png" and "media\x.png" address the same entry.
+    /// Absolute URLs (containing "://") are left untouched.
+    /// </summary>
+    private static string GetCacheKey(string uri)
+    {
+        if (string.IsNullOrWhiteSpace(uri) || uri.Contains("://"))
+        {
+            return uri;
+        }
+
+        var normalized = uri.Replace('\\', '/');
+        if (normalized.StartsWith('/') && !normalized.StartsWith("//", StringComparison.Ordinal))
+        {
+            normalized = normalized.TrimStart('/');
+        }
+
+        return normalized;
+    }
+
     public void UpdateInCache(string uri, SKBitmap bitmap, int cacheLongevityMinutes)
     {
         if (_cachingProvider != null)
         {
-            _cachingProvider.Set(uri, bitmap, TimeSpan.FromMinutes(cacheLongevityMinutes));
+            _cachingProvider.Set(GetCacheKey(uri), bitmap, TimeSpan.FromMinutes(cacheLongevityMinutes));
         }
     }
 
@@ -714,6 +734,7 @@ public partial class SkiaImageManager : IDisposable
     /// <returns></returns>
     public bool AddToCache(string uri, SKBitmap bitmap, int cacheLongevitySecs)
     {
+        uri = GetCacheKey(uri);
         if (_cachingProvider == null || _cachingProvider.Exists(uri))
             return false;
 
@@ -746,7 +767,7 @@ public partial class SkiaImageManager : IDisposable
             return null;
         }
 
-        return _cachingProvider.Get<SKBitmap>(url)?.Value;
+        return _cachingProvider.Get<SKBitmap>(GetCacheKey(url))?.Value;
     }
 
     public async Task Preload(ImageSource source, CancellationTokenSource cts)
@@ -764,7 +785,7 @@ public partial class SkiaImageManager : IDisposable
             return;
         }
 
-        var cacheKey = uri;
+        var cacheKey = GetCacheKey(uri);
 
         // Check if the image is already cached or being loaded
         if (_cachingProvider != null && _cachingProvider.Get<SKBitmap>(cacheKey).HasValue || _trackLoadingBitmapsUris.ContainsKey(uri))

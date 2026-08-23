@@ -1,4 +1,4 @@
-# Shaders
+﻿# Shaders
 
 DrawnUI ships with a thin, reusable SKSL shader layer on top of SkiaSharp's
 `SKRuntimeEffect`. It is designed for **hot-path rendering** — applying custom
@@ -32,7 +32,7 @@ result back onto the canvas. No code-behind required.
 ## Standard uniforms
 
 `SkiaShader` provides the Shadertoy-style uniform set out of the box. Declare
-the ones you need in your `.sksl` file:
+**all of them** in your `.sksl` file, even the ones you never read:
 
 ```glsl
 uniform shader iImage1;          // input texture (the control's output)
@@ -43,8 +43,14 @@ uniform float2 iOffset;          // top-left of the draw rect
 uniform float4 iMouse;           // xy = current, zw = down position
 ```
 
-You do not need to populate them manually — the base class handles it every
-frame.
+You do not need to populate them manually — the base class writes every one of
+them on every frame. That is also why they are all mandatory: writing a uniform
+the compiled shader does not declare throws, and the throw aborts shader
+creation, so the whole effect silently stops rendering. An unused declared
+uniform costs nothing.
+
+Shaders assembled from a template (`//script-goes-here`) declare them once in
+the template, not per snippet.
 
 ## Resource loading
 
