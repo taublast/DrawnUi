@@ -922,6 +922,8 @@ items:
   - DrawnUi.Draw.SkiaControl.OnFirstDrawn
   - DrawnUi.Draw.SkiaControl.WasFirstTimeDrawn
   - DrawnUi.Draw.SkiaControl.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)
+  - DrawnUi.Draw.SkiaControl.ClipContentPath
+  - DrawnUi.Draw.SkiaControl.GetContentClip(System.Object)
   - DrawnUi.Draw.SkiaControl.DebugRenderingColor
   - DrawnUi.Draw.SkiaControl.UseTranslationY
   - DrawnUi.Draw.SkiaControl.UseTranslationX
@@ -6853,7 +6855,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Draw
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3049
+    startLine: 3079
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6884,7 +6886,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetScrollOffset
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3306
+    startLine: 3336
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6934,7 +6936,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ParallaxComputedValue
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3359
+    startLine: 3389
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6963,7 +6965,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DrawViews
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3370
+    startLine: 3400
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7002,7 +7004,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ContentAvailableSpace
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3614
+    startLine: 3644
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7031,7 +7033,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ContentRectWithOffset
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3619
+    startLine: 3649
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7062,7 +7064,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: .ctor
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3621
+    startLine: 3651
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7091,7 +7093,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Init
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3626
+    startLine: 3656
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7117,7 +7119,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetChildren
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3635
+    startLine: 3665
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7151,7 +7153,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ApplyBindingContext
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3642
+    startLine: 3672
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7180,7 +7182,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetContent
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3654
+    startLine: 3684
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7212,7 +7214,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnLayoutReady
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3675
+    startLine: 3705
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7241,7 +7243,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnLayoutChanged
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3682
+    startLine: 3712
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7270,7 +7272,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetHeader
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3689
+    startLine: 3719
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7299,7 +7301,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetFooter
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3707
+    startLine: 3737
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7328,7 +7330,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ScrollingSpeedMsProperty
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3726
+    startLine: 3756
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7355,7 +7357,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ScrollingSpeedMs
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3735
+    startLine: 3765
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7386,7 +7388,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ZoomLockedProperty
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3741
+    startLine: 3771
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7413,7 +7415,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ZoomLocked
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3746
+    startLine: 3776
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7442,7 +7444,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ZoomMinProperty
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3752
+    startLine: 3782
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7469,7 +7471,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ZoomMin
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3757
+    startLine: 3787
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7498,7 +7500,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ZoomMaxProperty
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3763
+    startLine: 3793
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7525,7 +7527,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ZoomMax
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3768
+    startLine: 3798
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7554,7 +7556,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ViewportZoomProperty
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3774
+    startLine: 3804
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7581,7 +7583,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ViewportZoom
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3779
+    startLine: 3809
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7610,7 +7612,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: VelocityImageLoaderLockProperty
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3785
+    startLine: 3815
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7637,7 +7639,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: VelocityImageLoaderLock
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3794
+    startLine: 3824
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7668,7 +7670,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ContentProperty
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3838
+    startLine: 3868
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7695,7 +7697,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Content
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3852
+    startLine: 3882
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7727,7 +7729,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OrientationProperty
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3858
+    startLine: 3888
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7754,7 +7756,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Orientation
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3866
+    startLine: 3896
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7785,7 +7787,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ScrollTypeProperty
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3872
+    startLine: 3902
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7812,7 +7814,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ScrollType
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3880
+    startLine: 3910
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7843,7 +7845,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AdaptToKeyboardForProperty
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3890
+    startLine: 3920
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7870,7 +7872,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AdaptToKeyboardFor
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3896
+    startLine: 3926
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7899,7 +7901,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AdaptToKeyboardSizeProperty
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3902
+    startLine: 3932
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7926,7 +7928,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AdaptToKeyboardSize
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3908
+    startLine: 3938
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7955,7 +7957,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CalculateNeededScrollForKeyboard
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3925
+    startLine: 3955
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -7981,7 +7983,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AdaptToKeyboard
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3964
+    startLine: 3994
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8007,7 +8009,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnPropertyChanged
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3981
+    startLine: 4011
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8043,7 +8045,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InvalidateViewport
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 3992
+    startLine: 4022
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8072,7 +8074,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WillClipBounds
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 4000
+    startLine: 4030
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8104,7 +8106,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnDrawn
     path: ../src/Shared/DrawnUi/Draw/Scroll/SkiaScroll.cs
-    startLine: 4024
+    startLine: 4054
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22606,6 +22608,44 @@ references:
     name: SKPath
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skpath
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.ClipContentPath
+  commentId: F:DrawnUi.Draw.SkiaControl.ClipContentPath
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClipContentPath
+  name: ClipContentPath
+  nameWithType: SkiaControl.ClipContentPath
+  fullName: DrawnUi.Draw.SkiaControl.ClipContentPath
+- uid: DrawnUi.Draw.SkiaControl.GetContentClip(System.Object)
+  commentId: M:DrawnUi.Draw.SkiaControl.GetContentClip(System.Object)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetContentClip_System_Object_
+  name: GetContentClip(object)
+  nameWithType: SkiaControl.GetContentClip(object)
+  fullName: DrawnUi.Draw.SkiaControl.GetContentClip(object)
+  nameWithType.vb: SkiaControl.GetContentClip(Object)
+  fullName.vb: DrawnUi.Draw.SkiaControl.GetContentClip(Object)
+  name.vb: GetContentClip(Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.GetContentClip(System.Object)
+    name: GetContentClip
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetContentClip_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.GetContentClip(System.Object)
+    name: GetContentClip
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetContentClip_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.DebugRenderingColor
   commentId: F:DrawnUi.Draw.SkiaControl.DebugRenderingColor

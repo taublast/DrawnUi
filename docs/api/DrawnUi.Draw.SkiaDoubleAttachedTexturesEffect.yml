@@ -61,11 +61,11 @@ items:
   - DrawnUi.Draw.SkiaShaderEffect.BlendMode
   - DrawnUi.Draw.SkiaShaderEffect.Flush(DrawnUi.Draw.SkiaDrawingContext)
   - DrawnUi.Draw.SkiaShaderEffect.CreateSnapshot(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
-  - DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTextureImage(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
-  - DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+  - DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect,SkiaSharp.SKRect)
   - DrawnUi.Draw.SkiaShaderEffect.Render(DrawnUi.Draw.DrawingContext)
-  - DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(SkiaSharp.SKImage)
-  - DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage)
+  - DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
+  - DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.CachedTexture)
   - DrawnUi.Draw.SkiaShaderEffect.NeedApply
   - DrawnUi.Draw.SkiaShaderEffect.TimeSeconds
   - DrawnUi.Draw.SkiaShaderEffect.MouseCurrent
@@ -627,18 +627,18 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
   - name: )
-- uid: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTextureImage(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTextureImage(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+- uid: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
   parent: DrawnUi.Draw.SkiaShaderEffect
   isExternal: true
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetPrimaryTextureImage_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
-  name: GetPrimaryTextureImage(SkiaDrawingContext, SKRect)
-  nameWithType: SkiaShaderEffect.GetPrimaryTextureImage(SkiaDrawingContext, SKRect)
-  fullName: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTextureImage(DrawnUi.Draw.SkiaDrawingContext, SkiaSharp.SKRect)
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetPrimaryTexture_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
+  name: GetPrimaryTexture(SkiaDrawingContext, SKRect)
+  nameWithType: SkiaShaderEffect.GetPrimaryTexture(SkiaDrawingContext, SKRect)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext, SkiaSharp.SKRect)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTextureImage(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
-    name: GetPrimaryTextureImage
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetPrimaryTextureImage_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
+  - uid: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+    name: GetPrimaryTexture
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetPrimaryTexture_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
   - name: (
   - uid: DrawnUi.Draw.SkiaDrawingContext
     name: SkiaDrawingContext
@@ -651,9 +651,9 @@ references:
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTextureImage(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
-    name: GetPrimaryTextureImage
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetPrimaryTextureImage_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
+  - uid: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+    name: GetPrimaryTexture
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetPrimaryTexture_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
   - name: (
   - uid: DrawnUi.Draw.SkiaDrawingContext
     name: SkiaDrawingContext
@@ -665,29 +665,41 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
   - name: )
-- uid: DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect)
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect)
+- uid: DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect,SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect,SkiaSharp.SKRect)
   parent: DrawnUi.Draw.SkiaShaderEffect
   isExternal: true
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SyncEngineState_SkiaSharp_SKRect_
-  name: SyncEngineState(SKRect)
-  nameWithType: SkiaShaderEffect.SyncEngineState(SKRect)
-  fullName: DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect)
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SyncEngineState_SkiaSharp_SKRect_SkiaSharp_SKRect_
+  name: SyncEngineState(SKRect, SKRect)
+  nameWithType: SkiaShaderEffect.SyncEngineState(SKRect, SKRect)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect, SkiaSharp.SKRect)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect)
+  - uid: DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect,SkiaSharp.SKRect)
     name: SyncEngineState
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SyncEngineState_SkiaSharp_SKRect_
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SyncEngineState_SkiaSharp_SKRect_SkiaSharp_SKRect_
   - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
   - uid: SkiaSharp.SKRect
     name: SKRect
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect)
+  - uid: DrawnUi.Draw.SkiaShaderEffect.SyncEngineState(SkiaSharp.SKRect,SkiaSharp.SKRect)
     name: SyncEngineState
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SyncEngineState_SkiaSharp_SKRect_
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_SyncEngineState_SkiaSharp_SKRect_SkiaSharp_SKRect_
   - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
   - uid: SkiaSharp.SKRect
     name: SKRect
     isExternal: true
@@ -718,71 +730,65 @@ references:
     name: DrawingContext
     href: DrawnUi.Draw.DrawingContext.html
   - name: )
-- uid: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(SkiaSharp.SKImage)
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(SkiaSharp.SKImage)
+- uid: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
   parent: DrawnUi.Draw.SkiaShaderEffect
-  isExternal: true
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShouldDisposePreviousTexture_SkiaSharp_SKImage_
-  name: ShouldDisposePreviousTexture(SKImage)
-  nameWithType: SkiaShaderEffect.ShouldDisposePreviousTexture(SKImage)
-  fullName: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(SkiaSharp.SKImage)
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShouldDisposePreviousTexture_DrawnUi_Draw_CachedTexture_
+  name: ShouldDisposePreviousTexture(CachedTexture)
+  nameWithType: SkiaShaderEffect.ShouldDisposePreviousTexture(CachedTexture)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(SkiaSharp.SKImage)
+  - uid: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
     name: ShouldDisposePreviousTexture
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShouldDisposePreviousTexture_SkiaSharp_SKImage_
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShouldDisposePreviousTexture_DrawnUi_Draw_CachedTexture_
   - name: (
-  - uid: SkiaSharp.SKImage
-    name: SKImage
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - uid: DrawnUi.Draw.CachedTexture
+    name: CachedTexture
+    href: DrawnUi.Draw.CachedTexture.html
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(SkiaSharp.SKImage)
+  - uid: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
     name: ShouldDisposePreviousTexture
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShouldDisposePreviousTexture_SkiaSharp_SKImage_
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShouldDisposePreviousTexture_DrawnUi_Draw_CachedTexture_
   - name: (
-  - uid: SkiaSharp.SKImage
-    name: SKImage
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - uid: DrawnUi.Draw.CachedTexture
+    name: CachedTexture
+    href: DrawnUi.Draw.CachedTexture.html
   - name: )
-- uid: DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage)
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage)
+- uid: DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.CachedTexture)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.CachedTexture)
   parent: DrawnUi.Draw.SkiaShaderEffect
-  isExternal: true
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateShader_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_
-  name: CreateShader(DrawingContext, SKImage)
-  nameWithType: SkiaShaderEffect.CreateShader(DrawingContext, SKImage)
-  fullName: DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext, SkiaSharp.SKImage)
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateShader_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_CachedTexture_
+  name: CreateShader(DrawingContext, CachedTexture)
+  nameWithType: SkiaShaderEffect.CreateShader(DrawingContext, CachedTexture)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext, DrawnUi.Draw.CachedTexture)
   spec.csharp:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage)
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.CachedTexture)
     name: CreateShader
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateShader_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateShader_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_CachedTexture_
   - name: (
   - uid: DrawnUi.Draw.DrawingContext
     name: DrawingContext
     href: DrawnUi.Draw.DrawingContext.html
   - name: ','
   - name: " "
-  - uid: SkiaSharp.SKImage
-    name: SKImage
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - uid: DrawnUi.Draw.CachedTexture
+    name: CachedTexture
+    href: DrawnUi.Draw.CachedTexture.html
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,SkiaSharp.SKImage)
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateShader(DrawnUi.Draw.DrawingContext,DrawnUi.Draw.CachedTexture)
     name: CreateShader
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateShader_DrawnUi_Draw_DrawingContext_SkiaSharp_SKImage_
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateShader_DrawnUi_Draw_DrawingContext_DrawnUi_Draw_CachedTexture_
   - name: (
   - uid: DrawnUi.Draw.DrawingContext
     name: DrawingContext
     href: DrawnUi.Draw.DrawingContext.html
   - name: ','
   - name: " "
-  - uid: SkiaSharp.SKImage
-    name: SKImage
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - uid: DrawnUi.Draw.CachedTexture
+    name: CachedTexture
+    href: DrawnUi.Draw.CachedTexture.html
   - name: )
 - uid: DrawnUi.Draw.SkiaShaderEffect.NeedApply
   commentId: P:DrawnUi.Draw.SkiaShaderEffect.NeedApply

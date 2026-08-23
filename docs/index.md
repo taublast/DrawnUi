@@ -346,6 +346,8 @@ Unlike traditional UI stacks that rely only on native platform widgets, DrawnUI 
 
 Perfect for apps requiring **custom UI designs**, **complex animations**, **game-like interfaces**, **headless rendering workflows**, or **pixel-perfect cross-platform consistency** that traditional controls alone can't achieve.
 
+😯 <a href="https://drawnui.net/sandbox/" target="_blank" rel="noopener noreferrer">See Blazor WebAssembly sample</a>
+
 ### 🏃 **Master Performance**
 - **Fast App Startup** for totally drawn apps
 - **Caching system** for retained rendering
@@ -357,6 +359,8 @@ Perfect for apps requiring **custom UI designs**, **complex animations**, **game
 - **Gesture system** with multi-touch support
 - **2D/3D transforms** and visual effects
 - **Custom shaders** and filters
+
+😃 <a href="https://fiddle.drawnui.net" target="_blank" rel="noopener noreferrer">Don't miss the Fiddle!</a>
 
 ### 👨‍💻 **Familiar Yet Powerful**
 - **MAUI/WFP-like** properties for layout etc

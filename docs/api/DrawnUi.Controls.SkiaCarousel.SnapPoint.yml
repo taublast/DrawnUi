@@ -21,7 +21,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SnapPoint
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1365
+    startLine: 1395
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -58,7 +58,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Id
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1367
+    startLine: 1397
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -87,7 +87,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Location
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1368
+    startLine: 1398
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls

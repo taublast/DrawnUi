@@ -51,16 +51,16 @@ Supported hosts:
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
 
-## What's New 1.10.5.13
+## What's New 1.10.5.14
+ * Hotfix safe insets on Android .NET 9 for latest MAUI safe insets update
+
+ ### Previously
+
 * Fix text alignement dropping shadow
 * Fixed templated `SkiaCarousel` with `RecyclingTemplate.Disabled` coming up blank: the cell pool was one short of what a full initialization rents at once.
 *  Fixed `SkiaImageManager` cache keys now slash-agnostic on all platforms.
 * Fixed effect input snapshot taken with canvas coordinates out of a cache surface when the parent cached.
 * Docs: the standard shader uniforms (`iResolution`, `iImageResolution`, `iTime`, `iOffset`, `iMouse`) are **mandatory** in every `.sksl`, even when unused. The engine writes all of them every frame and writing one the compiled shader does not declare throws, aborting shader creation so the effect silently renders nothing.
- 
-
- ### Previously
-
 *  Hotfix for smoother rendering loop frames sync
 *  Hotfix for templated layouts which were cached (BindableLayout-like), were not invalidated when applying staged structure changes
 * Fixed SkiaCarousel changing selected index in the middle of animating.

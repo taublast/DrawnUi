@@ -1,34 +1,49 @@
 ### YamlMime:ManagedReference
 items:
-- uid: DrawnUi.Draw.SkiaControl.ParentMeasureRequest
-  commentId: T:DrawnUi.Draw.SkiaControl.ParentMeasureRequest
-  id: SkiaControl.ParentMeasureRequest
+- uid: DrawnUi.Draw.CachedTexture
+  commentId: T:DrawnUi.Draw.CachedTexture
+  id: CachedTexture
   parent: DrawnUi.Draw
   children:
-  - DrawnUi.Draw.SkiaControl.ParentMeasureRequest.HeightRequest
-  - DrawnUi.Draw.SkiaControl.ParentMeasureRequest.Parent
-  - DrawnUi.Draw.SkiaControl.ParentMeasureRequest.WidthRequest
+  - DrawnUi.Draw.CachedTexture.#ctor(SkiaSharp.SKImage,SkiaSharp.SKRect)
+  - DrawnUi.Draw.CachedTexture.Bounds
+  - DrawnUi.Draw.CachedTexture.Image
+  - DrawnUi.Draw.CachedTexture.IsValid
+  - DrawnUi.Draw.CachedTexture.None
   langs:
   - csharp
   - vb
-  name: SkiaControl.ParentMeasureRequest
-  nameWithType: SkiaControl.ParentMeasureRequest
-  fullName: DrawnUi.Draw.SkiaControl.ParentMeasureRequest
+  name: CachedTexture
+  nameWithType: CachedTexture
+  fullName: DrawnUi.Draw.CachedTexture
   type: Struct
   source:
     remote:
-      path: src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
+      path: src/Shared/DrawnUi/Internals/Models/CachedObject.cs
       branch: Cells
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: ParentMeasureRequest
-    path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5718
+    id: CachedTexture
+    path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
+    startLine: 12
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
+  summary: >-
+    A texture together with WHERE it sits, in canvas pixels. The two halves are inseparable:
+
+    a cache surface is recorded over <xref href="DrawnUi.Draw.CachedObject.Bounds" data-throw-if-not-resolved="false"></xref>, which can be inflated
+
+    beyond the control box by effects/shadow margins, and <xref href="DrawnUi.Draw.SkiaImage" data-throw-if-not-resolved="false"></xref> hands over
+
+    its rescaled source, rasterized at DISPLAY size — neither starts at DrawingRect. Consumers
+
+    that sample the texture by screen coordinates (post-renderer effects) get it wrong unless
+
+    the origin travels with the image.
+  example: []
   syntax:
-    content: public struct SkiaControl.ParentMeasureRequest
-    content.vb: Public Structure SkiaControl.ParentMeasureRequest
+    content: public readonly struct CachedTexture
+    content.vb: Public Structure CachedTexture
   inheritedMembers:
   - System.ValueType.Equals(System.Object)
   - System.ValueType.GetHashCode
@@ -38,94 +53,168 @@ items:
   - System.Object.ReferenceEquals(System.Object,System.Object)
   extensionMethods:
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
-- uid: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.Parent
-  commentId: P:DrawnUi.Draw.SkiaControl.ParentMeasureRequest.Parent
-  id: Parent
-  parent: DrawnUi.Draw.SkiaControl.ParentMeasureRequest
+- uid: DrawnUi.Draw.CachedTexture.#ctor(SkiaSharp.SKImage,SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.CachedTexture.#ctor(SkiaSharp.SKImage,SkiaSharp.SKRect)
+  id: '#ctor(SkiaSharp.SKImage,SkiaSharp.SKRect)'
+  parent: DrawnUi.Draw.CachedTexture
   langs:
   - csharp
   - vb
-  name: Parent
-  nameWithType: SkiaControl.ParentMeasureRequest.Parent
-  fullName: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.Parent
-  type: Property
+  name: CachedTexture(SKImage, SKRect)
+  nameWithType: CachedTexture.CachedTexture(SKImage, SKRect)
+  fullName: DrawnUi.Draw.CachedTexture.CachedTexture(SkiaSharp.SKImage, SkiaSharp.SKRect)
+  type: Constructor
   source:
     remote:
-      path: src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
+      path: src/Shared/DrawnUi/Internals/Models/CachedObject.cs
       branch: Cells
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: Parent
-    path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5720
+    id: .ctor
+    path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
+    startLine: 14
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public IDrawnBase Parent { readonly get; set; }
-    parameters: []
-    return:
-      type: DrawnUi.Draw.IDrawnBase
-    content.vb: Public Property Parent As IDrawnBase
-  overload: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.Parent*
-- uid: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.WidthRequest
-  commentId: P:DrawnUi.Draw.SkiaControl.ParentMeasureRequest.WidthRequest
-  id: WidthRequest
-  parent: DrawnUi.Draw.SkiaControl.ParentMeasureRequest
+    content: public CachedTexture(SKImage image, SKRect bounds)
+    parameters:
+    - id: image
+      type: SkiaSharp.SKImage
+    - id: bounds
+      type: SkiaSharp.SKRect
+    content.vb: Public Sub New(image As SKImage, bounds As SKRect)
+  overload: DrawnUi.Draw.CachedTexture.#ctor*
+  nameWithType.vb: CachedTexture.New(SKImage, SKRect)
+  fullName.vb: DrawnUi.Draw.CachedTexture.New(SkiaSharp.SKImage, SkiaSharp.SKRect)
+  name.vb: New(SKImage, SKRect)
+- uid: DrawnUi.Draw.CachedTexture.Image
+  commentId: F:DrawnUi.Draw.CachedTexture.Image
+  id: Image
+  parent: DrawnUi.Draw.CachedTexture
   langs:
   - csharp
   - vb
-  name: WidthRequest
-  nameWithType: SkiaControl.ParentMeasureRequest.WidthRequest
-  fullName: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.WidthRequest
-  type: Property
+  name: Image
+  nameWithType: CachedTexture.Image
+  fullName: DrawnUi.Draw.CachedTexture.Image
+  type: Field
   source:
     remote:
-      path: src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
+      path: src/Shared/DrawnUi/Internals/Models/CachedObject.cs
       branch: Cells
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: WidthRequest
-    path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5721
+    id: Image
+    path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
+    startLine: 20
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public float WidthRequest { readonly get; set; }
-    parameters: []
+    content: public readonly SKImage Image
     return:
-      type: System.Single
-    content.vb: Public Property WidthRequest As Single
-  overload: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.WidthRequest*
-- uid: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.HeightRequest
-  commentId: P:DrawnUi.Draw.SkiaControl.ParentMeasureRequest.HeightRequest
-  id: HeightRequest
-  parent: DrawnUi.Draw.SkiaControl.ParentMeasureRequest
+      type: SkiaSharp.SKImage
+    content.vb: Public ReadOnly Image As SKImage
+- uid: DrawnUi.Draw.CachedTexture.Bounds
+  commentId: F:DrawnUi.Draw.CachedTexture.Bounds
+  id: Bounds
+  parent: DrawnUi.Draw.CachedTexture
   langs:
   - csharp
   - vb
-  name: HeightRequest
-  nameWithType: SkiaControl.ParentMeasureRequest.HeightRequest
-  fullName: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.HeightRequest
+  name: Bounds
+  nameWithType: CachedTexture.Bounds
+  fullName: DrawnUi.Draw.CachedTexture.Bounds
+  type: Field
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Internals/Models/CachedObject.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: Bounds
+    path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
+    startLine: 23
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: Canvas-space rect the texture was rasterized over. Its top-left is the texel (0,0).
+  example: []
+  syntax:
+    content: public readonly SKRect Bounds
+    return:
+      type: SkiaSharp.SKRect
+    content.vb: Public ReadOnly Bounds As SKRect
+- uid: DrawnUi.Draw.CachedTexture.IsValid
+  commentId: P:DrawnUi.Draw.CachedTexture.IsValid
+  id: IsValid
+  parent: DrawnUi.Draw.CachedTexture
+  langs:
+  - csharp
+  - vb
+  name: IsValid
+  nameWithType: CachedTexture.IsValid
+  fullName: DrawnUi.Draw.CachedTexture.IsValid
   type: Property
   source:
     remote:
-      path: src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
+      path: src/Shared/DrawnUi/Internals/Models/CachedObject.cs
       branch: Cells
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: HeightRequest
-    path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5722
+    id: IsValid
+    path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
+    startLine: 25
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: public float HeightRequest { readonly get; set; }
+    content: public bool IsValid { get; }
     parameters: []
     return:
-      type: System.Single
-    content.vb: Public Property HeightRequest As Single
-  overload: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.HeightRequest*
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsValid As Boolean
+  overload: DrawnUi.Draw.CachedTexture.IsValid*
+- uid: DrawnUi.Draw.CachedTexture.None
+  commentId: P:DrawnUi.Draw.CachedTexture.None
+  id: None
+  parent: DrawnUi.Draw.CachedTexture
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: CachedTexture.None
+  fullName: DrawnUi.Draw.CachedTexture.None
+  type: Property
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Internals/Models/CachedObject.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: None
+    path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
+    startLine: 27
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  syntax:
+    content: public static CachedTexture None { get; }
+    parameters: []
+    return:
+      type: DrawnUi.Draw.CachedTexture
+    content.vb: Public Shared ReadOnly Property None As CachedTexture
+  overload: DrawnUi.Draw.CachedTexture.None*
 references:
+- uid: DrawnUi.Draw.CachedObject.Bounds
+  commentId: P:DrawnUi.Draw.CachedObject.Bounds
+  href: DrawnUi.Draw.CachedObject.html#DrawnUi_Draw_CachedObject_Bounds
+  name: Bounds
+  nameWithType: CachedObject.Bounds
+  fullName: DrawnUi.Draw.CachedObject.Bounds
+- uid: DrawnUi.Draw.SkiaImage
+  commentId: T:DrawnUi.Draw.SkiaImage
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.SkiaImage.html
+  name: SkiaImage
+  nameWithType: SkiaImage
+  fullName: DrawnUi.Draw.SkiaImage
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
   href: DrawnUi.html
@@ -455,39 +544,65 @@ references:
   - uid: DrawnUi.Extensions
     name: Extensions
     href: DrawnUi.Extensions.html
-- uid: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.Parent*
-  commentId: Overload:DrawnUi.Draw.SkiaControl.ParentMeasureRequest.Parent
-  href: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.html#DrawnUi_Draw_SkiaControl_ParentMeasureRequest_Parent
-  name: Parent
-  nameWithType: SkiaControl.ParentMeasureRequest.Parent
-  fullName: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.Parent
-- uid: DrawnUi.Draw.IDrawnBase
-  commentId: T:DrawnUi.Draw.IDrawnBase
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.IDrawnBase.html
-  name: IDrawnBase
-  nameWithType: IDrawnBase
-  fullName: DrawnUi.Draw.IDrawnBase
-- uid: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.WidthRequest*
-  commentId: Overload:DrawnUi.Draw.SkiaControl.ParentMeasureRequest.WidthRequest
-  href: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.html#DrawnUi_Draw_SkiaControl_ParentMeasureRequest_WidthRequest
-  name: WidthRequest
-  nameWithType: SkiaControl.ParentMeasureRequest.WidthRequest
-  fullName: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.WidthRequest
-- uid: System.Single
-  commentId: T:System.Single
+- uid: DrawnUi.Draw.CachedTexture.#ctor*
+  commentId: Overload:DrawnUi.Draw.CachedTexture.#ctor
+  href: DrawnUi.Draw.CachedTexture.html#DrawnUi_Draw_CachedTexture__ctor_SkiaSharp_SKImage_SkiaSharp_SKRect_
+  name: CachedTexture
+  nameWithType: CachedTexture.CachedTexture
+  fullName: DrawnUi.Draw.CachedTexture.CachedTexture
+  nameWithType.vb: CachedTexture.New
+  fullName.vb: DrawnUi.Draw.CachedTexture.New
+  name.vb: New
+- uid: SkiaSharp.SKImage
+  commentId: T:SkiaSharp.SKImage
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  name: SKImage
+  nameWithType: SKImage
+  fullName: SkiaSharp.SKImage
+- uid: SkiaSharp.SKRect
+  commentId: T:SkiaSharp.SKRect
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  name: SKRect
+  nameWithType: SKRect
+  fullName: SkiaSharp.SKRect
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp
+- uid: DrawnUi.Draw.CachedTexture.IsValid*
+  commentId: Overload:DrawnUi.Draw.CachedTexture.IsValid
+  href: DrawnUi.Draw.CachedTexture.html#DrawnUi_Draw_CachedTexture_IsValid
+  name: IsValid
+  nameWithType: CachedTexture.IsValid
+  fullName: DrawnUi.Draw.CachedTexture.IsValid
+- uid: System.Boolean
+  commentId: T:System.Boolean
   parent: System
   isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.single
-  name: float
-  nameWithType: float
-  fullName: float
-  nameWithType.vb: Single
-  fullName.vb: Single
-  name.vb: Single
-- uid: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.HeightRequest*
-  commentId: Overload:DrawnUi.Draw.SkiaControl.ParentMeasureRequest.HeightRequest
-  href: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.html#DrawnUi_Draw_SkiaControl_ParentMeasureRequest_HeightRequest
-  name: HeightRequest
-  nameWithType: SkiaControl.ParentMeasureRequest.HeightRequest
-  fullName: DrawnUi.Draw.SkiaControl.ParentMeasureRequest.HeightRequest
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: DrawnUi.Draw.CachedTexture.None*
+  commentId: Overload:DrawnUi.Draw.CachedTexture.None
+  href: DrawnUi.Draw.CachedTexture.html#DrawnUi_Draw_CachedTexture_None
+  name: None
+  nameWithType: CachedTexture.None
+  fullName: DrawnUi.Draw.CachedTexture.None
+- uid: DrawnUi.Draw.CachedTexture
+  commentId: T:DrawnUi.Draw.CachedTexture
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.CachedTexture.html
+  name: CachedTexture
+  nameWithType: CachedTexture
+  fullName: DrawnUi.Draw.CachedTexture
