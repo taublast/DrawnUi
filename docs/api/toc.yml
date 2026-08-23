@@ -283,6 +283,9 @@ items:
   - uid: DrawnUi.Draw.CachedShadow
     name: CachedShadow
     type: Class
+  - uid: DrawnUi.Draw.CachedTexture
+    name: CachedTexture
+    type: Struct
   - uid: DrawnUi.Draw.CellWIthHeight
     name: CellWIthHeight
     type: Class

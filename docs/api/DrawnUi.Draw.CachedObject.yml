@@ -49,7 +49,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CachedObject
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 4
+    startLine: 30
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -89,7 +89,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DataContext
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 6
+    startLine: 32
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -118,7 +118,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LogicalBounds
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 15
+    startLine: 41
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -158,7 +158,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TranslateInputCoords
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 17
+    startLine: 43
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -189,7 +189,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CalculatePositionOffset
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 28
+    startLine: 54
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -220,7 +220,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Test
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 36
+    startLine: 62
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -251,7 +251,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CalculateDrawingOffset
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 50
+    startLine: 76
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -286,7 +286,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Draw
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 81
+    startLine: 107
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -326,7 +326,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Draw
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 94
+    startLine: 120
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -373,7 +373,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LastDrawnAt
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 122
+    startLine: 148
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -402,7 +402,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LastDestination
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 127
+    startLine: 153
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -431,7 +431,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Draw
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 136
+    startLine: 162
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -477,7 +477,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Draw
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 150
+    startLine: 176
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -527,7 +527,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: .ctor
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 182
+    startLine: 208
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -565,7 +565,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: .ctor
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 190
+    startLine: 216
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -603,7 +603,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: .ctor
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 203
+    startLine: 229
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -646,7 +646,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Id
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 211
+    startLine: 237
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -673,7 +673,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SurfaceIsRecycled
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 217
+    startLine: 243
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -704,7 +704,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Picture
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 219
+    startLine: 245
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -733,7 +733,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Image
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 221
+    startLine: 247
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -762,7 +762,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Bounds
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 223
+    startLine: 249
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -791,7 +791,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RecordingArea
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 225
+    startLine: 251
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -820,7 +820,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Type
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 227
+    startLine: 253
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -849,7 +849,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Dispose
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 229
+    startLine: 255
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -879,7 +879,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsDisposed
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 251
+    startLine: 277
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -908,7 +908,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Tag
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 253
+    startLine: 279
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -937,7 +937,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PreserveSourceFromDispose
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 255
+    startLine: 281
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -966,7 +966,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetBitmap
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 257
+    startLine: 283
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -994,7 +994,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Surface
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 262
+    startLine: 288
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1023,7 +1023,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Children
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 264
+    startLine: 290
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1052,7 +1052,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsAlive
     path: ../src/Shared/DrawnUi/Internals/Models/CachedObject.cs
-    startLine: 266
+    startLine: 292
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

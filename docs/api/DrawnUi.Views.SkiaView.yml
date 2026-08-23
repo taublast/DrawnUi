@@ -665,7 +665,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FrameTime
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 122
+    startLine: 135
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -697,7 +697,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsDrawing
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 124
+    startLine: 137
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -729,7 +729,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: HasDrawn
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 126
+    startLine: 139
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views
@@ -761,7 +761,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Update
     path: ../src/Maui/DrawnUi/Views/SkiaView.cs
-    startLine: 164
+    startLine: 254
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Views

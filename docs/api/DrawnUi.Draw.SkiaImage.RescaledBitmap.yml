@@ -25,7 +25,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RescaledBitmap
     path: ../src/Shared/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1403
+    startLine: 1408
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -64,7 +64,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Bitmap
     path: ../src/Shared/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1405
+    startLine: 1410
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -93,7 +93,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _image
     path: ../src/Shared/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1407
+    startLine: 1412
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -120,7 +120,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Image
     path: ../src/Shared/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1409
+    startLine: 1414
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -149,7 +149,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Quality
     path: ../src/Shared/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1422
+    startLine: 1427
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -178,7 +178,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Source
     path: ../src/Shared/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1424
+    startLine: 1429
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -207,7 +207,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Dispose
     path: ../src/Shared/DrawnUi/Draw/Images/SkiaImage.cs
-    startLine: 1426
+    startLine: 1431
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

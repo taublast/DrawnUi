@@ -931,6 +931,8 @@ items:
   - DrawnUi.Draw.SkiaControl.ExecuteOnPaintCallbacks(DrawnUi.Draw.DrawingContext)
   - DrawnUi.Draw.SkiaControl.OnFirstDrawn
   - DrawnUi.Draw.SkiaControl.WasFirstTimeDrawn
+  - DrawnUi.Draw.SkiaControl.ClipContentPath
+  - DrawnUi.Draw.SkiaControl.GetContentClip(System.Object)
   - DrawnUi.Draw.SkiaControl.DebugRenderingColor
   - DrawnUi.Draw.SkiaControl.UseTranslationY
   - DrawnUi.Draw.SkiaControl.UseTranslationX
@@ -2300,7 +2302,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnDisposing
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 352
+    startLine: 350
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2329,7 +2331,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CreateClip
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 371
+    startLine: 368
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2375,7 +2377,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PaintBackground
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 440
+    startLine: 437
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2417,7 +2419,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MapStrokeCapToStrokeJoin
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 484
+    startLine: 481
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2448,7 +2450,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PaintWithShadows
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 498
+    startLine: 495
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2481,7 +2483,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddPaintArguments
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 503
+    startLine: 500
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2514,7 +2516,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Paint
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 514
+    startLine: 511
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2552,7 +2554,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ComputeEffectsMargin
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 820
+    startLine: 817
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2594,7 +2596,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ShadowsProperty
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 903
+    startLine: 900
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2621,7 +2623,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Shadows
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 919
+    startLine: 916
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2650,7 +2652,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PolygonStar
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 952
+    startLine: 949
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2679,7 +2681,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SmoothPointsProperty
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1017
+    startLine: 1014
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2706,7 +2708,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SmoothPoints
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1047
+    startLine: 1044
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2758,7 +2760,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CreateStarPoints
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1194
+    startLine: 1191
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2794,7 +2796,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CreateStarPointsCrossed
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1242
+    startLine: 1239
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -2828,7 +2830,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetCompensatedStrokeWidth
     path: ../src/Shared/DrawnUi/Draw/SkiaShape.cs
-    startLine: 1300
+    startLine: 1297
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20493,6 +20495,44 @@ references:
   name: WasFirstTimeDrawn
   nameWithType: SkiaControl.WasFirstTimeDrawn
   fullName: DrawnUi.Draw.SkiaControl.WasFirstTimeDrawn
+- uid: DrawnUi.Draw.SkiaControl.ClipContentPath
+  commentId: F:DrawnUi.Draw.SkiaControl.ClipContentPath
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClipContentPath
+  name: ClipContentPath
+  nameWithType: SkiaControl.ClipContentPath
+  fullName: DrawnUi.Draw.SkiaControl.ClipContentPath
+- uid: DrawnUi.Draw.SkiaControl.GetContentClip(System.Object)
+  commentId: M:DrawnUi.Draw.SkiaControl.GetContentClip(System.Object)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetContentClip_System_Object_
+  name: GetContentClip(object)
+  nameWithType: SkiaControl.GetContentClip(object)
+  fullName: DrawnUi.Draw.SkiaControl.GetContentClip(object)
+  nameWithType.vb: SkiaControl.GetContentClip(Object)
+  fullName.vb: DrawnUi.Draw.SkiaControl.GetContentClip(Object)
+  name.vb: GetContentClip(Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.GetContentClip(System.Object)
+    name: GetContentClip
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetContentClip_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.GetContentClip(System.Object)
+    name: GetContentClip
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetContentClip_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.DebugRenderingColor
   commentId: F:DrawnUi.Draw.SkiaControl.DebugRenderingColor
   parent: DrawnUi.Draw.SkiaControl

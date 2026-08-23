@@ -37,6 +37,7 @@ items:
   - DrawnUi.Controls.SkiaCarousel.GoNext
   - DrawnUi.Controls.SkiaCarousel.GoPrev
   - DrawnUi.Controls.SkiaCarousel.InitializeChildren
+  - DrawnUi.Controls.SkiaCarousel.InterruptSnapping
   - DrawnUi.Controls.SkiaCarousel.IsAtEnd
   - DrawnUi.Controls.SkiaCarousel.IsAtStart
   - DrawnUi.Controls.SkiaCarousel.IsLooped
@@ -964,6 +965,8 @@ items:
   - DrawnUi.Draw.SkiaControl.OnFirstDrawn
   - DrawnUi.Draw.SkiaControl.WasFirstTimeDrawn
   - DrawnUi.Draw.SkiaControl.CreateClip(System.Object,System.Boolean,SkiaSharp.SKPath)
+  - DrawnUi.Draw.SkiaControl.ClipContentPath
+  - DrawnUi.Draw.SkiaControl.GetContentClip(System.Object)
   - DrawnUi.Draw.SkiaControl.DebugRenderingColor
   - DrawnUi.Draw.SkiaControl.UseTranslationY
   - DrawnUi.Draw.SkiaControl.UseTranslationX
@@ -2004,7 +2007,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ScrollAmount
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 497
+    startLine: 514
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2035,7 +2038,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ScrollProgress
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 518
+    startLine: 535
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2071,7 +2074,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LastScrollProgress
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 533
+    startLine: 550
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2100,7 +2103,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TransitionProgress
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 535
+    startLine: 552
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2129,7 +2132,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AdaptTemplate
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 558
+    startLine: 575
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2158,7 +2161,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CreateContentFromTemplate
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 590
+    startLine: 607
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2188,7 +2191,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnItemSourceChanged
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 634
+    startLine: 651
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2216,7 +2219,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CalculateChildPosition
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 657
+    startLine: 674
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2254,7 +2257,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FixPosition
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 759
+    startLine: 776
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2282,7 +2285,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnTransitionChanged
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 773
+    startLine: 790
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2311,7 +2314,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ScrollToOffset
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 787
+    startLine: 804
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2353,7 +2356,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ApplyOptions
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 977
+    startLine: 994
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2387,7 +2390,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CheckTransitionEnded
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 994
+    startLine: 1011
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2417,7 +2420,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetContentOffsetBounds
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1055
+    startLine: 1072
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2448,7 +2451,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CheckConstraints
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1111
+    startLine: 1128
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2474,7 +2477,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnChildAdded
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1121
+    startLine: 1138
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2505,7 +2508,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnLayoutChanged
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1131
+    startLine: 1148
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2534,7 +2537,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetupViewport
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1138
+    startLine: 1155
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2560,7 +2563,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ChildrenInitialized
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1168
+    startLine: 1185
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2587,7 +2590,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MaxIndex
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1172
+    startLine: 1189
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2616,7 +2619,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InitializeChildren
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1194
+    startLine: 1211
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2644,7 +2647,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnChildrenInitialized
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1279
+    startLine: 1302
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2670,7 +2673,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CellSize
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1285
+    startLine: 1308
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2699,7 +2702,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AdaptChildren
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1290
+    startLine: 1313
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2727,7 +2730,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ChildrenCount
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1315
+    startLine: 1338
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2756,7 +2759,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetTemplatesPoolLimit
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1329
+    startLine: 1352
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2786,7 +2789,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetTemplatesPoolPrefill
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1338
+    startLine: 1368
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2816,7 +2819,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetVirtualSnapPoints
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1372
+    startLine: 1402
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2844,7 +2847,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetVirtualAnchor
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1395
+    startLine: 1425
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2877,7 +2880,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FindNearestAnchorInternal
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1401
+    startLine: 1431
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2912,7 +2915,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SnapPointsVirtual
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1424
+    startLine: 1454
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2941,7 +2944,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SwipeSpeedProperty
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1430
+    startLine: 1460
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2968,7 +2971,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SwipeSpeed
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1439
+    startLine: 1469
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2999,7 +3002,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PreloadNeighboorsProperty
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1445
+    startLine: 1475
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3026,7 +3029,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PreloadNeighboors
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1454
+    startLine: 1484
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3057,7 +3060,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DynamicSizeProperty
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1460
+    startLine: 1490
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3084,7 +3087,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DynamicSize
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1471
+    startLine: 1501
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3120,7 +3123,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsLoopedProperty
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1478
+    startLine: 1508
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3147,7 +3150,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsLooped
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1487
+    startLine: 1517
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3178,7 +3181,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsVerticalProperty
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1494
+    startLine: 1524
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3205,7 +3208,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsVertical
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1503
+    startLine: 1533
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3236,7 +3239,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ApplyDynamicSize
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1510
+    startLine: 1540
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3268,7 +3271,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SafeIndex
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1550
+    startLine: 1580
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3284,6 +3287,49 @@ items:
       type: System.Int32
     content.vb: Public ReadOnly Property SafeIndex As Integer
   overload: DrawnUi.Controls.SkiaCarousel.SafeIndex*
+- uid: DrawnUi.Controls.SkiaCarousel.InterruptSnapping
+  commentId: M:DrawnUi.Controls.SkiaCarousel.InterruptSnapping
+  id: InterruptSnapping
+  parent: DrawnUi.Controls.SkiaCarousel
+  langs:
+  - csharp
+  - vb
+  name: InterruptSnapping()
+  nameWithType: SkiaCarousel.InterruptSnapping()
+  fullName: DrawnUi.Controls.SkiaCarousel.InterruptSnapping()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: InterruptSnapping
+    path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
+    startLine: 1595
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: >-
+    Interrupts an in-flight snapping animation before a programmatic index change:
+
+    stops animators (so a restarted animator gets a fresh clock instead of the old
+
+    one's elapsed time, which would finish it instantly) and continues from the actual
+
+    visual position. For IsLooped the position may sit in the virtual zone beyond the
+
+    real strip — it is shifted by whole strip lengths into the neighborhood of the
+
+    current SelectedIndex (visually identical, looped rendering wraps), so the next
+
+    ScrollToOffset computes a short correct-direction displacement instead of sweeping
+
+    backwards across the whole strip. Must be called BEFORE SelectedIndex mutates.
+  example: []
+  syntax:
+    content: protected void InterruptSnapping()
+    content.vb: Protected Sub InterruptSnapping()
+  overload: DrawnUi.Controls.SkiaCarousel.InterruptSnapping*
 - uid: DrawnUi.Controls.SkiaCarousel.GoNext
   commentId: M:DrawnUi.Controls.SkiaCarousel.GoNext
   id: GoNext
@@ -3302,7 +3348,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GoNext
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1555
+    startLine: 1621
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3328,7 +3374,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GoPrev
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1573
+    startLine: 1635
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3354,7 +3400,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsAtStart
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1591
+    startLine: 1649
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3383,7 +3429,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsAtEnd
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1596
+    startLine: 1654
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3412,7 +3458,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnSelectedIndexChanged
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1601
+    startLine: 1659
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3444,7 +3490,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LinearSpeedMsProperty
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1635
+    startLine: 1693
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3471,7 +3517,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LinearSpeedMs
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1646
+    startLine: 1704
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3507,7 +3553,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LastIndex
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1654
+    startLine: 1712
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3536,7 +3582,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SelectedIndexProperty
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1668
+    startLine: 1726
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3563,7 +3609,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SelectedIndex
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1685
+    startLine: 1743
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3594,7 +3640,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ChildrenTotal
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1695
+    startLine: 1753
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3625,7 +3671,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ChildrenTotalProperty
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1701
+    startLine: 1759
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3652,7 +3698,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsRightToLeftProperty
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1708
+    startLine: 1766
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3679,7 +3725,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsRightToLeft
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1717
+    startLine: 1775
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3710,7 +3756,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SidesOffsetProperty
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1723
+    startLine: 1781
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3737,7 +3783,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SidesOffset
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1732
+    startLine: 1790
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3768,7 +3814,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsUserFocused
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1751
+    startLine: 1809
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3797,7 +3843,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsUserPanning
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1752
+    startLine: 1810
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3826,7 +3872,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _panningOffset
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1758
+    startLine: 1816
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3853,7 +3899,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _panningStartOffset
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1759
+    startLine: 1817
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3880,7 +3926,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: VelocityAccumulator
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1762
+    startLine: 1820
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3909,7 +3955,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ProcessGestures
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaCarousel.cs
-    startLine: 1764
+    startLine: 1822
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -21200,6 +21246,44 @@ references:
     name: SKPath
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/skiasharp.skpath
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.ClipContentPath
+  commentId: F:DrawnUi.Draw.SkiaControl.ClipContentPath
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ClipContentPath
+  name: ClipContentPath
+  nameWithType: SkiaControl.ClipContentPath
+  fullName: DrawnUi.Draw.SkiaControl.ClipContentPath
+- uid: DrawnUi.Draw.SkiaControl.GetContentClip(System.Object)
+  commentId: M:DrawnUi.Draw.SkiaControl.GetContentClip(System.Object)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetContentClip_System_Object_
+  name: GetContentClip(object)
+  nameWithType: SkiaControl.GetContentClip(object)
+  fullName: DrawnUi.Draw.SkiaControl.GetContentClip(object)
+  nameWithType.vb: SkiaControl.GetContentClip(Object)
+  fullName.vb: DrawnUi.Draw.SkiaControl.GetContentClip(Object)
+  name.vb: GetContentClip(Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.GetContentClip(System.Object)
+    name: GetContentClip
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetContentClip_System_Object_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.GetContentClip(System.Object)
+    name: GetContentClip
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_GetContentClip_System_Object_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
   - name: )
 - uid: DrawnUi.Draw.SkiaControl.DebugRenderingColor
   commentId: F:DrawnUi.Draw.SkiaControl.DebugRenderingColor
@@ -44094,6 +44178,12 @@ references:
   name: SafeIndex
   nameWithType: SkiaCarousel.SafeIndex
   fullName: DrawnUi.Controls.SkiaCarousel.SafeIndex
+- uid: DrawnUi.Controls.SkiaCarousel.InterruptSnapping*
+  commentId: Overload:DrawnUi.Controls.SkiaCarousel.InterruptSnapping
+  href: DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_InterruptSnapping
+  name: InterruptSnapping
+  nameWithType: SkiaCarousel.InterruptSnapping
+  fullName: DrawnUi.Controls.SkiaCarousel.InterruptSnapping
 - uid: DrawnUi.Controls.SkiaCarousel.GoNext*
   commentId: Overload:DrawnUi.Controls.SkiaCarousel.GoNext
   href: DrawnUi.Controls.SkiaCarousel.html#DrawnUi_Controls_SkiaCarousel_GoNext

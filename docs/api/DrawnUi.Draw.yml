@@ -28,6 +28,7 @@ items:
   - DrawnUi.Draw.CachedObject
   - DrawnUi.Draw.CachedShader
   - DrawnUi.Draw.CachedShadow
+  - DrawnUi.Draw.CachedTexture
   - DrawnUi.Draw.CellWIthHeight
   - DrawnUi.Draw.ChainAdjustBrightnessEffect
   - DrawnUi.Draw.ChainAdjustContrastEffect
@@ -1882,6 +1883,13 @@ references:
   name: RangeF
   nameWithType: RangeF
   fullName: DrawnUi.Draw.RangeF
+- uid: DrawnUi.Draw.CachedTexture
+  commentId: T:DrawnUi.Draw.CachedTexture
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.CachedTexture.html
+  name: CachedTexture
+  nameWithType: CachedTexture
+  fullName: DrawnUi.Draw.CachedTexture
 - uid: DrawnUi.Draw.CachedObject
   commentId: T:DrawnUi.Draw.CachedObject
   parent: DrawnUi.Draw
