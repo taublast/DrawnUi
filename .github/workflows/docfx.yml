@@ -1,4 +1,4 @@
-name: Build And Deploy Pages
+name: Build Docs + Blazor Samples + Publish
 
 on:
   workflow_dispatch:
