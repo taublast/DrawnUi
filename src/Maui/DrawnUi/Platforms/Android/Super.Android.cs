@@ -4,6 +4,7 @@ using Android.Content.Res;
 using Android.Graphics;
 using Android.OS;
 using Android.Views;
+using Android.Widget;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using static DrawnUi.Views.SkiaViewAccelerated;
 using Canvas = Android.Graphics.Canvas;
@@ -249,8 +250,63 @@ public partial class Super
         {
             Android.App.Activity activity = Platform.CurrentActivity;
 
+            if (activity == null)
+            {
+                ExecAfterInit += (s, a) => { SetStatusBarColor(color); };
+                return;
+            }
+
             activity.Window.SetStatusBarColor(color);
+
+            _statusBarColor = color;
+            PaintSystemBarStrips(activity);
         }
+    }
+
+    static Color? _statusBarColor;
+    static Color? _navigationBarColor;
+    static int _statusBarPx;
+    static int _navigationBarPx;
+    static Android.Views.View _statusBarStrip;
+    static Android.Views.View _navigationBarStrip;
+
+    /// <summary>
+    /// targetSdk 35+ on Android 15+: Window.SetStatusBarColor / SetNavigationBarColor are no-ops
+    /// (bars forced transparent), so we draw colored strips over the bar areas on the decor view ourselves.
+    /// </summary>
+    static void PaintSystemBarStrips(Android.App.Activity activity = null)
+    {
+        activity ??= Platform.CurrentActivity;
+        if (activity?.Window?.DecorView is not ViewGroup decor
+            || Build.VERSION.SdkInt < (BuildVersionCodes)35
+            || activity.ApplicationInfo.TargetSdkVersion < (BuildVersionCodes)35)
+            return;
+
+        PaintStrip(decor, ref _statusBarStrip, _statusBarColor, _statusBarPx, GravityFlags.Top);
+        PaintStrip(decor, ref _navigationBarStrip, _navigationBarColor, _navigationBarPx, GravityFlags.Bottom);
+    }
+
+    static void PaintStrip(ViewGroup decor, ref Android.Views.View strip, Color? color, int px, GravityFlags gravity)
+    {
+        if (color == null)
+            return;
+
+        if (strip == null || strip.Parent != decor)
+        {
+            strip = new Android.Views.View(decor.Context);
+            decor.AddView(strip, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, px)
+            {
+                Gravity = gravity
+            });
+        }
+        else if (strip.LayoutParameters.Height != px)
+        {
+            strip.LayoutParameters.Height = px;
+            strip.RequestLayout();
+        }
+
+        if (strip.Background is not Android.Graphics.Drawables.ColorDrawable existing || existing.Color != color.Value)
+            strip.SetBackgroundColor(color.Value);
     }
 
     static InsetsListener _insetsListener;
@@ -262,6 +318,25 @@ public partial class Super
 
         public WindowInsets OnApplyWindowInsets(Android.Views.View v, WindowInsets insets)
         {
+            if (Build.VERSION.SdkInt >= (BuildVersionCodes)35)
+            {
+                var cutout = (int)WindowInsets.Type.DisplayCutout();
+                _statusBarPx = insets.GetInsets((int)WindowInsets.Type.StatusBars() | cutout).Top;
+                _navigationBarPx = insets.GetInsets((int)WindowInsets.Type.NavigationBars() | cutout).Bottom;
+                PaintSystemBarStrips();
+            }
+#if !NET10_0_OR_GREATER
+            // Android 15+ enforces edge-to-edge for targetSdk 35+ and MAUI 9 does not apply insets,
+            // so page content would go under system bars. Pad the content view ourselves to keep
+            // the pre-enforcement behavior. MAUI 10 handles this itself.
+            if (!isFullscreen
+                && Build.VERSION.SdkInt >= (BuildVersionCodes)35
+                && v.Context?.ApplicationInfo?.TargetSdkVersion >= (BuildVersionCodes)35)
+            {
+                var bars = insets.GetInsets((int)(WindowInsets.Type.SystemBars() | WindowInsets.Type.DisplayCutout()));
+                v.SetPadding(bars.Left, bars.Top, bars.Right, bars.Bottom);
+            }
+#endif
             //we are saving system insets BEFORE the fullscreen flag was applied
             //and system insets became zero
             if (_returnInsets == null)
@@ -357,6 +432,17 @@ public partial class Super
 
         window.ClearFlags(WindowManagerFlags.TranslucentNavigation);
         window.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
+
+        if (Build.VERSION.SdkInt >= (BuildVersionCodes)35)
+        {
+            _navigationBarColor = colorBar.ToAndroid();
+            PaintSystemBarStrips(activity);
+            if (window.InsetsController != null)
+            {
+                var light = darkStatusBarTint ? 0 : (int)WindowInsetsControllerAppearance.LightNavigationBars;
+                window.InsetsController.SetSystemBarsAppearance(light, (int)WindowInsetsControllerAppearance.LightNavigationBars);
+            }
+        }
 
         if (Build.VERSION.SdkInt >= BuildVersionCodes.M)
         {
