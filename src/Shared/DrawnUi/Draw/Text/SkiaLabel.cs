@@ -539,6 +539,13 @@ namespace DrawnUi.Draw
                 // Calculate stroke offset to position text within measured bounds
                 float strokeOffset = paintStroke != null ? (float)(StrokeWidth * 2 * scale) : 0f;
 
+                // Measurement reserves (DropShadowSize + DropShadowOffsetY) * scale BELOW the text for the shadow;
+                // lift the baseline by the same amount so the glyphs stay where they would be without a shadow
+                // instead of sinking into the reserved shadow band.
+                float shadowOffset = (DropShadowSize > 0 && DropShadowColor != TransparentColor)
+                    ? (float)(DropShadowSize * scale + DropShadowOffsetY * scale)
+                    : 0f;
+
                 float baselineY = 0;
                 float moveToBaseline = 0f;
                 float useLineHeight = 0f;
@@ -568,7 +575,7 @@ namespace DrawnUi.Draw
                         if (!LineHeightUniform)
                         {
                             useLineHeight = line.Height;
-                            moveToBaseline = useLineHeight - FontMetrics.Descent - strokeOffset;
+                            moveToBaseline = useLineHeight - FontMetrics.Descent - strokeOffset - shadowOffset;
                             if (lineNb == 0)
                             {
                                 baselineY += PositionBaseline(rectDraw.Top + moveToBaseline);
@@ -584,7 +591,7 @@ namespace DrawnUi.Draw
 
                             var add = useLineHeight - useLineHeight / LineHeight;
                             var move = useLineHeight - add / 2.0;
-                            moveToBaseline = (float)(move - FontMetrics.Descent - strokeOffset);
+                            moveToBaseline = (float)(move - FontMetrics.Descent - strokeOffset - shadowOffset);
                             baselineY = PositionBaseline(moveToBaseline + rectDraw.Top);
                             baseLineCalculated = true;
                         }
