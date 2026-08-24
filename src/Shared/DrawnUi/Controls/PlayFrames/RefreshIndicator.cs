@@ -163,7 +163,15 @@ public class RefreshIndicator : SkiaLayout, IRefreshIndicator
 
         if (Orientation == ScrollOrientation.Vertical)
         {
-            if (Height > 0)
+            if (ratio <= 0)
+            {
+                // getPosition divides by the ratio: at 0 (HideRefreshIndicator after a refresh) it produced
+                // NaN/-Infinity for TranslationY and Opacity, which poisoned the transform so the indicator
+                // never showed again on the next pull. Park it just above the viewport instead.
+                TranslationY = -(float)Height;
+                opacity = 0;
+            }
+            else if (Height > 0)
             {
                 var diff = Height - ptsLimit;
 
