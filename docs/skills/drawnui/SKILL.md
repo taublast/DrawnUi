@@ -284,6 +284,14 @@ Conditional: `AutoCache` on `SkiaScroll`/`SkiaDrawer` sets THEIR OWN `UseCache =
 - Match `GlassBackdropEffect.CornerRadius` to the parent `SkiaShape.CornerRadius` (in points, not pixels — the effect multiplies by `RenderingScale` internally).
 - `SkiaBackdrop.Blur = 0` when using a custom shader effect — the shader handles its own blur.
 
+### Shader slide transitions (SkiaShaderCarousel / ShaderTransitionEffect)
+
+- `SkiaShaderCarousel` (`DrawnUi.Controls`): `SkiaCarousel` subclass where slides never translate — an attached `ShaderTransitionEffect` (a `ShaderDoubleTexturesEffect` adding `progress` + `ratio` uniforms) blends the from/to cells' cached images. Give it a gl-transitions style `transition(vec2 uv)` via `TransitionShader` (Resources/Raw path), `TransitionShaderCode` (raw SkSL string — required on OpenTK/DRAWNUI_NET and in the fiddle), or a custom `TransitionTemplate`. Cell templates MUST use `UseCache = Image` (the effect samples cell RenderObject caches); ctor forces `RecyclingTemplate.Disabled`.
+- `InterruptedTransitionMs` (default 50): a swipe during a running transition wraps the current transition up in ~that time, then plays the next. Gesture targeting is deterministic: max ONE slide per gesture, direction from velocity (threshold 100) or displacement, target computed from the gesture-origin snap — never from nearest-to-finger.
+- Custom effect subclass: override `protected virtual ShaderTransitionEffect CreateTransitionEffect()` — called once from ctor; effect is attached lazily on first `Render`.
+- AspectFit letterboxed slides (photo viewer case): the shader spans the whole cell, so e.g. the cube transition's reflection projects at SCREEN bottom instead of under the photo. Fix = a band-clipped effect subclass: (1) override `Render`, intersect `ctx.Destination` with the union of from/to inner `SkiaImage.DisplayRect`, call `base.Render(ctx.WithDestination(clipped))`; (2) override `SyncEngineState` and set `GetEngine().Offset` to the clipped destination origin (base sets it to TEXTURE bounds origin, so uv would not be [0,1] over the band); (3) cell textures stay full-size, so remap sampling in a custom template: `getFromColor/getToColor` sample `(uBandOffset + float2(uv.x, 1.0-uv.y) * uBandScale) * uTexResolution` with those uniforms added in `CreateUniforms` (band rect vs stored textureBounds ratios). NB `iResolution` AND `iImageResolution` are both destination-sized (`engine.CreateUniforms(destW, destH, destW, destH)`) — after clipping they are band-sized, so the full texture pixel size needs its own uniform.
+- Single-texture variant of the same hack: `ClippedShaderEffect` — only intersect destination with `SkiaImage.DisplayRect`, no remap needed, because with `AutoCreateInputTexture` the snapshot is taken FROM the clipped destination, so texture == band content exactly.
+
 ## Visual Structure
 
 - For custom shutter/camera buttons, prefer composed `SkiaShape` outer ring + inner shape/disc.

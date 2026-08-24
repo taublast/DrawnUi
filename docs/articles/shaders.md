@@ -207,7 +207,55 @@ trip and a managed allocation.
 - Line endings in `.sksl` files are normalised automatically via
   `SkiaShader.NormalizeLineEndings` — no need to worry about CRLF/LF mixing.
 
+## Slide transitions — SkiaShaderCarousel
+
+`SkiaShaderCarousel` (`DrawnUi.Controls`) renders slide changes with an SkSL transition
+instead of translating slides: an attached `ShaderTransitionEffect` (a
+`ShaderDoubleTexturesEffect` adding `progress` and `ratio` uniforms) blends the cached
+images of the outgoing and incoming cells.
+
+```xml
+<draw:SkiaShaderCarousel
+    IsLooped="True"
+    LinearSpeedMs="750"
+    TransitionShader="Shaders/Transitions/cube.sksl"
+    ItemsSource="{Binding Items}">
+    <!-- cell template MUST use UseCache="Image" — the effect samples cell caches -->
+</draw:SkiaShaderCarousel>
+```
+
+The shader is a gl-transitions style `transition(vec2 uv)` function using
+`getFromColor` / `getToColor` — any transition from
+[gl-transitions](https://github.com/gl-transitions/gl-transitions) ported to SkSL works.
+Provide it via:
+
+- `TransitionShader` — path inside Resources/Raw
+- `TransitionShaderCode` — raw SkSL string (required on OpenTK/`DRAWNUI_NET`)
+- `TransitionTemplate` — replace the built-in adapter template
+  (`ShaderTransitionEffect.DefaultTemplate`) when you need custom uniforms or sampling
+
+Behavior notes:
+
+- One gesture moves at most ONE slide; direction comes from velocity or displacement,
+  the target from the gesture-origin snap point.
+- A swipe during a running transition wraps it up within `InterruptedTransitionMs`
+  (default 50) and then plays the next transition.
+- Override `CreateTransitionEffect()` to plug a custom `ShaderTransitionEffect`
+  subclass (extra uniforms, render-area clipping).
+
+### Letterboxed slides (AspectFit)
+
+When slides letterbox their content (photo viewer), the transition spans the whole
+cell — a cube's reflection projects at screen bottom instead of under the photo. Fix
+with a custom effect: clip `ctx.Destination` in `Render` to the union of the from/to
+images' `DisplayRect`, re-anchor `GetEngine().Offset` to the clipped origin in
+`SyncEngineState`, and remap `getFromColor`/`getToColor` sampling into that band via
+custom uniforms (cell textures stay full-size). For a single-texture effect the clip
+alone is enough — with `AutoCreateInputTexture` the snapshot is taken from the clipped
+destination.
+
 ## See also
 
 - [Drawing Pipeline](drawing-pipeline.md) — where effects fit in the render loop
 - [Fluent C# Extensions](fluent-extensions.md) — attaching effects from code
+- [Carousels](controls/carousels.md) — `SkiaShaderCarousel` details and gallery patterns
