@@ -18,7 +18,7 @@ public class SkiaShaderCarousel : SkiaCarousel
         // the effect samples cached images of specific cells, every index must keep its own view
         RecyclingTemplate = RecyclingTemplate.Disabled;
 
-        TransitionEffect = new ShaderTransitionEffect();
+        TransitionEffect = CreateTransitionEffect();
     }
 
     #region PUBLIC API
@@ -117,7 +117,14 @@ public class SkiaShaderCarousel : SkiaCarousel
     /// The effect rendering the transition. Exposed for customization (extra uniforms, compilation errors via
     /// <see cref="SkiaShaderEffect.OnCompilationError"/>). Created by the carousel, do not replace.
     /// </summary>
-    public ShaderTransitionEffect TransitionEffect { get; }
+    public ShaderTransitionEffect TransitionEffect { get; protected set; }
+
+    /// <summary>
+    /// Factory for the effect that renders the transition, called once from the constructor.
+    /// Override to supply a custom <see cref="ShaderTransitionEffect"/> subclass
+    /// (extra uniforms, custom render-area clipping etc.).
+    /// </summary>
+    protected virtual ShaderTransitionEffect CreateTransitionEffect() => new ShaderTransitionEffect();
 
     /// <summary>
     /// Index of the slide the current transition starts from, -1 before the first layout.
