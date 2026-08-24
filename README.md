@@ -53,6 +53,8 @@ Supported hosts:
 
 ## What's New 1.10.5.14
  * Hotfix safe insets on Android .NET 9 for latest MAUI safe insets update
+ * Fix changing status and navigationbar colors via Super on android 15+ when app targetSdk >= 35.
+ * Fixed `Canvas` staying blank forever on Android when created hidden/offscreen and later revealed without a layout pass (FlyoutPage drawer, login/overlay screens, translated containers): offscreen detection disabled rendering, but reveals that slide/translate views don't fire a global layout, so visibility was never re-checked and the canvas never woke up. A pre-draw listener now re-checks visibility (throttled, only while hidden) — visible canvases pay a single bool check per frame.
 
  ### Previously
 
