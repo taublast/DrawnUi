@@ -126,6 +126,9 @@ items:
   - uid: DrawnUi.Controls.SkiaRadioButton
     name: SkiaRadioButton
     type: Class
+  - uid: DrawnUi.Controls.SkiaShaderCarousel
+    name: SkiaShaderCarousel
+    type: Class
   - uid: DrawnUi.Controls.SkiaShell
     name: SkiaShell
     type: Class
@@ -789,6 +792,9 @@ items:
     type: Struct
   - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
     name: ShaderDoubleTexturesEffect
+    type: Class
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
     type: Class
   - uid: DrawnUi.Draw.ShapeType
     name: ShapeType

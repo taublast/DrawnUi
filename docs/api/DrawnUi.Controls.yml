@@ -36,6 +36,7 @@ items:
   - DrawnUi.Controls.SkiaMediaImage
   - DrawnUi.Controls.SkiaPicker
   - DrawnUi.Controls.SkiaRadioButton
+  - DrawnUi.Controls.SkiaShaderCarousel
   - DrawnUi.Controls.SkiaShell
   - DrawnUi.Controls.SkiaShell.IHandleGoBack
   - DrawnUi.Controls.SkiaShell.ModalWrapper
@@ -418,6 +419,7 @@ references:
   fullName: DrawnUi.Controls.GridLayout
 - uid: DrawnUi.Controls.SkiaCarousel
   commentId: T:DrawnUi.Controls.SkiaCarousel
+  parent: DrawnUi.Controls
   href: DrawnUi.Controls.SkiaCarousel.html
   name: SkiaCarousel
   nameWithType: SkiaCarousel
@@ -445,6 +447,12 @@ references:
   - uid: DrawnUi.Controls.SkiaCarousel.SnapPoint
     name: SnapPoint
     href: DrawnUi.Controls.SkiaCarousel.SnapPoint.html
+- uid: DrawnUi.Controls.SkiaShaderCarousel
+  commentId: T:DrawnUi.Controls.SkiaShaderCarousel
+  href: DrawnUi.Controls.SkiaShaderCarousel.html
+  name: SkiaShaderCarousel
+  nameWithType: SkiaShaderCarousel
+  fullName: DrawnUi.Controls.SkiaShaderCarousel
 - uid: DrawnUi.Controls.SkiaDecoratedColumn
   commentId: T:DrawnUi.Controls.SkiaDecoratedColumn
   href: DrawnUi.Controls.SkiaDecoratedColumn.html

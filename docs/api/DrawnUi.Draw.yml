@@ -197,6 +197,7 @@ items:
   - DrawnUi.Draw.ScrollToIndexOrder
   - DrawnUi.Draw.ScrollToPointOrder
   - DrawnUi.Draw.ShaderDoubleTexturesEffect
+  - DrawnUi.Draw.ShaderTransitionEffect
   - DrawnUi.Draw.ShapeType
   - DrawnUi.Draw.ShimmerAnimator
   - DrawnUi.Draw.SidePosition
@@ -1793,10 +1794,18 @@ references:
   fullName: DrawnUi.Draw.PostRendererEffectUseBackgroud
 - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
   commentId: T:DrawnUi.Draw.ShaderDoubleTexturesEffect
+  parent: DrawnUi.Draw
   href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
   name: ShaderDoubleTexturesEffect
   nameWithType: ShaderDoubleTexturesEffect
   fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect
+- uid: DrawnUi.Draw.ShaderTransitionEffect
+  commentId: T:DrawnUi.Draw.ShaderTransitionEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ShaderTransitionEffect.html
+  name: ShaderTransitionEffect
+  nameWithType: ShaderTransitionEffect
+  fullName: DrawnUi.Draw.ShaderTransitionEffect
 - uid: DrawnUi.Draw.SkiaEffect
   commentId: T:DrawnUi.Draw.SkiaEffect
   parent: DrawnUi.Draw
