@@ -96,7 +96,56 @@ namespace DrawnUi.Views
             }
         }
 
+        /// <summary>
+        /// DrawerLayout and similar containers move children with offset+invalidate, without a layout pass,
+        /// so OnGlobalLayout never fires and a canvas detected as hidden would never wake up.
+        /// PreDraw fires on every window draw: while the canvas is hidden we schedule a throttled
+        /// visibility re-check; when it is visible this costs a single bool check per frame.
+        /// </summary>
+        public class HiddenWakePreDrawListener : Java.Lang.Object, ViewTreeObserver.IOnPreDrawListener
+        {
+            DrawnView _control;
+            View _view;
+            long _lastCheck;
+
+            public HiddenWakePreDrawListener(View view, DrawnView control)
+            {
+                _view = view;
+                _control = control;
+                _view.ViewTreeObserver?.AddOnPreDrawListener(this);
+            }
+
+            public void Release()
+            {
+                try
+                {
+                    _view?.ViewTreeObserver?.RemoveOnPreDrawListener(this);
+                }
+                catch
+                {
+                }
+                _view = null;
+                _control = null;
+            }
+
+            public bool OnPreDraw()
+            {
+                var control = _control;
+                if (control != null && control.IsHiddenInViewTree)
+                {
+                    var now = Environment.TickCount64;
+                    if (now - _lastCheck > 100)
+                    {
+                        _lastCheck = now;
+                        control.NeedCheckParentVisibility = true;
+                    }
+                }
+                return true;
+            }
+        }
+
         LayoutChangedListener _layoutChangedListener;
+        HiddenWakePreDrawListener _hiddenWakeListener;
 
         protected virtual void InitFrameworkPlatform(bool subscribe)
         {
@@ -105,12 +154,15 @@ namespace DrawnUi.Views
                 if (Handler?.PlatformView is Android.Views.View element)
                 {
                     _layoutChangedListener = new LayoutChangedListener(element, this);
+                    _hiddenWakeListener = new HiddenWakePreDrawListener(element, this);
                 }
             }
             else
             {
                 _layoutChangedListener?.Release();
                 _layoutChangedListener = null;
+                _hiddenWakeListener?.Release();
+                _hiddenWakeListener = null;
             }
         }
 
