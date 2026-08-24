@@ -1,4 +1,4 @@
-using System.Numerics;
+﻿using System.Numerics;
 using SkiaControl = DrawnUi.Draw.SkiaControl;
 
 namespace DrawnUi.Controls;
@@ -46,6 +46,30 @@ public class SkiaShaderCarousel : SkiaCarousel
     {
         get { return (string)GetValue(TransitionShaderProperty); }
         set { SetValue(TransitionShaderProperty, value); }
+    }
+
+    public static readonly BindableProperty TransitionShaderCodeProperty = BindableProperty.Create(
+        nameof(TransitionShaderCode),
+        typeof(string),
+        typeof(SkiaShaderCarousel),
+        null,
+        propertyChanged: (b, o, n) =>
+        {
+            if (b is SkiaShaderCarousel control)
+            {
+                control.TransitionEffect.ShaderCode = (string)n;
+            }
+        });
+
+    /// <summary>
+    /// Raw SkSL source of the transition, alternative to <see cref="TransitionShader"/> when the code does not
+    /// come from a packaged file (generated, downloaded, user-edited). Used when <see cref="TransitionShader"/>
+    /// is not set; wrapped by the same template. Can be changed at any time.
+    /// </summary>
+    public string TransitionShaderCode
+    {
+        get { return (string)GetValue(TransitionShaderCodeProperty); }
+        set { SetValue(TransitionShaderCodeProperty, value); }
     }
 
     public static readonly BindableProperty TransitionTemplateProperty = BindableProperty.Create(
@@ -125,6 +149,7 @@ public class SkiaShaderCarousel : SkiaCarousel
     private int IndexTo = -1;
     private int IndexFromLast = -1;
     private int IndexToLast = -1;
+    private bool _wasWrapped;
 
     protected virtual void OnFromToChanged()
     {
@@ -205,16 +230,23 @@ public class SkiaShaderCarousel : SkiaCarousel
             var scaled = ScrollProgress * MaxIndex;
             if (scaled < 0 || scaled > MaxIndex)
             {
-                // beyond the real strip: a true wrap only when panning or snapping to a virtual anchor,
-                // otherwise it's spring overshoot at an edge - clamp instead of showing the far slide
-                var wrap = IsUserPanning;
+                // beyond the real strip: a true wrap only when panning, snapping to a virtual anchor, or
+                // continuing a wrap already shown (release-return from the virtual zone must animate the
+                // same pair to its end, not jump). Otherwise it's spring overshoot at an edge - clamp
+                // instead of flashing the far slide.
+                var wrap = IsUserPanning || _wasWrapped;
                 if (!wrap)
                 {
                     var anchor = GetVirtualAnchor(CurrentSnap, Vector2.Zero);
                     wrap = scaled < 0 ? anchor.Id == -1 : anchor.Id == -2;
                 }
 
+                _wasWrapped = wrap;
                 scaled = wrap ? ((scaled % slides) + slides) % slides : Math.Clamp(scaled, 0, MaxIndex);
+            }
+            else
+            {
+                _wasWrapped = false;
             }
 
             var currentIndex = (int)Math.Floor(scaled);
@@ -282,70 +314,116 @@ public class SkiaShaderCarousel : SkiaCarousel
 
     #endregion
 
-    #region INTERRUPTED TRANSITION
+    #region GESTURE TARGETING
 
-    private bool _swipedDuringTransition;
-    private Vector2 _interruptedTarget;
-    private Vector2 _interruptedFrom;
+    private bool _wasInTransitionAtDown;
+    private bool _inGestureRelease;
+    private Vector2 _gestureOrigin;
+    private Vector2 _gestureFrom;
     private Vector2? _pendingTarget;
 
     public override ISkiaGestureListener ProcessGestures(SkiaGesturesParameters args, GestureEventProcessingInfo apply)
     {
-        var wasInTransition = args.Type == TouchActionResult.Down && InTransition;
-        var result = base.ProcessGestures(args, apply);
-        if (wasInTransition)
+        if (args.Type == TouchActionResult.Down)
         {
-            // touched while a transition is still playing: remember where it was heading
-            // (read after base: Down may have normalized a looped virtual position);
-            // while phase 1 is still wrapping up, the real destination is the pending phase-2 slide
-            _swipedDuringTransition = true;
-            _interruptedTarget = _pendingTarget ?? CurrentSnap;
-            _interruptedFrom = CurrentPosition;
+            var interrupted = InTransition;
+            var result = base.ProcessGestures(args, apply);
+            // read after base: Down may have normalized a looped virtual position;
+            // while phase 1 is still wrapping up, the real origin is the pending phase-2 slide
+            _wasInTransitionAtDown = interrupted;
+            _gestureOrigin = _pendingTarget ?? CurrentSnap;
+            _gestureFrom = CurrentPosition;
             _pendingTarget = null;
+            return result;
         }
 
-        return result;
+        if (args.Type == TouchActionResult.Up)
+        {
+            _inGestureRelease = true;
+            try
+            {
+                return base.ProcessGestures(args, apply);
+            }
+            finally
+            {
+                _inGestureRelease = false;
+            }
+        }
+
+        return base.ProcessGestures(args, apply);
     }
 
     /// <summary>
-    /// A swipe that interrupts a running transition: wrap that transition up within
-    /// <see cref="InterruptedTransitionMs"/>, then move one slide further in the swipe direction at normal speed.
-    /// The destination is derived from the interrupted transition, not from the finger position: mid-flight
-    /// the position is arbitrary and the nearest-anchor rule would lose the swipe or skip slides.
+    /// Gesture targeting: one gesture moves AT MOST ONE slide from the slide the gesture started on
+    /// (for an interrupted transition: from the slide it was heading to). The base nearest-anchor rule
+    /// can pick a farther snap from a fast flick or an arbitrary mid-flight finger position; here its
+    /// choice is kept only for direction and stay-or-move, then clamped to ±1 slide.
+    /// A swipe that interrupted a running transition additionally wraps that transition up within
+    /// <see cref="InterruptedTransitionMs"/> before the new one starts. Programmatic scrolls
+    /// (<see cref="SkiaCarousel.SelectedIndex"/>, GoNext/GoPrev) are not affected.
     /// </summary>
     protected override bool ScrollToOffset(Vector2 targetOffset, Vector2 velocity, bool animate)
     {
-        if (!_swipedDuringTransition || !animate)
+        if (!_inGestureRelease || !animate || SnapPoints.Count < 2)
         {
-            _swipedDuringTransition = false;
             return base.ScrollToOffset(targetOffset, velocity, animate);
         }
 
-        _swipedDuringTransition = false;
-
-        if (SnapPoints.Count > 1)
+        // One gesture = at most one slide from the gesture origin. The base nearest-anchor choice is
+        // ignored entirely: mid-flight it works off an arbitrary finger position, and in the looped
+        // virtual zone its pseudo-anchor mapping can even flip the direction. Deterministic instead:
+        // a flick (velocity over the base's 100 units/s threshold) moves one slide in the flick
+        // direction; a slow drag snaps to the nearest slide within one step of the origin.
+        var step = SnapPoints[1] - SnapPoints[0];
+        var stepAxis = IsVertical ? step.Y : step.X;
+        if (stepAxis != 0)
         {
-            var swipe = IsVertical ? CurrentPosition.Y - _interruptedFrom.Y : CurrentPosition.X - _interruptedFrom.X;
-            var step = SnapPoints[1] - SnapPoints[0];
-            var stepAxis = IsVertical ? step.Y : step.X;
-            targetOffset = _interruptedTarget;
-            if (swipe != 0 && stepAxis != 0)
+            var vel = IsVertical ? velocity.Y : velocity.X;
+            var disp = IsVertical ? CurrentPosition.Y - _gestureFrom.Y : CurrentPosition.X - _gestureFrom.X;
+            int k;
+            if (Math.Abs(vel) >= 100)
             {
-                var beyond = _interruptedTarget + step * Math.Sign(swipe) * Math.Sign(stepAxis);
+                k = Math.Sign(vel) * Math.Sign(stepAxis);
+            }
+            else
+            {
+                k = Math.Clamp((int)Math.Round(disp / stepAxis), -1, 1);
+            }
+
+            var capped = _gestureOrigin + step * k;
+            if (!IsLooped)
+            {
                 var first = SnapPoints[0];
                 var last = SnapPoints[^1];
                 var lo = Vector2.Min(first, last);
                 var hi = Vector2.Max(first, last);
-                if (IsLooped || (beyond.X >= lo.X && beyond.X <= hi.X && beyond.Y >= lo.Y && beyond.Y <= hi.Y))
-                    targetOffset = beyond; // looped: may be the virtual slot past the edge, the base wraps it
+                capped = Vector2.Max(lo, Vector2.Min(hi, capped));
             }
+
+            targetOffset = capped; // looped: may be the virtual slot past the edge, the base wraps it
         }
 
-        _pendingTarget = targetOffset != _interruptedTarget ? targetOffset : null;
+        if (!_wasInTransitionAtDown)
+        {
+            return base.ScrollToOffset(targetOffset, velocity, animate);
+        }
+
+        _wasInTransitionAtDown = false;
+
+        // the pan may have already carried the position PAST the interrupted transition's destination
+        // toward the new target: wrapping it up would animate BACKWARD first (visible jump-back).
+        // Only run phase 1 while that destination is still ahead in the direction of travel.
+        var toOrigin = IsVertical ? _gestureOrigin.Y - CurrentPosition.Y : _gestureOrigin.X - CurrentPosition.X;
+        var toTarget = IsVertical ? targetOffset.Y - CurrentPosition.Y : targetOffset.X - CurrentPosition.X;
+        if (targetOffset != _gestureOrigin && (toOrigin == 0 || Math.Sign(toOrigin) != Math.Sign(toTarget)))
+        {
+            return base.ScrollToOffset(targetOffset, velocity, animate);
+        }
+        _pendingTarget = targetOffset != _gestureOrigin ? targetOffset : null;
 
         if (InterruptedTransitionMs <= 0)
         {
-            base.ScrollToOffset(_interruptedTarget, Vector2.Zero, false);
+            base.ScrollToOffset(_gestureOrigin, Vector2.Zero, false);
             if (_pendingTarget is Vector2 instant)
             {
                 _pendingTarget = null;
@@ -359,14 +437,14 @@ public class SkiaShaderCarousel : SkiaCarousel
         // (ms per slide), so scale it to cover the remaining distance in InterruptedTransitionMs.
         var cell = IsVertical ? CellSize.Pixels.Height : CellSize.Pixels.Width;
         var remaining = IsVertical
-            ? Math.Abs(_interruptedTarget.Y - CurrentPosition.Y)
-            : Math.Abs(_interruptedTarget.X - CurrentPosition.X);
+            ? Math.Abs(_gestureOrigin.Y - CurrentPosition.Y)
+            : Math.Abs(_gestureOrigin.X - CurrentPosition.X);
         var keep = LinearSpeedMs;
         LinearSpeedMs = remaining > 0 && cell > 0 ? InterruptedTransitionMs * cell / remaining : keep;
         bool started;
         try
         {
-            started = base.ScrollToOffset(_interruptedTarget, Vector2.Zero, true);
+            started = base.ScrollToOffset(_gestureOrigin, Vector2.Zero, true);
         }
         finally
         {
