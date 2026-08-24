@@ -1,4 +1,4 @@
-using System.Drawing;
+﻿using System.Drawing;
 using AppoMobi.Gestures;
 using DrawnUi.Draw;
 
@@ -49,6 +49,13 @@ public sealed class GestureRobot
     /// Call <see cref="SettleFling(SkiaScroll,int,double,float)"/> to run the fling to rest.
     /// </summary>
     public void Pan(PointF from, PointF to, double durationMs = 200, int steps = 12)
+        => Pan(from, to, durationMs, steps, 0);
+
+    /// <summary>
+    /// Pan with a hold before release: the finger stays at the end point for <paramref name="holdMs"/>
+    /// so the release velocity is ~zero (slow-drag-and-release, not a flick).
+    /// </summary>
+    public void Pan(PointF from, PointF to, double durationMs, int steps, double holdMs)
     {
         if (steps < 1) steps = 1;
         var id = ++_pointerId;
@@ -81,7 +88,12 @@ public sealed class GestureRobot
             prev = move;
         }
 
-        Advance(dt);
+        Advance(dt + holdMs);
+        if (holdMs > 0)
+        {
+            // VelocityAccumulator ages samples by REAL time: sleep so the release sees a stale window -> ~zero velocity
+            System.Threading.Thread.Sleep((int)holdMs);
+        }
         var up = MakeArgs(id, TouchActionType.Released, toPx, fromPx);
         up.IsInContact = false;
         TouchActionEventArgs.FillDistanceInfo(up, prev);
