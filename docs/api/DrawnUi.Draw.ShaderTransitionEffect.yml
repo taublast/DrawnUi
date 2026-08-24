@@ -1,68 +1,56 @@
 ### YamlMime:ManagedReference
 items:
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  commentId: T:DrawnUi.Draw.ShaderDoubleTexturesEffect
-  id: ShaderDoubleTexturesEffect
+- uid: DrawnUi.Draw.ShaderTransitionEffect
+  commentId: T:DrawnUi.Draw.ShaderTransitionEffect
+  id: ShaderTransitionEffect
   parent: DrawnUi.Draw
   children:
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ApplyControlTo(DrawnUi.Draw.SkiaControl)
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.AssignedControlTo
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.CompileSecondaryTexture(SkiaSharp.SKImage)
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFrom
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFromProperty
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlTo
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlToProperty
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(System.String)
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.GetSecondaryTexture
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ImportCacheTo
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource(System.String)
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource(System.String)
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedPrimaryBitmap
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedSecondaryBitmap
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.OnDisposing
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ParentReady
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySource
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySourceProperty
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizedPrimaryImage
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySource
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySourceProperty
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondaryTexture
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.TilingSecondaryTexture
+  - DrawnUi.Draw.ShaderTransitionEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+  - DrawnUi.Draw.ShaderTransitionEffect.CreateUniforms(SkiaSharp.SKRect)
+  - DrawnUi.Draw.ShaderTransitionEffect.DefaultTemplate
+  - DrawnUi.Draw.ShaderTransitionEffect.Progress
   langs:
   - csharp
   - vb
-  name: ShaderDoubleTexturesEffect
-  nameWithType: ShaderDoubleTexturesEffect
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  name: ShaderTransitionEffect
+  nameWithType: ShaderTransitionEffect
+  fullName: DrawnUi.Draw.ShaderTransitionEffect
   type: Class
   source:
     remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
+      path: src/Shared/DrawnUi/Features/Effects/ShaderTransitionEffect.cs
       branch: Cells
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: ShaderDoubleTexturesEffect
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 10
+    id: ShaderTransitionEffect
+    path: ../src/Shared/DrawnUi/Features/Effects/ShaderTransitionEffect.cs
+    startLine: 11
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
-  summary: Base shader effect class that has 2 input textures.
+  summary: >-
+    Two-texture shader effect driven by a 0..1 <xref href="DrawnUi.Draw.ShaderTransitionEffect.Progress" data-throw-if-not-resolved="false"></xref>, for slide transitions
+
+    (<xref href="DrawnUi.Controls.SkiaShaderCarousel" data-throw-if-not-resolved="false"></xref>). The shader receives the usual
+
+    <xref href="DrawnUi.Draw.ShaderDoubleTexturesEffect" data-throw-if-not-resolved="false"></xref> inputs (<code>iImage1</code> = from, <code>iImage2</code> = to) plus
+
+    <code>progress</code> and <code>ratio</code> (width / height) uniforms. Without an explicit
+
+    <xref href="DrawnUi.Draw.SkiaShaderEffect.ShaderTemplate" data-throw-if-not-resolved="false"></xref> the embedded gl-transitions adapter template is used, so any
+
+    transition from https://github.com/gl-transitions/gl-transitions ported to SkSL
+
+    (a <code>transition(vec2 uv)</code> function using <code>getFromColor</code>/<code>getToColor</code>) works as <xref href="DrawnUi.Draw.SkiaShaderEffect.ShaderSource" data-throw-if-not-resolved="false"></xref>.
   example: []
   syntax:
-    content: 'public class ShaderDoubleTexturesEffect : SkiaShaderEffect, INotifyPropertyChanged, IDisposable, IPostRendererEffect, ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated, IComparable, IComparable<SkiaShaderEffect>, IEquatable<SkiaShaderEffect>'
-    content.vb: Public Class ShaderDoubleTexturesEffect Inherits SkiaShaderEffect Implements INotifyPropertyChanged, IDisposable, IPostRendererEffect, ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated, IComparable, IComparable(Of SkiaShaderEffect), IEquatable(Of SkiaShaderEffect)
+    content: 'public class ShaderTransitionEffect : ShaderDoubleTexturesEffect, INotifyPropertyChanged, IDisposable, IPostRendererEffect, ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated, IComparable, IComparable<SkiaShaderEffect>, IEquatable<SkiaShaderEffect>'
+    content.vb: Public Class ShaderTransitionEffect Inherits ShaderDoubleTexturesEffect Implements INotifyPropertyChanged, IDisposable, IPostRendererEffect, ISkiaEffect, ICanBeUpdatedWithContext, ICanBeUpdated, IComparable, IComparable(Of SkiaShaderEffect), IEquatable(Of SkiaShaderEffect)
   inheritance:
   - System.Object
   - Microsoft.Maui.Controls.BindableObject
   - DrawnUi.Draw.SkiaEffect
   - DrawnUi.Draw.SkiaShaderEffect
-  derivedClasses:
-  - DrawnUi.Draw.ShaderTransitionEffect
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect
   implements:
   - System.ComponentModel.INotifyPropertyChanged
   - System.IDisposable
@@ -74,6 +62,34 @@ items:
   - System.IComparable{DrawnUi.Draw.SkiaShaderEffect}
   - System.IEquatable{DrawnUi.Draw.SkiaShaderEffect}
   inheritedMembers:
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ParentReady
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.OnDisposing
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.TilingSecondaryTexture
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFromProperty
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFrom
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySourceProperty
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySource
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizedPrimaryImage
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedPrimaryBitmap
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource(System.String)
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.GetSecondaryTexture
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondaryTexture
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.CompileSecondaryTexture(SkiaSharp.SKImage)
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedSecondaryBitmap
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySourceProperty
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySource
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource(System.String)
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(System.String)
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.AssignedControlTo
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ImportCacheTo
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ApplyControlTo(DrawnUi.Draw.SkiaControl)
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlToProperty
+  - DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlTo
   - DrawnUi.Draw.SkiaShaderEffect.Engine
   - DrawnUi.Draw.SkiaShaderEffect.CompiledShader
   - DrawnUi.Draw.SkiaShaderEffect.CreateEngine
@@ -106,14 +122,12 @@ items:
   - DrawnUi.Draw.SkiaShaderEffect.SetUniform(System.String,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaShaderEffect.SetUniform(System.String,System.Single,System.Single,System.Single,System.Single)
   - DrawnUi.Draw.SkiaShaderEffect.SetUniform(System.String,System.Single[])
-  - DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
   - DrawnUi.Draw.SkiaShaderEffect._template
   - DrawnUi.Draw.SkiaShaderEffect._templatePlacehodler
   - DrawnUi.Draw.SkiaShaderEffect.LoadedCode
   - DrawnUi.Draw.SkiaShaderEffect.CompileShader
   - DrawnUi.Draw.SkiaShaderEffect.OnCompilationError
   - DrawnUi.Draw.SkiaShaderEffect.SendError(System.String)
-  - DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
   - DrawnUi.Draw.SkiaShaderEffect.ApplyShaderSource
   - DrawnUi.Draw.SkiaShaderEffect.NeedChangeSource(Microsoft.Maui.Controls.BindableObject,System.Object,System.Object)
   - DrawnUi.Draw.SkiaShaderEffect.ShaderCodeProperty
@@ -163,853 +177,187 @@ items:
   - System.Object.ReferenceEquals(System.Object,System.Object)
   - System.Object.ToString
   extensionMethods:
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.ShaderDoubleTexturesEffect@)
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.DrawnUi.Draw.FluentExtensions.OnShaderError``1(System.Action{DrawnUi.Draw.ShaderDoubleTexturesEffect,System.String})
-  - DrawnUi.Draw.ShaderDoubleTexturesEffect.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  - DrawnUi.Draw.ShaderTransitionEffect.DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.ShaderTransitionEffect@)
+  - DrawnUi.Draw.ShaderTransitionEffect.DrawnUi.Draw.FluentExtensions.OnShaderError``1(System.Action{DrawnUi.Draw.ShaderTransitionEffect,System.String})
+  - DrawnUi.Draw.ShaderTransitionEffect.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   - System.Object.DrawnUi.Extensions.InternalExtensions.FromPlatform
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ParentReady
-  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.ParentReady
-  id: ParentReady
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+- uid: DrawnUi.Draw.ShaderTransitionEffect.DefaultTemplate
+  commentId: F:DrawnUi.Draw.ShaderTransitionEffect.DefaultTemplate
+  id: DefaultTemplate
+  parent: DrawnUi.Draw.ShaderTransitionEffect
   langs:
   - csharp
   - vb
-  name: ParentReady()
-  nameWithType: ShaderDoubleTexturesEffect.ParentReady()
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ParentReady()
-  type: Method
+  name: DefaultTemplate
+  nameWithType: ShaderTransitionEffect.DefaultTemplate
+  fullName: DrawnUi.Draw.ShaderTransitionEffect.DefaultTemplate
+  type: Field
   source:
     remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
+      path: src/Shared/DrawnUi/Features/Effects/ShaderTransitionEffect.cs
       branch: Cells
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: ParentReady
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 12
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: protected bool ParentReady()
-    return:
-      type: System.Boolean
-    content.vb: Protected Function ParentReady() As Boolean
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.ParentReady*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
-  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
-  id: ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: ShouldDisposePreviousTexture(CachedTexture)
-  nameWithType: ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture(CachedTexture)
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
-  type: Method
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: ShouldDisposePreviousTexture
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
+    id: DefaultTemplate
+    path: ../src/Shared/DrawnUi/Features/Effects/ShaderTransitionEffect.cs
     startLine: 17
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   summary: >-
-    Checks if image is a new snapshot that needs disposal this frame.
+    gl-transitions adapter: declares the uniforms and <code>getFromColor</code>/<code>getToColor</code> sampling
 
-    Frozen snapshots are managed by ReleaseFrozenSnapshot; parent cache is never owned.
+    with the GLSL bottom-left to SkSL top-left Y flip. The transition source replaces <code>//script-goes-here</code>.
   example: []
   syntax:
-    content: protected override bool ShouldDisposePreviousTexture(CachedTexture texture)
-    parameters:
-    - id: texture
-      type: DrawnUi.Draw.CachedTexture
+    content: public const string DefaultTemplate = "\nuniform float ratio; // width / height\nuniform float progress; // 0.0 - 1.0\nuniform shader iImage1; // Texture\nuniform shader iImage2; // Texture for backside\nuniform float2 iOffset; // Top-left corner of DrawingRect\nuniform float2 iResolution; // Viewport resolution (pixels)\nuniform float2 iImageResolution; // iImage1 resolution (pixels)\nuniform float  iTime; // Shader playback time (s)\nuniform float4 iMouse; // Mouse drag pos=.xy Click pos=.zw (pixels)\n\n//In GLSL, the texture coordinate origin is at the bottom-left corner,\n//whereas in SKSL the origin is at the top-left corner.\n\nvec4 getFromColor(vec2 uv) {\n    vec2 adjustedUV = float2(uv.x, 1.0 - uv.y) * iImageResolution;\n    return iImage1.eval(adjustedUV);\n}\n\nvec4 getToColor(vec2 uv) {\n    vec2 adjustedUV = float2(uv.x, 1.0 - uv.y) * iImageResolution;\n    return iImage2.eval(adjustedUV);\n}\n\n//script-goes-here\n"
     return:
-      type: System.Boolean
-    content.vb: Protected Overrides Function ShouldDisposePreviousTexture(texture As CachedTexture) As Boolean
-  overridden: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.OnDisposing
-  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.OnDisposing
-  id: OnDisposing
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+      type: System.String
+    content.vb: Public Const DefaultTemplate As String = vbLf & "uniform float ratio; // width / height" & vbLf & "uniform float progress; // 0.0 - 1.0" & vbLf & "uniform shader iImage1; // Texture" & vbLf & "uniform shader iImage2; // Texture for backside" & vbLf & "uniform float2 iOffset; // Top-left corner of DrawingRect" & vbLf & "uniform float2 iResolution; // Viewport resolution (pixels)" & vbLf & "uniform float2 iImageResolution; // iImage1 resolution (pixels)" & vbLf & "uniform float  iTime; // Shader playback time (s)" & vbLf & "uniform float4 iMouse; // Mouse drag pos=.xy Click pos=.zw (pixels)" & vbLf & vbLf & "//In GLSL, the texture coordinate origin is at the bottom-left corner," & vbLf & "//whereas in SKSL the origin is at the top-left corner." & vbLf & vbLf & "vec4 getFromColor(vec2 uv) {" & vbLf & "    vec2 adjustedUV = float2(uv.x, 1.0 - uv.y) * iImageResolution;" & vbLf & "    return iImage1.eval(adjustedUV);" & vbLf & "}" & vbLf & vbLf & "vec4 getToColor(vec2 uv) {" & vbLf & "    vec2 adjustedUV = float2(uv.x, 1.0 - uv.y) * iImageResolution;" & vbLf & "    return iImage2.eval(adjustedUV);" & vbLf & "}" & vbLf & vbLf & "//script-goes-here" & vbLf
+- uid: DrawnUi.Draw.ShaderTransitionEffect.Progress
+  commentId: P:DrawnUi.Draw.ShaderTransitionEffect.Progress
+  id: Progress
+  parent: DrawnUi.Draw.ShaderTransitionEffect
   langs:
   - csharp
   - vb
-  name: OnDisposing()
-  nameWithType: ShaderDoubleTexturesEffect.OnDisposing()
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.OnDisposing()
-  type: Method
+  name: Progress
+  nameWithType: ShaderTransitionEffect.Progress
+  fullName: DrawnUi.Draw.ShaderTransitionEffect.Progress
+  type: Property
   source:
     remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
+      path: src/Shared/DrawnUi/Features/Effects/ShaderTransitionEffect.cs
       branch: Cells
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: OnDisposing
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 33
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  example: []
-  syntax:
-    content: protected override void OnDisposing()
-    content.vb: Protected Overrides Sub OnDisposing()
-  overridden: DrawnUi.Draw.SkiaShaderEffect.OnDisposing
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.OnDisposing*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.TilingSecondaryTexture
-  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.TilingSecondaryTexture
-  id: TilingSecondaryTexture
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: TilingSecondaryTexture
-  nameWithType: ShaderDoubleTexturesEffect.TilingSecondaryTexture
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.TilingSecondaryTexture
-  type: Field
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: TilingSecondaryTexture
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 47
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: protected SKShaderTileMode TilingSecondaryTexture
-    return:
-      type: SkiaSharp.SKShaderTileMode
-    content.vb: Protected TilingSecondaryTexture As SKShaderTileMode
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
-  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
-  id: CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: CreateTexturesUniforms(SkiaDrawingContext, SKRect, SKShader)
-  nameWithType: ShaderDoubleTexturesEffect.CreateTexturesUniforms(SkiaDrawingContext, SKRect, SKShader)
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext, SkiaSharp.SKRect, SkiaSharp.SKShader)
-  type: Method
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: CreateTexturesUniforms
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
+    id: Progress
+    path: ../src/Shared/DrawnUi/Features/Effects/ShaderTransitionEffect.cs
     startLine: 49
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
-  summary: Creates texture children via engine. Override to add additional textures.
+  summary: >-
+    Transition progress from 0 (fully <xref href="DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFrom" data-throw-if-not-resolved="false"></xref>) to 1
+
+    (fully <xref href="DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlTo" data-throw-if-not-resolved="false"></xref>), passed to the shader as the <code>progress</code> uniform.
+
+    Call <xref href="DrawnUi.Draw.SkiaEffect.Update" data-throw-if-not-resolved="false"></xref> after changing it.
   example: []
   syntax:
-    content: protected override SKRuntimeEffectChildren CreateTexturesUniforms(SkiaDrawingContext ctx, SKRect destination, SKShader primaryTexture)
-    parameters:
-    - id: ctx
-      type: DrawnUi.Draw.SkiaDrawingContext
-    - id: destination
-      type: SkiaSharp.SKRect
-    - id: primaryTexture
-      type: SkiaSharp.SKShader
+    content: public double Progress { get; set; }
+    parameters: []
     return:
-      type: SkiaSharp.SKRuntimeEffectChildren
-    content.vb: Protected Overrides Function CreateTexturesUniforms(ctx As SkiaDrawingContext, destination As SKRect, primaryTexture As SKShader) As SKRuntimeEffectChildren
-  overridden: DrawnUi.Draw.SkiaShaderEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.CreateTexturesUniforms*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
-  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
-  id: GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+      type: System.Double
+    content.vb: Public Property Progress As Double
+  overload: DrawnUi.Draw.ShaderTransitionEffect.Progress*
+- uid: DrawnUi.Draw.ShaderTransitionEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+  commentId: M:DrawnUi.Draw.ShaderTransitionEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+  id: CompileShader(System.String,System.Boolean,System.Action{System.String})
+  parent: DrawnUi.Draw.ShaderTransitionEffect
   langs:
   - csharp
   - vb
-  name: GetPrimaryTexture(SkiaDrawingContext, SKRect)
-  nameWithType: ShaderDoubleTexturesEffect.GetPrimaryTexture(SkiaDrawingContext, SKRect)
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext, SkiaSharp.SKRect)
+  name: CompileShader(string, bool, Action<string>)
+  nameWithType: ShaderTransitionEffect.CompileShader(string, bool, Action<string>)
+  fullName: DrawnUi.Draw.ShaderTransitionEffect.CompileShader(string, bool, System.Action<string>)
   type: Method
   source:
     remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
+      path: src/Shared/DrawnUi/Features/Effects/ShaderTransitionEffect.cs
       branch: Cells
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: GetPrimaryTexture
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 81
+    id: CompileShader
+    path: ../src/Shared/DrawnUi/Features/Effects/ShaderTransitionEffect.cs
+    startLine: 51
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  example: []
+  syntax:
+    content: protected override void CompileShader(string shaderCode, bool useCache = true, Action<string> onError = null)
+    parameters:
+    - id: shaderCode
+      type: System.String
+    - id: useCache
+      type: System.Boolean
+    - id: onError
+      type: System.Action{System.String}
+    content.vb: Protected Overrides Sub CompileShader(shaderCode As String, useCache As Boolean = True, onError As Action(Of String) = Nothing)
+  overridden: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+  overload: DrawnUi.Draw.ShaderTransitionEffect.CompileShader*
+  nameWithType.vb: ShaderTransitionEffect.CompileShader(String, Boolean, Action(Of String))
+  fullName.vb: DrawnUi.Draw.ShaderTransitionEffect.CompileShader(String, Boolean, System.Action(Of String))
+  name.vb: CompileShader(String, Boolean, Action(Of String))
+- uid: DrawnUi.Draw.ShaderTransitionEffect.CreateUniforms(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.ShaderTransitionEffect.CreateUniforms(SkiaSharp.SKRect)
+  id: CreateUniforms(SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.ShaderTransitionEffect
+  langs:
+  - csharp
+  - vb
+  name: CreateUniforms(SKRect)
+  nameWithType: ShaderTransitionEffect.CreateUniforms(SKRect)
+  fullName: DrawnUi.Draw.ShaderTransitionEffect.CreateUniforms(SkiaSharp.SKRect)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Features/Effects/ShaderTransitionEffect.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: CreateUniforms
+    path: ../src/Shared/DrawnUi/Features/Effects/ShaderTransitionEffect.cs
+    startLine: 61
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   summary: >-
-    Returns the background texture according to the current UseBackground mode.
+    Creates standard uniforms via engine, then merges any <xref href="DrawnUi.Draw.SkiaShaderEffect.Uniforms" data-throw-if-not-resolved="false"></xref> on top.
 
-    Always  — live snapshot (or parent cache) every frame.
-
-    Once    — snapshot taken on first call, frozen thereafter; reset AquiredBackground to re-capture.
-
-    Never   — returns null; shader must not require iImage1.
+    Override to add custom uniforms in code instead.
   example: []
   syntax:
-    content: protected override CachedTexture GetPrimaryTexture(SkiaDrawingContext ctx, SKRect destination)
+    content: protected override SKRuntimeEffectUniforms CreateUniforms(SKRect destination)
     parameters:
-    - id: ctx
-      type: DrawnUi.Draw.SkiaDrawingContext
     - id: destination
       type: SkiaSharp.SKRect
     return:
-      type: DrawnUi.Draw.CachedTexture
-    content.vb: Protected Overrides Function GetPrimaryTexture(ctx As SkiaDrawingContext, destination As SKRect) As CachedTexture
-  overridden: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetPrimaryTexture*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFromProperty
-  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFromProperty
-  id: ControlFromProperty
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: ControlFromProperty
-  nameWithType: ShaderDoubleTexturesEffect.ControlFromProperty
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFromProperty
-  type: Field
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: ControlFromProperty
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 131
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public static readonly BindableProperty ControlFromProperty
-    return:
-      type: Microsoft.Maui.Controls.BindableProperty
-    content.vb: Public Shared ReadOnly ControlFromProperty As BindableProperty
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFrom
-  commentId: P:DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFrom
-  id: ControlFrom
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: ControlFrom
-  nameWithType: ShaderDoubleTexturesEffect.ControlFrom
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFrom
-  type: Property
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: ControlFrom
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 137
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public SkiaControl ControlFrom { get; set; }
-    parameters: []
-    return:
-      type: DrawnUi.Draw.SkiaControl
-    content.vb: Public Property ControlFrom As SkiaControl
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFrom*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySourceProperty
-  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySourceProperty
-  id: PrimarySourceProperty
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: PrimarySourceProperty
-  nameWithType: ShaderDoubleTexturesEffect.PrimarySourceProperty
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySourceProperty
-  type: Field
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: PrimarySourceProperty
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 149
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public static readonly BindableProperty PrimarySourceProperty
-    return:
-      type: Microsoft.Maui.Controls.BindableProperty
-    content.vb: Public Shared ReadOnly PrimarySourceProperty As BindableProperty
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySource
-  commentId: P:DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySource
-  id: PrimarySource
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: PrimarySource
-  nameWithType: ShaderDoubleTexturesEffect.PrimarySource
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySource
-  type: Property
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: PrimarySource
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 156
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public string PrimarySource { get; set; }
-    parameters: []
-    return:
-      type: System.String
-    content.vb: Public Property PrimarySource As String
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySource*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap
-  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap
-  id: ResizePrimaryLoadedBitmap
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: ResizePrimaryLoadedBitmap()
-  nameWithType: ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap()
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap()
-  type: Method
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: ResizePrimaryLoadedBitmap
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 182
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public void ResizePrimaryLoadedBitmap()
-    content.vb: Public Sub ResizePrimaryLoadedBitmap()
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizedPrimaryImage
-  commentId: P:DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizedPrimaryImage
-  id: ResizedPrimaryImage
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: ResizedPrimaryImage
-  nameWithType: ShaderDoubleTexturesEffect.ResizedPrimaryImage
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizedPrimaryImage
-  type: Property
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: ResizedPrimaryImage
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 221
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: Loaded from file
-  example: []
-  syntax:
-    content: protected SKImage ResizedPrimaryImage { get; set; }
-    parameters: []
-    return:
-      type: SkiaSharp.SKImage
-    content.vb: Protected Property ResizedPrimaryImage As SKImage
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizedPrimaryImage*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedPrimaryBitmap
-  commentId: P:DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedPrimaryBitmap
-  id: LoadedPrimaryBitmap
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: LoadedPrimaryBitmap
-  nameWithType: ShaderDoubleTexturesEffect.LoadedPrimaryBitmap
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedPrimaryBitmap
-  type: Property
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: LoadedPrimaryBitmap
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 222
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: protected SKBitmap LoadedPrimaryBitmap { get; set; }
-    parameters: []
-    return:
-      type: SkiaSharp.SKBitmap
-    content.vb: Protected Property LoadedPrimaryBitmap As SKBitmap
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedPrimaryBitmap*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource(System.String)
-  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource(System.String)
-  id: LoadPrimarySource(System.String)
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: LoadPrimarySource(string)
-  nameWithType: ShaderDoubleTexturesEffect.LoadPrimarySource(string)
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource(string)
-  type: Method
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: LoadPrimarySource
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 231
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: Loading from local files only
-  example: []
-  syntax:
-    content: public Task LoadPrimarySource(string fileName)
-    parameters:
-    - id: fileName
-      type: System.String
-      description: ''
-    return:
-      type: System.Threading.Tasks.Task
-      description: ''
-    content.vb: Public Function LoadPrimarySource(fileName As String) As Task
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource*
-  nameWithType.vb: ShaderDoubleTexturesEffect.LoadPrimarySource(String)
-  fullName.vb: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource(String)
-  name.vb: LoadPrimarySource(String)
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetSecondaryTexture
-  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.GetSecondaryTexture
-  id: GetSecondaryTexture
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: GetSecondaryTexture()
-  nameWithType: ShaderDoubleTexturesEffect.GetSecondaryTexture()
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetSecondaryTexture()
-  type: Method
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: GetSecondaryTexture
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 275
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: protected virtual SKShader GetSecondaryTexture()
-    return:
-      type: SkiaSharp.SKShader
-    content.vb: Protected Overridable Function GetSecondaryTexture() As SKShader
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetSecondaryTexture*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondaryTexture
-  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondaryTexture
-  id: SecondaryTexture
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: SecondaryTexture
-  nameWithType: ShaderDoubleTexturesEffect.SecondaryTexture
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondaryTexture
-  type: Field
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: SecondaryTexture
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 300
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: Will be normally set by CompileSecondaryTexture
-  example: []
-  syntax:
-    content: protected SKShader SecondaryTexture
-    return:
-      type: SkiaSharp.SKShader
-    content.vb: Protected SecondaryTexture As SKShader
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.CompileSecondaryTexture(SkiaSharp.SKImage)
-  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.CompileSecondaryTexture(SkiaSharp.SKImage)
-  id: CompileSecondaryTexture(SkiaSharp.SKImage)
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: CompileSecondaryTexture(SKImage)
-  nameWithType: ShaderDoubleTexturesEffect.CompileSecondaryTexture(SKImage)
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.CompileSecondaryTexture(SkiaSharp.SKImage)
-  type: Method
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: CompileSecondaryTexture
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 302
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public void CompileSecondaryTexture(SKImage image)
-    parameters:
-    - id: image
-      type: SkiaSharp.SKImage
-    content.vb: Public Sub CompileSecondaryTexture(image As SKImage)
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.CompileSecondaryTexture*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedSecondaryBitmap
-  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedSecondaryBitmap
-  id: LoadedSecondaryBitmap
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: LoadedSecondaryBitmap
-  nameWithType: ShaderDoubleTexturesEffect.LoadedSecondaryBitmap
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedSecondaryBitmap
-  type: Field
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: LoadedSecondaryBitmap
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 321
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: protected SKBitmap LoadedSecondaryBitmap
-    return:
-      type: SkiaSharp.SKBitmap
-    content.vb: Protected LoadedSecondaryBitmap As SKBitmap
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySourceProperty
-  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySourceProperty
-  id: SecondarySourceProperty
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: SecondarySourceProperty
-  nameWithType: ShaderDoubleTexturesEffect.SecondarySourceProperty
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySourceProperty
-  type: Field
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: SecondarySourceProperty
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 325
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public static readonly BindableProperty SecondarySourceProperty
-    return:
-      type: Microsoft.Maui.Controls.BindableProperty
-    content.vb: Public Shared ReadOnly SecondarySourceProperty As BindableProperty
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySource
-  commentId: P:DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySource
-  id: SecondarySource
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: SecondarySource
-  nameWithType: ShaderDoubleTexturesEffect.SecondarySource
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySource
-  type: Property
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: SecondarySource
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 332
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public string SecondarySource { get; set; }
-    parameters: []
-    return:
-      type: System.String
-    content.vb: Public Property SecondarySource As String
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySource*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture
-  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture
-  id: ResizeSecondaryLoadedBitmapAndCompileTexture
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: ResizeSecondaryLoadedBitmapAndCompileTexture()
-  nameWithType: ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture()
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture()
-  type: Method
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: ResizeSecondaryLoadedBitmapAndCompileTexture
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 359
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public void ResizeSecondaryLoadedBitmapAndCompileTexture()
-    content.vb: Public Sub ResizeSecondaryLoadedBitmapAndCompileTexture()
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource(System.String)
-  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource(System.String)
-  id: LoadSecondarySource(System.String)
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: LoadSecondarySource(string)
-  nameWithType: ShaderDoubleTexturesEffect.LoadSecondarySource(string)
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource(string)
-  type: Method
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: LoadSecondarySource
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 389
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  summary: Loading from local files only
-  example: []
-  syntax:
-    content: public Task LoadSecondarySource(string fileName)
-    parameters:
-    - id: fileName
-      type: System.String
-      description: ''
-    return:
-      type: System.Threading.Tasks.Task
-      description: ''
-    content.vb: Public Function LoadSecondarySource(fileName As String) As Task
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource*
-  nameWithType.vb: ShaderDoubleTexturesEffect.LoadSecondarySource(String)
-  fullName.vb: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource(String)
-  name.vb: LoadSecondarySource(String)
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(System.String)
-  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(System.String)
-  id: DecodePackageBitmapAsync(System.String)
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: DecodePackageBitmapAsync(string)
-  nameWithType: ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(string)
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(string)
-  type: Method
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: DecodePackageBitmapAsync
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 424
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: protected virtual Task<SKBitmap> DecodePackageBitmapAsync(string fileName)
-    parameters:
-    - id: fileName
-      type: System.String
-    return:
-      type: System.Threading.Tasks.Task{SkiaSharp.SKBitmap}
-    content.vb: Protected Overridable Function DecodePackageBitmapAsync(fileName As String) As Task(Of SKBitmap)
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync*
-  nameWithType.vb: ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(String)
-  fullName.vb: DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(String)
-  name.vb: DecodePackageBitmapAsync(String)
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.AssignedControlTo
-  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.AssignedControlTo
-  id: AssignedControlTo
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: AssignedControlTo
-  nameWithType: ShaderDoubleTexturesEffect.AssignedControlTo
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.AssignedControlTo
-  type: Field
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: AssignedControlTo
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 442
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: protected SkiaControl AssignedControlTo
-    return:
-      type: DrawnUi.Draw.SkiaControl
-    content.vb: Protected AssignedControlTo As SkiaControl
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ImportCacheTo
-  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.ImportCacheTo
-  id: ImportCacheTo
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: ImportCacheTo()
-  nameWithType: ShaderDoubleTexturesEffect.ImportCacheTo()
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ImportCacheTo()
-  type: Method
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: ImportCacheTo
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 444
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: protected virtual void ImportCacheTo()
-    content.vb: Protected Overridable Sub ImportCacheTo()
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.ImportCacheTo*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ApplyControlTo(DrawnUi.Draw.SkiaControl)
-  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.ApplyControlTo(DrawnUi.Draw.SkiaControl)
-  id: ApplyControlTo(DrawnUi.Draw.SkiaControl)
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: ApplyControlTo(SkiaControl)
-  nameWithType: ShaderDoubleTexturesEffect.ApplyControlTo(SkiaControl)
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ApplyControlTo(DrawnUi.Draw.SkiaControl)
-  type: Method
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: ApplyControlTo
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 459
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: protected virtual void ApplyControlTo(SkiaControl control)
-    parameters:
-    - id: control
-      type: DrawnUi.Draw.SkiaControl
-    content.vb: Protected Overridable Sub ApplyControlTo(control As SkiaControl)
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.ApplyControlTo*
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlToProperty
-  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlToProperty
-  id: ControlToProperty
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: ControlToProperty
-  nameWithType: ShaderDoubleTexturesEffect.ControlToProperty
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlToProperty
-  type: Field
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: ControlToProperty
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 490
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public static readonly BindableProperty ControlToProperty
-    return:
-      type: Microsoft.Maui.Controls.BindableProperty
-    content.vb: Public Shared ReadOnly ControlToProperty As BindableProperty
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlTo
-  commentId: P:DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlTo
-  id: ControlTo
-  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
-  langs:
-  - csharp
-  - vb
-  name: ControlTo
-  nameWithType: ShaderDoubleTexturesEffect.ControlTo
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlTo
-  type: Property
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: ControlTo
-    path: ../src/Shared/DrawnUi/Features/Effects/ShaderDoubleTexturesEffect.cs
-    startLine: 496
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Draw
-  syntax:
-    content: public SkiaControl ControlTo { get; set; }
-    parameters: []
-    return:
-      type: DrawnUi.Draw.SkiaControl
-    content.vb: Public Property ControlTo As SkiaControl
-  overload: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlTo*
+      type: SkiaSharp.SKRuntimeEffectUniforms
+    content.vb: Protected Overrides Function CreateUniforms(destination As SKRect) As SKRuntimeEffectUniforms
+  overridden: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+  overload: DrawnUi.Draw.ShaderTransitionEffect.CreateUniforms*
 references:
+- uid: DrawnUi.Draw.ShaderTransitionEffect.Progress
+  commentId: P:DrawnUi.Draw.ShaderTransitionEffect.Progress
+  href: DrawnUi.Draw.ShaderTransitionEffect.html#DrawnUi_Draw_ShaderTransitionEffect_Progress
+  name: Progress
+  nameWithType: ShaderTransitionEffect.Progress
+  fullName: DrawnUi.Draw.ShaderTransitionEffect.Progress
+- uid: DrawnUi.Controls.SkiaShaderCarousel
+  commentId: T:DrawnUi.Controls.SkiaShaderCarousel
+  href: DrawnUi.Controls.SkiaShaderCarousel.html
+  name: SkiaShaderCarousel
+  nameWithType: SkiaShaderCarousel
+  fullName: DrawnUi.Controls.SkiaShaderCarousel
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  commentId: T:DrawnUi.Draw.ShaderDoubleTexturesEffect
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  name: ShaderDoubleTexturesEffect
+  nameWithType: ShaderDoubleTexturesEffect
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect
+- uid: DrawnUi.Draw.SkiaShaderEffect.ShaderTemplate
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.ShaderTemplate
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderTemplate
+  name: ShaderTemplate
+  nameWithType: SkiaShaderEffect.ShaderTemplate
+  fullName: DrawnUi.Draw.SkiaShaderEffect.ShaderTemplate
+- uid: DrawnUi.Draw.SkiaShaderEffect.ShaderSource
+  commentId: P:DrawnUi.Draw.SkiaShaderEffect.ShaderSource
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderSource
+  name: ShaderSource
+  nameWithType: SkiaShaderEffect.ShaderSource
+  fullName: DrawnUi.Draw.SkiaShaderEffect.ShaderSource
 - uid: DrawnUi.Draw
   commentId: N:DrawnUi.Draw
   href: DrawnUi.html
@@ -1183,6 +531,477 @@ references:
     name: SkiaShaderEffect
     href: DrawnUi.Draw.SkiaShaderEffect.html
   - name: )
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ParentReady
+  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.ParentReady
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ParentReady
+  name: ParentReady()
+  nameWithType: ShaderDoubleTexturesEffect.ParentReady()
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ParentReady()
+  spec.csharp:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ParentReady
+    name: ParentReady
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ParentReady
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ParentReady
+    name: ParentReady
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ParentReady
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
+  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ShouldDisposePreviousTexture_DrawnUi_Draw_CachedTexture_
+  name: ShouldDisposePreviousTexture(CachedTexture)
+  nameWithType: ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture(CachedTexture)
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
+    name: ShouldDisposePreviousTexture
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ShouldDisposePreviousTexture_DrawnUi_Draw_CachedTexture_
+  - name: (
+  - uid: DrawnUi.Draw.CachedTexture
+    name: CachedTexture
+    href: DrawnUi.Draw.CachedTexture.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
+    name: ShouldDisposePreviousTexture
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ShouldDisposePreviousTexture_DrawnUi_Draw_CachedTexture_
+  - name: (
+  - uid: DrawnUi.Draw.CachedTexture
+    name: CachedTexture
+    href: DrawnUi.Draw.CachedTexture.html
+  - name: )
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.OnDisposing
+  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.OnDisposing
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_OnDisposing
+  name: OnDisposing()
+  nameWithType: ShaderDoubleTexturesEffect.OnDisposing()
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.OnDisposing()
+  spec.csharp:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.OnDisposing
+    name: OnDisposing
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_OnDisposing
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.OnDisposing
+    name: OnDisposing
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_OnDisposing
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.TilingSecondaryTexture
+  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.TilingSecondaryTexture
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_TilingSecondaryTexture
+  name: TilingSecondaryTexture
+  nameWithType: ShaderDoubleTexturesEffect.TilingSecondaryTexture
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.TilingSecondaryTexture
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
+  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  isExternal: true
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_CreateTexturesUniforms_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_SkiaSharp_SKShader_
+  name: CreateTexturesUniforms(SkiaDrawingContext, SKRect, SKShader)
+  nameWithType: ShaderDoubleTexturesEffect.CreateTexturesUniforms(SkiaDrawingContext, SKRect, SKShader)
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext, SkiaSharp.SKRect, SkiaSharp.SKShader)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
+    name: CreateTexturesUniforms
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_CreateTexturesUniforms_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_SkiaSharp_SKShader_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaDrawingContext
+    name: SkiaDrawingContext
+    href: DrawnUi.Draw.SkiaDrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKShader
+    name: SKShader
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skshader
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
+    name: CreateTexturesUniforms
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_CreateTexturesUniforms_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_SkiaSharp_SKShader_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaDrawingContext
+    name: SkiaDrawingContext
+    href: DrawnUi.Draw.SkiaDrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKShader
+    name: SKShader
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skshader
+  - name: )
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  isExternal: true
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_GetPrimaryTexture_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
+  name: GetPrimaryTexture(SkiaDrawingContext, SKRect)
+  nameWithType: ShaderDoubleTexturesEffect.GetPrimaryTexture(SkiaDrawingContext, SKRect)
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext, SkiaSharp.SKRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+    name: GetPrimaryTexture
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_GetPrimaryTexture_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaDrawingContext
+    name: SkiaDrawingContext
+    href: DrawnUi.Draw.SkiaDrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
+    name: GetPrimaryTexture
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_GetPrimaryTexture_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaDrawingContext
+    name: SkiaDrawingContext
+    href: DrawnUi.Draw.SkiaDrawingContext.html
+  - name: ','
+  - name: " "
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFromProperty
+  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFromProperty
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ControlFromProperty
+  name: ControlFromProperty
+  nameWithType: ShaderDoubleTexturesEffect.ControlFromProperty
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFromProperty
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFrom
+  commentId: P:DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFrom
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ControlFrom
+  name: ControlFrom
+  nameWithType: ShaderDoubleTexturesEffect.ControlFrom
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFrom
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySourceProperty
+  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySourceProperty
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_PrimarySourceProperty
+  name: PrimarySourceProperty
+  nameWithType: ShaderDoubleTexturesEffect.PrimarySourceProperty
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySourceProperty
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySource
+  commentId: P:DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySource
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_PrimarySource
+  name: PrimarySource
+  nameWithType: ShaderDoubleTexturesEffect.PrimarySource
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySource
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap
+  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ResizePrimaryLoadedBitmap
+  name: ResizePrimaryLoadedBitmap()
+  nameWithType: ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap()
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap()
+  spec.csharp:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap
+    name: ResizePrimaryLoadedBitmap
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ResizePrimaryLoadedBitmap
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap
+    name: ResizePrimaryLoadedBitmap
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ResizePrimaryLoadedBitmap
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizedPrimaryImage
+  commentId: P:DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizedPrimaryImage
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ResizedPrimaryImage
+  name: ResizedPrimaryImage
+  nameWithType: ShaderDoubleTexturesEffect.ResizedPrimaryImage
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizedPrimaryImage
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedPrimaryBitmap
+  commentId: P:DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedPrimaryBitmap
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_LoadedPrimaryBitmap
+  name: LoadedPrimaryBitmap
+  nameWithType: ShaderDoubleTexturesEffect.LoadedPrimaryBitmap
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedPrimaryBitmap
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource(System.String)
+  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource(System.String)
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  isExternal: true
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_LoadPrimarySource_System_String_
+  name: LoadPrimarySource(string)
+  nameWithType: ShaderDoubleTexturesEffect.LoadPrimarySource(string)
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource(string)
+  nameWithType.vb: ShaderDoubleTexturesEffect.LoadPrimarySource(String)
+  fullName.vb: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource(String)
+  name.vb: LoadPrimarySource(String)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource(System.String)
+    name: LoadPrimarySource
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_LoadPrimarySource_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource(System.String)
+    name: LoadPrimarySource
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_LoadPrimarySource_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetSecondaryTexture
+  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.GetSecondaryTexture
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_GetSecondaryTexture
+  name: GetSecondaryTexture()
+  nameWithType: ShaderDoubleTexturesEffect.GetSecondaryTexture()
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetSecondaryTexture()
+  spec.csharp:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetSecondaryTexture
+    name: GetSecondaryTexture
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_GetSecondaryTexture
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetSecondaryTexture
+    name: GetSecondaryTexture
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_GetSecondaryTexture
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondaryTexture
+  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondaryTexture
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_SecondaryTexture
+  name: SecondaryTexture
+  nameWithType: ShaderDoubleTexturesEffect.SecondaryTexture
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondaryTexture
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.CompileSecondaryTexture(SkiaSharp.SKImage)
+  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.CompileSecondaryTexture(SkiaSharp.SKImage)
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  isExternal: true
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_CompileSecondaryTexture_SkiaSharp_SKImage_
+  name: CompileSecondaryTexture(SKImage)
+  nameWithType: ShaderDoubleTexturesEffect.CompileSecondaryTexture(SKImage)
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.CompileSecondaryTexture(SkiaSharp.SKImage)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.CompileSecondaryTexture(SkiaSharp.SKImage)
+    name: CompileSecondaryTexture
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_CompileSecondaryTexture_SkiaSharp_SKImage_
+  - name: (
+  - uid: SkiaSharp.SKImage
+    name: SKImage
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.CompileSecondaryTexture(SkiaSharp.SKImage)
+    name: CompileSecondaryTexture
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_CompileSecondaryTexture_SkiaSharp_SKImage_
+  - name: (
+  - uid: SkiaSharp.SKImage
+    name: SKImage
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
+  - name: )
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedSecondaryBitmap
+  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedSecondaryBitmap
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_LoadedSecondaryBitmap
+  name: LoadedSecondaryBitmap
+  nameWithType: ShaderDoubleTexturesEffect.LoadedSecondaryBitmap
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedSecondaryBitmap
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySourceProperty
+  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySourceProperty
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_SecondarySourceProperty
+  name: SecondarySourceProperty
+  nameWithType: ShaderDoubleTexturesEffect.SecondarySourceProperty
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySourceProperty
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySource
+  commentId: P:DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySource
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_SecondarySource
+  name: SecondarySource
+  nameWithType: ShaderDoubleTexturesEffect.SecondarySource
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySource
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture
+  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ResizeSecondaryLoadedBitmapAndCompileTexture
+  name: ResizeSecondaryLoadedBitmapAndCompileTexture()
+  nameWithType: ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture()
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture()
+  spec.csharp:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture
+    name: ResizeSecondaryLoadedBitmapAndCompileTexture
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ResizeSecondaryLoadedBitmapAndCompileTexture
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture
+    name: ResizeSecondaryLoadedBitmapAndCompileTexture
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ResizeSecondaryLoadedBitmapAndCompileTexture
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource(System.String)
+  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource(System.String)
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  isExternal: true
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_LoadSecondarySource_System_String_
+  name: LoadSecondarySource(string)
+  nameWithType: ShaderDoubleTexturesEffect.LoadSecondarySource(string)
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource(string)
+  nameWithType.vb: ShaderDoubleTexturesEffect.LoadSecondarySource(String)
+  fullName.vb: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource(String)
+  name.vb: LoadSecondarySource(String)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource(System.String)
+    name: LoadSecondarySource
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_LoadSecondarySource_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource(System.String)
+    name: LoadSecondarySource
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_LoadSecondarySource_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(System.String)
+  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(System.String)
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  isExternal: true
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_DecodePackageBitmapAsync_System_String_
+  name: DecodePackageBitmapAsync(string)
+  nameWithType: ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(string)
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(string)
+  nameWithType.vb: ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(String)
+  fullName.vb: DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(String)
+  name.vb: DecodePackageBitmapAsync(String)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(System.String)
+    name: DecodePackageBitmapAsync
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_DecodePackageBitmapAsync_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync(System.String)
+    name: DecodePackageBitmapAsync
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_DecodePackageBitmapAsync_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.AssignedControlTo
+  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.AssignedControlTo
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_AssignedControlTo
+  name: AssignedControlTo
+  nameWithType: ShaderDoubleTexturesEffect.AssignedControlTo
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.AssignedControlTo
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ImportCacheTo
+  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.ImportCacheTo
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ImportCacheTo
+  name: ImportCacheTo()
+  nameWithType: ShaderDoubleTexturesEffect.ImportCacheTo()
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ImportCacheTo()
+  spec.csharp:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ImportCacheTo
+    name: ImportCacheTo
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ImportCacheTo
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ImportCacheTo
+    name: ImportCacheTo
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ImportCacheTo
+  - name: (
+  - name: )
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ApplyControlTo(DrawnUi.Draw.SkiaControl)
+  commentId: M:DrawnUi.Draw.ShaderDoubleTexturesEffect.ApplyControlTo(DrawnUi.Draw.SkiaControl)
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ApplyControlTo_DrawnUi_Draw_SkiaControl_
+  name: ApplyControlTo(SkiaControl)
+  nameWithType: ShaderDoubleTexturesEffect.ApplyControlTo(SkiaControl)
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ApplyControlTo(DrawnUi.Draw.SkiaControl)
+  spec.csharp:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ApplyControlTo(DrawnUi.Draw.SkiaControl)
+    name: ApplyControlTo
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ApplyControlTo_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ApplyControlTo(DrawnUi.Draw.SkiaControl)
+    name: ApplyControlTo
+    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ApplyControlTo_DrawnUi_Draw_SkiaControl_
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlToProperty
+  commentId: F:DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlToProperty
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ControlToProperty
+  name: ControlToProperty
+  nameWithType: ShaderDoubleTexturesEffect.ControlToProperty
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlToProperty
+- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlTo
+  commentId: P:DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlTo
+  parent: DrawnUi.Draw.ShaderDoubleTexturesEffect
+  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ControlTo
+  name: ControlTo
+  nameWithType: ShaderDoubleTexturesEffect.ControlTo
+  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlTo
 - uid: DrawnUi.Draw.SkiaShaderEffect.Engine
   commentId: P:DrawnUi.Draw.SkiaShaderEffect.Engine
   parent: DrawnUi.Draw.SkiaShaderEffect
@@ -1923,34 +1742,6 @@ references:
   - name: (
   - name: )
   - name: )
-- uid: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
-  parent: DrawnUi.Draw.SkiaShaderEffect
-  isExternal: true
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateUniforms_SkiaSharp_SKRect_
-  name: CreateUniforms(SKRect)
-  nameWithType: SkiaShaderEffect.CreateUniforms(SKRect)
-  fullName: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
-    name: CreateUniforms
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateUniforms_SkiaSharp_SKRect_
-  - name: (
-  - uid: SkiaSharp.SKRect
-    name: SKRect
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
-    name: CreateUniforms
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateUniforms_SkiaSharp_SKRect_
-  - name: (
-  - uid: SkiaSharp.SKRect
-    name: SKRect
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
-  - name: )
 - uid: DrawnUi.Draw.SkiaShaderEffect._template
   commentId: F:DrawnUi.Draw.SkiaShaderEffect._template
   parent: DrawnUi.Draw.SkiaShaderEffect
@@ -2028,75 +1819,6 @@ references:
     name: String
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: )
-- uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
-  parent: DrawnUi.Draw.SkiaShaderEffect
-  isExternal: true
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__
-  name: CompileShader(string, bool, Action<string>)
-  nameWithType: SkiaShaderEffect.CompileShader(string, bool, Action<string>)
-  fullName: DrawnUi.Draw.SkiaShaderEffect.CompileShader(string, bool, System.Action<string>)
-  nameWithType.vb: SkiaShaderEffect.CompileShader(String, Boolean, Action(Of String))
-  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.CompileShader(String, Boolean, System.Action(Of String))
-  name.vb: CompileShader(String, Boolean, Action(Of String))
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
-    name: CompileShader
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__
-  - name: (
-  - uid: System.String
-    name: string
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: ','
-  - name: " "
-  - uid: System.Boolean
-    name: bool
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.boolean
-  - name: ','
-  - name: " "
-  - uid: System.Action`1
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-1
-  - name: <
-  - uid: System.String
-    name: string
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: '>'
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
-    name: CompileShader
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__
-  - name: (
-  - uid: System.String
-    name: String
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: ','
-  - name: " "
-  - uid: System.Boolean
-    name: Boolean
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.boolean
-  - name: ','
-  - name: " "
-  - uid: System.Action`1
-    name: Action
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.action-1
-  - name: (
-  - name: Of
-  - name: " "
-  - uid: System.String
-    name: String
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.string
-  - name: )
   - name: )
 - uid: DrawnUi.Draw.SkiaShaderEffect.ApplyShaderSource
   commentId: M:DrawnUi.Draw.SkiaShaderEffect.ApplyShaderSource
@@ -2193,13 +1915,6 @@ references:
   name: ShaderSourceProperty
   nameWithType: SkiaShaderEffect.ShaderSourceProperty
   fullName: DrawnUi.Draw.SkiaShaderEffect.ShaderSourceProperty
-- uid: DrawnUi.Draw.SkiaShaderEffect.ShaderSource
-  commentId: P:DrawnUi.Draw.SkiaShaderEffect.ShaderSource
-  parent: DrawnUi.Draw.SkiaShaderEffect
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderSource
-  name: ShaderSource
-  nameWithType: SkiaShaderEffect.ShaderSource
-  fullName: DrawnUi.Draw.SkiaShaderEffect.ShaderSource
 - uid: DrawnUi.Draw.SkiaShaderEffect.ShaderTemplateProperty
   commentId: F:DrawnUi.Draw.SkiaShaderEffect.ShaderTemplateProperty
   parent: DrawnUi.Draw.SkiaShaderEffect
@@ -2207,13 +1922,6 @@ references:
   name: ShaderTemplateProperty
   nameWithType: SkiaShaderEffect.ShaderTemplateProperty
   fullName: DrawnUi.Draw.SkiaShaderEffect.ShaderTemplateProperty
-- uid: DrawnUi.Draw.SkiaShaderEffect.ShaderTemplate
-  commentId: P:DrawnUi.Draw.SkiaShaderEffect.ShaderTemplate
-  parent: DrawnUi.Draw.SkiaShaderEffect
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShaderTemplate
-  name: ShaderTemplate
-  nameWithType: SkiaShaderEffect.ShaderTemplate
-  fullName: DrawnUi.Draw.SkiaShaderEffect.ShaderTemplate
 - uid: DrawnUi.Draw.SkiaShaderEffect.FilterModeProperty
   commentId: F:DrawnUi.Draw.SkiaShaderEffect.FilterModeProperty
   parent: DrawnUi.Draw.SkiaShaderEffect
@@ -3122,83 +2830,83 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.object.tostring
   - name: (
   - name: )
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.ShaderDoubleTexturesEffect@)
+- uid: DrawnUi.Draw.ShaderTransitionEffect.DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.ShaderTransitionEffect@)
   commentId: M:DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
   parent: DrawnUi.Draw.FluentExtensions
   definition: DrawnUi.Draw.FluentExtensions.Assign``1(``0,``0@)
   href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
-  name: Assign<ShaderDoubleTexturesEffect>(ShaderDoubleTexturesEffect, out ShaderDoubleTexturesEffect)
-  nameWithType: FluentExtensions.Assign<ShaderDoubleTexturesEffect>(ShaderDoubleTexturesEffect, out ShaderDoubleTexturesEffect)
-  fullName: DrawnUi.Draw.FluentExtensions.Assign<DrawnUi.Draw.ShaderDoubleTexturesEffect>(DrawnUi.Draw.ShaderDoubleTexturesEffect, out DrawnUi.Draw.ShaderDoubleTexturesEffect)
-  nameWithType.vb: FluentExtensions.Assign(Of ShaderDoubleTexturesEffect)(ShaderDoubleTexturesEffect, ShaderDoubleTexturesEffect)
-  fullName.vb: DrawnUi.Draw.FluentExtensions.Assign(Of DrawnUi.Draw.ShaderDoubleTexturesEffect)(DrawnUi.Draw.ShaderDoubleTexturesEffect, DrawnUi.Draw.ShaderDoubleTexturesEffect)
-  name.vb: Assign(Of ShaderDoubleTexturesEffect)(ShaderDoubleTexturesEffect, ShaderDoubleTexturesEffect)
+  name: Assign<ShaderTransitionEffect>(ShaderTransitionEffect, out ShaderTransitionEffect)
+  nameWithType: FluentExtensions.Assign<ShaderTransitionEffect>(ShaderTransitionEffect, out ShaderTransitionEffect)
+  fullName: DrawnUi.Draw.FluentExtensions.Assign<DrawnUi.Draw.ShaderTransitionEffect>(DrawnUi.Draw.ShaderTransitionEffect, out DrawnUi.Draw.ShaderTransitionEffect)
+  nameWithType.vb: FluentExtensions.Assign(Of ShaderTransitionEffect)(ShaderTransitionEffect, ShaderTransitionEffect)
+  fullName.vb: DrawnUi.Draw.FluentExtensions.Assign(Of DrawnUi.Draw.ShaderTransitionEffect)(DrawnUi.Draw.ShaderTransitionEffect, DrawnUi.Draw.ShaderTransitionEffect)
+  name.vb: Assign(Of ShaderTransitionEffect)(ShaderTransitionEffect, ShaderTransitionEffect)
   spec.csharp:
-  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.ShaderDoubleTexturesEffect,DrawnUi.Draw.ShaderDoubleTexturesEffect@)
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.ShaderTransitionEffect,DrawnUi.Draw.ShaderTransitionEffect@)
     name: Assign
     href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
   - name: <
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: '>'
   - name: (
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: ','
   - name: " "
   - name: out
   - name: " "
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.ShaderDoubleTexturesEffect,DrawnUi.Draw.ShaderDoubleTexturesEffect@)
+  - uid: DrawnUi.Draw.FluentExtensions.Assign``1(DrawnUi.Draw.ShaderTransitionEffect,DrawnUi.Draw.ShaderTransitionEffect@)
     name: Assign
     href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_Assign__1___0___0__
   - name: (
   - name: Of
   - name: " "
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: )
   - name: (
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: ','
   - name: " "
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: )
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.DrawnUi.Draw.FluentExtensions.OnShaderError``1(System.Action{DrawnUi.Draw.ShaderDoubleTexturesEffect,System.String})
+- uid: DrawnUi.Draw.ShaderTransitionEffect.DrawnUi.Draw.FluentExtensions.OnShaderError``1(System.Action{DrawnUi.Draw.ShaderTransitionEffect,System.String})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnShaderError``1(``0,System.Action{``0,System.String})
   parent: DrawnUi.Draw.FluentExtensions
   definition: DrawnUi.Draw.FluentExtensions.OnShaderError``1(``0,System.Action{``0,System.String})
   href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnShaderError__1___0_System_Action___0_System_String__
-  name: OnShaderError<ShaderDoubleTexturesEffect>(ShaderDoubleTexturesEffect, Action<ShaderDoubleTexturesEffect, string>)
-  nameWithType: FluentExtensions.OnShaderError<ShaderDoubleTexturesEffect>(ShaderDoubleTexturesEffect, Action<ShaderDoubleTexturesEffect, string>)
-  fullName: DrawnUi.Draw.FluentExtensions.OnShaderError<DrawnUi.Draw.ShaderDoubleTexturesEffect>(DrawnUi.Draw.ShaderDoubleTexturesEffect, System.Action<DrawnUi.Draw.ShaderDoubleTexturesEffect, string>)
-  nameWithType.vb: FluentExtensions.OnShaderError(Of ShaderDoubleTexturesEffect)(ShaderDoubleTexturesEffect, Action(Of ShaderDoubleTexturesEffect, String))
-  fullName.vb: DrawnUi.Draw.FluentExtensions.OnShaderError(Of DrawnUi.Draw.ShaderDoubleTexturesEffect)(DrawnUi.Draw.ShaderDoubleTexturesEffect, System.Action(Of DrawnUi.Draw.ShaderDoubleTexturesEffect, String))
-  name.vb: OnShaderError(Of ShaderDoubleTexturesEffect)(ShaderDoubleTexturesEffect, Action(Of ShaderDoubleTexturesEffect, String))
+  name: OnShaderError<ShaderTransitionEffect>(ShaderTransitionEffect, Action<ShaderTransitionEffect, string>)
+  nameWithType: FluentExtensions.OnShaderError<ShaderTransitionEffect>(ShaderTransitionEffect, Action<ShaderTransitionEffect, string>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnShaderError<DrawnUi.Draw.ShaderTransitionEffect>(DrawnUi.Draw.ShaderTransitionEffect, System.Action<DrawnUi.Draw.ShaderTransitionEffect, string>)
+  nameWithType.vb: FluentExtensions.OnShaderError(Of ShaderTransitionEffect)(ShaderTransitionEffect, Action(Of ShaderTransitionEffect, String))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnShaderError(Of DrawnUi.Draw.ShaderTransitionEffect)(DrawnUi.Draw.ShaderTransitionEffect, System.Action(Of DrawnUi.Draw.ShaderTransitionEffect, String))
+  name.vb: OnShaderError(Of ShaderTransitionEffect)(ShaderTransitionEffect, Action(Of ShaderTransitionEffect, String))
   spec.csharp:
-  - uid: DrawnUi.Draw.FluentExtensions.OnShaderError``1(DrawnUi.Draw.ShaderDoubleTexturesEffect,System.Action{DrawnUi.Draw.ShaderDoubleTexturesEffect,System.String})
+  - uid: DrawnUi.Draw.FluentExtensions.OnShaderError``1(DrawnUi.Draw.ShaderTransitionEffect,System.Action{DrawnUi.Draw.ShaderTransitionEffect,System.String})
     name: OnShaderError
     href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnShaderError__1___0_System_Action___0_System_String__
   - name: <
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: '>'
   - name: (
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: ','
   - name: " "
   - uid: System.Action`2
@@ -3206,9 +2914,9 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.action-2
   - name: <
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: ','
   - name: " "
   - uid: System.String
@@ -3218,20 +2926,20 @@ references:
   - name: '>'
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.FluentExtensions.OnShaderError``1(DrawnUi.Draw.ShaderDoubleTexturesEffect,System.Action{DrawnUi.Draw.ShaderDoubleTexturesEffect,System.String})
+  - uid: DrawnUi.Draw.FluentExtensions.OnShaderError``1(DrawnUi.Draw.ShaderTransitionEffect,System.Action{DrawnUi.Draw.ShaderTransitionEffect,System.String})
     name: OnShaderError
     href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnShaderError__1___0_System_Action___0_System_String__
   - name: (
   - name: Of
   - name: " "
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: )
   - name: (
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: ','
   - name: " "
   - uid: System.Action`2
@@ -3241,9 +2949,9 @@ references:
   - name: (
   - name: Of
   - name: " "
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: ','
   - name: " "
   - uid: System.String
@@ -3252,30 +2960,30 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
   - name: )
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+- uid: DrawnUi.Draw.ShaderTransitionEffect.DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   commentId: M:DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   parent: DrawnUi.Draw.ThemeBindings
   definition: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(``0,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
   href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
-  name: WithThemeBinding<ShaderDoubleTexturesEffect>(ShaderDoubleTexturesEffect, BindableProperty, object, object, object)
-  nameWithType: ThemeBindings.WithThemeBinding<ShaderDoubleTexturesEffect>(ShaderDoubleTexturesEffect, BindableProperty, object, object, object)
-  fullName: DrawnUi.Draw.ThemeBindings.WithThemeBinding<DrawnUi.Draw.ShaderDoubleTexturesEffect>(DrawnUi.Draw.ShaderDoubleTexturesEffect, Microsoft.Maui.Controls.BindableProperty, object, object, object)
-  nameWithType.vb: ThemeBindings.WithThemeBinding(Of ShaderDoubleTexturesEffect)(ShaderDoubleTexturesEffect, BindableProperty, Object, Object, Object)
-  fullName.vb: DrawnUi.Draw.ThemeBindings.WithThemeBinding(Of DrawnUi.Draw.ShaderDoubleTexturesEffect)(DrawnUi.Draw.ShaderDoubleTexturesEffect, Microsoft.Maui.Controls.BindableProperty, Object, Object, Object)
-  name.vb: WithThemeBinding(Of ShaderDoubleTexturesEffect)(ShaderDoubleTexturesEffect, BindableProperty, Object, Object, Object)
+  name: WithThemeBinding<ShaderTransitionEffect>(ShaderTransitionEffect, BindableProperty, object, object, object)
+  nameWithType: ThemeBindings.WithThemeBinding<ShaderTransitionEffect>(ShaderTransitionEffect, BindableProperty, object, object, object)
+  fullName: DrawnUi.Draw.ThemeBindings.WithThemeBinding<DrawnUi.Draw.ShaderTransitionEffect>(DrawnUi.Draw.ShaderTransitionEffect, Microsoft.Maui.Controls.BindableProperty, object, object, object)
+  nameWithType.vb: ThemeBindings.WithThemeBinding(Of ShaderTransitionEffect)(ShaderTransitionEffect, BindableProperty, Object, Object, Object)
+  fullName.vb: DrawnUi.Draw.ThemeBindings.WithThemeBinding(Of DrawnUi.Draw.ShaderTransitionEffect)(DrawnUi.Draw.ShaderTransitionEffect, Microsoft.Maui.Controls.BindableProperty, Object, Object, Object)
+  name.vb: WithThemeBinding(Of ShaderTransitionEffect)(ShaderTransitionEffect, BindableProperty, Object, Object, Object)
   spec.csharp:
-  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(DrawnUi.Draw.ShaderDoubleTexturesEffect,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(DrawnUi.Draw.ShaderTransitionEffect,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
     name: WithThemeBinding
     href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
   - name: <
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: '>'
   - name: (
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: ','
   - name: " "
   - uid: Microsoft.Maui.Controls.BindableProperty
@@ -3302,20 +3010,20 @@ references:
     href: https://learn.microsoft.com/dotnet/api/system.object
   - name: )
   spec.vb:
-  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(DrawnUi.Draw.ShaderDoubleTexturesEffect,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
+  - uid: DrawnUi.Draw.ThemeBindings.WithThemeBinding``1(DrawnUi.Draw.ShaderTransitionEffect,Microsoft.Maui.Controls.BindableProperty,System.Object,System.Object,System.Object)
     name: WithThemeBinding
     href: DrawnUi.Draw.ThemeBindings.html#DrawnUi_Draw_ThemeBindings_WithThemeBinding__1___0_Microsoft_Maui_Controls_BindableProperty_System_Object_System_Object_System_Object_
   - name: (
   - name: Of
   - name: " "
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: )
   - name: (
-  - uid: DrawnUi.Draw.ShaderDoubleTexturesEffect
-    name: ShaderDoubleTexturesEffect
-    href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html
+  - uid: DrawnUi.Draw.ShaderTransitionEffect
+    name: ShaderTransitionEffect
+    href: DrawnUi.Draw.ShaderTransitionEffect.html
   - name: ','
   - name: " "
   - uid: Microsoft.Maui.Controls.BindableProperty
@@ -3755,259 +3463,6 @@ references:
   - uid: DrawnUi.Extensions
     name: Extensions
     href: DrawnUi.Extensions.html
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ParentReady*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.ParentReady
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ParentReady
-  name: ParentReady
-  nameWithType: ShaderDoubleTexturesEffect.ParentReady
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ParentReady
-- uid: System.Boolean
-  commentId: T:System.Boolean
-  parent: System
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.boolean
-  name: bool
-  nameWithType: bool
-  fullName: bool
-  nameWithType.vb: Boolean
-  fullName.vb: Boolean
-  name.vb: Boolean
-- uid: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
-  parent: DrawnUi.Draw.SkiaShaderEffect
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShouldDisposePreviousTexture_DrawnUi_Draw_CachedTexture_
-  name: ShouldDisposePreviousTexture(CachedTexture)
-  nameWithType: SkiaShaderEffect.ShouldDisposePreviousTexture(CachedTexture)
-  fullName: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
-    name: ShouldDisposePreviousTexture
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShouldDisposePreviousTexture_DrawnUi_Draw_CachedTexture_
-  - name: (
-  - uid: DrawnUi.Draw.CachedTexture
-    name: CachedTexture
-    href: DrawnUi.Draw.CachedTexture.html
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.ShouldDisposePreviousTexture(DrawnUi.Draw.CachedTexture)
-    name: ShouldDisposePreviousTexture
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_ShouldDisposePreviousTexture_DrawnUi_Draw_CachedTexture_
-  - name: (
-  - uid: DrawnUi.Draw.CachedTexture
-    name: CachedTexture
-    href: DrawnUi.Draw.CachedTexture.html
-  - name: )
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ShouldDisposePreviousTexture_DrawnUi_Draw_CachedTexture_
-  name: ShouldDisposePreviousTexture
-  nameWithType: ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ShouldDisposePreviousTexture
-- uid: DrawnUi.Draw.CachedTexture
-  commentId: T:DrawnUi.Draw.CachedTexture
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.CachedTexture.html
-  name: CachedTexture
-  nameWithType: CachedTexture
-  fullName: DrawnUi.Draw.CachedTexture
-- uid: DrawnUi.Draw.SkiaShaderEffect.OnDisposing
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.OnDisposing
-  parent: DrawnUi.Draw.SkiaShaderEffect
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_OnDisposing
-  name: OnDisposing()
-  nameWithType: SkiaShaderEffect.OnDisposing()
-  fullName: DrawnUi.Draw.SkiaShaderEffect.OnDisposing()
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.OnDisposing
-    name: OnDisposing
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_OnDisposing
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.OnDisposing
-    name: OnDisposing
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_OnDisposing
-  - name: (
-  - name: )
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.OnDisposing*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.OnDisposing
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_OnDisposing
-  name: OnDisposing
-  nameWithType: ShaderDoubleTexturesEffect.OnDisposing
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.OnDisposing
-- uid: SkiaSharp.SKShaderTileMode
-  commentId: T:SkiaSharp.SKShaderTileMode
-  parent: SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp.skshadertilemode
-  name: SKShaderTileMode
-  nameWithType: SKShaderTileMode
-  fullName: SkiaSharp.SKShaderTileMode
-- uid: SkiaSharp
-  commentId: N:SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp
-  name: SkiaSharp
-  nameWithType: SkiaSharp
-  fullName: SkiaSharp
-- uid: DrawnUi.Draw.SkiaShaderEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
-  parent: DrawnUi.Draw.SkiaShaderEffect
-  isExternal: true
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateTexturesUniforms_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_SkiaSharp_SKShader_
-  name: CreateTexturesUniforms(SkiaDrawingContext, SKRect, SKShader)
-  nameWithType: SkiaShaderEffect.CreateTexturesUniforms(SkiaDrawingContext, SKRect, SKShader)
-  fullName: DrawnUi.Draw.SkiaShaderEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext, SkiaSharp.SKRect, SkiaSharp.SKShader)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
-    name: CreateTexturesUniforms
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateTexturesUniforms_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_SkiaSharp_SKShader_
-  - name: (
-  - uid: DrawnUi.Draw.SkiaDrawingContext
-    name: SkiaDrawingContext
-    href: DrawnUi.Draw.SkiaDrawingContext.html
-  - name: ','
-  - name: " "
-  - uid: SkiaSharp.SKRect
-    name: SKRect
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
-  - name: ','
-  - name: " "
-  - uid: SkiaSharp.SKShader
-    name: SKShader
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skshader
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateTexturesUniforms(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect,SkiaSharp.SKShader)
-    name: CreateTexturesUniforms
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateTexturesUniforms_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_SkiaSharp_SKShader_
-  - name: (
-  - uid: DrawnUi.Draw.SkiaDrawingContext
-    name: SkiaDrawingContext
-    href: DrawnUi.Draw.SkiaDrawingContext.html
-  - name: ','
-  - name: " "
-  - uid: SkiaSharp.SKRect
-    name: SKRect
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
-  - name: ','
-  - name: " "
-  - uid: SkiaSharp.SKShader
-    name: SKShader
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skshader
-  - name: )
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.CreateTexturesUniforms*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.CreateTexturesUniforms
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_CreateTexturesUniforms_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_SkiaSharp_SKShader_
-  name: CreateTexturesUniforms
-  nameWithType: ShaderDoubleTexturesEffect.CreateTexturesUniforms
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.CreateTexturesUniforms
-- uid: DrawnUi.Draw.SkiaDrawingContext
-  commentId: T:DrawnUi.Draw.SkiaDrawingContext
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.SkiaDrawingContext.html
-  name: SkiaDrawingContext
-  nameWithType: SkiaDrawingContext
-  fullName: DrawnUi.Draw.SkiaDrawingContext
-- uid: SkiaSharp.SKRect
-  commentId: T:SkiaSharp.SKRect
-  parent: SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
-  name: SKRect
-  nameWithType: SKRect
-  fullName: SkiaSharp.SKRect
-- uid: SkiaSharp.SKShader
-  commentId: T:SkiaSharp.SKShader
-  parent: SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp.skshader
-  name: SKShader
-  nameWithType: SKShader
-  fullName: SkiaSharp.SKShader
-- uid: SkiaSharp.SKRuntimeEffectChildren
-  commentId: T:SkiaSharp.SKRuntimeEffectChildren
-  parent: SkiaSharp
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp.skruntimeeffectchildren
-  name: SKRuntimeEffectChildren
-  nameWithType: SKRuntimeEffectChildren
-  fullName: SkiaSharp.SKRuntimeEffectChildren
-- uid: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
-  commentId: M:DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
-  parent: DrawnUi.Draw.SkiaShaderEffect
-  isExternal: true
-  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetPrimaryTexture_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
-  name: GetPrimaryTexture(SkiaDrawingContext, SKRect)
-  nameWithType: SkiaShaderEffect.GetPrimaryTexture(SkiaDrawingContext, SKRect)
-  fullName: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext, SkiaSharp.SKRect)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
-    name: GetPrimaryTexture
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetPrimaryTexture_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
-  - name: (
-  - uid: DrawnUi.Draw.SkiaDrawingContext
-    name: SkiaDrawingContext
-    href: DrawnUi.Draw.SkiaDrawingContext.html
-  - name: ','
-  - name: " "
-  - uid: SkiaSharp.SKRect
-    name: SKRect
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaShaderEffect.GetPrimaryTexture(DrawnUi.Draw.SkiaDrawingContext,SkiaSharp.SKRect)
-    name: GetPrimaryTexture
-    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_GetPrimaryTexture_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
-  - name: (
-  - uid: DrawnUi.Draw.SkiaDrawingContext
-    name: SkiaDrawingContext
-    href: DrawnUi.Draw.SkiaDrawingContext.html
-  - name: ','
-  - name: " "
-  - uid: SkiaSharp.SKRect
-    name: SKRect
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
-  - name: )
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetPrimaryTexture*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.GetPrimaryTexture
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_GetPrimaryTexture_DrawnUi_Draw_SkiaDrawingContext_SkiaSharp_SKRect_
-  name: GetPrimaryTexture
-  nameWithType: ShaderDoubleTexturesEffect.GetPrimaryTexture
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetPrimaryTexture
-- uid: Microsoft.Maui.Controls.BindableProperty
-  commentId: T:Microsoft.Maui.Controls.BindableProperty
-  parent: Microsoft.Maui.Controls
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
-  name: BindableProperty
-  nameWithType: BindableProperty
-  fullName: Microsoft.Maui.Controls.BindableProperty
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFrom*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFrom
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ControlFrom
-  name: ControlFrom
-  nameWithType: ShaderDoubleTexturesEffect.ControlFrom
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlFrom
-- uid: DrawnUi.Draw.SkiaControl
-  commentId: T:DrawnUi.Draw.SkiaControl
-  parent: DrawnUi.Draw
-  href: DrawnUi.Draw.SkiaControl.html
-  name: SkiaControl
-  nameWithType: SkiaControl
-  fullName: DrawnUi.Draw.SkiaControl
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySource*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySource
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_PrimarySource
-  name: PrimarySource
-  nameWithType: ShaderDoubleTexturesEffect.PrimarySource
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.PrimarySource
 - uid: System.String
   commentId: T:System.String
   parent: System
@@ -4019,205 +3474,226 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ResizePrimaryLoadedBitmap
-  name: ResizePrimaryLoadedBitmap
-  nameWithType: ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizePrimaryLoadedBitmap
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizedPrimaryImage*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizedPrimaryImage
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ResizedPrimaryImage
-  name: ResizedPrimaryImage
-  nameWithType: ShaderDoubleTexturesEffect.ResizedPrimaryImage
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizedPrimaryImage
-- uid: SkiaSharp.SKImage
-  commentId: T:SkiaSharp.SKImage
-  parent: SkiaSharp
+- uid: DrawnUi.Draw.ShaderTransitionEffect.Progress*
+  commentId: Overload:DrawnUi.Draw.ShaderTransitionEffect.Progress
+  href: DrawnUi.Draw.ShaderTransitionEffect.html#DrawnUi_Draw_ShaderTransitionEffect_Progress
+  name: Progress
+  nameWithType: ShaderTransitionEffect.Progress
+  fullName: DrawnUi.Draw.ShaderTransitionEffect.Progress
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
   isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp.skimage
-  name: SKImage
-  nameWithType: SKImage
-  fullName: SkiaSharp.SKImage
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedPrimaryBitmap*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedPrimaryBitmap
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_LoadedPrimaryBitmap
-  name: LoadedPrimaryBitmap
-  nameWithType: ShaderDoubleTexturesEffect.LoadedPrimaryBitmap
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadedPrimaryBitmap
-- uid: SkiaSharp.SKBitmap
-  commentId: T:SkiaSharp.SKBitmap
-  parent: SkiaSharp
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+  parent: DrawnUi.Draw.SkiaShaderEffect
   isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/skiasharp.skbitmap
-  name: SKBitmap
-  nameWithType: SKBitmap
-  fullName: SkiaSharp.SKBitmap
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_LoadPrimarySource_System_String_
-  name: LoadPrimarySource
-  nameWithType: ShaderDoubleTexturesEffect.LoadPrimarySource
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadPrimarySource
-- uid: System.Threading.Tasks.Task
-  commentId: T:System.Threading.Tasks.Task
-  parent: System.Threading.Tasks
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
-  name: Task
-  nameWithType: Task
-  fullName: System.Threading.Tasks.Task
-- uid: System.Threading.Tasks
-  commentId: N:System.Threading.Tasks
-  isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system
-  name: System.Threading.Tasks
-  nameWithType: System.Threading.Tasks
-  fullName: System.Threading.Tasks
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__
+  name: CompileShader(string, bool, Action<string>)
+  nameWithType: SkiaShaderEffect.CompileShader(string, bool, Action<string>)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CompileShader(string, bool, System.Action<string>)
+  nameWithType.vb: SkiaShaderEffect.CompileShader(String, Boolean, Action(Of String))
+  fullName.vb: DrawnUi.Draw.SkiaShaderEffect.CompileShader(String, Boolean, System.Action(Of String))
+  name.vb: CompileShader(String, Boolean, Action(Of String))
   spec.csharp:
-  - uid: System
-    name: System
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+    name: CompileShader
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__
+  - name: (
+  - uid: System.String
+    name: string
     isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system
-  - name: .
-  - uid: System.Threading
-    name: Threading
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
     isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading
-  - name: .
-  - uid: System.Threading.Tasks
-    name: Tasks
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
     isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
-  spec.vb:
-  - uid: System
-    name: System
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system
-  - name: .
-  - uid: System.Threading
-    name: Threading
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading
-  - name: .
-  - uid: System.Threading.Tasks
-    name: Tasks
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetSecondaryTexture*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.GetSecondaryTexture
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_GetSecondaryTexture
-  name: GetSecondaryTexture
-  nameWithType: ShaderDoubleTexturesEffect.GetSecondaryTexture
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.GetSecondaryTexture
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.CompileSecondaryTexture*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.CompileSecondaryTexture
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_CompileSecondaryTexture_SkiaSharp_SKImage_
-  name: CompileSecondaryTexture
-  nameWithType: ShaderDoubleTexturesEffect.CompileSecondaryTexture
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.CompileSecondaryTexture
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySource*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySource
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_SecondarySource
-  name: SecondarySource
-  nameWithType: ShaderDoubleTexturesEffect.SecondarySource
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.SecondarySource
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ResizeSecondaryLoadedBitmapAndCompileTexture
-  name: ResizeSecondaryLoadedBitmapAndCompileTexture
-  nameWithType: ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ResizeSecondaryLoadedBitmapAndCompileTexture
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_LoadSecondarySource_System_String_
-  name: LoadSecondarySource
-  nameWithType: ShaderDoubleTexturesEffect.LoadSecondarySource
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.LoadSecondarySource
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_DecodePackageBitmapAsync_System_String_
-  name: DecodePackageBitmapAsync
-  nameWithType: ShaderDoubleTexturesEffect.DecodePackageBitmapAsync
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.DecodePackageBitmapAsync
-- uid: System.Threading.Tasks.Task{SkiaSharp.SKBitmap}
-  commentId: T:System.Threading.Tasks.Task{SkiaSharp.SKBitmap}
-  parent: System.Threading.Tasks
-  definition: System.Threading.Tasks.Task`1
-  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
-  name: Task<SKBitmap>
-  nameWithType: Task<SKBitmap>
-  fullName: System.Threading.Tasks.Task<SkiaSharp.SKBitmap>
-  nameWithType.vb: Task(Of SKBitmap)
-  fullName.vb: System.Threading.Tasks.Task(Of SkiaSharp.SKBitmap)
-  name.vb: Task(Of SKBitmap)
-  spec.csharp:
-  - uid: System.Threading.Tasks.Task`1
-    name: Task
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
   - name: <
-  - uid: SkiaSharp.SKBitmap
-    name: SKBitmap
+  - uid: System.String
+    name: string
     isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skbitmap
+    href: https://learn.microsoft.com/dotnet/api/system.string
   - name: '>'
+  - name: )
   spec.vb:
-  - uid: System.Threading.Tasks.Task`1
-    name: Task
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CompileShader(System.String,System.Boolean,System.Action{System.String})
+    name: CompileShader
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__
+  - name: (
+  - uid: System.String
+    name: String
     isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: ','
+  - name: " "
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
   - name: (
   - name: Of
   - name: " "
-  - uid: SkiaSharp.SKBitmap
-    name: SKBitmap
+  - uid: System.String
+    name: String
     isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/skiasharp.skbitmap
+    href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
-- uid: System.Threading.Tasks.Task`1
-  commentId: T:System.Threading.Tasks.Task`1
+  - name: )
+- uid: DrawnUi.Draw.ShaderTransitionEffect.CompileShader*
+  commentId: Overload:DrawnUi.Draw.ShaderTransitionEffect.CompileShader
+  href: DrawnUi.Draw.ShaderTransitionEffect.html#DrawnUi_Draw_ShaderTransitionEffect_CompileShader_System_String_System_Boolean_System_Action_System_String__
+  name: CompileShader
+  nameWithType: ShaderTransitionEffect.CompileShader
+  fullName: DrawnUi.Draw.ShaderTransitionEffect.CompileShader
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
   isExternal: true
-  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
-  name: Task<TResult>
-  nameWithType: Task<TResult>
-  fullName: System.Threading.Tasks.Task<TResult>
-  nameWithType.vb: Task(Of TResult)
-  fullName.vb: System.Threading.Tasks.Task(Of TResult)
-  name.vb: Task(Of TResult)
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Action{System.String}
+  commentId: T:System.Action{System.String}
+  parent: System
+  definition: System.Action`1
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<string>
+  nameWithType: Action<string>
+  fullName: System.Action<string>
+  nameWithType.vb: Action(Of String)
+  fullName.vb: System.Action(Of String)
+  name.vb: Action(Of String)
   spec.csharp:
-  - uid: System.Threading.Tasks.Task`1
-    name: Task
+  - uid: System.Action`1
+    name: Action
     isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
   - name: <
-  - name: TResult
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
   - name: '>'
   spec.vb:
-  - uid: System.Threading.Tasks.Task`1
-    name: Task
+  - uid: System.Action`1
+    name: Action
     isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
   - name: (
   - name: Of
   - name: " "
-  - name: TResult
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
   - name: )
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ImportCacheTo*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.ImportCacheTo
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ImportCacheTo
-  name: ImportCacheTo
-  nameWithType: ShaderDoubleTexturesEffect.ImportCacheTo
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ImportCacheTo
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ApplyControlTo*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.ApplyControlTo
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ApplyControlTo_DrawnUi_Draw_SkiaControl_
-  name: ApplyControlTo
-  nameWithType: ShaderDoubleTexturesEffect.ApplyControlTo
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ApplyControlTo
-- uid: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlTo*
-  commentId: Overload:DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlTo
-  href: DrawnUi.Draw.ShaderDoubleTexturesEffect.html#DrawnUi_Draw_ShaderDoubleTexturesEffect_ControlTo
-  name: ControlTo
-  nameWithType: ShaderDoubleTexturesEffect.ControlTo
-  fullName: DrawnUi.Draw.ShaderDoubleTexturesEffect.ControlTo
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+  commentId: M:DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+  parent: DrawnUi.Draw.SkiaShaderEffect
+  isExternal: true
+  href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateUniforms_SkiaSharp_SKRect_
+  name: CreateUniforms(SKRect)
+  nameWithType: SkiaShaderEffect.CreateUniforms(SKRect)
+  fullName: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+    name: CreateUniforms
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateUniforms_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaShaderEffect.CreateUniforms(SkiaSharp.SKRect)
+    name: CreateUniforms
+    href: DrawnUi.Draw.SkiaShaderEffect.html#DrawnUi_Draw_SkiaShaderEffect_CreateUniforms_SkiaSharp_SKRect_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: )
+- uid: DrawnUi.Draw.ShaderTransitionEffect.CreateUniforms*
+  commentId: Overload:DrawnUi.Draw.ShaderTransitionEffect.CreateUniforms
+  href: DrawnUi.Draw.ShaderTransitionEffect.html#DrawnUi_Draw_ShaderTransitionEffect_CreateUniforms_SkiaSharp_SKRect_
+  name: CreateUniforms
+  nameWithType: ShaderTransitionEffect.CreateUniforms
+  fullName: DrawnUi.Draw.ShaderTransitionEffect.CreateUniforms
+- uid: SkiaSharp.SKRect
+  commentId: T:SkiaSharp.SKRect
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  name: SKRect
+  nameWithType: SKRect
+  fullName: SkiaSharp.SKRect
+- uid: SkiaSharp.SKRuntimeEffectUniforms
+  commentId: T:SkiaSharp.SKRuntimeEffectUniforms
+  parent: SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp.skruntimeeffectuniforms
+  name: SKRuntimeEffectUniforms
+  nameWithType: SKRuntimeEffectUniforms
+  fullName: SkiaSharp.SKRuntimeEffectUniforms
+- uid: SkiaSharp
+  commentId: N:SkiaSharp
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/skiasharp
+  name: SkiaSharp
+  nameWithType: SkiaSharp
+  fullName: SkiaSharp

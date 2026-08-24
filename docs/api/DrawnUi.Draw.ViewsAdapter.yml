@@ -375,7 +375,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InitializeSoft
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 340
+    startLine: 343
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -413,7 +413,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ApplyInsertShift
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 479
+    startLine: 482
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -470,7 +470,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ApplyRemoveShift
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 494
+    startLine: 497
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -523,7 +523,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsViewRealizedForIndex
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 589
+    startLine: 592
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -568,7 +568,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PeekRealizedViewForIndex
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 601
+    startLine: 604
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -611,7 +611,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsViewPrepared
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 663
+    startLine: 666
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -645,7 +645,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetViewForPreparation
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 698
+    startLine: 701
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -696,7 +696,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _HandleSmartCollectionChange
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 797
+    startLine: 800
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -738,7 +738,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ReleaseViewInUse
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1115
+    startLine: 1148
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -767,7 +767,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ReleaseViewInUseForIndex
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1123
+    startLine: 1156
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -801,7 +801,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ReleaseMeasuringView
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1159
+    startLine: 1192
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -839,7 +839,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetCellInUseOrNull
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1179
+    startLine: 1212
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -880,7 +880,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ReleaseCellByIndex
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1189
+    startLine: 1222
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -914,7 +914,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetViewForIndex
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1212
+    startLine: 1245
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -966,7 +966,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetOrCreateViewForIndexInternal
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1313
+    startLine: 1346
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1006,7 +1006,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ReleaseViewToPool
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1372
+    startLine: 1405
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1044,7 +1044,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsDisposed
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1435
+    startLine: 1468
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1071,7 +1071,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: .ctor
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1438
+    startLine: 1471
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1103,7 +1103,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Dispose
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1443
+    startLine: 1476
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1133,7 +1133,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UpdateVisibleViews
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1460
+    startLine: 1493
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1159,7 +1159,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DisposeVisibleViews
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1474
+    startLine: 1507
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1185,7 +1185,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DisposeViews
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1490
+    startLine: 1523
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1211,7 +1211,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AttachView
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1499
+    startLine: 1532
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1247,7 +1247,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetPoolMaxSize
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1584
+    startLine: 1617
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1286,7 +1286,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PoolMaxSize
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1592
+    startLine: 1625
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1315,7 +1315,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PoolSize
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1605
+    startLine: 1638
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1344,7 +1344,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MarkAllViewsAsHidden
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1624
+    startLine: 1657
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1370,7 +1370,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MarkViewAsHidden
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1636
+    startLine: 1669
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1402,7 +1402,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddedMore
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1664
+    startLine: 1697
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1431,7 +1431,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddMoreToPool
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1671
+    startLine: 1704
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1469,7 +1469,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FillPool
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1695
+    startLine: 1728
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1509,7 +1509,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FillPool
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1715
+    startLine: 1748
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1547,7 +1547,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InvalidateAllPooledCells
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1734
+    startLine: 1767
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1578,7 +1578,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TotalCellsCount
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1753
+    startLine: 1786
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1607,7 +1607,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetDebugInfo
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1761
+    startLine: 1794
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1635,7 +1635,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetChildrenCount
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1772
+    startLine: 1805
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1663,7 +1663,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _lockTemplates
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1811
+    startLine: 1844
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1690,7 +1690,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TemplesInvalidating
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1816
+    startLine: 1849
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1717,7 +1717,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TemplatesInvalidated
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1820
+    startLine: 1853
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1746,7 +1746,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TemplatesBusy
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1833
+    startLine: 1866
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1773,7 +1773,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UpdateViews
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1839
+    startLine: 1872
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1805,7 +1805,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TemplatesAvailable
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1851
+    startLine: 1884
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1836,7 +1836,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetViewsIterator
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1861
+    startLine: 1894
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1864,7 +1864,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DisposeWrapper
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1908
+    startLine: 1941
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1890,7 +1890,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PrintDebugVisible
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1920
+    startLine: 1953
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1916,7 +1916,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetTemplateInstance
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1934
+    startLine: 1967
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1944,7 +1944,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ReleaseTemplateInstance
     path: ../src/Shared/DrawnUi/Draw/Layout/ViewsAdapter.cs
-    startLine: 1955
+    startLine: 1988
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

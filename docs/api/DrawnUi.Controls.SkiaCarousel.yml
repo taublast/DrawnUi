@@ -130,6 +130,8 @@ items:
   - DrawnUi.Draw.SkiaControl
   - DrawnUi.Draw.SkiaLayout
   - DrawnUi.Draw.SnappingLayout
+  derivedClasses:
+  - DrawnUi.Controls.SkiaShaderCarousel
   implements:
   - System.ComponentModel.INotifyPropertyChanged
   - Microsoft.Maui.Controls.IEffectControlProvider
