@@ -36,6 +36,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Layouts\ContentWithBackdrop.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Layouts\GridLayout.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Layouts\SkiaCarousel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Layouts\SkiaShaderCarousel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Layouts\SkiaDecoratedColumn.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Layouts\SkiaDecoratedGrid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Layouts\SkiaTabsSelector.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\OuterGlowEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\PostRendererEffectUseBackgroud.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\ShaderDoubleTexturesEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\ShaderTransitionEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\SkiaEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\SkiaShaderEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Features\Effects\StateEffect.cs" />
