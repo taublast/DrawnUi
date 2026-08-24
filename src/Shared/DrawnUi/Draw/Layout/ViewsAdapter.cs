@@ -269,6 +269,9 @@ namespace DrawnUi.Draw
                             || (layoutChanged || _templatedViewsPool == null || _dataContextsSource != dataContexts ||
                                 CheckTemplateChanged());
 
+            if (LogEnabled)
+                Super.Log($"[ViewsAdapter] InitializeTemplates {args.Action} count={dataContexts?.Count} needReset={needReset} busy={TemplatesBusy} invalidating={TemplesInvalidating}");
+
             if (needReset)
             {
                 CancelBackgroundPoolFilling();
@@ -895,6 +898,36 @@ namespace DrawnUi.Draw
 
             var insertIndex = args.NewStartingIndex;
             var insertCount = args.NewItems.Count;
+
+            // Collection changes are applied deferred: a Clear() followed by AddRange() on the same frame
+            // lands here as a Reset that already rebuilt the adapter from the REFILLED source, then this
+            // Add. The in-use views at the insert range are then already bound to exactly these new items:
+            // shifting them would move them past the end and starve the pool (blank cells).
+            // Shift only when the views sitting there hold something else (a real insert in front of them).
+            var alreadyBound = false;
+            lock (lockVisible)
+            {
+                var matched = 0;
+                for (int i = 0; i < insertCount; i++)
+                {
+                    if (_cellsInUseViews.TryGetValue(insertIndex + i, out var view))
+                    {
+                        if (!ReferenceEquals(view.BindingContext, args.NewItems[i]))
+                        {
+                            matched = 0;
+                            break;
+                        }
+                        matched++;
+                    }
+                }
+                alreadyBound = matched > 0;
+            }
+            if (alreadyBound)
+            {
+                if (LogEnabled)
+                    Super.Log($"[ViewsAdapter] Add of {insertCount} at {insertIndex}: views already bound to these items, no shift");
+                return true;
+            }
 
             // Shift existing cached views
             ShiftCachedViewIndexes(insertIndex, insertCount);

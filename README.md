@@ -51,8 +51,12 @@ Supported hosts:
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
 
-## What's New 1.10.5.14
- * Hotfix safe insets on Android .NET 9 for latest MAUI safe insets update
+## What's New 1.10.5.15
+ * New `SkiaShaderCarousel` comes to lib, a subclassed `SkiaCarousel` ready to use your transition shader instead of standart swiping animation.
+ * Fixed cells adapter starving the pool after a same-frame `Clear()`+`AddRange()` of a templated ItemsSource.
+ * Fixed `RefreshIndicator` sometimes never showing again after the first refresh.
+ * Fixed `Canvas` staying blank forever on Android when created hidden/offscreen. A pre-draw listener now re-checks visibility (throttled, only while hidden) — visible canvases pay a single bool check per frame.
+
 
  ### Previously
 

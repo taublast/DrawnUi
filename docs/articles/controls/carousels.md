@@ -147,6 +147,45 @@ myCarousel.PropertyChanged += (sender, e) => {
 };
 ```
 
+## SkiaShaderCarousel
+
+A `SkiaCarousel` subclass that renders slide changes with an SkSL transition shader
+(gl-transitions style) instead of moving slides. See
+[Shaders — slide transitions](../shaders.md#slide-transitions--skiashadercarousel) for
+the shader contract and customization.
+
+```xml
+<draw:SkiaShaderCarousel
+    IsLooped="True"
+    LinearSpeedMs="750"
+    TransitionShader="Shaders/Transitions/cube.sksl"
+    HeightRequest="340"
+    ItemsSource="{Binding Images}">
+    <draw:SkiaLayout.ItemTemplate>
+        <DataTemplate>
+            <!-- UseCache="Image" is REQUIRED: the shader samples this cell cache -->
+            <draw:SkiaLayer UseCache="Image">
+                <draw:SkiaImage Source="{Binding .}" Aspect="AspectCover"
+                                HorizontalOptions="Fill" VerticalOptions="Fill" />
+            </draw:SkiaLayer>
+        </DataTemplate>
+    </draw:SkiaLayout.ItemTemplate>
+</draw:SkiaShaderCarousel>
+```
+
+### Key Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `TransitionShader` | string | Path to a transition `.sksl` inside Resources/Raw |
+| `TransitionShaderCode` | string | Raw SkSL string alternative (OpenTK, dynamic shaders) |
+| `TransitionTemplate` | string | Custom wrapper template replacing the built-in gl-transitions adapter |
+| `InterruptedTransitionMs` | double | Wrap-up time for a transition interrupted by a new swipe (default 50) |
+| `TransitionEffect` | ShaderTransitionEffect | The effect instance; override `CreateTransitionEffect()` to customize |
+
+Notes: the constructor forces `RecyclingTemplate="Disabled"` (the effect needs stable
+per-slide caches); one gesture advances at most one slide regardless of velocity.
+
 ## Real-World Examples
 
 ### Gallery Popup with Zoom

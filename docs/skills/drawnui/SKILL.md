@@ -284,6 +284,14 @@ Conditional: `AutoCache` on `SkiaScroll`/`SkiaDrawer` sets THEIR OWN `UseCache =
 - Match `GlassBackdropEffect.CornerRadius` to the parent `SkiaShape.CornerRadius` (in points, not pixels — the effect multiplies by `RenderingScale` internally).
 - `SkiaBackdrop.Blur = 0` when using a custom shader effect — the shader handles its own blur.
 
+### Shader slide transitions (SkiaShaderCarousel / ShaderTransitionEffect)
+
+- `SkiaShaderCarousel` (`DrawnUi.Controls`): `SkiaCarousel` subclass where slides never translate — an attached `ShaderTransitionEffect` (a `ShaderDoubleTexturesEffect` adding `progress` + `ratio` uniforms) blends the from/to cells' cached images. Give it a gl-transitions style `transition(vec2 uv)` via `TransitionShader` (Resources/Raw path), `TransitionShaderCode` (raw SkSL string — required on OpenTK/DRAWNUI_NET and in the fiddle), or a custom `TransitionTemplate`. Cell templates MUST use `UseCache = Image` (the effect samples cell RenderObject caches); ctor forces `RecyclingTemplate.Disabled`.
+- `InterruptedTransitionMs` (default 50): a swipe during a running transition wraps the current transition up in ~that time, then plays the next. Gesture targeting is deterministic: max ONE slide per gesture, direction from velocity (threshold 100) or displacement, target computed from the gesture-origin snap — never from nearest-to-finger.
+- Custom effect subclass: override `protected virtual ShaderTransitionEffect CreateTransitionEffect()` — called once from ctor; effect is attached lazily on first `Render`.
+- AspectFit letterboxed slides (photo viewer case): the shader spans the whole cell, so e.g. the cube transition's reflection projects at SCREEN bottom instead of under the photo. Fix = a band-clipped effect subclass: (1) override `Render`, intersect `ctx.Destination` with the union of from/to inner `SkiaImage.DisplayRect`, call `base.Render(ctx.WithDestination(clipped))`; (2) override `SyncEngineState` and set `GetEngine().Offset` to the clipped destination origin (base sets it to TEXTURE bounds origin, so uv would not be [0,1] over the band); (3) cell textures stay full-size, so remap sampling in a custom template: `getFromColor/getToColor` sample `(uBandOffset + float2(uv.x, 1.0-uv.y) * uBandScale) * uTexResolution` with those uniforms added in `CreateUniforms` (band rect vs stored textureBounds ratios). NB `iResolution` AND `iImageResolution` are both destination-sized (`engine.CreateUniforms(destW, destH, destW, destH)`) — after clipping they are band-sized, so the full texture pixel size needs its own uniform.
+- Single-texture variant of the same hack: `ClippedShaderEffect` — only intersect destination with `SkiaImage.DisplayRect`, no remap needed, because with `AutoCreateInputTexture` the snapshot is taken FROM the clipped destination, so texture == band content exactly.
+
 ## Visual Structure
 
 - For custom shutter/camera buttons, prefer composed `SkiaShape` outer ring + inner shape/disc.
@@ -533,6 +541,46 @@ The batching collection (`ObservableRangeCollection` with `ReplaceRange`/`AddRan
 - Recycled cell caching by measure strategy:
   - `MeasureVisible`: `UseCache = SkiaCacheType.Image` on the cell root. `ImageDoubleBuffered` NOT needed — measurement already runs in background, the latency the double buffer hides isn't on the hot path; plain `Image` avoids the second surface per cell.
   - `MeasureFirst` / `MeasureAll`: `GPU` cache for even-height rows with large cells; `ImageDoubleBuffered` for the other cases.
+
+## Android 15+ Edge-to-Edge & System Bars (lib ≥ 2026-08)
+
+Android 15+ (API 35) with targetSdk ≥ 35 enforces edge-to-edge: system bars transparent, `Window.SetStatusBarColor` / `SetNavigationBarColor` / theme bar colors / `windowOptOutEdgeToEdgeEnforcement` (targetSdk 36) are no-ops. DrawnUi handles this in the lib — no app-side config:
+
+- **net9 (MAUI 9)**: MAUI 9 does not apply insets, so DrawnUi's `InsetsListener` pads the activity content view itself (systemBars+cutout) when `SdkInt >= 35 && targetSdk >= 35`. Skipped when `MobileIsFullscreen=true`.
+- **net10 (MAUI 10)**: MAUI 10 pads by itself (Layouts default `SafeAreaEdges=Container`; ContentPage defaults `None`). `MobileIsFullscreen=true` works via handler mappings in `ConfigureHandlers.Android.cs` setting `SafeAreaEdges.None` on ContentPage/Layout/ScrollView.
+- **Bar colors on 35+**: `Super.SetStatusBarColor` / `Super.SetNavigationBarColor` paint their own strip views on the DecorView (gravity Top/Bottom, height from insets) since the Window APIs are dead. Works net9+net10. Both defer via `ExecAfterInit` when called before activity exists.
+- Shell apps: the top band is Shell's own `AppBarLayout` (background = Android theme `colorPrimary`, NOT `Shell.BackgroundColor` which is toolbar-only); status bar area color for Shell apps = `Super.SetStatusBarColor`.
+
+## Android 16+ "not 16 KB aligned" compatibility dialog (MAUI apps)
+
+Dialog "This app isn't 16 KB compatible" on Android 16/17 emulators. Diagnosis order:
+
+1. **Ignore the "Unknown error" lines** — compressed APK entries the checker can't parse, pure noise. Find the entry saying `LOAD segment not aligned` — that's the real offender.
+2. `lib_*.dll.so` entries listed = `EmbedAssembliesIntoApk=true` in a **Debug** build packing managed assemblies as unaligned wrapper .so files. Fix: scope embed to Release: `<EmbedAssembliesIntoApk Condition="'$(Configuration)'=='Release'">true</EmbedAssembliesIntoApk>`.
+3. Real native lib misaligned: check ELF `p_align` of the APK's copy (16384 good, 4096 bad), then hunt WHERE the 4 KB copy comes from — known trap: referencing desktop **`SQLitePCLRaw.lib.e_sqlite3`** unconditioned on Android packs its `runtimes/linux-x64/native/libe_sqlite3.so` (4 KB) into the APK over the correct 16 KB Android aar. Fix: condition the desktop package out of android/ios TFMs.
+4. **The verdict is cached per install** — after fixing, `adb uninstall` + fresh install, or the dialog keeps showing with stale text.
+5. Release AABs for Play: verify with `bundletool dump config --bundle=app.aab | grep -i alignment` (want 16K). SkiaSharp 4.x is aligned; old 2.88.x is not.
+
+## Android 12+ splash screen shows .NET logo instead of custom splash (MAUI apps)
+
+On API 31+ the OS forces its own splash phase (solid color + centered icon) BEFORE the app window; a custom `android:windowBackground` splash drawable only shows after it, briefly or never. Themes inheriting `Maui.SplashTheme` point `windowSplashScreenBackground`/`windowSplashScreenAnimatedIcon` at MAUI-generated resources from `Resources\Splash\splash.svg` — the template's purple ".NET" logo. Below API 31 nothing changed: the windowBackground splash shows as always.
+
+Fix in the splash theme (`Platforms\Android\Resources\values\styles.xml`):
+- `windowSplashScreenBackground` = brand color resource.
+- `windowSplashScreenAnimatedIcon` = brand icon drawable. Gotchas:
+  1. Only plain bitmap/vector drawables work — an `<inset>` wrapper (dp or `%`) fails SILENTLY to a blank splash.
+  2. The circular mask reveals only the inner ~2/3 of the icon bounds — bake transparent padding into the PNG itself: square canvas ≥ `diagonal(logo) / 0.66`, logo centered.
+- Verify by cold start + immediate screencap (icon phase lasts ~1s): `am force-stop`, `am start`, capture at ~0.7s.
+
+## Android: Canvas created hidden/offscreen stays blank forever (fixed 2026-08-24)
+
+Symptom: DrawnUi `Canvas` controls created while hidden or offscreen (FlyoutPage drawer cells, login/overlay screens, translated containers) never draw after being revealed — content blank while MAUI Labels around them render fine. SVG loads and parses OK; `SkiaControl.Paint` is simply never called.
+
+Cause: canvases created hidden/offscreen are correctly detected (`IsHiddenInViewTree=true`, rendering disabled). But reveals that slide/translate views (Android `DrawerLayout` offset+invalidate, translation animations) happen WITHOUT a layout pass, so `OnGlobalLayout` never fires and the visibility re-check (`NeedCheckParentVisibility`) never triggers — canvases stay disabled forever.
+
+Fix (in lib, `DrawnView.Android.cs`): `HiddenWakePreDrawListener` — a `ViewTreeObserver.IOnPreDrawListener` that, only while the canvas is hidden-in-tree and throttled to 100ms, sets `NeedCheckParentVisibility=true`. Visible canvases pay one bool check per preDraw; hidden ones re-check parent-chain visibility at most 10x/s during window redraws.
+
+Debug method that found it: transition-only logs can't distinguish "never re-checked" from "re-checked, still hidden" — log inside `CheckElementVisibility` itself. `uiautomator dump` confirms native views exist with correct bounds while pixels stay empty.
 
 ## Preferred Sources
 
