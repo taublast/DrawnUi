@@ -1,13 +1,29 @@
 <Project>
-    
-    <!-- Auto-replace SkiaSharp native DLLs when DrawnUi is installed via NuGet -->
-    <Target Name="DrawnUiReplaceNativeDLLs" BeforeTargets="Build" Condition="$(TargetFramework.Contains('windows')) == true">
-        <Copy SourceFiles="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\libEGL.dll" 
-              DestinationFiles="$(OutDir)libEGL.dll" 
-              OverwriteReadOnlyFiles="true" />
-        <Copy SourceFiles="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\libGLESv2.dll" 
-              DestinationFiles="$(OutDir)libGLESv2.dll" 
-              OverwriteReadOnlyFiles="true" />
-    </Target>
+
+    <!--
+        Replace SkiaSharp's ANGLE with our build when DrawnUi is installed via NuGet.
+
+        Item form, not a raw <Copy>: GetPackagingOutputs pulls in the
+        GetCopyToOutputDirectoryItems output group, so these land both next to the .exe
+        (unpackaged mode) and inside the MSIX payload. A Copy task writing to $(OutDir)
+        is invisible to packaging.
+
+        None, not Content: Content items are indexed into the consuming project's PRI,
+        which breaks any consumer that is itself packed as a library.
+    -->
+    <ItemGroup Condition="$(TargetFramework.Contains('windows')) == true">
+        <None Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\libEGL.dll">
+            <Link>libEGL.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Visible>false</Visible>
+            <Pack>false</Pack>
+        </None>
+        <None Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\libGLESv2.dll">
+            <Link>libGLESv2.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Visible>false</Visible>
+            <Pack>false</Pack>
+        </None>
+    </ItemGroup>
 
 </Project>

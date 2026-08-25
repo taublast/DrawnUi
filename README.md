@@ -51,14 +51,16 @@ Supported hosts:
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
 
-## What's New 1.10.5.15
+## What's New 1.10.5.16
+ 
+ * Fixed Windows builds failing with `MSB3030: Could not copy ... DrawnUi.Maui\Platforms\Windows\Natives\libEGL.dll` on 1.10.5.15: Windows ANGLE natives are now delivered as build items instead of a raw `Copy` into the output directory, so they reach the MSIX payload as well as unpackaged output, for both a project reference and a nuget reference.
+
+ ### Previously
+
  * New `SkiaShaderCarousel` comes to lib, a subclassed `SkiaCarousel` ready to use your transition shader instead of standart swiping animation. - enjoy [sample in web fiddle](https://fiddle.drawnui.net/f/Mo9zx4HR)!
  * Fixed cells adapter starving the pool after a same-frame `Clear()`+`AddRange()` of a templated ItemsSource.
  * Fixed `RefreshIndicator` sometimes never showing again after the first refresh.
  * Fixed `Canvas` staying blank forever on Android when created hidden/offscreen. A pre-draw listener now re-checks visibility (throttled, only while hidden) — visible canvases pay a single bool check per frame.
-
-
- ### Previously
 
 * Fix text alignement dropping shadow
 * Fixed templated `SkiaCarousel` with `RecyclingTemplate.Disabled` coming up blank: the cell pool was one short of what a full initialization rents at once.

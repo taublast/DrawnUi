@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <Target Name="IssueCustomWarning" BeforeTargets="BeforeBuild">
         <Warning Text="------ Building $(TargetFramework) using MAUI $(MauiVersion) ------" />
@@ -118,33 +118,43 @@
         <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.6" />
     </ItemGroup>
 
-    <!-- FIX for Windows unpackaged mode when library is referenced directly -->
-    <ItemGroup Condition="$(TargetFramework.Contains('windows')) == true">
-
-        <PackageReference Include="SkiaSharp.Views.WinUI" Version="4.148.0" />
-
+    <!--
+        Our ANGLE build, shipped into the nuget under runtimes/win-x64/native.
+        These MUST stay None, never Content: on windows TFMs Content items are indexed into
+        the library PRI at their project-relative path, while PackagePath ships them elsewhere,
+        so every consumer then fails with MSB3030 looking for lib/<tfm>/DrawnUi.Maui/Platforms/... 
+    -->
+    <ItemGroup>
         <None Include="Platforms/Windows/Natives/libEGL.dll">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-            <TargetPath>libEGL.dll</TargetPath>
+            <Pack>true</Pack>
+            <PackagePath>runtimes/win-x64/native/libEGL.dll</PackagePath>
             <Visible>false</Visible>
         </None>
         <None Include="Platforms/Windows/Natives/libGLESv2.dll">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-            <TargetPath>libGLESv2.dll</TargetPath>
+            <Pack>true</Pack>
+            <PackagePath>runtimes/win-x64/native/libGLESv2.dll</PackagePath>
             <Visible>false</Visible>
         </None>
     </ItemGroup>
 
-    <!-- FIX for Windows unpackaged mode when consumed from nuget package -->
-    <ItemGroup>
-        <Content Include="Platforms/Windows/Natives/libEGL.dll">
-            <Pack>true</Pack>
-            <PackagePath>runtimes/win-x64/native/libEGL.dll</PackagePath>
-        </Content>
-        <Content Include="Platforms/Windows/Natives/libGLESv2.dll">
-            <Pack>true</Pack>
-            <PackagePath>runtimes/win-x64/native/libGLESv2.dll</PackagePath>
-        </Content>
+    <!--
+        Windows: replace SkiaSharp's ANGLE next to the app. Flows to the referencing project
+        through GetCopyToOutputDirectoryItems, so it covers both unpackaged output and the
+        MSIX payload (GetPackagingOutputs includes that output group).
+        This is the ProjectReference/source path; the nuget path is nugets/DrawnUi.Maui.targets.
+    -->
+    <ItemGroup Condition="$(TargetFramework.Contains('windows')) == true">
+
+        <PackageReference Include="SkiaSharp.Views.WinUI" Version="4.148.0" />
+
+        <None Update="Platforms/Windows/Natives/libEGL.dll">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <TargetPath>libEGL.dll</TargetPath>
+        </None>
+        <None Update="Platforms/Windows/Natives/libGLESv2.dll">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <TargetPath>libGLESv2.dll</TargetPath>
+        </None>
     </ItemGroup>
 
     <!-- Include targets file for NuGet package -->
