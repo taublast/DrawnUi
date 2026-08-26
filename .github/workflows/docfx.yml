@@ -2,6 +2,11 @@ name: Build Docs + Blazor Samples + Publish
 
 on:
   workflow_dispatch:
+    inputs:
+      samples:
+        description: "Rebuild Blazor WASM samples (uncheck for docs-only: reuses the samples cached by the last full run)"
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -28,9 +33,6 @@ jobs:
       - name: Install DocFX
         run: dotnet tool install --global docfx
 
-      - name: Install WASM workload
-        run: sudo dotnet workload install wasm-tools
-
       - name: Build DocFX site
         shell: pwsh
         run: |
@@ -44,10 +46,33 @@ jobs:
           docfx metadata ./docfx.json
           docfx build ./docfx.json
 
+      - name: Restore cached WASM samples
+        uses: actions/cache@v4
+        with:
+          path: ./docs/_site/sandbox
+          key: wasm-samples-${{ github.run_id }}
+          restore-keys: wasm-samples-
+
+      - name: Decide whether to build samples
+        id: samples
+        shell: pwsh
+        run: |
+          $build = '${{ inputs.samples }}' -eq 'true'
+          if (-not $build -and -not (Test-Path ./docs/_site/sandbox/index.html)) {
+            Write-Host "No cached samples available, building them anyway so the published site keeps /sandbox/."
+            $build = $true
+          }
+          "build=$($build.ToString().ToLower())" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
+      - name: Install WASM workload
+        if: steps.samples.outputs.build == 'true'
+        run: sudo dotnet workload install wasm-tools
+
       - name: Publish WASM samples
+        if: steps.samples.outputs.build == 'true'
         shell: pwsh
         run: ./dev/publish-wasm-samples.ps1
-        
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
         
