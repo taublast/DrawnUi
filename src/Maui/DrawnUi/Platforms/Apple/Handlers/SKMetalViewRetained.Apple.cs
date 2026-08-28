@@ -190,9 +190,32 @@ namespace DrawnUi.Views
             Device = _device;
             Queue = _sharedQueue; // MTKView uses the shared queue for drawable presentation
             Delegate = this;
- 
+
+            SyncContentScaleFactor();
+
             Super.RegisterMetalView(this);
 
+        }
+
+        /// <summary>
+        /// Keeps the drawable pixel scale equal to the scale DrawnUi lays out and hit-tests with.
+        /// MTKView defaults its ContentScaleFactor to UIScreen.NativeScale, which differs from
+        /// UIScreen.Scale on iPhones running Display Zoom ("Larger Text"): the drawable becomes
+        /// bounds × ~3.4 while RenderingScale and touch conversion use 3, so content renders
+        /// ~15% smaller and every tap lands at ~0.85× of the finger position. Pinning the view to
+        /// UIScreen.Scale makes rendering, layout and gestures agree by construction; the system
+        /// resamples the layer to native pixels exactly like every other UIKit view in zoomed mode.
+        /// Re-applied in MovedToWindow because UIKit may reapply the native value on window attach.
+        /// </summary>
+        private void SyncContentScaleFactor()
+        {
+#if IOS
+            var scale = UIScreen.MainScreen.Scale;
+            if (scale > 0 && ContentScaleFactor != scale)
+            {
+                ContentScaleFactor = scale;
+            }
+#endif
         }
 
         // ── MTKView delegate ─────────────────────────────────────────────────────
@@ -390,6 +413,10 @@ namespace DrawnUi.Views
             if (Window == null)
             {
                 _preRenderingAttempted = false;
+            }
+            else
+            {
+                SyncContentScaleFactor();
             }
         }
 
