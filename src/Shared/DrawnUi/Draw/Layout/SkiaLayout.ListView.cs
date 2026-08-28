@@ -4223,9 +4223,10 @@ public partial class SkiaLayout
                             SKRect destinationRect;
                             if (IsTemplated && RecyclingTemplate != RecyclingTemplate.Disabled)
                             {
-                                //when context changes we need all available space for remeasuring cell
+                                // arranged size (same as GetStackChildDrawRect): a slot-sized rect at the arranged
+                                // origin re-runs alignment at draw, and Area.Bottom is an absolute coordinate
                                 destinationRect = new SKRect(cell.Drawn.Left, cell.Drawn.Top,
-                                    cell.Drawn.Left + cell.Area.Width, cell.Drawn.Top + cell.Area.Bottom);
+                                    cell.Drawn.Left + cell.Destination.Width, cell.Drawn.Top + cell.Destination.Height);
                             }
                             else
                             {

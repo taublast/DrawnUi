@@ -348,5 +348,87 @@ namespace UnitTests
             Assert.Equal(75, a.Destination.Left, 0.5f);
             Assert.Equal(285, b.Destination.Left, 0.5f);
         }
+
+        // ---- Templated main-axis Fill cells are auto-sized ----
+
+        private static SkiaControl FillCell(float innerW, float innerH) => new SkiaLayout
+        {
+            Type = LayoutType.Absolute, HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Fill,
+            Children = new List<SkiaControl> { Box(innerW, innerH) }
+        };
+
+        [Fact]
+        public void Templated_Column_FillYCells_FiniteHeight_AreContentSized()
+        {
+            var stack = Templated(0, 0, () => FillCell(80, 30));
+            stack.CommitInvalidations();
+            stack.Measure(300, 1000, 1);
+            Render(stack, new SKRect(0, 0, 300, 1000));
+
+            Assert.Equal(90, stack.MeasuredSize.Pixels.Height); // was 1000: first cell swallowed the whole column
+            var tree = stack.RenderTree;
+            Assert.Equal(3, tree.Count);
+            AssertRect(tree[0].Control.DrawingRect, 0, 0, 300, 30);
+            AssertRect(tree[1].Control.DrawingRect, 0, 30, 300, 60);
+            AssertRect(tree[2].Control.DrawingRect, 0, 60, 300, 90);
+        }
+
+        [Fact]
+        public void Templated_Row_FillXCells_FiniteWidth_AreContentSized()
+        {
+            var stack = Templated(0, 0, () => FillCell(30, 80));
+            stack.Type = LayoutType.Row;
+            stack.HorizontalOptions = LayoutOptions.Start;
+            stack.VerticalOptions = LayoutOptions.Fill;
+            stack.CommitInvalidations();
+            stack.Measure(1000, 300, 1);
+            Render(stack, new SKRect(0, 0, 1000, 300));
+
+            Assert.Equal(90, stack.MeasuredSize.Pixels.Width);
+            var tree = stack.RenderTree;
+            Assert.Equal(3, tree.Count);
+            AssertRect(tree[1].Control.DrawingRect, 30, 0, 60, 300);
+            AssertRect(tree[2].Control.DrawingRect, 60, 0, 90, 300);
+        }
+
+        [Fact]
+        public void Templated_Column_FillYCells_MeasureVisible_AreContentSized()
+        {
+            var stack = Templated(0, 0, () => FillCell(80, 30));
+            stack.RecyclingTemplate = RecyclingTemplate.Enabled;
+            stack.MeasureItemsStrategy = MeasuringStrategy.MeasureVisible;
+            stack.CommitInvalidations();
+            stack.Measure(300, 1000, 1);
+            Render(stack, new SKRect(0, 0, 300, 1000));
+
+            var tree = stack.RenderTree;
+            Assert.Equal(3, tree.Count);
+            AssertRect(tree[0].Control.DrawingRect, 0, 0, 300, 30);
+            AssertRect(tree[1].Control.DrawingRect, 0, 30, 300, 60);
+            AssertRect(tree[2].Control.DrawingRect, 0, 60, 300, 90);
+        }
+
+        // ---- Absolute: measure never peeks at the previous arrange ----
+
+        [Fact]
+        public void Absolute_FillLayer_InfiniteWidth_MeasureDoesNotDependOnPreviousArrange()
+        {
+            var a = Box(100, 20);
+            var b = Panel(80, 20, LayoutOptions.Fill); // Fill-X, auto height
+            var layer = new SkiaLayout { Type = LayoutType.Absolute, HorizontalOptions = LayoutOptions.Fill, Children = new List<SkiaControl> { a, b } };
+
+            layer.CommitInvalidations();
+            layer.Measure(float.PositiveInfinity, 300, 1);
+            var first = b.MeasuredSize.Pixels.Width;
+            Assert.Equal(80, first); // unbounded: content width, no previous frame to borrow from
+
+            // arranged into a finite box: the Fill child follows the real box
+            layer.Arrange(new SKRect(0, 0, 200, 300), layer.SizeRequest.Width, layer.SizeRequest.Height, 1);
+            Assert.Equal(200, b.MeasuredSize.Pixels.Width);
+
+            // same unbounded measure again must give the same numbers as the first time, not the last arrange
+            layer.Measure(float.PositiveInfinity, 300, 1);
+            Assert.Equal(first, b.MeasuredSize.Pixels.Width);
+        }
     }
 }

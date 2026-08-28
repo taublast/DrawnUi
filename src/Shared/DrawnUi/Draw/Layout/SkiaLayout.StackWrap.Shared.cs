@@ -102,6 +102,19 @@ public partial class SkiaLayout
     {
         cell.Area = destination;
 
+        // Templated Column/Row: a main-axis Fill cell is AUTO-sized (MAUI StackLayout parity) — measured
+        // with an unbounded main-axis constraint so it reports its desired size instead of swallowing the
+        // remaining stack extent (3 Fill/Fill cells in a 1000px column: first cell 1000 tall). LayoutCell
+        // then clamps the slot to the measured size. Non-templated stacks distribute Fill space themselves
+        // (CalculateFillSpace) and hand a finite slot here, so they are left alone.
+        if (IsTemplated && child != null)
+        {
+            if (Type == LayoutType.Column && child.NeedFillY)
+                cell.Area = new(destination.Left, destination.Top, destination.Right, float.PositiveInfinity);
+            else if (Type == LayoutType.Row && child.NeedFillX)
+                cell.Area = new(destination.Left, destination.Top, float.PositiveInfinity, destination.Bottom);
+        }
+
         // Always route through the child's Measure path so constraint changes
         // use its built-in measurement cache instead of blindly reusing a stale size.
         var measured = MeasureChild(child, cell.Area.Width, cell.Area.Height, scale);

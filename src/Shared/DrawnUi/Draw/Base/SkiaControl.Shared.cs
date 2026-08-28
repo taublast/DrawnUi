@@ -5626,21 +5626,12 @@ namespace DrawnUi.Draw
             //PASS 3 for those with partial Fill (only one dimension) - only if needed
             if (partialFill != null)
             {
-                // When this layout is Fill (NeedAutoWidth=false) but the incoming constraint is
-                // float.MaxValue (the "unconstrained" sentinel used by horizontal SkiaScroll),
-                // fall back to the previous frame's arranged width so Fill/Center/End children
-                // measure and position correctly instead of expanding into infinite space.
+                // Measure depends on the constraint only — never on the previous frame's DrawingRect
+                // (that peek made an unbounded measure return different numbers depending on what was
+                // arranged before). A Fill child arranged into a different box than it measured for is
+                // re-measured by Arrange with the real box.
                 var effectiveWidth = rectForChildrenPixels.Width;
-                if (!NeedAutoWidth && effectiveWidth >= MaxRealPixelSize && DrawingRect.Width > 0 && DrawingRect.Width < MaxRealPixelSize)
-                {
-                    effectiveWidth = Math.Max(0f, DrawingRect.Width - (float)((Padding.Left + Padding.Right) * scale));
-                }
-
                 var effectiveHeight = rectForChildrenPixels.Height;
-                if (!NeedAutoHeight && effectiveHeight >= MaxRealPixelSize && DrawingRect.Height > 0 && DrawingRect.Height < MaxRealPixelSize)
-                {
-                    effectiveHeight = Math.Max(0f, DrawingRect.Height - (float)((Padding.Top + Padding.Bottom) * scale));
-                }
 
                 foreach (var (child, originalMeasured) in partialFill)
                 {
