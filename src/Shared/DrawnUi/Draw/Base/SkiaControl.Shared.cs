@@ -803,6 +803,31 @@ namespace DrawnUi.Draw
         /// After the call InitializeDefaultContent with set DefaultContentCreated = true;
         /// You don't need to call SkiaControl base.CreateDefaultContent it's empty.
         /// </summary>
+        /// <summary>
+        /// Applies a style-time default for a property ONLY when the user has not set it themselves
+        /// (object initializer, XAML attribute, MAUI Style). Use inside Create*StyleContent builders:
+        /// they run lazily at first measure, AFTER user code, so an unconditional assignment there
+        /// (e.g. HorizontalOptions = Fill) silently overrides the user's alignment, size or cache choice.
+        /// </summary>
+        protected void SetStyleDefault(BindableProperty property, object value)
+        {
+            if (!IsSet(property))
+            {
+                var handled = false;
+                SetValueFromStyleDefault(property, value, ref handled);
+                if (!handled)
+                {
+                    SetValue(property, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Head hook for SetStyleDefault: a style-time default must not be recorded as an explicit user set
+        /// (ExplicitPropertiesSet), otherwise ApplyStyle would skip the property later.
+        /// </summary>
+        partial void SetValueFromStyleDefault(BindableProperty property, object value, ref bool handled);
+
         protected virtual void CreateDefaultContent()
         {
         }
@@ -4045,6 +4070,14 @@ namespace DrawnUi.Draw
                 if (wants >= 0 && wants < rectWidth)
                     rectWidth = wants;
             }
+            else if (double.IsFinite(MaximumWidthRequest) && MaximumWidthRequest >= 0)
+            {
+                // Fill axis: measure capped the constraint by MaximumWidthRequest, arrange must too,
+                // else DrawingRect > MeasuredSize (children laid out for the max, background/hit rect at full width)
+                var max = (float)(MaximumWidthRequest * scale);
+                if (rectWidth > max)
+                    rectWidth = max;
+            }
 
             var rectHeight = destination.Height;
             if (float.IsFinite(heightRequest) && heightRequest >= 0)
@@ -4052,6 +4085,12 @@ namespace DrawnUi.Draw
                 var wants = heightRequest * scale;
                 if (wants >= 0 && wants < rectHeight)
                     rectHeight = wants;
+            }
+            else if (double.IsFinite(MaximumHeightRequest) && MaximumHeightRequest >= 0)
+            {
+                var max = (float)(MaximumHeightRequest * scale);
+                if (rectHeight > max)
+                    rectHeight = max;
             }
 
             if (useModifiers)
@@ -5118,6 +5157,26 @@ namespace DrawnUi.Draw
         /// <param name="scale"></param>
         public virtual void Arrange(SKRect destination, float widthRequest, float heightRequest, float scale)
         {
+            // Arranged into a different box than measured for on a Fill axis: re-measure with the final box
+            // (MAUI ArrangeOverride(finalSize) parity). Otherwise the control's internal layout — children
+            // positions, centered rows, text wrapping — stays frozen at the measure-time constraint while the
+            // control itself is drawn at the arranged size (Column second pass, Grid Auto-track stretch, ...).
+            // Idempotent: after the call measuredFor == destination on that axis, so it never fires twice for the
+            // same box; unchanged children hit their own Measure early-return, so steady state costs nothing.
+            if (WasMeasured && !NeedToMeasureSelf() && scale == measuredForScale)
+            {
+                var fillXMismatch = NeedFillX && float.IsFinite(destination.Width) && destination.Width < MaxRealPixelSize
+                                    && !AreEqual(destination.Width, measuredForWidthConstraint, 1f);
+                var fillYMismatch = NeedFillY && float.IsFinite(destination.Height) && destination.Height < MaxRealPixelSize
+                                    && !AreEqual(destination.Height, measuredForHeightConstraint, 1f);
+                if (fillXMismatch || fillYMismatch)
+                {
+                    Measure(fillXMismatch ? destination.Width : measuredForWidthConstraint,
+                        fillYMismatch ? destination.Height : measuredForHeightConstraint, scale);
+                    ApplyMeasureResult();
+                }
+            }
+
             if (!PreArrange(destination, widthRequest, heightRequest, scale))
             {
                 DrawingRect = SKRect.Empty;
@@ -5993,6 +6052,9 @@ namespace DrawnUi.Draw
             }
             else if (LockRatio > 0)
             {
+                // NOTE: with an infinite axis Max() yields infinity and auto-sized content (a label) then
+                // measures to its content instead of a square. Apps rely on that (icon glyph boxes with
+                // LockRatio=1 inside scroll content), so this is deliberately NOT "fixed" to use the finite axis.
                 var size = Math.Max(heightConstraint, widthConstraint);
                 size *= (float)LockRatio;
                 heightConstraint = size;

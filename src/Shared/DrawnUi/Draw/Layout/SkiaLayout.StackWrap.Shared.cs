@@ -219,6 +219,37 @@ public partial class SkiaLayout
                             rectForChildrenPixels.Top + desiredHeight);
                     }
                 }
+                else if (Type == LayoutType.Wrap && Split <= 0 && !child.NeedFillX && area.Width > desiredWidth)
+                {
+                    // A flow-wrap cell IS its measured width (Split > 0 keeps its fixed slot, alignment inside
+                    // it is wanted). The measure rect spans to the row's right edge, so a Center/End child
+                    // used to float inside the leftover strip while the flow continued from its measured
+                    // width (Center cell drawn far right, next cell placed over its slot).
+                    area = new(area.Left, area.Top, area.Left + desiredWidth, area.Bottom);
+                }
+
+                // MAIN axis: a Center child sits in its own slot (measured size), never in whatever remains of
+                // the stack rect below/right of it (that centered it in the leftover area — or, in a finite
+                // stack, outside the stack entirely). A Fill child arranged into an UNBOUNDED slot (content of
+                // a scroll) is auto-sized too, else Arrange stretches it to float.MaxValue.
+                // End is deliberately left as is (pushes the child to the stack's end) — semantic call for the
+                // owner, not changed here.
+                if (Type == LayoutType.Column)
+                {
+                    if (child.VerticalOptions.Alignment == LayoutAlignment.Center
+                        || (child.NeedFillY && !float.IsFinite(area.Height)))
+                    {
+                        area = new(area.Left, area.Top, area.Right, area.Top + desiredHeight);
+                    }
+                }
+                else if (Type == LayoutType.Row)
+                {
+                    if (child.HorizontalOptions.Alignment == LayoutAlignment.Center
+                        || (child.NeedFillX && !float.IsFinite(area.Width)))
+                    {
+                        area = new(area.Left, area.Top, area.Left + desiredWidth, area.Bottom);
+                    }
+                }
             }
 
             child.Arrange(area, measured.Units.Width, measured.Units.Height, scale);

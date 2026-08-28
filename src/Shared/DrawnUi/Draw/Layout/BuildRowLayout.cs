@@ -303,11 +303,11 @@ public class BuildRowLayout : StackLayoutStructure
 
         if (_layout.HorizontalOptions.Alignment == LayoutAlignment.Fill)
         {
-            stackWidth = rectForChildrenPixels.Width;
+            stackWidth = float.IsFinite(rectForChildrenPixels.Width) ? rectForChildrenPixels.Width : stackWidth; // Fill inside an unbounded axis = content size, never infinity
         }
         if (_layout.VerticalOptions.Alignment == LayoutAlignment.Fill)
         {
-            stackHeight = rectForChildrenPixels.Height;
+            stackHeight = float.IsFinite(rectForChildrenPixels.Height) ? rectForChildrenPixels.Height : stackHeight;
         }
 
         return ScaledSize.FromPixels(stackWidth, stackHeight, scale);

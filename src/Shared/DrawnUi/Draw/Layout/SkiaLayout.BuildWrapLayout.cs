@@ -295,6 +295,14 @@ public partial class SkiaLayout
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 ScaledSize MeasureCellInternal()
                 {
+                    // A Fill-X child fills the REST of the row (flex-fill, 1.9.7.4 semantic): measured with the
+                    // remaining width, not the full row width — that made it never fit and always break to
+                    // its own row.
+                    if (!useFixedSplitSize && child.NeedFillX)
+                    {
+                        rectFitChild.Right = rectForChild.Right;
+                    }
+
                     if (_layout.IsTemplated)
                     {
                         bool needMeasure =
@@ -387,11 +395,11 @@ public partial class SkiaLayout
 
             if (_layout.HorizontalOptions.Alignment == LayoutAlignment.Fill && _layout.WidthRequest < 0)
             {
-                stackWidth = rectForChildrenPixels.Width;
+                stackWidth = float.IsFinite(rectForChildrenPixels.Width) ? rectForChildrenPixels.Width : stackWidth; // Fill inside an unbounded axis = content size, never infinity
             }
             if (_layout.VerticalOptions.Alignment == LayoutAlignment.Fill && _layout.HeightRequest < 0)
             {
-                stackHeight = rectForChildrenPixels.Height;
+                stackHeight = float.IsFinite(rectForChildrenPixels.Height) ? rectForChildrenPixels.Height : stackHeight;
             }
 
             return ScaledSize.FromPixels(stackWidth, stackHeight, scale);

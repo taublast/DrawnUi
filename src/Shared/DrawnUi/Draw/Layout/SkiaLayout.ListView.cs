@@ -1210,7 +1210,8 @@ public partial class SkiaLayout
                                     if (measured.Pixels.Height > rowMaxHeight)
                                         rowMaxHeight = measured.Pixels.Height;
 
-                                    rectForChild.Left += (float)(measured.Pixels.Width);
+                                    // Column slot advances by the SLOT width (Split > 1), not by what the cell measured
+                                    rectForChild.Left += Type == LayoutType.Column ? widthPerColumn : measured.Pixels.Width;
                                 }
                             }
 
@@ -1247,12 +1248,12 @@ public partial class SkiaLayout
 
             if (HorizontalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Width >= 0)
             {
-                stackWidth = rectForChildrenPixels.Width;
+                stackWidth = float.IsFinite(rectForChildrenPixels.Width) ? rectForChildrenPixels.Width : stackWidth; // Fill inside an unbounded axis = content size, never infinity
             }
 
             if (VerticalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Height >= 0)
             {
-                stackHeight = rectForChildrenPixels.Height;
+                stackHeight = float.IsFinite(rectForChildrenPixels.Height) ? rectForChildrenPixels.Height : stackHeight;
             }
 
             // Second layout pass logic stays the same...
@@ -1313,12 +1314,12 @@ public partial class SkiaLayout
 
             if (HorizontalOptions.Alignment == LayoutAlignment.Fill && WidthRequest < 0)
             {
-                stackWidth = rectForChildrenPixels.Width;
+                stackWidth = float.IsFinite(rectForChildrenPixels.Width) ? rectForChildrenPixels.Width : stackWidth; // Fill inside an unbounded axis = content size, never infinity
             }
 
             if (VerticalOptions.Alignment == LayoutAlignment.Fill && HeightRequest < 0)
             {
-                stackHeight = rectForChildrenPixels.Height;
+                stackHeight = float.IsFinite(rectForChildrenPixels.Height) ? rectForChildrenPixels.Height : stackHeight;
             }
 
             var structure = new LayoutStructure(rows);

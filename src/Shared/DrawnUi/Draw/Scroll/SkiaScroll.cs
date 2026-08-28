@@ -251,7 +251,7 @@ namespace DrawnUi.Draw
                 //    newControl.WidthRequest = RefreshDistanceLimit;
                 //}
 
-                newControl.ZIndex = 1000;
+                if (!newControl.IsSet(ZIndexProperty)) newControl.ZIndex = 1000;
                 AddSubView(newControl);
             }
         }
@@ -425,7 +425,7 @@ namespace DrawnUi.Draw
 
             if (indicator is SkiaControl newControl)
             {
-                newControl.ZIndex = 1001;
+                if (!newControl.IsSet(ZIndexProperty)) newControl.ZIndex = 1001;
                 AddSubView(newControl);
             }
 
@@ -445,7 +445,7 @@ namespace DrawnUi.Draw
 
             if (indicator is SkiaControl newControl)
             {
-                newControl.ZIndex = 1001;
+                if (!newControl.IsSet(ZIndexProperty)) newControl.ZIndex = 1001;
                 AddSubView(newControl);
             }
 

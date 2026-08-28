@@ -405,35 +405,47 @@ public partial class SkiaLayout
             // Apply minimum dimensions from Fill children
             ApplyMinimumDimensionsFromFillChildren();
 
-            // Fill children in all-Auto cells were measured unconstrained on their fill axes;
-            // re-measure them at the resolved cell size so they arrange to fill it.
-            // (Cells spanning Absolute/Star tracks are re-measured in MeasureKnownCells.)
-            RemeasureFillChildrenInAutoCells();
-
             // Compress the star values to their minimums for measurement
             CompressStarMeasurements();
         }
 
-        void RemeasureFillChildrenInAutoCells()
+        /// <summary>
+        /// Final measure pass, run by MeasureGrid once every track has its final size (spans resolved,
+        /// minimums applied, stars decompressed, last track stretched). Every visible child is measured
+        /// at the exact cell it will be arranged in, so its internal layout (centered rows, wrapped text,
+        /// nested structures) matches the arranged box. Children whose cell did not change hit
+        /// SkiaControl.Measure's early-return, so the pass is free for them. A child that grows on an
+        /// Auto track after this re-measure (wrapping text got taller) grows that track.
+        /// </summary>
+        public void RemeasureChildrenAtFinalCells()
         {
             foreach (var cell in _cells)
             {
-                if (cell.NeedsKnownMeasurePass)
-                {
-                    continue;
-                }
-
                 var control = _childrenToLayOut[cell.ViewIndex];
 
-                if (control is not SkiaControl skiaChild || !control.IsVisible
-                    || (!skiaChild.NeedFillX && !skiaChild.NeedFillY))
+                if (control is not SkiaControl || !control.IsVisible)
                 {
                     continue;
                 }
 
                 var rectCell = GetCellBoundsFor(control, 0, 0);
+                if (rectCell.Width <= 0 || rectCell.Height <= 0)
+                {
+                    continue;
+                }
+
                 var scale = (float)control.RenderingScale;
-                control.Measure((float)(rectCell.Width * scale), (float)Math.Round(rectCell.Height * scale), scale);
+                var measured = control.Measure((float)(rectCell.Width * scale), (float)Math.Round(rectCell.Height * scale), scale);
+
+                if (cell.ColumnSpan == 1 && Columns[cell.Column].IsAuto && measured.Units.Width > Columns[cell.Column].Size)
+                {
+                    Columns[cell.Column].Update(measured.Units.Width);
+                }
+
+                if (cell.RowSpan == 1 && Rows[cell.Row].IsAuto && measured.Units.Height > Rows[cell.Row].Size)
+                {
+                    Rows[cell.Row].Update(measured.Units.Height);
+                }
             }
         }
 
@@ -451,11 +463,15 @@ public partial class SkiaLayout
 
             var availableWidth = AvailableWidth(cell);
             var availableHeight = AvailableHeight(cell);
+            var finiteAvailableWidth = availableWidth;
+            var finiteAvailableHeight = availableHeight;
 
             // A Fill child measured against a finite constraint returns that whole constraint,
             // which would inflate an Auto column/row to all the available space. Measure it
             // unconstrained on that axis instead, so the Auto track is sized by its content
             // (like MAUI Grid desired size); the child then fills the resolved track.
+            // The unconstrained result is clamped back to the finite space below: a constraint-dependent
+            // Fill child (wrapping label, scroll, wrap layout) must not inflate the track past the grid.
             if (_childrenToLayOut[cell.ViewIndex] is SkiaControl skiaChild)
             {
                 if (cell.IsColumnSpanAuto && skiaChild.NeedFillX)
@@ -495,6 +511,18 @@ public partial class SkiaLayout
                     var pixels = child.Measure((float)width, (float)height, scale);
 
                     measure = new Size(pixels.Units.Width, pixels.Units.Height);
+
+                    if (double.IsPositiveInfinity(availableWidth) && double.IsFinite(finiteAvailableWidth) && finiteAvailableWidth >= 0
+                        && measure.Width > finiteAvailableWidth)
+                    {
+                        measure.Width = finiteAvailableWidth;
+                    }
+
+                    if (double.IsPositiveInfinity(availableHeight) && double.IsFinite(finiteAvailableHeight) && finiteAvailableHeight >= 0
+                        && measure.Height > finiteAvailableHeight)
+                    {
+                        measure.Height = finiteAvailableHeight;
+                    }
                 }
 
                 if (cell.IsColumnSpanAuto)

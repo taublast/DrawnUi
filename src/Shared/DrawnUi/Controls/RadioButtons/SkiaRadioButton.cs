@@ -52,13 +52,13 @@ public class SkiaRadioButton : SkiaToggle, ISkiaRadioButton
     protected virtual void CreateDefaultStyleContent()
     {
         // Flat DrawnUI look: neutral ring when off, accent ring + filled accent dot when on.
-        UseCache = SkiaCacheType.Image;
-        MinimumHeightRequest = 24;
+        SetStyleDefault(UseCacheProperty, SkiaCacheType.Image);
+        SetStyleDefault(MinimumHeightRequestProperty, 24d);
 
         // SkiaToggle's ColorThumb* default to White (invisible on light bg) — use the flat palette
         // unless the app explicitly set ring/dot colors via ColorFrameOff/ColorFrameOn.
-        ColorThumbOff = IsSet(ColorFrameOffProperty) ? ColorFrameOff : DefaultOutlineColor;
-        ColorThumbOn = IsSet(ColorFrameOnProperty) ? ColorFrameOn : DefaultAccentColor;
+        SetStyleDefault(ColorThumbOffProperty, IsSet(ColorFrameOffProperty) ? ColorFrameOff : DefaultOutlineColor);
+        SetStyleDefault(ColorThumbOnProperty, IsSet(ColorFrameOnProperty) ? ColorFrameOn : DefaultAccentColor);
 
         Children = new List<SkiaControl>()
         {
@@ -117,11 +117,11 @@ public class SkiaRadioButton : SkiaToggle, ISkiaRadioButton
     /// </summary>
     protected virtual void CreateCupertinoStyleContent()
     {
-        UseCache = SkiaCacheType.Image;
-        MinimumHeightRequest = 24;
+        SetStyleDefault(UseCacheProperty, SkiaCacheType.Image);
+        SetStyleDefault(MinimumHeightRequestProperty, 24d);
 
-        ColorThumbOff = Color.FromRgba(191, 191, 191, 255); // iOS light gray
-        ColorThumbOn = Color.FromRgba(0, 122, 255, 255);    // iOS blue
+        SetStyleDefault(ColorThumbOffProperty, Color.FromRgba(191, 191, 191, 255)); // iOS light gray
+        SetStyleDefault(ColorThumbOnProperty, Color.FromRgba(0, 122, 255, 255));    // iOS blue
 
         Children = new List<SkiaControl>()
         {
@@ -179,8 +179,8 @@ public class SkiaRadioButton : SkiaToggle, ISkiaRadioButton
     /// </summary>
     protected virtual void CreateMaterialStyleContent()
     {
-        ColorThumbOff = Color.FromRgba(117, 117, 117, 255); // Material mid-gray
-        ColorThumbOn = Color.FromRgba(33, 150, 243, 255);   // Material blue
+        SetStyleDefault(ColorThumbOffProperty, Color.FromRgba(117, 117, 117, 255)); // Material mid-gray
+        SetStyleDefault(ColorThumbOnProperty, Color.FromRgba(33, 150, 243, 255));   // Material blue
 
         BuildMaterialFamilyContent();
     }
@@ -191,8 +191,8 @@ public class SkiaRadioButton : SkiaToggle, ISkiaRadioButton
     /// </summary>
     protected virtual void CreateMaterial3StyleContent()
     {
-        ColorThumbOff = Color.FromRgba(73, 69, 79, 255);   // M3 on-surface variant
-        ColorThumbOn = Color.FromRgba(103, 80, 164, 255);  // M3 primary
+        SetStyleDefault(ColorThumbOffProperty, Color.FromRgba(73, 69, 79, 255));   // M3 on-surface variant
+        SetStyleDefault(ColorThumbOnProperty, Color.FromRgba(103, 80, 164, 255));  // M3 primary
 
         BuildMaterialFamilyContent();
     }
@@ -204,8 +204,8 @@ public class SkiaRadioButton : SkiaToggle, ISkiaRadioButton
     /// </summary>
     protected void BuildMaterialFamilyContent()
     {
-        UseCache = SkiaCacheType.Image;
-        MinimumHeightRequest = 24;
+        SetStyleDefault(UseCacheProperty, SkiaCacheType.Image);
+        SetStyleDefault(MinimumHeightRequestProperty, 24d);
 
         Children = new List<SkiaControl>()
         {
@@ -264,11 +264,11 @@ public class SkiaRadioButton : SkiaToggle, ISkiaRadioButton
     /// </summary>
     protected virtual void CreateWindowsStyleContent()
     {
-        UseCache = SkiaCacheType.Image;
-        MinimumHeightRequest = 24;
+        SetStyleDefault(UseCacheProperty, SkiaCacheType.Image);
+        SetStyleDefault(MinimumHeightRequestProperty, 24d);
 
-        ColorThumbOff = Color.Parse("#767676");            // Fluent neutral
-        ColorThumbOn = Color.FromRgba(0, 120, 215, 255);   // Windows blue
+        SetStyleDefault(ColorThumbOffProperty, Color.Parse("#767676"));            // Fluent neutral
+        SetStyleDefault(ColorThumbOnProperty, Color.FromRgba(0, 120, 215, 255));   // Windows blue
 
         Children = new List<SkiaControl>()
         {
