@@ -1,7 +1,7 @@
 ---
 name: drawnui-opentk
-description: DrawnUI on the OpenTK desktop head (Windows/Linux) — DrawnUiWindow apps, CanvasHost overlays over raw OpenGL, update/rendering modes, desktop input wiring, output-dir assets, window icon and DWM chrome niceties, Linux/WSL2 fixes, trimmed single-file publish, and using an OpenTK head as an instant visual test harness for shared DrawnUI code. Trigger on "drawnui opentk", "DrawnUiWindow", "CanvasHost", "drawnui desktop", "GL overlay drawnui".
-version: 1.0.0
+description: DrawnUI on the OpenTK desktop head (Windows/Linux, plus what macOS would need) — DrawnUiWindow apps, CanvasHost overlays over raw OpenGL, update/rendering modes, desktop input wiring, output-dir assets, window icon and DWM chrome niceties, Linux/WSL2 fixes, trimmed single-file publish, and using an OpenTK head as an instant visual test harness for shared DrawnUI code. Trigger on "drawnui opentk", "DrawnUiWindow", "CanvasHost", "drawnui desktop", "GL overlay drawnui".
+version: 1.1.0
 tags: [drawnui, opentk, desktop, opengl, dotnet]
 ---
 
@@ -88,6 +88,41 @@ Source strings (`"Images/x.gif"`, `"Lottie/x.json"`) resolve relative to the out
 - `GLXBadFBConfig` → request OpenGL 3.3 on Linux (Mesa D3D12 lacks 4.6).
 - D3D12 "Removing Device" + segfault on WSLg → keep `WindowState = WindowState.Normal`.
 - Uncapped FPS (Mesa ignores swap interval) → `DrawnUiWindow` soft-caps automatically; a custom `GameWindow` must set `UpdateFrequency` itself.
+
+## macOS (unbuilt as of 2026-08-27 — investigated, not yet run)
+
+Nothing in the stack blocks it; nobody has shipped it. What was verified:
+
+- **GLFW natives exist** — `opentk.redist.glfw` 3.4.0.44 ships `runtimes/osx-arm64` and `runtimes/osx-x64`
+  with `libglfw.3.dylib`. OpenTK 4 windowing is GLFW-based, hence cross-platform.
+- **Skia natives exist** — use `SkiaSharp.NativeAssets.macOS`, the counterpart of the
+  `SkiaSharp.NativeAssets.Linux` reference the samples already carry.
+- **Windows-only code is guarded** — DWM chrome, the WndProc hook and `WindowsUiaProvider` all sit
+  inside `if (OperatingSystem.IsWindows())` in `DrawnUiWindow.cs`. P/Invokes don't bind until called,
+  so macOS won't trip on them. Expect a plainer window and no accessibility there.
+- `RuntimeIdentifiers` in the samples lack `osx-arm64;osx-x64` — add them.
+
+**The context settings are the trap.** The samples request GL 4.6 on anything that isn't Linux:
+
+```csharp
+APIVersion = OperatingSystem.IsLinux() ? new Version(3,3) : new Version(4,6),   // FAILS on macOS
+```
+
+macOS caps at **OpenGL 4.1**, so 4.6 fails context creation and the window never appears — the usual
+reason people conclude "OpenTK doesn't run on Mac". It does. Use:
+
+```csharp
+APIVersion = OperatingSystem.IsWindows() ? new Version(4,6) : new Version(3,3),
+Profile = ContextProfile.Core,
+Flags = ContextFlags.ForwardCompatible,   // REQUIRED on macOS for core >= 3.2
+```
+
+`ForwardCompatible` is not optional on macOS. This lives in the caller that builds
+`NativeWindowSettings`, not in the library.
+
+Hardware acceleration is real — Apple implements GL over Metal, and Skia's GL backend needs only
+GL 3.0+. GL is deprecated on macOS (since 10.14) but not removed; if it ever is, the escape hatch is
+`GRContext.CreateMetal`, which changes the host, not DrawnUI drawing code.
 
 ## OpenTK head as a visual test harness
 
