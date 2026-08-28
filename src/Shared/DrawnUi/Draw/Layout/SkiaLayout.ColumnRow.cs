@@ -1,4 +1,4 @@
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace DrawnUi.Draw
 {
@@ -671,12 +671,12 @@ else
 
                     if (HorizontalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Width >= 0)
                     {
-                        stackWidth = rectForChildrenPixels.Width;
+                        stackWidth = float.IsFinite(rectForChildrenPixels.Width) ? rectForChildrenPixels.Width : stackWidth; // Fill inside an unbounded axis = content size, never infinity
                     }
 
                     if (VerticalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Height >= 0)
                     {
-                        stackHeight = rectForChildrenPixels.Height;
+                        stackHeight = float.IsFinite(rectForChildrenPixels.Height) ? rectForChildrenPixels.Height : stackHeight;
                     }
 
                     //second layout pass in some cases
@@ -756,12 +756,12 @@ else
 
                 if (HorizontalOptions.Alignment == LayoutAlignment.Fill && WidthRequest < 0)
                 {
-                    stackWidth = rectForChildrenPixels.Width;
+                    stackWidth = float.IsFinite(rectForChildrenPixels.Width) ? rectForChildrenPixels.Width : stackWidth; // Fill inside an unbounded axis = content size, never infinity
                 }
 
                 if (VerticalOptions.Alignment == LayoutAlignment.Fill && HeightRequest < 0)
                 {
-                    stackHeight = rectForChildrenPixels.Height;
+                    stackHeight = float.IsFinite(rectForChildrenPixels.Height) ? rectForChildrenPixels.Height : stackHeight;
                 }
 
                 return ScaledSize.FromPixels(stackWidth, stackHeight, scale);
@@ -898,7 +898,8 @@ else
                         if (measured.Pixels.Height > maxHeight)
                             maxHeight = measured.Pixels.Height;
 
-                        rectForChild.Left += measured.Pixels.Width;
+                        // Column slot advances by the SLOT width (Split > 1), not by what the cell measured
+                        rectForChild.Left += isColumn ? widthPerColumn : measured.Pixels.Width;
                     }
 
                     cell.WasMeasured = true;
@@ -915,9 +916,9 @@ else
 
             // Inline ApplyFillConstraints
             if (HorizontalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Width >= 0)
-                stackWidth = rectForChildrenPixels.Width;
+                stackWidth = float.IsFinite(rectForChildrenPixels.Width) ? rectForChildrenPixels.Width : stackWidth; // Fill inside an unbounded axis = content size, never infinity
             if (VerticalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Height >= 0)
-                stackHeight = rectForChildrenPixels.Height;
+                stackHeight = float.IsFinite(rectForChildrenPixels.Height) ? rectForChildrenPixels.Height : stackHeight;
 
             return ScaledSize.FromPixels(stackWidth, stackHeight, scale);
         }
@@ -1085,7 +1086,8 @@ else
                             if (measured.Pixels.Height > maxHeight)
                                 maxHeight = measured.Pixels.Height;
 
-                            rectForChild.Left += measured.Pixels.Width;
+                            // Column slot advances by the SLOT width (Split > 1), not by what the cell measured
+                            rectForChild.Left += isColumn ? widthPerColumn : measured.Pixels.Width;
                         }
 
                         cell.WasMeasured = true;
@@ -1103,9 +1105,9 @@ else
 
                 // Inline ApplyFillConstraints
                 if (HorizontalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Width >= 0)
-                    stackWidth = rectForChildrenPixels.Width;
+                    stackWidth = float.IsFinite(rectForChildrenPixels.Width) ? rectForChildrenPixels.Width : stackWidth; // Fill inside an unbounded axis = content size, never infinity
                 if (VerticalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Height >= 0)
-                    stackHeight = rectForChildrenPixels.Height;
+                    stackHeight = float.IsFinite(rectForChildrenPixels.Height) ? rectForChildrenPixels.Height : stackHeight;
 
                 return ScaledSize.FromPixels(stackWidth, stackHeight, scale);
             }
@@ -1163,6 +1165,8 @@ else
             // Track minimum dimensions from Fill children in perpendicular direction
             var minStackWidthFromFill = 0.0f;
             var minStackHeightFromFill = 0.0f;
+            var sawFillX = false;
+            var sawFillY = false;
 
             // Subpixel accumulation
             double stackY = rectForChildrenPixels.Top;
@@ -1255,6 +1259,11 @@ else
                             // Track minimum dimensions from Fill children in perpendicular direction
                             if (!isTemplated)
                             {
+                                if (isColumn && child.NeedFillX)
+                                    sawFillX = true;
+                                else if (!isColumn && child.NeedFillY)
+                                    sawFillY = true;
+
                                 // Column layout: check Fill-X children for MinimumWidthRequest
                                 if (isColumn && child.NeedFillX && child.MinimumWidthRequest >= 0)
                                 {
@@ -1281,7 +1290,7 @@ else
                             {
                                 var widthToUse = measured.Pixels.Width;
                                 // For Fill-X children in Row layout (stacking direction), use allocated space if larger
-                                if (hasFillHandling && child.NeedFillX && !isColumn && spacePerFillChild > widthToUse)
+                                if (hasFillHandling && child.NeedFillX && !isColumn && float.IsFinite(spacePerFillChild) && spacePerFillChild > widthToUse)
                                 {
                                     widthToUse = spacePerFillChild;
                                 }
@@ -1296,7 +1305,7 @@ else
                             {
                                 var heightToUse = measured.Pixels.Height;
                                 // For Fill-Y children in Column layout (stacking direction), use allocated space if larger
-                                if (hasFillHandling && child.NeedFillY && isColumn && spacePerFillChild > heightToUse)
+                                if (hasFillHandling && child.NeedFillY && isColumn && float.IsFinite(spacePerFillChild) && spacePerFillChild > heightToUse)
                                 {
                                     heightToUse = spacePerFillChild;
                                 }
@@ -1321,6 +1330,11 @@ else
                             }
                             else
                             {
+                                // Next column slot (Split > 1): the slot is widthPerColumn wide regardless of
+                                // what the cell measured. Was never advanced, so every column-2+ cell landed at
+                                // Left = spacing, overlapping column 1.
+                                stackX += widthPerColumn;
+
                                 // Vertical stacking (single column)
                                 if (columnsCount == 1)
                                 {
@@ -1371,14 +1385,22 @@ else
                 if (minStackHeightFromFill > stackHeight)
                     stackHeight = minStackHeightFromFill;
 
+                // An auto-sized stack whose only cross-axis children are Fill has no content size of its own:
+                // adopt the constraint (what a Fill child already does to an auto Row on its main axis)
+                // instead of collapsing to 0 and re-measuring every child at width 0.
+                if (stackWidth <= 0 && sawFillX && float.IsFinite(rectForChildrenPixels.Width))
+                    stackWidth = rectForChildrenPixels.Width;
+                if (stackHeight <= 0 && sawFillY && float.IsFinite(rectForChildrenPixels.Height))
+                    stackHeight = rectForChildrenPixels.Height;
+
                 // apply fill constraints
                 if (float.IsFinite(rectForChildrenPixels.Width) &&
                     HorizontalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Width >= 0)
-                    stackWidth = rectForChildrenPixels.Width;
+                    stackWidth = float.IsFinite(rectForChildrenPixels.Width) ? rectForChildrenPixels.Width : stackWidth; // Fill inside an unbounded axis = content size, never infinity
 
                 if (float.IsFinite(rectForChildrenPixels.Height) && VerticalOptions.Alignment == LayoutAlignment.Fill ||
                     SizeRequest.Height >= 0)
-                    stackHeight = rectForChildrenPixels.Height;
+                    stackHeight = float.IsFinite(rectForChildrenPixels.Height) ? rectForChildrenPixels.Height : stackHeight;
 
                 if (needSecondPass)
                 {
@@ -1445,6 +1467,8 @@ else
                 ? rectForChildrenPixels.Height
                 : rectForChildrenPixels.Width;
             var remainingSpace = Math.Max(0, totalAvailableSpace - fixedSpaceUsed - spacingUsed);
+            // Infinite on an unbounded axis (scroll content) — consumers treat that as "no Fill distribution":
+            // Fill children measure their content instead of an infinite slot that blew the stack up to ∞.
             spacePerFillChild = fillChildrenCount > 0 ? remainingSpace / fillChildrenCount : 0;
         }
 
@@ -1492,7 +1516,8 @@ else
                 var child = nonTemplated[cell.ControlIndex];
                 var isFillChild = IsChildFill(child);
 
-                if (isFillChild)
+                // Unbounded main axis (content of a scroll): a Fill child is auto-sized, no infinite slot
+                if (isFillChild && float.IsFinite(spacePerFillChild))
                 {
                     if (Type == LayoutType.Column)
                     {
@@ -1653,12 +1678,12 @@ else
         {
             if (HorizontalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Width >= 0)
             {
-                stackWidth = rectForChildrenPixels.Width;
+                stackWidth = float.IsFinite(rectForChildrenPixels.Width) ? rectForChildrenPixels.Width : stackWidth; // Fill inside an unbounded axis = content size, never infinity
             }
 
             if (VerticalOptions.Alignment == LayoutAlignment.Fill || SizeRequest.Height >= 0)
             {
-                stackHeight = rectForChildrenPixels.Height;
+                stackHeight = float.IsFinite(rectForChildrenPixels.Height) ? rectForChildrenPixels.Height : stackHeight;
             }
         }
 
@@ -1694,9 +1719,42 @@ else
                 ScaledSize measured;
                 if (needRemeasure)
                 {
-                    measured = MeasureChild(secondPass.Child, secondPass.Cell.Area.Width,
-                        secondPass.Cell.Area.Height, secondPass.Scale);
+                    // Only the PERPENDICULAR constraint changed (final stack width/height). The main-axis
+                    // constraint must stay what the first pass used: the layout rect edge, possibly infinite
+                    // (content of a scroll). AdjustSecondPassCell clamps an infinite Area to the final stack
+                    // extent for ARRANGE purposes; using that as a MEASURE constraint hands a Start/Center
+                    // child the whole stack height (sum of all children) — any max/ratio-based sizing inside
+                    // (LockRatio, Fill descendants) then consumes it and the child balloons to the stack size.
+                    // A main-axis Fill child keeps its finite slot (space distribution) — unless the main axis is
+                    // UNBOUNDED: then it is auto-sized (no distribution exists), so it must not be handed the
+                    // clamped Area (= whole stack height) either.
+                    var mainAxisUnbounded = Type == LayoutType.Column
+                        ? float.IsInfinity(rectForChildrenPixels.Bottom)
+                        : float.IsInfinity(rectForChildrenPixels.Right);
+
+                    var remeasureWidth = secondPass.Cell.Area.Width;
+                    var remeasureHeight = secondPass.Cell.Area.Height;
+                    if (Type == LayoutType.Column && (!secondPass.Child.NeedFillY || mainAxisUnbounded))
+                    {
+                        remeasureHeight = rectForChildrenPixels.Bottom - secondPass.Cell.Area.Top;
+                    }
+                    else if (Type == LayoutType.Row && (!secondPass.Child.NeedFillX || mainAxisUnbounded))
+                    {
+                        remeasureWidth = rectForChildrenPixels.Right - secondPass.Cell.Area.Left;
+                    }
+
+                    measured = MeasureChild(secondPass.Child, remeasureWidth, remeasureHeight, secondPass.Scale);
                     secondPass.Cell.Measured = measured;
+
+                    if (mainAxisUnbounded)
+                    {
+                        // auto-sized Fill child: its slot is its measured size, not the stack extent
+                        var a = secondPass.Cell.Area;
+                        if (Type == LayoutType.Column && secondPass.Child.NeedFillY)
+                            secondPass.Cell.Area = new(a.Left, a.Top, a.Right, a.Top + measured.Pixels.Height);
+                        else if (Type == LayoutType.Row && secondPass.Child.NeedFillX)
+                            secondPass.Cell.Area = new(a.Left, a.Top, a.Left + measured.Pixels.Width, a.Bottom);
+                    }
                 }
                 else
                 {
@@ -2248,8 +2306,13 @@ else
         {
             if (IsTemplated)
             {
+                // Arranged size, same as non-templated. Used to be the SLOT (cell.Area.Width x cell.Area.Bottom —
+                // an absolute coordinate, infinite inside a scroll) at the arranged origin: x,y already carry the
+                // Center/End offset from LayoutCell, so the child re-aligned inside the slot at draw (double
+                // centering, End cells pushed out of their column), and a Fill-Y cell arranged into an infinite
+                // height painted float.MaxValue tall. cell.Destination is refreshed by every draw-time LayoutCell.
                 return new SKRect(x, y,
-                    x + cell.Area.Width, y + cell.Area.Bottom);
+                    x + cell.Destination.Width, y + cell.Destination.Height);
             }
             else
             {

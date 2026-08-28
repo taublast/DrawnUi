@@ -9,7 +9,7 @@ public class SkiaSlider : SkiaLayout
     public SkiaSlider()
     {
         
-        UseCache = SkiaCacheType.ImageDoubleBuffered;
+        SetStyleDefault(UseCacheProperty, SkiaCacheType.ImageDoubleBuffered);
     }
 
     #region DEFAULT CONTENT
@@ -92,6 +92,9 @@ public class SkiaSlider : SkiaLayout
     /// </summary>
     protected bool StyleContentCreated { get; private set; }
 
+    // true when SliderHeight was not user-set before style content was built
+    private bool _styleOwnsSliderHeight;
+
     // Flat DrawnUI default palette (shared across the default-styled controls).
     private static readonly Color DefaultAccentColor = Color.FromRgba(220, 20, 60, 255); // Crimson #DC143C
     private static readonly Color DefaultTrackColor = Color.FromRgba(215, 219, 224, 255); // neutral #D7DBE0
@@ -99,12 +102,13 @@ public class SkiaSlider : SkiaLayout
     protected virtual void CreateDefaultStyleContent()
     {
         StyleContentCreated = true;
+        _styleOwnsSliderHeight = !IsSet(SliderHeightProperty);
         AvailableWidthAdjustment = 1.5;
-        HorizontalOptions = LayoutOptions.Fill;
-        MinimumWidthRequest = 64;
-        SliderHeight = 35;
+        SetStyleDefault(HorizontalOptionsProperty, LayoutOptions.Fill);
+        SetStyleDefault(MinimumWidthRequestProperty, 64d);
+        SetStyleDefault(SliderHeightProperty, 35d);
         Type = LayoutType.Column;
-        UseCache = SkiaCacheType.ImageDoubleBuffered;
+        SetStyleDefault(UseCacheProperty, SkiaCacheType.ImageDoubleBuffered);
 
         // Flat "DrawnUI" look: neutral track, accent trail + thumb, white inner dot, soft shadow, no strokes.
         SliderThumb BuildDefaultThumb(string tag) => new SliderThumb()
@@ -221,12 +225,13 @@ public class SkiaSlider : SkiaLayout
     protected virtual void CreateCupertinoStyleContent()
     {
         StyleContentCreated = true;
+        _styleOwnsSliderHeight = !IsSet(SliderHeightProperty);
         AvailableWidthAdjustment = -1;
-        HorizontalOptions = LayoutOptions.Fill;
-        MinimumWidthRequest = 64;
-        SliderHeight = CupertinoThumbDiameter;
+        SetStyleDefault(HorizontalOptionsProperty, LayoutOptions.Fill);
+        SetStyleDefault(MinimumWidthRequestProperty, 64d);
+        SetStyleDefault(SliderHeightProperty, EnableRange ? CupertinoThumbDiameter + 8 : CupertinoThumbDiameter);
         Type = LayoutType.Column;
-        UseCache = SkiaCacheType.ImageDoubleBuffered;
+        SetStyleDefault(UseCacheProperty, SkiaCacheType.ImageDoubleBuffered);
 
         var trailChildren = new List<SkiaControl>()
         {
@@ -299,8 +304,7 @@ public class SkiaSlider : SkiaLayout
 
         if (EnableRange)
         {
-            // Extra vertical space so thumb drop-shadows are not clipped by the track container.
-            SliderHeight = CupertinoThumbDiameter + 8;
+            // Extra vertical space so thumb drop-shadows are not clipped by the track container (see SliderHeight default above).
             var thumbSize = CupertinoThumbDiameter + 4;
 
             // Adjust end-thumb for shadow room; trail edges follow thumb centers via UpdateTrailGeometry.
@@ -404,12 +408,13 @@ public class SkiaSlider : SkiaLayout
     protected virtual void CreateMaterialStyleContent()
     {
         StyleContentCreated = true;
+        _styleOwnsSliderHeight = !IsSet(SliderHeightProperty);
         AvailableWidthAdjustment = -1;
-        HorizontalOptions = LayoutOptions.Fill;
-        MinimumWidthRequest = 64;
-        SliderHeight = MaterialThumbSize;
+        SetStyleDefault(HorizontalOptionsProperty, LayoutOptions.Fill);
+        SetStyleDefault(MinimumWidthRequestProperty, 64d);
+        SetStyleDefault(SliderHeightProperty, EnableRange ? MaterialThumbSize + 8 : MaterialThumbSize);
         Type = LayoutType.Column;
-        UseCache = SkiaCacheType.ImageDoubleBuffered;
+        SetStyleDefault(UseCacheProperty, SkiaCacheType.ImageDoubleBuffered);
 
         var trackColor = IsSet(TrackColorProperty) ? TrackColor : MaterialPaletteTrack;
         var selectedColor = IsSet(TrackSelectedColorProperty) ? TrackSelectedColor : MaterialPalettePrimary;
@@ -476,8 +481,7 @@ public class SkiaSlider : SkiaLayout
 
         if (EnableRange)
         {
-            // Extra vertical space so thumb drop-shadows are not clipped by the track container.
-            SliderHeight = MaterialThumbSize + 8;
+            // Extra vertical space so thumb drop-shadows are not clipped by the track container (see SliderHeight default above).
             EndThumb.Top = 4;
 
             StartThumb = new SliderThumb()
@@ -522,12 +526,13 @@ public class SkiaSlider : SkiaLayout
     protected virtual void CreateWindowsStyleContent()
     {
         StyleContentCreated = true;
+        _styleOwnsSliderHeight = !IsSet(SliderHeightProperty);
         AvailableWidthAdjustment = -1;
-        HorizontalOptions = LayoutOptions.Fill;
-        MinimumWidthRequest = 64;
-        SliderHeight = WindowsThumbSize;
+        SetStyleDefault(HorizontalOptionsProperty, LayoutOptions.Fill);
+        SetStyleDefault(MinimumWidthRequestProperty, 64d);
+        SetStyleDefault(SliderHeightProperty, EnableRange ? WindowsThumbSize + 8 : WindowsThumbSize);
         Type = LayoutType.Column;
-        UseCache = SkiaCacheType.ImageDoubleBuffered;
+        SetStyleDefault(UseCacheProperty, SkiaCacheType.ImageDoubleBuffered);
 
         var trackColor = IsSet(TrackColorProperty) ? TrackColor : WindowsTrackColor;
         var selectedColor = IsSet(TrackSelectedColorProperty) ? TrackSelectedColor : WindowsAccentColor;
@@ -608,8 +613,7 @@ public class SkiaSlider : SkiaLayout
 
         if (EnableRange)
         {
-            // Extra vertical space so thumb drop-shadows are not clipped by the track container.
-            SliderHeight = WindowsThumbSize + 8;
+            // Extra vertical space so thumb drop-shadows are not clipped by the track container (see SliderHeight default above).
             EndThumb.Top = 4;
 
             StartThumb = new SliderThumb()
@@ -882,7 +886,10 @@ public class SkiaSlider : SkiaLayout
         }
 
         // Update the overall slider height (range mode needs extra room for shadows)
-        SliderHeight = EnableRange ? CupertinoThumbDiameter + 8 : CupertinoThumbDiameter;
+        if (_styleOwnsSliderHeight)
+        {
+            SliderHeight = EnableRange ? CupertinoThumbDiameter + 8 : CupertinoThumbDiameter;
+        }
         Trail.HeightRequest = SliderHeight;
 
         UpdateTrailGeometry();
@@ -1483,7 +1490,7 @@ public class SkiaSlider : SkiaLayout
 
         // EnableRange may be set after ControlStyle in an object initializer, which causes
         // NeedInitialize to fire before EnableRange=true. Detect this and force a rebuild.
-        if (propertyName == nameof(EnableRange) && DefaultContentCreated)
+        if (propertyName == nameof(EnableRange) && DefaultContentCreated && StyleContentCreated)
         {
             Trail = null;
             SelectedTrail = null;

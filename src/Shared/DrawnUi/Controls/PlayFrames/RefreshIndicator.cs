@@ -120,7 +120,7 @@ public class RefreshIndicator : SkiaLayout, IRefreshIndicator
                     throw new NotImplementedException();
                 }
 
-                refresh.UpdateOrientation();
+                refresh.UpdateOrientation(old is ScrollOrientation previous ? previous : ScrollOrientation.Vertical);
             }
         });
 
@@ -133,18 +133,20 @@ public class RefreshIndicator : SkiaLayout, IRefreshIndicator
         set { SetValue(OrientationProperty, value); }
     }
 
-    protected virtual void UpdateOrientation()
+    protected virtual void UpdateOrientation(ScrollOrientation previous)
     {
-        if (Orientation == ScrollOrientation.Vertical)
-        {
-            HorizontalOptions = LayoutOptions.Fill;
-            VerticalOptions = LayoutOptions.Start;
-        }
-        else if (Orientation == ScrollOrientation.Horizontal)
-        {
-            HorizontalOptions = LayoutOptions.Start;
-            VerticalOptions = LayoutOptions.Fill;
-        }
+        // only swap alignments still at the previous orientation's defaults, keep user-set ones
+        var (oldH, oldV) = previous == ScrollOrientation.Horizontal
+            ? (LayoutOptions.Start, LayoutOptions.Fill)
+            : (LayoutOptions.Fill, LayoutOptions.Start);
+        var (newH, newV) = Orientation == ScrollOrientation.Horizontal
+            ? (LayoutOptions.Start, LayoutOptions.Fill)
+            : (LayoutOptions.Fill, LayoutOptions.Start);
+
+        if (HorizontalOptions.Alignment == oldH.Alignment)
+            HorizontalOptions = newH;
+        if (VerticalOptions.Alignment == oldV.Alignment)
+            VerticalOptions = newV;
 
         Invalidate();
     }

@@ -141,9 +141,9 @@ public class SkiaCheckbox : SkiaToggle
         ViewCheckOn = checkmark;
         
         // Color overrides for iOS style
-        ColorFrameOff = Color.FromRgba(191, 191, 191, 255);
-        ColorFrameOn = Color.FromRgba(0, 122, 255, 255);
-        ColorCheckOn = Colors.White;
+        SetStyleDefault(ColorFrameOffProperty, Color.FromRgba(191, 191, 191, 255));
+        SetStyleDefault(ColorFrameOnProperty, Color.FromRgba(0, 122, 255, 255));
+        SetStyleDefault(ColorCheckOnProperty, Colors.White);
     }
     
     protected virtual void CreateMaterialStyleContent()
@@ -191,9 +191,9 @@ public class SkiaCheckbox : SkiaToggle
         ViewCheckOn = checkmark;
         
         // Color overrides for Material style
-        ColorFrameOff = Color.FromRgba(117, 117, 117, 255);
-        ColorFrameOn = Color.FromRgba(33, 150, 243, 255);
-        ColorCheckOn = Colors.White;
+        SetStyleDefault(ColorFrameOffProperty, Color.FromRgba(117, 117, 117, 255));
+        SetStyleDefault(ColorFrameOnProperty, Color.FromRgba(33, 150, 243, 255));
+        SetStyleDefault(ColorCheckOnProperty, Colors.White);
     }
 
     /// <summary>
@@ -244,9 +244,9 @@ public class SkiaCheckbox : SkiaToggle
         ViewCheckOn = checkmark;
 
         // Color overrides for Material 3 style
-        ColorFrameOff = Color.FromRgba(73, 69, 79, 255);
-        ColorFrameOn = Color.FromRgba(103, 80, 164, 255);
-        ColorCheckOn = Colors.White;
+        SetStyleDefault(ColorFrameOffProperty, Color.FromRgba(73, 69, 79, 255));
+        SetStyleDefault(ColorFrameOnProperty, Color.FromRgba(103, 80, 164, 255));
+        SetStyleDefault(ColorCheckOnProperty, Colors.White);
     }
     
     protected virtual void CreateWindowsStyleContent()
@@ -294,9 +294,9 @@ public class SkiaCheckbox : SkiaToggle
         ViewCheckOn = checkmark;
         
         // Color overrides for Windows style
-        ColorFrameOff = Color.FromRgba(153, 153, 153, 255);
-        ColorFrameOn = Color.FromRgba(0, 120, 215, 255);
-        ColorCheckOn = Colors.White;
+        SetStyleDefault(ColorFrameOffProperty, Color.FromRgba(153, 153, 153, 255));
+        SetStyleDefault(ColorFrameOnProperty, Color.FromRgba(0, 120, 215, 255));
+        SetStyleDefault(ColorCheckOnProperty, Colors.White);
     }
     
     #endregion

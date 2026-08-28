@@ -117,10 +117,10 @@ public class SkiaSwitch : SkiaToggle
         };
 
         // iOS default colors
-        ColorFrameOff = Color.FromRgba(229, 229, 229, 255);
-        ColorFrameOn = Color.FromRgba(48, 209, 88, 255);
-        ColorThumbOff = Colors.White;
-        ColorThumbOn = Colors.White;
+        SetStyleDefault(ColorFrameOffProperty, Color.FromRgba(229, 229, 229, 255));
+        SetStyleDefault(ColorFrameOnProperty, Color.FromRgba(48, 209, 88, 255));
+        SetStyleDefault(ColorThumbOffProperty, Colors.White);
+        SetStyleDefault(ColorThumbOnProperty, Colors.White);
     }
 
     protected virtual void CreateMaterialStyleContent()
@@ -168,10 +168,10 @@ public class SkiaSwitch : SkiaToggle
         };
 
         // Material design default colors
-        ColorFrameOff = Color.FromRgba(158, 158, 158, 255);
-        ColorFrameOn = Color.FromRgba(33, 150, 243, 255);
-        ColorThumbOff = Colors.White;
-        ColorThumbOn = Colors.White;
+        SetStyleDefault(ColorFrameOffProperty, Color.FromRgba(158, 158, 158, 255));
+        SetStyleDefault(ColorFrameOnProperty, Color.FromRgba(33, 150, 243, 255));
+        SetStyleDefault(ColorThumbOffProperty, Colors.White);
+        SetStyleDefault(ColorThumbOnProperty, Colors.White);
     }
 
     /// <summary>
@@ -229,10 +229,10 @@ public class SkiaSwitch : SkiaToggle
         };
 
         // Material 3 default colors
-        ColorFrameOff = Color.FromRgba(230, 224, 233, 255); // M3 surface container highest
-        ColorFrameOn = Color.FromRgba(103, 80, 164, 255);   // M3 primary
-        ColorThumbOff = MaterialOutlineColor;               // M3 outline
-        ColorThumbOn = Colors.White;                        // M3 on-primary
+        SetStyleDefault(ColorFrameOffProperty, Color.FromRgba(230, 224, 233, 255)); // M3 surface container highest
+        SetStyleDefault(ColorFrameOnProperty, Color.FromRgba(103, 80, 164, 255));   // M3 primary
+        SetStyleDefault(ColorThumbOffProperty, MaterialOutlineColor);               // M3 outline
+        SetStyleDefault(ColorThumbOnProperty, Colors.White);                        // M3 on-primary
     }
 
     protected virtual void CreateWindowsStyleContent()
@@ -269,10 +269,10 @@ public class SkiaSwitch : SkiaToggle
         this.AddSubView(hotspot);
 
         // Windows default colors
-        ColorFrameOff = Color.Parse("#767676");
-        ColorFrameOn = Color.FromRgba(0, 120, 215, 255);
-        ColorThumbOff = Color.Parse("#767676");
-        ColorThumbOn = Colors.White;
+        SetStyleDefault(ColorFrameOffProperty, Color.Parse("#767676"));
+        SetStyleDefault(ColorFrameOnProperty, Color.FromRgba(0, 120, 215, 255));
+        SetStyleDefault(ColorThumbOffProperty, Color.Parse("#767676"));
+        SetStyleDefault(ColorThumbOnProperty, Colors.White);
     }
 
     #endregion

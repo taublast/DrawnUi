@@ -1,4 +1,4 @@
-namespace DrawnUi.Draw;
+﻿namespace DrawnUi.Draw;
 
 /// <summary>
 /// Linear progress bar control with platform-specific styling.
@@ -39,10 +39,10 @@ public class SkiaProgress : SkiaRangeBase
     {
         SetDefaultContentSize(200, 8);
 
-        HorizontalOptions = LayoutOptions.Fill;
-        MinimumWidthRequest = 100;
+        SetStyleDefault(HorizontalOptionsProperty, LayoutOptions.Fill);
+        SetStyleDefault(MinimumWidthRequestProperty, 100d);
         Type = LayoutType.Column;
-        UseCache = SkiaCacheType.ImageDoubleBuffered;
+        SetStyleDefault(UseCacheProperty, SkiaCacheType.ImageDoubleBuffered);
 
         var trackHeight = ResolvedTrackHeight;
         var trackColor = ResolvedTrackColor;
@@ -141,10 +141,10 @@ public class SkiaProgress : SkiaRangeBase
         // iOS progress bar styling - follows Apple HIG specifications
         SetDefaultContentSize(200, 4);
 
-        HorizontalOptions = LayoutOptions.Fill;
-        MinimumWidthRequest = 100;
+        SetStyleDefault(HorizontalOptionsProperty, LayoutOptions.Fill);
+        SetStyleDefault(MinimumWidthRequestProperty, 100d);
         Type = LayoutType.Column;
-        UseCache = SkiaCacheType.ImageDoubleBuffered;
+        SetStyleDefault(UseCacheProperty, SkiaCacheType.ImageDoubleBuffered);
 
         var iosTrackHeight = ResolvedTrackHeight;
         var iosTrackColor = ResolvedTrackColor;
@@ -195,10 +195,10 @@ public class SkiaProgress : SkiaRangeBase
         // Material Design progress bar styling - follows Material Design 3 specifications
         SetDefaultContentSize(200, 4);
 
-        HorizontalOptions = LayoutOptions.Fill;
-        MinimumWidthRequest = 100;
+        SetStyleDefault(HorizontalOptionsProperty, LayoutOptions.Fill);
+        SetStyleDefault(MinimumWidthRequestProperty, 100d);
         Type = LayoutType.Column;
-        UseCache = SkiaCacheType.ImageDoubleBuffered;
+        SetStyleDefault(UseCacheProperty, SkiaCacheType.ImageDoubleBuffered);
 
         var materialTrackHeight = ResolvedTrackHeight;
         var materialTrackColor = ResolvedTrackColor;
@@ -252,10 +252,10 @@ public class SkiaProgress : SkiaRangeBase
     {
         SetDefaultContentSize(200, 4);
 
-        HorizontalOptions = LayoutOptions.Fill;
-        MinimumWidthRequest = 100;
+        SetStyleDefault(HorizontalOptionsProperty, LayoutOptions.Fill);
+        SetStyleDefault(MinimumWidthRequestProperty, 100d);
         Type = LayoutType.Column;
-        UseCache = SkiaCacheType.ImageDoubleBuffered;
+        SetStyleDefault(UseCacheProperty, SkiaCacheType.ImageDoubleBuffered);
 
         var trackHeight = ResolvedTrackHeight;
         var trackColor = ResolvedTrackColor;
@@ -319,10 +319,10 @@ public class SkiaProgress : SkiaRangeBase
         // Windows Fluent Design progress bar styling
         SetDefaultContentSize(200, 6);
 
-        HorizontalOptions = LayoutOptions.Fill;
-        MinimumWidthRequest = 100;
+        SetStyleDefault(HorizontalOptionsProperty, LayoutOptions.Fill);
+        SetStyleDefault(MinimumWidthRequestProperty, 100d);
         Type = LayoutType.Column;
-        UseCache = SkiaCacheType.ImageDoubleBuffered;
+        SetStyleDefault(UseCacheProperty, SkiaCacheType.ImageDoubleBuffered);
 
         var windowsTrackHeight = ResolvedTrackHeight;
         var windowsTrackColor = ResolvedTrackColor;

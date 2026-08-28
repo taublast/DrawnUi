@@ -157,6 +157,14 @@ namespace DrawnUi.Draw
 
         protected volatile bool isApplyingStyle;
 
+        partial void SetValueFromStyleDefault(BindableProperty property, object value, ref bool handled)
+        {
+            isApplyingStyle = true;
+            SetValue(property, value);
+            isApplyingStyle = false;
+            handled = true;
+        }
+
         // Tracks which properties were set explicitly so style application skips them.
         protected void TrackExplicitPropertyChange(string propertyName)
         {

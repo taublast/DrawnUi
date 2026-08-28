@@ -76,18 +76,21 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
             this.Observe(this, OnButtonPropertyChanged);
 
             // Set up gesture handling with cleaner pattern
-            OnGestures = (parameters, info) =>
+            if (OnGestures == null)
             {
-                if (parameters.Type == TouchActionResult.Down && IsInsideTapRegion(parameters))
+                OnGestures = (parameters, info) =>
                 {
-                    IsPressed = true;
-                    return this;
-                }
+                    if (parameters.Type == TouchActionResult.Down && IsInsideTapRegion(parameters))
+                    {
+                        IsPressed = true;
+                        return this;
+                    }
 
-                IsPressed = false;
+                    IsPressed = false;
 
-                return null;
-            };
+                    return null;
+                };
+            }
 
             ApplyProperties();
         }
@@ -193,7 +196,6 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
 
         // Store the initial values
         InitialBackgroundColor = frame.BackgroundColor;
-        TextColor = Colors.White;
 
         MainWrapper = wrapper;
         MainFrame = frame;
@@ -250,7 +252,6 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
 
         // Store the initial values
         InitialBackgroundColor = frame.BackgroundColor;
-        TextColor = Colors.White;
 
         MainWrapper = wrapper;
         MainFrame = frame;
@@ -297,7 +298,6 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
 
         // Store the initial values
         InitialBackgroundColor = frame.BackgroundColor;
-        TextColor = Colors.White;
 
         MainWrapper = wrapper;
         MainFrame = frame;
@@ -352,7 +352,6 @@ public partial class SkiaButton : SkiaLayout, ISkiaGestureListener
 
         // Store the initial values
         InitialBackgroundColor = UseBackGroundColor;
-        TextColor = Colors.White;
 
         MainWrapper = wrapper;
         MainFrame = frame;

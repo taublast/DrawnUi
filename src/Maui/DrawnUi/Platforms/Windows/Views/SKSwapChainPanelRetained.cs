@@ -11,7 +11,7 @@ namespace DrawnUi.Views
     /// <summary>
     /// SwapChain panel with retained surface rendering for improved performance
     /// </summary>
-    public class SKSwapChainPanelRetained : AngleSwapChainPanel, IDisposable //AngleAcceleratedView
+    public class SKSwapChainPanelRetained : DrawnSwapChainPanel, IDisposable
     {
         public Guid Uid = Guid.NewGuid();
 
@@ -28,6 +28,7 @@ namespace DrawnUi.Views
         private readonly object _surfaceLock = new();
 
         public SKSize CanvasSize => _lastSize;
+
 
         public GRContext GRContext => _context;
 

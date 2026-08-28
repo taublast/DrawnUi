@@ -91,7 +91,8 @@ public partial class SkiaLayout
             var currentGridWidth = GridStructureMeasured.GridWidth();
             var availableContentWidth = constraints.Width;
 
-            if (currentGridWidth < availableContentWidth)
+            // infinite constraint (grid inside a scroll on that axis): nothing to stretch to
+            if (double.IsFinite(availableContentWidth) && currentGridWidth < availableContentWidth)
             {
                 var extraSpace = availableContentWidth - currentGridWidth;
                 // Add the extra space to the last column
@@ -107,7 +108,7 @@ public partial class SkiaLayout
             var currentGridHeight = GridStructureMeasured.GridHeight();
             var availableContentHeight = constraints.Height;
 
-            if (currentGridHeight < availableContentHeight)
+            if (double.IsFinite(availableContentHeight) && currentGridHeight < availableContentHeight)
             {
                 var extraSpace = availableContentHeight - currentGridHeight;
                 // Add the extra space to the last row
@@ -115,6 +116,11 @@ public partial class SkiaLayout
                 GridStructureMeasured.Rows[lastRowIndex].Size += extraSpace;
             }
         }
+
+        // Tracks are final only now (spans, minimums, star decompression, last-track stretch all happened
+        // after the children were first measured). Measure every child at its final cell so its internal
+        // layout matches the box it is arranged in.
+        GridStructureMeasured.RemeasureChildrenAtFinalCells();
 
         var maxHeight = 0.0f;
         var maxWidth = 0.0f;
