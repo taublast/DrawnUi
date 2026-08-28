@@ -51,32 +51,21 @@ Supported hosts:
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
 
-## What's New 1.10.5.16
- 
- * Fixed Windows builds failing with `MSB3030: Could not copy ... DrawnUi.Maui\Platforms\Windows\Natives\libEGL.dll` on 1.10.5.15: Windows ANGLE natives are now delivered as build items instead of a raw `Copy` into the output directory, so they reach the MSIX payload as well as unpackaged output, for both a project reference and a nuget reference.
+## What's New 1.10.5.19
+  * Layout engine consistency sweep: a control's internal layout is now always computed for the box it is actually arranged in. `Arrange` re-measures on a Fill axis when the final box differs from the measured-for constraint (MAUI `ArrangeOverride(finalSize)` parity), so centered rows inside grids/stacks, wrapping text and nested layouts no longer render for a stale width.
+  * Grid: children are measured once more at their final cell after spans, minimums, star decompression and the last-track stretch; a Fill child in an `Auto` track can no longer inflate the track past the grid (wrapping labels, scrolls); no infinite stretch when the grid sits inside a scroll.
+  * Column/Row: second measure pass keeps the main-axis constraint; `Split>1` on non-templated columns fixed (all columns drew at x=0); templated `Split` slot advance fixed for Center/End cells; templated draw rect no longer double-aligns Center/End cells or draws Fill-Y cells `float.MaxValue` tall inside a scroll; main-axis `Center` clamps to the child's own size; a Fill child on an unbounded axis is auto-sized instead of blowing the stack; auto-sized stacks holding only cross-axis Fill children no longer collapse to 0; templated main-axis Fill cells are auto-sized (MAUI StackLayout semantics).
+  * Wrap: a Fill-X child shares its row again (flex-fill), Center/End children stay in flow.
+  * Fill layouts measured on an unbounded axis report their content size instead of infinity; `MaximumWidthRequest`/`MaximumHeightRequest` are honored at arrange as well as measure.
+  * Styled controls (`SkiaSlider`, `SkiaProgress`, `SkiaSwitch`, `SkiaCheckbox`, `SkiaRadioButton`, `SkiaButton`, `RefreshIndicator`) no longer override user-set properties when their look is built lazily: `HorizontalOptions`, `UseCache`, colors, `SliderHeight`, `OnGestures`... set by you always win (`SetStyleDefault` for control authors).
+  * Windows: accelerated `Canvas` under an animated XAML scale transform (popup zoom-in, `ScaleTo`) rendered a 2x zoomed crop for the animated frames. DrawnUi now owns the swap-chain panel (`DrawnSwapChainPanel`, forked from SkiaSharp's `AngleSwapChainPanel`): the GL surface is sized by the real DPI and only recreated on a real DPI change, never on transient composition-scale changes.
+
 
  ### Previously
 
- * New `SkiaShaderCarousel` comes to lib, a subclassed `SkiaCarousel` ready to use your transition shader instead of standart swiping animation. - enjoy [sample in web fiddle](https://fiddle.drawnui.net/f/Mo9zx4HR)!
- * Fixed cells adapter starving the pool after a same-frame `Clear()`+`AddRange()` of a templated ItemsSource.
- * Fixed `RefreshIndicator` sometimes never showing again after the first refresh.
- * Fixed `Canvas` staying blank forever on Android when created hidden/offscreen. A pre-draw listener now re-checks visibility (throttled, only while hidden) — visible canvases pay a single bool check per frame.
-
-* Fix text alignement dropping shadow
-* Fixed templated `SkiaCarousel` with `RecyclingTemplate.Disabled` coming up blank: the cell pool was one short of what a full initialization rents at once.
-*  Fixed `SkiaImageManager` cache keys now slash-agnostic on all platforms.
-* Fixed effect input snapshot taken with canvas coordinates out of a cache surface when the parent cached.
-* Docs: the standard shader uniforms (`iResolution`, `iImageResolution`, `iTime`, `iOffset`, `iMouse`) are **mandatory** in every `.sksl`, even when unused. The engine writes all of them every frame and writing one the compiled shader does not declare throws, aborting shader creation so the effect silently renders nothing.
-*  Hotfix for smoother rendering loop frames sync
-*  Hotfix for templated layouts which were cached (BindableLayout-like), were not invalidated when applying staged structure changes
-* Fixed SkiaCarousel changing selected index in the middle of animating.
-* Fix children clipping in viewport when children had effects. `ClipContentPath` is now in base.
-* Fix FPS metering for capped scenarions.
-* Fixed Split=1 on a grid without ColumnDefinitions.
-* Target fps now allows floats instead of integers for more fluent animations, resulting in smoother scrolling etc.
-* Scrolling ending jagging removed on density < 1.5 devices.
-* SkiaLayout Wrap fix for auto-sized children, other layout fixes
+ * Fixed Windows builds failing with `MSB3030: Could not copy ... DrawnUi.Maui\Platforms\Windows\Natives\libEGL.dll` on 1.10.5.15: Windows ANGLE natives are now delivered as build items instead of a raw `Copy` into the output directory, so they reach the MSIX payload as well as unpackaged output, for both a project reference and a nuget reference.
  
+* 
 ---
 MIT | Free to use and customize
 
