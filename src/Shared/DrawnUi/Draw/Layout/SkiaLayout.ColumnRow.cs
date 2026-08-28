@@ -1,4 +1,4 @@
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace DrawnUi.Draw
 {
@@ -1694,8 +1694,24 @@ else
                 ScaledSize measured;
                 if (needRemeasure)
                 {
-                    measured = MeasureChild(secondPass.Child, secondPass.Cell.Area.Width,
-                        secondPass.Cell.Area.Height, secondPass.Scale);
+                    // Only the PERPENDICULAR constraint changed (final stack width/height). The main-axis
+                    // constraint must stay what the first pass used: the layout rect edge, possibly infinite
+                    // (content of a scroll). AdjustSecondPassCell clamps an infinite Area to the final stack
+                    // extent for ARRANGE purposes; using that as a MEASURE constraint hands a Start/Center
+                    // child the whole stack height (sum of all children) — any max/ratio-based sizing inside
+                    // (LockRatio, Fill descendants) then consumes it and the child balloons to the stack size.
+                    var remeasureWidth = secondPass.Cell.Area.Width;
+                    var remeasureHeight = secondPass.Cell.Area.Height;
+                    if (Type == LayoutType.Column && !secondPass.Child.NeedFillY)
+                    {
+                        remeasureHeight = rectForChildrenPixels.Bottom - secondPass.Cell.Area.Top;
+                    }
+                    else if (Type == LayoutType.Row && !secondPass.Child.NeedFillX)
+                    {
+                        remeasureWidth = rectForChildrenPixels.Right - secondPass.Cell.Area.Left;
+                    }
+
+                    measured = MeasureChild(secondPass.Child, remeasureWidth, remeasureHeight, secondPass.Scale);
                     secondPass.Cell.Measured = measured;
                 }
                 else
