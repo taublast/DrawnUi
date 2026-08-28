@@ -5,7 +5,7 @@ using Windows.Foundation;
 
 namespace DrawnUi.Draw;
 {
-	public class SKSwapChainPanel : AngleSwapChainPanel
+	public class SKSwapChainPanel : DrawnSwapChainPanel
 {
     private const SKColorType colorType = SKColorType.Rgba8888;
     private const GRSurfaceOrigin surfaceOrigin = GRSurfaceOrigin.BottomLeft;
