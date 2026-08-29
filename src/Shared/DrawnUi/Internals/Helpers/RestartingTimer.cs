@@ -1,34 +1,25 @@
-﻿namespace DrawnUi.Models;
+namespace DrawnUi.Models;
 
-public class RestartingTimer<T> //where T:class 
+/// <summary>
+/// A one-shot timer that can be postponed with Kick(). Kicking only moves the deadline,
+/// it never cancels the pending wait, so kicking at gesture rate costs nothing.
+/// </summary>
+public class RestartingTimer<T>
 {
     public bool IsRunning { get; protected set; }
 
     public T Context { get; protected set; }
-    public void Kick(T param)
-    {
-        if (IsRunning)
-        {
-            Restart(param);
-        }
-        else
-        {
-            Start(param);
-        }
-    }
 
     private readonly TimeSpan timespan;
-
     private readonly Action<T> callback;
-
     private CancellationTokenSource cancellation;
+    private long dueAtMs;
+    private int running;
 
-    public RestartingTimer(uint ms, Action<T> callback)
+    public RestartingTimer(uint ms, Action<T> callback) : this(TimeSpan.FromMilliseconds(ms), callback)
     {
-        this.timespan = TimeSpan.FromMilliseconds(ms);
-        this.callback = callback;
-        this.cancellation = new CancellationTokenSource();
     }
+
     public RestartingTimer(TimeSpan timespan, Action<T> callback)
     {
         this.timespan = timespan;
@@ -36,47 +27,62 @@ public class RestartingTimer<T> //where T:class
         this.cancellation = new CancellationTokenSource();
     }
 
-
-
-    public void Restart(T param)
+    /// <summary>
+    /// Starts the timer, or postpones it if already running
+    /// </summary>
+    public void Kick(T param)
     {
-        Stop();
-        Start(param);
-    }
-
-    public void Start(T param)
-    {
-        IsRunning = true;
         Context = param;
+        Volatile.Write(ref this.dueAtMs, Environment.TickCount64 + (long)this.timespan.TotalMilliseconds);
 
-        CancellationTokenSource cts = this.cancellation; // safe copy
-        Tasks.StartDelayed(this.timespan, cts.Token, async () =>
-            {
-                if (cts.IsCancellationRequested) return;
-                this.callback.Invoke(param);
-                Stop();
-                cts.Cancel();
-                IsRunning = false;
-            });
+        if (Interlocked.CompareExchange(ref this.running, 1, 0) == 0)
+        {
+            IsRunning = true;
+            RestartingTimer.Run(Volatile.Read(ref this.cancellation), this.DueAt, this.Ended, () => this.callback?.Invoke(Context));
+        }
     }
+
+    public void Restart(T param) => Kick(param);
+
+    public void Start(T param) => Kick(param);
 
     public void Stop()
     {
+        Volatile.Write(ref this.running, 0);
+        IsRunning = false;
         Interlocked.Exchange(ref this.cancellation, new CancellationTokenSource()).Cancel();
     }
 
+    private long DueAt() => Volatile.Read(ref this.dueAtMs);
+
+    private void Ended(CancellationTokenSource cts)
+    {
+        //do not clear the flag of a loop that Stop() already replaced, it would allow a second loop
+        if (ReferenceEquals(Volatile.Read(ref this.cancellation), cts))
+        {
+            Volatile.Write(ref this.running, 0);
+            IsRunning = false;
+        }
+    }
+
     protected bool disposed;
+
     public void Dispose()
     {
         if (disposed)
             return;
-        disposed = true;
-        cancellation?.Cancel();
-        cancellation?.Dispose();
-    }
 
+        disposed = true;
+        Stop();
+        cancellation?.Dispose();
+        cancellation = null;
+    }
 }
 
+/// <summary>
+/// A one-shot timer that can be postponed with Kick(). Kicking only moves the deadline,
+/// it never cancels the pending wait, so kicking at gesture rate costs nothing.
+/// </summary>
 public class RestartingTimer : IDisposable
 {
     /// <summary>
@@ -84,38 +90,19 @@ public class RestartingTimer : IDisposable
     /// </summary>
     public bool IsRunning { get; protected set; }
 
- 
-    /// <summary>
-    /// Starts the timer if not running or restarts it if already running,
-    /// but only if the timer is active
-    /// </summary>
-    public void Kick()
-    {
-  
-        if (IsRunning)
-        {
-            Restart();
-        }
-        else
-        {
-            Start();
-        }
-    }
-
     private readonly TimeSpan timespan;
     private readonly Action callback;
     private CancellationTokenSource cancellation;
+    private long dueAtMs;
+    private int running;
 
     /// <summary>
     /// Creates a new timer with the specified millisecond delay and callback
     /// </summary>
     /// <param name="ms">Milliseconds to delay before invoking callback</param>
     /// <param name="callback">Action to execute when timer completes</param>
-    public RestartingTimer(uint ms, Action callback)
+    public RestartingTimer(uint ms, Action callback) : this(TimeSpan.FromMilliseconds(ms), callback)
     {
-        this.timespan = TimeSpan.FromMilliseconds(ms);
-        this.callback = callback;
-        this.cancellation = new CancellationTokenSource();
     }
 
     /// <summary>
@@ -131,41 +118,50 @@ public class RestartingTimer : IDisposable
     }
 
     /// <summary>
-    /// Restarts the timer by stopping it and starting it again
+    /// Starts the timer if not running, otherwise postpones it. Safe to call at gesture rate:
+    /// this only moves the deadline, nothing is cancelled and nothing is allocated.
     /// </summary>
-    public void Restart()
+    public void Kick()
     {
-        Stop();
-        Start();
+        Volatile.Write(ref this.dueAtMs, Environment.TickCount64 + (long)this.timespan.TotalMilliseconds);
+
+        if (Interlocked.CompareExchange(ref this.running, 1, 0) == 0)
+        {
+            IsRunning = true;
+            Run(Volatile.Read(ref this.cancellation), this.DueAt, this.Ended, this.callback);
+        }
     }
+
+    /// <summary>
+    /// Postpones the timer, starting it if needed
+    /// </summary>
+    public void Restart() => Kick();
 
     /// <summary>
     /// Starts the timer
     /// </summary>
-    protected void Start()
-    {
-        IsRunning = true;
-        CancellationTokenSource cts = this.cancellation; // safe copy
-        Tasks.StartDelayed(this.timespan, cts.Token, async () =>
-        {
-            if (cts.IsCancellationRequested) return;
-            this.callback.Invoke();
-            IsRunning = false;
-        });
-    }
+    protected void Start() => Kick();
 
     /// <summary>
     /// Stops the timer
     /// </summary>
     public void Stop()
     {
-        var oldCts = Interlocked.Exchange(ref this.cancellation, new CancellationTokenSource());
-        if (oldCts != null && !oldCts.IsCancellationRequested)
-        {
-            oldCts.Cancel();
-            oldCts.Dispose();
-        }
+        Volatile.Write(ref this.running, 0);
         IsRunning = false;
+        Interlocked.Exchange(ref this.cancellation, new CancellationTokenSource()).Cancel();
+    }
+
+    private long DueAt() => Volatile.Read(ref this.dueAtMs);
+
+    private void Ended(CancellationTokenSource cts)
+    {
+        //do not clear the flag of a loop that Stop() already replaced, it would allow a second loop
+        if (ReferenceEquals(Volatile.Read(ref this.cancellation), cts))
+        {
+            Volatile.Write(ref this.running, 0);
+            IsRunning = false;
+        }
     }
 
     protected bool disposed;
@@ -182,5 +178,44 @@ public class RestartingTimer : IDisposable
         Stop();
         cancellation?.Dispose();
         cancellation = null;
+    }
+
+    /// <summary>
+    /// Waits until the deadline stops moving, then fires. Shared by both timer flavors.
+    /// </summary>
+    internal static async void Run(CancellationTokenSource cts, Func<long> dueAt, Action<CancellationTokenSource> ended, Action fire)
+    {
+        var invoke = false;
+        try
+        {
+            while (true)
+            {
+                //a Kick landing in the sub-ms window between this check and Ended() is lost and the
+                //callback fires one cycle early, which is fine for inactivity/debounce use
+                var wait = dueAt() - Environment.TickCount64;
+                if (wait <= 0)
+                {
+                    invoke = !cts.IsCancellationRequested;
+                    break;
+                }
+
+                await Task.Delay((int)Math.Min(wait, int.MaxValue), cts.Token).ConfigureAwait(false);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (ObjectDisposedException)
+        {
+        }
+        finally
+        {
+            ended(cts);
+        }
+
+        if (invoke)
+        {
+            fire?.Invoke();
+        }
     }
 }
