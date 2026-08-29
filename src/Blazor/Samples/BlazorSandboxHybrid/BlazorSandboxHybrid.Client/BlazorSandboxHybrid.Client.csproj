@@ -17,9 +17,4 @@
     <ProjectReference Include="..\..\..\DrawnUi.Wasm\DrawnUi.Blazor.Wasm.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="..\..\BlazorSandbox\wwwroot\fonts\OpenSans-Regular.ttf" Link="wwwroot\fonts\OpenSans-Regular.ttf" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="..\..\BlazorSandbox\wwwroot\fonts\OpenSans-Semibold.ttf" Link="wwwroot\fonts\OpenSans-Semibold.ttf" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
-
 </Project>

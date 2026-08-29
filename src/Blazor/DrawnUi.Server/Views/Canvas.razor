@@ -25,6 +25,7 @@ else
           <img @ref="_imageElement"
               src="@_imageSource"
               alt="@Alt"
+              draggable="false"
               width="@_renderedWidth"
               height="@_renderedHeight"
               style="@ResolvedImageStyle"
@@ -711,6 +712,12 @@ else
         var resolvedStyle = string.IsNullOrWhiteSpace(style)
             ? "display:block; max-width:100%;"
             : style.Trim();
+
+        // Native image drag / touch panning take over the pointer (pointercancel) and swallow taps.
+        if (!resolvedStyle.Contains("touch-action:", StringComparison.OrdinalIgnoreCase))
+        {
+            resolvedStyle = $"{resolvedStyle.TrimEnd(';')}; touch-action:none; user-select:none; -webkit-user-drag:none;";
+        }
 
         if (resolvedStyle.Contains("height:", StringComparison.OrdinalIgnoreCase))
         {

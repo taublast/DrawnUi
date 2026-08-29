@@ -142,3 +142,11 @@ Google indexes a Blazor WASM page badly (or "Oops" fails in GSC Request Indexing
 2. **robots.txt blocks payload**: `Disallow: /_framework/`, `/_content/`, `decode.js`; explicitly `Allow:` favicon paths under `_content` (longest-match wins). Bots then see splash + SEO footer instantly — deterministic, no crawl budget burn. The old "never block CSS/JS" guidance targets pages whose CONTENT needs JS; here content is deliberately static.
 3. **Favicon for Google Search**: needs >=48x48 (32x32 = generic globe icon in results). Ship 96x96 PNG (`<link rel="icon" sizes="96x96">`) + root `/favicon.ico` (ICO may be a PNG-embedded container).
 4. **Embedded-iframe case**: a post/page embedding a WASM sample iframe fails indexing the SAME way — block the sample's `_framework` in the robots.txt of the IFRAME'S ORIGIN domain root (robots.txt works only at domain root; a project-path robots.txt is ignored; for GitHub Pages project sites the override lives in the USER-site repo, which beats a Jekyll theme's generated robots.txt).
+
+## Blazor Server `Canvas` (image frames) — taps swallowed by native drag (2026-08-29)
+
+Server-side `DrawnUi.Blazor.Server` `Canvas` is an `<img>` with `@onpointerdown/@onpointerup`. Symptom: drawn buttons ignore real-mouse clicks (Playwright `click` works — zero movement). Cause: ≥~5px pointer movement between down and up starts native image drag → `dragstart` + `pointercancel`, `pointerup` never fires, tap lost; on touch the same happens via page panning. Fixed in lib: `draggable="false"` + `touch-action:none; user-select:none; -webkit-user-drag:none;` on the img (`EnsureResponsiveImageStyle`). Diagnose by listening for `dragstart`/`pointercancel` on the img.
+
+## Blazor Server `Canvas` (image frames) — taps swallowed by native drag (2026-08-29)
+
+Server-side `DrawnUi.Blazor.Server` `Canvas` is an `<img>` with `@onpointerdown/@onpointerup`. Symptom: drawn buttons ignore real-mouse clicks (Playwright `click` works — zero movement). Cause: ≥~5px pointer movement between down and up starts native image drag → `dragstart` + `pointercancel`, `pointerup` never fires, tap lost; on touch the same happens via page panning. Fixed in lib: `draggable="false"` + `touch-action:none; user-select:none; -webkit-user-drag:none;` on the img (`EnsureResponsiveImageStyle`). Diagnose by listening for `dragstart`/`pointercancel` on the img.
