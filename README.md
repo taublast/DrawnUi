@@ -53,7 +53,15 @@ Supported hosts:
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
 
-## What's New 1.10.6.1
+## What's New 1.10.6.4
+
+  * `SkiaEditor` implemented `IsSpellCheckEnabled` property
+  * Fix `SkiaSvg` source to accept Unicode strings.
+  * `SkiaEditor` implemented `IsSpellCheckEnabled` property
+  * Updated AI skills, docs, [fiddle](https://fiddle.drawnui.net)
+
+ ### Previously
+
   * Layout engine consistency sweep: a control's internal layout is now always computed for the box it is actually arranged in. `Arrange` re-measures on a Fill axis when the final box differs from the measured-for constraint (MAUI `ArrangeOverride(finalSize)` parity), so centered rows inside grids/stacks, wrapping text and nested layouts no longer render for a stale width.
   * Grid: children are measured once more at their final cell after spans, minimums, star decompression and the last-track stretch; a Fill child in an `Auto` track can no longer inflate the track past the grid (wrapping labels, scrolls); no infinite stretch when the grid sits inside a scroll.
   * Column/Row: second measure pass keeps the main-axis constraint; `Split>1` on non-templated columns fixed (all columns drew at x=0); templated `Split` slot advance fixed for Center/End cells; templated draw rect no longer double-aligns Center/End cells or draws Fill-Y cells `float.MaxValue` tall inside a scroll; main-axis `Center` clamps to the child's own size; a Fill child on an unbounded axis is auto-sized instead of blowing the stack; auto-sized stacks holding only cross-axis Fill children no longer collapse to 0; templated main-axis Fill cells are auto-sized (MAUI StackLayout semantics).
@@ -61,10 +69,6 @@ Supported hosts:
   * Fill layouts measured on an unbounded axis report their content size instead of infinity; `MaximumWidthRequest`/`MaximumHeightRequest` are honored at arrange as well as measure.
   * Styled controls (`SkiaSlider`, `SkiaProgress`, `SkiaSwitch`, `SkiaCheckbox`, `SkiaRadioButton`, `SkiaButton`, `RefreshIndicator`) no longer override user-set properties when their look is built lazily: `HorizontalOptions`, `UseCache`, colors, `SliderHeight`, `OnGestures`... set by you always win (`SetStyleDefault` for control authors).
   * Windows: accelerated `Canvas` under an animated XAML scale transform (popup zoom-in, `ScaleTo`) rendered a 2x zoomed crop for the animated frames. DrawnUi now owns the swap-chain panel (`DrawnSwapChainPanel`, forked from SkiaSharp's `AngleSwapChainPanel`): the GL surface is sized by the real DPI and only recreated on a real DPI change, never on transient composition-scale changes.
-
-
- ### Previously
-
  * Fixed Windows builds failing with `MSB3030: Could not copy ... DrawnUi.Maui\Platforms\Windows\Natives\libEGL.dll` on 1.10.5.15: Windows ANGLE natives are now delivered as build items instead of a raw `Copy` into the output directory, so they reach the MSIX payload as well as unpackaged output, for both a project reference and a nuget reference.
  
 * 

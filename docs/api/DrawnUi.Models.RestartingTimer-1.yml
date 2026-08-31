@@ -29,10 +29,15 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RestartingTimer
     path: ../src/Shared/DrawnUi/Internals/Helpers/RestartingTimer.cs
-    startLine: 2
+    startLine: 6
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Models
+  summary: >-
+    A one-shot timer that can be postponed with Kick(). Kicking only moves the deadline,
+
+    it never cancels the pending wait, so kicking at gesture rate costs nothing.
+  example: []
   syntax:
     content: public class RestartingTimer<T>
     typeParameters:
@@ -71,7 +76,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsRunning
     path: ../src/Shared/DrawnUi/Internals/Helpers/RestartingTimer.cs
-    startLine: 4
+    startLine: 8
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Models
@@ -102,7 +107,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Context
     path: ../src/Shared/DrawnUi/Internals/Helpers/RestartingTimer.cs
-    startLine: 6
+    startLine: 10
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Models
@@ -115,37 +120,6 @@ items:
   overload: DrawnUi.Models.RestartingTimer`1.Context*
   nameWithType.vb: RestartingTimer(Of T).Context
   fullName.vb: DrawnUi.Models.RestartingTimer(Of T).Context
-- uid: DrawnUi.Models.RestartingTimer`1.Kick(`0)
-  commentId: M:DrawnUi.Models.RestartingTimer`1.Kick(`0)
-  id: Kick(`0)
-  parent: DrawnUi.Models.RestartingTimer`1
-  langs:
-  - csharp
-  - vb
-  name: Kick(T)
-  nameWithType: RestartingTimer<T>.Kick(T)
-  fullName: DrawnUi.Models.RestartingTimer<T>.Kick(T)
-  type: Method
-  source:
-    remote:
-      path: src/Shared/DrawnUi/Internals/Helpers/RestartingTimer.cs
-      branch: Cells
-      repo: https://github.com/DrawnUi/DrawnUi.Net.git
-    id: Kick
-    path: ../src/Shared/DrawnUi/Internals/Helpers/RestartingTimer.cs
-    startLine: 7
-  assemblies:
-  - DrawnUi.Maui
-  namespace: DrawnUi.Models
-  syntax:
-    content: public void Kick(T param)
-    parameters:
-    - id: param
-      type: '{T}'
-    content.vb: Public Sub Kick(param As T)
-  overload: DrawnUi.Models.RestartingTimer`1.Kick*
-  nameWithType.vb: RestartingTimer(Of T).Kick(T)
-  fullName.vb: DrawnUi.Models.RestartingTimer(Of T).Kick(T)
 - uid: DrawnUi.Models.RestartingTimer`1.#ctor(System.UInt32,System.Action{`0})
   commentId: M:DrawnUi.Models.RestartingTimer`1.#ctor(System.UInt32,System.Action{`0})
   id: '#ctor(System.UInt32,System.Action{`0})'
@@ -164,7 +138,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: .ctor
     path: ../src/Shared/DrawnUi/Internals/Helpers/RestartingTimer.cs
-    startLine: 25
+    startLine: 18
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Models
@@ -198,7 +172,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: .ctor
     path: ../src/Shared/DrawnUi/Internals/Helpers/RestartingTimer.cs
-    startLine: 31
+    startLine: 22
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Models
@@ -214,6 +188,39 @@ items:
   nameWithType.vb: RestartingTimer(Of T).New(TimeSpan, Action(Of T))
   fullName.vb: DrawnUi.Models.RestartingTimer(Of T).New(System.TimeSpan, System.Action(Of T))
   name.vb: New(TimeSpan, Action(Of T))
+- uid: DrawnUi.Models.RestartingTimer`1.Kick(`0)
+  commentId: M:DrawnUi.Models.RestartingTimer`1.Kick(`0)
+  id: Kick(`0)
+  parent: DrawnUi.Models.RestartingTimer`1
+  langs:
+  - csharp
+  - vb
+  name: Kick(T)
+  nameWithType: RestartingTimer<T>.Kick(T)
+  fullName: DrawnUi.Models.RestartingTimer<T>.Kick(T)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Internals/Helpers/RestartingTimer.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: Kick
+    path: ../src/Shared/DrawnUi/Internals/Helpers/RestartingTimer.cs
+    startLine: 32
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Models
+  summary: Starts the timer, or postpones it if already running
+  example: []
+  syntax:
+    content: public void Kick(T param)
+    parameters:
+    - id: param
+      type: '{T}'
+    content.vb: Public Sub Kick(param As T)
+  overload: DrawnUi.Models.RestartingTimer`1.Kick*
+  nameWithType.vb: RestartingTimer(Of T).Kick(T)
+  fullName.vb: DrawnUi.Models.RestartingTimer(Of T).Kick(T)
 - uid: DrawnUi.Models.RestartingTimer`1.Restart(`0)
   commentId: M:DrawnUi.Models.RestartingTimer`1.Restart(`0)
   id: Restart(`0)
@@ -232,7 +239,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Restart
     path: ../src/Shared/DrawnUi/Internals/Helpers/RestartingTimer.cs
-    startLine: 40
+    startLine: 44
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Models
@@ -294,7 +301,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Stop
     path: ../src/Shared/DrawnUi/Internals/Helpers/RestartingTimer.cs
-    startLine: 62
+    startLine: 48
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Models
@@ -351,7 +358,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Dispose
     path: ../src/Shared/DrawnUi/Internals/Helpers/RestartingTimer.cs
-    startLine: 68
+    startLine: 69
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Models
@@ -748,14 +755,6 @@ references:
   name: T
   nameWithType: T
   fullName: T
-- uid: DrawnUi.Models.RestartingTimer`1.Kick*
-  commentId: Overload:DrawnUi.Models.RestartingTimer`1.Kick
-  href: DrawnUi.Models.RestartingTimer-1.html#DrawnUi_Models_RestartingTimer_1_Kick__0_
-  name: Kick
-  nameWithType: RestartingTimer<T>.Kick
-  fullName: DrawnUi.Models.RestartingTimer<T>.Kick
-  nameWithType.vb: RestartingTimer(Of T).Kick
-  fullName.vb: DrawnUi.Models.RestartingTimer(Of T).Kick
 - uid: DrawnUi.Models.RestartingTimer`1.#ctor*
   commentId: Overload:DrawnUi.Models.RestartingTimer`1.#ctor
   href: DrawnUi.Models.RestartingTimer-1.html#DrawnUi_Models_RestartingTimer_1__ctor_System_UInt32_System_Action__0__
@@ -841,6 +840,14 @@ references:
   name: TimeSpan
   nameWithType: TimeSpan
   fullName: System.TimeSpan
+- uid: DrawnUi.Models.RestartingTimer`1.Kick*
+  commentId: Overload:DrawnUi.Models.RestartingTimer`1.Kick
+  href: DrawnUi.Models.RestartingTimer-1.html#DrawnUi_Models_RestartingTimer_1_Kick__0_
+  name: Kick
+  nameWithType: RestartingTimer<T>.Kick
+  fullName: DrawnUi.Models.RestartingTimer<T>.Kick
+  nameWithType.vb: RestartingTimer(Of T).Kick
+  fullName.vb: DrawnUi.Models.RestartingTimer(Of T).Kick
 - uid: DrawnUi.Models.RestartingTimer`1.Restart*
   commentId: Overload:DrawnUi.Models.RestartingTimer`1.Restart
   href: DrawnUi.Models.RestartingTimer-1.html#DrawnUi_Models_RestartingTimer_1_Restart__0_

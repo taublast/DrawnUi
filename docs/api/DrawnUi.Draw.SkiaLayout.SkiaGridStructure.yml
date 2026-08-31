@@ -19,6 +19,7 @@ items:
   - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridHeight
   - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridWidth
   - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Padding
+  - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RemeasureChildrenAtFinalCells
   - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RowDefinitions
   - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RowSpacing
   - DrawnUi.Draw.SkiaLayout.SkiaGridStructure.Rows
@@ -494,6 +495,45 @@ items:
       type: System.Double
     content.vb: Public Function MeasuredGridWidth() As Double
   overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridWidth*
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RemeasureChildrenAtFinalCells
+  commentId: M:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RemeasureChildrenAtFinalCells
+  id: RemeasureChildrenAtFinalCells
+  parent: DrawnUi.Draw.SkiaLayout.SkiaGridStructure
+  langs:
+  - csharp
+  - vb
+  name: RemeasureChildrenAtFinalCells()
+  nameWithType: SkiaLayout.SkiaGridStructure.RemeasureChildrenAtFinalCells()
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RemeasureChildrenAtFinalCells()
+  type: Method
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: RemeasureChildrenAtFinalCells
+    path: ../src/Shared/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
+    startLine: 419
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Final measure pass, run by MeasureGrid once every track has its final size (spans resolved,
+
+    minimums applied, stars decompressed, last track stretched). Every visible child is measured
+
+    at the exact cell it will be arranged in, so its internal layout (centered rows, wrapped text,
+
+    nested structures) matches the arranged box. Children whose cell did not change hit
+
+    SkiaControl.Measure's early-return, so the pass is free for them. A child that grows on an
+
+    Auto track after this re-measure (wrapping text got taller) grows that track.
+  example: []
+  syntax:
+    content: public void RemeasureChildrenAtFinalCells()
+    content.vb: Public Sub RemeasureChildrenAtFinalCells()
+  overload: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RemeasureChildrenAtFinalCells*
 - uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn(System.Int32)
   commentId: M:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn(System.Int32)
   id: LeftEdgeOfColumn(System.Int32)
@@ -512,7 +552,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LeftEdgeOfColumn
     path: ../src/Shared/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-    startLine: 670
+    startLine: 698
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -546,7 +586,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TopEdgeOfRow
     path: ../src/Shared/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-    startLine: 683
+    startLine: 711
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -580,7 +620,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DecompressStarsInternal
     path: ../src/Shared/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-    startLine: 893
+    startLine: 921
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -609,7 +649,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DecompressStars
     path: ../src/Shared/DrawnUi/Draw/Layout/SkiaLayout.Grid.Structure.cs
-    startLine: 922
+    startLine: 950
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1294,6 +1334,12 @@ references:
   name: MeasuredGridWidth
   nameWithType: SkiaLayout.SkiaGridStructure.MeasuredGridWidth
   fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.MeasuredGridWidth
+- uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RemeasureChildrenAtFinalCells*
+  commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RemeasureChildrenAtFinalCells
+  href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure_RemeasureChildrenAtFinalCells
+  name: RemeasureChildrenAtFinalCells
+  nameWithType: SkiaLayout.SkiaGridStructure.RemeasureChildrenAtFinalCells
+  fullName: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.RemeasureChildrenAtFinalCells
 - uid: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn*
   commentId: Overload:DrawnUi.Draw.SkiaLayout.SkiaGridStructure.LeftEdgeOfColumn
   href: DrawnUi.Draw.SkiaLayout.SkiaGridStructure.html#DrawnUi_Draw_SkiaLayout_SkiaGridStructure_LeftEdgeOfColumn_System_Int32_

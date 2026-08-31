@@ -1,4 +1,4 @@
-namespace DrawnUi.Draw;
+﻿namespace DrawnUi.Draw;
 
 public partial class SkiaEditor
 {
@@ -41,6 +41,8 @@ public partial class SkiaEditor
     {
     }
 
+    // No native text input here: keyboard type, password mode and IsSpellCheckEnabled
+    // have no platform counterpart to apply.
     public void ApplyKeyboardType()
     {
     }

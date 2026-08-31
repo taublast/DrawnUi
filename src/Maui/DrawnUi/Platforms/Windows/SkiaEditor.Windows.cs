@@ -1,4 +1,4 @@
-using DrawnUi.Draw;
+﻿using DrawnUi.Draw;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -157,6 +157,8 @@ namespace DrawnUi.Draw
         public void ApplyKeyboardType()
         {
             if (_hiddenTextBox == null) return;
+
+            _hiddenTextBox.IsSpellCheckEnabled = IsSpellCheckEnabled && !IsPassword;
 
             if (IsPassword || KeyboardType == SkiaEditorKeyboard.Default)
             {

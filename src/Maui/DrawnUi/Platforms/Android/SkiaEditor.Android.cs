@@ -46,6 +46,9 @@ namespace DrawnUi.Draw
                     inputType |= InputTypes.TextFlagMultiLine;
             }
 
+            if (!IsSpellCheckEnabled)
+                inputType |= InputTypes.TextFlagNoSuggestions;
+
             Control.InputType = inputType;
         }
 

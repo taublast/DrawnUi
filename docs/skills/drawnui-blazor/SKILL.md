@@ -31,6 +31,7 @@ Pipeline: JS gesture package → `Canvas.OnTouchAction(TouchActionEventArgs)` �
 
 - `GesturesMode`: `Disabled` (no capture), `Enabled` (standard), `Lock`/`SoftLock` (panning controls). Enabling gestures auto-applies `touch-action:none; user-select:none` CSS on the canvas.
 - Touch mapping: Pressed→Down, Moved/Pan*→Panning, Released/Cancelled/Exited→Up, Wheel→Wheel. Multi-touch tracked per pointer id.
+- **Gesture callbacks arrive far slower than frames** (measured 2026-08-30, prod Blazor WASM): pointer moves reach `WithGestures`/`Panning` at roughly **16/s** while the canvas renders a steady **60 fps** — browser pointer coalescing plus the JS→.NET hop. Anything that follows a finger (paddle, drag handle, slider thumb) must NOT be assigned the raw event value, or it visibly steps ~16 times a second. Store the pointer value as a target and chase it in the per-frame animator: `x += (target - x) * Math.Min(1, dt * 22);` — reaches the target in ~3 frames, so it reads as instant and glides between events.
 - For gesture bugs on scaled/transformed controls prefer built-in transform-aware helpers (`HitIsInside()`, `HitBoxAuto`, `IsGestureForChild(...)`, rescaled `args.Event.Location`) over hand-rolled transform math.
 
 ## Rendering modes
