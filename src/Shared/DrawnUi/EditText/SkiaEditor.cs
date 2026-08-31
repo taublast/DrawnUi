@@ -1700,6 +1700,27 @@ namespace DrawnUi.Draw
             set { SetValue(IsPasswordProperty, value); }
         }
 
+        public static readonly BindableProperty IsSpellCheckEnabledProperty = BindableProperty.Create(
+            nameof(IsSpellCheckEnabled),
+            typeof(bool),
+            typeof(SkiaEditor),
+            true,
+            propertyChanged: (b, o, n) => { if (b is SkiaEditor e && e.IsFocused) e.ApplyKeyboardType(); });
+
+        /// <summary>
+        /// Whether the platform spell checker may underline misspelled words and offer
+        /// correction suggestions while typing. Default is <c>true</c>.
+        /// Set to <c>false</c> for fields where suggestions are unwanted (usernames, codes, tags).
+        /// Applied to the hidden native input on MAUI targets (Android, iOS/MacCatalyst, Windows);
+        /// ignored on targets that have no native text input (Blazor, .NET/OpenTK) since there is
+        /// no platform spell checker there. Takes effect on the next focus when changed while unfocused.
+        /// </summary>
+        public bool IsSpellCheckEnabled
+        {
+            get { return (bool)GetValue(IsSpellCheckEnabledProperty); }
+            set { SetValue(IsSpellCheckEnabledProperty, value); }
+        }
+
         public static readonly BindableProperty CommandOnSubmitProperty = BindableProperty.Create(
             nameof(CommandOnSubmit),
             typeof(ICommand),

@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -787,7 +787,9 @@ namespace DrawnUi.Draw
 
         protected virtual bool CreateSvg(string loadedString)
         {
-            byte[] byteArray = Encoding.ASCII.GetBytes(loadedString);
+            // UTF8, not ASCII: svg files routinely carry non-ascii bytes (metadata, entities, text),
+            // and ASCII turns each of them into '?', which can make the whole document fail to parse
+            byte[] byteArray = Encoding.UTF8.GetBytes(loadedString);
             return LoadSvgFromBytes(byteArray);
         }
 

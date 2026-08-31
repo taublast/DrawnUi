@@ -151,7 +151,46 @@ Always use fluent extension methods — never `+=` events or commands wired outs
 | Label text + sender | `.OnTextChanged((lbl, text) => { ... })` |
 | Arbitrary setup | `.Adapt(me => { me.X = ...; })` |
 | Post-build wiring (touching Assign'd refs) | `.Initialize(me => { ... })` |
+| Key pressed | `.OnKeyDown((me, key) => { ... })` |
+| Key released | `.OnKeyUp((me, key) => { ... })` |
 | Paint hook | `.WhenPaint((me, ctx) => { ... })` |
+
+Keyboard: `.OnKeyDown` / `.OnKeyUp` both take `(control, InputKey key)` — `InputKey.ArrowLeft/ArrowRight/ArrowUp/ArrowDown`, `Space`, `Enter`, `KeyD`… Attach them to the ROOT control of the tree, not to the focused child. Verified on the Fiddle WASM build 2026-08-30.
+
+`OnKeyDown` repeats at the OS key-repeat rate — with a delay before the first repeat and gaps between them — so driving a value directly from it produces stepped, laggy movement. For anything held (a game paddle, a camera pan), keep a direction flag instead and move per frame:
+
+```csharp
+var keyDir = 0;
+
+// in the per-frame animator: FPS-independent, no repeat delay
+if (keyDir != 0) targetX = Math.Clamp(targetX + keyDir * speed * dt, min, max);
+
+root.OnKeyDown((me, key) =>
+     {
+         if (key == InputKey.ArrowLeft) keyDir = -1;
+         else if (key == InputKey.ArrowRight) keyDir = 1;
+     })
+    .OnKeyUp((me, key) =>
+     {
+         if (key == InputKey.ArrowLeft && keyDir < 0) keyDir = 0;
+         else if (key == InputKey.ArrowRight && keyDir > 0) keyDir = 0;
+     });
+```
+
+On Blazor the key event is not `preventDefault`ed, so Space also scrolls the hosting page while the canvas has focus.
+
+**`.WhenPaint` draws BEFORE the control paints its own background** (verified 2026-08-30, DrawnUI Fiddle WASM). A control that has `BackgroundColor` set will cover everything the hook drew — silently, no error, blank result. Put the background on a parent (e.g. a `SkiaShape` frame) and attach `.WhenPaint` to a transparent child filling it:
+
+```csharp
+new SkiaShape { CornerRadius = 10, BackgroundColor = Color.Parse("#0B0E14"), WidthRequest = w, HeightRequest = h,
+    Children = new List<SkiaControl>
+    {
+        new SkiaLayer().Fill().WhenPaint((me, ctx) => { /* raw SKCanvas drawing lands on top */ }),
+    }
+}
+```
+
+Hook coordinates: `ctx.Context.Canvas` = raw `SKCanvas`, `ctx.Destination` = the control's rect in device pixels, `ctx.Scale` = DIP→px. Convert local DIP to canvas px with `dest.Left + v * scale`.
 | Self-observe any property | `.ObserveSelf((me, propName) => { ... })` |
 | Raw gesture interception | `.WithGestures((me, args, apply) => { ... })` — return `this` = consumed, `null` = pass; never consume Up unless required |
 

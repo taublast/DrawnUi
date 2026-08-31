@@ -77,7 +77,17 @@ public sealed class HeadlessCanvasHost : IDisposable
             _surface,
             new SKRect(0, 0, _drawable.CanvasSize.Width, _drawable.CanvasSize.Height),
             _frameNanos);
+        // Mark the surface as drawn: DrawnView.OnFinalizeRendering forces IsDirty back to true while
+        // the drawable reports HasDrawn == false, which would make NeedsFrame useless.
+        _drawable.MarkDrawn();
     }
+
+    /// <summary>
+    /// True when something requested a redraw since the last <see cref="RenderFrame"/> (animators,
+    /// <c>Update()</c>, async image arrival). False = the next frame would be pixel-identical; a
+    /// server/streaming host can skip rendering and encoding it.
+    /// </summary>
+    public bool NeedsFrame => Canvas.IsDirty;
 
     /// <summary>Renders <paramref name="count"/> frames, each advancing the clock by <paramref name="advanceMs"/>.</summary>
     public void AdvanceFrames(int count, double advanceMs = 16.0)
@@ -225,6 +235,9 @@ public sealed class HeadlessCanvasHost : IDisposable
     }
 
     /// <summary>Saves the current surface contents to a PNG file (useful for visual diffing).</summary>
+    /// <summary>Snapshot of the current surface (caller disposes). Encode it yourself for streaming.</summary>
+    public SKImage Snapshot() => _surface.Snapshot();
+
     public void SavePng(string filePath)
     {
         using var image = _surface.Snapshot();
@@ -275,6 +288,9 @@ public sealed class HeadlessCanvasHost : IDisposable
         }
 
         public void SignalFrame(long nanoseconds) => FrameTime = nanoseconds;
+
+        /// <summary>External-surface renders bypass <see cref="Update"/>; the host calls this after each frame.</summary>
+        public void MarkDrawn() => HasDrawn = true;
 
         public void PrepareFrame(long nanos = 0) =>
             FrameTime = nanos > 0 ? nanos : GetFrameTimestampNanos();

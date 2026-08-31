@@ -1,4 +1,4 @@
-using Microsoft.JSInterop;
+﻿using Microsoft.JSInterop;
 
 namespace DrawnUi.Draw;
 
@@ -44,6 +44,8 @@ public partial class SkiaEditor : SkiaShape, ISkiaGestureListener
         _stubSelectionStop = stop;
     }
 
+    // No native text input here: keyboard type, password mode and IsSpellCheckEnabled
+    // have no platform counterpart to apply.
     public void ApplyKeyboardType() { }
 
     public void DisposePlatform()

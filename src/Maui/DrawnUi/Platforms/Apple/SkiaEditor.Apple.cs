@@ -1,4 +1,4 @@
-using CoreGraphics;
+﻿using CoreGraphics;
 using DrawnUi.Draw;
 using Foundation;
 using UIKit;
@@ -188,6 +188,10 @@ namespace DrawnUi.Draw
             Control.AutocorrectionType = IsPassword
                 ? UITextAutocorrectionType.No
                 : UITextAutocorrectionType.Default;
+
+            Control.SpellCheckingType = IsPassword || !IsSpellCheckEnabled
+                ? UITextSpellCheckingType.No
+                : UITextSpellCheckingType.Default;
 
             Control.KeyboardType = IsPassword ? UIKeyboardType.Default : KeyboardType switch
             {
