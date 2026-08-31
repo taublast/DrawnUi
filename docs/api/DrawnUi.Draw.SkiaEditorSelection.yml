@@ -230,6 +230,7 @@ items:
   - DrawnUi.Draw.SkiaControl.CanDraw
   - DrawnUi.Draw.SkiaControl.SkipRendering
   - DrawnUi.Draw.SkiaControl.DefaultContentCreated
+  - DrawnUi.Draw.SkiaControl.SetStyleDefault(Microsoft.Maui.Controls.BindableProperty,System.Object)
   - DrawnUi.Draw.SkiaControl.CreateDefaultContent
   - DrawnUi.Draw.SkiaControl.SetDefaultMinimumContentSize(System.Double,System.Double)
   - DrawnUi.Draw.SkiaControl.SetDefaultContentSize(System.Double,System.Double)
@@ -4836,6 +4837,49 @@ references:
   name: DefaultContentCreated
   nameWithType: SkiaControl.DefaultContentCreated
   fullName: DrawnUi.Draw.SkiaControl.DefaultContentCreated
+- uid: DrawnUi.Draw.SkiaControl.SetStyleDefault(Microsoft.Maui.Controls.BindableProperty,System.Object)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetStyleDefault(Microsoft.Maui.Controls.BindableProperty,System.Object)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetStyleDefault_Microsoft_Maui_Controls_BindableProperty_System_Object_
+  name: SetStyleDefault(BindableProperty, object)
+  nameWithType: SkiaControl.SetStyleDefault(BindableProperty, object)
+  fullName: DrawnUi.Draw.SkiaControl.SetStyleDefault(Microsoft.Maui.Controls.BindableProperty, object)
+  nameWithType.vb: SkiaControl.SetStyleDefault(BindableProperty, Object)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SetStyleDefault(Microsoft.Maui.Controls.BindableProperty, Object)
+  name.vb: SetStyleDefault(BindableProperty, Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SetStyleDefault(Microsoft.Maui.Controls.BindableProperty,System.Object)
+    name: SetStyleDefault
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetStyleDefault_Microsoft_Maui_Controls_BindableProperty_System_Object_
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SetStyleDefault(Microsoft.Maui.Controls.BindableProperty,System.Object)
+    name: SetStyleDefault
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetStyleDefault_Microsoft_Maui_Controls_BindableProperty_System_Object_
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.CreateDefaultContent
   commentId: M:DrawnUi.Draw.SkiaControl.CreateDefaultContent
   parent: DrawnUi.Draw.SkiaControl

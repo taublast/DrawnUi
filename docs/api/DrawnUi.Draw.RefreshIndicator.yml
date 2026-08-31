@@ -12,7 +12,7 @@ items:
   - DrawnUi.Draw.RefreshIndicator.OrientationProperty
   - DrawnUi.Draw.RefreshIndicator.SetAnimationState(System.Boolean)
   - DrawnUi.Draw.RefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double,System.Double)
-  - DrawnUi.Draw.RefreshIndicator.UpdateOrientation
+  - DrawnUi.Draw.RefreshIndicator.UpdateOrientation(Microsoft.Maui.ScrollOrientation)
   - DrawnUi.Draw.RefreshIndicator.VisibleRatio
   langs:
   - csharp
@@ -472,6 +472,7 @@ items:
   - DrawnUi.Draw.SkiaControl.CanDraw
   - DrawnUi.Draw.SkiaControl.SkipRendering
   - DrawnUi.Draw.SkiaControl.DefaultContentCreated
+  - DrawnUi.Draw.SkiaControl.SetStyleDefault(Microsoft.Maui.Controls.BindableProperty,System.Object)
   - DrawnUi.Draw.SkiaControl.CreateDefaultContent
   - DrawnUi.Draw.SkiaControl.SetDefaultMinimumContentSize(System.Double,System.Double)
   - DrawnUi.Draw.SkiaControl.SetDefaultContentSize(System.Double,System.Double)
@@ -1327,16 +1328,16 @@ items:
       type: Microsoft.Maui.ScrollOrientation
     content.vb: Public Property Orientation As ScrollOrientation
   overload: DrawnUi.Draw.RefreshIndicator.Orientation*
-- uid: DrawnUi.Draw.RefreshIndicator.UpdateOrientation
-  commentId: M:DrawnUi.Draw.RefreshIndicator.UpdateOrientation
-  id: UpdateOrientation
+- uid: DrawnUi.Draw.RefreshIndicator.UpdateOrientation(Microsoft.Maui.ScrollOrientation)
+  commentId: M:DrawnUi.Draw.RefreshIndicator.UpdateOrientation(Microsoft.Maui.ScrollOrientation)
+  id: UpdateOrientation(Microsoft.Maui.ScrollOrientation)
   parent: DrawnUi.Draw.RefreshIndicator
   langs:
   - csharp
   - vb
-  name: UpdateOrientation()
-  nameWithType: RefreshIndicator.UpdateOrientation()
-  fullName: DrawnUi.Draw.RefreshIndicator.UpdateOrientation()
+  name: UpdateOrientation(ScrollOrientation)
+  nameWithType: RefreshIndicator.UpdateOrientation(ScrollOrientation)
+  fullName: DrawnUi.Draw.RefreshIndicator.UpdateOrientation(Microsoft.Maui.ScrollOrientation)
   type: Method
   source:
     remote:
@@ -1350,8 +1351,11 @@ items:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
   syntax:
-    content: protected virtual void UpdateOrientation()
-    content.vb: Protected Overridable Sub UpdateOrientation()
+    content: protected virtual void UpdateOrientation(ScrollOrientation previous)
+    parameters:
+    - id: previous
+      type: Microsoft.Maui.ScrollOrientation
+    content.vb: Protected Overridable Sub UpdateOrientation(previous As ScrollOrientation)
   overload: DrawnUi.Draw.RefreshIndicator.UpdateOrientation*
 - uid: DrawnUi.Draw.RefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double,System.Double)
   commentId: M:DrawnUi.Draw.RefreshIndicator.SetDragRatio(System.Single,System.Single,System.Double,System.Double)
@@ -1371,7 +1375,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetDragRatio
     path: ../src/Shared/DrawnUi/Controls/PlayFrames/RefreshIndicator.cs
-    startLine: 155
+    startLine: 157
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1414,7 +1418,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetAnimationState
     path: ../src/Shared/DrawnUi/Controls/PlayFrames/RefreshIndicator.cs
-    startLine: 222
+    startLine: 224
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1446,7 +1450,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: VisibleRatio
     path: ../src/Shared/DrawnUi/Controls/PlayFrames/RefreshIndicator.cs
-    startLine: 227
+    startLine: 229
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1475,7 +1479,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnIsRunningChanged
     path: ../src/Shared/DrawnUi/Controls/PlayFrames/RefreshIndicator.cs
-    startLine: 229
+    startLine: 231
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -1507,7 +1511,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsRunning
     path: ../src/Shared/DrawnUi/Controls/PlayFrames/RefreshIndicator.cs
-    startLine: 238
+    startLine: 240
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10186,6 +10190,49 @@ references:
   name: DefaultContentCreated
   nameWithType: SkiaControl.DefaultContentCreated
   fullName: DrawnUi.Draw.SkiaControl.DefaultContentCreated
+- uid: DrawnUi.Draw.SkiaControl.SetStyleDefault(Microsoft.Maui.Controls.BindableProperty,System.Object)
+  commentId: M:DrawnUi.Draw.SkiaControl.SetStyleDefault(Microsoft.Maui.Controls.BindableProperty,System.Object)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetStyleDefault_Microsoft_Maui_Controls_BindableProperty_System_Object_
+  name: SetStyleDefault(BindableProperty, object)
+  nameWithType: SkiaControl.SetStyleDefault(BindableProperty, object)
+  fullName: DrawnUi.Draw.SkiaControl.SetStyleDefault(Microsoft.Maui.Controls.BindableProperty, object)
+  nameWithType.vb: SkiaControl.SetStyleDefault(BindableProperty, Object)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SetStyleDefault(Microsoft.Maui.Controls.BindableProperty, Object)
+  name.vb: SetStyleDefault(BindableProperty, Object)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SetStyleDefault(Microsoft.Maui.Controls.BindableProperty,System.Object)
+    name: SetStyleDefault
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetStyleDefault_Microsoft_Maui_Controls_BindableProperty_System_Object_
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SetStyleDefault(Microsoft.Maui.Controls.BindableProperty,System.Object)
+    name: SetStyleDefault
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SetStyleDefault_Microsoft_Maui_Controls_BindableProperty_System_Object_
+  - name: (
+  - uid: Microsoft.Maui.Controls.BindableProperty
+    name: BindableProperty
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.controls.bindableproperty
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.CreateDefaultContent
   commentId: M:DrawnUi.Draw.SkiaControl.CreateDefaultContent
   parent: DrawnUi.Draw.SkiaControl
@@ -40134,7 +40181,7 @@ references:
   fullName: Microsoft.Maui.ScrollOrientation
 - uid: DrawnUi.Draw.RefreshIndicator.UpdateOrientation*
   commentId: Overload:DrawnUi.Draw.RefreshIndicator.UpdateOrientation
-  href: DrawnUi.Draw.RefreshIndicator.html#DrawnUi_Draw_RefreshIndicator_UpdateOrientation
+  href: DrawnUi.Draw.RefreshIndicator.html#DrawnUi_Draw_RefreshIndicator_UpdateOrientation_Microsoft_Maui_ScrollOrientation_
   name: UpdateOrientation
   nameWithType: RefreshIndicator.UpdateOrientation
   fullName: DrawnUi.Draw.RefreshIndicator.UpdateOrientation

@@ -19,7 +19,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ButtonElevationShadowEffect
     path: ../src/Shared/DrawnUi/Controls/Button/SkiaButton.cs
-    startLine: 367
+    startLine: 366
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
