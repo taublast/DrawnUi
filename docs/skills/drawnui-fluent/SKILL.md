@@ -283,6 +283,32 @@ new SkiaShaderEffect
 - The fluent for the `OnCompilationError` event is named `.OnShaderError(...)` (an instance event hides a same-named extension).
 - SkiaSharp v4 gotcha (fixed in framework): scalar uniforms must be written as `float`, not `float[1]`.
 
+### Inline SkSL: always use a raw string literal
+
+Declare shader source as a **raw string literal** hoisted to its own `const`, never as a verbatim `@"..."` string inlined at the property:
+
+```csharp
+const string brushed = """
+uniform float2 iResolution;
+uniform float2 iOffset;
+
+half4 main(float2 fragCoord)
+{
+    float2 uv = (fragCoord - iOffset) / iResolution.xy;
+    return half4(uv.x, uv.y, 0.0, 1.0);
+}
+""";
+
+// ...
+new SkiaShaderEffect { ShaderCode = brushed, ... }
+```
+
+Three reasons:
+
+- No escaping. A verbatim string needs every `"` doubled; a raw literal takes the SkSL byte for byte.
+- No stray indentation. The raw literal strips the indentation of the closing `"""`, so the SkSL that reaches the compiler is not carrying the C# nesting whitespace on every line (which is what makes reported error columns match the source).
+- **Syntax highlighting for free** in Monaco-based editors (DrawnUI Fiddle, and anything else using Monaco's bundled `csharp` grammar). That tokenizer has a rule for `@"` — a verbatim shader is one flat string colour — but **no rule for `"""`**, so the raw-literal body falls through to ordinary code tokenization: `float`, `return`, `const` colour as keywords, numbers as numbers, `//` as comments. It reads like a shader editor. This is a tokenizer gap, not a feature: a Monaco version that learns raw strings would make it flat again, while everything else above still holds.
+
 ---
 
 ## Bindings (ObserveProperty / ObserveProperties)

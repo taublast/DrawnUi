@@ -11,6 +11,7 @@
         <ApplicationId>com.drawnioui.repro</ApplicationId>
         <ApplicationIdGuid>330e66b0-efc2-4fde-9ac8-074d5c3299b3</ApplicationIdGuid>
         <ApplicationTitle>Repro DrawnUI</ApplicationTitle>
+     
         <OutputType>Exe</OutputType>
         <RootNamespace>Sandbox</RootNamespace>
         <UseMaui>true</UseMaui>
