@@ -27,6 +27,15 @@ Save under `~/.claude/skills/<name>/SKILL.md` (or your agent's skill folder) to 
 - [FAQ](https://drawnui.net/articles/faq.html)
 - [API reference](https://drawnui.net/api/)
 
+## DrawnUI for React
+
+DrawnUI for React (npm `drawnui-react`) is the same engine in TypeScript on CanvasKit (Skia WASM) for the web, composed with React through a custom `react-reconciler`. Same control names and PascalCase API as the .NET version, early prototype.
+
+- [DrawnUI for React overview](https://drawnui.net/articles/react/index.html)
+- [Source](https://github.com/DrawnUi/DrawnUi.React)
+- [Live demo](https://helloreact.drawnui.net)
+- [DrawnUI React skill](https://helloreact.drawnui.net/skills/drawnui-react/SKILL.md): install, startup, composition rules for agents
+
 ## Try it live
 
 - [DrawnUI Fiddle](https://fiddle.drawnui.net/): in-browser C# playground — Roslyn compiles on WebAssembly, renders live on a DrawnUI canvas. AI-drivable, has its own [llms.txt](https://fiddle.drawnui.net/llms.txt).
