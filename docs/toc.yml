@@ -149,6 +149,12 @@
 - name: Sample Apps
   href: articles/sample-apps.md
 
+- name: React
+  href: articles/react/index.md
+  items:
+    - name: DrawnUI for React
+      href: articles/react/index.md
+
 - name: AI Skills
   href: articles/ai-skills.md
 
