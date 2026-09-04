@@ -61,6 +61,42 @@ per process even if used on many controls.
 
 For inline code use `ShaderCode="..."` instead.
 
+### Writing inline SkSL in C#
+
+Put the shader in a **raw string literal**, hoisted to its own `const`, rather
+than a verbatim `@"..."` string inlined at the property:
+
+```csharp
+const string ripple = """
+uniform float2 iResolution;
+uniform float2 iOffset;
+uniform float  iTime;
+
+half4 main(float2 fragCoord)
+{
+    float2 uv = (fragCoord - iOffset) / iResolution.xy;
+    float  w  = sin(length(uv - 0.5) * 40.0 - iTime * 4.0) * 0.5 + 0.5;
+    return half4(w, w, w, 1.0);
+}
+""";
+
+// ...
+new SkiaShaderEffect { ShaderCode = ripple, AutoCreateInputTexture = true }
+```
+
+A verbatim string needs every `"` doubled and carries the surrounding C#
+indentation into the shader source; the raw literal takes the SkSL byte for
+byte and strips the indentation of the closing `"""`, so compiler error columns
+line up with what you wrote.
+
+It also buys syntax highlighting in Monaco-based editors such as
+[DrawnUI Fiddle](https://fiddle.drawnui.net/app). Monaco's bundled `csharp`
+tokenizer has a rule for `@"` — a verbatim shader is painted as one flat string
+— but no rule for `"""`, so the raw-literal body falls through to ordinary code
+tokenization and `float`, `return`, numbers and `//` comments all get coloured.
+That part is a tokenizer gap rather than a guaranteed feature; the escaping and
+indentation benefits hold regardless.
+
 ## Code-behind rendering
 
 `SkiaShader` can be used directly inside any control's `Paint` override:

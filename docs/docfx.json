@@ -47,6 +47,7 @@
         "files": [
           "images/**",
           "llms.txt",
+          "robots.txt",
           "skills/**"
         ]
       }

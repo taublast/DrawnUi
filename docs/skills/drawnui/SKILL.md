@@ -283,6 +283,7 @@ Conditional: `AutoCache` on `SkiaScroll`/`SkiaDrawer` sets THEIR OWN `UseCache =
 
 ## Shader Effects (SkiaShaderEffect / SkiaBackdrop)
 
+- Write inline SkSL as a **raw string literal** in its own `const` (`const string mySksl = """ ... """;`), never as a verbatim `@"..."` inlined at the property. No `""` escaping, and the closing `"""` strips the C# indentation so the shader reaches the compiler without leading whitespace on every line. Bonus in Monaco-based editors (DrawnUI Fiddle): the bundled `csharp` tokenizer has a rule for `@"` but none for `"""`, so a raw-literal shader body is tokenized as code and gets keyword/number/comment colours instead of one flat string colour.
 - Use `ShaderCode` (inline SKSL string) instead of `ShaderSource` (file path) on the `DRAWNUI_NET` / OpenTK target — `LoadFromResources` throws there. `ShaderCode` bypasses file loading entirely and compiles the string directly.
 - `SkiaBackdrop` + `VisualEffects` + a `SkiaShaderEffect` subclass (e.g. `GlassBackdropEffect`) works on the OpenTK target. The backdrop snapshots `ctx.Context.Surface` which is the same GPU framebuffer used by raw GL — so GL-drawn content (cube, 3D scene) IS captured and passed to the shader as `iImage1`.
 - For liquid glass over a GL scene: place `SkiaBackdrop` as the first child inside the `SkiaShape` panel. Do NOT put GPU cache (`UseCache = GPU`) on the outer shape — that caches the backdrop snapshot and prevents live updates each frame.
