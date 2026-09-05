@@ -3658,6 +3658,25 @@ public partial class SkiaLayout
     #endregion
 
     /// <summary>
+    /// Structure-preserving collection changes (uniform MeasureFirst add/remove, background measurement
+    /// batches, visibility changes) resize this layout arithmetically, without a measure pass. A viewport
+    /// parent (SkiaScroll) polls Content.MeasuredSize every frame and adopts the new size by itself. A plain
+    /// autosized parent (SkiaShape, SkiaLayer, grid cell) does not: it keeps arranging this layout at the
+    /// size obtained during its own last measure pass, so an appended item stays clipped forever (regression
+    /// since the MeasureFirst arithmetic paths bypassed the old Invalidate on NeedAutoSize). Ask that parent
+    /// to re-measure: SkiaControl.Measure short-circuits for this layout (NeedMeasure is false after
+    /// SetMeasured, same constraints) so the parent just adopts the new MeasuredSize - no structure rebuild,
+    /// no template binds. Skipped under a viewport parent so scroll-hosted lists keep their exact cost.
+    /// </summary>
+    private void NotifyParentOfArithmeticResize()
+    {
+        if (NeedAutoSize && Parent is not IDefinesViewport)
+        {
+            InvalidateParent();
+        }
+    }
+
+    /// <summary>
     /// Updates content size with progressive accuracy as we approach measuring all items
     /// </summary>
     private void UpdateProgressiveContentSize()
@@ -3745,6 +3764,7 @@ public partial class SkiaLayout
             if (Math.Abs(newContentHeight - currentHeight) > 1f)
             {
                 SetMeasured(MeasuredSize.Pixels.Width, newContentHeight, false, false, RenderingScale);
+                NotifyParentOfArithmeticResize();
 
                 //Debug.WriteLine($"[SkiaLayout] Updated content COLUMN {100.0 * progress:0}% height from {currentHeight:F1}px to {newContentHeight:F1}px");
             }
@@ -3812,6 +3832,7 @@ public partial class SkiaLayout
             if (Math.Abs(newContentWidth - currentWidth) > 1f)
             {
                 SetMeasured(newContentWidth, MeasuredSize.Pixels.Height, false, false, RenderingScale);
+                NotifyParentOfArithmeticResize();
                 Debug.WriteLine(
                     $"[SkiaLayout] Updated content ROW {100.0 * progress:0}% width from {currentWidth:F1}px to {newContentWidth:F1}px");
             }
