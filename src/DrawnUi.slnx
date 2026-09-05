@@ -48,6 +48,7 @@
     <Project Path="Maui/Samples/Tutorials/Tutorials.csproj">
       <Deploy Solution="Debug|Any CPU" />
     </Project>
+    <Project Path="Maui/Templates/DrawnAppEmpty/DrawnAppEmpty.csproj" />
   </Folder>
   <Folder Name="/Samples/NET/">
     <Project Path="Net/Tests/DrawnUi.Net.Tests/DrawnUi.Net.Tests.csproj" />
