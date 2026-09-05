@@ -1160,6 +1160,16 @@ namespace DrawnUi.Draw
             {
                 if (!bakePass)
                 {
+                    // A head insert/remove stages a two-phase rebase whose commit (cell translation +
+                    // scroll-offset compensation) is driven by the parent SkiaScroll before its frame
+                    // offset. Under a plain layout parent there is no scroll to drive it: commit here,
+                    // translation only, or the survivors keep their pre-trim positions forever (dead gap
+                    // above the content, HeadRemoveInFlight stuck true, later fast paths gated off).
+                    if (HasPendingStructureRebase && Parent is not IDefinesViewport)
+                    {
+                        CommitPendingStructureRebase();
+                    }
+
                     // Apply all pending structure changes to StackStructure
                     ApplyStructureChanges();
 
