@@ -20,7 +20,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ShellCurrentRoute
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2362
+    startLine: 2375
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -59,7 +59,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Nodes
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2365
+    startLine: 2378
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls

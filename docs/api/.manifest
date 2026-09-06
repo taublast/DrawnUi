@@ -4479,6 +4479,7 @@
   "DrawnUi.Draw.SkiaLabel.CanDraw": "DrawnUi.Draw.SkiaLabel.yml",
   "DrawnUi.Draw.SkiaLabel.CharacterSpacing": "DrawnUi.Draw.SkiaLabel.yml",
   "DrawnUi.Draw.SkiaLabel.CharacterSpacingProperty": "DrawnUi.Draw.SkiaLabel.yml",
+  "DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin(System.Single)": "DrawnUi.Draw.SkiaLabel.yml",
   "DrawnUi.Draw.SkiaLabel.CutLineToFit(SkiaSharp.SKPaint,SkiaSharp.SKFont,System.String,System.Single)": "DrawnUi.Draw.SkiaLabel.yml",
   "DrawnUi.Draw.SkiaLabel.DebugColor": "DrawnUi.Draw.SkiaLabel.yml",
   "DrawnUi.Draw.SkiaLabel.DebugSpans": "DrawnUi.Draw.SkiaLabel.yml",

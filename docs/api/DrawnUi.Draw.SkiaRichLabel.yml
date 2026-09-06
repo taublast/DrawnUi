@@ -271,6 +271,7 @@ items:
   - DrawnUi.Draw.SkiaLabel.StrokeColor
   - DrawnUi.Draw.SkiaLabel.StrokeWidthProperty
   - DrawnUi.Draw.SkiaLabel.StrokeWidth
+  - DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin(System.Single)
   - DrawnUi.Draw.SkiaLabel.DropShadowColorProperty
   - DrawnUi.Draw.SkiaLabel.DropShadowColor
   - DrawnUi.Draw.SkiaLabel.DropShadowSizeProperty
@@ -364,7 +365,6 @@ items:
   - DrawnUi.Draw.SkiaControl.OnVisualEffectsChanged
   - DrawnUi.Draw.SkiaControl.AggregatedEffectsMarginPixels
   - DrawnUi.Draw.SkiaControl.EffectsMarginPixels
-  - DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(System.Single)
   - DrawnUi.Draw.SkiaControl.MergeShadowMargin(System.Double@,System.Double@,System.Double@,System.Double@,DrawnUi.Draw.SkiaShadow,System.Single)
   - DrawnUi.Draw.SkiaControl.GetRenderingExpandPixels
   - DrawnUi.Draw.SkiaControl.EffectsGestureProcessors
@@ -6575,6 +6575,37 @@ references:
   name: StrokeWidth
   nameWithType: SkiaLabel.StrokeWidth
   fullName: DrawnUi.Draw.SkiaLabel.StrokeWidth
+- uid: DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin(System.Single)
+  parent: DrawnUi.Draw.SkiaLabel
+  isExternal: true
+  href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_ComputeEffectsMargin_System_Single_
+  name: ComputeEffectsMargin(float)
+  nameWithType: SkiaLabel.ComputeEffectsMargin(float)
+  fullName: DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin(float)
+  nameWithType.vb: SkiaLabel.ComputeEffectsMargin(Single)
+  fullName.vb: DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin(Single)
+  name.vb: ComputeEffectsMargin(Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin(System.Single)
+    name: ComputeEffectsMargin
+    href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_ComputeEffectsMargin_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin(System.Single)
+    name: ComputeEffectsMargin
+    href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_ComputeEffectsMargin_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
 - uid: DrawnUi.Draw.SkiaLabel.DropShadowColorProperty
   commentId: F:DrawnUi.Draw.SkiaLabel.DropShadowColorProperty
   parent: DrawnUi.Draw.SkiaLabel
@@ -8490,37 +8521,6 @@ references:
   name: EffectsMarginPixels
   nameWithType: SkiaControl.EffectsMarginPixels
   fullName: DrawnUi.Draw.SkiaControl.EffectsMarginPixels
-- uid: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(System.Single)
-  commentId: M:DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(System.Single)
-  parent: DrawnUi.Draw.SkiaControl
-  isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ComputeEffectsMargin_System_Single_
-  name: ComputeEffectsMargin(float)
-  nameWithType: SkiaControl.ComputeEffectsMargin(float)
-  fullName: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(float)
-  nameWithType.vb: SkiaControl.ComputeEffectsMargin(Single)
-  fullName.vb: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(Single)
-  name.vb: ComputeEffectsMargin(Single)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(System.Single)
-    name: ComputeEffectsMargin
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ComputeEffectsMargin_System_Single_
-  - name: (
-  - uid: System.Single
-    name: float
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(System.Single)
-    name: ComputeEffectsMargin
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ComputeEffectsMargin_System_Single_
-  - name: (
-  - uid: System.Single
-    name: Single
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: )
 - uid: DrawnUi.Draw.SkiaControl.MergeShadowMargin(System.Double@,System.Double@,System.Double@,System.Double@,DrawnUi.Draw.SkiaShadow,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.MergeShadowMargin(System.Double@,System.Double@,System.Double@,System.Double@,DrawnUi.Draw.SkiaShadow,System.Single)
   parent: DrawnUi.Draw.SkiaControl
