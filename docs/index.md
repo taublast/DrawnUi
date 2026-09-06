@@ -428,6 +428,6 @@ Perfect for apps requiring **custom UI designs**, **complex animations**, **game
     <img src="https://img.shields.io/nuget/dt/AppoMobi.Maui.DrawnUi.svg" alt="NuGet Downloads" style="margin: 0 5px;">
   </p>
   <p style="margin-top: 15px;">
-    By <a href="https://taublast.github.io" style="color: #4299e1; text-decoration: none;">Nick Kovalsky</a> (<a href="https://www.linkedin.com/in/nick-kovalsky-92a770174/">Available for commercial work</a>) and contributors
+    <a href="https://taublast.github.io/about/" style="color: #4299e1; text-decoration: none;">Nick Kovalsky (@taublast)</a> and contributors
   </p>
 </div>
