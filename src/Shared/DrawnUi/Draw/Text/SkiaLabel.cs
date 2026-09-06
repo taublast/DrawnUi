@@ -3758,12 +3758,52 @@ namespace DrawnUi.Draw
 
         #region Drop Shadow
 
+        /// <summary>
+        /// Shadow parameters change the effects margin (cache surface, clip, dirty region), not
+        /// only the pixels: refresh both.
+        /// </summary>
+        private static void NeedDrawShadow(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (bindable is SkiaLabel label)
+            {
+                label.InvalidateEffectsMargin();
+            }
+
+            NeedDraw(bindable, oldvalue, newvalue);
+        }
+
+        /// <summary>
+        /// The built-in drop shadow is a stroked copy of the glyphs (stroke width DropShadowSize*2,
+        /// so DropShadowSize px beyond the glyph on every side) drawn at DropShadowOffsetX/Y.
+        /// Measurement only reserves the band BELOW the text, so the shadow paints outside
+        /// DrawingRect on the other sides (visibly on the left and top when the size exceeds the
+        /// offset). Report that overflow so a cached label gets a surface, clip and dirty region
+        /// big enough, like VisualEffects and shape Shadows already do.
+        /// </summary>
+        protected override Thickness ComputeEffectsMargin(float scale)
+        {
+            var margin = base.ComputeEffectsMargin(scale);
+
+            if (DropShadowSize <= 0 || DropShadowColor == null || DropShadowColor.Alpha == 0)
+                return margin;
+
+            var size = DropShadowSize * scale;
+            var offsetX = DropShadowOffsetX * scale;
+            var offsetY = DropShadowOffsetY * scale;
+
+            return new Thickness(
+                Math.Max(margin.Left, Math.Max(0, size - offsetX)),
+                Math.Max(margin.Top, Math.Max(0, size - offsetY)),
+                Math.Max(margin.Right, Math.Max(0, size + offsetX)),
+                Math.Max(margin.Bottom, Math.Max(0, size + offsetY)));
+        }
+
         public static readonly BindableProperty DropShadowColorProperty = BindableProperty.Create(
             nameof(DropShadowColor),
             typeof(Color),
             typeof(SkiaLabel),
             Colors.Transparent,
-            propertyChanged: NeedDraw);
+            propertyChanged: NeedDrawShadow);
 
         public Color DropShadowColor
         {
@@ -3776,7 +3816,7 @@ namespace DrawnUi.Draw
             typeof(double),
             typeof(SkiaLabel),
             2.0,
-            propertyChanged: NeedDraw);
+            propertyChanged: NeedDrawShadow);
 
         public double DropShadowSize
         {
@@ -3789,7 +3829,7 @@ namespace DrawnUi.Draw
             typeof(double),
             typeof(SkiaLabel),
             2.0,
-            propertyChanged: NeedDraw);
+            propertyChanged: NeedDrawShadow);
 
 
         public double DropShadowOffsetY
@@ -3803,7 +3843,7 @@ namespace DrawnUi.Draw
             typeof(double),
             typeof(SkiaLabel),
             2.0,
-            propertyChanged: NeedDraw);
+            propertyChanged: NeedDrawShadow);
 
         /// <summary>
         /// To make DropShadow act like shadow
