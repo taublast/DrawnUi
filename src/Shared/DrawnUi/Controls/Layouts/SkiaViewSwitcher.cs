@@ -816,6 +816,26 @@ namespace DrawnUi.Controls
         //	paint.Shader = shader;
         //}
 
+        /// <summary>
+        /// Completes after this switcher's next rendered frame (or the timeout), so a timed
+        /// transition begins with the new view already measured and painted once.
+        /// </summary>
+        protected async Task WaitForNextFrameAsync(int timeoutMs)
+        {
+            var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            EventHandler handler = null;
+            handler = (s, e) =>
+            {
+                Rendered -= handler;
+                tcs.TrySetResult(true);
+            };
+            Rendered += handler;
+            Update();
+
+            await Task.WhenAny(tcs.Task, Task.Delay(timeoutMs));
+            Rendered -= handler;
+        }
+
         protected virtual async Task SetupTransitionAnimation(
             DoubleViewTransitionType doubleViewTransitionType,
             SkiaControl previousVisibleView, SkiaControl newVisibleView)
@@ -1104,6 +1124,11 @@ namespace DrawnUi.Controls
 
                                 ChangeViewVisibility(newVisibleView.View, true);
                                 SendOnLoaded(newVisibleView.View);
+
+                                // the transition is time-based: let the frame that measures and
+                                // paints the new view happen first, else a heavy page spends the
+                                // whole animation on its first layout and pops in at the end
+                                await WaitForNextFrameAsync(500);
 
                                 //animate
                                 var previousView = previousVisibleView != null ? previousVisibleView.View : null;
