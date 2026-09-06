@@ -53,13 +53,15 @@ Supported hosts:
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
 
-## What's New 1.10.6.5
+## What's New 1.10.6.7
 
-  * HotFix for autosized templated layout not growing/shrinking when NOT inside a scroll
-  * Updated AI skills, docs, [fiddle](https://fiddle.drawnui.net)
+  * SkiaLabel: built-in drop shadow size now cached properly
+  * SkiaShell blur backdrop fixed
+  * Updated docs (https://drawnui.net)
 
  ### Previously
 
+  * HotFix for autosized templated layout not growing/shrinking when NOT inside a scroll
   * `SkiaEditor` implemented `IsSpellCheckEnabled` property
   * Fix `SkiaSvg` source to accept Unicode strings.
   * `SkiaEditor` implemented `IsSpellCheckEnabled` property
@@ -75,4 +77,8 @@ Supported hosts:
 * 
 ---
 MIT | Free to use and customize
+
+---
+
+DrawnUI is built and maintained by Nick Kovalsky, who is available for commercial work: full mobile and desktop app development, custom controls, performance and rendering work, Xamarin → MAUI migrations, and support contracts. Get in touch via [LinkedIn](https://www.linkedin.com/in/nick-kovalsky-92a770174/) or taublast(at)gmail.com.
 

@@ -1,0 +1,25 @@
+<Project>
+
+    <!--
+        Ship AudioEncoderNative.dll next to the consuming app when DrawnUi.Native.Windows
+        comes in via NuGet. Same recipe as DrawnUi.Maui.targets for libEGL/libGLESv2:
+
+        Item form, not a raw <Copy>: GetPackagingOutputs pulls in the
+        GetCopyToOutputDirectoryItems output group, so the dll lands both next to the .exe
+        (unpackaged mode) and inside the MSIX payload.
+
+        None, not Content: Content items are indexed into the consuming project's PRI. When the
+        consumer is itself a packed library (DrawnUi.Maui.Camera) its shipped .pri then lists
+        "DrawnUi.Maui.Camera\AudioEncoderNative.dll" as a resource file and every app referencing
+        that package fails with MSB3030 trying to copy it out of the nupkg (1.7.7.2 shipped this).
+    -->
+    <ItemGroup Condition="$(TargetFramework.Contains('windows')) == true">
+        <None Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\AudioEncoderNative.dll">
+            <Link>AudioEncoderNative.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Visible>false</Visible>
+            <Pack>false</Pack>
+        </None>
+    </ItemGroup>
+
+</Project>

@@ -25,7 +25,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TypeRouteFactory
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2019
+    startLine: 2032
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -61,7 +61,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: .ctor
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2024
+    startLine: 2037
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -95,7 +95,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetOrCreate
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2030
+    startLine: 2043
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -125,7 +125,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetOrCreateObject
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2035
+    startLine: 2048
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -156,7 +156,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetOrCreate
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2061
+    startLine: 2074
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -189,7 +189,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Equals
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2077
+    startLine: 2090
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -228,7 +228,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetHashCode
     path: ../src/Maui/DrawnUi/Controls/Navigation/SkiaShell.cs
-    startLine: 2085
+    startLine: 2098
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls

@@ -20,6 +20,7 @@ items:
   - DrawnUi.Draw.SkiaLabel.CanDraw
   - DrawnUi.Draw.SkiaLabel.CharacterSpacing
   - DrawnUi.Draw.SkiaLabel.CharacterSpacingProperty
+  - DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin(System.Single)
   - DrawnUi.Draw.SkiaLabel.CutLineToFit(SkiaSharp.SKPaint,SkiaSharp.SKFont,System.String,System.Single)
   - DrawnUi.Draw.SkiaLabel.DebugColor
   - DrawnUi.Draw.SkiaLabel.DebugSpans
@@ -337,7 +338,6 @@ items:
   - DrawnUi.Draw.SkiaControl.OnVisualEffectsChanged
   - DrawnUi.Draw.SkiaControl.AggregatedEffectsMarginPixels
   - DrawnUi.Draw.SkiaControl.EffectsMarginPixels
-  - DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(System.Single)
   - DrawnUi.Draw.SkiaControl.MergeShadowMargin(System.Double@,System.Double@,System.Double@,System.Double@,DrawnUi.Draw.SkiaShadow,System.Single)
   - DrawnUi.Draw.SkiaControl.GetRenderingExpandPixels
   - DrawnUi.Draw.SkiaControl.EffectsGestureProcessors
@@ -5937,6 +5937,54 @@ items:
       type: System.Double
     content.vb: Public Property StrokeWidth As Double
   overload: DrawnUi.Draw.SkiaLabel.StrokeWidth*
+- uid: DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin(System.Single)
+  id: ComputeEffectsMargin(System.Single)
+  parent: DrawnUi.Draw.SkiaLabel
+  langs:
+  - csharp
+  - vb
+  name: ComputeEffectsMargin(float)
+  nameWithType: SkiaLabel.ComputeEffectsMargin(float)
+  fullName: DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin(float)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: ComputeEffectsMargin
+    path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
+    startLine: 3782
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    The built-in drop shadow is a stroked copy of the glyphs (stroke width DropShadowSize*2,
+
+    so DropShadowSize px beyond the glyph on every side) drawn at DropShadowOffsetX/Y.
+
+    Measurement only reserves the band BELOW the text, so the shadow paints outside
+
+    DrawingRect on the other sides (visibly on the left and top when the size exceeds the
+
+    offset). Report that overflow so a cached label gets a surface, clip and dirty region
+
+    big enough, like VisualEffects and shape Shadows already do.
+  example: []
+  syntax:
+    content: protected override Thickness ComputeEffectsMargin(float scale)
+    parameters:
+    - id: scale
+      type: System.Single
+    return:
+      type: Microsoft.Maui.Thickness
+    content.vb: Protected Overrides Function ComputeEffectsMargin(scale As Single) As Thickness
+  overridden: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(System.Single)
+  overload: DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin*
+  nameWithType.vb: SkiaLabel.ComputeEffectsMargin(Single)
+  fullName.vb: DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin(Single)
+  name.vb: ComputeEffectsMargin(Single)
 - uid: DrawnUi.Draw.SkiaLabel.DropShadowColorProperty
   commentId: F:DrawnUi.Draw.SkiaLabel.DropShadowColorProperty
   id: DropShadowColorProperty
@@ -5955,7 +6003,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DropShadowColorProperty
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3760
+    startLine: 3800
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5982,7 +6030,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DropShadowColor
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3767
+    startLine: 3807
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6011,7 +6059,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DropShadowSizeProperty
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3773
+    startLine: 3813
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6038,7 +6086,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DropShadowSize
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3780
+    startLine: 3820
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6067,7 +6115,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DropShadowOffsetYProperty
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3786
+    startLine: 3826
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6094,7 +6142,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DropShadowOffsetY
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3794
+    startLine: 3834
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6123,7 +6171,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DropShadowOffsetXProperty
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3800
+    startLine: 3840
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6150,7 +6198,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DropShadowOffsetX
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3810
+    startLine: 3850
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6181,7 +6229,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FontSizeProperty
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3818
+    startLine: 3858
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6208,7 +6256,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FontSize
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3842
+    startLine: 3882
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6271,7 +6319,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GradientByLinesProperty
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3866
+    startLine: 3906
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6298,7 +6346,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GradientByLines
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3873
+    startLine: 3913
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6327,7 +6375,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: StrokeGradientProperty
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3880
+    startLine: 3920
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6354,7 +6402,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: StrokeGradient
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3887
+    startLine: 3927
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6383,7 +6431,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnSpanTapped
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3925
+    startLine: 3965
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6418,7 +6466,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetFrameworkFocus
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3931
+    startLine: 3971
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -6461,7 +6509,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ProcessGestures
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.cs
-    startLine: 3936
+    startLine: 3976
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8621,37 +8669,6 @@ references:
   name: EffectsMarginPixels
   nameWithType: SkiaControl.EffectsMarginPixels
   fullName: DrawnUi.Draw.SkiaControl.EffectsMarginPixels
-- uid: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(System.Single)
-  commentId: M:DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(System.Single)
-  parent: DrawnUi.Draw.SkiaControl
-  isExternal: true
-  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ComputeEffectsMargin_System_Single_
-  name: ComputeEffectsMargin(float)
-  nameWithType: SkiaControl.ComputeEffectsMargin(float)
-  fullName: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(float)
-  nameWithType.vb: SkiaControl.ComputeEffectsMargin(Single)
-  fullName.vb: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(Single)
-  name.vb: ComputeEffectsMargin(Single)
-  spec.csharp:
-  - uid: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(System.Single)
-    name: ComputeEffectsMargin
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ComputeEffectsMargin_System_Single_
-  - name: (
-  - uid: System.Single
-    name: float
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: )
-  spec.vb:
-  - uid: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(System.Single)
-    name: ComputeEffectsMargin
-    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ComputeEffectsMargin_System_Single_
-  - name: (
-  - uid: System.Single
-    name: Single
-    isExternal: true
-    href: https://learn.microsoft.com/dotnet/api/system.single
-  - name: )
 - uid: DrawnUi.Draw.SkiaControl.MergeShadowMargin(System.Double@,System.Double@,System.Double@,System.Double@,DrawnUi.Draw.SkiaShadow,System.Single)
   commentId: M:DrawnUi.Draw.SkiaControl.MergeShadowMargin(System.Double@,System.Double@,System.Double@,System.Double@,DrawnUi.Draw.SkiaShadow,System.Single)
   parent: DrawnUi.Draw.SkiaControl
@@ -41825,6 +41842,51 @@ references:
   name: StrokeWidth
   nameWithType: SkiaLabel.StrokeWidth
   fullName: DrawnUi.Draw.SkiaLabel.StrokeWidth
+- uid: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(System.Single)
+  commentId: M:DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(System.Single)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ComputeEffectsMargin_System_Single_
+  name: ComputeEffectsMargin(float)
+  nameWithType: SkiaControl.ComputeEffectsMargin(float)
+  fullName: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(float)
+  nameWithType.vb: SkiaControl.ComputeEffectsMargin(Single)
+  fullName.vb: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(Single)
+  name.vb: ComputeEffectsMargin(Single)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(System.Single)
+    name: ComputeEffectsMargin
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ComputeEffectsMargin_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.ComputeEffectsMargin(System.Single)
+    name: ComputeEffectsMargin
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ComputeEffectsMargin_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: )
+- uid: DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin*
+  commentId: Overload:DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin
+  href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_ComputeEffectsMargin_System_Single_
+  name: ComputeEffectsMargin
+  nameWithType: SkiaLabel.ComputeEffectsMargin
+  fullName: DrawnUi.Draw.SkiaLabel.ComputeEffectsMargin
+- uid: Microsoft.Maui.Thickness
+  commentId: T:Microsoft.Maui.Thickness
+  parent: Microsoft.Maui
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness
+  name: Thickness
+  nameWithType: Thickness
+  fullName: Microsoft.Maui.Thickness
 - uid: DrawnUi.Draw.SkiaLabel.DropShadowColor*
   commentId: Overload:DrawnUi.Draw.SkiaLabel.DropShadowColor
   href: DrawnUi.Draw.SkiaLabel.html#DrawnUi_Draw_SkiaLabel_DropShadowColor

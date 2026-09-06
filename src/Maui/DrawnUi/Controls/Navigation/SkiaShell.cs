@@ -657,6 +657,19 @@ namespace DrawnUi.Controls
             float blur,
             bool animated)
         {
+            // The snapshot comes straight off an accelerated surface, texture-backed. Drawing a
+            // texture-backed image through this control's raster cache with the blur image filter
+            // renders solid black (verified Windows accelerated, 2026-09-06), while the same image
+            // without the filter draws fine. The freeze is a one-shot, so rasterize it once here.
+            if (screenshot != null && screenshot.IsTextureBacked)
+            {
+                var raster = LoadedImageSource.DrawImageOnCpuSurface(screenshot);
+                if (raster != null)
+                {
+                    screenshot = raster;
+                }
+            }
+
             //blur will create alpha on borders, so we need a background color
             var background = new SkiaImage()
             {

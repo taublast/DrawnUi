@@ -11,7 +11,8 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryType>git</RepositoryType>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <IncludeSymbols>true</IncludeSymbols>
+        <!-- a package without managed output (DrawnUi.Native.Windows) has no symbols to ship; an empty snupkg fails the pack with NU5017 -->
+        <IncludeSymbols Condition="'$(IncludeBuildOutput)' != 'false'">true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
 
