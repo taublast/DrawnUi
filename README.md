@@ -56,7 +56,7 @@ Supported hosts:
 ## What's New 1.10.6.7
 
   * SkiaLabel: built-in drop shadow size now cached properly
-  * SkiaShell blur backdrop fixed
+  * SkiaShell blur backdrop and modal animation fixed
   * Updated docs (https://drawnui.net)
 
  ### Previously
