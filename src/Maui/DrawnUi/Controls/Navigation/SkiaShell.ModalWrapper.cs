@@ -33,6 +33,9 @@ public partial class SkiaShell
                 BlockGesturesBelow = true,
                 RespondsToGestures = _useGestures,
                 Animated = _animated,
+                // slide in/out over PopupsAnimationSpeed ms (SnappingLayout: 0.7 * 300 / v seconds);
+                // the drawer default of 1500 pt/s gives 0.14 s, too fast to read as an animation
+                AutoVelocity = 300.0 * 0.7 / Math.Max(0.1, SkiaShell.PopupsAnimationSpeed / 1000.0),
                 Tag = $"ModalDrawer_{content.GetType().Name}",
                 Bounces = false,
                 Direction = DrawerDirection.FromBottom,
